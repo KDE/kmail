@@ -330,26 +330,26 @@ namespace KMail {
   }
 
   QString CSSHelper::Private::printCssDefinitions() const {
-    const QString headerFont = QString( "  font-family: \"%1\";\n"
-					"  font-size: %2pt;\n" )
+    const QString headerFont = QString( "  font-family: \"%1\" ! important;\n"
+					"  font-size: %2pt ! important;\n" )
                            .arg( mPrintFont.family() )
                            .arg( mPrintFont.pointSize() );
     const QColorGroup & cg = QApplication::palette().active();
 
     QString quoteCSS;
     if ( mPrintFont.italic() )
-      quoteCSS += "  font-style: italic;\n";
+      quoteCSS += "  font-style: italic ! important;\n";
     if ( mPrintFont.bold() )
-      quoteCSS += "  font-weight: bold;\n";
+      quoteCSS += "  font-weight: bold ! important;\n";
     if ( !quoteCSS.isEmpty() )
       quoteCSS = "div.noquote {\n" + quoteCSS + "}\n\n";
 
     return
       QString( "body {\n"
-	       "  font-family: \"%1\";\n"
-	       "  font-size: %2pt;\n"
-	       "  color: #000000;\n"
-	       "  background-color: #ffffff\n"
+	       "  font-family: \"%1\" ! important;\n"
+	       "  font-size: %2pt ! important;\n"
+	       "  color: #000000 ! important;\n"
+	       "  background-color: #ffffff ! important\n"
 	       "}\n\n" )
       .arg( mPrintFont.family(),
 	    QString::number( mPrintFont.pointSize() ) )
@@ -366,24 +366,24 @@ namespace KMail {
 	       "}\n\n"
 
 	       "div.fancy.header > div {\n"
-	       "  background-color: %2;\n"
-	       "  color: %3;\n"
-	       "  padding: 4px;\n"
-	       "  border: solid %3 1px;\n"
+	       "  background-color: %2 ! important;\n"
+	       "  color: %3 ! important;\n"
+	       "  padding: 4px ! important;\n"
+	       "  border: solid %3 1px ! important;\n"
 	       "}\n\n"
 
-	       "div.fancy.header > div a[href] { color: %3; }\n\n"
+	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
 
 	       "div.fancy.header table {\n"
-	       "  background-color: %2;\n"
-	       "  color: %3;\n"
-	       "  border-bottom: solid %3 1px;\n"
-	       "  border-left: solid %3 1px;\n"
-	       "  border-right: solid %3 1px;\n"
+	       "  background-color: %2 ! important;\n"
+	       "  color: %3 ! important;\n"
+	       "  border-bottom: solid %3 1px ! important;\n"
+	       "  border-left: solid %3 1px ! important;\n"
+	       "  border-right: solid %3 1px ! important;\n"
 	       "}\n\n"
 
 	       "div.htmlWarn {\n"
-	       "  border: 2px solid #ffffff;\n"
+	       "  border: 2px solid #ffffff ! important;\n"
 	       "}\n\n" )
       .arg( headerFont,
 	    cg.background().name(),
@@ -395,42 +395,42 @@ namespace KMail {
     const QString fgColor = c1.name();
     const QString bgColor = c4.name();
     const QString linkColor = c2.name();
-    const QString headerFont = QString("  font-family: \"%1\";\n"
-				       "  font-size: %2px\n;")
+    const QString headerFont = QString("  font-family: \"%1\" ! important;\n"
+				       "  font-size: %2px ! important;\n")
       .arg( mBodyFont.family() )
       .arg( pointsToPixel( helper->mMetrics, mBodyFont.pointSize() ) );
     const QString background = ( mBackingPixmapOn
-                         ? QString( "  background-image:url(file://%1);\n" )
+                         ? QString( "  background-image:url(file://%1) ! important;\n" )
                            .arg( mBackingPixmapStr )
-                         : QString( "  background-color: %1;\n" )
+                         : QString( "  background-color: %1 ! important;\n" )
                            .arg( bgColor ) );
     const QString bodyFontSize = QString::number( pointsToPixel( helper->mMetrics, fontSize( fixed ) ) ) + "px" ;
     const QColorGroup & cg = QApplication::palette().active();
 
     QString quoteCSS;
     if ( bodyFont( fixed ).italic() )
-      quoteCSS += "  font-style: italic;\n";
+      quoteCSS += "  font-style: italic ! important;\n";
     if ( bodyFont( fixed ).bold() )
-      quoteCSS += "  font-weight: bold;\n";
+      quoteCSS += "  font-weight: bold ! important;\n";
     if ( !quoteCSS.isEmpty() )
       quoteCSS = "div.noquote {\n" + quoteCSS + "}\n\n";
 
     for ( int i = 0 ; i < 3 ; ++i ) {
       quoteCSS += QString( "div.quotelevel%1 {\n"
-			   "  color: %2;\n" )
+			   "  color: %2 ! important;\n" )
 	.arg( QString::number(i+1), mQuoteColor[i].name() );
       if ( mQuoteFont[i].italic() )
-	quoteCSS += "  font-style: italic;\n";
+	quoteCSS += "  font-style: italic ! important;\n";
       if ( mQuoteFont[i].bold() )
-	quoteCSS += "  font-weight: bold;\n";
+	quoteCSS += "  font-weight: bold ! important;\n";
       quoteCSS += "}\n\n";
     }
 
     return
       QString( "body {\n"
-	       "  font-family: \"%1\";\n"
-	       "  font-size: %2;\n"
-	       "  color: %3;\n"
+	       "  font-family: \"%1\" ! important;\n"
+	       "  font-size: %2 ! important;\n"
+	       "  color: %3 ! important;\n"
 	       "%4"
 	       "}\n\n" )
       .arg( bodyFont( fixed ).family(),
@@ -439,23 +439,23 @@ namespace KMail {
 	    background )
       +
       QString( "a {\n"
-	       "  color: %1;\n"
-	       "  text-decoration: none;\n"
+	       "  color: %1 ! important;\n"
+	       "  text-decoration: none ! important;\n"
 	       "}\n\n"
 
-	       "table.textAtm { background-color: %2; }\n\n"
+	       "table.textAtm { background-color: %2 ! important; }\n\n"
 
 	       "tr.textAtmH {\n"
-	       "  background-color: %3;\n"
+	       "  background-color: %3 ! important;\n"
 	       "%4"
 	       "}\n\n"
 
 	       "tr.textAtmB {\n"
-	       "  background-color: %3;\n"
+	       "  background-color: %3 ! important;\n"
 	       "}\n\n"
 
 	       "table.rfc822 {\n"
-	       "  background-color: %3;\n"
+	       "  background-color: %3 ! important;\n"
 	       "}\n\n"
 
 	       "tr.rfc822H {\n"
@@ -464,82 +464,82 @@ namespace KMail {
       .arg( linkColor, fgColor, bgColor, headerFont )
       +
       QString( "table.encr {\n"
-	       "  background-color: %1;\n"
+	       "  background-color: %1 ! important;\n"
 	       "}\n\n"
 
 	       "tr.encrH {\n"
-	       "  background-color: %2;\n"
+	       "  background-color: %2 ! important;\n"
 	       "%3"
 	       "}\n\n"
 
-	       "tr.encrB { background-color: %4; }\n\n" )
+	       "tr.encrB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpEncrF.name(),
 	    cPgpEncrH.name(),
 	    headerFont,
 	    cPgpEncrB.name() )
       +
       QString( "table.signOkKeyOk {\n"
-	       "  background-color: %1;\n"
+	       "  background-color: %1 ! important;\n"
 	       "}\n\n"
 
 	       "tr.signOkKeyOkH {\n"
-	       "  background-color: %2;\n"
+	       "  background-color: %2 ! important;\n"
 	       "%3"
 	       "}\n\n"
 
-	       "tr.signOkKeyOkB { background-color: %4; }\n\n" )
+	       "tr.signOkKeyOkB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpOk1F.name(),
 	    cPgpOk1H.name(),
 	    headerFont,
 	    cPgpOk1B.name() )
       +
       QString( "table.signOkKeyBad {\n"
-	       "  background-color: %1;\n"
+	       "  background-color: %1 ! important;\n"
 	       "}\n\n"
 
 	       "tr.signOkKeyBadH {\n"
-	       "  background-color: %2;\n"
+	       "  background-color: %2 ! important;\n"
 	       "%3"
 	       "}\n\n"
 
-	       "tr.signOkKeyBadB { background-color: %4; }\n\n" )
+	       "tr.signOkKeyBadB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpOk0F.name(),
 	    cPgpOk0H.name(),
 	    headerFont,
 	    cPgpOk0B.name() )
       +
       QString( "table.signWarn {\n"
-	       "  background-color: %1;\n"
+	       "  background-color: %1 ! important;\n"
 	       "}\n\n"
 
 	       "tr.signWarnH {\n"
-	       "  background-color: %2;\n"
+	       "  background-color: %2 ! important;\n"
 	       "%3"
 	       "}\n\n"
 
-	       "tr.signWarnB { background-color: %4; }\n\n" )
+	       "tr.signWarnB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpWarnF.name(),
 	    cPgpWarnH.name(),
 	    headerFont,
 	    cPgpWarnB.name() )
       +
       QString( "table.signErr {\n"
-	       "  background-color: %1;\n"
+	       "  background-color: %1 ! important;\n"
 	       "}\n\n"
 
 	       "tr.signErrH {\n"
-	       "  background-color: %2;\n"
+	       "  background-color: %2 ! important;\n"
 	       "%3"
 	       "}\n\n"
 
-	       "tr.signErrB { background-color: %4; }\n\n" )
+	       "tr.signErrB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpErrF.name(),
 	    cPgpErrH.name(),
 	    headerFont,
 	    cPgpErrB.name() )
       +
       QString( "div.htmlWarn {\n"
-	       "  border: 2px solid %1;\n"
+	       "  border: 2px solid %1 ! important;\n"
 	       "}\n\n" )
       .arg( cHtmlWarning.name() )
       +
@@ -548,21 +548,21 @@ namespace KMail {
 	       "}\n\n"
 
 	       "div.fancy.header > div {\n"
-	       "  background-color: %2;\n"
-	       "  color: %3;\n"
-	       "  border: solid %4 1px;\n"
+	       "  background-color: %2 ! important;\n"
+	       "  color: %3 ! important;\n"
+	       "  border: solid %4 1px ! important;\n"
 	       "}\n\n"
 
-	       "div.fancy.header > div a[href] { color: %3; }\n\n"
+	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
 
-	       "div.fancy.header > div a[href]:hover { text-decoration: underline; }\n\n"
+	       "div.fancy.header > div a[href]:hover { text-decoration: underline ! important; }\n\n"
 
 	       "div.fancy.header table {\n"
-	       "  background-color: %5;\n"
-	       "  color: %4;\n"
-	       "  border-bottom: solid %4 1px;\n"
-	       "  border-left: solid %4 1px;\n"
-	       "  border-right: solid %4 1px;\n"
+	       "  background-color: %5 ! important;\n"
+	       "  color: %4 ! important;\n"
+	       "  border-bottom: solid %4 1px ! important;\n"
+	       "  border-left: solid %4 1px ! important;\n"
+	       "  border-right: solid %4 1px ! important;\n"
 	       "}\n\n" )
       .arg( headerFont )
       .arg( cg.highlight().name(),
@@ -575,18 +575,18 @@ namespace KMail {
   QString CSSHelper::Private::commonCssDefinitions() const {
     return
       "div.header {\n"
-      "  margin-bottom: 10pt;\n"
+      "  margin-bottom: 10pt ! important;\n"
       "}\n\n"
 
       "table.textAtm {\n"
-      "  margin-top: 10pt;\n"
-      "  margin-bottom: 10pt;\n"
+      "  margin-top: 10pt ! important;\n"
+      "  margin-bottom: 10pt ! important;\n"
       "}\n\n"
 
       "tr.textAtmH,\n"
       "tr.textAtmB,\n"
       "tr.rfc822B {\n"
-      "  font-weight: normal;\n"
+      "  font-weight: normal ! important;\n"
       "}\n\n"
 
       "tr.rfc822H,\n"
@@ -595,19 +595,19 @@ namespace KMail {
       "tr.signOkKeyBadH,\n"
       "tr.signWarnH,\n"
       "tr.signErrH {\n"
-      "  font-weight: bold;\n"
+      "  font-weight: bold ! important;\n"
       "}\n\n"
 
       "tr.textAtmH td,\n"
       "tr.textAtmB td {\n"
-      "  padding: 3px;\n"
+      "  padding: 3px ! important;\n"
       "}\n\n"
 
       "table.rfc822 {\n"
-      "  width: 100%;\n"
-      "  border: solid 1px black;\n"
-      "  margin-top: 10pt;\n"
-      "  margin-bottom: 10pt;\n"
+      "  width: 100% ! important;\n"
+      "  border: solid 1px black ! important;\n"
+      "  margin-top: 10pt ! important;\n"
+      "  margin-bottom: 10pt ! important;\n"
       "}\n\n"
 
       "table.textAtm,\n"
@@ -617,40 +617,40 @@ namespace KMail {
       "table.signOkKeyBad,\n"
       "table.signOkKeyOk,\n"
       "div.fancy.header table {\n"
-      "  width: 100%;\n"
-      "  border-width: 0px;\n"
+      "  width: 100% ! important;\n"
+      "  border-width: 0px ! important;\n"
       "}\n\n"
 
       "div.htmlWarn {\n"
-      "  margin: 0px 5%;\n"
-      "  padding: 10px;\n"
-      "  text-align: left;\n"
+      "  margin: 0px 5% ! important;\n"
+      "  padding: 10px ! important;\n"
+      "  text-align: left ! important;\n"
       "}\n\n"
 
       "div.fancy.header > div {\n"
-      "  font-weight: bold;\n"
-      "  padding: 4px;\n"
+      "  font-weight: bold ! important;\n"
+      "  padding: 4px ! important;\n"
       "}\n\n"
 
       "div.fancy.header table {\n"
-      "  padding: 2px;\n" // ### khtml bug: this is ignored
-      "  text-align: left\n"
+      "  padding: 2px ! important;\n" // ### khtml bug: this is ignored
+      "  text-align: left ! important\n"
       "}\n\n"
 
       "div.fancy.header table th {\n"
-      "  padding: 0px;\n"
-      "  white-space: nowrap;\n"
-      "  border-spacing: 0px;\n"
-      "  text-align: left;\n"
-      "  vertical-align: top;\n"
+      "  padding: 0px ! important;\n"
+      "  white-space: nowrap ! important;\n"
+      "  border-spacing: 0px ! important;\n"
+      "  text-align: left ! important;\n"
+      "  vertical-align: top ! important;\n"
       "}\n\n"
 
       "div.fancy.header table td {\n"
-      "  padding: 0px;\n"
-      "  border-spacing: 0px;\n"
-      "  text-align: left;\n"
-      "  vertical-align: top;\n"
-      "  width: 100%;\n"
+      "  padding: 0px ! important;\n"
+      "  border-spacing: 0px ! important;\n"
+      "  text-align: left ! important;\n"
+      "  vertical-align: top ! important;\n"
+      "  width: 100% ! important;\n"
       "}\n\n"
       ;
   }
