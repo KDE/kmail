@@ -57,19 +57,19 @@ public:
   KMPaintInfo *mPaintInfo;
 
   /* Construct the root item */
-  KMFolderTreeItem( QListView *parent, 
+  KMFolderTreeItem( QListView *parent,
 		    KMPaintInfo *aPaintInfo )
-    : QListViewItem( parent, i18n("Mail") ), 
+    : QListViewItem( parent, i18n("Mail") ),
       folder( 0 ),
       unread( 0 ),
       mPaintInfo( aPaintInfo )
     {}
 
   /* Construct a child item */
-  KMFolderTreeItem( QListViewItem* parent, 
-		    KMFolder* folder, 
+  KMFolderTreeItem( QListViewItem* parent,
+		    KMFolder* folder,
 		    KMPaintInfo *aPaintInfo )
-    : QListViewItem( parent, folder->label() ), 
+    : QListViewItem( parent, folder->label() ),
       folder( folder ),
       unread( 0 ),
       mPaintInfo( aPaintInfo )
@@ -109,12 +109,12 @@ void paintCell( QPainter * p, const QColorGroup & cg,
   } else {
     p->setPen( mPaintInfo->colFore );
   }
-  
+
   if ( icon ) {
     p->drawPixmap( r, (height()-icon->height())/2, *icon );
     r += icon->width() + listView()->itemMargin();
   }
-  
+
   QString t = text( column );
   if ( !t.isEmpty() ) {
     QRect br;
@@ -125,7 +125,7 @@ void paintCell( QPainter * p, const QColorGroup & cg,
     if (column == 0)
       p->drawText( br.right(), 0, width-marg-br.right(), height(),
 		   align | AlignVCenter, unread);
-    
+
   }
 }
 // End this code may be relicensed by Troll Tech
@@ -266,7 +266,7 @@ void KMFolderTree::updateUnreadAll()
 {
   bool upd = isUpdatesEnabled();
   setUpdatesEnabled(FALSE);
-  
+
   KMFolderDir* fdir;
   KMFolderNode* folderNode;
   KMFolder* folder;
@@ -278,13 +278,13 @@ void KMFolderTree::updateUnreadAll()
   {
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
-      
+
       folder->open();
       folder->countUnread();
       folder->close();
     }
   }
-  
+
   setUpdatesEnabled(upd);
 }
 
@@ -293,11 +293,11 @@ void KMFolderTree::updateUnreadAll()
 void KMFolderTree::paintEmptyArea( QPainter * p, const QRect & rect )
 {
   if (mPaintInfo.pixmapOn)
-    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(), 
-			mPaintInfo.pixmap, 
-			rect.left() + contentsX(), 
+    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(),
+			mPaintInfo.pixmap,
+			rect.left() + contentsX(),
 			rect.top() + contentsY() );
-  else 
+  else
     p->fillRect( rect, colorGroup().base() );
 }
 
@@ -341,7 +341,7 @@ void KMFolderTree::reload(void)
   root->setOpen( TRUE );
   fdir = &folderMgr->dir();
   addDirectory(fdir, root);
-  
+
   QListViewItemIterator jt( this );
   while (jt.current()) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(jt.current());
@@ -359,7 +359,7 @@ void KMFolderTree::reload(void)
 //-----------------------------------------------------------------------------
 // Recursively add a directory of folders to the tree of folders
 void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
-{ 
+{
   KMFolderNode *folderNode;
   KMFolder* folder;
   KMFolderTreeItem* fti;
@@ -403,7 +403,7 @@ void KMFolderTree::refresh(KMFolder* )
   }
   mUpdateTimer->changeInterval(200);
 }
-                                                               
+
 //-----------------------------------------------------------------------------
 // Updates the pixmap and extendedLabel information for items
 void KMFolderTree::delayedUpdate()
@@ -442,7 +442,7 @@ void KMFolderTree::delayedUpdate()
       fti->unread = extendedName;
     }
 
-    if (upd && repaintRequired) 
+    if (upd && repaintRequired)
       fti->repaint();
     ++it;
   }
@@ -558,7 +558,7 @@ void KMFolderTree::addChildFolder()
     dir = fti->folder->child();
 
   KMFolderDialog *d;
-  d = new KMFolderDialog(0, dir, 
+  d = new KMFolderDialog(0, dir,
 			 app->mainWidget(), i18n( "New Child Folder" ));
 
   if (d->exec()) {
@@ -587,7 +587,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   config->setGroup("Folder-" + path + folder->name());
 
   return config->readBoolEntry("isOpen", false);
-} 
+}
 
 //-----------------------------------------------------------------------------
 // Saves open/closed state of a folder directory into the config file
@@ -604,7 +604,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + folder->name());
   config->writeEntry("isOpen", fti->isOpen());
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -627,9 +627,9 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
         e->ignore();
         return;
   }
-  
+
   oldCurrent = currentItem();
-  
+
   QListViewItem *i = itemAt( contentsToViewport(e->pos()) );
   if ( i ) {
     dropItem = i;

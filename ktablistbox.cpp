@@ -59,6 +59,7 @@
 
 #include <kglobal.h>
 #include <kstddirs.h>
+#include <kiconloader.h>
 
 // This is only for flushKeys().
 #include <X11/Xlib.h>
@@ -364,10 +365,10 @@ KTabListBox::KTabListBox(QWidget *parent, const char *name, int columns,
   dndDefaultPixmap.load(f);
 
   f = locate("toolbar", QString::fromLatin1("up.png"));
-  upPix.load(f);
+  upPix = BarIcon( "up" );
 
   f = locate("toolbar", QString::fromLatin1("down.png"));
-  downPix.load(f);
+  downPix = BarIcon( "down" );
 
   QPalette pal = palette();
   QColorGroup g1 = pal.disabled();
@@ -1788,7 +1789,7 @@ KTabListBoxItem* KTabListBox :: getItem (int idx)
 {
     return ((idx>=0 && idx<maxItems) ? itemList[idx] : (KTabListBoxItem*)0L);
 }
- 
+
 const KTabListBoxItem* KTabListBox :: getItem (int idx) const
 {
   return ((idx>=0 && idx<maxItems) ? itemList[idx] : (KTabListBoxItem*)0L);
