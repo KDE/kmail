@@ -38,10 +38,10 @@ KMIOStatusWdg::KMIOStatusWdg(QWidget *parent, const char *name,
 void KMIOStatusWdg::update() {
 
   if(Task() == SEND)
-    setCaption(i18n("Sending messages to %1").arg(host()));
+    setCaption(i18n("Sending Messages to %1").arg(host()));
   else 
     if(Task() == RETRIEVE)
-      setCaption(i18n("Retrieving messages from %1").arg(host()));
+      setCaption(i18n("Retrieving Messages from %1").arg(host()));
  
   QWidget::update();
 
