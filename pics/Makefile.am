@@ -7,7 +7,7 @@ data_DATA = green-bullet.xpm kmfldin.xpm kmfldout.xpm kmfolder.xpm \
 	kmmsgforwarded.xpm kmmsgqueued.xpm kmmsgsent.xpm \
 	kmfldsent.xpm closed.xpm green-bullet.xpm \
 	stopwatch.xbm stopwatchMask.xbm kdelogo.xpm \
-	feather_white.xpm pub_key_red.xpm 
+	feather_white.xpm pub_key_red.xpm pgp-keys.xpm
 
 datadir = $(kde_datadir)/kmail/pics
 
