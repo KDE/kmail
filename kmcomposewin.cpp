@@ -562,7 +562,12 @@ void KMComposeWin::deadLetter(void)
 
   // This method is called when KMail crashed, so we better use as
   // basic functions as possible here.
+  // temporarily disable signing/encryption
+  bool bSaveNeverSign    = mNeverSign;    mNeverSign    = true;
+  bool bSaveNeverEncrypt = mNeverEncrypt; mNeverEncrypt = true;
   applyChanges();
+  mNeverSign    = bSaveNeverSign;
+  mNeverEncrypt = bSaveNeverEncrypt;
   QCString msgStr = mMsg->asString();
   QCString fname = getenv("HOME");
   fname += "/dead.letter.tmp";
