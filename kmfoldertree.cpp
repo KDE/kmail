@@ -1280,17 +1280,21 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotAccountDeleted(KMAcctImap *account)
 {
-  QListViewItemIterator it(this);
-  while (it.current())
+  writeConfig();
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
+  if (fti && fti->folder && fti->folder->account() == account)
+    doFolderSelected(0);
+  QListViewItem *lvi = firstChild();
+  if (lvi) lvi = lvi->firstChild();
+  while (lvi)
   {
-    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    it++;
+    fti = static_cast<KMFolderTreeItem*>(lvi);
     if (fti && fti->folder && fti->folder->account() == account)
     {
-      if (fti == currentItem()) doFolderSelected(0);
-      writeIsListViewItemOpen(fti);
       delete fti;
+      break;
     }
+    lvi = lvi->nextSibling();
   }
 }
 
