@@ -1350,9 +1350,13 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
   // we might have rethreaded it, in which case its current state will be lost
-  if ( curItem && curItem != removedItem ) {
-    setCurrentItem( curItem );
-    setSelectionAnchor( currentItem() );
+  if ( curItem ) {
+    if ( curItem != removedItem ) {
+      setCurrentItem( curItem );
+      setSelectionAnchor( currentItem() );
+    } else {
+      emit maybeDeleting();
+    }
   }
 
   /* restore signal */
