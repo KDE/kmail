@@ -21,6 +21,8 @@
 #include "kmailicalifaceimpl.h"
 
 #include <kdebug.h>
+#include <kapplication.h>
+#include <dcopclient.h>
 
 #include "kmgroupware.h"
 
@@ -42,7 +44,8 @@ bool KMailICalIfaceImpl::addIncidence( const QString& folder,
 {
   kdDebug() << "KMailICalIfaceImpl::addIncidence( " << folder << ", "
 	    << uid << ", " << ical << " )" << endl;
-  return mGroupware->addIncidence( folder, uid, ical );
+  bool rc = mGroupware->addIncidence( folder, uid, ical );
+  return rc;
 }
 
 bool KMailICalIfaceImpl::deleteIncidence( const QString& folder, 
@@ -50,7 +53,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& folder,
 {
   kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << folder << ", "
 	    << uid << " )" << endl;
-  return mGroupware->deleteIncidence( folder, uid );
+  bool rc = mGroupware->deleteIncidence( folder, uid );
 }
 
 QStringList KMailICalIfaceImpl::incidences( const QString& folder )
@@ -64,7 +67,9 @@ void KMailICalIfaceImpl::slotIncidenceAdded( const QString& folder, const QStrin
   QByteArray data;
   QDataStream arg(data, IO_WriteOnly );
   arg << folder << ical;
+  kdDebug() << "Emitting DCOP signal incidenceAdded( " << folder << ", " << ical << " )" << endl;
   emitDCOPSignal( "incidenceAdded(QString,QString)", data );
+  //kapp->dcopClient()->send( "korganizer", "ResourceIMAP", "addIncidence(QString,QString)", data );
 }
 
 void KMailICalIfaceImpl::slotIncidenceDeleted( const QString& folder, const QString& uid )
@@ -72,7 +77,9 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( const QString& folder, const QStr
   QByteArray data;
   QDataStream arg(data, IO_WriteOnly );
   arg << folder << uid;
+  kdDebug() << "Emitting DCOP signal incidenceDeleted( " << folder << ", " << uid << " )" << endl;
   emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
+  //kapp->dcopClient()->send( "korganizer", "ResourceIMAP", "deleteIncidence(QString,QString)", data );
 }
 
 #include "kmailicalifaceimpl.moc"

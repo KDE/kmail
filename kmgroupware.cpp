@@ -1053,6 +1053,7 @@ bool KMGroupware::addIncidence( const QString& type,
   } else if( type == "Task" ) {
     folder = mTasks;
   } else {
+    kdError() << "No folder type \"" << type << "\"" << endl;
     assert(0);
   }
 
