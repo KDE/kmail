@@ -349,7 +349,7 @@ RecipientsPicker::~RecipientsPicker()
 
 void RecipientsPicker::initCollections()
 {
-  KABC::StdAddressBook *addressbook = KABC::StdAddressBook::self();
+  KABC::StdAddressBook *addressbook = KABC::StdAddressBook::self( true );
 
   QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
 

@@ -2608,7 +2608,7 @@ KMCommand::Result KMIMChatCommand::execute()
   kdDebug( 5006 ) << k_funcinfo << " URL is: " << mUrl << endl;
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
   // find UID for mail address
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   KABC::AddresseeList addressees = addressBook->findByEmail( KPIM::getEmailAddress( addr ) ) ;
 
   // start chat

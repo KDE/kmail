@@ -40,7 +40,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
 {
   KCursorSaver busy(KBusyPtr::busy()); // loading might take a while
 
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   KABC::AddressBook::ConstIterator it;
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
     const QStringList emails = (*it).emails();
@@ -91,7 +91,7 @@ QStringList KabcBridge::addresses()
     QStringList entries;
     KABC::AddressBook::ConstIterator it;
 
-    const KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+    const KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
     for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
         entries += (*it).fullEmail();
     }
@@ -105,7 +105,7 @@ QString KabcBridge::expandNickName( const QString& nickName )
     return QString::null;
 
   const QString lowerNickName = nickName.lower();
-  const KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  const KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   for( KABC::AddressBook::ConstIterator it = addressBook->begin();
        it != addressBook->end(); ++it ) {
     if ( (*it).nickName().lower() == lowerNickName )
@@ -119,7 +119,7 @@ QString KabcBridge::expandNickName( const QString& nickName )
 
 QStringList KabcBridge::categories()
 {
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   KABC::Addressee::List addresses = addressBook->allAddressees();
   QStringList allcategories, aux;
 

@@ -232,7 +232,7 @@ namespace KMail {
 
   void XFaceConfigurator::slotSelectFromAddressbook()
   {
-    StdAddressBook *ab = StdAddressBook::self();
+    StdAddressBook *ab = StdAddressBook::self( true );
     Addressee me = ab->whoAmI();
     if ( !me.isEmpty() )
     {

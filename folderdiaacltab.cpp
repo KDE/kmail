@@ -649,7 +649,7 @@ bool KMail::FolderDiaACLTab::save()
   // Now, how to expand them? Playing with listviewitem iterators and inserting
   // listviewitems at the same time sounds dangerous, so let's just save into
   // ACLList and reload that.
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self( true );
   KABC::DistributionListManager manager( addressBook );
   manager.load();
   ACLList aclList;

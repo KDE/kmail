@@ -1430,7 +1430,7 @@ Kleo::KeyResolver::ContactPreferences& Kleo::KeyResolver::lookupContactPreferenc
   Private::ContactPreferencesMap::iterator pos =
     d->mContactPreferencesMap.find( address );
   if ( pos == d->mContactPreferencesMap.end() ) {
-    KABC::AddressBook *ab = KABC::StdAddressBook::self();
+    KABC::AddressBook *ab = KABC::StdAddressBook::self( true );
     KABC::Addressee::List res = ab->findByEmail( address );
     ContactPreferences pref;
     if ( !res.isEmpty() ) {
