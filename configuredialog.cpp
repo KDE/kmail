@@ -1444,7 +1444,8 @@ void ConfigureDialog::makeMiscPage( void )
   ///KGlobal::instance()->iconLoader()
 
   QFrame *page = addPage( i18n("Miscellaneous"), i18n("Various settings"),
-    KGlobal::instance()->iconLoader()->loadIcon( "misc" ));
+    KGlobal::instance()->iconLoader()->loadIcon( "misc", KIcon::NoGroup, 
+    KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMisc.pageIndex = pageIndex(page);
 
