@@ -9,9 +9,10 @@
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)
 {
-  mHigh  = size();
-  mCount = 0;
-  clear(FALSE);
+    for (long int i=size()-1; i>=0; i--)
+	KMMsgListInherited::at(i) = 0;
+    mHigh  = 0;
+    mCount = 0;
 }
 
 
@@ -38,7 +39,7 @@ void KMMsgList::clear(bool doDelete, bool syncDict)
     if (msg) {
       if (dict)
         dict->remove(msg);
-      KMMsgListInherited::at(i) = NULL;
+      KMMsgListInherited::at(i) = 0;
       if (doDelete) delete msg;
     }
   }
