@@ -124,13 +124,12 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
-    mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
-    mFolderRemoved( false ), mResync( false ),
+    uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
+    mUserRights( 0 ), mFolderRemoved( false ), mResync( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mContentsTypeChanged( false ), mStatusChangedLocally( false )
 {
   setUidValidity("");
-  mLastUid=0;
   readUidCache();
 
   mProgress = 0;
@@ -234,8 +233,8 @@ int KMFolderCachedImap::readUidCache()
           setUidValidity( QString::fromLocal8Bit( buf).stripWhiteSpace() );
           len = uidcache.readLine( buf, sizeof(buf) );
           if( len > 0 ) {
-            mLastUid =
-              QString::fromLocal8Bit( buf).stripWhiteSpace().toULong();
+            // load the last known highest uid from the on disk cache
+            setLastUid( QString::fromLocal8Bit( buf).stripWhiteSpace().toULong() );
             return 0;
           }
         }
@@ -278,7 +277,6 @@ void KMFolderCachedImap::reloadUidMap()
     if( !msg ) continue;
     ulong uid = msg->UID();
     uidMap.insert( uid, i );
-    if( uid > mLastUid ) setLastUid( uid );
   }
   close();
   uidMapDirty = false;
@@ -299,8 +297,6 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
   ulong uid = msg->UID();
   if( uid != 0 ) {
     uidMapDirty = true;
-    if( uid > mLastUid )
-      setLastUid( uid );
   }
 
   // Add the message
@@ -498,6 +494,7 @@ void KMFolderCachedImap::serverSync( bool recurse )
     return;
   }
 #endif
+  mTentativeHighestUid = 0; // reset, last sync could have been canceled
 
   mResync = false;
   serverSyncInternal();
@@ -751,17 +748,25 @@ void KMFolderCachedImap::serverSyncInternal()
                                                 this );
         connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
                  this, SLOT( slotProgress(unsigned long, unsigned long) ) );
+        connect( job, SIGNAL( finished() ), this, SLOT( slotUpdateLastUid() ) );
         connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
         job->start();
         mMsgsForDownload.clear();
         break;
       } else {
         newState( mProgress, i18n("No new messages from server"));
+        /* There were no messages to download, but it could be that we uploaded some
+           which we didn't need to download again because we already knew the uid.
+           Now that we are sure there is nothing to download, and everything that had
+           to be deleted on the server has been deleted, adjust our local notion of the
+           highes uid seen thus far. */
+        slotUpdateLastUid();
         if( mLastUid == 0 && uidWriteTimer == -1 )
           // This is probably a new and empty folder. Write the UID cache
           writeUidCache();
       }
     }
+
     // Else carry on
 
   case SYNC_STATE_HANDLE_INBOX:
@@ -1253,8 +1258,8 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         }
         uidsOnServer.insert( uid, &v );
       }
-      if (  uid <= lastUid()) {
-        /*
+      if (  uid <= lastUid() ) {
+       /*
         * If this message UID is not present locally, then it must
         * have been deleted by the user, so we delete it on the
         * server also.
@@ -1277,11 +1282,17 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         }
         // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       } else {
-        ulong size = msg.headerField("X-Length").toULong();
-        mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
-        if( imapPath() == "/INBOX/" )
-          mUidsForDownload << uid;
-
+        // The message is new since the last sync, but we might have just uploaded it, in which case
+        // the uid map already contains it.
+        if ( !uidMap.contains( uid ) ) {
+          ulong size = msg.headerField("X-Length").toULong();
+          mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
+          if( imapPath() == "/INBOX/" )
+            mUidsForDownload << uid;
+        }
+        // Remember the highest uid and once the download is completed, update mLastUid
+        if ( uid > mTentativeHighestUid )
+          mTentativeHighestUid = uid;
       }
     }
     (*it).cdata.remove(0, pos);
@@ -1805,6 +1816,13 @@ KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
   }
   if ( cont )
     serverSyncInternal();
+}
+
+void KMFolderCachedImap::slotUpdateLastUid()
+{
+  if( mTentativeHighestUid != 0 )
+    setLastUid( mTentativeHighestUid );
+  mTentativeHighestUid = 0;
 }
 
 #include "kmfoldercachedimap.moc"
