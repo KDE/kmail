@@ -508,6 +508,33 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
+  // Do not remove imapPath, FolderDiaACLTab needs to call this with parent==0.
+  void ImapAccountBase::getACL( KMFolder* parent, const QString& imapPath )
+  {
+    KURL url = getUrl();
+    url.setPath(imapPath);
+
+    ACLJobs::GetACLJob* job = ACLJobs::getACL( mSlave, url );
+    jobData jd;
+    jd.total = 1; jd.done = 0; jd.parent = parent;
+    insertJob(job, jd);
+
+    connect(job, SIGNAL(result(KIO::Job *)),
+            SLOT(slotGetACLResult(KIO::Job *)));
+  }
+
+  void ImapAccountBase::slotGetACLResult( KIO::Job* _job )
+  {
+    ACLJobs::GetACLJob* job = static_cast<ACLJobs::GetACLJob *>( _job );
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
+
+    KMFolder* folder = (*it).parent; // can be 0
+    emit receivedACL( folder, job, job->entries() );
+    if (mSlave) removeJob(job);
+  }
+
+  //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveError(KIO::Slave *aSlave, int errorCode,
       const QString &errorMsg)
   {

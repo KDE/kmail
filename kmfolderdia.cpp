@@ -134,7 +134,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   }
 
   KMFolderType folderType = mFolder ? mFolder->folderType() : mParentFolder ? mParentFolder->folderType() : KMFolderTypeUnknown;
-  if ( folderType == KMFolderTypeImap /*|| folderType == KMFolderTypeCachedImap*/ )
+  if ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap )
   {
     box = addVBoxPage( i18n("Access Control") );
     tab = new FolderDiaACLTab( this, box );

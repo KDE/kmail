@@ -35,6 +35,7 @@
 #include <kdialogbase.h>
 #include <kstandarddirs.h>
 #include <qvaluelist.h>
+#include <qvaluevector.h>
 #include <qptrlist.h>
 #include <qdialog.h>
 
@@ -49,7 +50,8 @@ using KMail::FolderJob;
 class KMAcctCachedImap;
 
 namespace KMail {
-   class AttachmentStrategy;
+  class AttachmentStrategy;
+  struct ACLListEntry;
 }
 using KMail::AttachmentStrategy;
 
@@ -193,12 +195,19 @@ public:
 
   /**
    * The user's rights on this folder - see bitfield in ACLJobs namespace.
-   * @return 0 when not known yet
+   * @return 0 when not known yet, -1 if there was an error fetching them
    */
-  unsigned int userRights() const { return mUserRights; }
+  int userRights() const { return mUserRights; }
 
-  /** Set the user's rights on this folder - called by getUserRights */
+  /// Set the user's rights on this folder - called by getUserRights
   void setUserRights( unsigned int userRights );
+
+  /// Return the list of ACL for this folder
+  typedef QValueVector<KMail::ACLListEntry> ACLList;
+  const ACLList& aclList() const { return mACLList; }
+
+  /// Set the list of ACL for this folder (for FolderDiaACLTab)
+  void setACLList( const ACLList& arr );
 
 protected slots:
   /**
@@ -225,6 +234,12 @@ protected slots:
 
   // Connected to the imap account
   void slotConnectionResult( int errorCode );
+
+  void slotReceivedUserRights( KMFolder* );
+  void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
+
+  void slotMultiSetACLResult(KIO::Job *);
+  void slotACLChanged( const QString&, int );
 
 protected:
   void listDirectory2();
@@ -297,6 +312,9 @@ private:
     SYNC_STATE_EXPUNGE_MESSAGES,
     SYNC_STATE_GET_MESSAGES,
     SYNC_STATE_HANDLE_INBOX,
+    SYNC_STATE_GET_USERRIGHTS,
+    SYNC_STATE_GET_ACLS,
+    SYNC_STATE_SET_ACLS,
     SYNC_STATE_FIND_SUBFOLDERS,
     SYNC_STATE_SYNC_SUBFOLDERS,
     SYNC_STATE_CHECK_UIDVALIDITY
@@ -332,7 +350,8 @@ private:
   int uidWriteTimer;
   void reloadUidMap();
 
-  unsigned int mUserRights;
+  int mUserRights;
+  ACLList mACLList;
 
   QString state2String( int state ) const;
   bool mIsConnected;

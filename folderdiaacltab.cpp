@@ -138,9 +138,10 @@ class KMail::FolderDiaACLTab::ListViewItem : public KListViewItem
 public:
   ListViewItem( QListView* listview )
     : KListViewItem( listview, listview->lastItem() ),
-      mJob( 0 ), mModified( false ) {}
+      mModified( false ) {}
 
-  void load( const ACLJobs::ACLListEntry& entry );
+  void load( const ACLListEntry& entry );
+  void save( ACLListEntry& entry );
 
   QString userId() const { return text( 0 ); }
   void setUserId( const QString& userId ) { setText( 0, userId ); }
@@ -151,11 +152,7 @@ public:
   bool isModified() const { return mModified; }
   void setModified( bool b ) { mModified = b; }
 
-  KIO::Job* job() const { return mJob; }
-  void setJob( KIO::Job* job ) { mJob = job; }
-
 private:
-  KIO::Job* mJob;
   unsigned int mPermissions;
   bool mModified;
 };
@@ -181,11 +178,21 @@ void KMail::FolderDiaACLTab::ListViewItem::setPermissions( unsigned int permissi
   setText( 1, permissionsToUserString( permissions, QString::null ) );
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::load( const ACLJobs::ACLListEntry& entry )
+void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
 {
-  setUserId( entry.userid );
+  setUserId( entry.userId );
   mPermissions = entry.permissions;
   setText( 1, permissionsToUserString( entry.permissions, entry.internalRightsList ) );
+  mModified = entry.changed; // for dimap, so that earlier changes are still marked as changes
+}
+
+void KMail::FolderDiaACLTab::ListViewItem::save( ACLListEntry& entry )
+{
+  entry.userId = userId();
+  entry.permissions = mPermissions;
+  if ( mModified )
+    entry.internalRightsList = QString::null;
+  entry.changed = mModified;
 }
 
 ////
@@ -195,7 +202,6 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
     mImapAccount( 0 ),
     mUserRights( 0 ),
     mDlg( dlg ),
-    mJobCounter( 0 ),
     mChanged( false ), mAccepting( false )
 {
   QVBoxLayout* topLayout = new QVBoxLayout( this );
@@ -249,13 +255,14 @@ KURL KMail::FolderDiaACLTab::imapURL() const
 void KMail::FolderDiaACLTab::initializeWithValuesFromFolder( KMFolder* folder )
 {
   // This can be simplified once KMFolderImap and KMFolderCachedImap have a common base class
-  if ( folder->folderType() == KMFolderTypeImap ) {
+  mFolderType = folder->folderType();
+  if ( mFolderType == KMFolderTypeImap ) {
     KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
     mImapPath = folderImap->imapPath();
     mImapAccount = folderImap->account();
     mUserRights = folderImap->userRights();
   }
-  else if ( folder->folderType() == KMFolderTypeCachedImap ) {
+  else if ( mFolderType == KMFolderTypeCachedImap ) {
     KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
     mImapPath = folderImap->imapPath();
     mImapAccount = folderImap->account();
@@ -275,7 +282,21 @@ void KMail::FolderDiaACLTab::load()
     initializeWithValuesFromFolder( mDlg->parentFolder() );
   }
 
-  // Loading [for online IMAP] consists of four steps:
+  if ( mFolderType == KMFolderTypeCachedImap ) {
+    KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
+    KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
+    if ( mUserRights == -1 ) { // error
+      mLabel->setText( i18n( "Error retrieving user permissions." ) );
+    } else if ( mUserRights == 0 ) { // not listed yet
+      mLabel->setText( i18n( "Information not retrieved from server yet, please use \"Check Mail\"." ) );
+      // TODO: save mUserRights and mACLList into a config file so that this almost never happens
+    } else {
+      loadFinished( folderImap->aclList() );
+    }
+    return;
+  }
+
+  // Loading, for online IMAP, consists of four steps:
   // 1) connect
   // 2) check ACL support [TODO]
   // 3) get user rights
@@ -331,39 +352,36 @@ void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
 
 void KMail::FolderDiaACLTab::startListing()
 {
-  // List ACLs of folder (or its parent, if creating a new folder)
-  ACLJobs::GetACLJob* job = ACLJobs::getACL( mImapAccount->slave(), imapURL() );
-
-  ImapAccountBase::jobData jd;
-  jd.total = 1; jd.done = 0; jd.parent = NULL;
-  mImapAccount->insertJob(job, jd);
-
-  connect(job, SIGNAL(result(KIO::Job *)),
-          SLOT(slotGetACLResult(KIO::Job *)));
+  // List ACLs of folder - or its parent, if creating a new folder
+  mImapAccount->getACL( 0, mImapPath );
+  connect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
+           this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 }
 
-void KMail::FolderDiaACLTab::slotGetACLResult(KIO::Job *job)
+void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder*, KIO::Job* job, const KMail::ACLList& aclList )
 {
-  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
-  if ( it == mImapAccount->jobsEnd() ) return;
-  mImapAccount->removeJob( it );
-  if ( job->error() ) {
+  disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
+              this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
+
+  if ( job && job->error() ) {
     mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
     return;
   }
 
-  ACLJobs::GetACLJob* aclJob = static_cast<ACLJobs::GetACLJob *>( job );
-  // Now we can populate the listview
-  const QValueVector<ACLJobs::ACLListEntry>& aclList = aclJob->entries();
-  for( QValueVector<ACLJobs::ACLListEntry>::ConstIterator it = aclList.begin(); it != aclList.end(); ++it ) {
-    ListViewItem* item = new ListViewItem( mListView );
-    item->load( *it );
-  }
-  loadFinished();
+  loadFinished( aclList );
 }
 
-void KMail::FolderDiaACLTab::loadFinished()
+void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
 {
+  // Now we can populate the listview
+  for( ACLList::const_iterator it = aclList.begin(); it != aclList.end(); ++it ) {
+    // -1 means deleted (for cachedimap), don't show those
+    if ( (*it).permissions > -1 ) {
+      ListViewItem* item = new ListViewItem( mListView );
+      item->load( *it );
+    }
+  }
+  mInitialACLList = aclList;
   mStack->raiseWidget( mACLWidget );
   slotSelectionChanged( mListView->selectedItem() );
 }
@@ -408,60 +426,6 @@ void KMail::FolderDiaACLTab::slotSelectionChanged(QListViewItem* item)
   mRemoveACL->setEnabled( item && lvVisible && canAdmin );
 }
 
-void KMail::FolderDiaACLTab::ACLJobDone(KIO::Job* job)
-{
-  --mJobCounter;
-  if ( job->error() ) {
-    job->showErrorDialog( this );
-    if ( mAccepting ) {
-      emit cancelAccept();
-      mAccepting = false; // don't emit readyForAccept anymore
-    }
-  }
-  if ( mJobCounter == 0 && mAccepting )
-    emit readyForAccept();
-}
-
-// Called by 'add' and 'edit' jobs fired from save()
-void KMail::FolderDiaACLTab::slotSetACLResult(KIO::Job* job)
-{
-  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
-  if ( it == mImapAccount->jobsEnd() ) return;
-  mImapAccount->removeJob( it );
-
-  bool ok = false;
-  for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
-    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    if ( ACLitem->job() == job ) {
-      if ( !job->error() ) {
-        // Success -> reset flags
-        ACLitem->setModified( false );
-      }
-      ACLitem->setJob( 0 );
-      ok = true;
-      break;
-    }
-  }
-  if ( !ok )
-    kdWarning(5006) << k_funcinfo << " no item found for job " << job << endl;
-  ACLJobDone( job );
-}
-
-void KMail::FolderDiaACLTab::slotDeleteACLResult(KIO::Job* job)
-{
-  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
-  if ( it == mImapAccount->jobsEnd() ) return;
-  mImapAccount->removeJob( it );
-
-  if ( !job->error() ) {
-    // Success -> remove from list
-    ACLJobs::DeleteACLJob* delJob = static_cast<ACLJobs::DeleteACLJob *>( job );
-    Q_ASSERT( mRemovedACLs.contains( delJob->userId() ) );
-    mRemovedACLs.remove( delJob->userId() );
-  }
-  ACLJobDone( job );
-}
-
 void KMail::FolderDiaACLTab::slotRemoveACL()
 {
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
@@ -478,6 +442,9 @@ KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaACLTab::accept()
     return Accepted; // (no change made), ok for accepting the dialog immediately
   // If there were changes, we need to apply them first (which is async)
   save();
+  if ( mFolderType == KMFolderTypeCachedImap )
+    return Accepted; // cached imap: changes saved immediately into the folder
+  // disconnected imap: async job[s] running
   mAccepting = true;
   return Delayed;
 }
@@ -486,8 +453,43 @@ bool KMail::FolderDiaACLTab::save()
 {
   if ( !mChanged || !mImapAccount ) // no changes
     return true;
-  mJobCounter = 0;
   assert( mDlg->folder() ); // should have been created already
+
+  ACLList aclList;
+  for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
+    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+
+    ACLListEntry entry;
+    ACLitem->save( entry );
+    aclList.append( entry );
+  }
+  // Now compare with the initial ACLList, because if the user renamed a userid
+  // we have to add the old userid to the "to be deleted" list.
+  for( ACLList::ConstIterator init = mInitialACLList.begin(); init != mInitialACLList.end(); ++init ) {
+    bool isInNewList = false;
+    QString uid = (*init).userId;
+    for( ACLList::ConstIterator it = aclList.begin(); it != aclList.end() && !isInNewList; ++it )
+      isInNewList = uid == (*it).userId;
+    if ( !isInNewList && !mRemovedACLs.contains(uid) )
+      mRemovedACLs.append( uid );
+  }
+
+  for( QStringList::ConstIterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
+    // We use permissions == -1 to signify deleting. At least on cyrus, setacl(0) or deleteacl are the same,
+    // but I'm not sure if that's true for all servers.
+    ACLListEntry entry( *rit, QString::null, -1 );
+    entry.changed = true;
+    aclList.append( entry );
+  }
+
+
+  if ( mFolderType == KMFolderTypeCachedImap ) {
+    // Apply the changes to the aclList stored in the folder.
+    // We have to do this now and not before, so that cancel really cancels.
+    KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( mDlg->folder()->storage() );
+    folderImap->setACLList( aclList );
+    return true;
+  }
 
   // When creating a new folder with online imap, update mImapPath
   // For disconnected imap, we shouldn't even be here
@@ -495,34 +497,57 @@ bool KMail::FolderDiaACLTab::save()
     mImapPath += mDlg->folder()->name();
   }
 
-  for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
-    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    if ( ACLitem->isModified() ) {
-      kdDebug(5006) << "Modified item: " << ACLitem->userId() << endl;
+  KIO::Job* job = ACLJobs::multiSetACL( mImapAccount->slave(), imapURL(), aclList );
+  ImapAccountBase::jobData jd;
+  jd.total = 1; jd.done = 0; jd.parent = 0;
+  mImapAccount->insertJob(job, jd);
 
-      KIO::Job* job = ACLJobs::setACL( mImapAccount->slave(), imapURL(), ACLitem->userId(), ACLitem->permissions() );
-      ACLitem->setJob( job );
-      ImapAccountBase::jobData jd;
-      jd.total = 1; jd.done = 0; jd.parent = NULL;
-      mImapAccount->insertJob(job, jd);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          SLOT(slotMultiSetACLResult(KIO::Job *)));
+  connect(job, SIGNAL(aclChanged( const QString&, int )),
+          SLOT(slotACLChanged( const QString&, int )) );
 
-      connect(job, SIGNAL(result(KIO::Job *)),
-              SLOT(slotSetACLResult(KIO::Job *)));
-      ++mJobCounter;
+  return true;
+}
+
+void KMail::FolderDiaACLTab::slotMultiSetACLResult(KIO::Job* job)
+{
+  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
+  if ( it == mImapAccount->jobsEnd() ) return;
+  mImapAccount->removeJob( it );
+
+  if ( job->error() ) {
+    job->showErrorDialog( this );
+    if ( mAccepting ) {
+      emit cancelAccept();
+      mAccepting = false; // don't emit readyForAccept anymore
     }
   }
-  for( QStringList::Iterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
-    kdDebug(5006) << "Removed item: " << (*rit) << endl;
-    KIO::Job* job = ACLJobs::deleteACL( mImapAccount->slave(), imapURL(), (*rit) );
-    ImapAccountBase::jobData jd;
-    jd.total = 1; jd.done = 0; jd.parent = NULL;
-    mImapAccount->insertJob(job, jd);
+  if ( mAccepting )
+    emit readyForAccept();
+}
 
-    connect(job, SIGNAL(result(KIO::Job *)),
-            SLOT(slotDeleteACLResult(KIO::Job *)));
-    ++mJobCounter;
+void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissions )
+{
+  // The job indicates success in changing the permissions for this user
+  // -> we note that it's been done.
+  bool ok = false;
+  if ( permissions > -1 ) {
+    for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
+      ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+      if ( ACLitem->userId() == userId ) {
+        if ( ACLitem->permissions() == (uint)permissions ) // i.e. the user didn't have time to change it again :)
+          ACLitem->setModified( false );
+        ok = true;
+        break;
+      }
+    }
+  } else {
+    uint nr = mRemovedACLs.remove( userId );
+    ok = ( nr > 0 );
   }
-  return true;
+  if ( !ok )
+    kdWarning(5006) << k_funcinfo << " no item found for userId " << userId << endl;
 }
 
 void KMail::FolderDiaACLTab::slotChanged( bool b )

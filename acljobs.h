@@ -37,6 +37,19 @@
 
 namespace KMail {
 
+  /// One entry in the ACL list: user and permissions
+  struct ACLListEntry {
+    ACLListEntry() {} // for QValueVector
+    ACLListEntry( const QString& u, const QString& irl, int p )
+      : userId( u ), internalRightsList( irl ), permissions( p ), changed( false ) {}
+    QString userId;
+    QString internalRightsList; ///< protocol-dependent string (e.g. IMAP rights list)
+    int permissions; ///< based on the ACLPermissions enum
+    bool changed; ///< special flag for KMFolderCachedImap
+  };
+
+  typedef QValueVector<ACLListEntry> ACLList;
+
 /**
  * This namespace contains functions that return jobs for ACL operations.
  *
@@ -77,15 +90,9 @@ namespace ACLJobs {
   /// Get the users' rights for a given url
   GetUserRightsJob* getUserRights( KIO::Slave* slave, const KURL& url );
 
-  /// One entry in the ACL list: user and permissions
-  struct ACLListEntry {
-    ACLListEntry() {} // for QValueVector
-    ACLListEntry( const QString& u, const QString& irl, unsigned int p )
-      : userid( u ), internalRightsList( irl ), permissions( p ) {}
-    QString userid;
-    QString internalRightsList; ///< protocol-dependent string (e.g. IMAP rights list)
-    unsigned int permissions; ///< based on the ACLPermissions enum
-  };
+  class MultiSetACLJob;
+  /// Set and delete a list of permissions for different users on a given url
+  MultiSetACLJob* multiSetACL( KIO::Slave* slave, const KURL& url, const ACLList& acl );
 
   /// List all ACLs for a given url
   class GetACLJob : public KIO::SimpleJob
@@ -95,12 +102,12 @@ namespace ACLJobs {
     GetACLJob( const KURL& url, const QByteArray &packedArgs,
                bool showProgressInfo );
 
-    const QValueVector<ACLListEntry>& entries() const { return m_entries; }
+    const ACLList& entries() const { return m_entries; }
 
   protected slots:
     void slotInfoMessage( KIO::Job*, const QString& );
   private:
-    QValueVector<ACLListEntry> m_entries;
+    ACLList m_entries;
   };
 
   /// Get the users' rights for a given url
@@ -133,6 +140,30 @@ namespace ACLJobs {
   private:
     QString mUserId;
   };
+
+  /// Set and delete a list of permissions for different users on a given url
+  class MultiSetACLJob : public KIO::Job {
+    Q_OBJECT
+
+  public:
+    MultiSetACLJob( KIO::Slave* slave, const KURL& url, const ACLList& acl, bool showProgressInfo );
+
+  signals:
+    // Emitted when a given user's permissions were successfully changed.
+    // This allows the caller to keep track of what exactly was done (and handle errors better)
+    void aclChanged( const QString& userId, int permissions );
+
+  protected slots:
+    virtual void slotStart();
+    virtual void slotResult( KIO::Job *job );
+
+  private:
+    KIO::Slave* mSlave;
+    const KURL mUrl;
+    const ACLList mACLList;
+    ACLList::const_iterator mACLListIterator;
+  };
+
 
 #ifndef NDEBUG
   QString permissionsToString( unsigned int permissions );

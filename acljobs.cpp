@@ -199,4 +199,55 @@ ACLJobs::DeleteACLJob::DeleteACLJob( const KURL& url, const QString& userId,
 {
 }
 
+////
+
+ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KURL& url, const ACLList& acl, bool showProgressInfo )
+  : KIO::Job( showProgressInfo ),
+    mSlave( slave ),
+    mUrl( url ), mACLList( acl ), mACLListIterator( acl.begin() )
+{
+  QTimer::singleShot(0, this, SLOT(slotStart()));
+}
+
+void ACLJobs::MultiSetACLJob::slotStart()
+{
+  // Skip over unchanged entries
+  while ( mACLListIterator != mACLList.end() && !(*mACLListIterator).changed )
+    ++mACLListIterator;
+
+  if ( mACLListIterator != mACLList.end() )
+  {
+    const ACLListEntry& entry = *mACLListIterator;
+    KIO::Job* job = 0;
+    if ( entry.permissions > -1 )
+      job = setACL( mSlave, mUrl, entry.userId, entry.permissions );
+    else
+      job = deleteACL( mSlave, mUrl, entry.userId );
+
+    addSubjob( job );
+  } else { // done!
+    emitResult();
+  }
+}
+
+void ACLJobs::MultiSetACLJob::slotResult( KIO::Job *job )
+{
+  if ( job->error() ) {
+    KIO::Job::slotResult( job ); // will set the error and emit result(this)
+    return;
+  }
+  subjobs.remove(job);
+  const ACLListEntry& entry = *mACLListIterator;
+  emit aclChanged( entry.userId, entry.permissions );
+
+  // Move on to next one
+  ++mACLListIterator;
+  slotStart();
+}
+
+ACLJobs::MultiSetACLJob* ACLJobs::multiSetACL( KIO::Slave* slave, const KURL& url, const ACLList& acl )
+{
+  return new MultiSetACLJob( slave, url, acl, false /*showProgressInfo*/ );
+}
+
 #include "acljobs.moc"

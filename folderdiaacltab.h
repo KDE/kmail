@@ -33,6 +33,7 @@
 #define FOLDERDIAACL_H
 
 #include "kmfolderdia.h"
+#include "kmfoldertype.h"
 
 class KPushButton;
 class QWidgetStack;
@@ -42,6 +43,9 @@ class KListView;
 namespace KIO { class Job; }
 
 namespace KMail {
+
+struct ACLListEntry;
+typedef QValueVector<KMail::ACLListEntry> ACLList;
 
 class ImapAccountBase;
 
@@ -86,9 +90,9 @@ public:
 private slots:
   // Network (KIO) slots
   void slotConnectionResult( int );
-  void slotGetACLResult(KIO::Job *);
-  void slotSetACLResult(KIO::Job *);
-  void slotDeleteACLResult(KIO::Job *);
+  void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
+  void slotMultiSetACLResult(KIO::Job *);
+  void slotACLChanged( const QString&, int );
   void slotReceivedUserRights( KMFolder* folder );
 
   // User (KListView) slots
@@ -103,11 +107,10 @@ private slots:
   void slotChanged( bool b );
 
 private:
-  void ACLJobDone(KIO::Job* job);
   KURL imapURL() const;
   void initializeWithValuesFromFolder( KMFolder* folder );
   void startListing();
-  void loadFinished();
+  void loadFinished( const KMail::ACLList& aclList );
 
 private:
   // The widget containing the ACL widgets (listview and buttons)
@@ -122,13 +125,14 @@ private:
   QStringList mRemovedACLs;
   QString mImapPath;
   ImapAccountBase* mImapAccount;
-  uint mUserRights;
+  int mUserRights;
+  KMFolderType mFolderType;
+  ACLList mInitialACLList;
 
   QLabel* mLabel;
   QWidgetStack* mStack;
   KMFolderDialog* mDlg;
 
-  int mJobCounter;
   bool mChanged;
   bool mAccepting; // i.e. close when done
 };

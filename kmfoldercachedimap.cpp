@@ -46,6 +46,7 @@
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include "kmdict.h"
+#include "acljobs.h"
 
 using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
@@ -496,10 +497,13 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_LIST_MESSAGES:     return "SYNC_STATE_LIST_MESSAGES";
   case SYNC_STATE_DELETE_MESSAGES:   return "SYNC_STATE_DELETE_MESSAGES";
   case SYNC_STATE_GET_MESSAGES:      return "SYNC_STATE_GET_MESSAGES";
-  case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
-  case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
   case SYNC_STATE_EXPUNGE_MESSAGES:  return "SYNC_STATE_EXPUNGE_MESSAGES";
   case SYNC_STATE_HANDLE_INBOX:      return "SYNC_STATE_HANDLE_INBOX";
+  case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
+  case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
+  case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
+  case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
+  case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
   case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
   default:                           return "Unknown state";
   }
@@ -510,6 +514,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
+  //kdDebug() << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
@@ -537,10 +542,24 @@ void KMFolderCachedImap::serverSyncInternal()
     } else {
       // Connected
       // kdDebug(5006) << "makeConnection said Connected, proceeding." << endl;
-      mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+      mSyncState = SYNC_STATE_GET_USERRIGHTS;
       // Fall through to next state
     }
   }
+
+  case SYNC_STATE_GET_USERRIGHTS:
+    mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+
+    // TODO do this only if the imap server returns "acl" in its capabilities
+    if( imapPath() != "/" ) {
+      // Check the user's own rights. We do this every time in case they changed.
+      emit newState( label(), mProgress, i18n("Checking permissions"));
+      mAccount->getUserRights( folder(), imapPath() );
+      connect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
+               this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
+      break;
+    }
+
   case SYNC_STATE_CHECK_UIDVALIDITY:
     emit syncRunning( folder(), true );
     mSyncState = SYNC_STATE_CREATE_SUBFOLDERS;
@@ -642,7 +661,7 @@ void KMFolderCachedImap::serverSyncInternal()
       emit statusMsg( i18n("%1: Expunging deleted messages").arg(label()) );
       emit newState( label(), mProgress, i18n("Expunging deleted messages"));
       CachedImapJob *job = new CachedImapJob( QString::null,
-                                                  CachedImapJob::tExpungeFolder, this );
+                                              CachedImapJob::tExpungeFolder, this );
       connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
       job->start();
       break;
@@ -686,8 +705,46 @@ void KMFolderCachedImap::serverSyncInternal()
       serverSyncInternal();
       break;
     } else
-      // Continue with the subfolders
-      mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
+      // Continue with the ACLs
+      mSyncState = SYNC_STATE_SET_ACLS;
+
+  case SYNC_STATE_SET_ACLS:
+    mSyncState = SYNC_STATE_GET_ACLS;
+
+    if( imapPath() != "/" ) {
+      bool hasChangedACLs = false;
+      ACLList::ConstIterator it = mACLList.begin();
+      for ( ; it != mACLList.end() && !hasChangedACLs; ++it ) {
+        hasChangedACLs = (*it).changed;
+      }
+      if ( hasChangedACLs ) {
+        emit statusMsg( i18n("%1: Setting permissions").arg(label()) );
+        emit newState( label(), mProgress, i18n("Setting permissions"));
+        KURL url = mAccount->getUrl();
+        url.setPath( imapPath() );
+        KIO::Job* job = KMail::ACLJobs::multiSetACL( mAccount->slave(), url, mACLList );
+        ImapAccountBase::jobData jd( url.url(), folder() );
+        mAccount->insertJob(job, jd);
+
+        connect(job, SIGNAL(result(KIO::Job *)),
+                SLOT(slotMultiSetACLResult(KIO::Job *)));
+        connect(job, SIGNAL(aclChanged( const QString&, int )),
+                SLOT(slotACLChanged( const QString&, int )) );
+        break;
+      }
+    }
+
+  case SYNC_STATE_GET_ACLS:
+    // Continue with the subfolders
+    mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
+
+    // The root folder doesn't have ACLs
+    if( imapPath() != "/" ) {
+      mAccount->getACL( folder(), mImapPath );
+      connect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
+               this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
+      break;
+    }
 
   case SYNC_STATE_FIND_SUBFOLDERS:
     {
@@ -759,7 +816,7 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode )
               this, SLOT( slotConnectionResult(int) ) );
   if ( !errorCode ) {
     // Success
-    mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+    mSyncState = SYNC_STATE_GET_USERRIGHTS;
     serverSyncInternal();
   } else {
     // Error (error message already shown by the account)
@@ -1132,7 +1189,7 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
                 !secondStep && !folder()->isSystemFolder() ) ? true : false;
 
   // get the folders
-  ImapAccountBase::ListType type = 
+  ImapAccountBase::ListType type =
     (mAccount->onlySubscribedFolders() ? ImapAccountBase::ListSubscribed : ImapAccountBase::List);
   mAccount->listDirectory(mImapPath, type,
                           secondStep, folder(), reset);
@@ -1329,6 +1386,66 @@ KMFolderCachedImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
   kdDebug() << imapPath() << " setUserRights: " << userRights << endl;
+}
+
+void
+KMFolderCachedImap::slotReceivedUserRights( KMFolder* folder )
+{
+  if ( folder->storage() == this ) {
+    disconnect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
+                this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
+    serverSyncInternal();
+    if ( mUserRights == 0 ) // didn't work
+      mUserRights = -1; // error code (used in folderdia)
+  }
+}
+
+void
+KMFolderCachedImap::slotReceivedACL( KMFolder* folder, KIO::Job*, const KMail::ACLList& aclList )
+{
+  if ( folder->storage() == this ) {
+    disconnect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
+                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
+    mACLList = aclList;
+    serverSyncInternal();
+  }
+}
+
+void
+KMFolderCachedImap::setACLList( const ACLList& arr )
+{
+  mACLList = arr;
+}
+
+void
+KMFolderCachedImap::slotMultiSetACLResult(KIO::Job *job)
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+
+  if ( job->error() )
+    // Display error but don't abort the sync just for this
+    job->showErrorDialog();
+
+  if (mAccount->slave()) mAccount->removeJob(job);
+  serverSyncInternal();
+}
+
+void
+KMFolderCachedImap::slotACLChanged( const QString& userId, int permissions )
+{
+  // The job indicates success in changing the permissions for this user
+  // -> we note that it's been done.
+  for( ACLList::Iterator it = mACLList.begin(); it != mACLList.end(); ++it ) {
+    if ( (*it).userId == userId && (*it).permissions == permissions ) {
+      if ( permissions == -1 ) // deleted
+        mACLList.erase( it );
+      else // added/modified
+        (*it).changed = false;
+      return;
+    }
+  }
 }
 
 #include "kmfoldercachedimap.moc"

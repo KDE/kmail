@@ -36,6 +36,7 @@ class KMessage;
 class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
+template <typename T> class QValueVector;
 
 namespace KIO {
   class Job;
@@ -43,7 +44,10 @@ namespace KIO {
 
 namespace KMail {
 
-class AttachmentStrategy;
+  struct ACLListEntry;
+  typedef QValueVector<KMail::ACLListEntry> ACLList;
+
+  class AttachmentStrategy;
 
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT
@@ -174,10 +178,17 @@ class AttachmentStrategy;
 
     /**
      * Retrieve the users' right on the folder
-     * identified by @p imapPath.
+     * identified by @p folder and @p imapPath.
      * Emits receivedUserRights signal on success/error.
      */
     void getUserRights( KMFolder* folder, const QString& imapPath );
+
+    /**
+     * Retrieve the complete list of ACLs on the folder
+     * identified by @p imapPath.
+     * Emits receivedACL signal on success/error.
+     */
+    void getACL( KMFolder* folder, const QString& imapPath );
 
     /**
      * The KIO-Slave died
@@ -269,6 +280,9 @@ class AttachmentStrategy;
     /// Result of getUserRights() job
     void slotGetUserRightsResult( KIO::Job* _job );
 
+    /// Result of getACL() job
+    void slotGetACLResult( KIO::Job* _job );
+
   protected:
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;
@@ -332,6 +346,15 @@ class AttachmentStrategy;
      * Use userRights() to retrieve them, they will still be on 0 if the job failed.
      */
     void receivedUserRights( KMFolder* folder );
+
+    /**
+     * Emitted when the get-the-ACLs job is done.
+     * @see getACL
+     * @param folder the folder for which we were listing the ACLs (can be 0)
+     * @param job the job that was used for doing so (can be used to display errors)
+     * @param entries the ACL list. Make your copy of it, it comes from the job.
+     */
+    void receivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& entries );
   };
 
 
