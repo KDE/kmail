@@ -816,7 +816,7 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "setup_spellchecker");
 
   encryptAction = new KToggleAction (i18n("Encrypt message"),
-                                     "pub_key_red", 0,
+                                     "lock", 0,
                                      actionCollection(), "encrypt_message");
   signAction = new KToggleAction (i18n("Sign message"),
                                   "feather_white", 0,
