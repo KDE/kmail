@@ -265,6 +265,8 @@ void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 void KMFilterActionWithFolder::argsFromString( const QString argsStr )
 {
   mFolder = kmkernel->folderMgr()->findIdString( argsStr );
+  if (!mFolder)
+     mFolder = kmkernel->dimapFolderMgr()->findIdString( argsStr );
   if (mFolder)
      mFolderName = QString::null;
   else
