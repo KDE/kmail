@@ -2599,7 +2599,6 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
 					     "%%=percent sign, %_=space, "
 					     "%L=linebreak"), this ),
 			    0, 0, 0, 2 ); // row 0; cols 0..2
-  //label->setAlignment( WordBreak ); // ### needed??
 
   // row 1: label and language combo box:
   mPhraseLanguageCombo = new LanguageComboBox( false, this );
@@ -2792,19 +2791,20 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   : ConfigurationPage( parent, name )
 {
   // tmp. vars:
-  QHBoxLayout *hlay;
+  QVBoxLayout *vlay;
   QGroupBox   *group;
+  QLabel      *label;
 
 
-  // ### OK, let's try to set them side-by-side:
-  hlay = new QHBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   group = new QVGroupBox( i18n("Repl&y subject prefixes"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
-  (void)new QLabel( i18n("Recognize the following prefixes\n"
-			 "(matching is case-insensitive):"), group );
+  label = new QLabel( i18n("Recognize the following prefixes "
+			   "(matching is case-insensitive):"), group );
+  label->setAlignment( AlignLeft|WordBreak );
 
   // row 1, string list editor:
   SimpleStringListEditor::ButtonCode buttonCode =
@@ -2819,28 +2819,29 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   mReplaceReplyPrefixCheck =
      new QCheckBox( i18n("Replace recognized prefi&x with Re:"), group );
 
-  hlay->addWidget( group );
+  vlay->addWidget( group );
 
 
-  group = new QVGroupBox( i18n("&Forward subject prefixes"), this );
+  group = new QVGroupBox( i18n("Forward subject prefixes"), this );
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
-  (void) new QLabel( i18n("Recognize the following prefixes\n"
+  label= new QLabel( i18n("Recognize the following prefixes "
 			  "(matching is case-insensitive):"), group );
+  label->setAlignment( AlignLeft|WordBreak );
 
   // row 1: string list editor
   mForwardListEditor =
     new SimpleStringListEditor( group, 0, buttonCode,
-				i18n("A&dd..."),
-				i18n("Re&move"), QString::null,
+				i18n("Add..."),
+				i18n("Remo&ve"), QString::null,
 				i18n("Enter new forward prefix:") );
 
   // row 3: "replace [...]" check box:
   mReplaceForwardPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefi&x with Fwd:"), group );
+     new QCheckBox( i18n("Replace recognized prefix with &Fwd:"), group );
 
-  hlay->addWidget( group );
+  vlay->addWidget( group );
 }
 
 void ComposerPage::SubjectTab::setup() {
