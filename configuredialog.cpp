@@ -412,7 +412,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   // row 0: "Name" line edit and label:
   mNameEdit = new QLineEdit( tab );
   glay->addWidget( mNameEdit, 0, 1 );
-  glay->addWidget( new QLabel( mNameEdit, i18n("Nam&e:"), tab ), 0, 0 );
+  glay->addWidget( new QLabel( mNameEdit, i18n("Name:"), tab ), 0, 0 );
 
   // row 1: "Organization" line edit and label:
   mOrganizationEdit = new QLineEdit( tab );
@@ -1380,7 +1380,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
 
   // "display message box" check box:
-  mShowMessageBoxCheck = new QCheckBox(i18n("Dis&play message box"), group );
+  mShowMessageBoxCheck = new QCheckBox(i18n("D&isplay message box"), group );
 
   // "Execute command" check box:
   mMailCommandCheck = new QCheckBox( i18n("E&xecute command line"), group );
@@ -2088,7 +2088,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"),
                                      generalOptionsVBG );
 
-  mCryptoIconsCheck = new QCheckBox( i18n( "Show cr&ypto icons" ),
+  mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto icons" ),
                                      generalOptionsVBG );
 
   mNestedMessagesCheck =
@@ -2174,7 +2174,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
     new QRadioButton( i18n("Threads default to clo&sed"),
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Open threads that contain new, &unread "
+    new QRadioButton( i18n("Open threads that contain new, unread "
 			   "or important messages"), mNestingPolicy ), 3 );
   vlay->addWidget( mNestingPolicy );
 
@@ -3857,10 +3857,10 @@ PluginPage::PluginPage( CryptPlugWrapperList* cryptPlugList,
     addTab( _generalPage, i18n( "&General") );
 
     _certificatesPage = new CertificatesPage( this );
-    addTab( _certificatesPage, i18n( "&Certificates" ) );
+    addTab( _certificatesPage, i18n( "Cert&ificates" ) );
 
     _signaturePage = new SignaturePage( this );
-    addTab( _signaturePage, i18n("&Signature Configuration") );
+    addTab( _signaturePage, i18n("Signature Configuration") );
 
     _encryptionPage = new EncryptionPage( this );
     addTab( _encryptionPage, i18n("&Encryption Configuration") );
