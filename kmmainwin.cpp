@@ -1891,11 +1891,7 @@ void KMMainWin::slotReadOn()
         mHeaders->nextUnreadMessage();
         return;
     }
-
-    KMFolder *before = mFolderTree->currentFolder();
     mFolderTree->nextUnreadFolder( true );
-    if ( before ==  mFolderTree->currentFolder() )
-        mFolderTree->firstUnreadFolder( true );
 }
 
 //-----------------------------------------------------------------------------

@@ -627,12 +627,15 @@ void KMFolderTree::nextUnreadFolder(bool confirm)
         }
 	prepareItem( fti );
         blockSignals( true );
-	doFolderSelected( fti );    
+	doFolderSelected( fti );
         blockSignals( false );
         emit folderSelectedUnread( fti->folder );
 	return;
     }
   }
+
+  if ( confirm ) // and still no new folder
+      firstUnreadFolder( true );
 }
 
 void KMFolderTree::firstUnreadFolder(bool confirm)
@@ -669,7 +672,7 @@ void KMFolderTree::prevUnreadFolder()
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
 	prepareItem( fti );
-	doFolderSelected( fti );    
+	doFolderSelected( fti );
 	return;
     }
   }
@@ -685,7 +688,7 @@ void KMFolderTree::incCurrentFolder()
       disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 		 this,SLOT(doFolderSelected(QListViewItem*)));
       setFocus();
-      setCurrentItem( fti );    
+      setCurrentItem( fti );
       connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	      this,SLOT(doFolderSelected(QListViewItem*)));
   }
@@ -762,7 +765,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     if (extendedName != fti->unread) {
       fti->unread = extendedName;
       fti->repaint();
-    }	
+    }
   }
 }
 
@@ -815,16 +818,16 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
      {
       folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                              SLOT(addChildFolder()));
-      folderMenu-> insertItem(i18n("Compact All &Folders"),  
+      folderMenu-> insertItem(i18n("Compact All &Folders"),
                      kernel->folderMgr(), SLOT(compactAll()));
      }
   else {
   if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
-      folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(), 
+      folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),
                                    SLOT(slotSendQueued()));
-  if (!fti->folder->isSystemFolder()) 
+  if (!fti->folder->isSystemFolder())
      {
-     if (!fti->folder->account())  // protect from imap folders 
+     if (!fti->folder->account())  // protect from imap folders
          folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                                        SLOT(addChildFolder()));
          folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
@@ -832,11 +835,11 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
      }
   folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
                          SLOT(slotCompactFolder()));
-  { 
+  {
      folderMenu->insertSeparator();
      folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
                             SLOT(slotEmptyFolder()));
-  if ( (!fti->folder->isSystemFolder()) && (!fti->folder->account())) 
+  if ( (!fti->folder->isSystemFolder()) && (!fti->folder->account()))
         folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
                                      SLOT(slotRemoveFolder()));
      }
@@ -867,13 +870,13 @@ void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint 
     return;
   if (!fti->folder->isMailingList())
     return;
-  
+
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setTo(fti->folder->mailingListPostAddress());
   KMComposeWin *win = new KMComposeWin(msg);
   win->show();
-  
+
 }
 
 //-----------------------------------------------------------------------------
