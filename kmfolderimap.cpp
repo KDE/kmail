@@ -27,6 +27,7 @@
 #include "kmfolderimap.h"
 #include "kmfoldermbox.h"
 #include "kmfoldertree.h"
+#include "kmmsgdict.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
@@ -1242,8 +1243,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
           KMMsgMetaData *md =  mMetaDataMap[id];
           msg->setStatus( md->status() );
           if ( md->serNum() != 0 )
-            msg->setMsgSerNum( md->serNum() );
-          mMetaDataMap.remove( id );
+	    msg->setMsgSerNum( md->serNum() );
+	  mMetaDataMap.remove( id );
           delete md;
         }
         // Merge with the flags from the server.
@@ -1252,6 +1253,9 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
         msg->setUID(uid);
 
+        // Just in case we have changed (reverted) the serial number of this 
+        // message update the message dict.
+        kmkernel->msgDict()->replace( msg->getMsgSerNum(), msg, msg->storage()->find( msg ) );
         if (count() > 1) unGetMsg(count() - 1);
         mLastUid = uid;
         if ( mMailCheckProgressItem ) {
@@ -1926,7 +1930,7 @@ void KMFolderImap::search( KMSearchPattern* pattern )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotSearchDone( QValueList<Q_UINT32> serNums, 
+void KMFolderImap::slotSearchDone( QValueList<Q_UINT32> serNums,
                                    KMSearchPattern* pattern )
 {
   emit searchDone( folder(), serNums, pattern );
