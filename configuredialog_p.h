@@ -29,6 +29,7 @@ class QTabWidget;
 class QListBox;
 class QButtonGroup;
 class QRegExpValidator;
+class QVGroupBox;
 class KMFolderComboBox;
 class KMAccount;
 class KMTransportInfo;
@@ -888,5 +889,58 @@ protected:
 private:
   int mVisibleItem;
 };
+
+//
+//
+// Groupware config page
+//
+//
+
+class GroupwarePage: public ConfigurationPage  {
+  Q_OBJECT
+public:
+  GroupwarePage( QWidget * parent=0, const char * name=0 );
+  ~GroupwarePage() {};
+
+  static QString iconLabel();
+  static const char * iconName();
+
+  static QString title();
+
+  /** Should return the help anchor for this page or tab */
+  virtual QString helpAnchor() const;
+
+  /** Should set the page up (ie. read the setting from the @ref
+      KConfig object into the widgets) after creating it in the
+      constructor. Called from @ref ConfigureDialog. */
+  virtual void setup();
+  /** Called when the installation of a profile is
+      requested. Reimplemenations of this method should do the
+      equivalent of a @ref setup(), but with the given @ref KConfig
+      object instead of KMKernel::config() and only for those entries that
+      really have keys defined in the profile.
+
+      The default implementation does nothing.
+  */
+  virtual void installProfile( KConfig * profile );
+  /** Should apply the changed settings (ie. read the settings from
+      the widgets into the @ref KConfig object). Called from @ref
+      ConfigureDialog. */
+  virtual void apply();
+private:
+  QCheckBox* mEnableGwCB;
+
+  QVGroupBox* mBox;
+
+  QComboBox* mLanguageCombo;
+  KMFolderComboBox* mFolderCombo;
+
+  QCheckBox* mAutoResCB;
+  QCheckBox* mAutoDeclConflCB;
+  QCheckBox* mAutoDeclRecurCB;
+    
+    QCheckBox* mLegacyMangleFromTo;
+};
+
 
 #endif // _CONFIGURE_DIALOG_PRIVATE_H_

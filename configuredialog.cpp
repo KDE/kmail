@@ -201,6 +201,15 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   vlay->addWidget( configPage );
   configPage->setPageIndex( pageIndex( page ) );
   mPages.append( configPage );
+
+  // Groupware Page:
+  page = addPage( GroupwarePage::iconLabel(), GroupwarePage::title(),
+		  loadIcon( FolderPage::iconName() ) );
+  vlay = new QVBoxLayout( page, 0, spacingHint() );
+  configPage = new GroupwarePage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 }
 
 
@@ -3978,6 +3987,116 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
     mActivateButton->setText( i18n("Ac&tivate") );
 }
 
+
+// *************************************************************
+// *                                                           *
+// *                      GroupwarePage                        *
+// *                                                           *
+// *************************************************************
+
+QString GroupwarePage::iconLabel() {
+  return i18n("Groupware");
+}
+
+QString GroupwarePage::title() {
+  return i18n("Configure Groupware");
+}
+
+const char * GroupwarePage::iconName() {
+  return "groupware";
+}
+
+QString GroupwarePage::helpAnchor() const {
+  return QString::fromLatin1("configure-groupware");
+}
+
+GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
+    : ConfigurationPage( parent, name )
+{
+  QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), this );
+  vlay->addWidget( mEnableGwCB );
+
+  mBox = new QVGroupBox( i18n("Groupware &Folder Options"), this );
+  vlay->addWidget(mBox);
+
+  connect( mEnableGwCB, SIGNAL( toggled(bool) ),
+	   mBox, SLOT( setEnabled(bool) ) );
+
+  QLabel* languageLA = new QLabel( i18n("&Language for groupware folders:"), mBox );
+
+  mLanguageCombo = new QComboBox( false, mBox );
+  languageLA->setBuddy( mLanguageCombo );
+
+  QStringList lst;
+  lst << i18n("English") << i18n("German");
+  mLanguageCombo->insertStringList( lst );
+
+  QLabel* subfolderLA = new QLabel( i18n("Groupware folders are &subfolders of:"), mBox );
+
+  mFolderCombo = new KMFolderComboBox( mBox );
+  subfolderLA->setBuddy( mFolderCombo );
+
+  QVGroupBox* resourceVGB = new QVGroupBox( i18n( "&Resource Management" ), this );
+  vlay->addWidget( resourceVGB );
+  connect( mEnableGwCB, SIGNAL( toggled(bool) ),
+           resourceVGB, SLOT( setEnabled(bool) ) );
+
+  mAutoResCB = new QCheckBox( i18n( "&Automatically accept resource requests" ), resourceVGB );
+  mAutoDeclConflCB = new QCheckBox( i18n( "A&utomatically decline conflicting requests" ), resourceVGB );
+  mAutoDeclConflCB->setEnabled( false );
+  connect( mAutoResCB, SIGNAL( toggled( bool ) ),
+           mAutoDeclConflCB, SLOT( setEnabled( bool ) ) );
+
+  mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), mBox );
+  QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+  
+  QLabel* dummy = new QLabel( this );
+  vlay->addWidget( dummy, 2 );
+}
+
+void GroupwarePage::setup()
+{
+  KConfigGroup options( KMKernel::config(), "Groupware" );
+
+  mEnableGwCB->setChecked( options.readBoolEntry( "Enabled", true ) );
+  mBox->setEnabled( mEnableGwCB->isChecked() );
+
+  int i = options.readNumEntry( "FolderLanguage", 0 );
+  mLanguageCombo->setCurrentItem(i);
+
+  QString folderId = options.readEntry( "GroupwareFolder", QString::null );
+  if( !folderId.isNull() ) {
+    mFolderCombo->setFolder( folderId );
+  }
+
+  mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
+  mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
+  
+  mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
+}
+
+void GroupwarePage::installProfile( KConfig * /*profile*/ )
+{
+  kdDebug() << "NYI: void GroupwarePage::installProfile( KConfig * /*profile*/ )" << endl;
+}
+
+void GroupwarePage::apply()
+{
+  KConfigGroup options( KMKernel::config(), "Groupware" );
+
+  options.writeEntry( "Enabled", mEnableGwCB->isChecked() );
+  options.writeEntry( "FolderLanguage", mLanguageCombo->currentItem() );
+  options.writeEntry( "GroupwareFolder", mFolderCombo->getFolder()->idString() );
+  options.writeEntry( "AutoAccept", mAutoResCB->isChecked() );
+  options.writeEntry( "AutoDeclConflict", mAutoDeclConflCB->isChecked() );
+  options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
+  
+#if 0
+  kernel->groupware().readConfig();
+#endif
+}
 
 
 
