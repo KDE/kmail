@@ -145,12 +145,17 @@ namespace KMail {
   };
 
   static const about_data credits[] = {
+    { "Till Adam", I18N_NOOP("improved threading, threading by subject\n"
+                             "check single IMAP folder"),
+      "till@adam-lilienthal.de", 0 },
     { "Heiko Hund", I18N_NOOP("POP filters"),
       "heiko@ist.eigentlich.net", 0 },
     { "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "bernhard@intevation.de", 0 },
     { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
       "jan@simonson.pp.se", 0 },
+    { "Patrick S. Vogt", I18N_NOOP("timestamp for 'Transmission completed' status messages"),
+      "patrick.vogt@unibas.ch", 0 },
     { "Jan-Oliver Wagner", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "jan@intevation.de", 0 },
     { "Wolfgang Westphal", I18N_NOOP("multiple encryption keys per address"),
