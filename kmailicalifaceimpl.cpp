@@ -367,8 +367,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
 
   Q_UINT32 sernum = 0;
   bool bAttachOK = true;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   // Make a new message for the incidence
   KMMessage* msg = new KMMessage();
@@ -434,7 +432,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   } else
     kdError(5006) << "addIncidenceKolab(): Message *NOT* saved!\n";
 
-  mResourceQuiet = quiet;
   return sernum;
 }
 
@@ -500,8 +497,6 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
   }
 
   bool rc = false;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   KMMessage* msg = findMessageBySerNum( sernum, f );
   if( msg ) {
@@ -511,8 +506,6 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
   } else {
     kdDebug(5006) << "Message not found, cannot remove serNum " << sernum << endl;
   }
-
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -777,8 +770,6 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   }
 
   f->open();
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   kdDebug(5006) << "Updating in folder " << f << " " << f->location() << endl;
   KMMessage* msg = 0;
@@ -829,7 +820,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
       kdDebug(5006) << "forget about " << sernum << ", it's " << rc << " now" << endl;
     }
 
-  }else{
+  } else {
     // Message not found - store it newly
     rc = addIncidenceKolab( *f, subject,
                             attachmentURLs,
@@ -839,7 +830,6 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 
   f->close();
 
-  mResourceQuiet = quiet;
   return rc;
 }
 
