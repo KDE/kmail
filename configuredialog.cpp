@@ -1067,6 +1067,7 @@ void ConfigureDialog::makeComposerPage( void )
   label->setText(
      i18n( "The following placeholders are supported in the reply phrases:\n"
 	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space, %L=linebreak"));
+  label->setAlignment( WordBreak );
   glay->addMultiCellWidget( label, 1, 1, 0, 1 );
   label = new QLabel( i18n("&Language:"), group );
   glay->addWidget( label, 2, 0 );
@@ -1316,10 +1317,12 @@ void ConfigureDialog::makeMimePage( void )
   QGridLayout *glay0 = new QGridLayout( topLevel, 1, 2 );
   glay0->setColStretch( 1, 10 );
 
-  QString lblOfs("      ");
-  QString lblTxt( lblOfs );
-  lblTxt += i18n("&Use this Message-Id suffix:");
+  int indent = 20;
+  QString lblTxt = i18n("&Use this Message-Id suffix:");
   mMime.messageIdSuffixLabel = new QLabel( lblTxt, page );
+  mMime.messageIdSuffixLabel->setAlignment( AlignLeft );
+  mMime.messageIdSuffixLabel->setFixedHeight( mMime.messageIdSuffixLabel->sizeHint().height() );
+  mMime.messageIdSuffixLabel->setIndent( indent );
   glay0->addWidget( mMime.messageIdSuffixLabel, 0, 0 );
 
   mMime.messageIdSuffixEdit = new QLineEdit( page );
@@ -1327,9 +1330,10 @@ void ConfigureDialog::makeMimePage( void )
   mMime.messageIdSuffixEdit->setFocus();
   glay0->addWidget( mMime.messageIdSuffixEdit,  0, 1 );
 
-  lblTxt = lblOfs;
-  lblTxt += i18n("(Name must be unique, you may use a domain name that you are the owner of.)");
+  lblTxt = i18n("(Name must be unique, you may use a domain name that you are the owner of.)");
   mMime.messageIdSuffixHintLabel = new QLabel( lblTxt, page );
+  mMime.messageIdSuffixHintLabel->setAlignment( AlignLeft | WordBreak );
+  mMime.messageIdSuffixHintLabel->setIndent( indent );
   topLevel->addWidget( mMime.messageIdSuffixHintLabel );
 
   connect( mMime.createOwnMessageIdCheck, SIGNAL(clicked() ),

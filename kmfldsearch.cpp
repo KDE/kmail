@@ -76,7 +76,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   lbl->setAlignment(AlignRight|AlignVCenter);
   mGrid->addWidget(lbl, 0, 0);
 
-  mLastFocus = new QWidget();	// to remeber the position of the focus
+  mLastFocus = 0L;	// to remeber the position of the focus
 
   mLbxMatches = new QListView(this, "Search in Folders");
   /* Default is to sort by date. TODO: Unfortunately this sorts *while*
@@ -145,6 +145,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 KMFldSearch::~KMFldSearch()
 {
   //TODO Save QListView layout
+  delete [] mRules;
 }
 
 
@@ -157,7 +158,7 @@ QComboBox* KMFldSearch::createFolderCombo(KMFolder *curFolder)
   cbx->setFixedHeight(cbx->sizeHint().height());
 
   cbx->insertItem(i18n("<Search all local folders>"));
-  cbx->insertStringList(mFolderNames); 
+  cbx->insertStringList(mFolderNames);
   if (curFolder && !curFolder->isDir())
     cbx->setCurrentItem(mFolders.findIndex(curFolder) + 1);
   return cbx;
@@ -197,6 +198,7 @@ void KMFldSearch::keyPressEvent(QKeyEvent *evt)
 
   switch (evt->key()) {
       case Key_Return:
+      case Key_Enter:
         KMFldSearchInherited::keyPressEvent(evt);
         break;
       case Key_Escape:
@@ -518,15 +520,20 @@ KMFldSearchRule::~KMFldSearchRule()
 //-----------------------------------------------------------------------------
 void KMFldSearchRule::insertFieldItems(bool all)
 {
+  int last = mCbxField->currentItem();
   mCbxField->clear();
-  if (mRow > 1) mCbxField->insertItem("");
+  if (mRow > 1) mCbxField->insertItem(QString::null);
   mCbxField->insertItem("Subject");
   mCbxField->insertItem("From");
   mCbxField->insertItem("To");
   mCbxField->insertItem("Cc");
-  if (!all) return;
-  mCbxField->insertItem("Organization");
-  mCbxField->insertItem(i18n("<complete message>"));
+  if (all) {
+    mCbxField->insertItem("Organization");
+    mCbxField->insertItem(i18n("<complete message>"));
+  }
+  
+  if (last < mCbxField->count())
+    mCbxField->setCurrentItem(last);
 }
 
 
@@ -578,7 +585,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
       }
       if (!mNonLatin || charset.isEmpty() || charset == "us-ascii"
         || charset == "iso-8859-1")         // Speedup
-          value += content;  
+          value += content;
       else {
         QTextCodec *codec = KMMsgBase::codecForName(charset);
         if (codec) value += codec->toUnicode(content);
