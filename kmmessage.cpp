@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <klocale.h>
+#include <kglobal.h>
 
 #if ALLOW_GUI
 #include <qmultilinedit.h>
@@ -262,7 +263,7 @@ const QString KMMessage::formatString(const QString aStr) const
   QString result, str;
   const char* pos;
   char ch, cstr[64];
-  time_t tm;
+  QDateTime datetime;
   int i;
 
   if (aStr.isEmpty()) return aStr;
@@ -276,9 +277,8 @@ const QString KMMessage::formatString(const QString aStr) const
       switch (ch)
       {
       case 'D':
-	tm = date();
-	strftime(cstr, 63, "%a, %d %b %Y", localtime(&tm));
-	result += cstr;
+	datetime.setTime_t(date());
+	result += KGlobal::locale()->formatDate(datetime.date());
 	break;
       case 'F':
 	result += stripEmailAddr(from());
