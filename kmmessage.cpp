@@ -661,9 +661,19 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (replyToAll)
   {
     int i;
-    if (!replyToStr.isEmpty()) toStr += replyToStr + ", ";
+    // sanders only include the replyTo address if it's != to the from address
+    QString rep = replyToStr;
+    if((i = rep.find("<")) != -1) // just keep <foo@bar.com>
+      rep = rep.right(rep.length() + 1 -i );
+    if(!replyToStr.isEmpty() && (rep.isEmpty() || from().find(rep) == -1))
+      toStr += replyToStr + ", ";
+
     if (!from().isEmpty()) toStr += from() + ", ";
-    if (!to().isEmpty()) toStr += to() + ", ";
+
+    // -sanders only include the to address if it's != replyTo address 
+    if(!to().isEmpty() && (rep.isEmpty() || to().find(rep) == -1))
+      toStr += to() + ", ";
+
     toStr = toStr.simplifyWhiteSpace() + " ";
 
     // now try to strip my own e-mail adress:
@@ -1692,7 +1702,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
 
   if (email.isEmpty()) return email;
 
-  result = "<A HREF=\"mailto:";
+  result = "<a href=\"mailto:";
   for (pos=email.data(); *pos; pos++)
   {
     ch = *pos;
@@ -1709,10 +1719,10 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
       result += "\">";
       if (stripped) result += KMMessage::stripEmailAddr(aEmail);
       else result += addr;
-      result += "</A>";
+      result += "</a>";
       if (ch == ',')
       {
-	result += ", <A HREF=\"mailto:";
+	result += ", <a href=\"mailto:";
 	while (pos[1]==' ') pos++;
       }
       addr = "";
