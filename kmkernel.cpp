@@ -699,7 +699,7 @@ void KMKernel::init()
   }
   mGroupware->readConfigStartup();
   // filterMgr->dump();
-#if 0 //disbabled for now..
+#if 0 //disabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
 #endif
 }
@@ -852,7 +852,7 @@ void KMKernel::cleanupLoop()
       if( maxTextWidth < ( w = fm.width( *it ) ) )
         maxTextWidth = w;
     }
-    
+
     mProgress = new KProgress( box, "kmail-cleanupProgress" );
     mProgress->setMinimumWidth( maxTextWidth+20 );
     mCleanupPopup->setView( box );
