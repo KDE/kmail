@@ -110,10 +110,10 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mBtnBcc("...",&mMainWidget),  mBtnFrom("...",&mMainWidget),
   mBtnReplyTo("...",&mMainWidget)
 
-  /* start added for KRN */
+#ifdef KRN
   ,mEdtNewsgroups(this,&mMainWidget),mEdtFollowupTo(this,&mMainWidget),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
-  /* end added for KRN */
+#endif
 {
 
   mGrid = NULL;
@@ -732,8 +732,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   mEdtSubject.setText(mMsg->subject());
   mEdtReplyTo.setText(mMsg->replyTo());
   mEdtBcc.setText(mMsg->bcc());
+#ifdef KRN
   mEdtNewsgroups.setText(mMsg->groups());
   mEdtFollowupTo.setText(mMsg->followup());
+#endif
 
   num = mMsg->numBodyParts();
   if (num > 0)
@@ -813,8 +815,10 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setSubject(subject());
   mMsg->setReplyTo(replyTo());
   mMsg->setBcc(bcc());
+#ifdef KRN
   mMsg->setFollowup(followupTo());
   mMsg->setGroups(newsgroups());
+#endif
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();

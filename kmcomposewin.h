@@ -257,8 +257,10 @@ protected:
   virtual const QString bcc(void) const { return mEdtBcc.text(); }
   virtual const QString from(void) const { return mEdtFrom.text(); }
   virtual const QString replyTo(void) const { return mEdtReplyTo.text(); }
+#ifdef KRN
   virtual const QString newsgroups(void) const { return mEdtNewsgroups.text(); }
   virtual const QString followupTo(void) const { return mEdtFollowupTo.text(); }
+#endif
 
   /** Ask for confirmation if the message was changed.
     Save settings upon close. */
@@ -311,11 +313,11 @@ protected:
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
   QPushButton mBtnTo, mBtnCc, mBtnBcc, mBtnFrom, mBtnReplyTo;
   bool mSpellCheckInProgress;
-  /* start Added for KRN */
+#ifdef KRN
   KMLineEdit mEdtNewsgroups, mEdtFollowupTo;
   QLabel     mLblNewsgroups, mLblFollowupTo;
-  /* end Added for KRN */
-  
+#endif
+
   QPopupMenu *mMnuView, *mMnuOptions;
   KMEdit* mEditor;
   QGridLayout* mGrid;
