@@ -67,13 +67,13 @@ using namespace KABC;
 #include <kparts/part.h>
 #include <kconfig.h>
 #include <kapplication.h>
+#include <kinputdialog.h>
 
 #include <kdebug.h>
 
 #include <qregexp.h>
 #include <qbuffer.h>
 #include <qfile.h>
-#include <qinputdialog.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/headers.h>
@@ -614,7 +614,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
           // what to do.
           if( fromAddress.isEmpty() ) {
               bool bOk;
-              fromAddress = QInputDialog::getItem( i18n( "Select Address" ),
+              fromAddress = KInputDialog::getItem( i18n( "Select Address" ),
                                                    i18n( "In order to let Outlook(tm) recognize you as the receiver, you need to indicate which one of the following addresses is your email address" ),
                                                    toAddresses, 0, false, &bOk,
                                                    mMainWin );
@@ -1509,7 +1509,7 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
     } else {
       QStringList addrs = KMMessage::splitEmailAddrList( msg->to() );
       bool ok;
-      receiver = QInputDialog::getItem( i18n("Select Address"),
+      receiver = KInputDialog::getItem( i18n("Select Address"),
 					i18n("None of your identities match the receiver "
 					     "of this message,<br> please choose which of "
 					     "the following addresses is yours:"),
