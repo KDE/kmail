@@ -49,6 +49,7 @@ class KMReaderWin: public QWidget
 public:
   KMReaderWin( CryptPlugWrapperList *cryptPlugList=0,
                KMMimePartTree* mimePartTree=0,
+               int* showMIMETreeMode=0,
                QWidget *parent=0,
                const char *name=0,
                int f=0 );
@@ -351,6 +352,7 @@ protected:
   QStringList mTempFiles;
   QStringList mTempDirs;
   KMMimePartTree* mMimePartTree;
+  int* mShowMIMETreeMode;
   CryptPlugWrapperList * mCryptPlugList;
   partNode* mRootNode;
 };

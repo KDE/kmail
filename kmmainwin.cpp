@@ -136,6 +136,7 @@ KMMainWin::~KMMainWin()
   kapp->config()->sync();
 
   delete mHeaders;
+  delete mStatusBar;
   delete mFolderTree;
 
 
@@ -153,8 +154,8 @@ void KMMainWin::readPreConfig(void)
 
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
-    mWindowLayout = config->readNumEntry( "windowLayout", 0 );
-    mShowMIME = config->readBoolEntry( "showMIME", true );
+    mWindowLayout = config->readNumEntry( "windowLayout", 1 );
+    mShowMIMETreeMode = config->readNumEntry( "showMIME", 1 );
   }
 
   KConfigGroupSaver saver(config, "General");
@@ -194,8 +195,8 @@ void KMMainWin::readConfig(void)
   KConfig *config = kapp->config();
 
 
-  int oldWindowLayout = 0;
-  bool oldShowMIME = true;
+  int oldWindowLayout = 1;
+  int oldShowMIMETreeMode = 1;
 
   QString str;
   QSize siz;
@@ -206,14 +207,14 @@ void KMMainWin::readConfig(void)
 
 
     oldWindowLayout = mWindowLayout;
-    oldShowMIME = mShowMIME;
+    oldShowMIMETreeMode = mShowMIMETreeMode;
 
     readPreConfig();
     mHeaders->refreshNestedState();
 
 
     if(oldWindowLayout != mWindowLayout ||
-       oldShowMIME != mShowMIME )
+       oldShowMIMETreeMode != mShowMIMETreeMode )
     {
       hide();
       // delete all panners
@@ -317,7 +318,8 @@ void KMMainWin::readConfig(void)
   if (mStartupDone)
   { 
 
-    if (oldWindowLayout != mWindowLayout || oldShowMIME != mShowMIME )
+    if (oldWindowLayout != mWindowLayout ||
+        oldShowMIMETreeMode != mShowMIMETreeMode )
       activatePanners();
 
     //    kernel->kbp()->busy(); //Crashes KMail
@@ -510,7 +512,7 @@ void KMMainWin::createWidgets(void)
   else mCodec = 0;
 
 
-  mMsgView = new KMReaderWin(&mCryptPlugList, 0, messageParent);
+  mMsgView = new KMReaderWin(&mCryptPlugList, 0, &mShowMIMETreeMode, messageParent);
 
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
@@ -559,7 +561,7 @@ void KMMainWin::createWidgets(void)
   // create a mime part tree and store it's pointer in the reader win
   mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
   mMsgView->setMimePartTree( mMimePartTree );
-  if( mShowMIME )
+  if( 0 < mShowMIMETreeMode )
       mMimePartTree->show();
   else
       mMimePartTree->hide();
@@ -678,7 +680,7 @@ void KMMainWin::activatePanners(void)
         break;
     }
 
-    if( mShowMIME )
+    if( 0 < mShowMIMETreeMode )
         mMimePartTree->show();
     else
         mMimePartTree->hide();
@@ -720,7 +722,7 @@ void KMMainWin::statusMsg(const QString& aText)
 void KMMainWin::displayStatusMsg(const QString& aText)
 {
   QString text = " " + aText + " ";
-  int statusWidth = statusBar()->width() - littleProgress->width()
+  int statusWidth = mStatusBar->width() - littleProgress->width()
     - fontMetrics().maxWidth();
 
   while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
@@ -733,7 +735,7 @@ void KMMainWin::displayStatusMsg(const QString& aText)
 //  text.replace(QRegExp("<"), "&lt;");
 //  text.replace(QRegExp(">"), "&gt;");
 
-  statusBar()->changeItem(text, mMessageStatusId);
+  mStatusBar->changeItem(text, mMessageStatusId);
 }
 
 
@@ -1561,8 +1563,8 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     mMsgView->setMsg( 0, TRUE );
     if( mHeaders && mWindowLayout < 3 )
       mHeaders->hide();
-    if( mShowMIME && mMimePartTree
-        && (mWindowLayout != 2) && (mWindowLayout != 3) )
+    if( mMimePartTree && (0 < mShowMIMETreeMode) &&
+        (mWindowLayout != 2) && (mWindowLayout != 3) )
         mMimePartTree->hide();
     mMsgView->displayAboutPage();
   } else if( !mFolder ) {
@@ -1570,7 +1572,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     mMsgView->setMsg( 0, TRUE );
     if( mHeaders )
       mHeaders->show();
-    if( mShowMIME && mMimePartTree )
+    if( mMimePartTree && (0 < mShowMIMETreeMode) )
       mMimePartTree->show();
   } else
     mMsgView->setMsg( 0, FALSE );
@@ -2690,12 +2692,14 @@ void KMMainWin::slotEditKeys()
 //-----------------------------------------------------------------------------
 void KMMainWin::setupStatusBar()
 {
-  littleProgress = new KMLittleProgressDlg( statusBar() );
+  mStatusBar = new KStatusBar(this);
 
-  statusBar()->addWidget( littleProgress, 0 , true );
+  littleProgress = new KMLittleProgressDlg( mStatusBar );
+
+  mStatusBar->addWidget( littleProgress, 0 , true );
   mMessageStatusId = 1;
-  statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
-  statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
+  mStatusBar->insertItem(i18n(" Initializing..."), 1, 1 );
+  mStatusBar->setItemAlignment( 1, AlignLeft | AlignVCenter );
   littleProgress->show();
   connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
 	   littleProgress, SLOT(slotEnable( bool )));
@@ -2707,6 +2711,7 @@ void KMMainWin::setupStatusBar()
 	   littleProgress, SLOT(slotClean()));
   connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
 	   this, SLOT(statusMsg( const QString& )));
+  setStatusBar(mStatusBar);
 }
 
 void KMMainWin::slotQuit()

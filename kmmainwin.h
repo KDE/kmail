@@ -335,7 +335,7 @@ protected:
   KMWidgetLayout mWidgetLayout;
 
   int mWindowLayout;
-  bool mShowMIME;
+  int mShowMIMETreeMode;
 
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;

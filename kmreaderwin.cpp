@@ -820,11 +820,13 @@ const int KMReaderWin::delay = 150;
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
                          KMMimePartTree* mimePartTree,
+                         int* showMIMETreeMode,
                          QWidget *aParent,
                          const char *aName,
                          int aFlags)
   : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
     mMimePartTree( mimePartTree ),
+    mShowMIMETreeMode( showMIMETreeMode ),
     mCryptPlugList( cryptPlugList ),
     mRootNode( 0 )
 {
@@ -1449,6 +1451,17 @@ void KMReaderWin::parseMsg(void)
 
   if( mMimePartTree )
     mMimePartTree->clear();
+                 
+  QString type = mMsg->typeStr().lower();
+
+  bool isMultipart = (type.find("multipart/") != -1);
+
+  if( mMimePartTree && mShowMIMETreeMode && (1 == *mShowMIMETreeMode) ) {
+    if( isMultipart )
+      mMimePartTree->show();
+    else
+      mMimePartTree->hide();
+  }
 
   QString bkgrdStr = "";
   if (mBackingPixmapOn)
@@ -1456,14 +1469,12 @@ void KMReaderWin::parseMsg(void)
 
   mViewer->begin( KURL( "file:/" ) );
 
-  QString type = mMsg->typeStr().lower();
-
   if (mAutoDetectEncoding) {
     mCodec = 0;
     QCString encoding;
     if (type.find("text/") != -1)
       encoding = mMsg->charset();
-    else if (type.find("multipart/") != -1) {
+    else if ( isMultipart ) {
       if (mMsg->numBodyParts() > 0) {
         KMMessagePart msgPart;
         mMsg->bodyPart(0, &msgPart);
@@ -1724,7 +1735,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         bIsOpaqueSigned = true;
       } else {
         txt = "<hr><b><h2>";
-        txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
+        txt.append( i18n( "The crypto engine returned no cleartext data !" ) );
         txt.append( "</h2></b>" );
         txt.append( "<br>&nbsp;<br>" );
         txt.append( i18n( "Status: " ).local8Bit() );
@@ -1790,7 +1801,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     }
     else {
       txt = "<hr><b><h2>";
-      txt.append( i18n( "Signature could not be verified!" ) );
+      txt.append( i18n( "Signature could *not* be verified !" ) );
       txt.append( "</h2></b>" );
       txt.append( "<br>&nbsp;<br>" );
       txt.append( i18n( "Status: " ).local8Bit() );

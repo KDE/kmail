@@ -453,13 +453,13 @@ protected:
   QCheckBox    *mShowColorbarCheck;
   QCheckBox    *mMessageSizeCheck;
   QCheckBox    *mNestedMessagesCheck;
-    QCheckBox  *mCryptoIconsCheck;
-    QButtonGroup *mNestingPolicy;
+  QCheckBox    *mCryptoIconsCheck;
+  QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
-    QPushButton  *mLayout1PB, *mLayout2PB, *mLayout3PB, *mLayout4PB, *mLayout5PB;
-    QCheckBox    *mShowMIMETreeCB;
-    QButtonGroup *mWindowLayoutVBG;
-    
+  QPushButton  *mLayout1PB, *mLayout2PB, *mLayout3PB, *mLayout4PB, *mLayout5PB;
+  QButtonGroup *mShowMIMETreeMode;
+  QButtonGroup *mWindowLayoutBG;
+
   enum { numDateDisplayConfig = 4 };
   static const struct dateDisplayConfigType {
     const char *  displayName;

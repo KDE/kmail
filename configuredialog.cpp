@@ -80,6 +80,7 @@
 #include <qwhatsthis.h>
 #include <qwidgetstack.h>
 #include <qvgroupbox.h>
+#include <qhgroupbox.h>
 #include <qvbuttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
@@ -2198,49 +2199,66 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
     new QCheckBox( i18n("&Thread list of message headers"),
                    generalOptionsVBG );
 
-  // The window layout
-  QVGroupBox* visibleVBG = new QVGroupBox( i18n( "W&indow Layout" ), this );
-  mWindowLayoutVBG = new QButtonGroup( this );
-  mWindowLayoutVBG->hide();
-  mWindowLayoutVBG->setExclusive( true );
-  vlay->addWidget( visibleVBG );
-  visibleVBG->layout()->setSpacing( KDialog::spacingHint() );
 
-  QHBox* layoutHB = new QHBox( visibleVBG );
+  // window layout and MIME tree viewer
+  QHBoxLayout* hlayWindowLayoutAndMIMETree = new QHBoxLayout();
+  vlay->addLayout( hlayWindowLayoutAndMIMETree );
+  hlayWindowLayoutAndMIMETree->setSpacing( KDialog::spacingHint() );
+
+  // The window layout
+  QHGroupBox* visibleHGB = new QHGroupBox( i18n( "W&indow Layout" ), this );
+  hlayWindowLayoutAndMIMETree->addWidget( visibleHGB );
+  visibleHGB->layout()->setSpacing( KDialog::spacingHint() );
+
+  mWindowLayoutBG = new QButtonGroup( this );
+  mWindowLayoutBG->hide();
+  mWindowLayoutBG->setExclusive( true );
+
+  QHBox* layoutHB = new QHBox( visibleHGB );
   layoutHB->layout()->setSpacing( KDialog::spacingHint() );
 
   mLayout1PB = new QPushButton( layoutHB );
-  mWindowLayoutVBG->insert( mLayout1PB, 0 );
+  mWindowLayoutBG->insert( mLayout1PB, 0 );
   mLayout1PB->setPixmap( UserIcon( "kmailwindowlayout1" ) );
   mLayout1PB->setFixedSize( mLayout1PB->sizeHint() );
   mLayout1PB->setToggleButton( true );
 
   mLayout2PB = new QPushButton( layoutHB );
-  mWindowLayoutVBG->insert( mLayout2PB, 1 );
+  mWindowLayoutBG->insert( mLayout2PB, 1 );
   mLayout2PB->setPixmap( UserIcon( "kmailwindowlayout2" ) );
   mLayout2PB->setFixedSize( mLayout2PB->sizeHint() );
   mLayout2PB->setToggleButton( true );
 
   mLayout3PB = new QPushButton( layoutHB );
-  mWindowLayoutVBG->insert( mLayout3PB, 2 );
+  mWindowLayoutBG->insert( mLayout3PB, 2 );
   mLayout3PB->setPixmap( UserIcon( "kmailwindowlayout3" ) );
   mLayout3PB->setFixedSize( mLayout3PB->sizeHint() );
   mLayout3PB->setToggleButton( true );
 
   mLayout4PB = new QPushButton( layoutHB );
-  mWindowLayoutVBG->insert( mLayout4PB, 3 );
+  mWindowLayoutBG->insert( mLayout4PB, 3 );
   mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4" ) );
   mLayout4PB->setFixedSize( mLayout4PB->sizeHint() );
   mLayout4PB->setToggleButton( true );
 
   mLayout5PB = new QPushButton( layoutHB );
-  mWindowLayoutVBG->insert( mLayout5PB, 4 );
+  mWindowLayoutBG->insert( mLayout5PB, 4 );
   mLayout5PB->setPixmap( UserIcon( "kmailwindowlayout5" ) );
   mLayout5PB->setFixedSize( mLayout5PB->sizeHint() );
   mLayout5PB->setToggleButton( true );
 
-  mShowMIMETreeCB = new QCheckBox( i18n( "Show &MIME tree" ),
-                                   visibleVBG );
+  // the MIME Tree Viewer
+  mShowMIMETreeMode =
+    new QVButtonGroup( i18n("Show &MIME tree"), this );
+  hlayWindowLayoutAndMIMETree->addWidget( mShowMIMETreeMode );
+  mShowMIMETreeMode->layout()->setSpacing( KDialog::spacingHint() );
+
+  mShowMIMETreeMode->insert(
+    new QRadioButton( i18n("Never"),  mShowMIMETreeMode ), 0 );
+  mShowMIMETreeMode->insert(
+    new QRadioButton( i18n("Smart"),  mShowMIMETreeMode ), 1 );
+  mShowMIMETreeMode->insert(
+    new QRadioButton( i18n("Always"), mShowMIMETreeMode ), 2 );
 
   // a button group for four radiobuttons (by default exclusive):
   mNestingPolicy =
@@ -2327,11 +2345,13 @@ void AppearancePage::LayoutTab::setup() {
   int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
   if( windowLayout < 0 || windowLayout > 4 )
       windowLayout = 0;
-  mWindowLayoutVBG->setButton( windowLayout );
-  bool showMIME = geometry.readBoolEntry( "showMIME", true );
-  mShowMIMETreeCB->setChecked( showMIME );
+  mWindowLayoutBG->setButton( windowLayout );
 
-  int num = geometry.readNumEntry( "nestingPolicy", 3 );
+  int num = geometry.readNumEntry( "showMIME", 1 );
+  if ( num < 0 || num > 2 ) num = 1;
+  mShowMIMETreeMode->setButton( num );
+
+  num = geometry.readNumEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
   mNestingPolicy->setButton( num );
 
@@ -2369,12 +2389,13 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
       int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
       if( windowLayout < 0 || windowLayout > 4 )
           windowLayout = 0;
-      mWindowLayoutVBG->setButton( windowLayout );
+      mWindowLayoutBG->setButton( windowLayout );
   }
 
   if( geometry.hasKey( "showMIME" ) ) {
-      bool showMIME = geometry.readBoolEntry( "showMIME", true );
-      mShowMIMETreeCB->setChecked( showMIME );
+    int num = geometry.readNumEntry( "showMIME" );
+    if ( num < 0 || num > 2 ) num = 1;
+    mShowMIMETreeMode->setButton( num );
   }
 
 
@@ -2430,8 +2451,9 @@ void AppearancePage::LayoutTab::apply() {
   }
 
   geometry.writeEntry( "windowLayout",
-                       mWindowLayoutVBG->id( mWindowLayoutVBG->selected() ) );
-  geometry.writeEntry( "showMIME", mShowMIMETreeCB->isChecked() );
+                       mWindowLayoutBG->id( mWindowLayoutBG->selected() ) );
+  geometry.writeEntry( "showMIME",
+                       mShowMIMETreeMode->id( mShowMIMETreeMode->selected()));
 
   geometry.writeEntry( "nestingPolicy",
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
