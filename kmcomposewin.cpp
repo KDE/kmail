@@ -4255,7 +4255,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
      // end of FIXME-AFTER-KDE-3.1
      mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mAttachMenu->insertItem(i18n("Save As..."), this, SLOT(slotAttachSave()));
-     mAttachMenu->insertItem(i18n("Properties..."),
+     mAttachMenu->insertItem(i18n("Properties"),
 		   this, SLOT(slotAttachProperties()));
      mAttachMenu->insertSeparator();
      mAttachMenu->insertItem(i18n("Add Attachment..."), this, SLOT(slotAttachFile()));

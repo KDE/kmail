@@ -996,7 +996,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     {
       folderMenu->insertSeparator();
       folderMenu->insertItem(SmallIcon("configure"),
-                             i18n("&Properties..."),
+                             i18n("&Properties"),
                              fti,
                              SLOT(properties()));
     }

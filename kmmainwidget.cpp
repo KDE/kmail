@@ -1962,7 +1962,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, this,
 		      SLOT(slotAddFolder()), actionCollection(), "new_folder" );
 
-  modifyFolderAction = new KAction( i18n("&Properties..."), "configure", 0, this,
+  modifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   markAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
