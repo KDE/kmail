@@ -36,6 +36,11 @@
 // other includes:
 #include <assert.h>
 
+// Using this define is save now since we made sure the
+// respective check boxes are enabled only if an active
+// plugin is there.
+#define AEGYPTEN
+
 static const struct {
   KMMsgPartDialog::Encoding encoding;
   const char * displayName;

@@ -3608,6 +3608,8 @@ int KMComposeWin::currentAttachmentNum()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachProperties()
 {
+  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  
   int idx = currentAttachmentNum();
 
   if (idx < 0) return;
@@ -3617,11 +3619,27 @@ void KMComposeWin::slotAttachProperties()
 
   KMMsgPartDialogCompat dlg;
   dlg.setMsgPart(msgPart);
+  KMAtmListViewItem* listItem = (KMAtmListViewItem*)(mAtmItemList.at(idx));
+  if( cryptPlug && listItem ) {
+    dlg.setCanSign(    true );
+    dlg.setCanEncrypt( true );
+    dlg.setSigned(    listItem->isSign()    );
+    dlg.setEncrypted( listItem->isEncrypt() );
+  } else {
+    dlg.setCanSign(    false );
+    dlg.setCanEncrypt( false );
+  }
   if (dlg.exec())
   {
     mAtmModified = TRUE;
     // values may have changed, so recreate the listbox line
-    msgPartToItem(msgPart, (KMAtmListViewItem*)(mAtmItemList.at(idx)));
+    if( listItem ) {
+      msgPartToItem(msgPart, listItem);
+      if( cryptPlug ) {
+        listItem->setSign(    dlg.isSigned()    );
+        listItem->setEncrypt( dlg.isEncrypted() );
+      }
+    }
   }
   if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 }
