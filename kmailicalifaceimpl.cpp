@@ -344,8 +344,9 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
 {
   // TODO: khz
   QMap<QString, bool> aMap;
-  KMail::FolderContentsType cntType folderContentsType( contentsType );
-  return dummy;
+  KMail::FolderContentsType cntType = folderContentsType( contentsType );
+  
+  return aMap;
 }
 
 bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
