@@ -84,12 +84,59 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mNeedsAssembly(true),
     mDecodeHTML(false),
     mOverrideCodec(0),
+    mFolderOffset( 0 ),
     mMsgSize(0),
-    mUnencryptedMsg(0)
+    mMsgLength( 0 ),
+    mDate( 0 ),
+    mEncryptionState( KMMsgEncryptionStateUnknown ),
+    mSignatureState( KMMsgSignatureStateUnknown ),
+    mMDNSentState( KMMsgMDNStateUnknown ),
+    mUnencryptedMsg(0),
+    mLastUpdated( 0 )
 {
+}
+
+//-----------------------------------------------------------------------------
+KMMessage::KMMessage(KMFolderIndex* parent): KMMsgBase(parent)
+{
+  mNeedsAssembly = FALSE;
+  mMsg = new DwMessage;
+  mOverrideCodec = 0;
+  mDecodeHTML = FALSE;
+  mMsgSize = 0;
+  mMsgLength = 0;
+  mFolderOffset = 0;
+  mStatus  = KMMsgStatusNew;
   mEncryptionState = KMMsgEncryptionStateUnknown;
   mSignatureState = KMMsgSignatureStateUnknown;
+  mMDNSentState = KMMsgMDNStateUnknown;
+  mDate    = 0;
+  mUnencryptedMsg = 0;
+  mLastUpdated = 0;
 }
+
+
+//-----------------------------------------------------------------------------
+KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
+{
+  mNeedsAssembly = FALSE;
+  mMsg = new DwMessage;
+  mOverrideCodec = 0;
+  mDecodeHTML = FALSE;
+  mMsgSize = msgInfo.msgSize();
+  mMsgLength = 0;
+  mFolderOffset = msgInfo.folderOffset();
+  mStatus = msgInfo.status();
+  mEncryptionState = msgInfo.encryptionState();
+  mSignatureState = msgInfo.signatureState();
+  mMDNSentState = msgInfo.mdnSentState();
+  mDate = msgInfo.date();
+  mFileName = msgInfo.fileName();
+  KMMsgBase::assign(&msgInfo);
+  mUnencryptedMsg = 0;
+  mLastUpdated = 0;
+}
+
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(const KMMessage& other) :
@@ -98,6 +145,7 @@ KMMessage::KMMessage(const KMMessage& other) :
     mMsg(0)
 {
   mUnencryptedMsg = 0;
+  mLastUpdated = 0;
   assign( other );
 }
 
@@ -131,6 +179,14 @@ void KMMessage::assign( const KMMessage& other )
 }
 
 //-----------------------------------------------------------------------------
+KMMessage::~KMMessage()
+{
+  delete mMsg;
+  kmkernel->undoStack()->msgDestroyed( this );
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMessage::setReferences(const QCString& aStr)
 {
   if (!aStr) return;
@@ -154,55 +210,6 @@ QCString KMMessage::id() const
 void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 {
   MessageProperty::setSerialCache( this, newMsgSerNum );
-}
-
-
-//-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMFolderIndex* parent): KMMsgBase(parent)
-{
-  mNeedsAssembly = FALSE;
-  mMsg = new DwMessage;
-  mOverrideCodec = 0;
-  mDecodeHTML = FALSE;
-  mMsgSize = 0;
-  mMsgLength = 0;
-  mFolderOffset = 0;
-  mStatus  = KMMsgStatusNew;
-  mEncryptionState = KMMsgEncryptionStateUnknown;
-  mSignatureState = KMMsgSignatureStateUnknown;
-  mMDNSentState = KMMsgMDNStateUnknown;
-  mDate    = 0;
-  mFileName = "";
-  mUnencryptedMsg = 0;
-}
-
-
-//-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
-{
-  mNeedsAssembly = FALSE;
-  mMsg = new DwMessage;
-  mOverrideCodec = 0;
-  mDecodeHTML = FALSE;
-  mMsgSize = msgInfo.msgSize();
-  mMsgLength = 0;
-  mFolderOffset = msgInfo.folderOffset();
-  mStatus = msgInfo.status();
-  mEncryptionState = msgInfo.encryptionState();
-  mSignatureState = msgInfo.signatureState();
-  mMDNSentState = msgInfo.mdnSentState();
-  mDate = msgInfo.date();
-  mFileName = msgInfo.fileName();
-  KMMsgBase::assign(&msgInfo);
-  mUnencryptedMsg = 0;
-}
-
-
-//-----------------------------------------------------------------------------
-KMMessage::~KMMessage()
-{
-  delete mMsg;
-  kmkernel->undoStack()->msgDestroyed( this );
 }
 
 
