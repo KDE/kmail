@@ -326,10 +326,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
     QCString str = kFileToString( messageFile.path(), true, false );
     if( !str.isEmpty() )
-      msg->setBody( str );
+      msg->setBody( QString::fromLocal8Bit( str ).utf8() );
   }
-
-  if (!body.isEmpty()) msg->setBody(body.utf8());
+  else if (!body.isEmpty())
+    msg->setBody(body.utf8());
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
