@@ -1248,18 +1248,30 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   urgentAction->setChecked( newMsg->isUrgent() );
 
   // enable/disable encryption if the message was/wasn't encrypted
-  if(    ( mMsg->encryptionState() == KMMsgPartiallyEncrypted )
-      || ( mMsg->encryptionState() == KMMsgFullyEncrypted ) )
-    mLastEncryptActionState = true;
-  else if( mMsg->encryptionState() == KMMsgNotEncrypted )
-    mLastEncryptActionState = false;
+  switch ( mMsg->encryptionState() ) {
+    case KMMsgFullyEncrypted: // fall through
+    case KMMsgPartiallyEncrypted:
+      mLastEncryptActionState = true;
+      break;
+    case KMMsgNotEncrypted:
+      mLastEncryptActionState = false;
+      break;
+    default: // nothing
+      break;
+  }
 
   // enable/disable signing if the message was/wasn't signed
-  if(    ( mMsg->signatureState() == KMMsgPartiallySigned )
-      || ( mMsg->signatureState() == KMMsgFullySigned ) )
-    mLastSignActionState = true;
-  else if( mMsg->signatureState() == KMMsgNotSigned )
-    mLastSignActionState = false;
+  switch ( mMsg->signatureState() ) {
+    case KMMsgFullySigned: // fall through
+    case KMMsgPartiallySigned:
+      mLastSignActionState = true;
+      break;
+    case KMMsgNotSigned:
+      mLastSignActionState = false;
+      break;
+    default: // nothing
+      break;
+  }
 
   // get PGP user id for the currently selected identity
   QCString pgpUserId = ident.pgpIdentity();
