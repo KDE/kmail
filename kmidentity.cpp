@@ -86,7 +86,7 @@ void KMIdentity::readConfig(void)
   char str[80];
   int i;
 
-  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ? 
+  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ?
 		     QString("Identity") : "Identity-" + mIdentity );
 
   mFullName = config->readEntry("Name");
@@ -122,6 +122,7 @@ void KMIdentity::readConfig(void)
   mSignatureFile = config->readEntry("Signature File");
   mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
   mSignatureInlineText = config->readEntry("Inline Signature");
+  mFcc = config->readEntry("Fcc");
   if (mIdentity == i18n( "Default" ))
     mTransport = QString::null;
   else
@@ -134,7 +135,7 @@ void KMIdentity::writeConfig(bool aWithSync)
 {
   KConfig* config = kapp->config();
 
-  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ? 
+  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ?
 		     QString("Identity") : "Identity-" + mIdentity );
 
   config->writeEntry("Identity", mIdentity);
@@ -148,6 +149,7 @@ void KMIdentity::writeConfig(bool aWithSync)
   config->writeEntry("UseSignatureFile", mUseSignatureFile );
   config->writeEntry("VCardFile", mVCardFile);
   config->writeEntry("Transport", mTransport);
+  config->writeEntry("Fcc", mFcc);
 
   if (aWithSync) config->sync();
 }
@@ -253,11 +255,19 @@ void KMIdentity::setUseSignatureFile( bool flag )
   mUseSignatureFile = flag;
 }
 
+
 //-----------------------------------------------------------------------------
 void KMIdentity::setTransport(const QString &str)
 {
   mTransport = str;
 }
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setFcc(const QString &str)
+{
+  mFcc = str;
+}
+
 
 //-----------------------------------------------------------------------------
 QString KMIdentity::signature(void) const

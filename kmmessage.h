@@ -167,6 +167,10 @@ public:
   virtual QString bcc(void) const;
   virtual void setBcc(const QString& aStr);
 
+  /** Get or set the 'Fcc' header field */
+  virtual QString fcc(void) const;
+  virtual void setFcc(const QString& aStr);
+
   /** Get or set the 'From' header field */
   virtual QString from(void) const;
   virtual void setFrom(const QString& aStr);
@@ -366,6 +370,9 @@ public:
 protected:
     /** Convert wildcards into normal string */
     QString formatString(const QString&) const;
+
+    /** Contains the name of the Fcc folder */
+    QString mFcc;
 
 protected:
     DwMessage* mMsg;

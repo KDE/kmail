@@ -38,6 +38,7 @@ class KpgpConfig;
 class ColorListBox;
 class KMAccount;
 class KMTransportInfo;
+class KMFolder;
 
 #include <klistview.h>
 #include <kdialogbase.h>
@@ -120,6 +121,7 @@ class IdentityEntry
     bool    signatureFileIsAProgram() const;
     bool    useSignatureFile() const;
     QString transport() const;
+    QString fcc() const;
 
     void setIdentity( const QString &identity );
     void setFullName( const QString &fullName );
@@ -133,6 +135,7 @@ class IdentityEntry
     void setSignatureFileIsAProgram( bool signatureFileIsAProgram );
     void setUseSignatureFile( bool useSignatureFile );
     void setTransport(const QString &transport);
+    void setFcc( const QString &fcc );
 
   private:
     QString mIdentity;
@@ -146,6 +149,8 @@ class IdentityEntry
     bool    mSignatureFileIsAProgram;
     bool    mUseSignatureFile;
     QString mTransport;
+    QString mFcc;
+
 };
 
 
@@ -261,6 +266,7 @@ private:
       QLineEdit      *pgpIdentityEdit;
       QCheckBox      *transportCheck;
       QComboBox      *transportCombo;
+      QComboBox      *fccCombo;
       KURLRequester  *signatureFileEdit;
       QLabel         *signatureFileLabel;
       QCheckBox      *signatureExecCheck;
@@ -269,6 +275,8 @@ private:
       QRadioButton   *signatureTextRadio;
       QMultiLineEdit *signatureTextEdit;
       QString        mActiveIdentity;
+      QStringList    mFolderNames;
+      QValueList<QGuardedPtr<KMFolder> > mFolderList;	  
     };
     struct NetworkWidget
     {

@@ -92,8 +92,15 @@ public:
   QString transport(void) { return mTransport; }
   virtual void setTransport(const QString&);
 
+
+  /** The folder where sent messages from this identity will be
+      stored by default. */
+  QString fcc(void) { return mFcc; }
+  virtual void setFcc(const QString&);
+
 protected:
   QString mIdentity, mFullName, mOrganization, mPgpIdentity, mEmailAddr;
+  QString mFcc;
   QString mReplyToAddr, mSignatureFile;
   QString mSignatureInlineText, mTransport;
   QString mVCardFile;

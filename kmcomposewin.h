@@ -479,11 +479,11 @@ private:
 
 protected:
   QWidget   *mMainWidget;
-  QComboBox *mIdentity, *mTransport;
+  QComboBox *mIdentity, *mTransport, *mFcc;
   KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc, *mEdtSubject;
-  QLabel    *mLblIdentity, *mLblTransport;
+  QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
   QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
-  QCheckBox *mBtnIdentity, *mBtnTransport;
+  QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
   QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;
@@ -520,7 +520,7 @@ protected:
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
-  KToggleAction *identityAction, *transportAction;
+  KToggleAction *identityAction, *transportAction, *fccAction;
   KToggleAction *toolbarAction, *statusbarAction;
   KToggleAction *wordWrapAction;
 
@@ -529,6 +529,9 @@ protected:
   QCString mCharset;
   QCString mDefCharset;
   QFont mSavedEditorFont;
+
+  QStringList mFolderNames;
+  QValueList<QGuardedPtr<KMFolder> > mFolderList;
 
 private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );

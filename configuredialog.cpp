@@ -57,6 +57,7 @@
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
 #include "kmfolder.h"
+#include "kmfoldermgr.h"
 #include "kmheaders.h"
 #include "kmidentity.h"
 #include "kmsender.h"
@@ -558,18 +559,25 @@ void ConfigureDialog::makeIdentityPage( void )
   label->setBuddy(mIdentity.replytoEdit);
   glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );
 
-  label = new QLabel( i18n("PGP &User Identity:"), page );
+  label = new QLabel( i18n("Sen&t-mail Folder"), page );
   glay->addWidget( label, 6, 0 );
+  mIdentity.fccCombo = new QComboBox( page );
+  mIdentity.fccCombo->setEditable( FALSE );
+  label->setBuddy(mIdentity.fccCombo);
+  glay->addMultiCellWidget( mIdentity.fccCombo, 6, 6, 1, 2 );
+
+  label = new QLabel( i18n("PGP &User Identity:"), page );
+  glay->addWidget( label, 7, 0 );
   mIdentity.pgpIdentityEdit = new QLineEdit( page );
   label->setBuddy(mIdentity.pgpIdentityEdit);
-  glay->addMultiCellWidget( mIdentity.pgpIdentityEdit, 6, 6, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.pgpIdentityEdit, 7, 7, 1, 2 );
 
   mIdentity.transportCheck = new QCheckBox( i18n("Spe&cial transport"), page );
-  glay->addWidget( mIdentity.transportCheck, 7, 0 );
+  glay->addWidget( mIdentity.transportCheck, 8, 0 );
   mIdentity.transportCombo = new QComboBox( page );
   mIdentity.transportCombo->setEditable( TRUE );
   label->setBuddy(mIdentity.transportCombo);
-  glay->addMultiCellWidget( mIdentity.transportCombo, 7, 7, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.transportCombo, 8, 8, 1, 2 );
   connect(mIdentity.transportCheck, SIGNAL(clicked()),
     SLOT(slotSpecialTransportClicked()));
 
@@ -580,10 +588,10 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.signatureFileRadio =
     new QRadioButton( i18n("&Use a signature from file"), page );
   buttonGroup->insert( mIdentity.signatureFileRadio );
-  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 8, 8, 0, 1 );
+  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 9, 9, 0, 1 );
 
   mIdentity.signatureFileLabel = new QLabel( i18n("&Signature File:"), page );
-  glay->addWidget( mIdentity.signatureFileLabel, 9, 0 );
+  glay->addWidget( mIdentity.signatureFileLabel, 10, 0 );
   mIdentity.signatureFileEdit = new KURLRequester( page );
   mIdentity.signatureFileLabel->setBuddy(mIdentity.signatureFileEdit);
   QPushButton *button = mIdentity.signatureFileEdit->button();
@@ -591,26 +599,26 @@ void ConfigureDialog::makeIdentityPage( void )
   button->setAutoDefault( false );
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
-  glay->addMultiCellWidget( mIdentity.signatureFileEdit, 9, 9, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureFileEdit, 10, 10, 1, 2 );
 
   mIdentity.signatureExecCheck =
     new QCheckBox( i18n("&The file is a program"), page );
-  glay->addWidget( mIdentity.signatureExecCheck, 10, 1 );
+  glay->addWidget( mIdentity.signatureExecCheck, 11, 1 );
   mIdentity.signatureEditButton = new QPushButton( i18n("Ed&it File"), page );
   connect( mIdentity.signatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureEditButton, 10, 2 );
+  glay->addWidget( mIdentity.signatureEditButton, 11, 2 );
   button->setMinimumSize( mIdentity.signatureEditButton->sizeHint() );
 
   mIdentity.signatureTextRadio =
     new QRadioButton( i18n("&Specify signature below"), page );
   buttonGroup->insert( mIdentity.signatureTextRadio );
-  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 11, 11, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 12, 12, 0, 2 );
 
   mIdentity.signatureTextEdit = new QMultiLineEdit( page );
   mIdentity.signatureTextEdit->setText("Does not work yet");
-  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 12, 12, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 13, 13, 0, 2 );
 }
 
 
@@ -1031,7 +1039,7 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.sendMethodCombo->insertItem(i18n("Send now"));
   mComposer.sendMethodCombo->insertItem(i18n("Send later"));
   glay->addWidget( mComposer.sendMethodCombo, 1, 1 );
- 
+
   label = new QLabel( i18n("Message &Property:"), sendingGroup );
   glay->addWidget( label, 2, 0 );
   mComposer.messagePropertyCombo = new QComboBox( sendingGroup );
@@ -1040,7 +1048,7 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.messagePropertyCombo->insertItem(
     i18n("MIME Compliant (Quoted Printable)"));
   glay->addWidget( mComposer.messagePropertyCombo, 2, 1 );
- 
+
   mComposer.confirmSendCheck =
     new QCheckBox(i18n("&Confirm before send"), sendingGroup );
   glay->addMultiCellWidget( mComposer.confirmSendCheck, 3, 3, 0, 1 );
@@ -1595,14 +1603,16 @@ void ConfigureDialog::setup( void )
   setupMiscPage();
 }
 
-
-
 void ConfigureDialog::setupIdentityPage( void )
 {
   mIdentityList.importData();
   mIdentity.identityCombo->clear();
   mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
   mIdentity.mActiveIdentity = "";
+  // populate fcc folder list
+  kernel->folderMgr()->createI18nFolderList(&mIdentity.mFolderNames, &mIdentity.mFolderList);
+  mIdentity.fccCombo->insertStringList(mIdentity.mFolderNames);
+
   slotIdentitySelectorChanged(); // This will trigger an update
 }
 
@@ -2507,6 +2517,7 @@ void ConfigureDialog::saveActiveIdentity( void )
     entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
     entry->setTransport( (mIdentity.transportCheck->isChecked()) ?
       mIdentity.transportCombo->currentText() : QString::null );
+    entry->setFcc( ( *mIdentity.mFolderList.at( mIdentity.fccCombo->currentItem() ) )->idString() );
   }
 }
 
@@ -2530,6 +2541,9 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   //
   bool useSignatureFile;
   IdentityEntry *entry = mIdentityList.get( mIdentity.mActiveIdentity );
+
+  kernel->folderMgr()->createI18nFolderList(&mIdentity.mFolderNames, &mIdentity.mFolderList);
+
   if( entry == 0 )
   {
     mIdentity.nameEdit->clear();
@@ -2543,6 +2557,12 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     useSignatureFile = true;
     mIdentity.transportCheck->setChecked( false );
     mIdentity.transportCombo->setEditText( QString::null );
+    for (int i=0; i < mIdentity.fccCombo->count(); ++i)
+      if ( ( *mIdentity.mFolderList.at( i ) )->idString() == kernel->sentFolder()->idString())
+      {
+          mIdentity.fccCombo->setCurrentItem(i);
+          break;
+      }
   }
   else
   {
@@ -2558,6 +2578,12 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.transportCheck->setChecked(!entry->transport().isEmpty());
     mIdentity.transportCombo->setEditText(entry->transport());
     mIdentity.transportCombo->setEnabled(!entry->transport().isEmpty());
+    for (int i=0; i < mIdentity.fccCombo->count(); ++i)
+      if ( ( *mIdentity.mFolderList.at( i ) )->idString() == entry->fcc() )
+      {
+          mIdentity.fccCombo->setCurrentItem(i);
+          break;
+      }
   }
 
   if( useSignatureFile == true )
@@ -2885,7 +2911,7 @@ void ConfigureDialog::slotModifySelectedTransport()
 
   KMTransportDialog *dialog = new KMTransportDialog( ti, this );
   dialog->setCaption( i18n("Modify transport") );
- 
+
   if (dialog->exec() == QDialog::Accepted )
   {
     QStringList transportNames;
@@ -3702,6 +3728,11 @@ QString IdentityEntry::transport() const
   return ( mTransport );
 }
 
+QString IdentityEntry::fcc() const
+{
+  return ( mFcc );
+}
+
 
 void IdentityEntry::setIdentity( const QString &identity )
 {
@@ -3775,6 +3806,10 @@ void IdentityEntry::setTransport( const QString &transport )
   mTransport = transport;
 }
 
+void IdentityEntry::setFcc( const QString &fcc )
+{
+  mFcc = fcc;
+}
 
 
 IdentityList::IdentityList()
@@ -3844,6 +3879,7 @@ void IdentityList::importData()
     entry.setSignatureInlineText( ident.signatureInlineText() );
     entry.setUseSignatureFile( ident.useSignatureFile() );
     entry.setTransport(ident.transport());
+    entry.setFcc(ident.fcc());
     add( entry );
   }
 }
@@ -3864,6 +3900,7 @@ void IdentityList::exportData()
     ident.setSignatureFile( e->signatureFileName(true) );
     ident.setSignatureInlineText( e->signatureInlineText() );
     ident.setTransport( e->transport() );
+    ident.setFcc( e->fcc() );
     ident.writeConfig(false);
     ids.append( e->identity() );
   }

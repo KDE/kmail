@@ -326,7 +326,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   QRegExp r( "%[\\-0-9]+" );
   int start=-1, len=0;
   bool OK = FALSE;
-  
+
   // search for '%n'
   while ( ( start = r.search( result, start + 1 ) ) > 0 ) {
     len = r.matchedLength();
@@ -648,7 +648,7 @@ public:
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
 
   virtual void argsFromString( const QString argsStr );
-  
+
   static KMFilterAction* newAction();
 };
 
@@ -1013,6 +1013,15 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   if ( !mFolder )
     return ErrorButGoOn;
 
+  kdDebug(5006) << "KMFilterActionMove::process: msg->fcc() == " << msg->fcc() << endl;
+
+  // If the user has defined a special folder to Fcc then we ignore folder filters.
+  if ( !msg->fcc().isEmpty() )
+  {
+      kdDebug(5006) << "KMFilterActionMove::process: will not process KMFilterActionWithFolder" << endl;
+      return GoOn;
+  }
+
   KMFilterAction::tempOpenFolder( mFolder );
 
   if ( msg->parent() )
@@ -1235,7 +1244,7 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
   else
     return ErrorButGoOn;
   outFile->close();
-  
+
   return GoOn;
 }
 

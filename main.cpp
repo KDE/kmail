@@ -230,6 +230,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Robert D. Williams", 0, "rwilliams@kde.org" );
   about.addAuthor( "Markus Wuebben", 0, "markus.wuebben@kde.org" );
   about.addAuthor( "Karl-Heinz Zimmer", 0, "khz@kde.org" );
+  about.addAuthor( "Roberto S. Teixeira", 0, "maragato@kde.org" );
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options

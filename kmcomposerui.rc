@@ -43,6 +43,7 @@
    <Action name="show_to" />
    <Action name="show_cc" />
    <Action name="show_bcc" />
+   <Action name="show_fcc" />
    <Action name="show_subject" />
   </Menu>
   <Menu name="attach" >

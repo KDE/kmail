@@ -154,6 +154,7 @@ QCString KMMessage::asSendableString()
   msg.removeHeaderField("X-Status");
   msg.removeHeaderField("X-KMail-Transport");
   msg.removeHeaderField("X-KMail-Identity");
+  msg.removeHeaderField("X-KMail-Fcc");
   msg.removeHeaderField("Bcc");
   return msg.asString();
 }
@@ -952,6 +953,7 @@ KMMessage* KMMessage::createBounce( bool )
   bounceMsg.removeHeaderField( "X-KMail-Mark" );
   bounceMsg.removeHeaderField( "X-KMail-Identity" );
   bounceMsg.removeHeaderField( "X-KMail-Transport" );
+  bounceMsg.removeHeaderField( "X-KMail-Fcc" );
   //FIXME If you know other KMail-specific headers, please add them.
 
   KMMessage *msg = new KMMessage;
@@ -1117,7 +1119,12 @@ void KMMessage::initHeader( QString id )
   else
     setHeaderField("X-KMail-Transport", ident.transport());
 
-  if (    !sCreateOwnMessageIdHeaders
+  if (ident.fcc().isEmpty())
+    setFcc( QString::null );
+  else
+    setFcc( ident.fcc() );
+
+  if ( !sCreateOwnMessageIdHeaders
        || sMessageIdSuffix.isEmpty()
        || sMessageIdSuffix.isNull() )
     removeHeaderField("Message-Id");
@@ -1354,6 +1361,30 @@ void KMMessage::setBcc(const QString& aStr)
   setHeaderField("Bcc", aStr);
 }
 
+//-----------------------------------------------------------------------------
+QString KMMessage::fcc(void) const
+{
+    // we return whatever has something: variable or header. We
+    // do it because if the message was in the Outbox, it'd lost
+    // the contents of the variable but the header remains.
+    QString tmp = headerField( "X-KMail-Fcc" );
+    if ( tmp.isEmpty() )
+        return mFcc;
+    return tmp;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setFcc(const QString& aStr)
+{
+  kdDebug(5006) << "KMMessage::setFcc: setting mFcc to " << aStr << endl;
+  // we keep this information in the header _and_ in a member variable
+  // because eventually the message may be put in the outbox where the
+  // variable will be lost. OTOH, when we send the message to the
+  // filter, this header will disappear so we must have a variable.
+  mFcc = aStr;
+  setHeaderField( "X-KMail-Fcc", mFcc );
+}
 
 //-----------------------------------------------------------------------------
 QString KMMessage::who(void) const

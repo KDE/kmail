@@ -16,6 +16,7 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmfolder.h"
+#include "kmfoldermgr.h"
 #include "kmtransport.h"
 
 #include <kaction.h>
@@ -75,6 +76,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mEdtTo = new KMLineEdit(this,true,mMainWidget);
   mEdtCc = new KMLineEdit(this,true,mMainWidget);
   mEdtBcc = new KMLineEdit(this,true,mMainWidget);
+  mFcc = new QComboBox(mMainWidget);
   mEdtSubject = new KMLineEdit(this,false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
   mLblTransport = new QLabel(mMainWidget);
@@ -83,9 +85,11 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mLblTo = new QLabel(mMainWidget);
   mLblCc = new QLabel(mMainWidget);
   mLblBcc = new QLabel(mMainWidget);
+  mLblFcc = new QLabel(mMainWidget);
   mLblSubject = new QLabel(mMainWidget);
   mBtnIdentity = new QCheckBox(i18n("Sticky"),mMainWidget);
   mBtnTransport = new QCheckBox(i18n("Sticky"),mMainWidget);
+  mBtnFcc = new QCheckBox(i18n("Sticky"),mMainWidget);
   mBtnTo = new QPushButton("...",mMainWidget);
   mBtnCc = new QPushButton("...",mMainWidget);
   mBtnBcc = new QPushButton("...",mMainWidget);
@@ -119,6 +123,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mBtnBcc->setFocusPolicy(QWidget::NoFocus);
   mBtnFrom->setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
+  mFcc->setFocusPolicy(QWidget::NoFocus);
 
   mAtmListBox = new QListView(mMainWidget, "mAtmListBox");
   mAtmListBox->setFocusPolicy(QWidget::NoFocus);
@@ -251,7 +256,6 @@ void KMComposeWin::setBody(QString body)
   mEditor->setText(body);
 }
 
-
 //-----------------------------------------------------------------------------
 bool KMComposeWin::event(QEvent *e)
 {
@@ -331,6 +335,10 @@ void KMComposeWin::readConfig(void)
   mBtnIdentity->setChecked(config->readBoolEntry("sticky-identity", false));
   if (mBtnIdentity->isChecked())
     mId = config->readEntry("previous-identity", mId );
+  mBtnFcc->setChecked(config->readBoolEntry("sticky-fcc", false));
+  QString previousFcc = kernel->sentFolder()->idString();
+  if (mBtnFcc->isChecked())
+    previousFcc = config->readEntry("previous-fcc", previousFcc );
   mBtnTransport->setChecked(config->readBoolEntry("sticky-transport", false));
   mTransportHistory = config->readListEntry("transport-history");
   QString currentTransport = config->readEntry("current-transport");
@@ -417,8 +425,29 @@ void KMComposeWin::readConfig(void)
   mTransport->insertStringList( mTransportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
     mTransport->setEditText( currentTransport );
-}
 
+  kernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
+  mFcc->insertStringList( mFolderNames );
+
+  if ( !mBtnFcc->isChecked() )
+  {
+      kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentText() << endl;
+      KMIdentity i( mIdentity->currentText() );
+      kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='" << i.fcc() << "'" << endl;
+      i.readConfig();
+      if ( i.fcc().isEmpty() )
+          i.setFcc( kernel->sentFolder()->idString() );
+      previousFcc = i.fcc();
+      kdDebug() << "KMComposeWin::readConfig: previousFcc=" << previousFcc <<  endl;
+  }
+
+  for (int i=0; i < mFcc->count(); ++i)
+      if ( ( *mFolderList.at( i ) )->idString() == previousFcc)
+      {
+          mFcc->setCurrentItem(i);
+          break;
+      }
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::writeConfig(void)
@@ -514,7 +543,9 @@ void KMComposeWin::slotView(void)
     id = HDR_BCC;
   else if (act == subjectAction)
     id = HDR_SUBJECT;
-   else
+  else if (act == fccAction)
+    id = HDR_FCC;
+  else
    {
      id = 0;
      kdDebug(5006) << "Something is wrong (Oh, yeah?)" << endl;
@@ -589,6 +620,9 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) bccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
 		    mLblBcc, mEdtBcc, mBtnBcc);
+  if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sen&t-mail Folder::"),
+		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
 		    mLblSubject, mEdtSubject);
@@ -611,6 +645,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   toAction->setEnabled(!allFieldsAction->isChecked());
   ccAction->setEnabled(!allFieldsAction->isChecked());
   bccAction->setEnabled(!allFieldsAction->isChecked());
+  fccAction->setEnabled(!allFieldsAction->isChecked());
   subjectAction->setEnabled(!allFieldsAction->isChecked());
 }
 
@@ -798,6 +833,9 @@ void KMComposeWin::setupActions(void)
   bccAction = new KToggleAction (i18n("&Bcc"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_bcc");
+  fccAction = new KToggleAction (i18n("Sen&t-mail Folder"), 0, this,
+                                 SLOT(slotView()),
+                                 actionCollection(), "show_fcc");
   subjectAction = new KToggleAction (i18n("&Subject"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_subject");
@@ -1115,6 +1153,17 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setSubject(subject());
   mMsg->setReplyTo(replyTo());
   mMsg->setBcc(bcc());
+
+  KMIdentity id( mIdentity->currentText() );
+  id.readConfig();
+  kdDebug() << "KMComposeWin::applyChanges: " << mFcc->currentText() << "==" << id.fcc() << "?" << endl;
+
+  KMFolder *f = *mFolderList.at( mFcc->currentItem() );
+
+  if ( f->idString() == id.fcc() )
+      mMsg->setFcc( QString::null );
+  else
+      mMsg->setFcc( f->idString() );
 
   if (mIdentity->currentText() == i18n("Default"))
     mMsg->removeHeaderField("X-KMail-Identity");
@@ -2069,7 +2118,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
         mEdtSubject->setFocus();
         int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
     		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"));
-        if( rc == KMessageBox::No ) 
+        if( rc == KMessageBox::No )
         {
            busy = false;
            return;
@@ -2379,6 +2428,23 @@ void KMComposeWin::slotIdentityActivated(int)
       mTransport->insertItem(transp,i);
       mTransport->setCurrentItem(i);
     }
+  }
+
+  if ( !mBtnFcc->isChecked() )
+  {
+      if ( ident.fcc().isEmpty() )
+          ident.setFcc( kernel->sentFolder()->idString() );
+
+      kdDebug(5006) << "KMComposeWin::slotIdentityActivated: mFcc->count() = " << mFcc->count() << endl;
+
+      for ( int i = 0; i < mFcc->count(); ++i )
+      {
+          if ( ( *mFolderList.at( i ) )->idString() == ident.fcc() )
+          {
+              mFcc->setCurrentItem( i );
+              break;
+          }
+      }
   }
 
   if (((pos >= 0) && (pos + mOldSigText.length() + 5 == edtText.length())) ||

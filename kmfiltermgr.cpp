@@ -2,7 +2,10 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
+#include <kmessagebox.h>
+#include <klocale.h>
 
+#include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmfilterdlg.h"
 #include "kmmessage.h"
@@ -90,6 +93,27 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
   int status = -1;
   KMFilter::ReturnCode result;
 
+  // here we must treat X-KMail-Fcc on outgoing messages
+  if ( ( !msg->fcc().isEmpty() ) && ( aSet == Outbound ) )
+  {
+      KMFolder *f = kernel->folderMgr()->findIdString( msg->fcc() );
+
+      if ( f != 0 )
+      {
+          kdDebug(5006) << "KMFilterMgr::process: moving to " << f->label() << endl;
+          KMFilterAction::tempOpenFolder( f );
+          f->moveMsg( msg );
+          status = 0; // Message moved to a folder.
+      }
+      else
+      {
+          KMessageBox::information( NULL, i18n( "Could not save to '%1'. Will process filters normally." )
+                             .arg( msg->fcc() ) );
+          // we remove X-KMail-Fcc so that the filter will take over
+          msg->setFcc( QString::null );
+      }
+  }
+
   QPtrListIterator<KMFilter> it(*this);
   for (it.toFirst() ; !stopIt && it.current() ; ++it)
   {
@@ -98,9 +122,9 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 	 || ( (aSet&Inbound)  && (*it)->applyOnInbound() ) ) {
 
       if ((*it)->pattern()->matches(msg)) {
-      
+
 	result = (*it)->execActions(msg, stopIt);
-	
+
 	switch ( result ) {
 	case KMFilter::CriticalError:
 	  // Critical error - immediate return

@@ -13,7 +13,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <klocale.h>
-
+#include <kdebug.h>
 #include "kmfiltermgr.h"
 
 #include "kmsender.h"
@@ -22,6 +22,7 @@
 #include "kmbroadcaststatus.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
+#include "kmfoldermgr.h"
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -200,6 +201,7 @@ bool KMSender::sendQueued(void)
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
 {
+  KMFolder *sentFolder = 0;	
   bool someSent = mCurrentMsg;
   if (someSent) mSentMessages++;
   int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
@@ -218,6 +220,22 @@ void KMSender::doSendMsg()
       parent->removeMsg( mCurrentMsg );
     mCurrentMsg->setParent(0);
 
+    QString msgIdentity = mCurrentMsg->headerField( "X-KMail-Identity" );
+    kdDebug(5006) << "KMSender::doSendMsg: msgIdentity = " << msgIdentity << endl;
+    KMIdentity id( msgIdentity );
+    id.readConfig();
+    if ( !id.fcc().isEmpty() )
+    {
+        sentFolder = kernel->folderMgr()->findIdString( id.fcc() );
+        if ( sentFolder == 0 )
+            sentFolder = kernel->sentFolder();
+        else
+            sentFolder->open();
+    }
+
+    if ( sentFolder == 0 )
+        sentFolder = kernel->sentFolder();
+
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
     int processResult = kernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
     switch (processResult) {
@@ -226,15 +244,17 @@ void KMSender::doSendMsg()
       KMessageBox::information(0, i18n("Critical error: "
 				       "Unable to process sent mail (out of space?)"
 				       "Moving failing message to \"sent-mail\" folder."));
-      kernel->sentFolder()->quiet(TRUE);
-      kernel->sentFolder()->moveMsg(mCurrentMsg);
+      sentFolder->quiet(TRUE);
+      sentFolder->moveMsg(mCurrentMsg);
+      if ( sentFolder != kernel->sentFolder() )
+          sentFolder->close();
       cleanup();
-      kernel->sentFolder()->quiet(FALSE);
+      sentFolder->quiet(FALSE);
       return;
     case 1:
-      kernel->sentFolder()->quiet(TRUE);
-      kernel->sentFolder()->moveMsg(mCurrentMsg);
-      kernel->sentFolder()->quiet(FALSE);
+      sentFolder->quiet(TRUE);
+      sentFolder->moveMsg(mCurrentMsg);
+      sentFolder->quiet(FALSE);
     default:
       break;
     }
@@ -251,6 +271,8 @@ void KMSender::doSendMsg()
   if (!mCurrentMsg)
   {
     // no more message: cleanup and done
+    if ( ( sentFolder != kernel->sentFolder() ) && ( sentFolder != 0 ) )
+        sentFolder->close();
     cleanup();
     if (someSent)
       setStatusMsg(i18n("Queued messages successfully sent."));
@@ -558,7 +580,7 @@ QCString KMSendProc::prepareStr(const QCString &aStr, bool toCRLF,
       if ( c == '\n' ) {
 	*t++ = '\r';
 	*t++ = c;
-	
+
 	if ( noSingleDot && (*s) == '.' ) {
 	  s++;
 	  *t++ = '.';
@@ -819,7 +841,7 @@ bool KMSendSendmail::addOneRecipient(const QString& aRcpt)
 //=============================================================================
 //=============================================================================
 KMSendSMTP::KMSendSMTP(KMSender *sender)
-  : KMSendProc(sender), 
+  : KMSendProc(sender),
     mInProcess(false),
     mJob(0),
     mSlave(0)
@@ -844,7 +866,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   // recipients
   mQueryField = "&to=";
-  if(!addRecipients(aMsg->headerAddrField("To"))) 
+  if(!addRecipients(aMsg->headerAddrField("To")))
   {
     return FALSE;
   }
@@ -864,13 +886,13 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   if(!aMsg->subject().isEmpty())
     mQuery += QString("&subject=") + aMsg->subject();
-  
+
   KURL destination;
- 
+
   destination.setProtocol((ti->encryption == "SSL") ? "smtps" : "smtp");
   destination.setHost(ti->host);
   destination.setPort(ti->port.toUShort());
-  
+
   if (ti->auth)
   {
     if(ti->user.isEmpty() || ti->pass.isEmpty())
@@ -904,25 +926,25 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     abort();
     return false;
   }
-  
+
   destination.setPath("/send");
   destination.setQuery(KURL::encode_string(mQuery));
 
   mQuery = "";
 
   mMessage = prepareStr(aMsg->asSendableString(), TRUE);
-  
+
   if ((mJob = KIO::put(destination, -1, false, false, false)))
   {
       KIO::Scheduler::assignJobToSlave(mSlave, mJob);
       connect(mJob, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
-      connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)), 
+      connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
               this, SLOT(dataReq(KIO::Job *, QByteArray &)));
       mSendOk = true;
       mInProcess = true;
       return mSendOk;
   }
-  else 
+  else
   {
     abort();
     return false;
@@ -943,13 +965,13 @@ bool KMSendSMTP::finish(bool b)
     mJob = 0;
     mSlave = 0;
   }
-  
+
   if (mSlave)
   {
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
-  
+
   mInProcess = false;
   return KMSendProc::finish(b);
 }
