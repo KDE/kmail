@@ -90,7 +90,7 @@ void KMAcctLocal::processNewMail(bool)
   hasNewMail = false;
 
   QFileInfo fi( location() );
-  if ( fi.size() == 0 ) {
+  if ( fi.size() == 0 && precommand().isEmpty() ) {
     emit finishedCheck(hasNewMail);
     return;
   }
