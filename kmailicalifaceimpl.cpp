@@ -47,7 +47,6 @@
 #include "kmfolderimap.h"
 #include "globalsettings.h"
 #include "kmacctmgr.h"
-#include "kmgroupware.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
