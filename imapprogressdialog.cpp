@@ -47,8 +47,7 @@ ProgressListViewItem::ProgressListViewItem(int col, int pro, QListView* parent,
 {
   pbcol = col;
   prog = pro;
-  mProgress = new QProgressBar( 100, parent );
-  //  progress->hide();
+  mProgress = new QProgressBar( 100, 0 );
   mProgress->setProgress( prog );
 }
 
@@ -67,8 +66,7 @@ ProgressListViewItem::ProgressListViewItem(int col, int pro, QListView* parent,
 {
   pbcol = col;
   prog = pro;
-  mProgress = new QProgressBar( 100, parent );
-  //  progress->hide();
+  mProgress = new QProgressBar( 100, 0 );
   mProgress->setProgress( prog );
 }
 
