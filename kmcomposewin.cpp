@@ -2856,6 +2856,19 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!saveInDrafts)
   {
+    if ( from().isEmpty() ) {
+      if ( !( mShowHeaders & HDR_FROM ) ) {
+        mShowHeaders |= HDR_FROM;
+        rethinkFields( false );
+      }
+      mEdtFrom->setFocus();
+      KMessageBox::sorry( this,
+                          i18n("You must enter your email address in the "
+                               "From: field. You should also set your email "
+                               "address for all identities, so that you do "
+                               "not have to enter it for each message.") );
+      return;
+    }
     if (to().isEmpty() && cc().isEmpty() && bcc().isEmpty())
     {
       mEdtTo->setFocus();
@@ -3254,6 +3267,9 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
 
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
+  // make sure the From field is shown if it's empty
+  if ( mEdtFrom->text().isEmpty() )
+    mShowHeaders |= HDR_FROM;
   mEdtReplyTo->setText(ident.replyToAddr());
   // don't overwrite the BCC field when the user has edited it and the
   // BCC field of the new identity is empty
@@ -3350,7 +3366,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   mEditor->setModified(TRUE);
   mId = uoid;
 
-  // make sure the BCC field is shown if necessary
+  // make sure the From and BCC fields are shown if necessary
   rethinkFields( false );
 }
 
