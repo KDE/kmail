@@ -1121,7 +1121,10 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
 
   delete mRootNode;
-  mRootNode = new partNode( mainBody, mainType, mainSubType, true );
+  if ( firstBodyPart && mainType == DwMime::kTypeText )
+    mRootNode = new partNode( firstBodyPart );
+  else
+    mRootNode = new partNode( mainBody, mainType, mainSubType, true );
   mRootNode->setFromAddress( aMsg->from() );
 
   QString cntDesc = aMsg->subject();
@@ -1614,10 +1617,22 @@ void KMReaderWin::slotCopySelectedText()
 //-----------------------------------------------------------------------------
 void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 {
-  KMMessage* msg = new KMMessage;
   assert(aMsgPart!=0);
-  msg->fromString(aMsgPart->bodyDecoded());
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  KMMessage* msg;
+  if (node && node->dwPart()->Body().Message()) {
+    // make a deep copy
+    msg = new KMMessage( new DwMessage(*node->dwPart()->Body().Message()) );
+  } else {
+    msg = new KMMessage;
+    msg->fromString(aMsgPart->bodyDecoded());
+  }
   assert(msg != 0);
+  // some information that is needed for imap messages with LOD
+  msg->setParent( message()->parent() );
+  if ( !message()->headerField("X-UID").isEmpty() )
+    msg->setHeaderField("X-UID", message()->headerField("X-UID"));
+  msg->setComplete(true);
   KMReaderMainWin *win = new KMReaderMainWin();
   win->showMsg( overrideCodec(), msg );
   win->resize(550,600);
@@ -1775,8 +1790,10 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
   QString str, pname, cmd, fileName;
 
   partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
-  if( !node )
+  if( !node ) {
+    kdWarning(5006) << "KMReaderWin::openAttachment - could not find node " << id << endl;
     return;
+  }
 
   KMMessagePart& msgPart = node->msgPart();
   if (qstricmp(msgPart.typeStr(), "message")==0)
@@ -1874,8 +1891,10 @@ void KMReaderWin::slotAtmSave()
     return;
 
   partNode * node = mRootNode->findId( mAtmCurrent );
-  if ( !node )
+  if ( !node ) {
+    kdWarning(5006) << "KMReaderWin::slotAtmSave - could not find node " << mAtmCurrent << endl;
     return;
+  }
 
   QPtrList<partNode> parts;
   parts.append( node );
@@ -1883,26 +1902,6 @@ void KMReaderWin::slotAtmSave()
   KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts,
       message(), false );
   command->start();
-/*
-  const KMMessagePart & msgPart = node->msgPart();
-
-  // prepend the previously used save dir,
-  // replace all ':' with '_' because ':' isn't allowed on FAT volumes
-  const QString fileName =
-    mSaveAttachDir + mAtmCurrentName.section( '/', -1 ).replace( ':', '_' );
-
-  // ### getSaveURL should allow setting "::<attachments>" _and_ a
-  // ### proposed filename (currently, it's xor)...
-  // ### We could then get rid of mSaveAttachDir!
-  const KURL url = KFileDialog::getSaveURL( fileName, QString::null, this,
-					    i18n("Save Attachment As") );
-  if ( url.isEmpty() )
-    return;
-
-  mSaveAttachDir = url.directory() + '/';
-
-  kmkernel->byteArrayToRemoteFile( msgPart.bodyDecodedBinary(), url );
-  */
 }
 
 

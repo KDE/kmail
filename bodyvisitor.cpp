@@ -190,8 +190,12 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  bool BodyVisitorHidden::addPartToList( KMMessagePart * )
+  bool BodyVisitorHidden::addPartToList( KMMessagePart * part )
   {
+    // header of an encapsulated message
+    if ( part->partSpecifier().endsWith(".HEADER") )
+      return true;
+
     return false;
   }
   

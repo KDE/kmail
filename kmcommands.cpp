@@ -1906,7 +1906,8 @@ void KMLoadPartsCommand::start()
         connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),
             this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
         job->start();
-      }
+      } else
+        kdWarning(5006) << "KMLoadPartsCommand - msg has no parent" << endl;
     }
     ++it;
   }
