@@ -220,13 +220,13 @@ ConfigureDialog::~ConfigureDialog() {
 }
 
 void ConfigureDialog::slotApply() {
-  GlobalSettings::writeConfig();
   KCMultiDialog::slotApply();
+  GlobalSettings::writeConfig();
 }
 
 void ConfigureDialog::slotOk() {
-  GlobalSettings::writeConfig();
   KCMultiDialog::slotOk();
+  GlobalSettings::writeConfig();
 }
 
 void ConfigureDialog::slotUser2() {
