@@ -51,6 +51,7 @@ using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 
 using KMail::CachedImapJob;
+#include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "listjob.h"
 using KMail::ListJob;

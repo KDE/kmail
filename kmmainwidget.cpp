@@ -63,6 +63,8 @@ using KPIM::BroadcastStatus;
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
+#include "imapaccountbase.h"
+using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
 #include "subscriptiondialog.h"

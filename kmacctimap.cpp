@@ -35,6 +35,7 @@ using KPIM::BroadcastStatus;
 #include "folderstorage.h"
 #include "imapjob.h"
 using KMail::ImapJob;
+using KMail::ImapAccountBase;
 #include "progressmanager.h"
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;

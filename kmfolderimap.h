@@ -27,8 +27,6 @@
 #include "kmacctimap.h"
 #include "kmfoldermbox.h"
 #include "kmmsgbase.h"
-#include "imapaccountbase.h"
-using KMail::ImapAccountBase;
 
 #include "kio/job.h"
 #include "kio/global.h"
@@ -45,6 +43,7 @@ namespace KMail {
   class FolderJob;
   class ImapJob;
   class AttachmentStrategy;
+  class ImapAccountBase;
 }
 namespace KPIM {
   class ProgressItem;
@@ -52,6 +51,7 @@ namespace KPIM {
 using KMail::FolderJob;
 using KMail::ImapJob;
 using KMail::AttachmentStrategy;
+using KMail::ImapAccountBase;
 using KPIM::ProgressItem;
 
 class KMMsgMetaData
@@ -348,6 +348,16 @@ public slots:
    */ 
   void slotCopyMsgResult( KMail::FolderJob* job );
 
+  /**
+   * Called from the SearchJob when the folder search is done
+   */
+  void slotSearchDone( QValueList<Q_UINT32> serNums, KMSearchPattern* pattern ); 
+
+  /**
+   * Called from the SearchJob when the message was searched
+   */
+  void slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern ); 
+
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                                   KMFolder *folder, QString partSpecifier,
@@ -361,9 +371,6 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
-
-  /** Generates an IMAP search command from the pattern */
-  QString searchStringFromPattern( KMSearchPattern* );
 
 protected slots:
 
@@ -436,25 +443,6 @@ protected slots:
    */
   void slotCreatePendingFolders();
 
-  /**
-   * Do an IMAP search
-   * It uses the mLastSearchPattern for this
-   */
-  void slotSearch();
-
-  /**
-   * Is called when the search is done
-   */ 
-  void slotSearchData( KIO::Job * job, const QString& data );
-  void slotSearchDataSingleMessage( KIO::Job * job, const QString& data );
-  void slotSearchResult( KIO::Job * job );
-
-  /**
-   * Called when a msg was downloaded for local search
-   */
-  void slotSearchMessageArrived( KMMessage* msg );
-  void slotSearchSingleMessage( KMMessage* msg );
-  
 protected:
   QString     mImapPath;
   ulong       mLastUid;
@@ -475,14 +463,6 @@ private:
   QGuardedPtr<ProgressItem> mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
   QStringList mFoldersPendingCreation;
-  // saves the patterns that are used for local search
-  KMSearchPattern* mLocalSearchPattern;
-  // saves the results of the imap search
-  QString mImapSearchData;
-  // collects the serial numbers from imap and local search
-  QValueList<Q_UINT32> mSearchSerNums;
-  // the remaining messages that have to be downloaded for local search
-  uint mRemainingMsgs;
 };
 
 #endif // kmfolderimap_h

@@ -46,7 +46,6 @@
 using KMail::FolderJob;
 #include "listjob.h"
 using KMail::ListJob;
-#include "kmsearchpattern.h"
 
 #include "mimelib/string.h"
 
@@ -60,6 +59,7 @@ class KMAcctList;
 class KMMsgDict;
 class KMMsgDictREntry;
 class QTimer;
+class KMSearchPattern;
 
 namespace KMail {
    class AttachmentStrategy;
@@ -473,8 +473,8 @@ signals:
    * Emitted when a search is completed
    * The matching serial numbers are included
    */
-  void searchDone( KMFolder*, QValueList<Q_UINT32> serNums );
-  void searchDone( KMFolder*, Q_UINT32 serNum );
+  void searchDone( KMFolder*, QValueList<Q_UINT32>, KMSearchPattern* );
+  void searchDone( KMFolder*, Q_UINT32, KMSearchPattern* );
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */

@@ -63,7 +63,7 @@ signals:
 
 protected slots:
   void slotProcessNextBatch();
-  void slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> );
+  void slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32>, KMSearchPattern* );
 
 protected:
   friend class KMIndexSearchTarget;
@@ -140,7 +140,7 @@ public slots:
   virtual int updateIndex();
 
   // Examine the added message
-  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum );
+  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum, KMSearchPattern* );
 
 public:
   //See base class for documentation

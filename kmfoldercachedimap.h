@@ -51,6 +51,7 @@ class KMAcctCachedImap;
 
 namespace KMail {
   class AttachmentStrategy;
+  class ImapAccountBase;
   struct ACLListEntry;
 }
 using KMail::AttachmentStrategy;
@@ -243,7 +244,7 @@ protected slots:
    * creates/removes folders
    */
   void slotListResult(const QStringList&, const QStringList&,
-      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
+      const QStringList&, const QStringList&, const KMail::ImapAccountBase::jobData& );
 
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);

@@ -230,9 +230,11 @@ void KMSearch::slotProcessNextBatch()
             folder->open();
             mOpenedFolders.append( folder );
             connect( folder->storage(), 
-                    SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
-                    this,
-                    SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> ) ) );
+                SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32>, 
+                    KMSearchPattern* ) ),
+                this,
+                SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32>, 
+                    KMSearchPattern* ) ) );
             folder->storage()->search( mSearchPattern );
         } else
           --mRemainingFolders;
@@ -241,13 +243,18 @@ void KMSearch::slotProcessNextBatch()
     }
 }
 
-void KMSearch::slotSearchFolderDone( KMFolder* folder, QValueList<Q_UINT32> serNums )
+void KMSearch::slotSearchFolderDone( KMFolder* folder, 
+                                     QValueList<Q_UINT32> serNums, 
+                                     KMSearchPattern* pattern )
 {
+    if ( pattern != mSearchPattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     disconnect( folder->storage(), 
-            SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
-            this,
-            SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> ) ) );
+        SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32>, 
+            KMSearchPattern* ) ),
+        this,
+        SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32>, 
+            KMSearchPattern* ) ) );
     --mRemainingFolders;
     mLastFolder = folder->label();
     mSearchedCount += folder->count();
@@ -916,19 +923,22 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     folder->open();
 
     connect( folder->storage(), 
-            SIGNAL( searchDone( KMFolder*, Q_UINT32 ) ),
+            SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
             this,
-            SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32 ) ) );
+            SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
     folder->storage()->search( search()->searchPattern(), serNum );
 }
 
-void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, Q_UINT32 serNum )
+void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
+                                               Q_UINT32 serNum, 
+                                               KMSearchPattern* pattern )
 {
+    if ( search()->searchPattern() != pattern ) return;
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNum << endl;
     disconnect( folder->storage(), 
-            SIGNAL( searchDone( KMFolder*, Q_UINT32 ) ),
+            SIGNAL( searchDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ),
             this,
-            SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32 ) ) );
+            SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, KMSearchPattern* ) ) );
     folder->close();
 
     if ( serNum == 0 )

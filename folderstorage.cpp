@@ -1034,7 +1034,7 @@ void FolderStorage::search( KMSearchPattern* pattern )
     if ( pattern->matches( serNum ) )
       serNums.append( serNum );
   }
-  emit searchDone( folder(), serNums );
+  emit searchDone( folder(), serNums, pattern );
 }
 
 //-----------------------------------------------------------------------------
@@ -1044,7 +1044,7 @@ void FolderStorage::search( KMSearchPattern* pattern, Q_UINT32 serNum )
   if ( pattern->matches( serNum ) )
     mySerNum = serNum;
 
-  emit searchDone( folder(), mySerNum );
+  emit searchDone( folder(), mySerNum, pattern );
 }
 
 #include "folderstorage.moc"
