@@ -1152,6 +1152,7 @@ void KMMoveCommand::execute()
     KMFolder *srcFolder = msgBase->parent();
     if (srcFolder == mDestFolder)
       continue;
+    srcFolder->open();
     bool undo = msgBase->enableUndo();
     int idx = srcFolder->find(msgBase);
     assert(idx != -1);
@@ -1180,6 +1181,7 @@ void KMMoveCommand::execute()
 	folderDeleteList[srcFolder]->append( msg );
       } else {
         srcFolder->removeMsg(idx);
+        srcFolder->close();
         delete msg;
       }
     }
@@ -1194,6 +1196,7 @@ void KMMoveCommand::execute()
   for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
     it.key()->removeMsg(*it.data());
     delete it.data();
+    it.key()->close();
   }
 
   if (mHeaders)
