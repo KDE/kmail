@@ -59,6 +59,12 @@ public:
    */
   virtual KMMessage* createRedirect();
 
+  /** Create a new message that is a "failed delivery" reply to this
+    message, filling all required header fields with the proper
+    values. The returned message is not stored in any folder. If @p
+    withUI is true, asks the user if he really wants that. */
+  virtual KMMessage* createBounce( bool withUI );
+
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */

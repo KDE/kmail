@@ -1110,73 +1110,15 @@ void KMHeaders::resendMsg ()
 //-----------------------------------------------------------------------------
 void KMHeaders::bounceMsg ()
 {
-  KMMessage bounceMsg;
-  QString str, fromStr;
-  int i;
-  const char* fromFields[] = { "Errors-To", "Return-Path", "Resent-From",
-			       "Resent-Sender", "From", "Sender", 0 };
   KMMessage *newMsg, *msg = currentMsg();
 
   if (!msg) return;
 
-  // Find email address of sender
-  for (i=0; fromFields[i]; i++)
-  {
-    fromStr = msg->headerField(fromFields[i]);
-    if (!fromStr.isEmpty()) break;
-  }
-  if (fromStr.isEmpty())
-  {
-    KMessageBox::sorry(this, i18n("The message has no sender set"),
-		       i18n("Bounce Message - KMail"));
-    return;
-  }
-
-  // No composer appears. So better ask before sending.
-  if (KMessageBox::warningContinueCancel(this,
-      i18n("Return the message to the sender as undeliverable?\n"
-	   "This will only work if the email address of the sender,\n"
-	   "%1, is valid.").arg(fromStr),
-      i18n("Bounce Message - KMail"), i18n("Continue")) ==
-	  KMessageBox::Cancel)
-  {
-    return;
-  }
-
-  kernel->kbp()->busy();
-
-  // Copy the original message, so that we can remove some of the
-  // header fields that shall not get bounced back
-  bounceMsg.fromString(msg->asString());
-  bounceMsg.removeHeaderField("Status");
-  bounceMsg.removeHeaderField("X-Status");
-  bounceMsg.removeHeaderField("X-KMail-Mark");
-
-  newMsg = new KMMessage;
-  newMsg->setTo(fromStr);
-  newMsg->setDateToday();
-  newMsg->setSubject("mail failed, returning to sender");
-
-  str = newMsg->from();
-  i = str.find('@');
-  newMsg->setFrom(str.replace(0, i, "MAILER-DAEMON"));
-  newMsg->setReferences(bounceMsg.id());
-
-  str = "|------------------------- Message log follows: -------------------------|\n"
-        "no valid recipients were found for this message\n"
-	"|------------------------- Failed addresses follow: ---------------------|\n";
-  str += bounceMsg.to();
-  str += "\n|------------------------- Message text follows: ------------------------|\n";
-  str += bounceMsg.asString();
-
-  //FIXME Maybe we should use a charset from the original message???
-  newMsg->setBody(str.latin1());
-
+  newMsg = msg->createBounce( TRUE /* with UI */);
   // Queue the message for sending, so the user can still intercept
   // it. This is currently for testing
-  kernel->msgSender()->send(newMsg, FALSE);
-
-  kernel->kbp()->idle();
+  if (newMsg)
+    kernel->msgSender()->send(newMsg, FALSE);
 }
 
 

@@ -366,7 +366,6 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
 //
 //=============================================================================
 
-#ifndef KMFILTERACTION_NO_BOUNCE
 //=============================================================================
 // KMFilterActionBounce - bounce
 // Return mail as undelivered.
@@ -391,9 +390,15 @@ KMFilterActionBounce::KMFilterActionBounce()
 
 KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg, bool& ) const
 {
-  return ErrorButGoOn;
+  KMMessage *bounceMsg = msg->createBounce( FALSE );
+  if ( !bounceMsg ) return ErrorButGoOn;
+
+  // Queue message. This is a) so that the user can check
+  // the bounces before sending and b) for speed reasons.
+  kernel->msgSender()->send( bounceMsg, FALSE );
+
+  return GoOn;
 }
-#endif
 
 //=============================================================================
 // KMFilterActionSetTransport - set transport to...
@@ -770,9 +775,7 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionReplyTo::newAction );
   insert( KMFilterActionForward::newAction );
   insert( KMFilterActionRedirect::newAction );
-#ifndef KMFILTERACTION_NO_BOUNCE
   insert( KMFilterActionBounce::newAction );
-#endif
   insert( KMFilterActionExec::newAction );
   insert( KMFilterActionExtFilter::newAction );
   // Register custom filter actions below this line.

@@ -38,6 +38,7 @@
 #include "kmmsgpart.h" // for encodeBase64
 
 #if ALLOW_GUI
+#include <kmessagebox.h>
 #include <qmultilineedit.h>
 #endif
 
@@ -855,6 +856,82 @@ KMMessage* KMMessage::createRedirect(void)
   msg->setSubject(subject());
   msg->setFrom(from());
   setStatus(KMMsgStatusForwarded);
+
+  return msg;
+}
+
+#if ALLOW_GUI
+KMMessage* KMMessage::createBounce( bool withUI )
+#else
+KMMessage* KMMessage::createBounce( bool )
+#endif
+{
+  KMMessage bounceMsg;
+  QString fromStr, bodyStr, senderStr;
+  int atIdx, i;
+
+  const char* fromFields[] = { "Errors-To", "Return-Path", "Resent-From",
+			       "Resent-Sender", "From", "Sender", 0 };
+
+  // Find email address of sender
+  for (i=0; fromFields[i]; i++)
+  {
+    senderStr = headerField(fromFields[i]);
+    if (!senderStr.isEmpty()) break;
+  }
+  if (senderStr.isEmpty())
+  {
+#if ALLOW_GUI
+    if ( withUI )
+      KMessageBox::sorry(0 /*app-global modal*/,
+			 i18n("The message has no sender set"),
+			 i18n("Bounce Message"));
+#endif
+    return 0;
+  }
+
+#if ALLOW_GUI
+  if ( withUI )
+    // No composer appears. So better ask before sending.
+    if (KMessageBox::warningContinueCancel(0 /*app-global modal*/,
+        i18n("Return the message to the sender as undeliverable?\n"
+	     "This will only work if the email address of the sender,\n"
+	     "%1, is valid.").arg(senderStr),
+	i18n("Bounce Message"), i18n("Continue")) == KMessageBox::Cancel)
+    {
+      return 0;
+    }
+#endif
+
+  // Copy the original message, so that we can remove some of the
+  // header fields that shall not get bounced back
+  bounceMsg.fromString( asString() );
+  bounceMsg.removeHeaderField( "Status" );
+  bounceMsg.removeHeaderField( "X-Status" );
+  bounceMsg.removeHeaderField( "X-KMail-Mark" );
+  bounceMsg.removeHeaderField( "X-KMail-Identity" );
+  bounceMsg.removeHeaderField( "X-KMail-Transport" );
+  //FIXME If you know other KMail-specific headers, please add them.
+
+  KMMessage *msg = new KMMessage;
+  msg->setTo( senderStr );
+  msg->setDateToday();
+  msg->setSubject( "mail failed, returning to sender" );
+
+  fromStr = msg->from();
+  atIdx = fromStr.find('@');
+  msg->setFrom( fromStr.replace( 0, atIdx, "MAILER-DAEMON" ) );
+  msg->setReferences( bounceMsg.id() );
+
+  bodyStr = "|------------------------- Message log follows: -------------------------|\n"
+        "no valid recipients were found for this message\n"
+	"|------------------------- Failed addresses follow: ---------------------|\n";
+  bodyStr += bounceMsg.to();
+  bodyStr += "\n|------------------------- Message text follows: ------------------------|\n";
+  bodyStr += bounceMsg.asString();
+
+  //FIXME Maybe we should use a charset from the original message???
+  msg->setBody( bodyStr.latin1() );
 
   return msg;
 }
