@@ -154,11 +154,11 @@ class KMHeaderItem : public KListViewItem
 
 public:
   int mMsgId;
-    QString mKey;
+  QString mKey;
   // WARNING: Do not add new member variables to the class
 
   // Constuction a new list view item with the given colors and pixmap
-    KMHeaderItem( QListView* parent, int msgId, QString key = QString::null)
+    KMHeaderItem( QListView* parent, int msgId, const QString& key = QString::null )
     : KListViewItem( parent ),
           mMsgId( msgId ),
           mKey( key ),
@@ -169,7 +169,7 @@ public:
   }
 
   // Constuction a new list view item with the given parent, colors, & pixmap
-    KMHeaderItem( QListViewItem* parent, int msgId, QString key = QString::null)
+    KMHeaderItem( QListViewItem* parent, int msgId, const QString& key = QString::null )
     : KListViewItem( parent ),
           mMsgId( msgId ),
           mKey( key ),
@@ -181,8 +181,7 @@ public:
 
   ~KMHeaderItem ()
   {
-    if (mSortCacheItem)
-      delete mSortCacheItem;
+    delete mSortCacheItem;
   }
 
   // Update the msgId this item corresponds to.
@@ -839,6 +838,7 @@ void KMHeaders::readFolderConfig (void)
 
   mTopItem = config->readNumEntry("Top", 0);
   mCurrentItem = config->readNumEntry("Current", 0);
+  mCurrentItemSerNum = config->readNumEntry("CurrentSerialNum", 0);
 
   mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", true );
   mPaintInfo.status = config->readBoolEntry( "Status", false );
@@ -866,6 +866,9 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
+  KMHeaderItem* current = currentHeaderItem();
+  config->writeEntry("CurrentSerialNum", current ? mFolder->getMsgBase( current->msgId() )->getMsgSerNum() : 0 );
+
   config->writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival);
   config->writeEntry("Status", mPaintInfo.status);
 }
@@ -1010,15 +1013,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
   END_TIMER(set_folder);
   SHOW_TIMER(set_folder);
-}
-
-// QListView::setContentsPos doesn't seem to work
-// until after the list view has been shown at least
-// once.
-void KMHeaders::workAroundQListViewLimitation()
-{
-  setTopItemByIndex(mTopItem);
-  setCurrentItemByIndex(mCurrentItem);
 }
 
 //-----------------------------------------------------------------------------
@@ -1294,7 +1288,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     }
     // Remove the message from the list of potential parents for threading by
     // subject.
-    if (!strippedSubjMD5.isEmpty() && 
+    if (!strippedSubjMD5.isEmpty() &&
         mSubjThreading && mSubjectLists[strippedSubjMD5])
         mSubjectLists[strippedSubjMD5]->remove(removedItem->sortCacheItem());
 
@@ -1842,7 +1836,7 @@ void KMHeaders::setSelectedByIndex( QValueList<int> items, bool selected )
 {
   for ( QValueList<int>::Iterator it = items.begin(); it != items.end(); ++it )
   {
-    if ( ((*it) >= 0) && ((*it) < (int)mItems.size()) ) 
+    if ( ((*it) >= 0) && ((*it) < (int)mItems.size()) )
     {
       setSelected( mItems[(*it)], selected );
     }
@@ -1888,9 +1882,9 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 QValueList<int> KMHeaders::selectedItems()
 {
   QValueList<int> items;
-  for ( QListViewItemIterator it(this); it.current(); it++ ) 
+  for ( QListViewItemIterator it(this); it.current(); it++ )
   {
-    if ( it.current()->isSelected() && it.current()->isVisible() ) 
+    if ( it.current()->isSelected() && it.current()->isVisible() )
     {
       KMHeaderItem* item = static_cast<KMHeaderItem*>( it.current() );
       items.append( item->msgId() );
@@ -3386,7 +3380,12 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
         if(first_unread == -1 ) {
             setTopItemByIndex(mTopItem);
-            setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
+            if ( mCurrentItem >= 0 )
+              setCurrentItemByIndex( mCurrentItem );
+            else if ( mCurrentItemSerNum > 0 )
+              setCurrentItemBySerialNum( mCurrentItemSerNum );
+            else
+              setCurrentItemByIndex( 0 );
         } else {
             setCurrentItemByIndex(first_unread);
             makeHeaderVisible();
@@ -3396,7 +3395,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
         // only reset the selection if we have no current item
         if (mCurrentItem <= 0) {
           setTopItemByIndex(mTopItem);
-          setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
+          setCurrentItemByIndex(0);
         }
     }
     END_TIMER(selection);
@@ -3416,4 +3415,21 @@ bool KMHeaders::readSortOrder(bool set_selection)
 }
 
 //-----------------------------------------------------------------------------
+void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
+{
+  // Linear search == slow. Don't overuse this method.
+  // It's currently only used for finding the current item again
+  // after expiry deleted mails (so the index got invalidated).
+  for (int i = 0; i < (int)mItems.size() - 1; ++i) {
+    KMMsgBase *mMsgBase = mFolder->getMsgBase( i );
+    if ( mMsgBase->getMsgSerNum() == serialNum ) {
+      setCurrentItem( mItems[i] );
+      setSelected( mItems[i], true );
+      setSelectionAnchor( currentItem() );
+      return;
+    }
+  }
+  // Not found. Maybe we should select the last item instead?
+}
+
 #include "kmheaders.moc"

@@ -191,6 +191,9 @@ void ExpireJob::done()
   if ( !str.isEmpty() )
     KMBroadcastStatus::instance()->setStatusMsg( str );
 
+  KConfigGroup group( KMKernel::config(), "Folder-" + mSrcFolder->idString() );
+  group.writeEntry( "Current", -1 ); // i.e. make it invalid, the serial number will be used
+
   if ( !moving ) {
     mSrcFolder->storage()->close();
     mFolderOpen = false;

@@ -95,7 +95,7 @@ public:
   virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);
 
   /** Returns the index values of currently selected items */
-  QValueList<int> selectedItems();  
+  QValueList<int> selectedItems();
 
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
@@ -126,6 +126,8 @@ public:
   virtual int currentItemIndex();
   /** Set the current item to the one corresponding to the given msg id */
   virtual void setCurrentItemByIndex( int msgIdx );
+  /** Set the current item to the one corresponding to the given serial number (slow!) */
+  void setCurrentItemBySerialNum( unsigned long serialNum );
   /** Return the message id of the top most visible item */
   virtual int topItemIndex();
   /** Make the item corresponding to the message with the given id the
@@ -174,8 +176,6 @@ signals:
   virtual void messageListUpdated();
 
 public slots:
-  void workAroundQListViewLimitation();
-
   /** For when a list view item has been double clicked */
   void selectMessage(QListViewItem*);
   /** For when a list view item has been selected */
@@ -227,7 +227,7 @@ public slots:
   /** Select several items by message index
    * and if they are the parent of a closed thread, also
    * recursively select their children. */
-  void setSelectedByIndex(QValueList<int> items, bool selected);  
+  void setSelectedByIndex(QValueList<int> items, bool selected);
 
   /** switch size-column
       1 for activate, 0 for deactivate, -1 for toggle*/
@@ -317,8 +317,10 @@ private:
   KMMainWidget* mOwner;
   /** Top most visible item */
   int mTopItem;
-  /** Current item */
+  /** Index of the current item */
   int mCurrentItem;
+  /** Serial number of the current item */
+  unsigned long mCurrentItemSerNum;
   /** Map messages ids into KMHeaderItems */
   QMemArray<KMHeaderItem*> mItems;
 
