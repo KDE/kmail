@@ -729,6 +729,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   invalid_encoded_word:
     // invalid encoding, keep separating LWSP.
     pos = beg;
+    if ( !LWSP_buffer.isNull() )
     result += LWSP_buffer;
     result += "=?";
     lastWasEncodedWord = false;
