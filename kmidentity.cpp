@@ -145,7 +145,7 @@ bool KMIdentity::mailingAllowed(void) const
 //-----------------------------------------------------------------------------
 void KMIdentity::setFullName(const QString &str)
 {
-  mFullName = str.copy();
+    mFullName = str;
 }
 
 
@@ -182,8 +182,8 @@ QString KMIdentity::fullEmailAddr(void) const
 {
   QString result;
 
-  if (mFullName.isEmpty()) result = mEmailAddr.copy();
-  else result = mFullName.copy() + " <" + mEmailAddr + ">";
+  if (mFullName.isEmpty()) result = mEmailAddr;
+  else result = mFullName + " <" + mEmailAddr + ">";
 
   return result;
 }
@@ -218,7 +218,7 @@ void KMIdentity::setUseSignatureFile( bool flag )
 //-----------------------------------------------------------------------------
 void KMIdentity::setTransport(const QString &str)
 {
-  mTransport = str.copy();
+    mTransport = str;
 }
 
 //-----------------------------------------------------------------------------

@@ -631,17 +631,17 @@ int KMFolder::createIndexFromContents()
       needStatus &= ~2;
     }
     else*/ if (strncasecmp(line,"X-KMail-Mark:",13)==0 && isblank(line[13]))
-      xmarkStr = QString(line+14).copy();
+        xmarkStr = QString(line+14);
     else if (strncasecmp(line,"In-Reply-To:",12)==0 && isblank(line[12])) {
       int rightAngle;
-      replyToIdStr = QString(line+13).copy();
+      replyToIdStr = QString(line+13);
       rightAngle = replyToIdStr.find( '>' );
       if (rightAngle != -1)
 	replyToIdStr.truncate( rightAngle + 1 );
     }
     else if (strncasecmp(line,"References:",11)==0 && isblank(line[11])) {
       int leftAngle, rightAngle;
-      referencesStr = QString(line+12).copy();
+      referencesStr = QString(line+12);
       leftAngle = referencesStr.findRev( '<' );
       if (leftAngle != -1)
 	referencesStr = referencesStr.mid( leftAngle );
@@ -651,31 +651,31 @@ int KMFolder::createIndexFromContents()
     }
     else if (strncasecmp(line,"Message-Id:",11)==0 && isblank(line[11])) {
       int rightAngle;
-      msgIdStr = QString(line+12).copy();
+      msgIdStr = QString(line+12);
       rightAngle = msgIdStr.find( '>' );
       if (rightAngle != -1)
 	msgIdStr.truncate( rightAngle + 1 );
     }
     else if (strncasecmp(line,"Date:",5)==0 && isblank(line[5]))
     {
-      dateStr = QString(line+6).copy();
+        dateStr = QString(line+6);
       lastStr = &dateStr;
     }
     else if (strncasecmp(line,"From:", 5)==0 &&
 	     isblank(line[5]))
     {
-      fromStr = QString(line+6).copy();
+        fromStr = QString(line+6);
       lastStr = &fromStr;
     }
     else if (strncasecmp(line,"To:", 3)==0 &&
 	     isblank(line[3]))
     {
-      toStr = QString(line+4).copy();
+        toStr = QString(line+4);
       lastStr = &toStr;
     }
     else if (strncasecmp(line,"Subject:",8)==0 && isblank(line[8]))
     {
-      subjStr = QString(line+9).copy();
+        subjStr = QString(line+9);
       lastStr = &subjStr;
     }
   }
@@ -1444,9 +1444,9 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 
   assert(!aName.isEmpty());
 
-  oldLoc = location().copy();
-  oldIndexLoc = indexLocation().copy();
-  oldSubDirLoc = subdirLocation().copy();
+  oldLoc = location();
+  oldIndexLoc = indexLocation();
+  oldSubDirLoc = subdirLocation();
 
   close(TRUE);
 
@@ -1757,7 +1757,7 @@ const char* KMFolder::whoField() const
 //-----------------------------------------------------------------------------
 void KMFolder::setWhoField(const QString& aWhoField)
 {
-  mWhoField = aWhoField.copy();
+    mWhoField = aWhoField;
 }
 
 //-----------------------------------------------------------------------------

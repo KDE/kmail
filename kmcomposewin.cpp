@@ -250,7 +250,7 @@ void KMComposeWin::readColorConfig(void)
   }
 
   // Color setup
-  mPalette = kapp->palette().copy();
+  mPalette = kapp->palette();
   QColorGroup cgrp  = mPalette.normal();
   cgrp.setColor( QColorGroup::Base, backColor);
   cgrp.setColor( QColorGroup::Text, foreColor);
@@ -1212,7 +1212,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   else
   {
     // encrypting
-    _to = to().copy();
+      _to = to();
     if(!cc().isEmpty()) _to += "," + cc();
     if(!bcc().isEmpty()) _to += "," + bcc();
     lastindex = -1;

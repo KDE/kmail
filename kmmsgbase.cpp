@@ -290,7 +290,7 @@ QTextCodec* KMMsgBase::codecForName(const QString& _str)
 //-----------------------------------------------------------------------------
 const QCString KMMsgBase::toUsAscii(const QString& _str)
 {
-  QString result = _str.copy();
+    QString result = _str;
   int len = result.length();
   for (int i = 0; i < len; i++)
     if (result.at(i).unicode() >= 128) result.at(i) = '?';
@@ -401,7 +401,8 @@ const QString dontQuote = "\"()<>";
 
 QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
 {
-  if (base64) return encodeBase64(aStr).copy().replace(QRegExp("\n"),"");
+  if (base64)
+      return encodeBase64(aStr).replace(QRegExp("\n"),"");
   QString result;
   unsigned char ch, hex;
   for (unsigned int i = 0; i < aStr.length(); i++)

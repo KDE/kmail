@@ -29,11 +29,11 @@ KMMsgInfo::~KMMsgInfo()
 KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 {
   KMMsgInfoInherited::assign(&other);
-  mSubject = other.mSubject.copy();
-  mFromStrip = other.mFromStrip.copy();
-  mToStrip = other.mToStrip.copy();
-  mReplyToIdMD5 = other.replyToIdMD5().copy();
-  mMsgIdMD5 = other.msgIdMD5().copy();
+  mSubject = other.mSubject;
+  mFromStrip = other.mFromStrip;
+  mToStrip = other.mToStrip;
+  mReplyToIdMD5 = other.replyToIdMD5();
+  mMsgIdMD5 = other.msgIdMD5();
   mXMark = other.xmark();
   return *this;
 }
@@ -43,11 +43,11 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 {
   KMMsgInfoInherited::assign(&msg);
-  mSubject = msg.subject().copy();
-  mFromStrip = msg.fromStrip().copy();
-  mToStrip = msg.toStrip().copy();
-  mReplyToIdMD5 = msg.replyToIdMD5().copy();
-  mMsgIdMD5 = msg.msgIdMD5().copy();
+  mSubject = msg.subject();
+  mFromStrip = msg.fromStrip();
+  mToStrip = msg.toStrip();
+  mReplyToIdMD5 = msg.replyToIdMD5();
+  mMsgIdMD5 = msg.msgIdMD5();
   mXMark = msg.xmark();
   return *this;
 }
@@ -60,7 +60,7 @@ void KMMsgInfo::init(const QString& aSubject, const QString& aFrom,
 		     const QString& replyToId, const QString& msgId,
 		     unsigned long aFolderOffset, unsigned long aMsgSize)
 {
-  mSubject   = decodeRFC2047String(aSubject).copy();
+    mSubject   = decodeRFC2047String(aSubject);
   mFromStrip = KMMessage::stripEmailAddr( decodeRFC2047String(aFrom) );
   mToStrip   = KMMessage::stripEmailAddr( decodeRFC2047String(aTo) );
   mDate      = aDate;
@@ -121,15 +121,15 @@ QString KMMsgInfo::msgIdMD5(void) const
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setSubject(const QString& aSubject)
 {
-  mSubject = aSubject.copy();
-  mDirty = TRUE;
+    mSubject = aSubject;
+    mDirty = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setXMark(const QString& aXMark)
 {
-  mXMark = aXMark.copy();
+    mXMark = aXMark;
   mDirty = TRUE;
 }
 
@@ -137,7 +137,7 @@ void KMMsgInfo::setXMark(const QString& aXMark)
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
 {
-  mReplyToIdMD5 = aReplyToIdMD5.copy();
+    mReplyToIdMD5 = aReplyToIdMD5;
   mDirty = TRUE;
 }
 
@@ -145,7 +145,7 @@ void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
 //-----------------------------------------------------------------------------
 void KMMsgInfo::setMsgIdMD5(const QString& aMsgIdMD5)
 {
-  mMsgIdMD5 = aMsgIdMD5.copy();
+    mMsgIdMD5 = aMsgIdMD5;
   mDirty = TRUE;
 }
 

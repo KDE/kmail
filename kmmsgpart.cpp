@@ -241,7 +241,7 @@ int KMMessagePart::type(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setTypeStr(const QString &aStr)
 {
-  mType = aStr.copy();
+    mType = aStr;
 }
 
 
@@ -304,7 +304,7 @@ int KMMessagePart::contentTransferEncoding(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentTransferEncodingStr(const QString &aStr)
 {
-  mCte = aStr.copy();
+    mCte = aStr;
 }
 
 
@@ -374,7 +374,7 @@ QString KMMessagePart::contentDisposition(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDisposition(const QString &aStr)
 {
-  mContentDisposition = aStr.copy();
+    mContentDisposition = aStr;
 }
 
 
