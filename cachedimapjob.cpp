@@ -545,6 +545,8 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
       return;
     }
 
+    mAccount->removeDeletedFolder( (*it).path );
+
     if( job->error() ) {
       mAccount->handleJobError( job, i18n( "Error while deleting folder %1 on the server: " ).arg( (*it).path ) + '\n' );
       delete this;

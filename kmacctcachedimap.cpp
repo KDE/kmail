@@ -267,7 +267,10 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
     //  instead of the user being stuck with "can't delete" every time.
     // And we do it for _all_ deleted folders, even those that were deleted on the server in the first place (slotListResult).
     //  Otherwise this might have side effects much later (e.g. when regaining permissions to a folder we could see before)
+
+#if 0 // this opens a race: delete a folder during a sync (after the sync checked that folder), and it'll be forgotten...
     mDeletedFolders.clear();
+#endif
     mPreviouslyDeletedFolders.clear();
   }
 
@@ -367,9 +370,46 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctCachedImap::addDeletedFolder( const QString& subFolderPath )
+void KMAcctCachedImap::addDeletedFolder( KMFolder* folder )
 {
-  mDeletedFolders.append( subFolderPath );
+  if ( folder->folderType() != KMFolderTypeCachedImap )
+    return;
+  KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(folder->storage());
+  addDeletedFolder( storage->imapPath() );
+  kdDebug(5006) << k_funcinfo << storage->imapPath() << endl;
+
+  // Add all child folders too
+  if( folder && folder->child() ) {
+    KMFolderNode *node = folder->child()->first();
+    while( node ) {
+      if( !node->isDir() ) {
+        addDeletedFolder( static_cast<KMFolder*>( node ) ); // recurse
+      }
+      node = folder->child()->next();
+    }
+  }
+}
+
+void KMAcctCachedImap::addDeletedFolder( const QString& imapPath )
+{
+  mDeletedFolders << imapPath;
+}
+
+QStringList KMAcctCachedImap::deletedFolderPaths( const QString& subFolderPath ) const
+{
+  QStringList lst;
+  for ( QStringList::const_iterator it = mDeletedFolders.begin(); it != mDeletedFolders.end(); ++it ) {
+    if ( (*it).startsWith( subFolderPath ) )
+      // We must reverse the order, so that sub sub sub folders are deleted first
+      lst.prepend( *it );
+  }
+  for ( QStringList::const_iterator it = mPreviouslyDeletedFolders.begin(); it != mPreviouslyDeletedFolders.end(); ++it ) {
+    if ( (*it).startsWith( subFolderPath ) )
+      lst.prepend( *it );
+  }
+  kdDebug(5006) << "KMAcctCachedImap::deletedFolderPaths for " << subFolderPath << " returning: " << lst << endl;
+  Q_ASSERT( !lst.isEmpty() );
+  return lst;
 }
 
 bool KMAcctCachedImap::isDeletedFolder( const QString& subFolderPath ) const

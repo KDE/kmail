@@ -393,7 +393,7 @@ int KMFolderCachedImap::rename( const QString& aName,
 
   // Make the change appear to the user with setLabel, but we'll do the change
   // on the server during the next sync. The name() is the name at the time of
-  // the last sync. Only rename if the new one is different. If it's the same, 
+  // the last sync. Only rename if the new one is different. If it's the same,
   // don't rename, but also make sure the rename is reset, in the case of
   // A -> B -> A renames.
   if ( name() != aName )
@@ -1584,7 +1584,7 @@ void KMFolderCachedImap::listDirectory2() {
 
       if ( locallyDeleted ) {
         kdDebug(5006) << subfolderPath << " was deleted locally => delete on server." << endl;
-        foldersForDeletionOnServer << subfolderPath;
+        foldersForDeletionOnServer += mAccount->deletedFolderPaths( subfolderPath ); // grab all subsubfolders too
       } else {
         kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
         KMFolder* newFolder = folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap);
