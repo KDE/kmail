@@ -123,6 +123,9 @@ class AccountDialog : public KDialogBase
       QCheckBox    *usePipeliningCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *leaveOnServerCheck;
+      QCheckBox    *deleteAfterDaysCheck;
+      QLabel       *deleteAfterDaysLabel;
+      KIntNumInput *deleteAfterDaysSpin;
 #if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
@@ -190,6 +193,7 @@ class AccountDialog : public KDialogBase
     void slotEnableMaildirInterval( bool state );
     void slotFontChanged();
     void slotLeaveOnServerClicked();
+    void slotEnableDeleteAfterDays( bool state );
     void slotFilterOnServerClicked();
     void slotPipeliningClicked();
     void slotPopEncryptionChanged(int);

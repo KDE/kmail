@@ -275,7 +275,6 @@ if( fileD0.open( IO_WriteOnly ) ) {
   return true; //Everything's fine - message has been added by filter  }
 }
 
-
 //-----------------------------------------------------------------------------
 void KMAccount::setCheckInterval(int aInterval)
 {

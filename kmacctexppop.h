@@ -45,6 +45,12 @@ public:
   virtual void setUsePipelining(bool);
 
   /**
+    * If value is positive, delete mail from server after that many days.
+    */
+   int deleteAfterDays(void) const { return mDeleteAfterDays; }
+   virtual void setDeleteAfterDays(int);
+ 
+   /**
    * Shall messages be left on the server upon retreival (TRUE)
    * or deleted (FALSE).
    */
@@ -103,6 +109,7 @@ protected:
 
   bool    mUsePipelining;
   bool    mLeaveOnServer;
+  int     mDeleteAfterDays;
   bool    gotMsgs;
   bool    mFilterOnServer;
   unsigned int mFilterOnServerCheckSize;
@@ -124,7 +131,9 @@ protected:
   QValueList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
   QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
+  QValueList<int> mTimeOfSeenMsgs; // list of times of previously seen messages
   QDict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
+  QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 

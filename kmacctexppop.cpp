@@ -111,6 +111,7 @@ void KMAcctExpPop::init(void)
 
   mUsePipelining = FALSE;
   mLeaveOnServer = FALSE;
+  mDeleteAfterDays = -1;
   mFilterOnServer = FALSE;
   //tz todo
   mFilterOnServerCheckSize = 50000;
@@ -126,6 +127,7 @@ void KMAcctExpPop::pseudoAssign( const KMAccount * a ) {
 
   setUsePipelining( p->usePipelining() );
   setLeaveOnServer( p->leaveOnServer() );
+  setDeleteAfterDays( p->deleteAfterDays() );
   setFilterOnServer( p->filterOnServer() );
   setFilterOnServerCheckSize( p->filterOnServerCheckSize() );
 }
@@ -156,19 +158,23 @@ void KMAcctExpPop::processNewMail(bool _interactive)
                                        mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     QStringList uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
+    mTimeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.resize( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
+    int idx = 1;
     for ( QStringList::ConstIterator it = uidsOfSeenMsgs.begin();
-          it != uidsOfSeenMsgs.end(); ++it ) {
-      // we use mUidsOfSeenMsgsDict to provide fast random access to the keys,
-      // so we simply set the values to (const int *)1
-      mUidsOfSeenMsgsDict.insert( *it, (const int *)1 );
+          it != uidsOfSeenMsgs.end(); ++it, idx++ ) {
+      // we use mUidsOfSeenMsgsDict to just provide fast random access to the
+      // keys, so we can store the index(+1) that corresponds to the index of
+      // mTimeOfSeenMsgs for use in KMAcctExpPop::slotData()
+      mUidsOfSeenMsgsDict.insert( *it, (const int *)idx );
     }
     QStringList downloadLater = config.readListEntry( "downloadLater" );
     for ( QStringList::Iterator it = downloadLater.begin(); it != downloadLater.end(); ++it ) {
         mHeaderLaterUids.insert( *it, true );
     }
     mUidsOfNextSeenMsgsDict.clear();
+    mTimeOfNextSeenMsgsMap.clear();
 
     interactive = _interactive;
     mUidlFinished = FALSE;
@@ -188,6 +194,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
 
   mUsePipelining = config.readNumEntry("pipelining", FALSE);
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
+  mDeleteAfterDays = config.readNumEntry("delete-after-days", -1);
   mFilterOnServer = config.readNumEntry("filter-on-server", FALSE);
   mFilterOnServerCheckSize = config.readUnsignedNumEntry("filter-os-check-size", 50000);
 }
@@ -200,6 +207,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
   config.writeEntry("pipelining", mUsePipelining);
   config.writeEntry("leave-on-server", mLeaveOnServer);
+  config.writeEntry("delete-after-days", mDeleteAfterDays);
   config.writeEntry("filter-on-server", mFilterOnServer);
   config.writeEntry("filter-os-check-size", mFilterOnServerCheckSize);
 }
@@ -217,7 +225,14 @@ void KMAcctExpPop::setLeaveOnServer(bool b)
   mLeaveOnServer = b;
 }
 
-
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setDeleteAfterDays(int days)
+{
+  if ( days <= 0 )
+    mDeleteAfterDays = 0;
+  else
+    mDeleteAfterDays = days;
+}
 //---------------------------------------------------------------------------
 void KMAcctExpPop::setFilterOnServer(bool b)
 {
@@ -235,11 +250,11 @@ void KMAcctExpPop::connectJob() {
   KIO::Scheduler::assignJobToSlave(mSlave, job);
   if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
-	  SLOT( slotData( KIO::Job*, const QByteArray &)));
+         SLOT( slotData( KIO::Job*, const QByteArray &)));
   connect(job, SIGNAL( result( KIO::Job * ) ),
-	  SLOT( slotResult( KIO::Job * ) ) );
+         SLOT( slotResult( KIO::Job * ) ) );
   connect(job, SIGNAL(infoMessage( KIO::Job*, const QString & )),
-          SLOT( slotMsgRetrieved(KIO::Job*, const QString &)));
+         SLOT( slotMsgRetrieved(KIO::Job*, const QString &)));
 }
 
 
@@ -282,6 +297,8 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     else {
       idsOfMsgsToDelete.append( *curId );
       mUidsOfNextSeenMsgsDict.insert( *curUid, (const int *)1 );
+      mTimeOfNextSeenMsgsMap.insert( *curUid,
+        QDateTime::currentDateTime().toTime_t() );
     }
     ++cur;
     ++curId;
@@ -575,6 +592,8 @@ void KMAcctExpPop::slotJobFinished() {
           mUidsOfNextSeenMsgsDict.insert( headersOnServer.current()->uid(),
                                           (const int *)1 );
           idsOfMsgsToDelete.append(headersOnServer.current()->id());
+          mTimeOfNextSeenMsgsMap.insert( headersOnServer.current()->uid(),
+                                     QDateTime::currentDateTime().toTime_t() );
         }
         else {
           mHeaderLaterUids.insert(headersOnServer.current()->uid(), true);
@@ -612,7 +631,28 @@ void KMAcctExpPop::slotJobFinished() {
     kmkernel->folderMgr()->syncAllFolders();
 
     KURL url = getUrl();
-    if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
+    if (mLeaveOnServer && mDeleteAfterDays > 0 && !idsOfMsgsToDelete.isEmpty()) {
+      // Remove from idsOfMsgsToDelete entries which are newer than the limit
+      QDateTime timeLimit = QDateTime::currentDateTime();
+      timeLimit = timeLimit.addDays( -mDeleteAfterDays );
+      QStringList::Iterator cur = idsOfMsgsToDelete.begin();
+      while (cur != idsOfMsgsToDelete.end()) {
+        QDateTime msgTime;
+        msgTime.setTime_t( mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]] );
+        kdDebug() << "uid: "
+                  << mUidForIdMap[*cur]
+                  << " msgTime: " << msgTime
+                  << ", timeLimit: " << timeLimit << endl;
+        if (msgTime >= timeLimit) {
+          cur = idsOfMsgsToDelete.remove( cur );
+        }
+        else {
+          ++cur;
+        }
+      }
+    }
+ 
+    if ((mLeaveOnServer && mDeleteAfterDays <= 0) || idsOfMsgsToDelete.isEmpty()) {
       stage = Quit;
       mMailCheckProgressItem->setStatus(
         i18n( "Fetched 1 message from %1. Terminating transmission...",
@@ -695,13 +735,17 @@ void KMAcctExpPop::saveUidList()
   if (!mUidlFinished) return;
 
   QStringList uidsOfNextSeenMsgs;
+  QValueList<int> seenUidTimeList;
   QDictIterator<int> it( mUidsOfNextSeenMsgsDict );
-  for( ; it.current(); ++it )
+  for( ; it.current(); ++it ) {
     uidsOfNextSeenMsgs.append( it.currentKey() );
+    seenUidTimeList.append( mTimeOfNextSeenMsgsMap[it.currentKey()] );
+  }
   QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
-				     mHost + ":" + QString("%1").arg(mPort) );
+                                      mHost + ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
+  config.writeEntry( "seenUidTimeList", seenUidTimeList );
   config.writeEntry( "downloadLater", QStringList( mHeaderLaterUids.keys() ) );
   config.sync();
 }
@@ -757,16 +801,16 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       QString msg;
       if (numBytes != numBytesToRead && mLeaveOnServer)
       {
-	msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5 "
-		   "(%6 KB remain on the server).")
-	  .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
-	  .arg(numBytesToRead/1024).arg(mHost).arg(numBytes/1024);
+        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5 "
+                   "(%6 KB remain on the server).")
+          .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
+          .arg(numBytesToRead/1024).arg(mHost).arg(numBytes/1024);
       }
       else
       {
-	msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5.")
-	  .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
-	  .arg(numBytesToRead/1024).arg(mHost);
+        msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5.")
+          .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
+          .arg(numBytesToRead/1024).arg(mHost);
       }
       mMailCheckProgressItem->setStatus( msg );
       mMailCheckProgressItem->setProgress(
@@ -807,6 +851,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
           kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
         idsOfMsgsToDelete.append( id );
         mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
+        mTimeOfNextSeenMsgsMap.insert( uid,
+          mTimeOfSeenMsgs[(int)mUidsOfSeenMsgsDict[uid] - 1] );
       }
       mUidForIdMap.insert( id, uid );
     }
@@ -837,7 +883,7 @@ void KMAcctExpPop::slotResult( KIO::Job* )
       {
         KMessageBox::error(0, i18n("Your server does not support the "
           "TOP command. Therefore it is not possible to fetch the headers "
-	  "of large emails first, before downloading them."));
+          "of large emails first, before downloading them."));
         slotCancel();
         return;
       }

@@ -621,7 +621,20 @@ void AccountDialog::makePopAccountPage()
   connect( mPop.leaveOnServerCheck, SIGNAL( clicked() ),
            this, SLOT( slotLeaveOnServerClicked() ) );
   grid->addMultiCellWidget( mPop.leaveOnServerCheck, 6, 6, 0, 1 );
-
+  mPop.deleteAfterDaysCheck =
+    new QCheckBox( i18n("Delete messages over a certain age"), page1 );
+  grid->addMultiCellWidget( mPop.deleteAfterDaysCheck, 7, 7, 0, 1 );
+  connect( mPop.deleteAfterDaysCheck, SIGNAL( toggled(bool) ),
+           this, SLOT( slotEnableDeleteAfterDays(bool)) );
+  mPop.deleteAfterDaysLabel = new QLabel( i18n("Delete age:"), page1 );
+  grid->addWidget( mPop.deleteAfterDaysLabel, 8, 0 );
+  mPop.deleteAfterDaysSpin = new KIntNumInput( page1 );
+  mPop.deleteAfterDaysSpin->setRange( 1, 365, 1, false );
+  mPop.deleteAfterDaysSpin->setSuffix( i18n(" days") );
+  mPop.deleteAfterDaysSpin->setValue( 1 );
+  mPop.deleteAfterDaysLabel->setBuddy( mPop.deleteAfterDaysSpin );
+  grid->addWidget( mPop.deleteAfterDaysSpin, 8, 1 );
+  
 #if 0
   QHBox* resourceHB = new QHBox( page1 );
   resourceHB->setSpacing( 11 );
@@ -645,12 +658,12 @@ void AccountDialog::makePopAccountPage()
                    i18n( "Delete all outdated allocations for the resource represented by this account." ) );
   connect( mPop.resourceClearPastButton, SIGNAL( clicked() ),
            this, SLOT( slotClearPastResourceAllocations() ) );
-  grid->addMultiCellWidget( resourceHB, 7, 7, 0, 2 );
+  grid->addMultiCellWidget( resourceHB, 9, 9, 0, 2 );
 #endif
 
   mPop.includeInCheck =
     new QCheckBox( i18n("Include in man&ual mail check"), page1 );
-  grid->addMultiCellWidget( mPop.includeInCheck, 7, 7, 0, 1 );
+  grid->addMultiCellWidget( mPop.includeInCheck, 9, 9, 0, 1 );
 
   QHBox * hbox = new QHBox( page1 );
   hbox->setSpacing( KDialog::spacingHint() );
@@ -662,7 +675,7 @@ void AccountDialog::makePopAccountPage()
   mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, FALSE );
   mPop.filterOnServerSizeSpin->setValue( 50000 );
   mPop.filterOnServerSizeSpin->setSuffix( i18n(" byte") );
-  grid->addMultiCellWidget( hbox, 8, 8, 0, 1 );
+  grid->addMultiCellWidget( hbox, 10, 10, 0, 1 );
   connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
 	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
   connect( mPop.filterOnServerCheck, SIGNAL( clicked() ),
@@ -675,29 +688,29 @@ void AccountDialog::makePopAccountPage()
 
   mPop.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addMultiCellWidget( mPop.intervalCheck, 9, 9, 0, 1 );
+  grid->addMultiCellWidget( mPop.intervalCheck, 11, 11, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
-  grid->addWidget( mPop.intervalLabel, 10, 0 );
+  grid->addWidget( mPop.intervalLabel, 12, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
   mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mPop.intervalSpin->setSuffix( i18n(" min") );
   mPop.intervalSpin->setValue( 1 );
   mPop.intervalLabel->setBuddy( mPop.intervalSpin );
-  grid->addWidget( mPop.intervalSpin, 10, 1 );
+  grid->addWidget( mPop.intervalSpin, 12, 1 );
 
   label = new QLabel( i18n("Des&tination folder:"), page1 );
-  grid->addWidget( label, 11, 0 );
+  grid->addWidget( label, 13, 0 );
   mPop.folderCombo = new QComboBox( false, page1 );
   label->setBuddy( mPop.folderCombo );
-  grid->addWidget( mPop.folderCombo, 11, 1 );
+  grid->addWidget( mPop.folderCombo, 13, 1 );
 
   label = new QLabel( i18n("Pre-com&mand:"), page1 );
-  grid->addWidget( label, 12, 0 );
+  grid->addWidget( label, 14, 0 );
   mPop.precommand = new KLineEdit( page1 );
   label->setBuddy(mPop.precommand);
-  grid->addWidget( mPop.precommand, 12, 1 );
+  grid->addWidget( mPop.precommand, 14, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("&Extras") );
@@ -1068,6 +1081,9 @@ void AccountDialog::setupSettings()
     mPop.usePipeliningCheck->setChecked( ap.usePipelining() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.leaveOnServerCheck->setChecked( ap.leaveOnServer() );
+    mPop.deleteAfterDaysCheck->setEnabled( ap.leaveOnServer() );
+    mPop.deleteAfterDaysCheck->setChecked( ap.deleteAfterDays() >= 1 );
+    mPop.deleteAfterDaysSpin->setValue( QMAX(1, ap.deleteAfterDays()) );
     mPop.filterOnServerCheck->setChecked( ap.filterOnServer() );
     mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
     mPop.intervalCheck->setChecked( interval >= 1 );
@@ -1098,6 +1114,8 @@ void AccountDialog::setupSettings()
       mPop.authAPOP->setChecked( TRUE );
     else mPop.authUser->setChecked( TRUE );
 
+    slotEnableDeleteAfterDays( mPop.deleteAfterDaysCheck->isEnabled() ?
+                                ap.deleteAfterDays() >= 1 : 0);
     slotEnablePopInterval( interval >= 1 );
     folderCombo = mPop.folderCombo;
   }
@@ -1273,9 +1291,17 @@ void AccountDialog::setupSettings()
   }
 }
 
-
 void AccountDialog::slotLeaveOnServerClicked()
 {
+  bool enabled = mPop.leaveOnServerCheck->isChecked();
+  mPop.deleteAfterDaysCheck->setEnabled( enabled );
+  if ( !enabled ) {
+    mPop.deleteAfterDaysSpin->setEnabled( false );
+    mPop.deleteAfterDaysLabel->setEnabled( false );
+  } else if ( mPop.deleteAfterDaysCheck->isChecked() ) {
+    mPop.deleteAfterDaysSpin->setEnabled( true );
+    mPop.deleteAfterDaysLabel->setEnabled( true );
+  } 
   if ( !( mCurCapa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
                               i18n("The server does not seem to support unique "
@@ -1645,6 +1671,8 @@ void AccountDialog::saveSettings()
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( mPop.leaveOnServerCheck->isChecked() );
+    epa.setDeleteAfterDays( mPop.deleteAfterDaysCheck->isChecked() ?
+                             mPop.deleteAfterDaysSpin->value() : 0 );
     epa.setFilterOnServer( mPop.filterOnServerCheck->isChecked() );
     epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
     epa.setPrecommand( mPop.precommand->text() );
@@ -1869,6 +1897,12 @@ void AccountDialog::slotMaildirChooser()
   directory = dir;
 }
 
+void AccountDialog::slotEnableDeleteAfterDays( bool state )
+{
+  if ( state && !mPop.deleteAfterDaysCheck->isEnabled()) return;
+  mPop.deleteAfterDaysSpin->setEnabled( state );
+  mPop.deleteAfterDaysLabel->setEnabled( state );
+}
 
 void AccountDialog::slotEnablePopInterval( bool state )
 {
