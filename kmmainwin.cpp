@@ -170,42 +170,10 @@ void KMMainWin::slotConfigChanged()
 
 //-----------------------------------------------------------------------------
 bool KMMainWin::queryClose() {
+#if 0
   if (kmkernel->shuttingDown() || kapp->sessionSaving())
     return true;
-
-  int      ret = 0;
-  QString  str = i18n("Expire old messages from all folders? "
-		      "Expired messages are permanently deleted.");
-  KConfig *config = KMKernel::config();
-
-  // Make sure this is the last window.
-  KMainWindow   *kmWin = 0;
-  int           num = 0;
-
-  kmkernel->setCanExpire(false);
-  for (kmWin = KMainWindow::memberList->first(); kmWin;
-       kmWin = KMainWindow::memberList->next()) {
-    if (kmWin->isA("KMMainWin")) {
-      num++;
-    }
-  }
-  // If this isn't the last open window, don't do anything.
-  if (num > 1) {
-    return true;
-  }
-
-  KConfigGroupSaver saver(config, "General");
-  if (config->readNumEntry("when-to-expire", 0) != expireAtExit) {
-    return true;
-  }
-
-  if (config->readBoolEntry("warn-before-expire", true)) {
-    ret = KMessageBox::warningYesNo(KMainWindow::memberList->first(),
-			 str, i18n("Expire Old Messages?"), i18n("Expire"), i18n("Do not Expire"));
-    if (ret == KMessageBox::Yes) {
-      kmkernel->setCanExpire(true);
-    }
-  }
-
+  // ask questions here, if any
+#endif
   return true;
 }

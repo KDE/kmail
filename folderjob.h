@@ -49,7 +49,7 @@ public:
   enum JobType { tListMessages, tGetFolder, tCreateFolder, tExpungeFolder,
 		 tDeleteMessage, tGetMessage, tPutMessage, tAddSubfolders,
 		 tDeleteFolders, tCheckUidValidity, tRenameFolder,
-                 tCopyMessage, tExpireMessages, tMoveMessage };
+                 tCopyMessage, tMoveMessage, tOther /* used by subclasses */ };
   /**
    * Constructs a new job, operating on the message msg, of type
    * @p jt and with a parent folder @p folder.
@@ -73,7 +73,17 @@ public:
   virtual ~FolderJob();
 
   QPtrList<KMMessage> msgList() const;
+  /**
+   * Start the job
+   */
   void start();
+
+  /**
+   * Interrupt the job. Note that the finished() and result() signal
+   * will be emitted, unless you called setPassiveDestructor(true) before.
+   * This kills the job, don't use it afterwards.
+   */
+  virtual void kill();
 
   /**
    * @return the error code of the job. This must only be called from
@@ -158,11 +168,6 @@ protected:
    * start the processing of the specified job function.
    */
   virtual void execute()=0;
-
-  /**
-   * Is used to implement asynchronous expiring of messages in folders.
-   */
-  void expireMessages();
 
   QPtrList<KMMessage> mMsgList;
   JobType             mType;

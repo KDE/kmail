@@ -568,6 +568,7 @@ void KMFolderCachedImap::serverSyncInternal()
       // kdDebug(5006) << "makeConnection said Error, aborting." << endl;
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
       emit newState( label(), progress(), i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
+      close();
       emit folderComplete(this, FALSE);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
@@ -913,7 +914,7 @@ void KMFolderCachedImap::uploadFlags()
 
     // FIXME DUPLICATED FROM KMFOLDERIMAP
     QMap< QString, QStringList > groups;
-    open();
+    //open(); //already done
     for( int i = 0; i < count(); ++i ) {
       KMMsgBase* msg = getMsgBase( i );
       if( !msg || msg->UID() == 0 )
@@ -1542,6 +1543,7 @@ void KMFolderCachedImap::resetSyncState()
 {
   mSubfoldersForSync.clear();
   mSyncState = SYNC_STATE_INITIAL;
+  close();
   emit newState( label(), progress(), i18n("Aborted"));
   emit statusMsg( i18n("%1: Aborted").arg(label()) );
 }

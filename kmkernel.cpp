@@ -44,6 +44,7 @@ using KRecentAddress::RecentAddresses;
 using KMail::MailServiceImpl;
 #include "folderIface.h"
 using KMail::FolderIface;
+#include "jobscheduler.h"
 
 #include <kapplication.h>
 #include <kaboutdata.h>
@@ -119,10 +120,11 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // Set up DCOP interface
   mICalIface = new KMailICalIfaceImpl();
 
+  mJobScheduler = new JobScheduler( this );
+
   mXmlGuiInstance = 0;
   mDeadLetterTimer = 0;
   mDeadLetterInterval = 1000*120; // 2 minutes
-  allowedToExpire = false;
 
   new Kpgp::Module();
 
@@ -686,7 +688,7 @@ void KMKernel::quit()
      - msgsender is nonblocking
        (our own, QSocketNotifier based. Pops up errors and sends signal
         senderFinished when done)
-     - compacting is non blocking (insert processEvents there)
+     - compacting is non blocking (port to FolderJob & ScheduledTask)
 
    o If we are getting mail, stop it (but don´t lose something!)
    o If we are sending mail, go on UNLESS this was called by SM,
@@ -953,6 +955,14 @@ void KMKernel::init()
            this, SLOT( slotFolderRemoved(KMFolder*) ) );
   connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
            this, SLOT( slotFolderRemoved(KMFolder*) ) );
+
+  mExpireFoldersTimer = new QTimer( this );
+  connect( mExpireFoldersTimer, SIGNAL( timeout() ), this, SLOT( slotExpireAllFolders() ) );
+#ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
+  mExpireFoldersTimer->start( 10000, true ); // 10s minute, singleshot
+#else
+  mExpireFoldersTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
+#endif
 }
 
 void KMKernel::cleanupImapFolders()
@@ -1174,12 +1184,10 @@ void KMKernel::cleanupLoop()
   QStringList cleanupMsgs;
   cleanupMsgs << i18n("Cleaning up...")
               << i18n("Emptying trash...")
-              << i18n("Expiring old messages...")
               << i18n("Compacting folders...");
   enum { CleaningUpMsgNo = 0,
          EmptyTrashMsgNo = 1,
-         ExpiringOldMessagesMsgNo = 2,
-         CompactingFoldersMsgNo = 3 };
+         CompactingFoldersMsgNo = 2 };
   mProgress = 0;
   mCleanupLabel = 0;
   mCleanupPopup = 0;
@@ -1218,18 +1226,6 @@ void KMKernel::cleanupLoop()
   KConfig* config =  KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
-  bool expire = false;
-  // Expire old messages in all folders.
-  if (closed_by_user) {
-    if (config->readNumEntry("when-to-expire")==expireAtExit) {
-      expire = true;
-
-      if (config->readBoolEntry("warn-before-expire", true)) {
-	expire = canExpire();
-      }
-    }
-  }
-
   if (!closed_by_user) {
       if (the_trashFolder)
 	  the_trashFolder->close();
@@ -1253,16 +1249,6 @@ void KMKernel::cleanupLoop()
 
   if (mProgress)
     mProgress->setProgress(2);
-
-  if (expire) {
-    if (mCleanupLabel)
-    {
-       mCleanupLabel->setText( cleanupMsgs[ExpiringOldMessagesMsgNo] );
-       QApplication::syncX();
-       kapp->processEvents();
-    }
-    the_folderMgr->expireAllFolders(0);
-  }
 
   if (mProgress)
      mProgress->setProgress(2+nrFolders);
@@ -1454,6 +1440,7 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
 void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KURL &aURL,
   bool overwrite)
 {
+  // ## when KDE 3.3 is out: use KIO::storedPut to remove slotDataReq altogether
   KIO::Job *job = KIO::put(aURL, -1, overwrite, FALSE);
   putData pd; pd.url = aURL; pd.data = aData; pd.offset = 0;
   mPutJobs.insert(job, pd);
@@ -1600,27 +1587,6 @@ void KMKernel::emergencyExit( const QString& reason )
   KNotifyClient::userEvent( 0, mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
 
   ::exit(1);
-}
-
-/**
- * Sets whether the user wants to expire old email on exit.
- * When last main window is closed, user can be presented with
- * a dialog asking them whether they want to expire old email.
- * This is used to keep track of the answer for when cleanup
- * occurs.
- */
-void
-KMKernel::setCanExpire(bool expire) {
-  allowedToExpire = expire;
-}
-
-/**
- * Returns true or false depending on whether user has given
- * their consent to old email expiry for this session.
- */
-bool
-KMKernel::canExpire() {
-  return allowedToExpire;
 }
 
 /**
@@ -1822,6 +1788,26 @@ KMMainWidget *KMKernel::getKMMainWidget()
 void KMKernel::slotFolderRemoved( KMFolder * aFolder )
 {
   if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
+}
+
+void KMKernel::slotExpireAllFolders() // the timer-based one
+{
+  the_folderMgr->expireAllFolders( false /*scheduled*/ );
+  the_imapFolderMgr->expireAllFolders( false /*scheduled*/ );
+  the_dimapFolderMgr->expireAllFolders( false /*scheduled*/ );
+  // the_searchFolderMgr: no expiry there
+#ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
+  mExpireFoldersTimer->start( 60 * 1000, true ); // check again in 1 minute
+#else
+  mExpireFoldersTimer->start( 4 * 60 * 60 * 1000, true ); // check again in 4 hours
+#endif
+}
+
+void KMKernel::expireAllFoldersNow() // the GUI one
+{
+  the_folderMgr->expireAllFolders( true /*immediate*/ );
+  the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
+  the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
 }
 
 #include "kmkernel.moc"

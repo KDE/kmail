@@ -7,13 +7,15 @@
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmsearchpattern.h"
-#include <qfileinfo.h>
+#include "kmmsgdict.h"
+#include "kmmsgindex.h"
+#include "jobscheduler.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kconfig.h>
-#include "kmmsgdict.h"
-#include "kmmsgindex.h"
+
+#include <qfileinfo.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -115,16 +117,12 @@ void KMSearch::setSearchPattern(KMSearchPattern *searchPattern)
 
 bool KMSearch::inScope(KMFolder* folder) const
 {
-    if (mRoot.isNull() || QGuardedPtr<KMFolder>(folder) == mRoot)
+    if (mRoot.isNull() || folder == mRoot)
 	return true;
     if (!recursive())
 	return false;
 
-    KMFolderDir *rootDir = 0;
-    if (mRoot.isNull())
-	rootDir = &kmkernel->folderMgr()->dir();
-    else
-	rootDir = mRoot->child();
+    KMFolderDir *rootDir = mRoot->child();
     KMFolderDir *ancestorDir = folder->parent();
     while (ancestorDir) {
 	if (ancestorDir == rootDir)
@@ -423,6 +421,7 @@ void KMFolderSearch::setSearch(KMSearch *search)
 	mUnlinked = true;
     }
     if (mSearch != search) {
+	close();
 	delete mSearch;
 	mSearch = search; // take ownership
 	if (mSearch) {
@@ -542,6 +541,7 @@ bool KMFolderSearch::readSearch()
 int KMFolderSearch::open()
 {
     mOpenCount++;
+    kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
     if (mOpenCount > 1)
 	return 0;  // already open
 
@@ -1120,6 +1120,16 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
 	}
 	++pos;
     }
+}
+
+void KMFolderSearch::tryReleasingFolder(KMFolder* folder)
+{
+  // We'll succeed releasing the folder only if mTempOpened and mOpenCount==1.
+  // Otherwise if mOpenCount>1 (e.g while the search dialog is up), we would just keep closing/reopening for nothing
+  if ( mTempOpened && mOpenCount == 1 )
+  {
+    examineInvalidatedFolder( folder );
+  }
 }
 
 #include "kmfoldersearch.moc"

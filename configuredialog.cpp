@@ -3051,7 +3051,7 @@ void ComposerPageAttachmentsTab::slotOutlookCompatibleChanged( int state )
     KMessageBox::information(0,i18n("You have choosen to "
     "encode attachment names containing non-English characters in a way that "
     "is understood by Outlook(tm) and other mail clients that do not "
-    "support standard-compliant encoded attachment names.\n" 
+    "support standard-compliant encoded attachment names.\n"
     "Note that KMail may create non-standard compliant messages, "
     "and consequently it's possible that your messages will not be "
     "understood by standard compliant mail clients. So, unless you have no "
@@ -3532,11 +3532,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   vlay->addWidget( mEmptyFolderConfirmCheck );
   connect( mEmptyFolderConfirmCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  mWarnBeforeExpire =
-    new QCheckBox( i18n("&Warn before expiring messages"), this );
-  vlay->addWidget( mWarnBeforeExpire );
-  connect( mWarnBeforeExpire, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
   mExcludeImportantFromExpiry =
     new QCheckBox( i18n("E&xclude important messages from expiry"), this );
   vlay->addWidget( mExcludeImportantFromExpiry );
@@ -3625,13 +3620,10 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   group->layout()->setSpacing( KDialog::spacingHint() );
   mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
-  mExpireAtExit = new QCheckBox( i18n("&Expire old messages"), group );
 
   connect( mCompactOnExitCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  connect( mExpireAtExit, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addWidget( group );
@@ -3675,8 +3667,6 @@ void MiscPage::FolderTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
-  mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
-  mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
   mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
 						  kmkernel->inboxFolder()->idString() ) );
@@ -3702,7 +3692,6 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
-  general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
 				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
 
@@ -3713,11 +3702,6 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
-
-  if ( mExpireAtExit->isChecked() )
-    general.writeEntry( "when-to-expire", expireAtExit );
-  else
-    general.writeEntry( "when-to-expire", expireManual );
 }
 
 QString MiscPage::GroupwareTab::helpAnchor() const {

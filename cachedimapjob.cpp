@@ -125,11 +125,6 @@ void CachedImapJob::execute()
 {
   mSentBytes = 0;
 
-  if ( mType == tExpireMessages ) {
-     expireMessages();
-     return;
-  }
-
   if( !mFolder ) {
     if( !mMsgList.isEmpty() ) {
       mFolder = static_cast<KMFolderCachedImap*>(mMsgList.first()->storage());

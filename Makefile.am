@@ -99,7 +99,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		globalsettings.kcfgc \
 		regexplineedit.cpp rulewidgethandlermanager.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
-		pluginloaderbase.cpp partnodebodypart.cpp
+		pluginloaderbase.cpp partnodebodypart.cpp \
+		expirejob.cpp jobscheduler.cpp
 
 kmail_SOURCES = main.cpp
 

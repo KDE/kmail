@@ -11,6 +11,7 @@
 #include "kmfolder.h"
 #include "undostack.h"
 #include "kcursorsaver.h"
+#include "jobscheduler.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -70,6 +71,8 @@ int KMFolderMbox::open()
   int rc = 0;
 
   mOpenCount++;
+  kmkernel->jobScheduler()->notifyOpeningFolder( folder() );
+
   if (mOpenCount > 1) return 0;  // already open
 
   assert(!folder()->name().isEmpty());
@@ -231,12 +234,14 @@ void KMFolderMbox::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
+#if 0 // removed hack that prevented closing system folders (see kmail-devel discussion about mail expiring)
   if ( (folder() != kmkernel->inboxFolder())
         && folder()->isSystemFolder() && !aForced )
   {
       mOpenCount = 1;
       return;
   }
+#endif
 
   if (mAutoCreateIndex)
   {

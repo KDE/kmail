@@ -626,7 +626,7 @@ public:
 
 protected slots:
   void slotOutlookCompatibleChanged( int );
-    
+
 protected:
   QCheckBox   *mOutlookCompatibleCheck;
   QCheckBox   *mMissingAttachmentDetectionCheck;
@@ -759,14 +759,12 @@ public:
 
 protected:
   QCheckBox    *mEmptyFolderConfirmCheck;
-  QCheckBox    *mWarnBeforeExpire;
   QCheckBox    *mExcludeImportantFromExpiry;
   QComboBox    *mLoopOnGotoUnread;
   QCheckBox    *mJumpToUnread;
   QComboBox    *mMailboxPrefCombo;
   QCheckBox    *mCompactOnExitCheck;
   QCheckBox    *mEmptyTrashCheck;
-  QCheckBox    *mExpireAtExit;
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;

@@ -101,12 +101,6 @@ void MaildirJob::startJob()
       emit messageStored( mMsgList.first() );
     }
     break;
-  case tExpireMessages:
-    {
-      expireMessages();
-      return;
-    }
-    break;
   case tCopyMessage:
   case tCreateFolder:
   case tGetFolder:

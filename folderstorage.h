@@ -236,6 +236,10 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE) = 0;
 
+  /** Try releasing @p folder if possible, something is attempting an exclusive access to it.
+      Currently used for KMFolderSearch and the background tasks like expiry. */
+  virtual void tryReleasingFolder(KMFolder*) {}
+
   /** fsync buffers to disk */
   virtual void sync() = 0;
 
@@ -367,6 +371,12 @@ public:
    */
   virtual KMFolder* trashFolder() const { return 0; }
 
+  /**
+   * Add job for this folder. This is done automatically by createJob.
+   * This method is public only for other kind of FolderJob like ExpireJob.
+   */
+  void addJob( FolderJob* ) const;
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -406,7 +416,7 @@ signals:
   /** Emitted when number of unread messages has changed. */
   void numUnreadMsgsChanged( KMFolder* );
 
-  // Emitted by KMFolderCachedIMAP to signal syncing
+  /** Emitted by KMFolderCachedIMAP to signal syncing */
   void syncRunning( KMFolder*, bool );
 
   /** Emitted when a folder was removed */
@@ -428,7 +438,6 @@ protected slots:
   virtual void removeJob( QObject* );
 
 protected:
-  virtual void addJob( FolderJob* ) const;
   /**
    * These two methods actually create the jobs. They have to be implemented
    * in all folders.
@@ -492,10 +501,7 @@ protected:
 
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
-  /** List of jobs created by this folder.
-   *  REMEBER to add jobs created via createJob
-   *  to this list.
-   */
+  /** List of jobs created by this folder. */
   mutable QPtrList<FolderJob> mJobList;
 
   QTimer *mDirtyTimer;

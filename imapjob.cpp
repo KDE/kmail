@@ -69,12 +69,6 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
 {
   mJob = 0;
 
-  if ( jt == tExpireMessages )
-  {
-    expireMessages();
-    return;
-  }
-
   assert(jt == tGetMessage || folder);
   KMMessage* msg = msgList.first();
    // guard against empty list

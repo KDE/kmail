@@ -14,6 +14,7 @@
 #include "kmfoldermgr.h"
 #include "identitymanager.h"
 #include "kmidentity.h"
+#include "expirejob.h"
 
 #include <errno.h>
 
@@ -671,10 +672,13 @@ void KMFolder::daysToExpire(int& unreadDays, int& readDays) {
   readDays = ::daysToExpire( getReadExpireAge(), getReadExpireUnits() );
 }
 
-void KMFolder::expireOldMessages()
+void KMFolder::expireOldMessages( bool immediate )
 {
-  FolderJob *job = createJob( 0, FolderJob::tExpireMessages );
-  job->start();
+  KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
+  if ( immediate )
+    kmkernel->jobScheduler()->runTaskNow( task );
+  else
+    kmkernel->jobScheduler()->registerTask( task );
 }
 
 KMFolder* KMFolder::trashFolder() const

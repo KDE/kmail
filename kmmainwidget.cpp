@@ -890,7 +890,7 @@ void KMMainWidget::slotExpireFolder()
 	!= KMessageBox::Continue) return;
   }
 
-  mFolder->expireOldMessages();
+  mFolder->expireOldMessages( true /*immediate*/);
 }
 
 //-----------------------------------------------------------------------------
@@ -1060,9 +1060,7 @@ void KMMainWidget::slotExpireAll() {
     }
   }
 
-  kmkernel->folderMgr()->expireAllFolders();
-  kmkernel->imapFolderMgr()->expireAllFolders();
-  kmkernel->dimapFolderMgr()->expireAllFolders();
+  kmkernel->expireAllFoldersNow();
 }
 
 //-----------------------------------------------------------------------------

@@ -87,10 +87,10 @@ public:
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
   /** fsync all open folders to disk */
-  virtual void syncAllFolders( KMFolderDir *adir = 0 );
+  void syncAllFolders( KMFolderDir *adir = 0 );
 
-  /** Expire old messages in all folders */
-  virtual void expireAllFolders( KMFolderDir *adir = 0 );
+  /** Expire old messages in all folders, either immediately or scheduled as a background task */
+  void expireAllFolders( bool immediate, KMFolderDir *adir = 0 );
 
   /** Inserts messages into the message dictionary.  Called during
     kernel initialization. */
@@ -109,6 +109,10 @@ public:
       invalidates/recreates data structures dependent on the
       serial numbers for this folder */
   void invalidateFolder(KMMsgDict *dict, KMFolder *folder);
+
+  /** Try closing @p folder if possible, something is attempting an exclusive access to it.
+      Currently used for KMFolderSearch and the background tasks like expiry */
+  void tryReleasingFolder(KMFolder* folder, KMFolderDir *Dir=0);
 
 public slots:
   /** Compacts all folders (they know is it needed) */
@@ -146,7 +150,7 @@ signals:
   /** Emitted when a field of the header of a specific message changed. */
   void msgHeaderChanged(KMFolder*, int idx);
 
-  /** Emitted once for each folder during compactAll() and expireAll() */
+  /** Emitted once for each folder during compactAll() */
   void progress();
 
 protected:

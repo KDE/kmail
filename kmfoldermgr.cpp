@@ -28,6 +28,7 @@
 #include "kmfoldermgr.h"
 #include "undostack.h"
 #include "kmmsgdict.h"
+#include "folderstorage.h"
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
@@ -70,7 +71,7 @@ void KMFolderMgr::expireAll() {
   }
 
   if (ret == KMessageBox::Continue) {
-    expireAllFolders(0);
+    expireAllFolders( true /*immediate*/ );
   }
 
 }
@@ -450,16 +451,16 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
  *
  * Should be called with 0 first time around.
  */
-void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
+void KMFolderMgr::expireAllFolders(bool immediate, KMFolderDir *adir) {
   KMFolderDir   *dir = adir ? adir : &mDir;
 
   DO_FOR_ALL(
              {
-               expireAllFolders(child);
+               expireAllFolders(immediate, child);
              },
              {
                if (folder->isAutoExpire()) {
-                 folder->expireOldMessages();
+                 folder->expireOldMessages( immediate );
                }
                emit progress();
              }
@@ -539,4 +540,18 @@ void KMFolderMgr::quiet(bool beQuiet)
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderMgr::tryReleasingFolder(KMFolder* f, KMFolderDir* adir)
+{
+  KMFolderDir* dir = adir ? adir : &mDir;
+  DO_FOR_ALL(
+             {
+               tryReleasingFolder(f, child);
+             },
+             {
+               if (folder->isOpened())
+	         folder->storage()->tryReleasingFolder(f);
+             }
+  )
+}
+
 #include "kmfoldermgr.moc"

@@ -409,7 +409,11 @@ public:
    */
   ExpireUnits getReadExpireUnits() const { return mReadExpireUnits; }
 
-  void expireOldMessages();
+  /**
+   * Expire old messages in this folder.
+   * If immediate is true, do it immediately; otherwise schedule it for later
+   */
+  void expireOldMessages( bool immediate );
 
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */

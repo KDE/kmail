@@ -83,7 +83,6 @@ void FolderJob::init()
   case tGetFolder:
   case tGetMessage:
   case tCheckUidValidity:
-  case tExpireMessages:
     mCancellable = true;
     break;
   default:
@@ -112,65 +111,16 @@ FolderJob::start()
 }
 
 //----------------------------------------------------------------------------
+void FolderJob::kill()
+{
+  delete this;
+}
+
+//----------------------------------------------------------------------------
 QPtrList<KMMessage>
 FolderJob::msgList() const
 {
   return mMsgList;
-}
-
-//----------------------------------------------------------------------------
-void
-FolderJob::expireMessages()
-{
-  int              maxUnreadTime    = 0;
-  int              maxReadTime      = 0;
-  const KMMsgBase *mb               = 0;
-  int              i                = 0;
-  time_t           msgTime, maxTime = 0;
-  FolderStorage*   storage          = mDestFolder->storage();
-
-  int unreadDays, readDays;
-  mDestFolder->daysToExpire( unreadDays, readDays );
-  if (unreadDays > 0) {
-    kdDebug(5006) << "deleting unread older than "<< unreadDays << " days" << endl;
-    maxUnreadTime = time(0) - unreadDays * 3600 * 24;
-  }
-  if (readDays > 0) {
-    kdDebug(5006) << "deleting read older than "<< readDays << " days" << endl;
-    maxReadTime = time(0) - readDays * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-
-  storage->open();
-  QPtrList<KMMessage> list;
-  for( i=storage->count()-1; i>=0; i-- ) {
-    mb = storage->getMsgBase(i);
-    if (mb == 0) {
-      continue;
-    }
-    if ( mb->isImportant()
-      && GlobalSettings::excludeImportantMailFromExpiry() )
-       continue;
-
-    msgTime = mb->date();
-
-    if (mb->isUnread()) {
-      maxTime = maxUnreadTime;
-    } else {
-      maxTime = maxReadTime;
-    }
-
-    if (msgTime < maxTime) {
-      list.append( storage->getMsg( i ) );
-    }
-  }
-  storage->removeMsg( list );
-  storage->close();
-
-  deleteLater();
 }
 
 }

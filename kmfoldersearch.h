@@ -107,6 +107,8 @@ public:
   virtual KMMessage* getMsg(int idx);
   virtual void ignoreJobsForMessage( KMMessage* );
 
+  virtual void tryReleasingFolder(KMFolder* folder);
+
 protected slots:
   // Reads search definition for this folder and creates a KMSearch
   bool readSearch();
@@ -161,7 +163,7 @@ public:
 
 protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
-                                 KMFolder *folder, QString partSpecifier, 
+                                 KMFolder *folder, QString partSpecifier,
                                  const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob(QPtrList<KMMessage>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder) const;

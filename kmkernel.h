@@ -22,9 +22,11 @@ namespace KIO {
 namespace KMail {
   class MailServiceImpl;
   class UndoStack;
+  class JobScheduler;
 }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
+using KMail::JobScheduler;
 class KMMsgIndex;
 class QLabel;
 class KMFolder;
@@ -59,10 +61,6 @@ class KMKernel : public QObject, virtual public KMailIface
 public:
   KMKernel (QObject *parent=0, const char *name=0);
   ~KMKernel ();
-
-  /** true if user has requested to expire all messages on exit */
-  void setCanExpire(bool expire);
-  bool canExpire();
 
   /** dcop callable stuff */
 
@@ -171,6 +169,11 @@ public:
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
 
+  JobScheduler* jobScheduler() { return mJobScheduler; }
+
+  /** Expire all folders, used for the gui action */
+  void expireAllFoldersNow();
+
   KMGroupware& groupware();
   KMailICalIfaceImpl& iCalIface();
 
@@ -254,6 +257,7 @@ protected slots:
   void cleanupLoop();
   void cleanupProgress();
   void slotFolderRemoved(KMFolder*);
+  void slotExpireAllFolders();
 
 signals:
   void configChanged();
@@ -303,7 +307,6 @@ private:
   bool the_server_is_ready;
   /** true unles kmail is closed by session management */
   bool closed_by_user;
-  bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
   KSharedConfig::Ptr mConfig;
@@ -315,8 +318,10 @@ private:
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
+  QTimer *mExpireFoldersTimer;
   KMGroupware * mGroupware;
   KMailICalIfaceImpl* mICalIface;
+  JobScheduler* mJobScheduler;
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;

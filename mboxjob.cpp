@@ -82,7 +82,7 @@ void
 MboxJob::startJob()
 {
   KMMessage *msg = mMsgList.first();
-  assert( (msg && ( mParent || msg->parent() )) || ( mParent && mType == tExpireMessages) );
+  assert( (msg && ( mParent || msg->parent() )) );
   switch( mType ) {
   case tGetMessage:
     {
@@ -105,11 +105,6 @@ MboxJob::startJob()
       emit messageStored( mMsgList.first() );
     }
     break;
-  case tExpireMessages:
-    {
-      expireMessages();
-    }
-    return;
   case tCopyMessage:
   case tCreateFolder:
   case tGetFolder:
