@@ -5157,7 +5157,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
 
 void CertificatesPage::slotStartCertManager()
 {
-	if ( plugListBoxCertConf->count() && plugListBoxCertConf->currentItem() )
+	if ( plugListBoxCertConf->count() && (0 <= plugListBoxCertConf->currentItem()) )
 	{
 	    KProcess certManagerProc; // save to create on the heap, since
                               // there is no parent
@@ -5168,6 +5168,8 @@ void CertificatesPage::slotStartCertManager()
 	    if( !certManagerProc.start( KProcess::DontCare ) )
     	    KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
         	                    i18n( "KMail Error" ) );
+        else
+            kdDebug(5006) << "\nCertificatesPage::slotStartCertManager(): certificate manager started.\n" << endl;
 	}
     // process continues to run even after the KProcess object goes
     // out of scope here, since it is started in DontCare run mode.
