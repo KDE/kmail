@@ -20,5 +20,5 @@ pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
 
 picsdir = $(kde_datadir)/kmail/pics
 
-EXTRA_DIST = $(data_DATA)
+EXTRA_DIST = $(pics_DATA)
 
