@@ -429,6 +429,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
 //-----------------------------------------------------------------------------
 void KMFolderImap::getFolder()
 {
+  if (mNoContent) return;
   mImapState = imapInProgress;
   checkValidity();
 }

@@ -1839,10 +1839,10 @@ void KMMainWin::setupMenuBar()
   expireFolderAction = new KAction(i18n("E&xpire"), 0, this, SLOT(slotExpireFolder()),
 				   actionCollection(), "expire");
 
-  (void) new KAction( i18n("C&ompact"), 0, this,
+  compactFolderAction = new KAction( i18n("C&ompact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  (void) new KAction( i18n("&Empty"), 0, this,
+  emptyFolderAction = new KAction( i18n("&Empty"), 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
   removeFolderAction = new KAction( i18n("&Remove"), 0, this,
@@ -2306,12 +2306,13 @@ void KMMainWin::updateMessageActions()
 //-----------------------------------------------------------------------------
 void KMMainWin::updateFolderMenu()
 {
-  //  modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder(): false );
+  modifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  compactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  emptyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   expireFolderAction->setEnabled( mFolder && mFolder->protocol() != "imap"
     && mFolder->isAutoExpire() );
   preferHtmlAction->setEnabled( mFolder ? true : false );
-  threadMessagesAction->setEnabled( true );
   threadMessagesAction->setEnabled( mFolder ? true : false );
 
   preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );

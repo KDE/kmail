@@ -712,7 +712,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   clearSelection();
   setCurrentItem( qlvi );
   setSelected( qlvi, TRUE );
-  if (!folder || folder->noContent()) {
+  if (!folder) {
     emit folderSelected(0); // Root has been selected
   }
   else {
@@ -781,7 +781,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
   QPopupMenu *folderMenu = new QPopupMenu;
 
-  if ((!fti->folder || fti->folder->noContent()))
+  if ((!fti->folder || (fti->folder->noContent()
+    && fti->parent() == firstChild())))
   {
     folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                            SLOT(addChildFolder()));
@@ -807,23 +808,26 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     // Want to be able to display properties for ALL folders,
     // so we can edit expiry properties.
     // -- smp.
-    folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
+    if (!fti->folder->noContent())
+    {
+      folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
                          SLOT(slotModifyFolder()));
 
-    if (fti->folder->protocol() != "imap" && fti->folder->isAutoExpire())
-      folderMenu->insertItem(i18n("E&xpire"), topLevelWidget(),
-                             SLOT(slotExpireFolder()));
+      if (fti->folder->protocol() != "imap" && fti->folder->isAutoExpire())
+        folderMenu->insertItem(i18n("E&xpire"), topLevelWidget(),
+                               SLOT(slotExpireFolder()));
 
-    folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
-                           SLOT(slotCompactFolder()));
-    folderMenu->insertSeparator();
-    folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
-                           SLOT(slotEmptyFolder()));
+      folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
+                             SLOT(slotCompactFolder()));
+      folderMenu->insertSeparator();
+      folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
+                             SLOT(slotEmptyFolder()));
+    }
     if ( !fti->folder->isSystemFolder() )
         folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
                                SLOT(slotRemoveFolder()));
 
-    if (fti->folder->isMailingList())
+    if (!fti->folder->noContent() && fti->folder->isMailingList())
     {
       folderMenu->insertSeparator();
       folderMenu->insertItem(i18n("&Post to mailing-list"),

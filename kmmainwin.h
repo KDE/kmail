@@ -266,7 +266,8 @@ protected:
   ConfigureDialog *mConfigureDialog;
   bool mbNewMBVisible;
 
-  KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction;
+  KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
+    *compactFolderAction, *emptyFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *toolbarAction, *statusbarAction;
 
