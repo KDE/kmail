@@ -932,6 +932,7 @@ void KMHeaders::resendMsg ()
   newMsg->fromString(msg->asString());
   newMsg->removeHeaderField("Message-Id");
   newMsg->initHeader();
+  newMsg->setCharset(msg->charset());
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
 
