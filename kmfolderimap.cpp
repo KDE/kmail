@@ -122,6 +122,45 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 }
 
 //-----------------------------------------------------------------------------
+int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
+{
+  KMFolder *msgParent = aMsg->parent();
+  if (msgParent)
+  {
+    int idx = msgParent->find(aMsg);
+    msgParent->getMsg( idx );
+    if (msgParent->protocol() == "imap")
+    {
+      if (static_cast<KMFolderImap*>(msgParent)->account() == account())
+      {
+        KMImapJob *imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);        connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
+          SLOT(addMsgQuiet(KMMessage*)));
+        aMsg->setTransferInProgress(TRUE);
+        if (aIndex_ret) *aIndex_ret = -1;
+        return 0;
+      }
+      else if (!aMsg->isComplete())
+      {
+        KMImapJob *imapJob = new KMImapJob(aMsg);
+        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+          SLOT(reallyAddMsg(KMMessage*)));
+        aMsg->setTransferInProgress(TRUE);
+        if (aIndex_ret) *aIndex_ret = -1;
+        return 0;
+      }
+    }
+  }
+  aMsg->setTransferInProgress(TRUE);
+  KMImapJob *imapJob = new KMImapJob(aMsg, KMImapJob::tPutMessage, this);
+  connect(imapJob, SIGNAL(messageStored(KMMessage*)),
+    SLOT(addMsgQuiet(KMMessage*)));
+  if (aIndex_ret) *aIndex_ret = -1;
+  return 0;
+
+  KMFolderImapInherited::addMsg(aMsg, aIndex_ret);
+}
+
+//-----------------------------------------------------------------------------
 KMMessage* KMFolderImap::take(int idx)
 {
   KMMsgBase* mb(mMsgList[idx]);
@@ -546,10 +585,9 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     if (flags & 8) delete msg;
     else {
       msg->setStatus(flagsToStatus(flags));
-      KMFolderImap *kf = static_cast<KMFolderImap*>((*it).parent->folder);
-      kf->addMsg(msg, NULL, TRUE);
-      if (kf->count() > 1) kf->unGetMsg(kf->count() - 1);
-      if (kf->count() % 100 == 0) { kf->quiet(FALSE); kf->quiet(TRUE); }
+      KMFolderImapInherited::addMsg(msg, NULL);
+      if (count() > 1) unGetMsg(count() - 1);
+      if (count() % 100 == 0) { quiet(FALSE); quiet(TRUE); }
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;

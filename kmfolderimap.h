@@ -170,6 +170,14 @@ public slots:
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage *);
 
+  /** Add the given message to the folder. Usually the message
+    is added at the end of the folder. Returns zero on success and
+    an errno error code on failure. The index of the new message
+    is stored in index_return if given.
+    Please note that the message is added as is to the folder and the folder
+    takes ownership of the message (deleting it in the destructor).*/
+  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
+
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
   virtual KMMessage* take(int idx);

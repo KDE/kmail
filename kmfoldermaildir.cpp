@@ -298,7 +298,7 @@ int KMFolderMaildir::compact()
   return 0;
 }
 
-int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return, bool)
+int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 {
   long len;
   unsigned long size;

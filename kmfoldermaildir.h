@@ -28,7 +28,7 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL, bool quiet = FALSE);
+  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
 
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
