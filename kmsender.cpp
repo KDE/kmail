@@ -636,12 +636,13 @@ QCString KMSendProc::prepareStr(const QCString &aStr, bool toCRLF,
  bool noSingleDot)
 {
   QString str;
-  int pos=0;
-
+  int pos = 0;
+  int len = aStr.length();
   if (aStr.isEmpty()) return QCString();
 
   // Convert LF to CR+LF and handle dots at beginning of line.
-  for (pos=0; pos<(int)aStr.length(); pos++)
+
+  for (pos=0; pos < len; ++pos)
   {
     QChar c = aStr[pos];
     if (c=='\n')
