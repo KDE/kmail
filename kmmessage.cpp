@@ -333,7 +333,7 @@ QString KMMessage::headerAsString(void) const
 {
   DwHeaders& header = mMsg->Headers();
   header.Assemble();
-  if (!header.AsString().isEmpty())
+  if(header.AsString() != "")
     return header.AsString().c_str();
   return "";
 }
