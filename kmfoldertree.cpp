@@ -190,8 +190,10 @@ void KMFolderTreeItem::slotRepaint() {
     setPixmap( 0, unreadIcon() );
   else
     setPixmap( 0, normalIcon() );
+  emit iconChanged( this );
   repaint();
 }
+
 
 //-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
@@ -528,6 +530,12 @@ void KMFolderTree::reload(bool openFolders)
 	       fti,SLOT(slotRepaint()));
     connect(fti->folder(),SIGNAL(iconsChanged()),
 	    fti,SLOT(slotRepaint()));
+
+    disconnect(fti->folder(),SIGNAL(nameChanged()),
+	       fti,SLOT(slotNameChanged()));
+    connect(fti->folder(),SIGNAL(nameChanged()),
+	    fti,SLOT(slotNameChanged()));
+
     if (isTotalActive() || isUnreadActive())
     {
 
@@ -603,6 +611,10 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     } else {
       // create new child
       fti = new KMFolderTreeItem( parent, folder->label(), folder );
+      connect (fti, SIGNAL(iconChanged(KMFolderTreeItem*)),
+               this, SIGNAL(iconChanged(KMFolderTreeItem*)));
+      connect (fti, SIGNAL(nameChanged(KMFolderTreeItem*)),
+               this, SIGNAL(nameChanged(KMFolderTreeItem*)));
     }
     // restore last open-state
     fti->setOpen( readIsListViewItemOpen(fti) );

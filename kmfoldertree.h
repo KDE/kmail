@@ -68,9 +68,18 @@ public:
 
   /** dnd */
   virtual bool acceptDrag(QDropEvent* ) const;
+
+signals:
+  /** Our icon changed */
+  void iconChanged( KMFolderTreeItem * );
+  /** Our name changed */
+  void nameChanged( KMFolderTreeItem * );
+  
 public slots:
   void properties();
   void slotRepaint();
+  void slotNameChanged() { emit nameChanged( this ); }
+
 
 protected:
   void init();
@@ -144,7 +153,13 @@ signals:
 
   /** unread/total column has changed */
   void columnsChanged();
-
+  
+  /** an icon of one of our folders changed */
+  void iconChanged( KMFolderTreeItem * );
+  
+  /** the name of one of our folders changed */
+  void nameChanged( KMFolderTreeItem * );
+  
 public slots:
   /** Select the next folder with unread messages */
   void nextUnreadFolder();

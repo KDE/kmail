@@ -711,6 +711,7 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
     mOpenCount = openCount;
   }
 
+  emit nameChanged();
   return rc;
 }
 

@@ -139,6 +139,10 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   KParts::InfoExtension *ie = new KParts::InfoExtension( this, "KMailInfo" );
   connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
+  connect( mainWidget->folderTree(), SIGNAL(iconChanged(KMFolderTreeItem*)), 
+           this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
+  connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)), 
+           this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
@@ -188,6 +192,17 @@ void KMailPart::exportFolder( KMFolder *folder )
   if ( fti )
     emit iconChanged( fti->normalIcon( 22 ) );
 }
+
+void KMailPart::slotIconChanged( KMFolderTreeItem *fti )
+{
+  emit iconChanged( fti->normalIcon( 22 ) );
+}
+
+void KMailPart::slotNameChanged( KMFolderTreeItem *fti )
+{
+  emit textChanged( fti->folder()->label() );
+}
+
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {

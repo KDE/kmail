@@ -44,6 +44,7 @@ class KMKernel;
 class KMMainWidget;
 class KMLittleProgressDlg;
 class KMFolder;
+class KMFolderTreeItem;
 
 class ActionManager;
 
@@ -64,6 +65,8 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     virtual void exit();
     virtual void updateEditMenu() {};
     void exportFolder( KMFolder* folder );
+    void slotIconChanged( KMFolderTreeItem *fti );
+    void slotNameChanged( KMFolderTreeItem *fti );
 
   signals:
     void textChanged( const QString& );
