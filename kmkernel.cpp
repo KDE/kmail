@@ -1349,8 +1349,10 @@ KMainWindow* KMKernel::mainWin()
   if (kmWin) {
     return kmWin;
   } else {
-    // There is not a single KMMainWin. Create one. Should
-    // not happen.
+    /* There is not a single KMMainWin. Create one. 
+       This could happen if we want to pop up an error message
+       while we are still doing the startup wizard and no other
+       KMainWindow is running. */
     mWin = new KMMainWin;
     return mWin;
   }
