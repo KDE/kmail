@@ -316,6 +316,8 @@ void KMMainWidget::readConfig(void)
         mFolderTree->addTotalColumn( i18n("Total"), 70 );
       if (unreadColumn != -1 && unreadColumn > totalColumn)
         mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
+
+      mFolderTree->updatePopup();
     }
   }
 

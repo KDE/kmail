@@ -42,7 +42,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                                     KFolderTreeItem::Protocol protocol )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name, protocol, Root ),
-    mFolder( 0 )
+    mFolder( 0 ), mNeedsRepaint( false )
 {
   init();
   setPixmap( 0, normalIcon() );
@@ -53,7 +53,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                     KMFolder* folder )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name ),
-    mFolder( folder )
+    mFolder( folder ), mNeedsRepaint( false )
 {
   init();
   setPixmap( 0, normalIcon() );
@@ -64,7 +64,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
                     KMFolder* folder )
   : QObject( 0, name.latin1() ),
     KFolderTreeItem( parent, name ),
-    mFolder( folder )
+    mFolder( folder ), mNeedsRepaint( false )
 {
   init();
   setPixmap( 0, normalIcon() );
@@ -183,19 +183,15 @@ void KMFolderTreeItem::init()
     setRenameEnabled(0, false);
 }
 
-bool KMFolderTreeItem::adjustUnreadCount() {
-  if ( !folder() )
-    return false;
-  const int count = folder()->countUnread();
-  //if ( count == unreadCount() )
-  //return false;
-  setUnreadCount( count );
-  if ( count > 0 )
+void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
+  // adjust the icons if the folder is now newly unread or
+  // now newly not-unread
+  if ( newUnreadCount != 0 && unreadCount() == 0 )
     setPixmap( 0, unreadIcon() );
-  else
+  if ( unreadCount() != 0 && newUnreadCount == 0 )
     setPixmap( 0, normalIcon() );
-
-  return true;
+  
+  setUnreadCount( newUnreadCount );
 }
 
 void KMFolderTreeItem::slotRepaint() {
@@ -358,7 +354,6 @@ void KMFolderTree::readColorConfig (void)
 void KMFolderTree::readConfig (void)
 {
   KConfig* conf = KMKernel::config();
-  QString fntStr;
 
   // Backing pixmap support
   { //area for config group "Pixmaps"
@@ -453,9 +448,6 @@ void KMFolderTree::reload(bool openFolders)
   mLastItem = 0;
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (fti && fti->folder())
-      disconnect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-                 this,SLOT(refresh()));
     writeIsListViewItemOpen( fti );
   }
   clear();
@@ -494,12 +486,6 @@ void KMFolderTree::reload(bool openFolders)
     if ( !fti || !fti->folder() )
       continue;
 
-    // first disconnect before each connect
-    // to make sure we don't call it several times with each reload
-    disconnect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-               this,SLOT(refresh()));
-    connect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-            this,SLOT(refresh()));
     disconnect(fti->folder(),SIGNAL(iconsChanged()),
                fti,SLOT(slotRepaint()));
     connect(fti->folder(),SIGNAL(iconsChanged()),
@@ -510,35 +496,32 @@ void KMFolderTree::reload(bool openFolders)
     connect(fti->folder(),SIGNAL(nameChanged()),
             fti,SLOT(slotNameChanged()));
 
-    if (isTotalActive() || isUnreadActive())
-    {
-
-      if (fti->folder()->folderType() == KMFolderTypeImap)
-      {
-        // imap-only
-        KMFolderImap *imapFolder =
-           dynamic_cast<KMFolderImap*> ( fti->folder()->storage() );
-        disconnect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-                    this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-        connect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-                 this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-      } else {
-        // others-only, imap doesn't need this because of the folderComplete-signal
-        // we want to be noticed of changes to update the unread/total columns
-        disconnect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-                   this,SLOT(slotUpdateCounts(KMFolder*)));
-        connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-                this,SLOT(slotUpdateCounts(KMFolder*)));
-        disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
-                   this,SLOT(slotUpdateCounts(KMFolder*)));
-        connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
-                this,SLOT(slotUpdateCounts(KMFolder*)));
-      }
-      disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
-                 this,SLOT(slotUpdateCounts(KMFolder*)));
-      connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
-              this,SLOT(slotUpdateCounts(KMFolder*)));
+    if (fti->folder()->folderType() == KMFolderTypeImap) {
+      // imap-only
+      KMFolderImap *imapFolder =
+        dynamic_cast<KMFolderImap*> ( fti->folder()->storage() );
+      disconnect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+          this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
+      connect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+          this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
+    } else {
+      // others-only, imap doesn't need this because of the folderComplete-signal
+      // we want to be noticed of changes to update the unread/total columns
+      disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+          this,SLOT(slotUpdateCounts(KMFolder*)));
+      connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+          this,SLOT(slotUpdateCounts(KMFolder*)));
     }
+
+    disconnect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+               this,SLOT(slotUpdateCounts(KMFolder*)));
+    connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+    disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
+               this,SLOT(slotUpdateCounts(KMFolder*)));
+    connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+
     if (!openFolders)
       slotUpdateCounts(fti->folder());
   }
@@ -626,7 +609,7 @@ void KMFolderTree::refresh(KMFolder* folder, bool doUpdate)
     static_cast<KMHeaders*>(mMainWidget->child("headers"))->setFolder(folder);
   }
   if ( doUpdate )
-    delayedUpdate();
+    refresh();
 }
 
 //-----------------------------------------------------------------------------
@@ -651,11 +634,10 @@ void KMFolderTree::delayedUpdate()
     if (!fti || !fti->folder())
       continue;
 
-    bool repaintRequired = fti->adjustUnreadCount();
-
-    if (upd && repaintRequired)
-      for (QListViewItem *p = fti; p; p = p->parent())
-        p->repaint();
+    if ( upd && fti->needsRepaint() ) {
+      fti->repaint();
+      fti->setNeedsRepaint( false );
+    }
   }
   setUpdatesEnabled(upd);
   mUpdateTimer.stop();
@@ -1475,8 +1457,10 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
   QListViewItem * current;
 
-  if (folder) current = indexOfFolder(folder);
-  else current = currentItem();
+  if (folder) 
+    current = indexOfFolder(folder);
+  else 
+    current = currentItem();
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(current);
   // sanity check
@@ -1487,15 +1471,15 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   int count = 0;
   if (folder->noContent()) // always empty
     count = -1;
-  else if (fti->folder()->countUnread() == 0)
-    count = 0;
   else
     count = fti->folder()->countUnread();
 
   // set it
   bool repaint = false;
-  if (fti->unreadCount() != count) repaint = true;
-  fti->setUnreadCount(count);
+  if (fti->unreadCount() != count) {
+     fti->adjustUnreadCount( count ); 
+     repaint = true;
+  }
 
   if (isTotalActive())
   {
@@ -1510,15 +1494,22 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
       count = -1;
 
     // set it
-    fti->setTotalCount(count);
+    if ( count != fti->totalCount() ) {
+      fti->setTotalCount(count);
+      repaint = true;
+    }
   }
   if (repaint) {
-    // repaint the item and it's parents
-    for (QListViewItem *p = fti; p; p = p->parent())
-      p->repaint();
+    fti->setNeedsRepaint( true );
+    refresh();
   }
 }
 
+void KMFolderTree::updatePopup() const
+{
+   mPopup->setItemChecked( mUnreadPop, isUnreadActive() );
+   mPopup->setItemChecked( mTotalPop, isTotalActive() );
+}
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::toggleColumn(int column, bool openFolders)
@@ -1597,16 +1588,16 @@ void KMFolderTree::slotCheckMail()
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::createFolderList( QStringList *str, 
+void KMFolderTree::createFolderList( QStringList *str,
                                      QValueList<QGuardedPtr<KMFolder> > *folders,
-                                     bool localFolders, 
-                                     bool imapFolders, 
+                                     bool localFolders,
+                                     bool imapFolders,
                                      bool dimapFolders,
                                      bool searchFolders,
                                      bool includeNoContent,
                                      bool includeNoChildren )
 {
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) 
+  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
   {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     if (!fti || !fti->folder()) continue;

@@ -59,13 +59,16 @@ public:
   QPixmap normalIcon(int size=16) const;
   QPixmap unreadIcon(int size=16) const;
 
-  /** associated folder */
-  KMFolder* folder() { return mFolder; }
-  QListViewItem* parent() { return KFolderTreeItem::parent(); }
+  void setNeedsRepaint( bool value ) { mNeedsRepaint = value; }
+  bool needsRepaint() const { return mNeedsRepaint; }
 
-  /** Adjust the unread count from the folder.
-      @return true if a repaint is necessary */
-  bool adjustUnreadCount();
+  /** associated folder */
+  KMFolder* folder() const { return mFolder; }
+  QListViewItem* parent() const { return KFolderTreeItem::parent(); }
+
+  /** Adjust the unread count from the folder and update the 
+   * pixmaps accordingly. */
+  void adjustUnreadCount( int newUnreadCount );
 
   /** dnd */
   virtual bool acceptDrag(QDropEvent* ) const;
@@ -85,6 +88,8 @@ public slots:
 protected:
   void init();
   KMFolder* mFolder;
+private:
+  bool mNeedsRepaint;
 };
 
 //==========================================================================
@@ -140,6 +145,10 @@ public:
 
   /** toggles the unread and total columns on/off */
   void toggleColumn(int column, bool openFolders = false);
+
+  /** Set the checked/unchecked state of the unread and total column
+   *  in the popup correctly */
+  virtual void updatePopup() const;
 
 signals:
   /** The selected folder has changed */
