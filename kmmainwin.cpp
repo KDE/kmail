@@ -1107,7 +1107,7 @@ void KMMainWin::slotExpireAll() {
   if (config->readBoolEntry("warn-before-expire")) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 i18n("Are you sure you want to expire all old messages?"),
-			 i18n("Expire Old Messages?"), i18n("Expire"));
+			 i18n("Expire old Messages?"), i18n("Expire"));
     if (ret != KMessageBox::Continue) {
       return;
     }
@@ -2881,7 +2881,7 @@ bool KMMainWin::queryClose() {
 
   if (config->readBoolEntry("warn-before-expire")) {
     ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
-			 str, i18n("Expire Old Messages?"), i18n("Expire"));
+			 str, i18n("Expire old Messages?"), i18n("Expire"));
     if (ret == KMessageBox::Continue) {
       kernel->setCanExpire(true);
     }

@@ -615,7 +615,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
 	if ( KMessageBox::questionYesNo( this,
 	   i18n( "Go to the next unread message in folder %1?" )
                                     .arg( fti->folder->label() ),
-	   i18n( "Go to the next unread message" ),
+	   i18n( "Go to the Next Unread Message" ),
 	   KStdGuiItem::yes(), KStdGuiItem::no(), // defaults
            "AskNextFolder",
            false)
