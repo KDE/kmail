@@ -17,6 +17,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
+#include <kstaticdeleter.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <qutf7codec.h>
@@ -65,7 +66,6 @@
 #include <qfile.h>
 
 KMKernel *KMKernel::mySelf = 0;
-KConfig *KMKernel::myConfig = 0;
 
 /********************************************************************/
 /*                     Constructor and destructor                   */
@@ -135,6 +135,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 KMKernel::~KMKernel ()
 {
   delete mSystemTray;
+  mSystemTray = 0;
 
   QMap<KIO::Job*, putData>::Iterator it = mPutJobs.begin();
   while ( it != mPutJobs.end() )
@@ -1353,10 +1354,13 @@ void KMKernel::slotEmptyTrash()
   }
 }
 
+KConfig *KMKernel::myConfig = 0;
+KStaticDeleter<KConfig> myConfigSD;
+
 KConfig* KMKernel::config()
 {
     if (!myConfig)
-	myConfig = new KConfig( locateLocal( "config", "kmailrc" ) );
+	myConfig = myConfigSD.setObject(new KConfig( "kmailrc"));
     return myConfig;
 }
 
