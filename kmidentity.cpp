@@ -239,11 +239,11 @@ const QString KMIdentity::signature(void) const
       KMessageBox::information(0, wmsg);
       return QString::null;
     }
-    result = kFileToString(tmpf.name(), TRUE, FALSE);
+    result = QString::fromLocal8Bit(kFileToString(tmpf.name(), TRUE, FALSE));
   }
   else
   {
-    result = kFileToString(mSignatureFile);
+    result = QString::fromLocal8Bit(kFileToString(mSignatureFile));
   }
 
   return result;
