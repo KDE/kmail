@@ -461,14 +461,18 @@ void KMComposeWin::setupEditor(void)
   //QPopupMenu* popup;
   mEditor = new KEdit(kapp, &mMainWidget);
   mEditor->toggleModified(FALSE);
+
+  // Word wrapping setup
   if(mWordWrap) {
     mEditor->setWordWrap(TRUE);
-    mEditor->setFillColumnMode(mLineBreak,TRUE);    
+    mEditor->setFillColumnMode(mLineBreak,TRUE);
   }
-  else
-    mEditor->setWordWrap(TRUE);
-    mEditor->setFillColumnMode(0, false);  
+  else {
+    mEditor->setWordWrap(FALSE);
+    mEditor->setFillColumnMode(0,FALSE);    
+  }
 
+  // Font setup
 
 #ifdef BROKEN
   popup = new QPopupMenu();
