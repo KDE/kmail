@@ -34,6 +34,7 @@
 #include <qpixmap.h>
 #include <qpixmapcache.h>
 
+#include "kaction.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "kmfolder.h"
@@ -41,7 +42,8 @@
 #include "kmkernel.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
-//#include "kmmainwidget.h"
+
+#define NEW_MESSAGE_POPUP_ID 999
 
 /**
  * Construct a KSystemTray icon to be displayed when new mail
@@ -69,10 +71,22 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
 
   KMFolderMgr * mgr = kernel->folderMgr();
   KMFolderMgr * imgr = kernel->imapFolderMgr();
-  //KMFolderMgr * smgr = kernel->searchFolderMgr();
   connect(mgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
   connect(imgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
-  //connect(smgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
+
+  buildPopupMenu();
+}
+
+void KMSystemTray::buildPopupMenu() 
+{
+  mPopupMenu.insertTitle(*(this->pixmap()), "KMail");
+  getKMMainWin()->action("check_mail")->plug(&mPopupMenu);
+  getKMMainWin()->action("check_mail_in")->plug(&mPopupMenu);
+  mPopupMenu.insertSeparator();
+  getKMMainWin()->action("new_message")->plug(&mPopupMenu);
+  getKMMainWin()->action("options_configure")->plug(&mPopupMenu);
+  mPopupMenu.insertSeparator();
+  getKMMainWin()->action("file_quit")->plug(&mPopupMenu);
 }
 
 KMSystemTray::~KMSystemTray()
@@ -157,8 +171,6 @@ void KMSystemTray::switchIcon()
   if ( !QPixmapCache::find(iconName, icon) ) {
     int w = mDefaultIcon.width() + (mStep * 1);
     int h = mDefaultIcon.width() + (mStep * 1);
-
-    //kdDebug(5006) << "Initting icon " << iconName << endl;
 
     // Scale icon out from default
     icon.convertFromImage(mDefaultIcon.convertToImage().smoothScale(w, h));
@@ -245,25 +257,32 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   // open popup menu on right mouse button
   if( e->button() == RightButton )
   {
-    KPopupMenu* popup = new KPopupMenu();
-    popup->insertTitle(*(this->pixmap()), "KMail");
     mPopupFolders.clear();
     mPopupFolders.resize(mFoldersWithUnread.count());
 
-    QMap<QGuardedPtr<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
-    for(uint i=0; it != mFoldersWithUnread.end(); ++i)
+    mPopupMenu.removeItem(NEW_MESSAGE_POPUP_ID);
+
+    if(mFoldersWithUnread.count() > 0)
     {
-      kdDebug(5006) << "Adding folder" << endl;
-      if(i > mPopupFolders.size()) mPopupFolders.resize(i * 2);
-      mPopupFolders.insert(i, it.key());
-      QString item = prettyName(it.key()) + "(" + QString::number(it.data()) + ")";
-      popup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
-      ++it;
+      KPopupMenu *newMessagesPopup = new KPopupMenu();
+
+      QMap<QGuardedPtr<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
+      for(uint i=0; it != mFoldersWithUnread.end(); ++i)
+      {
+        kdDebug(5006) << "Adding folder" << endl;
+        if(i > mPopupFolders.size()) mPopupFolders.resize(i * 2);
+        mPopupFolders.insert(i, it.key());
+        QString item = prettyName(it.key()) + "(" + QString::number(it.data()) + ")";
+        newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
+        ++it;
+      }
+
+      mPopupMenu.insertItem(i18n("New messages in..."), newMessagesPopup, NEW_MESSAGE_POPUP_ID, 3); 
     }
 
     kdDebug(5006) << "Folders added" << endl;
 
-    popup->popup(e->globalPos());
+    mPopupMenu.popup(e->globalPos());
   }
 
 }
@@ -369,6 +388,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   {
     /** Add folder to our internal store, or update unread count if already mapped */
     mFoldersWithUnread.insert(fldr, unread);
+    
   }
 
   /**

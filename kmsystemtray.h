@@ -24,12 +24,12 @@
 #include <qguardedptr.h>
 #include <qptrvector.h>
 #include <qpixmap.h>
+#include <kpopupmenu.h>
 
 class KMFolder;
 class KMFolderMgr;
 class KMMainWin;
 class QMouseEvent;
-class KPopupMenu;
 
 /** 
  * KMSystemTray extends KSystemTray and handles system
@@ -63,6 +63,7 @@ protected:
   void hideKMail();
   void switchIcon();
   void startAnimation();
+  void buildPopupMenu();
 
   QString prettyName(KMFolder *);
   KMMainWin * getKMMainWin();
@@ -77,6 +78,8 @@ private:
 
   int mMode;
   int mStep;
+
+  KPopupMenu mPopupMenu;
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
