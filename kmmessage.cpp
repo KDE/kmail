@@ -1439,6 +1439,8 @@ QString KMMessage::dateStr(void) const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
+  //kdDebug()<<"####  Date = "<<header.Date().AsString().c_str()<<endl;
+
   return KMime::DateFormatter::formatDate(
       static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )),
       unixTime, general.readEntry( "customDateFormat" ));

@@ -141,7 +141,7 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
     }
     break;
   case CharFreq::EightBitText:
-    if ( allow8Bit ) 
+    if ( allow8Bit )
       allowedCte << DwMime::kCte8bit;
     if ( cf.printableRatio() > 5.0/6.0 ) {
       allowedCte << DwMime::kCteQp;
@@ -154,6 +154,10 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
   case CharFreq::EightBitData:
     allowedCte << DwMime::kCteBase64;
     break;
+  case CharFreq::None:
+  default:
+      //just nothing
+      break;
   }
 
   kdDebug() << "CharFreq returned " << cf.type() << "/"
@@ -191,7 +195,7 @@ void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
     }
     break;
   case CharFreq::EightBitText:
-    if ( allow8Bit ) 
+    if ( allow8Bit )
       allowedCte << DwMime::kCte8bit;
     if ( cf.printableRatio() > 5.0/6.0 ) {
       allowedCte << DwMime::kCteQp;
@@ -204,6 +208,10 @@ void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
   case CharFreq::EightBitData:
     allowedCte << DwMime::kCteBase64;
     break;
+  case CharFreq::None:
+  default:
+      //just nothing
+      break;
   }
 
   kdDebug() << "CharFreq returned " << cf.type() << "/"

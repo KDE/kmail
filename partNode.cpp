@@ -72,7 +72,7 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
     }
     // siblings are tested allways
     if( mNext ) {
-        KMMsgEncryptionState otherState = mNext->overallEncryptionState(); 
+        KMMsgEncryptionState otherState = mNext->overallEncryptionState();
         switch( otherState ) {
         case KMMsgEncryptionStateUnknown:
             break;
@@ -88,6 +88,8 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
         case KMMsgFullyEncrypted:
             if( myState != KMMsgFullyEncrypted )
                 myState = KMMsgPartiallyEncrypted;
+            break;
+        case KMMsgEncryptionProblematic:
             break;
         }
     }
@@ -128,6 +130,8 @@ KMMsgSignatureState  partNode::overallSignatureState() const
         case KMMsgFullySigned:
             if( myState != KMMsgFullySigned )
                 myState = KMMsgPartiallySigned;
+            break;
+        case KMMsgEncryptionProblematic:
             break;
         }
     }

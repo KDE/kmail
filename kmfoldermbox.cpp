@@ -122,8 +122,6 @@ int KMFolderMbox::open()
 //----------------------------------------------------------------------------
 int KMFolderMbox::canAccess()
 {
-  int rc;
-
   assert(name() != "");
 
   if (access(location().local8Bit(), R_OK | W_OK) != 0) {
