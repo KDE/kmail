@@ -7,19 +7,41 @@
 #include "kmsearchpatternedit.h"
 
 #include "kmsearchpattern.h"
-#include "regexplineedit.h"
+#include "rulewidgethandlermanager.h"
+using KMail::RuleWidgetHandlerManager;
 
 #include <klocale.h>
-#include <kdebug.h>
-#include <klineedit.h>
 #include <kdialog.h>
+#include <kdebug.h>
 
 #include <qradiobutton.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>
 #include <qwidgetstack.h>
+#include <qlayout.h>
 
 #include <assert.h>
+
+// Definition of special rule field strings
+// Note: Also see KMSearchRule::matches() and ruleFieldToEnglish() if
+//       you change the following i18n-ized strings!
+enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
+// Note: The index of the values in the following array has to correspond to
+//       the value of the entries in the previous enum.
+static const struct {
+  const char *internalName;
+  const char *displayName;
+} SpecialRuleFields[] = {
+  { "<message>",     I18N_NOOP( "<message>" )       },
+  { "<body>",        I18N_NOOP( "<body>" )          },
+  { "<any header>",  I18N_NOOP( "<any header>" )    },
+  { "<recipients>",  I18N_NOOP( "<recipients>" )    },
+  { "<size>",        I18N_NOOP( "<size in bytes>" ) },
+  { "<age in days>", I18N_NOOP( "<age in days>" )   },
+  { "<status>",      I18N_NOOP( "<status>" )        }
+};
+static const int SpecialRuleFieldsCount =
+  sizeof( SpecialRuleFields ) / sizeof( *SpecialRuleFields );
 
 //=============================================================================
 //
@@ -27,258 +49,188 @@
 //
 //=============================================================================
 
-KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly, bool absoluteDates)
-  : QHBox(parent,name)
+KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
+                                        const char *name, bool headersOnly,
+                                        bool absoluteDates )
+  : QWidget( parent, name ),
+    mRuleField( 0 ),
+    mFunctionStack( 0 ),
+    mValueStack( 0 )
 {
-  initLists( headersOnly, absoluteDates ); // sFilter{Func,Field}List are local to KMSearchRuleWidget
+  initFieldList( headersOnly, absoluteDates );
   initWidget();
 
   if ( aRule )
-    setRule(aRule);
+    setRule( aRule );
   else
     reset();
 }
 
 void KMSearchRuleWidget::initWidget()
 {
-  setSpacing( KDialog::spacingHint() );
+  QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
+  // initialize the header field combo box
   mRuleField = new QComboBox( true, this, "mRuleField" );
-  mRuleFunc = new QComboBox( false, this, "mRuleFunc" );
-  mValueWidgetStack = new QWidgetStack( this, "mValueWidgetStack" );
-  mRuleValue = new RegExpLineEdit( this, "mRuleValue" );
-  mStati = new QComboBox( false, this, "mStati" );
-  mValueWidgetStack->addWidget( mRuleValue );
-  mValueWidgetStack->addWidget( mStati );
-  mValueWidgetStack->raiseWidget( mRuleValue );
-
-  setStretchFactor( mValueWidgetStack, 10 );
-
-  connect( mRuleFunc, SIGNAL( activated(int) ),
-           this, SLOT( functionChanged(int) ) );
-  functionChanged( mRuleFunc->currentItem() );
-
-  mRuleFunc->insertStringList(mFilterFuncList);
-  mRuleFunc->adjustSize();
-
-  mRuleField->insertStringList(mFilterFieldList);
+  mRuleField->insertStringList( mFilterFieldList );
   // don't show sliders when popping up this menu
   mRuleField->setSizeLimit( mRuleField->count() );
   mRuleField->adjustSize();
+  hlay->addWidget( mRuleField );
 
-  mStati->insertStringList( mStatiList );
-  mStati->adjustSize();
+  // initialize the function/value widget stack
+  mFunctionStack = new QWidgetStack( this, "mFunctionStack" );
+  hlay->addWidget( mFunctionStack );
 
-  connect( mRuleField, SIGNAL(activated(int)),
-	   this, SLOT(slotRuleChanged(int)) );
-  connect( mRuleField, SIGNAL(textChanged(const QString &)),
-	   this, SIGNAL(fieldChanged(const QString &)) );
-  connect( mRuleValue, SIGNAL(textChanged(const QString &)),
-	   this, SIGNAL(contentsChanged(const QString &)) );
+  mValueStack = new QWidgetStack( this, "mValueStack" );
+  hlay->addWidget( mValueStack );
+  hlay->setStretchFactor( mValueStack, 10 );
+
+  RuleWidgetHandlerManager::instance()->createWidgets( mFunctionStack,
+                                                       mValueStack,
+                                                       this );
+
+  connect( mRuleField, SIGNAL( activated( const QString & ) ),
+	   this, SLOT( slotRuleFieldChanged( const QString & ) ) );
+  connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
+	   this, SLOT( slotRuleFieldChanged( const QString & ) ) );
+  connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
+           this, SIGNAL( fieldChanged( const QString & ) ) );
 }
 
-void KMSearchRuleWidget::functionChanged( int which )
-{
-  mRuleValue->showEditButton( which == 4 || which == 5 );
-}
-
-
-void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
+void KMSearchRuleWidget::setRule( KMSearchRule *aRule )
 {
   assert ( aRule );
 
-  blockSignals(TRUE);
+  //kdDebug(5006) << "KMSearchRuleWidget::setRule( "
+  //              << aRule->asString() << " )" << endl;
+
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
 
-  if ( i<0 ) { // not found -> user defined field
-    mRuleField->changeItem( QString(aRule->field()), 0 );
-    i=0;
-  } else // found in the list of predefined fields
-    mRuleField->changeItem( "", 0 );
+  mRuleField->blockSignals( true );
+
+  if ( i < 0 ) { // not found -> user defined field
+    mRuleField->changeItem( QString::fromLatin1( aRule->field() ), 0 );
+    i = 0;
+  } else { // found in the list of predefined fields
+    mRuleField->changeItem( QString::null, 0 );
+  }
 
   mRuleField->setCurrentItem( i );
+  mRuleField->blockSignals( false );
 
-  //--------------set function and contents
-  mRuleFunc->setCurrentItem( (int)aRule->function() );
-  //--------------special case status search
-  if ( i == indexOfRuleField( "<status>" ) ) {
-    mValueWidgetStack->raiseWidget( mStati );
-    mStati->setCurrentItem( indexOfStatus( aRule->contents() ) );
-  } else {
-    mValueWidgetStack->raiseWidget( mRuleValue );
-    mRuleValue->setText( aRule->contents() );
-  }
-  functionChanged( (int)aRule->function() );
-
-  blockSignals(FALSE);
+  RuleWidgetHandlerManager::instance()->setRule( mFunctionStack, mValueStack,
+                                                 aRule );
 }
 
 KMSearchRule* KMSearchRuleWidget::rule() const {
-  QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
-  QString text = 0;
-  if ( ruleField == "<status>" )
-    text = statusToEnglish( mStati->currentText() );
-  else
-    text = mRuleValue->text();
+  const QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const KMSearchRule::Function function =
+    RuleWidgetHandlerManager::instance()->function( ruleField,
+                                                    mFunctionStack );
+  const QString value =
+    RuleWidgetHandlerManager::instance()->value( ruleField, mFunctionStack,
+                                                 mValueStack );
 
-  return KMSearchRule::createInstance( ruleField,
-                     (KMSearchRule::Function)mRuleFunc->currentItem(), text );
+  return KMSearchRule::createInstance( ruleField, function, value );
 }
 
 void KMSearchRuleWidget::reset()
 {
-  blockSignals(TRUE);
-
+  mRuleField->blockSignals( true );
   mRuleField->changeItem( "", 0 );
   mRuleField->setCurrentItem( 0 );
+  mRuleField->blockSignals( false );
 
-  mRuleFunc->setCurrentItem( 0 );
-  mRuleValue->showEditButton( false );
-  mValueWidgetStack->raiseWidget( mRuleValue );
-  mRuleValue->clear();
-  mStati->setCurrentItem( 0 );
-
-  blockSignals(FALSE);
+  RuleWidgetHandlerManager::instance()->reset( mFunctionStack, mValueStack );
 }
 
-QCString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) {
-  if (i18nVal == i18n("<recipients>")) return "<recipients>";
-  if (i18nVal == i18n("<body>")) return "<body>";
-  if (i18nVal == i18n("<message>")) return "<message>";
-  if (i18nVal == i18n("<any header>")) return "<any header>";
-  if (i18nVal == i18n("<size in bytes>")) return "<size>";
-  if (i18nVal == i18n("<age in days>")) return "<age in days>";
-  if (i18nVal == i18n("<status>")) return "<status>";
+void KMSearchRuleWidget::slotFunctionChanged()
+{
+  const QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  RuleWidgetHandlerManager::instance()->update( ruleField,
+                                                mFunctionStack,
+                                                mValueStack );
+}
+
+void KMSearchRuleWidget::slotValueChanged()
+{
+  const QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
+  const QString prettyValue =
+    RuleWidgetHandlerManager::instance()->prettyValue( ruleField,
+                                                       mFunctionStack,
+                                                       mValueStack );
+  emit contentsChanged( prettyValue );
+}
+
+QCString KMSearchRuleWidget::ruleFieldToEnglish( const QString & i18nVal )
+{
+  for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
+    if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
+      return SpecialRuleFields[i].internalName;
+  }
   return i18nVal.latin1();
 }
 
-QCString KMSearchRuleWidget::statusToEnglish(const QString & i18nVal) {
-  if (i18nVal == i18n("new")) return "new";
-  if (i18nVal == i18n("unread")) return "unread";
-  if (i18nVal == i18n("read")) return "read";
-  if (i18nVal == i18n("old")) return "old";
-  if (i18nVal == i18n("deleted")) return "deleted";
-  if (i18nVal == i18n("replied")) return "replied";
-  if (i18nVal == i18n("forwarded")) return "forwarded";
-  if (i18nVal == i18n("queued")) return "queued";
-  if (i18nVal == i18n("sent")) return "sent";
-  if (i18nVal == i18n("important")) return "important";
-  if (i18nVal == i18n("watched")) return "watched";
-  if (i18nVal == i18n("ignored")) return "ignored";
-  //if (i18nVal == i18n("todo")) return "todo";
-  if (i18nVal == i18n("spam")) return "spam";
-  return i18nVal.latin1();
-}
-
-
-int KMSearchRuleWidget::indexOfRuleField( const QString & aName ) const {
-  int i;
-
-  if ( aName.isEmpty() ) return -1;
-
-  QString i18n_aName = i18n( aName.latin1() );
-
-  for (i=mFilterFieldList.count()-1; i>=0; i--) {
-    if (*(mFilterFieldList.at(i))==i18n_aName) break;
-  }
-  return i;
-}
-
-int KMSearchRuleWidget::indexOfStatus( const QString & aStatus ) const {
-  int i;
-
-  if ( aStatus.isEmpty() ) return -1;
-
-  QString i18n_aName = i18n( aStatus.latin1() );
-
-  for (i=mStatiList.count()-1; i>=0; i--) {
-    if (*(mStatiList.at(i))==i18n_aName) break;
-  }
-  return i;
-}
-
-
-void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
+int KMSearchRuleWidget::ruleFieldToId( const QString & i18nVal )
 {
-  //---------- initialize list of filter operators
-  if ( mFilterFuncList.isEmpty() )
-  {
-    // also see KMSearchRule::matches() and KMSearchRule::Function
-    // if you change the following strings!
-    mFilterFuncList.append(i18n("contains"));
-    mFilterFuncList.append(i18n("doesn't contain"));
-    mFilterFuncList.append(i18n("equals"));
-    mFilterFuncList.append(i18n("doesn't equal"));
-    mFilterFuncList.append(i18n("matches regular expr."));
-    mFilterFuncList.append(i18n("doesn't match reg. expr."));
-    mFilterFuncList.append(i18n("is greater than"));
-    mFilterFuncList.append(i18n("is less than or equal to"));
-    mFilterFuncList.append(i18n("is less than"));
-    mFilterFuncList.append(i18n("is greater than or equal to"));
+  for ( int i = 0; i < SpecialRuleFieldsCount; ++i ) {
+    if ( i18nVal == i18n( SpecialRuleFields[i].displayName ) )
+      return i;
   }
-
-  //---------- initialize list of filter operators
-  if ( mFilterFieldList.isEmpty() )
-  {
-    mFilterFieldList.append("");
-    // also see KMSearchRule::matches() and ruleFieldToEnglish() if
-    // you change the following i18n-ized strings!
-    if( !headersOnly )  mFilterFieldList.append(i18n("<message>"));
-    if( !headersOnly )  mFilterFieldList.append(i18n("<body>"));
-    mFilterFieldList.append(i18n("<any header>"));
-    mFilterFieldList.append(i18n("<recipients>"));
-    mFilterFieldList.append(i18n("<size in bytes>"));
-    if ( !absoluteDates )  mFilterFieldList.append(i18n("<age in days>"));
-    mFilterFieldList.append(i18n("<status>"));
-    // these others only represent message headers and you can add to
-    // them as you like
-    mFilterFieldList.append("Subject");
-    mFilterFieldList.append("From");
-    mFilterFieldList.append("To");
-    mFilterFieldList.append("CC");
-    mFilterFieldList.append("Reply-To");
-    mFilterFieldList.append("List-Id");
-    mFilterFieldList.append("Organization");
-    mFilterFieldList.append("Resent-From");
-    mFilterFieldList.append("X-Loop");
-    mFilterFieldList.append("X-Mailing-List");
-    mFilterFieldList.append("X-Spam-Flag");
-  }
-
-  //---------- initialize list of stati
-  if ( mStatiList.isEmpty() )
-  {
-    mStatiList.append( "" );
-    mStatiList.append( i18n( "new" ) );
-    mStatiList.append( i18n( "unread" ) );
-    mStatiList.append( i18n( "read" ) );
-    mStatiList.append( i18n( "old" ) );
-    mStatiList.append( i18n( "deleted" ) );
-    mStatiList.append( i18n( "replied" ) );
-    mStatiList.append( i18n( "forwarded" ) );
-    mStatiList.append( i18n( "queued" ) );
-    mStatiList.append( i18n( "sent" ) );
-    mStatiList.append( i18n( "important" ) );
-    mStatiList.append( i18n( "watched" ) );
-    mStatiList.append( i18n( "ignored" ) );
-    //mStatiList.append( i18n( "todo" ) );
-    mStatiList.append( i18n( "spam" ) );
-    mStatiList.append( i18n( "ham" ) );
-  }
+  return -1; // no pseudo header
 }
 
-void KMSearchRuleWidget::slotRuleChanged( int ruleIndex )
+int KMSearchRuleWidget::indexOfRuleField( const QCString & aName ) const
 {
-  if ( ruleIndex == indexOfRuleField( "<status>" ) ) {
-      mRuleValue->clear();
-      mValueWidgetStack->raiseWidget( mStati );
-  } else {
-      mStati->setCurrentItem( 0 );
-      mValueWidgetStack->raiseWidget( mRuleValue );
+  if ( aName.isEmpty() )
+    return -1;
+
+  QString i18n_aName = i18n( aName );
+
+  for ( int i = 1; i < mRuleField->count(); ++i ) {
+    if ( mRuleField->text( i ) == i18n_aName )
+      return i;
   }
+
+  return -1;
 }
 
+void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
+{
+  mFilterFieldList.append(""); // empty entry for user input
+  if( !headersOnly ) {
+    mFilterFieldList.append( i18n( SpecialRuleFields[Message].displayName ) );
+    mFilterFieldList.append( i18n( SpecialRuleFields[Body].displayName ) );
+  }
+  mFilterFieldList.append( i18n( SpecialRuleFields[AnyHeader].displayName ) );
+  mFilterFieldList.append( i18n( SpecialRuleFields[Recipients].displayName ) );
+  mFilterFieldList.append( i18n( SpecialRuleFields[Size].displayName ) );
+  if ( !absoluteDates )
+    mFilterFieldList.append( i18n( SpecialRuleFields[AgeInDays].displayName ) );
+  mFilterFieldList.append( i18n( SpecialRuleFields[Status].displayName ) );
+  // these others only represent message headers and you can add to
+  // them as you like
+  mFilterFieldList.append("Subject");
+  mFilterFieldList.append("From");
+  mFilterFieldList.append("To");
+  mFilterFieldList.append("CC");
+  mFilterFieldList.append("Reply-To");
+  mFilterFieldList.append("List-Id");
+  mFilterFieldList.append("Organization");
+  mFilterFieldList.append("Resent-From");
+  mFilterFieldList.append("X-Loop");
+  mFilterFieldList.append("X-Mailing-List");
+  mFilterFieldList.append("X-Spam-Flag");
+}
+
+void KMSearchRuleWidget::slotRuleFieldChanged( const QString & field )
+{
+  RuleWidgetHandlerManager::instance()->update( ruleFieldToEnglish( field ),
+                                                mFunctionStack,
+                                                mValueStack );
+}
 
 //=============================================================================
 //
@@ -335,7 +287,7 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
   QPtrListIterator<QWidget> wIt( mWidgetList );
   for ( rIt.toFirst(), wIt.toFirst() ;
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
-    ((KMSearchRuleWidget*)(*wIt))->setRule( (*rIt) );
+    (static_cast<KMSearchRuleWidget*>(*wIt))->setRule( (*rIt) );
   }
   for ( ; wIt.current() ; ++wIt )
     ((KMSearchRuleWidget*)(*wIt))->reset();

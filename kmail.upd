@@ -82,9 +82,6 @@ Id=3.2-misc
 ######################################################################
 File=kmailrc
 Script=kmail-3.2-misc.sh,bash
-Id=3.3-use-ID-for-accounts
-File=kmailrc
-Script=kmail-3.3-use-ID-for-accounts.pl,perl
 #
 # reuse this section to add trivial stuff!
 #
@@ -92,6 +89,14 @@ Id=3.2-moves
 File=kmailrc
 Group=Geometry,Reader
 Key=MimePaneHeight
+#
+Id=3.3-use-ID-for-accounts
+File=kmailrc
+Script=kmail-3.3-use-ID-for-accounts.pl,perl
+#
+Id=3.3-update-filter-rules
+File=kmailrc
+Script=kmail-3.3-update-filter-rules.pl,perl
 #
 # Important notice:
 # If you add updates here, keep this text below them.

@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmsearchpattern.cpp
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL!
@@ -16,6 +17,7 @@ using KMail::FilterLog;
 #include <kdebug.h>
 #include <kconfig.h>
 
+#include <kabc/stdaddressbook.h>
 #include <qregexp.h>
 
 #include <mimelib/string.h>
@@ -25,7 +27,8 @@ using KMail::FilterLog;
 
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",
-    "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal" };
+    "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal",
+    "is-in-addressbook", "is-not-in-addressbook" };
 static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfigNames;
 
 
@@ -106,12 +109,21 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
 }
 
 KMSearchRule::Function KMSearchRule::configValueToFunc( const char * str ) {
-  if ( !str ) return FuncContains;
+  if ( !str )
+    return FuncNone;
 
   for ( int i = 0 ; i < numFuncConfigNames ; ++i )
     if ( qstricmp( funcConfigNames[i], str ) == 0 ) return (Function)i;
 
-  return FuncContains;
+  return FuncNone;
+}
+
+QString KMSearchRule::functionToString( Function function )
+{
+  if ( function != FuncNone )
+    return funcConfigNames[int( function )];
+  else
+    return "invalid";
 }
 
 void KMSearchRule::writeConfig( KConfig * config, int aIdx ) const {
@@ -121,7 +133,7 @@ void KMSearchRule::writeConfig( KConfig * config, int aIdx ) const {
   static const QString & contents = KGlobal::staticQString( "contents" );
 
   config->writeEntry( field + cIdx, QString(mField) );
-  config->writeEntry( func + cIdx, funcConfigNames[(int)mFunction] );
+  config->writeEntry( func + cIdx, functionToString( mFunction ) );
   config->writeEntry( contents + cIdx, mContents );
 }
 
@@ -138,7 +150,7 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
 const QString KMSearchRule::asString() const
 {
   QString result  = "\"" + mField + "\" <";
-  result += funcConfigNames[(int)mFunction];
+  result += functionToString( mFunction );
   result += "> \"" + mContents + "\"";
 
   return result;
@@ -159,7 +171,7 @@ KMSearchRuleString::KMSearchRuleString( const QCString & field,
   if ( field.isEmpty() || field[0] == '<' )
     mBmHeaderField = 0;
   else //TODO handle the unrealistic case of the message starting with mField
-    mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data()); 	
+    mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data());
 }
 
 KMSearchRuleString::KMSearchRuleString( const KMSearchRuleString & other )
@@ -262,7 +274,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   QString msgContents;
   // Show the value used to compare the rules against in the log.
   // Overwrite the value for complete messages and all headers!
-  bool logContents = true;  
+  bool logContents = true;
 
   if( field() == "<message>" ) {
     msgContents = msg->asString();
@@ -292,15 +304,24 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     else
       msgContents += msg->cc();
     msgContents += msg->headerField("Bcc");
-    
+
   }  else {
     // make sure to treat messages with multiple header lines for
     // the same header correctly
     msgContents = msg->headerFields( field() ).join( " " );
   }
+
+  if ( function() == FuncIsInAddressbook ||
+       function() == FuncIsNotInAddressbook ) {
+    // I think only the "from"-field makes sense.
+    msgContents = msg->headerField( field() );
+    if ( msgContents.isEmpty() )
+      return false;
+  }
+
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "<font color=#00FF00>1 = </font>" 
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
                        : "<font color=#FF0000>0 = </font>" );
     msg += FilterLog::recode( asString() );
     // only log headers bcause messages and bodies can be pretty large
@@ -350,6 +371,35 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
   case FuncIsGreaterOrEqual:
       return ( QString::compare( msgContents.lower(), contents().lower() ) >= 0 );
+
+  case FuncIsInAddressbook: {
+    KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
+    QStringList addressList =
+      KMMessage::splitEmailAddrList( msgContents.lower() );
+    for( QStringList::ConstIterator it = addressList.begin();
+         ( it != addressList.end() );
+         ++it ) {
+      if ( !stdAb->findByEmail( KMMessage::getEmailAddr( *it ) ).isEmpty() )
+        return true;
+    }
+    return false;
+  }
+
+  case FuncIsNotInAddressbook: {
+    KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
+    QStringList addressList =
+      KMMessage::splitEmailAddrList( msgContents.lower() );
+    for( QStringList::ConstIterator it = addressList.begin();
+         ( it != addressList.end() );
+         ++it ) {
+      if ( stdAb->findByEmail( KMMessage::getEmailAddr( *it ) ).isEmpty() )
+        return true;
+    }
+    return false;
+  }
+
+  default:
+    ;
   }
 
   return false;
@@ -397,7 +447,7 @@ bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
   }
   bool rc = matchesInternal( numericalValue, numericalMsgContents, msgContents );
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "<font color=#00FF00>1 = </font>" 
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
                        : "<font color=#FF0000>0 = </font>" );
     msg += FilterLog::recode( asString() );
     msg += " ( <i>" + QString::number( numericalMsgContents ) + "</i> )";
@@ -445,6 +495,15 @@ bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue,
 
   case FuncIsGreaterOrEqual:
       return ( numericalMsgContents >= numericalValue );
+
+  case FuncIsInAddressbook:  // since email-addresses are not numerical, I settle for false here
+    return false;
+
+  case FuncIsNotInAddressbook:
+    return false;
+
+  default:
+    ;
   }
 
   return false;
@@ -534,7 +593,7 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
   }
 
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "<font color=#00FF00>1 = </font>" 
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
                        : "<font color=#FF0000>0 = </font>" );
     msg += FilterLog::recode( asString() );
     FilterLog::instance()->add( msg, FilterLog::ruleResult );

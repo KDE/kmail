@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmsearchpattern.h
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL!
@@ -31,16 +32,18 @@ class KMSearchRule
 public:
   /** Operators for comparison of field and contents.
       If you change the order or contents of the enum: do not forget
-      to change funcConfNames[], sFilterFuncList and matches()
+      to change funcConfigNames[], sFilterFuncList and matches()
       in @ref KMSearchRule, too.
       Also, it is assumed that these functions come in pairs of logical
       opposites (ie. "=" <-> "!=", ">" <-> "<=", etc.).
   */
-  enum Function { FuncContains=0, FuncContainsNot,
+  enum Function { FuncNone = -1,
+                  FuncContains=0, FuncContainsNot,
 		  FuncEquals, FuncNotEqual,
 		  FuncRegExp, FuncNotRegExp,
 		  FuncIsGreater, FuncIsLessOrEqual,
-		  FuncIsLess, FuncIsGreaterOrEqual };
+		  FuncIsLess, FuncIsGreaterOrEqual,
+		  FuncIsInAddressbook, FuncIsNotInAddressbook};
   KMSearchRule ( const QCString & field=0, Function=FuncContains,
                  const QString &contents=QString::null );
   KMSearchRule ( const KMSearchRule &other );
@@ -74,7 +77,7 @@ public:
   */
   virtual bool matches( const KMMessage * msg ) const = 0;
 
-   /** Optimized version tries to match the rule against the given 
+   /** Optimized version tries to match the rule against the given
        @ref DwString.
        @return TRUE if the rule matched, FALSE otherwise.
    */
@@ -134,6 +137,8 @@ public:
 
 private:
   static Function configValueToFunc( const char * str );
+  static QString functionToString( Function function );
+
   QCString mField;
   Function mFunction;
   QString  mContents;

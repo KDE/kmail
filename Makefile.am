@@ -80,6 +80,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		encryptionconfigurationdialogimpl.cpp mailsourceviewer.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
 		kmstartup.cpp kmmainwidget.cpp \
+	dcopproxy.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
 		folderjob.cpp cachedimapjob.cpp \
@@ -92,7 +93,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
 		korganizeriface.stub messagecomposer.cpp \
 		globalsettings.kcfgc \
-		regexplineedit.cpp
+		regexplineedit.cpp rulewidgethandlermanager.cpp
 
 kmail_SOURCES = main.cpp
 

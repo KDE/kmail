@@ -219,8 +219,6 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QWidgetStack *functionStack
       if ( childCount( functionStack, w->name() ) < 2 ) {
         // there wasn't already a widget with this name, so add this widget
         functionStack->addWidget( w );
-        kdDebug(5006) << "RuleWidgetHandlerManager::createWidgets: Adding "
-                      << w->name() << " to functionStack" << endl;
       }
       else {
         // there was already a widget with this name, so discard this widget
@@ -236,8 +234,6 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QWidgetStack *functionStack
       if ( childCount( valueStack, w->name() ) < 2 ) {
         // there wasn't already a widget with this name, so add this widget
         valueStack->addWidget( w );
-        kdDebug(5006) << "RuleWidgetHandlerManager::createWidgets: Adding "
-                      << w->name() << " to valueStack" << endl;
       }
       else {
         // there was already a widget with this name, so discard this widget
@@ -311,8 +307,8 @@ void KMail::RuleWidgetHandlerManager::update( const QCString &field,
                                               QWidgetStack *functionStack,
                                               QWidgetStack *valueStack ) const
 {
-  kdDebug(5006) << "RuleWidgetHandlerManager::update( \"" << field
-                << "\", ... )" << endl;
+  //kdDebug(5006) << "RuleWidgetHandlerManager::update( \"" << field
+  //              << "\", ... )" << endl;
   for ( const_iterator it = mHandlers.begin(); it != mHandlers.end(); ++it ) {
     if ( (*it)->update( field, functionStack, valueStack ) )
       return;
@@ -512,7 +508,6 @@ namespace {
   void TextRuleWidgetHandler::reset( QWidgetStack *functionStack,
                                      QWidgetStack *valueStack ) const
   {
-    kdDebug(5006) << "TextRuleWidgetHandler::reset()" << endl;
     // reset the function combo box
     QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( functionStack->child( "textRuleFuncCombo",
@@ -542,7 +537,6 @@ namespace {
                                        QWidgetStack *valueStack,
                                        const KMSearchRule *rule ) const
   {
-    kdDebug(5006) << "TextRuleWidgetHandler::setRule()" << endl;
     if ( !rule ) {
       reset( functionStack, valueStack );
       return false;
@@ -600,7 +594,6 @@ namespace {
                                       QWidgetStack *functionStack,
                                       QWidgetStack *valueStack ) const
   {
-    kdDebug(5006) << "TextRuleWidgetHandler::update()" << endl;
     // raise the correct function widget
     functionStack->raiseWidget(
       static_cast<QWidget*>( functionStack->child( "textRuleFuncCombo",
@@ -800,7 +793,6 @@ namespace {
   void StatusRuleWidgetHandler::reset( QWidgetStack *functionStack,
                                        QWidgetStack *valueStack ) const
   {
-    kdDebug(5006) << "StatusRuleWidgetHandler::reset()" << endl;
     // reset the function combo box
     QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( functionStack->child( "statusRuleFuncCombo",
@@ -828,7 +820,6 @@ namespace {
                                          QWidgetStack *valueStack,
                                          const KMSearchRule *rule ) const
   {
-    kdDebug(5006) << "StatusRuleWidgetHandler::setRule()" << endl;
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
       return false;
@@ -889,7 +880,6 @@ namespace {
                                         QWidgetStack *functionStack,
                                         QWidgetStack *valueStack ) const
   {
-    kdDebug(5006) << "StatusRuleWidgetHandler::update()" << endl;
     if ( !handlesField( field ) )
       return false;
 
@@ -1049,7 +1039,6 @@ namespace {
   void NumericRuleWidgetHandler::reset( QWidgetStack *functionStack,
                                         QWidgetStack *valueStack ) const
   {
-    kdDebug(5006) << "NumericRuleWidgetHandler::reset()" << endl;
     // reset the function combo box
     QComboBox *funcCombo =
       dynamic_cast<QComboBox*>( functionStack->child( "numericRuleFuncCombo",
@@ -1091,7 +1080,6 @@ namespace {
                                           QWidgetStack *valueStack,
                                           const KMSearchRule *rule ) const
   {
-    kdDebug(5006) << "NumericRuleWidgetHandler::setRule()" << endl;
     if ( !rule || !handlesField( rule->field() ) ) {
       reset( functionStack, valueStack );
       return false;
@@ -1145,7 +1133,6 @@ namespace {
                                          QWidgetStack *functionStack,
                                          QWidgetStack *valueStack ) const
   {
-    kdDebug(5006) << "NumericRuleWidgetHandler::update()" << endl;
     if ( !handlesField( field ) )
       return false;
 

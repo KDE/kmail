@@ -8,16 +8,11 @@
 
 #include "kwidgetlister.h"
 
-#include <qhbox.h>
 #include <qgroupbox.h>
 #include <qstringlist.h>
 
 class KMSearchRule;
 class KMSearchPattern;
-namespace KMail {
-  class RegExpLineEdit;
-}
-using KMail::RegExpLineEdit;
 
 template <typename T> class QPtrList;
 class QString;
@@ -25,6 +20,7 @@ class QComboBox;
 class QLineEdit;
 class QRadioButton;
 class QWidgetStack;
+class QLabel;
 
 /** A widget to edit a single KMSearchRule.
     It consists of an editable @ref QComboBox for the field,
@@ -40,7 +36,7 @@ class QWidgetStack;
     @author Marc Mutz <Marc@Mutz.com>
 */
 
-class KMSearchRuleWidget: public QHBox
+class KMSearchRuleWidget : public QWidget
 {
   Q_OBJECT
 public:
@@ -59,6 +55,11 @@ public:
   /** Resets the rule currently worked on and updates the widget
       accordingly. */
   void reset();
+  static int ruleFieldToId( const QString & i18nVal );
+
+public slots:
+  void slotFunctionChanged();
+  void slotValueChanged();
 
 signals:
   /** This signal is emitted whenever the user alters the field.  The
@@ -74,28 +75,21 @@ protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
       english. */
   static QCString ruleFieldToEnglish(const QString & i18nVal);
-  /** Used internally to translate i18n-ized status strings back to
-      english. */
-  static QCString statusToEnglish(const QString & i18nVal);
   /** Used internally to find the corresponding index into the field
       ComboBox. Returns the index if found or -1 if the search failed, */
-  int indexOfRuleField(const QString & aName) const;
-  int indexOfStatus(const QString & aStatus) const;
+  int indexOfRuleField( const QCString & aName ) const;
 
 protected slots:
-  void functionChanged( int which );
-  void slotRuleChanged( int which );
+  void slotRuleFieldChanged( const QString & );
 
 private:
   void initWidget();
-  void initLists(bool headersOnly, bool absoluteDates);
+  void initFieldList( bool headersOnly, bool absoluteDates );
 
-  QComboBox* mRuleField;
-  QComboBox* mRuleFunc;
-  QWidgetStack* mValueWidgetStack;
-  RegExpLineEdit *mRuleValue; // used for all but status searches
-  QComboBox* mStati;     // special case of a status search
-  QStringList mFilterFieldList, mFilterFuncList, mStatiList;
+  QStringList mFilterFieldList;
+  QComboBox *mRuleField;
+  QWidgetStack *mFunctionStack;
+  QWidgetStack *mValueStack;
 };
 
 

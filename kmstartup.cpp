@@ -85,6 +85,7 @@ void checkConfigUpdates() {
     "3.2-misc",
     "3.2-moves",
     "3.3-use-ID-for-accounts",
+    "3.3-update-filter-rules"
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
 
@@ -109,7 +110,7 @@ void lockOrDie() {
   bool first_instance = false;
   if ( oldPid == -1 )
       first_instance = true;
-  // check if the lock file is stale by trying to see if 
+  // check if the lock file is stale by trying to see if
   // the other pid is currently running.
   // Not 100% correct but better safe than sorry
   else if (hostName == oldHostName && oldPid != getpid()) {
