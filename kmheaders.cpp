@@ -1513,9 +1513,12 @@ void KMHeaders::updateMessageList(void)
     // (when moving a folder to another folder with around the same
     // number of items) but it does unspeakable things if nested
     // messages is turned on.
+    if (mFolder->count() < oldSize) {
+      clear();
+      oldSize = 0;
+    }
     for (int temp = oldSize; temp > mFolder->count(); --temp)
-      if (mItems[temp-1])
-	delete mItems[temp-1];
+      delete mItems[temp-1];
   }
 
   mItems.resize( mFolder->count() );  
@@ -1614,10 +1617,8 @@ void KMHeaders::updateMessageList(void)
 	mb = mFolder->getMsgBase(i);
 	assert(mb != NULL); // otherwise using count() above is wrong
 	
-	if (i >= oldSize) {
-	  KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-	  mItems[i] = hi;
-	}
+	if (i >= oldSize)
+	  mItems[i] = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
 	else
 	  mItems[i]->reset( mFolder, i );
       }
