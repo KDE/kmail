@@ -401,7 +401,7 @@ void ConfigModuleWithTabs::defaults() {
   }
 }
 
-void ConfigModuleWithTabs::installProfile(KConfig /* *profile */ ) {
+void ConfigModuleWithTabs::installProfile(KConfig * /* profile */ ) {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
     if ( tab )
