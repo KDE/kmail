@@ -2467,7 +2467,7 @@ void KMMainWidget::setupActions()
   mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
   mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
   mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
-  mToggleSentAction->setCheckedState( i18n("Mark Message as Un&sent") );
+  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
 #endif
 
   mStatusMenu->insert( new KActionSeparator( this ) );
@@ -2539,7 +2539,7 @@ void KMMainWidget::setupActions()
   mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
   mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
   mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
-  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Un&sent") );
+  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Not &Sent") );
 #endif
 
   //------- "Watch and ignore thread" actions
