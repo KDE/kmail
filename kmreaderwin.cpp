@@ -769,11 +769,13 @@ void KMReaderWin::slotAtmSave()
 {
   KMMessagePart msgPart;
   QString fileName, str;
-
+  const char *fname =0;
+  
   mMsg->bodyPart(mAtmCurrent, &msgPart);
+  fname = msgPart.name();
   
   fileName = msgPart.name();
-  fileName = KFileDialog::getSaveFileName(NULL, "*", this);
+  fileName = KFileDialog::getSaveFileName(NULL, "*", this, fname);
   if(fileName.isEmpty()) return;
 
   kbp->busy();
