@@ -199,6 +199,8 @@ namespace KMail {
 			  const QTextCodec * codec,
 			  ProcessResult & result );
 
+    const QTextCodec * codecFor( partNode * node ) const;
+
 #ifndef NDEBUG
     void dumpToFile( const char * filename, const char * dataStart, size_t dataLen );
 #else

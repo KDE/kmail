@@ -341,7 +341,7 @@ namespace KMail {
 	  } else {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
 	    writeBodyString( cstr, curNode->trueFromAddress(),
-			     curNode->msgPart().codec(), processResult );
+			     codecFor( curNode ), processResult );
 	  }
 	}
 	curNode->mWasProcessed = true;
@@ -922,7 +922,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  vCal.replace( '>',  "&gt;"   );
 		  vCal.replace( '\"', "&quot;" );
 		  writeBodyString( vCal, curNode->trueFromAddress(),
-				   curNode->msgPart().codec(), result );
+				   codecFor( curNode ), result );
 		  htmlWriter()->queue( postfix );
 		}
 	      }
@@ -1082,7 +1082,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    }
 	    if( !bDone )
 	      writeBodyString( cstr, curNode->trueFromAddress(),
-			       curNode->msgPart().codec(), result );
+			       codecFor( curNode ), result );
 	  }
 	  mResultString = cstr;
 	  bDone = true;
@@ -1242,7 +1242,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  QCString cstr( data->msgPart().bodyDecoded() );
 	  if( mReader )
 	    writeBodyString( cstr, curNode->trueFromAddress(),
-			     data->msgPart().codec(), result );
+			     codecFor( data ), result );
 	  mResultString += cstr;
 	  bDone = true;
 	} else if( sign && data && plugFound ) {
@@ -1266,7 +1266,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	QCString cstr( curNode->msgPart().bodyDecoded() );
 	if( mReader )
 	  writeBodyString ( cstr, curNode->trueFromAddress(),
-			    curNode->msgPart().codec(), result );
+			    codecFor( curNode ), result );
 	mResultString += cstr;
 	bDone = true;
       } else if( curNode->mChild ) {
@@ -1498,7 +1498,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
 	    if( mReader )
 	      writeBodyString( cstr, curNode->trueFromAddress(),
-			       curNode->msgPart().codec(), result );
+			       codecFor( curNode ), result );
 	    mResultString += cstr;
 	    bDone = true;
 	  } else {
@@ -1728,7 +1728,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  vPart.replace( '>',  "&gt;"   );
 	  vPart.replace( '\"', "&quot;" );
 	  writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
-			   curNode->msgPart().codec(), result );
+			   codecFor( curNode ), result );
 	  htmlWriter()->queue( postfix );
 	}
       }
@@ -1777,6 +1777,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 			   inlineSignatureState, inlineEncryptionState );
     result.setInlineSignatureState( inlineSignatureState );
     result.setInlineEncryptionState( inlineEncryptionState );
+  }
+
+  const QTextCodec * ObjectTreeParser::codecFor( partNode * node ) const {
+    assert( node );
+    if ( mReader && !mReader->mAutoDetectEncoding )
+      return mReader->mCodec;
+    return node->msgPart().codec();
   }
 
 #ifndef NDEBUG
