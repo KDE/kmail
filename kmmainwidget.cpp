@@ -1,6 +1,5 @@
 // kmmainwidget.cpp
 //#define MALLOC_DEBUG 1
-#define IDENTITY_UOIDs
 
 #include <kwin.h>
 
