@@ -1,5 +1,5 @@
 
-pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
+pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgreplied.png kmmsgforwarded.png kmmsgqueued.png kmmsgflag.png \
 	kmmsgsent.png kmmsgwatched.png kmmsgignored.png \
 	stopwatch.xbm stopwatchMask.xbm kdelogo.png \
