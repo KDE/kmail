@@ -695,18 +695,19 @@ void AccountDialog::makeImapAccountPage()
   grid->addMultiCellWidget( mImap.intervalCheck, 11, 11, 0, 2 );
   connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableImapInterval(bool)) );
-  mImap.intervalLabel = new QLabel( i18n("Check inter&val (minutes):"), page1 );
+  mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
   grid->addWidget( mImap.intervalLabel, 12, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
-  mImap.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mImap.intervalSpin->setRange( 1, 60, 1, true );
   mImap.intervalSpin->setValue( 1 );
+  mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
   grid->addWidget( mImap.intervalSpin, 12, 1 );
 
   mImap.trashCombo = new KMFolderComboBox( page1 );
   mImap.trashCombo->showOutboxFolder( FALSE );
-  grid->addMultiCellWidget( mImap.trashCombo, 13, 13, 1, 2 );
-  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash Folder:"), page1 ), 13, 0 );
+  grid->addWidget( mImap.trashCombo, 13, 1 );
+  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash folder:"), page1 ), 13, 0 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
