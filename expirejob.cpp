@@ -158,7 +158,7 @@ void ExpireJob::done()
         KMMoveCommand* cmd = new KMMoveCommand( moveToFolder, mRemovedMsgs );
         cmd->start();
       } else {
-        str = i18n( "Can't expire messages from %1: destination folder %2 not found" ).arg( mDestFolder->label(), mDestFolder->expireToFolderId() );
+        str = i18n( "Cannot expire messages from %1: destination folder %2 not found" ).arg( mDestFolder->label(), mDestFolder->expireToFolderId() );
         kdWarning(5006) << str << endl;
         KMBroadcastStatus::instance()->setStatusMsg( str );
       }
