@@ -762,10 +762,12 @@ void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
 
   if(kmkernel->xmlGuiInstance()) {
     KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
-    KNotifyClient::event(0, "new-mail-arrived", i18n("New mail arrived"));
+    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived", 
+      i18n("New mail arrived"));
   }
   else
-    KNotifyClient::event(0, "new-mail-arrived", i18n("New mail arrived"));
+    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived", 
+      i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
