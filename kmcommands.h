@@ -634,4 +634,15 @@ private:
   KMMessage *mMsg;
 };
 
+class KMResendMessageCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMResendMessageCommand( QWidget *parent, KMMessage *msg=0 );
+
+private:
+  virtual void execute();
+};
+
 #endif /*KMCommands_h*/

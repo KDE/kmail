@@ -68,7 +68,6 @@ public:
   virtual void applyFiltersOnMsg();
   virtual void undo();
   virtual bool canUndo() const;
-  virtual void resendMsg();
   virtual KMHeaderItem * prepareMove( int *contentX, int *contentY );
   virtual void finalizeMove( KMHeaderItem *item, int contentX, int contentY );
 

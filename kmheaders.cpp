@@ -1646,26 +1646,6 @@ void KMHeaders::deleteMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::resendMsg ()
-{
-  KMComposeWin *win;
-  KMMessage *newMsg, *msg = currentMsg();
-  if (!msg || !msg->codec()) return;
-
-  KCursorSaver busy(KBusyPtr::busy());
-  newMsg = new KMMessage;
-  newMsg->fromString(msg->asString());
-  newMsg->setCharset(msg->codec()->mimeName());
-  // the message needs a new Message-Id
-  newMsg->removeHeaderField( "Message-Id" );
-
-  win = new KMComposeWin();
-  win->setMsg(newMsg, false, true);
-  win->show();
-}
-
-
-//-----------------------------------------------------------------------------
 void KMHeaders::moveSelectedToFolder( int menuId )
 {
   if (mMenuToFolder[menuId])

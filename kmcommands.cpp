@@ -1949,3 +1949,24 @@ void KMLoadPartsCommand::execute()
   delete this;
 }
 
+KMResendMessageCommand::KMResendMessageCommand( QWidget *parent,
+   KMMessage *msg )
+  :KMCommand( parent, msg )
+{
+}
+
+void KMResendMessageCommand::execute()
+{
+  KMComposeWin *win;
+  KMMessage *msg = retrievedMessage();
+
+  KMMessage *newMsg = new KMMessage(*msg);
+  newMsg->setCharset(msg->codec()->mimeName());
+  // the message needs a new Message-Id
+  newMsg->removeHeaderField( "Message-Id" );
+
+  win = new KMComposeWin();
+  win->setMsg(newMsg, false, true);
+  win->show();
+}
+

@@ -1182,7 +1182,8 @@ void KMMainWidget::slotEditMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotResendMsg()
 {
-  mHeaders->resendMsg();
+  KMCommand *command = new KMResendMessageCommand( this, mHeaders->currentMsg() );
+  command->start();
 }
 
 
