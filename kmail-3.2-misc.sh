@@ -72,5 +72,7 @@ while read; do
     esac
 done
 
-echo "[Geometry]"
-echo "ReaderPaneHeight=$(($GeometryMimePaneHeight+$GeometryMessagePaneHeight))"
+if [ "$GeometryMimePaneHeight" ] && [ "$GeometryMessagePaneHeight" ]; then
+    echo "[Geometry]"
+    echo "ReaderPaneHeight=$(($GeometryMimePaneHeight+$GeometryMessagePaneHeight))"
+fi
