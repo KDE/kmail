@@ -83,12 +83,17 @@ FolderShortcutDialog::~FolderShortcutDialog()
 void FolderShortcutDialog::slotCapturedShortcut( const KShortcut& sc )
 {
   if ( sc == mKeyButton->shortcut() ) return;
-  if ( !mMainWidget->shortcutIsValid( sc ) ) {
-    QString msg( i18n( "The selected shortcut is already used, "
-          "please select a different one." ) );
-    KMessageBox::sorry( mMainWidget, msg );
+  if ( sc.toString().isNull() ) {
+    // null is fine, that's reset, but sc.іsNull() will be false :/
+    mKeyButton->setShortcut( KShortcut::null(), false );
   } else {
-    mKeyButton->setShortcut( sc, false );
+    if( !mMainWidget->shortcutIsValid( sc ) ) {
+      QString msg( i18n( "The selected shortcut is already used, "
+            "please select a different one." ) );
+      KMessageBox::sorry( mMainWidget, msg );
+    } else {
+      mKeyButton->setShortcut( sc, false );
+    }
   }
 }
 
