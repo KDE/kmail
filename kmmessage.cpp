@@ -402,6 +402,11 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart)
       aPart->setTypeStr("Text");      // Set to defaults
       aPart->setSubtypeStr("Plain");
     }
+    // Modification by Markus
+    if(headers->ContentType().Name().c_str() != "" )
+      aPart->setName(headers->ContentType().Name().c_str());
+    else
+      aPart->setName("Undefined Name");
 
     // Content-transfer-encoding
     if (headers->HasContentTransferEncoding())
@@ -433,6 +438,8 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart)
     aPart->setTypeStr("");
     aPart->setSubtypeStr("");
     aPart->setCteStr("");
+    // Modification by Markus
+    aPart->setName("");
     aPart->setContentDescription("");
     aPart->setContentDisposition("");
     aPart->setBody("");
@@ -505,6 +512,8 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   const DwString contDesc = aPart->contentDescription();
   const DwString contDisp = aPart->contentDisposition();
   const DwString bodyStr  = aPart->body();
+  // Modification by Markus
+  const DwString name     = aPart->name();
 
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
@@ -512,6 +521,10 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
   }
+  // Modification by Markus
+  if(name != "")
+    headers.ContentType().SetName(name);
+
   if (cte != "")
     headers.Cte().FromString(cte);
 

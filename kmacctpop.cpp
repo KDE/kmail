@@ -1,4 +1,5 @@
 // kmacctpop.cpp
+// Author: Stefan Taferner Modification by Markus Wuebben
 
 #include "kmacctpop.moc"
 #include <assert.h>
@@ -55,21 +56,17 @@ bool KMAcctPop::processNewMail(void)
   int num, size;
   QString status, response;
 
+  printf("after setjmp\n");
   cout << mHost << endl;
   cout << mPort << endl;
   cout << mLogin << endl;
   cout << mPasswd << endl;
 
+
   replyCode = client.Open(mHost, mPort);
   printf("replyCode for Open: %i\n",replyCode);
 
-  if((replyCode=client.IsOpen()) == 0)
-    {KMsgBox::message(0,"Network error!","Could not open connection to " +
-		      mHost +"!");
-    return false;
-    }
-  printf("Reply Code for isOpen :%i\n",replyCode);
-
+  // The following is an atempt to syncronize with the server.
   while (1) {
     response = client.SingleLineResponse().c_str();
     printf("Entering loop\n");
@@ -86,15 +83,21 @@ bool KMAcctPop::processNewMail(void)
       break;
    }
 
+  if((replyCode=client.IsOpen()) == 0)
+    {KMsgBox::message(0,"Network error!","Could not open connection to " +
+		      mHost +"!");
+    return false;
+    }
+  printf("Reply Code for isOpen :%i\n",replyCode);
 
   replyCode = client.User(mLogin); // Send USER command
   printf("replyCode for User: %i\n",replyCode);
   if(replyCode != 43 && replyCode != 0)
-    {KMsgBox::message(0,"","");
+    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
     return false;
     }
   else if(replyCode == 0)
-    {KMsgBox::message(0,"Network Error",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
     return false;
     }
   else
@@ -102,12 +105,30 @@ bool KMAcctPop::processNewMail(void)
 
   replyCode = client.Pass(mPasswd); // Send PASS command
   printf("replyCode for Pass: %i\n",replyCode);
-  cout << client.SingleLineResponse().c_str();
+    if(replyCode != 43 && replyCode != 0)
+    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
+    return false;
+    }
+  else if(replyCode == 0)
+    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
+    return false;
+    }
+  else
+    cout << client.SingleLineResponse().c_str();
+
   replyCode = client.Stat();// Send STAT command
   printf("reply Code1 for stat: %i\n",replyCode);
-  replyCode = client.Stat();
-  printf("reply Code2 for stat: %i\n",replyCode);
-  response = client.SingleLineResponse().c_str();
+    if(replyCode != 43 && replyCode != 0)
+    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
+    return false;
+    }
+  else if(replyCode == 0)
+    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
+    return false;
+    }
+  else
+    response = client.SingleLineResponse().c_str();
+
   cout << response;  
   QTextStream str(response, IO_ReadOnly);
   str >> status >> num >> size;
@@ -124,7 +145,7 @@ bool KMAcctPop::processNewMail(void)
     char buffer[300];
     strncpy(buffer, client.MultiLineResponse().c_str(), 299);
     
-    buffer[299]=0;
+    buffer[299]='\0';
 
     debug("GOT %s", buffer);
     DwMessage *dmsg = new DwMessage(client.MultiLineResponse());
@@ -136,6 +157,7 @@ bool KMAcctPop::processNewMail(void)
     */
   }
   return (num > 0);
+
 }
 
 void KMAcctPop::passwdError()
@@ -182,7 +204,6 @@ void KMAcctPop::slotOkPressed()
   mLogin = usernameLEdit->text();
   mPasswd = passwdLEdit->text();
   delete newWidget;
-  processNewMail();
 }
 
 void KMAcctPop::slotCancelPressed()

@@ -54,6 +54,11 @@ public:
   const char* body(long* length_return=0L) const;
   void setBody(const char* aStr);
 
+  // Modification by Markus
+  /** Get or set name parameter */
+  const char * name(void) const;
+  void setName(const char *aStr);
+
 protected:
   DwString mType;
   DwString mSubtype;
@@ -61,6 +66,8 @@ protected:
   DwString mContentDescription;
   DwString mContentDisposition;
   DwString mBody;
+  // Modification by Markus
+  DwString mName;
 };
 
 

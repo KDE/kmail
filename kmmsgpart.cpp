@@ -149,3 +149,18 @@ void KMMessagePart::setBody(const char* aStr)
 {
   mBody = aStr;
 }
+//-----------------------------------------------------------------------------
+// Function added by Markus. The new mimelib allows reading/writing  of name
+// parameter
+const char * KMMessagePart::name(void) const
+{
+  return mName.c_str();
+}
+
+void KMMessagePart::setName(const char *aStr)
+{
+  mName = aStr;
+}
+
+
+

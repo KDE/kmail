@@ -1,4 +1,5 @@
 // kmreaderwin.cpp
+// Author: Markus Wuebben <markus.wuebben@kde.org>
 
 #include "kmfolder.h"
 #include "kmmessage.h"
@@ -15,8 +16,9 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 {
   printf("Entering view:  msgno = %i \n",msgno);
 
-  kdeDir = getenv("KDEDIR");
-  if(!kdeDir)
+  QString kdeDir;
+  kdeDir = KApplication::kdedir();
+  if(kdeDir.isEmpty())
        	{KMsgBox::message(0,"Ouuch","$KDEDIR not set.\nPlease do so");
        	qApp->quit();}
 
@@ -217,28 +219,39 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 
   QString pnumstring;
   QString temp;
+  QString comment;
   int pos;
 
+  cout << "Part name: " << p->name() << endl;
+  comment = p->name();
   pnumstring.sprintf("file:/%i",pnumber);
+  text = decodeString(p,p->cteStr()); // Decode bodyPart
+
+  // ************* MimeMagic stuff ****************// 
 
   KMimeMagicResult *result = new KMimeMagicResult();
-  text = decodeString(p,p->cteStr());
-  result = magic->findBufferType(text,text.length()-1);	
+  result = magic->findBufferType(text,text.length()-1); // Removed -1	
+  if(result->getAccuracy() <= 50)
+    {debug("The Accuracy is <= 50 looking at filename ending\n");
+    }
   temp =  result->getContent(); // Determine Content Type
   pos = temp.find("/",0,0);
-  cout << "pos:" << pos << endl << "temp: "<< temp << endl;
   type = temp.copy();
   subType = temp.copy();
   type.truncate(pos);
   subType = subType.remove(0,pos+1); 
   cout << "Type:" << type << endl << "SubType:" << subType <<endl;
 
+
+  // ************* MimeMagic stuff end *****************//
+
   printf("Debug :%i\n",showInline);
   if(showInline == false) // If we do not want 
                           //the attachments to be displayed inline
     {QString icon;
      QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
-			     + type + subType); // Search for mimetype.
+			     + type + "/"+ subType + ".kdelnk"); // Search for mimetype.
+     cout << type  << "/" << subType << ".kdelnk" << endl;
      if(file->open(IO_ReadOnly)) // if mimetype exists                        
         {QTextStream pstream(file);         
 	KConfig config(&pstream);
@@ -248,18 +261,17 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	else
 	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
-	QString comment = config.readEntry("Comment");
 	file->close();
-	text = "<A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
-	  + ">" + comment + "</A>";
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
+	  + "><P>" + comment + "</A></TD></TR></TABLE>";
 	text += "<br><hr><br>";
 	return text;
 	}
      else
        {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	printf("Not a registered mimetype\n");
-	text = "<A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
-	  + ">Unknown content</A>";
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
+	  + "><P>" + comment + "</A></TD></TR></TABLE>";
 	text += "<br><hr><br>";
 	return text;	
        }
@@ -275,7 +287,8 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	  return text;}
 	else // We want the icon to be displayed 
 	  {QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
-				   + type + subType); // Search for mimetype.
+				   + type + "/" + subType + ".kdelnk"); // Search for mimetype.
+	cout << type << subType  << +".kdelnk" << endl;
 	  if(!file->open(IO_ReadOnly)) // if does not exist 
 	    {file = new QFile(KApplication::kdedir()+"/share/mimelnk" 
 			      + "/text/plain.kdelnk" ); // use text/plain  
@@ -291,10 +304,10 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	  else
 	    icon.prepend(KApplication::kdedir()+ "/share/icons/");
-	  QString comment = config.readEntry("Comment");
 	  file->close();
-	  text = "<A HREF=\"" + pnumstring + "\"><IMG SRC=" + icon 
-	    + ">"+ comment +"</A>";
+	  text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
+	    + "\"><IMG SRC=" + icon + "><P>" + comment 
+	    + "</A></TD></TR></TABLE>";
 	  text += "<br><hr><br>";
 	  return text;
 	  }
@@ -312,7 +325,8 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
   else
     {QString icon;
      QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
-			     + type + subType); // Search for mimetype.
+			     + type + "/" + subType + ".kdelnk"); // Search for mimetype.
+	cout << type << subType + ".kdelnk" << endl;
      if(file->open(IO_ReadOnly)) // if mimetype exists                        
         {QTextStream pstream(file);         
 	KConfig config(&pstream);
@@ -322,17 +336,17 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	else
 	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
-	QString comment = config.readEntry("Comment");
 	file->close();
-	text = "<A HREF=\"" + pnumstring + "\"><IMG SRC=" + icon 
-	  + ">" + comment + "</A>";
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
+	  + ">" + comment + "</A></TD></TR></TABLE>";
 	text += "<br><hr><br>";
 	return text;
 	}
      else
        {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	printf("Not a registered mimetype\n");
-	text = "<A HREF=\"" + pnumstring + "\"><IMG SRC=" + icon + ">Unknown</A>";
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
+	  + ">" + comment + "</A></TD></TR></TABLE>";
 	text += "<br><hr><br>";
 	return text;
        }
@@ -556,7 +570,10 @@ void KMReaderView::slotDocumentDone()
 
 void KMReaderView::slotOpenAtmnt()
 {
+  if(!currentMessage)
+    return;
   printf("CurrentAtmnt :%i\n",currentAtmnt);
+
 }
 
 void KMReaderView::slotSaveAtmnt()

@@ -9,6 +9,7 @@
 #include <qpushbt.h>
 #include <qlined.h>
 #include <qlabel.h>
+#include <setjmp.h>
 #include "kmaccount.h"
 
 #define KMAcctPopInherited KMAccount
@@ -58,6 +59,7 @@ private:
   QLineEdit *passwdLEdit;
   QPushButton *ok;
   QPushButton *cancel;
+  jmp_buf jmpbuffer;
 
 private slots:
   void slotOkPressed();

@@ -1,4 +1,5 @@
 // kmcomposewin.cpp
+// Author: Markus Wuebben <markus.wuebben@kde.org>
 
 #include <klocale.h>
 #include <unistd.h>
@@ -289,8 +290,9 @@ KMMessage * KMComposeView::prepareMessage()
   // and adds them to msg.
   // 3. setAutomaticFields is called.
 
-  QString option;
+  QString str;
   QString temp;
+  int pos;
   KMMessage *msg;
 
   msg = new KMMessage();
@@ -308,7 +310,10 @@ KMMessage * KMComposeView::prepareMessage()
 
   msg->setFrom(EMailAddress);
   msg->setReplyTo(ReplyToAddress);
+
+  // I hate string parsing! Mutiple recipients on toLEdit && ccLEdit
   msg->setTo(toLEdit->text());
+
   msg->setCc(ccLEdit->text());
   msg->setSubject(subjLEdit->text());
 
