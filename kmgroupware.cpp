@@ -528,7 +528,8 @@ bool KMGroupware::vPartToHTML( int /*aUpdateCounter*/, const QString& vCal,
   }
 
   // show the 'buttons' (only if in groupware mode)
-  if( mUseGroupware ) {
+  // Disable buttons. This is handled in KOrganizer.
+  if( false && mUseGroupware ) {
     prefix.append( "<br>&nbsp;<br>&nbsp;<br><table border=\"0\" cellspacing=\"0\"><tr><td>&nbsp;</td><td>" );
     if( sMethod == "request" || sMethod == "update" ) {
       // Accept

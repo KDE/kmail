@@ -65,6 +65,9 @@
 #include <klocale.h>
 #include <khtml_part.h>
 #include <ktempfile.h>
+#include <kstandarddirs.h>
+#include <kapplication.h>
+#include <kmessagebox.h>
 
 // other Qt headers
 #include <qtextcodec.h>
@@ -821,6 +824,37 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( !mReader )
       return false;
 
+    QString vCal( curNode->msgPart().bodyToUnicode() );
+    QString prefix;
+    QString postfix;
+    // We let KMGroupware do most of our 'print formatting':
+    // generates text preceding to and following to the vCal
+    if ( kmkernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
+                                            vCal, QString::null, prefix,
+                                            postfix ) ) {
+      htmlWriter()->queue( prefix );
+      htmlWriter()->queue( quotedHTML( vCal ) );
+      htmlWriter()->queue( postfix );
+    }
+
+    // Pass iTIP message to KOrganizer
+    QString location = locateLocal( "data", "korganizer/income/", true );
+    QString file = location + KApplication::randomString( 10 );
+    QFile f( file );
+    if ( !f.open( IO_WriteOnly ) ) {
+      KMessageBox::error( mReader, i18n("Could not open file for writing:\n%1")
+		                   .arg( file ) );
+    } else {
+      QByteArray msgArray = curNode->msgPart().bodyDecodedBinary();
+      f.writeBlock( msgArray, msgArray.size() );
+      f.close();
+    }
+
+    return true;
+
+// Disable kroupware code, because KOrganizer counterpart code also is disabled.
+// Analyzing of iCalendar attachments belongs into KOrganizer anyway.
+#if 0
     DwMediaType ct = curNode->dwPart()->Headers().ContentType();
     for( DwParameter * param = ct.FirstParameter(); param;
          param = param->Next() ) {
@@ -855,6 +889,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       }
     }
     return false;
+#endif  
   }
 
 } // namespace KMail
