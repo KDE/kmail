@@ -343,11 +343,17 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
 QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
   QMap<QString, bool> map;
-  const KMail::FolderContentsType t = folderContentsType( contentsType );
+  
+  // Add the default one
+  KMFolder* f = folderFromType( type, QString::null );
+  if ( f )
+    map.insert( f->location(), !f->isReadOnly() );
 
+  // get ehe extra ones
+  const KMail::FolderContentsType t = folderContentsType( contentsType );
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
-    const KMFolder* f = it.current()->folder;
+    f = it.current()->folder;
     if ( it.current()->type == t 
          // && f->isXMLFolder()
          )
