@@ -2972,7 +2972,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 
   if ( charset.lower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( QCString( KGlobal::locale()->codecForEncoding()->mimeName() ).lower() );
+      .arg( QCString( kernel->networkCodec()->mimeName() ).lower() );
     return;
   }
 
@@ -2995,7 +2995,7 @@ void ComposerPage::CharsetTab::setup() {
 	it != charsets.end() ; ++it )
       if ( (*it) == QString::fromLatin1("locale") )
 	(*it) = QString("%1 (locale)")
-	  .arg( QCString( KGlobal::locale()->codecForEncoding()->mimeName() ).lower() );
+	  .arg( QCString( kernel->networkCodec()->mimeName() ).lower() );
 
   mCharsetListEditor->setStringList( charsets );
   mKeepReplyCharsetCheck->setChecked( !composer.readBoolEntry( "force-reply-charset", false ) );

@@ -711,7 +711,7 @@ void KMReaderWin::parseMsg(void)
       }
     }
     if (encoding.isEmpty())
-      encoding = QTextCodec::codecForLocale()->name();
+      encoding = kernel->networkCodec()->name();
     mCodec = KMMsgBase::codecForName(encoding);
   }
 

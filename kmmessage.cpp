@@ -596,7 +596,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     QCString cset = charset();
     if (!cset.isEmpty())
       codec = KMMsgBase::codecForName(cset);
-    if (!codec) codec = QTextCodec::codecForLocale();
+    if (!codec) codec = kernel->networkCodec();
   }
 
   indentStr = formatString(aIndentStr);
@@ -2160,7 +2160,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixedfont)
 {
   QString str = (codec) ? codec->toUnicode(asString()) :
-    QString::fromLocal8Bit(asString());
+    kernel->networkCodec()->toUnicode(asString());
 
 #if ALLOW_GUI
   QMultiLineEdit *edt;
@@ -2457,7 +2457,7 @@ QCString KMMessage::defaultCharset()
       retval = sPrefCharsets[0].latin1();
 
   if (retval.isEmpty()  || (retval == "locale"))
-      retval = QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower();
+      retval = QCString(kernel->networkCodec()->mimeName()).lower();
 
   if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
   else if (retval == "ksc5601.1987-0") retval = "euc-kr";

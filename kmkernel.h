@@ -131,6 +131,7 @@ public:
 
   /** Returns a message serial number that hasn't been used yet. */
   unsigned long getNextMsgSerNum();
+  QTextCodec *networkCodec() { return netCodec; }
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
@@ -174,6 +175,7 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
+  QTextCodec *netCodec;
 };
 
 #endif

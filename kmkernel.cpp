@@ -62,9 +62,12 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // We want to change locale name from eucjp to iso-2022-jp at KMail only.
   if ( QCString(QTextCodec::codecForLocale()->name()).lower() == "eucjp" )
   {
-    QTextCodec *cdc = QTextCodec::codecForName("jis7");
-    QTextCodec::setCodecForLocale(cdc);
-    KGlobal::locale()->setEncoding(cdc->mibEnum());
+    netCodec = QTextCodec::codecForName("jis7");
+    // QTextCodec *cdc = QTextCodec::codecForName("jis7");
+    // QTextCodec::setCodecForLocale(cdc);
+    // KGlobal::locale()->setEncoding(cdc->mibEnum());
+  } else {
+    netCodec = QTextCodec::codecForLocale();
   }
 }
 
