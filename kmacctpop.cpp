@@ -68,7 +68,9 @@ bool KMAcctPop::processNewMail(void)
   void (*oldHandler)(int);
   bool result;
 
+  kbp->idle();
   warning("POP support is still experimental\nand may not work.");
+  kbp->busy();
 
   // Before we do anything else let's ignore the friggin' SIGALRM signal
   // This signal somehow interrupts the network functions and messed up
@@ -157,8 +159,10 @@ bool KMAcctPop::doProcessNewMail(void)
 //-----------------------------------------------------------------------------
 bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 {
+  kbp->idle();
   KMsgBox::message(0, "Pop-Mail Error", nls->translate("In ")+aStage+":\n"+
 		   aClient.MultiLineResponse().c_str());
+  kbp->busy();
   return FALSE;
 }
 
