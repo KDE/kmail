@@ -158,18 +158,6 @@ void StatusbarProgressWidget::setMode() {
     stack->raiseWidget( m_pLabel );
     break;
 
-#if 0
-  case Clean:
-    if ( m_bShowButton ) {
-      m_pButton->hide();
-    }
-    m_sslLabel->setState( SSLLabel::Clean );
-    // show the empty label in order to make the status bar look better
-    stack->show();
-    stack->raiseWidget( m_pLabel );
-    break;
-#endif
-
   case Label:
     if ( m_bShowButton ) {
       m_pButton->show();
@@ -222,10 +210,14 @@ void StatusbarProgressWidget::slotProgressDialogVisible( bool b )
   if ( b ) {
     mode = Label;
     m_pButton->setPixmap( SmallIcon( "down" ) );
+    QToolTip::remove( m_pButton );
+    QToolTip::add( m_pButton, i18n("Close detailed progress dialog") );
   } else {
     if ( mode == Label )  // not if None already
       mode = Progress;
     m_pButton->setPixmap( SmallIcon( "up" ) );
+    QToolTip::remove( m_pButton );
+    QToolTip::add( m_pButton, i18n("Open detailed progress dialog") );
   }
   setMode();
 }
