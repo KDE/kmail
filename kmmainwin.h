@@ -307,6 +307,9 @@ protected slots:
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);
 
+  /** copy text selected in the reader win */
+  void slotCopySelectedText();
+
 protected:
   KRadioAction * actionForHeaderStyle(int);
   KRadioAction * actionForAttachmentStyle(int);

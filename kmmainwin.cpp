@@ -2164,7 +2164,7 @@ void KMMainWin::setupMenuBar()
   //----- Edit Menu
   KStdAction::undo( this, SLOT(slotUndo()), actionCollection(), "edit_undo");
 
-  KStdAction::copy( mMsgView, SLOT(slotCopySelectedText()), actionCollection(), "copy");
+  KStdAction::copy( this, SLOT(slotCopySelectedText()), actionCollection(), "copy");
 
   trashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
@@ -3042,5 +3042,10 @@ void KMMainWin::slotChangeCaption(QListViewItem * i)
   for ( QListViewItem * item = i ; item ; item = item->parent() )
     names.prepend( item->text(0) );
   setCaption( names.join("/") );
+}
+
+void KMMainWin::slotCopySelectedText()
+{
+  mMsgView->slotCopySelectedText();
 }
 
