@@ -208,6 +208,7 @@ int main(int argc, char *argv[])
   //local, do the init
   KMKernel kmailKernel;
   kmailKernel.init();
+  kapp->dcopClient()->setDefaultObject( kmailKernel.objId() );
 
   // and session management
   kmailKernel.doSessionManagement();
