@@ -3298,14 +3298,15 @@ void ConfigureDialog::slotAddCharset( void )
     this);
   if ( linedlg->exec() == QDialog::Accepted )
   {
-    if (linedlg->text().lower() == "us-ascii" ||
-      KMMsgBase::codecForName( linedlg->text().latin1() ))
+      QString charsetText=linedlg->text();
+      if (!charsetText.isEmpty() && (charsetText.lower() == "us-ascii" ||
+      KMMsgBase::codecForName( charsetText.latin1() )))
     {
-      mComposer.charsetListBox->insertItem( linedlg->text(),
+      mComposer.charsetListBox->insertItem( charsetText,
         mComposer.charsetListBox->currentItem() + 1 );
       mComposer.charsetListBox->setSelected( mComposer.charsetListBox->
         currentItem() + 1, TRUE );
-      mComposer.defaultCharsetCombo->insertItem( linedlg->text() );
+      mComposer.defaultCharsetCombo->insertItem( charsetText );
     } else {
       KMessageBox::sorry( this, i18n("This charset is not supported.") );
     }
