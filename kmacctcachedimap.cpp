@@ -52,8 +52,6 @@ KMAcctCachedImap::KMAcctCachedImap(KMAcctMgr* aOwner, const QString& aAccountNam
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
 
-  setLocation( locateLocal("appdata", "imap") );
-
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
@@ -79,17 +77,7 @@ QString KMAcctCachedImap::type() const
 void KMAcctCachedImap::init() {
   base::init();
 
-  mLocation = locateLocal( "appdata", "imap" );
   setProgressDialogEnabled( true );
-
-  /*
-  mLocation = getenv("MAIL");
-  if (mLocation.isNull()) {
-    mLocation = _PATH_MAILDIR;
-    mLocation += "/";
-    mLocation += getenv("USER");
-  }
-  */
 }
 
 //-----------------------------------------------------------------------------
@@ -325,11 +313,6 @@ void KMAcctCachedImap::postProcessNewMail(KMFolderCachedImap* folder, bool)
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
       this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   postProcessNewMail(static_cast<KMFolder*>(folder));
-}
-
-void KMAcctCachedImap::setLocation(const QString& aLocation)
-{
-  mLocation = aLocation;
 }
 
 //

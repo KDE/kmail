@@ -110,11 +110,6 @@ public:
    */
   virtual void setImapFolder(KMFolderCachedImap *);
 
-  /** Access to location of maildir mail file (usually something like
-   "/home/joe/Maildir"). */
-  const QString& location(void) const { return mLocation; }
-  virtual void setLocation(const QString&);
-
   KMail::IMAPProgressDialog * imapProgressDialog() const;
   bool isProgressDialogEnabled() const { return mProgressDialogEnabled; }
   void setProgressDialogEnabled( bool enable ) { mProgressDialogEnabled = enable; }
@@ -162,7 +157,6 @@ protected slots:
 private:
   QPtrList<KMCachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;
-  QString mLocation;
   mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;
 };
