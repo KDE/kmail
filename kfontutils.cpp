@@ -57,6 +57,11 @@ const char* kfontToStr(const QFont& aFont)
     charsetStr = "*";
     enc = 0;
   }
+  else if(charset == QFont::KOI8R)
+  {
+    charsetStr = "koi8r";
+    enc = 0;
+  }
   else 
   {
     charsetStr = "iso8859";
@@ -106,6 +111,8 @@ const QFont kstrToFont(const char* aStr)
     if (i < 0 || i > 9) i = 0;
     charset = encIso8859[i];
   }
+  else if (stricmp(pos,"koi8r")==0)
+    charset = QFont::KOI8R;
   else charset = QFont::AnyCharSet;
   font.setCharSet(charset);
 
