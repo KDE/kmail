@@ -2578,6 +2578,8 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.transportCheck->setChecked(!entry->transport().isEmpty());
     mIdentity.transportCombo->setEditText(entry->transport());
     mIdentity.transportCombo->setEnabled(!entry->transport().isEmpty());
+    if ( entry->fcc().isEmpty() )
+        entry->setFcc( kernel->sentFolder()->idString() );
     for (int i=0; i < mIdentity.fccCombo->count(); ++i)
       if ( ( *mIdentity.mFolderList.at( i ) )->idString() == entry->fcc() )
       {

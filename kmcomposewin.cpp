@@ -70,26 +70,26 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mMainWidget = new QWidget(this);
 
   mIdentity = new QComboBox(mMainWidget);
+  mFcc = new QComboBox(mMainWidget);
   mTransport = new QComboBox(true, mMainWidget);
   mEdtFrom = new KMLineEdit(this,false,mMainWidget);
   mEdtReplyTo = new KMLineEdit(this,false,mMainWidget);
   mEdtTo = new KMLineEdit(this,true,mMainWidget);
   mEdtCc = new KMLineEdit(this,true,mMainWidget);
   mEdtBcc = new KMLineEdit(this,true,mMainWidget);
-  mFcc = new QComboBox(mMainWidget);
   mEdtSubject = new KMLineEdit(this,false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
+  mLblFcc = new QLabel(mMainWidget);
   mLblTransport = new QLabel(mMainWidget);
   mLblFrom = new QLabel(mMainWidget);
   mLblReplyTo = new QLabel(mMainWidget);
   mLblTo = new QLabel(mMainWidget);
   mLblCc = new QLabel(mMainWidget);
   mLblBcc = new QLabel(mMainWidget);
-  mLblFcc = new QLabel(mMainWidget);
   mLblSubject = new QLabel(mMainWidget);
   mBtnIdentity = new QCheckBox(i18n("Sticky"),mMainWidget);
-  mBtnTransport = new QCheckBox(i18n("Sticky"),mMainWidget);
   mBtnFcc = new QCheckBox(i18n("Sticky"),mMainWidget);
+  mBtnTransport = new QCheckBox(i18n("Sticky"),mMainWidget);
   mBtnTo = new QPushButton("...",mMainWidget);
   mBtnCc = new QPushButton("...",mMainWidget);
   mBtnBcc = new QPushButton("...",mMainWidget);
@@ -117,13 +117,13 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   setMinimumSize(200,200);
 
   mBtnIdentity->setFocusPolicy(QWidget::NoFocus);
+  mFcc->setFocusPolicy(QWidget::NoFocus);
   mBtnTransport->setFocusPolicy(QWidget::NoFocus);
   mBtnTo->setFocusPolicy(QWidget::NoFocus);
   mBtnCc->setFocusPolicy(QWidget::NoFocus);
   mBtnBcc->setFocusPolicy(QWidget::NoFocus);
   mBtnFrom->setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
-  mFcc->setFocusPolicy(QWidget::NoFocus);
 
   mAtmListBox = new QListView(mMainWidget, "mAtmListBox");
   mAtmListBox->setFocusPolicy(QWidget::NoFocus);
@@ -302,6 +302,7 @@ void KMComposeWin::readColorConfig(void)
   mEdtBcc->setPalette(mPalette);
   mTransport->setPalette(mPalette);
   mEditor->setPalette(mPalette);
+  mFcc->setPalette(mPalette);
 }
 
 //-----------------------------------------------------------------------------
@@ -461,8 +462,10 @@ void KMComposeWin::writeConfig(void)
     config->writeEntry("headers", mShowHeaders);
     config->writeEntry("sticky-transport", mBtnTransport->isChecked());
     config->writeEntry("sticky-identity", mBtnIdentity->isChecked());
+    config->writeEntry("sticky-fcc", mBtnFcc->isChecked());
     config->writeEntry("previous-identity", mIdentity->currentText() );
     config->writeEntry("current-transport", mTransport->currentText());
+    config->writeEntry("previous-fcc", (*mFolderList.at(mFcc->currentItem()))->idString());
     mTransportHistory.remove(mTransport->currentText());
     if (KMTransportInfo::availableTransports().findIndex(mTransport
       ->currentText()) == -1)
@@ -602,6 +605,9 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) identityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    mLblIdentity, mIdentity, mBtnIdentity);
+  if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sen&t-mail Folder:"),
+		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
 		    mLblTransport, mTransport, mBtnTransport);
@@ -620,9 +626,6 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) bccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
 		    mLblBcc, mEdtBcc, mBtnBcc);
-  if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sen&t-mail Folder::"),
-		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
 		    mLblSubject, mEdtSubject);
@@ -815,6 +818,9 @@ void KMComposeWin::setupActions(void)
   identityAction = new KToggleAction (i18n("&Identity"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_identity");
+  fccAction = new KToggleAction (i18n("Sen&t-mail Folder"), 0, this,
+                                 SLOT(slotView()),
+                                 actionCollection(), "show_fcc");
   transportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_transport");
@@ -833,9 +839,6 @@ void KMComposeWin::setupActions(void)
   bccAction = new KToggleAction (i18n("&Bcc"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_bcc");
-  fccAction = new KToggleAction (i18n("Sen&t-mail Folder"), 0, this,
-                                 SLOT(slotView()),
-                                 actionCollection(), "show_fcc");
   subjectAction = new KToggleAction (i18n("&Subject"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_subject");

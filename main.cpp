@@ -225,12 +225,12 @@ int main(int argc, char *argv[])
   about.addAuthor( "George Staikos", 0, "staikos@kde.org" );
   about.addAuthor( "Jason Stephenson", 0, "panda@mis.net" );
   about.addAuthor( "Jacek Stolarczyk", 0, "jacek@mer.chemia.polsl.gliwice.pl" );
+  about.addAuthor( "Roberto S. Teixeira", 0, "maragato@kde.org" );
   about.addAuthor( "Mario Weilguni", 0, "mweilguni@sime.com" );
   about.addAuthor( "Wynn Wilkes", 0, "wynnw@calderasystems.com" );
   about.addAuthor( "Robert D. Williams", 0, "rwilliams@kde.org" );
   about.addAuthor( "Markus Wuebben", 0, "markus.wuebben@kde.org" );
   about.addAuthor( "Karl-Heinz Zimmer", 0, "khz@kde.org" );
-  about.addAuthor( "Roberto S. Teixeira", 0, "maragato@kde.org" );
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options

@@ -37,7 +37,7 @@ typedef enum
 #define HDR_IDENTITY 0x100
 #define HDR_TRANSPORT 0x200
 #define HDR_FCC       0x400
-#define HDR_ALL      0x3ff
+#define HDR_ALL      0x7ff
 
 #define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
 
