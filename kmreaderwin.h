@@ -387,6 +387,7 @@ private:
   void createWidgets();
   void createActions( KActionCollection * ac );
   void saveSplitterSizes( KConfigBase & c ) const;
+  QString createAtmFileLink() const;
 
 private:
   bool mHtmlMail, mHtmlOverride;

@@ -1877,11 +1877,21 @@ void KMReaderWin::slotDoAtmOpen()
     return;
   }
 
-  KURL url;
-  url.setPath( mAtmCurrentName );
   KURL::List lst;
+  KURL url;
+  bool autoDelete = true;
+  QString fname = createAtmFileLink(); 
+
+  if ( fname == QString::null ) {
+    autoDelete = false;
+    fname = mAtmCurrentName;
+  }
+
+  url.setPath( fname );
   lst.append( url );
-  KRun::run( *mOffer, lst );
+  if ( (KRun::run( *mOffer, lst, autoDelete ) <= 0) && autoDelete ) {
+      QFile::remove(url.path());
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1892,9 +1902,19 @@ void KMReaderWin::slotAtmOpenWith()
 
     KURL::List lst;
     KURL url;
-    url.setPath(mAtmCurrentName);
+    bool autoDelete = true;
+    QString fname = createAtmFileLink(); 
+
+    if ( fname == QString::null ) {
+      autoDelete = false;
+      fname = mAtmCurrentName;
+    }
+
+    url.setPath( fname );
     lst.append(url);
-    KRun::displayOpenWithDialog(lst);
+    if ( (! KRun::displayOpenWithDialog(lst, autoDelete)) && autoDelete ) {
+      QFile::remove(url.path());
+    }
 }
 
 
@@ -2190,6 +2210,24 @@ void KMReaderWin::slotIMChat()
 }
 
 //-----------------------------------------------------------------------------
+QString KMReaderWin::createAtmFileLink() const
+{
+  QFileInfo atmFileInfo(mAtmCurrentName);
+
+  KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
+                          "]."+ atmFileInfo.extension() );
+
+  linkFile->setAutoDelete(true);
+  QString linkName = linkFile->name();
+  delete linkFile;
+
+  if ( link(QFile::encodeName(mAtmCurrentName), QFile::encodeName(linkName)) == 0 ) {
+    return linkName; // success
+  }
+  kdWarning() << "Couldn't link to " << mAtmCurrentName << endl;
+  return QString::null;
+}
+
 #include "kmreaderwin.moc"
 
 
