@@ -139,3 +139,4 @@ KMScoringManager::globalScoringManager()
 
 KMScoringManager*
 KMScoringManager::mScoringManager = 0;
+#include "kmscoring.moc"

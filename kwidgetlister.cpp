@@ -153,3 +153,4 @@ void KWidgetLister::enableControls()
   mBtnMore->setEnabled( !isMaxWidgets );
   mBtnFewer->setEnabled( !isMinWidgets );
 }
+#include "kwidgetlister.moc"

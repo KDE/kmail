@@ -654,3 +654,4 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
     
 }
 
+#include "kmfilterdlg.moc"

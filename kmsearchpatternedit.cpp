@@ -389,3 +389,4 @@ void KMSearchPatternEdit::slotAutoNameHack()
   mRuleLister->regenerateRuleListFromWidgets();
   emit maybeNameChanged();
 }
+#include "kmsearchpatternedit.moc"

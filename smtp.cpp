@@ -178,3 +178,4 @@ void Smtp::deleteMe()
     delete this;
 }
 
+#include "smtp.moc"
