@@ -54,6 +54,8 @@ namespace KMail {
     static bool parseScript( const QString & script, QString & messageText,
 			     int & notificationInterval, QStringList & aliases );
     KURL findURL() const;
+    void handlePutResult( KMail::SieveJob * job, bool success, bool );
+
 
   signals:
     void result( bool success );
@@ -64,9 +66,8 @@ namespace KMail {
 			const QString & script, bool active );
     void slotDialogOk();
     void slotDialogCancel();
-    void slotPutResult( KMail::SieveJob * job, bool success,
-			const QString &, bool );
-
+    void slotPutActiveResult( KMail::SieveJob *, bool );
+    void slotPutInactiveResult( KMail::SieveJob *, bool );
   protected:
     // IO:
     KMail::SieveJob * mSieveJob;

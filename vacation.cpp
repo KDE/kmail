@@ -369,7 +369,9 @@ namespace KMail {
     // and commit the dialog's settings to the server:
     mSieveJob = SieveJob::put( mUrl, script, active, mWasActive );
     connect( mSieveJob, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
-	     SLOT(slotPutResult(KMail::SieveJob*,bool,const QString&,bool)) );
+	     active
+	     ? SLOT(slotPutActiveResult(KMail::SieveJob*,bool))
+	     : SLOT(slotPutInactiveResult(KMail::SieveJob*,bool)) );
 
     // destroy the dialog:
     mDialog->delayedDestruct();
@@ -383,11 +385,24 @@ namespace KMail {
     emit result( false );
   }
 
-  void Vacation::slotPutResult( SieveJob *, bool success, const QString &, bool ) {
+  void Vacation::slotPutActiveResult( SieveJob * job, bool success ) {
+    handlePutResult( job, success, true );
+  }
+
+  void Vacation::slotPutInactiveResult( SieveJob * job, bool success ) {
+    handlePutResult( job, success, false );
+  }
+
+  void Vacation::handlePutResult( SieveJob *, bool success, bool activated ) {
     if ( success )
-      KMessageBox::information( 0, i18n("Out of Office reply installed successfully.") );
-    kdDebug(5006) << "Vacation::slotPutResult( ???, " << success << ", ?, ? )"
-	      << endl;
+      KMessageBox::information( 0, activated
+				? i18n("Sieve script installed successfully on the server.\n"
+				       "Out of Office reply is now active.")
+				: i18n("Sieve script installed successfully on the server.\n"
+				       "Out of Office reply has been deactivated.") );
+    
+    kdDebug(5006) << "Vacation::handlePutResult( ???, " << success << ", ? )"
+		  << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );
   }
