@@ -1118,7 +1118,11 @@ void KMImapJob::slotGetNextMessage()
 //-----------------------------------------------------------------------------
 void KMImapJob::slotGetMessageResult(KIO::Job * job)
 {
-  KMMessage *msg = mMsgList.first();
+  if( !mMsg )
+    return;
+  KMMessage *msg = mMsg; // was: mMsgList.first();
+                         // This did not compile since mMsgList
+                         // is not a member of KMImapJob.
   KMFolderImap * folder = static_cast<KMFolderImap*>(msg->parent());
   if (!folder) // guarded ptr - can be 0
 	return;
