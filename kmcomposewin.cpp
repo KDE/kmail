@@ -3695,8 +3695,6 @@ void KMComposeWin::addAttach(const KURL aUrl)
   ld.url = aUrl;
   ld.data = QByteArray();
   ld.insert = false;
-  ld.mimeType = KMimeType::findByURL(aUrl, 0, aUrl.isLocalFile())
-    ->name().latin1();
   mapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
@@ -3998,10 +3996,15 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
 			      !kernel->msgSender()->sendQuotedPrintable());
   kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
-  int slash = (*it).mimeType.find("/");
-  if (slash == -1) slash = (*it).mimeType.length();
-  msgPart->setTypeStr((*it).mimeType.left(slash));
-  msgPart->setSubtypeStr((*it).mimeType.mid(slash+1));
+  // ask the job for the mime type of the file
+  QCString mimeType = static_cast<KIO::MimetypeJob*>(job)->mimetype().latin1();
+  kdDebug(5006) << "According to KIO::MimetypeJob the file has the mime type "
+                << mimeType << endl;
+  int slash = mimeType.find( '/' );
+  if( slash == -1 )
+    slash = mimeType.length();
+  msgPart->setTypeStr( mimeType.left( slash ) );
+  msgPart->setSubtypeStr( mimeType.mid( slash + 1 ) );
   msgPart->setContentDisposition(QCString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 

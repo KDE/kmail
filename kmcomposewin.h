@@ -786,7 +786,6 @@ private:
     QByteArray data;
     bool insert;
     QCString encoding;
-    QCString mimeType;
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
   bool mForceReplyCharset;
