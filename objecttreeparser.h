@@ -189,9 +189,6 @@ namespace KMail {
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
     bool processTextVCalSubtype( partNode * node, ProcessResult & result );
-    bool processTextVCardSubtype( partNode * node, ProcessResult & result );
-    bool processTextRtfSubtype( partNode * node, ProcessResult & result );
-    bool processTextEnrichedSubtype( partNode * node, ProcessResult & result );
     bool processTextPlainSubtype( partNode * node, ProcessResult & result );
 
     bool processMultiPartMixedSubtype( partNode * node, ProcessResult & result );
@@ -203,12 +200,9 @@ namespace KMail {
 
     bool processMessageRfc822Subtype( partNode * node, ProcessResult & result );
 
-    bool processApplicationPostscriptSubtype( partNode * node, ProcessResult & result );
     bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
     bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
     bool processApplicationMsTnefSubtype( partNode * node, ProcessResult & result );
-
-    bool processAudioType( int subtype, partNode * node, ProcessResult & result );
 
   private:
     void writeBodyString( const QCString & bodyString,

@@ -857,39 +857,19 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return false;
   }
 
-  bool ObjectTreeParser::processTextVCardSubtype( partNode *, ProcessResult & result ) {
-    // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
-    //             _before_ calling parseObjectTree()
-    // It doesn't make sense to display raw vCards inline
-    result.setNeverDisplayInline( true );
-    return false;
-  }
-
-  bool ObjectTreeParser::processTextRtfSubtype( partNode *, ProcessResult & result ) {
-    // RTF shouldn't be displayed inline
-    result.setNeverDisplayInline( true );
-    return false;
-  }
-
-  bool ObjectTreeParser::processTextEnrichedSubtype( partNode * node, ProcessResult & result ) {
-    return processTextPlainSubtype( node, result );
-  }
-
 } // namespace KMail
 
-namespace {
-  bool isMailmanMessage( partNode * curNode ) {
-    if ( !curNode->dwPart() || !curNode->dwPart()->hasHeaders() )
-      return false;
-    DwHeaders & headers = curNode->dwPart()->Headers();
-    if ( headers.HasField("X-Mailman-Version") )
-      return true;
-    if ( headers.HasField("X-Mailer") &&
-	 0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
-	      .find("MAILMAN", 0, false) )
-      return true;
+static bool isMailmanMessage( partNode * curNode ) {
+  if ( !curNode->dwPart() || !curNode->dwPart()->hasHeaders() )
     return false;
-  }
+  DwHeaders & headers = curNode->dwPart()->Headers();
+  if ( headers.HasField("X-Mailman-Version") )
+    return true;
+  if ( headers.HasField("X-Mailer") &&
+       0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
+       .find("MAILMAN", 0, false) )
+    return true;
+  return false;
 }
 
 namespace KMail {
@@ -1416,14 +1396,6 @@ namespace KMail {
   }
 
 
-  bool ObjectTreeParser::processApplicationPostscriptSubtype( partNode *, ProcessResult & ) {
-    // showing PostScript inline can be used for a DoS attack;
-    // therefore it's disabled until KMail is fixed to not hang
-    // while a PostScript attachment is rendered; IK 2003-02-20
-    //result.setIsImage( true );
-    return false;
-  }
-
   bool ObjectTreeParser::processApplicationOctetStreamSubtype( partNode * curNode, ProcessResult & result ) {
     if ( curNode->mChild ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
@@ -1667,14 +1639,6 @@ namespace KMail {
     return false;
   }
 
-  bool ObjectTreeParser::processAudioType( int /*subtype*/, partNode * curNode,
-					   ProcessResult & /*result*/ ) {
-    // We always show audio as icon.
-    if ( mReader && ( attachmentStrategy() != AttachmentStrategy::hidden()
-		     || showOnlyOneMimePart() ) )
-      writePartIcon( &curNode->msgPart(), curNode->nodeId() );
-    return true;
-  }
 
   void ObjectTreeParser::writeBodyString( const QCString & bodyString,
 					  const QString & fromAddress,
