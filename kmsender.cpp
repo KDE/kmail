@@ -321,7 +321,7 @@ void KMSender::doSendMsg()
       mSendProcStarted = FALSE;
     }
 
-    mSendProc = createSendProcFromString(mCurrentMsg->headerField("X-KMail-Transport"));
+    mSendProc = createSendProcFromString(msgTransport);
     mMethodStr = msgTransport;
 
     if (!mSendProc)
