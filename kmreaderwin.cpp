@@ -1371,7 +1371,7 @@ void KMReaderWin::slotTouchMessage()
   if (message())
   {
     if (message()->isNew() || message()->isUnread() || message()->isRead())
-      message()->setStatus(KMMsgStatusOld);
+      message()->setStatus(KMMsgStatusRead);
     if ( message()->isNew() || message()->isUnread() ) {
       KMMessage * receipt = message()->createMDN( MDN::ManualAction,
 						  MDN::Displayed,

@@ -282,7 +282,7 @@ public:
       if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
       if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
       if(mMsgBase->isSent()) pixmaps << *KMHeaders::pixSent;
-
+ 
       // Only merge the crypto icons in if that is configured.
       if( headers->paintInfo()->showCryptoIcons ) {
           if( mMsgBase->encryptionState() == KMMsgFullyEncrypted )
@@ -1053,7 +1053,7 @@ void KMHeaders::msgAdded(int id)
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
     else if (parent && mFolder->getMsgBase(parent->msgId())->isIgnored()) {
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
-      mFolder->getMsgBase(id)->setStatus( KMMsgStatusRead );
+      mFolder->setStatus( id, KMMsgStatusRead );
     }
 
     // Update and resize the id trees.
@@ -1475,11 +1475,11 @@ void KMHeaders::setMsgRead (int msgId)
     return;
 
   SerNumList serNums;
-  if (msgBase->isNew() || msgBase->isUnread() || msgBase->isRead()) {
+  if (msgBase->isNew() || msgBase->isUnread()) {
     serNums.append( msgBase->getMsgSerNum() );
   }
 
-  KMCommand *command = new KMSetStatusCommand( KMMsgStatusOld, serNums );
+  KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
   command->start();
 }
 
@@ -3057,7 +3057,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
                   msg->setStatus(KMMsgStatusWatched);
                 if (mFolder->getMsgBase(parent->id())->isIgnored()) {
                   msg->setStatus(KMMsgStatusIgnored);
-                  msg->setStatus(KMMsgStatusRead);
+                  mFolder->setStatus((*it)->id(), KMMsgStatusRead);
                 }
 	    } else {
 		//oh well we tried, to the root with you!
