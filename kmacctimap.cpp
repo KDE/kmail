@@ -41,8 +41,8 @@ using KMail::ImapJob;
 
 
 //-----------------------------------------------------------------------------
-KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMail::ImapAccountBase(aOwner, aAccountName)
+KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
+  KMail::ImapAccountBase(aOwner, aAccountName, id)
 {
   mFolder = 0;
   mOpenFolders.setAutoDelete(true);

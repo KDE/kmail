@@ -127,7 +127,8 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
                 kmail-3.1-update-new-mail-notification-settings.pl \
                 kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl \
 		kmail-3.2-update-loop-on-goto-unread-settings.sh \
-		kmail-3.2-misc.sh
+		kmail-3.2-misc.sh \
+		kmail-3.3-use-ID-for-accounts.pl
 
 confdir = $(kde_confdir)
 conf_DATA = kmail.antispamrc

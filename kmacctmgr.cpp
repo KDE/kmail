@@ -20,8 +20,10 @@ using KMail::NetworkAccount;
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kapplication.h>
 
 #include <qregexp.h>
+#include <qvaluelist.h>
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(): QObject()
@@ -76,6 +78,7 @@ void KMAcctMgr::readConfig(void)
   QString acctType, acctName;
   QCString groupName;
   int i, num;
+  uint id;
 
   mAcctList.clear();
 
@@ -91,8 +94,9 @@ void KMAcctMgr::readConfig(void)
     if (acctType == "advanced pop" || acctType == "experimental pop")
       acctType = "pop";
     acctName = config->readEntry("Name");
+    id = config->readUnsignedNumEntry("Id", 0);
     if (acctName.isEmpty()) acctName = i18n("Account %1").arg(i);
-    acct = create(acctType, acctName);
+    acct = create(acctType, acctName, id);
     if (!acct) continue;
     add(acct);
     acct->readConfig(*config);
@@ -185,28 +189,31 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
+KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id)
 {
   KMAccount* act = 0;
+  if (id == 0)
+    id = createId();
 
   if (aType == "local")
-    act = new KMAcctLocal(this, aName);
+    act = new KMAcctLocal(this, aName, id);
 
   if (aType == "maildir")
-    act = new KMAcctMaildir(this, aName);
+    act = new KMAcctMaildir(this, aName, id);
 
   else if (aType == "pop")
-    act = new KMAcctExpPop(this, aName);
+    act = new KMAcctExpPop(this, aName, id);
 
   else if (aType == "imap")
-    act = new KMAcctImap(this, aName);
+    act = new KMAcctImap(this, aName, id);
 
   else if (aType == "cachedimap")
-    act = new KMAcctCachedImap(this, aName);
+    act = new KMAcctCachedImap(this, aName, id);
 
   if (act)
   {
-    act->setFolder(kmkernel->inboxFolder());
+    if (aType != "imap" && aType != "cachedimap")
+      act->setFolder(kmkernel->inboxFolder());
     connect( act, SIGNAL(newMailsProcessed(int)),
 	this, SLOT(addToTotalNewMailCount(int)) );
   }
@@ -224,15 +231,27 @@ void KMAcctMgr::add(KMAccount *account)
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::find(const QString &aName)
+KMAccount* KMAcctMgr::findByName(const QString &aName)
 {
-  KMAccount* cur;
-
   if (aName.isEmpty()) return 0;
 
-  for (cur=mAcctList.first(); cur; cur=mAcctList.next())
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
   {
-    if (cur->name() == aName) return cur;
+    if ((*it)->name() == aName) return (*it);
+  }
+
+  return 0;
+}
+
+
+//-----------------------------------------------------------------------------
+KMAccount* KMAcctMgr::find(const uint id)
+{
+  if (id == 0) return 0;
+
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
+  {
+    if ((*it)->id() == id) return (*it);
   }
 
   return 0;
@@ -347,6 +366,23 @@ void KMAcctMgr::addToTotalNewMailCount(int newmails)
   if ( newmails == -1 ) mTotalNewMailsArrived = -1;
   if ( mTotalNewMailsArrived == -1 ) return;
   mTotalNewMailsArrived += newmails;
+}
+
+//-----------------------------------------------------------------------------
+uint KMAcctMgr::createId()
+{
+  QValueList<uint> usedIds;
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
+    usedIds << it.current()->id();
+
+  usedIds << 0; // 0 is default for unknown
+  int newId;
+  do
+  {
+    newId = kapp->random();
+  } while ( usedIds.find(newId) != usedIds.end() );
+
+  return newId;
 }
 
 //-----------------------------------------------------------------------------

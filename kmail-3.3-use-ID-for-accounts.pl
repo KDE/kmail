@@ -6,7 +6,8 @@ use strict;
 # accounts and replaces accounts referenced by name to be referenced
 # by IDs. 
 # It also renames the toplevel-folder and the sent/trash/drafts folder
-# accordingly and moves the lokal folder-cache
+# accordingly and renames all references
+# last but not least we move the lokal folder-cache of (d)imap folders
 
 # read the whole config file
 my $currentGroup = "";
@@ -18,7 +19,7 @@ while ( <> ) {
     if ( /^\[/ ) { # group begin
       $currentGroup = $_;
       next;
-    } elsif ( $currentGroup =~ /^\[Account/ and /^id/ ) {
+    } elsif ( $currentGroup =~ /^\[Account/ and /^Id/ ) {
 	  # We need to prevent this script from running twice, since it
       # would change IDs of accounts then.
       # Presence of a id key in an Account section is the
@@ -35,15 +36,18 @@ my @accountGroups = grep { /^\[Account \d+\]/ } keys %configFile;
 
 # create IDs for each account
 my %nameToID;
+my %nameToType;
 foreach my $accountGroup (@accountGroups) {
   my $id;
   do {
     $id = int(rand 0x7fFFffFF);
   } while ($id <= 0);
   my $name = $configFile{$accountGroup}{'Name'};
+  # remember id and type
   $nameToID{$name} = $id;
-  # create the uoid entries of [Identity #n] groups:
-  print "${accountGroup}\nid=$id\n";
+  $nameToType{$name} = $configFile{$accountGroup}{'Type'};
+  # create the id entries
+  print "${accountGroup}\nId=$id\n";
   # rename the trash
   my $trash = $configFile{$accountGroup}{'trash'};
   if (&replaceID($trash)) {
@@ -53,7 +57,10 @@ foreach my $accountGroup (@accountGroups) {
 }
 
 # we need the directory where the imap cache is stored
-my $basedir = "`kde-config --localprefix`share/apps/kmail/imap";
+open(CMD, "kde-config --localprefix|");
+my $basedir = <CMD>;
+chomp( $basedir );
+$basedir = $basedir."share/apps/kmail";
 
 # Now, go through all [Folder-*] groups that belong to (d)imap folders
 # and replace the account name with the id
@@ -73,7 +80,7 @@ foreach my $folderGroup ( @folderGroups )
     # this is no root folder
     $isRootFolder = 0;
   }
-  # write the new entry
+  # delete the old group and write the new entry
   if ( exists( $nameToID{$account} ) ) 
   {
     print "# DELETEGROUP $folderGroup\n";
@@ -87,13 +94,21 @@ foreach my $folderGroup ( @folderGroups )
       print "$key=" . $groupData{$key} . "\n";
     }
     if ($isRootFolder) {
-      print "Label=$account\n";
+      # new label and id of this rootfolder
+      print "SystemLabel=$account\n";
+      print "Id=".$nameToID{$account}."\n";
     }
 
     # move the directory
-    my $systemcall = "mv ${basedir}/\.${account}\.directory ${basedir}/\.".$nameToID{$account}."\.directory";
+    my $subdir;
+    if ($nameToType{$account} eq "imap") {
+      $subdir = "imap";
+    } elsif ($nameToType{$account} eq "cachedimap") {
+      $subdir = "dimap";
+    }
+    my $systemcall = "mv $basedir/$subdir/\.$account\.directory $basedir/$subdir/\.".$nameToID{$account}."\.directory";
     system($systemcall);
-    $systemcall = "mv ${basedir}/${account} ${basedir}/".$nameToID{$account};
+    $systemcall = "mv $basedir/$subdir/$account $basedir/$subdir/".$nameToID{$account};
     system($systemcall);
   }
 }
@@ -118,6 +133,40 @@ foreach my $identity (@identities)
   }
 }
 
+# go through all filters and replace the target
+my @filterGroups = grep { /^\[Filter \#\d+\]/ } keys %configFile;
+foreach my $filterGroup (@filterGroups) 
+{
+    my $numActions = +$configFile{$filterGroup}{'actions'};
+    # go through all actions in search for "set identity":
+    for ( my $i = 0 ; $i < $numActions ; ++$i ) 
+    {
+      my $actionName = "action-name-$i";
+      my $actionArgs = "action-args-$i";
+      if ( $configFile{$filterGroup}{$actionName} eq "transfer" &&
+           &replaceID($configFile{$filterGroup}{$actionArgs}) ) 
+      {
+        print "# DELETE $filterGroup$actionArgs\n";
+        print "$filterGroup\n$actionArgs=".
+          &replaceID($configFile{$filterGroup}{$actionArgs})."\n";
+      }
+    }
+}
+
+# previous fcc
+my $pfcc = $configFile{'[Composer]'}{'previous-fcc'};
+if (&replaceID($pfcc)) {
+  print "# DELETE [Composer]previous-fcc\n";
+  print "[Composer]\nprevious-fcc=".&replaceID($pfcc)."\n";
+}
+
+# GroupwareFolder
+my $groupware = $configFile{'[Groupware]'}{'GroupwareFolder'};
+if (&replaceID($groupware)) {
+  print "# DELETE [Groupware]GroupwareFolder\n";
+  print "[Groupware]\nGroupwareFolder=".&replaceID($groupware)."\n";
+}
+
 # and finally the startupFolder
 my $startup = $configFile{'[General]'}{'startupFolder'};
 if (&replaceID($startup)) {
@@ -126,11 +175,12 @@ if (&replaceID($startup)) {
 }
 
 ## Returns input string with replaced account name
+## If there is nothing to replace it returns undef
 sub replaceID
 {
   my ($input) = @_;
 
-  if ($input =~ /\.directory/)
+  if ($input && $input =~ /\.directory/)
   {
     my (@dirparts) = split (/\./,$input);
     my $account = $dirparts[1];

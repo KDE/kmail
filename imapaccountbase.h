@@ -48,7 +48,7 @@ class AttachmentStrategy;
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT
   protected:
-    ImapAccountBase( KMAcctMgr * parent, const QString & name );
+    ImapAccountBase( KMAcctMgr * parent, const QString & name, uint id );
   public:
     virtual ~ImapAccountBase();
 
@@ -83,8 +83,8 @@ class AttachmentStrategy;
     /** Configure the slave by adding to the meta data map */
     virtual KIO::MetaData slaveConfig() const;
 
-    virtual void readConfig( /*const*/ KConfig/*Base*/ & config );
-    virtual void writeConfig( KConfig/*Base*/ & config ) /*const*/;
+    virtual void readConfig( KConfig& config );
+    virtual void writeConfig( KConfig& config );
 
     enum ConnectionState { Error = 0, Connected, Connecting };
     /**
@@ -195,6 +195,11 @@ class AttachmentStrategy;
      */ 
     void handleBodyStructure( QDataStream & stream, KMMessage * msg,
                               const AttachmentStrategy *as );
+
+    /**
+     * Reimplemented. Additionally set the folder label
+     */  
+    virtual void setFolder(KMFolder*, bool addAccount = false);
 
   public slots:
     /**

@@ -12,7 +12,7 @@ class KMAcctLocal: public KMAccount
 protected:
   friend class KMAcctMgr;
 
-  KMAcctLocal(KMAcctMgr* owner, const QString& accountName);
+  KMAcctLocal(KMAcctMgr* owner, const QString& accountName, uint id);
 
 public:
   virtual ~KMAcctLocal();

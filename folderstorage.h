@@ -302,6 +302,10 @@ public:
   virtual QString label() const;
   void setLabel(const QString& lbl) { mLabel = lbl; }
 
+  /** Set the label that is used as a system default */
+  virtual QString systemLabel() const { return mSystemLabel; }
+  void setSystemLabel(const QString& lbl) { mSystemLabel = lbl; }
+
   /** Type of the folder. Inherited. */
   virtual const char* type() const;
 
@@ -473,6 +477,7 @@ protected:
   bool mFilesLocked;
   /** nationalized label or QString::null (then name() should be used) */
   QString mLabel;
+  QString mSystemLabel;
   KMAcctList* mAcctList;
 
   /** number of unread messages, -1 if not yet set */

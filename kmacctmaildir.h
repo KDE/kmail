@@ -12,7 +12,7 @@ class KMAcctMaildir: public KMAccount
 protected:
   friend class KMAcctMgr;
 
-  KMAcctMaildir(KMAcctMgr* owner, const QString& accountName);
+  KMAcctMaildir(KMAcctMgr* owner, const QString& accountName, uint id);
 
 public:
   virtual ~KMAcctMaildir();

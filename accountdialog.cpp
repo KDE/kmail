@@ -1414,7 +1414,7 @@ void AccountDialog::saveSettings()
     mAccount->setResource( mImap.resourceCheck->isChecked() );
 #endif
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
-    mAccount->setFolder( 0 );
+    mAccount->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()) );
 
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
     epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
@@ -1464,7 +1464,7 @@ void AccountDialog::saveSettings()
 #endif
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
     //mAccount->setFolder( NULL );
-    mAccount->setFolder( kmkernel->dimapFolderMgr()->find(mAccount->name()) );
+    mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
     kdDebug(5006) << mAccount->name() << endl;
     //kdDebug(5006) << "account for folder " << mAccount->folder()->name() << endl;
 
@@ -1537,7 +1537,7 @@ void AccountDialog::saveSettings()
   kmkernel->acctMgr()->writeConfig(TRUE);
 
   // get the new account and register the new destination folder
-  KMAccount* newAcct = kmkernel->acctMgr()->find(mAccount->name());
+  KMAccount* newAcct = kmkernel->acctMgr()->find(mAccount->id());
   if (newAcct)
   {
     if( accountType == "local" ) {

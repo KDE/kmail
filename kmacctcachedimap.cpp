@@ -58,8 +58,8 @@ using KMail::IMAPProgressDialog;
 
 
 KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
-				    const QString& aAccountName )
-  : KMail::ImapAccountBase( aOwner, aAccountName ), mFolder( 0 ),
+				    const QString& aAccountName, uint id )
+  : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
     mProgressDialogEnabled( true ), mSyncActive( false )
 {
   // Never EVER set this for the cached IMAP account

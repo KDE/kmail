@@ -68,7 +68,7 @@ void KMFolderComboBox::createFolderList(QStringList *names,
   if (mImapShown)
     kmkernel->imapFolderMgr()->createI18nFolderList( names, folders );
 
-  kmkernel->dimapFolderMgr()->createFolderList( names, folders );
+  kmkernel->dimapFolderMgr()->createI18nFolderList( names, folders );
   kmkernel->folderMgr()->createFolderList( names, folders );
   uint i = 0;
   while (i < folders->count())

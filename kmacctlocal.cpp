@@ -24,8 +24,8 @@
 #include <assert.h>
 
 //-----------------------------------------------------------------------------
-KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMAccount(aOwner, aAccountName)
+KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
+  KMAccount(aOwner, aAccountName, id)
 {
   mLock = procmail_lockfile;
 }

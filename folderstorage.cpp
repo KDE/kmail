@@ -706,7 +706,9 @@ const char* FolderStorage::type() const
 //-----------------------------------------------------------------------------
 QString FolderStorage::label() const
 {
-  if ( folder() && folder()->isSystemFolder() && !mLabel.isEmpty() )
+  if ( folder() && !mSystemLabel.isEmpty() ) 
+     return mSystemLabel;
+  if ( folder() && !mLabel.isEmpty() ) 
      return mLabel;
   if ( folder() && folder()->isSystemFolder() )
      return i18n( folder()->name().latin1() );
@@ -808,6 +810,8 @@ void FolderStorage::readConfig()
   if (mTotalMsgs == -1)
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
+  if (!config->readEntry("SystemLabel").isEmpty())
+    mSystemLabel = config->readEntry("SystemLabel");
 
   if( folder() ) folder()->readConfig( config );
 }
@@ -820,6 +824,7 @@ void FolderStorage::writeConfig()
   config->writeEntry("UnreadMsgs", countUnread());
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
+  config->writeEntry("SystemLabel", mSystemLabel);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );

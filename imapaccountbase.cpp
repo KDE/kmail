@@ -67,8 +67,8 @@ namespace KMail {
   //
   //
 
-  ImapAccountBase::ImapAccountBase( KMAcctMgr * parent, const QString & name )
-    : NetworkAccount( parent, name ),
+  ImapAccountBase::ImapAccountBase( KMAcctMgr * parent, const QString & name, uint id )
+    : NetworkAccount( parent, name, id ),
       mPrefix( "/" ),
       mTotal( 0 ),
       mCountUnread( 0 ),
@@ -664,6 +664,16 @@ namespace KMail {
      displayProgress();
   }
 
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::setFolder(KMFolder* folder, bool addAccount)
+  {
+    if (folder)
+    { 
+      folder->setSystemLabel(name());
+      folder->setId(id());
+    }
+    NetworkAccount::setFolder(folder, addAccount);
+  }
   
 } // namespace KMail
 

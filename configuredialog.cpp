@@ -1233,7 +1233,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
       }
 
     if ( !account ) {
-      account = kmkernel->acctMgr()->find( listItem->text(0) );
+      account = kmkernel->acctMgr()->findByName( listItem->text(0) );
       if( !account ) {
 	// ### FIXME: How should this happen? See above.
         KMessageBox::sorry( this, i18n("Unable to locate account") );
@@ -1298,7 +1298,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
       }
   }
   if ( !acct ) {
-    acct = kmkernel->acctMgr()->find( listItem->text(0) );
+    acct = kmkernel->acctMgr()->findByName( listItem->text(0) );
     if ( acct )
       mAccountsToDelete.append( acct );
   }

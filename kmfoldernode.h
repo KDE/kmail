@@ -58,11 +58,16 @@ public:
    the name. */
   virtual QString label(void) const;
 
+  /** ID of the node */
+  uint id() const;
+  void setId( uint id ) { mId = id; }
+
 protected:
   QString mName;
   const char* mType;
   KMFolderDir *mParent;
   bool mDir;
+  uint mId;
 };
 
 typedef QPtrList<KMFolderNode> KMFolderNodeList;

@@ -64,10 +64,14 @@ public:
   virtual QString type() const { return QString::null; }
 
   /**
-   * Returns account name
+   * Reimplemented, set account name
    */
-  QString name(void) const { return mName; }
   virtual void setName(const QString&);
+
+  /**
+   * Account name (reimpl because of ambiguous QObject::name())
+   */ 
+  virtual QString name() const { return KAccount::name(); }
 
   /**
    * Set password to "" (empty string)
@@ -210,7 +214,7 @@ protected slots:
   virtual void precommandExited(bool);
 
 protected:
-  KMAccount(KMAcctMgr* owner, const QString& accountName);
+  KMAccount(KMAcctMgr* owner, const QString& accountName, uint id);
 
   /**
    * Does filtering and storing in a folder for the given message.
@@ -234,7 +238,6 @@ protected:
   virtual void deinstallTimer();
 
 protected:
-  QString       mName;
   QString       mPrecommand;
   QString       mTrash;
   KMAcctMgr*    mOwner;

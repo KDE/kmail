@@ -42,6 +42,10 @@ public:
     created. Directories are skipped. */
   virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE);
 
+  /** Searches folder by id and returns it. Skips directories
+    (objects of type KMFolderDir) if foldersOnly is TRUE. */
+  virtual KMFolder* findById(const uint id, bool foldersOnly=TRUE);
+
   virtual void        getFolderURLS( QStringList& flist,
                                      const QString& prefix=QString::null,
                                      KMFolderDir *adir=0 );

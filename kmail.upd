@@ -82,6 +82,9 @@ Id=3.2-misc
 ######################################################################
 File=kmailrc
 Script=kmail-3.2-misc.sh,bash
+Id=3.3-use-ID-for-accounts
+File=kmailrc
+Script=kmail-3.3-use-ID-for-accounts.pl,perl
 #
 # reuse this section to add trivial stuff!
 #

@@ -265,7 +265,7 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
 {
   kdDebug(5006) << "KMKernel::checkMail called" << endl;
 
-  KMAccount* acct = kmkernel->acctMgr()->find(account);
+  KMAccount* acct = kmkernel->acctMgr()->findByName(account);
   if (acct)
     kmkernel->acctMgr()->singleCheckMail(acct, false);
 }
@@ -915,7 +915,7 @@ void KMKernel::cleanupImapFolders()
   KMFolderNode *node = the_imapFolderMgr->dir().first();
   while (node)
   {
-    if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
+    if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
 			  && ( acct->type() == "imap" )) )
     {
       node = the_imapFolderMgr->dir().next();
@@ -928,7 +928,7 @@ void KMKernel::cleanupImapFolders()
   node = the_dimapFolderMgr->dir().first();
   while (node)
   {
-    if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
+    if (node->isDir() || ((acct = the_acctMgr->find(node->id()))
 			  && ( acct->type() == "cachedimap" )) )
     {
       node = the_dimapFolderMgr->dir().next();
@@ -947,8 +947,9 @@ void KMKernel::cleanupImapFolders()
 
     if (acct->type() != "imap") continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
-      ->findOrCreate(acct->name(), false)->storage());
+      ->findOrCreate(QString::number(acct->id()), false)->storage());
     fld->setNoContent(true);
+    fld->setLabel(acct->name());
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
@@ -964,19 +965,21 @@ void KMKernel::cleanupImapFolders()
 
     if (acct->type() != "cachedimap" ) continue;
 
-    KMFolder* fld = the_dimapFolderMgr->find(acct->name());
+    KMFolder* fld = the_dimapFolderMgr->find(QString::number(acct->id()));
     if( fld )
       cfld = static_cast<KMFolderCachedImap*>( fld->storage() );
     if (cfld == 0) {
       // Folder doesn't exist yet
-      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(acct->name(), false, KMFolderTypeCachedImap)->storage());
+      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(QString::number(acct->id()), 
+            false, KMFolderTypeCachedImap)->storage());
       if (!cfld) {
-	KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_dimapFolderMgr->basePath())));
-	exit(-1);
+        KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_dimapFolderMgr->basePath())));
+        exit(-1);
       }
     }
 
     cfld->setNoContent(true);
+    cfld->setLabel(acct->name());
     cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
     cfld->setAccount(cachedImapAcct);
     cachedImapAcct->setImapFolder(cfld);

@@ -108,6 +108,7 @@ void KMFolder::readConfig( KConfig* config )
   mIdentity = config->readUnsignedNumEntry("Identity",0);
 
   setUserWhoField( config->readEntry("WhoField"), false );
+  mId = config->readUnsignedNumEntry("Id", 0);
 
   if ( mUseCustomIcons )
     emit iconsChanged();
@@ -132,6 +133,7 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("Identity", mIdentity);
 
   config->writeEntry("WhoField", mUserWhoField);
+  config->writeEntry("Id", mId);
 }
 
 KMFolderType KMFolder::folderType() const
@@ -472,6 +474,16 @@ QString KMFolder::label() const
 void KMFolder::setLabel( const QString& lbl )
 {
   mStorage->setLabel( lbl );
+}
+
+QString KMFolder::systemLabel() const
+{
+  return mStorage->systemLabel();
+}
+
+void KMFolder::setSystemLabel( const QString& lbl )
+{
+  mStorage->setSystemLabel( lbl );
 }
 
 const char* KMFolder::type() const

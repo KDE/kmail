@@ -14,6 +14,7 @@ KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QString& aName)
   mName = aName;
   mParent = aParent;
   mDir = FALSE;
+  mId = 0;
 }
 
 
@@ -67,6 +68,15 @@ KMFolderDir* KMFolderNode::parent(void) const
 void KMFolderNode::setParent( KMFolderDir* aParent )
 {
   mParent = aParent;
+}
+
+//-----------------------------------------------------------------------------
+uint KMFolderNode::id() const
+{
+  if (mId > 0)
+    return mId;
+  // compatibility, returns 0 on error
+  return name().toUInt();
 }
 
 #include "kmfoldernode.moc"

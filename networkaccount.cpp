@@ -37,8 +37,8 @@ using KIO::MetaData;
 
 namespace KMail {
 
-  NetworkAccount::NetworkAccount( KMAcctMgr * parent, const QString & name )
-    : KMAccount( parent, name ),
+  NetworkAccount::NetworkAccount( KMAcctMgr * parent, const QString & name, uint id )
+    : KMAccount( parent, name, id ),
       mSlave( 0 ),
       mAuth( "*" ),
       mPort( 0 ),

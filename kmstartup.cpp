@@ -84,6 +84,7 @@ void checkConfigUpdates() {
     "3.1.4-dont-use-UOID-0-for-any-identity",
     "3.2-misc",
     "3.2-moves",
+    "3.3-use-ID-for-accounts",
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
 

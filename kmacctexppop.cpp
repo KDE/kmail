@@ -27,8 +27,8 @@ using KIO::MetaData;
 static const unsigned short int pop3DefaultPort = 110;
 
 //-----------------------------------------------------------------------------
-KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName)
-  : NetworkAccount(aOwner, aAccountName),
+KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName, uint id)
+  : NetworkAccount(aOwner, aAccountName, id),
     headerIt(headersOnServer)
 {
   init();

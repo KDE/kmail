@@ -44,7 +44,7 @@ namespace KMail {
   class NetworkAccount : public KMAccount {
     Q_OBJECT
   protected:
-    NetworkAccount( KMAcctMgr * parent, const QString & name );
+    NetworkAccount( KMAcctMgr * parent, const QString & name, uint id );
   public:
     virtual ~NetworkAccount();
 

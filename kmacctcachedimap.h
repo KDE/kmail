@@ -144,7 +144,7 @@ public slots:
 
 protected:
   friend class KMAcctMgr;
-  KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName);
+  KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
 
 protected slots:
   /**

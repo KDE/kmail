@@ -73,9 +73,8 @@ void KMPrecommand::precommandExited(KProcess *p)
 
 
 //-----------------------------------------------------------------------------
-KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
-  : KAccount( 0, aName ),
-    mName(aName),
+KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName, uint id)
+  : KAccount( id, aName ),
     mTrash(KMKernel::self()->trashFolder()->idString()),
     mOwner(aOwner),
     mFolder(0),
@@ -138,7 +137,6 @@ void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 void KMAccount::readConfig(KConfig& config)
 {
   QString folderName;
-
   mFolder = 0;
   folderName = config.readEntry("Folder");
   setCheckInterval(config.readNumEntry("check-interval", 0));
@@ -167,8 +165,10 @@ void KMAccount::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAccount::writeConfig(KConfig& config)
 {
+  // ID, Name
+  KAccount::writeConfig(config);
+
   config.writeEntry("Type", type());
-  config.writeEntry("Name", mName);
   config.writeEntry("Folder", mFolder ? mFolder->idString() : QString::null);
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("resource", mResource);

@@ -97,6 +97,7 @@ public:
    */
   virtual void readConfig(KConfig& config);  
 
+
 public slots:
   void processNewMail() { processNewMail(TRUE); }
 
@@ -113,7 +114,7 @@ public slots:
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
-  KMAcctImap(KMAcctMgr* owner, const QString& accountName);
+  KMAcctImap(KMAcctMgr* owner, const QString& accountName, uint id);
 
   QPtrList<KMail::ImapJob> mJobList;
   QGuardedPtr<KMFolderImap> mFolder;

@@ -31,14 +31,18 @@ public:
 
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */
-  virtual KMAccount* create(const QString& type, const QString& name);
+  virtual KMAccount* create(const QString& type, const QString& name, uint id = 0);
 
   /** Adds an account to the list of accounts */
   virtual void add(KMAccount *account);
 
   /** Find account by name. Returns 0 if account does not exist.
     Search is done case sensitive. */
-  virtual KMAccount* find(const QString& name);
+  virtual KMAccount* findByName(const QString& name);
+
+  /** Find account by id. Returns 0 if account does not exist.
+   */
+  virtual KMAccount* find(const uint id);
 
   /** Physically remove account. Also deletes the given account object !
       Returns FALSE and does nothing if the account cannot be removed. */
@@ -57,6 +61,9 @@ public:
   void invalidateIMAPFolders();
 
   QStringList getAccounts(bool noImap = false);
+
+  /** Create a new unique ID */
+  uint createId();
 
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);

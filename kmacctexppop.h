@@ -77,7 +77,7 @@ protected:
   enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
-  KMAcctExpPop(KMAcctMgr* owner, const QString& accountName);
+  KMAcctExpPop(KMAcctMgr* owner, const QString& accountName, uint id);
 
   /**
    * Start a KIO Job to get a list of messages on the pop server

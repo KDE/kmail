@@ -125,7 +125,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
   if (aName == "INBOX" && mImapPath == "/INBOX/")
   {
-    //mLabel = i18n("inbox");
+    mLabel = i18n("inbox");
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
@@ -350,7 +350,7 @@ KMAcctCachedImap *KMFolderCachedImap::account() const
 {
   if( (KMAcctCachedImap *)mAccount == 0 ) {
     // Find the account
-    mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->find( name() ) );
+    mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->findByName( name() ) );
   }
 
   return mAccount;

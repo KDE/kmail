@@ -302,6 +302,10 @@ public:
   QString label() const;
   void setLabel(const QString& lbl);
 
+  /** Returns the system default label of the folder */
+  QString systemLabel() const;
+  void setSystemLabel(const QString& lbl);
+
   /** Type of the folder. Inherited. */
   const char* type() const;
 

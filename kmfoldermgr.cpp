@@ -203,6 +203,19 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 }
 
 //-----------------------------------------------------------------------------
+KMFolder* KMFolderMgr::findById(const uint id, bool foldersOnly)
+{
+  KMFolderNode* node;
+
+  for (node=mDir.first(); node; node=mDir.next())
+  {
+    if (node->isDir() && foldersOnly) continue;
+    if (node->id()==id) return (KMFolder*)node;
+  }
+  return 0;
+}
+
+//-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
 {
   if (!dir)
