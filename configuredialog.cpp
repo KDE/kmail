@@ -3718,6 +3718,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   mBackendConfig = Kleo::CryptoBackendFactory::instance()->configWidget( this, "mBackendConfig" );
+  connect( mBackendConfig, SIGNAL( changed( bool ) ), this, SIGNAL( changed( bool ) ) );
 
   vlay->addWidget( mBackendConfig );
 }
