@@ -35,6 +35,7 @@
 #include <dcopobject.h>
 
 class KMFolder;
+class KMMainWidget;
 
 namespace KMail {
 
@@ -48,6 +49,7 @@ namespace KMail {
     FolderIface( const QString& vpath );
 
   k_dcop:
+    virtual void select();
     virtual QString path() const;
     virtual bool usesCustomIcons() const;
     virtual QString normalIconPath() const;
@@ -58,7 +60,8 @@ namespace KMail {
 
     //not yet
     //virtual QValueList<DCOPRef> messageRefs();
-
+  protected:
+    KMMainWidget *getKMMainWidget();
   protected:
     KMFolder* mFolder;
     QString   mPath;

@@ -32,24 +32,47 @@
 #endif
 
 #include "folderIface.h"
+
+#include "kmkernel.h"
+#include "kmmainwin.h"
+#include "kmmainwidget.h"
+#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 
-#include <stdlib.h>
-
+#include <kapplication.h>
 #include <kdebug.h>
+
+#include <qwidgetlist.h>
+#include <qobjectlist.h>
+
+#include <stdlib.h>
 
 namespace KMail {
 
 FolderIface::FolderIface( const QString& vpath )
   : DCOPObject( "FolderIface" ), mPath( vpath )
 {
-    //kdDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
-    mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
-    if ( !mFolder )
-      mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
-    if ( !mFolder )
-      mFolder = kmkernel->dimapFolderMgr()->getFolderByURL( mPath );
+  kdDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
+  mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
+  if ( !mFolder )
+    mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
+  if ( !mFolder )
+    mFolder = kmkernel->dimapFolderMgr()->getFolderByURL( mPath );
+  Q_ASSERT( mFolder );
+}
+
+void
+FolderIface::select()
+{
+  KMMainWidget *widget = getKMMainWidget();
+  Q_ASSERT( widget );
+  if ( !widget )
+    return;
+
+  KMFolderTree *tree = widget->folderTree();
+  tree->doFolderSelected( tree->indexOfFolder( mFolder ) );
+  tree->ensureItemVisible( tree->indexOfFolder( mFolder ) );
 }
 
 QString
@@ -94,6 +117,33 @@ FolderIface::unreadRecursiveMessages()
     return mFolder->countUnreadRecursive();
 }
 
+KMMainWidget*
+FolderIface::getKMMainWidget()
+{
+  //This could definitely use a speadup
+  QWidgetList *l = kapp->topLevelWidgets();
+  QWidgetListIt it( *l );
+  QWidget *wid;
+
+  while ( ( wid = it.current() ) != 0 ) {
+    ++it;
+    QObjectList *l2 = wid->topLevelWidget()->queryList( "KMMainWidget" );
+    if (l2 && l2->first()) {
+      KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>( l2->first() );
+      Q_ASSERT( kmmw );
+      delete l2;
+      delete l;
+      return kmmw;
+    }
+    delete l2;
+  }
+  delete l;
+  return 0;
+}
+
+//The reason why this function is disabled is that we loose
+//the message as soon as we get it (after we switch folders,
+//it's being unget. We need a reference count on message to make it work
 /*
 QValueList<DCOPRef>
 FolderIface::messageRefs()
