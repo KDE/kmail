@@ -581,7 +581,7 @@ int KMFolder::writeIndex()
   if (fclose(mIndexStream) != 0) return errno;
 
   _rename(tempName, indexLocation());
-  mIndexStream = 0;
+  mIndexStream = fopen(indexLocation(), "r+"); // index file
 
   mDirty = FALSE;
   return 0;
