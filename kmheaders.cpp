@@ -1526,7 +1526,7 @@ void KMHeaders::setFolderInfoStatus ()
   str = i18n( "1 message, %1.", "%n messages, %1.", mFolder->count() )
         .arg( str );
   if ( mFolder->isReadOnly() )
-    str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.");
+    str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.").arg( str );
   KMBroadcastStatus::instance()->setStatusMsg(str);
 }
 
