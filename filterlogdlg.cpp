@@ -75,11 +75,11 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
             this, SLOT(slotSwitchLogRuleEvaluation(void)) );
   QWhatsThis::add( mLogRuleEvaluationBox, 
       i18n( "You can control the feedback in the log concerning the "
-            "evaluation of the filter rules of applied filters. "
-            "Having this option checked will give detailed feedback "
-            "for each single filter rule. Alternativly, only "
+            "evaluation of the filter rules of applied filters: "
+            "having this option checked will give detailed feedback "
+            "for each single filter rule; alternatively, only "
             "feedback about the result of the evaluation of all rules "
-            "of a single filter is given." ) );
+            "of a single filter will be given." ) );
 
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
@@ -102,12 +102,11 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotChangeLogMemLimit(int)) );
   QWhatsThis::add( mLogMemLimitSpin, 
-      i18n( "Collecting log data means an appropriate memory consumption "
-            "to be able to temporarily store those data. Here you can "
-            "limit the maximum amount of memory to be used for storing "
-            "log data. If the collected log data exceeds this limit, "
-            "the oldest data will be discarded until the limit is no "
-            "longer exceeded. " ) );
+      i18n( "Collecting log data uses memory to temporarily store the "
+	    "log data; here you can limit the maximum amount of memory "
+	    "to be used: if the size of the collected log data exceeds "
+	    "this limit then the oldest data will be discarded until "
+	    "the limit is no longer exceeded. " ) );
 
   connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)),
           this, SLOT(slotLogEntryAdded(QString)));
