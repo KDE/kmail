@@ -84,11 +84,10 @@ KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent,
 					    const char * name )
     : QStoredDrag( "KMHeaderToFolderDrag/magic", parent, name )
 {
-  dragPix = new QPixmap( DesktopIcon("message", 
-				     KGlobal::iconLoader()->currentSize( KIcon::Desktop )) );
+  dragPix = new QPixmap( DesktopIcon("message",
+				     KIcon::SizeMedium ) );
   
-  setPixmap( *dragPix, QPoint(-5,-7) );
-
+  setPixmap( *dragPix );
 }
 
 bool KMHeaderToFolderDrag::canDecode( QDropEvent* e )
