@@ -3535,6 +3535,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         // pending(khz): Implement usage of these for PGP sigs as well.
         int frameColor = SIG_FRAME_COL_UNDEF;
         bool showKeyInfos;
+        bool onlyShowKeyURL = false;
         bool cannotCheckSignature;
         QString statusStr = sigStatusToString( cryptPlug,
                                                block.status_code,
@@ -3597,6 +3598,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
             switch( frameColor ){
                 case SIG_FRAME_COL_RED:
                     block.signClass = "signErr";//"signCMSRed";
+                    onlyShowKeyURL = true;
                     break;
                 case SIG_FRAME_COL_YELLOW:
                     block.signClass = "signOkKeyBad";//"signCMSYellow";
@@ -3695,7 +3697,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                     }
 
                     if( block.keyId.isEmpty() ) {
-                        if( signer.isEmpty() )
+                        if( signer.isEmpty() || onlyShowKeyURL )
                             htmlStr += i18n( "Message was signed with unknown key." );
                         else
                             htmlStr += i18n( "Message was signed by %1." )
@@ -3706,17 +3708,27 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                                     block.creationTime.tm_mon,
                                     block.creationTime.tm_mday );
                         if( dateOK && created.isValid() ) {
-                            if( signer.isEmpty() )
-                                htmlStr += i18n( "Message was signed with key %1, created %2." )
-                                        .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
-                            else
-                                htmlStr += i18n( "Message was signed by %1 with key %2, created %3." )
-                                        .arg( signer )
-                                        .arg( keyWithWithoutURL )
-                                        .arg( created.toString( Qt::LocalDate ) );
+                            if( signer.isEmpty() ) {
+                                if( onlyShowKeyURL )
+                                    htmlStr += i18n( "Message was signed with key %1." )
+                                                .arg( keyWithWithoutURL );
+                                else
+                                    htmlStr += i18n( "Message was signed with key %1, created %2." )
+                                                .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
+                            }
+                            else {
+                                if( onlyShowKeyURL )
+                                    htmlStr += i18n( "Message was signed with key %1." )
+                                            .arg( keyWithWithoutURL );
+                                else
+                                    htmlStr += i18n( "Message was signed by %1 with key %2, created %3." )
+                                            .arg( signer )
+                                            .arg( keyWithWithoutURL )
+                                            .arg( created.toString( Qt::LocalDate ) );
+                            }
                         }
                         else {
-                            if( signer.isEmpty() )
+                            if( signer.isEmpty() || onlyShowKeyURL )
                                 htmlStr += i18n( "Message was signed with key %1." )
                                         .arg( keyWithWithoutURL );
                             else
