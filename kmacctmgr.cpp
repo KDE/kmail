@@ -27,8 +27,6 @@
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
   mAcctList.setAutoDelete(TRUE);
-  mAccountIt = new QPtrListIterator<KMAccount>(mAcctList);
-  mAcctChecking = new QPtrList<KMAccount>();
   checking = false;
   lastAccountChecked = 0;
   mTotalNewMailsArrived=0;
@@ -38,10 +36,7 @@ KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 //-----------------------------------------------------------------------------
 KMAcctMgr::~KMAcctMgr()
 {
-  delete mAccountIt;
-  delete mAcctChecking;
   writeConfig(FALSE);
-  mAcctList.clear();
 }
 
 
@@ -83,7 +78,6 @@ void KMAcctMgr::readConfig(void)
   int i, num;
 
   mAcctList.clear();
-  *mAccountIt = mAcctList;
 
   KConfigGroup general(config, "General");
   num = general.readNumEntry("accounts", 0);
@@ -112,7 +106,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   newMailArrived = false;
   interactive = _interactive;
 
-  if (!mAcctChecking->contains(account)) mAcctChecking->append(account);
+  if (!mAcctChecking.contains(account)) mAcctChecking.append(account);
 
   if (checking) {
     return;
@@ -136,14 +130,6 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   lastAccountChecked = 0;
 
   processNextCheck(false);
-
-//   mAccountIt->toLast();
-//   ++(*mAccountIt);
-
-//   lastAccountChecked = account;
-//   connect( account, SIGNAL(finishedCheck(bool)),
-// 	   this, SLOT(processNextCheck(bool)) );
-//   account->processNewMail(interactive);
 }
 
 void KMAcctMgr::processNextCheck(bool _newMail)
@@ -155,8 +141,8 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
 		this, SLOT(processNextCheck(bool)) );
 
-  if (mAcctChecking->isEmpty() || 
-      (((curAccount = mAcctChecking->take(0)) == lastAccountChecked))) {
+  if (mAcctChecking.isEmpty() || 
+      (((curAccount = mAcctChecking.take(0)) == lastAccountChecked))) {
     kernel->filterMgr()->cleanup();
     kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
@@ -280,9 +266,12 @@ void KMAcctMgr::checkMail(bool _interactive)
 
   mTotalNewMailsArrived=0;
 
-  for (mAccountIt->toFirst(); !mAccountIt->atLast(); ++(*mAccountIt))
-    if (!mAccountIt->current()->checkExclude())
-      singleCheckMail(mAccountIt->current(), _interactive);
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ;
+	it.current() ; ++it ) 
+  {
+    if (!it.current()->checkExclude())
+      singleCheckMail(it.current(), _interactive);
+  }
 }
 
 

@@ -76,8 +76,7 @@ signals:
 
 private:
   KMAcctList   mAcctList;
-  QPtrListIterator< KMAccount > *mAccountIt;
-  QPtrList< KMAccount > *mAcctChecking;
+  KMAcctList   mAcctChecking;
   KMAccount *lastAccountChecked;
   bool checking;
   bool newMailArrived;
