@@ -1896,7 +1896,6 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
 					bool onlyNew,
 					bool aDirNext )
 {
-if (item) kdDebug() << "item = " << item->msgId() << endl;
   KMMsgBase* msgBase = 0;
   KMHeaderItem *lastUnread = 0;
   /* itemAbove() is _slow_ */
@@ -1926,7 +1925,6 @@ if (item) kdDebug() << "item = " << item->msgId() << endl;
     }
     item = lastUnread;
   }
-if (item) kdDebug() << "item = " << item->msgId() << endl;
 }
 
 //-----------------------------------------------------------------------------
