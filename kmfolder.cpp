@@ -1369,14 +1369,12 @@ void KMFolder::writeConfig()
 {
   KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
-  config->writeEntry("UnreadMsgs", countUnread());
+  config->writeEntry("UnreadMsgs", mUnreadMsgs);
 }
 
 //-----------------------------------------------------------------------------
 void KMFolder::correctUnreadMsgsCount()
 {
-  int i;
-
   open();
   close();
   emit numUnreadMsgsChanged( this );
