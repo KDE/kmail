@@ -175,7 +175,10 @@ void KMMsgList::remove(int idx)
   mHigh--;
   for (i=idx; i<mHigh; i++) {
     if (dict)
-      msn = dict->remove(at(i + 1));
+    {
+      msn = dict->getMsgSerNum(at(i + 1)->parent(), i + 1);
+      dict->remove(msn);
+    }
     KMMsgListInherited::at(i) = KMMsgListInherited::at(i+1);
     if (dict)
       dict->insert(msn, at(i), i);
