@@ -1085,7 +1085,7 @@ bool KMGroupware::deleteIncidence( const QString& type, const QString& uid )
     folder = mTasks;
   } else {
     kdError() << "No such folder" << endl;
-    return;
+    return false;
   }
 
   KMMessage* msg = findMessageByUID( uid, folder, false );
