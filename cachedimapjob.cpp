@@ -423,7 +423,7 @@ void CachedImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
-  if (data.find("UID") != -1)
+  if ( data.find("UID") != -1 && mMsg )
   {
     int uid = (data.right(data.length()-4)).toInt();
     kdDebug( 5006 ) << k_funcinfo << "Server told us uid is: " << uid << endl;
