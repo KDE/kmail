@@ -207,7 +207,14 @@ public:
         tmp = KMHeaders::formatDate(mMsgBase->date(), headers->paintInfo()->dateDisplay );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
-        tmp.setNum(mMsgBase->msgSize());
+        if (headers->folder()->protocol() == "imap")
+        {
+          QCString cstr;
+          headers->folder()->getMsgString(mMsgId, cstr);
+          int a = cstr.find("\nX-Length: ");
+          int b = cstr.find("\n", a+1);
+          tmp = cstr.mid(a+11, b-a-11);
+        } else tmp.setNum(mMsgBase->msgSize());
 
     } else if(col == headers->paintInfo()->scoreCol) {
       tmp.setNum(headers->messageScore(mMsgId));
@@ -312,7 +319,7 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  static QString generate_key( int id, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
+  static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
   {
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QString("%1") .arg( (char)sortOrder );
@@ -342,6 +349,14 @@ public:
       return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + " " + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
+      if (headers->folder()->protocol() == "imap")
+      {
+        QCString cstr;
+        headers->folder()->getMsgString(id, cstr);
+        int a = cstr.find("\nX-Length: ");
+        int b = cstr.find("\n", a+1);
+        return ret + QString( "%1" ).arg( cstr.mid(a+11, b-a-11), 9 );
+      }
       return ret + QString( "%1" ).arg( msg->msgSize(), 9 );
     }
     return ret + "missing key"; //you forgot something!!
@@ -360,7 +375,7 @@ public:
     if(mKey.isEmpty() || mKey[0] != (char)sortOrder) {
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
       return ((KMHeaderItem *)this)->mKey =
-	generate_key(mMsgId, headers->folder()->getMsgBase( mMsgId ),
+	generate_key(mMsgId, headers, headers->folder()->getMsgBase( mMsgId ),
 		     headers->paintInfo(), sortOrder);
     }	
     return mKey;
@@ -2962,7 +2977,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		if (mPaintInfo.status)
 		    sortOrder |= (1 << 5);
 		sortCache[x] = new KMSortCacheItem(
-		    x, KMHeaderItem::generate_key(x, msg, &mPaintInfo, sortOrder));
+		    x, KMHeaderItem::generate_key(x, this, msg, &mPaintInfo, sortOrder));
 		if(threaded)
 		    unparented.append(sortCache[x]);
 		else
