@@ -2,7 +2,7 @@ CXX	=	@CXX@
 INCLUDES=	-I.. @all_includes@
 CXXFLAGS=	@CXXFLAGS@ -DHAVE_CONFIG_H  $(INCLUDES)
 LDFLAGS	=	@LDFLAGS@  @all_libraries@ -lkdeui -lkdecore -lkhtmlw\
--ljscript -lqt -lXext ../../kdesupport/mimelib/.libs/libmimelib.a
+-ljscript -lqt -lXext -lmimelib
 BIN	=	kmail
 MOC	=	@MOC@
 install =	@INSTALL@
