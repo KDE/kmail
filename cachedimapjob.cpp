@@ -40,6 +40,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmfoldercachedimap.h"
+#include "kmailicalifaceimpl.h"
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
 #include "maildirjob.h"
@@ -467,9 +468,15 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
      if ( mMsg->UID() == 0 ) {
         mFolder->removeMsg(i);
      } else {
+        // When removing+readding, no point in telling the imap resources about it
+       bool b = kmkernel->iCalIface().isResourceQuiet();
+       kmkernel->iCalIface().setResourceQuiet( true );
+
         mFolder->take( i );
         mFolder->addMsgKeepUID( mMsg );
         mMsg->setTransferInProgress( false );
+
+       kmkernel->iCalIface().setResourceQuiet( b );
      }
   }
   mMsg = NULL;

@@ -203,6 +203,10 @@ public:
   void folderSynced( KMFolder* folder, const KURL& folderURL );
   void addFolderChange( KMFolder* folder, FolderChanges changes );
 
+  // See CachedImapJob::slotPutMessageResult
+  bool isResourceQuiet() const;
+  void setResourceQuiet(bool q);
+
 public slots:
   /* (Re-)Read configuration file */
   void readConfig();

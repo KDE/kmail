@@ -1967,4 +1967,14 @@ KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderPar
   }
 }
 
+void KMailICalIfaceImpl::setResourceQuiet(bool q)
+{
+  mResourceQuiet = q;
+}
+
+bool KMailICalIfaceImpl::isResourceQuiet() const
+{
+  return mResourceQuiet;
+}
+
 #include "kmailicalifaceimpl.moc"
