@@ -128,6 +128,11 @@ QString FolderStorage::location() const
   return sLocation;
 }
 
+QString FolderStorage::fileName() const
+{
+  return mFolder->name(); 
+}
+
 
 
 //-----------------------------------------------------------------------------
@@ -717,7 +722,7 @@ QString FolderStorage::label() const
      return mLabel;
   if ( folder() && folder()->isSystemFolder() ) 
      return i18n( folder()->name().latin1() );
-  return name();
+  return mFolder->name();
 }
 
 int FolderStorage::count(bool cache) const
