@@ -14,7 +14,7 @@ class KMMsgList: public QArray<KMMsgBasePtr>
 {
 public:
   /** Valid parameters for sort() */
-  typedef enum { sfStatus=0, sfFrom=1, sfSubject=2, sfDate=3 } SortField;
+  typedef enum { sfNone=99, sfStatus=0, sfFrom=1, sfSubject=2, sfDate=3 } SortField;
 
   /** Constructor with optional initial size. */
   KMMsgList(int initialSize=32);
@@ -59,7 +59,7 @@ public:
   virtual void set(int idx, KMMsgBasePtr msg);
 
   /** Sort messages by given field. */
-  virtual void sort(SortField byField=sfDate);
+  virtual void sort(SortField byField=sfDate, bool descending=FALSE);
 
   /** Returns first unused index (index of last message plus one). */
   int high(void) const { return mHigh; }
@@ -75,7 +75,7 @@ protected:
   void rethinkHigh(void);
 
   /** Function that does the compare in sort() method. */
-  static int msgSortCompFunc(const void* a, const void* b);
+  static int msgSortCompFunc(KMMsgBasePtr, KMMsgBasePtr, KMMsgList::SortField, bool);
 
   int mHigh, mCount;
 };

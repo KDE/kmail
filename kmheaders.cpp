@@ -33,6 +33,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mFolder = NULL;
   getMsgIndex = -1;
   mSortCol = KMMsgList::sfDate;
+  mSortDescending = FALSE;
 
   setColumn(0, i18n("F"), 17, KMHeadersInherited::PixmapColumn);
   setColumn(1, i18n("Sender"), 200);
@@ -89,7 +90,9 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(2, config->readNumEntry("SubjectWidth", 270));
   setColumnWidth(3, config->readNumEntry("DateWidth", 300));
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
-  mFolder->sort((KMMsgList::SortField)mSortCol);
+  mSortDescending = (mSortCol < 0);
+  mSortCol = abs(mSortCol);
+  sort();
 }
 
 
@@ -103,7 +106,7 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("SenderWidth", columnWidth(1));
   config->writeEntry("SubjectWidth", columnWidth(2));
   config->writeEntry("DateWidth", columnWidth(3));
-  config->writeEntry("SortColumn", mSortCol);
+  config->writeEntry("SortColumn", (mSortDescending ? -mSortCol : mSortCol));
 }
 
 
@@ -204,14 +207,39 @@ void KMHeaders::headerClicked(int column)
 {
   int idx = currentItem();
   KMMsgBasePtr cur;
-  
+  const char* sortStr = "(unknown)";
+  QString msg;
+
   if (idx >= 0) cur = (*mFolder)[idx];
   else cur = NULL;
 
-  mSortCol = column;
+  if (mSortCol == column) 
+  {
+    if (!mSortDescending) mSortDescending = TRUE;
+    else
+    {
+      mSortCol = (int)KMMsgList::sfNone;
+      mSortDescending = FALSE;
+      sortStr = i18n("order of arrival");
+    }
+  }
+  else 
+  {
+    mSortCol = column;
+    mSortDescending = FALSE;
+  }
+
+  if (mSortCol==(int)KMMsgList::sfSubject) sortStr = i18n("subject");
+  else if (mSortCol==(int)KMMsgList::sfDate) sortStr = i18n("date");
+  else if (mSortCol==(int)KMMsgList::sfFrom) sortStr = i18n("sender");
+  else if (mSortCol==(int)KMMsgList::sfStatus) sortStr = i18n("status");
+
+  if (mSortDescending) msg.sprintf(i18n("Sorting messages descending by %s"), sortStr);
+  else msg.sprintf(i18n("Sorting messages ascending by %s"), sortStr);
+  mOwner->statusMsg(msg);
 
   kbp->busy();
-  mFolder->sort((KMMsgList::SortField)mSortCol);
+  sort();
   kbp->idle();
 
   if (cur) idx = mFolder->find(cur);
@@ -668,6 +696,13 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
 
   debug("Ready to drag...");
   return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::sort(void)
+{
+  mFolder->sort((KMMsgList::SortField)mSortCol, mSortDescending);
 }
 
 

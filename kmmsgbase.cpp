@@ -191,9 +191,17 @@ int KMMsgBase::indexStringLength(void)
 
 
 //-----------------------------------------------------------------------------
+int KMMsgBase::compareByIndex(const KMMsgBase* other) const
+{
+  return (mFolderOffset - other->mFolderOffset);
+}
+
+
+//-----------------------------------------------------------------------------
 int KMMsgBase::compareBySubject(const KMMsgBase* other) const
 {
-  const char *subjStr, *otherSubjStr;
+  //const char *subjStr, *otherSubjStr;
+  QString subjStr, otherSubjStr;
   bool hasKeywd, otherHasKeywd;
   int rc;
 
@@ -201,7 +209,7 @@ int KMMsgBase::compareBySubject(const KMMsgBase* other) const
   otherSubjStr = skipKeyword(other->subject(), ':', &otherHasKeywd);
 
   rc = stricmp(subjStr, otherSubjStr);
-  //debug("\"%s\" =?= \"%s\": %d", subjStr, otherSubjStr, rc);
+  //debug("\"%s\" =?= \"%s\": %d", (const char*)subjStr, (const char*)otherSubjStr, rc);
 
   if (rc) return rc;
 

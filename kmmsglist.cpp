@@ -8,6 +8,7 @@
 static KMMsgList::SortField sortCriteria;
 static int* sortIndex;
 static KMMsgList* sortList;
+static bool sortDescending;
 
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)
@@ -187,50 +188,53 @@ void KMMsgList::rethinkHigh(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::sort(SortField aField)
+void KMMsgList::sort(SortField aField, bool aDescending)
 {
-  int i;
-  KMMsgBasePtr ptrList[mHigh];
+  int i, j;
+  KMMsgBasePtr ptrList[mHigh+1];
+  KMMsgBasePtr mb;
 
   if (mHigh < 2) return;
 
-  sortIndex = new int[mHigh];
-  sortCriteria = aField;
-  sortList = this;
-
-  for (i=0; i<mHigh; i++)
-    sortIndex[i] = i;
-
-  qsort(sortIndex, mHigh, sizeof(int), msgSortCompFunc);
-
-  for (i=0; i<mHigh; i++)
-    ptrList[i] = KMMsgListInherited::at(sortIndex[i]);
-
-  for (i=0; i<mHigh; i++)
-    KMMsgListInherited::at(i) = ptrList[i];
-
-  delete sortIndex;
+  for (j=0; j<mHigh; j++)
+  {
+    for (i=0; i<mHigh-1; i++)
+    {
+      if (msgSortCompFunc(KMMsgListInherited::at(i), KMMsgListInherited::at(i+1),
+			  aField, aDescending) > 0)
+      {
+	mb = KMMsgListInherited::at(i);
+	KMMsgListInherited::at(i) = KMMsgListInherited::at(i+1);
+	KMMsgListInherited::at(i+1) = mb;
+      }
+    }
+  }
 }
 
 
 //-----------------------------------------------------------------------------
-int KMMsgList::msgSortCompFunc(const void* a, const void* b)
+int KMMsgList::msgSortCompFunc(KMMsgBasePtr mbA, KMMsgBasePtr mbB, 
+			       KMMsgList::SortField sortCriteria, bool desc)
 {
-  KMMsgBasePtr mbA = sortList->at(*(int*)a);
-  KMMsgBasePtr mbB = sortList->at(*(int*)b);
-  int          res = 0;
+  int res = 0;
 
-  if (sortCriteria==sfStatus)
-    res = mbA->compareByStatus(mbB);
+  if (sortCriteria==sfNone)
+    res = mbA->compareByIndex(mbB);
+  else
+  {
+    if (sortCriteria==sfStatus)
+      res = mbA->compareByStatus(mbB);
 
-  else if (sortCriteria==sfFrom)
-    res = mbA->compareByFrom(mbB);
+    else if (sortCriteria==sfFrom)
+      res = mbA->compareByFrom(mbB);
 
-  else if (res==0 || sortCriteria==sfSubject)
-    res = mbA->compareBySubject(mbB);
+    else if (res==0 || sortCriteria==sfSubject)
+      res = mbA->compareBySubject(mbB);
 
-  if (res==0 || sortCriteria==sfDate)
-    res = mbA->compareByDate(mbB);
+    if (res==0 || sortCriteria==sfDate)
+      res = mbA->compareByDate(mbB);
+  }
 
+  if (desc) return -res;
   return res;
 }

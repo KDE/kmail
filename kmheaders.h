@@ -101,6 +101,9 @@ protected:
 
   virtual void mouseReleaseEvent (QMouseEvent*);
 
+  /** Sort message list by current sort settings. */
+  virtual void sort(void);
+
 private:
   virtual void updateMessageList(void);
   KMFolder* mFolder;
@@ -108,6 +111,7 @@ private:
   int getMsgIndex;
   bool getMsgMulti;
   KMMessageList mSelMsgList;
+  bool mSortDescending;
 };
 
 #endif

@@ -162,7 +162,7 @@ public:
   virtual void quiet(bool beQuiet);
 
   /** Sort folder by given field. Actually sorts the index. */
-  virtual void sort(KMMsgList::SortField field=KMMsgList::sfDate);
+  virtual void sort(KMMsgList::SortField field=KMMsgList::sfDate, bool descending=FALSE);
 
   /** Is the folder read-only? */
   virtual bool isReadOnly(void) const { return !mFilesLocked; }

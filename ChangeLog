@@ -1,6 +1,16 @@
+1998-03-18  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.4)
+
+	* Reader: improved detection of urls and email addresses
+	to ignore special characters at the end, e.g. "." or ")".
+
+	* Messagelist: finally fixed sorting of messages. Also
+	implemented ascending/descending/none sorting (use multiple
+	clicks on the column headers to switch). Sorting order "none"
+	is what was IMO missing for the trash folder :-)
+
 1998-03-17  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.3)
 
-	* Composer: in menu view, when "all headers" view is 
+	* Composer: in menu view, when 'all headers' view is 
 	activated, then the individual header line menu entries are 
 	disabled now.
 

@@ -897,9 +897,9 @@ int KMFolder::sync(void)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::sort(KMMsgList::SortField aField)
+void KMFolder::sort(KMMsgList::SortField aField, bool aDesc)
 {
-  mMsgList.sort(aField);
+  mMsgList.sort(aField, aDesc);
   if (!mQuiet) emit changed();
   mDirty = TRUE;
 }

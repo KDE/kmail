@@ -478,7 +478,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 {
   QString htmlStr, qpstr, iStr;
   char ch, *pos, str[256];
-  int i,i1, x;
+  int i, i1, x, len;
 
   if (aDecodeQP) qpstr = KMMsgBase::decodeRFC1522String(aStr);
   else qpstr = aStr;
@@ -516,8 +516,13 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     {
       for (i=0; *pos && *pos>' ' && i<255; i++, pos++)
 	str[i] = *pos;
-      str[i] = '\0';
       pos--;
+      while (i>0 && ispunct(str[i-1]) && str[i-1]!='/')
+      {
+	i--;
+	pos--;
+      }
+      str[i] = '\0';
       htmlStr += "<A HREF=\"";
       htmlStr += str;
       htmlStr += "\">";
@@ -537,7 +542,15 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       {
 	iStr += *pos;
       }
-      pos--; 
+      pos--;
+      len = iStr.length();
+      while (len>2 && ispunct(*pos))
+      {
+	len--;
+	pos--;
+      }
+      iStr.truncate(len);
+
       htmlStr.truncate(htmlStr.length() - i1 + 1);
       if (iStr.length()>3) 
 	htmlStr += "<A HREF=\"mailto:" + iStr + "\">" + iStr + "</A>";

@@ -98,6 +98,9 @@ public:
   /** Compare with other message by From. Returns -1/0/1 like strcmp.*/
   int compareByFrom(const KMMsgBase* other) const;
 
+  /** Compare with other message by position in folder. Returns -1/0/1 like strcmp.*/
+  int compareByIndex(const KMMsgBase* other) const;
+
   /** Skip leading keyword if keyword has given character at it's end 
    * (e.g. ':' or ',') and skip the then following blanks (if any) too.
    * If keywordFound is specified it will be TRUE if a keyword was skipped
