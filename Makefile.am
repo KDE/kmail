@@ -75,7 +75,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		maildirjob.cpp mboxjob.cpp imapjob.cpp \
 		addressesdialog.cpp addresspicker.ui subscriptiondialog.cpp \
 		kmailicalifaceimpl.cpp aboutdata.cpp \
-		syntaxhighlighter.cpp
+		syntaxhighlighter.cpp folderIface.cpp folderIface.skel 
 
 kmail_SOURCES = main.cpp
 

@@ -105,6 +105,8 @@ public:
   bool lockContactsFolder();
   bool unlockContactsFolder();
   bool storeAddresses( QString addresses, QStringList delUIDs );
+  QStringList folderList() const;
+  DCOPRef getFolder( const QString& vpath );
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }

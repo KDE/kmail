@@ -57,6 +57,8 @@ using KMail::RecentAddresses;
 #include "kmmainwidget.h"
 #include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
+#include "folderIface.h"
+using KMail::FolderIface;
 
 #include <X11/Xlib.h>
 #undef Unsorted
@@ -469,6 +471,24 @@ bool KMKernel::unlockContactsFolder()
 bool KMKernel::storeAddresses( QString addresses, QStringList delUIDs )
 {
   return mGroupware->storeAddresses( addresses, delUIDs );
+}
+
+QStringList KMKernel::folderList() const
+{
+  QStringList folders;
+  the_folderMgr->getFolderURLS( folders );
+  the_imapFolderMgr->getFolderURLS( folders );
+
+  return folders;
+}
+
+DCOPRef KMKernel::getFolder( const QString& vpath )
+{
+  if ( the_folderMgr->getFolderByURL( vpath ) )
+    return DCOPRef( new FolderIface( vpath ) );
+  else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
+    return DCOPRef( new FolderIface( vpath ) );
+  return DCOPRef();
 }
 
 /********************************************************************/
