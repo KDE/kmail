@@ -1318,8 +1318,10 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
 
   connect(win, SIGNAL(statusMsg(const QString&)),
           this, SLOT(statusMsg(const QString&)));
+/*
   connect(win, SIGNAL(popupMenu(const KURL&,const QPoint&)),
           this, SLOT(slotMsgPopup(const KURL&,const QPoint&)));
+*/
   connect(win, SIGNAL(urlClicked(const KURL&,int)),
           this, SLOT(slotUrlClicked(const KURL&,int)));
   connect(win, SIGNAL(showAtmMsg(KMMessage *)),
