@@ -9,6 +9,7 @@
 #include "kmmsgpart.h"
 #include "kmmessage.h"
 #include "kmkernel.h"
+#include "globalsettings.h"
 
 #include <kmime_charfreq.h>
 #include <kmime_codecs.h>
@@ -122,6 +123,12 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
 
 const QTextCodec * KMMessagePart::codec() const {
   const QTextCodec * c = KMMsgBase::codecForName( charset() );
+
+  if ( !c ) {
+    // Ok, no override and nothing in the message, let's use the fallback
+    // the user configured
+    c = KMMsgBase::codecForName( GlobalSettings::fallbackCharacterEncoding().latin1() );
+  }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
     // be okay
