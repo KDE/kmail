@@ -959,8 +959,7 @@ KMFolderImap::ignoreJobsForMessage( KMMessage* msg )
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 {
-  // this is called for the final (emtpy) data chunk as well
-  if ( data.size() == 0 ) return;
+  if ( data.isEmpty() ) return; // optimization
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   (*it).cdata += QCString(data, data.size() + 1);
@@ -1187,8 +1186,7 @@ bool KMFolderImap::autoExpunge()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
-  // this is called for the final (emtpy) data chunk as well
-  if ( data.size() == 0 ) return;
+  if ( data.isEmpty() ) return; // optimization
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   QBuffer buff((*it).data);
