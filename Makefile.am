@@ -16,9 +16,9 @@ dummy.cpp:
 
 check_PROGRAMS = dcoptest
 
-kde_module_LTLIBRARIES = libkmailpart.la
+lib_LTLIBRARIES = libkmailpart.la
 
-libkmailpart_la_LDFLAGS = $(KDE_PLUGIN) $(all_libraries)
+libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
 libkmailpart_la_LIBADD	= $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 			../libkdenetwork/libkdenetwork.la \
 			../mimelib/libmimelib.la
