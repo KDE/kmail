@@ -2563,7 +2563,7 @@ void ComposerPage::GeneralTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
 
   // various check boxes:
-  bool state = ( composer.readEntry("signature").lower() == "auto" );
+  bool state = ( composer.readEntry("signature").lower() != "manual" );
   mAutoAppSignFileCheck->setChecked( state );
   mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote", true ) );
   mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
