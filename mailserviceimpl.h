@@ -34,7 +34,7 @@
 
 class QString;
 class KURL;
-class KURL::List;
+//class KURL::List;
 template <typename T> class QMemArray;
 typedef QMemArray<char> QByteArray;
 
