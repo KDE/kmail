@@ -78,7 +78,7 @@ FolderRequester::~FolderRequester()
 }
 
 //-----------------------------------------------------------------------------
-KMFolder * FolderRequester::folder( void )
+KMFolder * FolderRequester::folder( void ) const
 {
   return mFolder;
 }

@@ -15,6 +15,7 @@
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
+#include "kmmainwidget.h"
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
@@ -22,7 +23,8 @@
 #include <libkdepim/collectingprocess.h>
 using KPIM::CollectingProcess;
 #include "kmfawidgets.h"
-#include "kmfoldercombobox.h"
+#include "folderrequester.h"
+using KMail::FolderRequester;
 #include "kmmsgbase.h"
 #include "messageproperty.h"
 #include "actionscheduler.h"
@@ -252,36 +254,37 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  KMFolderComboBox *cb = new KMFolderComboBox( parent );
-  cb->showImapFolders( false );
-  setParamWidgetValue( cb );
-  return cb;
+  FolderRequester *req = new FolderRequester( parent, 
+      kmkernel->getKMMainWidget()->folderTree() );
+  req->setShowImapFolders( false );
+  setParamWidgetValue( req );
+  return req;
 }
 
 void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 {
-  mFolder = ((KMFolderComboBox *)paramWidget)->getFolder();
+  mFolder = ((FolderRequester *)paramWidget)->folder();
   if (mFolder)
   {
      mFolderName = QString::null;
   }
   else
   {
-     mFolderName = ((KMFolderComboBox *)paramWidget)->currentText();
+     mFolderName = ((FolderRequester *)paramWidget)->text();
   }
 }
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 {
   if ( mFolder )
-    ((KMFolderComboBox *)paramWidget)->setFolder( mFolder );
+    ((FolderRequester *)paramWidget)->setFolder( mFolder );
   else
-    ((KMFolderComboBox *)paramWidget)->setFolder( mFolderName );
+    ((FolderRequester *)paramWidget)->setFolder( mFolderName );
 }
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 {
-  ((KMFolderComboBox *)paramWidget)->setFolder( kmkernel->draftsFolder() );
+  ((FolderRequester *)paramWidget)->setFolder( kmkernel->draftsFolder() );
 }
 
 void KMFilterActionWithFolder::argsFromString( const QString argsStr )

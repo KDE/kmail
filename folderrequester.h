@@ -30,15 +30,15 @@
 #define folderrequester_h
 
 #include <qwidget.h>
+#include <klineedit.h>
 
 class KMFolder;
 class KMFolderTree;
-class KLineEdit;
 
 namespace KMail {
 
   /**
-   * A widget that contains of a KLineEdit which shows the current folder
+   * A widget that contains a KLineEdit which shows the current folder
    * and a button that fires a KMFolderSelDlg
    * The dialog is set to disable readonly folders by default
    * Search folders are excluded
@@ -57,7 +57,10 @@ namespace KMail {
       virtual ~FolderRequester();
 
       /** Returns selected folder */
-      KMFolder* folder( void );
+      KMFolder* folder( void ) const;
+
+      /** Returns current text */
+      QString text() const { return edit->originalText(); } 
 
       /** Preset the folder */
       void setFolder( KMFolder* );
