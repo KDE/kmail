@@ -183,6 +183,9 @@ private:
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
   bool deleteIncidence( KMFolder& folder, const QString& uid, Q_UINT32 serNum );
+  bool updateAttachment( KMMessage& msg, const QString& attachmentURL );
+  bool deleteAttachment( KMMessage& msg, const QString& attachmentURL );
+  Q_UINT32 addIncidence( KMFolder& folder, const QStringList& attachments );
 
   void loadPixmaps() const;
 

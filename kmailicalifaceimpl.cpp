@@ -49,6 +49,8 @@
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
+#include <mimelib/body.h>
+#include <mimelib/mimepp.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -57,6 +59,8 @@
 #include <kconfig.h>
 #include <kurl.h>
 #include <qmap.h>
+#include <ktempfile.h>
+#include <qfile.h>
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
@@ -162,6 +166,159 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
   mResourceQuiet = quiet;
   return rc;
 }
+
+
+// Add (or overwrite, resp.) an attachment in an existing mail,
+// attachments must be local files, they are identified by their names.
+// return value: wrong if attachment could not be added/updated
+bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
+                                           const QString& attachmentURL )
+{
+  kdDebug(5006) << "KMailICalIfaceImpl::updateAttachment( " << attachmentURL << " )" << endl;
+
+  bool bOK = false;
+
+  KURL url( attachmentURL );
+  if ( url.isValid() && url.isLocalFile() ) {
+    const QString fileName( url.path() );
+    QFile file( fileName );
+    if( file.open( IO_ReadOnly ) ) {
+      QByteArray rawData = file.readAll();
+      file.close();
+
+      // create the new message part with data read from temp file
+      KMMessagePart *msgPart = new KMMessagePart;
+      msgPart->setName( fileName );
+      msgPart->setPartSpecifier( fileName );
+      if( url.fileEncoding().isEmpty() ){
+        QValueList<int> allowedCTEs;
+        msgPart->setBodyAndGuessCte( rawData, allowedCTEs );
+      }else{
+        msgPart->setContentTransferEncodingStr( url.fileEncoding().latin1() );
+        msgPart->setBodyEncodedBinary( rawData );
+      }
+      msgPart->setType(DwMime::kTypeApplication);
+      msgPart->setSubtype(DwMime::kSubtypeOctetStream);
+      msgPart->setContentDisposition( QString("attachment;\n\tfilename=\"%1\"")
+          .arg( fileName ).latin1() );
+      
+      // quickly searching for our message part: since Kolab parts are
+      // top-level parts we do *not* have to travel into embedded multiparts
+      DwBodyPart* part = msg.getFirstDwBodyPart();
+      while( part ){
+        if( fileName == part->partId() ){
+          DwBodyPart* newPart = msg.createDWBodyPart( msgPart );
+          // Make sure the replacing body part is pointing
+          // to the same next part as the original body part.
+          newPart->SetNext( part->Next() );
+          // call DwBodyPart::operator =
+          // which calls DwEntity::operator =
+          *part = *newPart;
+          delete newPart;
+          msg.setNeedsAssembly();
+          kdDebug(5006) << "Attachment updated." << endl;
+          bOK = true;
+          break;
+        }
+        part = part->Next();
+      }
+
+      if( !bOK ){
+        msg.addBodyPart(msgPart);
+        kdDebug(5006) << "Attachment added." << endl;
+        bOK = true;
+      }
+    }else{
+      kdDebug(5006) << "Attachment " << attachmentURL << " can not be read." << endl;
+    }
+  }else{
+    kdDebug(5006) << "Attachment " << attachmentURL << " not a local file." << endl;
+  }
+  
+  return bOK;
+}
+
+
+// Delete an attachment in an existing mail.
+// return value: wrong if attachment could not be deleted
+//
+// This code could be optimized: for now we just replace
+// the attachment by an empty dummy attachment since Mimelib
+// does not provide an option for deleting attachments yet.
+bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
+                                           const QString& attachmentURL )
+{
+  kdDebug(5006) << "KMailICalIfaceImpl::deleteAttachment( " << attachmentURL << " )" << endl;
+
+  bool bOK = false;
+
+  // quickly searching for our message part: since Kolab parts are
+  // top-level parts we do *not* have to travel into embedded multiparts
+  DwBodyPart* part = msg.getFirstDwBodyPart();
+  while( part ){
+    if( attachmentURL == part->partId() ){
+      DwBodyPart emptyPart;
+      // Make sure the empty replacement body part is pointing
+      // to the same next part as the to be deleted body part.
+      emptyPart.SetNext( part->Next() );
+      // call DwBodyPart::operator =
+      *part = emptyPart;
+      msg.setNeedsAssembly();
+      kdDebug(5006) << "Attachment deleted." << endl;
+      bOK = true;
+      break;
+    }
+    part = part->Next();
+  }
+
+  if( !bOK ){
+    kdDebug(5006) << "Attachment " << attachmentURL << " not found." << endl;
+  }
+  
+  return bOK;
+}
+
+
+// Store a new entry that was received from the resource
+Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
+                                           const QStringList& attachments )
+{
+  kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << attachments << " )" << endl;
+
+  Q_UINT32 rc = 0;
+  bool bAttachOK = true;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+
+  // Make a new message for the incidence
+  KMMessage* msg = new KMMessage();
+  msg->initHeader();
+  msg->setType( DwMime::kTypeMultipart );
+  msg->setSubtype( DwMime::kSubtypeMixed );
+  msg->setHeaderField( "Content-Type", "Multipart/Mixed" );
+  msg->setSubject( "[kolab data]" );
+  msg->setBody( "Your mailer can not display this format.\nSee http://www.kolab.org for details on the Kolab storage format." );
+
+  // Add all attachments by reading them from their temp. files
+  for( QStringList::ConstIterator it = attachments.begin();
+       it != attachments.end(); ++it ){
+    if( !updateAttachment( *msg, *it ) ){
+      kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
+      bAttachOK = false;
+      break;
+    }
+  }
+    
+  if( bAttachOK ){
+    // Mark the message as read and store it in the folder
+    msg->touch();
+    rc = folder.addMsg( msg );
+  }
+
+  mResourceQuiet = quiet;
+  return rc;
+}
+
 
 // The resource orders a deletion
 bool KMailICalIfaceImpl::deleteIncidence( KMFolder& folder,
@@ -446,36 +603,127 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      const QStringList& attachments,
                                      const QStringList& deletedAttachments )
 {
-  kdError(5006) << "NYI: KMailICalIfaceImpl::update()\n";
-
-  // TODO: This should find the message with serial number "id", set the
-  // xml attachment to hold the contents of "xml", and update all
+  // This finds the message with serial number "id", sets the
+  // xml attachment to hold the contents of "xml", and updates all
   // attachments.
-  // The mail can have additional attachments, and these are not to be
-  // touched! They belong to other clients - like Outlook
-  // The best is to delete all the attachments listed in the
+  // The mail can have additional attachments, and these are not
+  // touched!  They belong to other clients - like Outlook
+  // So we delete all the attachments listed in the
   // "deletedAttachments" arg, and then update/add all the attachments
   // given by the urllist attachments.
 
   // If the mail does not already exist, id will not be a valid serial
-  // number, and the mail should just be added instead. In this case
+  // number, and the mail is just added instead. In this case
   // the deletedAttachments can be forgotten.
-  // TODO: khz
-  return 0;
+  if( !mUseResourceIMAP )
+    return false;
+
+  kdDebug(5006) << "KMailICalIfaceImpl::update( " << resource << ", " << sernum << " )\n";
+  
+  Q_UINT32 rc = 0;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+
+  // Find the folder
+  KMFolder* f = kmkernel->findFolderById( resource );
+  if( f && storageFormat( f ) == StorageXML ){
+    KMMessage* msg = findMessageBySerNum( sernum, f );
+    if( msg ) {
+      // Message found - update it:
+
+      // Delete some attachments according to list
+      for( QStringList::ConstIterator it = deletedAttachments.begin();
+          it != deletedAttachments.end();
+          ++it ){
+        if( !deleteAttachment( *msg, *it ) ){
+          // Note: It is _not_ an error if an attachment was already deleted.
+        }
+      }
+
+      // Add all attachments by reading them from their temp. files
+      for( QStringList::ConstIterator it2 = attachments.begin();
+          it2 != attachments.end(); 
+          ++it2 ){
+        if( !updateAttachment( *msg, *it2 ) ){
+          kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
+          break;
+        }
+      }
+    }else{
+      // Message not found - store it newly
+      rc = addIncidence( *f, attachments );
+    }
+  }else
+    kdError(5006) << resource << " not an IMAP resource folder" << endl;
+
+  mResourceQuiet = quiet;
+  return rc;
 }
 
 KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
                                         Q_UINT32 sernum,
                                         const QString& filename )
 {
-  kdError(5006) << "NYI: KMailICalIfaceImpl::getAttachment()\n";
+  // This finds the attachment with the filename, saves it to a
+  // temp file and returns a URL to it. It's up to the resource
+  // to delete the tmp file later.
+  if( !mUseResourceIMAP )
+    return false;
 
-  // TODO: Find the attachment with the filename, save it to /tmp
-  // and return a URL to it. It's up to the resource to delete the
-  // tmp file later.
+  kdDebug(5006) << "KMailICalIfaceImpl::getAttachment( "
+                << resource << ", " << sernum << ", " << filename << " )\n";
+  
+  KURL url;
+  
+  bool bOK = false;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
 
-  // TODO: khz
-  return KURL();
+  // Find the folder
+  KMFolder* f = kmkernel->findFolderById( resource );
+  if( f && storageFormat( f ) == StorageXML ){
+    KMMessage* msg = findMessageBySerNum( sernum, f );
+    if( msg ) {
+      // Message found - look for the attachment:
+
+      // quickly searching for our message part: since Kolab parts are
+      // top-level parts we do *not* have to travel into embedded multiparts
+      DwBodyPart* part = msg->getFirstDwBodyPart();
+      while( part ){
+        if( filename == part->partId() ){
+          // Save the xml file. Will be deleted at the end of this method
+          KMMessagePart aPart;
+          msg->bodyPart( part, &aPart );
+          QByteArray rawData( aPart.bodyDecodedBinary() );
+          
+          KTempFile file;
+          file.setAutoDelete( true );
+          QTextStream* stream = file.textStream();
+          stream->setEncoding( QTextStream::UnicodeUTF8 );
+          stream->writeRawBytes( rawData.data(), rawData.size() );
+          file.close();
+        
+          // Compose the return value
+          url.setPath( file.name() );
+          url.setFileEncoding( "UTF-8" );
+          
+          bOK = true;
+          break;
+        }
+        part = part->Next();
+      }
+    
+      if( !bOK ){
+        kdDebug(5006) << "Attachment " << filename << " not found." << endl;
+      }
+    }else{
+      kdDebug(5006) << "Message not found." << endl;
+    }
+  }else
+    kdError(5006) << resource << " not an IMAP resource folder" << endl;
+
+  mResourceQuiet = quiet;
+  return url;
 }
 
 // KMail added a file to one of the groupware folders
