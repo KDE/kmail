@@ -253,9 +253,9 @@ void KMMainWin::readConfig(void)
     //    kernel->kbp()->idle(); //For symmetry
     show();
     */
+  } else {
+    manager()->readConfig(KGlobal::config(), "dock_configuration");
   }
-
-  manager()->readConfig(KGlobal::config(), "dock_configuration");
 }
 
 
