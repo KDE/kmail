@@ -82,6 +82,8 @@ using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
+#include <redirectdialog.h>
+using KMail::RedirectDialog;
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -1251,18 +1253,20 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
-  //TODO: move KMMessage::createRedirect to here
-  KMComposeWin *win;
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() )
     return Failed;
+    
+  RedirectDialog dlg( parentWidget() );
+  if (dlg.exec()==QDialog::Rejected) return Failed;
 
-  KCursorSaver busy(KBusyPtr::busy());
-  win = new KMComposeWin();
-  win->setMsg(msg->createRedirect(), FALSE);
-  win->setCharset(msg->codec()->mimeName());
-  win->show();
+  KMMessage *newMsg = msg->createRedirect( dlg.to() );
+  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
+  if ( !kmkernel->msgSender()->send( newMsg, FALSE ) ) {
+    kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
+    return Failed; // error: couldn't send
+  }
   return OK;
 }
 

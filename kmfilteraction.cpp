@@ -1446,7 +1446,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  msg = aMsg->createRedirect2( mParameter );
+  msg = aMsg->createRedirect( mParameter );
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 

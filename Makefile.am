@@ -106,7 +106,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		listjob.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
-		accountcombobox.cpp
+		accountcombobox.cpp redirectdialog.cpp
 
 kmail_SOURCES = main.cpp
 

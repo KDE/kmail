@@ -174,9 +174,7 @@ public:
     user, mail is not changed and the reply-to field is set to
     the email address of the original sender
    */
-  KMMessage* createRedirect();
-  // new implementation, ATM only used for redirect filter action
-  KMMessage* createRedirect2( const QString &toStr );
+  KMMessage* createRedirect( const QString &toStr );
 
   /** Create a new message that is a "failed delivery" reply to this
     message, filling all required header fields with the proper

@@ -1033,59 +1033,7 @@ QCString KMMessage::getRefStr() const
 }
 
 
-KMMessage* KMMessage::createRedirect()
-{
-  KMMessage* msg = new KMMessage;
-  KMMessagePart msgPart;
-  int i;
-
-  msg->initFromMessage(this);
-
-  /// ### FIXME: The message should be redirected with the same Content-Type
-  /// ###        as the original message
-  /// ### FIXME: ??Add some Resent-* headers?? (c.f. RFC2822 3.6.6)
-
-  QString st = asQuotedString("", "", QString::null, false, false);
-  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
-  if (encoding.isEmpty()) encoding = "utf-8";
-  QCString str = codecForName(encoding)->fromUnicode(st);
-
-  msg->setCharset(encoding);
-  msg->setBody(str);
-
-  if (numBodyParts() > 0)
-  {
-    msgPart.setBody(str);
-    msgPart.setTypeStr("text");
-    msgPart.setSubtypeStr("plain");
-    msgPart.setCharset(encoding);
-    msg->addBodyPart(&msgPart);
-
-    for (i = 0; i < numBodyParts(); i++)
-    {
-      bodyPart(i, &msgPart);
-      if ((qstricmp(msgPart.contentDisposition(),"inline")!=0 && i > 0) ||
-	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
-	   qstricmp(msgPart.typeStr(),"message")!=0))
-      {
-	msg->addBodyPart(&msgPart);
-      }
-    }
-  }
-
-//TODO: insert sender here
-  msg->setHeaderField("X-KMail-Redirect-From", from());
-  msg->setSubject(subject());
-  msg->setFrom(from());
-  msg->cleanupHeader();
-
-  // setStatus(KMMsgStatusForwarded);
-  msg->link(this, KMMsgStatusForwarded);
-
-  return msg;
-}
-
-KMMessage* KMMessage::createRedirect2( const QString &toStr )
+KMMessage* KMMessage::createRedirect( const QString &toStr )
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
