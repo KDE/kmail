@@ -72,12 +72,12 @@ void KMKernel::openReader( KURL /*messageFile*/)
 {
 #warning Ugly hack! (sven)
   KMMainWin *mWin = 0;
-  KTMainWindow *ktmw = 0;
+  KMainWindow *ktmw = 0;
   debug ("KMKernel::openReader called");
 
-  if (KTMainWindow::memberList)
-    for (ktmw = KTMainWindow::memberList->first(); ktmw;
-         ktmw = KTMainWindow::memberList->next())
+  if (KMainWindow::memberList)
+    for (ktmw = KMainWindow::memberList->first(); ktmw;
+         ktmw = KMainWindow::memberList->next())
       if (ktmw->isA("KMMainWin"))
         break;
 
@@ -145,7 +145,7 @@ void KMKernel::quit()
 {
   // Called when all windows are closed. Will take care of compacting,
   // sending... should handle session management too!!
-  
+
   if (msgSender() && msgSender()->sending()) // sender working?
   {
     kernel->msgSender()->quitWhenFinished(); // tell him to quit app when finished
@@ -308,7 +308,7 @@ void KMKernel::init()
   the_shuttingDown = false;
   the_server_is_ready = false;
   mUseKAB = false;
-  
+
   the_kbp = new KBusyPtr;
   cfg = kapp->config();
   //debug ("1");
@@ -337,7 +337,7 @@ void KMKernel::init()
   the_filterActionDict = new KMFilterActionDict;
   the_addrBook  = new KMAddrBook;
   the_KAB_addrBook=0;
-  
+
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
@@ -349,10 +349,10 @@ void KMKernel::init()
   KMMessage::readConfig();
   the_msgSender = new KMSender;
 
-  
+
   the_server_is_ready = true;
-  
-  // filterMgr->dump(); 
+
+  // filterMgr->dump();
   debug ("exiting KMKernel::init()");
 }
 
@@ -428,7 +428,7 @@ void KMKernel::transferMail(void)
   // Markus: lol ;-)
   if (!dir.cd("KMail")) return;
 
-  rc = KMessageBox::questionYesNo(0, 
+  rc = KMessageBox::questionYesNo(0,
          i18n(
 	    "The directory ~/KMail exists. From now on, KMail uses the\n"
 	    "directory ~/Mail for its messages.\n"
@@ -492,7 +492,7 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 void KMKernel::dumpDeadLetters()
 {
   QWidget *win;
-  
+
   while (KTMainWindow::memberList->first() != 0)
   {
     win = KTMainWindow::memberList->take();
@@ -507,7 +507,7 @@ void KMKernel::dumpDeadLetters()
 void KMKernel::action(bool mailto, bool check, QString to, QString cc,
                       QString bcc, QString subj, KURL messageFile)
 {
-  
+
   if (mailto)
     openComposer (to, cc, bcc, subj, 0);
   else
@@ -518,8 +518,8 @@ void KMKernel::action(bool mailto, bool check, QString to, QString cc,
   //Anything else?
 }
 
-KabAPI* KMKernel::KABaddrBook() 
-{ 
+KabAPI* KMKernel::KABaddrBook()
+{
   if (the_KAB_addrBook)
     return the_KAB_addrBook;
 
@@ -529,12 +529,12 @@ KabAPI* KMKernel::KABaddrBook()
   { // this connects to the default address book and opens it:
     debug( "Error initializing the connection to your KAB address book." );
     the_KAB_addrBook=0;
-  } 
+  }
   else {
     debug ("KMKernel::init: KabApi initialized.");
   }
-  
-  return the_KAB_addrBook; 
+
+  return the_KAB_addrBook;
 }
 
 

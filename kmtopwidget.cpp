@@ -42,7 +42,7 @@ void KMTopLevelWidget::closeEvent(QCloseEvent* e)
     e->accept();
 
     int not_withdrawn = 0;
-    QListIterator<KTMainWindow> it(*KTMainWindow::memberList);
+    QListIterator<KMainWindow> it(*KMainWindow::memberList);
     for (it.toFirst(); it.current(); ++it)
     {
       if ( !it.current()->testWState( WState_ForceHide ) )
