@@ -121,7 +121,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   setMinimumSize(200,200);
 
   mBtnIdentity->setFocusPolicy(QWidget::NoFocus);
-  mFcc->setFocusPolicy(QWidget::NoFocus);
+  mBtnFcc->setFocusPolicy(QWidget::NoFocus);
   mBtnTransport->setFocusPolicy(QWidget::NoFocus);
   mBtnTo->setFocusPolicy(QWidget::NoFocus);
   mBtnCc->setFocusPolicy(QWidget::NoFocus);
