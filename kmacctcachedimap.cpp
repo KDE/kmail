@@ -136,7 +136,7 @@ bool KMAcctCachedImap::handleJobErrorInternal( int errorCode, const QString &err
   case KIO::ERR_COULD_NOT_LOGIN: mAskAgain = TRUE; break;
   default:
     if ( abortSync )
-      killAllJobs( errorCode = KIO::ERR_CONNECTION_BROKEN );
+      killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
     else
       jobsKilled = false;
     break;
