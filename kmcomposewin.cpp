@@ -93,7 +93,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 
 {
   mMainWidget = new QWidget(this);
-  
+
   mIdentity = new QComboBox(mMainWidget);
   mTransport = new QComboBox(true, mMainWidget);
   mEdtFrom = new KMLineEdit(this,false,mMainWidget);
@@ -102,7 +102,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mEdtCc = new KMLineEdit(this,true,mMainWidget);
   mEdtBcc = new KMLineEdit(this,true,mMainWidget);
   mEdtSubject = new KMLineEdit(this,false,mMainWidget, "subjectLine");
-  mLblIdentity = new QLabel(mMainWidget); 
+  mLblIdentity = new QLabel(mMainWidget);
   mLblTransport = new QLabel(mMainWidget);
   mLblFrom = new QLabel(mMainWidget);
   mLblReplyTo = new QLabel(mMainWidget);
@@ -112,7 +112,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mLblSubject = new QLabel(mMainWidget);
   mBtnIdentity = new QCheckBox(i18n("Sticky"),mMainWidget);
   mBtnTransport = new QCheckBox(i18n("Sticky"),mMainWidget);
-  mBtnTo = new QPushButton("...",mMainWidget); 
+  mBtnTo = new QPushButton("...",mMainWidget);
   mBtnCc = new QPushButton("...",mMainWidget);
   mBtnBcc = new QPushButton("...",mMainWidget);
   mBtnFrom = new QPushButton("...",mMainWidget);
@@ -2684,18 +2684,20 @@ void KMLineEdit::doCompletion(bool ctrlT)
     {
         QStringList addresses = s_completion->items();
         QStringList::Iterator it = addresses.begin();
+        QStringList completions;
         for (; it != addresses.end(); ++it)
         {
             if ((*it).find(s,0,false) >= 0)
-                box->insertItem(*it);
+                completions.append( *it );
         }
 
-        if (box->count() > 1) {
+        if (completions.count() > 1) {
             m_previousAddresses = prevAddr;
+            box->insertItems( completions );
             box->setCancelledText( text() );
             box->popup();
         }
-        else if (box->count() == 1)
+        else if (completions.count() == 1)
             setText(prevAddr + box->text(0));
         else
             box->hide();
@@ -2711,7 +2713,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
             if ( !match.isNull() )
             {
                 m_previousAddresses = prevAddr;
-                box->insertStringList( s_completion->allMatches( s ));
+                box->insertItems( s_completion->allMatches( s ));
                 box->setCancelledText( text() );
                 box->popup();
             }
