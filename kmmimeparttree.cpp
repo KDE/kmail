@@ -245,8 +245,9 @@ void KMMimePartTree::slotSaveAll()
 
         if( !filename.isEmpty() ) {
             if( QFile::exists( filename ) ) {
+                // Unlike slotSaveAs, we're saving multiple files, so show which one creates trouble
                 if( KMessageBox::warningYesNo( this,
-                                               i18n( "A file with this name already exists. Do you want to overwrite it?" ),
+                                               i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s ),
                                                i18n( "KMail Warning" ) ) ==
                     KMessageBox::No ) {
                     ++lit;
@@ -283,8 +284,9 @@ void KMMimePartTree::slotSaveSelected()
 
         if( !filename.isEmpty() ) {
             if( QFile::exists( filename ) ) {
+                // Unlike slotSaveAs, we're saving multiple files, so show which one creates trouble
                 if( KMessageBox::warningYesNo( this,
-                                               i18n( "A file with this name already exists. Do you want to overwrite it?" ),
+                                               i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s ),
                                                i18n( "KMail Warning" ) ) ==
                     KMessageBox::No ) {
                     ++it;
