@@ -83,6 +83,7 @@ public:
   inline KMSender *msgSender() { return the_msgSender; }
 
   inline bool firstStart() { return the_firstStart; }
+  inline QString previousVersion() { return the_previousVersion; }
   inline bool shuttingDown() { return the_shuttingDown; }
   inline bool checkingMail() { return the_checkingMail; }
   inline void setCheckingMail(bool flag) { the_checkingMail = flag; }
@@ -104,6 +105,8 @@ private:
   KabAPI *the_KAB_addrBook;
   KMSender *the_msgSender;
 
+  QString the_previousVersion;  // previous KMail version. If different from current, 
+                                // the user has just updated. read from config
   bool the_firstStart;          // is this the first start?  read from config
   bool the_shuttingDown;        // are we going down? set from here
   bool the_checkingMail;        // are we checking mail? set from... where the mail is checked

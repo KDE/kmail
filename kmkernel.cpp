@@ -32,6 +32,7 @@
 #include "kmaddrbook.h"
 #include "kfileio.h"
 #include "kmpgpwrap.h"
+#include "kmversion.h"
 #include <kabapi.h>
 #include <kwin.h>
 
@@ -446,6 +447,8 @@ void KMKernel::init()
 
   cfg->setGroup("General");
   the_firstStart = cfg->readBoolEntry("first-start", true);
+  the_previousVersion = cfg->readEntry("previous-version", "");
+  cfg->writeEntry("previous-version", KMAIL_VERSION);
   foldersPath = cfg->readEntry("folders", "");
   acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
 

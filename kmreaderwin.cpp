@@ -424,14 +424,16 @@ void KMReaderWin::displayAboutPage()
   if (codec) mViewer->setCharset(codec->name(), true);
     else mViewer->setCharset(KGlobal::locale()->charset(), true);
   adjustFontSize();
-  mViewer->write(content.arg(
+  QString info =
     i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
     "Desktop Environment. It is designed to be fully compatible with Internet "
     "mailing standards including MIME, SMTP, POP3 and IMAP.</p>\n"
     "<ul><li>KMail has many powerful features which are described in the "
     "<A HREF=\"%2\">documentation</A></li>\n"
     "<li>You can find news and updates at the <A HREF=\"%3\">KMail homepage"
-    "</A></li></ul>\n") +
+    "</A></li></ul>\n").arg(KMAIL_VERSION)
+    .arg("help:kmail")
+    .arg("http://kmail.kde.org/") +
     i18n("<p>Some of the new features in this release of KMail include "
     "(compared to KMail 1.2, which is part of KDE 2.1):</p>\n"
     "<ul>\n"
@@ -440,7 +442,7 @@ void KMReaderWin::displayAboutPage()
     "<li>Performance improvements for huge folders</li>\n"
     "<li>Message scoring</li>\n"
     "<li>Only the selected part of a mail will be quoted on reply</li>\n"
-    "<li>Delete old messages from the trash folder on exit</li>\n"
+    "<li>Delete only <em>old</em> messages from the trash folder on exit</li>\n"
     "<li>Collapsable threads</li>\n"
     "<li>Multiple PGP identities</li>\n"
     "<li>Bind an SMTP server to an identity</li>\n"
@@ -448,16 +450,17 @@ void KMReaderWin::displayAboutPage()
     "<li>Messages can be flagged</li>\n"
     "<li>Automatic filter creation</li>\n"
     "<li>Read the new messages by only hitting the space key</li>\n"
-    "</ul>\n") +
-    i18n("<p>Please take a moment to fill in the KMail configuration panel at "
+    "</ul>\n");
+  if( kernel->firstStart() ) {
+    info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
     "Settings-&gt;Configuration.\n"
     "You need to at least create a primary identity and a mail "
-    "account.</p>\n"
-    "<p>We hope that you will enjoy KMail.</p>\n"
+    "account.</p>\n");
+  }
+  info += i18n("<p>We hope that you will enjoy KMail.</p>\n"
     "<p>Thank you,</p>\n"
-    "<p>&nbsp; &nbsp; The KMail Team</p>")).arg(KMAIL_VERSION)
-    .arg("help:kmail")
-    .arg("http://kmail.kde.org/"));
+    "<p>&nbsp; &nbsp; The KMail Team</p>");
+  mViewer->write(content.arg(info));
   mViewer->end();
 }
 
@@ -1186,6 +1189,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aDecodeQP,
 	     (ch=='h' && strncmp(pos,"https:", 6)==0) ||
 	     (ch=='f' && strncmp(pos,"ftp:", 4)==0) ||
 	     (ch=='m' && strncmp(pos,"mailto:", 7)==0))
+	     // note: no "file:" for security reasons
     {
       for (i=0; *pos && *pos > ' ' && *pos != '\"' &&
                 *pos != '<' &&		// handle cases like this: <link>http://foobar.org/</link>

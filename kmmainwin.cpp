@@ -64,6 +64,7 @@
 #include "kmsender.h"
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
+#include "kmversion.h"
 #include "kwin.h"
 
 #include <errno.h>
@@ -108,7 +109,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   readConfig();
   activatePanners();
 
-  if (kernel->firstStart()) idx = mFolderTree->firstChild(); else
+  if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
+    idx = mFolderTree->firstChild();
+  else
     idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
   if (idx!=0) {
     mFolderTree->setCurrentItem(idx);
