@@ -790,18 +790,10 @@ bool FolderDiaGeneralTab::save()
       KMail::FolderContentsType type =
         static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
       folder->storage()->setContentsType( type );
-      // make sure everything is on disk, connected slots will call readConfig()
-      // when creating a new folder.
-      folder->storage()->writeConfig();
     }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
-    kmkernel->folderMgr()->contentsChanged();
-
     folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
-
-    if( mDlg->isNewFolder() )
-      folder->close();
 
     if( folder->folderType() == KMFolderTypeImap )
     {
@@ -809,6 +801,15 @@ bool FolderDiaGeneralTab::save()
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
     }
+    // make sure everything is on disk, connected slots will call readConfig()
+    // when creating a new folder.
+    folder->storage()->writeConfig();
+
+    kmkernel->folderMgr()->contentsChanged();
+
+    if( mDlg->isNewFolder() )
+      folder->close();
+
   }
   return true;
 }
