@@ -271,6 +271,14 @@ protected:
   /** To initiate a drag operation */
   void contentsMouseMoveEvent( QMouseEvent *e );
 
+  /** reimplemented in order to update the frame width in case of a changed
+      GUI style */
+  void styleChange( QStyle& oldStyle );
+
+  /** Set the width of the frame to a reasonable value for the current GUI
+      style */
+  void setStyleDependantFrameWidth();
+
 protected slots:
   /** Move messages corresponding to the selected items to the folder
       corresponding to the given menuId */
