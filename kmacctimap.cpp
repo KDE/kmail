@@ -49,9 +49,6 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
-  KIO::Scheduler::connect(
-    SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
-    this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
 }
@@ -161,7 +158,7 @@ void KMAcctImap::slotAbortRequested()
 void KMAcctImap::killAllJobs( bool disconnectSlave )
 {
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-  for ( ; it != mapJobData.end(); ++it) 
+  for ( ; it != mapJobData.end(); ++it)
   {
     QPtrList<KMMessage> msgList = (*it).msgList;
     QPtrList<KMMessage>::Iterator it2 = msgList.begin();
@@ -214,7 +211,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
   {
     ImapJob *job = it.current();
     ++it;
-    if ( job->msgList().findRef( msg ) != -1 ) 
+    if ( job->msgList().findRef( msg ) != -1 )
     {
       if ( job->mJob )
         removeJob( job->mJob );
@@ -273,7 +270,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
     if (!quiet)
       slotSlaveError(mSlave, job->error(), job->errorText() );
     else if ( job->error() == KIO::ERR_CONNECTION_BROKEN && slave() ) {
-      // make sure ERR_CONNECTION_BROKEN is properly handled and the slave 
+      // make sure ERR_CONNECTION_BROKEN is properly handled and the slave
       // disconnected even when quiet()
       KIO::Scheduler::disconnectSlave( slave() );
       mSlave = 0;
@@ -338,7 +335,7 @@ void KMAcctImap::processNewMail(bool interactive)
           connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)));
           bool ok = imapFolder->processNewMail(interactive);
-          if (!ok) 
+          if (!ok)
           {
             // there was an error so cancel
             mCountRemainChecks--;
