@@ -7,7 +7,6 @@
 #include <qpopupmenu.h>
 #include <qcursor.h>
 
-#include <qheader.h>
 #include <qptrstack.h>
 #include <qptrqueue.h>
 #include <qpainter.h>
@@ -1055,7 +1054,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
   QListViewItem *threadRoot = myParent;
   while (threadRoot->parent())
       threadRoot = threadRoot->parent();
-	
+
   QString key = static_cast<KMHeaderItem*>(threadRoot)->key(mSortCol, !mSortDescending);
 
   while (myChild) {
@@ -2885,7 +2884,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		if (mJumpToUnread) // search unread messages
 		    if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusUnread)
 			isUnread = true;
-		
+
 		if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusNew || isUnread) {
 		    first_unread = item->msgId();
 		    break;

@@ -11,7 +11,6 @@
 #include <qaccel.h>
 #include <qregexp.h>
 #include <qmap.h>
-#include <qvaluelist.h>
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qguardedptr.h>

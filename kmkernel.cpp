@@ -9,7 +9,6 @@
 #include <kstaticdeleter.h>
 
 #include "kmkernel.h"
-#include "kmfoldertype.h"
 #include <dcopclient.h>
 
 #include <qvbox.h>

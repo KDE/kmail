@@ -24,7 +24,6 @@
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
-#include <klocale.h>
 #include <kmessagebox.h>
 #include <kpgp.h>
 #include <kpgpblock.h>
