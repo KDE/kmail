@@ -172,7 +172,7 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status,
 
 void KMMsgBase::setEncryptionState( QChar status, int idx )
 {
-    kdDebug() << "***setEncryptionState2( " << (status.isNull() ? '?' : status) << " )" << endl;
+    kdDebug() << "***setEncryptionState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
     
     if( status.latin1() == (char)KMMsgEncryptionStateUnknown )
             setEncryptionState( KMMsgEncryptionStateUnknown, idx );
@@ -200,7 +200,7 @@ void KMMsgBase::setSignatureState( const KMMsgSignatureState status,
 
 void KMMsgBase::setSignatureState( QChar status, int idx )
 {
-    kdDebug() << "***setSignatureState2( " << (status.isNull() ? '?' : status) << " )" << endl;
+    kdDebug() << "***setSignatureState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
     
     if( status.latin1() == (char)KMMsgSignatureStateUnknown )
             setSignatureState( KMMsgSignatureStateUnknown, idx );
