@@ -2,6 +2,8 @@
 #define KMAcctExpPop_h
 
 #include "kmaccount.h"
+#include "kmpopheaders.h"
+#include "kmfiltermgr.h"
 #include <kapp.h>
 #include <qdialog.h>
 #include "kio/job.h"
@@ -10,6 +12,8 @@
 #include <qstringlist.h>
 #include <qcstring.h>
 #include <qtimer.h>
+
+#include <kdebug.h>
 
 class QLineEdit;
 class QPushButton;
@@ -107,6 +111,20 @@ public:
   virtual void setLeaveOnServer(bool);
 
   /**
+   * Shall messages be filter on the server (TRUE)
+   * or not (FALSE).
+   */
+  bool filterOnServer(void) const { return mFilterOnServer; }
+  virtual void setFilterOnServer(bool);
+
+  /**
+   * Size of messages which should be check on the
+   * pop server before download
+   */
+  unsigned int filterOnServerCheckSize(void) const { return mFilterOnServerCheckSize; }
+  virtual void setFilterOnServerCheckSize(unsigned int);
+
+  /**
    * Inherited methods.
    */
   virtual QString type(void) const;
@@ -116,7 +134,7 @@ public:
   virtual void pseudoAssign(KMAccount*);
 
 protected:
-  enum Stage { Idle, List, Uidl, Retr, Dele, Quit };
+  enum Stage { Idle, List, Uidl, Head, Retr, Dele, Quit };
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
   KMAcctExpPop(KMAcctMgr* owner, const QString& accountName);
@@ -154,18 +172,28 @@ protected:
   bool    mAskAgain;
   bool    mLeaveOnServer;
   bool    gotMsgs;
+  bool    mFilterOnServer;
+  unsigned int mFilterOnServerCheckSize;
 
   KIO::SimpleJob *job;
   KIO::Slave *slave;
   KIO::MetaData mSlaveConfig;
-  QStringList idsOfMsgsPendingDownload;
-  QValueList<int> lensOfMsgsPendingDownload;
+  QStringList idsOfMsgsPendingDownload; //ID of messages which should be downloaded
+  QValueList<int> lensOfMsgsPendingDownload; //length of messages which should be downloaded
 
-  QStringList idsOfMsgs;
+  QPtrList<KMPopHeaders> headersOnServer;
+  QPtrListIterator<KMPopHeaders> headerIt;
+  bool headers;
+  QStringList headerDeleteUids;
+  QStringList headerDownUids;
+  QStringList headerLaterUids;
+
+
+  QStringList idsOfMsgs; //used for ids and for count
   QValueList<int> lensOfMsgs;
   QStringList uidsOfMsgs;
-  QStringList uidsOfSeenMsgs;
-  QStringList uidsOfNextSeenMsgs;
+  QStringList uidsOfSeenMsgs; //UIDS of seen messages, saved in config
+  QStringList uidsOfNextSeenMsgs; //UIDS of new seen messages, for writing in the config file
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 
@@ -244,7 +272,20 @@ protected slots:
    * Slave error handling
    */
   void slotSlaveError(KIO::Slave *, int, const QString &);
+
+  /**
+   * If there are more headers to be downloaded then start a new kio job
+   * to get the next header
+   */
+  void slotGetNextHdr();
+
+  /**
+   * The Header has been retrieved successfully. The next data belongs to the
+   * next Header
+   */
+  void slotHdrRetrieved();
 };
+
 
 
 #endif /*KMAcctExpPop_h*/

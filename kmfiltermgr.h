@@ -18,7 +18,7 @@ class KMFilterDlg;
 class KMFilterMgr: public QPtrList<KMFilter>
 {
 public:
-  KMFilterMgr();
+  KMFilterMgr(bool popFilter = false);
   virtual ~KMFilterMgr();
 
   enum FilterSet { NoSet = 0x0, Inbound = 0x1, Outbound = 0x2, All = 0x80000000 };
@@ -81,9 +81,17 @@ public:
       created. Forwards this to the filter dialog if that is open. */
   virtual void folderCreated(KMFolder*) {}
 
+  /** Set the global option 'Show Download Later Messages' */
+  virtual void setShowLaterMsgs(bool);
+
+  /** Get the global option 'Show Download Later Messages' */
+  virtual bool showLaterMsgs();
+
 private:
   QGuardedPtr<KMFilterDlg> mEditDialog;
   QPtrList<KMFolder> mOpenFolders;
+  bool bPopFilter;
+  bool mShowLater;
 };
 
 #endif /*kmfiltermgr_h*/

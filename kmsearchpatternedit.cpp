@@ -23,10 +23,10 @@ static QStringList sFilterFieldList, sFilterFuncList;
 //
 //=============================================================================
 
-KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name)
+KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly)
   : QHBox(parent,name)
 {
-  initLists(); // sFilter{Func,Field}List are local to KMSearchRuleWidget
+  initLists( headersOnly ); // sFilter{Func,Field}List are local to KMSearchRuleWidget
   initWidget();
 
   if ( aRule )
@@ -130,7 +130,7 @@ int KMSearchRuleWidget::indexOfRuleField(const QString aName) const
   return i;
 }
 
-void KMSearchRuleWidget::initLists() const
+void KMSearchRuleWidget::initLists(bool headersOnly) const
 {
   //---------- initialize list of filter operators
   if ( sFilterFuncList.isEmpty() )
@@ -155,8 +155,8 @@ void KMSearchRuleWidget::initLists() const
     sFilterFieldList.append("");
     // also see KMSearchRule::matches() and ruleFieldToEnglish() if
     // you change the following i18n-ized strings!
-    sFilterFieldList.append(i18n("<message>"));
-    sFilterFieldList.append(i18n("<body>"));
+    if( !headersOnly )  sFilterFieldList.append(i18n("<message>"));
+    if( !headersOnly )  sFilterFieldList.append(i18n("<body>"));
     sFilterFieldList.append(i18n("<any header>"));
     sFilterFieldList.append(i18n("<recipients>"));
     sFilterFieldList.append(i18n("<size>"));
@@ -182,10 +182,11 @@ void KMSearchRuleWidget::initLists() const
 //
 //=============================================================================
 
-KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name )
+KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name, bool headersOnly )
   : KWidgetLister( 2, FILTER_MAX_RULES, parent, name )
 {
   mRuleList = 0;
+  mHeadersOnly = headersOnly;
 }
 
 KMSearchRuleWidgetLister::~KMSearchRuleWidgetLister()
@@ -247,7 +248,7 @@ void KMSearchRuleWidgetLister::reset()
 
 QWidget* KMSearchRuleWidgetLister::createWidget( QWidget *parent )
 {
-  return new KMSearchRuleWidget(parent);
+  return new KMSearchRuleWidget(parent, 0, 0, mHeadersOnly);
 }
 
 void KMSearchRuleWidgetLister::clearWidget( QWidget *aWidget )
@@ -279,24 +280,24 @@ void KMSearchRuleWidgetLister::regenerateRuleListFromWidgets()
 //
 //=============================================================================
 
-KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name )
+KMSearchPatternEdit::KMSearchPatternEdit(QWidget *parent, const char *name, bool headersOnly )
   : QGroupBox( 1/*columns*/, Horizontal, parent, name )
 {
   setTitle( i18n("Search Criteria") );
-  initLayout();
+  initLayout( headersOnly );
 }
 
-KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name )
+KMSearchPatternEdit::KMSearchPatternEdit(const QString & title, QWidget *parent, const char *name, bool headersOnly )
   : QGroupBox( 1/*column*/, Horizontal, title, parent, name )
 {
-  initLayout();
+  initLayout( headersOnly );
 }
 
 KMSearchPatternEdit::~KMSearchPatternEdit()
 {
 }
 
-void KMSearchPatternEdit::initLayout()
+void KMSearchPatternEdit::initLayout(bool headersOnly)
 {
   //------------the radio buttons
   mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this, "mAllRBtn" );
@@ -311,7 +312,7 @@ void KMSearchPatternEdit::initLayout()
   bg->insert( mAnyRBtn, (int)KMSearchPattern::OpOr );
 
   //------------the list of KMSearchRuleWidget's
-  mRuleLister = new KMSearchRuleWidgetLister( this );
+  mRuleLister = new KMSearchRuleWidgetLister( this, "swl", headersOnly );
   mRuleLister->slotClear();
 
   //------------connect a few signals

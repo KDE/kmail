@@ -12,10 +12,14 @@
 
 #include <kdialogbase.h>
 
+#include <qvgroupbox.h>
 #include <qgroupbox.h>
 #include <qhbox.h>
 #include <qstring.h>
 #include <qptrlist.h>
+#include <qradiobutton.h>
+#include <qvbuttongroup.h>
+#include <qmap.h>
 
 class KMSearchPatternEdit;
 class QListBox;
@@ -55,7 +59,7 @@ class KMFilterListBox : public QGroupBox
   Q_OBJECT
 public:
   /** Constuctor. */
-  KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0 );
+  KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0, bool popFilter = false);
 
   /** Called from @ref KMFilterDlg. Creates a new filter and presets
       the first rule with "field equals value". It's there mainly to
@@ -68,6 +72,9 @@ public:
   /** Loads the filter list and selects the first filter. Should be
       called when all signals are connected properly. */
   void loadFilterList();
+
+  /** Returns wheather the global option 'Show Later Msgs' is set or not */
+  bool showLaterMsgs();
 
 signals:
   /** Emitted when a new filter has been selected by the user or if
@@ -90,6 +97,9 @@ public slots:
   /** Called when the user clicks either 'Apply' or 'OK' in @ref
       KMFilterDlg. Updates the filter list in the @ref KMFilterMgr. */
   void slotApplyFilterChanges();
+  /** Called when the user toggles the 'Show Download Later Msgs'
+      Checkbox in the Global Options section */
+  void slotShowLaterToggled(bool aOn);
 
 protected slots:
   /** Called when the user clicks on a filter in the filter
@@ -121,11 +131,14 @@ protected:
   QPushButton *mBtnNew, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
   /** The index of the currently selected item. */
   int mIdxSelItem;
+  bool mShowLater;
 private:
   void enableControls();
   void insertFilter( KMFilter* aFilter );
   void swapNeighbouringFilters( int untouchedOne, int movedOne);
+  bool bPopFilter;
 };
+
 
 /** This widgets allows to edit a single @ref KMFilterAction (in fact
     any derived class that is registered in
@@ -179,6 +192,30 @@ private:
   /** The widget stack that holds all the parameter widgets for the
       filter actions. */
   QWidgetStack   *mWidgetStack;
+};
+
+class KMPopFilterActionWidget : public QVButtonGroup
+{
+  Q_OBJECT
+public:
+  KMPopFilterActionWidget( const QString &title, QWidget* parent=0, const char* name=0 );
+  void setAction( KMPopFilterAction aAction );
+  KMPopFilterAction action();
+
+public slots:
+  void reset();
+
+private slots:
+  void slotActionClicked(int aId);
+
+private:
+  KMPopFilterAction mAction;
+  KMFilter mFilter;
+  QMap<KMPopFilterAction, QRadioButton*> mActionMap;
+  QMap<int, KMPopFilterAction> mIdMap;
+
+signals: // Signals
+  void actionChanged(const KMPopFilterAction aAction);
 };
 
 class KMFilterActionWidgetLister : public KWidgetLister
@@ -269,7 +306,7 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is @ref KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  KMFilterDlg(QWidget* parent=0, const char* name=0);
+  KMFilterDlg(QWidget* parent=0, const char* name=0, bool popFilter = false);
 
   /** Called from @ref KMFilterMgr. Creates a new filter and presets
       the first rule with "field equals value". Internally forwarded
@@ -284,6 +321,8 @@ public slots:
 	@ref KMSearchPatternEdit::setSearchPattern and
 	@ref KMFilterActionEdit::setActionList. */
   void slotFilterSelected(KMFilter * aFilter);
+  /** Action for popFilter */
+  void slotActionChanged(const KMPopFilterAction aAction);
 
 protected slots:
   void slotApplicabilityChanged( int aOption );
@@ -299,13 +338,18 @@ protected:
   KMSearchPatternEdit *mPatternEdit;
   /** The widget that allows editing of the filter actions. */
   KMFilterActionWidgetLister *mActionLister;
+  /** The widget that allows editing the popFilter actions. */
+  KMPopFilterActionWidget *mActionGroup;
   /** Lets the user select whether to apply this filter on
       inbound/outbound messages, both, or only on explicit CTRL-J. */
   QComboBox *mApplicability;
   QCheckBox *mStopProcessingHere;
   QGroupBox *mAdvOptsGroup;
+  QVGroupBox *mGlobalsBox;
+  QCheckBox *mShowLaterBtn;
 
   KMFilter *mFilter;
+  bool bPopFilter;
 };
 
 

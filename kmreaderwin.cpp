@@ -501,6 +501,8 @@ void KMReaderWin::displayAboutPage()
     "<li>SMTP over SSL/TLS</li>\n"
     "<li>Pipelining for POP3 (faster mail download on slow responding networks)</li>\n"
     "<li>Various improvements for IMAP</li>\n"
+    "<li>On demand downloading or deleting without downloading of big mails on "
+    "a POP3 server</li>\n"
     "<li>Automatic configuration of the POP3/IMAP/SMTP security features</li>\n"
     "<li>DIGEST-MD5 authentication</li>\n"
     "<li>Identity based sent-mail folders</li>\n"

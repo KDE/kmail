@@ -598,6 +598,13 @@ void KMMainWin::slotFilter()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotPopFilter()
+{
+  kernel->popFilterMgr()->openDialog( this );
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
   KMAddrBookExternal::launch(this);
@@ -2035,6 +2042,8 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("Configure F&ilters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );
+  (void) new KAction( i18n("Configure &Pop Filters..."), 0, this,
+ 		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
 
   createGUI( "kmmainwin.rc", false );
 

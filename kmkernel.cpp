@@ -503,7 +503,8 @@ void KMKernel::init()
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr(locateLocal("appdata","imap"), TRUE);
   the_acctMgr       = new KMAcctMgr();
-  the_filterMgr     = new KMFilterMgr;
+  the_filterMgr     = new KMFilterMgr();
+  the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
   the_addrBook      = new KMAddrBook;
   the_KAB_addrBook  = 0;
@@ -511,6 +512,7 @@ void KMKernel::init()
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
+  the_popFilterMgr->readConfig();
   cleanupImapFolders();
 
   the_addrBook->readConfig();

@@ -387,7 +387,8 @@ public:
     void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
 
     /** Get/set size of message in the folder including the whole header in
-        bytes. Can be 0, if the message is not is a folder */
+        bytes. Can be 0, if the message is not is a folder
+        the setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
     virtual unsigned long msgSize(void) const { return mMsgSize; }
     void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
 
@@ -395,6 +396,7 @@ public:
         folder */
     virtual unsigned long msgLength(void) const
     { return (mMsgLength) ? mMsgLength : mMsgSize; }
+    void setMsgLength(unsigned long sz) { mMsgLength = sz; }
 
     /** Status of the message. */
     virtual KMMsgStatus status(void) const { return mStatus; }

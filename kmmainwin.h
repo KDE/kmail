@@ -133,6 +133,7 @@ protected slots:
   void slotNewMailReader();
   void slotSettings();
   void slotFilter();
+  void slotPopFilter();
   void slotAddrBook();
   void slotImport();
   void slotViewChange();

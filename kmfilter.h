@@ -9,6 +9,7 @@
 #define kmfilter_h
 
 #include "kmsearchpattern.h"
+#include "kmpopheaders.h"
 
 #include <qptrlist.h>
 
@@ -45,7 +46,7 @@ public:
   /** Constructor that initializes from given config file, if given.
     * Filters are stored one by one in config groups, i.e. one filter, one group.
     * The config group has to be preset if config is not NULL. */
-  KMFilter( KConfig* aConfig=0 );
+  KMFilter( KConfig* aConfig=0 , bool popFilter = false);
 
   /** Copy constructor. Constructs a deep copy of @p aFilter. */
   KMFilter( KMFilter* aFilter );
@@ -66,6 +67,12 @@ public:
   */
   virtual ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
 
+  /** No descriptions */
+  KMPopFilterAction action();
+
+  /** No descriptions */
+  void setAction(const KMPopFilterAction aAction);
+
   /** Write contents to given config file. The config group (see the
       constructor above) has to be preset.  The config object will be
       deleted by higher levels, so it is not allowed to store a
@@ -82,8 +89,7 @@ public:
   virtual void purify();
 
   /** Check for empty pattern and action list. */
-  virtual bool isEmpty() const
-    { return mPattern.isEmpty() || mActions.isEmpty(); }
+  virtual bool isEmpty() const;
 
   /** Provides a reference to the internal action list. If your used
       the @p setAction() and @p action() functions before, please
@@ -135,13 +141,17 @@ public:
       debugging but not much else. Don't use, as it may well go away
       in the future... */
   const QString asString() const;
+  /** No descriptions */
+  bool isPopFilter(void);
 
 private:
+  bool bPopFilter;
   bool bApplyOnInbound;
   bool bApplyOnOutbound;
   bool bStopProcessingHere;
   KMSearchPattern mPattern;
   QPtrList<KMFilterAction> mActions;
+  KMPopFilterAction mAction;
 };
 
 #endif /*kmfilter_h*/

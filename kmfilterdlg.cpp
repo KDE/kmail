@@ -6,6 +6,7 @@
 #include "kmfilterdlg.h"
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
+//Tudo
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -67,9 +68,17 @@ I18N_NOOP( "<qt><p>Click this button to rename the currently selected filter.</p
 	   "<p>If you have renamed a filter accidently and want automatic "
 	   "naming back, click this button and select <em>Clear</em> and "
 	   "then <em>OK</em> in the appearing dialog.</p></qt>" );
+const char * _wt_filterdlg_showLater =
+I18N_NOOP( "<qt><p>Check this button to force the confirmation dialog to show "
+	   "up.</p><p>This is useful if you have defined a ruleset that tags "
+           "messages to be downloaded later. Without the possibility to force "
+           "the dialog popup these messages could never be downloaded if no "
+           "other big messages would be waiting on the server or you would "
+           "change the ruleset to tag the messages differently.</p></qt>" );
 
 // The anchor of the filter dialog's help.
 const char * KMFilterDlgHelpAnchor =  "filters-id" ;
+const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 
 //=============================================================================
 //
@@ -77,52 +86,63 @@ const char * KMFilterDlgHelpAnchor =  "filters-id" ;
 //
 //=============================================================================
 
-KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
+KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
   : KDialogBase( parent, name, FALSE /* modality */,
-		 i18n("Filter Rules") /* caption*/,
+		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
 		 Help|Ok|Apply|Cancel /* button mask */,
-		 Ok /* default btn */, FALSE /* separator */)
+		 Ok /* default btn */, FALSE /* separator */),
+  bPopFilter(popFilter)
 {
-  setHelp( KMFilterDlgHelpAnchor );
+  setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget(this);
   setMainWidget(w);
   QHBoxLayout *hbl = new QHBoxLayout( w, 0, spacingHint(), "kmfd_hbl" );
 
-  mFilterList = new KMFilterListBox( i18n("Available Filters"), w);
+  mFilterList = new KMFilterListBox( i18n("Available Filters"), w, 0, bPopFilter);
   hbl->addWidget( mFilterList, 1 /*stretch*/ );
 
   QVBoxLayout *vbl = new QVBoxLayout( hbl, spacingHint(), "kmfd_vbl" );
   hbl->setStretchFactor( vbl, 2 );
 
-  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), w );
+  mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), w , "spe", bPopFilter);
   vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
 
-  QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), w );
-  mActionLister = new KMFilterActionWidgetLister( agb );
-  vbl->addWidget( agb, 0, Qt::AlignTop );
+  if(bPopFilter){
+    mActionGroup = new KMPopFilterActionWidget( i18n("Filter Action"), w );
+    vbl->addWidget( mActionGroup, 0, Qt::AlignTop );
 
-  mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical, i18n("Advanced Options"), w);
-  {
-    QWidget *adv_w = new QWidget( mAdvOptsGroup );
-    QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 2 /*cols*/,
-				       0 /*border*/, spacingHint() );
-    gl->setColStretch( 1, 1 );
-    QLabel *l = new QLabel(i18n("Apply this filter on"), adv_w );
-    gl->addWidget( l, 0, 0, Qt::AlignLeft );
-    mApplicability = new QComboBox( FALSE, adv_w );
-    mApplicability->insertItem( i18n("incoming messages") );
-    mApplicability->insertItem( i18n("outgoing messages") );
-    mApplicability->insertItem( i18n("both") );
-    mApplicability->insertItem( i18n("explicit \"Apply Filters\" only") );
-    gl->addWidget( mApplicability, 0, 1, Qt::AlignLeft );
-    mStopProcessingHere = new QCheckBox( i18n("If this filter matches, stop processing here"), adv_w );
-    gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
-			    1, 1, /*from to row*/
-			    0, 1 /*from to col*/ );
+    mGlobalsBox = new QVGroupBox(i18n("Global Options"), w);
+    mShowLaterBtn = new QCheckBox(i18n("Always &show matched 'Download Later' messages in confirmation dialog"), mGlobalsBox);
+    QWhatsThis::add( mShowLaterBtn, i18n(_wt_filterdlg_showLater) );
+    vbl->addWidget( mGlobalsBox, 0, Qt::AlignTop );
   }
-  vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
+  else {
+    QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), w );
+    mActionLister = new KMFilterActionWidgetLister( agb );
+    vbl->addWidget( agb, 0, Qt::AlignTop );
 
+    mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical, i18n("Advanced Options"), w);
+    {
+      QWidget *adv_w = new QWidget( mAdvOptsGroup );
+      QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 2 /*cols*/,
+				         0 /*border*/, spacingHint() );
+      gl->setColStretch( 1, 1 );
+      QLabel *l = new QLabel(i18n("Apply this filter on"), adv_w );
+      gl->addWidget( l, 0, 0, Qt::AlignLeft );
+      mApplicability = new QComboBox( FALSE, adv_w );
+      mApplicability->insertItem( i18n("incoming messages") );
+      mApplicability->insertItem( i18n("outgoing messages") );
+      mApplicability->insertItem( i18n("both") );
+      mApplicability->insertItem( i18n("explicit \"Apply Filters\" only") );
+      gl->addWidget( mApplicability, 0, 1, Qt::AlignLeft );
+      mStopProcessingHere = new QCheckBox( i18n("If this filter matches, stop processing here"), adv_w );
+      gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
+			      1, 1, /*from to row*/
+  			      0, 1 /*from to col*/ );
+    }
+    vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
+  }
   // spacer:
   vbl->addStretch( 1 );
   
@@ -130,11 +150,28 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
   connect( mFilterList, SIGNAL(filterSelected(KMFilter*)),
 	   this, SLOT(slotFilterSelected(KMFilter*)) );
   
-  // reset the edit widgets
-  connect( mFilterList, SIGNAL(resetWidgets()),
-	   mPatternEdit, SLOT(reset()) );
-  connect( mFilterList, SIGNAL(resetWidgets()),
-	   mActionLister, SLOT(reset()) );
+  if (bPopFilter){
+    // set the state of the global setting 'show later msgs'
+    connect( mShowLaterBtn, SIGNAL(toggled(bool)),
+             mFilterList, SLOT(slotShowLaterToggled(bool)));
+
+    // set the action in the filter when changed
+    connect( mActionGroup, SIGNAL(actionChanged(const KMPopFilterAction)),
+	     this, SLOT(slotActionChanged(const KMPopFilterAction)) );
+  }
+  else {
+    // transfer changes from the 'Apply this filter on...'
+    // combo box to the filter
+    connect( mApplicability, SIGNAL(activated(int)),
+  	     this, SLOT(slotApplicabilityChanged(int)) );
+
+    // transfer changes from the 'stop processing here'
+    // check box to the filter
+    connect( mStopProcessingHere, SIGNAL(toggled(bool)),
+	     this, SLOT(slotStopProcessingButtonToggled(bool)) );
+  }
+	
+	// reset all widgets here
   connect( mFilterList, SIGNAL(resetWidgets()),
 	   this, SLOT(slotReset()) );
   
@@ -154,20 +191,16 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
   connect( this, SIGNAL(finished()),
 	   this, SLOT(slotDelayedDestruct()) );
 
-  // transfer changes from the 'Apply this filter on...'
-  // combo box to the filter
-  connect( mApplicability, SIGNAL(activated(int)),
-	   this, SLOT(slotApplicabilityChanged(int)) );
-
-  // transfer changes from the 'stop processing here'
-  // check box to the filter
-  connect( mStopProcessingHere, SIGNAL(toggled(bool)),
-	   this, SLOT(slotStopProcessingButtonToggled(bool)) );
-
   adjustSize();
 
   // load the filter list (emits filterSelected())
   mFilterList->loadFilterList();
+}
+
+/** Set action of popFilter */
+void KMFilterDlg::slotActionChanged(const KMPopFilterAction aAction)
+{
+  mFilter->setAction(aAction);
 }
 
 void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
@@ -175,40 +208,59 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
   assert( aFilter );
   int a=0;
   
-  kdDebug(5006) << "apply on inbound == "
-	    << aFilter->applyOnInbound() << endl;
-  kdDebug(5006) << "apply on outbound == "
-	    << aFilter->applyOnOutbound() << endl;
+  if (bPopFilter){
+    mActionGroup->setAction( aFilter->action() );
+    mGlobalsBox->setEnabled(true);
+    mShowLaterBtn->setChecked(mFilterList->showLaterMsgs());
+  }
+  else {
+    kdDebug(5006) << "apply on inbound == "
+  	      << aFilter->applyOnInbound() << endl;
+    kdDebug(5006) << "apply on outbound == "
+	      << aFilter->applyOnOutbound() << endl;
   
-  if ( aFilter->applyOnInbound() )
-    if ( aFilter->applyOnOutbound() )
-      a=2;
+    if ( aFilter->applyOnInbound() )
+      if ( aFilter->applyOnOutbound() )
+        a=2;
+      else
+        a=0;
     else
-      a=0;
-  else
-    if ( aFilter->applyOnOutbound() )
-      a=1;
-    else
-      a=3;
-  mApplicability->blockSignals(TRUE);
-  mApplicability->setCurrentItem( a );
-  mApplicability->blockSignals(FALSE);
+      if ( aFilter->applyOnOutbound() )
+        a=1;
+      else
+        a=3;
+    mApplicability->blockSignals(TRUE);
+    mApplicability->setCurrentItem( a );
+    mApplicability->blockSignals(FALSE);
 
-  mStopProcessingHere->blockSignals(TRUE);
-  mStopProcessingHere->setChecked( aFilter->stopProcessingHere() );
-  mStopProcessingHere->blockSignals(FALSE);
+    mStopProcessingHere->blockSignals(TRUE);
+    mStopProcessingHere->setChecked( aFilter->stopProcessingHere() );
+    mStopProcessingHere->blockSignals(FALSE);
+
+    mActionLister->setActionList( aFilter->actions() );
+  
+    mAdvOptsGroup->setEnabled(TRUE);
+  }
 
   mPatternEdit->setSearchPattern( aFilter->pattern() );
-  mActionLister->setActionList( aFilter->actions() );
-  
-  mAdvOptsGroup->setEnabled(TRUE);
   mFilter = aFilter;
 }
 
 void KMFilterDlg::slotReset()
 {
   mFilter = 0;
-  mAdvOptsGroup->setEnabled(FALSE);
+	mPatternEdit->reset();
+
+	if(bPopFilter)
+	{
+		mActionGroup->reset();
+		mGlobalsBox->setEnabled(false);		  	
+	}
+	else
+	{
+		mActionLister->reset();
+		mAdvOptsGroup->setEnabled(FALSE);
+	}
 }
 
 void KMFilterDlg::slotApplicabilityChanged( int aOption )
@@ -237,8 +289,9 @@ void KMFilterDlg::slotStopProcessingButtonToggled( bool aChecked )
 //
 //=============================================================================
 
-KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const char* name )
-  : QGroupBox( 1, Horizontal, title, parent, name )
+KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const char* name, bool popFilter )
+  : QGroupBox( 1, Horizontal, title, parent, name ),
+    bPopFilter(popFilter)
 {
   mFilterList.setAutoDelete(TRUE);
   mIdxSelItem = -1;
@@ -304,7 +357,7 @@ void KMFilterListBox::createFilter( const QCString field, const QString value )
   KMSearchRule *newRule = new KMSearchRule();
   newRule->init( field, KMSearchRule::FuncContains, value );
   
-  KMFilter *newFilter = new KMFilter();
+  KMFilter *newFilter = new KMFilter(0, bPopFilter);
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( field ).arg( value) );
   
@@ -314,6 +367,11 @@ void KMFilterListBox::createFilter( const QCString field, const QString value )
 
   insertFilter( newFilter );
   enableControls();
+}
+
+bool KMFilterListBox::showLaterMsgs()
+{
+	return mShowLater;
 }
 
 void KMFilterListBox::slotUpdateFilterName()
@@ -340,6 +398,11 @@ void KMFilterListBox::slotUpdateFilterName()
   mListBox->blockSignals(FALSE);
 }
 
+void KMFilterListBox::slotShowLaterToggled(bool aOn)
+{
+  mShowLater = aOn;
+}
+
 void KMFilterListBox::slotApplyFilterChanges()
 {
   int oIdxSelItem = mIdxSelItem;
@@ -354,7 +417,11 @@ void KMFilterListBox::slotApplyFilterChanges()
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
 
-  KMFilterMgr *fm = kernel->filterMgr();
+  KMFilterMgr *fm;
+  if (bPopFilter)
+    fm = kernel->popFilterMgr();
+  else
+    fm = kernel->filterMgr();
 
   // block attemts to use filters (currently a no-op)
   fm->beginUpdate();
@@ -371,6 +438,8 @@ void KMFilterListBox::slotApplyFilterChanges()
       // the filter is invalid:
       delete f;
   }
+  if (bPopFilter)
+    fm->setShowLaterMsgs(mShowLater);
   
   // allow usage of the filters again.
   fm->endUpdate();
@@ -398,7 +467,7 @@ void KMFilterListBox::slotSelected( int aIdx )
 void KMFilterListBox::slotNew()
 {
   // just insert a new filter.
-  insertFilter( new KMFilter() );
+  insertFilter( new KMFilter(0, bPopFilter) );
   enableControls();
 }
 
@@ -517,7 +586,6 @@ void KMFilterListBox::enableControls()
 void KMFilterListBox::loadFilterList()
 {
   assert(mListBox);
-
   setEnabled(FALSE);
   // we don't want the insertion to
   // cause flicker in the edit widgets.
@@ -527,7 +595,18 @@ void KMFilterListBox::loadFilterList()
   mFilterList.clear();
   mListBox->clear();
 
-  QPtrListIterator<KMFilter> it( *kernel->filterMgr() );
+	QPtrList<KMFilter> *manager;
+  if(bPopFilter)
+	{
+    mShowLater = kernel->popFilterMgr()->showLaterMsgs();
+		manager = kernel->popFilterMgr();
+	}
+	else
+	{
+		manager = kernel->filterMgr();
+	}
+
+  QPtrListIterator<KMFilter> it( *manager );
   for ( it.toFirst() ; it.current() ; ++it ) {
     mFilterList.append( new KMFilter( *it ) ); // deep copy
     mListBox->insertItem( (*it)->pattern()->name() );
@@ -538,8 +617,11 @@ void KMFilterListBox::loadFilterList()
 
   // select topmost item
   if ( mListBox->count() )
+	{
     mListBox->setSelected( 0, TRUE );
-  else {
+	}
+  else
+	{
     emit resetWidgets();
     mIdxSelItem = -1;
   }
@@ -565,6 +647,7 @@ void KMFilterListBox::insertFilter( KMFilter* aFilter )
     mListBox->setSelected( mIdxSelItem, TRUE );
     //    slotSelected( mIdxSelItem );
   }
+
 }
 
 void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
@@ -585,7 +668,6 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 
   mIdxSelItem += movedOne - untouchedOne;
 }
-
 
 
 //=============================================================================
@@ -772,6 +854,65 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
       mActionList->append( a );
   }
     
+}
+
+//=============================================================================
+//
+// class KMPopFilterActionWidget
+//
+//=============================================================================
+
+KMPopFilterActionWidget::KMPopFilterActionWidget( const QString& title, QWidget *parent, const char* name )
+  : QVButtonGroup( title, parent, name )
+{
+  mActionMap[Down] = new QRadioButton( i18n("&Download mail"), this );
+  mActionMap[Later] = new QRadioButton( i18n("Download mail la&ter"), this );
+  mActionMap[Delete] = new QRadioButton( i18n("D&elete mail from server"), this );
+  mIdMap[id(mActionMap[Later])] = Later;
+  mIdMap[id(mActionMap[Down])] = Down;
+  mIdMap[id(mActionMap[Delete])] = Delete;
+
+  connect( this, SIGNAL(clicked(int)),
+	   this, SLOT( slotActionClicked(int)) );
+}
+
+void KMPopFilterActionWidget::setAction( KMPopFilterAction aAction )
+{
+  if( aAction == NoAction)
+  {
+    aAction = Later;
+  }
+
+  mAction = aAction;
+
+  blockSignals( true );
+  if(!mActionMap[aAction]->isChecked())
+  {
+    mActionMap[aAction]->setChecked(true);
+  }
+  blockSignals( false );
+
+  setEnabled(true);
+}
+
+KMPopFilterAction  KMPopFilterActionWidget::action()
+{
+  return mAction;
+}
+
+void KMPopFilterActionWidget::slotActionClicked(int aId)
+{
+  emit actionChanged(mIdMap[aId]);
+  setAction(mIdMap[aId]);
+}
+
+void KMPopFilterActionWidget::reset()
+{
+  blockSignals(TRUE);
+  mActionMap[Down]->setChecked( TRUE );
+  blockSignals(FALSE);
+
+  setEnabled( FALSE );
 }
 
 #include "kmfilterdlg.moc"

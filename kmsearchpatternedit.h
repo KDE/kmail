@@ -43,7 +43,7 @@ class KMSearchRuleWidget: public QHBox
 public:
   /** Constructor. You can give a @ref KMSearchRule as parameter, which will
       be used to initialize the widget. */
-  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0 );
+  KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false );
   
   /** Set the rule. The rule is accepted regardless of the return
       value of @ref KMSearchRule::isEmpty. This widget makes a shallow
@@ -77,7 +77,7 @@ protected:
 
 private:
   void initWidget();
-  void initLists() const;
+  void initLists(bool headersOnly) const;
   
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
@@ -92,7 +92,7 @@ class KMSearchRuleWidgetLister : public KWidgetLister
   friend class KMSearchPatternEdit;
 
 public:
-  KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0 );
+  KMSearchRuleWidgetLister( QWidget *parent=0, const char* name=0, bool headersOnly = false);
 
   virtual ~KMSearchRuleWidgetLister();
 
@@ -108,6 +108,7 @@ protected:
 private:
   void regenerateRuleListFromWidgets();
   QPtrList<KMSearchRule> *mRuleList;
+  bool mHeadersOnly;
 };
 
 
@@ -148,10 +149,10 @@ class KMSearchPatternEdit : public QGroupBox  {
 public: 
   /** Constructor. The parent and name parameters are passed to the underlying
       @ref QGroupBox, as usual. */
-  KMSearchPatternEdit(QWidget *parent=0, const char *name=0);
+  KMSearchPatternEdit(QWidget *parent=0, const char *name=0, bool headersOnly = false);
   /** Constructor. This one allows you to set a title different from
       i18n("Search Criteria"). */
-  KMSearchPatternEdit(const QString & title, QWidget *parent=0, const char *name=0);
+  KMSearchPatternEdit(const QString & title, QWidget *parent=0, const char *name=0, bool headersOnly = false);
   ~KMSearchPatternEdit();
   
   /** Set the search pattern. Rules are inserted regardless of the
@@ -175,7 +176,7 @@ private slots:
   void slotAutoNameHack(); 
 
 private:
-  void initLayout();
+  void initLayout( bool headersOnly );
 
   KMSearchPattern *mPattern;
   QRadioButton    *mAllRBtn, *mAnyRBtn;

@@ -462,7 +462,7 @@ void AccountDialog::makePopAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 16, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
@@ -511,28 +511,41 @@ void AccountDialog::makePopAccountPage()
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page1 );
   grid->addMultiCellWidget( mPop.excludeCheck, 8, 8, 0, 1 );
 
+  mPop.filterOnServerCheck =
+    new QCheckBox( i18n("Filter mail on server"), page1 );
+  grid->addMultiCellWidget( mPop.filterOnServerCheck, 9, 9, 0, 1 );
+  connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
+	   this, SLOT(slotEnableCheckSize(bool)) );
+  mPop.filterOnServerSizeLabel =
+    new QLabel( i18n("Size of messages to filter:"), page1 );
+  grid->addWidget(mPop.filterOnServerSizeLabel, 10, 0 );
+  mPop.filterOnServerSizeSpin = new KIntNumInput ( page1 );
+  mPop.filterOnServerSizeSpin->setRange( 1, 10000000, 100, FALSE );
+  mPop.filterOnServerSizeSpin->setValue( 50000 );
+  grid->addWidget(mPop.filterOnServerSizeSpin, 10, 1 );
+
   mPop.intervalCheck =
     new QCheckBox( i18n("Enable interval mail checking"), page1 );
-  grid->addMultiCellWidget( mPop.intervalCheck, 9, 9, 0, 1 );
+  grid->addMultiCellWidget( mPop.intervalCheck, 11, 11, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page1 );
-  grid->addWidget( mPop.intervalLabel, 10, 0 );
+  grid->addWidget( mPop.intervalLabel, 12, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
   mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mPop.intervalSpin->setValue( 1 );
-  grid->addWidget( mPop.intervalSpin, 10, 1 );
+  grid->addWidget( mPop.intervalSpin, 12, 1 );
 
   label = new QLabel( i18n("Destination folder:"), page1 );
-  grid->addWidget( label, 11, 0 );
+  grid->addWidget( label, 13, 0 );
   mPop.folderCombo = new QComboBox( false, page1 );
-  grid->addWidget( mPop.folderCombo, 11, 1 );
+  grid->addWidget( mPop.folderCombo, 13, 1 );
 
   label = new QLabel( i18n("Pre&command:"), page1 );
-  grid->addWidget( label, 12, 0 );
+  grid->addWidget( label, 14, 0 );
   mPop.precommand = new QLineEdit( page1 );
   label->setBuddy(mPop.precommand);
-  grid->addWidget( mPop.precommand, 12, 1 );
+  grid->addWidget( mPop.precommand, 14, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("&Extras") );
@@ -774,6 +787,8 @@ void AccountDialog::setupSettings()
     mPop.usePipeliningCheck->setChecked( ap.usePipelining() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
+    mPop.filterOnServerCheck->setChecked( ap.filterOnServer() );
+    mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
     mPop.intervalCheck->setChecked( interval >= 1 );
     mPop.intervalSpin->setValue( QMAX(1, interval) );
     mPop.excludeCheck->setChecked( mAccount->checkExclude() );
@@ -796,6 +811,7 @@ void AccountDialog::setupSettings()
     else mPop.authUser->setChecked( TRUE );
 
     slotEnablePopInterval( interval >= 1 );
+    slotEnableCheckSize( ap.filterOnServer() );
     folderCombo = mPop.folderCombo;
   }
   else if( accountType == "imap" )
@@ -1068,6 +1084,8 @@ void AccountDialog::saveSettings()
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
+    epa.setFilterOnServer( mPop.filterOnServerCheck->isChecked() );
+    epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
     epa.setPrecommand( mPop.precommand->text() );
     epa.setUseSSL( mPop.encryptionSSL->isChecked() );
     epa.setUseTLS( mPop.encryptionTLS->isChecked() );
@@ -1189,6 +1207,12 @@ void AccountDialog::slotEnablePopInterval( bool state )
 {
   mPop.intervalSpin->setEnabled( state );
   mPop.intervalLabel->setEnabled( state );
+}
+
+void AccountDialog::slotEnableCheckSize( bool state )
+{
+  mPop.filterOnServerSizeSpin->setEnabled( state );
+  mPop.filterOnServerSizeLabel->setEnabled( state );
 }
 
 void AccountDialog::slotEnableImapInterval( bool state )

@@ -106,6 +106,7 @@ public:
   inline KMUndoStack *undoStack() { return the_undoStack; }
   inline KMAcctMgr *acctMgr() { return the_acctMgr; }
   inline KMFilterMgr *filterMgr() { return the_filterMgr; }
+  inline KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   inline KMAddrBook *addrBook() { return the_addrBook; }
   KabAPI *KABaddrBook();
@@ -140,6 +141,7 @@ private:
   KMUndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;
   KMFilterMgr *the_filterMgr;
+  KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
   KMAddrBook *the_addrBook;
   KabAPI *the_KAB_addrBook;
