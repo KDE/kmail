@@ -1059,6 +1059,7 @@ void KMMainWidget::slotOverrideHtml()
       i18n( "Continue" ),
       "OverrideHtmlWarning", false);
     if( result == KMessageBox::Cancel ) {
+      mPreferHtmlAction->setChecked( false );
       return;
     }
   }
