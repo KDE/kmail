@@ -283,7 +283,7 @@ void KMMessage::setStatusFields(void)
 
   str[0] = (char)signatureState();
   str[1] = '\0';
-  qDebug( "Setting SignatureState header field to %c", str[0] );
+  kdDebug() << "Setting SignatureState header field to " << str[0] << endl;
   setHeaderField("X-KMail-SignatureState", str);
 
   // We better do the assembling ourselves now to prevent the

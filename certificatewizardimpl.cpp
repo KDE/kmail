@@ -25,7 +25,7 @@ CertificateWizardImpl::~CertificateWizardImpl()
  */
 void CertificateWizardImpl::slotCreatePSE()
 {
-    qWarning( "CertificateWizardImpl::slotCreatePSE() not yet implemented!" ); 
+    kdWarning() << "CertificateWizardImpl::slotCreatePSE() not yet implemented!" << endl;
 }
 
 

@@ -1646,7 +1646,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   // preprocess the body text
   QCString body = breakLinesAndApplyCodec();
 
-  qDebug( "***body = %s", body.data() );
+  kdDebug() << "***body = " << body << endl;
 
   if (body.isNull()) return Kpgp::Failure;
 
@@ -2192,8 +2192,7 @@ bool KMComposeWin::processStructuringInfo( const QString   bugURL,
                                            KMMessagePart&  resultingPart )
 {
 #ifdef DEBUG
-  QString ds( "||| entering KMComposeWin::processStructuringInfo()" );
-  qDebug( ds.utf8() );
+  kdDebug() << "||| entering KMComposeWin::processStructuringInfo()" << endl;
 #endif
   //assert(mMsg!=NULL);
   if(!mMsg)
@@ -2293,17 +2292,17 @@ bool KMComposeWin::processStructuringInfo( const QString   bugURL,
     mainDwPa.Parse();
     KMMessage::bodyPart(&mainDwPa, &resultingPart);
 /*
-qDebug("***************************************");
-qDebug("***************************************");
-qDebug("***************************************");
-qDebug(mainHeader);
-qDebug("***************************************");
-qDebug("***************************************");
-qDebug("***************************************");
-qDebug(resultingPart.additionalCTypeParamStr());
-qDebug("***************************************");
-qDebug("***************************************");
-qDebug("***************************************");
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << mainHeader << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << resultingPart.additionalCTypeParamStr() << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
 */
     if( ! structuring.data.makeMultiMime ) {
 
@@ -2420,11 +2419,11 @@ qDebug("***************************************");
         // store string representation of encoded cleartext
         codeCStr += "\n\n";
         codeCStr += codeKmPa.body();
-qDebug("***************************************");
-qDebug("***************************************");
-qDebug( codeCStr );
-qDebug("***************************************");
-qDebug("***************************************");
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << codeCStr << endl;
+kdDebug() << "***************************************" << endl;
+kdDebug() << "***************************************" << endl;
       } else {
 
         // Plugin error!
@@ -2527,10 +2526,7 @@ qDebug("***************************************");
   // but the convenient CryptPlugWrapper's StructuringInfoWrapper class.
 
 #ifdef DEBUG
-  ds = "||| leaving KMComposeWin::processStructuringInfo()\n||| returning: ";
-  ds += bOk ? "TRUE" : "FALSE";
-  ds += "\"\n\n";
-  qDebug( ds.utf8() );
+  kdDebug() << "||| leaving KMComposeWin::processStructuringInfo()\n||| returning: " << bOK << endl << endl;
 #endif
 
   return bOk;
@@ -2698,7 +2694,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         ds += "\nstructuring.flatTextPostfix:   \"";
         ds += structuring.data.flatTextPostfix;
         ds += "\"";
-        kdDebug(5006) << ds.utf8();
+        kdDebug(5006) << ds << endl;
 #endif
 
         // Check for expiry of the signer, CA, and Root certificate.
@@ -2835,8 +2831,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     ds += "\"\n\n";
                     ds += "signature length: ";
                     ds += cipherLen;
-                    ds += "\n\n";
-                    kdDebug(5006) << ds.utf8();
+                    kdDebug(5006) << ds << endl << endl;
                 }
                 signature.assign( ciphertext, cipherLen );
             } else {
@@ -2947,7 +2942,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                                                       false )
                           && (0 < certSize);
             kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-            qDebug( "findCertificates() 1st try returned %s", certificatePtr );
+            kdDebug() << "findCertificates() 1st try returned " << certificatePtr << endl;
             if( findCertsOk )
               certificateList.assign( certificatePtr, certSize );
           }
@@ -2978,7 +2973,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                                             false )
                             && (0 < certSize);
               kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-              qDebug( "findCertificates() 2nd try returned %s", certificatePtr );
+              kdDebug() << "findCertificates() 2nd try returned " << certificatePtr << endl;
               if( findCertsOk )
                 certificateList.assign( certificatePtr, certSize );
             } else {
@@ -3292,8 +3287,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   }
 
   // in case of an error we end up here
-  //qWarning(i18n("Error during PGP:") + QString("\n") +
-  //	  pgp->lastErrorMsg());
+  //kdWarning() << i18n("Error during PGP: ") << end << pgp->lastErrorMsg() << endl;
 
   return QCString();
 }

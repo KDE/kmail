@@ -76,7 +76,7 @@ void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( QListViewIt
 void CertificateHandlingDialogImpl::slotRequestChangedCertificate()
 {
     // PENDING(khz) Send change request to CA
-    qWarning( "CertificateHandlingDialogImpl::slotRequestChangedCertificate() not yet implemented!" );
+    kdWarning() << "CertificateHandlingDialogImpl::slotRequestChangedCertificate() not yet implemented!" << endl;
 }
 
 /*
@@ -85,7 +85,7 @@ void CertificateHandlingDialogImpl::slotRequestChangedCertificate()
 void CertificateHandlingDialogImpl::slotRequestExtendedCertificate()
 {
     // PENDING(khz) Send extension request CA
-    qWarning( "CertificateHandlingDialogImpl::slotRequestExtendedCertificate() not yet implemented!" );
+    kdWarning() << "CertificateHandlingDialogImpl::slotRequestExtendedCertificate() not yet implemented!" << endl;
 }
 
 /*
