@@ -110,6 +110,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
       } else {
 	  mChkbxAllFolders->setChecked(true);
       }
+      mFolder = searchFolder;
   }
   mPatternEdit->setSearchPattern( mSearchPattern );
   QObject *object = mPatternEdit->queryList( 0, "mRuleField" )->first();
@@ -349,22 +350,26 @@ void KMFldSearch::slotSearch()
 
     mLbxMatches->clear();
 
-    KMFolderMgr *mgr = kernel->searchFolderMgr();
-    QString baseName = "search";
-    QString fullName = baseName;
-    int count = 0;
-    KMFolder *folder;
-    while ((folder = mgr->find(fullName))) {
-	if (folder->inherits("KMFolderSearch"))
-	    break;
-	fullName = QString("%1 %2").arg(baseName).arg(++count);
+    // If we haven't openend an existing search folder, find or
+    // create one.
+    if (!mFolder) {
+      KMFolderMgr *mgr = kernel->searchFolderMgr();
+      QString baseName = "search";
+      QString fullName = baseName;
+      int count = 0;
+      KMFolder *folder;
+      while ((folder = mgr->find(fullName))) {
+        if (folder->inherits("KMFolderSearch"))
+          break;
+        fullName = QString("%1 %2").arg(baseName).arg(++count);
+      }
+
+      if (!folder)
+        folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
+            &mgr->dir());
+
+      mFolder = (KMFolderSearch*)folder;
     }
-
-    if (!folder)
-	folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
-				   &mgr->dir());
-
-    mFolder = (KMFolderSearch*)folder;
     mFolder->stopSearch();
     disconnect(mFolder, SIGNAL(msgAdded(int)),
 	    this, SLOT(slotAddMsg(int)));

@@ -485,7 +485,7 @@ QCString& KMFolderSearch::getMsgString(int idx, QCString& mDest)
 {
     KMFolder *folder = getMsgBase(idx)->parent();
     assert(folder);
-    return folder->getMsgString(idx, mDest);
+    return folder->getMsgString(folder->find(getMsgBase(idx)), mDest);
 }
 
 int KMFolderSearch::addMsg(KMMessage*, int* index_return)

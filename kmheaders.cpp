@@ -207,7 +207,7 @@ public:
 	tmp = headers->mDate.dateString( mMsgBase->date() );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
-        if (headers->folder()->protocol() == "imap")
+        if ( mMsgBase->parent()->folderType() == KMFolderTypeImap )
         {
           QCString cstr;
           headers->folder()->getMsgString(mMsgId, cstr);
@@ -215,7 +215,7 @@ public:
 	  if(a != -1) {
 	      int b = cstr.find('\n', a+11);
 	      tmp = KIO::convertSize(cstr.mid(a+11, b-a-11).toULong());
-	  }
+          }
         } else tmp = KIO::convertSize(mMsgBase->msgSize());
     }
     return tmp;
@@ -406,7 +406,7 @@ public:
     }
     else if (column == paintInfo->sizeCol) {
       QString len;
-      if (headers->folder()->protocol() == "imap")
+      if ( msg->parent()->folderType() == KMFolderTypeImap )
       {
         QCString cstr;
         headers->folder()->getMsgString(id, cstr);
