@@ -44,6 +44,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 : KDialogBase( parent, "FilterLogDlg", false, i18n( "KMail Filter Log Viewer" ),
               User1|Close, Close, true, i18n("C&lear") )
 {
+  setWFlags( WDestructiveClose );
   textEdit = new QTextEdit( this );
   setMainWidget( textEdit );
   textEdit->setReadOnly( true );
