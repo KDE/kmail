@@ -43,6 +43,7 @@ using namespace KPIM;
 #include <mimelib/mimepp.h>
 
 #include <stdlib.h>
+#include <errno.h>
 
 #if 0 //timing utilities
 #include <qdatetime.h>
