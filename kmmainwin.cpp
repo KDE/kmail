@@ -367,12 +367,13 @@ void KMMainWin::slotEmptyFolder()
     {
       while ((msg = mFolder->take(0)) != NULL)
 	trashFolder->addMsg(msg);
+      statusMsg(i18n("Moved all messages into trash"));
     }
     mFolder->close();
     mFolder->expunge();
     mHeaders->setFolder(mFolder);
     kbp->idle();
-    statusMsg(i18n("Moved all messages into trash"));
+
 //}
 }
 
@@ -570,7 +571,9 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
-  assert(msg != NULL);
+  //assert(msg != NULL);
+  if(msg == NULL)
+    return;
   mMsgView->setMsg(msg);
 }
 
@@ -603,6 +606,16 @@ void KMMainWin::slotCopyText()
   temp = mMsgView->copyText();
   app->clipboard()->setText(temp);
 }
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMarkAll() {
+
+  int i;
+  for(i = 0; i < mHeaders->numRows(); i++) 
+    mHeaders->markItem(i);
+
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlClicked(const char* aUrl, int)
@@ -840,6 +853,7 @@ void KMMainWin::setupMenuBar()
 			 SLOT(slotModifyFolder()));
   folderMenu->insertItem(i18n("C&ompact"), this, 
 			 SLOT(slotCompactFolder()));
+  folderMenu->insertSeparator();
   folderMenu->insertItem(i18n("&Empty"), this, 
 			 SLOT(slotEmptyFolder()));
   folderMenu->insertItem(i18n("&Remove"), this, 
@@ -876,6 +890,8 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
   messageMenu->insertSeparator();
+  messageMenu->insertItem(i18n("Mar&k all"), this, 
+			  SLOT(slotMarkAll()), Key_K);
   messageMenu->insertItem(i18n("&Move..."), this, 
 			  SLOT(slotMoveMsg()), Key_M);
   messageMenu->insertItem(i18n("&Copy..."), this, 

@@ -437,7 +437,7 @@ void KMHeaders::replyToMsg (int msgId)
 
   msg = getMsg(msgId);
   if (!msg) return;
-
+  
   kbp->busy();
   win = new KMComposeWin(msg->createReply(FALSE));
   win->show();

@@ -19,6 +19,7 @@ class KMMessage;
 class KMFolder;
 
 #define KMMainWinInherited KMTopLevelWidget
+
 class KMMainWin : public KMTopLevelWidget
 {
   Q_OBJECT
@@ -90,6 +91,7 @@ protected slots:
   void slotMsgPopup(const char* url, const QPoint&);
   void slotUrlClicked(const char* url, int button);
   void slotCopyText();
+  void slotMarkAll();
 
   /** etc. */
   void folderSelected(KMFolder*);

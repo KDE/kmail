@@ -1,3 +1,10 @@
+1998-06-20  Markus Wuebben  <markus@kde.org>
+
+	* kmsender.cpp (cleanup): Fixed the sendQueued problem.
+	If only one message from the outbox couldnt get sent all
+	following messages got deleted from the outbox. This is fixed now.
+	
+
 1998-06-19  Stefan Taferner  <taferner@kde.org> (KMail-0.7.6)
 
 	* Folder: fixed broken locking on systems without

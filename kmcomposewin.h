@@ -19,6 +19,7 @@
 #include <kmsgbox.h>
 #include "kmmsgpart.h"
 
+
 #include <qlined.h>
 #include "kmtopwidget.h"
 #ifdef HAS_KSPELL

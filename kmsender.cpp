@@ -256,7 +256,9 @@ void KMSender::cleanup(void)
   mSendInProgress = FALSE;
   sentFolder->close();
   outboxFolder->close();
-  if (outboxFolder->count()<=0) outboxFolder->expunge();
+  if (outboxFolder->count()<0) 
+    outboxFolder->expunge();
+
   else outboxFolder->compact();
 
   emit statusMsg(i18n("Done sending messages."));
