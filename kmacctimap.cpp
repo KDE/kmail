@@ -24,6 +24,7 @@
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
+#include "kmfiltermgr.h"
 
 #include <kmfolderimap.h>
 #include <kio/passdlg.h>
@@ -366,6 +367,7 @@ void KMAcctImap::displayProgress()
   {
     mProgressEnabled = !mapJobData.isEmpty();
     KMBroadcastStatus::instance()->setStatusProgressEnable( mProgressEnabled );
+    if (!mProgressEnabled) kernel->filterMgr()->cleanup();
   }
   mIdle = FALSE;
   if (mapJobData.isEmpty())

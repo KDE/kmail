@@ -10,6 +10,7 @@
 #include "kmundostack.h"
 #include "kmmsgdict.h"
 #include "kmidentity.h"
+#include "kmfiltermgr.h"
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -90,7 +91,6 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   readExpireAge = 14;
   readExpireUnits = expireNever;
   mRDict = 0;
-  kdDebug(5006) << "Created folder " << aName << endl;
 }
 
 
@@ -655,6 +655,7 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
     connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
       SLOT(reallyAddMsg(KMMessage*)));
     aMsg->setTransferInProgress(TRUE);
+    kernel->filterMgr()->tempOpenFolder(this);
     return FALSE;
   }
   return TRUE;

@@ -1748,6 +1748,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 
       if ((mFolder->protocol() == "imap") && !newMsg->isComplete())
       {
+        kernel->filterMgr()->tempOpenFolder(destFolder);
 	newMsg->setParent(msg->parent());
         KMImapJob *imapJob = new KMImapJob(newMsg);
         connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
