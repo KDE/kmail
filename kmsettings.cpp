@@ -281,12 +281,12 @@ void KMSettings::createTabIdentity(QWidget* parent)
   sigEdit = createLabeledEntry(tab, grid, i18n("Signature File:"),
 			       identity->signatureFile(), 4, 0, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
-  sigModify = createPushButton(tab, grid, i18n("&Edit Sig File..."),
+  sigModify = createPushButton(tab, grid, i18n("&Edit Signature File..."),
                                5, 0);
   connect(sigModify, SIGNAL(clicked()), this, SLOT(slotSigModify()));
 
   label = new QLabel(tab);
-  label->setText(i18n("Prepend sigfile with a | to specify a program."));
+  label->setText(i18n("(Prepend the signature file with a \"|\" to specify a program.)"));
   label->setMinimumSize(label->size());
   grid->addMultiCellWidget(label, 5, 5, 1, 1);
 
@@ -1626,3 +1626,4 @@ void KMAccountSettings::slotIntervalChange()
       mChkInt->setEnabled(true);
   } else mChkInt->setEnabled(false);
 }
+
