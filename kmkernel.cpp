@@ -828,6 +828,15 @@ void KMKernel::cleanupProgress()
 
 void KMKernel::cleanupLoop()
 {
+  QStringList cleanupMsgs;
+  cleanupMsgs << i18n("Cleaning up...")
+              << i18n("Emptying trash...")
+              << i18n("Expiring old messages...")
+              << i18n("Compacting folders...");
+  enum { CleaningUpMsgNo = 0,
+         EmptyTrashMsgNo = 1,
+         ExpiringOldMessagesMsgNo = 2,
+         CompactingFoldersMsgNo = 3 };
   mProgress = 0;
   mCleanupLabel = 0;
   mCleanupPopup = 0;
@@ -837,8 +846,20 @@ void KMKernel::cleanupLoop()
     mCleanupPopup = new KPassivePopup();
     QVBox *box = mCleanupPopup->standardView( kapp->aboutData()->programName(),
                                               QString::null, kapp->miniIcon());
-    mCleanupLabel = new QLabel( i18n("Cleaning up"), box );
+    mCleanupLabel = new QLabel( cleanupMsgs[CleaningUpMsgNo], box );
+    // determine the maximal width of the clean up messages
+    QFontMetrics fm = mCleanupLabel->fontMetrics();
+    int maxTextWidth = 0;
+    for( QStringList::ConstIterator it = cleanupMsgs.begin();
+         it != cleanupMsgs.end();
+         ++it ) {
+      int w;
+      if( maxTextWidth < ( w = fm.width( *it ) ) )
+        maxTextWidth = w;
+    }
+    
     mProgress = new KProgress( box, "kmail-cleanupProgress" );
+    mProgress->setMinimumWidth( maxTextWidth+20 );
     mCleanupPopup->setView( box );
 
     mProgress->setTotalSteps(nrFolders*2+2);
@@ -878,7 +899,7 @@ void KMKernel::cleanupLoop()
     {
       if (mCleanupLabel)
       {
-        mCleanupLabel->setText(i18n("Emptying trash..."));
+        mCleanupLabel->setText( cleanupMsgs[EmptyTrashMsgNo] );
         QApplication::syncX();
         kapp->processEvents();
       }
@@ -892,7 +913,7 @@ void KMKernel::cleanupLoop()
   if (expire) {
     if (mCleanupLabel)
     {
-       mCleanupLabel->setText(i18n("Expiring old messages..."));
+       mCleanupLabel->setText( cleanupMsgs[ExpiringOldMessagesMsgNo] );
        QApplication::syncX();
        kapp->processEvents();
     }
@@ -907,15 +928,19 @@ void KMKernel::cleanupLoop()
     {
       if (mCleanupLabel)
       {
-        mCleanupLabel->setText(i18n("Compacting folders..."));
+        mCleanupLabel->setText( cleanupMsgs[CompactingFoldersMsgNo] );
         QApplication::syncX();
         kapp->processEvents();
       }
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
     }
   }
-  if (mProgress)
-     mProgress->setProgress(2+2*nrFolders);
+  if (mProgress) {
+    mCleanupLabel->setText( cleanupMsgs[CleaningUpMsgNo] );
+    mProgress->setProgress(2+2*nrFolders);
+    QApplication::syncX();
+    kapp->processEvents();
+  }
 
   if (the_inboxFolder) the_inboxFolder->close(TRUE);
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
