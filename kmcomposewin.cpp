@@ -92,7 +92,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mMainWidget(this), 
   mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget), 
   mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget), 
-  mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget),
+  mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget, "subjectLine"),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget), 
@@ -1136,7 +1136,9 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in 
   // this function.
   QString fileName;
-  KFileDialog fdlg(".","*",this,NULL,TRUE);
+  QString path = QDir::currentDirPath();
+  
+  KFileDialog fdlg(path.data(),"*",this,NULL,TRUE);
 
   fdlg.setCaption(i18n("Attach File"));
   if (!fdlg.exec()) return;
@@ -1153,8 +1155,9 @@ void KMComposeWin::slotInsertFile()
 {
   QString fileName, str;
   int col, line;
-
-  KFileDialog fdlg(".", "*", this, NULL, TRUE);
+  QString path = QDir::currentDirPath();
+  
+  KFileDialog fdlg(path.data(), "*", this, NULL, TRUE);
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
@@ -1238,7 +1241,8 @@ void KMComposeWin::slotAttachSave()
 {
   KMMessagePart* msgPart;
   QString fileName, pname;
-
+  QString path = QDir::currentDirPath();
+  
   int idx = mAtmListBox->currentItem();
   if (idx < 0) return;
 
@@ -1246,7 +1250,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  fileName = KFileDialog::getSaveFileName(".", "*", NULL, pname);
+  fileName = KFileDialog::getSaveFileName(path.data(), "*", NULL, pname);
   if (fileName.isEmpty()) return;
   kStringToFile(msgPart->bodyDecoded(), fileName, TRUE);
 }
@@ -1798,8 +1802,10 @@ void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
 KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent, 
 		       const char *name): KMLineEditInherited(parent,name)
 {
+  QString Name(name);
   mComposer = composer;
-  connect (this, SIGNAL(completion()), this, SLOT(complete()));
+  if (Name != "subjectLine")
+    connect (this, SIGNAL(completion()), this, SLOT(complete()));
 }
 
 //-----------------------------------------------------------------------------
