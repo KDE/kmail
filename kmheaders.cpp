@@ -176,7 +176,7 @@ public:
 	tmp = QString( QChar( (char)mMsgBase->status() ));
 
     } else if(col == headers->paintInfo()->senderCol) {
-			if (qstricmp(headers->folder()->whoField(), "To")==0)
+      if (headers->folder()->whoField().lower() == QString::fromLatin1("To"))
         tmp = mMsgBase->toStrip();
       else
         tmp = mMsgBase->fromStrip();
@@ -381,7 +381,7 @@ public:
       }
     } else if (column == paintInfo->senderCol) {
       QString tmp;
-      if (qstricmp(headers->folder()->whoField(), "To")==0)
+      if (headers->folder()->whoField().lower() == "to")
         tmp = msg->toStrip();
       else
         tmp = msg->fromStrip();
@@ -917,7 +917,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     setFolderInfoStatus();
 
   QString colText = i18n( "Sender" );
-  if (mFolder && (qstricmp(mFolder->whoField(), "To")==0))
+  if (mFolder && (mFolder->whoField().lower() == QString::fromLatin1("To")))
     colText = i18n("Receiver");
   setColumnText( mPaintInfo.senderCol, colText);
 

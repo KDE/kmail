@@ -488,13 +488,12 @@ int KMFolderMbox::createIndexFromContents()
   char status[8], xstatus[8];
   QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
   QCString replyToIdStr, referencesStr, msgIdStr;
-  QString whoFieldName;
   bool atEof = FALSE;
   bool inHeader = TRUE;
   KMMsgInfo* mi;
   QString msgStr;
   QRegExp regexp(MSG_SEPERATOR_REGEX);
-  int i, num, numStatus, whoFieldLen;
+  int i, num, numStatus;
   short needStatus;
 
   quiet(TRUE);
@@ -517,10 +516,6 @@ int KMFolderMbox::createIndexFromContents()
   replyToIdStr = "";
   msgIdStr = "";
   needStatus = 3;
-  whoFieldName = QString(whoField()) + ':'; //unused (sven)
-  whoFieldLen = whoFieldName.length();      //unused (sven)
-
-  //kdDebug(5006) << "***whoField: " << //      (const char*)whoFieldName << " (" << whoFieldLen << ")" << endl;
 
   while (!atEof)
   {

@@ -320,7 +320,7 @@ public:
   virtual void headerOfMsgChanged(const KMMsgBase*, int idx = -1);
 
   /** Get / set the name of the field that is used for the Sender/Receiver column in the headers (From/To) */
-  const char* whoField() const { return mWhoField.latin1(); }
+  QString whoField() const { return mWhoField; }
   void setWhoField(const QString& aWhoField) { mWhoField = aWhoField; /*writeConfig();*/ }
 
   /** Get / set the user-settings for the WhoField (From/To/Empty) */

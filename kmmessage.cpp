@@ -1603,12 +1603,9 @@ void KMMessage::setDrafts(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::who(void) const
 {
-  const char* whoField;
-
-  if (mParent) whoField = mParent->whoField();
-  else whoField = "From";
-
-  return headerField(whoField);
+  if (mParent) 
+	return headerField(mParent->whoField().utf8());
+  return headerField("From");
 }
 
 
