@@ -51,7 +51,7 @@ static short msgSepLen = strlen(MSG_SEPERATOR_START);
 KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
   : KMFolderMboxInherited(aParent, aName)
 {
-  mStream         = NULL;
+  mStream         = 0;
   mFilesLocked    = FALSE;
   mLockType       = None;
 }
@@ -170,7 +170,7 @@ int KMFolderMbox::open()
 // ######### end of FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
       }
       QString str;
-      mIndexStream = NULL;
+      mIndexStream = 0;
       str = i18n("Folder `%1' changed. Recreating index.")
 		  .arg(name());
       emit statusMsg(str);
@@ -298,8 +298,8 @@ void KMFolderMbox::close(bool aForced)
     }
 
   mOpenCount   = 0;
-  mStream      = NULL;
-  mIndexStream = NULL;
+  mStream      = 0;
+  mIndexStream = 0;
   mFilesLocked = FALSE;
   mUnreadMsgs  = -1;
 
@@ -327,7 +327,7 @@ int KMFolderMbox::lock()
   fl.l_len=0;
   fl.l_pid=-1;
   QString cmd_str;
-  assert(mStream != NULL);
+  assert(mStream != 0);
   mFilesLocked = FALSE;
 
   switch( mLockType )
@@ -451,7 +451,7 @@ int KMFolderMbox::unlock()
   fl.l_len=0;
   QString cmd_str;
 
-  assert(mStream != NULL);
+  assert(mStream != 0);
   mFilesLocked = FALSE;
 
   switch( mLockType )
@@ -527,7 +527,7 @@ int KMFolderMbox::createIndexFromContents()
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
-  QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
+  QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
   QCString replyToIdStr, referencesStr, msgIdStr;
   bool atEof = FALSE;
   bool inHeader = TRUE;
@@ -538,7 +538,7 @@ int KMFolderMbox::createIndexFromContents()
   short needStatus;
 
   quiet(TRUE);
-  assert(mStream != NULL);
+  assert(mStream != 0);
   rewind(mStream);
 
   mMsgList.clear();
@@ -620,7 +620,7 @@ int KMFolderMbox::createIndexFromContents()
       if (line [i] < ' ' && line [i]>0) inHeader = FALSE;
       else if (lastStr) *lastStr += line + i;
     }
-    else lastStr = NULL;
+    else lastStr = 0;
 
     if (inHeader && (line [0]=='\n' || line [0]=='\r'))
       inHeader = FALSE;
@@ -721,8 +721,8 @@ KMMessage* KMFolderMbox::readMsg(int idx)
   QCString msgText;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
-  assert(mi!=NULL && !mi->isMessage());
-  assert(mStream != NULL);
+  assert(mi!=0 && !mi->isMessage());
+  assert(mStream != 0);
 
   msgSize = mi->msgSize();
   msgText.resize(msgSize+2);
@@ -746,8 +746,8 @@ QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
   unsigned long msgSize;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
-  assert(mi!=NULL);
-  assert(mStream != NULL);
+  assert(mi!=0);
+  assert(mStream != 0);
 
   msgSize = mi->msgSize();
   mDest.resize(msgSize+2);
@@ -833,7 +833,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   msgText.replace(QRegExp("\nFrom "),"\n>From ");
   size_t len = msgText.length();
 
-  assert(mStream != NULL);
+  assert(mStream != 0);
   clearerr(mStream);
   if (len <= 0)
   {
@@ -930,7 +930,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   // write index entry if desired
   if (mAutoCreateIndex)
   {
-    assert(mIndexStream != NULL);
+    assert(mIndexStream != 0);
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
     revert = ftell(mIndexStream);

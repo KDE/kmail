@@ -137,7 +137,7 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL) = 0;
+  virtual int addMsg(KMMessage* msg, int* index_return = 0) = 0;
 
   /** Returns FALSE, if the message has to be retrieved from an IMAP account
    * first. In this case this function does this and cares for the rest */
@@ -160,8 +160,8 @@ public:
     adds it to this folder. Returns zero on success and an errno error
     code on failure. The index of the new message is stored in index_return
     if given. */
-  virtual int moveMsg(KMMessage* msg, int* index_return = NULL);
-  virtual int moveMsg(QPtrList<KMMessage>, int* index_return = NULL);
+  virtual int moveMsg(KMMessage* msg, int* index_return = 0);
+  virtual int moveMsg(QPtrList<KMMessage>, int* index_return = 0);
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const KMMsgBase* msg) const { return mMsgList.find((KMMsgBase*)msg); }
@@ -280,7 +280,7 @@ public:
   virtual QCString protocol() const = 0;
 
   /** Returns TRUE if accounts are associated with this folder. */
-  bool hasAccounts() const { return (mAcctList != NULL); }
+  bool hasAccounts() const { return (mAcctList != 0); }
 
   /** Returns TRUE if this folder is associated with a mailing-list. */
   void setMailingList(bool enabled)
@@ -501,7 +501,7 @@ protected:
   /** Escape a leading dot */
   virtual QString dotEscape(const QString&) const;
 
-  /** Load message from file and store it at given index. Returns NULL
+  /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx) = 0;
 
@@ -509,7 +509,7 @@ protected:
   virtual bool readIndex();
 
   /** Read index header. Called from within readIndex(). */
-    virtual bool readIndexHeader(int *gv=NULL);
+    virtual bool readIndexHeader(int *gv=0);
 
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on
@@ -559,7 +559,7 @@ protected:
   bool mDirty;
   /** TRUE if the files of the folder are locked (writable) */
   bool mFilesLocked;
-  /** nationalized label or NULL (then name() should be used) */
+  /** nationalized label or QString::null (then name() should be used) */
   QString mLabel;
   /** name of the field that is used for "From" in listbox */
   QString mWhoField, mUserWhoField;

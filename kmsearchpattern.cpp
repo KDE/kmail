@@ -27,10 +27,10 @@ static int findInStrList(const char* strList[], const char* str)
 {
   int i;
 
-  //assert(strList != NULL);
+  //assert(strList != 0);
   if(!strList)
     {
-      kdDebug(5006) << "KMFilter::findInStrList() : strList == NULL\n" << endl;
+      kdDebug(5006) << "KMFilter::findInStrList() : strList == 0\n" << endl;
       return -1; // we return -1 here. Fake unsuccessfull search
     }
 
@@ -89,7 +89,7 @@ bool KMSearchRule::matches(const KMMessage* msg) const
   int numericalValue = 0;
   bool numerical = FALSE;
 
-  assert(msg != NULL); // This assert seems to be important
+  assert(msg != 0); // This assert seems to be important
 
   if( mField == "<message>" ) {
     // there's msg->asString(), but this way we can keep msg const (dnaber, 1999-05-27)

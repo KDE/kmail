@@ -13,7 +13,7 @@
 class QString;
 
 /** Load a file. Returns a pointer to the memory-block that contains
- * the loaded file. Returns a NULL string if the file could not be loaded.
+ * the loaded file. Returns a null string if the file could not be loaded.
  * If withDialogs is FALSE no warning dialogs are opened if there are
  * problems.
  * The string returned is always zero-terminated and therefore one

@@ -229,7 +229,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
     mAccount(account)
 {
-  mServerTest = NULL;
+  mServerTest = 0;
   setHelp("receiving-mail");
 
   QString accountType = mAccount->type();
@@ -262,7 +262,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 
 AccountDialog::~AccountDialog()
 {
-  if (mServerTest) delete mServerTest;
+  delete mServerTest;
 }
 
 void AccountDialog::makeLocalAccountPage()
@@ -985,7 +985,7 @@ void AccountDialog::slotImapEncryptionChanged(int id)
 
 void AccountDialog::slotCheckPopCapabilities()
 {
-  if (mServerTest) delete mServerTest;
+  delete mServerTest;
   mServerTest = new KMServerTest("pop3", mPop.hostEdit->text(),
     mPop.portEdit->text());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
@@ -996,7 +996,7 @@ void AccountDialog::slotCheckPopCapabilities()
 
 void AccountDialog::slotCheckImapCapabilities()
 {
-  if (mServerTest) delete mServerTest;
+  delete mServerTest;
   mServerTest = new KMServerTest("imap", mImap.hostEdit->text(),
     mImap.portEdit->text());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
@@ -1020,8 +1020,8 @@ void AccountDialog::slotPopCapabilities(const QStringList &list)
   mPop.authAPOP->setEnabled(list.findIndex("APOP") != -1);
   checkHighest(mPop.encryptionGroup);
   checkHighest(mPop.authGroup);
-  if (mServerTest) delete mServerTest;
-  mServerTest = NULL;
+  delete mServerTest;
+  mServerTest = 0;
 }
 
 
@@ -1039,8 +1039,8 @@ void AccountDialog::slotImapCapabilities(const QStringList &list)
   mImap.authAnonymous->setEnabled(list.findIndex("AUTH=ANONYMOUS") != -1);
   checkHighest(mImap.encryptionGroup);
   checkHighest(mImap.authGroup);
-  if (mServerTest) delete mServerTest;
-  mServerTest = NULL;
+  delete mServerTest;
+  mServerTest = 0;
 }
 
 
@@ -1141,7 +1141,7 @@ void AccountDialog::saveSettings()
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
-    mAccount->setFolder( NULL );
+    mAccount->setFolder( 0 );
 
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
     epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
@@ -1226,7 +1226,7 @@ void AccountDialog::slotLocationChooser()
   }
   if( url.isLocalFile() == false )
   {
-    KMessageBox::sorry( 0L, i18n( "Only local files are currently supported." ) );
+    KMessageBox::sorry( 0, i18n( "Only local files are currently supported." ) );
     return;
   }
 

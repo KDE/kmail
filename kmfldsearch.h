@@ -39,8 +39,8 @@ class KMFldSearch: public KDialogBase
   Q_OBJECT
 
 public:
-  KMFldSearch(KMMainWin* parent, const char* name=NULL,
-              KMFolder *curFolder=NULL, bool modal=FALSE);
+  KMFldSearch(KMMainWin* parent, const char* name=0,
+              KMFolder *curFolder=0, bool modal=FALSE);
   virtual ~KMFldSearch();
 
   void activateFolder(KMFolder* curFolder);

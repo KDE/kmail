@@ -138,6 +138,7 @@ void KMKernel::checkMail () //might create a new reader but won´t show!!
     mWin = new KMMainWin;
     mWin->slotCheckMail();
     delete mWin;
+    mWin = 0;
   }
 }
 
@@ -175,8 +176,10 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
     setCheckingMail(false);
   }
 
-  if (deleteWin)
+  if (deleteWin) {
     delete mWin;
+    mWin = 0;
+  }
 }
 
 void KMKernel::openReader()
@@ -340,14 +343,17 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
 int retval;
 QCString bericht;
-static QStringList *msgIds=NULL;
+static QStringList *msgIds=0;
 static QString      lastFolder="";
 bool readFolderMsgIds=false;
 
   //kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
 
   if (foldername!=lastFolder) {
-    if (msgIds!=NULL) { delete msgIds; }
+    if (msgIds!=0) {
+      delete msgIds;
+      msgIds = 0;
+    }
     msgIds=new QStringList;
     readFolderMsgIds=true;
     lastFolder=foldername;
@@ -370,7 +376,7 @@ bool readFolderMsgIds=false;
 
     KMFolder  *F=the_folderMgr->findOrCreate(foldername, FALSE);
 
-    if (F==NULL) { retval=-1; }
+    if (F==0) { retval=-1; }
     else {
 
       if (readFolderMsgIds) {int i;
@@ -416,7 +422,7 @@ bool readFolderMsgIds=false;
       if (k==-1) {
         if (msgId!="") { msgIds->append(msgId); }
         if (F->addMsg(M)==0) { retval=1; }
-        else { retval=-2;delete M; }
+        else { retval=-2;delete M; M = 0; }
       }
       else { retval=-4; }
     }
@@ -501,7 +507,7 @@ void KMKernel::testDir(const char *_name)
 
   c += _name;
   dp = opendir(c);
-  if (dp == NULL) ::mkdir(c, S_IRWXU);
+  if (dp == 0) ::mkdir(c, S_IRWXU);
   else closedir(dp);
 }
 
@@ -827,7 +833,7 @@ void KMKernel::cleanupLoop()
        kapp->flushX();
        kapp->processEvents();
     }
-    the_folderMgr->expireAllFolders(NULL);
+    the_folderMgr->expireAllFolders(0);
   }
 
   if (mProgress)
@@ -854,7 +860,7 @@ void KMKernel::cleanupLoop()
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
 
   delete the_msgDict;
-
+  the_msgDict = 0;
   delete the_folderMgr;
   the_folderMgr = 0;
   delete the_imapFolderMgr;

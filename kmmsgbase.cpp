@@ -286,7 +286,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 //-----------------------------------------------------------------------------
 QTextCodec* KMMsgBase::codecForName(const QCString& _str)
 {
-  if (_str.isEmpty()) return NULL;
+  if (_str.isEmpty()) return 0;
   return KGlobal::charsets()->codecForName(_str.lower());
 }
 
@@ -349,7 +349,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   {
     QString str = kernel->networkCodec()->toUnicode(aStr);
     if (str.find('\n') == -1) return str;
-    QString str2((QChar*)NULL, str.length());
+    QString str2((QChar*)0, str.length());
     uint i = 0;
     while (i < str.length())
     {
@@ -791,7 +791,7 @@ void swapEndian(QString &str)
 
 //-----------------------------------------------------------------------------
 static int g_chunk_length = 0, g_chunk_offset=0;
-static uchar *g_chunk = NULL;
+static uchar *g_chunk = 0;
 
 #define COPY_DATA(x, length) do { \
      if(g_chunk_offset + ((int)length) > g_chunk_length) {\
@@ -856,7 +856,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   }
   if(using_mmap) {
       g_chunk_length = 0;
-      g_chunk = NULL;
+      g_chunk = 0;
   }
   // Normally we need to swap the byte order because the QStrings are written
   // in the style of Qt2 (MSB -> network ordered).
@@ -978,7 +978,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
   }
   if(using_mmap) {
     g_chunk_length = 0;
-    g_chunk = NULL;
+    g_chunk = 0;
   }
   return ret;
 }
@@ -988,7 +988,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 const uchar *KMMsgBase::asIndexString(int &length) const
 {
   unsigned int csize = 256;
-  static uchar *ret = NULL; //different static buffer here for we may use the other buffer in the functions below
+  static uchar *ret = 0; //different static buffer here for we may use the other buffer in the functions below
   if(!ret)
     ret = (uchar *)malloc(csize);
   length = 0;

@@ -64,7 +64,7 @@ public:
     array.resize(size);
     for (int i = 0; i < size; i++)
       array.at(i) = 0;
-    fp = NULL;
+    fp = 0;
     swapByteOrder = false;
     baseOffset = 0;
   }

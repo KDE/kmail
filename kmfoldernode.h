@@ -29,13 +29,13 @@ public:
   virtual bool isDir(void) const;
   virtual void setDir(bool aDir) { mDir = aDir; }
 
-  /** Returns ptr to owning directory object or NULL if none. This
+  /** Returns ptr to owning directory object or 0 if none. This
     is just a wrapper for convenient access. */
   KMFolderDir* parent(void) const ;
   void setParent( KMFolderDir* aParent );
   //	{ return (KMFolderDir*)KMFolderNodeInherited::parent(); }
 
-  /** Returns full path to the directory where this node is stored or NULL
+  /** Returns full path to the directory where this node is stored or 0
    if the node has no parent. Example: if this object represents a folder
    ~joe/Mail/inbox then path() returns "/home/joe/Mail" and name() returns
    "inbox". */

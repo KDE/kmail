@@ -72,8 +72,8 @@ class KMEdit: public KEdit
 {
   Q_OBJECT
 public:
-  KMEdit(QWidget *parent=0L,KMComposeWin* composer=0L,
-	 const char *name=0L);
+  KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
+	 const char *name=0);
   virtual ~KMEdit();
 
   /**
@@ -124,8 +124,8 @@ class KMLineEdit : public KLineEdit
   Q_OBJECT
 
 public:
-  KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0L,
-             const char *name = 0L);
+  KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
+             const char *name = 0);
   virtual ~KMLineEdit();
 
   virtual void setFont( const QFont& );
@@ -516,7 +516,7 @@ protected:
    */
   void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString& labelStr, QLabel* lbl,
-				 QLineEdit* edt, QPushButton* btn=NULL);
+				 QLineEdit* edt, QPushButton* btn=0);
   void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString& labelStr, QLabel* lbl,
 				 QComboBox* cbx, QCheckBox *chk);

@@ -179,7 +179,7 @@ QString LinkLocator::convertToHtml(const QString& plainText, bool preserveBlanks
   locator.setMaxAddressLen(maxAddressLen);
 
   QString str;
-  QString result((QChar*)NULL, (int)locator.mText.length() * 2);
+  QString result((QChar*)0, (int)locator.mText.length() * 2);
   QChar ch;
   int x;
   bool startOfLine = true;

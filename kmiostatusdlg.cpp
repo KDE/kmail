@@ -10,7 +10,7 @@
 
 //-----------------------------------------------------------------------------
 KMIOStatusDlg::KMIOStatusDlg(const char* aCap):
-  KMIOStatusDlgInherited(NULL, aCap, TRUE)
+  KMIOStatusDlgInherited(0, aCap, TRUE)
 {
   int y, h, w;
 

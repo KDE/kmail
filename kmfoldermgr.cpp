@@ -67,7 +67,7 @@ void KMFolderMgr::expireAll() {
   }
      
   if (ret == KMessageBox::Continue) {
-    expireAllFolders(NULL);
+    expireAllFolders(0);
   }
     
 }
@@ -181,7 +181,7 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
     if (node->isDir() && foldersOnly) continue;
     if (node->name()==folderName) return (KMFolder*)node;
   }
-  return NULL;
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::remove(KMFolder* aFolder)
 {
-  assert(aFolder != NULL);
+  assert(aFolder != 0);
 
   emit removed(aFolder);
   removeFolderAux(aFolder);
@@ -261,7 +261,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder)
   aFolder->remove();
   aFolder->parent()->remove(aFolder);
   //  mDir.remove(aFolder);
-  if (kernel->filterMgr()) kernel->filterMgr()->folderRemoved(aFolder,NULL);
+  if (kernel->filterMgr()) kernel->filterMgr()->folderRemoved(aFolder,0);
 }
 
 void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
@@ -359,7 +359,7 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
  * Check each folder in turn to see if it is configured to
  * AutoExpire. If so, expire old messages.
  *
- * Should be called with NULL first time around.
+ * Should be called with 0 first time around.
  */
 void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
   KMFolderDir   *dir = adir ? adir : &mDir;

@@ -99,7 +99,7 @@ public:
   /** Set printing mode */
   virtual void setPrinting(bool enable) { mPrinting = enable; }
 
-  /** Set the message that shall be shown. If NULL, an empty page is
+  /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
 
@@ -257,7 +257,7 @@ signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
 
-  /** The user presses the right mouse button. 'url' may be NULL. */
+  /** The user presses the right mouse button. 'url' may be 0. */
   void popupMenu(KMMessage &msg, const KURL &url, const QPoint& mousePos);
 
   /** The user has clicked onto an URL that is no attachment. */
@@ -316,7 +316,7 @@ protected slots:
   void slotTouchMessage();
 
 protected:
-  /** Returns the current message or NULL if none. */
+  /** Returns the current message or 0 if none. */
   KMMessage* message(void) const;
 
   /** Watch for palette changes */

@@ -39,7 +39,7 @@ public:
   /** Adds an account to the list of accounts */
   virtual void add(KMAccount *account);
 
-  /** Find account by name. Returns NULL if account does not exist.
+  /** Find account by name. Returns 0 if account does not exist.
     Search is done case sensitive. */
   virtual KMAccount* find(const QString& name);
 

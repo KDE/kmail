@@ -28,7 +28,7 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
+  virtual int addMsg(KMMessage* msg, int* index_return = 0);
 
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
@@ -69,7 +69,7 @@ public:
   virtual QCString protocol() const { return "maildir"; }
 
 protected:
-  /** Load message from file and store it at given index. Returns NULL
+  /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx);
   

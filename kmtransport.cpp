@@ -169,8 +169,8 @@ KMTransportDialog::KMTransportDialog( const QString & caption,
 				      bool modal )
   : KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true )
 {
-  assert(transportInfo != NULL);
-  mServerTest = NULL;
+  assert(transportInfo != 0);
+  mServerTest = 0;
   mTransportInfo = transportInfo;
  
   if( transportInfo->type == QString::fromLatin1("sendmail") )
@@ -492,7 +492,7 @@ void KMTransportDialog::slotSendmailChooser()
  
     if( url.isLocalFile() == false )
     {
-      KMessageBox::sorry( 0L, i18n( "Only local files allowed." ) );
+      KMessageBox::sorry( 0, i18n( "Only local files allowed." ) );
       return;
     }
  
@@ -559,8 +559,8 @@ void KMTransportDialog::slotSmtpCapabilities(const QStringList & list)
   mSmtp.authDigestMd5->setEnabled(list.findIndex("DIGEST-MD5") != -1);
   checkHighest(mSmtp.encryptionGroup);
   checkHighest(mSmtp.authGroup);
-  if (mServerTest) delete mServerTest;
-  mServerTest = NULL;
+  delete mServerTest;
+  mServerTest = 0;
 }
 
 

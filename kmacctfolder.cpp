@@ -10,7 +10,7 @@
 KMAccount* KMAcctFolder::account(void)
 {
   if (mAcctList) return mAcctList->first();
-  return NULL;
+  return 0;
 }
 
 
@@ -18,7 +18,7 @@ KMAccount* KMAcctFolder::account(void)
 KMAccount* KMAcctFolder::nextAccount(void)
 {
   if (mAcctList) return mAcctList->next();
-  return NULL;
+  return 0;
 }
 
 
@@ -46,11 +46,11 @@ void KMAcctFolder::removeAccount(KMAccount* aAcct)
   if (!aAcct || !mAcctList) return;
 
   mAcctList->remove(aAcct);
-  aAcct->setFolder(NULL);
+  aAcct->setFolder(0);
   if (mAcctList->count() <= 0)
   {
     delete mAcctList;
-    mAcctList = NULL;
+    mAcctList = 0;
   }
 }
 

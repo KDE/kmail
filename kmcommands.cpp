@@ -1138,7 +1138,7 @@ void KMMoveCommand::execute()
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList, KMHeaders *headers )
 {
-  KMFolder* folder = NULL;
+  KMFolder* folder = 0;
   if (srcFolder->protocol() == "imap")
   {
     KMFolderImap* fi = static_cast<KMFolderImap*> (srcFolder);

@@ -425,7 +425,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotUpdateItems ( int current )
 {
-  KMFolder* selectedFolder = NULL;
+  KMFolder* selectedFolder = 0;
   // check if the index is valid (the top level has no entrance in the mFolders)
   if (current > 0) selectedFolder = *mFolders.at(current - 1);
   if (selectedFolder && selectedFolder->protocol() == "imap")
@@ -449,7 +449,7 @@ void KMFolderDialog::slotOk()
     QString acctName;
     QString fldName, oldFldName;
     KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
-    KMFolder *selectedFolder = NULL;
+    KMFolder *selectedFolder = 0;
     int curFolder = fileInFolder->currentItem();
 
     if (folder) oldFldName = folder->name();

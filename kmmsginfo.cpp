@@ -77,7 +77,7 @@ public:
 KMMsgInfo::KMMsgInfo(KMFolder* p, off_t off, short len) :
     KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown),
     mEncryptionState( KMMsgEncryptionStateUnknown ),
-    mSignatureState( KMMsgSignatureStateUnknown ), kd(NULL)
+    mSignatureState( KMMsgSignatureStateUnknown ), kd(0)
 {
     setIndexOffset(off);
     setIndexLength(len);
@@ -101,7 +101,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 	*kd = *other.kd;
     } else {
 	delete kd;
-	kd = NULL;
+	kd = 0;
     }
     mStatus = other.status();
     mEncryptionState = other.encryptionState();

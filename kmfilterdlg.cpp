@@ -508,7 +508,7 @@ void KMFilterListBox::slotApplyFilterChanges()
 void KMFilterListBox::slotSelected( int aIdx )
 {
   mIdxSelItem = aIdx;
-  // QPtrList::at(i) will return NULL if i is out of range.
+  // QPtrList::at(i) will return 0 if i is out of range.
   KMFilter *f = mFilterList.at(aIdx);
   if ( f )
     emit filterSelected( f );

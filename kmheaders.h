@@ -75,7 +75,7 @@ public:
   virtual void prepareMove( KMMsgBase **curMsg, int *contentX, int *contentY );
   virtual void finalizeMove( KMMsgBase *curMsg, int contentX, int contentY );
 
-  /** If destination==NULL the messages are deleted, otherwise
+  /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. */
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
 
@@ -83,7 +83,7 @@ public:
       If aMsg is set this one will be written to the destination folder. */
   virtual void copyMsgToFolder(KMFolder* destination,
                                int msgId=-1,
-                               KMMessage* aMsg = NULL);
+                               KMMessage* aMsg = 0);
 
  /** Returns list of selected messages or a list with the message with
     the given Id if msgId >= 0. Do not delete the returned list. */

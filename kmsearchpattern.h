@@ -157,7 +157,7 @@ public:
   /** Constructor that initializes from a given @ref KConfig group, if
       given. This feature is mainly (solely?) used in @ref KMFilter,
       as we don't allow to store search patterns in the config (yet).
-      If config is NULL, provides a pattern with minimal, but
+      If config is 0, provides a pattern with minimal, but
       sufficient initialization. Unmodified, such a pattern will fail
       to match any @ref KMMessage. You can query for such an empty
       rule by using @ref isEmpty, which is inherited from @ref
@@ -205,7 +205,7 @@ public:
   */
   virtual void readConfig( KConfig *config );
   /** Writes itself into @p config. The group has to be preset. Tries
-      to delete old-style keys by overwriting them with the NULL
+      to delete old-style keys by overwriting them with the null
       QString. 
 
       Derived classes reimplementing writeConfig() should also call this

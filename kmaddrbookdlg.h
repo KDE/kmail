@@ -26,7 +26,7 @@ public:
   KMAddrBookSelDlg(QWidget *parent, const QString& caption=QString::null);
   virtual ~KMAddrBookSelDlg();
 
-  /** returns selected address(es) or NULL if none was selected or the cancel
+  /** returns selected address(es) or 0 if none was selected or the cancel
     button was pressed. If multiple addresses were selected they
     are returned comma separated. */
   virtual QString address(void) const { return mAddress; }

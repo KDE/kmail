@@ -36,7 +36,7 @@ class KMMessage: public KMMsgBase
 
 public:
   /** Straight forward initialization. */
-  KMMessage(KMFolder* parent=NULL);
+  KMMessage(KMFolder* parent=0);
 
   /** Constructor from a DwMessage. */
   KMMessage(DwMessage*);
@@ -83,12 +83,12 @@ public:
   void setUnencryptedMsg( KMMessage* unencrypted );
   
   /** Returns TRUE is the massage contains an unencrypted copy of itself. */
-  virtual bool hasUnencryptedMsg() const { return NULL != mUnencryptedMsg; }
+  virtual bool hasUnencryptedMsg() const { return 0 != mUnencryptedMsg; }
   
-  /** Returns an unencrypted copy of this message or NULL if none exists. */
+  /** Returns an unencrypted copy of this message or 0 if none exists. */
   virtual KMMessage* unencryptedMsg() const { return mUnencryptedMsg; }
   
-  /** Returns an unencrypted copy of this message or NULL if none exists.
+  /** Returns an unencrypted copy of this message or 0 if none exists.
       \note This functions removed the internal unencrypted message pointer
       from the message: the process calling takeUnencryptedMsg() must
       delete the returned pointer when no longer needed.
@@ -96,7 +96,7 @@ public:
   virtual KMMessage* takeUnencryptedMsg()
   { 
     KMMessage* ret = mUnencryptedMsg;
-    mUnencryptedMsg = NULL;
+    mUnencryptedMsg = 0;
     return ret;
   }
   

@@ -3,7 +3,7 @@
 
 #include "kmrecentaddr.h"
 
-KMRecentAddresses * KMRecentAddresses::s_self = 0L;
+KMRecentAddresses * KMRecentAddresses::s_self = 0;
 
 KMRecentAddresses * KMRecentAddresses::self()
 {

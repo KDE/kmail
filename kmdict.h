@@ -37,7 +37,7 @@ public:
   /** Removes an item. */
   void remove(long key);
   
-  /** Find an item by key.  Returns pointer to it, or NULL if not found. */
+  /** Find an item by key.  Returns pointer to it, or 0 if not found. */
   KMDictItem *find(long key);
   
 protected:

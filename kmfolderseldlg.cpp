@@ -34,7 +34,7 @@ KMFolderSelDlg::KMFolderSelDlg(KMMainWin * parent, const QString& caption)
   int i = 0;
   while (mFolder.at(i) != mFolder.end()) {
     cur = *mFolder.at(i);
-    // cur will be NULL for accounts. Don't crash on that,
+    // cur will be 0 for accounts. Don't crash on that,
     // but ignore them for now.
     if(!cur)
       mListBox->item(i)->setSelectable(false);
@@ -66,7 +66,7 @@ KMFolder* KMFolderSelDlg::folder(void)
 {
   int idx = mListBox->currentItem();
 
-  if (idx < 0) return NULL;
+  if (idx < 0) return 0;
   return *mFolder.at(idx);
 }
 

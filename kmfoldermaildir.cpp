@@ -102,7 +102,7 @@ int KMFolderMaildir::open()
     if (KMFolder::IndexOk != indexStatus()) // test if contents file has changed
     {
       QString str;
-      mIndexStream = NULL;
+      mIndexStream = 0;
       str = i18n("Folder `%1' changed. Recreating index.")
 		  .arg(name());
       emit statusMsg(str);
@@ -217,7 +217,7 @@ void KMFolderMaildir::close(bool aForced)
     }
 
   mOpenCount   = 0;
-  mIndexStream = NULL;
+  mIndexStream = 0;
   mUnreadMsgs  = -1;
 
   mMsgList.reset(INIT_MSGS);
@@ -404,7 +404,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // write index entry if desired
   if (mAutoCreateIndex)
   {
-    assert(mIndexStream != NULL);
+    assert(mIndexStream != 0);
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
     off_t revert = ftell(mIndexStream);
@@ -488,7 +488,7 @@ QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
-  assert(mi!=NULL);
+  assert(mi!=0);
 
   QString abs_file(location() + "/cur/");
   abs_file += mi->fileName();
@@ -528,7 +528,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   char line[MAX_LINE];
   bool atEof    = false;
   bool inHeader = true;
-  QCString *lastStr = NULL;
+  QCString *lastStr = 0;
 
   QCString dateStr, fromStr, toStr, subjStr;
   QCString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
@@ -596,7 +596,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
           *lastStr += line + i;
     }
     else
-      lastStr = NULL;
+      lastStr = 0;
 
     if (inHeader && (line[0] == '\n' || line[0] == '\r'))
       inHeader = false;
@@ -777,12 +777,12 @@ KMMessage* KMFolderMaildir::take(int idx)
   // first, we do the high-level stuff.. then delete later
   KMMessage *msg = KMFolderMaildirInherited::take(idx);
 
-  if (!msg || !msg->fileName()) return NULL;
+  if (!msg || !msg->fileName()) return 0;
 
   if (removeFile(msg->fileName()))
     return msg;
   else
-    return NULL;
+    return 0;
 }
 
 bool KMFolderMaildir::removeFile(const QString& filename)
@@ -829,7 +829,7 @@ QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus 
 {
   if (aFileName.isEmpty())
   {
-    aFileName.sprintf("%ld.%d.", (long)time(NULL), getpid());
+    aFileName.sprintf("%ld.%d.", (long)time(0), getpid());
     aFileName += KApplication::randomString(5);
   }
 

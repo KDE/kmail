@@ -16,7 +16,7 @@ KBusyPtr :: KBusyPtr ()
   busyLevel  = 0;
   numCursors = 0;
   frameDelay = 500;
-  cursorList = NULL;
+  cursorList = 0;
   //animated   = TRUE;
   animated   = FALSE;
 
@@ -30,8 +30,8 @@ KBusyPtr :: KBusyPtr ()
 KBusyPtr :: ~KBusyPtr()
 {
   while (busyLevel) idle();
-  if (cursorList) delete[] cursorList;
-  cursorList = NULL;
+  delete[] cursorList;
+  cursorList = 0;
 }
 
 

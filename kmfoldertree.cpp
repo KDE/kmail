@@ -93,7 +93,7 @@ KMFolderTree::KMFolderTree( QWidget *parent,
 {
   oldSelected = 0;
   oldCurrent = 0;
-  mLastItem = NULL;
+  mLastItem = 0;
 
   addAcceptableDropMimetype("x-kmail-drag/message", false);
 
@@ -194,7 +194,7 @@ void KMFolderTree::createFolderList(QStringList *str,
         prefix += "  ";
       }
       str->append(prefix + fti->text(0));
-      if (fti->folder()->noContent()) folders->append(NULL);
+      if (fti->folder()->noContent()) folders->append(0);
       else folders->append(fti->folder());
     }
     ++it;
@@ -320,7 +320,7 @@ void KMFolderTree::updateUnreadAll()
 
   fdir = &kernel->folderMgr()->dir();
   for (folderNode = fdir->first();
-    folderNode != NULL;
+    folderNode != 0;
     folderNode =fdir->next())
   {
     if (!folderNode->isDir()) {
@@ -357,7 +357,7 @@ void KMFolderTree::reload(bool openFolders)
   int top = contentsY();
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
-  mLastItem = NULL;
+  mLastItem = 0;
   QListViewItemIterator it( this );
   while (it.current()) {
     fti = static_cast<KMFolderTreeItem*>(it.current());
@@ -378,7 +378,7 @@ void KMFolderTree::reload(bool openFolders)
 
   fdir = &kernel->imapFolderMgr()->dir();
   // each imap-account creates it's own root
-  addDirectory(fdir, NULL);
+  addDirectory(fdir, 0);
 
   if (openFolders)
   {
@@ -466,7 +466,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
   KMFolderTreeItem* fti;
 
   for (folderNode = fdir->first();
-       folderNode != NULL;
+       folderNode != 0;
        folderNode = fdir->next())
   {
     if (!folderNode->isDir()) {
@@ -575,7 +575,7 @@ void KMFolderTree::delayedUpdate()
 void KMFolderTree::doFolderListChanged()
 {
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
-  KMFolder* folder = (fti) ? fti->folder() : NULL;
+  KMFolder* folder = (fti) ? fti->folder() : 0;
   reload();
   QListViewItem *qlvi = indexOfFolder(folder);
   if (qlvi) {
@@ -1176,7 +1176,7 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
     } else {
         e->ignore();
         autoopen_timer.stop();
-        dropItem = 0L;
+        dropItem = 0;
     }
 }
 
@@ -1187,7 +1187,7 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
 
     autoopen_timer.stop();
     stopAutoScroll();
-    dropItem = 0L;
+    dropItem = 0;
 
     setCurrentItem( oldCurrent );
     if (oldSelected)
@@ -1247,7 +1247,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     } else
       e->ignore();
 
-    dropItem = 0L;
+    dropItem = 0;
 
     clearSelection();
     setCurrentItem( oldCurrent );

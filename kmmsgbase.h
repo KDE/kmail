@@ -66,7 +66,7 @@ typedef enum
 class KMMsgBase
 {
 public:
-  KMMsgBase(KMFolder* p=NULL);
+  KMMsgBase(KMFolder* p=0);
   virtual ~KMMsgBase();
 
   /** Convert the given message status to a string. */
@@ -171,7 +171,7 @@ public:
    * If keywordFound is specified it will be TRUE if a keyword was skipped
    * and FALSE otherwise. */
   static QString skipKeyword(const QString& str, QChar sepChar=':',
-				 bool* keywordFound=NULL);
+				 bool* keywordFound=0);
 
   /** Return a QTextCodec for the specified charset.
    * This function is a bit more tolerant, than QTextCodec::codecForName */

@@ -26,8 +26,8 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):
     headerIt(headersOnServer)
 {
   init();
-  job = 0L;
-  slave = 0L;
+  job = 0;
+  slave = 0;
   stage = Idle;
   indexOfCurrentMsg = -1;
   curMsgStrm = 0;
@@ -404,8 +404,8 @@ void KMAcctExpPop::slotAbortRequested()
           this, SLOT(slotAbortRequested()));
   stage = Quit;
   if (job) job->kill();
-  job = 0L;
-  slave = 0L;
+  job = 0;
+  slave = 0;
   slotCancel();
 }
 
@@ -726,9 +726,9 @@ void KMAcctExpPop::slotJobFinished() {
   }
   else if (stage == Quit) {
     kdDebug(5006) << "stage == Quit" << endl;
-    job = 0L;
+    job = 0;
     if (slave) KIO::Scheduler::disconnectSlave(slave);
-    slave = NULL;
+    slave = 0;
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( "P" + mName, 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
@@ -900,8 +900,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   else {
     stage = Idle;
     if (job) job->kill();
-    job = 0L;
-    slave = 0L;
+    job = 0;
+    slave = 0;
     KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
                           i18n("Invalid Response From Server"));
     return;
@@ -943,7 +943,7 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   const QString &errorMsg)
 {
   if (aSlave != slave) return;
-  if (error == KIO::ERR_SLAVE_DIED) slave = NULL;
+  if (error == KIO::ERR_SLAVE_DIED) slave = 0;
   if (interactive) {
     KMessageBox::error(0, KIO::buildErrorString(error, errorMsg));
   }

@@ -28,7 +28,7 @@ typedef struct _KATimeoutRec
 } KATimeoutRec;
 typedef KATimeoutRec* KATimeoutPtr;
 
-static KATimeoutPtr head = NULL;
+static KATimeoutPtr head = 0;
 static KAlarmTimerId idCounter = 1;
 
 #define ONE_SECOND 1000000
@@ -82,7 +82,7 @@ void KAlarmTimer :: internalTimerEvent (KAlarmTimerId id)
 {
   struct timeval tod;
 
-  gettimeofday(&tod,NULL);
+  gettimeofday(&tod,0);
 
   emit timeout(id);
   timerEvent();
@@ -111,7 +111,7 @@ void KAlarmTimeoutHandler(int)
 
   todo = head;
   head = head->next;
-  todo->next = NULL;
+  todo->next = 0;
 
   for (cur=head; cur; cur=next)
   {
@@ -141,7 +141,7 @@ void KAlarmTimeoutHandler(int)
     timerVal.it_value = head->time;
     timerVal.it_interval.tv_sec  = 0;
     timerVal.it_interval.tv_usec = 0;
-    setitimer (ITIMER_REAL, &timerVal, NULL);
+    setitimer (ITIMER_REAL, &timerVal, 0);
     dprintf ("next timeout #%ld in %s\n",head->id, time2str(timerVal.it_value));
   }
 }
@@ -156,7 +156,7 @@ static KAlarmTimerId KAlarmAddTimeout (KAlarmTimer* aObj, unsigned long aTime)
   timeVal.tv_sec  = (aTime>=1000 ? aTime/1000 : 0);
   timeVal.tv_usec = (aTime<1000  ? aTime : aTime%1000)*1000;
 
-  for (cur=head, last=NULL; cur; cur=cur->next)
+  for (cur=head, last=0; cur; cur=cur->next)
   {
     if ((cur->time.tv_sec  > timeVal.tv_sec) ||
 	(cur->time.tv_sec == timeVal.tv_sec &&
@@ -211,7 +211,7 @@ static KAlarmTimerId KAlarmAddTimeout (KAlarmTimer* aObj, unsigned long aTime)
     timerVal.it_value = newTR->time;
     timerVal.it_interval.tv_sec  = 0;
     timerVal.it_interval.tv_usec = 0;
-    setitimer (ITIMER_REAL, &timerVal, NULL);
+    setitimer (ITIMER_REAL, &timerVal, 0);
     dprintf ("starting timer for #%ld with %s\n", newTR->id,
 	    time2str(newTR->time));
   }

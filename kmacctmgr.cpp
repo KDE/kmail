@@ -183,7 +183,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 {
-  KMAccount* act = NULL;
+  KMAccount* act = 0;
 
   if (aType == "local")
     act = new KMAcctLocal(this, aName);
@@ -221,14 +221,14 @@ KMAccount* KMAcctMgr::find(const QString &aName)
 {
   KMAccount* cur;
 
-  if (aName.isEmpty()) return NULL;
+  if (aName.isEmpty()) return 0;
 
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
     if (cur->name() == aName) return cur;
   }
 
-  return NULL;
+  return 0;
 }
 
 
@@ -249,7 +249,7 @@ KMAccount* KMAcctMgr::next(void)
 //-----------------------------------------------------------------------------
 bool KMAcctMgr::remove(KMAccount* acct)
 {
-  //assert(acct != NULL);
+  //assert(acct != 0);
   if(!acct)
     return FALSE;
   mAcctList.remove(acct);

@@ -315,7 +315,7 @@ public:
       mergedpix = pixmapMerge( pixmaps );
       return &mergedpix;
     }
-    return NULL;
+    return 0;
   }
 
   void paintCell( QPainter * p, const QColorGroup & cg,
@@ -472,7 +472,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   //qInitImageIO();
   KImageIO::registerFormats();
   mOwner  = aOwner;
-  mFolder = NULL;
+  mFolder = 0;
   noRepaint = FALSE;
   getMsgIndex = -1;
   mTopItem = 0;
@@ -761,7 +761,7 @@ void KMHeaders::refreshNestedState(void)
 void KMHeaders::readFolderConfig (void)
 {
   KConfig* config = kapp->config();
-  assert(mFolder!=NULL);
+  assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
@@ -791,7 +791,7 @@ void KMHeaders::writeFolderConfig (void)
   KConfig* config = kapp->config();
   int mSortColAdj = mSortCol + 1;
 
-  assert(mFolder!=NULL);
+  assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
@@ -988,7 +988,7 @@ void KMHeaders::msgAdded(int id)
 
   mItems.resize( mFolder->count() );
   KMMsgBase* mb = mFolder->getMsgBase( id );
-  assert(mb != NULL); // otherwise using count() above is wrong
+  assert(mb != 0); // otherwise using count() above is wrong
 
   if (mNested != mNestedOverride) {
     QString msgId = mb->msgIdMD5();
@@ -1540,7 +1540,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
   if (!mFolder || msgId < -2)
   {
     getMsgIndex = -1;
-    return NULL;
+    return 0;
   }
 
   if (msgId >= 0)
@@ -1565,10 +1565,10 @@ KMMessage* KMHeaders::getMsg (int msgId)
 	break;
       }
 
-    return (getMsgIndex>=0 ? mFolder->getMsg(getMsgIndex) : (KMMessage*)NULL);
+    return (getMsgIndex>=0 ? mFolder->getMsg(getMsgIndex) : (KMMessage*)0);
   }
 
-  if (getMsgIndex < 0) return NULL;
+  if (getMsgIndex < 0) return 0;
 
   if (getMsgMulti)
   {
@@ -1584,7 +1584,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
 
   getMsgIndex = -1;
   getMsgItem = 0;
-  return NULL;
+  return 0;
 }
 
 
@@ -1828,15 +1828,15 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   }
   if (!item)
   {
-    emit selected( NULL ); return;
+    emit selected( 0 ); return;
   }
 
   int idx = item->msgId();
   KMMessage *msg = mFolder->getMsg(idx);
   if (!msg || msg->transferInProgress())
   {
-    emit selected( NULL );
-    mPrevCurrent = NULL;
+    emit selected( 0 );
+    mPrevCurrent = 0;
     return;
   }
 
@@ -2398,7 +2398,7 @@ bool KMHeaders::writeSortOrder()
 	} else if( i->nextSibling()) {
 	  i = i->nextSibling();
 	} else {
-	    for(i=NULL; !i && s.count(); i = s.pop()->nextSibling());
+	    for(i=0; !i && s.count(); i = s.pop()->nextSibling());
 	}
       }
     }
@@ -2507,10 +2507,10 @@ class KMSortCacheItem {
     KMSortCacheItem **mUnsortedChildren;
 
 public:
-    KMSortCacheItem() : mItem(NULL), mParent(NULL), mId(-1), mSortOffset(-1),
+    KMSortCacheItem() : mItem(0), mParent(0), mId(-1), mSortOffset(-1),
 	mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0) { }
     KMSortCacheItem(int i, QString k, int o=-1)
-	: mItem(NULL), mParent(NULL), mId(i), mSortOffset(o), mKey(k),
+	: mItem(0), mParent(0), mId(i), mSortOffset(o), mKey(k),
 	  mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0) { }
     ~KMSortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
@@ -2632,7 +2632,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
             if (sorted_count + discovered_count > mFolder->count()) { //sanity check
 		kdDebug(5006) << "Whoa.0! " << __FILE__ << ":" << __LINE__ << endl;
 		fclose(sortStream);
-		sortStream = NULL;
+		sortStream = 0;
 	    }
 	    else if ((threaded != (mNested != mNestedOverride)) ||
 	       sorted_count <= mFolder->count())  {
@@ -2648,7 +2648,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
 		KMSortCacheItem *item;
 		int id, len, parent, x;
-		QChar *tmp_qchar = NULL;
+		QChar *tmp_qchar = 0;
 		int tmp_qchar_len = 0;
 		const int mFolderCount = mFolder->count();
 		bool error = false;
@@ -2719,7 +2719,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		if (error || (x != sorted_count + discovered_count)) {// sanity check
 		    kdDebug(5006) << "Whoa: x " << x << ", sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", count " << mFolder->count() << endl;
 		    fclose(sortStream);
-		    sortStream = NULL;
+		    sortStream = 0;
 		}
 
 		if(tmp_qchar)
@@ -2728,16 +2728,16 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		SHOW_TIMER(parse);
 	    } else {
 		fclose(sortStream);
-		sortStream = NULL;
+		sortStream = 0;
 	    }
 	  }
 	  else {
 	      fclose(sortStream);
- 	      sortStream = NULL;
+ 	      sortStream = 0;
 	  }
 	} else {
 	    fclose(sortStream);
-	    sortStream = NULL;
+	    sortStream = 0;
 	}
     }
 
@@ -2754,7 +2754,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if((sorted_count + discovered_count) < mFolder->count()) {
 	CREATE_TIMER(holes);
 	START_TIMER(holes);
-	KMMsgBase *msg = NULL;
+	KMMsgBase *msg = 0;
 	for(int x = 0; x < mFolder->count(); x++) {
 	    if(!sortCache[x] && (msg=mFolder->getMsgBase(x))) {
 		int sortOrder = column;
@@ -2853,7 +2853,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    sortCache[x]->setItem(mItems[sortCache[x]->id()] = khi);
 	}
 	delete sortCache[x];
-	sortCache[x] = NULL;
+	sortCache[x] = 0;
     }
     END_TIMER(header_creation);
     SHOW_TIMER(header_creation);

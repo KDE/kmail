@@ -85,7 +85,7 @@ signals:
   /** Emitted when this widgets wants the edit widgets to let go of
       their filter reference. Everyone holding a reference to a filter
       should update it from the contents of the widgets used to edit
-      it and set their internal reference to NULL. */
+      it and set their internal reference to 0. */
   void resetWidgets();
 
 public slots:
@@ -171,7 +171,7 @@ public:
 
   /** Set an action. The action's type is determined and the
       corresponding widget it loaded with @p aAction's parameters and
-      then raised. If @ aAction is NULL, the widget is cleared. */
+      then raised. If @ aAction is 0, the widget is cleared. */
   void setAction( const KMFilterAction * aAction );
   /** Retrieve the action. This method is necessary because the type
       of actions can change during editing. Therefore the widget

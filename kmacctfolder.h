@@ -15,11 +15,11 @@ class KMAccount;
 class KMAcctFolder: public KMFolder
 {
 public:
-  /** Returns first account or NULL if no account is associated with this
+  /** Returns first account or 0 if no account is associated with this
       folder */
   KMAccount* account(void);
 
-  /** Returns next account or NULL if at the end of the list */
+  /** Returns next account or 0 if at the end of the list */
   KMAccount* nextAccount(void);
 
   /** Add given account to the list */

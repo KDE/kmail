@@ -77,7 +77,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
     mCheckingMail(false),
     mPrecommandSuccess(true)
 {
-  assert(aOwner != NULL);
+  assert(aOwner != 0);
 
   connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
@@ -109,8 +109,8 @@ void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 {
   if(!aFolder)
     {
-    kdDebug(5006) << "KMAccount::setFolder() : aFolder == NULL" << endl;
-    mFolder = NULL;
+    kdDebug(5006) << "KMAccount::setFolder() : aFolder == 0" << endl;
+    mFolder = 0;
     return;
     }
   mFolder = (KMAcctFolder*)aFolder;
@@ -123,7 +123,7 @@ void KMAccount::readConfig(KConfig& config)
 {
   QString folderName;
 
-  mFolder = NULL;
+  mFolder = 0;
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
@@ -172,7 +172,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
 {
   int rc, processResult;
 
-  assert(aMsg != NULL);
+  assert(aMsg != 0);
 
   // checks whether we should send delivery receipts
   // and sends them.
@@ -268,10 +268,8 @@ void KMAccount::installTimer()
 //-----------------------------------------------------------------------------
 void KMAccount::deinstallTimer()
 {
-  if(mTimer) {
-    delete mTimer;
-    mTimer = NULL;
-  }
+  delete mTimer;
+  mTimer = 0;
 }
 
 //-----------------------------------------------------------------------------

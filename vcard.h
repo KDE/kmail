@@ -144,7 +144,7 @@ class VCardLine {
       VCard *vc = VCard::parseVCard(string);
     </pre>
     where @p string contains the complete vcard.
-    On success, @p vc is different from @p NULL and refers to a valid VCard object.
+    On success, @p vc is different from @p 0 and refers to a valid VCard object.
 
     It should be possible to construct a VCard from scratch
     (using the primitives @p addLine() and
@@ -345,8 +345,8 @@ class VCard {
   ~VCard();
 
   /** this parses a vcard in a string and if it's valid, returns
-      a new VCard object, else returns NULL and sets err if it is not NULL */
-  static VCard *parseVCard(const QString& vc, int *err = NULL);
+      a new VCard object, else returns 0 and sets err if it is not 0 */
+  static VCard *parseVCard(const QString& vc, int *err = 0);
   static QString getError(int err);
   
   /** these add a new entry with a single value */

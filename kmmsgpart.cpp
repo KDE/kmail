@@ -125,7 +125,7 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
 
   mBodyDecodedSize = aBuf.size();
 
-  CharFreq cf( aBuf ); // save to pass NULL arrays...
+  CharFreq cf( aBuf ); // save to pass null arrays...
 
   switch ( cf.type() ) {
   case CharFreq::SevenBitText:
@@ -179,7 +179,7 @@ void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
 
   mBodyDecodedSize = aBuf.length();
 
-  CharFreq cf( aBuf.data(), mBodyDecodedSize ); // save to pass NULL strings
+  CharFreq cf( aBuf.data(), mBodyDecodedSize ); // save to pass null strings
 
   switch ( cf.type() ) {
   case CharFreq::SevenBitText:

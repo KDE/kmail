@@ -80,14 +80,14 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mTransferInProgress(false),
     mDecodeHTML(false),
     mCodec(0),
-    mUnencryptedMsg(NULL)
+    mUnencryptedMsg(0)
 {
 }
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg(0)
 {
-  mUnencryptedMsg = NULL;
+  mUnencryptedMsg = 0;
   assign( other );
 }
 
@@ -114,7 +114,7 @@ void KMMessage::assign( const KMMessage& other )
   if( other.hasUnencryptedMsg() )
     mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
   else
-    mUnencryptedMsg = NULL;
+    mUnencryptedMsg = 0;
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //mMsgSerNum = other.mMsgSerNum; // what about serial number ?
   //KMMsgBase::assign( &other );
@@ -164,7 +164,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
-  mCodec = NULL;
+  mCodec = 0;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
@@ -177,7 +177,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mDate    = 0;
   mFileName = "";
   mMsgSerNum = 0;
-  mUnencryptedMsg = NULL;
+  mUnencryptedMsg = 0;
 }
 
 
@@ -186,7 +186,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
-  mCodec = NULL;
+  mCodec = 0;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
@@ -200,7 +200,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mFileName = msgInfo.fileName();
   mMsgSerNum = msgInfo.getMsgSerNum();
   KMMsgBase::assign(&msgInfo);
-  mUnencryptedMsg = NULL;
+  mUnencryptedMsg = 0;
 }
 
 
@@ -770,7 +770,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       if( !parsedString.isEmpty() ) {
 
         Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-        assert(pgp != NULL);
+        assert(pgp != 0);
 
         QPtrList<Kpgp::Block> pgpBlocks;
         QStrList nonPgpBlocks;
@@ -845,7 +845,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     if( !parsedString.isEmpty() )
     {
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-      assert(pgp != NULL);
+      assert(pgp != 0);
       QString part;
 
       QPtrList<Kpgp::Block> pgpBlocks;
@@ -1493,7 +1493,7 @@ time_t KMMessage::date(void) const
 void KMMessage::setDateToday(void)
 {
   struct timeval tval;
-  gettimeofday(&tval, NULL);
+  gettimeofday(&tval, 0);
   setDate((time_t)tval.tv_sec);
 }
 
@@ -2092,7 +2092,7 @@ void KMMessage::setBodyAndGuessCte(const QByteArray& aBuf,
 {
   allowedCte.clear();
 
-  CharFreq cf( aBuf ); // save to pass NULL arrays...
+  CharFreq cf( aBuf ); // save to pass null arrays...
 
   switch ( cf.type() ) {
   case CharFreq::SevenBitText:
@@ -2142,7 +2142,7 @@ void KMMessage::setBodyAndGuessCte(const QCString& aBuf,
 {
   allowedCte.clear();
 
-  CharFreq cf( aBuf.data(), aBuf.length() ); // save to pass NULL strings
+  CharFreq cf( aBuf.data(), aBuf.length() ); // save to pass null strings
 
   switch ( cf.type() ) {
   case CharFreq::SevenBitText:

@@ -289,7 +289,8 @@ QValueList<QString> lines;
 
   if (_err != 0) {
     delete _vcdata;
-    return NULL;
+    _vcdata = 0;
+    return 0;
   }
 
   return new VCard(_vcdata);

@@ -35,12 +35,12 @@
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
 {
-  mPrecommand = NULL;
-  mSendDlg = NULL;
-  mSendProc = NULL;
+  mPrecommand = 0;
+  mSendDlg = 0;
+  mSendProc = 0;
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;
-  mCurrentMsg = NULL;
+  mCurrentMsg = 0;
   mTransportInfo = new KMTransportInfo();
   readConfig();
   mSendAborted = false;
@@ -113,7 +113,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 {
   int rc;
 
-  //assert(aMsg != NULL);
+  //assert(aMsg != 0);
   if(!aMsg)
     {
       return false;
@@ -198,7 +198,7 @@ bool KMSender::sendQueued(void)
   mTotalMessages = kernel->outboxFolder()->count();
   connect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
           this, SLOT(outboxMsgAdded()));
-  mCurrentMsg = NULL;
+  mCurrentMsg = 0;
 
   kernel->sentFolder()->open();
 
@@ -262,7 +262,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       if ( sentFolder == 0 )
         imapSentFolder = kernel->imapFolderMgr()->findIdString( id.fcc() );
     }
-    if (imapSentFolder && imapSentFolder->noContent()) imapSentFolder = NULL;
+    if (imapSentFolder && imapSentFolder->noContent()) imapSentFolder = 0;
 
     if ( sentFolder == 0 )
       sentFolder = kernel->sentFolder();
@@ -381,7 +381,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
         if (!mPrecommand->start())
         {
           delete mPrecommand;
-          mPrecommand = NULL;
+          mPrecommand = 0;
         }
         return;
       }
@@ -439,14 +439,14 @@ void KMSender::doSendMsgAux()
 void KMSender::cleanup(void)
 {
   if (mSendProc && mSendProcStarted) mSendProc->finish(true);
-  mSendProc = NULL;
+  mSendProc = 0;
   mSendProcStarted = FALSE;
   if (mSendInProgress) kapp->deref();
   mSendInProgress = FALSE;
   if (mCurrentMsg)
   {
     mCurrentMsg->setTransferInProgress( FALSE );
-    mCurrentMsg = NULL;
+    mCurrentMsg = 0;
   }
   disconnect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
              this, SLOT(outboxMsgAdded()));
@@ -470,15 +470,15 @@ void KMSender::cleanup(void)
 void KMSender::slotAbortSend()
 {
   mSendAborted = true;
-  if (mPrecommand) delete mPrecommand;
-  mPrecommand = NULL;
+  delete mPrecommand;
+  mPrecommand = 0;
   if (mSendProc) mSendProc->abort();
 }
 
 //-----------------------------------------------------------------------------
 void KMSender::slotIdle()
 {
-  assert(mSendProc != NULL);
+  assert(mSendProc != 0);
 
   if (!mSendAborted) {
       if (mSendProc->sendOk()) {
@@ -517,7 +517,7 @@ void KMSender::slotIdle()
 void KMSender::slotPrecommandFinished(bool normalExit)
 {
   delete mPrecommand;
-  mPrecommand = NULL;
+  mPrecommand = 0;
   if (normalExit) mSendProc->start();
   else slotIdle();
 }
@@ -571,7 +571,7 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
   if (mTransportInfo->type == "smtp")
     return new KMSendSMTP(this);
 
-  return NULL;
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -756,13 +756,13 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
 KMSendSendmail::KMSendSendmail(KMSender* aSender):
   KMSendSendmailInherited(aSender)
 {
-  mMailerProc = NULL;
+  mMailerProc = 0;
 }
 
 //-----------------------------------------------------------------------------
 KMSendSendmail::~KMSendSendmail()
 {
-  if (mMailerProc) delete mMailerProc;
+  delete mMailerProc;
 }
 
 //-----------------------------------------------------------------------------
@@ -787,7 +787,7 @@ void KMSendSendmail::start(void)
   if (!mMailerProc)
   {
     mMailerProc = new KProcess;
-    assert(mMailerProc != NULL);
+    assert(mMailerProc != 0);
     connect(mMailerProc,SIGNAL(processExited(KProcess*)),
 	    this, SLOT(sendmailExited(KProcess*)));
     connect(mMailerProc,SIGNAL(wroteStdin(KProcess*)),
@@ -802,7 +802,7 @@ void KMSendSendmail::start(void)
 bool KMSendSendmail::finish(bool destructive)
 {
   delete mMailerProc;
-  mMailerProc = NULL;
+  mMailerProc = 0;
   if (destructive)
     	deleteLater(); 
   return TRUE;
@@ -811,8 +811,8 @@ bool KMSendSendmail::finish(bool destructive)
 //-----------------------------------------------------------------------------
 void KMSendSendmail::abort()
 {
-  if (mMailerProc) delete mMailerProc;
-  mMailerProc = NULL;
+  delete mMailerProc;
+  mMailerProc = 0;
   mSendOk = false;
   mMsgStr = 0;
   idle();
@@ -861,7 +861,7 @@ void KMSendSendmail::wroteStdin(KProcess *proc)
   char* str;
   int len;
 
-  assert(proc!=NULL);
+  assert(proc!=0);
 
   str = mMsgPos;
   len = (mMsgRest>1024 ? 1024 : mMsgRest);
@@ -884,7 +884,7 @@ void KMSendSendmail::wroteStdin(KProcess *proc)
 //-----------------------------------------------------------------------------
 void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 {
-  assert(proc!=NULL);
+  assert(proc!=0);
   mMsg.replace(mMsg.length(), buflen, buffer);
 }
 
@@ -892,7 +892,7 @@ void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 //-----------------------------------------------------------------------------
 void KMSendSendmail::sendmailExited(KProcess *proc)
 {
-  assert(proc!=NULL);
+  assert(proc!=0);
   mSendOk = (proc->normalExit() && proc->exitStatus()==0);
   if (!mSendOk) failed(i18n("Sendmail exited abnormally."));
   mMsgStr = 0;
@@ -903,7 +903,7 @@ void KMSendSendmail::sendmailExited(KProcess *proc)
 //-----------------------------------------------------------------------------
 bool KMSendSendmail::addOneRecipient(const QString& aRcpt)
 {
-  assert(mMailerProc!=NULL);
+  assert(mMailerProc!=0);
   if (!aRcpt.isEmpty()) *mMailerProc << aRcpt;
   return TRUE;
 }
@@ -932,7 +932,7 @@ KMSendSMTP::~KMSendSMTP()
 bool KMSendSMTP::send(KMMessage *aMsg)
 {
   KMTransportInfo *ti = mSender->transportInfo();
-  assert(aMsg != NULL);
+  assert(aMsg != 0);
 
   // email this is from
   mQuery = QString("headers=0&from=%1")
@@ -1094,7 +1094,7 @@ void KMSendSMTP::result(KIO::Job *_job)
   if(_job->error())
   {
     mSendOk = false;
-    if (_job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    if (_job->error() == KIO::ERR_SLAVE_DIED) mSlave = 0;
     failed(_job->errorString());
     abort();
   } else {
@@ -1106,9 +1106,9 @@ void KMSendSMTP::slaveError(KIO::Slave *aSlave, int error, const QString &errorM
 {
   if (aSlave == mSlave)
   {
-    if (error == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    if (error == KIO::ERR_SLAVE_DIED) mSlave = 0;
     mSendOk = false;
-    mJob = NULL;
+    mJob = 0;
     failed(KIO::buildErrorString(error, errorMsg));
     abort();
   }

@@ -17,7 +17,7 @@
 //=============================================================================
 //=============================================================================
 KMFolderRootDir::KMFolderRootDir(const QString& path, bool imap):
-  KMFolderDir(NULL, path, imap)
+  KMFolderDir(0, path, imap)
 {
   setPath(path);
 }
@@ -79,7 +79,7 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
     fld = new KMFolderMaildir(this, aFolderName);
   else
     fld = new KMFolderMbox(this, aFolderName);
-  assert(fld != NULL);
+  assert(fld != 0);
 
   fld->setSystemFolder(aSysFldr);
 
@@ -89,7 +89,8 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
     QString wmsg = i18n("Error while creating file `%1':\n%2").arg(aFolderName).arg(strerror(rc));
     KMessageBox::information(0,wmsg );
     delete fld;
-    return NULL;
+    fld = 0;
+    return 0;
   }
 
   KMFolderNode* fNode;

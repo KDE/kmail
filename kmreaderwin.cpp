@@ -2369,7 +2369,7 @@ void KMReaderWin::showHideMimeTree( bool showIt )
 void KMReaderWin::parseMsg(void)
 {
   KMMessage *msg = message();
-  if ( msg == NULL )
+  if ( msg == 0 )
     return;
 
   if( mMimePartTree )
@@ -3167,7 +3167,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   QByteArray str;
   partNode* savedRootNode = 0;
 
-  assert(aMsg!=NULL);
+  assert(aMsg!=0);
 
   type = aMsg->typeStr();
   numParts = aMsg->numBodyParts();
@@ -3345,7 +3345,7 @@ kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
     NewByteArray decryptedData;
     // note: The following call may change the message's headers.
     objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
-    // add a NULL to the data
+    // add a \0 to the data
     decryptedData.appendNULL();
     QCString resultString( decryptedData.data() );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
@@ -3897,7 +3897,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         // temporary hack: allways show key infos!
         showKeyInfos = true;
 
-        // Sorry for using 'black' as NULL color but .isValid()
+        // Sorry for using 'black' as null color but .isValid()
         // checking with QColor default c'tor did not work for
         // some reason.
         if( isSMIME && (SIG_FRAME_COL_UNDEF != frameColor) ) {
@@ -4204,7 +4204,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
   QString signClass;
   bool goodSignature = false;
   Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-  assert(pgp != NULL);
+  assert(pgp != 0);
   bool isPgpMessage = false; // true if the message contains at least one
                              // PGP MESSAGE or one PGP SIGNED MESSAGE block
   QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
@@ -4434,8 +4434,8 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
   QString iconName, href, label, comment, contDisp;
   QString fileName;
 
-  if(aMsgPart == NULL) {
-    kdDebug(5006) << "writePartIcon: aMsgPart == NULL\n" << endl;
+  if(aMsgPart == 0) {
+    kdDebug(5006) << "writePartIcon: aMsgPart == 0\n" << endl;
     return;
   }
 
@@ -4776,7 +4776,7 @@ void KMReaderWin::slotToggleFixedFont()
 void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 {
   KMMessage* msg = new KMMessage;
-  assert(aMsgPart!=NULL);
+  assert(aMsgPart!=0);
 
   msg->fromString(aMsgPart->bodyDecoded());
   emit showAtmMsg(msg);
@@ -4810,7 +4810,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
     if (partTypeStr == "message")
     {               // if called from compose win
       KMMessage* msg = new KMMessage;
-      assert(aMsgPart!=NULL);
+      assert(aMsgPart!=0);
       msg->fromString(aMsgPart->bodyDecoded());
       win->setCaption(msg->subject());
       win->setMsg(msg, true);
@@ -4828,7 +4828,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
           QString errstring = i18n("Error reading in vCard:\n");
 	  errstring += VCard::getError(vcerr);
           kernel->kbp()->idle();
-	  KMessageBox::error(NULL, errstring, i18n("vCard error"));
+	  KMessageBox::error(0, errstring, i18n("vCard error"));
 	  return;
 	}
 

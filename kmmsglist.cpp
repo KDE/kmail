@@ -76,7 +76,7 @@ bool KMMsgList::resize(int aSize)
 
   // initialize new elements
   for (i=oldSize; i<aSize; i++)
-    KMMsgListInherited::at(i) = NULL;
+    KMMsgListInherited::at(i) = 0;
 
   return TRUE;
 }
@@ -179,7 +179,7 @@ void KMMsgList::remove(int idx)
     KMMsgListInherited::at(i) = KMMsgListInherited::at(i+1);
   }
   
-  KMMsgListInherited::at(mHigh) = NULL;
+  KMMsgListInherited::at(mHigh) = 0;
 
   rethinkHigh();
 }

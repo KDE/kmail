@@ -48,7 +48,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   KMAcctImapInherited(aOwner, aAccountName)
 {
   init();
-  mSlave = NULL;
+  mSlave = 0;
   mTotal = 0;
   mFolder = 0;
   mCountUnread = 0;
@@ -105,7 +105,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   mIdleTimer.stop();
   killAllJobs();
   if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
-  mSlave = NULL;
+  mSlave = 0;
   if (mFolder)
   {
     mFolder->setContentState(KMFolderImap::imapNoInformation);
@@ -273,7 +273,7 @@ void KMAcctImap::initJobData(jobData &jd)
 {
   jd.total = 1;
   jd.done = 0;
-  jd.parent = NULL;
+  jd.parent = 0;
   jd.quiet = FALSE;
   jd.inboxOnly = FALSE;
 }
@@ -429,7 +429,7 @@ void KMAcctImap::slotIdleTimeout()
   if (mIdle)
   {
     if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
-    mSlave = NULL;
+    mSlave = 0;
     mIdleTimer.stop();
   } else {
     if (mSlave)
@@ -473,7 +473,7 @@ void KMAcctImap::killAllJobs()
   if (mSlave && mapJobData.begin() != mapJobData.end())
   {
     mSlave->kill();
-    mSlave = NULL;
+    mSlave = 0;
   }
   // remove the jobs
   mapJobData.clear();

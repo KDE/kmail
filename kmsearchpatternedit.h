@@ -48,8 +48,8 @@ public:
   /** Set the rule. The rule is accepted regardless of the return
       value of @ref KMSearchRule::isEmpty. This widget makes a shallow
       copy of @p aRule and operates directly on it. If @p aRule is
-      NULL, resets itself, taks user input, but does essentially
-      nothing. If your pass NULL, you should probably disable it. */
+      0, resets itself, taks user input, but does essentially
+      nothing. If you pass 0, you should probably disable it. */
   void setRule( KMSearchRule* aRule );
   /** Return a reference to the currently worked-on @ref KMSearchRule. */
   KMSearchRule* rule() const;
@@ -127,7 +127,7 @@ private:
 
     To set the widget according to a given @ref KMSearchPattern, use
     @ref setSearchPattern; to initialize it (e.g. for a new, virgin
-    rule), use @ref setSearchPattern with a NULL argument. The widget
+    rule), use @ref setSearchPattern with a 0 argument. The widget
     operates directly on a shallow(!) copy of the search rule. So
     while you actually don't really need @ref searchPattern, because
     you can always store a pointer to the current pattern yourself,

@@ -41,8 +41,8 @@ class KMImapJob : public QObject
 public:
   enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
     tGetMessage, tPutMessage, tCopyMessage };
-  KMImapJob(KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = NULL);
-  KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = NULL );
+  KMImapJob(KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0);
+  KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   ~KMImapJob();
   static void ignoreJobsForMessage(KMMessage *msg);
 signals:
@@ -174,7 +174,7 @@ public:
   void getUids(QValueList<int>& ids, QValueList<int>& uids);
  
   /** same as above but accepts a Message-List */
-  void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent = NULL);
+  void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent = 0);
 
   /**
    * Expunge deleted messages from the folder
@@ -235,8 +235,8 @@ public slots:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
-  int addMsg(QPtrList<KMMessage>&, int* index_return = NULL);
+  virtual int addMsg(KMMessage* msg, int* index_return = 0);
+  int addMsg(QPtrList<KMMessage>&, int* index_return = 0);
 
   /** Copy the messages to this folder */
   void copyMsg(QPtrList<KMMessage>& msgList/*, KMFolder* parent*/);

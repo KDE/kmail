@@ -190,7 +190,7 @@ void SimpleStringListEditor::slotAdd() {
 }
 
 void SimpleStringListEditor::slotRemove() {
-  delete findSelectedItem( mListBox ); // delete NULL is well-behaved...
+  delete findSelectedItem( mListBox ); // delete 0 is well-behaved...
 }
 
 void SimpleStringListEditor::slotModify() {
@@ -262,7 +262,7 @@ void SimpleStringListEditor::slotSelectionChanged() {
   // try to find a selected item:
   QListBoxItem * item = findSelectedItem( mListBox );
 
-  // if there is one, item will be non-null (ie. true), else NULL
+  // if there is one, item will be non-null (ie. true), else 0
   // (ie. false):
   if ( mRemoveButton )
     mRemoveButton->setEnabled( item );

@@ -40,7 +40,7 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
   if (!mSlave)
   {
-    slotSlaveResult(NULL, 1);
+    slotSlaveResult(0, 1);
     return;
   }
   
@@ -89,7 +89,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   if (error != KIO::ERR_SLAVE_DIED && mSlave)
   {
     KIO::Scheduler::disconnectSlave(mSlave);
-    mSlave = NULL;
+    mSlave = 0;
   }
   if (mFirstTry)
   {
@@ -100,7 +100,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
     if (!mSlave)
     {
-      slotSlaveResult(NULL, 1);
+      slotSlaveResult(0, 1);
       return;
     }
 
@@ -118,7 +118,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
               SLOT(slotData(KIO::Job *, const QString &)));
     }
   } else {
-    mJob = NULL;
+    mJob = 0;
     if (!error) mList.append("SSL");
     if (mList.isEmpty())
       KMessageBox::error(0, i18n("Could not connect to server %1")

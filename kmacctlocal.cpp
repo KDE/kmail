@@ -99,7 +99,7 @@ void KMAcctLocal::processNewMail(bool)
     }
   }
 
-  KMFolderMbox mailFolder(NULL, location());
+  KMFolderMbox mailFolder(0, location());
   mailFolder.setLockType( mLock );
   if ( mLock == procmail_lockfile)
     mailFolder.setProcmailLockFileName( mProcmailLockFileName );

@@ -128,15 +128,15 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   //setWFlags( WType_TopLevel | WStyle_Dialog );
   mDone = false;
-  mGrid = NULL;
-  mAtmListBox = NULL;
+  mGrid = 0;
+  mAtmListBox = 0;
   mAtmList.setAutoDelete(TRUE);
   mAtmTempList.setAutoDelete(TRUE);
   mAtmModified = FALSE;
   mAutoDeleteMsg = FALSE;
-  mFolder = NULL;
+  mFolder = 0;
   bAutoCharset = TRUE;
-  fixedFontAction = NULL;
+  fixedFontAction = 0;
   mEditor = new KMEdit(mMainWidget, this);
   mEditor->setTextFormat(Qt::PlainText);
   disableBreaking = false;
@@ -224,7 +224,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
     mEditor->setExternalEditorPath(mExtEditor);
   }
 
-  mMsg = NULL;
+  mMsg = 0;
   bccMsgList.setAutoDelete( false );
   if (aMsg)
     setMsg(aMsg);
@@ -243,7 +243,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
          "<li><em>or</em> specify traditional OpenPGP settings on the same dialog's "
          "Identity->Advanced tab.</li></ul>");
   
-  if(getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != NULL){
+  if(getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != 0){
     QCString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
     mDebugComposerCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
     kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE" << endl;
@@ -265,7 +265,10 @@ KMComposeWin::~KMComposeWin()
     mFolder->addMsg(mMsg);
     emit messageQueuedOrDrafted();
   }
-  if (mAutoDeleteMsg && mMsg) delete mMsg;
+  if (mAutoDeleteMsg) {
+    delete mMsg;
+    mMsg = 0;
+  }
   QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.begin();
   while ( it != mapAtmLoadData.end() )
   {
@@ -442,6 +445,7 @@ void KMComposeWin::readConfig(void)
         mCustHeaders.append(thisItem);
       } else {
         delete thisItem;
+        thisItem = 0;
       }
     }
   }
@@ -644,7 +648,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   numRows = mNumHeaders + 2;
 
-  if (mGrid) delete mGrid;
+  delete mGrid;
   mGrid = new QGridLayout(mMainWidget, numRows, 3, 4, 4);
   mGrid->setColStretch(0, 1);
   mGrid->setColStretch(1, 100);
@@ -1135,10 +1139,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   KMMessagePart bodyPart, *msgPart;
   int i, num;
 
-  //assert(newMsg!=NULL);
+  //assert(newMsg!=0);
   if(!newMsg)
     {
-      kdDebug(5006) << "KMComposeWin::setMsg() : newMsg == NULL!\n" << endl;
+      kdDebug(5006) << "KMComposeWin::setMsg() : newMsg == 0!\n" << endl;
       return;
     }
   mMsg = newMsg;
@@ -1321,10 +1325,10 @@ bool KMComposeWin::applyChanges(void)
   QString str, atmntStr;
   QString temp, replyAddr;
 
-  //assert(mMsg!=NULL);
+  //assert(mMsg!=0);
   if(!mMsg)
   {
-    kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == NULL!\n" << endl;
+    kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
     return FALSE;
   }
 
@@ -1387,7 +1391,7 @@ bool KMComposeWin::applyChanges(void)
 
   _StringPair *pCH;
   for (pCH  = mCustHeaders.first();
-       pCH != NULL;
+       pCH != 0;
        pCH  = mCustHeaders.next()) {
     mMsg->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
   }
@@ -1784,6 +1788,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     body +=                 "\n";
     body += innerDwPart->AsString().c_str();
     delete innerDwPart;
+    innerDwPart = 0;
     // add all matching Attachments
     // NOTE: This code will be changed when KMime is complete.
     int idx;
@@ -1802,6 +1807,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
         body +=                   "\n";
         body += innerDwPart->AsString().c_str();
         delete innerDwPart;
+        innerDwPart = 0;
       }
     }
     body += "\n--";
@@ -1827,6 +1833,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
       dwPart->Assemble();
       encodedBody = dwPart->AsString().c_str();
       delete dwPart;
+      dwPart = 0;
 
       // manually add a boundary definition to the Content-Type header
       if( !boundaryCStr.isEmpty() ) {
@@ -1987,7 +1994,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
   Kpgp::Result result = Kpgp::Ok;
   if(!msg)
   {
-    kdDebug(5006) << "KMComposeWin::encryptMessage() : msg == NULL!\n" << endl;
+    kdDebug(5006) << "KMComposeWin::encryptMessage() : msg == 0!\n" << endl;
     return Kpgp::Failure;
   }
 
@@ -2003,6 +2010,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
       dwPart->Assemble();
       innerContent = dwPart->AsString().c_str();
       delete dwPart;
+      dwPart = 0;
     } else
       innerContent = encodedBody;
 
@@ -2125,6 +2133,7 @@ kdDebug(5006) << "                                 processing " << idx << ". att
             innerDwPart->Assemble();
             QCString encodedAttachment = innerDwPart->AsString().c_str();
             delete innerDwPart;
+            innerDwPart = 0;
 
             if( (0 <= mSelectedCryptPlug->libName().find( "smime",   0, false )) ||
                 (0 <= mSelectedCryptPlug->libName().find( "openpgp", 0, false )) ) {
@@ -2166,6 +2175,7 @@ kdDebug(5006) << "                                 sign " << idx << ". attachmen
                     dwPart->Assemble();
                     encodedAttachment = dwPart->AsString().c_str();
                     delete dwPart;
+                    dwPart = 0;
                   }
                 } else
                     KMessageBox::sorry(this, mErrorProcessingStructuringInfo );
@@ -2273,10 +2283,10 @@ bool KMComposeWin::processStructuringInfo( const QString   bugURL,
 #ifdef DEBUG
   kdDebug() << "||| entering KMComposeWin::processStructuringInfo()" << endl;
 #endif
-  //assert(mMsg!=NULL);
+  //assert(mMsg!=0);
   if(!mMsg)
   {
-    kdDebug(5006) << "KMComposeWin::processStructuringInfo() : mMsg == NULL!\n" << endl;
+    kdDebug(5006) << "KMComposeWin::processStructuringInfo() : mMsg == 0!\n" << endl;
     return FALSE;
   }
 
@@ -2416,6 +2426,7 @@ kdDebug() << "***************************************" << endl;
         tmpDwPa->Headers().Assemble();
         clearCStr = tmpDwPa->Headers().AsString().c_str();
         delete tmpDwPa;
+        tmpDwPa = 0;
         // store string representation of encoded cleartext
         clearKmPa.setBodyEncoded( cleartext );
         clearCStr += clearKmPa.body();
@@ -2634,7 +2645,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
     if (mCharset == "us-ascii") {
       cText = KMMsgBase::toUsAscii(text);
       newText = QString::fromLatin1(cText);
-    } else if (codec == NULL) {
+    } else if (codec == 0) {
       kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
       cText = text.local8Bit();
       newText = QString::fromLocal8Bit(cText);
@@ -2649,7 +2660,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
       QString oldText = mEditor->text();
       mEditor->setText(newText);
       kernel->kbp()->idle();
-      bool anyway = (KMessageBox::warningYesNo(0L,
+      bool anyway = (KMessageBox::warningYesNo(0,
       i18n("<qt>Not all characters fit into the chosen"
       " encoding.<br><br>Send the message anyway?</qt>"),
       i18n("Some characters will be lost"),
@@ -3001,6 +3012,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
             // we do NOT call a "delete ciphertext" !
             // since "signature" will take care for it (is a QByteArray)
             delete errTxt;
+            errTxt = 0;
         }
     }
 
@@ -3179,6 +3191,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                   .arg( error ) );
       }
       delete errTxt;
+      errTxt = 0;
     }
 
     // we do NOT delete the "ciphertext" !
@@ -3461,7 +3474,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
     if (mCharset == "us-ascii") {
       cText = KMMsgBase::toUsAscii(text);
       newText = QString::fromLatin1(cText);
-    } else if (codec == NULL) {
+    } else if (codec == 0) {
       kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
       cText = text.local8Bit();
       newText = QString::fromLocal8Bit(cText);
@@ -3476,7 +3489,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       QString oldText = mEditor->text();
       mEditor->setText(newText);
       kernel->kbp()->idle();
-      bool anyway = (KMessageBox::warningYesNo(0L,
+      bool anyway = (KMessageBox::warningYesNo(0,
       i18n("Not all characters fit into the chosen"
       " encoding.\nSend the message anyway?"),
       i18n("Some Characters Will Be Lost"),
@@ -3614,7 +3627,7 @@ QString KMComposeWin::prettyMimeType( const QString& type )
 void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
                                  KMAtmListViewItem *lvi)
 {
-  assert(msgPart != NULL);
+  assert(msgPart != 0);
 
   if (!msgPart->fileName().isEmpty())
     lvi->setText(0, msgPart->fileName());
@@ -3694,10 +3707,10 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
   KMAddrBookSelDlg dlg(this);
   QString txt;
 
-  //assert(aLineEdit!=NULL);
+  //assert(aLineEdit!=0);
   if(!aLineEdit)
     {
-      kdDebug(5006) << "KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n" << endl;
+      kdDebug(5006) << "KMComposeWin::addrBookSelInto() : aLineEdit == 0\n" << endl;
       return;
     }
   if (dlg.exec()==QDialog::Rejected) return;
@@ -3897,6 +3910,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     dlg.setMsgPart(msgPart);
     if (!dlg.exec()) {
       delete msgPart;
+      msgPart = 0;
       return;
     }
   }
@@ -3911,10 +3925,10 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KFileDialog fdlg(QString::null, QString::null, this, NULL, TRUE);
+  KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
   fdlg.setCaption(i18n("Insert File"));
   fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(FALSE), 4711,
-    false, NULL, NULL, NULL);
+    false, 0, 0, 0);
   KComboBox *combo = fdlg.toolBar()->getCombo(4711);
   for (int i = 0; i < combo->count(); i++)
     if (KGlobal::charsets()->codecForName(KGlobal::charsets()->
@@ -3987,7 +4001,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   if (armoredKey.isEmpty())
   {
     kernel->kbp()->idle();
-    KMessageBox::sorry( 0L, i18n("Unable to obtain your public key.") );
+    KMessageBox::sorry( 0, i18n("Unable to obtain your public key.") );
     return;
   }
 
@@ -4039,7 +4053,7 @@ void KMComposeWin::slotInsertPublicKey()
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
   } else {
-    KMessageBox::sorry( 0L, i18n( "Unable to obtain the selected public key." ) );
+    KMessageBox::sorry( 0, i18n( "Unable to obtain the selected public key." ) );
   }
 }
 
@@ -4133,7 +4147,7 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname,
+  KMReaderWin::atmView(0, msgPart, false, atmTempFile->name(), pname,
     KMMsgBase::codecForName(mCharset));
 }
 
@@ -4294,7 +4308,7 @@ void KMComposeWin::slotNewComposer()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotNewMailReader()
 {
-  KMMainWin *kmmwin = new KMMainWin(NULL);
+  KMMainWin *kmmwin = new KMMainWin(0);
   kmmwin->show();
   //d->resize(d->size());
 }
@@ -4466,7 +4480,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 	imapDraftsFolder = kernel->imapFolderMgr()->findIdString( mMsg->drafts() );
     }
     if (imapDraftsFolder && imapDraftsFolder->noContent())
-      imapDraftsFolder = NULL;
+      imapDraftsFolder = 0;
 
     if ( draftsFolder == 0 ) {
       draftsFolder = kernel->draftsFolder();
@@ -4524,7 +4538,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   KMRecentAddresses::self()->add( to() );
 
   mAutoDeleteMsg = FALSE;
-  mFolder = NULL;
+  mFolder = 0;
   close();
   return true;
 }
@@ -4600,7 +4614,7 @@ void KMComposeWin::slotAppendSignature()
     }
     if( !url.isLocalFile() )
     {
-      KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
+      KMessageBox::sorry( 0, i18n( "Only local files are supported." ) );
       return;
     }
     QString sigFileName = url.path();
@@ -4608,7 +4622,7 @@ void KMComposeWin::slotAppendSignature()
     if ( ident.signatureIsCommand() && !qfi.isExecutable() )
     {
       // ### Commented out due to msg freeze (remove comment and underscores):
-      //KMessageBox::sorry( 0L, _i_1_8_n_( "%1 is not executable." ).arg( url.path() ) );
+      //KMessageBox::sorry( 0, _i_1_8_n_( "%1 is not executable." ).arg( url.path() ) );
       return;
     }
     ident.setSignatureFile(sigFileName);
@@ -4899,7 +4913,7 @@ void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 		mFolder = kernel->draftsFolder();
 		kdDebug(5006) << "restoring drafts to " << mFolder->idString() << endl;
 	}
-	if (mMsg) mMsg->setParent(NULL);
+	if (mMsg) mMsg->setParent(0);
 }
 
 
@@ -5011,7 +5025,7 @@ bool KMAtmListViewItem::isSign()
 //
 //=============================================================================
 
-KCompletion * KMLineEdit::s_completion = 0L;
+KCompletion * KMLineEdit::s_completion = 0;
 bool KMLineEdit::s_addressesDirty = false;
 
 KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
@@ -5404,10 +5418,10 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
 
   extEditor = false;     // the default is to use ourself
 
-  mKSpell = NULL;
+  mKSpell = 0;
   mSpellingFilter = 0;
-  mTempFile = NULL;
-  mExtEditorProcess = NULL;
+  mTempFile = 0;
+  mExtEditorProcess = 0;
 }
 
 
@@ -5417,8 +5431,8 @@ KMEdit::~KMEdit()
 
   removeEventFilter(this);
 
-  if (mKSpell) delete mKSpell;
-
+  delete mKSpell;
+  mKSpell = 0;
 }
 
 
@@ -5487,11 +5501,11 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
               SLOT(slotExternalEditorDone(KProcess*)));
       if (!mExtEditorProcess->start())
       {
-        KMessageBox::error(NULL, i18n("Unable to start external editor."));
+        KMessageBox::error(0, i18n("Unable to start external editor."));
         delete mExtEditorProcess;
+        mExtEditorProcess = 0;
         delete mTempFile;
-        mExtEditorProcess = NULL;
-        mTempFile = NULL;
+        mTempFile = 0;
       }
 
       return TRUE;
@@ -5546,9 +5560,10 @@ void KMEdit::slotExternalEditorDone(KProcess* proc)
   setAutoUpdate(true);
   repaint();
   delete proc;
+  proc = 0;
   delete mTempFile;
-  mTempFile = NULL;
-  mExtEditorProcess = NULL;
+  mTempFile = 0;
+  mExtEditorProcess = 0;
 }
 
 

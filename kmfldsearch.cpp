@@ -56,7 +56,7 @@ const int KMFldSearch::MSGID_COLUMN = 4;
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
                          KMFolder *curFolder, bool modal):
-  KDialogBase(NULL, name, modal, i18n("Search in Folders"),
+  KDialogBase(0, name, modal, i18n("Search in Folders"),
               User1 | User2 | Close, User1, false,
               KGuiItem( i18n("&Search"), "find" ),
               KGuiItem( i18n("S&top"), "cancel" )),
@@ -335,7 +335,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
   {
     if (fastMode)
     {
-      found = searchInMessage(NULL, aFld->getMsgString(i, cStr));
+      found = searchInMessage(0, aFld->getMsgString(i, cStr));
       if (found)
       {
         unget = !aFld->isMessage(i);
@@ -589,8 +589,8 @@ void KMFldSearch::enableGUI()
 KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
                                  int aRow, int aCol)
 {
-  assert(aParent!=NULL);
-  assert(aGrid!=NULL);
+  assert(aParent!=0);
+  assert(aGrid!=0);
 
   mRow = aRow;
   mCbxField = new KComboBox(true, aParent);

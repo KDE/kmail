@@ -912,7 +912,7 @@ void NetworkPage::SendingTab::slotTransportUp()
 
   // swap in the transportInfo list:
   // ### FIXME: use value-based list. This is ugly.
-  KMTransportInfo *ti, *ti2 = NULL;
+  KMTransportInfo *ti, *ti2 = 0;
   int i = 0;
   for (ti = mTransportInfoList.first(); ti;
     ti2 = ti, ti = mTransportInfoList.next(), i++)
@@ -948,7 +948,7 @@ void NetworkPage::SendingTab::slotTransportDown()
   QListViewItem * below = item->itemBelow();
   if ( !below ) return;
 
-  KMTransportInfo *ti, *ti2 = NULL;
+  KMTransportInfo *ti, *ti2 = 0;
   int i = 0;
   for (ti = mTransportInfoList.first(); ti;
        ti = mTransportInfoList.next(), i++)

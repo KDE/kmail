@@ -26,7 +26,7 @@ QCString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
   unsigned int len = info.size();
   QFile file(aFileName);
 
-  //assert(aFileName!=NULL);
+  //assert(aFileName!=0);
   if( aFileName.isEmpty() )
     return "";
 
@@ -96,7 +96,7 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
   unsigned int len = info.size();
   QFile file(aFileName);
 
-  //assert(aFileName!=NULL);
+  //assert(aFileName!=0);
   if( aFileName.isEmpty() )
     return result;
 
@@ -165,7 +165,7 @@ bool kBytesToFile(const char* aBuffer, int len,
   QFile file(aFileName);
   int writeLen, rc;
 
-  //assert(aFileName!=NULL);
+  //assert(aFileName!=0);
   if(aFileName.isEmpty())
     return FALSE;
 

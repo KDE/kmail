@@ -78,7 +78,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mStartupDone = FALSE;
   mbNewMBVisible = false;
   mIntegrated  = TRUE;
-  mFolder = NULL;
+  mFolder = 0;
   mFolderThreadPref = false;
   mFolderHtmlPref = false;
   mCountJobs = 0;
@@ -788,7 +788,7 @@ void KMMainWin::slotNewMailReader()
 {
   KMMainWin *d;
 
-  d = new KMMainWin(NULL);
+  d = new KMMainWin(0);
   d->show();
   d->resize(d->size());
 }
@@ -1057,14 +1057,14 @@ void KMMainWin::slotEmptyFolder()
   // from here to "end..." no signal may change to another mFolder, otherwise
   // the wrong folder will be truncated in expunge (dnaber, 1999-08-29)
   mFolder->open();
-  mHeaders->setFolder(NULL);
+  mHeaders->setFolder(0);
   mMsgView->clear();
 
   if (mFolder != kernel->trashFolder())
   {
     // FIXME: If we run out of disk space mail may be lost rather
     // than moved into the trash -sanders
-    while ((msg = mFolder->take(0)) != NULL) {
+    while ((msg = mFolder->take(0)) != 0) {
       kernel->trashFolder()->addMsg(msg);
       kernel->trashFolder()->unGetMsg(kernel->trashFolder()->count()-1);
     }
@@ -1102,7 +1102,7 @@ void KMMainWin::slotRemoveFolder()
     if (mFolder->hasAccounts())
     {
       // this folder has an account, so we need to change that to the inbox
-      KMAccount* acct = NULL;
+      KMAccount* acct = 0;
       KMAcctFolder* acctFolder = static_cast<KMAcctFolder*>(mFolder);
       for ( acct = acctFolder->account(); acct; acct = acctFolder->nextAccount() )
       {
@@ -1909,7 +1909,7 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
 		return;
   }
 
-  assert(msg != NULL);
+  assert(msg != 0);
   KMReaderWin *win;
 
   win = new KMReaderWin;
@@ -1927,7 +1927,7 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
 void KMMainWin::slotAtmMsg(KMMessage *msg)
 {
   KMReaderWin *win;
-  assert(msg != NULL);
+  assert(msg != 0);
   win = new KMReaderWin;
   win->setAutoDelete(true); //delete on end
   showMsg(win, msg);
@@ -3063,7 +3063,7 @@ bool KMMainWin::queryClose() {
   KConfig *config = kapp->config();
 
   // Make sure this is the last window.
-  KMainWindow   *kmWin = NULL;
+  KMainWindow   *kmWin = 0;
   int           num = 0;
 
   kernel->setCanExpire(false);

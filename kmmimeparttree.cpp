@@ -76,7 +76,7 @@ void KMMimePartTree::restoreLayoutIfPresent() {
 void KMMimePartTree::itemClicked( QListViewItem* item )
 {
     KMMimePartTreeItem* i = dynamic_cast<KMMimePartTreeItem*>( item );
-    if ( 0L == i ) {
+    if ( 0 == i ) {
         kdDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
     }
     else {
@@ -97,7 +97,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
                                        const QPoint& point )
 {
     mCurrentContextMenuItem = dynamic_cast<KMMimePartTreeItem*>( item );
-    if ( 0L == mCurrentContextMenuItem ) {
+    if ( 0 == mCurrentContextMenuItem ) {
         kdDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
     }
     else {

@@ -45,7 +45,7 @@ public:
 
   /** Constructor that initializes from given config file, if given.
     * Filters are stored one by one in config groups, i.e. one filter, one group.
-    * The config group has to be preset if config is not NULL. */
+    * The config group has to be preset if config is not 0. */
   KMFilter( KConfig* aConfig=0 , bool popFilter = false);
 
   /** Copy constructor. Constructs a deep copy of @p aFilter. */
