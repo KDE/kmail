@@ -219,11 +219,6 @@ namespace KMail {
 
       node->mWasProcessed = true;
     }
-    // parse the siblings (children are parsed in the 'multipart' case terms)
-    // ### FIXME (mmutz): use iteration instead of recursion!
-    if ( !showOnlyOneMimePart() && node->mNext )
-      parseObjectTree( node->mNext );
-
     // adjust signed/encrypted flags if inline PGP was found
 
     // ### (mmutz) I think this is a bug if node->mWasProcessed is
@@ -232,6 +227,11 @@ namespace KMail {
     // corresponding conditional above:
     processResult.adjustCryptoStatesOfNode( node );
     // end of ###
+
+    // parse the siblings (children are parsed in the 'multipart' case terms)
+    // ### FIXME (mmutz): use iteration instead of recursion!
+    if ( !showOnlyOneMimePart() && node->mNext )
+      parseObjectTree( node->mNext );
 
   }
 
