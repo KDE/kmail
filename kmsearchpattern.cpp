@@ -137,7 +137,7 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
 
 const QString KMSearchRule::asString() const
 {
-  QString result  = "\t\"" + mField + "\" <";
+  QString result  = "\"" + mField + "\" <";
   result += funcConfigNames[(int)mFunction];
   result += "> \"" + mContents + "\"";
 
@@ -285,7 +285,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   }
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "\t1 = " : "\t0 = " );
+    QString msg = ( rc ? "1 = " : "0 = " );
     msg += asString() + " (" + msgContents + ")";
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
@@ -378,9 +378,9 @@ bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
   }
   bool rc = matchesInternal( numericalValue, numericalMsgContents, msgContents );
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "\t1 = " : "\t0 = " );
-    msg += asString() + " ( " + QString::number(numericalValue);
-    msg += " / " + QString::number(numericalMsgContents) + " )";
+    QString msg = ( rc ? "1 = " : "0 = " );
+    msg += asString() + " ( " + QString::number( numericalMsgContents );
+    msg += " / " + QString::number( numericalValue ) + " )";
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
@@ -514,7 +514,7 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
   }
 
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "\t1 = " : "\t0 = " );
+    QString msg = ( rc ? "1 = " : "0 = " );
     msg += asString();
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
@@ -722,12 +722,12 @@ void KMSearchPattern::init() {
 QString KMSearchPattern::asString() const {
   QString result = "\t";
   if ( mOperator == OpOr )
-    result += i18n("(match any of the following)") + "\n";
+    result += i18n("(match any of the following)") + '\n';
   else
-    result += i18n("(match all of the following)") + "\n";
+    result += i18n("(match all of the following)") + '\n';
 
   for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
-    result += (*it)->asString() + '\n';
+    result += '\t' + (*it)->asString() + '\n';
 
   return result;
 }

@@ -37,6 +37,21 @@ using namespace KMail;
 
 FilterLog * FilterLog::self = NULL;
 
+
+FilterLog::FilterLog()
+{ 
+  self = this;
+  // start with logging enabled by default
+  logging = true;
+  // better limit the log to 512 KByte to avoid out of memory situations
+  // when the log i sgoing to become very long
+  maxLogSize = 512 * 1024;
+  currentLogSize = 0;
+  allowedTypes =  meta | patternDesc | ruleResult | 
+                  patternResult | appliedAction;
+};
+
+
 FilterLog::~FilterLog()
 {}
 
@@ -57,12 +72,24 @@ void FilterLog::add( QString logEntry, ContentType contentType )
   {
     logEntries.append( logEntry );
     emit logEntryAdded( logEntry );
-// FIXME remove it
-kdDebug(5006) << "New filter log entry added."<< endl;
+    currentLogSize += logEntry.length();
+    checkLogSize();
   }
 }
 
 
+void FilterLog::setMaxLogSize( long size ) 
+{
+  if ( size < -1)
+    size = -1;
+  // do not allow less than 1 KByte except unlimited (-1)
+  if ( size >= 0 && size < 1024 )
+    size = 1024; 
+  maxLogSize = size; 
+  checkLogSize(); 
+};
+
+      
 void FilterLog::dump()
 {
 #ifndef NDEBUG
@@ -74,6 +101,33 @@ void FilterLog::dump()
   }
   kdDebug(5006) << "------ end of filter log ------" << endl;
 #endif
+}
+
+
+void FilterLog::checkLogSize()
+{
+  if ( currentLogSize > maxLogSize && maxLogSize >= -1 )
+  {
+    kdDebug(5006) << "Filter log: memory limit reached, starting to discard old items, size = "
+                  << QString::number( currentLogSize ) << endl;
+    // avoid some kind of hysteresis, shrink the log to 90% of its maximum
+    while ( currentLogSize > ( maxLogSize * 0.9 ) )
+    {
+      QValueListIterator<QString> it = logEntries.begin();
+      if ( it != logEntries.end())
+      {
+        currentLogSize -= (*it).length();
+        logEntries.remove( it );
+        kdDebug(5006) << "Filter log: new size = " << QString::number( currentLogSize ) << endl;
+      }
+      else
+      {
+        kdDebug(5006) << "Filter log: size reduction disaster!" << endl;
+        clear();
+      }
+    }
+    emit logShrinked();
+  }
 }
 
 

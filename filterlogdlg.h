@@ -52,6 +52,7 @@ namespace KMail {
     
     protected slots:
       void slotLogEntryAdded( QString logEntry );
+      void slotLogShrinked();
       
     protected:
       virtual void slotUser1();

@@ -57,6 +57,8 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   
   connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)), 
           this, SLOT(slotLogEntryAdded(QString)));
+  connect(FilterLog::instance(), SIGNAL(logShrinked(void)), 
+          this, SLOT(slotLogShrinked(void)));
   
   setInitialSize( QSize( 500, 300 ) );
 }
@@ -65,6 +67,18 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 void FilterLogDialog::slotLogEntryAdded( QString logEntry )
 {
   textEdit->append( logEntry );
+}
+
+
+void FilterLogDialog::slotLogShrinked()
+{
+  textEdit->clear();
+  QStringList logEntries = FilterLog::instance()->getLogEntries();
+  for ( QStringList::Iterator it = logEntries.begin(); 
+        it != logEntries.end(); ++it ) 
+  {
+    textEdit->append( *it );
+  }
 }
 
 

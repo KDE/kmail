@@ -63,8 +63,12 @@ namespace KMail {
       bool isLogging() { return logging; };
       /** set the logging state */
       void setLogging( bool active ) { logging = active; };
+      
+      /** control the size of the log */
+      void setMaxLogSize( long size = -1 );
+      
       /** add a content type to the set of logged ones */
-      void enableContentType( ContentType contentType ) { allowedTypes |= contentType; };
+      void enableContentType( ContentType contentType )  { allowedTypes |= contentType; };
       /** remove a content type from the set of logged ones */
       void disableContentType( ContentType contentType ) { allowedTypes &= ~contentType; };
 
@@ -73,7 +77,7 @@ namespace KMail {
       /** add a separating line in the log */
       void addSeparator() { add( "------------------------------", meta ); };
       /** discard collected log data */
-      void clear() { logEntries.clear(); };
+      void clear() { logEntries.clear(); currentLogSize = 0; };
       
       /** get access to the log entries */
       const QStringList & getLogEntries() { return logEntries; };
@@ -85,21 +89,28 @@ namespace KMail {
       
     signals:
       void logEntryAdded( QString );
+      void logShrinked();
 
     protected:
       /** Non-public constructor needed by the singleton implementation */
-      FilterLog() 
-      { 
-        self = this; 
-        logging = true; 
-        allowedTypes = meta | patternDesc | ruleResult | patternResult | appliedAction;
-      };
+      FilterLog();
       
       /** The list contains the single log pieces */
       QStringList logEntries;
+      
       /** the log status */
       bool logging;
+      
+      /** max size for kept log items, when reached 
+          the last recently added items are discarded
+          -1 means unlimited */
+      long maxLogSize;
+      long currentLogSize;
+      
+      /** types currently allowed to be legged */
       int allowedTypes;
+      
+      void checkLogSize();
       
     private:
       static FilterLog * self;
