@@ -43,7 +43,7 @@ KMFolderMgr::~KMFolderMgr()
 {
   if  (kernel->undoStack())
     kernel->undoStack()->clear(); // Speed things up a bit.
-  mBasePath = QString::null;;
+  mBasePath = QString::null;
 }
 
 

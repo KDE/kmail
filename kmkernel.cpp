@@ -1040,7 +1040,7 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
   {
   case QtDebugMsg:
   case QtWarningMsg:
-    kdDebug(5006) << aMsg << endl;;
+    kdDebug(5006) << aMsg << endl;
     break;
 
   case QtFatalMsg: // Hm, what about using kdFatal() here?
@@ -1349,7 +1349,7 @@ KMainWindow* KMKernel::mainWin()
   if (kmWin) {
     return kmWin;
   } else {
-    /* There is not a single KMMainWin. Create one. 
+    /* There is not a single KMMainWin. Create one.
        This could happen if we want to pop up an error message
        while we are still doing the startup wizard and no other
        KMainWindow is running. */

@@ -1493,7 +1493,7 @@ bool KMComposeWin::applyChanges(void)
   // mMsg->bcc() later)
   mBcc = mMsg->bcc();
 
-  bool doSign    = signAction->isChecked()    && !mNeverSign;;
+  bool doSign    = signAction->isChecked()    && !mNeverSign;
   bool doEncrypt = encryptAction->isChecked() && !mNeverEncrypt;
 
   // get PGP user id for the chosen identity

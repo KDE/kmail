@@ -896,7 +896,7 @@ void KMMainWidget::slotPostToML()
       msg->initHeader( mFolder->identity() );
 
       if (mFolder->isMailingList()) {
-          kdDebug(5006)<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
+          kdDebug(5006)<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;
 
           msg->setTo(mFolder->mailingListPostAddress());
       }
