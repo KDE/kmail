@@ -212,38 +212,37 @@ const KMail::BodyPartFormatter * KMail::BodyPartFormatter::createFor( int type, 
 
 namespace {
   const KMail::BodyPartFormatter * createForText( const char * subtype ) {
-    if ( !subtype || !*subtype )
-      return 0;
-    switch ( subtype[0] ) {
-    case 'h':
-    case 'H':
-      if ( qstricmp( subtype, "html" ) == 0 )
-	return TextHtmlBodyPartFormatter::create();
-      break;
-    case 'c':
-    case 'C':
-      if ( qstricmp( subtype, "calendar" ) == 0 )
-	return TextVCalBodyPartFormatter::create();
-      break;
-    case 'e':
-    case 'E':
-    case 'r':
-    case 'R':
-      if ( qstricmp( subtype, "enriched" ) == 0 ||
-	   qstricmp( subtype, "richtext" ) == 0 )
-	return TextEnrichedBodyPartFormatter::create();
-      else if ( qstricmp( subtype, "rtf" ) == 0 )
-	return TextRtfBodyPartFormatter::create();
-      break;
-    case 'x':
-    case 'X':
-    case 'v':
-    case 'V':
-      if ( qstricmp( subtype, "x-vcard" ) == 0 ||
-	   qstricmp( subtype, "vcard" ) == 0 )
-	return TextVCardBodyPartFormatter::create();
-      break;
-    }
+    if ( subtype && *subtype )
+      switch ( subtype[0] ) {
+      case 'h':
+      case 'H':
+	if ( qstricmp( subtype, "html" ) == 0 )
+	  return TextHtmlBodyPartFormatter::create();
+	break;
+      case 'c':
+      case 'C':
+	if ( qstricmp( subtype, "calendar" ) == 0 )
+	  return TextVCalBodyPartFormatter::create();
+	break;
+      case 'e':
+      case 'E':
+      case 'r':
+      case 'R':
+	if ( qstricmp( subtype, "enriched" ) == 0 ||
+	     qstricmp( subtype, "richtext" ) == 0 )
+	  return TextEnrichedBodyPartFormatter::create();
+	else if ( qstricmp( subtype, "rtf" ) == 0 )
+	  return TextRtfBodyPartFormatter::create();
+	break;
+      case 'x':
+      case 'X':
+      case 'v':
+      case 'V':
+	if ( qstricmp( subtype, "x-vcard" ) == 0 ||
+	     qstricmp( subtype, "vcard" ) == 0 )
+	  return TextVCardBodyPartFormatter::create();
+	break;
+      }
 
     return TextPlainBodyPartFormatter::create();
   }
@@ -265,8 +264,6 @@ namespace {
   }
 
   const KMail::BodyPartFormatter * createForMessage( const char * subtype ) {
-    if ( !subtype || !*subtype )
-      return 0;
     if ( qstricmp( subtype, "rfc822" ) == 0 )
       return MessageRfc822BodyPartFormatter::create();
     return AnyTypeBodyPartFormatter::create();
@@ -277,28 +274,27 @@ namespace {
   }
 
   const KMail::BodyPartFormatter * createForApplication( const char * subtype ) {
-    if ( !subtype || !*subtype )
-      return 0;
-    switch ( subtype[0] ) {
-    case 'p':
-    case 'P':
-      if ( qstricmp( subtype, "pgp" ) == 0 )
-	return ApplicationPgpBodyPartFormatter::create();
-      else if ( qstricmp( subtype, "postscript" ) == 0 )
-	return ApplicationPostscriptBodyPartFormatter::create();
-      // fall through
-    case 'x':
-    case 'X':
-      if ( qstricmp( subtype, "pkcs7-mime" ) == 0 ||
-	   qstricmp( subtype, "x-pkcs7-mime" ) == 0 )
-	return ApplicationPkcs7MimeBodyPartFormatter::create();
-      break;
-    case 'm':
-    case 'M':
-      if ( qstricmp( subtype, "ms-tnef" ) == 0 )
-	return ApplicationMsTnefBodyPartFormatter::create();
-      break;
-    }
+    if ( subtype && *subtype )
+      switch ( subtype[0] ) {
+      case 'p':
+      case 'P':
+	if ( qstricmp( subtype, "pgp" ) == 0 )
+	  return ApplicationPgpBodyPartFormatter::create();
+	else if ( qstricmp( subtype, "postscript" ) == 0 )
+	  return ApplicationPostscriptBodyPartFormatter::create();
+	// fall through
+      case 'x':
+      case 'X':
+	if ( qstricmp( subtype, "pkcs7-mime" ) == 0 ||
+	     qstricmp( subtype, "x-pkcs7-mime" ) == 0 )
+	  return ApplicationPkcs7MimeBodyPartFormatter::create();
+	break;
+      case 'm':
+      case 'M':
+	if ( qstricmp( subtype, "ms-tnef" ) == 0 )
+	  return ApplicationMsTnefBodyPartFormatter::create();
+	break;
+      }
 
     return AnyTypeBodyPartFormatter::create();
   }
@@ -306,41 +302,41 @@ namespace {
 
 // OK, replace this with a factory with plugin support later on...
 const KMail::BodyPartFormatter * KMail::BodyPartFormatter::createFor( const char * type, const char * subtype ) {
-  if ( !type || !*type || !subtype || !*subtype )
-    return 0;
-  switch ( type[0] ) {
-  case 'a': // application / audio
-  case 'A':
-    if ( qstricmp( type, "application" ) == 0 )
-      return createForApplication( subtype );
-    else if ( qstricmp( type, "audio" ) == 0 )
-      return createForAudio( subtype );
-    break;
-  case 'i': // image
-  case 'I':
-    if ( qstricmp( type, "image" ) == 0 )
-      return createForImage( subtype );
-    break;
-  case 'm': // multipart / message / model
-  case 'M':
-    if ( qstricmp( type, "multipart" ) == 0 )
-      return createForMultiPart( subtype );
-    else if ( qstricmp( type, "message" ) == 0 )
-      return createForMessage( subtype );
-    else if ( qstricmp( type, "model" ) == 0 )
-      return createForModel( subtype );
-    break;
-  case 't': // text
-  case 'T':
-    if ( qstricmp( type, "text" ) == 0 )
-      return createForText( subtype );
-    break;
-  case 'v': // video
-  case 'V':
-    if ( qstricmp( type, "video" ) == 0 )
-      return createForVideo( subtype );
-    break;
-  }
-  return 0;//createForApplication( "octet-stream" );
+  if ( type && *type )
+    switch ( type[0] ) {
+    case 'a': // application / audio
+    case 'A':
+      if ( qstricmp( type, "application" ) == 0 )
+	return createForApplication( subtype );
+      else if ( qstricmp( type, "audio" ) == 0 )
+	return createForAudio( subtype );
+      break;
+    case 'i': // image
+    case 'I':
+      if ( qstricmp( type, "image" ) == 0 )
+	return createForImage( subtype );
+      break;
+    case 'm': // multipart / message / model
+    case 'M':
+      if ( qstricmp( type, "multipart" ) == 0 )
+	return createForMultiPart( subtype );
+      else if ( qstricmp( type, "message" ) == 0 )
+	return createForMessage( subtype );
+      else if ( qstricmp( type, "model" ) == 0 )
+	return createForModel( subtype );
+      break;
+    case 't': // text
+    case 'T':
+      if ( qstricmp( type, "text" ) == 0 )
+	return createForText( subtype );
+      break;
+    case 'v': // video
+    case 'V':
+      if ( qstricmp( type, "video" ) == 0 )
+	return createForVideo( subtype );
+      break;
+    }
+
+  return AnyTypeBodyPartFormatter::create();
 }
 
