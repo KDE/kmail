@@ -8,7 +8,6 @@
 #endif
 
 #include "kmfilteraction.h"
-#include "kmfilteraction.moc"
 
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
@@ -1624,7 +1623,7 @@ const QString KMFilterActionWithTest::argsAsString() const
 
 
 KMFilterActionExecSound::KMFilterActionExecSound()
-  : KMFilterActionWithTest( "execute sound", i18n("execute sound") )
+  : KMFilterActionWithTest( "play sound", i18n("play a sound") )
 {
 }
 
@@ -1695,3 +1694,4 @@ void KMFilterActionDict::insert( KMFilterActionNewFunc aNewFunc )
   delete action;
 }
 
+#include "kmfilteraction.moc"
