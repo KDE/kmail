@@ -971,10 +971,10 @@ void KMHeaders::msgChanged()
   setSelected( currentItem(), TRUE );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
-  
+
   // if the current message has changed then emit
   // the selected signal to force an update
-  
+
   // Normally the serial number of the message would be
   // used to do this, but because we don't yet have
   // guaranteed serial numbers for IMAP messages fall back
@@ -2888,7 +2888,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
     END_TIMER(selection);
     SHOW_TIMER(selection);
     if (error || (sortStream && ferror(sortStream))) {
-	fclose(sortStream);
+        if ( sortStream )
+            fclose(sortStream);
 	unlink(sortFile.local8Bit());
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
