@@ -2108,8 +2108,9 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
-  mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()),
-                      actionCollection(), "file_save_as" );
+  mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
+    KStdAccel::shortcut(KStdAccel::Save),
+    this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
 
   mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
