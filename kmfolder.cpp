@@ -774,7 +774,7 @@ KMMessage* KMFolder::readMsg(int idx)
 int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   KMFolder* msgParent;
-  int rc, idx = 0;
+  int rc;
 
   assert(aMsg != NULL);
   msgParent = aMsg->parent();

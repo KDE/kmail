@@ -228,7 +228,7 @@ public:
   }
   // End this code may be relicensed by Troll Tech  
 
-  virtual QString key( int column, bool ascending ) const {
+  virtual QString key( int column, bool /*ascending*/ ) const {
     if (column == 3) {
       if (mPaintInfo->orderOfArrival)
 	return mSortArrival;
@@ -244,6 +244,7 @@ public:
   }
 };
 
+#include "qcstring.h"
 
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
@@ -499,7 +500,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       else
 	id = -1;
 
-      if ((id >= 0) && (id < mItems.size()))
+      if ((id >= 0) && (id < (int)mItems.size()))
       {
         setMsgRead(id);
 	setCurrentItemByIndex(id);
@@ -599,11 +600,11 @@ void KMHeaders::msgAdded(int id)
 void KMHeaders::msgRemoved(int id)
 {
   if (!isUpdatesEnabled()) return;
-  KMMsgBase *mMsgBase = mFolder->getMsgBase( id );
-  if ((id < 0) || (id >= mItems.size()))
+
+  if ((id < 0) || (id >= (int)mItems.size()))
     return;
   delete mItems[id];
-  for (int i = id; i < mItems.size() - 1; ++i) {
+  for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
   }
@@ -615,11 +616,9 @@ void KMHeaders::msgRemoved(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgHeaderChanged(int msgId)
 {
-  KMMsgStatus flag;
-  KMMsgBase* mb;
   QString fromStr, subjStr;
 
-  if (msgId<0 || msgId >= mItems.size() || !isUpdatesEnabled()) return;
+  if (msgId<0 || msgId >= (int)mItems.size() || !isUpdatesEnabled()) return;
   mItems[msgId]->irefresh();
   mItems[msgId]->repaint();
 }
@@ -701,7 +700,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
 {
   KMMessage* msg;
   KMMessageList* msgList = selectedMsgs();
-  int idx, cur = firstSelectedMsg(currentItemIndex());
+  int idx, cur = firstSelectedMsg();
   int topX = contentsX();
   int topY = contentsY();
 
@@ -715,7 +714,6 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
       next = next->itemAbove();
   }
 
-  int rc;
   for (idx=cur, msg=msgList->first(); msg; msg=msgList->next())
     if (filterMgr->process(msg) == 2) {
       // something went horribly wrong (out of space?)
@@ -875,7 +873,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMessage *msg;
   KMMsgBase *curMsg = 0;
-  int top, rc, cur = firstSelectedMsg(currentItemIndex());
+  int top, rc;
   bool doUpd;
 
   kbp->busy();
@@ -995,7 +993,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 void KMHeaders::setCurrentMsg(int cur)
 {
   if (cur >= mFolder->count()) cur = mFolder->count() - 1;
-  if ((cur >= 0) && (cur < mItems.size())) {
+  if ((cur >= 0) && (cur < (int)mItems.size())) {
     clearSelection();
     setCurrentItem( mItems[cur] );
     setSelected( mItems[cur], TRUE );
@@ -1018,7 +1016,7 @@ KMMessageList* KMHeaders::selectedMsgs(int idx)
 
 
 //-----------------------------------------------------------------------------
-int KMHeaders::firstSelectedMsg (int msgId) const
+int KMHeaders::firstSelectedMsg() const
 {
   int selectedMsg = -1;
   QListViewItem *item;
@@ -1034,7 +1032,6 @@ int KMHeaders::firstSelectedMsg (int msgId) const
 //-----------------------------------------------------------------------------
 KMMessage* KMHeaders::getMsg (int msgId)
 {
-  int i, high;
 
   if (!mFolder || msgId < -2)
   {
@@ -1124,7 +1121,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   if (!mFolder) return -1;
   if (!(mFolder->count()) > 0) return -1;
 
-  if ((aStartAt >= 0) && (aStartAt < mItems.size()))
+  if ((aStartAt >= 0) && (aStartAt < (int)mItems.size()))
     item = mItems[aStartAt];
   else {
     item = currentHeaderItem();
@@ -1216,7 +1213,6 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 void KMHeaders::updateMessageList(void)
 {
   long i;
-  KMMsgStatus flag;
   KMMsgBase* mb;
   bool autoUpd;
 
@@ -1453,7 +1449,7 @@ int KMHeaders::currentItemIndex()
 //-----------------------------------------------------------------------------
 void KMHeaders::setCurrentItemByIndex(int msgIdx)
 {
-  if ((msgIdx >= 0) && (msgIdx < mItems.size())) {
+  if ((msgIdx >= 0) && (msgIdx < (int)mItems.size())) {
     clearSelection();
     setSelected( mItems[msgIdx], TRUE );
     setCurrentItem( mItems[msgIdx] );
@@ -1476,7 +1472,7 @@ void KMHeaders::showNewMail()
 {
   if (mSortCol != 3)
     return;
- for( int i = 0; i < mItems.size(); ++i)
+ for( int i = 0; i < (int)mItems.size(); ++i)
    if (mFolder->getMsgBase(i)->isNew()) {
      if (!mSortDescending)
        setTopItemByIndex( currentItemIndex() );
@@ -1489,9 +1485,9 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
   int msgIdx = aMsgIdx;
   if (msgIdx < 0)
     msgIdx = 0;
-  else if (msgIdx >= mItems.size())
+  else if (msgIdx >= (int)mItems.size())
     msgIdx = mItems.size() - 1;
-  if ((msgIdx >= 0) && (msgIdx < mItems.size()))
+  if ((msgIdx >= 0) && (msgIdx < (int)mItems.size()))
     setContentsPos( 0, itemPos( mItems[msgIdx] ));
 }
 

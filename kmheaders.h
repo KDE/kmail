@@ -170,7 +170,7 @@ protected:
     where the message with the given id is in. This for finding the correct
     message that shall be the current message after move/delete of multiple
     messages. */
-  virtual int firstSelectedMsg(int id) const;
+  virtual int firstSelectedMsg() const;
 
   /** Read per-folder config options and apply them. */
   virtual void readFolderConfig(void);

@@ -33,7 +33,6 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 			   aCap,  KDialogBase::Ok|KDialogBase::Cancel ),
   mFolderDir( aFolderDir )
 {
-  KMAccount* acct;
   QLabel *label;
   QString type;
 
@@ -81,8 +80,6 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 void KMFolderDialog::slotOk()
 {
   QString acctName;
-  KMAccount* acct;
-  unsigned int i;
   QString fldName, oldFldName;
   KMFolderDir *selectedFolderDir = &(folderMgr->dir());
   int curFolder = fileInFolder->currentItem();

@@ -167,7 +167,7 @@ const QString KMMessagePart::iconName(void) const
 
   fileName = locate("mime", mType + "/" + mSubtype + ".desktop");
 
-  if (dir.exists(fileName))
+  if (!(fileName.isEmpty()) && dir.exists(fileName))
   {
     KConfig config(fileName);
     config.setDesktopGroup();

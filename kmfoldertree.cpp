@@ -131,9 +131,9 @@ void paintCell( QPainter * p, const QColorGroup & cg,
 }
 // End this code may be relicensed by Troll Tech
 
-  // May sure system folders come first when sorting
-  // (or last when sorting in descending order)
-  virtual QString key( int column, bool ascending ) const {
+// May sure system folders come first when sorting
+// (or last when sorting in descending order)
+virtual QString key( int /*column*/, bool /*ascending*/ ) const {
     if (folder->label() == i18n("inbox"))
       return "\t0";
     else if (folder->label() == i18n("outbox"))
@@ -209,7 +209,6 @@ void KMFolderTree::readConfig (void)
 {
   KConfig* conf = app->config();
   QString fntStr;
-  int width;
 
   // Backing pixmap support
   conf->setGroup("Pixmaps");
@@ -362,7 +361,6 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
 { 
   KMFolderNode *folderNode;
   KMFolder* folder;
-  KMFolderDir* folderDir = 0;
   KMFolderTreeItem* fti;
 
   for (folderNode = fdir->first();

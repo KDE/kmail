@@ -386,7 +386,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
           else
 	  {
 	    part = QString(msgPart.bodyDecoded());
-	    debug ("part\n" + part );
+	    //	    debug ("part\n" + part ); inexplicably crashes -sanders
 	    part = part.replace(reNL,nlIndentStr);
 	  }
 	  result += part + '\n';

@@ -360,7 +360,7 @@ void KMFilterDlg::applyFilterChanges(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMFilterDlg::updateCurFilterName(const QString &text)
+void KMFilterDlg::updateCurFilterName(const QString &/*text*/)
 {
   if (mCurFilterIdx < 0)
     return;

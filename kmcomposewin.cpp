@@ -1864,7 +1864,7 @@ bool KMLineEdit::eventFilter(QObject*, QEvent* e)
     }
     if (k->key() == Key_Right)
     {
-      if (strlen(text()) == cursorPosition()) // at End?
+      if ((int)strlen(text()) == cursorPosition()) // at End?
       {
         emit completion();
         cursorAtEnd();

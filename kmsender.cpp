@@ -109,7 +109,7 @@ void KMSender::writeConfig(bool aWithSync)
   config->writeEntry("Quoted-Printable", mSendQuotedPrintable);
   config->writeEntry("Mailer", mMailer);
   config->writeEntry("Smtp Host", mSmtpHost);
-  config->writeEntry("Smtp Port", mSmtpPort);
+  config->writeEntry("Smtp Port", (int)mSmtpPort);
   config->writeEntry("Method", (mMethod==smSMTP) ? "smtp" : "mail");
 
   if (aWithSync) config->sync();
@@ -178,7 +178,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 }
 
 
-bool KMSender::sendSingleMail( KMMessage *aMsg) 
+bool KMSender::sendSingleMail( KMMessage*) 
 {
 
   return true;
@@ -807,7 +807,7 @@ void KMSendSMTP::smtpInCmd(const char* inCommand)
 
 
 //-----------------------------------------------------------------------------
-void KMSendSMTP::smtpDebug(const char* inCommand)
+void KMSendSMTP::smtpDebug(const char* /*inCommand*/)
 {
 #ifdef SMTP_DEBUG_OUTPUT
   const char* errorStr = mClient->Response().c_str();

@@ -184,7 +184,7 @@ KMFilterActionForward::KMFilterActionForward(): KMFilterAction("forward")
 {
 }
  
-int KMFilterActionForward::process(KMMessage* aMsg, bool&stop)
+int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
 {
   KMMessage* msg;
   if (mTo.isEmpty()) return TRUE;
@@ -258,7 +258,7 @@ void KMFilterActionExec::dummySigHandler(int)
 {
 }
  
-int KMFilterActionExec::process(KMMessage* aMsg, bool&stop)
+int KMFilterActionExec::process(KMMessage* /*aMsg*/, bool& /*stop*/)
 {
   void (*oldSigHandler)(int);
   int rc;

@@ -95,8 +95,6 @@ KMReaderWin::~KMReaderWin()
 //-----------------------------------------------------------------------------
 void KMReaderWin::makeAttachDir(void)
 {
-  bool ok = true;
-
   QString directory;
   directory.sprintf("kmail/tmp/kmail%d/", getpid());
   KGlobal::dirs()->
@@ -260,7 +258,11 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   mMsg = aMsg;
 
   // Avoid flicker, somewhat of a cludge
-  if (updateReaderWinTimer.isActive())
+  if (force) {
+    mMsgBuf = 0;
+    updateReaderWin();
+  }
+  else if (updateReaderWinTimer.isActive())
     updateReaderWinTimer.changeInterval( 100 );
   else {
     updateReaderWin();

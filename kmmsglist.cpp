@@ -198,7 +198,7 @@ void KMMsgList::qsort(int left, int right, SortField aField, bool aDescending)
   int j = right;
   
   // $markus: Yes, I am paranoid ;-)
-  if((i + j / 2) < 0 || (i + j / 2) > KMMsgListInherited::size())
+  if((i + j / 2) < 0 || (i + j / 2) > (int)KMMsgListInherited::size())
     return;
   KMMsgBasePtr pivot = KMMsgListInherited::at((int)((i + j) / 2));
 

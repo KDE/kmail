@@ -73,19 +73,11 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupToolBar();
   setupStatusBar();
 
-  // set active folder to `inbox' folder
-  //  mHeaders->setFolder(0);
   idx = mFolderTree->indexOfFolder(inboxFolder);
   if (idx!=0) {
     mFolderTree->setCurrentItem(idx);
     mFolderTree->setSelected(idx,TRUE);
-
-    // I can't set the contents position until after the list
-    // view has been shown at least once :-(
-    QTimer *timer = new QTimer( this );
-    connect( timer, SIGNAL(timeout()),
-	     mHeaders, SLOT(workAroundQListViewLimitation()) );
-    timer->start( 0, TRUE );  
+    mHeaders->workAroundQListViewLimitation();
   }
   
   connect(msgSender, SIGNAL(statusMsg(const QString&)),
@@ -860,8 +852,6 @@ void KMMainWin::slotCopyText()
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMarkAll() {
-
-  int i;
   QListViewItem *item;
   for (item = mHeaders->firstChild(); item; item = item->nextSibling())
     mHeaders->setSelected( item, TRUE );
@@ -1306,7 +1296,6 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
 {
   KMFolderNode *folderNode;
   KMFolder* folder;
-  KMFolderDir* folderDir = 0;
 
   QPopupMenu *msgMoveMenu = new QPopupMenu;
   if (move)
