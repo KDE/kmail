@@ -2004,7 +2004,7 @@ void KMMainWin::setupMenuBar()
   removeFolderAction = new KAction( i18n("&Remove"), 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
-  preferHtmlAction = new KToggleAction( i18n("&Prefer HTML to Plain Text"), 0, this,
+  preferHtmlAction = new KToggleAction( i18n("Pre&fer HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
 
   threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
