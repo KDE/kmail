@@ -210,7 +210,9 @@ int KMFolder::writeIndex()
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  system("touch \"" + location().local8Bit() + "\"");
+  KProcess p;
+  p << "touch" << location();
+  p.start(KProcess::Block);
 
   FILE *tmpIndexStream = fopen(tempName.local8Bit(), "w");
   umask(old_umask);
@@ -1199,8 +1201,11 @@ bool KMFolder::updateIndexStreamPtr(bool)
 {
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  system("touch \"" + location().local8Bit() + "\"");
-  system("touch \"" + indexLocation().local8Bit() + "\"");
+  KProcess p, q;
+  p << "touch" << location();
+  p.start(KProcess::Block);
+  q << "touch" << indexLocation();
+  q.start(KProcess::Block);
 
 #ifdef HAVE_MMAP
     if(just_close) {
