@@ -106,7 +106,7 @@ void KMAccount::writeConfig(KConfig& config)
 {
   config.writeEntry("Type", type());
   config.writeEntry("Name", mName);
-  config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
+  config.writeEntry("Folder", mFolder ? mFolder->name() : QString::null);
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
   config.writeEntry("precommand", mPrecommand);
