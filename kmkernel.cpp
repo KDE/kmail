@@ -1129,6 +1129,16 @@ bool KMKernel::folderIsDraftOrOutbox(const KMFolder * folder)
   return false;
 }
 
+bool KMKernel::folderIsTrash(KMFolder * folder)
+{
+  assert(folder);
+  if (folder == the_trashFolder) return true;
+  if (folder->protocol() != "imap") return false;
+  KMFolderImap *fi = static_cast<KMFolderImap*>(folder);
+  if (fi->account()->trash() == fi->idString()) return true;
+  return false;
+}
+
 IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
     kdDebug(5006) << "instantating IdentityManager" << endl;

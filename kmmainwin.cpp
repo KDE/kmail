@@ -1045,12 +1045,15 @@ void KMMainWin::slotEmptyFolder()
 
   if (mConfirmEmpty)
   {
-    str = i18n("Are you sure you want to move all messages from "
-               "folder \"%1\" to the trash?").arg(mFolder->label());
+    bool isTrash = kernel->folderIsTrash(mFolder);
+    QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
+    QString text = (isTrash) ?
+      i18n("Are you sure you want to empty the trash folder?") :
+      i18n("Are you sure you want to move all messages from "
+           "folder \"%1\" to the trash?").arg(mFolder->label());
 
-    if (KMessageBox::warningContinueCancel(this, str, i18n("Move to Trash"),
-                                           i18n("&Move to Trash"))
-        !=KMessageBox::Continue) return;
+    if (KMessageBox::warningContinueCancel(this, text, title, title)
+      != KMessageBox::Continue) return;
   }
 
   if (mFolder->protocol() == "imap")
@@ -2991,6 +2994,8 @@ void KMMainWin::updateFolderMenu()
   modifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   compactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   emptyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  emptyFolderAction->setText( (mFolder && kernel->folderIsTrash(mFolder))
+    ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   expireFolderAction->setEnabled( mFolder && mFolder->protocol() != "imap"
     && mFolder->isAutoExpire() );

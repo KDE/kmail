@@ -113,6 +113,7 @@ public:
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
 			     bool overwrite = FALSE);
   bool folderIsDraftOrOutbox(const KMFolder *);
+  bool folderIsTrash(KMFolder *);
 
   KMFolder *inboxFolder() { return the_inboxFolder; }
   KMFolder *outboxFolder() { return the_outboxFolder; }
