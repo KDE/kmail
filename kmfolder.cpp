@@ -13,6 +13,8 @@
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 
+#include <errno.h>
+
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <qfile.h>
