@@ -529,6 +529,15 @@ void KMKernel::cleanup(void)
   KConfig* config =  kapp->config();
   KConfigGroupSaver saver(config, "General");
 
+  if (the_acctMgr) delete the_acctMgr;
+  the_acctMgr = 0;
+  if (the_filterMgr) delete the_filterMgr;
+  the_filterMgr = 0;
+  if (the_msgSender) delete the_msgSender;
+  the_msgSender = 0;
+  if (the_addrBook) delete the_addrBook;
+  the_addrBook = 0;
+
   if (the_trashFolder) {
 
     the_trashFolder->close(TRUE);
@@ -582,12 +591,10 @@ void KMKernel::cleanup(void)
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
 
-  if (the_msgSender) delete the_msgSender;
-  if (the_addrBook) delete the_addrBook;
-  if (the_filterMgr) delete the_filterMgr;
-  if (the_acctMgr) delete the_acctMgr;
   if (the_folderMgr) delete the_folderMgr;
+  the_folderMgr = 0;
   if (the_kbp) delete the_kbp;
+  the_kbp = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
   KMRecentAddresses::self()->save( KGlobal::config() );

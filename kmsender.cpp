@@ -251,8 +251,8 @@ void KMSender::doSendMsg()
   bool someSent = mCurrentMsg;
 
   // Post-process sent message (filtering)
-  if (mCurrentMsg)
-  { 
+  if (mCurrentMsg  && kernel->filterMgr())
+  {
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
