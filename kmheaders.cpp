@@ -1453,7 +1453,7 @@ void KMHeaders::nextMessage()
 	temp->firstChild();
 	temp = temp->parent();
     }
-      
+
     clearSelection();
     setSelected( lvi, FALSE );
     lvi->repaint();
@@ -1675,7 +1675,7 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
     recursivelyAddChildren( *it, hi );
   }
 
-  setOpen( parent, true );
+  parent->setOpen( true );
 }
 
 
