@@ -1313,8 +1313,12 @@ void KMReaderWin::clearCache()
 static const char * const kmailNewFeatures[] = {
   I18N_NOOP("PGP/MIME (RFC 3156) support for GnuPG users"),
   I18N_NOOP("S/MIME support"),
+  I18N_NOOP("Optional MIME tree viewer, allowing direct access to all "
+	    "body parts (attachments)"),
+  I18N_NOOP("Optional total/unread columns in the folder view"),
   I18N_NOOP("Custom folder icons"),
   I18N_NOOP("Custom date format"),
+  I18N_NOOP("Reorganized menu bar looks more like in other KDE applications"),
   I18N_NOOP("Default identity can now be renamed"),
 };
 static const int numKMailNewFeatures =
