@@ -29,7 +29,7 @@
 #include <assert.h>
 
 // The anchor of the filter dialog's help.
-const char * KMFilterDlgHelpAnchor =  "FILTERS_ID" ;
+const char * KMFilterDlgHelpAnchor =  "filters-id" ;
 
 //=============================================================================
 //
@@ -53,6 +53,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
   hbl->addWidget( mFilterList, 1 /*stretch*/ );
 
   QVBoxLayout *vbl = new QVBoxLayout( hbl, spacingHint(), "kmfd_vbl" );
+  hbl->setStretchFactor( vbl, 2 );
 
   mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), w );
   vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
@@ -129,9 +130,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown = new QPushButton( QString::null, hb );
   mBtnDown->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
-  QToolTip::add(mBtnUp,i18n("Move the selected filter rule up in the list,\n"
+  QToolTip::add(mBtnUp,i18n("Move the selected filter up in the list,\n"
     "which gives it priority over lower rules."));
-  QToolTip::add(mBtnDown,i18n("Move the selected filter rule down in the list."));
+  QToolTip::add(mBtnDown,i18n("Move the selected filter down in the list."));
   
   //----------- the second row of buttons
   hb = new QHBox(this);
@@ -142,9 +143,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename"), hb );
-  QToolTip::add(mBtnNew,i18n("Add a new filter rule to the list."));
-  QToolTip::add(mBtnDelete,i18n("Delete the selected filter rule."));
-  QToolTip::add(mBtnRename,i18n("Rename the selected filter rule."));
+  QToolTip::add(mBtnNew,i18n("Add a new filter to the list."));
+  QToolTip::add(mBtnDelete,i18n("Delete the selected filter."));
+  QToolTip::add(mBtnRename,i18n("Rename the selected filter."));
 
   //----------- now connect everything
   connect( mListBox, SIGNAL(highlighted(int)),

@@ -1847,7 +1847,7 @@ void KMMainWin::setupMenuBar()
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
 
 
-  (void) new KAction( i18n("F&ilter Rules..."), 0, this,
+  (void) new KAction( i18n("Configure F&ilters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );
 
   createGUI( "kmmainwin.rc", false );
