@@ -184,14 +184,15 @@ const QString KMMsgBase::dateStr(void) const
 const QString KMMsgBase::asIndexString(void) const
 {
   int i, len;
-  QString str(256);
+  QString str(356); // Sven is blind.
 
   // don't forget to change indexStringLength() below !!
-  str.sprintf("%c %-.9lu %-.9lu %-.9lu %-3.3s %-100.100s %-100.100s",
+  str.sprintf("%c %-.9lu %-.9lu %-.9lu %-3.3s %-100.100s %-100.100s %-100.100s",
 	      (char)status(), folderOffset(), msgSize(), (unsigned long)date(),
 	      (const char*)xmark(),
 	      (const char*)decodeQuotedPrintableString(subject()),
-	      (const char*)decodeQuotedPrintableString(from()));
+	      (const char*)decodeQuotedPrintableString(from()),
+	      (const char*)decodeQuotedPrintableString(to())); //sven
   len = str.length();
   for (i=0; i<len; i++)
     if (str[i] < ' ' && str[i] >= 0)
@@ -204,7 +205,8 @@ const QString KMMsgBase::asIndexString(void) const
 //-----------------------------------------------------------------------------
 int KMMsgBase::indexStringLength(void)
 {
-  return 237;
+  //return 237;
+  return 338; //sven (+ 100 chars to + one space, right?
 }
 
 

@@ -270,7 +270,7 @@ public:
 
 protected:
   /** Convert wildcards into normal string */
-  const QString formatString(const QString);
+  const QString formatString(const QString) const;
 
 protected:
   DwMessage* mMsg;

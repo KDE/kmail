@@ -21,13 +21,15 @@ public:
   virtual void fromIndexString(const QString str);
 
   /** Initialize with given values and set dirty flag to FALSE. */
-  virtual void init(const QString subject, const QString from, time_t date,
+  virtual void init(const QString subject, const QString from,
+                    const QString to, time_t date,
 		    KMMsgStatus status, const QString xmark,
 		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
   /** Inherited methods (see KMMsgBase for description): */
   virtual const QString subject(void) const;
   virtual const QString from(void) const;
+  virtual const QString to(void) const;
   virtual const QString xmark(void) const;
   virtual void setSubject(const QString);
   virtual void setFrom(const QString);
@@ -38,7 +40,7 @@ public:
   KMMsgInfo& operator=(const KMMsgInfo&);
 
 protected:
-  QString mSubject, mFrom, mXMark;
+  QString mSubject, mFrom, mTo, mXMark;
 };
 
 typedef KMMsgInfo* KMMsgInfoPtr;

@@ -257,7 +257,7 @@ void KMMessage::fromString(const QString aStr, bool aSetStatus)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::formatString(const QString aStr)
+const QString KMMessage::formatString(const QString aStr) const
 {
   QString result, str;
   const char* pos;

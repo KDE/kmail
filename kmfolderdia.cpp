@@ -35,18 +35,21 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   folder = (KMAcctFolder*)aFolder;
 
   label = new QLabel(this);
-  label->setGeometry(20,20,40,25);
+  label->setGeometry(20,20,60,25);
   label->setText(i18n("Name:"));
   label->setAlignment(290);
 
   nameEdit = new QLineEdit(this);
-  nameEdit->setGeometry(70,20,340,25);
+  nameEdit->setGeometry(90,20,320,25);
   nameEdit->setFocus();
   nameEdit->setText(folder ? folder->name().data() : i18n("unnamed"));
 
-  type = aFolder->type();
-  if (!type.isEmpty() && type!="plain")
-    nameEdit->setEnabled(false);
+  if (folder)
+  {
+    type = folder->type();
+    if (!type.isEmpty() && type!="plain")
+      nameEdit->setEnabled(false);
+  }
 
   label = new QLabel(this);
   label->setText(i18n("Associated with"));
@@ -94,6 +97,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   connect(button,SIGNAL(clicked()),this,SLOT(reject()));
 
   resize(430,340);
+  setFixedSize(430,340);
 
   if (folder)
   {

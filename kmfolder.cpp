@@ -38,7 +38,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1201
+#define INDEX_VERSION 1202
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -334,7 +334,7 @@ int KMFolder::createIndexFromContents(void)
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
-  QString subjStr, dateStr, fromStr, xmarkStr, *lastStr=NULL;
+  QString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
   QString whoFieldName;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
@@ -356,16 +356,17 @@ int KMFolder::createIndexFromContents(void)
   size    = 0;
   dateStr = "";
   fromStr = "";
+  toStr = "";
   subjStr = "";
   *status = '\0';
   *xstatus = '\0';
   xmarkStr = "";
   needStatus = 3;
-  whoFieldName = QString(whoField()) + ':';
-  whoFieldLen = whoFieldName.length();
+  whoFieldName = QString(whoField()) + ':'; //unused (sven)
+  whoFieldLen = whoFieldName.length();      //unused (sven)
 
-  debug("%s: whoField: %s (%d)", (const char*)mLabel,
-	(const char*)whoFieldName, whoFieldLen);
+  //debug("***whoField: %s (%d)",
+  //      (const char*)whoFieldName, whoFieldLen);
 
   while (!atEof)
   {
@@ -391,7 +392,7 @@ int KMFolder::createIndexFromContents(void)
 	if (size > 0)
 	{
 	  mi = new KMMsgInfo(this);
-	  mi->init(subjStr, fromStr, 0, KMMsgStatusNew, xmarkStr, offs, size);
+	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, offs, size);
 	  mi->setStatus(status,xstatus);
 	  mi->setDate(dateStr);
 	  mi->setDirty(FALSE);
@@ -451,11 +452,17 @@ int KMFolder::createIndexFromContents(void)
       dateStr = QString(line+6).copy();
       lastStr = &dateStr;
     }
-    else if (strncasecmp(line,whoFieldName,whoFieldLen)==0 && 
-	     isblank(line[whoFieldLen]))
+    else if (strncasecmp(line,"From:", 5)==0 &&
+	     isblank(line[5]))
     {
-      fromStr = QString(line+whoFieldLen+1).copy();
+      fromStr = QString(line+6).copy();
       lastStr = &fromStr;
+    }
+    else if (strncasecmp(line,"To:", 3)==0 &&
+	     isblank(line[3]))
+    {
+      toStr = QString(line+4).copy();
+      lastStr = &toStr;
     }
     else if (strncasecmp(line,"Subject:",8)==0 && isblank(line[8]))
     {
@@ -770,7 +777,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
-  if (msgText[len-1]!='\n') fwrite("\n", 1, 1, mStream);
+  if (msgText[len-1]!='\n') fwrite("\n\n", 1, 1, mStream);
   fflush(mStream);
   size = ftell(mStream) - offs;
 

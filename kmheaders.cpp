@@ -265,8 +265,10 @@ QString KMHeaders::msgAsLbxString(KMMsgBase* aMsg) const
   assert(aMsg!=NULL);
 
   flag = aMsg->status();
-
-  fromStr = KMMessage::stripEmailAddr(aMsg->from());
+  if (flag == KMMsgStatusQueued || flag == KMMsgStatusSent)
+    fromStr = KMMessage::stripEmailAddr(aMsg->to());
+  else
+    fromStr = KMMessage::stripEmailAddr(aMsg->from());
   if (fromStr.isEmpty()) fromStr = i18n("Unknown");
 
   subjStr = aMsg->subject();

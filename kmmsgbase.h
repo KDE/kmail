@@ -59,6 +59,7 @@ public:
   /** Important header fields of the message that are also kept in the index. */
   virtual const QString subject(void) const = 0;
   virtual const QString from(void) const = 0;
+  virtual const QString to(void) const = 0;
   virtual time_t date(void) const;
   virtual const QString dateStr(void) const;
   virtual const QString xmark(void) const = 0;
