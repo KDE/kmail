@@ -362,6 +362,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
     mDate = date();
 
   // Convert messages with a binary body into a message with attachment.
+#if 0
   QCString ct = dwContentType().TypeStr().c_str();
   QCString st = dwContentType().SubtypeStr().c_str();
   ct = ct.lower();
@@ -386,6 +387,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
   addBodyPart(&textPart);
   addBodyPart(&bodyPart);
   mNeedsAssembly = FALSE;
+#endif
 }
 
 

@@ -2380,7 +2380,7 @@ void KMReaderWin::parseMsg(void)
   int mainType = msg->type();
   bool isMultipart = ( DwMime::kTypeMultipart == mainType );
 
-  showHideMimeTree( isMultipart );
+  showHideMimeTree( DwMime::kTypeText != mainType );
 
   QString bkgrdStr = "";
   if (mBackingPixmapOn)
@@ -3392,10 +3392,7 @@ kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
   } else {
 kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
     if (!onlyProcessHeaders)
-      showHideMimeTree( (DwMime::kTypeMultipart   == rootNodeCntType) ||
-                        (DwMime::kTypeApplication == rootNodeCntType) ||
-                        (DwMime::kTypeMessage     == rootNodeCntType) ||
-                        (DwMime::kTypeModel       == rootNodeCntType) );
+      showHideMimeTree( DwMime::kTypeText != rootNodeCntType );
   }
   if( mColorBar->text().isEmpty() ) {
     mColorBar->setEraseColor( cCBnoHtmlB );
