@@ -92,6 +92,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   mVcnum = -1;
   mMsgDisplay = true;
   mPrinting = false;
+  mShowColorbar = false;
 
   initHtmlWidget();
   readConfig();
