@@ -453,6 +453,15 @@ void IdentityDialog::slotOk() {
       return;
     }
 
+    // check the Bcc address
+    const QString bcc = mBccEdit->text().stripWhiteSpace();
+    if ( !( isValidSimpleEmailAddress( bcc ) || bcc.isEmpty() )) {
+      QString errorMsg( simpleEmailAddressErrorMsg());
+      KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") ); //FIXME:change to Invalid Bcc Address after stringfreeze
+      return;
+    }
+
+
     const std::vector<GpgME::Key> & pgpSigningKeys = mPGPSigningKeyRequester->keys();
     const std::vector<GpgME::Key> & pgpEncryptionKeys = mPGPEncryptionKeyRequester->keys();
     const std::vector<GpgME::Key> & smimeSigningKeys = mSMIMESigningKeyRequester->keys();
