@@ -574,6 +574,8 @@ KMFolder::daysToExpire(int number, ExpireUnits units) {
     return number * 7;
   case expireMonths: // Months - this could be better rather than assuming 31day months.
     return number * 31;
+  default: // this avoids a compiler warning (not handled enumeration values)
+    ;
   }
 
   return -1;
