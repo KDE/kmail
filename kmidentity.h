@@ -17,55 +17,55 @@ public:
   static QStringList identities();
 
   /** Save a list of identity ids in the config file */
-  static void saveIdentities( QStringList ids, bool aWithSync = TRUE );
+  static void saveIdentities( const QStringList & ids, bool aWithSync=true );
 
   /** Returns an identity whose address matches with any in addressList **/
-  static QString matchIdentity( const QString &addressList );
+  static QString matchIdentity( const QString & addressList );
 
   /** Constructor loads config file */
-  KMIdentity( QString id );
+  KMIdentity( const QString & id );
 
   /** Destructor saves config file */
   ~KMIdentity();
 
   /** Read configuration from the global config */
-  void readConfig(void);
+  void readConfig();
 
   /** Write configuration to the global config with optional sync */
-  void writeConfig(bool withSync=TRUE) const;
+  void writeConfig(bool withSync=true) const;
 
   /** Tests if there are enough values set to allow mailing */
-  bool mailingAllowed(void) const;
+  bool mailingAllowed() const;
 
   /** Identity/nickname fot this collection */
-  QString identity(void) const { return mIdentity; }
+  QString identity() const { return mIdentity; }
 
   /** Full name of the user */
-  QString fullName(void) const { return mFullName; }
+  QString fullName() const { return mFullName; }
   void setFullName(const QString&);
 
   /** The user's organization (optional) */
-  QString organization(void) const { return mOrganization; }
+  QString organization() const { return mOrganization; }
   void setOrganization(const QString&);
 
   /** The user's PGP identity */
-  QCString pgpIdentity(void) const { return mPgpIdentity; }
+  QCString pgpIdentity() const { return mPgpIdentity; }
   void setPgpIdentity(const QCString&);
 
   /** email address (without the user name - only name@host) */
-  QString emailAddr(void) const { return mEmailAddr; }
+  QString emailAddr() const { return mEmailAddr; }
   void setEmailAddr(const QString&);
 
   /** vCard to attach to outgoing emails */
-  QString vCardFile(void) const { return mVCardFile; }
+  QString vCardFile() const { return mVCardFile; }
   void setVCardFile(const QString&);
 
   /** email address in the format "username <name@host>" suitable
     for the "From:" field of email messages. */
-  QString fullEmailAddr(void) const;
+  QString fullEmailAddr() const;
 
   /** email address for the ReplyTo: field */
-  QString replyToAddr(void) const { return mReplyToAddr; }
+  QString replyToAddr() const { return mReplyToAddr; }
   void setReplyToAddr(const QString&);
 
   /** @return true if the signature is read from the output of a command */
@@ -76,15 +76,15 @@ public:
   bool signatureIsInline() const { return !mUseSignatureFile; }
 
   /** name of the signature file (with path) */
-  QString signatureFile(void) const { return mSignatureFile; }
+  QString signatureFile() const { return mSignatureFile; }
   void setSignatureFile(const QString&);
 
   /** inline signature */
-  QString signatureInlineText(void) const { return mSignatureInlineText;}
+  QString signatureInlineText() const { return mSignatureInlineText;}
   void setSignatureInlineText(const QString&);
 
   /** Inline or signature from a file */
-  bool useSignatureFile(void) const { return mUseSignatureFile; }
+  bool useSignatureFile() const { return mUseSignatureFile; }
   void setUseSignatureFile(bool);
 
   /** Returns the signature. This method also takes care of special
@@ -96,17 +96,17 @@ public:
 
   /** The transport that is set for this identity. Used to link a
       transport with an identity. */
-  QString transport(void) const { return mTransport; }
+  QString transport() const { return mTransport; }
   void setTransport(const QString&);
 
   /** The folder where sent messages from this identity will be
       stored by default. */
-  QString fcc(void) const { return mFcc; }
+  QString fcc() const { return mFcc; }
   void setFcc(const QString&);
 
   /** The folder where draft messages from this identity will be
       stored by default. */
-  QString drafts(void) const { return mDrafts; }
+  QString drafts() const { return mDrafts; }
   void setDrafts(const QString&);
 
 protected:

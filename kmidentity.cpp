@@ -8,6 +8,8 @@
 
 #include <kapplication.h>
 
+#include <qstringlist.h>
+
 #include <pwd.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -36,14 +38,16 @@ QStringList KMIdentity::identities()
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::saveIdentities( QStringList ids, bool aWithSync )
+void KMIdentity::saveIdentities( const QStringList & ids, bool aWithSync )
 {
   KConfig* config = kapp->config();
   KConfigGroupSaver saver( config, "Identity" );
 
-  if (ids.contains( i18n( "Default" )))
-    ids.remove( i18n( "Default" ));
-  config->writeEntry( "IdentityList", ids );
+  QStringList list = ids;
+  QStringList::Iterator defaultIdentity = list.find( i18n("Default") );
+  if ( defaultIdentity != list.end() )
+    list.remove( defaultIdentity );
+  config->writeEntry( "IdentityList", list );
 
   if (aWithSync) config->sync();
 }
@@ -68,7 +72,7 @@ QString KMIdentity::matchIdentity( const QString &addressList )
 
 
 //-----------------------------------------------------------------------------
-KMIdentity::KMIdentity( QString id )
+KMIdentity::KMIdentity( const QString & id )
 {
   mIdentity = id;
 }
