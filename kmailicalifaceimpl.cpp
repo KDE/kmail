@@ -357,6 +357,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->addBodyPart( &firstPart );
 
 
+  Q_ASSERT( attachmentMimetypes.count() == attachmentURLs.count() );
+  Q_ASSERT( attachmentNames.count() == attachmentURLs.count() );
   // Add all attachments by reading them from their temp. files
   QStringList::ConstIterator itmime = attachmentMimetypes.begin();
   QStringList::ConstIterator iturl = attachmentURLs.begin();
@@ -691,7 +693,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 {
   Q_UINT32 rc = 0;
 
-  // This finds the message with serial number "id", sets the
+  // This finds the message with serial number "sernum", sets the
   // xml attachments to hold the contents of "xml", and updates all
   // attachments.
   // The mail can have additional attachments, and these are not
@@ -707,6 +709,9 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     return rc;
 
   kdDebug(5006) << "KMailICalIfaceImpl::update( " << resource << ", " << sernum << " )\n";
+  kdDebug(5006) << attachmentURLs << "\n";
+  kdDebug(5006) << attachmentMimetypes << "\n";
+  kdDebug(5006) << attachmentNames << "\n";
 
   // Find the folder
   KMFolder* f = findResourceFolder( resource );
@@ -721,7 +726,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
-  kdDebug(5006) << "Updating in folder " << f << endl;
+  kdDebug(5006) << "Updating in folder " << f << " " << f->location() << endl;
   KMMessage* msg = 0;
   if ( sernum != 0 )
     msg = findMessageBySerNum( sernum, f );
@@ -759,7 +764,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
         f->addMsg( newMsg );
     }
 
-
+    rc = sernum;
   }else{
     // Message not found - store it newly
     rc = addIncidenceKolab( *f, subject,
@@ -811,21 +816,15 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
     DwBodyPart* part = msg->getFirstDwBodyPart();
     while( part ){
       if( filename == part->partId() ){
-        // Save the xml file. Will be deleted at the end of this method
+        // Save the contents of the attachment.
         KMMessagePart aPart;
         msg->bodyPart( part, &aPart );
         QByteArray rawData( aPart.bodyDecodedBinary() );
 
         KTempFile file;
-        file.setAutoDelete( true );
-        QTextStream* stream = file.textStream();
-        stream->setEncoding( QTextStream::UnicodeUTF8 );
-        stream->writeRawBytes( rawData.data(), rawData.size() );
-        file.close();
+        file.file()->writeBlock( rawData.data(), rawData.size() );
 
-        // Compose the return value
         url.setPath( file.name() );
-        url.setFileEncoding( "UTF-8" );
 
         bOK = true;
         break;
@@ -1099,8 +1098,8 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* f
   KMFolder* aFolder = 0;
   int index;
   kmkernel->msgDict()->getLocation( serNum, &aFolder, &index );
-  if( aFolder != folder ){
-    kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) folder not matching\n" << endl;
+  if( aFolder && aFolder != folder ){
+    kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) found it in folder " << aFolder->location() << ", expected " << folder->location() << endl;
   }else{
     if( aFolder )
       message = aFolder->getMsg( index );
