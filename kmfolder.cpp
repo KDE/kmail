@@ -551,10 +551,11 @@ void KMFolder::reallyAddMsg(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
   int index;
+  QString md5 = aMsg->msgIdMD5();
   addMsg(aMsg, &index);
   if (index < 0) return;
-  KMMsgBase *mb = unGetMsg(count() - 1);
-  kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
+  unGetMsg(index);
+  kernel->undoStack()->pushAction( md5, folder, this );
 }
 
 
