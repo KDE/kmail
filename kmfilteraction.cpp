@@ -1,4 +1,3 @@
-#undef QT_NO_COMPAT // fixable as soon as KMMessage:;asString returns a QCString
 // kmfilteraction.cpp
 // The process methods really should use an enum instead of an int
 // -1 -> status unchanged, 0 -> success, 1 -> failure, 2-> critical failure
@@ -354,7 +353,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       aTempFileList.append( tf );
       tempFileName = tf->name();
       if ((*it) == -1)
-        kCStringToFile( aMsg->asString().data(), tempFileName,
+        kCStringToFile( aMsg->asString(), tempFileName, //###
                           false, false, false );
       else if (aMsg->numBodyParts() == 0)
         kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
@@ -1210,7 +1209,7 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
   QString msgText, tempFileName;
 
   tempFileName = inFile->name();
-  kCStringToFile( aMsg->asString().data(), tempFileName,
+  kCStringToFile( aMsg->asString(), tempFileName, //###
 		  false, false, false );
   inFile->close();
 

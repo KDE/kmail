@@ -139,7 +139,7 @@ bool KMMessage::isMessage(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::asString(void)
+QCString KMMessage::asString(void)
 {
   if (mNeedsAssembly)
   {

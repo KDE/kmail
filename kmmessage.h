@@ -80,8 +80,16 @@ public:
   /** Parse the string and create this message from it. */
   virtual void fromString(const QString& str, bool setStatus=FALSE);
 
-  /** Return the entire message contents as a string. */
-  virtual QString asString(void);
+  /** Return the entire message contents as a string. This function is
+      slow for large message since it involves a string copy. If you
+      need the string representation only for a short time
+      (i.e. without the chance of calling any function in the
+      underlying mimelib, then you should use the @ref asByteArray,
+      which is more efficient.
+      @see asByteArray
+  */
+  virtual QCString asString(void);
+
   /** Return header as string. */
   virtual QString headerAsString(void) const;
 
