@@ -297,6 +297,13 @@ public:
   virtual void setComplete(bool value)
   { mIsComplete = value; }
 
+  /** Return, if the message should not be deleted */
+  virtual bool transferInProgress() { return mTransferInProgress; }
+
+  /** Set that the message shall not be deleted because it is still required */
+  virtual void setTransferInProgress(bool value)
+  { mTransferInProgress = value; }
+
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig(void);
@@ -312,7 +319,7 @@ protected:
 
 protected:
   DwMessage* mMsg;
-  bool       mNeedsAssembly, mIsComplete;
+  bool       mNeedsAssembly, mIsComplete, mTransferInProgress;
   static int sHdrStyle;
   static QString sForwardStr;
   QTextCodec* mCodec;

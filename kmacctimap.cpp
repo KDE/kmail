@@ -388,12 +388,14 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
       folder->getMsgString(idx, cstr);
       a = cstr.find("X-UID: ");
       b = cstr.find("\n", a);
-      mailUid = cstr.mid(a + 7, b - a - 7).toLong();
+      if (a == -1 || b == -1) mailUid = -1;
+      else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
       serverUid = (*uid).toLong();
       if (mailUid < serverUid) folder->removeMsg(idx, TRUE);
       else if (mailUid > serverUid) uid++;
       else { idx++; uid = (*it).items.remove(uid); }
     }
+    while (idx < folder->count()) folder->removeMsg(idx, TRUE);
   }
   jobData jd;
   jd.parent = (*it).parent;
@@ -485,7 +487,7 @@ void KMAcctImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     if (flags & 2) msg->setStatus(KMMsgStatusReplied); else
     if (flags & 1) msg->setStatus(KMMsgStatusRead);
     KMFolder *kf = (*it).parent->folder;
-    kf->addMsg(msg);
+    kf->addMsg(msg, NULL, TRUE);
     if (kf->count() > 1) kf->unGetMsg(kf->count() - 1);
     if (kf->count() % 100 == 0) { kf->quiet(FALSE); kf->quiet(TRUE); }
     (*it).cdata.remove(0, pos);
@@ -563,6 +565,7 @@ void KMAcctImap::slotCreateFolderResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 KMImapJob::KMImapJob(QList<KMMessage> msgList, KMFolder *destFolder)
 {
+  mType = tGetMessage;
   mSingleMessage = false;
   mDestFolder = destFolder;
   mMsgList = msgList;
@@ -572,12 +575,40 @@ KMImapJob::KMImapJob(QList<KMMessage> msgList, KMFolder *destFolder)
 
 
 //-----------------------------------------------------------------------------
-KMImapJob::KMImapJob(KMMessage *msg)
+KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
 {
+  assert(!put || folder);
+  mType = (put) ? tPutMessage : tGetMessage;
   mSingleMessage = true;
+  mDestFolder = folder;
   mMsgList.append(msg);
-  msg->parent()->account()->mJobList.append(this);
-  slotGetNextMessage();
+  KMAcctImap *account = (folder) ? folder->account() : msg->parent()->account();
+  account->mJobList.append(this);
+  if (put)
+  {
+    KURL url = account->getUrl();
+    url.setPath(folder->imapPath());
+    KMAcctImap::jobData jd;
+    jd.parent = NULL;
+    jd.total = 1; jd.done = 0;
+    QCString cstr(msg->asString());
+    int a = cstr.find("\nX-UID: ");
+    int b = cstr.find("\n", a);
+    if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
+    mData = cstr;
+    account->makeConnection();
+    KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
+    KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
+    mJob = simpleJob;
+    account->mapJobData.insert(mJob, jd);
+    connect(mJob, SIGNAL(result(KIO::Job *)),
+            SLOT(slotPutMessageResult(KIO::Job *)));
+    connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
+            SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)));
+    account->displayProgress();
+  } else {
+    slotGetNextMessage();
+  }
 }
 
 
@@ -627,6 +658,36 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
       emit messageRetrieved(mMsgList.first());
     else
       emit messagesRetrieved(mMsgList, mDestFolder);
+  }
+  account->mapJobData.remove(it);
+  account->displayProgress();
+  account->mJobList.remove(this);
+  delete this;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
+{
+  assert(mJob == job);
+  data = mData;
+  mData.resize(0);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMImapJob::slotPutMessageResult(KIO::Job *job)
+{
+  KMAcctImap *account = mDestFolder->account();
+  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    account->mapJobData.find(job);
+  if (it == account->mapJobData.end()) return;
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
+  } else {
+    emit messageStored(mMsgList.first());
   }
   account->mapJobData.remove(it);
   account->displayProgress();

@@ -62,6 +62,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
   mMsg = aMsg;
   mCodec = NULL;
   mIsComplete = FALSE;
+  mTransferInProgress = FALSE;
 }
 
 
@@ -92,6 +93,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mMsg = new DwMessage;
   mCodec = NULL;
   mIsComplete = FALSE;
+  mTransferInProgress = FALSE;
 }
 
 
@@ -102,6 +104,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
   mMsg = new DwMessage;
   mCodec = NULL;
   mIsComplete = FALSE;
+  mTransferInProgress = FALSE;
 
   assign(&msgInfo);
 }

@@ -50,14 +50,17 @@ class KMImapJob : public QObject
 
 public:
   KMImapJob(QList<KMMessage> msgList, KMFolder *destFolder);
-  KMImapJob(KMMessage *msg);
+  KMImapJob(KMMessage *msg, bool put = false, KMFolder *folder = NULL);
   static void killJobsForMessage(KMMessage *msg);
 signals:
   void messagesRetrieved(QList<KMMessage>, KMFolder*);
   void messageRetrieved(KMMessage *);
+  void messageStored(KMMessage *);
 private slots:
   void slotGetMessageResult(KIO::Job * job);
   void slotGetNextMessage();
+  void slotPutMessageDataReq(KIO::Job *job, QByteArray &data);
+  void slotPutMessageResult(KIO::Job *job);
 private:
   enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
     tGetMessage, tPutMessage };

@@ -1190,7 +1190,9 @@ int KMFolder::find(const QString& msgIdMD5) const
 void KMFolder::reallyAddMsg(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
-  addMsg(aMsg);
+  int index;
+  addMsg(aMsg, &index);
+  if (index < 0) return;
   KMMsgBase *mb = unGetMsg(count() - 1);
   kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
 }
@@ -1206,7 +1208,17 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
+void KMFolder::addMsgQuiet(KMMessage* aMsg)
+{
+  KMFolder *folder = aMsg->parent();
+  addMsg( aMsg, NULL, TRUE );
+  KMMsgBase *mb = unGetMsg(count() - 1);
+  kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 {
   long offs, size, len, revert;
   bool opened = FALSE;
@@ -1250,6 +1262,16 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       if (aIndex_ret) *aIndex_ret = -1;
       return 0;
     }
+  }
+
+  if (mAccount && !imapQuiet)
+  {
+    aMsg->setTransferInProgress(TRUE);
+    KMImapJob *imapJob = new KMImapJob(aMsg, TRUE, this);
+    connect(imapJob, SIGNAL(messageStored(KMMessage*)),
+      SLOT(addMsgQuiet(KMMessage*)));
+    if (aIndex_ret) *aIndex_ret = -1;
+    return 0;
   }
 
   aMsg->setStatusFields();

@@ -113,7 +113,8 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
+  virtual int addMsg(KMMessage* msg, int* index_return = NULL,
+    bool imapQuiet = FALSE);
 
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
@@ -306,6 +307,9 @@ public slots:
   /** Add the message to the folder after it has been retrieved from an IMAP
       server */
   virtual void reallyAddMsg(KMMessage *);
+
+  /** Add a message to a folder after is has been added on an IMAP server */
+  virtual void addMsgQuiet(KMMessage *);
 
   /** Add a copy of the message to the folder after it has been retrieved
       from an IMAP server */

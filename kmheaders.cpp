@@ -1409,7 +1409,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
-  int top, rc, idx = -1;
+  int top, rc, index, idx = -1;
   bool isMessage;
 
   if (!destFolder) return;
@@ -1441,8 +1441,9 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
       connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
         destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
     } else {
-      rc = destFolder->addMsg(newMsg);
-      destFolder->unGetMsg( destFolder->count() - 1 );
+      rc = destFolder->addMsg(newMsg, &index);
+      if (rc == 0 && index != -1)
+        destFolder->unGetMsg( destFolder->count() - 1 );
     }
     if (!isMessage)
     {
@@ -1743,7 +1744,8 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
     {
       if (mFolder->account()) KMImapJob::killJobsForMessage(
         mFolder->getMsg(mPrevCurrent->msgId()));
-      mFolder->unGetMsg(mPrevCurrent->msgId());
+      if (!mFolder->getMsg(mPrevCurrent->msgId())->transferInProgress())
+        mFolder->unGetMsg(mPrevCurrent->msgId());
     }
     mPrevCurrent = item;
   }
