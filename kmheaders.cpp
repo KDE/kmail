@@ -535,7 +535,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
                      const char *name) :
   KListView(parent, name)
 {
-    static bool pixmapsLoaded = false;
+  static bool pixmapsLoaded = false;
   //qInitImageIO();
   KImageIO::registerFormats();
   mOwner  = aOwner;
@@ -827,8 +827,8 @@ void KMHeaders::refreshNestedState(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
 {
+  if (!mFolder) return;
   KConfig* config = KMKernel::config();
-  assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
@@ -857,10 +857,9 @@ void KMHeaders::readFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeFolderConfig (void)
 {
+  if (!mFolder) return;
   KConfig* config = KMKernel::config();
   int mSortColAdj = mSortCol + 1;
-
-  assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
@@ -883,7 +882,7 @@ void KMHeaders::writeConfig (void)
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
+void KMHeaders::setFolder (KMFolder *aFolder)
 {
   CREATE_TIMER(set_folder);
   START_TIMER(set_folder);
@@ -894,12 +893,12 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
   mSortInfo.fakeSort = 0;
   // carsten: really needed?
 //  setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
-  if (mFolder && mFolder==aFolder) {
+  if ( mFolder && static_cast<KMFolder*>(mFolder) == aFolder ) {
     int top = topItemIndex();
     id = currentItemIndex();
     writeFolderConfig();
     readFolderConfig();
-    updateMessageList();
+    updateMessageList(); // do not change the selection
     setCurrentMsg(id);
     setTopItemByIndex(top);
   } else {
@@ -937,9 +936,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
-    mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingListEnabled() :
-      false);
+    mOwner->editAction()->setEnabled(mFolder ?  
+        (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
+    mOwner->replyListAction()->setEnabled(mFolder ? 
+        mFolder->isMailingListEnabled() : false);
     if (mFolder)
     {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
@@ -988,7 +988,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
   CREATE_TIMER(updateMsg);
   START_TIMER(updateMsg);
-  updateMessageList(!jumpToFirst); // jumpToFirst seem inverted - don
+  updateMessageList(true); 
   END_TIMER(updateMsg);
   SHOW_TIMER(updateMsg);
   makeHeaderVisible();
@@ -1040,7 +1040,8 @@ void KMHeaders::msgChanged()
              this,SLOT(highlightMessage(QListViewItem*)));
   // remember all selected messages
   QValueList<int> curItems = selectedItems();
-  updateMessageList();
+  updateMessageList(); // do not change the selection
+  // restore the old state
   setTopItemByIndex( i );
   setCurrentMsg( cur );
   setSelectedByIndex( curItems, true );
@@ -1518,7 +1519,8 @@ void KMHeaders::styleChange( QStyle& oldStyle )
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
-  QString str = ( mFolder == kmkernel->outboxFolder() )
+  if ( !mFolder ) return;
+  QString str = ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
                 ? i18n( "1 unsent", "%n unsent", mFolder->countUnread() )
                 : i18n( "1 unread", "%n unread", mFolder->countUnread() );
   str = i18n( "1 message, %1.", "%n messages, %1.", mFolder->count() )
@@ -2159,7 +2161,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
 
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
   if (lvi != mPrevCurrent) {
-    if (mPrevCurrent)
+    if (mPrevCurrent && mFolder)
     {
       KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
       if (prevMsg && mReaderWindowActive)
@@ -3309,8 +3311,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
             new_kci->setItem(mItems[new_kci->id()] = khi);
             if(new_kci->hasChildren())
                 s.enqueue(new_kci);
-            if(set_selection && mFolder->getMsgBase(new_kci->id())->isNew() ||
-                set_selection && mFolder->getMsgBase(new_kci->id())->isUnread() )
+            if(GlobalSettings::jumpToUnread() && mFolder->getMsgBase(new_kci->id())->isNew() ||
+                GlobalSettings::jumpToUnread() && mFolder->getMsgBase(new_kci->id())->isUnread() )
                 unread_exists = true;
         }
         // If we are sorting by date and ascending the top level items are sorted

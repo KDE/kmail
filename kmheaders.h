@@ -46,7 +46,7 @@ public:
   virtual ~KMHeaders();
 
   /** A new folder has been selected update the list of headers shown */
-  virtual void setFolder(KMFolder *, bool jumpToFirst = false);
+  virtual void setFolder(KMFolder *);
 
   /** Return the folder whose message headers are being displayed */
   KMFolder* folder(void) { return mFolder; }
@@ -312,7 +312,7 @@ private:
   virtual void updateMessageList( bool set_selection=false );
 
   /** Currently associated folder */
-  KMFolder* mFolder;
+  QGuardedPtr<KMFolder> mFolder;
   /** The KMMainWin for status bar updates */
   KMMainWidget* mOwner;
   /** Top most visible item */

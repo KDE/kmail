@@ -48,6 +48,7 @@
 #include "kmfoldertree.h"
 #include "kmreadermainwin.h"
 #include "kmfoldercachedimap.h"
+#include "kmfolderimap.h"
 #include "kmacctcachedimap.h"
 #include "kmcomposewin.h"
 #include "kmfolderseldlg.h"
@@ -376,7 +377,6 @@ void KMMainWidget::readConfig(void)
       activatePanners();
     }
 
-    //    kmkernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
     if (qlvi!=0) {
@@ -386,7 +386,7 @@ void KMMainWidget::readConfig(void)
 
 
     // sanders - New code
-    mHeaders->setFolder(mFolder, true);
+    mHeaders->setFolder(mFolder);
     if (mMsgView) {
       int aIdx = mHeaders->currentItemIndex();
       if (aIdx != -1)
@@ -1621,36 +1621,34 @@ void KMMainWidget::slotCycleAttachmentStrategy() {
   action->setChecked( true );
 }
 
-void KMMainWidget::folderSelected(KMFolder* aFolder)
-{
-    folderSelected( aFolder, false );
-}
-
 StatusbarProgressWidget* KMMainWidget::progressWidget() const
 {
-    return mLittleProgress;
+  return mLittleProgress;
 }
 
 void KMMainWidget::folderSelectedUnread(KMFolder* aFolder)
 {
-    mHeaders->blockSignals( true );
-    folderSelected( aFolder, true );
-    QListViewItem *item = mHeaders->firstChild();
-    while (item && item->itemAbove())
-	item = item->itemAbove();
-    mHeaders->setCurrentItem( item );
-    mHeaders->nextUnreadMessage(true);
-    mHeaders->blockSignals( false );
-    mHeaders->highlightMessage( mHeaders->currentItem() );
-    slotChangeCaption(mFolderTree->currentItem());
+  mHeaders->blockSignals( true );
+  folderSelected( aFolder );
+  QListViewItem *item = mHeaders->firstChild();
+  while (item && item->itemAbove())
+    item = item->itemAbove();
+  mHeaders->setCurrentItem( item );
+  mHeaders->nextUnreadMessage(true);
+  mHeaders->blockSignals( false );
+  mHeaders->highlightMessage( mHeaders->currentItem() );
+  slotChangeCaption(mFolderTree->currentItem());
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
+void KMMainWidget::folderSelected()
 {
-  if( aFolder && mFolder == aFolder )
-    return;
+  folderSelected( mFolder );
+}
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::folderSelected(KMFolder* aFolder)
+{
   KCursorSaver busy(KBusyPtr::busy());
 
   if (mMsgView)
@@ -1664,13 +1662,14 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     if( mSearchAndHeaders && mHeaders )
       mSearchAndHeaders->show();
   }
-
-  if (mFolder && mFolder->needsCompacting() && (mFolder->folderType() == KMFolderTypeImap))
+  
+  if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
-    if (imap->autoExpunge())
+    if ( mFolder->needsCompacting() && imap->autoExpunge() )
       imap->expungeFolder(imap, TRUE);
   }
+
   writeFolderConfig();
   if ( mFolder ) {
     disconnect( mFolder, SIGNAL( changed() ),
@@ -1681,9 +1680,27 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
            this, SLOT( updateMarkAsReadAction() ) );
     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-
   }
-  mFolder = (KMFolder*)aFolder;
+
+  bool newFolder = ( mFolder != aFolder );
+  mFolder = aFolder;
+  if ( aFolder && aFolder->folderType() == KMFolderTypeImap )
+  {
+    KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
+    if ( newFolder )
+    {
+      imap->setSelected( true );
+      connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+          this, SLOT( folderSelected() ) );
+      imap->getAndCheckFolder();
+      mHeaders->setFolder( 0 );
+      return;
+    } else {
+      disconnect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+          this, SLOT( folderSelected() ) );
+    }
+  }
+
   if ( mFolder ) { // == 0 -> pointing to toplevel ("Welcome to KMail") folder
     connect( mFolder, SIGNAL( changed() ),
            this, SLOT( updateMarkAsReadAction() ) );
@@ -1694,11 +1711,10 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     connect( mFolder, SIGNAL( msgRemoved(KMFolder *) ),
            this, SLOT( updateMarkAsReadAction() ) );
   }
-
   readFolderConfig();
   if (mMsgView)
     mMsgView->setHtmlOverride(mFolderHtmlPref);
-  mHeaders->setFolder( mFolder, jumpToUnread );
+  mHeaders->setFolder( mFolder );
   updateMessageActions();
   updateFolderMenu();
   if (!aFolder)

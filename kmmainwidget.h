@@ -132,7 +132,6 @@ public:
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
   KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
 
-  void folderSelected(KMFolder*, bool jumpToUnread);
   KMHeaders *headers() const { return mHeaders; }
   StatusbarProgressWidget* progressWidget() const;
   ProgressDialog* progressDialog() const { return mProgressDialog; }
@@ -155,8 +154,16 @@ public slots:
   /** sven: moved here as public */
   void slotCheckMail();
 
-  /** Output given message in the statusbar message field. */
-  void folderSelected(KMFolder*);
+  /** 
+   * Select the given folder
+   * If the folder is 0 the intro is shown 
+   */
+  void folderSelected( KMFolder* );
+
+  /** Reselect current folder */
+  void folderSelected();
+
+  /** Select the folder and jump to the next unread msg */
   void folderSelectedUnread( KMFolder* );
 
   void slotMsgSelected(KMMessage*);

@@ -808,7 +808,6 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
       // uidValidity changed
       kdDebug(5006) << "KMFolderImap::slotCheckValidityResult uidValidty changed." << endl;
       mAccount->ignoreJobsForFolder( folder() );
-      expunge();
       mLastUid = 0;
       uidmap.clear();
       setUidValidity(uidv);
@@ -836,6 +835,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMFolderImap::getAndCheckFolder(bool force)
 {
+  open();
   if (mNoContent)
     return getFolder(force);
 
@@ -973,7 +973,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     // next step for the progressitem
     mMailCheckProgressItem->setProgress( 0 );
-    mMailCheckProgressItem->setTotalItems( (*it).items.count() );
+    mMailCheckProgressItem->setTotalItems( jd.total );
     mMailCheckProgressItem->updateProgress();
     mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
   }
@@ -1124,6 +1124,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
   int flags;
+  open();
   while (pos >= 0)
   {
     if ( mMailCheckProgressItem )
@@ -1169,7 +1170,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         // delete the entry
         uidmap.remove(uid);
       }
-      open();
       KMFolderMbox::addMsg(msg, 0);
       // Transfer the status, if it is cached.
       QString id = msg->msgIdMD5();
@@ -1186,7 +1186,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       // set the correct size
       msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
       msg->setUID(uid);
-      close();
 
       if (count() > 1) unGetMsg(count() - 1);
       mLastUid = uid;
@@ -1194,7 +1193,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
-  }
+  } // while
+  close();
 }
 
 //-------------------------------------------------------------

@@ -810,17 +810,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   }
   else {
     emit folderSelected(folder);
-    if (folder->folderType() == KMFolderTypeImap)
-    {
-      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder->storage());
-      imap_folder->setSelected(TRUE);
-      if (imap_folder->getContentState() != KMFolderImap::imapInProgress)
-        imap_folder->getAndCheckFolder();
-    } else {
-      // we don't need this for imap-folders because
-      // they're updated with the folderComplete-signal
-      slotUpdateCounts(folder);
-    }
+    slotUpdateCounts(folder);
   }
 }
 
