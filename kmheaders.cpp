@@ -1272,6 +1272,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   START_TIMER(msgRemoved);
 
   KMHeaderItem *removedItem = mItems[id];
+  KMHeaderItem *currentItem = currentHeaderItem();
+
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
@@ -1344,6 +1346,9 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
 
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
+  // we might have rethreaded it, in which case its current state will be lost
+  if ( currentItem && currentItem != removedItem )
+    setCurrentItem( currentItem );
   END_TIMER(msgRemoved);
   SHOW_TIMER(msgRemoved);
 
