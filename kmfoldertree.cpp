@@ -244,6 +244,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   oldCurrent = 0;
   mLastItem = 0;
   mMainWidget = mainWidget;
+  mReloading = false;
 
   addAcceptableDropMimetype(MailListDrag::format(), false);
 
@@ -423,12 +424,21 @@ void KMFolderTree::updateUnreadAll()
 // Reload the tree of items in the list view
 void KMFolderTree::reload(bool openFolders)
 {
+  if ( mReloading ) {
+    // no parallel reloads are allowed
+    kdDebug(5006) << "KMFolderTree::reload - already reloading" << endl;
+    return;
+  }
+  mReloading = true;
+  
   int top = contentsY();
   mLastItem = 0;
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     writeIsListViewItemOpen( fti );
   }
+  // remember last
+  KMFolder* last = currentFolder();
   clear();
 
   // construct the root of the local folders
@@ -506,6 +516,14 @@ void KMFolderTree::reload(bool openFolders)
   }
   ensureVisible(0, top + visibleHeight(), 0, 0);
   refresh();
+  if ( last )
+  {
+    // if the current folder did not change set it again
+    for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
+      if ( static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
+        mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
+  }
+  mReloading = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -1099,6 +1117,8 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 //-----------------------------------------------------------------------------
 void KMFolderTree::cleanupConfigFile()
 {
+  if ( childCount() == 0 )
+    return; // just in case reload wasn't called before
   KConfig* config = KMKernel::config();
   QStringList existingFolders;
   QListViewItemIterator fldIt(this);
@@ -1602,6 +1622,18 @@ void KMFolderTree::slotResetFolderList( QListViewItem* item, bool startList )
     folder->setSubfolderState( KMFolderImap::imapNoInformation );
     if ( startList )
       folder->listDirectory();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::showFolder( KMFolder* folder )
+{
+  if ( !folder ) return;
+  QListViewItem* item = indexOfFolder( folder );
+  if ( item )
+  {
+    doFolderSelected( item );
+    ensureItemVisible( item );
   }
 }
 

@@ -154,6 +154,9 @@ public:
   /** Returns the main widget that this widget is a child of. */
   KMMainWidget * mainWidget() const { return mMainWidget; }
 
+  /** Select the folder and make sure it's visible */
+  void showFolder( KMFolder* );
+
 signals:
   /** The selected folder has changed */
   void folderSelected(KMFolder*);
@@ -310,6 +313,7 @@ private:
   /** show popup after D'n'D? */
   bool mShowPopupAfterDnD;
   KMMainWidget *mMainWidget;
+  bool mReloading;
 };
 
 #endif
