@@ -1821,4 +1821,16 @@ Wallet *KMKernel::wallet() {
   return mWallet;
 }
 
+QValueList< QGuardedPtr<KMFolder> > KMKernel::allFolders()
+{
+  QStringList names;
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  folderMgr()->createFolderList(&names, &folders);
+  imapFolderMgr()->createFolderList(&names, &folders);
+  dimapFolderMgr()->createFolderList(&names, &folders);
+  searchFolderMgr()->createFolderList(&names, &folders);
+  
+  return folders;
+}
+
 #include "kmkernel.moc"

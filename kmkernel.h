@@ -5,6 +5,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
+#include <qguardedptr.h>
 #include <weaver.h>
 #include <weaverlogger.h>
 
@@ -280,6 +281,9 @@ public:
 
   /** Get first mainwidget */
   KMMainWidget *getKMMainWidget();
+
+  /** @return a list of all folders from all folder managers. */
+  QValueList< QGuardedPtr<KMFolder> > allFolders();
 
 public slots:
 
