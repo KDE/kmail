@@ -376,6 +376,7 @@ namespace KMail {
     bool mACLSupport : 1;
     bool mAnnotationSupport : 1;
     bool mSlaveConnected : 1;
+    bool mSlaveConnectionError : 1;
 
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;

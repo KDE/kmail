@@ -1677,7 +1677,7 @@ bool KMFolderImap::processNewMail(bool)
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
     // wait
-    kdDebug(5006) << "KMFolderImap::processNewMail - waiting for connection" << endl;
+    kdDebug(5006) << "KMFolderImap::processNewMail - waiting for connection: " << label() << endl;
     connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
         this, SLOT( slotProcessNewMail(int, const QString&) ) );
     return true;
