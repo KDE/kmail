@@ -22,6 +22,7 @@ class QComboBox;
 class QLineEdit;
 class QRadioButton;
 class QPushButton;
+class QWidgetStack;
 
 /** A widget to edit a single KMSearchRule.
     It consists of an editable @ref QComboBox for the field,
@@ -69,15 +70,20 @@ signals:
 
 protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
-      english */
+      english. */
   static QCString ruleFieldToEnglish(const QString & i18nVal);
+  /** Used internally to translate i18n-ized status strings back to
+      english. */
+  static QCString statusToEnglish(const QString & i18nVal);
   /** Used internally to find the corresponding index into the field
       ComboBox. Returns the index if found or -1 if the search failed, */
   int indexOfRuleField(const QString & aName) const;
+  int indexOfStatus(const QString & aStatus) const;
 
 protected slots:
   void editRegExp();
   void functionChanged( int which );
+  void slotRuleChanged( int which );
 
 private:
   void initWidget();
@@ -85,10 +91,12 @@ private:
 
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
-  QLineEdit* mRuleValue;
+  QWidgetStack* mValueWidgetStack;
+  QLineEdit* mRuleValue; // used for all but status searches
+  QComboBox* mStati;     // special case of a status search
   QPushButton* mRuleEditBut;
   QDialog* mRegExpEditDialog;
-  QStringList mFilterFieldList, mFilterFuncList;
+  QStringList mFilterFieldList, mFilterFuncList, mStatiList;
 };
 
 

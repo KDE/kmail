@@ -429,8 +429,8 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
                                         Function func, const QString & aContents )
           : KMSearchRule(field, func, aContents)
 {
-  // FIXME do this more elegantly once we have a drop down for selecting stati in
-  // the gui.
+  // the values are always in english, both from the conf file as well as
+  // the patternedit gui
   if ( ! aContents.compare("new") )
     mStatus = KMMsgStatusNew;
   if ( ! aContents.compare("unread") )
