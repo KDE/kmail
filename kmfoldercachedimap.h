@@ -223,6 +223,20 @@ public:
   // For kmailicalifaceimpl only
   void updateAnnotationFolderType();
 
+  /// Free-busy and alarms relevance of this folder, i.e. for whom should
+  /// events in this calendar lead to "busy" periods in their freebusy lists,
+  /// and who should get alarms for the incidences in this folder.
+  /// Applies to Calendar and Task folders only.
+  ///
+  /// IncForNobody: not relevant for free-busy and alarms to anybody
+  /// IncForOwner: free-busy and alarms relevant for the owner of the calendar only
+  /// IncForReaders: free-busy relevant for all readers of this calendar
+  enum IncidencesFor { IncForNobody, IncForOwner, IncForReaders };
+
+  IncidencesFor incidencesFor() const { return mIncidencesFor; }
+  /// For the folder properties dialog
+  void setIncidencesFor( IncidencesFor incfor );
+
 protected slots:
   /**
    * Connected to ListJob::receivedFolders
@@ -251,6 +265,8 @@ protected slots:
 
   void slotMultiSetACLResult(KIO::Job *);
   void slotACLChanged( const QString&, int );
+  void slotAnnotationResult(const QString& entry, const QString& value, bool found);
+  void slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value );
   void slotDeleteMessagesResult(KMail::FolderJob *);
   void slotImapStatusChanged(KMFolder* folder, const QString&, bool);
 
@@ -349,6 +365,7 @@ private:
   QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
   QString     mAnnotationFolderType;
+  IncidencesFor mIncidencesFor;
 
   bool        mHasInbox;
   bool        mIsSelected;
@@ -402,8 +419,10 @@ private:
       uploaded to the server, overwriting the server's notion of the status
       of the mails in this folder. */
   bool mStatusChangedLocally;
-  /// Set to true when the annotation needs to be set on the next sync
+  /// Set to true when the foldertype annotation needs to be set on the next sync
   bool mAnnotationFolderTypeChanged;
+  /// Set to true when the "incidences-for" annotation needs to be set on the next sync
+  bool mIncidencesForChanged;
 };
 
 #endif /*kmfoldercachedimap_h*/

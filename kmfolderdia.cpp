@@ -46,6 +46,7 @@
 #include "folderdiaacltab.h"
 #include "kmailicalifaceimpl.h"
 #include "kmmainwidget.h"
+#include "globalsettings.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -435,8 +436,61 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mContentsComboBox->insertItem( i18n( "Journal" ) );
     if ( mDlg->folder() )
       mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
-  } else
+    connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
+              this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
+  } else {
     mContentsComboBox = 0;
+  }
+
+  // Kolab incidences-for annotation.
+  // Show incidences-for combobox if the contents type can be changed (new folder),
+  // or if it's set to calendar or task (existing folder)
+  if ( ( GlobalSettings::theIMAPResourceStorageFormat() ==
+         GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
+       ( mContentsComboBox ||
+         ( mDlg->folder() && ( mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeCalendar
+                               || mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeTask ) ) ) ) {
+    mIncidencesForGroup = new QGroupBox( i18n("Relevance of Events and Tasks" ), this );
+    mIncidencesForGroup->setColumnLayout( 0, Qt::Vertical );
+    QHBoxLayout *relevanceLayout = new QHBoxLayout( mIncidencesForGroup->layout() );
+    relevanceLayout->setSpacing( 6 );
+    topLayout->addWidget( mIncidencesForGroup );
+
+    QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), mIncidencesForGroup );
+    relevanceLayout->addWidget( label );
+    mIncidencesForComboBox = new QComboBox( mIncidencesForGroup );
+    label->setBuddy( mIncidencesForComboBox );
+    relevanceLayout->addWidget( mIncidencesForComboBox, 3 );
+
+    QWhatsThis::add( mIncidencesForComboBox,
+                     i18n( "This setting defines which users sharing "
+                           "this folder should get \"busy\" periods in their freebusy lists "
+                           "and should see the alarms for the events or tasks in this folder. "
+                           "The setting applies to Calendar and Task folders only "
+                           "(for tasks, this setting is only used for alarms).\n\n"
+                           "Example use cases: if the boss shares a folder with his secretary, "
+                           "only the boss should be marked as busy for his meetings, so he should "
+                           "select \"Owner\".\n"
+                           "On the other hand if a working group shares a Calendar for "
+                           "group meetings, all readers of the folders should be marked "
+                           "as busy for meetings." ) );
+
+    mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
+    mIncidencesForComboBox->insertItem( i18n( "Owner of this folder" ) );
+    mIncidencesForComboBox->insertItem( i18n( "All readers of this folder" ) );
+
+    //connect ( mIncidencesForComboBox, SIGNAL ( activated( int ) ),
+    //          this, SLOT( slotIncidencesForChanged( int ) ) );
+    if ( mContentsComboBox && mDlg->folder()&& mIncidencesForGroup ) {
+      KMail::FolderContentsType type = mDlg->folder()->storage()->contentsType();
+      mIncidencesForGroup->setEnabled( type == KMail::ContentsTypeCalendar ||
+                                       type == KMail::ContentsTypeTask );
+    }
+
+  } else {
+    mIncidencesForComboBox = 0;
+    mIncidencesForGroup = 0;
+  }
 
   // should this folder be included in new-mail-checks?
   QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), this, "newmailGroup" );
@@ -608,6 +662,16 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
     bool checked = imapFolder->includeInMailCheck();
     mNewMailCheckBox->setChecked(checked);
   }
+
+  bool isImap = /*folder->folderType() == KMFolderTypeImap ||*/ folder->folderType() == KMFolderTypeCachedImap;
+  if ( mIncidencesForGroup ) {
+    if ( !isImap )
+      mIncidencesForGroup->hide();
+    else {
+      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+      mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -631,6 +695,25 @@ void FolderDiaGeneralTab::slotUpdateItems ( int current )
     // activate it
     mMailboxTypeGroupBox->setEnabled( true );
   }
+}
+
+//-----------------------------------------------------------------------------
+void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
+{
+  KMail::FolderContentsType type =
+    static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+  if( type != KMail::ContentsTypeMail && GlobalSettings::hideGroupwareFolders() ) {
+    QString message = i18n("You have configured this folder to contain groupware information "
+        "and the general configuration option to hide groupware folders is "
+        "set. That means that this folder will disappear once the configuration "
+        "dialog is closed. If you want to remove the folder again, you will need "
+        "to temporarily disable hiding of groupware folders to be able to see it.");
+    KMessageBox::information( this, message );
+  }
+
+  if ( mIncidencesForGroup )
+    mIncidencesForGroup->setEnabled( type == KMail::ContentsTypeCalendar ||
+                                     type == KMail::ContentsTypeTask );
 }
 
 //-----------------------------------------------------------------------------
@@ -769,10 +852,22 @@ bool FolderDiaGeneralTab::save()
 
     // Set type field
     if ( mContentsComboBox ) {
-      folder->storage()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
+      KMail::FolderContentsType type =
+        static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+      folder->storage()->setContentsType( type );
       // make sure everything is on disk, connected slots will call readConfig()
       // when creating a new folder.
       folder->storage()->writeConfig();
+    }
+
+    if ( mIncidencesForComboBox && folder->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap::IncidencesFor incfor =
+        static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentItem() );
+      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+      if ( dimap->incidencesFor() != incfor ) {
+        dimap->setIncidencesFor( incfor );
+        dimap->writeConfig();
+      }
     }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );

@@ -130,6 +130,7 @@ private slots:
    */
   void slotUpdateItems( int );
   void slotFolderNameChanged( const QString& );
+  void slotFolderContentsSelectionChanged( int );
 
 private:
   void initializeWithValuesFromFolder( KMFolder* folder );
@@ -139,6 +140,8 @@ private:
   QComboBox *mMailboxTypeComboBox;
   QComboBox *mShowSenderReceiverComboBox;
   QComboBox *mContentsComboBox;
+  QGroupBox *mIncidencesForGroup;
+  QComboBox *mIncidencesForComboBox;
   QLineEdit *mNameEdit;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;
