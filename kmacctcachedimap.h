@@ -174,6 +174,10 @@ public:
    * Returns the root folder of this account
    */
   virtual FolderStorage* const rootFolder() const;
+  
+  /** return if the account passed the annotation test  */
+  bool annotationCheckPassed(){ return mAnnotationCheckPassed;};
+  void setAnnotationCheckPassed( bool a ){ mAnnotationCheckPassed = a; };
 
 protected:
   friend class KMAcctMgr;
@@ -198,6 +202,7 @@ private:
   QStringList mDeletedFolders; // folders deleted in this session
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session
   QMap<QString, RenamedFolder> mRenamedFolders;
+  bool mAnnotationCheckPassed;
 };
 
 #endif /*KMAcctCachedImap_h*/

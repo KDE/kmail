@@ -59,7 +59,7 @@ using KMail::SieveConfig;
 KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 				    const QString& aAccountName, uint id )
   : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
-    mProgressDialogEnabled( true )
+    mProgressDialogEnabled( true ), mAnnotationCheckPassed(false)
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;

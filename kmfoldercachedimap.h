@@ -259,6 +259,7 @@ protected slots:
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
   void slotCheckUidValidityResult( KMail::FolderJob* job );
+  void slotTestAnnotationResult(KIO::Job *job);
   void slotGetAnnotationResult( KIO::Job* );
   void slotSetAnnotationResult(KIO::Job *job);
   void slotReceivedUserRights( KMFolder* );
@@ -336,6 +337,7 @@ private:
   /** State variable for the synchronization mechanism */
   enum {
     SYNC_STATE_INITIAL,
+    SYNC_STATE_TEST_ANNOTATIONS,
     SYNC_STATE_PUT_MESSAGES,
     SYNC_STATE_UPLOAD_FLAGS,
     SYNC_STATE_CREATE_SUBFOLDERS,

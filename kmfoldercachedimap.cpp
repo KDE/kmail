@@ -526,6 +526,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 {
   switch( state ) {
   case SYNC_STATE_INITIAL:           return "SYNC_STATE_INITIAL";
+  case SYNC_STATE_TEST_ANNOTATIONS:  return "SYNC_STATE_TEST_ANNOTATIONS";
   case SYNC_STATE_PUT_MESSAGES:      return "SYNC_STATE_PUT_MESSAGES";
   case SYNC_STATE_UPLOAD_FLAGS:      return "SYNC_STATE_UPLOAD_FLAGS";
   case SYNC_STATE_CREATE_SUBFOLDERS: return "SYNC_STATE_CREATE_SUBFOLDERS";
@@ -613,6 +614,7 @@ void KMFolderCachedImap::serverSyncInternal()
       emit folderComplete(this, FALSE);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
+      mAccount->setAnnotationCheckPassed( false );
       // kdDebug(5006) << "makeConnection said Connecting, waiting for signal." << endl;
       newState( mProgress, i18n("Connecting to %1").arg( mAccount->host() ) );
       // We'll wait for the connectionResult signal from the account.
@@ -626,11 +628,12 @@ void KMFolderCachedImap::serverSyncInternal()
       // Fall through to next state
     }
   }
+  
 
   case SYNC_STATE_GET_USERRIGHTS:
     //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
 
-    mSyncState = SYNC_STATE_RENAME_FOLDER;
+    mSyncState = SYNC_STATE_TEST_ANNOTATIONS;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
@@ -641,6 +644,33 @@ void KMFolderCachedImap::serverSyncInternal()
       break;
     }
 
+  #define KOLAB_FOLDERTEST "/vendor/kolab/folder-test"
+  case SYNC_STATE_TEST_ANNOTATIONS:
+    mSyncState = SYNC_STATE_RENAME_FOLDER;
+    // The first folder with user rights to write annotations
+    if( !mAccount->annotationCheckPassed() &&
+         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )  
+      ){
+      newState( mProgress, i18n("Checking annotation support"));
+    
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      KMail::AnnotationList annotations; // to be set
+      
+      KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
+      annotations.append( attr );
+      
+      kdDebug(5006) << "Setting test attribute to "<< url << endl;
+      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(), 
+          url, annotations );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      jd.cancellable = true; // we can always do so later
+      mAccount->insertJob(job, jd);
+       connect(job, SIGNAL(result(KIO::Job *)),
+              SLOT(slotTestAnnotationResult(KIO::Job *)));
+      break;
+    }
+    
   case SYNC_STATE_RENAME_FOLDER:
   {
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
@@ -1921,6 +1951,25 @@ KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& 
   }
 }
 
+void KMFolderCachedImap::slotTestAnnotationResult(KIO::Job *job)
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  Q_ASSERT( it != mAccount->jobsEnd() );
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  Q_ASSERT( (*it).parent == folder() );
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+
+  mAccount->setAnnotationCheckPassed( true );
+  if ( job->error() ) {
+    kdDebug(5006) << "Test Annotation was not passed, disabling annotation support" << endl;
+    mAccount->setHasNoAnnotationSupport( );
+  } else {
+    kdDebug(5006) << "Test Annotation was passed   OK" << endl;
+  }
+  if (mAccount->slave()) mAccount->removeJob(job);
+  serverSyncInternal();
+}
+
 void
 KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
 {
@@ -1931,9 +1980,9 @@ KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
   bool cont = true;
   if ( job->error() ) {
     // Don't show error if the server doesn't support ANNOTATEMORE and this folder only contains mail
-    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION && contentsType() == ContentsTypeMail ) {
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION && contentsType() == ContentsTypeMail )
       if (mAccount->slave()) mAccount->removeJob(job);
-    } else
+    else
       cont = mAccount->handleJobError( job, i18n( "Error while setting annotation: " ) + '\n' );
   } else {
     if (mAccount->slave()) mAccount->removeJob(job);
