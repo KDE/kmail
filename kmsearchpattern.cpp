@@ -76,7 +76,7 @@ void KMSearchRule::init(const KMSearchRule* aRule)
   if (aRule) 
     init( aRule->field(), aRule->function(), aRule->contents() );
   else
-    init ( " ", FuncEquals, "" );
+    init ( "", FuncEquals, "" );
 }
 
 //-----------------------------------------------------------------------------

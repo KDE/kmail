@@ -72,7 +72,7 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
     mRuleField->changeItem( aRule->field(), 0 );
     i=0;
   } else // found in the list of predefined fields
-    mRuleField->changeItem( " ", 0 );
+    mRuleField->changeItem( "", 0 );
 
   mRuleField->setCurrentItem( i );
 
@@ -98,7 +98,7 @@ void KMSearchRuleWidget::reset()
 {
   blockSignals(TRUE);
 
-  mRuleField->changeItem( " ", 0 );
+  mRuleField->changeItem( "", 0 );
   mRuleField->setCurrentItem( 0 );
 
   mRuleFunc->setCurrentItem( 0 );
@@ -155,7 +155,7 @@ void KMSearchRuleWidget::initLists() const
   //---------- initialize list of filter operators
   if ( sFilterFieldList.isEmpty() )
   {
-    sFilterFieldList.append(" ");
+    sFilterFieldList.append("");
     // also see KMSearchRule::matches() and ruleFieldToEnglish() if
     // you change the following i18n-ized strings!
     sFilterFieldList.append(i18n("<message>"));
