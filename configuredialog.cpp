@@ -959,7 +959,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 
   makeIdentityPage();
   makeNetworkPage();
-  makeApperancePage();
+  makeAppearancePage();
   makeComposerPage();
   makeMimePage();
   makeSecurityPage();
@@ -1205,7 +1205,7 @@ void ConfigureDialog::makeNetworkPage( void )
 
 
 
-void ConfigureDialog::makeApperancePage( void )
+void ConfigureDialog::makeAppearancePage( void )
 {
   QVBox *vbox = addVBoxPage( i18n("Appearance"), 
 			     i18n("Customize visual appearance"),
@@ -1264,8 +1264,10 @@ void ConfigureDialog::makeApperancePage( void )
   modeList.append( i18n("Quoted Text - First level") );
   modeList.append( i18n("Quoted Text - Second level") );
   modeList.append( i18n("Quoted Text - Third level") );
-  modeList.append( i18n("URL Link/New") );
-  modeList.append( i18n("Followed Link/Unread") );
+  modeList.append( i18n("URL Link") );
+  modeList.append( i18n("Followed URL Link") );
+  modeList.append( i18n("New Message") );
+  modeList.append( i18n("Unread Message") );
 
   mAppearance.colorList = new ColorListBox( page2 );
   vlay->addWidget( mAppearance.colorList, 10 );
@@ -1275,6 +1277,10 @@ void ConfigureDialog::makeApperancePage( void )
     mAppearance.colorList->insertItem( listItem );
   }
   mAppearance.colorList->setCurrentItem(0);
+
+  mAppearance.recycleColorCheck = 
+    new QCheckBox( i18n("Recycle colors on deep quoting"), page2 );
+  vlay->addWidget( mAppearance.recycleColorCheck );
 
 
   QWidget *page3 = new QWidget( tabWidget );
@@ -1576,7 +1582,7 @@ void ConfigureDialog::setup( void )
 {
   setupIdentityPage();
   setupNetworkPage();
-  setupApperancePage();
+  setupAppearancePage();
   setupComposerPage();
   setupMimePage();
   setupSecurityPage();
@@ -1644,7 +1650,7 @@ void ConfigureDialog::setupNetworkPage( void )
   }
 }
 
-void ConfigureDialog::setupApperancePage( void )
+void ConfigureDialog::setupAppearancePage( void )
 {
   KConfig &config = *kapp->config();
   config.setGroup("Fonts");
@@ -1697,9 +1703,20 @@ void ConfigureDialog::setupApperancePage( void )
   mAppearance.colorList->setColor(
     6, config.readColorEntry("FollowedColor",&defaultColor ) );
 
+  defaultColor = QColor("blue");
+  mAppearance.colorList->setColor( 
+    7, config.readColorEntry("NewMessage",&defaultColor ) );
+
+  defaultColor = QColor("red");
+  mAppearance.colorList->setColor(
+    8, config.readColorEntry("UnreadMessage",&defaultColor ) );
+
   state = config.readBoolEntry("defaultColors", false );
   mAppearance.customColorCheck->setChecked( state == false ? true : false );
   slotCustomColorSelectionChanged();
+
+  state = config.readBoolEntry( "RecycleQuoteColors", false );
+  mAppearance.recycleColorCheck->setChecked( state );
 
   config.setGroup("Geometry");
   state = config.readBoolEntry( "longFolderList", false );
@@ -1833,6 +1850,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 4, kapp->palette().normal().text() );
     mAppearance.colorList->setColor( 5, blue );
     mAppearance.colorList->setColor( 6, red );
+    mAppearance.colorList->setColor( 7, blue );
+    mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
     
     mAppearance.longFolderCheck->setChecked( false );
@@ -1854,6 +1873,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 4, QColor("#832B8B") );
     mAppearance.colorList->setColor( 5, blue );
     mAppearance.colorList->setColor( 6, red );
+    mAppearance.colorList->setColor( 7, blue );
+    mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
     
     mAppearance.longFolderCheck->setChecked( false );
@@ -1875,6 +1896,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 4, QColor("#832B8B") );
     mAppearance.colorList->setColor( 5, blue );
     mAppearance.colorList->setColor( 6, red );
+    mAppearance.colorList->setColor( 7, blue );
+    mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
     
     mAppearance.longFolderCheck->setChecked( false );
@@ -1982,6 +2005,10 @@ void ConfigureDialog::slotApply( void )
     config.writeEntry("QuoutedText3",    mAppearance.colorList->color(4) );
     config.writeEntry("LinkColor",       mAppearance.colorList->color(5) );
     config.writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
+    config.writeEntry("NewMessage",      mAppearance.colorList->color(7) );
+    config.writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
+    bool recycleColors = mAppearance.recycleColorCheck->isChecked();
+    config.writeEntry("RecycleQuoteColors", recycleColors );
 
     config.setGroup("Geometry");
     bool longFolderList = mAppearance.longFolderCheck->isChecked();
@@ -2581,7 +2608,9 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
 
 void ConfigureDialog::slotCustomColorSelectionChanged( void )
 {
-  mAppearance.colorList->setEnabled(mAppearance.customColorCheck->isChecked());
+  bool state = mAppearance.customColorCheck->isChecked();
+  mAppearance.colorList->setEnabled( state );
+  mAppearance.recycleColorCheck->setEnabled( state );
 }
 
 void ConfigureDialog::slotWordWrapSelectionChanged( void )

@@ -222,6 +222,7 @@ class ConfigureDialog : public KDialogBase
       KFontChooser  *fontChooser;
       QCheckBox     *customColorCheck;
       ColorListBox  *colorList;
+      QCheckBox     *recycleColorCheck;
       QCheckBox     *longFolderCheck;
       QCheckBox     *nestedMessagesCheck;
       int           activeFontIndex;
@@ -311,7 +312,7 @@ class ConfigureDialog : public KDialogBase
   private:
     void makeIdentityPage( void );
     void makeNetworkPage( void );
-    void makeApperancePage( void );
+    void makeAppearancePage( void );
     void makeComposerPage( void );
     void makeMimePage( void );
     void makeSecurityPage( void );
@@ -319,7 +320,7 @@ class ConfigureDialog : public KDialogBase
 
     void setupIdentityPage( void );
     void setupNetworkPage( void );
-    void setupApperancePage( void );
+    void setupAppearancePage( void );
     void setupComposerPage( void );
     void setupMimePage( void );
     void setupSecurityPage( void );
