@@ -606,6 +606,8 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
   if ( foldername.isEmpty() )
     return -1;
+  if ( foldername.contains("/"))
+    return -1;
 
   int retval;
   bool readFolderMsgIds = false;
@@ -742,6 +744,8 @@ int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & 
   // search for already existing emails.
 
   if ( foldername.isEmpty() )
+    return -1;
+  if ( foldername.contains("/"))
     return -1;
 
   int retval;
