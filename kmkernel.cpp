@@ -1059,7 +1059,7 @@ void KMKernel::cleanupLoop()
         QApplication::syncX();
         kapp->processEvents();
       }
-      if ( the_trashFolder->count() > 0 )
+      if ( the_trashFolder->count( true ) > 0 )
         the_trashFolder->expunge();
     }
   }
