@@ -40,17 +40,23 @@ namespace KMail {
 class CachedImapJob : public FolderJob {
   Q_OBJECT
 public:
+  // Put messages
   CachedImapJob( QPtrList<KMMessage>& msgs,
-                 JobType type = tGetMessage, KMFolderCachedImap* folder=0 );
+                 JobType type, KMFolderCachedImap* folder=0 );
+  // Add sub folders
   CachedImapJob( const QValueList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
                  KMFolderCachedImap* folder = 0 );
+  // Get messages
   CachedImapJob( const QValueList<ulong>& uids,
                  JobType type = tGetMessage, KMFolderCachedImap* folder = 0,
                  const QValueList<int>& flags = QValueList<int>() );
+  // Delete message ; Rename folder
   CachedImapJob( const QString& string1, JobType type,
                  KMFolderCachedImap* folder );
+  // Delete folders
   CachedImapJob( const QStringList& folders, JobType type, KMFolderCachedImap* folder = 0 );
+  // Other jobs (expunge folder, check uid validity)
   CachedImapJob( JobType type, KMFolderCachedImap* folder );
 
   virtual ~CachedImapJob();
