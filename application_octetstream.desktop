@@ -46,6 +46,7 @@ Comment[sr@Latn]=Pruključak formater tela application/octet-stream toka
 Comment[sv]=Ett insticksprogram för brevtextformatering av application/octet-stream
 Comment[ta]=பயன்பாடு அல்லது எண்மத்திற்கான அங்க அமைப்பு சொருகி
 Comment[tg]=Модули ба андозадарории application/octet-stream
+Comment[uk]=Втулок для форматування application/octet-stream
 Comment[zh_CN]=application/octet-stream 的格式化插件
 
 [Plugin]
