@@ -80,5 +80,8 @@ tipdir = $(kde_datadir)/kmail
 tip_DATA = tips
 
 messages: rc.cpp
+	rm -f tips.cpp
+	$(PREPARETIPS) > tips.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot
+	rm -f tips.cpp
 
