@@ -79,7 +79,7 @@ public:
     static void dictionaryChanged();
 
 signals:
-    activeChanged(bool);
+    void activeChanged(bool);
 
 protected:
     QString spellKey();

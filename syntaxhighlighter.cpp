@@ -173,6 +173,7 @@ DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
     mActive = true;
     mAutomatic = true;
     textEdit->installEventFilter( this );
+    textEdit->viewport()->installEventFilter( this );
     mInitialMove = true;
     mRehighlightRequested = false;
     mSpell = 0;
@@ -349,7 +350,10 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	    k->key() == Key_Up || 
 	    k->key() == Key_Down || 
 	    k->key() == Key_Left || 
-	    k->key() == Key_Right) {
+	    k->key() == Key_Right ||
+	    k->key() == Key_PageUp ||
+	    k->key() == Key_PageDown ||
+	    k->key() == Key_Home) {
 	    if (mInitialMove) {
 		if (!mRehighlightRequested) {
 		    mRehighlightRequested = true;
@@ -365,6 +369,18 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	    k->key() == Key_Return)
 	    QTimer::singleShot(0, this, SLOT(slotAutoDetection()));
     }
+    
+    if (o == textEdit()->viewport() && 
+	(e->type() == QEvent::MouseButtonPress)) {
+	if (mInitialMove) {
+	    if (!mRehighlightRequested) {
+		mRehighlightRequested = true;
+		QTimer::singleShot(0, this, SLOT(slotRehighlight()));
+	    }
+	    mInitialMove = false;
+	}
+    }
+
     return false;
 }
 
