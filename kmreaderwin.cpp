@@ -976,7 +976,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
         htmlStr += i18n("Message was signed with unknown key %1.")
                    .arg(pgp->signedByKey());
         htmlStr += "<br />";
-        htmlStr += i18n("The validity of the signature can't be checked.");
+        htmlStr += i18n("The validity of the signature can't be verified.");
         htmlStr += "\n</td></tr>\n<tr class=\"signWarnB\"><td>\n";
 ;
       }
@@ -996,7 +996,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
                      "<tr class=\"signOkH\"><td>\n";
           htmlStr += i18n("Message was signed by %1.").arg(signer);
           htmlStr += "<br />";
-          htmlStr += i18n("The signature is good.");
+          htmlStr += i18n("The signature is valid.");
           htmlStr += "\n</td></tr>\n<tr class=\"signOkB\"><td>\n";
         }
         else
