@@ -945,8 +945,7 @@ void KMComposeWin::setupActions(void)
   CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
 
   mLastEncryptActionState =
-    (    (!cryptPlug && mAutoPgpEncrypt)
-      || ( cryptPlug && EncryptEmail_EncryptAll == cryptPlug->encryptEmail()) );
+    ( cryptPlug && EncryptEmail_EncryptAll == cryptPlug->encryptEmail() );
   mLastSignActionState = 
     (    (!cryptPlug && mAutoPgpSign)
       || ( cryptPlug && SignEmail_SignAll == cryptPlug->signEmail()) );
