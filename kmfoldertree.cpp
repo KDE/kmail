@@ -928,6 +928,10 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   KPopupMenu *folderMenu = new KPopupMenu;
   if (fti->folder()) folderMenu->insertTitle(fti->folder()->label());
 
+  // Mark all as read is supposedly used often, therefor it is first
+  if ( fti->folder() && !fti->folder()->noContent() )
+      mMainWidget->action("mark_all_as_read")->plug( folderMenu );
+
   if ((!fti->folder() || (fti->folder()->noContent()
     && !fti->parent())))
   {
@@ -967,10 +971,6 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
       mMainWidget->action("mark_all_as_read")->plug(folderMenu);
 
       mMainWidget->action("compact")->plug(folderMenu);
-
-      //mMainWidget->action("expire")->plug(folderMenu);
-      folderMenu->insertItem( i18n("Expire..."), fti,
-                              SLOT( slotShowExpiryProperties() ) );
 
       folderMenu->insertSeparator();
 
@@ -1017,6 +1017,11 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         i18n("&Assign Shortcut..."),
         fti,
         SLOT(assignShortcut()));
+
+    if ( !fti->folder()->noContent() ) {
+      folderMenu->insertItem( i18n("Expire..."), fti,
+                              SLOT( slotShowExpiryProperties() ) );
+    }
     mMainWidget->action("modify")->plug(folderMenu);
   }
 
