@@ -57,8 +57,9 @@ const int KMFldSearch::MSGID_COLUMN = 4;
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
                          KMFolder *curFolder, bool modal):
   KDialogBase(NULL, name, modal, i18n("Search in Folders"),
-              KDialogBase::User1 | KDialogBase::User2 | KDialogBase::Close,
-              KDialogBase::User1, false, i18n("&Search"), i18n("S&top")),
+              User1 | User2 | Close, User1, false, 
+              KGuiItem( i18n("&Search"), "find" ), 
+              KGuiItem( i18n("S&top"), "cancel" )),
   mSearching(false),
   mStopped(false),
   mCloseRequested(false),
