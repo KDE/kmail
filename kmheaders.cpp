@@ -388,7 +388,7 @@ public:
     if (!msg) return QString::null;
 
     int column = sortOrder & ((1 << 5) - 1);
-    QString ret = QString("%1") .arg( (char)sortOrder );
+    QString ret = QChar( (char)sortOrder );
     QString sortArrival = QString( "%1" )
       .arg( kernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
     while (sortArrival.length() < 7) sortArrival = "0" + sortArrival;
@@ -412,7 +412,7 @@ public:
       return ret + tmp.lower() + " " + sortArrival;
     } else if (column == paintInfo->subCol) {
       if (paintInfo->status)
-        return ret + QString( QChar( (uint)msg->status() ));
+        return ret + QString( QChar( (uint)msg->status() )) + sortArrival;
       return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + " " + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
