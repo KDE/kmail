@@ -2812,13 +2812,22 @@ void KMMainWidget::removeDuplicates()
     }
     qHeapSort( redundantIds );
     kt = redundantIds.end();
+    int numDuplicates = 0;
     if (kt != redundantIds.begin()) do {
        mFolder->removeMsg( *(--kt) );
+       ++numDuplicates;
     }
     while (kt != redundantIds.begin());
 
     mFolder->close();
     mHeaders->setFolder(oFolder);
+    QString msg;
+    if ( numDuplicates )
+        msg = i18n("Removed %n duplicate message.",
+                  "Removed %n duplicate messages.", numDuplicates );
+    else
+        msg = i18n("No duplicate messages found.");
+    KMBroadcastStatus::instance()->setStatusMsg( msg );
 }
 
 
