@@ -1,3 +1,8 @@
+1999-02-21  Stefan Taferner  <taferner@kde.org>
+
+	* Added extra ungrabbing of pointer and keyboard to avoid
+	locking problems when many message windows pop up.
+
 1999-02-10  Stefan Taferner  <taferner@kde.org> (KMail-1.1.1)
 
 	* Bugfix: new/unread messages that are displayed upon selecting

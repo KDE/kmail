@@ -85,6 +85,19 @@ static void checkMessage(void);
 static void writePid(bool ready);
 
 //-----------------------------------------------------------------------------
+static void ungrabPtrKb(void)
+{
+  QWidget* widg = KTMainWindow::memberList->first();
+  Display* dpy;
+
+  if (!widg) return;
+  dpy = widg->x11Display();
+  XUngrabKeyboard(dpy, CurrentTime);
+  XUngrabPointer(dpy, CurrentTime);
+}
+
+
+//-----------------------------------------------------------------------------
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
@@ -106,6 +119,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 	strncmp(aMsg,"Could not load", 14) != 0 &&
 	strncmp(aMsg,"QPixmap:",8) != 0)
     {
+      ungrabPtrKb();
       KMsgBox::message(NULL, appName+" "+i18n("warning"), msg.data(),
 		       KMsgBox::EXCLAMATION);
     }
@@ -113,6 +127,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
     break;
 
   case QtFatalMsg:
+    ungrabPtrKb();
     fprintf(stderr, appName+" "+i18n("fatal error")+": %s\n", msg.data());
     KMsgBox::message(NULL, appName+" "+i18n("fatal error"),
 		     aMsg, KMsgBox::STOP);
