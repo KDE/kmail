@@ -728,7 +728,6 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
     // Since it doesn't seem to be there, save it instead
     addIncidence( type, folder, uid, entry );
   }
-
   mResourceQuiet = quiet;
   return rc;
 }
@@ -1236,6 +1235,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   }
 
   // Tell about the new resource
+  /* FIXME merge once we are back in HEAD. IMAP Resource still uses the other one. */
+  subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL() );
   subresourceAdded( folderContentsType( contentsType ), location );
 }
 
@@ -1478,10 +1479,15 @@ void KMailICalIfaceImpl::readConfig()
   slotRefresh( "Contact" );
   slotRefresh( "Notes" );
 #else
+  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), mCalendar->label() );
   subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), mTasks->label() );
   subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), mJournals->label() );
   subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), mContacts->label() );
   subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location() );
+  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), mNotes->label() );
   subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location() );
   // This also shows that we might even get rid of the mCalendar etc. special
   // case and just use ExtraFolder for all
