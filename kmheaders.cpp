@@ -510,21 +510,14 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       {
         setMsgRead(id);
 	setCurrentItemByIndex(id);
-	//	if ((mSortCol == 3) && !mSortDescending)
-	//	  setTopItemByIndex( id );
-	//	else
-        center( contentsX(), itemPos(item), 0, 9.0 );
+        makeHeaderVisible();
+	center( contentsX(), itemPos(mItems[id]), 0, 9.0 );
       }
       else
       {
         setMsgRead(mCurrentItem);
-        // setTopItemByIndex Doesn't seem to work the first time, that is
-	// when selecting the inbox at startup. I use the 
-	// wordAroundQListViewLimitation method and a timer to get around this.
-	//	debug (QString("mTopItem %1  mCurrentItem %2").arg(mTopItem).arg(mCurrentItem));
 	setTopItemByIndex(mTopItem);
 	setCurrentItemByIndex(mCurrentItem);
-	//	debug (QString("mTopItem %1  mCurrentItem %2").arg(topItemIndex()).arg(currentItemIndex()));
       }
     }
     else setCurrentItemByIndex(0);
