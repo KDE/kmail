@@ -71,6 +71,6 @@ private:
     KMMsgStatus mStatus;
 };
 
-};
+}
 
 #endif
