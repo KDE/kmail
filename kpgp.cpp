@@ -24,6 +24,21 @@
 #include <kiconloader.h>
 
 
+/* TODO :
+  -- Convert '<', '>' characters to &lt; and &gt; in mail reading window
+     when displaying signature (the HTML parser takes this like a
+     HTML tag
+  -- Make 2.xxx to use pipes instead of /tmp/.kmail-* files too, because
+     1.) pipes are safer (there is no decrypted mail stored on the same
+         disk
+     2.) What if two kmails were running at the same time ? They would
+         like to create /tmp/.kmail-* files both and it would probably
+         cause problems.
+     3.) When there is no output from PGP, a warning dialog should
+         appear (when there's a problem now, the MESSAGE IS SENT
+         UNENCRYPTED AND/OR UNSIGNED !)
+*/ 
+
 static void
 pgpSigHandler(int)
 {
@@ -645,12 +660,14 @@ Kpgp::runPGP(int action, const char* args)
   }
 
   // add passphrase
-  if((havePassPhrase) && (!flagPgp50))
+  if(havePassPhrase)
   {
     sprintf(str," '-z%s'",(const char *)passPhrase);
     cmd += str;
   }
   cmd += " -f";
+  if (flagPgp50) 
+    cmd += " +batchmode=1 +OutputInformationFD=2";
 
   tmpName.sprintf("/tmp/.kmail-");
   errName = tmpName + "err";
@@ -666,15 +683,8 @@ Kpgp::runPGP(int action, const char* args)
   } else 
   {
   cmd = cmd + " 2>"+errName;
-  if (havePassPhrase)
-    setenv("PGPPASSFD", "0", 1);
   runPgp50(cmd,&infd,&outfd);
   }
-  if ((havePassPhrase) && (flagPgp50)) 
-  {
-    write(infd, (const void *)passPhrase,strlen( (const char *)passPhrase));
-    write(infd, (const void *) "\n", strlen( (const char *) "\n")); 
-  }  
   if (!input.isEmpty()) {
     write(infd, input.data(), input.length());
     }
@@ -682,8 +692,7 @@ Kpgp::runPGP(int action, const char* args)
 
   if (!flagPgp50) {
   oldsig = signal(SIGALRM,pgpSigHandler);
-  alarm(15);
-  fprintf (stderr,"Volam prikazcok : \"%s\"\n",cmd.data());
+  alarm(5);
   rc = system(cmd.data());
   alarm(0);
   signal(SIGALRM,oldsig);
@@ -701,7 +710,11 @@ Kpgp::runPGP(int action, const char* args)
     }
     if (flagPgp50) 
       {
+        oldsig = signal(SIGALRM,pgpSigHandler);
+        alarm(5);
         wait(NULL);
+        alarm(0);
+        signal(SIGALRM,oldsig);
         unsetenv("PGPPASSFD");
       }
     close(outfd);
@@ -769,9 +782,9 @@ bool Kpgp::parseInfo(int action)
 	}
       }
     }
-    if((index = info.find("File has signature")) != -1)
+    if(((index = info.find("File has signature")) != -1) || flagPgp50)
     {
-      flagSigned = TRUE;
+      if (!flagPgp50) flagSigned = TRUE;
       flagSigIsGood = FALSE;
       if( info.find("Key matching expected") != -1)
       {
@@ -780,12 +793,16 @@ bool Kpgp::parseInfo(int action)
 	signature = "unknown key ID " + signatureID + " ";
 	// FIXME: not a very good solution...
 	flagSigIsGood = TRUE;
+	flagSigned = TRUE;
       }
       else
       {
-	if( info.find("Good signature") != -1 )
+	if( info.find("Good signature") != -1 ) {
+	  flagSigned = TRUE;
 	  flagSigIsGood = TRUE;
+        }
 		    
+	if (flagPgp50) index= info.find("Good signature");
 	// get signer
 	index = info.find("\"",index);
 	index2 = info.find("\"", index+1);
@@ -795,7 +812,10 @@ bool Kpgp::parseInfo(int action)
 	else signature = i18n("Unknown");
 		    
 	// get key ID of signer
-	index = info.find("key ID ",index2);
+        if (flagPgp50)
+	  index = info.find("Key ID ",info.find("Good signature")); else
+	  index = info.find("key ID ",index2);
+	
 	signatureID = info.mid(index+7,8);
       }
     }
@@ -830,7 +850,7 @@ bool Kpgp::parseInfo(int action)
     break;
   }
   case SIGN:
-    if(info.find("Pass phrase is good") != -1)
+    if((info.find("Pass phrase is good") != -1) || flagPgp50)
     {
       flagEncrypted = TRUE;
     }
@@ -839,6 +859,7 @@ bool Kpgp::parseInfo(int action)
       errMsg = i18n("Bad pass Phrase; couldn't sign");
       returnFlag = FALSE;
       havePassPhrase = FALSE;
+      flagEncrypted=FALSE;
     }
     break;
   case PUBKEYS:
