@@ -130,6 +130,7 @@ private slots:
    */
   void slotUpdateItems( int );
   void slotFolderNameChanged( const QString& );
+  void slotFolderContentsSelectionChanged( int );
 
 private:
   void initializeWithValuesFromFolder( KMFolder* folder );

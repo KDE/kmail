@@ -46,6 +46,7 @@
 #include "folderdiaacltab.h"
 #include "kmailicalifaceimpl.h"
 #include "kmmainwidget.h"
+#include "globalsettings.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -435,6 +436,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mContentsComboBox->insertItem( i18n( "Journal" ) );
     if ( mDlg->folder() )
       mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
+    connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
+              this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
   } else
     mContentsComboBox = 0;
 
@@ -634,6 +637,21 @@ void FolderDiaGeneralTab::slotUpdateItems ( int current )
 }
 
 //-----------------------------------------------------------------------------
+void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
+{
+  KMail::FolderContentsType type = 
+    static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+  if( type != KMail::ContentsTypeMail && GlobalSettings::hideGroupwareFolders() ) {
+    QString message = i18n("You have configured this folder to contain groupware information "
+        "and the general configuration option to hide groupware folders is "
+        "set. That means that this folder will dissapear once the configuration "
+        "dialog is closed. If you want to remove the folder again, you will need "
+        "to temporarily disable hiding of groupware folders to be able to see it.");
+    KMessageBox::information( this, message );
+  }
+}
+
+//-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
   // moving of IMAP folders is not yet supported
@@ -768,8 +786,11 @@ bool FolderDiaGeneralTab::save()
       folder->setUserWhoField(QString::null);
 
     // Set type field
-    if ( mContentsComboBox )
-      folder->storage()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
+    if ( mContentsComboBox ) {
+      KMail::FolderContentsType type = 
+        static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+      folder->storage()->setContentsType( type );
+    }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
     kmkernel->folderMgr()->contentsChanged();
