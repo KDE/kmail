@@ -1040,6 +1040,10 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setReplyTo(replyTo());
   mMsg->setBcc(bcc());
 
+  if (mIdentity.currentText() == i18n("Default"))
+    mMsg->removeHeaderField("X-KMail-Identity");
+  else mMsg->setHeaderField("X-KMail-Identity", mIdentity.currentText());
+
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
 

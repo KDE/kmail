@@ -174,7 +174,8 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   // Handle redirections
   QString f = aMsg->headerField("X-KMail-Redirect-From");
   if(f.length() > 0) {
-    KMIdentity ident( i18n( "Default" ));
+    QString idStr = aMsg->headerField("X-KMail-Identity");
+    KMIdentity ident( idStr.isEmpty() ? i18n( "Default" ) : idStr );
     ident.readConfig();
 
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)").
@@ -360,7 +361,6 @@ void KMSender::doSendMsgAux()
   // remove header fields that shall not be included in sending
   mCurrentMsg->removeHeaderField("Status");
   mCurrentMsg->removeHeaderField("X-Status");
-  mCurrentMsg->removeHeaderField("X-KMail-Identity");
   mCurrentMsg->removeHeaderField("X-KMail-Transport");
 
   // start sending the current message
@@ -744,6 +744,7 @@ bool KMSendSendmail::send(KMMessage* aMsg)
 
   mMailerProc->clearArguments();
   *mMailerProc << mMailer;
+  aMsg->removeHeaderField("X-KMail-Identity");
   addRecipients(aMsg->headerAddrField("To"));
   if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
 
@@ -892,7 +893,9 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
   qDebug( "aMsg\n%s", aMsg->asString().latin1() );  
 
   QString str, msgStr, bccStr;
-  KMIdentity ident( i18n( "Default" ));
+  QString idStr = aMsg->headerField("X-KMail-Identity");
+  aMsg->removeHeaderField("X-KMail-Identity");
+  KMIdentity ident( idStr.isEmpty() ? i18n( "Default" ) : idStr );
   ident.readConfig();
 
   assert(aMsg != NULL);
