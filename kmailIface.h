@@ -44,6 +44,8 @@ k_dcop:
 //        =-3, Can't allocate memory.
 //        =-4, Message already exists in folder.
   virtual int dcopAddMessage(const QString & foldername,
+                             const QString & messagefile) = 0;
+  virtual int dcopAddMessage(const QString & foldername,
                              const KURL & messagefile) = 0;
 };
 

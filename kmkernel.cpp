@@ -150,6 +150,11 @@ void KMKernel::compactAllFolders ()
   kdDebug() << "KMKernel::compactAllFolders finished" << endl;
 }
 
+int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlString)
+{
+  return dcopAddMessage(foldername, KURL(msgUrlString));
+}
+
 int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
 int retval;
