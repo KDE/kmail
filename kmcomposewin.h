@@ -38,11 +38,13 @@ class _StringPair {
 
 
 class QLineEdit;
+class QComboBox;
 class QGridLayout;
 class QFrame;
 class QPopupMenu;
 class KEdit;
-class KTabListBox;
+class QListView;
+class QListViewItem;
 class KMMessage;
 class KDNDDropZone;
 class KToolBar;
@@ -212,8 +214,12 @@ public slots:
   void slotToggleToolBar();
 
   /** Open a popup-menu in the attachments-listbox. */
-  void slotAttachPopupMenu(int, int);
+  void slotAttachPopupMenu(QListViewItem *, const QPoint &, int);
 
+  /** Returns the number of the current attachment in the listbox,
+  or -1 if there is no current attachment */
+  int currentAttachmentNum();
+  
   /** Attachment operations. */
   void slotAttachView();
   void slotAttachRemove();
@@ -246,7 +252,7 @@ public slots:
   void slotView();
   
   /** Move focus to next/prev edit widget */
-  void focusNextPrevEdit(const QLineEdit* current, bool next);
+  void focusNextPrevEdit(const QWidget* current, bool next);
 
 protected:
   /** Install grid management and header fields. If fields exist that
@@ -258,6 +264,9 @@ protected:
   void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString labelStr, QLabel* lbl,
 				 QLineEdit* edt, QPushButton* btn=NULL);
+  void rethinkHeaderLine(int value, int mask, int& row,
+				 const QString labelStr, QLabel* lbl,
+				 QComboBox* cbx);
   
   /** Initialization methods */
   void setupActions();
@@ -290,9 +299,8 @@ protected:
    void removeAttach(const QString url);
    void removeAttach(int idx);
 
-  /** Returns a string suitable for the attachment listbox that describes
-    the given message part. */
-   const QString msgPartLbxString(const KMMessagePart* msgPart) const;
+   /* Updates an item in the QListView to represnet a given message part */
+   void msgPartToItem(const KMMessagePart* msgPart, QListViewItem *lvi);
 
   /** Open addressbook and append selected addresses to the given
     edit field. */
@@ -318,7 +326,9 @@ private:
 
 protected:
   QWidget   mMainWidget;
+  QComboBox mIdentity, mTransport;
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
+  QLabel    mLblIdentity, mLblTransport;
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
   QPushButton mBtnTo, mBtnCc, mBtnBcc, mBtnFrom, mBtnReplyTo;
   bool mSpellCheckInProgress;
@@ -332,7 +342,8 @@ protected:
   QGridLayout* mGrid;
   //KDNDDropZone *mDropZone;
   KMMessage *mMsg;
-  KTabListBox *mAtmListBox;
+  QListView *mAtmListBox;
+  QList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
   bool mAutoSign, mAutoPgpSign, mShowToolBar, mAutoDeleteMsg;
   long mShowHeaders;
@@ -349,7 +360,8 @@ protected:
   short mBtnIdSign, mBtnIdEncrypt;
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
   QFont mBodyFont;
-  QList<QLineEdit> mEdtList;
+  //  QList<QLineEdit> mEdtList;
+  QList<QWidget> mEdtList;
   static QString mPathAttach;
   QPalette mPalette;
   QString mId;
@@ -357,7 +369,7 @@ protected:
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
-      
+  KToggleAction *identityAction, *transportAction;
 
 #if defined CHARSETS
   int m7BitAscii;

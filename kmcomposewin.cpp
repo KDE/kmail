@@ -7,6 +7,7 @@
 #include <qcombobox.h>
 #include <qdragobject.h>
 #include <qlistview.h>
+#include <qcombobox.h>
 
 #include "kmcomposewin.h"
 #include "kmmessage.h"
@@ -20,6 +21,7 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kfontutils.h"
+#include "kmidentity.h"
 
 #include <kaction.h>
 #include <kstdaction.h>
@@ -99,7 +101,9 @@ WindowList* windowList=new WindowList;
 #define HDR_SUBJECT  0x20
 #define HDR_NEWSGROUPS  0x40
 #define HDR_FOLLOWUP_TO 0x80
-#define HDR_ALL      0xff
+#define HDR_IDENTITY 0x100
+#define HDR_TRANSPORT 0x200
+#define HDR_ALL      0x3ff
 
 #ifdef KRN
 #define HDR_STANDARD (HDR_SUBJECT|HDR_NEWSGROUPS)
@@ -113,9 +117,11 @@ QString KMComposeWin::mPathAttach = QString::null;
 KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   : KMTopLevelWidget (),
   mMainWidget(this),
+  mIdentity(&mMainWidget), mTransport(&mMainWidget),
   mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
   mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),
   mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget, "subjectLine"),
+  mLblIdentity(&mMainWidget), mLblTransport(&mMainWidget),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget),
@@ -167,7 +173,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
     toolBar()->show();
   else
     toolBar()->hide();
-  
+
+  mIdentity.insertStringList( KMIdentity::identities() );
   connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
   connect(&mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
@@ -262,6 +269,7 @@ void KMComposeWin::readConfig(void)
   mEdtCc.setPalette(mPalette);
   mEdtBcc.setPalette(mPalette);
   mEdtSubject.setPalette(mPalette);
+  mAtmListBox->setPalette(mPalette);
 
 #ifndef KRN
   config->setGroup("General");
@@ -397,6 +405,10 @@ void KMComposeWin::slotView(void)
   
   if (act == allFieldsAction)
     id = 0;
+  else if (act == identityAction)
+    id = HDR_IDENTITY;
+  else if (act == transportAction)
+    id = HDR_TRANSPORT;
   else if (act == fromAction)
     id = HDR_FROM;
   else if (act == replyToAction)
@@ -466,6 +478,13 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   mEdtList.clear();
   row = 0;
+  debug( "KMComposeWin::rethinkFields" );
+  if (!fromSlot) identityAction->setChecked(showHeaders&HDR_IDENTITY);
+  rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
+		    &mLblIdentity, &mIdentity);
+  if (!fromSlot) transportAction->setChecked(showHeaders&HDR_TRANSPORT);
+  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("&Mail Transport:"),
+		    &mLblTransport, &mTransport);
   if (!fromSlot) fromAction->setChecked(showHeaders&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
 		    &mLblFrom, &mEdtFrom, &mBtnFrom);
@@ -504,6 +523,8 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   mGrid->activate();
 
+  identityAction->setEnabled(!allFieldsAction->isChecked());
+  transportAction->setEnabled(!allFieldsAction->isChecked());
   fromAction->setEnabled(!allFieldsAction->isChecked());
   replyToAction->setEnabled(!allFieldsAction->isChecked());
   toAction->setEnabled(!allFieldsAction->isChecked());
@@ -522,6 +543,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 				     const QString aLabelStr, QLabel* aLbl,
 				     QLineEdit* aEdt, QPushButton* aBtn)
 {
+  debug( "rethinkHeaderLine" );
   if (aValue & aMask)
   {
     //mMnuView->setItemChecked(aMask, TRUE);
@@ -559,6 +581,38 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     if (aBtn) aBtn->hide();
   }
 }
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
+				     const QString aLabelStr, QLabel* aLbl,
+				     QComboBox* aCbx)
+{
+  if (aValue & aMask)
+  {
+    aLbl->setText(aLabelStr);
+    aLbl->adjustSize();
+    aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
+    aLbl->setMinimumSize(aLbl->size());
+    aLbl->show();
+    aLbl->setBuddy(aCbx);
+    mGrid->addWidget(aLbl, aRow, 0);
+
+    //    aCbx->setBackgroundColor( backColor );
+    aCbx->show();
+    aCbx->setMinimumSize(100, aLbl->height()+2);
+    aCbx->setMaximumSize(1000, aLbl->height()+2);
+    mEdtList.append(aCbx);
+
+    mGrid->addMultiCellWidget(aCbx, aRow, aRow, 1, 2);
+    aRow++;
+  }
+  else
+  {
+    aLbl->hide();
+    aCbx->hide();
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupActions(void)
@@ -639,6 +693,12 @@ void KMComposeWin::setupActions(void)
   allFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
                                        actionCollection(), "show_all_fields");
+  identityAction = new KToggleAction (i18n("&Identity"), 0, this,
+				      SLOT(slotView()),
+				      actionCollection(), "show_identity");
+  transportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
+				      SLOT(slotView()),
+				      actionCollection(), "show_transport");
   fromAction = new KToggleAction (i18n("&From"), 0, this,
                                   SLOT(slotView()),
                                   actionCollection(), "show_from");
@@ -1921,9 +1981,9 @@ void KMComposeWin::setEditCharset()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
+void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 {
-  QLineEdit* cur;
+  QWidget* cur;
 
   if (!aCur)
   {
