@@ -157,6 +157,8 @@ signals:
   virtual void activated(KMMessage *);
   /** emitted when we might be about to delete messages */
   virtual void maybeDeleting();
+  /** emitted when the list of messages has been completely rebuilt */
+  virtual void messageListUpdated();
 
 public slots:
   void workAroundQListViewLimitation();

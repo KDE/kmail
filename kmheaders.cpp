@@ -2234,6 +2234,7 @@ void KMHeaders::updateMessageList(bool set_selection)
     return;
   }
   readSortOrder(set_selection);
+  emit messageListUpdated();
 }
 
 
