@@ -63,6 +63,7 @@ using KMail::HeaderStyle;
 #include "folderjob.h"
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
+#include "kmgroupware.h"
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -103,6 +104,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mPanner2Sep << 1 << 1;
 
   setMinimumSize(400, 300);
+
+  kmkernel->groupware().setMainWidget( this );
 
   readPreConfig();
   createWidgets();

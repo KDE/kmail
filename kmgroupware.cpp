@@ -83,16 +83,14 @@ using namespace KABC;
 
 #include <assert.h>
 
-// global status flag:
-static bool ignore_GroupwareDataChangeSlots = false;
-
+//-----------------------------------------------------------------------------
+KMGroupware::KMGroupware( QObject* parent, const char* name )
+  : QObject( parent, name ), mUseGroupware( false )
+{
+}
 
 //-----------------------------------------------------------------------------
-KMGroupware::KMGroupware( QObject* parent, const char* name ) :
-    QObject(parent, name),
-    mUseGroupware(false),
-    mGroupwareIsHidingMimePartTree(false),
-    mKOrgPart(0)
+KMGroupware::~KMGroupware()
 {
 }
 
@@ -105,27 +103,6 @@ void KMGroupware::readConfig()
     return;
 
   mUseGroupware = options.readBoolEntry( "Enabled", true );
-
-  // Set the menus on the main window
-  setupActions();
-
-  if( !mUseGroupware ) {
-    slotGroupwareHide();
-
-    // FIXME: This doesn't work :-(
-    // delete (KParts::ReadOnlyPart*)mKOrgPart;
-    // mKOrgPart = 0;
-
-    return;
-  }
-
-  internalCreateKOrgPart();
-}
-
-//-----------------------------------------------------------------------------
-KMGroupware::~KMGroupware()
-{
-  delete mKOrgPart;
 }
 
 bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
@@ -179,257 +156,22 @@ void KMGroupware::slotInvalidateIMAPFolders()
 		     "This will remove all changes you have done locally to your folders");
   QString s1 = i18n("Refresh IMAP Cache");
   QString s2 = i18n("&Refresh");
-  if( KMessageBox::warningContinueCancel(mMainWin, str, s1, s2 ) == KMessageBox::Continue)
+  if( KMessageBox::warningContinueCancel(kmkernel->mainWin(), str, s1, s2 ) == KMessageBox::Continue)
     kmkernel->acctMgr()->invalidateIMAPFolders();
 }
-
-//-----------------------------------------------------------------------------
-void KMGroupware::setupKMReaderWin(KMReaderWin* reader)
-{
-  mReader = reader;
-
-  // connect KMReaderWin's signals to our slots
-  connect( mReader, SIGNAL( signalGroupwareShow( bool ) ),
-           this,      SLOT(   slotGroupwareShow( bool ) ) );
-
-  // HACK (Bo): Don't receive events while showing groupware widgets
-  mReader->installEventFilter( this );
-}
-
-
-void KMGroupware::setHeaders( KMHeaders* headers )
-{
-  mHeaders = headers;
-
-  // HACK (Bo): Don't receive events while showing groupware widgets
-  mHeaders->installEventFilter( this );
-}
-
-//-----------------------------------------------------------------------------
-void KMGroupware::setMimePartTree(KMMimePartTree* mimePartTree)
-{
-  mMimePartTree = mimePartTree;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMGroupware::createKOrgPart(QWidget* parent)
-{
-  if( mKOrgPart && mKOrgPartParent.operator->() == parent )
-    // The part is already set up.
-    return;
-
-  // We must at least remember this.
-  mKOrgPartParent = parent;
-
-  if( !mUseGroupware )
-    // Groupware mode is disabled, so hold setting it up until user enables it
-    return;
-
-  // Ok, we can proceed with actually making the part
-  internalCreateKOrgPart();
-}
-
-void KMGroupware::internalCreateKOrgPart()
-{
-  if( !mKOrgPartParent || mKOrgPart )
-    // Don't set this up before the parent is set or if the parent is destructed
-    return;
-
-  // create a KOrganizer KPart and embedd it into the messageParent
-  KLibFactory *factory = KLibLoader::self()->factory( "libkorganizer" );
-  if( !factory ) {
-    KMessageBox::error(mMainWin, "No libkorganizer found !");
-    mUseGroupware = false;
-    return;
-  }
-
-  // Create the part
-  QStringList partArgs;
-  const KMIdentity& identity = kmkernel->identityManager()->defaultIdentity();
-  partArgs << QString( "name=%1" ).arg( identity.fullName() );
-  partArgs << QString( "email=%1" ).arg( identity.emailAddr() );
-  partArgs << "storage=imap";
-  mKOrgPart = (KParts::ReadOnlyPart *)factory->create( (QWidget*)mKOrgPartParent,
-						       "korganizerpart",
-						       "KParts::ReadOnlyPart", partArgs );
-
-  // initially hide the KOrganizer part
-  mKOrgPart->widget()->hide();
-
-  // connect our signals to KOrgPart's slots
-  connect( this, SIGNAL( signalSetKroupwareCommunicationEnabled( QObject* ) ),
-	   mKOrgPart, SLOT( slotSetKroupwareCommunicationEnabled( QObject* ) ) );
-
-  connect( this, SIGNAL( signalShowCalendarView() ), mKOrgPart, SLOT( slotShowNextXView() ) );
-  connect( this, SIGNAL( signalShowNotesView() ), mKOrgPart, SLOT( slotShowNotesView() ) );
-  connect( this, SIGNAL( signalShowTodoView() ), mKOrgPart, SLOT( slotShowTodoView() ) );
-  // exception: Contacts are handled by KAddressbook - so call it via KMMainWin
-  connect( this, SIGNAL( signalShowContactsView() ), mMainWin, SLOT( slotAddrBook() ) );
-
-  connect( this, SIGNAL( signalCalendarUpdateView( const QDateTime&, const QDateTime& ) ),
-	   mKOrgPart, SLOT( slotUpdateView( const QDateTime&, const QDateTime& ) ) );
-  connect( this, SIGNAL( signalRefreshNotes( const QStringList& ) ),
-	   mKOrgPart, SLOT( slotRefreshNotes( const QStringList& ) ) );
-
-  connect( this, SIGNAL( signalEventRequest( const QCString&, const QString&, bool&,
-					     QString&, QString&, bool& ) ),
-	   mKOrgPart, SLOT(slotEventRequest( const QCString&, const QString&, bool&,
-					     QString&, QString&, bool& ) ) );
-  connect( this, SIGNAL( signalResourceRequest( const QValueList<QPair<QDateTime,QDateTime> >&,
-						const QCString&, const QString&, bool&,
-						QString&, bool&, bool&,
-						QDateTime&, QDateTime& ) ),
-	   mKOrgPart,
-	   SLOT( slotResourceRequest( const QValueList<QPair<QDateTime, QDateTime> >&,
-				      const QCString&, const QString&, bool&,
-				      QString&, bool&, bool&, QDateTime&, QDateTime& ) ) );
-  connect( this, SIGNAL( signalAcceptedEvent( bool, const QCString&, const QString&,
-					      bool&, QString&, bool& ) ),
-	   mKOrgPart, SLOT(slotAcceptedEvent( bool, const QCString&, const QString&,
-					      bool&, QString&, bool& ) ) );
-  connect( this, SIGNAL( signalRejectedEvent( const QCString&, const QString&, bool&,
-					      QString&, bool& ) ),
-	   mKOrgPart, SLOT(slotRejectedEvent( const QCString&, const QString&, bool&,
-					      QString&, bool& ) ) );
-  connect( this, SIGNAL( signalIncidenceAnswer( const QCString&, const QString&,
-						QString& ) ),
-	   mKOrgPart, SLOT( slotIncidenceAnswer( const QCString&, const QString&,
-						 QString& ) ) );
-  connect( this, SIGNAL( signalEventDeleted( const QString& ) ),
-	   mKOrgPart, SLOT( slotEventDeleted( const QString& ) ) );
-
-  connect( this, SIGNAL( signalTaskDeleted( const QString& ) ),
-	   mKOrgPart, SLOT( slotTaskDeleted( const QString& ) ) );
-
-  connect( this, SIGNAL( signalNoteDeleted( const QString& ) ),
-	   mKOrgPart, SLOT( slotNoteDeleted( const QString& ) ) );
-
-  connect( mKOrgPart,SIGNAL( signalKOrganizerShow( bool ) ),
-	   this, SLOT( slotGroupwareShow( bool ) ) );
-
-  emit signalSetKroupwareCommunicationEnabled( this );
-
-  // initialize Groupware using data stored in our folders
-  // ignore_GroupwareDataChangeSlots = true;
-  slotRefreshCalendar();
-  slotRefreshTasks();
-  // ignore_GroupwareDataChangeSlots = false;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMGroupware::reparent(QSplitter* panner)
-{
-  mPanner = panner;
-  if( mKOrgPart )
-    mKOrgPart->widget()->reparent( mPanner, 0, QPoint( 0, 0 ) );
-  else
-    // Since the creation of the part is possibly deferred, we should remember this
-    mKOrgPartParent = panner;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMGroupware::moveToLast()
-{
-  if( mKOrgPart )
-    mPanner->moveToLast( mKOrgPart->widget() );
-}
-
 
 //-----------------------------------------------------------------------------
 void KMGroupware::setupActions()
 {
   static bool actionsSetup = false;
 
-  if( !actionsSetup && mMainWin ) {
+  if( !actionsSetup && kmkernel->mainWin() ) {
     actionsSetup = true;
 
     // file menu: some entries
-    new KAction( i18n("Merge Calendar"), 0, mKOrgPart, SLOT(slotFileMerge()),
-		 mMainWin->actionCollection(), "file_korganizermerge_calendar" );
-    new KAction( i18n("Archive Old Entries"), 0, mKOrgPart, SLOT(slotFileArchive()),
-		 mMainWin->actionCollection(), "file_korganizerarchive_old_entries" );
-    new KAction( i18n("Export iCal"), 0, mKOrgPart, SLOT(slotExportICalendar()),
-		 mMainWin->actionCollection(), "file_korganizerexport_ical" );
-    new KAction( i18n("Export vCal"), 0, mKOrgPart, SLOT(slotExportVCalendar()),
-		 mMainWin->actionCollection(), "file_korganizerexport_vcal" );
-    new KAction( i18n("delete completed To-Dos","Purge Completed To-Dos"), 0, mKOrgPart,
-		 SLOT(slotPurgeCompleted()), mMainWin->actionCollection(),
-		 "file_korganizerpurge_completed" );
     new KAction( i18n("refresh local imap cache", "Refresh Local IMAP Cache"), 0,
-		 this, SLOT(slotInvalidateIMAPFolders()), mMainWin->actionCollection(),
+		 this, SLOT(slotInvalidateIMAPFolders()), kmkernel->mainWin()->actionCollection(),
 		 "invalidate_imap_cache" );
-    // view menu: some entries
-    new KAction( i18n("What's Next"), "whatsnext", 0, mKOrgPart, SLOT(slotShowWhatsNextView()),
-		 mMainWin->actionCollection(), "view_korganizerwhats_next" );
-    new KAction( i18n("List"), "list", 0, mKOrgPart, SLOT(slotShowListView()),
-		 mMainWin->actionCollection(), "view_korganizerlist" );
-    new KAction( i18n("Day"), "1day", 0, mKOrgPart, SLOT(slotShowDayView()),
-		 mMainWin->actionCollection(), "view_korganizerday" );
-    new KAction( i18n("Work Week"), "5days", 0, mKOrgPart, SLOT(slotShowWorkWeekView()),
-		 mMainWin->actionCollection(), "view_korganizerwork_week" );
-    new KAction( i18n("Week"), "7days", 0, mKOrgPart, SLOT(slotShowWeekView()),
-		 mMainWin->actionCollection(), "view_korganizerweek" );
-    new KAction( i18n("Next 3 Days"), 0, mKOrgPart, SLOT(slotShowNextXView()),
-		 mMainWin->actionCollection(), "view_korganizernext_three_days" );
-    new KAction( i18n("Month"), "month", 0, mKOrgPart, SLOT(slotShowMonthView()),
-		 mMainWin->actionCollection(), "view_korganizermonth" );
-    new KAction( i18n("To-Do List"), "todo", 0, mKOrgPart, SLOT(slotShowTodoView()),
-		 mMainWin->actionCollection(), "view_korganizertodo_list" );
-    new KAction( i18n("Notes"), "notes", 0, mKOrgPart, SLOT(slotShowNotesView()),
-		 mMainWin->actionCollection(), "view_korganizernotes" );
-    // FIXME (Bo): Disable Journals for now
-//     new KAction( i18n("Journal"), 0, mKOrgPart, SLOT(slotShowJournalView()),
-// 		 mMainWin->actionCollection(), "view_korganizerjournal" );
-    new KAction( i18n("Update"), 0, mKOrgPart, SLOT(slotUpdate()),
-		 mMainWin->actionCollection(), "view_korganizerupdate" );
-    // FIXME (Bo): IMHO this doesn't make sense
-//     new KAction( i18n("Hide Organizer"), 0, this, SLOT(slotGroupwareHide()),
-// 		 mMainWin->actionCollection(), "view_korganizerhide_groupware" );
-    // go menu: some entries
-    new KAction( i18n("Go Backward in Calendar"), "1leftarrow", 0, mKOrgPart,
-		 SLOT(slotGoPrevious()), mMainWin->actionCollection(),
-		 "go_korganizerbackward" );
-    new KAction( i18n("Go Forward in Calendar"), "1rightarrow", 0, mKOrgPart,
-		 SLOT(slotGoNext()), mMainWin->actionCollection(), "go_korganizerforward" );
-    new KAction( i18n("Go to Today"), "today", 0, mKOrgPart, SLOT(slotGoToday()),
-		 mMainWin->actionCollection(), "go_korganizertoday" );
-    // actions menu: complete menu
-    new KAction( i18n("New Event"), "appointment", 0, mKOrgPart, SLOT(slotAppointment_new()),
-		 mMainWin->actionCollection(), "korganizeractions_new_event" );
-    new KAction( i18n("New To-Do"), "newtodo", 0, mKOrgPart, SLOT(slotNewTodo()),
-		 mMainWin->actionCollection(), "korganizeractions_new_todo" );
-    new KAction( i18n("New Sub-To-Do"), 0, mKOrgPart, SLOT(slotSubTodo()),
-		 mMainWin->actionCollection(), "korganizeractions_new_subtodo" );
-    new KAction( i18n("New Note"), 0, mKOrgPart, SLOT(slotNewNote()),
-		 mMainWin->actionCollection(), "korganizeractions_new_note" );
-    new KAction( i18n("Delete"), 0, mKOrgPart, SLOT(slotDeleteIncidence()),
-		 mMainWin->actionCollection(), "korganizeractions_new_delete" );
-    new KAction( i18n("Edit"), 0, mKOrgPart, SLOT(slotEditIncidence()),
-		 mMainWin->actionCollection(), "korganizeractions_edit" );
-    new KAction( i18n("Make Sub-To-Do Independent"), 0, mKOrgPart, SLOT(slotTodo_unsub()),
-		 mMainWin->actionCollection(), "korganizeractions_make_subtodo_independent" );
-    new KAction( i18n("Organizer Print Preview"), 0, mKOrgPart, SLOT(slotPrintPreview()),
-		 mMainWin->actionCollection(), "korganizeractions_printpreview" );
-    new KAction( i18n( "Organizer Print" ), 0, mKOrgPart, SLOT( slotPrint() ),
-		 mMainWin->actionCollection(), "korganizeractions_print" );
-    // schedule menu: complete menu
-    new KAction( i18n("Publish Free Busy Information"), 0, mKOrgPart,
-		 SLOT(slotPublishFreeBusy()), mMainWin->actionCollection(),
-		 "korganizerschedule_publish_free_busy_information" );
-    // settings menu: some entries
-    new KAction( i18n("Configure KOrganizer"), "korganizer", 0, mKOrgPart,
-		 SLOT(slotConfigure()), mMainWin->actionCollection(),
-		 "settings_korganizerKOrganizer" );
-    new KAction( i18n("Configure Date && Time..."), 0,
-		 mKOrgPart, SLOT(slotConfigureDateTime()),
-		 mMainWin->actionCollection(), "settings_korganizerdatetime" );
-    new KAction( i18n("Edit Filters"), 0, mKOrgPart, SLOT(slotEditFilters()),
-		 mMainWin->actionCollection(), "settings_korganizeredit_filters" );
-    new KAction( i18n("Edit Categories"), 0, mKOrgPart, SLOT(slotShowCategoryEditDialog()),
-		 mMainWin->actionCollection(), "settings_korganizeredit_categories" );
   }
 
   emit signalMenusChanged();
@@ -541,27 +283,6 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
   return true;
 }
 
-void internal_directlySendMessage(KMMessage* msg)
-{
-  // important: We create a composer, but don't want to show it,
-  //            so we can *not* call mMainWin->slotCompose().
-  KMComposeWin win( msg );
-  win.mNeverSign    = true;
-  win.mNeverEncrypt = true;
-  win.slotSendNow();
-  //mMainWin->slotCompose( msgNew, 0 );
-}
-
-void KMGroupware::slotRefreshCalendar()
-{
-  emit signalRefresh( "Calendar" );
-}
-
-void KMGroupware::slotRefreshTasks()
-{
-  emit signalRefresh( "Task" );
-}
-
 
 KMGroupware::VCalType KMGroupware::getVCalType( const QString &vCal )
 {
@@ -582,10 +303,10 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
                                       QString& choice )
 {
 #if 0
+  // FIXME: Reinstate Outlook workaround
   // If we are in legacy mode, and there is more than one receiver, we
   // need to ask the user which address to use
-  // FIXME: Reinstate Outlook workaround
-  KMMessage* msgOld = mMainWin->mainKMWidget()->headers()->currentMsg();
+  KMMessage* msgOld = mMainWidget->headers()->currentMsg();
   KConfigGroup options( KMKernel::config(), "Groupware" );
   QString fromAddress; // this variable is only used in legacy mode
   if( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) ) {
@@ -616,7 +337,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
               fromAddress = KInputDialog::getItem( i18n( "Select Address" ),
                                                    i18n( "In order to let Outlook(tm) recognize you as the receiver, you need to indicate which one of the following addresses is your email address" ),
                                                    toAddresses, 0, false, &bOk,
-                                                   mMainWin );
+                                                   kmkernel->mainWin() );
               if( !bOk )
                   // If the user didn't select anything, just take the
                   // first one so that we have something at all.
@@ -625,29 +346,6 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
       }
   }
 #endif
-
-  // step 1: call Organizer
-  if( choice == "check" ) {
-    // Perhaps bring up KOrganizer here? Or is that better done from KOrg?
-
-    // Old code:
-#if 0
-    emit signalShowCalendarView();
-    slotGroupwareShow( true );
-    // try to find out the start and end time
-    QString sDtStart( "DTSTART" );
-    QString sDtEnd( "DTEND" );
-    vPartMicroParser( vCalIn.utf8(), sDtStart, sDtEnd );
-    if( !sDtStart.isEmpty() && !sDtEnd.isEmpty() ) {
-      sDtStart = ISOToLocalQDateTime( sDtStart );
-      sDtEnd = ISOToLocalQDateTime( sDtEnd );
-      QDateTime start = QDateTime::fromString( sDtStart.left(sDtStart.find('@')), Qt::ISODate );
-      QDateTime end = QDateTime::fromString( sDtEnd.left( sDtEnd.find(  '@')), Qt::ISODate );
-      emit signalCalendarUpdateView( start, end );
-    }
-    //emit signalEventRequest( receiver, vCalIn );
-#endif
-  }
 
   QByteArray data, replyData;
   QCString replyType;
@@ -664,11 +362,9 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
     kdDebug(5006) << "KOrganizer call succeeded, rc = " << rc << endl;
 
     if( rc )
-      mMainWin->mainKMWidget()->slotTrashMsg();
+      mMainWidget->slotTrashMsg();
   } else
     kdDebug(5006) << "KOrganizer call failed";
-
-  slotGroupwareHide();
 }
 
 
@@ -705,11 +401,13 @@ void KMGroupware::processVCalReply( const QCString& sender,
       kdDebug(5006) << "KOrganizer call failed\n";
 
     // step 2: inform user that Organizer was updated
-    KMessageBox::information( mMainWin, (type == vCalEvent ?
+    KMessageBox::information( kmkernel->mainWin(), (type == vCalEvent ?
 					 i18n("The answer was registered in your calendar.") :
 					 i18n("The answer was registered in your task list.")),
 			      QString::null, "groupwareBox");
   } else if( choice == "cancel" ) {
+#if 0
+    // TODO: Implement this with DCOP
     QString uid( "UID" );
     QString descr("DESCRIPTION");
     QString summary("SUMMARY");
@@ -717,100 +415,28 @@ void KMGroupware::processVCalReply( const QCString& sender,
     vPartMicroParser( vCal.utf8(), uid, descr, summary );
     if( type == vCalEvent ) {
       emit signalEventDeleted( uid );
-      KMessageBox::information( mMainWin, i18n("<qt>The event <b>%1</b> was deleted from your calendar.</qt>")
+      KMessageBox::information( kmkernel->mainWin(), i18n("<qt>The event <b>%1</b> was deleted from your calendar.</qt>")
 				.arg( descr) );
     } else if( type == vCalTodo ) {
       emit signalTaskDeleted( uid );
-      KMessageBox::information( mMainWin, i18n("The task was deleted from your tasks")
+      KMessageBox::information( kmkernel->mainWin(), i18n("The task was deleted from your tasks")
 				.arg( summary ) );
     }
+#endif
   } else {
     // Don't know what to do, so better not delete the mail
     return;
   }
 
   // An answer was saved, so trash the message
-  mMainWin->mainKMWidget()->slotTrashMsg();
+  mMainWidget->slotTrashMsg();
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMGroupware::folderSelected( KMFolder* folder )
-{
-  bool bFound = mUseGroupware;
-  if( mUseGroupware ) {
-    KFolderTreeItem::Type type = kmkernel->iCalIface().folderType( folder );
-    switch( type ) {
-    case KFolderTreeItem::Calendar:
-      emit signalShowCalendarView();
-      break;
-    case KFolderTreeItem::Contacts:
-      emit signalShowContactsView();
-      break;
-    case KFolderTreeItem::Notes:
-      emit signalShowNotesView();
-      break;
-    case KFolderTreeItem::Tasks:
-      emit signalShowTodoView();
-      break;
-    default:
-      bFound = false;
-    }
-  }
-  return bFound;
-}
-
-
-/* View->Groupware menu */
-void KMGroupware::slotGroupwareHide()
-{
-  if( mKOrgPart ){
-    mKOrgPart->widget()->hide();
-    mHeaders->show();
-    mReader->show();
-    if( mGroupwareIsHidingMimePartTree ){
-      mGroupwareIsHidingMimePartTree = false;
-      mMimePartTree->show();
-    }
-  }
-}
-
-
-/* additional groupware slots */
-void KMGroupware::slotGroupwareShow(bool visible)
-{
-  if( mKOrgPart ){
-    if( visible ){
-      mHeaders->hide();
-      mReader->hide();
-      if( !mMimePartTree->isHidden() ){
-        mMimePartTree->hide();
-        mGroupwareIsHidingMimePartTree = true;
-      }
-      mKOrgPart->widget()->show();
-    }
-    else
-      slotGroupwareHide();
-  }
-}
-
-bool KMGroupware::eventFilter( QObject *o, QEvent *e ) const {
-  if( o ) {
-    if( o == mReader || o == mHeaders )
-      // When a groupware widget is shown, these two must not get any events
-      return mKOrgPart->widget()->isShown();
-
-    if( o == mMainWin )
-      // Only filter keypresses from main win
-      return mKOrgPart->widget()->isShown() && e->type() == QEvent::KeyPress;
-  }
-
-  return false;
-}
-
-//-----------------------------------------------------------------------------
-bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
-                               QString& prefix, QString& postfix ) const
+bool KMGroupware::vPartToHTML( int /*aUpdateCounter*/, const QString& vCal,
+			       QString fname, QString& prefix,
+			       QString& postfix ) const
 {
   VCalType type = getVCalType( vCal );
   if( type == vCalUnknown ) {
@@ -1451,7 +1077,7 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
 					i18n("None of your identities match the receiver "
 					     "of this message,<br> please choose which of "
 					     "the following addresses is yours:"),
-					addrs, 0, FALSE, &ok, mMainWin );
+					addrs, 0, FALSE, &ok, kmkernel->mainWin() );
       if( !ok ) return false;
     }
   }
@@ -1476,8 +1102,11 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
   KOrganizer for answering, records the result and sends an answer
   back.
 */
-bool KMGroupware::incomingResourceMessage( KMAccount* acct, KMMessage* msg )
+bool KMGroupware::incomingResourceMessage( KMAccount* /*acct*/, KMMessage* /*msg*/ )
 {
+#if 0
+  // TODO: Reimplement with DCOP
+
   if( !mUseGroupware)
     return false;
 
@@ -1512,6 +1141,7 @@ bool KMGroupware::incomingResourceMessage( KMAccount* acct, KMMessage* msg )
 
   // And also record in the account.
   acct->addInterval( qMakePair( start, end ) );
+#endif
 
   return true;
 }
@@ -1520,8 +1150,8 @@ bool KMGroupware::incomingResourceMessage( KMAccount* acct, KMMessage* msg )
 void KMGroupware::reloadFolderTree() const
 {
   // Make the folder tree show the icons or not
-  if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
-    mMainWin->mainKMWidget()->folderTree()->reload();
+  if( mMainWidget->folderTree() )
+    mMainWidget->folderTree()->reload();
 }
 
 #include "kmgroupware.moc"

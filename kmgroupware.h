@@ -26,28 +26,13 @@
 #ifndef KMGROUPWARE_H
 #define KMGROUPWARE_H
 
-#include "kmfoldertype.h"
-#include <kfoldertree.h>
 #include <qguardedptr.h>
 
-class QSplitter;
-class QDateTime;
-
-class DCOPClient;
-
-class KMFolder;
 class KMAccount;
-class KMMainWin;
 class KMMessage;
-class KMHeaders;
 class KMReaderWin;
-class KMMimePartTree;
-class KMMsgBase;
+class KMMainWidget;
 class KURL;
-
-namespace KParts {
-  class ReadOnlyPart;
-}
 
 
 class KMGroupware : public QObject
@@ -58,28 +43,9 @@ public:
   KMGroupware( QObject* parent = 0, const char* name = 0 );
   virtual ~KMGroupware();
 
-signals:
-  /** Make the IMAP resource re-read all of the given type */
-  void signalRefresh( const QString& type);
-
-private slots:
-  // internal slots for new interface
-  void slotRefreshCalendar();
-  void slotRefreshTasks();
-
-  ////////////////////////////////////////////////////////////////
 
 public:
-  bool folderSelected( KMFolder* folder );
-  bool checkFolders() const;
-
-  void setupKMReaderWin(KMReaderWin* reader);
-  void setMimePartTree(KMMimePartTree* mimePartTree);
-  void createKOrgPart(QWidget* parent);
-  void reparent(QSplitter* panner);
-  void moveToLast();
   void setupActions(); // Not const since it emits a signal
-  void enableActions(bool on) const;
   void processVCalRequest( const QCString& receiver, const QString& vCalIn,
                            QString& choice );
   void processVCalReply( const QCString& sender, const QString& vCalIn,
@@ -89,8 +55,6 @@ public:
   void readConfig();
 
   bool isEnabled() const { return mUseGroupware; }
-
-  bool hidingMimePartTree(){ return mGroupwareIsHidingMimePartTree; }
 
   // retrieve matching body part (either text/vCal (or vCard) or application/ms-tnef)
   // and decode it
@@ -127,92 +91,29 @@ public:
   // automatic resource handling
   bool incomingResourceMessage( KMAccount*, KMMessage* );
 
-  void setMainWin(KMMainWin *mainWin) { mMainWin = mainWin; }
-  void setHeaders(KMHeaders* headers );
-
   // To be exchanged with something reasonable
   void reloadFolderTree() const;
 
-public slots:
-  /** View->Groupware menu */
-  void slotGroupwareHide();
-  /** additional groupware slots */
-  void slotGroupwareShow(bool);
+  void setMainWidget( KMMainWidget* mw ) { mMainWidget = mw; }
 
+signals:
+  /** The menus were changed */
+  void signalMenusChanged();
+
+public slots:
   /** Delete and sync the local IMAP cache  */
   void slotInvalidateIMAPFolders();
 
 protected:
-  void saveActionEnable( const QString& name, bool on ) const;
-
   // Figure out if a vCal is a todo, event or neither
   enum VCalType { vCalEvent, vCalTodo, vCalUnknown };
   static VCalType getVCalType( const QString &vCard );
 
-  /** This class functions as an event filter while showing groupware widgets */
-  bool eventFilter( QObject *o, QEvent *e ) const;
-
-  // We use QGuardedPtr for everything, since
-  // we are not the owner of any of those objects
-  QGuardedPtr<KMMainWin>      mMainWin;
-  QGuardedPtr<KMHeaders>      mHeaders;
-  QGuardedPtr<KMReaderWin>    mReader;
-  QGuardedPtr<KMMimePartTree> mMimePartTree;
-
-signals:
-  void signalSetKroupwareCommunicationEnabled( QObject* );
-
-  /** Make sure a given time span is visible in the Calendar */
-  void signalCalendarUpdateView( const QDateTime&, const QDateTime& );
-
-  void signalShowCalendarView();
-  void signalShowContactsView();
-  void signalShowNotesView();
-  void signalShowTodoView();
-
-  /** Open Groupware to consider accepting/declining an invitation */
-  void signalEventRequest( const QCString& receiver, const QString&, bool&,
-			   QString&, QString&, bool& );
-
-  /** Use Groupware to create an answer to a resource request. */
-  void signalResourceRequest( const QValueList<QPair<QDateTime, QDateTime> >& busy,
-                              const QCString& resource,
-                              const QString& vCalIn, bool& vCalInOK,
-                              QString& vCalOut, bool& vCalOutOK,
-                              bool& isFree, QDateTime& start, QDateTime& end );
-
-  /** Accept an invitation without checking: Groupware will *not* show up */
-  void signalAcceptedEvent( bool, const QCString&, const QString&, bool&,
-			    QString&, bool& );
-
-  /** Reject an invitation: Groupware will *not* show up */
-  void signalRejectedEvent( const QCString&, const QString&, bool&, QString&,
-			    bool& );
-
-  /** Answer an invitation */
-  void signalIncidenceAnswer( const QCString&, const QString&, QString& );
-
-  /** An event was deleted */
-  void signalEventDeleted( const QString& );
-
-  /** A task was deleted */
-  void signalTaskDeleted( const QString& );
-
-  /** A note was deleted */
-  void signalNoteDeleted( const QString& );
-
-  /** The menus were changed */
-  void signalMenusChanged();
-
-private:
-  void internalCreateKOrgPart();
   void setEnabled( bool b );
 
   bool mUseGroupware;
-  bool mGroupwareIsHidingMimePartTree;
-  QSplitter* mPanner;
-  QGuardedPtr<KParts::ReadOnlyPart> mKOrgPart;
-  QGuardedPtr<QWidget> mKOrgPartParent;
+
+  QGuardedPtr<KMMainWidget> mMainWidget;
 };
 
 #endif /* KMGROUPWARE_H */
