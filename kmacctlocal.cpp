@@ -206,12 +206,8 @@ void KMAcctLocal::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::readConfig(KConfig& config)
 {
-  QString defaultPath(_PATH_MAILDIR);
-  defaultPath += "/";
-  defaultPath += getenv("USER");
-
   KMAcctLocalInherited::readConfig(config);
-  mLocation = config.readEntry("Location", defaultPath);
+  mLocation = config.readEntry("Location", mLocation);
   QString locktype = config.readEntry("LockType", "procmail_lockfile" );
 
   if( locktype == "procmail_lockfile" ) {
