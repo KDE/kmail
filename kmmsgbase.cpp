@@ -521,6 +521,7 @@ const QString KMMsgBase::decodeBase64(const QString& aStr)
   QString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
+  while (bStr.length() < 16) bStr += "=";
 
   DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
