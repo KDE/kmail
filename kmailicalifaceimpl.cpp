@@ -626,7 +626,8 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
     map.insert( f->location(), !f->isReadOnly() );
-    kdDebug(5006) << "Adding(1) folder " << f->location() << endl;
+    kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
+      ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
 
   // get the extra ones
@@ -637,7 +638,8 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
     if ( f->storage()->contentsType() == t
          && storageFormat( f ) == StorageXML ) {
       map.insert( f->location(), !f->isReadOnly() );
-      kdDebug(5006) << "Adding(2) folder " << f->location() << endl;
+      kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
+              ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
   }
 
