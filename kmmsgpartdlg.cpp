@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <klocale.h>
-#include <kmimetypevalidator.h>
+#include <kstringvalidator.h>
 
 
 //-----------------------------------------------------------------------------
