@@ -5911,6 +5911,8 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 //-----------------------------------------------------------------------------
 void KMEdit::slotAutoSpellCheckingToggled( bool on )
 {
+  // don't autoEnable spell checking if the user turned spell checking off
+  mSpellChecker->setAutomatic( on );
   mSpellChecker->setActive( on );
 }
 
