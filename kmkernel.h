@@ -319,11 +319,12 @@ public slots:
 
   void slotShowConfigurationDialog();
   void slotRunBackgroundTasks();
+  
+  void slotConfigChanged();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
-  void slotConfigChanged();
 
 signals:
   void configChanged();
