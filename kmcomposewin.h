@@ -22,8 +22,6 @@
 #include <qlineedit.h>
 #include "kmtopwidget.h"
 
-#include <kspell.h>
-
 
 
 class QLineEdit;
@@ -66,10 +64,8 @@ public:
 signals:
   void spellcheck_done();
 public slots:
-  void slotSpellCorrected (char *originalword, char *newword, unsigned pos);
-  void slotSpellMisspelling (char *word, QStrList *, unsigned pos);
   void slotSpellcheck2(KSpell*);
-  void slotSpellResult (char *newtext);
+  void slotSpellResult(const char *newtext);
   void slotSpellDone();
 
 protected:

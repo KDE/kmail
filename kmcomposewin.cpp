@@ -25,6 +25,7 @@
 
 #include <assert.h>
 #include <kapp.h>
+#include <kconfig.h>
 #include <kiconloader.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
@@ -36,6 +37,8 @@
 #include <kwm.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
+
+#include <kspell.h>
 
 #include <qtabdialog.h>
 #include <qlabel.h>
@@ -2112,115 +2115,58 @@ void KMEdit::spellcheck()
 {
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 		       SLOT(slotSpellcheck2(KSpell*)));
+  connect (mKSpell, SIGNAL( death()),
+          this, SLOT (slotSpellDone()));
+  connect (mKSpell, SIGNAL (misspelling (QString, QStringList *, unsigned)),
+          this, SLOT (misspelling (QString, QStringList *, unsigned)));
+  connect (mKSpell, SIGNAL (corrected (QString, QString, unsigned)),
+          this, SLOT (corrected (QString, QString, unsigned)));
+  connect (mKSpell, SIGNAL (done(const char *)),
+          this, SLOT (slotSpellResult (const char *)));
 }
 
 
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellcheck2(KSpell*)
 {
-
-  if (mKSpell->isOk())
-  {
-    setReadOnly (TRUE);
-
-    connect (mKSpell, SIGNAL (misspelling (char *, QStrList *, unsigned)),
-	     this, SLOT (slotSpellMisspelling (char *, QStrList *, unsigned)));
-    connect (mKSpell, SIGNAL (corrected (char *, char *, unsigned)),
-	     this, SLOT (slotSpellCorrected (char *, char *, unsigned)));
-    connect (mKSpell, SIGNAL (done(char *)),
-	     this, SLOT (slotSpellResult (char *)));
-
-    //we're going to want to ignore quoted-message lines...
-
-    mKSpell->check (text().data());
-  }
-  else
-  {
-    warning(i18n("Error starting KSpell. Please make sure you have ISpell properly configured."));
-  }
-
+  spellcheck_start();
+  //we're going to want to ignore quoted-message lines...
+  mKSpell->check(text());
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotSpellResult(char *aNewText)
+void KMEdit::slotSpellResult(const char *aNewText)
 {
-  deselect();
-
-  setText(aNewText);
-  setReadOnly(FALSE);
-  setModified();
-  connect (mKSpell, SIGNAL (cleanDone()),
-	   this, SLOT (slotSpellDone()));
+  spellcheck_stop();
+  if (mKSpell->dlgResult() == 0)
+  {
+     setText(aNewText);
+  }
   mKSpell->cleanUp();
 }
 
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellDone()
 {
+  KSpell::spellStatus status = mKSpell->status();
   delete mKSpell;
-  mKSpell = NULL;  //Shouldn't this be zero, not NULL?
-  emit spellcheck_done();
-}
-
-//-----------------------------------------------------------------------------
-void KMEdit::slotSpellCorrected(char *originalword,
-				      char *newword, unsigned pos)
-{
-  //we'll reselect the original word in case the user has played with
-  //the selection in eframe or the word was auto-replaced
-
-  unsigned line, cnt=0, l;
-  if( (QString) newword != (QString) originalword)
-    {
-
-      for (line=0;line<(unsigned)numLines() && cnt<=pos;line++)
-        cnt+=lineLength(line)+1;
-      line--;
-
-      cnt=pos-cnt+lineLength(line)+1;
-
-      //remove old word
-      setCursorPosition (line, cnt);
-      for(l = 0 ; l < (unsigned) strlen(originalword); l++)
-        cursorRight(TRUE);
-      ///      setCursorPosition (line,
-      //         cnt+strlen(originalword),TRUE);
-      cut();
-
-      insertAt (newword, line, cnt);
-    }
-
-  deselect();
-
-}
-
-
-//-----------------------------------------------------------------------------
-void KMEdit::slotSpellMisspelling(char *word, QStrList *, unsigned pos)
-{
-  unsigned l, cnt=0;
-
-  for (l=0;l<(unsigned)numLines() && cnt<=pos;l++)
-    cnt+=strlen (textLine(l))+1;
-  l--;
-
-  cnt=pos-cnt+strlen (textLine (l))+1;
-
-  setCursorPosition (l, cnt);
-
-  //According to the Qt docs this could be done more simply with
-  //setCursorPosition (l, cnt+strlen(word), TRUE);
-  //but that doesn't seem to work.
-  for(l = 0 ; l < (unsigned) strlen(word); l++)
-    cursorRight(TRUE);
-
-  if (cursorPoint().y()>height()/2)
-    mKSpell->moveDlg(10, height()/2 - mKSpell->heightDlg()-15);
+  mKSpell = 0;
+  if (status == KSpell::Error)
+  {
+     KMessageBox::sorry(this, i18n("ISpell could not be started.\n"
+     "Please make sure you have ISpell properly configured and in your PATH."));
+  }
+  else if (status == KSpell::Crashed)
+  {
+     spellcheck_stop();
+     KMessageBox::sorry(this, i18n("ISpell seems to have crashed."));
+  }
   else
-    mKSpell->moveDlg(10, height()/2 + 15);
-
-  //  setCursorPosition (line, cnt+strlen(word),TRUE);
+  {
+     emit spellcheck_done();
+  }
 }
+
 
 
 
