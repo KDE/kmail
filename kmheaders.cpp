@@ -2298,7 +2298,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
 
 //-----------------------------------------------------------------------------
 // Handle RMB press, show pop up menu
-void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &p, int )
+void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
 {
   if (!lvi)
     return;
