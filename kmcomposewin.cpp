@@ -1307,30 +1307,39 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       text = mEditor->brokenText();
 
   text.truncate(text.length()); // to ensure text.size()==text.length()+1
-  QTextCodec *codec = KMMsgBase::codecForName(mCharset);
 
-  if (mCharset == "us-ascii")
-    cText = KMMsgBase::toUsAscii(text);
-  else if (codec == NULL) {
-    kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
-    cText = text.local8Bit();
-  } else
-      cText = codec->fromUnicode(text);
-
-  if (!text.isEmpty() && codec && codec->toUnicode(cText) != text)
   {
-    QString oldText = mEditor->text();
-    mEditor->setText(codec->toUnicode(cText));
-    kernel->kbp()->idle();
-    bool anyway = (KMessageBox::warningYesNo(0L,
-    i18n("Not all characters fit into the chosen"
-    " encoding.\nSend the message anyway?"),
-    i18n("Some characters will be lost"),
-    i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
-    if (!anyway)
+    // Provide a local scope for newText.
+    QString newText;
+    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+
+    if (mCharset == "us-ascii") {
+      cText = KMMsgBase::toUsAscii(text);
+      newText = QString::fromLatin1(cText);
+    } else if (codec == NULL) {
+      kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
+      cText = text.local8Bit();
+      newText = QString::fromLocal8Bit(cText);
+    } else {
+      cText = codec->fromUnicode(text);
+      newText = codec->toUnicode(cText);
+    }
+
+    if (!text.isEmpty() && (newText != text))
     {
-      mEditor->setText(oldText);
-      return QCString();
+      QString oldText = mEditor->text();
+      mEditor->setText(newText);
+      kernel->kbp()->idle();
+      bool anyway = (KMessageBox::warningYesNo(0L,
+      i18n("Not all characters fit into the chosen"
+      " encoding.\nSend the message anyway?"),
+      i18n("Some characters will be lost"),
+      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
+      if (!anyway)
+      {
+        mEditor->setText(oldText);
+        return QCString();
+      }
     }
   }
 
