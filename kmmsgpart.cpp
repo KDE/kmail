@@ -375,7 +375,7 @@ const QString KMMessagePart::name(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setName(const QString aStr)
 {
-  mName = KMMsgBase::decodeQuotedPrintableString(aStr);
+  mName = aStr;
 }
 
 

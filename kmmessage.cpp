@@ -1675,7 +1675,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
      } ;
      if (curpart)
 	 curpart = curpart->Next();
-  }  
+  }
 
   // If the DwBodyPart was found get the header fields and body
   if (part)
@@ -1700,9 +1700,9 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     }
     // Modification by Markus
     if (!headers->ContentType().Name().empty())
-	aPart->setName(headers->ContentType().Name().c_str());
+      aPart->setName(KMMsgBase::decodeQuotedPrintableString(headers->ContentType().Name().c_str()) );
     else if (!headers->Subject().AsString().empty())
-	aPart->setName( headers->Subject().AsString().c_str() );
+      aPart->setName( KMMsgBase::decodeQuotedPrintableString(headers->Subject().AsString().c_str()) );
     else
       aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
 
