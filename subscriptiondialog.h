@@ -72,11 +72,6 @@ namespace KMail {
       void slotLoadFolders();
 
       /**
-       * Reimplemented to cancel remaining jobs
-       */ 
-      virtual void slotCancel();    
-
-      /**
        * Create or update the listitems
        */ 
       void createItems();
