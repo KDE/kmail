@@ -93,8 +93,8 @@ void KMSearchRule::init(const QCString aField, const char* aStrFunction,
 bool KMSearchRule::matches(const KMMessage* msg) const
 {
   QString msgContents;
-  unsigned long numericalMsgContents = 0;
-  unsigned long numericalValue = 0;
+  int numericalMsgContents = 0;
+  int numericalValue = 0;
   bool numerical = FALSE;
 
   assert(msg != NULL); // This assert seems to be important
@@ -112,15 +112,15 @@ bool KMSearchRule::matches(const KMMessage* msg) const
         || matches( false, 0, 0, msg->headerField("Cc") );
   } else if( mField == "<size>" ) {
     numerical = TRUE;
-    numericalMsgContents = msg->msgSize();
-    numericalValue = mContents.toULong(); // isEmpty() checks this
+    numericalMsgContents = int(msg->msgSize());
+    numericalValue = mContents.toInt(); // isEmpty() checks this
     msgContents.setNum( numericalMsgContents );
   } else if( mField == "<age in days>" ) {
     numerical = TRUE;
     QDateTime msgDateTime;
     msgDateTime.setTime_t( msg->date() );
     numericalMsgContents = msgDateTime.daysTo( QDateTime::currentDateTime() );
-    numericalValue = mContents.toULong(); // isEmpty() checks this
+    numericalValue = mContents.toInt(); // isEmpty() checks this
     msgContents.setNum( numericalMsgContents );
   } else {
     msgContents = msg->headerField(mField);
@@ -225,7 +225,7 @@ bool KMSearchRule::isEmpty() const
 
   if ( mField == "<size>" || mField == "<age in days>" ) {
     ok = FALSE;
-    mContents.toULong(&ok);
+    mContents.toInt(&ok);
   } else
     ok = TRUE;
 
