@@ -50,12 +50,11 @@ class KMFolderTreeItem;
 
 namespace {
 
-// Local helper classes
+  // Local helper class
 class ExtraFolder {
 public:
-  ExtraFolder( KMFolder* f, KMail::FolderContentsType t ) : folder( f ), type( t ) {}
-  KMFolder* folder;
-  KMail::FolderContentsType type;
+  ExtraFolder( KMFolder* f ) : folder( f ) {}
+  QGuardedPtr<KMFolder> folder;
 };
 
 class Accumulator {
@@ -100,6 +99,33 @@ public:
   // Update a single entry in the storage layer
   bool update( const QString& type, const QString& folder,
                const QString& uid, const QString& entry );
+
+  /// Update a kolab storage entry.
+  /// If message is not there, it is added and
+  /// given the subject as Subject: header.
+  /// Returns the new mail serial number,
+  /// or 0 if something went wrong,
+  Q_UINT32 update( const QString& resource,
+                   Q_UINT32 sernum,
+                   const QString& subject,
+                   const QStringList& attachmentURLs,
+                   const QStringList& attachmentMimetypes,
+                   const QStringList& attachmentNames,
+                   const QStringList& deletedAttachments );
+
+  bool deleteIncidenceKolab( const QString& resource,
+                             Q_UINT32 sernum );
+  QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
+                                           const QString& resource );
+
+  QValueList<SubResource> subresourcesKolab( const QString& contentsType );
+
+  // "Get" an attachment. This actually saves the attachment in a file
+  // and returns a URL to it
+  KURL getAttachment( const QString& resource,
+                      Q_UINT32 sernum,
+                      const QString& filename );
+
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );
@@ -146,6 +172,8 @@ public:
 
   /** Find message matching a given UID. */
   KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
+  /** Find message matching a given serial number. */
+  static KMMessage* findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder );
 
   /** Convenience function to delete a message. */
   static void deleteMsg( KMMessage* msg );
@@ -181,10 +209,26 @@ private slots:
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */
-  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
+  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString,
+                        KMail::FolderContentsType contentsType );
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
+  KMFolder* findResourceFolder( const QString& resource );
+
+  bool updateAttachment( KMMessage& msg,
+                         const QString& attachmentURL,
+                         const QString& attachmentName,
+                         const QString& attachmentMimetype,
+                         bool lookupByName );
+  bool deleteAttachment( KMMessage& msg,
+                         const QString& attachmentURL );
+  Q_UINT32 addIncidenceKolab( KMFolder& folder,
+                              const QString& subject,
+                              const QStringList& attachmentURLs,
+                              const QStringList& attachmentNames,
+                              const QStringList& attachmentMimetypes );
+  static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
   void loadPixmaps() const;
 
   QGuardedPtr<KMFolder> mContacts;
@@ -194,6 +238,7 @@ private:
   QGuardedPtr<KMFolder> mJournals;
 
   // The extra IMAP resource folders
+  // Key: folder location. Data: folder.
   QDict<ExtraFolder> mExtraFolders;
   // used for collecting incidences during async loading
   QDict<Accumulator> mAccumulators;
@@ -215,6 +260,7 @@ private:
   static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks;
 
   bool mUseResourceIMAP;
+  bool mResourceQuiet;
   bool mHideFolders;
 
   /*
