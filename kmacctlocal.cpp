@@ -91,7 +91,7 @@ void KMAcctLocal::processNewMail(bool)
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( fi.size() == 0 ) {
-      QString statusMsg = i18n("Transmission completed, no new messages.");
+      QString statusMsg = i18n("Transmission complete. No new messages.");
       KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
       emit finishedCheck(hasNewMail);
       emit newMailsProcessed(0);
@@ -214,10 +214,10 @@ void KMAcctLocal::processNewMail(bool)
       KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
     QString statusMsg;
     if ( num )
-      statusMsg = i18n("Transmission completed, %n new message.",
-		       "Transmission completed, %n new messages.", num);
+      statusMsg = i18n("Transmission complete. %n new message.",
+		       "Transmission complete. %n new messages.", num);
     else
-      statusMsg = i18n("Transmission completed, no new messages.");
+      statusMsg = i18n("Transmission complete. No new messages.");
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
   }
   // else warning is written already

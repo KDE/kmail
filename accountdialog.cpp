@@ -375,7 +375,7 @@ void AccountDialog::makeLocalAccountPage()
 
   //mLocal.identityCombo->setEnabled(false);
 
-  label = new QLabel( i18n("&Precommand:"), page );
+  label = new QLabel( i18n("&Pre-Command:"), page );
   topLayout->addWidget( label, 9, 0 );
   mLocal.precommand = new QLineEdit( page );
   label->setBuddy( mLocal.precommand );
@@ -445,7 +445,7 @@ void AccountDialog::makeMaildirAccountPage()
 
   mMaildir.precommand = new QLineEdit( page );
   topLayout->addWidget( mMaildir.precommand, 9, 1 );
-  label = new QLabel( mMaildir.precommand, i18n("&Precommand:"), page );
+  label = new QLabel( mMaildir.precommand, i18n("&Pre-Command:"), page );
   topLayout->addWidget( label, 9, 0 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
@@ -1226,7 +1226,7 @@ void AccountDialog::slotLocationChooser()
   }
   if( url.isLocalFile() == false )
   {
-    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+    KMessageBox::sorry( 0L, i18n( "Only local files are currently supported." ) );
     return;
   }
 

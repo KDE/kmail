@@ -45,8 +45,8 @@ static const struct {
   KMMsgPartDialog::Encoding encoding;
   const char * displayName;
 } encodingTypes[] = {
-  { KMMsgPartDialog::SevenBit, I18N_NOOP("none (7bit text)") },
-  { KMMsgPartDialog::EightBit, I18N_NOOP("none (8bit text)") },
+  { KMMsgPartDialog::SevenBit, I18N_NOOP("none (7-bit text)") },
+  { KMMsgPartDialog::EightBit, I18N_NOOP("none (8-bit text)") },
   { KMMsgPartDialog::QuotedPrintable, I18N_NOOP("quoted printable") },
   { KMMsgPartDialog::Base64, I18N_NOOP("base 64") },
 };

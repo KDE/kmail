@@ -51,7 +51,7 @@ I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently "
 	   "selected filter from the list above.</p>"
 	   "<p>There's no way to get the filter back once "
 	   "it is deleted, but you can always leave the "
-	   "dialog through <em>Cancel</em> to discard the "
+	   "dialog by clicking <em>Cancel</em> to discard the "
 	   "changes made.</p></qt>" );
 const char * _wt_filterlist_up =
 I18N_NOOP( "<qt><p>Click this button to move the currently "
@@ -59,29 +59,29 @@ I18N_NOOP( "<qt><p>Click this button to move the currently "
 	   "<p>This is useful since the order of the filters in the list "
 	   "determines the order in which they are tried on messages: "
 	   "The topmost filter gets tried first.</p>"
-	   "<p>If you have hit this button accidently, you can undo this "
-	   "by clicking on the <em>down</em> button (to the right)</p></qt>" );
+	   "<p>If you have clicked this button accidentally, you can undo this "
+	   "by clicking on the <em>down</em> button (to the right).</p></qt>" );
 const char * _wt_filterlist_down =
 I18N_NOOP( "<qt><p>Click this button to move the currently "
 	   "selected filter <em>down</em> one in the list above.</p>"
 	   "<p>This is useful since the order of the filters in the list "
 	   "determines the order in which they are tried on messages: "
 	   "The topmost filter gets tried first.</p>"
-	   "<p>If you have hit this button accidently, you can undo this "
+	   "<p>If you have clicked this button accidentally, you can undo this "
 	   "by clicking on the <em>up</em> button (to the left)</p></qt>" );
 const char * _wt_filterlist_rename =
 I18N_NOOP( "<qt><p>Click this button to rename the currently selected filter.</p>"
 	   "<p>Filters are named automatically, as long as they start with "
 	   "\"<<\".</p>"
-	   "<p>If you have renamed a filter accidently and want automatic "
-	   "naming back, click this button and select <em>Clear</em> and "
-	   "then <em>OK</em> in the appearing dialog.</p></qt>" );
+	   "<p>If you have renamed a filter accidentally and want automatic "
+	   "naming back, click this button and select <em>Clear</em> followed "
+	   "by <em>OK</em> in the appearing dialog.</p></qt>" );
 const char * _wt_filterdlg_showLater =
 I18N_NOOP( "<qt><p>Check this button to force the confirmation dialog to show "
 	   "up.</p><p>This is useful if you have defined a ruleset that tags "
            "messages to be downloaded later. Without the possibility to force "
            "the dialog popup, these messages could never be downloaded if no "
-           "other big messages were waiting on the server, or if you wanted to "
+           "other large messages were waiting on the server, or if you wanted to "
            "change the ruleset to tag the messages differently.</p></qt>" );
 
 // The anchor of the filter dialog's help.

@@ -671,10 +671,10 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("&To:"),
 		    mLblTo, mEdtTo, mBtnTo);
   if (!fromSlot) ccAction->setChecked(abs(mShowHeaders)&HDR_CC);
-  rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Cc:"),
+  rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&CC:"),
 		    mLblCc, mEdtCc, mBtnCc);
   if (!fromSlot) bccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
-  rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
+  rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&BCC:"),
 		    mLblBcc, mEdtBcc, mBtnBcc);
   if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
@@ -881,10 +881,10 @@ void KMComposeWin::setupActions(void)
   toAction = new KToggleAction (i18n("&To"), 0, this,
                                 SLOT(slotView()),
                                 actionCollection(), "show_to");
-  ccAction = new KToggleAction (i18n("&Cc"), 0, this,
+  ccAction = new KToggleAction (i18n("&CC"), 0, this,
                                 SLOT(slotView()),
                                 actionCollection(), "show_cc");
-  bccAction = new KToggleAction (i18n("&Bcc"), 0, this,
+  bccAction = new KToggleAction (i18n("&BCC"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_bcc");
   subjectAction = new KToggleAction (i18n("&Subject"), 0, this,

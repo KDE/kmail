@@ -202,7 +202,7 @@ void KMSearchRuleWidget::initLists(bool headersOnly) const
     sFilterFieldList.append("Subject");
     sFilterFieldList.append("From");
     sFilterFieldList.append("To");
-    sFilterFieldList.append("Cc");
+    sFilterFieldList.append("CC");
     sFilterFieldList.append("Reply-To");
     sFilterFieldList.append("List-Id");
     sFilterFieldList.append("Organization");

@@ -3176,7 +3176,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 
     if (!aMsg->cc().isEmpty())
     {
-      headerStr.append(i18n("Cc: ")+
+      headerStr.append(i18n("CC: ")+
                        KMMessage::emailAddrAsAnchor(aMsg->cc(),TRUE) + ", ");
     }
 
@@ -3204,7 +3204,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     headerStr.append(i18n("To: ") +
                      KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE) + "<br>");
     if (!aMsg->cc().isEmpty())
-      headerStr.append(i18n("Cc: ")+
+      headerStr.append(i18n("CC: ")+
                        KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
     break;
 
@@ -3242,7 +3242,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     if (!aMsg->cc().isEmpty())
     {
       headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
-                              .arg(i18n("Cc: "))
+                              .arg(i18n("CC: "))
                               .arg(KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE)));
     }
 
@@ -3291,13 +3291,13 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
                    KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE) + "<br>");
     if (!aMsg->cc().isEmpty())
     {
-      headerStr.append(i18n("Cc: ")+
+      headerStr.append(i18n("CC: ")+
                        KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
     }
 
     if (!aMsg->bcc().isEmpty())
     {
-      headerStr.append(i18n("Bcc: ")+
+      headerStr.append(i18n("BCC: ")+
                        KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE) + "<br>");
     }
 

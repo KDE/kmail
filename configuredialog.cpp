@@ -2327,7 +2327,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay->addWidget( mNestingPolicy );
 
   // a button group for three radiobuttons:
-  mDateDisplay = new QVButtonGroup( i18n( "Display of Date" ), this );
+  mDateDisplay = new QVButtonGroup( i18n( "Displaying of the date", "Date Display" ), this );
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {

@@ -411,7 +411,7 @@ void KMSender::sendProcStarted(bool success)
     if (mSendProc)
        mSendProc->finish(true);
     else
-      setStatusMsg(i18n("Unrecognised transport protocol, could not send message."));
+      setStatusMsg(i18n("Unrecognized transport protocol. Unable to send message."));
     mSendProc = 0;
     mSendProcStarted = false;
     cleanup();

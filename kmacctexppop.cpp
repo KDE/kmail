@@ -736,19 +736,19 @@ void KMAcctExpPop::slotJobFinished() {
     QString statusMsg;
     if (numMessages > 0)
       if (numBytesToRead != numBytes && mLeaveOnServer)
-	statusMsg = i18n("Transmission completed, %n new message in %1 KB "
-			 "(%2 KB remain on the server).",
-			 "Transmission completed, %n new messages in %1 KB "
-			 "(%2 KB remain on the server).",
+	statusMsg = i18n("Transmission complete. %n new message in %1 KB "
+			 "(%2 KB remaining on the server).",
+			 "Transmission complete. %n new messages in %1 KB "
+			 "(%2 KB remaining on the server).",
 			 numMessages)
 	  .arg(numBytesRead/1024).arg(numBytes/1024);
       else
-	statusMsg = i18n("Transmission completed, %n message in %1 KB.",
-			 "Transmission completed, %n messages in %1 KB.",
+	statusMsg = i18n("Transmission complete. %n message in %1 KB.",
+			 "Transmission complete. %n messages in %1 KB.",
 			 numMessages)
 	  .arg(numBytesRead/1024);
     else
-      statusMsg = i18n("Transmission completed, no new messages." );
+      statusMsg = i18n("Transmission complete. No new messages." );
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
     KMBroadcastStatus::instance()->setStatusProgressEnable( "P" + mName,
       false );
