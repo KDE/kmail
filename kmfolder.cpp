@@ -545,7 +545,8 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   if (msgParent)
   {
     if (msgParent==this) return 0;
-    msgParent->take(msgParent->find(aMsg));
+    idx = msgParent->find(aMsg);
+    if (idx >= 0) msgParent->take(idx);
   }
 
   msgText = aMsg->asString();
