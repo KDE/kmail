@@ -23,6 +23,7 @@
 #include "kmfoldermgr.h"
 #include "identitycombo.h"
 #include "kmkernel.h"
+#include "kmfoldertype.h"
 #include "kmfolderimap.h"
 #include "kmmessage.h"
 
@@ -101,7 +102,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
   mNormalIconButton->setFixedSize( 28, 28 );
-  mNormalIconButton->setIcon( (!normalIcon.isEmpty()) ? normalIcon : 
+  mNormalIconButton->setIcon( (!normalIcon.isEmpty()) ? normalIcon :
                                                         QString("folder") );
   ihl->addWidget( mNormalIconButton );
   ihl->addStretch( 1 );
@@ -325,8 +326,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   sl->addWidget( senderType );
   sl->addStretch( 1 );
 
+
   if ( ((!mFolder) && mFolderDir->type() == KMImapDir) ||
-       (mFolder && (mFolder->type() == "imap")) )
+       (mFolder && (mFolder->folderType() == KMFolderTypeImap)) )
   {
     KMFolderImap* imapFolder = 0;
     if (mFolder) imapFolder = static_cast<KMFolderImap*>((KMFolder*)mFolder);
@@ -352,7 +354,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     if (curFolder->child() == aFolderDir) {
       fileInFolder->setCurrentItem( i );
       slotUpdateItems( i );
-    }	
+    }
   }
 
 //   hl = new QHBoxLayout();
@@ -554,7 +556,7 @@ void KMFolderDialog::slotOk()
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
-      }	
+      }
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
@@ -608,7 +610,7 @@ void KMFolderDialog::slotOk()
     if (folder->protocol() == "imap")
     {
       KMFolderImap* imapFolder = static_cast<KMFolderImap*>((KMFolder*)folder);
-      imapFolder->setIncludeInMailCheck( 
+      imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
       kernel->imapFolderMgr()->contentsChanged();
     }
