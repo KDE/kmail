@@ -455,7 +455,7 @@ void KMFolderTree::delayedUpdate()
     }
 
     if (upd && repaintRequired)
-      fti->repaint();
+      for (QListViewItem *p = fti; p; p = p->parent()) p->repaint();
     ++it;
   }
   setUpdatesEnabled(upd);

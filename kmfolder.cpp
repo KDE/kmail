@@ -1111,7 +1111,8 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (aMsg->status()==KMMsgStatusUnread ||
       aMsg->status()==KMMsgStatusNew) {
-    ++mUnreadMsgs;
+    if (mUnreadMsgs == -1) mUnreadMsgs = 1;
+    else ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
 
@@ -1424,11 +1425,7 @@ int KMFolder::countUnread()
 
   open(); // will update unreadMsgs
   close();
-  // George Staikos <staikos@kde.org> 9/8/2000 - hack added here
-  //                           to make it stop displaying -1 unread
-  //                           messages when there are really none.
-  //               (no time to track down the cause)
-  return (mUnreadMsgs > 0 ? mUnreadMsgs : 0);
+  return mUnreadMsgs;
 }
 
 //-----------------------------------------------------------------------------
