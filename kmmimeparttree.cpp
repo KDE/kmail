@@ -6,7 +6,6 @@
 #include "kmmimeparttree.h"
 
 #include "kmreaderwin.h"
-#include "kmcomposewin.h"
 #include "partNode.h"
 #include "kmkernel.h"
 

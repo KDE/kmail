@@ -12,7 +12,6 @@
 #include "partNode.h"
 #include <klocale.h>
 #include <kdebug.h>
-#include "kmcomposewin.h"
 #include "kmmimeparttree.h"
 
 /*
