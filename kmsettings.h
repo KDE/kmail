@@ -130,7 +130,6 @@ private:
   QComboBox *mFolders;
   KMAccount *mAcct;
   QCheckBox *mStorePasswd, *mChkDelete, *mChkInterval, *mChkExclude;
-  QCheckBox *mChkRetrieveAll;
 };
 
 #endif

@@ -67,10 +67,6 @@ public:
   bool leaveOnServer(void) const { return mLeaveOnServer; }
   virtual void setLeaveOnServer(bool);
 
-  /** Retrieve all messages from server (TRUE) or unread messages only. */
-  bool retrieveAll(void) const { return mRetrieveAll; }
-  virtual void setRetrieveAll(bool);
-
   /** Inherited methods. */
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
@@ -106,7 +102,6 @@ protected:
   bool    mUseSSL;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
-  bool    mRetrieveAll;
   bool    gotMsgs;
 
   KIO::Job *job;

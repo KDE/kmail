@@ -45,7 +45,6 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
-  mRetrieveAll = FALSE;
   mProtocol = 3;
   struct servent *serv = getservbyname("pop-3", "tcp");
   if (serv) {
@@ -100,7 +99,6 @@ void KMAcctExpPop::init(void)
   mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
-  mRetrieveAll = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -119,7 +117,6 @@ void KMAcctExpPop::pseudoAssign(KMAccount* account)
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
   setLeaveOnServer(acct->leaveOnServer());
-  setRetrieveAll(acct->retrieveAll());
   setPrecommand(acct->precommand());
 }
 
@@ -169,7 +166,6 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
-  mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
 }
 
 
@@ -188,7 +184,6 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("port", static_cast<int>(mPort));
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
-  config.writeEntry("retrieve-all", mRetrieveAll);
 }
 
 
@@ -225,11 +220,13 @@ void KMAcctExpPop::setUseSSL(bool b)
   mUseSSL = b;
 }
 
+
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::setStorePasswd(bool b)
 {
   mStorePasswd = b;
 }
+
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::setLeaveOnServer(bool b)
@@ -239,22 +236,18 @@ void KMAcctExpPop::setLeaveOnServer(bool b)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::setRetrieveAll(bool b)
-{
-  mRetrieveAll = b;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctExpPop::setLogin(const QString& aLogin)
 {
   mLogin = aLogin;
 }
+
+
 //-----------------------------------------------------------------------------
 const QString KMAcctExpPop::passwd(void) const
 {
   return decryptStr(mPasswd);
 }
+
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::setPasswd(const QString& aPasswd, bool aStoreInConfig)
@@ -722,24 +715,22 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       QString uid = qdata.mid(spc + 1);
       uidsOfMsgs.append( uid );
       if (uidsOfSeenMsgs.contains(uid)) {
-	if (!mRetrieveAll) {
-	  QString id = qdata.left(spc);
-           url.setPath(QString("/download/%1").arg(id));
-	  int idx = idsOfMsgsPendingDownload.findIndex(url.url());
-	  if (idx != -1) {
-	    lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
-					      .at( idx ));
-	    idsOfMsgsPendingDownload.remove(url.url());
-	    idsOfMsgs.remove( id );
-	    uidsOfMsgs.remove( uid );
-	  }
-	  else
-	    kdDebug() << "KMAcctExpPop::slotData synchronization failure." << endl;
-	  url.setPath(QString("/%1").arg(id));
-	  if (uidsOfSeenMsgs.contains( uid ))
-	    idsOfMsgsToDelete.append(url.url());
-	}
-	uidsOfNextSeenMsgs.append( uid );
+        QString id = qdata.left(spc);
+        url.setPath(QString("/download/%1").arg(id));
+        int idx = idsOfMsgsPendingDownload.findIndex(url.url());
+        if (idx != -1) {
+          lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
+                                            .at( idx ));
+          idsOfMsgsPendingDownload.remove(url.url());
+          idsOfMsgs.remove( id );
+          uidsOfMsgs.remove( uid );
+        }
+        else
+          kdDebug() << "KMAcctExpPop::slotData synchronization failure." << endl;
+        url.setPath(QString("/%1").arg(id));
+        if (uidsOfSeenMsgs.contains( uid ))
+          idsOfMsgsToDelete.append(url.url());
+        uidsOfNextSeenMsgs.append( uid );
       }
     }
   }

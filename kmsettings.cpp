@@ -1518,11 +1518,6 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     mChkDelete->setChecked(!((KMAcctExpPop*)mAcct)->leaveOnServer());
     grid->addMultiCellWidget(mChkDelete, 8, 8, 1, 2);
 
-    mChkRetrieveAll=new QCheckBox(i18n("Retrieve all mail from server"), this);
-    mChkRetrieveAll->setMinimumSize(mChkRetrieveAll->sizeHint());
-    mChkRetrieveAll->setChecked(((KMAcctExpPop*)mAcct)->retrieveAll());
-    grid->addMultiCellWidget(mChkRetrieveAll, 9, 9, 1, 2);
-
   }
   else 
   {
@@ -1669,7 +1664,6 @@ void KMAccountSettings::accept()
     ((KMAcctExpPop*)mAcct)->setPasswd(mEdtPasswd->text(),
                  ((KMAcctExpPop*)mAcct)->storePasswd());
     ((KMAcctExpPop*)mAcct)->setLeaveOnServer(!mChkDelete->isChecked());
-    ((KMAcctExpPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
   }
 
   kernel->acctMgr()->writeConfig(TRUE);
