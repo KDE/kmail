@@ -124,14 +124,6 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   if (!searchFolder && object && ::qt_cast<QComboBox*>(object))
       static_cast<QComboBox*>(object)->setCurrentText("Subject");
 
-  list = mPatternEdit->queryList( 0, "mRuleValue" );
-  object = 0;
-  if ( list )
-      object = list->first();
-  delete list;
-  if (object && object->isWidgetType())
-      static_cast<QWidget*>(object)->setFocus();
-
   vbl->addWidget( mPatternEdit );
 
   // enable/disable widgets depending on radio buttons:
@@ -226,6 +218,16 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
   connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
   connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+
+  // give focus to the value field of the first search rule
+  object = mPatternEdit->child( "regExpLineEdit" );
+  if ( object && object->isWidgetType() ) {
+      static_cast<QWidget*>(object)->setFocus();
+      //kdDebug(5006) << "KMFldSearch: focus has been given to widget "
+      //              << object->name() << endl;
+  }
+  else
+      kdDebug(5006) << "KMFldSearch: regExpLineEdit not found" << endl;
 
   //set up actions
   KActionCollection *ac = actionCollection();
