@@ -266,7 +266,7 @@ public:
 
       The default implementation does nothing.
   */
-  virtual void installProfile( KConfig * profile ) {};
+  virtual void installProfile( KConfig * /*profile*/ ) {};
   /** Should apply the changed settings (ie. read the settings from
       the widgets into the @ref KConfig object). Called from @ref
       ConfigureDialog. */
