@@ -6,7 +6,7 @@
 #define KMFILTERRULESEDIT_H
 
 #include "kmsearchpattern.h"
-#include "../libkdenetwork/kwidgetlister.h"
+#include "kwidgetlister.h"
 
 #include <qhbox.h>
 #include <qgroupbox.h>
