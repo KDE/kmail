@@ -146,7 +146,7 @@ static void initFolders(KConfig* cfg)
   if (name.isEmpty()) name = "inbox";
   
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(name);
-  inboxFolder->open();
+  // inboxFolder->open();
 
   outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   outboxFolder->setType("Out");
