@@ -147,9 +147,6 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
   readLen = file.readBlock(result.data(), len);
   debug( QString( "len %1" ).arg(len));
 
-  result.resize(len + 1);
-  result[len] = '\0';
-
   if (readLen < len)
   {
     QString msg;

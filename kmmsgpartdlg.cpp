@@ -172,7 +172,8 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 //-----------------------------------------------------------------------------
 void KMMsgPartDlg::applyChanges(void)
 {
-  QString str, body, type, subtype;
+  QString str, type, subtype;
+  QByteArray body;
   int idx;
 
   if (!mMsgPart) return;
@@ -205,9 +206,9 @@ void KMMsgPartDlg::applyChanges(void)
 
   if (str != mMsgPart->cteStr())
   {
-    body = QCString(mMsgPart->bodyDecoded());
+    body.duplicate( mMsgPart->bodyDecoded() );
     mMsgPart->setCteStr(str);
-    mMsgPart->setBodyEncoded(QCString(body.ascii()));
+    mMsgPart->setBodyEncoded(body);
   }
   kernel->kbp()->idle();
 }

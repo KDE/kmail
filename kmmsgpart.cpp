@@ -66,28 +66,23 @@ void KMMessagePart::setBodyEncoded(const QByteArray& aStr)
   int encoding = contentTransferEncoding();
   int len;
 
-  mBodySize = aStr.size() - 1;
+  mBodySize = aStr.size();
 
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
-    dwSrc = DwString(aStr.data(), aStr.size()-1);
+    dwSrc = DwString(aStr.data(), aStr.size());
     DwEncodeQuotedPrintable(dwSrc, dwResult);
     len = dwResult.size();
     mBody.truncate(len);
-    memcpy(mBody.data(), dwResult.c_str(), len+1);
+    memcpy(mBody.data(), dwResult.c_str(), len);
     break;
   case DwMime::kCteBase64:
-    dwSrc = DwString(aStr.data(), aStr.size()-1);
+    dwSrc = DwString(aStr.data(), aStr.size());
     DwEncodeBase64(dwSrc, dwResult);
     len = dwResult.size();
     mBody.truncate(len);
-    memcpy(mBody.data(), dwResult.c_str(), len+1);
-    break;
-    len = aStr.size()-1;
-    dwSrc = DwString(aStr.data(), len);
-    DwEncodeBase64(dwSrc, dwResult);
-    mBody = QString(dwResult.c_str());
+    memcpy(mBody.data(), dwResult.c_str(), len);
     break;
   default:
     debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
@@ -95,7 +90,7 @@ void KMMessagePart::setBodyEncoded(const QByteArray& aStr)
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    mBody = aStr;
+    mBody.duplicate( aStr );
     break;
   }
 }
@@ -131,9 +126,7 @@ QByteArray KMMessagePart::bodyDecoded(void) const
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    len = mBody.length();
-    result.resize(len);
-    memcpy((void*)result.data(), (void*)mBody.data(), len);
+    result.duplicate( mBody );
     break;
   }
 

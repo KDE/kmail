@@ -1107,7 +1107,6 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
   msgPart->setBodyEncoded(str);
-  //  msgPart->setBodyEncoded(QCString(str.ascii()));
   msgPart->magicSetType();
   msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
 
