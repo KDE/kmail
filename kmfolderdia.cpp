@@ -612,13 +612,20 @@ void KMFolderDialog::slotOk()
     mFolder->setReadExpireAge(readExpiryTime->value());
     mFolder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
     mFolder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
-    //update the tree iff new icon paths are different and not empty
-    mFolder->setUseCustomIcons( mIconsCheckBox->isChecked() );
-    if ( (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&
-	  ( !mNormalIconButton->icon().isEmpty())) ||
-	 (( mUnreadIconButton->icon() != mFolder->unreadIconPath() ) &&
-	  ( !mUnreadIconButton->icon().isEmpty())) )
-      mFolder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+    // Update the tree iff new icon paths are different and not empty or if
+    // useCustomIcons changed.
+    if ( mFolder->useCustomIcons() != mIconsCheckBox->isChecked() ) {
+      mFolder->setUseCustomIcons( mIconsCheckBox->isChecked() );
+      if ( (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&
+            ( !mNormalIconButton->icon().isEmpty())) ||
+          (( mUnreadIconButton->icon() != mFolder->unreadIconPath() ) &&
+           ( !mUnreadIconButton->icon().isEmpty())) )
+        mFolder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+      if ( !mFolder->useCustomIcons() ) {
+        // Reset icons, useCustomIcons was turned off.
+        mFolder->setIconPaths( "", "" );
+      }
+    }
 
     // set whoField
     if (senderType->currentItem() == 1)
@@ -631,12 +638,11 @@ void KMFolderDialog::slotOk()
     if( bIsNewFolder )
       mFolder->close();
 
-    if( mFolder->protocol() == "imap" )
+    if( mFolder->folderType() == KMFolderTypeImap )
     {
       KMFolderImap* imapFolder = static_cast<KMFolderImap*>( (KMFolder*) mFolder );
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
-      kernel->imapFolderMgr()->contentsChanged();
     }
   }
 
