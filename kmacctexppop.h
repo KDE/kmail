@@ -7,6 +7,7 @@
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qtimer.h>
+#include <qdict.h>
 
 class KMPopHeaders;
 class KMMessage;
@@ -117,8 +118,9 @@ protected:
   QStringList idsOfMsgs; //used for ids and for count
   QValueList<int> lensOfMsgs;
   QStringList uidsOfMsgs;
-  QStringList uidsOfSeenMsgs; //UIDS of seen messages, saved in config
-  QStringList uidsOfNextSeenMsgs; //UIDS of new seen messages, for writing in the config file
+  QStringList mUidsOfSeenMsgs; // list of UIDs of previously seen messages (read from config)
+  QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
+  QStringList uidsOfNextSeenMsgs; // list of UIDs of new seen messages, for writing in the config file
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 

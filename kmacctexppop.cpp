@@ -14,6 +14,7 @@
 #include "kmpopfiltercnfrmdlg.h"
 #include "kmkernel.h"
 #include "protocols.h"
+#include "kmdict.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -42,6 +43,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName, uint 
   processingDelay = 2*100;
   mProcessing = false;
   dataCounter = 0;
+  mUidsOfSeenMsgsDict.setAutoDelete( false );
 
   headersOnServer.setAutoDelete(true);
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
@@ -133,7 +135,15 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
 				       mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
-    uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
+    mUidsOfSeenMsgs = config.readListEntry( "seenUidList" );
+    mUidsOfSeenMsgsDict.clear();
+    mUidsOfSeenMsgsDict.resize( KMail::nextPrime( ( mUidsOfSeenMsgs.count() * 11 ) / 10 ) );
+    for ( QStringList::ConstIterator it = mUidsOfSeenMsgs.begin();
+          it != mUidsOfSeenMsgs.end(); ++it ) {
+      // we use mUidsOfSeenMsgsDict to provide fast random access to the keys,
+      // so we simply set the values to (const int *)1
+      mUidsOfSeenMsgsDict.insert( *it, (const int *)1 );
+    }
     QStringList downloadLater = config.readListEntry( "downloadLater" );
     for ( QStringList::Iterator it = downloadLater.begin(); it != downloadLater.end(); ++it ) {
         mHeaderLaterUids.insert( *it, true );
@@ -406,7 +416,7 @@ void KMAcctExpPop::slotJobFinished() {
     }
     // An attempt to work around buggy pop servers, these seem to be popular.
     if (uidsOfNextSeenMsgs.isEmpty())
-	uidsOfNextSeenMsgs = uidsOfSeenMsgs;
+	uidsOfNextSeenMsgs = mUidsOfSeenMsgs;
 
     //check if filter on server
     if (mFilterOnServer == true) {
@@ -732,20 +742,21 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     }
     else { // stage == Uidl
       QString uid = qdata.mid(spc + 1);
-      uidsOfMsgs.append( uid );
-      if (uidsOfSeenMsgs.contains(uid)) {
+      bool bAppendUid = true;
+      if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
         QString id = qdata.left(spc);
         if ( mMsgsPendingDownload.contains( id ) ) {
-            mMsgsPendingDownload.remove( id );
+          mMsgsPendingDownload.remove( id );
           idsOfMsgs.remove( id );
-          uidsOfMsgs.remove( uid );
+          bAppendUid = false;
         }
         else
           kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
-        if (uidsOfSeenMsgs.contains( uid ))
-          idsOfMsgsToDelete.append( id );
+        idsOfMsgsToDelete.append( id );
         uidsOfNextSeenMsgs.append( uid );
       }
+      if ( bAppendUid )
+        uidsOfMsgs.append( uid );
     }
   }
   else {
