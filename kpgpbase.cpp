@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <klocale.h>
- 
+
 #include <config.h>
 
 KpgpBase::KpgpBase()
@@ -26,7 +26,7 @@ KpgpBase::KpgpBase()
 
 KpgpBase::~KpgpBase()
 {
-  
+
 }
 
 void
@@ -58,7 +58,7 @@ KpgpBase::setMessage(const QCString mess)
   input = mess;
 
   // "-----BEGIN PGP" must be at the beginning of a line
-  if(((index = input.find("-----BEGIN PGP")) != -1) && 
+  if(((index = input.find("-----BEGIN PGP")) != -1) &&
      ((index == 0) || (input[index-1] == '\n'))) {
     decrypt();
     return true;
@@ -284,7 +284,7 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
   close(perr[1]);
 
   if (!input.isEmpty())
-    write(pin[1], input.data(), input.length());
+    write(pin[1], input.data(), input.length()); 
   else
     write(pin[1], "\n", 1);
   close(pin[1]);
@@ -343,7 +343,7 @@ KpgpBase::addUserId()
   return "";
 }
 
-void 
+void
 KpgpBase::clear()
 {
   input = QCString();
@@ -356,13 +356,13 @@ KpgpBase::clear()
   status = OK;
 }
 
-void 
+void
 KpgpBase::clearOutput()
 {
   output = QString::null;
 }
 
-QString 
+QString
 KpgpBase::lastErrorMessage() const
 {
   return errMsg;
@@ -379,19 +379,19 @@ KpgpBaseG::~KpgpBaseG()
 {
 }
 
-int 
+int
 KpgpBaseG::encrypt(const QStrList *_recipients, bool /*ignoreUntrusted*/)
 {
   return encsign(_recipients, 0);
 }
 
-int 
+int
 KpgpBaseG::sign(const char *passphrase)
 {
   return encsign(0, passphrase);
 }
 
-int 
+int
 KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
 		   bool /*ignoreUntrusted*/)
 {
@@ -408,7 +408,7 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
     cmd = "--batch --escape-from --armor --always-trust --encrypt ";
   else if(passphrase != 0 )
     cmd = "--batch --escape-from --armor --always-trust --clearsign ";
-  else 
+  else
   {
     kdDebug() << "kpgpbase: Neither recipients nor passphrase specified." << endl;
     return OK;
@@ -444,7 +444,7 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
     bool bad = FALSE;
     unsigned int num = 0;
     QString badkeys = "";
-    while((index = info.find("Cannot find the public key",index)) 
+    while((index = info.find("Cannot find the public key",index))
 	  != -1)
     {
       bad = TRUE;
@@ -457,12 +457,12 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
     {
       badkeys.stripWhiteSpace();
       if(num == _recipients->count())
-	errMsg.sprintf("Could not find public keys matching the\n" 
-		       "userid(s) %s.\n" 
+	errMsg.sprintf("Could not find public keys matching the\n"
+		       "userid(s) %s.\n"
 		       "Message is not encrypted.\n",
 		       (const char *)badkeys);
       else
-	errMsg.sprintf("Could not find public keys matching the\n" 
+	errMsg.sprintf("Could not find public keys matching the\n"
 		       "userid(s) %s. These persons won't be able\n"
 		       "to read the message.",
 		       (const char *)badkeys);
@@ -495,8 +495,13 @@ KpgpBaseG::decrypt(const char *passphrase)
   QString cmd;
   int index, index2;
   output = "";
-
-  cmd = "--batch --set-filename stdin --decrypt ";
+  
+  if(((index = input.find("-----BEGIN PGP SIGNED MESSAGE-----")) != -1) &&
+     ((index == 0) || (input[index-1] == '\n'))) {
+      cmd = "--batch --set-filename stdin --verify";
+  }
+  else
+      cmd = "--batch --set-filename stdin --decrypt";
 
   status = runGpg(cmd, passphrase);
 
@@ -515,7 +520,7 @@ KpgpBaseG::decrypt(const char *passphrase)
     input.remove(index1, index2 - index1);
     status = runGpg(cmd, passphrase);
   }
- 
+
   if(status == RUN_ERR)
   {
     errMsg = i18n("error running gpg");
@@ -550,7 +555,7 @@ KpgpBaseG::decrypt(const char *passphrase)
 	requiredID = QString::fromUtf8(info.mid(index, index2 - index + 1));
 	kdDebug() << "KpgpBase: key needed is \"" << requiredID << "\"!" << endl;
       }
-    } 
+    }
     else
     {
       // no secret key fitting this message
@@ -561,7 +566,7 @@ KpgpBaseG::decrypt(const char *passphrase)
     }
     // check for persons
     index = info.find("can only be read by:");
-    if(index != -1) 
+    if(index != -1)
     {
       index = info.find("\n",index);
       int end = info.find("\n\n",index);
@@ -596,7 +601,7 @@ KpgpBaseG::decrypt(const char *passphrase)
       index = info.find("\"",index);
       index2 = info.find("\"", index+1);
       signature = info.mid(index+1, index2-index-1);
-      
+
       // get key ID of signer
       index = info.find("key ID ",index2);
       signatureID = info.mid(index+7,8);
@@ -611,7 +616,7 @@ KpgpBaseG::decrypt(const char *passphrase)
       index = info.find("\"",index);
       index2 = info.find("\"", index+1);
       signature = info.mid(index+1, index2-index-1);
-      
+
       // get key ID of signer
       index = info.find("key ID ",index2);
       signatureID = info.mid(index+7,8);
@@ -657,7 +662,7 @@ KpgpBaseG::pubKeys()
       int index4 = output.find("uid ",index);
       if ((index4 != -1) && ((index4 < index3) || (index3 == -1)))
         index3 = index4;
-		    
+		
       if( (index3 <index2) && (index3 != -1) )
       {
 	line = output.mid(index3+31,index2-index3-31);
@@ -715,19 +720,19 @@ KpgpBase2::~KpgpBase2()
 {
 }
 
-int 
+int
 KpgpBase2::encrypt(const QStrList *_recipients, bool /*ignoreUntrusted*/)
 {
   return encsign(_recipients, 0);
 }
 
-int 
+int
 KpgpBase2::sign(const char *passphrase)
 {
   return encsign(0, passphrase);
 }
 
-int 
+int
 KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
 		   bool /*ignoreUntrusted*/)
 {
@@ -1144,13 +1149,13 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
   {
     input.append("\n");
     input.replace(QRegExp("[ \t]+\n"), "\n");   //strip trailing whitespace
-  }                                                                        
+  }
   //We have to do this otherwise it's all in vain
 
 
   status = run(cmd, passphrase);
   if(status == RUN_ERR) return status;
-  
+
   // now parse the returned info
   if(info.find("Cannot unlock private key") != -1)
   {
@@ -1195,7 +1200,7 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
     index = info.find(":",index);
     int index2 = info.find("\n",index);
 
-    errMsg.sprintf("Missing encryption key(s) for: %s", 
+    errMsg.sprintf("Missing encryption key(s) for: %s",
 		   info.mid(index,index2-index).data());
     status |= ERROR;
     status |= MISSINGKEY;
@@ -1213,9 +1218,9 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
   return status;
 }
 
-int 
+int
 KpgpBase5::decrypt(const char *passphrase)
-{  
+{
   QString in = "";
   output = "";
 
@@ -1235,7 +1240,7 @@ KpgpBase5::decrypt(const char *passphrase)
     // or do we not have the secret key?
     if(info.find("Need a pass phrase") != -1)
     {
-      if(passphrase != 0) 
+      if(passphrase != 0)
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
 	kdDebug() << "KpgpBase: passphrase is bad" << endl;
@@ -1253,11 +1258,11 @@ KpgpBase5::decrypt(const char *passphrase)
     }
     // check for persons
     index = info.find("can only be decrypted by:");
-    if(index != -1) 
+    if(index != -1)
     {
       index = info.find("\n",index);
       int end = info.find("\n\n",index);
-	 
+	
       recipients.clear();
       int index2;
       while( (index2 = info.find("\n",index+1)) <= end )
@@ -1268,14 +1273,14 @@ KpgpBase5::decrypt(const char *passphrase)
 	index = index2;
       }
     }
-  } 
+  }
   index = info.find("Good signature");
   if(index != -1)
   {
     //kdDebug() << "good signature" << endl;
     status |= SIGNED;
     status |= GOODSIG;
- 
+
     // get key ID of signer
     index = info.find("Key ID ");
     int index2 = info.find(",",index);
