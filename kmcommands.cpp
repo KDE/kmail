@@ -1230,7 +1230,7 @@ void KMUrlClickedCommand::execute()
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "Do you really want to execute"
-        " '%1' ? " ).arg( mUrl.prettyURL() ) ) != KMessageBox::Yes) return;
+        " '%1'? " ).arg( mUrl.prettyURL() ) ) != KMessageBox::Yes) return;
     }
     (void) new KRun( mUrl );
   }
