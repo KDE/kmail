@@ -3689,6 +3689,12 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   vlay->addWidget( mWarnBeforeExpire );
   connect( mWarnBeforeExpire, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  mExcludeImportantFromExpiry =
+    new QCheckBox( i18n("E&xclude important messages from expiry"), this );
+  vlay->addWidget( mExcludeImportantFromExpiry );
+  connect( mExcludeImportantFromExpiry, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   // "when trying to find unread messages" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mLoopOnGotoUnread = new QComboBox( false, this );
@@ -3823,6 +3829,7 @@ void MiscPage::FolderTab::load() {
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
   mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
+  mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
 						  kmkernel->inboxFolder()->idString() ) );
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
@@ -3856,6 +3863,8 @@ void MiscPage::FolderTab::save() {
   GlobalSettings::setJumpToUnread( mJumpToUnread->isChecked() );
   GlobalSettings::setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
   GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
+  GlobalSettings::setExcludeImportantMailFromExpiry( 
+        mExcludeImportantFromExpiry->isChecked() );
   
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );

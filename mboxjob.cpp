@@ -36,6 +36,7 @@
 
 #include "kmfoldermbox.h"
 #include "kmfolder.h"
+#include "globalsettings.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -105,6 +106,11 @@ MboxJob::expireMessages()
     if (mb == 0) {
       continue;
     }
+
+    if ( mb->isImportant()
+      && GlobalSettings::excludeImportantMailFromExpiry() )
+       continue;
+
     msgTime = mb->date();
 
     if (mb->isUnread()) {

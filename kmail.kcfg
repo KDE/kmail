@@ -33,5 +33,10 @@
         <whatsthis> </whatsthis>
         <default>true</default>
     </entry>
+    <entry name="ExcludeImportantMailFromExpiry"  type="Bool">
+        <label></label>
+        <whatsthis></whatsthis>
+        <default>true</default>
+    </entry>
     </group>
 </kcfg>

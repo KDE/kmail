@@ -35,6 +35,7 @@
 
 #include "kmfoldermaildir.h"
 #include "kmfolder.h"
+#include "globalsettings.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -153,6 +154,10 @@ MaildirJob::expireMessages()
     if (mb == 0) {
       continue;
     }
+    if ( mb->isImportant()
+      && GlobalSettings::excludeImportantMailFromExpiry() )
+       continue;
+
     msgTime = mb->date();
 
     if (mb->isUnread()) {
