@@ -193,6 +193,7 @@ void KMail::FolderDiaACLTab::ListViewItem::load( const ACLJobs::ACLListEntry& en
 KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
   : FolderDiaTab( parent, name ),
     mImapAccount( 0 ),
+    mUserRights( 0 ),
     mDlg( dlg ),
     mJobCounter( 0 ),
     mChanged( false ), mAccepting( false )
@@ -252,11 +253,13 @@ void KMail::FolderDiaACLTab::initializeWithValuesFromFolder( KMFolder* folder )
     KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
     mImapPath = folderImap->imapPath();
     mImapAccount = folderImap->account();
+    mUserRights = folderImap->userRights();
   }
   else if ( folder->folderType() == KMFolderTypeCachedImap ) {
     KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
     mImapPath = folderImap->imapPath();
     mImapAccount = folderImap->account();
+    mUserRights = folderImap->userRights();
   }
   else
     assert( 0 ); // see KMFolderDialog constructor
@@ -271,6 +274,12 @@ void KMail::FolderDiaACLTab::load()
     // new folder
     initializeWithValuesFromFolder( mDlg->parentFolder() );
   }
+
+  // Loading [for online IMAP] consists of four steps:
+  // 1) connect
+  // 2) check ACL support [TODO]
+  // 3) get user rights
+  // 4) load ACLs
 
   // First ensure we are connected
   mStack->raiseWidget( mLabel );
@@ -302,6 +311,26 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode )
 
   // TODO check if the capabilities of the IMAP server include "acl"
 
+  if ( mUserRights == 0 ) {
+    mImapAccount->getUserRights( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
+    connect( mImapAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
+             this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
+  }
+  else
+    startListing();
+}
+
+void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
+{
+  if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
+    KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
+    mUserRights = folderImap->userRights();
+    startListing();
+  }
+}
+
+void KMail::FolderDiaACLTab::startListing()
+{
   // List ACLs of folder (or its parent, if creating a new folder)
   ACLJobs::GetACLJob* job = ACLJobs::getACL( mImapAccount->slave(), imapURL() );
 
@@ -372,10 +401,11 @@ void KMail::FolderDiaACLTab::slotAddACL()
 
 void KMail::FolderDiaACLTab::slotSelectionChanged(QListViewItem* item)
 {
+  bool canAdmin = ( mUserRights & ACLJobs::Administer );
   bool lvVisible = mStack->visibleWidget() == mACLWidget;
-  mAddACL->setEnabled( lvVisible );
-  mEditACL->setEnabled( item && lvVisible );
-  mRemoveACL->setEnabled( item && lvVisible );
+  mAddACL->setEnabled( lvVisible && canAdmin );
+  mEditACL->setEnabled( item && lvVisible && canAdmin );
+  mRemoveACL->setEnabled( item && lvVisible && canAdmin );
 }
 
 void KMail::FolderDiaACLTab::ACLJobDone(KIO::Job* job)

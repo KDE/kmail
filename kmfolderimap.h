@@ -52,9 +52,9 @@ using KMail::AttachmentStrategy;
 class KMMsgMetaData
 {
 public:
-  KMMsgMetaData(KMMsgStatus aStatus) 
+  KMMsgMetaData(KMMsgStatus aStatus)
     :mStatus(aStatus), mSerNum(0) {}
-  KMMsgMetaData(KMMsgStatus aStatus, Q_UINT32 aSerNum) 
+  KMMsgMetaData(KMMsgStatus aStatus, Q_UINT32 aSerNum)
     :mStatus(aStatus), mSerNum(aSerNum) {}
   ~KMMsgMetaData() {};
   const KMMsgStatus status() const { return mStatus; }
@@ -72,9 +72,9 @@ class KMFolderImap : public KMFolderMbox
   friend class ImapJob;
 public:
 
-  static QString cacheLocation() { 
-     return locateLocal("data", "kmail/imap" ); 
-  } 
+  static QString cacheLocation() {
+     return locateLocal("data", "kmail/imap" );
+  }
 
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
 
@@ -176,7 +176,7 @@ public:
   static QStringList makeSets(const QStringList&, bool sort = true);
 
   /** splits the message list according to sets. Modifies the @msgList. */
-  static QPtrList<KMMessage> splitMessageList(const QString& set, 
+  static QPtrList<KMMessage> splitMessageList(const QString& set,
                                               QPtrList<KMMessage>& msgList);
 
   /** gets the uids of the given ids */
@@ -191,7 +191,7 @@ public:
   void expungeFolder(KMFolderImap * aFolder, bool quiet);
 
   int compact() { expungeFolder(this, false); return 0; };
-  
+
   /**
    * Emit the folderComplete signal
    */
@@ -243,7 +243,7 @@ public:
 
   /**
    * If this folder should be included in new-mail-check
-   */   
+   */
   bool includeInMailCheck() { return mCheckMail; }
   void setIncludeInMailCheck( bool check ) { mCheckMail = check; }
 
@@ -263,14 +263,23 @@ public:
   /** Return the trash folder. */
   KMFolder* trashFolder() const;
 
-  /** 
-   * Mark the folder as already removed from the server 
+  /**
+   * Mark the folder as already removed from the server
    * If the folder is removed the server will not be queried anymore
    */
-  void setAlreadyRemoved(bool removed) { mAlreadyRemoved = removed; } 
+  void setAlreadyRemoved(bool removed) { mAlreadyRemoved = removed; }
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
+
+  /**
+   * The user's rights on this folder - see bitfield in ACLJobs namespace.
+   * @return 0 when not known yet
+   */
+  unsigned int userRights() const { return mUserRights; }
+
+  /** Set the user's rights on this folder - called by getUserRights */
+  void setUserRights( unsigned int userRights );
 
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
@@ -320,7 +329,7 @@ protected:
                                   const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
-  
+
   void getMessagesResult(KIO::Job * job, bool lastSet);
 
   /** Called by KMFolder::expunge() to delete the actual contents.
@@ -331,8 +340,8 @@ protected:
 protected slots:
 
   /**
-   * Connected to ImapAccountBase::receivedFolders 
-   * creates/removes folders 
+   * Connected to ImapAccountBase::receivedFolders
+   * creates/removes folders
    */
   void slotListResult(QStringList, QStringList,
       QStringList, const ImapAccountBase::jobData &);
@@ -393,6 +402,7 @@ protected:
   QGuardedPtr<KMAcctImap> mAccount;
   QIntDict<ulong> uidmap;
   QString mUidValidity;
+  unsigned int mUserRights;
 
 private:
   bool        mCheckingValidity;

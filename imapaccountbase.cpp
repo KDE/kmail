@@ -58,6 +58,7 @@ using KIO::PasswordDialog;
 
 #include <qregexp.h>
 #include "acljobs.h"
+#include "kmfoldercachedimap.h"
 
 namespace KMail {
 
@@ -461,7 +462,8 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::getUserRights( const QString& imapPath )
+  // TODO imapPath can be removed once parent can be a KMFolderImapBase or whatever
+  void ImapAccountBase::getUserRights( KMFolder* parent, const QString& imapPath )
   {
     KURL url = getUrl();
     url.setPath(imapPath);
@@ -469,7 +471,7 @@ namespace KMail {
     ACLJobs::GetUserRightsJob* job = ACLJobs::getUserRights( mSlave, url );
 
     jobData jd;
-    jd.total = 1; jd.done = 0; jd.parent = NULL;
+    jd.total = 1; jd.done = 0; jd.parent = parent;
     insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -479,19 +481,24 @@ namespace KMail {
   void ImapAccountBase::slotGetUserRightsResult( KIO::Job* _job )
   {
     ACLJobs::GetUserRightsJob* job = static_cast<ACLJobs::GetUserRightsJob *>( _job );
-    // result of a get-users-right-job
     JobIterator it = findJob( job );
     if ( it == jobsEnd() ) return;
 
+    KMFolder* folder = (*it).parent;
     if ( job->error() )
       kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
     else {
 #ifndef NDEBUG
       kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
 #endif
-      // TODO store the permissions somewhere (in the folder? storage?)
+      // Store the permissions
+      if ( folder->folderType() == KMFolderTypeImap )
+        static_cast<KMFolderImap*>( folder->storage() )->setUserRights( job->permissions() );
+      else if ( folder->folderType() == KMFolderTypeCachedImap )
+        static_cast<KMFolderCachedImap*>( folder->storage() )->setUserRights( job->permissions() );
     }
     if (mSlave) removeJob(job);
+    emit receivedUserRights( folder );
   }
 
   //-----------------------------------------------------------------------------

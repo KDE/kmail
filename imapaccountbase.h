@@ -173,9 +173,9 @@ class AttachmentStrategy;
     /**
      * Retrieve the users' right on the folder
      * identified by @p imapPath.
-     * (async, will emit some signal)
+     * Emits receivedUserRights signal on success/error.
      */
-    void getUserRights( const QString& imapPath );
+    void getUserRights( KMFolder* folder, const QString& imapPath );
 
     /**
      * The KIO-Slave died
@@ -325,6 +325,11 @@ class AttachmentStrategy;
      */
     void subscriptionChanged(const QString& imapPath, bool subscribed);
 
+    /**
+     * Emitted when the get-user-rights job is done.
+     * Use userRights() to retrieve them, they will still be on 0 if the job failed.
+     */
+    void receivedUserRights( KMFolder* folder );
   };
 
 

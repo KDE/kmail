@@ -54,6 +54,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mCheckFlags = TRUE;
   mCheckMail = TRUE;
   mCheckingValidity = FALSE;
+  mUserRights = 0;
   mAlreadyRemoved = false;
 }
 
@@ -1572,6 +1573,13 @@ int KMFolderImap::expungeContents()
   getFolder();
 
   return rc;
+}
+
+void
+KMFolderImap::setUserRights( unsigned int userRights )
+{
+  mUserRights = userRights;
+  kdDebug() << imapPath() << " setUserRights: " << userRights << endl;
 }
 
 #include "kmfolderimap.moc"

@@ -191,6 +191,15 @@ public:
   /** Return the trash folder. */
   KMFolder* trashFolder() const;
 
+  /**
+   * The user's rights on this folder - see bitfield in ACLJobs namespace.
+   * @return 0 when not known yet
+   */
+  unsigned int userRights() const { return mUserRights; }
+
+  /** Set the user's rights on this folder - called by getUserRights */
+  void setUserRights( unsigned int userRights );
+
 protected slots:
   /**
    * Connected to ImapAccountBase::receivedFolders
@@ -322,6 +331,8 @@ private:
   ulong mLastUid;
   int uidWriteTimer;
   void reloadUidMap();
+
+  unsigned int mUserRights;
 
   QString state2String( int state ) const;
   bool mIsConnected;

@@ -89,6 +89,7 @@ private slots:
   void slotGetACLResult(KIO::Job *);
   void slotSetACLResult(KIO::Job *);
   void slotDeleteACLResult(KIO::Job *);
+  void slotReceivedUserRights( KMFolder* folder );
 
   // User (KListView) slots
   void slotEditACL(QListViewItem*);
@@ -105,6 +106,7 @@ private:
   void ACLJobDone(KIO::Job* job);
   KURL imapURL() const;
   void initializeWithValuesFromFolder( KMFolder* folder );
+  void startListing();
   void loadFinished();
 
 private:
@@ -120,6 +122,7 @@ private:
   QStringList mRemovedACLs;
   QString mImapPath;
   ImapAccountBase* mImapAccount;
+  uint mUserRights;
 
   QLabel* mLabel;
   QWidgetStack* mStack;

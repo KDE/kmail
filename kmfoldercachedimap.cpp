@@ -117,7 +117,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
-    mLastUid( 0 ), uidWriteTimer( -1 ),
+    mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
     mSuppressDialog( false ), mHoldSyncs( false ), mRemoveRightAway( false )
 {
@@ -1081,7 +1081,7 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else {
-    if (lastSet) 
+    if (lastSet)
       mContentState = imapFinished;
     mAccount->removeJob(it);
   }
@@ -1320,6 +1320,13 @@ KMFolderCachedImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& se
   CachedImapJob *job = new CachedImapJob( msgList, jt, folder? static_cast<KMFolderCachedImap*>( folder->storage() ):0 );
   job->setParentFolder( this );
   return job;
+}
+
+void
+KMFolderCachedImap::setUserRights( unsigned int userRights )
+{
+  mUserRights = userRights;
+  kdDebug() << imapPath() << " setUserRights: " << userRights << endl;
 }
 
 #include "kmfoldercachedimap.moc"
