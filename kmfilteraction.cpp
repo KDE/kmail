@@ -532,6 +532,90 @@ KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 }
 
 //=============================================================================
+// KMFilterActionSetStatus - set status to
+// Set the status of messages
+//=============================================================================
+class KMFilterActionSetStatus: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionSetStatus();
+  virtual ReturnCode process(KMMessage* msg) const;
+  static KMFilterAction* newAction();
+
+  virtual bool isEmpty() const { return false; }
+
+  virtual void KMFilterActionSetStatus::argsFromString( const QString argsStr );
+  virtual const QString KMFilterActionSetStatus::argsAsString() const;
+};
+
+
+// if you change this list, also update
+// the count in argsFromString
+static const KMMsgStatus stati[] =
+{
+  KMMsgStatusFlag,
+  KMMsgStatusRead,
+  KMMsgStatusUnread,
+  KMMsgStatusReplied,
+  KMMsgStatusForwarded,
+  KMMsgStatusOld,
+  KMMsgStatusNew
+};
+
+KMFilterAction* KMFilterActionSetStatus::newAction()
+{
+  return (new KMFilterActionSetStatus);
+}
+
+KMFilterActionSetStatus::KMFilterActionSetStatus()
+  : KMFilterActionWithStringList( "set status", i18n("mark as") )
+{
+  // if you change this list, also update
+  // KMFilterActionSetStatus::stati above
+  mParameterList.append( "" );
+  mParameterList.append( i18n("msg status","Important") );
+  mParameterList.append( i18n("msg status","Read") );
+  mParameterList.append( i18n("msg status","Unread") );
+  mParameterList.append( i18n("msg status","Replied") );
+  mParameterList.append( i18n("msg status","Forwarded") );
+  mParameterList.append( i18n("msg status","Old") );
+  mParameterList.append( i18n("msg status","New") );
+
+  mParameter = *mParameterList.at(0);
+}
+
+KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  if ( idx < 1 ) return ErrorButGoOn;
+
+  KMMsgStatus status = stati[idx-1] ;
+  msg->setStatus( status );
+  return GoOn;
+}
+
+void KMFilterActionSetStatus::argsFromString( const QString argsStr )
+{
+  if ( argsStr.length() == 1 ) {
+    for ( int i = 0 ; i < 8 ; i++ )
+      if ( char(stati[i]) == argsStr[0] ) {
+	mParameter = *mParameterList.at(i+1);
+	return;
+      }
+  }
+  mParameter = *mParameterList.at(0);
+}
+
+const QString KMFilterActionSetStatus::argsAsString() const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  if ( idx < 1 ) return QString::null;
+
+  KMMsgStatus status = stati[idx-1];
+  return QString( QChar( char(status) ) );
+}
+
+//=============================================================================
 // KMFilterActionMove - move to folder
 // Move message to another mail folder
 //=============================================================================
@@ -793,6 +877,7 @@ void KMFilterActionDict::init(void)
 {
   insert( KMFilterActionMove::newAction );
   insert( KMFilterActionIdentity::newAction );
+  insert( KMFilterActionSetStatus::newAction );
   insert( KMFilterActionTransport::newAction );
   insert( KMFilterActionReplyTo::newAction );
   insert( KMFilterActionForward::newAction );
