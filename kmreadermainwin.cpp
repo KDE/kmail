@@ -60,6 +60,7 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     const QTextCodec *codec, char *name )
   : KMTopLevelWidget( name ), mMsg( 0 )
 {
+  resize( 550, 600 );
   mReaderWin = new KMReaderWin( this, this ); //new reader
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname, codec );
   setCentralWidget( mReaderWin );
@@ -93,7 +94,7 @@ void KMReaderMainWin::setupAccel()
                      mReaderWin, SLOT(slotScrollPrior()));
   accel->connectItem(accel->insertItem(Key_Next),
                      mReaderWin, SLOT(slotScrollNext()));
-#ifndef NO_NEW_FEATURES 
+#ifndef NO_NEW_FEATURES
   accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
                      mReaderWin, SLOT(slotCopySelectedText()));
   connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
@@ -125,7 +126,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       menu->insertItem(i18n("Open in Addressbook..."), this,
 		       SLOT(slotMailtoOpenAddrBook()));
       menu->insertItem(i18n("Copy to Clipboard"), this, SLOT(slotUrlCopy()));
-		       
+		
     } else {
       // popup on a not-mailto URL
       menu->insertItem(i18n("Open URL..."), this, SLOT(slotUrlOpen()));
@@ -143,9 +144,9 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
 
     menu->insertItem( i18n("&Reply..."), this, SLOT(slotReplyToMsg()) );
     menu->insertItem( i18n("Reply &All..."), this, SLOT(slotReplyAllToMsg()) );
-    menu->insertItem( i18n("Message->","&Forward"), this, 
+    menu->insertItem( i18n("Message->","&Forward"), this,
 		      SLOT(slotForwardMsg()) );
-    menu->insertItem( i18n("Message->Forward->","As &Attachment..."), this, 
+    menu->insertItem( i18n("Message->Forward->","As &Attachment..."), this,
 		      SLOT(slotForwardAttachedMsg()) );
     menu->insertItem( i18n("Message->Forward->","&Redirect..."), this,
 		      SLOT(slotRedirectMsg()) );
@@ -159,7 +160,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
 			    SLOT(slotFromFilter()) );
     filterMenu->insertItem( i18n("Filter on &To..."), this,
 			    SLOT(slotToFilter()) );
-    
+
     int fml = filterMenu->insertItem( i18n("Filter on Mailing-&List..."), this,
 				      SLOT(slotMailingListFilter()) );
     QCString name;
@@ -175,9 +176,9 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();
 
-    menu->insertItem( i18n("Fixed Font &Widths"), this, 
+    menu->insertItem( i18n("Fixed Font &Widths"), this,
 		      SLOT(slotToggleFixedFont()) );
-    menu->insertItem( i18n("&View Source"), this, 
+    menu->insertItem( i18n("&View Source"), this,
 		      SLOT(slotShowMsgSrc()) );
     menu->insertSeparator();
 
@@ -191,7 +192,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
 void KMReaderMainWin::slotMailtoCompose()
 {
   KMCommand *command = new KMMailtoComposeCommand( mUrl, mMsg );
-  command->start();  
+  command->start();
 }
 
 void KMReaderMainWin::slotMailtoForward()
@@ -203,25 +204,25 @@ void KMReaderMainWin::slotMailtoForward()
 void KMReaderMainWin::slotMailtoAddAddrBook()
 {
   KMCommand *command = new KMMailtoAddAddrBookCommand( mUrl, this );
-  command->start();  
+  command->start();
 }
 
 void KMReaderMainWin::slotMailtoOpenAddrBook()
 {
   KMCommand *command = new KMMailtoOpenAddrBookCommand( mUrl, this );
-  command->start();  
+  command->start();
 }
 
 void KMReaderMainWin::slotUrlCopy()
 {
   KMCommand *command = new KMUrlCopyCommand( mUrl );
-  command->start();  
+  command->start();
 }
 
 void KMReaderMainWin::slotUrlOpen()
 {
   KMCommand *command = new KMUrlOpenCommand( mUrl, mReaderWin );
-  command->start();  
+  command->start();
 }
 
 void KMReaderMainWin::slotUrlSave()
@@ -256,7 +257,7 @@ void KMReaderMainWin::slotForwardMsg()
   QPtrList<KMMsgBase> msgList;
   msgList.append( mMsg );
   KMCommand *command = new KMForwardCommand( this, msgList, 0 );
-  command->start();  
+  command->start();
 }
 
 void KMReaderMainWin::slotForwardAttachedMsg()

@@ -4598,7 +4598,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 		    message() ? message()->from() : "" );
       queueHtml("</body></html>");
       sendNextHtmlChunk();
-      mMainWindow->setCaption(i18n("View x Attachment: ") + pname);
+      mMainWindow->setCaption(i18n("View Attachment: ") + pname);
   } else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
              (qstricmp(aMsgPart->typeStr(), "application")==0 &&
               qstricmp(aMsgPart->subtypeStr(), "postscript")))
