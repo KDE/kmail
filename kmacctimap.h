@@ -1,7 +1,7 @@
 /**
  * kmacctimap.h
  *
- * Copyright (c) 2000 Michael Haeckel <Michael@Haeckel.Net>
+ * Copyright (c) 2000-2001 Michael Haeckel <Michael@Haeckel.Net>
  *
  * This file is based on kmacctexppop.h by Don Sanders
  *
@@ -29,6 +29,7 @@
 
 class QLineEdit;
 class QPushButton;
+class KMFolderImap;
 class KMFolderTreeItem;
 class KMImapJob;
 
@@ -205,6 +206,7 @@ protected:
   KIO::Slave *mSlave;
   KIO::MetaData mSlaveConfig;
   QList<KMImapJob> mJobList;
+  KMFolderImap *mFolder;
 
 protected slots:
   /**

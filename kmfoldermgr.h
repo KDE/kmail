@@ -19,7 +19,7 @@ class KMFolderMgr: public QObject
   Q_OBJECT
 
 public:
-  KMFolderMgr(const QString& basePath);
+  KMFolderMgr(const QString& basePath, bool aImap = FALSE);
   virtual ~KMFolderMgr();
 
   /** Returns path to directory where all the folders live. */
@@ -80,6 +80,9 @@ signals:
     is meant to be emitted whenever the code using the folder-manager
     changed things. */
   void changed();
+
+  /** Emitted, when a folder has been deleted. */
+  void removed(KMFolder*);
 
 protected:
 

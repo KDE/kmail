@@ -1,7 +1,7 @@
 /**
  * kmacctimap.cpp
  *
- * Copyright (c) 2000 Michael Haeckel <Michael@Haeckel.Net>
+ * Copyright (c) 2000-2001 Michael Haeckel <Michael@Haeckel.Net>
  *
  * This file is based on kmacctexppop.cpp by Don Sanders
  *
@@ -44,6 +44,7 @@
 #include "kmacctfolder.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
+#include "kmfoldermgr.h"
 #include <kprocess.h>
 #include <qtooltip.h>
 #include <qlayout.h>
@@ -59,6 +60,10 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   init();
   mSlave = NULL;
   mTotal = 0;
+  mFolder = static_cast<KMFolderImap*>(kernel->imapFolderMgr()
+    ->findOrCreate(aAccountName, FALSE));
+  mFolder->setNoContent(TRUE);
+  mFolder->setAccount(this);
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
@@ -141,6 +146,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mAuth = config.readEntry("auth", "*");
   mPrefix = config.readEntry("prefix", "/");
+  mFolder->setImapPath(mPrefix);
   mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
   mUseSSL = config.readBoolEntry("use-ssl", FALSE);
@@ -260,6 +266,7 @@ void KMAcctImap::setPrefix(const QString& aPrefix)
   mPrefix.replace(QRegExp("[%*\"]"), "");
   if (mPrefix.isEmpty() || mPrefix.at(0) != '/') mPrefix = '/' + mPrefix;
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
+  mFolder->setImapPath(mPrefix);
 }
 
 

@@ -83,10 +83,6 @@ public:
   /** Recusively add folders in a folder directory to a listview item. */
   virtual void addDirectory( KMFolderDir *fdir, QListViewItem* parent );
 
-  /** Add an item for an Imap foler */
-  void addImapChildFolder(KMFolderTreeItem *item, const QString& name,
-    const QString& url, const QString& mimeType, bool noPrefix);
-
   /** Find index of given folder. Returns -1 if not found */
   virtual QListViewItem* indexOfFolder(const KMFolder*);
 
@@ -158,6 +154,9 @@ protected slots:
   /** called by the folder-manager when the list of folders changed */
   void doFolderListChanged();
 
+  /** called, when a folder has been deleted */
+  void slotFolderRemoved(KMFolder *);
+
   /** Updates the folder tree only if some folder lable has changed */
   void refresh(KMFolder*);
 
@@ -169,9 +168,6 @@ protected slots:
 
   /** Expand an IMAP folder */
   void slotFolderExpanded( QListViewItem * item );
-
-  /** Delete all child items on collapse */
-  void slotFolderCollapsed( QListViewItem * item );
 
 protected:
   /** Catch palette changes */

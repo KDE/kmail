@@ -509,13 +509,14 @@ void KMKernel::init()
     transferMail();
   }
 
-  the_undoStack = new KMUndoStack(20);
-  the_folderMgr = new KMFolderMgr(foldersPath);
-  the_acctMgr   = new KMAcctMgr();
-  the_filterMgr = new KMFilterMgr;
+  the_undoStack     = new KMUndoStack(20);
+  the_folderMgr     = new KMFolderMgr(foldersPath);
+  the_imapFolderMgr = new KMFolderMgr(locateLocal("appdata","imap"), TRUE);
+  the_acctMgr       = new KMAcctMgr();
+  the_filterMgr     = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
-  the_addrBook  = new KMAddrBook;
-  the_KAB_addrBook=0;
+  the_addrBook      = new KMAddrBook;
+  the_KAB_addrBook  = 0;
 
   initFolders(cfg);
   the_acctMgr->readConfig();
@@ -636,6 +637,8 @@ void KMKernel::cleanup(void)
 
   if (the_folderMgr) delete the_folderMgr;
   the_folderMgr = 0;
+  if (the_imapFolderMgr) delete the_imapFolderMgr;
+  the_imapFolderMgr = 0;
   if (the_kbp) delete the_kbp;
   the_kbp = 0;
 

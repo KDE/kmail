@@ -98,7 +98,7 @@ public:
   QString uidValidity() { return mUidValidity; }
 
   /** The imap account associated with this folder */
-  void setAccount(KMAcctImap *acct) { mAccount = acct; }
+  void setAccount(KMAcctImap *acct);
   KMAcctImap* account() { return mAccount; }
   
   /** Remove (first occurance of) given message from the folder. */
@@ -254,10 +254,12 @@ protected slots:
   void slotSetStatusResult(KIO::Job * job);
 
 protected:
-  QString    mImapPath;
-  QString    mUidNext;
-  imapState  mImapState;
-  KMAcctImap *mAccount;
+  QString     mImapPath;
+  QString     mUidNext;
+  imapState   mImapState;
+  KMAcctImap  *mAccount;
+  QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
+  bool        mHasInbox;
 };
 
 #endif // kmfolderimap_h

@@ -95,6 +95,7 @@ public:
 
   inline KBusyPtr *kbp() { return the_kbp; }
   inline KMFolderMgr *folderMgr() { return the_folderMgr; }
+  inline KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
   inline KMUndoStack *undoStack() { return the_undoStack; }
   inline KMAcctMgr *acctMgr() { return the_acctMgr; }
   inline KMFilterMgr *filterMgr() { return the_filterMgr; }
@@ -121,7 +122,7 @@ private:
   KMFolder *the_draftsFolder;
 
   KBusyPtr *the_kbp;
-  KMFolderMgr *the_folderMgr;
+  KMFolderMgr *the_folderMgr, *the_imapFolderMgr;
   KMUndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;
   KMFilterMgr *the_filterMgr;

@@ -78,8 +78,15 @@ public:
   virtual void setChild( KMFolderDir* aChild )
     { mChild = aChild; }
 
-  /** Read message at given index. Indexing starts at one to stay
-    compatible with imap-lib */
+  /** Returns, if the folder can't contain mails, but only subfolder */
+  virtual bool noContent() const
+    { return mNoContent; }
+
+  /** Specify, that the folder can't contain mails. */
+  virtual void setNoContent(bool aNoContent)
+    { mNoContent = aNoContent; }
+
+  /** Read message at given index. Indexing starts at one */
   virtual KMMessage* getMsg(int idx);
 
   /** Replace KMMessage with KMMsgInfo and delete KMMessage  */
@@ -373,6 +380,7 @@ protected:
   bool needsCompact;
   /** false if index file is out of sync with mbox file */
   bool mCompactable;
+  bool mNoContent;
   KMFolderDir* mChild;
   bool mConvertToUtf8;
   uchar *mIndexStreamPtr;

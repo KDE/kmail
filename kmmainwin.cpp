@@ -838,17 +838,7 @@ void KMMainWin::slotRemoveFolder()
       ==
       KMessageBox::Continue)
   {
-    KMFolder *folderToDelete = mFolder;
-    QListViewItem *qlviCur = mFolderTree->currentItem();
-    QListViewItem *qlvi = qlviCur->itemAbove();
-    if (!qlvi)
-      qlvi = mFolderTree->currentItem()->itemBelow();
-    mHeaders->setFolder(0);
-    mMsgView->clear();
-    mFolderTree->setCurrentItem( qlvi );
-    mFolderTree->setSelected( qlvi, TRUE );
-    delete qlviCur;
-    kernel->folderMgr()->remove(folderToDelete);
+    kernel->folderMgr()->remove(mFolder);
   }
 }
 

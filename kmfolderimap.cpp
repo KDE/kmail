@@ -31,6 +31,8 @@
 #include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
+#include "kmfolderdir.h"
+#include "kmfoldermgr.h"
 
 #include <mimelib/mimepp.h>
 
@@ -48,31 +50,52 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   : KMFolderImapInherited(aParent, aName)
 {
   mImapState = imapNoInformation;
+  mAccount = NULL;
+
+  KConfig* config = kapp->config();
+  KConfigGroupSaver saver(config, "Folder-" + idString());
+  mUidValidity = config->readEntry("UidValidity");
+  if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
+  if (mImapPath == "/INBOX")
+  {
+    mIsSystemFolder = TRUE;
+    mLabel = i18n("inbox");
+  }
 }
 
 KMFolderImap::~KMFolderImap()
 {
+  KConfig* config = kapp->config();
+  KConfigGroupSaver saver(config, "Folder-" + idString());
+  config->writeEntry("UidValidity", mUidValidity);
+  config->writeEntry("ImapPath", mImapPath);
+
   if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::setAccount(KMAcctImap *aAccount)
+{
+  mAccount = aAccount;
+  if (!mChild) return;
+  KMFolderNode* node;
+  for (node = mChild->first(); node; node = mChild->next())
+  {
+    if (!node->isDir())
+      static_cast<KMFolderImap*>(node)->setAccount(aAccount);
+  }
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::readConfig()
 {
   KMFolderImapInherited::readConfig();
-
-  KConfig* config = kapp->config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
-  mUidValidity = config->readEntry("UidValidity");
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::writeConfig()
 {
   KMFolderImapInherited::writeConfig();
-
-  KConfig* config = kapp->config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
-  config->writeEntry("UidValidity", mUidValidity);
 }
 
 //-----------------------------------------------------------------------------
@@ -181,21 +204,24 @@ KMMessage* KMFolderImap::take(int idx)
 //-----------------------------------------------------------------------------
 void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
-  KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
   mImapState = imapInProgress;
   KMAcctImap::jobData jd;
   jd.parent = fti;
   jd.total = 1; jd.done = 0;
   jd.inboxOnly = !secondStep && mAccount->prefix() != "/"
-    && folder->imapPath() == mAccount->prefix();
+    && imapPath() == mAccount->prefix();
   KURL url = mAccount->getUrl();
-  url.setPath(((jd.inboxOnly) ? QString("/") : folder->imapPath())
+  url.setPath(((jd.inboxOnly) ? QString("/") : imapPath())
     + ";TYPE=LIST");
   if (!mAccount->makeConnection())
   { 
     fti->setOpen( FALSE );
     return;
   }
+  if (!secondStep) mHasInbox = FALSE;
+  mSubfolderNames.clear();
+  mSubfolderPaths.clear();
+  mSubfolderMimeTypes.clear();
   KIO::SimpleJob *job = KIO::listDir(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   mAccount->mapJobData.insert(job, jd);
@@ -218,9 +244,63 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
-  } else if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
+  }
   mImapState = imapFinished;
+  bool it_inboxOnly = (*it).inboxOnly;
   mAccount->mapJobData.remove(it);
+  if (!job->error())
+  {
+    if (it_inboxOnly) listDirectory(NULL, TRUE);
+    else {
+      if (mImapPath == "/INBOX" && mAccount->prefix() == "/INBOX/")
+        mSubfolderNames.clear();
+      createChildFolder();
+      KMFolderImap *folder;
+      KMFolderNode *node = mChild->first();
+      while (node)
+      {
+        if (!node->isDir() && (node->name() != "INBOX" || !mHasInbox)
+            && mSubfolderNames.findIndex(node->name()) == -1)
+        {
+kdDebug(5006) << node->name() << " disappeared." << endl;
+          kernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
+          node = mChild->first();
+        }
+        else node = mChild->next();
+      }
+      bool changed = FALSE;
+      if (mHasInbox)
+      {
+        for (node = mChild->first(); node; node = mChild->next())
+          if (!node->isDir() && node->name() == "INBOX") break;
+        if (node) folder = static_cast<KMFolderImap*>(node);
+        else folder = static_cast<KMFolderImap*>
+          (mChild->createFolder("INBOX", TRUE));
+        folder->setAccount(mAccount);
+        folder->setImapPath("/INBOX");
+        folder->setLabel(i18n("inbox"));
+        changed = TRUE;
+      }
+      for (uint i = 0; i < mSubfolderNames.count(); i++)
+      {
+        for (node = mChild->first(); node; node = mChild->next())
+          if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
+        if (node) folder = static_cast<KMFolderImap*>(node);
+        else {
+          folder = static_cast<KMFolderImap*>
+            (mChild->createFolder(mSubfolderNames[i]));
+          changed = TRUE;
+        }
+        folder->setAccount(mAccount);
+        folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+        folder->setImapPath(mSubfolderPaths[i]);
+        if (mSubfolderMimeTypes[i] == "message/directory" ||
+            mSubfolderMimeTypes[i] == "inode/directory")
+          folder->listDirectory(NULL);
+      }
+      if (changed) kernel->imapFolderMgr()->contentsChanged();
+    }
+  }
   mAccount->displayProgress();
 }
 
@@ -252,16 +332,22 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
         && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.')
         && (!(*it).inboxOnly || name == "INBOX"))
     {
-      static_cast<KMFolderTree*>((*it).parent->listView())
+      if (((*it).inboxOnly || KURL(url).path() == "/") && name == "INBOX")
+        mHasInbox = TRUE;
+      else {
+        mSubfolderNames.append(name);
+        mSubfolderPaths.append(KURL(url).path());
+        mSubfolderMimeTypes.append(mimeType);
+      }
+/*      static_cast<KMFolderTree*>((*it).parent->listView())
         ->addImapChildFolder((*it).parent, name, KURL(url).path(),
-        mimeType, (*it).inboxOnly);
+        mimeType, (*it).inboxOnly); */
     }
   }
-  static_cast<KMFolderTree*>((*it).parent->listView())->delayedUpdate();
+//  static_cast<KMFolderTree*>((*it).parent->listView())->delayedUpdate();
 }
 
 
-#include <kdebug.h>
 //-----------------------------------------------------------------------------
 void KMFolderImap::checkValidity(KMFolderTreeItem * fti)
 {

@@ -5,6 +5,7 @@
 #include "kmfolderdir.h"
 #include "kmfoldermaildir.h"
 #include "kmfoldermbox.h"
+#include "kmfolderimap.h"
 #include <kapp.h>
 
 #include <assert.h>
@@ -17,10 +18,9 @@
 
 //=============================================================================
 //=============================================================================
-KMFolderRootDir::KMFolderRootDir(const QString& path):
-  KMFolderDir(NULL, path)
+KMFolderRootDir::KMFolderRootDir(const QString& path, bool imap):
+  KMFolderDir(NULL, path, imap)
 {
-
   setPath(path);
 }
 
@@ -37,7 +37,6 @@ KMFolderRootDir::~KMFolderRootDir()
 void KMFolderRootDir::setPath(const QString& aPath)
 {
   mPath = aPath;
-
 }
 
 
@@ -51,13 +50,14 @@ QString KMFolderRootDir::path() const
 
 //=============================================================================
 //=============================================================================
-KMFolderDir::KMFolderDir(KMFolderDir* parent, const QString& name):
+KMFolderDir::KMFolderDir(KMFolderDir* parent, const QString& name, bool imap):
   KMFolderNode(parent,name), KMFolderNodeList()
 {
 
   setAutoDelete(TRUE);
 
   mType = "dir";
+  mImap = imap;
 }
 
 
@@ -75,7 +75,9 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   int rc;
 
   assert(!aFolderName.isEmpty());
-  if (aFolderType == KMFolderTypeMaildir)
+  if (mImap)
+    fld = new KMFolderImap(this, aFolderName);
+  else if (aFolderType == KMFolderTypeMaildir)
     fld = new KMFolderMaildir(this, aFolderName);
   else
     fld = new KMFolderMbox(this, aFolderName);
@@ -181,7 +183,12 @@ bool KMFolderDir::reload(void)
       else
         diList.append(fname);
     }
-
+    else if (mImap)
+    {
+      folder = new KMFolderImap(this, fname);
+      append(folder);
+      folderList.append(folder);
+    }
     else // all other files are folders (at the moment ;-)
     {
       folder = new KMFolderMbox(this, fname);
@@ -196,7 +203,7 @@ bool KMFolderDir::reload(void)
 	it != diList.end();
 	++it)
       if (*it == "." + folder->name() + ".directory") {
-	KMFolderDir* folderDir = new KMFolderDir(this, *it);
+	KMFolderDir* folderDir = new KMFolderDir(this, *it, mImap);
 	folderDir->reload();
 	append(folderDir);
 	folder->setChild(folderDir);

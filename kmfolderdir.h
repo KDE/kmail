@@ -20,7 +20,7 @@ class KMFolderDir: public KMFolderNode, public KMFolderNodeList
   Q_OBJECT
 
 public:
-  KMFolderDir(KMFolderDir* parent=NULL, const QString& path=0);
+  KMFolderDir(KMFolderDir* parent=NULL, const QString& path=0, bool imap=FALSE);
   virtual ~KMFolderDir();
 
   virtual bool isDir() const { return TRUE; }
@@ -41,6 +41,8 @@ public:
   /** Returns folder with given name or zero if it does not exist */
   virtual KMFolderNode* hasNamedFolder(const QString& name);
 
+protected:
+  bool mImap;
 };
 
 
@@ -51,7 +53,7 @@ class KMFolderRootDir: public KMFolderDir
   Q_OBJECT
 
 public:
-  KMFolderRootDir(const QString& path=0);
+  KMFolderRootDir(const QString& path=0, bool imap=FALSE);
   virtual ~KMFolderRootDir();
   virtual QString path() const;
 

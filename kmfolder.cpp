@@ -63,8 +63,6 @@ static int _rename(const char* oldname, const char* newname)
 KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   KMFolderInherited(aParent, aName), mMsgList(INIT_MSGS)
 {
-
-
   mIndexStream    = NULL;
   mOpenCount      = 0;
   mQuiet          = 0;
@@ -84,6 +82,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mIndexStreamPtr = NULL;
   mIndexStreamPtrLength = 0;
   mCompactable     = TRUE;
+  mNoContent      = FALSE;
 }
 
 
@@ -162,7 +161,8 @@ KMFolderDir* KMFolder::createChildFolder()
     return 0;
   }
 
-  KMFolderDir* folderDir = new KMFolderDir(parent(), childName);
+  KMFolderDir* folderDir = new KMFolderDir(parent(), childName,
+    protocol() == "imap");
   if (!folderDir)
     return 0;
   folderDir->reload();

@@ -32,8 +32,8 @@
 #include "kmmessage.h"
 
 //-----------------------------------------------------------------------------
-KMFolderMgr::KMFolderMgr(const QString& aBasePath):
-  KMFolderMgrInherited(), mDir()
+KMFolderMgr::KMFolderMgr(const QString& aBasePath, bool aImap):
+  KMFolderMgrInherited(), mDir(QString::null, aImap)
 {
   setBasePath(aBasePath);
 }
@@ -188,7 +188,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
       }
     }
 
-    folder = createFolder(aFolderName, TRUE, type);
+    folder = createFolder(aFolderName, sysFldr, type);
     if (!folder) {
       KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
       exit(-1);
@@ -203,6 +203,7 @@ void KMFolderMgr::remove(KMFolder* aFolder)
 {
   assert(aFolder != NULL);
 
+  emit removed(aFolder);
   removeFolderAux(aFolder);
 
   emit changed();
