@@ -2171,7 +2171,7 @@ AddressList KMMessage::headerAddrField( const QCString & aName ) const {
   const char * scursor = header.begin();
   if ( !scursor )
     return AddressList();
-  const char * const send = header.end();
+  const char * const send = header.begin() + header.length();
   if ( !parseAddressList( scursor, send, result ) )
     kdDebug(5006) << "Error in address splitting: parseAddressList returned false!"
                   << endl;
