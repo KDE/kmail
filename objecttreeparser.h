@@ -30,29 +30,19 @@ typedef QMemArray<char> QByteArray;
 namespace KMail {
 
   class ObjectTreeParser {
-    /** 1. Create a new partNode using 'content' data and Content-Description
-            found in 'cntDesc'.
-        2. Make this node the child of 'node'.
-        3. Insert the respective entries in the Mime Tree Viewer.
-        3. Parse the 'node' to display the content. */
-    //  Function will be replaced once KMime is alive.
-    static void insertAndParseNewChildNode( KMReaderWin * reader,
-                                            QCString * resultString,
-                                            CryptPlugWrapper * useThisCryptPlug,
-                                            partNode & node,
-                                            const char * content,
-                                            const char * cntDesc,
-                                            bool append=false );
   public:
+    ObjectTreeParser( KMReaderWin * reader );
+    virtual ~ObjectTreeParser();
+
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
     //  Function is called internally by "parseMsg(KMMessage* msg)"
     //  and it will be replaced once KMime is alive.
-    static void parseObjectTree( KMReaderWin * reader, QCString * resultStringPtr,
-				 CryptPlugWrapper * useThisCryptPlug, partNode * node,
-				 bool showOneMimePart=false,
-				 bool keepEncryptions=false,
-				 bool includeSignatures=true );
+    void parseObjectTree( QCString * resultStringPtr,
+			  CryptPlugWrapper * useThisCryptPlug, partNode * node,
+			  bool showOneMimePart=false,
+			  bool keepEncryptions=false,
+			  bool includeSignatures=true );
 
     /** Save a QByteArray into a new temp. file using the extention
         given in dirExt to compose the directory name and
@@ -66,6 +56,18 @@ namespace KMail {
                                         const QByteArray& theBody );
 
   private:
+    /** 1. Create a new partNode using 'content' data and Content-Description
+            found in 'cntDesc'.
+        2. Make this node the child of 'node'.
+        3. Insert the respective entries in the Mime Tree Viewer.
+        3. Parse the 'node' to display the content. */
+    //  Function will be replaced once KMime is alive.
+    void insertAndParseNewChildNode( QCString * resultString,
+				     CryptPlugWrapper * useThisCryptPlug,
+				     partNode & node,
+				     const char * content,
+				     const char * cntDesc,
+				     bool append=false );
     /** if data is 0:
 	Feeds the HTML widget with the contents of the opaque signed
             data found in partNode 'sign'.
@@ -76,34 +78,34 @@ namespace KMail {
 
         Returns whether a signature was found or not: use this to
         find out if opaque data is signed or not. */
-    static bool writeOpaqueOrMultipartSignedData( KMReaderWin * reader, QCString * resultString,
-						  CryptPlugWrapper * useThisCryptPlug,
-						  partNode * data,
-						  partNode & sign,
-						  const QString & fromAddress,
-						  bool doCheck=true,
-						  QCString * cleartextData=0,
-						  struct CryptPlugWrapper::SignatureMetaData * paramSigMeta=0,
-						  bool hideErrors=false );
+    bool writeOpaqueOrMultipartSignedData( QCString * resultString,
+					   CryptPlugWrapper * useThisCryptPlug,
+					   partNode * data,
+					   partNode & sign,
+					   const QString & fromAddress,
+					   bool doCheck=true,
+					   QCString * cleartextData=0,
+					   struct CryptPlugWrapper::SignatureMetaData * paramSigMeta=0,
+					   bool hideErrors=false );
 
     /** find a plugin matching a given libName */
-    static bool foundMatchingCryptPlug( const QString & libName,
-                                        CryptPlugWrapper** useThisCryptPlug_ref,
-                                        QWidget* parent=0,
-                                        const QString & verboseName=QString::null );
+    bool foundMatchingCryptPlug( const QString & libName,
+				 CryptPlugWrapper** useThisCryptPlug_ref,
+				 const QString & verboseName=QString::null );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
-    static bool okDecryptMIME( KMReaderWin* reader,
-                               CryptPlugWrapper*     useThisCryptPlug,
-                               partNode& data,
-                               QCString& decryptedData,
-                               bool& signatureFound,
-                               struct CryptPlugWrapper::SignatureMetaData& sigMeta,
-                               bool showWarning,
-                               bool& passphraseError,
-                               QString& aErrorText );
+    bool okDecryptMIME( CryptPlugWrapper*     useThisCryptPlug,
+			partNode& data,
+			QCString& decryptedData,
+			bool& signatureFound,
+			struct CryptPlugWrapper::SignatureMetaData& sigMeta,
+			bool showWarning,
+			bool& passphraseError,
+			QString& aErrorText );
 
+  private:
+    KMReaderWin * mReader;
   };
 
 }; // namespace KMail

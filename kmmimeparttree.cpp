@@ -85,12 +85,10 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemClicked() **\n**" << endl;
         if( mReaderWin->mRootNode == i->node() )
           mReaderWin->update( true ); // Force update
-        else
-          ObjectTreeParser::parseObjectTree( mReaderWin,
-					     0,
-					     0,
-					     i->node(),
-					     true );
+        else {
+          ObjectTreeParser otp( mReaderWin );
+	  otp.parseObjectTree( 0, 0, i->node(), true );
+	}
     }
 }
 
@@ -166,15 +164,12 @@ void KMMimePartTree::slotSaveAs()
                     QByteArray cstr = mCurrentContextMenuItem->node()->msgPart().bodyDecodedBinary();
                     ds.writeRawBytes( cstr, cstr.size() );
                 } else {
-
-                    ObjectTreeParser::parseObjectTree( mReaderWin,
-						       0,
-						       0,
-						       mCurrentContextMenuItem->node(),
-						       true,
-						       bSaveEncrypted,
-						       bSaveWithSig );
-
+                    ObjectTreeParser otp( mReaderWin );
+		    otp.parseObjectTree( 0, 0,
+					 mCurrentContextMenuItem->node(),
+					 true,
+					 bSaveEncrypted,
+					 bSaveWithSig );
                 }
                 file.close();
             } else
