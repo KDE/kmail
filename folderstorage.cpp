@@ -679,6 +679,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   KMKernel::config()->deleteGroup( oldConfigString );
 
   emit nameChanged();
+  kmkernel->folderMgr()->contentsChanged();
   return rc;
 }
 

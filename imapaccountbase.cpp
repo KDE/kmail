@@ -699,7 +699,7 @@ namespace KMail {
     // first delete old parts as we construct our own
     msg->deleteBodyParts();
     // make the parts and fill the mBodyPartList
-    constructParts( stream, 1, 0, 0, msg->asDwMessage() );
+    constructParts( stream, 1, 0, 0, msg->getTopLevelPart() );
     if ( mBodyPartList.count() == 1 ) // we directly set the body later
       msg->deleteBodyParts();
 

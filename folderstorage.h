@@ -44,8 +44,6 @@
 #include "kmglobal.h"
 #include "folderjob.h"
 using KMail::FolderJob;
-#include "listjob.h"
-using KMail::ListJob;
 
 #include "mimelib/string.h"
 

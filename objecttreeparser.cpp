@@ -152,7 +152,6 @@ namespace KMail {
                                                      const char* cntDesc,
                                                      bool append )
   {
-    //  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
     DwBodyPart* myBody = new DwBodyPart( DwString( content ), 0 );
     myBody->Parse();
 
@@ -160,7 +159,6 @@ namespace KMail {
       DwText& desc = myBody->Headers().ContentDescription();
       desc.FromString( cntDesc );
       desc.SetModified();
-      //desc.Assemble();
       myBody->Headers().Parse();
     }
 
@@ -172,7 +170,6 @@ namespace KMail {
     {
       // if encapsulated imap messages are loaded the content-string is not complete
       // so we need to keep the child dwparts by copying them to the new dwpart
-      kdDebug(5006) << "copy parts" << endl;
       myBody->Body().AddBodyPart(
           startNode.dwPart()->Body().Message()->Body().FirstBodyPart() );
       myBody->Body().FromString(

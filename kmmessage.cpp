@@ -4291,10 +4291,10 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       // get the parent bodypart
       specifier = partSpecifier.section( '.', 0, -2 );
     }
-    kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
 
     // search for the bodypart
     mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
+    kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << "(" << mLastUpdated<<")" << endl;
     if (!mLastUpdated)
     {
       kdWarning(5006) << "KMMessage::updateBodyPart - can not find part "
@@ -4306,8 +4306,8 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       // update headers
       // get rid of EOL
       content.resize( content.length()-2 );
-      // we have to delete the fields first as they might by created by an earlier
-      // call to DwHeaders::FieldBody
+      // we have to delete the fields first as they might have been created by 
+      // an earlier call to DwHeaders::FieldBody
       mLastUpdated->Headers().DeleteAllFields();
       mLastUpdated->Headers().FromString( content );
       mLastUpdated->Headers().Parse();

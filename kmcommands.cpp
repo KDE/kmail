@@ -1855,7 +1855,8 @@ KMCommand::Result KMMoveCommand::execute()
         completeMove( OK );
       }
     }
-    if ( !mDestFolder ) {
+    if ( !mDestFolder || mLostBoys.isEmpty() ) {
+      // normal local move
       completeMove( OK );
     }
   }
@@ -1863,7 +1864,7 @@ KMCommand::Result KMMoveCommand::execute()
   return OK;
 }
 
-void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
+void KMMoveCommand::slotImapFolderCompleted(KMFolderImap*, bool success)
 {
   if ( success ) {
     // the folder was checked successfully but we were still called, so check
@@ -1896,7 +1897,6 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
     }
-    completeMove( OK );
   } else {
     mProgressItem->incCompletedItems();
     mProgressItem->updateProgress();
@@ -1913,7 +1913,10 @@ void KMMoveCommand::completeMove( Result result )
     folder->close();
   }
   if ( mProgressItem )
+  {
     mProgressItem->setComplete();
+    mProgressItem = 0;
+  }
   setResult( result );
   emit completed( this );
   deleteLater();

@@ -1143,7 +1143,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   KConfig* config = KMKernel::config();
   KMFolder *folder = fti->folder();
   QString name;
-  if (folder)
+  if (folder && !folder->idString().isEmpty())
   {
     name = "Folder-" + folder->idString();
   } else if (fti->type() == KFolderTreeItem::Root)

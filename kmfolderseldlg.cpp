@@ -138,9 +138,8 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
     }
 
     item->setText( mFolderColumn, fti->text( 0 ) );
-    // Make items without folders and top level items unselectable
-    // (i.e. root item Local Folders and IMAP accounts)
-    if ( !fti->folder() || depth == 0 || ( mustBeReadWrite && fti->folder()->isReadOnly() ) ) {
+    // Make items without folders and readonly items unselectable
+    if ( !fti->folder() || ( mustBeReadWrite && fti->folder()->isReadOnly() ) ) {
       item->setSelectable( false );
     } else {
       item->setFolder( fti->folder() );

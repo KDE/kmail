@@ -44,6 +44,8 @@ using KPIM::ProgressManager;
 #include "kmsearchpattern.h"
 #include "searchjob.h"
 using KMail::SearchJob;
+#include "renamejob.h"
+using KMail::RenameJob;
 
 #include <kdebug.h>
 #include <kio/scheduler.h>
@@ -276,52 +278,12 @@ void KMFolderImap::removeMsg( const QPtrList<KMMessage>& msgList, bool quiet )
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderImap::rename( const QString& newName, KMFolderDir */*aParent*/ )
+int KMFolderImap::rename( const QString& newName, KMFolderDir *aParent )
 {
-  if ( newName == name() )
-    return 0;
-
-  QString path = imapPath();
-  path.replace( name(), newName );
-  KURL src( mAccount->getUrl() );
-  src.setPath( imapPath() );
-  KURL dst( mAccount->getUrl() );
-  dst.setPath( path );
-  // hack to transport the new name
-  ImapAccountBase::jobData jd;
-  jd.path = newName;
-  KIO::SimpleJob *job = KIO::rename( src, dst, true );
-  kdDebug(5006)<< "KMFolderImap::rename - " << src.prettyURL()
-           << " |=> " << dst.prettyURL()
-           << endl;
-  mAccount->insertJob( job, jd );
-  KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
-  connect( job, SIGNAL(result(KIO::Job*)),
-           SLOT(slotRenameResult(KIO::Job*)) );
-  setImapPath( path );
-  return 0;
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderImap::slotRenameResult( KIO::Job *job )
-{
-  ImapAccountBase::JobIterator it = mAccount->findJob( job );
-  if ( it == mAccount->jobsEnd() ) return;
-  KIO::SimpleJob* sj = static_cast<KIO::SimpleJob*>(job);
-  if ( job->error() ) {
-    // rollback
-    setImapPath( sj->url().path() );
-    mAccount->handleJobError( job, i18n("Error while renaming a folder.") );
-    return;
-  }
-  // unsubscribe old (we don't want ghosts)
-  mAccount->changeSubscription( false, sj->url().path() );
-  // subscribe new
-  mAccount->changeSubscription( true, imapPath() );
-  // ATTENTION port me to maildir
-  KMFolderMbox::rename( (*it).path );
-  mAccount->removeJob(it);
+  if ( !aParent )
+    KMFolderMbox::rename( newName );
   kmkernel->folderMgr()->contentsChanged();
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -856,11 +818,16 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     if (uidValidity() != uidv)
     {
       // uidValidity changed
-      kdDebug(5006) << "KMFolderImap::slotCheckValidityResult uidValidty changed." << endl;
-      mAccount->ignoreJobsForFolder( folder() );
+      kdDebug(5006) << k_funcinfo << "uidValidty changed from "
+       << uidValidity() << " to " << uidv << endl;
+      if ( !uidValidity().isEmpty() )
+      {
+        mAccount->ignoreJobsForFolder( folder() );
+        uidmap.clear();
+      }
       mLastUid = 0;
-      uidmap.clear();
       setUidValidity(uidv);
+      writeConfig();
     } else {
       if (!mCheckFlags)
         startUid = QString::number(lastUid() + 1);

@@ -87,51 +87,28 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mPositionInFolderList( 0 ),
   mIsNewFolder( aFolder == 0 ),
   mFolderTree( aParent )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
-  if( !mFolder ) {
-    // new folder can be subfolder of any other folder
-    aParent->createFolderList(&mFolderNameList, &mFolders, true, true,
-                              true, false, true, false);
-  }
-  else if( mFolder->folderType() != KMFolderTypeImap
-           && mFolder->folderType() != KMFolderTypeCachedImap ) {
-    // already existant local folder can only be moved locally
-    aParent->createFolderList(&mFolderNameList, &mFolders, true, false,
-                              false, false, true, false);
-  }
-  else {
-    // already existant IMAP folder can't be moved, but we add all
-    // IMAP folders so that the correct parent folder can be shown
-    aParent->createFolderList(&mFolderNameList, &mFolders, false, true,
-                              true, false, true, false);
-  }
-
-  mFolderNameList.prepend( i18n( "Local Folders" ) );
+  QStringList folderNames;
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  // get all folders but search and folders that can not have children
+  aParent->createFolderList(&folderNames, &folders, true, true,
+                            true, false, true, false);
 
   if( mFolderDir ) {
     // search the parent folder of the folder
-//    kdDebug(5006) << "search the parent folder of the folder" << endl;
     FolderList::ConstIterator it;
     int i = 1;
-    for( it = mFolders.begin(); it != mFolders.end(); ++it, ++i ) {
-//      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
+    for( it = folders.begin(); it != folders.end(); ++it, ++i ) {
       if( (*it)->child() == mFolderDir ) {
         mParentFolder = *it;
-        mPositionInFolderList = i;
         break;
       }
     }
   }
-
-  // Now create the folder list for the "move expired message to..." combo
-  aParent->createFolderList(&mMoveToFolderNameList, &mMoveToFolderList, true, true,
-                            true, false, true, true); // all except search folders
-
 
   FolderDiaTab* tab;
   QVBox* box;
@@ -187,7 +164,7 @@ void KMFolderDialog::slotApply()
   for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
   if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
-    mIsNewFolder = false; // so it's new anymore :)
+    mIsNewFolder = false; // so it's not new anymore :)
   KDialogBase::slotApply();
 }
 
@@ -289,6 +266,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   hl->addWidget( belongsToLabel );
 
   mBelongsTo = new FolderRequester( fpGroup, mDlg->folderTree() );
+  mBelongsTo->setMustBeReadWrite( false );
   hl->addWidget( mBelongsTo );
   belongsToLabel->setBuddy( mBelongsTo );
 
@@ -558,6 +536,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     // existing folder
     initializeWithValuesFromFolder( mDlg->folder() );
 
+    bool hasChildren = ( mDlg->folder()->child() &&
+                         mDlg->folder()->child()->count() > 0 );
+
     // mailbox folder type
     switch ( mDlg->folder()->folderType() ) {
       case KMFolderTypeSearch:
@@ -575,13 +556,19 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         newmailGroup->hide();
         break;
       case KMFolderTypeImap:
-        belongsToLabel->setEnabled( false );
-        mBelongsTo->setEnabled( false );
+        if ( hasChildren )
+        {
+          belongsToLabel->setEnabled( false );
+          mBelongsTo->setEnabled( false );
+        }
         mMailboxTypeGroupBox->hide();
         break;
       case KMFolderTypeCachedImap:
-        belongsToLabel->setEnabled( false );
-        mBelongsTo->setEnabled( false );
+        if ( hasChildren )
+        {
+          belongsToLabel->setEnabled( false );
+          mBelongsTo->setEnabled( false );
+        }
         mMailboxTypeGroupBox->hide();
         newmailGroup->hide();
         break;
@@ -729,8 +716,10 @@ static bool folderHasCreateRights( const KMFolder *folder )
   bool createRights = true; // we don't have acls for local folders yet
   if ( folder && folder->folderType() == KMFolderTypeImap ) {
     const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
-    createRights =
-      imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
+    createRights = ( ( imapFolder->userRights() > 0 && 
+                       ( imapFolder->userRights() & KMail::ACLJobs::Create ) ) ||
+                     ( imapFolder->userRights() == 0 ) );
+      
   } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
     createRights =
@@ -741,17 +730,22 @@ static bool folderHasCreateRights( const KMFolder *folder )
 //-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
-  // moving of IMAP folders is not yet supported
+  QString fldName, oldFldName;
+  KMFolderDir *selectedFolderDir = 0;
   if ( mDlg->isNewFolder() || !mDlg->folder()->isSystemFolder() )
   {
     QString acctName;
-    QString fldName, oldFldName;
-    KMFolderDir *selectedFolderDir = &(kmkernel->folderMgr()->dir());
+    selectedFolderDir = &(kmkernel->folderMgr()->dir());
     KMFolder *selectedFolder = mBelongsTo->folder();
 
-    if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
-    if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
-    else fldName = oldFldName;
+    if ( !mDlg->isNewFolder() )
+      oldFldName = mDlg->folder()->name();
+    
+    if (!mNameEdit->text().isEmpty()) 
+      fldName = mNameEdit->text();
+    else 
+      fldName = oldFldName;
+   
     if ( mDlg->parentFolder() &&
          mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
          mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
@@ -780,20 +774,20 @@ bool FolderDiaGeneralTab::save()
     message = i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).arg(fldName);
     KMFolderDir* folderDir = selectedFolderDir;
 
-
-    // Buggy?
-    if( mDlg->folder() && mDlg->folder()->child() ) {
-      while( ( folderDir != &kmkernel->folderMgr()->dir() )
-             && ( folderDir != mDlg->folder()->parent() ) ) {
-        if( folderDir->findRef( mDlg->folder() ) != -1 ) {
+    // check that the folder can be moved
+    if ( mDlg->folder() && mDlg->folder()->child() ) 
+    {
+      while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
+              ( folderDir != mDlg->folder()->parent() ) ) 
+      {
+        if ( folderDir->findRef( mDlg->folder() ) != -1 ) 
+        {
           KMessageBox::error( this, message );
           return false;
         }
         folderDir = folderDir->parent();
       }
     }
-    // End buggy?
-
 
     if( mDlg->folder() && mDlg->folder()->child() && selectedFolderDir &&
         ( selectedFolderDir->path().find( mDlg->folder()->child()->path() + "/" ) == 0 ) ) {
@@ -871,20 +865,6 @@ bool FolderDiaGeneralTab::save()
 
       }
     }
-    else if( ( oldFldName != fldName )
-             || ( mDlg->folder()->parent() != selectedFolderDir ) )
-    {
-      if( mDlg->folder()->parent() != selectedFolderDir ) {
-        if( mDlg->folder()->folderType() == KMFolderTypeCachedImap ) {
-          QString message = i18n("Moving IMAP folders is not supported");
-          KMessageBox::error( this, message );
-        } else
-          mDlg->folder()->rename(fldName, selectedFolderDir );
-      } else
-        mDlg->folder()->rename(fldName);
-
-      kmkernel->folderMgr()->contentsChanged();
-    }
   }
 
   KMFolder* folder = mDlg->folder();
@@ -945,7 +925,18 @@ bool FolderDiaGeneralTab::save()
     // when creating a new folder.
     folder->storage()->writeConfig();
 
-    kmkernel->folderMgr()->contentsChanged();
+    if ( !mDlg->isNewFolder() && !oldFldName.isEmpty() &&
+         ( oldFldName != fldName || folder->parent() != selectedFolderDir ) )
+    {
+      if ( folder->parent() != selectedFolderDir ) {
+        kmkernel->folderMgr()->renameFolder( folder, fldName, 
+            selectedFolderDir );
+      } else {
+        kmkernel->folderMgr()->renameFolder( folder, fldName );
+      }
+    } else {
+      kmkernel->folderMgr()->contentsChanged();
+    }
 
     if( mDlg->isNewFolder() )
       folder->close();
@@ -1035,9 +1026,8 @@ KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
                                         this );
   radioBG->insert( mExpireActionMove );
   hbl->addWidget( mExpireActionMove );
-  mExpireToFolderComboBox = new QComboBox( this );
+  mExpireToFolderComboBox = new FolderRequester( this, mDlg->folderTree() );
   hbl->addWidget( mExpireToFolderComboBox );
-  mExpireToFolderComboBox->insertStringList( mDlg->moveToFolderNameList() );
   hbl->addStretch( 100 );
 
   topLayout->addStretch( 100 ); // eat all superfluous space
@@ -1083,11 +1073,9 @@ void FolderDiaExpiryTab::load()
       mExpireActionMove->setChecked( true );
     QString destFolderID = folder->expireToFolderId();
     if ( !destFolderID.isEmpty() ) {
-      KMFolderDialog::FolderList moveToFolderList = mDlg->moveToFolderList();
       KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
-      int pos = moveToFolderList.findIndex( QGuardedPtr<KMFolder>( destFolder ) );
-      if ( pos > -1 )
-        mExpireToFolderComboBox->setCurrentItem( pos );
+      if ( destFolder )
+        mExpireToFolderComboBox->setFolder( destFolder );
     }
   } else { // new folder, use default values
     mReadExpiryTimeNumInput->setValue( 7 );
@@ -1127,8 +1115,7 @@ bool FolderDiaExpiryTab::save()
     folder->setExpireAction( KMFolder::ExpireDelete );
   else
     folder->setExpireAction( KMFolder::ExpireMove );
-  KMFolder* expireToFolder =
-    mDlg->moveToFolderList()[mExpireToFolderComboBox->currentItem()];
+  KMFolder* expireToFolder = mExpireToFolderComboBox->folder();
   if ( expireToFolder )
     folder->setExpireToFolderId( expireToFolder->idString() );
 

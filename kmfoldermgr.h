@@ -124,6 +124,10 @@ public:
   /** Create a new unique ID */
   uint createId();
 
+  /** Rename or move a folder */
+  void renameFolder( KMFolder* folder, const QString& newName, 
+      KMFolderDir* newParent = 0 );
+
 public slots:
   /** GUI action: compact all folders that need to be compacted */
   void compactAll() { compactAllFolders( true ); }
@@ -133,6 +137,9 @@ public slots:
 
   /** Called from KMFolder::remove when the folderstorage was removed */
   void removeFolderAux(KMFolder* obsoleteFolder, bool success);
+
+  /** Called when the renaming of a folder is done */
+  void slotRenameDone( QString newName, bool success );
 
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook

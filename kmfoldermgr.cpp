@@ -30,6 +30,8 @@
 #include "undostack.h"
 #include "kmmsgdict.h"
 #include "folderstorage.h"
+#include "renamejob.h"
+using KMail::RenameJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
@@ -181,6 +183,8 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
     fldDir = &mDir;
   fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
+    if ( fld->id() == 0 )
+      fld->setId( createId() );
     contentsChanged();
     emit folderAdded(fld);
     if (kmkernel->filterMgr())
@@ -575,6 +579,22 @@ uint KMFolderMgr::createId()
   } while ( findById( newId ) != 0 );
 
   return newId;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName, 
+                                KMFolderDir *newParent )
+{
+  RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
+  connect( job, SIGNAL( renameDone( QString, bool ) ),
+      this, SLOT( slotRenameDone( QString, bool ) ) );
+  job->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::slotRenameDone( QString, bool success )
+{
+  kdDebug(5006) << k_funcinfo << success << endl;
 }
 
 #include "kmfoldermgr.moc"

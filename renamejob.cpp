@@ -75,6 +75,16 @@ void RenameJob::execute()
   if ( mNewParent )
   {
     // move the folder to a different parent
+    KMFolderType type = mStorage->folderType();
+    if ( ( type == KMFolderTypeMbox || type == KMFolderTypeMaildir ) &&
+         mNewParent->type() == KMStandardDir )
+    {
+      // local folders can handle this on their own
+      mStorage->rename( mNewName, mNewParent );
+      emit renameDone( mNewName, true );
+      deleteLater();
+      return;
+    }
     // first create the new folder
     KMFolderMgr* folderMgr = kmkernel->folderMgr();
     if ( mNewParent->type() == KMImapDir ) {
@@ -85,6 +95,13 @@ void RenameJob::execute()
 
     mNewFolder = folderMgr->createFolder( 
         mNewName, false, mNewParent->owner()->folderType(), mNewParent );
+    if ( !mNewFolder )
+    {
+      kdWarning(5006) << k_funcinfo << "could not create folder" << endl;
+      emit renameDone( mNewName, false );
+      deleteLater();
+      return;
+    }
     kdDebug(5006)<< "RenameJob::rename - " << mStorage->folder()->idString()
       << " |=> " << mNewFolder->idString() << endl;
 
@@ -102,6 +119,7 @@ void RenameJob::execute()
       KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mNewFolder->storage());
       KMFolderCachedImap* owner = static_cast<KMFolderCachedImap*>(mNewParent->owner()->storage());
       newStorage->initializeFrom( owner );
+      slotMoveMessages();
     } else
     {
       // local
@@ -110,10 +128,19 @@ void RenameJob::execute()
   } else
   {
     // only rename the folder
-    if ( mOldImapPath.isEmpty() || mStorage->folderType() != KMFolderTypeImap )
+    if ( mStorage->folderType() != KMFolderTypeImap )
+    {
+      // local and dimap folder handle this directly
+      mStorage->rename( mNewName );
+      emit renameDone( mNewName, true );
+      deleteLater();
+      return;
+    }
+    if ( mOldImapPath.isEmpty() )
     { 
       // sanity
-      kdDebug(5006) << k_funcinfo << "only imap folders allowed" << endl;
+      emit renameDone( mNewName, false );
+      deleteLater();
       return;
     }
     ImapAccountBase* account = static_cast<KMFolderImap*>(mStorage)->account();
@@ -139,11 +166,17 @@ void RenameJob::slotRenameResult( KIO::Job *job )
 {
   ImapAccountBase* account = static_cast<KMFolderImap*>(mStorage)->account();
   ImapAccountBase::JobIterator it = account->findJob(job);
-  if ( it == account->jobsEnd() ) return;
+  if ( it == account->jobsEnd() )
+  {
+    emit renameDone( mNewName, false );
+    deleteLater();
+    return;
+  }
   if ( job->error() )
   {
     account->handleJobError( job, i18n("Error while renaming a folder.") );
     emit renameDone( mNewName, false );
+    deleteLater();
     return;
   }
   account->removeJob(it);
@@ -159,22 +192,21 @@ void RenameJob::slotRenameResult( KIO::Job *job )
   mStorage->rename( mNewName );
 
   emit renameDone( mNewName, true );
+  deleteLater();
 }
 
 void RenameJob::slotMoveMessages()
 {
   kdDebug(5006) << k_funcinfo << endl;
-  // do not bounce
   disconnect( kmkernel->imapFolderMgr(), SIGNAL( changed() ),
       this, SLOT( slotMoveMessages() ) );
   // move all messages to the new folder
-  mNewFolder->open();
   QPtrList<KMMsgBase> msgList;
   for ( int i = 0; i < mStorage->count(); i++ )
   {
     KMMsgBase* msgBase = mStorage->getMsgBase( i );
-    if ( msgBase )
-      msgList.append( msgBase );
+    assert( msgBase );
+    msgList.append( msgBase );
   }
   if ( msgList.count() == 0 ) 
   {
@@ -193,6 +225,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
   kdDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
   if ( !command || command->result() == KMCommand::OK ) 
   {
+    kdDebug(5006) << "deleting old folder" << endl;
     // move complete or not necessary
     // save our settings
     QString oldconfig = "Folder-" + mStorage->folder()->idString();
@@ -202,7 +235,8 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     for ( QMap<QString, QString>::Iterator it = entries.begin(); 
           it != entries.end(); ++it ) 
     {
-      if ( it.key() == "Id" || it.key() == "ImapPath" )
+      if ( it.key() == "Id" || it.key() == "ImapPath" || 
+           it.key() == "UidValidity" )
         continue;
       config->writeEntry( it.key(), it.data() );
     }
@@ -218,11 +252,11 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
       KMAcctCachedImap* acct = static_cast<KMFolderCachedImap*>(mStorage)->account();
       if ( acct )
         acct->addDeletedFolder( mOldImapPath );
-
       kmkernel->dimapFolderMgr()->remove( mStorage->folder() );
     } else if ( mStorage->folderType() == KMFolderTypeSearch ) 
     {
       // invalid
+      kdWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
     } else {
       kmkernel->folderMgr()->remove( mStorage->folder() );
     }
@@ -230,6 +264,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     emit renameDone( mNewName, true );
   } else 
   {
+    kdDebug(5006) << "rollback - deleting folder" << endl;
     // move failed - rollback and delete the new folder
     if ( mNewFolder->folderType() == KMFolderTypeImap )
     {
@@ -241,17 +276,18 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
       KMAcctCachedImap* acct = folder->account();
       if ( acct )
         acct->addDeletedFolder( folder->imapPath() );
-
       kmkernel->dimapFolderMgr()->remove( mNewFolder );
     } else if ( mNewFolder->folderType() == KMFolderTypeSearch ) 
     {
       // invalid
+      kdWarning(5006) << k_funcinfo << "cannot remove a search folder" << endl;
     } else {
       kmkernel->folderMgr()->remove( mNewFolder );
     }
     
     emit renameDone( mNewName, false );
   }
+  deleteLater();
 }
 
 #include "renamejob.moc"

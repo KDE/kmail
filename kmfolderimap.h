@@ -399,11 +399,6 @@ protected slots:
   void slotListFolderEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
 
   /**
-   * For renaming folders
-   */
-  void slotRenameResult( KIO::Job *job );
-
-  /**
    * For retrieving a message digest
    */
   void slotGetMessagesResult(KIO::Job * job);
