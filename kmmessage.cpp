@@ -1316,25 +1316,27 @@ void KMMessage::setMsgId(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QStrList KMMessage::headerAddrField(const QString& aName) const
 {
-  static QStrList resultList;
+  QStrList resultList;
   DwHeaders& header = mMsg->Headers();
-  DwAddressList* addrList;
-  DwAddress* addr;
-  QString str;
 
-  if (aName.isEmpty()) return resultList;
-  addrList = (DwAddressList*)&header.FieldBody((const char*)aName);
+  QCString content = header.FieldBody((const char*)aName).AsString().c_str();
+  if (content.isEmpty()) return resultList;
 
-  resultList.clear();
-  for (addr=addrList->FirstAddress(); addr; addr=addr->Next())
+  bool insideQuote1 = FALSE, insideQuote2 = FALSE;
+  char *start = content.data(), *stop;
+  while (*start)
   {
-    resultList.append(addr->AsString().c_str());
-  }
-
-  if (resultList.count()==0)
-  {
-    str = headerField(aName);
-    if (!str.isEmpty()) resultList.append(str);
+    while (*start == ' ') start++;
+    stop = start;
+    while (*stop && (*stop != ',' || insideQuote1 || insideQuote2))
+    {
+      if (*stop == '"') insideQuote1 = !insideQuote1;
+      else if (*stop == '\'') insideQuote2 = !insideQuote2;
+      stop++;
+    }
+    resultList.append(content.mid(start - content.data(), stop - start));
+    start = stop;
+    if (*start) start++;
   }
 
   return resultList;
