@@ -1807,9 +1807,11 @@ QString KMMessage::dateIsoStr() const
 //-----------------------------------------------------------------------------
 time_t KMMessage::date() const
 {
+  time_t res = ( time_t )-1;
   DwHeaders& header = mMsg->Headers();
-  if (header.HasDate()) return header.Date().AsUnixTime();
-  return (time_t)-1;
+  if (header.HasDate())
+    res = header.Date().AsUnixTime();
+  return res;
 }
 
 

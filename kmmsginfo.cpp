@@ -532,9 +532,12 @@ size_t KMMsgInfo::msgSize(void) const
 //-----------------------------------------------------------------------------
 time_t KMMsgInfo::date(void) const
 {
+    time_t res;
     if (kd && kd->modifiers & KMMsgInfoPrivate::DATE_SET)
-	return kd->date;
-    return getLongPart(MsgDatePart);
+      res = kd->date;
+    else
+      res = getLongPart(MsgDatePart);
+    return res;
 }
 
 //-----------------------------------------------------------------------------
