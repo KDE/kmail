@@ -1,4 +1,5 @@
-/*
+/*  -*- mode: C++; c-file-style: "gnu" -*-
+
     This file is part of KMail.
     Copyright (c) 2002-2003 Don Sanders <sanders@kde.org>,
     Copyright (c) 2003      Zack Rusin  <zack@kde.org>,
@@ -39,6 +40,8 @@
 #include "kmfolder.h"
 #include "sidebarextension.h"
 #include "infoextension.h"
+#include "recentaddresses.h"
+using KRecentAddress::RecentAddresses;
 
 #include <kapplication.h>
 #include <kparts/genericfactory.h>
@@ -152,6 +155,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
+  RecentAddresses::self( KMKernel::config() )->save( KMKernel::config() );
+  KMKernel::config()->sync();
   kmkernel->dumpDeadLetters();
   kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
   mainWidget->destruct();
