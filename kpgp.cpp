@@ -91,7 +91,7 @@ Kpgp::init()
   // get public keys
   // No! This takes time since pgp takes some ridicules
   // time to start, blocking everything (pressing any key _on_
-  // _the_ _machine_ _where_ _pgp_ _runs: helps; ???)
+  // _the_ _machine_ _where_ _pgp_ _runs: helps; ??? )
   // So we will ask for keys when we need them.
   //publicKeys = pgp->pubKeys(); This can return 0!!!
 
