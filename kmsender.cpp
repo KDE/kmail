@@ -61,8 +61,8 @@ KMSender::KMSender()
 KMSender::~KMSender()
 {
   writeConfig(FALSE);
-  if (mSendProc) delete mSendProc;
-  if (mPrecommand) delete mPrecommand;
+  delete mSendProc;
+  delete mPrecommand;
   delete mTransportInfo;
 }
 
@@ -639,7 +639,7 @@ void KMSendProc::start(void)
 //-----------------------------------------------------------------------------
 bool KMSendProc::finish(bool destructive)
 {
-  if (destructive) delete this;
+  if (destructive) deleteLater();
   return TRUE;
 }
 
@@ -789,6 +789,7 @@ void KMSendSendmail::start(void)
     .arg("sendmail://");
     KMessageBox::information(0,msg);
     emit started(false);
+    return;
   }
 
   if (!mMailerProc)
@@ -808,10 +809,10 @@ void KMSendSendmail::start(void)
 //-----------------------------------------------------------------------------
 bool KMSendSendmail::finish(bool destructive)
 {
-  if (mMailerProc) delete mMailerProc;
+  delete mMailerProc;
   mMailerProc = NULL;
   if (destructive)
-      delete this;
+    	deleteLater(); 
   return TRUE;
 }
 
