@@ -158,10 +158,7 @@ namespace KMail {
      */
     void removeJob( JobIterator& it );
 
-    // for KMImapJob::ignoreJobsForMessage...
-    void removeJob( KIO::Job* job ) {
-      mapJobData.remove( job );
-    }
+    void removeJob( KIO::Job* job );
 
     /**
      * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder
