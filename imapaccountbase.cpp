@@ -310,10 +310,11 @@ namespace KMail {
     // create jobData
     jobData jd;
     jd.total = 1; jd.done = 0;
+    // this inboxonly switch is only needed when you set the INBOX as prefix
     jd.inboxOnly = !secondStep && prefix() != "/"
-      && path == prefix();
-    if (jd.inboxOnly)
-      mHasInbox = false; // reset
+      && path == prefix() && !mHasInbox; 
+    if ( !secondStep && prefix() != "/" && path == prefix() )
+      mHasInbox = false; // reset when a new listing starts
     jd.onlySubscribed = onlySubscribed;
     if (parent) jd.parent = parent;
     if (!secondStep) mCreateInbox = FALSE;
@@ -362,13 +363,13 @@ namespace KMail {
           && name != ".." && (hiddenFolders() || name.at(0) != '.')
           && (!(*it).inboxOnly || name.upper() == "INBOX"))
       {
+        kdDebug() << "slotListEntries for " << name << endl;
         if (((*it).inboxOnly ||
               url.path() == "/INBOX/") && name.upper() == "INBOX" &&
             !mHasInbox)
         {
           // our INBOX
           mCreateInbox = TRUE;
-          mHasInbox = TRUE;
         }
 
         // Some servers send _lots_ of duplicates

@@ -557,7 +557,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     }
     if (mAccount->createInbox())
     {
-      // INBOX-special
+      // create the INBOX
       for (node = mChild->first(); node; node = mChild->next())
         if (!node->isDir() && node->name() == "INBOX") break;
       if (node) folder = static_cast<KMFolderImap*>(node);
@@ -567,6 +567,9 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       folder->setImapPath("/INBOX/");
       folder->setLabel(i18n("inbox"));
       if (!node) folder->close();
+      // so we have an INBOX
+      mAccount->setCreateInbox( false );
+      mAccount->setHasInbox( true );
       folder->listDirectory();
       kmkernel->imapFolderMgr()->contentsChanged();
     }
@@ -584,7 +587,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
           folder->close();
           kmkernel->imapFolderMgr()->contentsChanged();
         } else {
-          kdDebug(5006) << "can't create folder " << mSubfolderNames[i] << endl;
+          kdWarning(5006) << "can't create folder " << mSubfolderNames[i] << endl;
         }
       }
       if (folder)
