@@ -209,7 +209,7 @@ public slots:
   // Make the previous header visible scrolling if necessary
   void prevMessage();
   // Make the nextUnread message header visible scrolling if necessary
-  void nextUnreadMessage();
+  void nextUnreadMessage(bool acceptCurrent = false);
   // Make the previous message header visible scrolling if necessary
   void prevUnreadMessage();
   // Don't show a drag cursor

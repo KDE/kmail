@@ -1144,7 +1144,7 @@ void KMMainWin::folderSelectedUnread(KMFolder* aFolder)
     while (item && item->itemAbove())
 	item = item->itemAbove();
     mHeaders->setCurrentItem( item );
-    mHeaders->nextUnreadMessage();
+    mHeaders->nextUnreadMessage(true);
     mHeaders->blockSignals( false );
     mHeaders->highlightMessage( mHeaders->currentItem() );
 }

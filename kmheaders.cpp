@@ -1920,9 +1920,9 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::nextUnreadMessage()
+void KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
-    int i = findUnread(TRUE);
+    int i = findUnread(TRUE, -1, false, acceptCurrent);
     setCurrentMsg(i);
     ensureCurrentItemVisible();
 }
