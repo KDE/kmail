@@ -311,6 +311,9 @@ protected slots:
   virtual void copySelectedToFolder( int menuId );
   /** Update html and threaded messages preferences in Folder menu. */
   virtual void updateFolderMenu();
+  /** Enable or disable the "mark all as read" action. Needs to happen more
+   * often the the other updates and is therefor in its own method. */
+  void updateMarkAsReadAction();
 
 
   /** XML-GUI stuff */

@@ -1545,7 +1545,14 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
       imap->expungeFolder(imap, TRUE);
   }
   writeFolderConfig();
+  if ( mFolder ) {
+     disconnect( mFolder, SIGNAL( changed() ),
+           this, SLOT( updateMarkAsReadAction() ) );
+  }
   mFolder = (KMFolder*)aFolder;
+  connect( mFolder, SIGNAL( changed() ),
+           this, SLOT( updateMarkAsReadAction() ) );
+
   readFolderConfig();
   if (mMsgView)
     mMsgView->setHtmlOverride(mFolderHtmlPref);
@@ -2871,6 +2878,12 @@ void KMMainWidget::statusMsg(const QString& message)
 }
 
 
+// This needs to be updated more often, so it is in its method.
+void KMMainWidget::updateMarkAsReadAction()
+{
+  mMarkAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
@@ -2886,7 +2899,7 @@ void KMMainWidget::updateFolderMenu()
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
-  mMarkAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
+  updateMarkAsReadAction();
   mPreferHtmlAction->setEnabled( mFolder ? true : false );
   mThreadMessagesAction->setEnabled( mFolder ? true : false );
 
