@@ -1,6 +1,7 @@
 [!Global!]
 IconName=kmail
 Comment=KMail
+Comment[be]=K Пошта
 Comment[sv]=Kmail
 
 [new-mail-arrived]
