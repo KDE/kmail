@@ -170,6 +170,7 @@ int KMFolderIndex::writeIndex()
   mHeaderOffset = nho;
 
   mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+  assert( mIndexStream );
   updateIndexStreamPtr();
 
   writeMsgDict();
