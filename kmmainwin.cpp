@@ -337,8 +337,10 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
 	  this, SLOT(slotMsgActivated(KMMessage*)));
+#ifdef thisIsReallySlow
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( updateMessageMenu() ) );
+#endif
   accel->connectItem(accel->insertItem(Key_Left),
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right),
@@ -393,28 +395,28 @@ void KMMainWin::createWidgets(void)
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
-  KAction *nextUnreadFolderAction = new KAction( 
-    i18n("Next folder with unread messages"), CTRL+Key_Plus, mFolderTree,  
+  KAction *nextUnreadFolderAction = new KAction(
+    i18n("Next folder with unread messages"), CTRL+Key_Plus, mFolderTree,
     SLOT(nextUnreadFolder()), actionCollection(), "next_unread_folder");
   nextUnreadFolderAction->plugAccel( this->accel() );
 
-  KAction *prevUnreadFolderAction = new KAction( 
-   i18n("Previous folder with unread messages"), CTRL+Key_Minus, mFolderTree,  
+  KAction *prevUnreadFolderAction = new KAction(
+   i18n("Previous folder with unread messages"), CTRL+Key_Minus, mFolderTree,
    SLOT(prevUnreadFolder()), actionCollection(), "prev_unread_folder");
   prevUnreadFolderAction->plugAccel( this->accel() );
 
-  KAction *nextFolderAction = new KAction( 
-   i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,  
+  KAction *nextFolderAction = new KAction(
+   i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
   nextFolderAction->plugAccel( this->accel() );
 
-  KAction *prevFolderAction = new KAction( 
-   i18n("Focus on previous folder"), CTRL+Key_Left, mFolderTree,  
+  KAction *prevFolderAction = new KAction(
+   i18n("Focus on previous folder"), CTRL+Key_Left, mFolderTree,
    SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
   prevFolderAction->plugAccel( this->accel() );
-  
-  KAction *selectCurrentFolderAction = new KAction( 
-   i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,  
+
+  KAction *selectCurrentFolderAction = new KAction(
+   i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
   selectCurrentFolderAction->plugAccel( this->accel() );
 
@@ -1118,7 +1120,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   readFolderConfig();
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mHeaders->setFolder( mFolder, jumpToUnread );
-  updateMessageMenu();   
+  updateMessageMenu();
   kernel->kbp()->idle();
 }
 
@@ -1970,9 +1972,13 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 //-----------------------------------------------------------------------------
 void KMMainWin::updateMessageMenu()
 {
+   mMenuToFolder.clear();
+   folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
+   folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+
+#ifdef thisIsReallySlow
+    
   mMenuToFolder.clear();
-    folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
-    folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
 
     int count = 0;
 
@@ -2031,6 +2037,7 @@ void KMMainWin::updateMessageMenu()
     action( "next_unread" )->setEnabled( mails );
     action( "previous" )->setEnabled( mails );
     action( "previous_unread" )->setEnabled( mails );
+#endif
 }
 
 
