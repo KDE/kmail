@@ -204,7 +204,7 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
       KMMessage *msg = f->getMsg( i );
       Q_ASSERT( msg );
       if( msg->isComplete() ) {
-        if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+        if( vPartFoundAndDecoded( msg, s ) ) {
           QString uid( "UID" );
           vPartMicroParser( s, uid );
           const Q_UINT32 sernum = msg->getMsgSerNum();
@@ -241,7 +241,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   Accumulator *ac = mAccumulators.find( parent->location() );
   if( ac ) {
     QString s;
-    if ( !KMGroupware::vPartFoundAndDecoded( msg, s ) ) return;
+    if ( !vPartFoundAndDecoded( msg, s ) ) return;
     QString uid( "UID" );
     vPartMicroParser( s, uid );
     const Q_UINT32 sernum = msg->getMsgSerNum();
@@ -387,7 +387,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     KMMessage *msg = folder->getMsg( i );
     if( !msg ) return;
     if( msg->isComplete() ) {
-      if ( !KMGroupware::vPartFoundAndDecoded( msg, s ) ) return;
+      if ( !vPartFoundAndDecoded( msg, s ) ) return;
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                     << ", " << folder->location() << ", " << s << " )" << endl;
       QString uid( "UID" );
@@ -440,7 +440,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
     QString s;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
+    if( vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
       QString uid( "UID" );
       vPartMicroParser( s, uid );
       kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
