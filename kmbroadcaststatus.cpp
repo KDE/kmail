@@ -363,15 +363,19 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
     QMouseEvent *e = (QMouseEvent*)ev;
 
     if ( e->button() == LeftButton ) {    // toggle view on left mouse button
+/*
       if ( mode == Label ) {
         mode = Progress;
       } else if ( mode == Progress ) {
         mode = Label;
       }
       setMode();
+*/
+      // Consensus seems to be that we should show the fancy dialog when the user
+      // clicks anywhere in the small one.
+      kmkernel->slotShowProgressDialog();
       return true;
     }
   }
-
   return false;
 }
