@@ -34,6 +34,8 @@
 #include <mimelib/mimepp.h>
 #include <html.h>
 #include <kfiledialog.h>
+#include <kwm.h>
+#include <qtabdlg.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
@@ -120,6 +122,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mPathAttach = 0;
   mEditor = NULL;
 
+  mSpellCheckInProgress=FALSE;
+
   setCaption(i18n("KMail Composer"));
   setMinimumSize(200,200);
 
@@ -172,10 +176,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mMsg = NULL;
   if (aMsg) setMsg(aMsg);
 
-#ifdef HAS_KSPELL
-  mKSpellConfig = new KSpellConfig;
-  mKSpell = NULL;
-#endif
 
   if (mEdtTo.isVisible())
     mEdtTo.setFocus();
@@ -190,10 +190,6 @@ KMComposeWin::~KMComposeWin()
   writeConfig();
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;
-#ifdef HAS_KSPELL
-  if (mKSpellConfig) delete KSpellConfig;
-  if (mKSpell) delete mKSpell;
-#endif
   delete mMenuBar;
   delete mToolBar;
 }
@@ -476,6 +472,9 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotFind()), keys->find());
   menu->insertItem(i18n("Replace..."), this,
 		   SLOT(slotReplace()), keys->replace());
+  menu->insertSeparator();
+  menu->insertItem(i18n("&Spellcheck..."), this,
+		   SLOT(slotSpellcheck()));
 
   //---------- Menu: Options
   menu = new QPopupMenu();
@@ -487,6 +486,9 @@ void KMComposeWin::setupMenuBar(void)
 				     SLOT(slotToggleConfirmDelivery()));
   mMnuIdConfRead = menu->insertItem(i18n("&Confirm read"), this,
 				    SLOT(slotToggleConfirmRead()));
+  menu->insertSeparator();
+  menu->insertItem(i18n("&Spellchecker..."), this,
+		   SLOT (slotSpellcheckConfig()));
 #if defined CHARSETS				    
   mMnuIdConfRead = menu->insertItem(i18n("&Charsets..."), this,
 				    SLOT(slotConfigureCharsets()));
@@ -586,11 +588,9 @@ void KMComposeWin::setupToolBar(void)
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAddrBook()),TRUE,
 			 i18n("Open addressbook..."));
-#ifdef HAS_KSPELL
   mToolBar->insertButton(loader->loadIcon("spellcheck.xpm"),7,
 			SIGNAL(clicked()),this,
 			SLOT(slotSpellcheck()),TRUE,"Spellcheck message");
-#endif
   mToolBar->insertSeparator();
   mBtnIdSign = 9;
   mToolBar->insertButton(loader->loadIcon("feather_white.xpm"), mBtnIdSign,
@@ -1572,126 +1572,27 @@ void KMComposeWin::slotHelp()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheck()
 {
-#ifdef HAS_KSPELL
-  if (mKSpell) return;
+  if (mSpellCheckInProgress) return;
 
-  mKSpell = new KSpell(this, i18n("KMail: Spellcheck"), this,
-		       SLOT(slotSpellcheck2(KSpell*)));
-#endif //HAS_KSPELL
+  mSpellCheckInProgress=TRUE;
+  /*
+    connect (mEditor, SIGNAL (spellcheck_progress (unsigned)),
+    this, SLOT (spell_progress (unsigned)));
+    */
+
+  if(mEditor){
+    connect (mEditor, SIGNAL (spellcheck_done()),
+	     this, SLOT (slotSpellcheckDone ()));
+    mEditor->spellcheck();
+  }                                 
 }
-
-
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellcheck2(KSpell*)
+void KMComposeWin::slotSpellcheckDone()
 {
-#ifdef HAS_KSPELL
-  if (mKSpell->isOk())
-  {
-    setReadOnly (TRUE);
-    
-    connect (mKSpell, SIGNAL (mispelling (char *, QStrList *, long)),
-	     this, SLOT (mispelling (char *, QStrList *, long)));
-    connect (mKSpell, SIGNAL (corrected (char *, char *, long)),
-	     this, SLOT (corrected (char *, char *, long)));
-    connect (mKSpell, SIGNAL (done(char *)), 
-	     this, SLOT (spellResult (char *)));
-    mKSpell->check (text().data());
-  }
-  else
-  {
-    warning(i18n("Error starting KSpell. Please make sure you have ISpell properly configured."));
-  }
-#endif //HAS_KSPELL
+  mSpellCheckInProgress=FALSE;
+  mStatusBar->changeItem("Spellcheck complete.",0);
+
 }
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellResult(char *aNewText)
-{
-  // prevent warning
-  (void)aNewText;
-
-#ifdef HAS_KSPELL
-  mEditor->setText(aNewText);
-  mEditor->setReadOnly(FALSE);
-  delete mKSpell;
-  mKSpell = NULL; 
-#endif //HAS_KSPELL
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellCorrected(char *originalword, 
-				      char *newword, long pos)
-{
-  // prevent warning
-  (void)originalword;
-  (void)newword;
-  (void)pos;
-
-#ifdef HAS_KSPELL
-  //we'll reselect the original word in case the user has played with
-  //the selection in eframe or the word was auto-replaced
-
-  int line, cnt=0, l;
-
-  if(strcmp(newword,originalword)!=0)
-  {
-    for (line=0;line<numLines() && cnt<=pos;line++)
-      cnt+=lineLength(line)+1;
-    line--;
-
-    cnt=pos-cnt+ lineLength(line)+1;
-
-    //remove old word
-    setCursorPosition (line, cnt);
-    for(l = 0 ; l < (int)strlen(originalword); l++)
-      cursorRight(TRUE);
-    ///      setCursorPosition (line,
-    //       cnt+strlen(originalword),TRUE);
-    cut();
-
-    insertAt (newword, line, cnt);
-  }
-
-  deselect();
-#endif //HAS_KSPELL
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellMispelling(char *word, QStrList *, long pos)
-{
-  // prevent warning
-  (void)word;
-  (void)pos;
-
-#ifdef HAS_KSPELL
-  int l, cnt=0;
-
-  for (l=0;l<numLines() && cnt<=pos;l++)
-    cnt+=strlen (textLine(l))+1;
-  l--;
-
-  cnt=pos-cnt+strlen (textLine (l))+1;
-
-  setCursorPosition (l, cnt);
-
-  //According to the Qt docs this could be done more quickly with
-  //setCursorPosition (l, cnt+strlen(word), TRUE);
-  //but that doesn't seem to work.
-  for(l = 0 ; l < (int)strlen(word); l++)
-    cursorRight(TRUE);
-  
-  if (cursorPoint().y()>height()/2)
-    mKSpell->moveDlg(10, height()/2 - mKSpell->heightDlg()-15);
-  else
-    mKSpell->moveDlg(10, height()/2 + 15);
-
-  //  setCursorPosition (line, cnt+strlen(word),TRUE);
-#endif //HAS_KSPELL
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotConfigureCharsets()
@@ -2030,7 +1931,22 @@ void KMLineEdit::slotCompletion()
   cursorAtEnd();
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotSpellcheckConfig()
+{
 
+  KWM kwm;
+  QTabDialog qtd (this, "tabdialog", true);        
+  KSpellConfig mKSpellConfig (&qtd);
+
+  qtd.addTab (&mKSpellConfig, "Spellchecker");
+  qtd.setCancelButton ();
+
+  kwm.setMiniIcon (qtd.winId(), kapp->getMiniIcon());
+
+  if (qtd.exec())
+    mKSpellConfig.writeGlobalSettings();
+}
 
 //=============================================================================
 //
@@ -2044,13 +1960,19 @@ KMEdit::KMEdit(KApplication *a,QWidget *parent, KMComposeWin* composer,
   initMetaObject();
   mComposer = composer;
   installEventFilter(this);
+
+  mKSpell = NULL;
 }
 
 
 //-----------------------------------------------------------------------------
 KMEdit::~KMEdit()
 {
+
   removeEventFilter(this);
+
+  if (mKSpell) delete mKSpell;
+
 }
 
 
@@ -2071,3 +1993,113 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
   }
   return FALSE;
 }
+//-----------------------------------------------------------------------------
+void KMEdit::spellcheck()
+{
+  mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
+		       SLOT(slotSpellcheck2(KSpell*)));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotSpellcheck2(KSpell*)
+{
+
+  if (mKSpell->isOk())
+  {
+    setReadOnly (TRUE);
+    
+    connect (mKSpell, SIGNAL (misspelling (char *, QStrList *, unsigned)),
+	     this, SLOT (slotSpellMisspelling (char *, QStrList *, unsigned)));
+    connect (mKSpell, SIGNAL (corrected (char *, char *, unsigned)),
+	     this, SLOT (slotSpellCorrected (char *, char *, unsigned)));
+    connect (mKSpell, SIGNAL (done(char *)), 
+	     this, SLOT (slotSpellResult (char *)));
+
+    //we're going to want to ignore quoted-message lines...
+
+    mKSpell->check (text().data());
+  }
+  else
+  {
+    warning(i18n("Error starting KSpell. Please make sure you have ISpell properly configured."));
+  }
+
+}
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotSpellResult(char *aNewText)
+{
+  deselect();
+
+  setText(aNewText);
+  setReadOnly(FALSE);
+  setModified();
+  delete mKSpell;
+  mKSpell = NULL;  //Shouldn't this be zero, not NULL?
+  emit spellcheck_done();
+
+}
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotSpellCorrected(char *originalword, 
+				      char *newword, unsigned pos)
+{
+  //we'll reselect the original word in case the user has played with
+  //the selection in eframe or the word was auto-replaced
+
+  unsigned line, cnt=0, l;
+  if( (QString) newword != (QString) originalword)
+    {
+
+      for (line=0;line<(unsigned)numLines() && cnt<=pos;line++)
+        cnt+=lineLength(line)+1;
+      line--;
+
+      cnt=pos-cnt+lineLength(line)+1;
+
+      //remove old word
+      setCursorPosition (line, cnt);
+      for(l = 0 ; l < (unsigned) strlen(originalword); l++)
+        cursorRight(TRUE);
+      ///      setCursorPosition (line,
+      //         cnt+strlen(originalword),TRUE);
+      cut();
+
+      insertAt (newword, line, cnt);
+    }
+
+  deselect();               
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotSpellMisspelling(char *word, QStrList *, unsigned pos)
+{
+  unsigned l, cnt=0;
+
+  for (l=0;l<(unsigned)numLines() && cnt<=pos;l++)
+    cnt+=strlen (textLine(l))+1;
+  l--;
+
+  cnt=pos-cnt+strlen (textLine (l))+1;
+
+  setCursorPosition (l, cnt);
+
+  //According to the Qt docs this could be done more simply with
+  //setCursorPosition (l, cnt+strlen(word), TRUE);
+  //but that doesn't seem to work.
+  for(l = 0 ; l < (unsigned) strlen(word); l++)
+    cursorRight(TRUE);
+  
+  if (cursorPoint().y()>height()/2)
+    mKSpell->moveDlg(10, height()/2 - mKSpell->heightDlg()-15);
+  else
+    mKSpell->moveDlg(10, height()/2 + 15);
+
+  //  setCursorPosition (line, cnt+strlen(word),TRUE);
+}
+
+
+

@@ -21,6 +21,7 @@
 #include <config.h>
 #endif
 
+
 #if HAVE_FCNTL_H && !HAVE_FLOCK
 #include <fcntl.h>
 #endif
