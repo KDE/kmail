@@ -1316,7 +1316,13 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     {
       msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);
-      addAttach(msgPart);
+      QCString mimeType = msgPart->typeStr().lower() + '/'
+                        + msgPart->subtypeStr().lower();
+      // don't add the detached signature as attachment when editting a
+      // PGP/MIME signed message
+      if( mimeType != "application/pgp-signature" ) {
+        addAttach(msgPart);
+      }
     }
   } else{
     mCharset=mMsg->charset();
