@@ -3,9 +3,9 @@
 // This code is under GPL
 
 #include <config.h>
-#include <pwd.h>
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
+#include "kmmessage.h"
 #include <kdebug.h>
 
 #include <qregexp.h>
@@ -77,7 +77,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
 QStringList KabcBridge::addresses()
 {
     QStringList entries;
-    KABC::AddressBook::Iterator it;
+    KABC::AddressBook::ConstIterator it;
 
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
     for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
@@ -87,85 +87,43 @@ QStringList KabcBridge::addresses()
 }
 
 //-----------------------------------------------------------------------------
-QString KabcBridge::expandDistributionLists(const QString& recipients)
+QString KabcBridge::expandNickName( const QString& nickName )
 {
-  if (recipients.isEmpty())
-    return "";
+  if ( nickName.isEmpty() )
+    return QString();
+
+  QString lowerNickName = nickName.lower();
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  for( KABC::AddressBook::ConstIterator it = addressBook->begin();
+       it != addressBook->end(); ++it ) {
+    if ( (*it).nickName().lower() == lowerNickName )
+      return (*it).fullEmail();
+  }
+  return QString();
+}
+
+//-----------------------------------------------------------------------------
+QString KabcBridge::expandDistributionList( const QString& listName )
+{
+  if ( listName.isEmpty() )
+    return QString();
+
+  QString lowerListName = listName.lower();
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::DistributionListManager manager( addressBook );
   manager.load();
-  QStringList recpList, names = manager.listNames();
-  QStringList::Iterator it, jt;
-  QString receiver, expRecipients;
-  unsigned int begin = 0, count = 0, quoteDepth = 0;
-  for (; begin + count < recipients.length(); ++count) {
-    if (recipients[begin + count] == '"')
-      ++quoteDepth;
-    if ((recipients[begin + count] == ',') && (quoteDepth % 2 == 0)) {
-      recpList.append( recipients.mid( begin, count ) );
-      begin += count + 1;
-      count = 0;
+  QStringList listNames = manager.listNames();
+
+  for ( QStringList::Iterator it = listNames.begin();
+        it != listNames.end(); ++it) {
+    if ( (*it).lower() == lowerListName ) {
+      QStringList addressList = manager.list( lowerListName )->emails();
+      return addressList.join( ", " );
     }
   }
-  recpList.append( recipients.mid( begin ));
-
-  for ( it = recpList.begin(); it != recpList.end(); ++it ) {
-    if (!expRecipients.isEmpty())
-      expRecipients += ", ";
-    receiver = (*it).stripWhiteSpace();
-    for ( jt = names.begin(); jt != names.end(); ++jt) {
-      if (receiver.lower() == (*jt).lower()) {
-	QStringList el = manager.list( receiver )->emails();
-	for ( QStringList::Iterator kt = el.begin(); kt != el.end(); ++kt ) {
-	  if (!expRecipients.isEmpty())
-	    expRecipients += ", ";
-	  expRecipients += *kt;
-	}
-	break;
-      }
-    }
-    if ( jt == names.end() )
-    {
-      if (receiver.find('@') == -1)
-      {
-        KConfigGroup general( KMKernel::config(), "General" );
-        QString defaultdomain = general.readEntry( "Default domain" );
-        if( !defaultdomain.isEmpty() )
-        {
-          receiver += "@" + defaultdomain;
-        }
-        else
-        {
-          char hostname[100];
-          gethostname(hostname, 100);
-          QString username = receiver;
-          receiver += "@";
-          receiver += QCString(hostname, 100);
-
-          passwd *pw = getpwnam(username.local8Bit());
-          if (pw)
-          {
-            QString fn = QString::fromLocal8Bit(pw->pw_gecos);
-            int first_comma = fn.find(',');
-            if (first_comma > 0) {
-              fn = fn.left(first_comma);
-            }
-            if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
-              receiver = "\"" + fn + "\" <" + receiver + ">";
-            else
-              receiver = fn + " <" + receiver + ">";
-          }
-        }
-        expRecipients += receiver;
-      }
-      else
-      {
-        expRecipients += receiver;
-      }
-    }
-  }
-  return expRecipients;
+  return QString();
 }
+
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
   if (useKAddressbook()) {

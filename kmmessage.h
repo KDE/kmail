@@ -689,6 +689,17 @@ public:
   static bool addressIsInAddressList( const QString& address,
                                       const QStringList& addresses );
 
+  /** Expands aliases (distribution lists and nick names) and appends a
+      domain part to all email addresses which are missing the domain part.
+  */
+  static QString expandAliases( const QString& recipients );
+
+  /** Uses the hostname as domain part and tries to determine the real name
+      from the entries in the password file.
+  */
+  static QString guessEmailAddressFromLoginName( const QString& userName );
+
+
   /** Get the default message charset.*/
   static QCString defaultCharset(void);
 

@@ -15,7 +15,8 @@ class KabcBridge {
 public:
   static QStringList addresses();
   static void addresses(QStringList& result);
-  static QString expandDistributionLists(const QString& recipients);
+  static QString expandNickName( const QString& nickName );
+  static QString expandDistributionList( const QString& listName );
 };
 
 class KMAddrBookExternal {

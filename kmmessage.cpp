@@ -16,6 +16,7 @@ using KMail::ObjectTreeParser;
 #include "kmkernel.h"
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
+#include "kmaddrbook.h"
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
@@ -46,6 +47,7 @@ using namespace KMime::Types;
 #include <time.h>
 #include <klocale.h>
 #include <stdlib.h>
+#include <pwd.h>
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
@@ -3507,6 +3509,84 @@ bool KMMessage::addressIsInAddressList( const QString& address,
   return false;
 }
 
+
+//-----------------------------------------------------------------------------
+//static
+QString KMMessage::expandAliases( const QString& recipients )
+{
+  if ( recipients.isEmpty() )
+    return QString();
+
+  QStringList recipientList = KMMessage::splitEmailAddrList( recipients );
+
+  QString expandedRecipients;
+  for ( QStringList::Iterator it = recipientList.begin();
+        it != recipientList.end(); ++it ) {
+    if ( !expandedRecipients.isEmpty() )
+      expandedRecipients += ", ";
+    QString receiver = (*it).stripWhiteSpace();
+    
+    // try to expand distribution list
+    QString expandedList = KabcBridge::expandDistributionList( receiver );
+    if ( !expandedList.isEmpty() ) {
+      expandedRecipients += expandedList;
+      continue;
+    }
+
+    // try to expand nick name
+    QString expandedNickName = KabcBridge::expandNickName( receiver );
+    if ( !expandedNickName.isEmpty() ) {
+      expandedRecipients += expandedNickName;
+      continue;
+    }
+    
+    // check whether the address is missing the domain part
+    // FIXME: looking for '@' might be wrong
+    if ( receiver.find('@') == -1 ) {
+      KConfigGroup general( KMKernel::config(), "General" );
+      QString defaultdomain = general.readEntry( "Default domain" );
+      if( !defaultdomain.isEmpty() ) {
+        expandedRecipients += receiver + "@" + defaultdomain;
+      }
+      else {
+        expandedRecipients += guessEmailAddressFromLoginName( receiver );
+      }
+    }
+  }
+
+  return expandedRecipients;
+}
+
+
+//-----------------------------------------------------------------------------
+//static
+QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
+{
+  if ( loginName.isEmpty() )
+    return QString();
+
+  char hostname[100];
+  gethostname( hostname, 100 );
+  QString address = loginName;
+  address += "@";
+  address += QCString( hostname, 100 );
+
+  // try to determine the real name
+  passwd *pw = getpwnam( loginName.local8Bit() );
+  if ( pw ) {
+    QString fullName = QString::fromLocal8Bit( pw->pw_gecos );
+    int first_comma = fullName.find( ',' );
+    if ( first_comma > 0 ) {
+      fullName = fullName.left( first_comma );
+    }
+    if ( fullName.find( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) != -1 )
+      address = "\"" + fullName + "\" <" + address + ">";
+    else
+      address = fullName + " <" + address + ">";
+  }
+
+  return address;
+}
 
 //-----------------------------------------------------------------------------
 void KMMessage::setTransferInProgress( bool value, bool force )

@@ -4848,24 +4848,24 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     }
 
   } else {
-    mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
-    mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
+    mMsg->setTo( KMMessage::expandAliases( to() ));
+    mMsg->setCc( KMMessage::expandAliases( cc() ));
     if( !mBcc.isEmpty() )
-      mMsg->setBcc( KabcBridge::expandDistributionLists( mBcc ));
+      mMsg->setBcc( KMMessage::expandAliases( mBcc ));
     QString recips = mMsg->headerField( "X-KMail-Recipients" );
     if( !recips.isEmpty() ) {
-      mMsg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
+      mMsg->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
     }
     mMsg->cleanupHeader();
     sentOk = kernel->msgSender()->send(mMsg, aSendNow);
     KMMessage* msg;
     for( msg = bccMsgList.first(); msg; msg = bccMsgList.next() ) {
-      msg->setTo( KabcBridge::expandDistributionLists( to() ));
-      msg->setCc( KabcBridge::expandDistributionLists( cc() ));
-      msg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
+      msg->setTo( KMMessage::expandAliases( to() ));
+      msg->setCc( KMMessage::expandAliases( cc() ));
+      msg->setBcc( KMMessage::expandAliases( bcc() ));
       QString recips = msg->headerField( "X-KMail-Recipients" );
       if( !recips.isEmpty() ) {
-        msg->setHeaderField( "X-KMail-Recipients", KabcBridge::expandDistributionLists( recips ) );
+        msg->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
       }
       msg->cleanupHeader();
       sentOk &= kernel->msgSender()->send(msg, aSendNow);
