@@ -1318,7 +1318,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Optional total/unread columns in the folder view"),
   I18N_NOOP("Custom folder icons"),
   I18N_NOOP("Custom date format"),
-  I18N_NOOP("Reorganized menu bar looks more like in other KDE applications"),
+  I18N_NOOP("Reorganized menu bar looks more like other KDE applications"),
   I18N_NOOP("Default identity can now be renamed"),
 };
 static const int numKMailNewFeatures =
