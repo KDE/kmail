@@ -126,7 +126,7 @@ void SubscriptionDialog::createItems()
         mCheckForExisting = true;
         QStringList folders = QStringList::split(mDelimiter, parentPath);
         uint i = 0;
-        for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it ) 
+        for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it )
         {
           QString name = *it;
           if (name.startsWith("/"))
@@ -134,7 +134,7 @@ void SubscriptionDialog::createItems()
           if (name.endsWith("/"))
             name.truncate(name.length()-1);
           KGroupInfo info(name);
-          if (("/"+name+"/") == ai->prefix()) 
+          if (("/"+name+"/") == ai->prefix())
           {
             ++i;
             continue;
@@ -171,7 +171,7 @@ void SubscriptionDialog::createItems()
           ++i;
         } // folders
       } // parent
-    
+
       KGroupInfo info(mFolderNames[i]);
       if (mFolderNames[i].upper() == "INBOX" &&
           mFolderPaths[i] == "/INBOX/")
@@ -188,7 +188,7 @@ void SubscriptionDialog::createItems()
 
       if (oldItem) // remove old item
         mItemDict.remove(info.path);
-      
+
       mItemDict.insert(info.path, item);
       if (oldItem)
       {
@@ -230,7 +230,7 @@ void SubscriptionDialog::createItems()
       }
     }
   }
-  if ( mJobData.inboxOnly ) 
+  if ( mJobData.inboxOnly )
   {
     // list again (secondStep=true) with prefix
     ImapAccountBase::ListType type = ImapAccountBase::List;
@@ -243,7 +243,7 @@ void SubscriptionDialog::createItems()
         this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
             const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
     job->start();
-  } else if (!onlySubscribed) 
+  } else if (!onlySubscribed)
   {
     // get subscribed folders
     // only do a complete listing (*) when the user did not enter a prefix
@@ -281,9 +281,9 @@ void SubscriptionDialog::findParentItem( QString &name, QString &path, QString &
 
   // find the parent by it's path
   *parent = mItemDict[parentPath];
-  
+
   // check if the item already exists
-  if (mCheckForExisting) 
+  if (mCheckForExisting)
     *oldItem = mItemDict[path];
 }
 
@@ -331,17 +331,6 @@ void SubscriptionDialog::slotLoadFolders()
       this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
   job->start();
-}
-
-//------------------------------------------------------------------------------
-void SubscriptionDialog::slotCancel()
-{
-  if ( account() )
-  {
-    ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
-    ai->killAllJobs();
-  }
-  KSubscription::slotCancel();
 }
 
 } // namespace

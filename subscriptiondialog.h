@@ -56,34 +56,29 @@ namespace KMail {
     public slots:
       /**
        * get the listing from the imap-server
-       */ 
+       */
       void slotListDirectory(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData &);
 
-      /** 
+      /**
        * called by Ok-button, saves the changes
-       */ 
+       */
       void slotSave();
 
     protected slots:
       /**
        * Loads the folders
-       */ 
+       */
       void slotLoadFolders();
 
       /**
-       * Reimplemented to cancel remaining jobs
-       */ 
-      virtual void slotCancel();    
-
-      /**
        * Create or update the listitems
-       */ 
+       */
       void createItems();
 
     private:
       QString mDelimiter;
-      QStringList mFolderNames, mFolderPaths, 
+      QStringList mFolderNames, mFolderPaths,
                   mFolderMimeTypes, mFolderAttributes;
       ImapAccountBase::jobData mJobData;
       uint mCount;
