@@ -379,6 +379,28 @@ public:
     return mKey;
   }
 
+  // Sorting by date doesn't really need to be locale aware
+  virtual int compare( QListViewItem * i, int col, bool ascending ) const
+  {
+    KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    if (col == headers->paintInfo()->dateCol)
+    {
+      KMHeaderItem *hi = static_cast<KMHeaderItem*>(i);
+      if (headers->paintInfo()->orderOfArrival)
+      {
+        int a = kernel->msgDict()->getMsgSerNum(headers->folder(), mMsgId);
+        int b = kernel->msgDict()->getMsgSerNum(headers->folder(), hi->mMsgId);
+        if (a < b) return -1;
+        if (a == b) return 0;
+        return 1;
+      } else {
+        return key( col, ascending ).compare( i->key(col, ascending) );
+      }
+    } else {
+      return KListViewItem::compare(i, col, ascending);
+    }
+  }
+
   QListViewItem* firstChildNonConst() /* Non const! */ {
     enforceSortOrder(); // Try not to rely on QListView implementation details
     return firstChild();
