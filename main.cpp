@@ -1,12 +1,15 @@
 // KMail startup and initialize code
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 #include <signal.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
-
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #endif
@@ -193,21 +196,21 @@ int main(int argc, char *argv[])
 		   0,
 		   "http://kmail.kde.org");
   about.addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "don@sanders.org" );
-  about.addAuthor( "Waldo Bastian", QString::null, "bastian@kde.org" );
-  about.addAuthor( "Andreas Gungl", QString::null, "a.gungl@gmx.de" );
-  about.addAuthor( "Michael Haeckel", QString::null, "michael@haeckel.net" );
-  about.addAuthor( "Lars Knoll", QString::null, "knoll@kde.org" );
-  about.addAuthor( "J. Nick Koston", QString::null, "bdraco@darkorb.net" );
-  about.addAuthor( "Stephan Kulow", QString::null, "coolo@kde.org" );
-  about.addAuthor( "Marc Mutz", QString::null, "mutz@kde.org" );
-  about.addAuthor( "Daniel Naber", QString::null, "daniel.naber@t-online.de" );
-  about.addAuthor( "Sven Radej", QString::null, "radej@kde.org" );
-  about.addAuthor( "Espen Sand", QString::null, "espen@kde.org" );
-  about.addAuthor( "George Staikos", QString::null, "staikos@kde.org" );
-  about.addAuthor( "Stefan Taferner ", QString::null, "taferner@kde.org" );
-  about.addAuthor( "Mario Weilguni", QString::null, "mweilguni@sime.com" );
-  about.addAuthor( "Robert D. Williams", QString::null, "rwilliams@kde.org" );
-  about.addAuthor( "Markus Wuebben", QString::null, "markus.wuebben@kde.org" );
+  about.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
+  about.addAuthor( "Andreas Gungl", 0, "a.gungl@gmx.de" );
+  about.addAuthor( "Michael Haeckel", 0, "michael@haeckel.net" );
+  about.addAuthor( "Lars Knoll", 0, "knoll@kde.org" );
+  about.addAuthor( "J. Nick Koston", 0, "bdraco@darkorb.net" );
+  about.addAuthor( "Stephan Kulow", 0, "coolo@kde.org" );
+  about.addAuthor( "Marc Mutz", 0, "mutz@kde.org" );
+  about.addAuthor( "Daniel Naber", 0, "daniel.naber@t-online.de" );
+  about.addAuthor( "Sven Radej", 0, "radej@kde.org" );
+  about.addAuthor( "Espen Sand", 0, "espen@kde.org" );
+  about.addAuthor( "George Staikos", 0, "staikos@kde.org" );
+  about.addAuthor( "Stefan Taferner ", 0, "taferner@kde.org" );
+  about.addAuthor( "Mario Weilguni", 0, "mweilguni@sime.com" );
+  about.addAuthor( "Robert D. Williams", 0, "rwilliams@kde.org" );
+  about.addAuthor( "Markus Wuebben", 0, "markus.wuebben@kde.org" );
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options

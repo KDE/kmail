@@ -26,10 +26,10 @@
 // FIXME: do proper CRLF/CR handling
 // FIXME: handle TYPE=x,y,z qualifiers
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 #include "vcard.h"
-#include <stdlib.h>
-#include <ctype.h>
 #include <klocale.h>
 
 /*
@@ -166,7 +166,7 @@ QValueList<QString> lines;
     //        first token:
     //              verify state, update if necessary
     if (_state & VC_STATE_BEGIN) {
-      if (!strcasecmp(*j, VCARD_BEGIN)) {
+      if (!QString::compare((*j).lower(), VCARD_BEGIN)) {
         _state = VC_STATE_BODY;
         continue;
       } else {
@@ -174,7 +174,7 @@ QValueList<QString> lines;
         break;
       }
     } else if (_state & VC_STATE_BODY) {
-      if (!strcasecmp(*j, VCARD_END)) {
+      if (!QString::compare((*j).lower(), VCARD_END)) {
         _state |= VC_STATE_END;
         break;
       }
@@ -740,4 +740,5 @@ bool VCardLine::isValid() const {
 
 return false;
 }
+
 
