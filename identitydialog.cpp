@@ -439,18 +439,16 @@ namespace KMail {
 
 void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().stripWhiteSpace();
-    EmailParseResult errorCode = isValidEmailAddress( email );
-    if ( errorCode != AddressOk ) {
-      QString errorMsg( emailParseResultToString( errorCode ));
+    if ( !isValidSimpleEmailAddress( email )) {
+      QString errorMsg( simpleEmailAddressErrorMsg());
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
       return;
     }
 
     // check the reply-to address
     const QString replyTo = mReplyToEdit->text().stripWhiteSpace();
-    errorCode = isValidEmailAddress( replyTo );
-    if (! ( errorCode == AddressOk || errorCode == AddressEmpty )) {
-      QString errorMsg( emailParseResultToString( errorCode ));
+    if ( !( isValidSimpleEmailAddress( replyTo ) || replyTo.isEmpty() )) {
+      QString errorMsg( simpleEmailAddressErrorMsg());
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Reply-To Address") );
       return;
     }
