@@ -188,7 +188,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mLogin = config.readEntry("login", "");
   mUseSSL = config.readNumEntry("use-ssl", FALSE);
   mUseTLS = config.readNumEntry("use-tls", FALSE);
-  mAuth = config.readEntry("auth", "AUTO");
+  mAuth = config.readEntry("auth", "USER");
   mUsePipelining = config.readNumEntry("pipelining", TRUE);
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
@@ -573,7 +573,7 @@ void KMAcctExpPop::startJob() {
     mSlaveConfig.insert("auth", "SASL");
     mSlaveConfig.insert("sasl", mAuth);
   }
-  else if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
+  else mSlaveConfig.insert("auth", mAuth);
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
   if (!slave)
   {

@@ -90,7 +90,6 @@ class AccountDialog : public KDialogBase
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
       QButtonGroup *authGroup;
-      QRadioButton *authAuto;
       QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
@@ -126,7 +125,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
       QButtonGroup *authGroup;
-      QRadioButton *authAuto;
+      QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;

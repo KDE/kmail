@@ -563,8 +563,6 @@ void AccountDialog::makePopAccountPage()
 
   mPop.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page2 );
-  mPop.authAuto = new QRadioButton( i18n("Most secure method supported"),
-    mPop.authGroup );
   mPop.authUser = new QRadioButton( i18n("Clear text") , mPop.authGroup );
   mPop.authPlain = new QRadioButton( i18n("Please translate this "
     "authentification method only, if you have a good reason", "PLAIN"),
@@ -683,7 +681,7 @@ void AccountDialog::makeImapAccountPage()
 
   mImap.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page2 );
-  mImap.authAuto = new QRadioButton( i18n("Clear text"), mImap.authGroup );
+  mImap.authUser = new QRadioButton( i18n("Clear text"), mImap.authGroup );
   mImap.authPlain = new QRadioButton( i18n("Please translate this "
     "authentification method only, if you have a good reason", "PLAIN"),
      mImap.authGroup );
@@ -762,9 +760,7 @@ void AccountDialog::setupSettings()
     else if (ap.useTLS())
       mPop.encryptionTLS->setChecked( TRUE );
     else mPop.encryptionNone->setChecked( TRUE );
-    if (ap.auth() == "USER")
-      mPop.authUser->setChecked( TRUE );
-    else if (ap.auth() == "PLAIN")
+    if (ap.auth() == "PLAIN")
       mPop.authPlain->setChecked( TRUE );
     else if (ap.auth() == "LOGIN")
       mPop.authLogin->setChecked( TRUE );
@@ -772,7 +768,7 @@ void AccountDialog::setupSettings()
       mPop.authCRAM_MD5->setChecked( TRUE );
     else if (ap.auth() == "APOP")
       mPop.authAPOP->setChecked( TRUE );
-    else mPop.authAuto->setChecked( TRUE );
+    else mPop.authUser->setChecked( TRUE );
 
     slotEnablePopInterval( interval >= 1 );
     folderCombo = mPop.folderCombo;
@@ -804,7 +800,7 @@ void AccountDialog::setupSettings()
       mImap.authPlain->setChecked( TRUE );
     else if (ai.auth() == "LOGIN")
       mImap.authLogin->setChecked( TRUE );
-    else mImap.authAuto->setChecked( TRUE );
+    else mImap.authUser->setChecked( TRUE );
   }
   else if( accountType == "maildir" )
   {
