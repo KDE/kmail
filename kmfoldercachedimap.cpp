@@ -536,7 +536,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 {
   switch( state ) {
   case SYNC_STATE_INITIAL:           return "SYNC_STATE_INITIAL";
-  case SYNC_STATE_TEST_ANNOTATIONS:  return "SYNC_STATE_TEST_ANNOTATIONS";
+  case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
   case SYNC_STATE_PUT_MESSAGES:      return "SYNC_STATE_PUT_MESSAGES";
   case SYNC_STATE_UPLOAD_FLAGS:      return "SYNC_STATE_UPLOAD_FLAGS";
   case SYNC_STATE_CREATE_SUBFOLDERS: return "SYNC_STATE_CREATE_SUBFOLDERS";
@@ -548,15 +548,15 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_GET_MESSAGES:      return "SYNC_STATE_GET_MESSAGES";
   case SYNC_STATE_EXPUNGE_MESSAGES:  return "SYNC_STATE_EXPUNGE_MESSAGES";
   case SYNC_STATE_HANDLE_INBOX:      return "SYNC_STATE_HANDLE_INBOX";
-  case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
+  case SYNC_STATE_TEST_ANNOTATIONS:  return "SYNC_STATE_TEST_ANNOTATIONS";
   case SYNC_STATE_GET_ANNOTATIONS:   return "SYNC_STATE_GET_ANNOTATIONS";
   case SYNC_STATE_SET_ANNOTATIONS:   return "SYNC_STATE_SET_ANNOTATIONS";
   case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
   case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
   case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
   case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
-  case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
   case SYNC_STATE_RENAME_FOLDER:     return "SYNC_STATE_RENAME_FOLDER";
+  case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
   default:                           return "Unknown state";
   }
 }
@@ -579,6 +579,7 @@ QString KMFolderCachedImap::state2String( int state ) const
    delete_messages 10
    expunge_messages 5
    get_messages variable (remaining-5) i.e. minimum 15.
+   check_annotations 0 (rare)
    set_annotations 0 (rare)
    get_annotations 2
    set_acls 0 (rare)
@@ -643,7 +644,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_GET_USERRIGHTS:
     //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
 
-    mSyncState = SYNC_STATE_TEST_ANNOTATIONS;
+    mSyncState = SYNC_STATE_RENAME_FOLDER;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
@@ -653,34 +654,7 @@ void KMFolderCachedImap::serverSyncInternal()
       mAccount->getUserRights( folder(), imapPath() ); // after connecting, due to the INBOX case
       break;
     }
-
-  #define KOLAB_FOLDERTEST "/vendor/kolab/folder-test"
-  case SYNC_STATE_TEST_ANNOTATIONS:
-    mSyncState = SYNC_STATE_RENAME_FOLDER;
-    // The first folder with user rights to write annotations
-    if( !mAccount->annotationCheckPassed() &&
-         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )  
-      ){
-      newState( mProgress, i18n("Checking annotation support"));
-    
-      KURL url = mAccount->getUrl();
-      url.setPath( imapPath() );
-      KMail::AnnotationList annotations; // to be set
-      
-      KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
-      annotations.append( attr );
-      
-      kdDebug(5006) << "Setting test attribute to "<< url << endl;
-      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(), 
-          url, annotations );
-      ImapAccountBase::jobData jd( url.url(), folder() );
-      jd.cancellable = true; // we can always do so later
-      mAccount->insertJob(job, jd);
-       connect(job, SIGNAL(result(KIO::Job *)),
-              SLOT(slotTestAnnotationResult(KIO::Job *)));
-      break;
-    }
-    
+   
   case SYNC_STATE_RENAME_FOLDER:
   {
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
@@ -837,9 +811,36 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_HANDLE_INBOX:
     // Wrap up the 'download emails' stage. We always end up at 95 here.
     mProgress = 95;
+    mSyncState = SYNC_STATE_TEST_ANNOTATIONS;
 
+  #define KOLAB_FOLDERTEST "/vendor/kolab/folder-test"
+  case SYNC_STATE_TEST_ANNOTATIONS:
     mSyncState = SYNC_STATE_GET_ANNOTATIONS;
-
+    // The first folder with user rights to write annotations
+    if( !mAccount->annotationCheckPassed() &&
+         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )
+         && !imapPath().isEmpty() && imapPath() != "/" ) {
+      kdDebug(5006) << "Setting test attribute on folder: "<< folder()->prettyURL() << endl;
+      newState( mProgress, i18n("Checking annotation support"));
+    
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      KMail::AnnotationList annotations; // to be set
+      
+      KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
+      annotations.append( attr );
+      
+      kdDebug(5006) << "Setting test attribute to "<< url << endl;
+      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(), 
+          url, annotations );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      jd.cancellable = true; // we can always do so later
+      mAccount->insertJob(job, jd);
+       connect(job, SIGNAL(result(KIO::Job *)),
+              SLOT(slotTestAnnotationResult(KIO::Job *)));
+      break;
+    }
+ 
   case SYNC_STATE_GET_ANNOTATIONS:
 #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
 #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
