@@ -954,7 +954,7 @@ void KMAcctImap::deleteMessage(KMMessage * msg)
 //-----------------------------------------------------------------------------
 void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
 {
-  QCString flags;
+  QCString flags = "";
   switch (status)
   {
     case KMMsgStatusNew:
