@@ -128,6 +128,10 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
       fld->sendFolderComplete(FALSE);
       fld->removeJobs();
     }
+    if ( (*it).progressItem )
+    {
+      (*it).progressItem->setComplete();
+    }
   }
   if (mSlave && mapJobData.begin() != mapJobData.end())
   {
