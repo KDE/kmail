@@ -629,8 +629,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
                  this, SLOT(msgHeaderChanged(KMFolder*,int)));
       disconnect(mFolder, SIGNAL(msgAdded(int)),
                  this, SLOT(msgAdded(int)));
-      disconnect(mFolder, SIGNAL(msgRemoved(int,QString, QString)),
-                 this, SLOT(msgRemoved(int,QString, QString)));
+      disconnect(mFolder, SIGNAL( msgRemoved( int, QString ) ),
+                 this, SLOT( msgRemoved( int, QString ) ) );
       disconnect(mFolder, SIGNAL(changed()),
                  this, SLOT(msgChanged()));
       disconnect(mFolder, SIGNAL(cleared()),
@@ -659,8 +659,8 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
               this, SLOT(msgHeaderChanged(KMFolder*,int)));
       connect(mFolder, SIGNAL(msgAdded(int)),
               this, SLOT(msgAdded(int)));
-      connect(mFolder, SIGNAL(msgRemoved(int,QString, QString)),
-              this, SLOT(msgRemoved(int,QString, QString)));
+      connect(mFolder, SIGNAL(msgRemoved(int,QString)),
+              this, SLOT(msgRemoved(int,QString)));
       connect(mFolder, SIGNAL(changed()),
               this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(cleared()),
@@ -865,6 +865,7 @@ void KMHeaders::msgAdded(int id)
           p++;
         }
         mSubjectLists[subjMD5]->insert( p, sci);
+        sci->setSubjectThreadingList( mSubjectLists[subjMD5] );
       }
     }
     // The message we just added might be a better parent for one of the as of
@@ -969,13 +970,12 @@ void KMHeaders::msgAdded(int id)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
+void KMHeaders::msgRemoved(int id, QString msgId )
 {
   if (!isUpdatesEnabled()) return;
 
   if ((id < 0) || (id >= (int)mItems.size()))
     return;
-  //printSubjectThreadingTree();
   /*
    * qlistview has its own ideas about what to select as the next
    * item once this one is removed. Sine we have already selected
@@ -1003,9 +1003,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     }
     // Remove the message from the list of potential parents for threading by
     // subject.
-    if (!strippedSubjMD5.isEmpty() &&
-        mSubjThreading && mSubjectLists[strippedSubjMD5])
-        mSubjectLists[strippedSubjMD5]->remove(removedItem->sortCacheItem());
+    if ( mSubjThreading && removedItem->sortCacheItem()->subjectThreadingList() )
+      removedItem->sortCacheItem()->subjectThreadingList()->removeRef( removedItem->sortCacheItem() );
 
     // Reparent children of item.
     QListViewItem *myParent = removedItem;
@@ -2742,6 +2741,7 @@ void KMHeaders::buildSubjectThreadingTree( QMemArray<SortCacheItem *> sortCache 
             p++;
         }
         mSubjectLists[subjMD5]->insert( p, sortCache[x]);
+        sortCache[x]->setSubjectThreadingList( mSubjectLists[subjMD5] );
     }
 }
 

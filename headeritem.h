@@ -55,11 +55,11 @@ class SortCacheItem {
 public:
     SortCacheItem() : mItem(0), mParent(0), mId(-1), mSortOffset(-1),
         mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0),
-        mImperfectlyThreaded (true) { }
+        mImperfectlyThreaded (true), mSubjThreadingList(0) { }
     SortCacheItem(int i, QString k, int o=-1)
         : mItem(0), mParent(0), mId(i), mSortOffset(o), mKey(k),
           mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0),
-          mImperfectlyThreaded (true) { }
+          mImperfectlyThreaded (true), mSubjThreadingList(0) { }
     ~SortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
     SortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
@@ -123,6 +123,10 @@ public:
     void updateSortFile( FILE *sortStream, KMFolder *folder,
                          bool waiting_for_parent = false,
                          bool update_discovered_count = false);
+
+    void setSubjectThreadingList( QPtrList<SortCacheItem> *list ) { mSubjThreadingList = list; }
+    QPtrList<SortCacheItem>* subjectThreadingList() const { return mSubjThreadingList; }
+
 private:
     HeaderItem *mItem;
     SortCacheItem *mParent;
@@ -133,6 +137,9 @@ private:
     int mUnsortedCount, mUnsortedSize;
     SortCacheItem **mUnsortedChildren;
     bool mImperfectlyThreaded;
+    // pointer to the list it might be on so it can be remove from it
+    // when the item goes away.
+    QPtrList<SortCacheItem>* mSubjThreadingList;
 };
 
 

@@ -364,12 +364,7 @@ void FolderStorage::removeMsg(int idx, bool)
   --mTotalMsgs;
 
   QString msgIdMD5 = mb->msgIdMD5();
-  QString strippedSubjMD5 = mb->strippedSubjectMD5();
-  if (strippedSubjMD5.isEmpty()) {
-     mb->initStrippedSubjectMD5();
-     strippedSubjMD5 = mb->strippedSubjectMD5();
-  }
-  emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
+  emit msgRemoved( idx, msgIdMD5 );
   emit msgRemoved( folder() );
 }
 
@@ -400,12 +395,7 @@ KMMessage* FolderStorage::take(int idx)
   setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
   QString msgIdMD5 = msg->msgIdMD5();
-  QString strippedSubjMD5 = msg->strippedSubjectMD5();
-  if (strippedSubjMD5.isEmpty()) {
-     msg->initStrippedSubjectMD5();
-     strippedSubjMD5 = msg->strippedSubjectMD5();
-  }
-  emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
+  emit msgRemoved( idx, msgIdMD5 );
   emit msgRemoved( folder() );
 
   return msg;

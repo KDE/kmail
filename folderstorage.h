@@ -459,8 +459,8 @@ signals:
   void msgRemoved(KMFolder*, Q_UINT32 sernum);
 
   /** Emitted after a message is removed from the folder. */
-  void msgRemoved(int idx,QString msgIdMD5, QString strippedSubjMD5);
-  void msgRemoved(KMFolder*);
+  void msgRemoved( int idx, QString msgIdMD5 );
+  void msgRemoved( KMFolder* );
 
   /** Emitted when a message is added from the folder. */
   void msgAdded(int idx);

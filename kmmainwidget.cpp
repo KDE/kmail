@@ -623,7 +623,7 @@ void KMMainWidget::createWidgets(void)
     accel->connectItem( accel->insertItem( ALT+Key_Space ),
                         mHeaders, SLOT( selectCurrentMessage() ) );
 
-  connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString, QString) ),
+  connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );
