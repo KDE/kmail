@@ -1512,17 +1512,17 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
 
   //----- Set status submenu
-  (void) new KAction( i18n("New"), 0, this,
+  newAction= new KAction( i18n("New"), 0, this,
     SLOT(slotSetMsgStatusNew()), actionCollection(), "status_new");
-  (void) new KAction( i18n("Unread"), 0, this,
+  unreadAction=new KAction( i18n("Unread"), 0, this,
     SLOT(slotSetMsgStatusUnread()), actionCollection(), "status_unread");
-  (void) new KAction( i18n("Read"), 0, this,
+  readAction=new KAction( i18n("Read"), 0, this,
     SLOT(slotSetMsgStatusRead()), actionCollection(), "status_read");
-  (void) new KAction( i18n("Replied"), 0, this,
+  repliedAction= new KAction( i18n("Replied"), 0, this,
     SLOT(slotSetMsgStatusReplied()), actionCollection(), "status_replied");
-  (void) new KAction( i18n("Queued"), 0, this,
+  queueAction=new KAction( i18n("Queued"), 0, this,
     SLOT(slotSetMsgStatusQueued()), actionCollection(), "status_queued");
-  (void) new KAction( i18n("Sent"), 0, this,
+  sentAction=new KAction( i18n("Sent"), 0, this,
     SLOT(slotSetMsgStatusSent()), actionCollection(), "status_sent");
 
   KActionMenu *moveActionMenu = new KActionMenu( i18n("&Move to" ),

@@ -2061,6 +2061,7 @@ void KMHeaders::slotRMB()
   mOwner->folderToPopupMenu( dir, TRUE, this, &mMenuToFolder, msgMoveMenu );
   QPopupMenu *msgCopyMenu = new QPopupMenu();
   mOwner->folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, msgCopyMenu );
+  QPopupMenu *setStatusMenu = new QPopupMenu();
 
   mOwner->replyAction->plug(menu);
   mOwner->replyAllAction->plug(menu);
@@ -2071,8 +2072,14 @@ void KMHeaders::slotRMB()
   mOwner->editAction->plug(menu);
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
+  menu->insertItem(i18n("&Set Status"), setStatusMenu);
+  mOwner->newAction->plug(setStatusMenu);
+  mOwner->unreadAction->plug(setStatusMenu);
+   mOwner->readAction->plug(setStatusMenu);
+   mOwner->repliedAction->plug(setStatusMenu);
+   mOwner->queueAction->plug(setStatusMenu);
+   mOwner->sentAction->plug(setStatusMenu);
   mOwner->deleteAction->plug(menu);
-
   menu->exec (QCursor::pos(), 0);
   delete menu;
 }
