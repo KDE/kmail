@@ -727,7 +727,7 @@ void KMComposeWin::setupActions(void)
   confirmDeliveryAction =  new KToggleAction (i18n("&Confirm delivery"), 0,
                                               actionCollection(),
                                               "confirm_delivery");
-  confirmReadAction = new KToggleAction (i18n("&Confirm read"), 0,
+  confirmReadAction = new KToggleAction (i18n("Confirm &read"), 0,
                                          actionCollection(), "confirm_read");
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
