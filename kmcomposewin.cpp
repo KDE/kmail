@@ -315,7 +315,7 @@ void KMComposeWin::readConfig(void)
   int maxTransportItems;
 
   KConfigGroupSaver saver(config, "Composer");
-  
+
   mDefCharset = KMMessage::defaultCharset();
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
@@ -1137,14 +1137,14 @@ bool KMComposeWin::applyChanges(void)
     QCString charset = KMMsgBase::autoDetectCharset(mCharset, KMMessage::preferredCharsets(), mEditor->text());
     if (charset.isEmpty())
     {
-      KMessageBox::sorry(this, 
+      KMessageBox::sorry(this,
            i18n("No suitable encoding could be found for your message.\n"
                 "Please set an encoding using the 'Options' menu."));
       return false;
     }
     mCharset = charset;
     mMsg->setCharset(mCharset);
-  } 
+  }
 
   mMsg->setTo(to());
   mMsg->setFrom(from());
@@ -1496,7 +1496,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 {
   if ((forceDefault && mForceReplyCharset) || aCharset.isEmpty())
     mCharset = mDefCharset;
-  else 
+  else
     mCharset = aCharset.lower();
 
   if ((mCharset=="") || (mCharset == "default"))
@@ -1910,7 +1910,7 @@ void KMComposeWin::slotReplace()
 void KMComposeWin::slotToggleFixedFont()
 {
   if (!mEditor) return;
- 
+
   QFont fixedfont = KGlobalSettings::fixedFont();
   mEditor->setFont( (mEditor->font() == fixedfont) ? mBodyFont : fixedfont );
 }
@@ -2237,10 +2237,12 @@ void KMComposeWin::slotAppendSignature()
   {
     /* actually "\n-- \n" (note the space) is a convention for attaching
     signatures and we should respect it, unless the user has already done so. */
+    mEditor->sync();
     if (!sigText.startsWith("-- \n")) mEditor->append("-- ");
     mEditor->append(sigText);
     mEditor->update();
     mEditor->setModified(mod);
+    mEditor->setContentsPos( 0, 0 );
   }
 }
 
