@@ -144,7 +144,6 @@ public:
   void recoverDeadLetters(void);
   void initFolders(KConfig* cfg);
   void closeAllKMailWindows();
-  void notClosedByUser();
   void cleanup(void);
   void quit();
   void transferMail(void);
@@ -284,7 +283,6 @@ public slots:
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
-  void cleanupLoop();
   void slotConfigChanged();
   void slotFolderRemoved(KMFolder*);
   void slotRunBackgroundTasks();
@@ -340,9 +338,6 @@ private:
   static KMKernel *mySelf;
   KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;
-  KProgress *mProgress;
-  KPassivePopup *mCleanupPopup;
-  QLabel *mCleanupLabel;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;

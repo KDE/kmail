@@ -87,7 +87,7 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   DCOPObject("KMailIface"), QObject(parent, name),
-  mIdentityManager(0), mProgress(0), mConfigureDialog(0),
+  mIdentityManager(0), mConfigureDialog(0),
   mContextMenuShown( false )
 {
   kdDebug(5006) << "KMKernel::KMKernel" << endl;
@@ -1112,21 +1112,12 @@ void KMKernel::closeAllKMailWindows()
   }
 }
 
-void KMKernel::notClosedByUser()
+void KMKernel::cleanup(void)
 {
-  if (!closed_by_user) // already closed
-    return;
-  closed_by_user = false;
+  dumpDeadLetters();
+  mDeadLetterTimer->stop();
   the_shuttingDown = true;
   closeAllKMailWindows();
-
-  KConfigGroup configGroup(KMKernel::config(), "General");
-  if (configGroup.readBoolEntry("empty-trash-on-exit", true)) {
-    KMFolder* trashFolder = kmkernel->trashFolder();
-    trashFolder->close(TRUE);
-    if ( trashFolder->count( true ) > 0 )
-      trashFolder->expunge();
-  }
 
   delete the_acctMgr;
   the_acctMgr = 0;
@@ -1141,8 +1132,29 @@ void KMKernel::notClosedByUser()
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
 
-  QStringList strList;
+#if 0
+  delete the_weaver;
+  the_weaver = 0;
+#endif
+
+  KConfig* config =  KMKernel::config();
+  KConfigGroupSaver saver(config, "General");
+
+  if (the_trashFolder) {
+
+    the_trashFolder->close(TRUE);
+
+    if (config->readBoolEntry("empty-trash-on-exit", true))
+    {
+      if ( the_trashFolder->count( true ) > 0 )
+        the_trashFolder->expunge();
+    }
+  }
+
+  mICalIface->cleanup();
+
   QValueList<QGuardedPtr<KMFolder> > folders;
+  QStringList strList;
   KMFolder *folder;
   the_folderMgr->createFolderList(&strList, &folders);
   for (int i = 0; folders.at(i) != folders.end(); i++)
@@ -1179,170 +1191,9 @@ void KMKernel::notClosedByUser()
   mConfigureDialog = 0;
   delete mWin;
   mWin = 0;
-}
 
-void KMKernel::cleanup(void)
-{
-  dumpDeadLetters();
-  mDeadLetterTimer->stop();
-  the_shuttingDown = TRUE;
-  closeAllKMailWindows();
-
-  delete the_acctMgr;
-  the_acctMgr = 0;
-  delete the_filterMgr;
-  the_filterMgr = 0;
-  delete the_msgSender;
-  the_msgSender = 0;
-  delete the_filterActionDict;
-  the_filterActionDict = 0;
-  delete the_undoStack;
-  the_undoStack = 0;
-  delete the_popFilterMgr;
-  the_popFilterMgr = 0;
-
-#if 0
-  delete the_weaver;
-  the_weaver = 0;
-#endif
-
-  // Since the application has already quit we can't use
-  // kapp->processEvents() because it will return immediately:
-  // We first have to fire up a new event loop.
-  // We use the timer to transfer control to the cleanupLoop function
-  // once the event loop is running.
-
-  // Don't handle DCOP requests from the event loop
-  kapp->dcopClient()->suspend();
-
-  // Schedule execution of cleanupLoop
-  QTimer::singleShot(0, this, SLOT(cleanupLoop()));
-
-  // Start new event loop
-  kapp->enter_loop();
-}
-
-void KMKernel::cleanupLoop()
-{
-  QStringList cleanupMsgs;
-  cleanupMsgs << i18n("Cleaning up...")
-              << i18n("Emptying trash...");
-  enum { CleaningUpMsgNo = 0,
-         EmptyTrashMsgNo = 1 };
-  mProgress = 0;
-  mCleanupLabel = 0;
-  mCleanupPopup = 0;
-  if (closed_by_user)
-  {
-    mCleanupPopup = new KPassivePopup();
-    QVBox *box = mCleanupPopup->standardView( kapp->aboutData()->programName(),
-                                              QString::null, kapp->miniIcon());
-    mCleanupLabel = new QLabel( cleanupMsgs[CleaningUpMsgNo], box );
-    // determine the maximal width of the clean up messages
-    QFontMetrics fm = mCleanupLabel->fontMetrics();
-    int maxTextWidth = 0;
-    for( QStringList::ConstIterator it = cleanupMsgs.begin();
-         it != cleanupMsgs.end();
-         ++it ) {
-      int w;
-      if( maxTextWidth < ( w = fm.width( *it ) ) )
-        maxTextWidth = w;
-    }
-
-    mProgress = new KProgress( box, "kmail-cleanupProgress" );
-    mProgress->setMinimumWidth( maxTextWidth+20 );
-    mCleanupPopup->setView( box );
-
-    mProgress->setTotalSteps(2);
-    mProgress->setProgress(0);
-    QApplication::syncX();
-    mCleanupPopup->adjustSize();
-    mCleanupPopup->show();
-    kapp->processEvents();
-    //connect(the_folderMgr, SIGNAL(progress()), this, SLOT(cleanupProgress()));
-  }
-
-
-  KConfig* config =  KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
-
-  if (!closed_by_user) {
-      if (the_trashFolder)
-	  the_trashFolder->close();
-  }
-  else if (the_trashFolder) {
-
-    the_trashFolder->close(TRUE);
-
-    if (config->readBoolEntry("empty-trash-on-exit", true))
-    {
-      if (mCleanupLabel)
-      {
-        mCleanupLabel->setText( cleanupMsgs[EmptyTrashMsgNo] );
-        QApplication::syncX();
-        kapp->processEvents();
-      }
-      if ( the_trashFolder->count( true ) > 0 )
-        the_trashFolder->expunge();
-    }
-  }
-
-  if (mProgress) {
-    mCleanupLabel->setText( cleanupMsgs[CleaningUpMsgNo] );
-    mProgress->setProgress(2);
-    QApplication::syncX();
-    kapp->processEvents();
-  }
-
-  if (the_inboxFolder) the_inboxFolder->close(TRUE);
-  if (the_outboxFolder) the_outboxFolder->close(TRUE);
-  if (the_sentFolder) the_sentFolder->close(TRUE);
-  if (the_draftsFolder) the_draftsFolder->close(TRUE);
-
-  mICalIface->cleanup();
-
-  folderMgr()->writeMsgDict(msgDict());
-  imapFolderMgr()->writeMsgDict(msgDict());
-  dimapFolderMgr()->writeMsgDict(msgDict());
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  QStringList strList;
-  KMFolder *folder;
-  the_searchFolderMgr->createFolderList(&strList, &folders);
-  for (int i = 0; folders.at(i) != folders.end(); i++)
-  {
-    folder = *folders.at(i);
-    if (!folder || folder->isDir()) continue;
-    folder->close(TRUE);
-  }
-  delete the_msgIndex;
-  the_msgIndex = 0;
-  delete the_folderMgr;
-  the_folderMgr = 0;
-  delete the_imapFolderMgr;
-  the_imapFolderMgr = 0;
-  delete the_dimapFolderMgr;
-  the_dimapFolderMgr = 0;
-  delete the_searchFolderMgr;
-  the_searchFolderMgr = 0;
-  delete the_msgDict;
-  the_msgDict = 0;
-  delete mConfigureDialog;
-  mConfigureDialog = 0;
-  delete mWin;
-  mWin = 0;
-
-  //qInstallMsgHandler(oldMsgHandler);
   RecentAddresses::self( KMKernel::config() )->save( KMKernel::config() );
   KMKernel::config()->sync();
-  if (mCleanupPopup)
-  {
-    sleep(1); // Give the user some time to realize what's going on
-    delete mCleanupPopup;
-    mCleanupPopup = 0;
-    mCleanupLabel = 0; // auto-deleted child of mCleanupPopup
-    mProgress = 0;     // ditto
-  }
-  kapp->exit_loop();
 }
 
 //Isn´t this obsolete? (sven)

@@ -151,14 +151,10 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
-  RecentAddresses::self( KMKernel::config() )->save( KMKernel::config() );
-  KMKernel::config()->sync();
-  kmkernel->dumpDeadLetters();
-  kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
   mainWidget->destruct();
-  kmkernel->notClosedByUser();
+  kmkernel->cleanup();
   delete kmkernel;
-  KMail::cleanup();
+  KMail::cleanup(); // pid file (see kmstartup.cpp)
 }
 
 KAboutData *KMailPart::createAboutData()

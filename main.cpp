@@ -107,11 +107,8 @@ int main(int argc, char *argv[])
   // Go!
   int ret = kapp->exec();
   // clean up
-  if (kmkernel->shuttingDown())
-      kmailKernel.notClosedByUser();
-  else
-      kmailKernel.cleanup();
+  kmailKernel.cleanup();
 
-  KMail::cleanup();
+  KMail::cleanup(); // pid file (see kmstartup.cpp)
   return ret;
 }
