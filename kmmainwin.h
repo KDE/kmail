@@ -22,6 +22,7 @@ public:
   KMMainWin(QWidget *parent = 0);
   virtual ~KMMainWin();
   KMMainWidget *mainKMWidget() { return mKMMainWidget; };
+  KMLittleProgressDlg* progressDialog() const { return littleProgress; }
 
   /** Read configuration options after widgets are created. */
   virtual void readConfig(void);

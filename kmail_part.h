@@ -1,6 +1,7 @@
 /*
     This file is part of KMail.
-    Copyright (c) 2002 Don Sanders <sanders@kde.org>,
+    Copyright (c) 2002-2003 Don Sanders <sanders@kde.org>,
+    Copyright (c) 2003      Zack Rusin  <zack@kde.org>,
     Based on the work of Cornelius Schumacher <schumacher@kde.org>
 
     This program is free software; you can redistribute it and/or modify
@@ -25,6 +26,7 @@
 #define KMail_PART_H
 
 #include <kparts/browserextension.h>
+#include <kparts/statusbarextension.h>
 #include <kparts/factory.h>
 #include <kparts/event.h>
 #include <qwidget.h>
@@ -36,6 +38,7 @@ class KAboutData;
 class KMailBrowserExtension;
 class KMKernel;
 class KMMainWidget;
+class KMLittleProgressDlg;
 
 class ActionManager;
 
@@ -43,8 +46,9 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
 {
     Q_OBJECT
   public:
+    friend class KMailStatusBarExtension;
     KMailPart(QWidget *parentWidget, const char *widgetName,
-                   QObject *parent, const char *name, const QStringList &);
+              QObject *parent, const char *name, const QStringList &);
     virtual ~KMailPart();
 
     static KAboutData *createAboutData();
@@ -64,6 +68,8 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     QWidget *widget;
     ActionManager *mActionManager;
     KMailBrowserExtension *m_extension;
+    KMailStatusBarExtension *mStatusBar;
+    QWidget *mParentWidget;
 };
 
 class KMailBrowserExtension : public KParts::BrowserExtension
@@ -73,6 +79,18 @@ class KMailBrowserExtension : public KParts::BrowserExtension
   public:
     KMailBrowserExtension(KMailPart *parent);
     virtual ~KMailBrowserExtension();
+};
+
+class KMailStatusBarExtension : public KParts::StatusBarExtension
+{
+public:
+  KMailStatusBarExtension( KMailPart *parent );
+
+  KMainWindow *mainWindow() const;
+
+private:
+  KMailPart *mParent;
+  KMLittleProgressDlg *mLittleProgress;
 };
 
 #endif

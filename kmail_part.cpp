@@ -1,6 +1,7 @@
 /*
     This file is part of KMail.
-    Copyright (c) 2002 Don Sanders <sanders@kde.org>,
+    Copyright (c) 2002-2003 Don Sanders <sanders@kde.org>,
+    Copyright (c) 2003      Zack Rusin  <zack@kde.org>,
     Based on the work of Cornelius Schumacher <schumacher@kde.org>
 
     This program is free software; you can redistribute it and/or modify
@@ -27,6 +28,7 @@
 
 #include <kapplication.h>
 #include <kinstance.h>
+#include <kstatusbar.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kaction.h>
@@ -46,13 +48,15 @@
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmstartup.h"
+#include "kmbroadcaststatus.h"
 
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
 K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory );
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
-  KParts::ReadOnlyPart(parent, name), DCOPObject("KMailIface")
+  KParts::ReadOnlyPart(parent, name), DCOPObject("KMailIface"),
+  mParentWidget( parentWidget )
 {
   kdDebug(5006) << "KMailPart()" << endl;
   kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
@@ -106,6 +110,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mReaderWin->setMsg( msg, true );
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
+  mStatusBar  = new KMailStatusBarExtension(this);
+  mStatusBar->addStatusBarItem( kmailKernel->mainWin()->progressDialog(), 0, true );
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
   mReaderWin->show();
@@ -116,6 +122,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
+  mStatusBar  = new KMailStatusBarExtension(this);
+  mStatusBar->addStatusBarItem( kmailKernel->mainWin()->progressDialog(), 0, true );
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
   mainWidget->show();
@@ -171,6 +179,15 @@ KMailBrowserExtension::~KMailBrowserExtension()
 {
 }
 
-using namespace KParts;
+KMailStatusBarExtension::KMailStatusBarExtension( KMailPart *parent )
+  : KParts::StatusBarExtension( parent ), mParent( parent )
+{
+}
+
+KMainWindow * KMailStatusBarExtension::mainWindow() const
+{
+  return static_cast<KMainWindow*>( mParent->mParentWidget );
+}
+
 #include "kmail_part.moc"
 
