@@ -1423,6 +1423,8 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
 
   httpURL.setPath( "/freebusy/trigger/" + path + ".pfb" );
   httpURL.setQuery( QString::null );
+  // Ensure that we encode everything with UTF8
+  httpURL = KURL( httpURL.url(), 106 );
   kdDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.
