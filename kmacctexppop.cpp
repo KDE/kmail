@@ -479,19 +479,32 @@ void KMAcctExpPop::startJob() {
 //-----------------------------------------------------------------------------
 // one message is finished
 // add data to a KMMessage
-void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg) {
+void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
+{
   if (infoMsg != "message complete") return;
-  kdDebug(5006) << "stage == Retr" << endl;
   KMMessage *msg = new KMMessage;
   curMsgData.resize(curMsgData.size() + 1);
   curMsgData[curMsgData.size() - 1] = '\0';
   msg->fromString(QCString(curMsgData),TRUE);
-  kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
+  if (stage == Head)
+  {
+    kdDebug(5006) << "slotHdrRetrieved: " << endl;
+    kdDebug(5006) << "Size of Message: " << (*lensOfMsgsPendingDownload.at(
+      uidsOfMsgs.findIndex(headerIt.current()->uid()))) << endl;
+    msg->setMsgLength(*lensOfMsgsPendingDownload.at(
+      uidsOfMsgs.findIndex(headerIt.current()->uid())));
+    headerIt.current()->setHeader(msg);
+    ++headerIt;
+    slotGetNextHdr();
+  } else {
+    kdDebug(5006) << "stage == Retr" << endl;
+    kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
 
-  msgsAwaitingProcessing.append(msg);
-  msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
-  msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
-  slotGetNextMsg();
+    msgsAwaitingProcessing.append(msg);
+    msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
+    msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
+    slotGetNextMsg();
+  }
 }
 
 
@@ -556,10 +569,18 @@ void KMAcctExpPop::slotJobFinished() {
     if ((headersOnServer.count() > 0) && (mFilterOnServer == true)) {
       headerIt.toFirst();
       KURL url = getUrl();
-      url.setPath(QString("/headers/" + headerIt.current()->id()));
+      QString headerIds;
+      while (headerIt.current())
+      {
+        headerIds += headerIt.current()->id();
+        if (!headerIt.atLast()) headerIds += ",";
+        ++headerIt;
+      }
+      headerIt.toFirst();
+      url.setPath(QString("/headers/") + headerIds);
       job = KIO::get( url.url(), false, false );
-      slotGetNextHdr();
       connectJob();
+      slotGetNextHdr();
       stage = Head;
     }
     else {
@@ -581,108 +602,98 @@ void KMAcctExpPop::slotJobFinished() {
   else if (stage == Head) {
     kdDebug(5006) << "stage == Head" << endl;
 
-    ++headerIt;
-    if (headerIt.current()) {
-      KURL url = getUrl();
-      url.setPath(QString("/headers/" + headerIt.current()->id()));
-      job = KIO::get( url.url(), false, false );
-      slotGetNextHdr();
-      connectJob();
-    }
-    else {
-      // All headers have been downloaded, check which mail you want to get
-      // data is in list headersOnServer
+    // All headers have been downloaded, check which mail you want to get
+    // data is in list headersOnServer
 
-      // check if headers apply to a filter
-      // if set the action of the filter
-      KMPopFilterAction action;
-      bool dlgPopup = false;
-      for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
-        action = (KMPopFilterAction)kernel->popFilterMgr()->process(headersOnServer.current()->header());
-        //debug todo
-        switch ( action ) {
-          case NoAction:
-            kdDebug(5006) << "PopFilterAction = NoAction" << endl;
-            break;
-          case Later:
-            kdDebug(5006) << "PopFilterAction = Later" << endl;
-            break;
-          case Delete:
-            kdDebug(5006) << "PopFilterAction = Delete" << endl;
-            break;
-          case Down:
-            kdDebug(5006) << "PopFilterAction = Down" << endl;
-            break;
-          default:
-            kdDebug(5006) << "PopFilterAction = default oops!" << endl;
-            break;
-        }
-        switch ( action ) {
-          case NoAction:
-            //kdDebug(5006) << "PopFilterAction = NoAction" << endl;
+    // check if headers apply to a filter
+    // if set the action of the filter
+    KMPopFilterAction action;
+    bool dlgPopup = false;
+    for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
+      action = (KMPopFilterAction)kernel->popFilterMgr()->process(headersOnServer.current()->header());
+      //debug todo
+      switch ( action ) {
+        case NoAction:
+          kdDebug(5006) << "PopFilterAction = NoAction" << endl;
+          break;
+        case Later:
+          kdDebug(5006) << "PopFilterAction = Later" << endl;
+          break;
+        case Delete:
+          kdDebug(5006) << "PopFilterAction = Delete" << endl;
+          break;
+        case Down:
+          kdDebug(5006) << "PopFilterAction = Down" << endl;
+          break;
+        default:
+          kdDebug(5006) << "PopFilterAction = default oops!" << endl;
+          break;
+      }
+      switch ( action ) {
+        case NoAction:
+          //kdDebug(5006) << "PopFilterAction = NoAction" << endl;
+          dlgPopup = true;
+          break;
+        case Later:
+          if (kernel->popFilterMgr()->showLaterMsgs()) 
             dlgPopup = true;
-            break;
-          case Later:
-            if (kernel->popFilterMgr()->showLaterMsgs()) 
-              dlgPopup = true;
-          default:
-            headersOnServer.current()->setAction(action);
-            headersOnServer.current()->setRuleMatched(true);
-            break;
-        }
+        default:
+          headersOnServer.current()->setAction(action);
+          headersOnServer.current()->setRuleMatched(true);
+          break;
       }
-
-      // if there are some messages which are not coverd by a filter
-      // show the dialog
-      headers = true;
-      if (dlgPopup) {
-        KMPopFilterCnfrmDlg *dlg = new KMPopFilterCnfrmDlg(&headersOnServer, this->name(), kernel->popFilterMgr()->showLaterMsgs());
-        dlg->exec();
-      }
-	
-      for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
-        if (headersOnServer.current()->action() == Delete ||
-            headersOnServer.current()->action() == Later) {
-          //remove entries form the lists when the mails sould not be downloaded
-          //(deleted or downloaded later)
-          int idx = idsOfMsgsPendingDownload.findIndex(headersOnServer.current()->id());
-          if (idx != -1) {
-            idsOfMsgsPendingDownload.remove( idsOfMsgsPendingDownload
-                                              .at( idx ));
-            lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
-                                            .at( idx ));
-            idsOfMsgs.remove(idsOfMsgs.at( idx ));
-            uidsOfMsgs.remove(uidsOfMsgs.at( idx ));
-          }
-          if (headersOnServer.current()->action() == Delete) {
-            headerDeleteUids.append(headersOnServer.current()->uid());
-            uidsOfNextSeenMsgs.append(headersOnServer.current()->uid());
-            idsOfMsgsToDelete.append(headersOnServer.current()->id());
-          }
-          else {
-            headerLaterUids.append(headersOnServer.current()->uid());
-          }
-        }
-        else if (headersOnServer.current()->action() == Down) {
-          headerDownUids.append(headersOnServer.current()->uid());
-        }
-      }
-
-      headersOnServer.clear();
-      stage = Retr;
-      numMsgs = idsOfMsgsPendingDownload.count();
-      numBytesToRead = 0;
-      QValueList<int>::Iterator len = lensOfMsgsPendingDownload.begin();
-      for (len = lensOfMsgsPendingDownload.begin();
-        len != lensOfMsgsPendingDownload.end(); len++)
-          numBytesToRead += *len;
-      KURL url = getUrl();
-      url.setPath("/download/" + idsOfMsgsPendingDownload.join(","));
-      job = KIO::get( url, false, false );
-      connectJob();
-      slotGetNextMsg();
-      processMsgsTimer.start(processingDelay);
     }
+
+    // if there are some messages which are not coverd by a filter
+    // show the dialog
+    headers = true;
+    if (dlgPopup) {
+      KMPopFilterCnfrmDlg *dlg = new KMPopFilterCnfrmDlg(&headersOnServer, this->name(), kernel->popFilterMgr()->showLaterMsgs());
+      dlg->exec();
+    }
+	
+    for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
+      if (headersOnServer.current()->action() == Delete ||
+          headersOnServer.current()->action() == Later) {
+        //remove entries form the lists when the mails sould not be downloaded
+        //(deleted or downloaded later)
+        int idx = idsOfMsgsPendingDownload.findIndex(headersOnServer.current()->id());
+        if (idx != -1) {
+          idsOfMsgsPendingDownload.remove( idsOfMsgsPendingDownload
+                                            .at( idx ));
+          lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
+                                          .at( idx ));
+          idsOfMsgs.remove(idsOfMsgs.at( idx ));
+          uidsOfMsgs.remove(uidsOfMsgs.at( idx ));
+        }
+        if (headersOnServer.current()->action() == Delete) {
+          headerDeleteUids.append(headersOnServer.current()->uid());
+          uidsOfNextSeenMsgs.append(headersOnServer.current()->uid());
+          idsOfMsgsToDelete.append(headersOnServer.current()->id());
+        }
+        else {
+          headerLaterUids.append(headersOnServer.current()->uid());
+        }
+      }
+      else if (headersOnServer.current()->action() == Down) {
+        headerDownUids.append(headersOnServer.current()->uid());
+      }
+    }
+
+    headersOnServer.clear();
+    stage = Retr;
+    numMsgs = idsOfMsgsPendingDownload.count();
+    numBytesToRead = 0;
+    QValueList<int>::Iterator len = lensOfMsgsPendingDownload.begin();
+    for (len = lensOfMsgsPendingDownload.begin();
+      len != lensOfMsgsPendingDownload.end(); len++)
+        numBytesToRead += *len;
+    KURL url = getUrl();
+    url.setPath("/download/" + idsOfMsgsPendingDownload.join(","));
+    job = KIO::get( url, false, false );
+    connectJob();
+    slotGetNextMsg();
+    processMsgsTimer.start(processingDelay);
   }
   else if (stage == Retr) {
     processRemainingQueuedMessagesAndSaveUidList();
@@ -799,7 +810,6 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       numBytesRead += curMsgLen - numMsgBytesRead;
     else if (stage == Head){
       kdDebug(5006) << "Head: <End>" << endl;
-      slotHdrRetrieved();
     }
     return;
   }
