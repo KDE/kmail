@@ -192,6 +192,7 @@ protected:
   QString mBodyFont;
   bool inlineImage;
   static QString mAttachDir;
+  static const int delay;
   bool mBackingPixmapOn;
   QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
@@ -199,6 +200,7 @@ protected:
   int fntSize;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
+
 };
 
 

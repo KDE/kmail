@@ -67,6 +67,7 @@ extern KBusyPtr *kbp;
 #endif
 
 QString KMReaderWin::mAttachDir;
+const int KMReaderWin::delay = 0;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
@@ -271,10 +272,10 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     updateReaderWin();
   }
   else if (updateReaderWinTimer.isActive())
-    updateReaderWinTimer.changeInterval( 100 );
+    updateReaderWinTimer.changeInterval( delay );
   else {
     //    updateReaderWin();
-    updateReaderWinTimer.start( 20, TRUE );
+    updateReaderWinTimer.start( delay, TRUE );
   }
 }
 
@@ -290,9 +291,6 @@ void KMReaderWin::updateReaderWin()
   {
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<HTML><BODY" +
-		   QString(" TEXT=#%1").arg(colorToString(c1)) +
-		   QString(" LINK=#%1").arg(colorToString(c2)) +
-		   QString(" VLINK=#%1").arg(colorToString(c3)) +
 		   QString(" BGCOLOR=#%1").arg(colorToString(c4)));
 
     if (mBackingPixmapOn)
@@ -319,17 +317,16 @@ void KMReaderWin::parseMsg(void)
     return;
 
   mViewer->begin( KURL( "file:/" ) );
-  mViewer->write("<HTML><BODY" +
-		 QString(" TEXT=#%1").arg(colorToString(c1)) +
-		 QString(" LINK=#%1").arg(colorToString(c2)) +
-		 QString(" VLINK=#%1").arg(colorToString(c3)) +
+  mViewer->write("<HTML><HEAD><STYLE>" +
+		 QString("a[href] { color: #%1;").arg(colorToString(c2)) +
+		 "text-decoration: none; }" + // just playing
+		 "</STYLE><BODY " +
+                 QString(" TEXT=#%1").arg(colorToString(c1)) +
 		 QString(" BGCOLOR=#%1").arg(colorToString(c4)));
 
   if (mBackingPixmapOn)
     mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
-  mViewer->write("><FONT FACE=\"" + mBodyFont +
-		 //		 QString(" SIZE=\"%1\"").arg(fntSize) +
-		 "\">");
+  mViewer->write("><FONT FACE=\"" + mBodyFont +"\">");
 
 #if defined CHARSETS
   printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
