@@ -186,12 +186,13 @@ public:
 
   bool isFixedFont() { return mUseFixedFont; }
 
-  /** Return the @see HtmlWriter connected to the @see KHTMLPart we use */
+  /** Return the @ref HtmlWriter connected to the @ref KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
+  KAction *viewSourceAction() { return mViewSourceAction; }
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
   KAction *mailToForwardAction() { return mMailToForwardAction; }
@@ -223,7 +224,7 @@ public:
 
   void setUpdateAttachment() { mAtmUpdate = true; }
 
-  /** Access to the @see KHTMLPart used for the viewer. Use with
+  /** Access to the @ref KHTMLPart used for the viewer. Use with
       care! */
   KHTMLPart * htmlPart() const { return mViewer; }
 
@@ -314,7 +315,9 @@ public slots:
   void slotUrlOpen( const KURL &url = KURL() );
   /** Save the page to a file */
   void slotUrlSave();
+  void slotSaveTextAs();
   void slotAddBookmarks();
+  void slotShowMsgSrc();
   void slotSaveMsg();
   void slotSaveAttachments();
 
@@ -429,7 +432,7 @@ private:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
-  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+  KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
 

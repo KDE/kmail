@@ -13,7 +13,6 @@
 class QPopupMenu;
 class QTextCodec;
 class KMainWindow;
-class KAction;
 class KProgressDialog;
 class KMComposeWin;
 class KMFilter;
@@ -268,6 +267,25 @@ private:
   KURL mUrl;
 };
 
+namespace KMail {
+  class SaveTextAsCommand : public KMCommand {
+    Q_OBJECT
+
+  public:
+    SaveTextAsCommand( const QString & txt, QWidget * parent );
+
+  private slots:
+    void slotResult( KIO::Job * );
+
+  private:
+    /*! \rimp */
+    Result execute();
+
+  private:
+    QString mText;
+  };
+}
+
 class KMEditMsgCommand : public KMCommand
 {
   Q_OBJECT
@@ -279,17 +297,16 @@ private:
   virtual Result execute();
 };
 
-class KMShowMsgSrcCommand : public KMCommand
+class KMShowMsgSrcCommand
 {
-  Q_OBJECT
-
 public:
-  KMShowMsgSrcCommand( QWidget *parent, KMMessage *msg,
-		       bool fixedFont );
-  virtual Result execute();
+  KMShowMsgSrcCommand( KMMessage *msg, bool fixedFont );
+		       
+  void start();
 
 private:
   bool mFixedFont;
+  KMMessage *mMsg;
 };
 
 class KMSaveMsgCommand : public KMCommand
@@ -588,27 +605,6 @@ private:
   KMMainWidget *mMainWidget;
 };
 
-class FolderShortcutCommand : public QObject
-{
-  Q_OBJECT
-
-public:
-  FolderShortcutCommand( KMMainWidget* mainwidget, KMFolder *folder );
-  ~FolderShortcutCommand();
-
-public slots:
-  void start();
-  /** Assign a KActio to the command which is used to trigger it. This 
-   * action will be deleted along with the command, so you don't need to
-   * keep track of it separately. */
-  void setAction( KAction* );
-
-private:
-  KMMainWidget *mMainWidget;
-  KMFolder *mFolder;
-  KAction *mAction;
-};
-
 
 class KMMailingListFilterCommand : public KMCommand
 {
@@ -627,7 +623,7 @@ private:
       move is TRUE this slot will cause all selected messages to
       be moved into the given folder, otherwise messages will be
       copied.
-      Am empty @see KMMenuToFolder must be passed in. */
+      Am empty @ref KMMenuToFolder must be passed in. */
 
 class KMMenuCommand : public KMCommand
 {

@@ -86,7 +86,6 @@ using KMail::HeaderListQuickSearch;
 #include <assert.h>
 #include <kstatusbar.h>
 #include <kstaticdeleter.h>
-#include <kaction.h>
 
 #include <kmime_mdn.h>
 #include <kmime_header_parsing.h>
@@ -125,13 +124,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mFilterMenuActions.setAutoDelete(true);
   mFilterTBarActions.setAutoDelete(false);
   mFilterCommands.setAutoDelete(true);
-  mFolderShortcutCommands.setAutoDelete(true);
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
-  // FIXME This should become a line separator as soon as the API
-  // is extended in kdelibs.
-  mToolbarActionSeparator = new KActionSeparator( actionCollection );
 
   if( !s_mainWidgetList )
     mwlsd.setObject( s_mainWidgetList, new QPtrList<KMMainWidget>() );
@@ -162,18 +157,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
-
-  connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
-
-  connect(kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
-
-  connect(kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
-
-  connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-          this, SLOT(slotFolderRemoved(KMFolder*)));
 
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
@@ -355,10 +338,8 @@ void KMMainWidget::readConfig(void)
   if (mMsgView)
     mMsgView->readConfig();
   slotSetEncoding();
-
   mHeaders->readConfig();
   mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
-
   mFolderTree->readConfig();
 
   { // area for config group "General"
@@ -510,12 +491,13 @@ void KMMainWidget::createWidgets(void)
            mQuickSearchLine, SLOT( updateSearch() ) );
   if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
 
+  mHeaders->setFullWidth(true);
   if (mReaderWindowActive) {
     connect(mHeaders, SIGNAL(selected(KMMessage*)),
             this, SLOT(slotMsgSelected(KMMessage*)));
   }
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
-          this, SLOT(slotMsgActivated(KMMessage*)));
+	  this, SLOT(slotMsgActivated(KMMessage*)));
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
   accel->connectItem(accel->insertItem(SHIFT+Key_Left),
@@ -585,16 +567,16 @@ void KMMainWidget::createWidgets(void)
     SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
 
   new KAction(
-    i18n("Abort Current Operation"), Key_Escape, ProgressManager::instance(),
-    SLOT(slotAbortAll()), actionCollection(), "cancel" );
-  accel->connectItem(accel->insertItem(Key_Escape),
-                     ProgressManager::instance(), SLOT(slotAbortAll()));
-  
-  new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
   accel->connectItem(accel->insertItem(CTRL+Key_Right),
                      mFolderTree, SLOT(incCurrentFolder()));
+
+  new KAction(
+    i18n("Abort Current Operation"), Key_Escape, ProgressManager::instance(),
+    SLOT(slotAbortAll()), actionCollection(), "cancel" );
+  accel->connectItem(accel->insertItem(Key_Escape),
+                     ProgressManager::instance(), SLOT(slotAbortAll()));
 
   new KAction(
    i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
@@ -607,23 +589,6 @@ void KMMainWidget::createWidgets(void)
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
   accel->connectItem(accel->insertItem(CTRL+Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
-  new KAction(
-    i18n("Focus on Next Message"), ALT+Key_Right, mHeaders,
-    SLOT(incCurrentMessage()), actionCollection(), "inc_current_message");
-    accel->connectItem( accel->insertItem( ALT+Key_Right ),
-                        mHeaders, SLOT( incCurrentMessage() ) );
-
-  new KAction(
-    i18n("Focus on Previous Message"), ALT+Key_Left, mHeaders,
-    SLOT(decCurrentMessage()), actionCollection(), "dec_current_message");
-    accel->connectItem( accel->insertItem( ALT+Key_Left ),
-                        mHeaders, SLOT( decCurrentMessage() ) );
- 
-  new KAction(
-    i18n("Select Message with Focus"), ALT+Key_Space, mHeaders,
-    SLOT( selectCurrentMessage() ), actionCollection(), "select_current_message");
-    accel->connectItem( accel->insertItem( ALT+Key_Space ),
-                        mHeaders, SLOT( selectCurrentMessage() ) );
 
   connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
@@ -1216,14 +1181,8 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardMsg()
 {
-  KMMessageList* selected = mHeaders->selectedMsgs();
-  KMCommand *command = 0L;
-  if(selected && !selected->isEmpty()) {
-    command = new KMForwardCommand( this, *selected, mFolder->identity() );
-  } else {
-    command = new KMForwardCommand( this, mHeaders->currentMsg(), mFolder->identity() );
-  }
-
+  KMCommand *command =
+    new KMForwardCommand( this, *mHeaders->selectedMsgs(), mFolder->identity() );
   command->start();
 }
 
@@ -1231,14 +1190,8 @@ void KMMainWidget::slotForwardMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardAttachedMsg()
 {
-  KMMessageList* selected = mHeaders->selectedMsgs();
-  KMCommand *command = 0L;
-  if(selected && !selected->isEmpty()) {
-    command = new KMForwardAttachedCommand( this, *selected, mFolder->identity() );
-  } else {
-    command = new KMForwardAttachedCommand( this, mHeaders->currentMsg(), mFolder->identity() );
-  }
-
+  KMCommand *command =
+    new KMForwardAttachedCommand( this, *mHeaders->selectedMsgs(), mFolder->identity() );
   command->start();
 }
 
@@ -1248,6 +1201,10 @@ void KMMainWidget::slotEditMsg()
 {
   KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
   command->start();
+
+  mHeaders->setSelected(mHeaders->currentItem(), true);
+  mHeaders->highlightMessage(mHeaders->currentItem(), true);
+
 }
 
 //-----------------------------------------------------------------------------
@@ -1306,6 +1263,15 @@ void KMMainWidget::slotRedirectMsg()
   KMCommand *command = new KMRedirectCommand( this, mHeaders->currentMsg() );
   command->start();
 }
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotBounceMsg()
+{
+  KMCommand *command = new KMBounceCommand( this, mHeaders->currentMsg() );
+  command->start();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplyListToMsg()
@@ -1504,7 +1470,7 @@ void KMMainWidget::slotCopyMsg()
 void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
-  KMCommand *command = 
+  KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
                         htmlOverride, mCodec );
   command->start();
@@ -1529,6 +1495,11 @@ void KMMainWidget::slotSaveMsg()
     delete saveCommand;
   else
     saveCommand->start();
+}
+
+void KMMainWidget::slotSaveTextAs() {
+  if ( mMsgView )
+    mMsgView->slotSaveTextAs();
 }
 
 //-----------------------------------------------------------------------------
@@ -2018,12 +1989,6 @@ void KMMainWidget::slotPrevImportantMessage() {
   //mHeaders->prevImportantMessage();
 }
 
-void KMMainWidget::slotDisplayCurrentMessage()
-{
-  if ( mHeaders->currentMsg() )
-    slotMsgActivated( mHeaders->currentMsg() );
-}
-
 //-----------------------------------------------------------------------------
 //called from headers. Message must not be deleted on close
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
@@ -2050,7 +2015,6 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   newMessage->setReadyToShow( true );
   win->showMsg( mCodec, newMessage );
-  win->resize( 550, 600 );
   win->show();
 }
 
@@ -2119,6 +2083,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mReplyAuthorAction->plug( menu );
       mReplyListAction->plug( menu );
       mForwardActionMenu->plug(menu);
+      mBounceAction->plug(menu);
     }
     menu->insertSeparator();
     if ( !out_folder ) {
@@ -2136,15 +2101,17 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
 
     menu->insertSeparator();
 
-    // this one only make sense if there is a reader window.
+    // these two only make sense if there is a reader window.
+    // I guess. Not sure about view source ;). Till
     if (mMsgView) {
       toggleFixFontAction()->plug(menu);
+      viewSourceAction()->plug(menu);
     }
-    viewSourceAction()->plug(menu);
 
     menu->insertSeparator();
     mPrintAction->plug( menu );
     mSaveAsAction->plug( menu );
+    mSaveTextAsAction->plug( menu );
     mSaveAttachmentsAction->plug( menu );
     menu->insertSeparator();
     mTrashAction->plug( menu );
@@ -2215,9 +2182,13 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
-  mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
+  mSaveAsAction = new KAction( i18n("Save Message &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
     this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
+
+  mSaveTextAsAction = new KAction( i18n("&Save Text As..."), "filesave", 0,
+				   this, SLOT(slotSaveTextAs()),
+				   actionCollection(), "file_save_text_as" );
 
   mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
@@ -2328,10 +2299,8 @@ void KMMainWidget::setupActions()
   mCompactFolderAction = new KAction( i18n("&Compact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload", 
-                                      KStdAccel::shortcut( KStdAccel::Reload ), this,
-                                      SLOT(slotRefreshFolder()), 
-                                      actionCollection(), "refresh_folder" );
+  mRefreshFolderAction = new KAction( i18n("Check Mail &in This Folder"), "reload", Key_F5 , this,
+                     SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
 
   mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
                                    "edittrash", 0, this,
@@ -2405,13 +2374,16 @@ void KMMainWidget::setupActions()
   mReplyActionMenu->insert( mReplyListAction );
 
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-                                 "mail_forward",
 				 Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
+
+  //---- Bounce action
+  mBounceAction = new KAction( i18n("&Bounce..."), 0, this,
+			      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
   //----- Create filter actions
   mFilterMenu = new KActionMenu( i18n("&Create Filter"), "filter", actionCollection(), "create_filter" );
@@ -2487,32 +2459,35 @@ void KMMainWidget::setupActions()
   mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
                                  0, this, SLOT(slotSetMsgStatusFlag()),
                                  actionCollection(), "status_flag");
-  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
   mStatusMenu->insert( mToggleFlagAction );
 
   mToggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
-  mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
-  mStatusMenu->insert( mToggleRepliedAction );
 
+  mStatusMenu->insert( mToggleRepliedAction );
   mToggleForwardedAction = new KToggleAction(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
                                  0, this, SLOT(slotSetMsgStatusForwarded()),
                                  actionCollection(), "status_forwarded");
-  mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
   mStatusMenu->insert( mToggleForwardedAction );
 
   mToggleQueuedAction = new KToggleAction(i18n("Mark Message as &Queued"), "kmmsgqueued",
                                  0, this, SLOT(slotSetMsgStatusQueued()),
                                  actionCollection(), "status_queued");
-  mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
   mStatusMenu->insert( mToggleQueuedAction );
 
   mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
                                  0, this, SLOT(slotSetMsgStatusSent()),
                                  actionCollection(), "status_sent");
-  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
   mStatusMenu->insert( mToggleSentAction );
+
+#if KDE_IS_VERSION(3,2,90)
+  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
+  mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
+  mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
+  mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
+  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
+#endif
 
   mStatusMenu->insert( new KActionSeparator( this ) );
 
@@ -2554,34 +2529,37 @@ void KMMainWidget::setupActions()
   mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "kmmsgflag",
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
-  mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
   mThreadStatusMenu->insert( mToggleThreadFlagAction );
 
   mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
                                        0, this, SLOT(slotSetThreadStatusReplied()),
                                        actionCollection(), "thread_replied");
-  mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
   mThreadStatusMenu->insert( mToggleThreadRepliedAction );
 
   mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
                                        0, this, SLOT(slotSetThreadStatusForwarded()),
                                        actionCollection(), "thread_forwarded");
-  mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
   mThreadStatusMenu->insert( mToggleThreadForwardedAction );
 
   mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
                                        0, this, SLOT(slotSetThreadStatusQueued()),
                                        actionCollection(), "thread_queued");
-  mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
   mThreadStatusMenu->insert( mToggleThreadQueuedAction );
 
   mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
                                        0, this, SLOT(slotSetThreadStatusSent()),
                                        actionCollection(), "thread_sent");
-  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Not &Sent") );
   mThreadStatusMenu->insert( mToggleThreadSentAction );
 
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
+
+#if KDE_IS_VERSION(3,2,90)
+  mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
+  mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
+  mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
+  mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
+  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Not &Sent") );
+#endif
 
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
@@ -2757,13 +2735,6 @@ void KMMainWidget::setupActions()
 		     SLOT(slotCollapseAllThreads()),
 		     actionCollection(), "collapse_all_threads" );
 
-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
-                                   SLOT(slotShowMsgSrc()), actionCollection(),
-                                   "view_source" );
-
-  ( void ) new KAction( i18n("&Display Message"), Key_Return, this,
-                        SLOT( slotDisplayCurrentMessage() ), actionCollection(),
-                        "display_message" );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,
@@ -2867,6 +2838,7 @@ void KMMainWidget::setupActions()
   connect( kmkernel->undoStack(),
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
+  initializeFilterActions();
   updateMessageActions();
 }
 
@@ -2929,19 +2901,6 @@ void KMMainWidget::slotCollapseAllThreads()
   mHeaders->slotExpandOrCollapseAllThreads( false ); // collapse
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotShowMsgSrc()
-{
-  KMMessage *msg = mHeaders->currentMsg();
-  if ( !msg )
-    return;
-  KMCommand *command = new KMShowMsgSrcCommand( this, msg,
-                                                mMsgView
-                                                ? mMsgView->isFixedFont()
-                                                : false );
-  command->start();
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::moveSelectedToFolder( int menuId )
@@ -2963,8 +2922,8 @@ void KMMainWidget::copySelectedToFolder(int menuId )
 void KMMainWidget::updateMessageMenu()
 {
     mMenuToFolder.clear();
-    folderTree()->folderToPopupMenu( true, this, &mMenuToFolder, mMoveActionMenu->popupMenu() );
-    folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, mCopyActionMenu->popupMenu() );
+    KMMenuCommand::folderToPopupMenu( true, this, &mMenuToFolder, mMoveActionMenu->popupMenu() );
+    KMMenuCommand::folderToPopupMenu( false, this, &mMenuToFolder, mCopyActionMenu->popupMenu() );
     updateMessageActions();
 }
 
@@ -3060,6 +3019,7 @@ void KMMainWidget::updateMessageActions()
     kmkernel->folderIsDraftOrOutbox(mFolder));
     replyMenu()->setEnabled( single_actions );
     filterMenu()->setEnabled( single_actions );
+    bounceAction()->setEnabled( single_actions );
     replyAction()->setEnabled( single_actions );
     noQuoteReplyAction()->setEnabled( single_actions );
     replyAuthorAction()->setEnabled( single_actions );
@@ -3067,7 +3027,9 @@ void KMMainWidget::updateMessageActions()
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
     printAction()->setEnabled( single_actions );
-    viewSourceAction()->setEnabled( single_actions );
+    if (mMsgView) {
+      viewSourceAction()->setEnabled( single_actions );
+    }
 
     mSendAgainAction->setEnabled( single_actions &&
              ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
@@ -3075,6 +3037,7 @@ void KMMainWidget::updateMessageActions()
           || ( mFolder && kmkernel->folderIsSentMailFolder( mFolder ) )
              );
     mSaveAsAction->setEnabled( mass_actions );
+    mSaveTextAsAction->setEnabled( single_actions );
     bool mails = mFolder && mFolder->count();
     bool enable_goto_unread = mails
        || (GlobalSettings::loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
@@ -3205,15 +3168,11 @@ void KMMainWidget::slotShowStartupFolder()
   // plug shortcut filter actions now
   initializeFilterActions();
 
-  // plug folder shortcut actions
-  initializeFolderShortcutActions();
-
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
        GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
     GlobalSettings::setPreviousNewFeaturesMD5( newFeaturesMD5 );
     slotIntro();
-    return;
   }
 
   KMFolder* startup = 0;
@@ -3336,26 +3295,6 @@ void KMMainWidget::clearFilterActions()
   mFilterCommands.clear();
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWidget::initializeFolderShortcutActions()
-{
-
-  // If we are loaded as a part, this will be set to fals, since the part
-  // does xml loading. Temporarily set to true, in that case, so the 
-  // accels are added to the collection as expected.
-  bool old = actionCollection()->isAutoConnectShortcuts();
-
-  actionCollection()->setAutoConnectShortcuts( true );
-  QValueList< QGuardedPtr< KMFolder > > folders = kmkernel->allFolders();
-  QValueList< QGuardedPtr< KMFolder > >::Iterator it = folders.begin();
-  while ( it != folders.end() ) {
-    KMFolder *folder = (*it);
-    ++it;
-    slotShortcutChanged( folder ); // load the initial accel
-  }
-  actionCollection()->setAutoConnectShortcuts( old );
-}
- 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::initializeFilterActions()
@@ -3378,57 +3317,27 @@ void KMMainWidget::initializeFilterActions()
       QString icon = (*it)->icon();
       if ( icon.isEmpty() )
         icon = "gear";
-      filterAction = new KAction(as, icon, (*it)->shortcut(), filterCommand,
+      filterAction = new KAction(as, icon, 0, filterCommand,
                                  SLOT(start()), actionCollection(),
                                  normalizedName.local8Bit());
       filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
       mFilterMenuActions.append(filterAction);
-      if ( (*it)->configureToolbar() )
+      // FIXME
+      // uncomment the next if statement after the filter dialog supports
+      // separate activation of filters for the toolbar - currently
+      // we better depend on whether an icon is defined, so the current
+      // IF statement is intermediate
+      // if ( (*it)->configureToolbar() )
+      if ( !(*it)->icon().isEmpty() )
         mFilterTBarActions.append(filterAction);
     }
   }
   if ( !mFilterMenuActions.isEmpty() && mGUIClient->factory() )
     mGUIClient->plugActionList( "menu_filter_actions", mFilterMenuActions );
-  if ( !mFilterTBarActions.isEmpty() && mGUIClient->factory() ) {
-    mFilterTBarActions.prepend( mToolbarActionSeparator );
+  if ( !mFilterTBarActions.isEmpty() && mGUIClient->factory() )
     mGUIClient->plugActionList( "toolbar_filter_actions", mFilterTBarActions );
-  }
 }
 
-void KMMainWidget::slotFolderRemoved( KMFolder *folder )
-{
-  mFolderShortcutCommands.remove( folder->idString() );
-}
-
-bool KMMainWidget::shortcutIsValid( const KShortcut &sc ) const
-{
-  KActionPtrList actions = actionCollection()->actions();
-  KActionPtrList::Iterator it( actions.begin() );
-  for ( ; it != actions.end(); it++ ) {
-    if ( (*it)->shortcut() == sc ) return false;
-  }
-  return true;
-}
-
-void KMMainWidget::slotShortcutChanged( KMFolder *folder )
-{
-  // remove the old one, autodelete
-  mFolderShortcutCommands.remove( folder->idString() );
-  if ( folder->shortcut().isNull() ) 
-    return;
-  
-  FolderShortcutCommand *c = new FolderShortcutCommand( this, folder );
-  mFolderShortcutCommands.insert( folder->idString(), c );
-
-  QString actionlabel = QString( "FolderShortcut %1").arg( folder->prettyURL() );
-  QString actionname = QString( "FolderShortcut %1").arg( folder->idString() );
-  QString normalizedName = actionname.replace(" ", "_");
-  KAction* action = 
-    new KAction(actionlabel, folder->shortcut(), c, SLOT(start()), 
-                actionCollection(), normalizedName.local8Bit());
-  action->setIcon( folder->unreadIconPath() );
-  c->setAction( action ); // will be deleted along with the command
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubscriptionDialog()
@@ -3487,14 +3396,16 @@ void KMMainWidget::toggleSystemTray()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
-  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this, folderTree() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam,
+                      this, folderTree(), actionCollection() );
   wiz.exec();
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiVirusWizard()
 {
-  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this, folderTree() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus,
+                      this, folderTree(), actionCollection() );
   wiz.exec();
 }
 

@@ -2288,6 +2288,52 @@ QString KMReaderWin::createAtmFileLink() const
   return QString::null;
 }
 
+#if 1
+namespace {
+  class SelectionSaver {
+    KHTMLPart * const part;
+    DOM::Range oldSelection;
+  public:
+    SelectionSaver( KHTMLPart * p )
+      : part( p ),
+	oldSelection( p->hasSelection() ? p->selection() : p->htmlDocument().createRange() ) {}
+
+    ~SelectionSaver() {
+      part->setSelection( oldSelection );
+    }
+  };
+}
+
+static QString selectedTextOrAll( KHTMLPart * part ) {
+  SelectionSaver saver( part );
+  part->selectAll();
+  return part->selectedText();
+}
+#endif
+
+#if 0
+static QString bodyElementInnerText( KHTMLPart * part ) {
+  const DOM::HTMLDocument doc = part->htmlDocument();
+  if ( doc.isNull() )
+    return QString::null;
+  const DOM::HTMLElement body = doc.body();
+  if ( body.isNull() )
+    return QString::null;
+  return body.innerText().string();
+}
+
+static QString selectedTextOrAll( KHTMLPart * part ) {
+  if ( part->hasSelection() )
+    return part->selectedText();
+  else
+    return bodyElementInnerText( part );
+}
+#endif
+
+void KMReaderWin::slotSaveTextAs() {
+  ( new KMail::SaveTextAsCommand( selectedTextOrAll( mViewer ), this ) )->start();
+}
+
 #include "kmreaderwin.moc"
 
 

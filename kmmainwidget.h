@@ -36,7 +36,6 @@ class KMFolderTreeItem;
 class KMHeaders;
 class KMCommand;
 class KMMetaFilterActionCommand;
-class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
@@ -106,6 +105,7 @@ public:
   KAction *forwardAction() const { return mForwardAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *redirectAction() const { return mRedirectAction; }
+  KAction *bounceAction() const { return mBounceAction; }
   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
@@ -118,7 +118,6 @@ public:
   KAction *findInMessageAction() const { return mFindInMessageAction; }
   KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
   KAction *openAction() const { return mOpenAction; }
-  KAction *viewSourceAction() { return mViewSourceAction; }
 
   KActionMenu *statusMenu()  const{ return mStatusMenu; }
   KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
@@ -131,6 +130,7 @@ public:
 
   // Forwarded to the reader window.
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
+  KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
 
   KMHeaders *headers() const { return mHeaders; }
   void toggleSystemTray();
@@ -141,11 +141,6 @@ public:
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
-  
-  /** Checks a shortcut against the actioncollection and returns whether it
-   * is already used and therefor not valid or not. */
-  bool shortcutIsValid( const KShortcut& ) const;
-
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -193,13 +188,7 @@ public slots:
   /** Clear and create actions for marked filters */
   void clearFilterActions();
   void initializeFilterActions();
-  
-  /** Create actions for the folder shortcuts. */
-  void initializeFolderShortcutActions();
  
-  /** Add, remove or adjust the folder's shortcut. */
-  void slotShortcutChanged( KMFolder *folder );
-
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
@@ -212,7 +201,7 @@ protected:
   void updateFileMenu();
   void updateViewMenu();
 
-  KActionCollection * actionCollection() const { return mActionCollection; }
+  KActionCollection * actionCollection() { return mActionCollection; }
 
   KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
@@ -258,6 +247,7 @@ protected slots:
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();
+  void slotSaveTextAs();
   void slotOpenMsg();
   void slotSaveAttachments();
   void slotMoveMsg();
@@ -273,7 +263,6 @@ protected slots:
   void slotExpandAllThreads();
   void slotCollapseThread();
   void slotCollapseAllThreads();
-  void slotShowMsgSrc();
   void slotSetMsgStatusNew();
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();
@@ -338,7 +327,6 @@ protected slots:
   void slotPrevUnreadFolder();
 
   /** etc. */
-  void slotDisplayCurrentMessage();
   void slotMsgActivated(KMMessage*);
 
   /** Update the undo action */
@@ -373,6 +361,7 @@ protected slots:
   void slotForwardMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
+  void slotBounceMsg();
   void slotNoQuoteReplyToMsg();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -381,19 +370,17 @@ protected slots:
   void slotPrintMsg();
 
   void slotConfigChanged();
-  /** Remove the shortcut actions associated with a folder. */
-  void slotFolderRemoved( KMFolder *folder );
 
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
     *mSendAgainAction, *mApplyFiltersAction, *mFindInMessageAction,
-    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
+    *mSaveAttachmentsAction, *mOpenAction, *mSaveTextAsAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
       *mReplyListAction,
       *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-      *mNoQuoteReplyAction;
+      *mBounceAction, *mNoQuoteReplyAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   // Filter actions
@@ -475,13 +462,11 @@ private:
 
   QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
-  KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread;
   QPtrList<KAction> mFilterMenuActions;
   QPtrList<KAction> mFilterTBarActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
-  QDict<FolderShortcutCommand> mFolderShortcutCommands;
   QGuardedPtr <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;

@@ -42,9 +42,9 @@
 
 #include <qtextcodec.h>
 
-#include <libemailfunctions/email.h>
+#include <libkdepim/email.h>
 #include <kdebug.h>
-#include <kfiledialog.h>
+#include <kencodingfiledialog.h>
 #include <kio/netaccess.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
@@ -56,7 +56,9 @@
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
-#include <kimproxy.h>
+#if !KDE_IS_VERSION( 3, 3, 0 )
+# include <storedtransferjob.h> // from libkleo
+#endif
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -82,8 +84,7 @@ using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
-#include <redirectdialog.h>
-using KMail::RedirectDialog;
+#include "kimproxy.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
@@ -593,6 +594,58 @@ void KMUrlSaveCommand::slotUrlSaveResult( KIO::Job *job )
   }
 }
 
+#if KDE_IS_VERSION( 3, 3, 0 )
+# define KIO_STORED_PUT KIO::storedPut
+#else
+  // this one comes from libkleopatra...
+# define KIO_STORED_PUT KIOext::put
+#endif
+
+KMail::SaveTextAsCommand::SaveTextAsCommand( const QString & txt, QWidget * parent )
+  : KMCommand( parent ), mText( txt ) {}
+
+KMCommand::Result KMail::SaveTextAsCommand::execute() {
+  if ( mText.isEmpty() )
+    return OK;
+
+  const KEncodingFileDialog::Result res = KEncodingFileDialog::getSaveURLAndEncoding( QString::null, QString::null, QString::null, parentWidget() );
+  if ( res.URLs.empty() )
+    return Canceled;
+  const KURL saveUrl = res.URLs.front();
+  if ( !saveUrl.isValid() )
+    return Canceled;
+  if ( KIO::NetAccess::exists( saveUrl, false, parentWidget() ) ) {
+    if (KMessageBox::warningContinueCancel(0,
+        i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>")
+        .arg(saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
+        != KMessageBox::Continue)
+      return Canceled;
+  }
+  const QTextCodec * codec = QTextCodec::codecForName( res.encoding.latin1() );
+  Q_ASSERT( codec );
+  if ( !codec )
+    return Canceled;
+  int len = -1;
+  QByteArray data = codec->fromUnicode( mText, len );
+  data.resize( len );
+  KIO::Job * uploadJob = KIO_STORED_PUT( data, saveUrl, -1, true /*overwrite*/, false /*resume*/ );
+  uploadJob->setWindow( parentWidget() );
+  connect( uploadJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
+  setEmitsCompletedItself( true );
+  return OK;
+}
+
+#undef KIO_STORED_PUT
+
+void KMail::SaveTextAsCommand::slotResult( KIO::Job * job ) {
+  if ( job->error() ) {
+    job->showErrorDialog();
+    setResult( Failed );
+  } else {
+    setResult( OK );
+  }
+  emit completed( this );
+}
 
 KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMessage *msg )
   :KMCommand( parent, msg )
@@ -622,17 +675,14 @@ KMCommand::Result KMEditMsgCommand::execute()
   return OK;
 }
 
-
-KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-  KMMessage *msg, bool fixedFont )
-  :KMCommand( parent, msg ), mFixedFont( fixedFont )
+KMShowMsgSrcCommand::KMShowMsgSrcCommand( KMMessage *msg, bool fixedFont )
+  : mFixedFont( fixedFont ), mMsg ( msg )
 {
 }
 
-KMCommand::Result KMShowMsgSrcCommand::execute()
+void KMShowMsgSrcCommand::start()
 {
-  KMMessage *msg = retrievedMessage();
-  QString str = msg->codec()->toUnicode( msg->asString() );
+  QString str = mMsg->codec()->toUnicode( mMsg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setCaption( i18n("Message as Plain Text") );
@@ -652,8 +702,6 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
                   2*QApplication::desktop()->geometry().height()/3);
   }
   viewer->show();
-
-  return OK;
 }
 
 static KURL subjectToUrl( const QString & subject ) {
@@ -1253,21 +1301,18 @@ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
 
 KMCommand::Result KMRedirectCommand::execute()
 {
+  //TODO: move KMMessage::createRedirect to here
+  KMComposeWin *win;
   KMMessage *msg = retrievedMessage();
   if ( !msg || !msg->codec() )
     return Failed;
-    
-  RedirectDialog dlg( parentWidget(), "redirect", true,
-                      kmkernel->msgSender()->sendImmediate() );
-  if (dlg.exec()==QDialog::Rejected) return Failed;
 
-  KMMessage *newMsg = msg->createRedirect( dlg.to() );
-  KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
+  KCursorSaver busy(KBusyPtr::busy());
+  win = new KMComposeWin();
+  win->setMsg(msg->createRedirect(), FALSE);
+  win->setCharset(msg->codec()->mimeName());
+  win->show();
 
-  if ( !kmkernel->msgSender()->send( newMsg, dlg.sendImmediate() ) ) {
-    kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
-    return Failed; // error: couldn't send
-  }
   return OK;
 }
 
@@ -1449,28 +1494,6 @@ void KMMetaFilterActionCommand::start()
 #endif
 }
 
-FolderShortcutCommand::FolderShortcutCommand( KMMainWidget *mainwidget,
-                                              KMFolder *folder )
-    : mMainWidget( mainwidget ), mFolder( folder ), mAction( 0 )
-{
-}
-
-
-FolderShortcutCommand::~FolderShortcutCommand()
-{
-  if ( mAction ) mAction->unplugAll();
-  delete mAction;
-}
-
-void FolderShortcutCommand::start()
-{
-  mMainWidget->slotSelectFolder( mFolder );
-}
-
-void FolderShortcutCommand::setAction( KAction* action )
-{
-  mAction = action;
-}
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
                                                         KMMessage *msg )
@@ -1745,7 +1768,7 @@ KMCommand::Result KMMoveCommand::execute()
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),
          mDestFolder ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
-  connect( mProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
+  connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
            this, SLOT( slotMoveCanceled() ) );
 
   KMMessage *msg;
@@ -1832,7 +1855,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
   }
   if (!list.isEmpty() && mDestFolder) {
-    mDestFolder->moveMsg(list, &index);
+       mDestFolder->moveMsg(list, &index);
   } else {
     FolderToMessageListMap::Iterator it;
     for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
@@ -2135,8 +2158,6 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
   }
 
-  QMap< QString, int > renameNumbering;
-
   Result globalResult = OK;
   int unnamedAtmCount = 0;
   for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
@@ -2161,34 +2182,6 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
 
     if ( !curUrl.isEmpty() ) {
-
-     // Rename the file if we have already saved one with the same name:
-     // try appending a number before extension (e.g. "pic.jpg" => "pic_2.jpg")
-     QString origFile = curUrl.fileName();
-     QString file = origFile;
-
-     while ( renameNumbering.contains(file) ) {
-       file = origFile;
-       int num = renameNumbering[file] + 1;
-       int dotIdx = file.findRev('.');
-       file = file.insert( (dotIdx>=0) ? dotIdx : file.length(), QString("_") + QString::number(num) );
-     }
-     curUrl.setFileName(file);
-
-     // Increment the counter for both the old and the new filename
-     if ( !renameNumbering.contains(origFile))
-         renameNumbering[origFile] = 1;
-     else
-         renameNumbering[origFile]++;
-
-     if ( file != origFile ) {
-        if ( !renameNumbering.contains(file))
-            renameNumbering[file] = 1;
-        else
-            renameNumbering[file]++;
-     }
-
-
       if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
         if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" )
