@@ -559,8 +559,6 @@ public:
 protected:
   QCheckBox     *mAutoAppSignFileCheck;
   QCheckBox     *mSmartQuoteCheck;
-  QCheckBox     *mPgpAutoSignatureCheck;
-  QCheckBox     *mPgpAutoEncryptCheck;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
   QCheckBox     *mExternalEditorCheck;
@@ -738,6 +736,29 @@ protected:
 };
 
 
+class SecurityPageOpenPgpTab : public ConfigurationPage {
+  Q_OBJECT
+public:
+  SecurityPageOpenPgpTab( QWidget * parent=0, const char * name=0 );
+
+  // no icons:
+  static QString iconLabel() { return QString::null; }
+  static const char * iconName() { return 0; }
+
+  static QString title();
+  QString helpAnchor() const;
+
+  void setup();
+  void apply();
+  void installProfile( KConfig * profile );
+
+protected:
+  Kpgp::Config *mPgpConfig;
+  QCheckBox    *mPgpAutoSignatureCheck;
+  QCheckBox    *mPgpAutoEncryptCheck;
+};
+
+
 class SecurityPageCryptPlugTab : public ConfigurationPage
 {
   Q_OBJECT
@@ -797,12 +818,13 @@ public:
   void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;
+  typedef SecurityPageOpenPgpTab OpenPgpTab;
   typedef SecurityPageCryptPlugTab CryptPlugTab;
 
 protected:
   GeneralTab   *mGeneralTab;
-  Kpgp::Config *mPgpTab;
-  CryptPlugTab  *mCryptPlugTab;
+  OpenPgpTab   *mOpenPgpTab;
+  CryptPlugTab *mCryptPlugTab;
 };
 
 

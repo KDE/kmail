@@ -2355,14 +2355,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
   vlay->addWidget( mSmartQuoteCheck );
 
-  mPgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically sig&n messages using OpenPGP"), this );
-  vlay->addWidget( mPgpAutoSignatureCheck );
-
-  mPgpAutoEncryptCheck =
-    new QCheckBox( i18n("Automatically encr&ypt messages whenever possible"), this );
-  vlay->addWidget( mPgpAutoEncryptCheck );
-
   // a checkbutton for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -2418,8 +2410,6 @@ void ComposerPage::GeneralTab::setup() {
   bool state = ( composer.readEntry("signature").lower() != "manual" );
   mAutoAppSignFileCheck->setChecked( state );
   mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote", true ) );
-  mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
-  mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt", false ) );
   mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap", true ) );
   mWrapColumnSpin->setValue( composer.readNumEntry( "break-at", 78 ) );
 
@@ -2438,10 +2428,6 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   }
   if ( composer.hasKey( "smart-quote" ) )
     mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote" ) );
-  if ( composer.hasKey( "pgp-auto-sign" ) )
-    mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign" ) );
-  if ( composer.hasKey( "pgp-auto-encrypt" ) )
-    mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
   if ( composer.hasKey( "word-wrap" ) )
     mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap" ) );
   if ( composer.hasKey( "break-at" ) )
@@ -2464,10 +2450,6 @@ void ComposerPage::GeneralTab::apply() {
   bool autoSignature = mAutoAppSignFileCheck->isChecked();
   composer.writeEntry( "signature", autoSignature ? "auto" : "manual" );
   composer.writeEntry( "smart-quote", mSmartQuoteCheck->isChecked() );
-  composer.writeEntry( "pgp-auto-sign",
-		       mPgpAutoSignatureCheck->isChecked() );
-  composer.writeEntry( "pgp-auto-encrypt",
-		      mPgpAutoEncryptCheck->isChecked() );
   composer.writeEntry( "word-wrap", mWordWrapCheck->isChecked() );
   composer.writeEntry( "break-at", mWrapColumnSpin->value() );
 }
@@ -3112,12 +3094,8 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
   //
   // "PGP" tab:
   //
-  mPgpTab = new Kpgp::Config();
-  if ( mPgpTab->layout() ) {
-    mPgpTab->layout()->setSpacing( KDialog::spacingHint() );
-    mPgpTab->layout()->setMargin( KDialog::marginHint() );
-  }
-  addTab( mPgpTab, i18n("Open&PGP") );
+  mOpenPgpTab = new OpenPgpTab();
+  addTab( mOpenPgpTab, mOpenPgpTab->title() );
 
   //
   // "CryptPlug" tab:
@@ -3128,17 +3106,18 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
 
 void SecurityPage::setup() {
   mGeneralTab->setup();
-  mPgpTab->setValues();
+  mOpenPgpTab->setup();
   mCryptPlugTab->setup();
 }
 
 void SecurityPage::installProfile( KConfig * profile ) {
   mGeneralTab->installProfile( profile );
+  mOpenPgpTab->installProfile( profile );
 }
 
 void SecurityPage::apply() {
   mGeneralTab->apply();
-  mPgpTab->applySettings();
+  mOpenPgpTab->apply();
   mCryptPlugTab->apply();
 }
 
@@ -3224,7 +3203,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "option, but you should be aware of the possible problem.</p></qt>" );
   QWhatsThis::add( mExternalReferences, msg );
 
-  msg = i18n( "<qt><p>This options enables the <em>unconditional</em> sending "
+  msg = i18n( "<qt><p>This option enables the <em>unconditional</em> sending "
 	      "of delivery- and read confirmations (\"receipts\").</p>"
 	      "<p>Returning these confirmations (so-called <em>receipts</em>) "
 	      "makes it easy for the sender to track whether and - more "
@@ -3287,6 +3266,80 @@ void SecurityPage::GeneralTab::apply() {
   }
   reader.writeEntry( "htmlLoadExternal", mExternalReferences->isChecked() );
   general.writeEntry( "send-receipts", mSendReceiptCheck->isChecked() );
+}
+
+
+QString SecurityPage::OpenPgpTab::title() {
+  return i18n("Open&PGP");
+}
+
+QString SecurityPage::OpenPgpTab::helpAnchor() const {
+  return QString::fromLatin1("configure-security-pgp");
+}
+
+SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * name )
+  : ConfigurationPage ( parent, name )
+{
+  // tmp. vars:
+  QVBoxLayout *vlay;
+  QGroupBox   *group;
+  QString     msg;
+
+  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // Generic OpenPGP configuration
+  mPgpConfig = new Kpgp::Config( this );
+  group = mPgpConfig->optionsGroupBox();
+
+  // Add some custom OpenPGP options to the Options group box of Kpgp::Config
+  mPgpAutoSignatureCheck =
+    new QCheckBox( i18n("Automatically s&ign messages using OpenPGP"),
+                   group );
+
+  mPgpAutoEncryptCheck =
+    new QCheckBox( i18n("Automatically encrypt messages &whenever possible"),
+                   group );
+
+  vlay->addWidget( mPgpConfig );
+
+  vlay->addStretch( 10 ); // spacer
+
+  // and now: adding QWhat'sThis all over the place:
+  msg = i18n( "<qt><p>When this option is enabled then all messages you send "
+              "will be signed by default. Of course it's still possible to "
+              "disable signing for each message individually.</p></qt>" );
+  QWhatsThis::add( mPgpAutoSignatureCheck, msg );
+
+  msg = i18n( "<qt><p>When this option is enabled then every message you send "
+              "will be encrypted whenever encryption is possible and desired. "
+              "Of course it's still possible to disable the automatic "
+              "encryption for each message individually.</p></qt>" );
+  QWhatsThis::add( mPgpAutoEncryptCheck, msg );
+}
+
+void SecurityPage::OpenPgpTab::setup() {
+  KConfigGroup composer( kapp->config(), "Composer" );
+
+  mPgpConfig->setValues();
+  mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
+  mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt", false ) );
+}
+
+void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
+  KConfigGroup composer( profile, "Composer" );
+
+  if ( composer.hasKey( "pgp-auto-sign" ) )
+    mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign" ) );
+  if ( composer.hasKey( "pgp-auto-encrypt" ) )
+    mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
+};
+
+void SecurityPage::OpenPgpTab::apply() {
+  KConfigGroup composer( kapp->config(), "Composer" );
+
+  mPgpConfig->applySettings();
+  composer.writeEntry( "pgp-auto-sign", mPgpAutoSignatureCheck->isChecked() );
+  composer.writeEntry( "pgp-auto-encrypt", mPgpAutoEncryptCheck->isChecked() );
 }
 
 
