@@ -163,7 +163,7 @@ void SearchJob::slotSearchData( KIO::Job* job, const QString& data )
   } else
   {
     // remember the uids the server found
-    mImapSearchData = data;
+    mImapSearchHits = QStringList::split( " ", data );
 
     // get the folder to make sure we have all messages
     connect ( mFolder, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
@@ -182,10 +182,9 @@ void SearchJob::slotSearchFolderComplete()
     // search for the serial number of the UIDs
     // data contains all found uids separated by blank
     QValueList<Q_UINT32> serNums;
-    QStringList searchHits = QStringList::split( " ", mImapSearchData );
     for ( int i = 0; i < mFolder->count(); ++i ) {
       KMMsgBase * base = mFolder->getMsgBase( i );
-      if ( searchHits.contains( QString::number( base->UID() ) ) ) {
+      if ( mImapSearchHits.find( QString::number( base->UID() ) ) != mImapSearchHits.end() ) {
         Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( mFolder->folder(), i );
         serNums.append( serNum );
       }
@@ -246,15 +245,15 @@ void SearchJob::slotSearchMessageArrived( KMMessage* msg )
     if ( mLocalSearchPattern->op() == KMSearchPattern::OpAnd ) {
       // imap and local search have to match
       if ( mLocalSearchPattern->matches( msg ) &&
-          ( mImapSearchData.contains( QString::number(msg->UID()) ) ||
-            mImapSearchData.isEmpty() ) ) {
+          ( mImapSearchHits.isEmpty() ||
+           mImapSearchHits.find( QString::number(msg->UID() ) ) != mImapSearchHits.end() ) ) {
         Q_UINT32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
       }
     } else if ( mLocalSearchPattern->op() == KMSearchPattern::OpOr ) {
       // imap or local search have to match
       if ( mLocalSearchPattern->matches( msg ) ||
-          mImapSearchData.contains( QString::number(msg->UID()) ) ) {
+          mImapSearchHits.find( QString::number(msg->UID()) ) != mImapSearchHits.end() ) {
         Q_UINT32 serNum = msg->getMsgSerNum();
         mSearchSerNums.append( serNum );
       }

@@ -28,6 +28,7 @@
 #ifndef SEARCHJOB_H
 #define SEARCHJOB_H
 
+#include <qstringlist.h>
 #include "folderjob.h"
 
 class KMFolderImap;
@@ -104,7 +105,7 @@ protected:
   KMSearchPattern* mLocalSearchPattern;
   Q_UINT32 mSerNum;
     // saves the results of the imap search
-  QString mImapSearchData;
+  QStringList mImapSearchHits;
   // collects the serial numbers from imap and local search
   QValueList<Q_UINT32> mSearchSerNums;
   // the remaining messages that have to be downloaded for local search
