@@ -31,6 +31,7 @@
 #include "filterlog.h"
 
 #include <kdebug.h>
+#include <kdeversion.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -44,7 +45,8 @@
 #include <qwhatsthis.h>
 
 #include <errno.h>
-
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 using namespace KMail;
 
@@ -116,6 +118,12 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
           this, SLOT(slotLogStateChanged(void)));
 
   setInitialSize( QSize( 500, 400 ) );
+#if !KDE_IS_VERSION( 3, 2, 91 )
+  // HACK - KWin keeps all dialogs on top of their mainwindows, but that's probably
+  // wrong (#76026), and should be done only for modals. CVS HEAD should get
+  // proper fix in KWin (see also kmfldsearch.cpp)
+  XDeleteProperty( qt_xdisplay(), winId(), XA_WM_TRANSIENT_FOR );
+#endif
 }
 
 
