@@ -593,8 +593,6 @@ void KMReaderWin::parseMsg(void)
       mViewer->setCharset("iso10646-1", true);
     else mViewer->setCharset(mCodec->name(), true);
 
-  adjustFontSize();
-
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("body { font-family: \"%1\" }\n").arg( mBodyFamily ) +
 		 QString("p { font-size: %1pt }\n").arg( fntSize  ) +
