@@ -66,6 +66,7 @@ const QString KMMessage::followup(void) const
       else return "";
   }
 }
+
 //-----------------------------------------------------------------------------
 void KMMessage::setFollowup(const QString aStr)
 {
@@ -195,6 +196,18 @@ const QString KMMessage::asString(void)
   }
   resultStr = mMsg->AsString().c_str();
   return resultStr;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::setStatusFields(void)
+{
+  char str[3];
+
+  str[0] = (char)status();
+  str[1] = '\0';
+
+  setHeaderField("Status", status()==KMMsgStatusNew ? "R " : "RO");
+  setHeaderField("X-Status", str);
 }
 
 //----------------------------------------------------------------------------

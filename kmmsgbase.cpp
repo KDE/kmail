@@ -76,14 +76,31 @@ void KMMsgBase::setStatus(KMMsgStatus aStatus)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgBase::setStatus(const char* aStatusStr)
+void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 {
   int i;
 
-  for (i=0; i<NUM_STATUSLIST-1; i++)
-    if (strchr(aStatusStr, (char)sStatusList[i])) break;
+  mStatus = KMMsgStatusUnknown;
 
-  mStatus = sStatusList[i];
+  // first try to find status from "X-Status" field if given
+  if (aXStatusStr) for (i=0; i<NUM_STATUSLIST-1; i++)
+  {
+    if (strchr(aXStatusStr, (char)sStatusList[i]))
+    {
+      mStatus = sStatusList[i];
+      break;
+    }
+  }
+
+  // if not successful then use the "Status" field
+  if (mStatus == KMMsgStatusUnknown)
+  {
+    if (aStatusStr[0]=='R' && aStatusStr[1]=='O') mStatus=KMMsgStatusOld;
+    else if (aStatusStr[0]=='R') mStatus=KMMsgStatusUnread;
+    else if (aStatusStr[0]=='D') mStatus=KMMsgStatusDeleted;
+    else mStatus=KMMsgStatusNew;
+  }
+
   mDirty = TRUE;
 #ifndef KRN
   if (mParent) mParent->headerOfMsgChanged(this);
@@ -274,7 +291,7 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
 
     if (beg > start) result += aStr.mid(start, beg-start);
     mid = aStr.find("?Q?", beg+2);
-    end = aStr.find("?=", beg+2);
+    if (mid>beg) end = aStr.find("?=", mid+3);
     if (mid < 0 || end < 0)
     {
       // no quoted printable part -- skip it
@@ -289,7 +306,8 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
     }
     else if (aStr[mid+3]==' ') mid++;
 
-    result += decodeQuotedPrintable(aStr.mid(mid+3, end-mid-3).data());
+    if (end-mid-3 > 0)
+      result += decodeQuotedPrintable(aStr.mid(mid+3, end-mid-3).data());
     start = end+2;
   }
   return result;

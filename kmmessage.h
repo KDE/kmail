@@ -211,6 +211,10 @@ public:
   /** Open a window containing the complete, unparsed, message. */
   virtual void viewSource(const QString windowCaption) const;
 
+  /** Set "Status" and "X-Status" fields of the message from the
+   * internal message status. */
+  virtual void setStatusFields(void);
+
   /** Strip email address from string. Examples:
    * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
    * "joe@nowhere.com" returns "joe@nowhere.com" */

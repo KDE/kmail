@@ -46,7 +46,7 @@ public:
 
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status);
-  virtual void setStatus(const char* statusStr);
+  virtual void setStatus(const char* statusField, const char* xstatusField=0);
 
   /** Important header fields of the message that are also kept in the index. */
   virtual const QString subject(void) const = 0;

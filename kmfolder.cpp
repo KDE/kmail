@@ -276,7 +276,7 @@ bool KMFolder::isIndexOutdated(void)
 int KMFolder::createIndexFromContents(void)
 {
   char line[MAX_LINE];
-  char status[8];
+  char status[8], xstatus[8];
   QString subjStr, dateStr, fromStr;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
@@ -284,6 +284,7 @@ int KMFolder::createIndexFromContents(void)
   QString msgStr(256);
   QRegExp regexp(MSG_SEPERATOR_REGEX);
   int i, num;
+  short needStatus;
 
   assert(mStream != NULL);
   rewind(mStream);
@@ -296,7 +297,9 @@ int KMFolder::createIndexFromContents(void)
   dateStr = "";
   fromStr = "";
   subjStr = "";
-  strcpy(status, "RO");
+  *status = '\0';
+  *xstatus = '\0';
+  needStatus = 3;
 
   while (!atEof)
   {
@@ -323,10 +326,14 @@ int KMFolder::createIndexFromContents(void)
 	{
 	  mi = new KMMsgInfo(this);
 	  mi->init(subjStr, fromStr, 0, KMMsgStatusNew, offs, size);
+	  mi->setStatus(status,xstatus);
 	  mi->setDate(dateStr);
+	  mi->setDirty(FALSE);
 	  mMsgList.append(mi);
 
-	  strcpy(status, "RO");
+	  *status = '\0';
+	  *xstatus = '\0';
+	  needStatus = 3;
 	  dateStr = "";
 	  fromStr = "";
 	  subjStr = "";
@@ -337,11 +344,19 @@ int KMFolder::createIndexFromContents(void)
       offs = ftell(mStream);
       num++;
     }
-    else if (strncmp(line, "Status: ", 8) == 0)
+    else if ((needStatus & 1) && strncmp(line, "Status: ", 8) == 0)
     {
-      for(i=0; i<8 && line[i+8] > ' '; i++)
+      for(i=0; i<4 && line[i+8] > ' '; i++)
 	status[i] = line[i+8];
       status[i] = '\0';
+      needStatus &= ~1;
+    }
+    else if ((needStatus & 2) && strncmp(line, "X-Status: ", 10) == 0)
+    {
+      for(i=0; i<4 && line[i+10] > ' '; i++)
+	xstatus[i] = line[i+10];
+      xstatus[i] = '\0';
+      needStatus &= ~2;
     }
     else if (strncmp(line, "Date: ", 6) == 0)
       dateStr = QString(line+6).copy();
@@ -593,6 +608,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     if (idx >= 0) msgParent->take(idx);
   }
 
+  aMsg->setStatusFields();
   msgText = aMsg->asString();
   len = msgText.length();
 
