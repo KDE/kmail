@@ -50,6 +50,8 @@ void KMSearchRuleWidget::initWidget()
   mRuleFunc->adjustSize();
 
   mRuleField->insertStringList(sFilterFieldList);
+  // don't show sliders when popping up this menu
+  mRuleField->setSizeLimit( mRuleField->count() );
   mRuleField->adjustSize();
 
   connect( mRuleField, SIGNAL(textChanged(const QString &)),

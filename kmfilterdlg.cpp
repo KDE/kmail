@@ -629,6 +629,8 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   mComboBox->insertItem( " " ); 
   mComboBox->setCurrentItem(i);
 
+  // don't show scroll bars.
+  mComboBox->setSizeLimit( mComboBox->count() );
   // layout management:
   // o the combo box is not to be made larger than it's sizeHint(),
   //   the parameter widget should grow instead.
