@@ -52,6 +52,10 @@ private slots:
   void modifyAccount2();
   void removeAccount();
   void setDefaults();
+  void slotSendNow();
+  void slotSendLater();
+  void slotAllow8Bit();
+  void slotQuotedPrintable();
 
 private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
@@ -59,7 +63,8 @@ private:
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
   QLineEdit *indentPrefixEdit, *wrapColumnEdit, *pgpUserEdit;
   QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign;
-  QRadioButton *smtpRadio,*sendmailRadio;
+  QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;
+  QRadioButton *allow8Bit, *quotedPrintable;
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;
   QPushButton *addButton,*modifyButton,*removeButton;

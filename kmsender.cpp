@@ -54,6 +54,7 @@ void KMSender::readConfig(void)
   config->setGroup(SENDER_GROUP);
 
   mSendImmediate = (bool)config->readNumEntry("Immediate", TRUE);
+  mSendQuotedPrintable = (bool)config->readNumEntry("Quoted-Printable", FALSE);
   mMailer = config->readEntry("Mailer", "/usr/sbin/sendmail");
   mSmtpHost = config->readEntry("Smtp Host", "localhost");
   mSmtpPort = config->readNumEntry("Smtp Port", 25);
@@ -72,6 +73,7 @@ void KMSender::writeConfig(bool aWithSync)
   config->setGroup(SENDER_GROUP);
 
   config->writeEntry("Immediate", mSendImmediate);
+  config->writeEntry("Quoted-Printable", mSendQuotedPrintable);
   config->writeEntry("Mailer", mMailer);
   config->writeEntry("Smtp Host", mSmtpHost);
   config->writeEntry("Smtp Port", mSmtpPort);
@@ -266,6 +268,13 @@ void KMSender::setMethod(Method aMethod)
 void KMSender::setSendImmediate(bool aSendImmediate)
 {
   mSendImmediate = aSendImmediate;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSender::setSendQuotedPrintable(bool aSendQuotedPrintable)
+{
+  mSendQuotedPrintable = aSendQuotedPrintable;
 }
 
 

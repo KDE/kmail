@@ -54,6 +54,11 @@ public:
   bool sendImmediate(void) const { return mSendImmediate; }
   virtual void setSendImmediate(bool);
 
+  /** Shall messages be sent quoted-printable encoded. No encoding
+    happens otherwise. */
+  bool sendQuotedPrintable(void) const { return mSendQuotedPrintable; }
+  virtual void setSendQuotedPrintable(bool);
+
   /** Name of the mail client (usually "/usr/bin/mail") that
     is used for mailing if the method is smMail */
   const QString mailer(void) const { return mMailer; }
@@ -95,7 +100,7 @@ protected:
 
 private:
   Method mMethod;
-  bool mSendImmediate;
+  bool mSendImmediate, mSendQuotedPrintable;
   QString mMailer;
   QString mSmtpHost;
   int mSmtpPort;

@@ -135,7 +135,11 @@ static void initFolders(KConfig* cfg)
   QString name;
 
   name = cfg->readEntry("inboxFolder");
-  if (name.isEmpty()) name = getenv("MAIL");
+
+  // Currently the folder manager cannot manage folders which are not
+  // in the base folder directory.
+  //if (name.isEmpty()) name = getenv("MAIL");
+
   if (name.isEmpty()) name = "inbox";
   
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(name);

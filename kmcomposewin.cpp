@@ -331,14 +331,18 @@ void KMComposeWin::setupMenuBar(void)
 
   //---------- Menu: File
   menu = new QPopupMenu();
-  menu->insertItem(nls->translate("&Send"),this, SLOT(slotSend()));
-  menu->insertItem(nls->translate("Send &later"),this, SLOT(slotSendLater()));
+  menu->insertItem(nls->translate("&Send"),this, SLOT(slotSend()),
+		   CTRL+Key_Enter);
+  if (msgSender->sendImmediate())
+    menu->insertItem(nls->translate("S&end later"),this,SLOT(slotSendLater()));
+  else
+    menu->insertItem(nls->translate("S&end now"),this,SLOT(slotSendNow()));
   menu->insertSeparator();
   menu->insertItem(nls->translate("&Insert File..."), this,
 		    SLOT(slotInsertFile()));
   menu->insertSeparator();
   menu->insertItem(nls->translate("&Addressbook..."),this,
-		   SLOT(slotToDo()), ALT+Key_B);
+		   SLOT(slotToDo()));
   menu->insertItem(nls->translate("&Print..."),this, 
 		   SLOT(slotPrint()), keys->print());
   menu->insertSeparator();
@@ -644,7 +648,17 @@ void KMComposeWin::applyChanges(void)
   {
     // If there are no attachments in the list waiting it is a simple 
     // text message.
-    mMsg->setBody(pgpProcessedMsg());
+    if (msgSender->sendQuotedPrintable())
+    {
+      mMsg->setTypeStr("text");
+      mMsg->setSubtypeStr("plain");
+      mMsg->setCteStr("quoted-printable");
+      mMsg->setBodyEncoded(pgpProcessedMsg());
+    }
+    else
+    {
+      mMsg->setBody(pgpProcessedMsg());
+    }
   }
   else 
   { 
@@ -655,10 +669,12 @@ void KMComposeWin::applyChanges(void)
     mMsg->setBody("This message is in MIME format.\n\n");
 
     // create bodyPart for editor text.
-    bodyPart.setCteStr("7bit"); 
+    if (msgSender->sendQuotedPrintable())
+         bodyPart.setCteStr("quoted-printable");
+    else bodyPart.setCteStr("8bit"); 
     bodyPart.setTypeStr("text");
     bodyPart.setSubtypeStr("plain");
-    bodyPart.setBody(pgpProcessedMsg());
+    bodyPart.setBodyEncoded(pgpProcessedMsg());
     mMsg->addBodyPart(&bodyPart);
 
     // Since there is at least one more attachment create another bodypart
@@ -769,7 +785,7 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
-  msgPart->setEncodedBody(str);
+  msgPart->setBodyEncoded(str);
   msgPart->magicSetType();
 
   // show properties dialog
@@ -1136,7 +1152,9 @@ void KMComposeWin::slotToDo()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdWinTitle(const char *text)
 {
-  setCaption(text);
+  if (!text || *text=='\0')
+       setCaption("("+QString(nls->translate("unnamed"))+")");
+  else setCaption(text);
 }
 
 
@@ -1209,6 +1227,20 @@ void KMComposeWin::slotSendLater()
   kbp->busy();
   applyChanges();
   if(msgSender->send(mMsg,FALSE))
+  {
+    mAutoDeleteMsg = FALSE;
+    close();
+  }
+  kbp->idle();
+}
+
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSendNow()
+{
+  kbp->busy();
+  applyChanges();
+  if(msgSender->send(mMsg,TRUE))
   {
     mAutoDeleteMsg = FALSE;
     close();

@@ -32,7 +32,7 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setEncodedBody(const QString aStr)
+void KMMessagePart::setBodyEncoded(const QString aStr)
 {
   DwString dwResult, dwSrc;
   QString result;

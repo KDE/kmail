@@ -92,6 +92,7 @@ public slots:
   void slotPrint();
   void slotAttachFile();
   void slotSend();
+  void slotSendNow();
   void slotSendLater();
   void slotDropAction();
   void slotNewComposer();

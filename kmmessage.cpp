@@ -402,6 +402,7 @@ void KMMessage::initHeader(void)
 {
   assert(identity != NULL);
   setFrom(identity->fullEmailAddr());
+  setReplyTo(identity->replyToAddr());
   setTo("");
   setSubject("");
   setDateToday();
@@ -480,6 +481,7 @@ void KMMessage::setDate(time_t aDate)
 {
   KMMessageInherited::setDate(aDate);
   mMsg->Headers().Date().FromUnixTime(aDate);
+  mMsg->Headers().Date().Assemble();
   mNeedsAssembly = TRUE;
   mDirty = TRUE;
 }
@@ -692,6 +694,7 @@ int KMMessage::type(void) const
 void KMMessage::setTypeStr(const QString aStr)
 {
   mMsg->Headers().ContentType().SetTypeStr((const char*)aStr);
+  mMsg->Headers().ContentType().Parse();
   mNeedsAssembly = TRUE;
 }
 
@@ -727,6 +730,7 @@ int KMMessage::subtype(void) const
 void KMMessage::setSubtypeStr(const QString aStr)
 {
   mMsg->Headers().ContentType().SetSubtypeStr((const char*)aStr);
+  mMsg->Headers().ContentType().Parse();
   mNeedsAssembly = TRUE;
 }
 
@@ -763,6 +767,7 @@ int KMMessage::contentTransferEncoding(void) const
 void KMMessage::setContentTransferEncodingStr(const QString aStr)
 {
   mMsg->Headers().ContentTransferEncoding().FromString((const char*)aStr);
+  mMsg->Headers().ContentTransferEncoding().Parse();
   mNeedsAssembly = TRUE;
 }
 
@@ -815,23 +820,29 @@ const QString KMMessage::bodyDecoded(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncoded(const QString aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.size(), 0, aStr.length());
-  DwString dwstr;
+  //  DwString dwSrc(aStr.data(), aStr.size(), 0, aStr.length());
+  DwString dwResult, dwSrc;
+  int len = aStr.size();
 
   switch (cte())
   {
   case DwMime::kCteBase64:
-    DwEncodeBase64(dwsrc, dwstr);
+    dwSrc.resize(len);
+    memcpy((void*)dwSrc.data(), (void*)aStr.data(), len);
+    DwEncodeBase64(dwSrc, dwResult);
     break;
   case DwMime::kCteQuotedPrintable:
-    DwEncodeQuotedPrintable(dwsrc, dwstr);
+    dwSrc.resize(len);
+    memcpy((void*)dwSrc.data(), (void*)aStr.data(), len);
+    DwEncodeQuotedPrintable(dwSrc, dwResult);
     break;
   default:
-    dwstr = dwsrc;
+    dwResult.resize(len);
+    memcpy((void*)dwResult.data(), (void*)aStr.data(), len);
     break;
   }
 
-  mMsg->Body().FromString(dwstr);
+  mMsg->Body().FromString(dwResult);
   mNeedsAssembly = TRUE;
 }
 
@@ -882,8 +893,8 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     }
     else
     {
-      aPart->setTypeStr("Text");      // Set to defaults
-      aPart->setSubtypeStr("Plain");
+      aPart->setTypeStr("text");      // Set to defaults
+      aPart->setSubtypeStr("plain");
     }
     // Modification by Markus
     if (!headers->ContentType().Name().empty())

@@ -23,7 +23,7 @@ public:
   virtual const QString bodyDecoded(void) const;
 
   /** Sets body, encoded according to the content-transfer-encoding. */
-  virtual void setEncodedBody(const QString aStr);
+  virtual void setBodyEncoded(const QString aStr);
 
   /** Get or set name parameter */
   const QString name(void) const;

@@ -92,6 +92,7 @@ static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
   if (detail_return)
   {
     sel = new QPushButton("...", parent);
+    sel->setFocusPolicy(QWidget::NoFocus);
     sel->setFixedSize(sel->sizeHint().width(), label->height());
     grid->addWidget(sel, gridy, gridx++);
     *detail_return = sel;
@@ -266,6 +267,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   QLabel* lbl;
   KConfig* config = app->getConfig();
   QString str;
+  int i;
 
   //---------- group: phrases
   grp = new QGroupBox(nls->translate("Phrases"), tab);
@@ -342,7 +344,8 @@ void KMSettings::createTabComposer(QWidget *parent)
   wrapColumnEdit->setMinimumSize(50, wrapColumnEdit->sizeHint().height());
   grid->addWidget(wrapColumnEdit, 2, 1);
 
-  monospFont = new QCheckBox(nls->translate("Use monospaced font"), grp);
+  monospFont = new QCheckBox(nls->translate("Use monospaced font") +
+			     QString(" (still broken)"), grp);
   monospFont->adjustSize();
   monospFont->setMinimumSize(monospFont->sizeHint());
   grid->addMultiCellWidget(monospFont, 3, 3, 0, 1);
@@ -352,6 +355,37 @@ void KMSettings::createTabComposer(QWidget *parent)
   grid->setColStretch(2,10);
   grid->activate();
 
+  //---------- group sending
+  grp = new QGroupBox(nls->translate("When sending mail"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 4, 3, 20, 4);
+  lbl = new QLabel(nls->translate("Default sending:"), grp);
+  lbl->setMinimumSize(lbl->sizeHint());
+  grid->addWidget(lbl, 0, 0);
+  sendNow = new QRadioButton(nls->translate("send now"), grp);
+  sendNow->setMinimumSize(sendNow->sizeHint());
+  connect(sendNow,SIGNAL(clicked()),SLOT(slotSendNow()));
+  grid->addWidget(sendNow, 0, 1);
+  sendLater = new QRadioButton(nls->translate("send later"), grp);
+  sendLater->setMinimumSize(sendLater->sizeHint());
+  connect(sendLater,SIGNAL(clicked()),SLOT(slotSendLater()));
+  grid->addWidget(sendLater, 0, 2);
+
+  lbl = new QLabel(nls->translate("Send messages:"), grp);
+  lbl->setMinimumSize(lbl->sizeHint());
+  grid->addWidget(lbl, 1, 0);
+  allow8Bit = new QRadioButton(nls->translate("Allow 8-bit"), grp);
+  allow8Bit->setMinimumSize(allow8Bit->sizeHint());
+  connect(allow8Bit,SIGNAL(clicked()),SLOT(slotAllow8Bit()));
+  grid->addWidget(allow8Bit, 1, 1);
+  quotedPrintable = new QRadioButton(nls->translate(
+			  "MIME Compilant (Quoted Printable)"), grp);
+  quotedPrintable->setMinimumSize(quotedPrintable->sizeHint());
+  connect(quotedPrintable,SIGNAL(clicked()),SLOT(slotQuotedPrintable()));
+  grid->addWidget(quotedPrintable, 1, 2);
+  grid->activate();
+
+  //---------- set values
   config->setGroup("Composer");
   autoAppSignFile->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
   wordWrap->setChecked(config->readNumEntry("word-wrap",1));
@@ -359,7 +393,15 @@ void KMSettings::createTabComposer(QWidget *parent)
   monospFont->setChecked(stricmp(config->readEntry("font","variable"),"fixed")==0);
   pgpAutoSign->setChecked(config->readNumEntry("pgp-auto-sign",0));
 
-  //---------- ére we gø
+  i = msgSender->sendImmediate();
+  sendNow->setChecked(i);
+  sendLater->setChecked(!i);
+
+  i = msgSender->sendQuotedPrintable();
+  allow8Bit->setChecked(!i);
+  quotedPrintable->setChecked(i);
+
+  //---------- ére we gø  (orcish battle cry)
   box->addStretch(10);
   box->activate();
  
@@ -380,6 +422,38 @@ const QString KMSettings::tabNetworkAcctStr(const KMAccount* act) const
   if (act->folder()) str += act->folder()->name();
 
   return str;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotAllow8Bit()
+{
+  allow8Bit->setChecked(TRUE);
+  quotedPrintable->setChecked(FALSE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotQuotedPrintable()
+{
+  allow8Bit->setChecked(FALSE);
+  quotedPrintable->setChecked(TRUE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotSendNow()
+{
+  sendNow->setChecked(TRUE);
+  sendLater->setChecked(FALSE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotSendLater()
+{
+  sendNow->setChecked(FALSE);
+  sendLater->setChecked(TRUE);
 }
 
 
@@ -536,6 +610,8 @@ void KMSettings::doApply()
   msgSender->setMailer(sendmailLocationEdit->text());
   msgSender->setSmtpHost(smtpServerEdit->text());
   msgSender->setSmtpPort(atoi(smtpPortEdit->text()));
+  msgSender->setSendImmediate(sendNow->isChecked());
+  msgSender->setSendQuotedPrintable(quotedPrintable->isChecked());
   msgSender->writeConfig(FALSE);
   
   //----- incoming mail
