@@ -2,10 +2,12 @@
 [KDE Desktop Entry]
 Name=Mail client
 Name[de]=Email Programm
+Name[pl]=Klient Email
 Type=Application
 Exec=kmail
 Icon=kmail.xpm
 DocPath=kmail.html
 Comment=Mail Client
 Comment[de]=Programm zum Lesen und Verschicken von Emails
+Comment[pl]=Program do wysy³ania i odbierania poczty elektronicznej
 Terminal=0
