@@ -226,16 +226,16 @@ void KMSystemTray::foldersChanged()
  */
 void KMSystemTray::mousePressEvent(QMouseEvent *e)
 {
-  mAnimating = false;
-
   // switch to kmail on left mouse button
   if( e->button() == LeftButton )
   {
-    if(mParentVisible) hideKMail();
-    else showKMail();
-
-    mParentVisible = !mParentVisible;
+    if ( mParentVisible && !mAnimating )
+      hideKMail();
+    else
+      showKMail();
   }
+
+  mAnimating = false;
 
   // open popup menu on right mouse button
   if( e->button() == RightButton )
@@ -301,7 +301,7 @@ void KMSystemTray::showKMail()
     /** Force window to grab focus */
     mainWin->show();
     mainWin->raise();
-
+    mParentVisible = true;
     /** Switch to appropriate desktop */
     int desk = KWin::info(mainWin->winId()).desktop;
     KWin::setCurrentDesktop(desk);
@@ -316,6 +316,7 @@ void KMSystemTray::hideKMail()
   if(mainWin)
   {
     mainWin->hide();
+    mParentVisible = false;
   }
 }
 
