@@ -959,7 +959,8 @@ public:
       mNewBodyPart( newBodyPart ), mFormat( format ) {}
 
   void execute() {
-    KMMessagePart tmpNewBodyPart = *mNewBodyPart;
+    KMMessagePart tmpNewBodyPart;
+    tmpNewBodyPart.duplicate( *mNewBodyPart );
 
     // TODO: Async call
 

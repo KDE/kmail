@@ -80,6 +80,15 @@ void KMMessagePart::clear()
 
 
 //-----------------------------------------------------------------------------
+KMMessagePart & KMMessagePart::duplicate( const KMMessagePart & msgPart )
+{
+  // copy the data of msgPart
+  *this = msgPart;
+  // detach the explicitely shared QByteArray
+  mBody.detach();
+}
+
+//-----------------------------------------------------------------------------
 int KMMessagePart::decodedSize(void) const
 {
   if (mBodyDecodedSize < 0)

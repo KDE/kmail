@@ -22,6 +22,10 @@ public:
   /** Reset to text/plain with 7bit cte and clear all other properties. */
   void clear();
 
+  /** Obtains an independant copy (i.e. without explicitely shared data) of the
+      data contained in msgPart. Returns a reference to this message part. */
+  KMMessagePart & duplicate( const KMMessagePart & msgPart );
+
   /** Get or set the message body */
   QCString body(void) const;
   void setBody(const QCString &aStr);
