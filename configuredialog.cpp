@@ -3926,12 +3926,10 @@ void SecurityPage::SMimeTab::save() {
     const bool honor = mWidget->honorHTTPProxyRB->isChecked();
     if ( e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue() != honor )
         e.mHonorHTTPProxy->setBoolValue( honor );
-    if ( !honor )
-    {
-      QString chosenProxy = mWidget->customHTTPProxy->text();
-      if ( chosenProxy != e.mCustomHTTPProxy->stringValue() )
-        e.mCustomHTTPProxy->setStringValue( chosenProxy );
-    }
+
+    QString chosenProxy = mWidget->customHTTPProxy->text();
+    if ( chosenProxy != e.mCustomHTTPProxy->stringValue() )
+      e.mCustomHTTPProxy->setStringValue( chosenProxy );
   }
   txt = mWidget->customLDAPProxy->text();
   if ( e.mCustomLDAPProxy && e.mCustomLDAPProxy->stringValue() != txt )
