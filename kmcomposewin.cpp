@@ -1328,6 +1328,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       cText = codec->fromUnicode(text);
       newText = codec->toUnicode(cText);
     }
+    if (cText.isNull()) cText = "";
 
     if (!text.isEmpty() && (newText != text))
     {
@@ -2119,17 +2120,12 @@ void KMComposeWin::slotPrint()
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
-  static bool busy = false;
-  if (busy) return;
-  busy = true;
-
   if (!saveInDrafts)
   {
      if (to().isEmpty())
      {
         mEdtTo->setFocus();
         KMessageBox::information(0,i18n("You must specify at least one receiver in the To: field."));
-        busy = false;
         return;
      }
 
@@ -2140,7 +2136,6 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"));
         if( rc == KMessageBox::No )
         {
-           busy = false;
            return;
         }
      }
@@ -2168,7 +2163,6 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (!sentOk)
   {
      kernel->kbp()->idle();
-     busy = false;
      return;
   }
 
@@ -2180,10 +2174,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   kernel->kbp()->idle();
 
   if (!sentOk)
-  {
-     busy = false;
      return;
-  }
 
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
@@ -2196,8 +2187,6 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   mFolder = NULL;
   hide();
   delete this;
-
-  busy = false;
 }
 
 
