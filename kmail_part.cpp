@@ -35,7 +35,6 @@
 #include "kmfoldertree.h"
 #include "kmstartup.h"
 #include "kmbroadcaststatus.h"
-#include "statusbarprogresswidget.h"
 #include "aboutdata.h"
 #include "kmkernel.h"
 #include "kmfolder.h"
@@ -115,7 +114,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
   mStatusBar  = new KMailStatusBarExtension(this);
-  mStatusBar->addStatusBarItem( mainWidget->progressWidget(), 0, true );
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
@@ -127,7 +125,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
   mStatusBar  = new KMailStatusBarExtension(this);
-  mStatusBar->addStatusBarItem( mainWidget->progressWidget(), 0, true );
   new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,
                                 "KMailSidebar" );

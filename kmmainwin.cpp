@@ -7,6 +7,7 @@
 #include "kstatusbar.h"
 #include "kmkernel.h"
 #include "kmsender.h"
+#include "progressdialog.h"
 #include "statusbarprogresswidget.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
@@ -102,9 +103,9 @@ void KMMainWin::htmlStatusMsg(const QString& aText)
 
 void KMMainWin::displayStatusMsg(const QString& aText)
 {
-  if ( !statusBar() || !littleProgress) return;
+  if ( !statusBar() || !mLittleProgress) return;
   QString text = " " + aText + " ";
-  int statusWidth = statusBar()->width() - littleProgress->width()
+  int statusWidth = statusBar()->width() - mLittleProgress->width()
     - fontMetrics().maxWidth();
 
   while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
@@ -140,12 +141,18 @@ void KMMainWin::slotUpdateToolbars()
 void KMMainWin::setupStatusBar()
 {
   mMessageStatusId = 1;
-  littleProgress = mainKMWidget()->progressWidget();
 
-  statusBar()->addWidget( littleProgress, 0 , true );
+  /* Create a progress dialog and hide it. */
+  mProgressDialog = new KPIM::ProgressDialog( statusBar(), this );
+  mProgressDialog->hide();
+
+  mLittleProgress = new StatusbarProgressWidget( mProgressDialog, statusBar() );
+  mLittleProgress->show();
+
+  statusBar()->addWidget( mLittleProgress, 0 , true );
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
   statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
-  littleProgress->show();
+  mLittleProgress->show();
 }
 
 /** Read configuration options after widgets are created. */

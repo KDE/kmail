@@ -39,8 +39,6 @@ class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMFldSearch;
-namespace KPIM { class StatusbarProgressWidget; }
-using KPIM::StatusbarProgressWidget;
 class KMSystemTray;
 
 template <typename T> class QValueList;
@@ -133,9 +131,6 @@ public:
   KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
 
   KMHeaders *headers() const { return mHeaders; }
-  StatusbarProgressWidget* progressWidget() const;
-  ProgressDialog* progressDialog() const { return mProgressDialog; }
-
   void toggleSystray(bool enabled, int mode);
 
   void updateListFilterAction();
@@ -196,7 +191,6 @@ signals:
 
 protected:
   void setupActions();
-  void setupStatusBar();
   void createWidgets();
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
@@ -464,9 +458,6 @@ private:
   KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 
   QTimer *menutimer;
-
-  StatusbarProgressWidget *mLittleProgress;
-  ProgressDialog *mProgressDialog;
 
   QPtrList<KMMessage> mSelectedMsgs;
   QGuardedPtr<KMail::Vacation> mVacation;

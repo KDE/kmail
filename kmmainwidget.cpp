@@ -40,7 +40,6 @@
 #include "globalsettings.h"
 #include "kcursorsaver.h"
 #include "kmbroadcaststatus.h"
-#include "statusbarprogresswidget.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
 #include "kmacctmgr.h"
@@ -63,7 +62,6 @@
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "progressdialog.h"
 #include "vacation.h"
 using KMail::Vacation;
 #include "subscriptiondialog.h"
@@ -138,7 +136,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   readPreConfig();
   createWidgets();
 
-  setupStatusBar();
   setupActions();
 
   readConfig();
@@ -1621,11 +1618,6 @@ void KMMainWidget::slotCycleAttachmentStrategy() {
   action->setChecked( true );
 }
 
-StatusbarProgressWidget* KMMainWidget::progressWidget() const
-{
-  return mLittleProgress;
-}
-
 void KMMainWidget::folderSelectedUnread(KMFolder* aFolder)
 {
   mHeaders->blockSignals( true );
@@ -2845,23 +2837,6 @@ void KMMainWidget::setupActions()
   initializeFilterActions();
   updateMessageActions();
 }
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::setupStatusBar()
-{
-  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
-  KStatusBar *bar = mainWin ? mainWin->statusBar() : 0;
-
-  /* Create a progress dialog and hide it. */
-  mProgressDialog = new KPIM::ProgressDialog( bar, this );
-  mProgressDialog->hide();
-
-  //we setup the progress widget here, because its the one widget
-  //we want to export to the part.
-  mLittleProgress = new StatusbarProgressWidget( mProgressDialog, bar );
-  mLittleProgress->show();
-}
-
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
