@@ -331,10 +331,10 @@ bool KMFilterRule::matches(const KMMessage* msg)
   switch (mFunction)
   {
   case KMFilterRule::FuncEquals:
-    return (stricmp(mContents, msgContents) == 0);
+    return (qstricmp(mContents, msgContents) == 0);
 
   case KMFilterRule::FuncNotEqual:
-    return (stricmp(mContents, msgContents) != 0);
+    return (qstricmp(mContents, msgContents) != 0);
 
   case KMFilterRule::FuncContains:
     return msgContents.contains(mContents, FALSE);

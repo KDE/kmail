@@ -181,7 +181,7 @@ public:
 
     const int dateLength = 30;
     char cDate[dateLength + 1];
-    strftime( cDate, dateLength, "%Y:%j:%T", gmtime( &mDate ));
+    strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &mDate ));
     mSortDate = cDate + mSortArrival;
   }
 
@@ -619,7 +619,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   }
 
   QString colText = i18n( "Sender" );
-  if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
+  if (mFolder && (qstricmp(mFolder->whoField(), "To")==0))
     colText = i18n("Receiver");
   setColumnText( mPaintInfo.senderCol, colText);
 
@@ -1855,7 +1855,7 @@ void KMHeaders::updateMessageList(void)
       if (mItems[i] == 0) {
 	// It turns out this can happen when different messages have the same ids;
 	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-	mItems[i] = hi;	
+	mItems[i] = hi;
 	kdDebug() << QString("%1 ").arg(i) + mFolder->getMsgBase(i)->subject() + " " +  mFolder->getMsgBase(i)->fromStrip() << endl;
 	//	assert(mItems[i] != 0);
       }
@@ -1869,7 +1869,7 @@ void KMHeaders::updateMessageList(void)
       {
 	mb = mFolder->getMsgBase(i);
 	assert(mb != NULL); // otherwise using count() above is wrong
-	
+
 	if (i >= oldSize)
 	  mItems[i] = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
 	else

@@ -616,8 +616,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   int vcnum = -1;
   for (int j = 0; j < aMsg->numBodyParts(); j++) {
     aMsg->bodyPart(j, &msgPart);
-    if (!stricmp(msgPart.typeStr(), "text")
-       && !stricmp(msgPart.subtypeStr(), "x-vcard")) {
+    if (!qstricmp(msgPart.typeStr(), "text")
+       && !qstricmp(msgPart.subtypeStr(), "x-vcard")) {
         int vcerr;
         vc = VCard::parseVCard(msgPart.body(), &vcerr);
 
@@ -646,13 +646,13 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       {
         aMsg->bodyPart(i, &msgPart);        // set part...
         subtype = msgPart.subtypeStr();     // get subtype...
-        if (htmlMail() && stricmp(subtype, "html")==0)    // is it html?
+        if (htmlMail() && qstricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
           str = msgPart.bodyDecoded();      // decode it...
           mViewer->write(mCodec->toUnicode(str.data()));    // write it...
           return;                           // return, finshed.
         }
-	else if (!htmlMail() && (stricmp(subtype, "plain")==0))
+	else if (!htmlMail() && (qstricmp(subtype, "plain")==0))
 	                                    // wasn't html show only if
 	{                                   // support for html is turned off
           str = msgPart.bodyDecoded();      // decode it...
@@ -692,15 +692,15 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
       if (!asIcon)
       {
-//	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
-//	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
-	if ((type == "") || (stricmp(type, "text")==0))
+//	if (i<=0 || qstricmp(type, "text")==0)//||qstricmp(type, "message")==0)
+//	if (qstricmp(type, "text")==0)//||qstricmp(type, "message")==0)
+	if ((type == "") || (qstricmp(type, "text")==0))
 	{
           QCString cstr(msgPart.bodyDecoded());
 	  if (i>0)
 	      mViewer->write("<br><hr><br>");
 
-	  if (htmlMail() && (stricmp(subtype, "html")==0))
+	  if (htmlMail() && (qstricmp(subtype, "html")==0))
           {
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
             // We must fo this, or else we will see only 1st inlined html attachment
@@ -720,7 +720,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
           else writeBodyStr(cstr);
 	}
         // ---Sven's view smart or inline image attachments in kmail start---
-        else if (stricmp(type, "image")==0)
+        else if (qstricmp(type, "image")==0)
         {
           inlineImage=true;
           writePartIcon(&msgPart, i);
@@ -1248,7 +1248,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       iStr.truncate(len);
 
       htmlPos -= (i1 - 1);
-      if (iStr.length()>3 && iStr.at(0) != '@' 
+      if (iStr.length()>3 && iStr.at(0) != '@'
         && iStr.at(iStr.length() - 1) != '@')
           iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
       HTML_ADD(iStr.data(), iStr.length());
@@ -1419,7 +1419,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 {
   QString str;
 
-  if (aReaderWin && stricmp(aMsgPart->typeStr(), "message")==0)
+  if (aReaderWin && qstricmp(aMsgPart->typeStr(), "message")==0)
   {
     aReaderWin->atmViewMsg(aMsgPart);
     return;
@@ -1428,7 +1428,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
   kernel->kbp()->busy();
   {
     KMReaderWin* win = new KMReaderWin; //new reader
-    if (stricmp(aMsgPart->typeStr(), "message")==0)
+    if (qstricmp(aMsgPart->typeStr(), "message")==0)
     {               // if called from compose win
       KMMessage* msg = new KMMessage;
       assert(aMsgPart!=NULL);
@@ -1437,9 +1437,9 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->setMsg(msg, true);
       win->show();
     }
-    else if (stricmp(aMsgPart->typeStr(), "text")==0)
+    else if (qstricmp(aMsgPart->typeStr(), "text")==0)
     {
-      if (stricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
+      if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
         KMDisplayVCard *vcdlg;
 	int vcerr;
 	VCard *vc = VCard::parseVCard(aMsgPart->body(), &vcerr);
@@ -1471,7 +1471,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 		 ">" );
 
       QCString str = aMsgPart->bodyDecoded();
-      if (aHTML && (stricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
+      if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
 	win->mViewer->write(win->codec()->toUnicode(str));
       else  // plain text
 	win->writeBodyStr(str);
@@ -1480,7 +1480,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }
-    else if (stricmp(aMsgPart->typeStr(), "image")==0)
+    else if (qstricmp(aMsgPart->typeStr(), "image")==0)
     {
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
@@ -1544,15 +1544,15 @@ void KMReaderWin::slotAtmOpen()
   KMMessagePart msgPart;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-  if (stricmp(msgPart.typeStr(), "message")==0)
+  if (qstricmp(msgPart.typeStr(), "message")==0)
   {
     atmViewMsg(&msgPart);
     return;
   }
 
-  if (stricmp(msgPart.typeStr(), "text") == 0)
+  if (qstricmp(msgPart.typeStr(), "text") == 0)
   {
-    if (stricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
+    if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
       KMDisplayVCard *vcdlg;
       int vcerr;
       VCard *vc = VCard::parseVCard(msgPart.body(), &vcerr);

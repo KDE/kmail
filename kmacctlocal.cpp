@@ -29,7 +29,7 @@
 #ifndef _PATH_MAILDIR
 #define _PATH_MAILDIR "/var/spool/mail"
 #endif
-
+#undef None
 
 //-----------------------------------------------------------------------------
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):

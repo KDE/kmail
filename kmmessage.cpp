@@ -649,10 +649,10 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       if (i==0)
         isInline = TRUE;
       else
-        isInline = (stricmp(msgPart.contentDisposition(), "inline") == 0);
+        isInline = (qstricmp(msgPart.contentDisposition(), "inline") == 0);
 
       if (isInline) {
-        if (stricmp(msgPart.typeStr(),"text") == 0) {
+        if (qstricmp(msgPart.typeStr(),"text") == 0) {
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
           QString part;
@@ -670,7 +670,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
             smartQuote(part, '\n' + indentStr, sWrapCol, aStripSignature);
           result += part;
         } else
-        if (stricmp(msgPart.typeStr(),"message") == 0) {
+        if (qstricmp(msgPart.typeStr(),"message") == 0) {
           KMMessage inlineMsg;
           inlineMsg.fromString(msgPart.bodyDecoded());
           QString inlineHeaderStr = inlineMsg.headerAsString();
@@ -753,7 +753,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList)
       quot = toStr.findRev("\"", i);
       pos1 = toStr.findRev(", ", i);
       if (pos1 < quot)
-      { 
+      {
         quot = toStr.findRev("\"", quot - 1);
         pos1 = toStr.findRev(", ", quot);
       }
@@ -903,9 +903,9 @@ KMMessage* KMMessage::createRedirect(void)
     for (i = 1; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if (stricmp(msgPart.contentDisposition(),"inline")!=0 ||
-	  (stricmp(msgPart.typeStr(),"text")!=0 &&
-	   stricmp(msgPart.typeStr(),"message")!=0))
+      if (qstricmp(msgPart.contentDisposition(),"inline")!=0 ||
+	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
+	   qstricmp(msgPart.typeStr(),"message")!=0))
       {
 	msg->addBodyPart(&msgPart);
       }
@@ -964,9 +964,9 @@ KMMessage* KMMessage::createForward(void)
     for (i = 1; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if (stricmp(msgPart.contentDisposition(),"inline")!=0 ||
-	  (stricmp(msgPart.typeStr(),"text")!=0 &&
-	   stricmp(msgPart.typeStr(),"message")!=0))
+      if (qstricmp(msgPart.contentDisposition(),"inline")!=0 ||
+	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
+	   qstricmp(msgPart.typeStr(),"message")!=0))
       {
         msg->addBodyPart(&msgPart);
       }
@@ -1681,7 +1681,7 @@ int KMMessage::numBodyParts(void) const
   QList< DwBodyPart > parts;
   QString mp = "multipart";
 
-  while (part) 
+  while (part)
   {
      //dive into multipart messages
      while ( part && part->Headers().HasContentType() &&
@@ -1699,7 +1699,7 @@ int KMMessage::numBodyParts(void) const
 	part = parts.getLast();
 	parts.removeLast();
      } ;
-     
+
      if (part)
 	 part = part->Next();
   }

@@ -507,9 +507,9 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   switch(mFunc)
   {
   case Equal:
-    return (stricmp(value, mValue) == 0);
+    return (qstricmp(value, mValue) == 0);
   case NotEqual:
-    return (stricmp(value, mValue) != 0);
+    return (qstricmp(value, mValue) != 0);
   case Contains:
     return value.contains(mValue, FALSE);
   case NotContains:

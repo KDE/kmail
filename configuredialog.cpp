@@ -1572,7 +1572,7 @@ void ConfigureDialog::setupComposerPage( void )
   state = config.readBoolEntry("replace-forward-prefix", true);
   mComposer.replaceForwardPrefixCheck->setChecked( state );
 
-  state = stricmp( config.readEntry("signature"), "auto" ) == 0;
+  state = qstricmp( config.readEntry("signature"), "auto" ) == 0;
   mComposer.autoAppSignFileCheck->setChecked( state );
 
   state = config.readBoolEntry( "smart-quote", true );

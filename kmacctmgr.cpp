@@ -142,7 +142,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
   processNextCheck(false);
 
-//   mAccountIt->toLast(); 
+//   mAccountIt->toLast();
 //   ++(*mAccountIt);
 
 //   lastAccountChecked = account;
@@ -167,7 +167,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     emit checkedMail(newMailArrived);
     return;
   }
-  
+
   KMAccount *curAccount = mAcctChecking->take(0);
   connect( curAccount, SIGNAL(finishedCheck(bool)),
 	   this, SLOT(processNextCheck(bool)) );
@@ -184,24 +184,24 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       KMessageBox::information(0,tmp);
       processNextCheck(false);
     }
-  
+
   kdDebug() << "processing next mail check, server busy" << endl;
-  
-  curAccount->processNewMail(interactive);  
+
+  curAccount->processNewMail(interactive);
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::create(const QString aType, const QString aName) 
+KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
 {
   KMAccount* act = NULL;
 
-  if (stricmp(aType,"local")==0) 
+  if (qstricmp(aType,"local")==0)
     act = new KMAcctLocal(this, aName);
 
-  else if (stricmp(aType,"pop")==0) 
+  else if (qstricmp(aType,"pop")==0)
     act = new KMAcctExpPop(this, aName);
 
-  if (act) 
+  if (act)
     act->setFolder(kernel->inboxFolder());
 
   return act;
@@ -209,7 +209,7 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::add(KMAccount *account) 
+void KMAcctMgr::add(KMAccount *account)
 {
   if (account)
     mAcctList.append(account);
@@ -217,7 +217,7 @@ void KMAcctMgr::add(KMAccount *account)
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::find(const QString aName) 
+KMAccount* KMAcctMgr::find(const QString aName)
 {
   KMAccount* cur;
 
@@ -276,8 +276,8 @@ void KMAcctMgr::checkMail(bool _interactive)
   checking = true;
 
   kernel->serverReady (false);
-  
-  mAccountIt->toFirst(); 
+
+  mAccountIt->toFirst();
   lastAccountChecked = 0;
   processNextAccount(false);
 }
@@ -298,7 +298,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
     emit checkedMail(newMailArrived);
     return;
   }
-  
+
   connect( cur, SIGNAL(finishedCheck(bool)),
 	   this, SLOT(processNextAccount(bool)) );
 
@@ -307,7 +307,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 
   if (cur->folder() == 0)
     {
-      QString tmp; 
+      QString tmp;
       tmp = i18n("Account %1 has no mailbox defined!\n"
 		 "Mail checking aborted\n"
 		 "Check your account settings!")
@@ -326,7 +326,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 
 //-----------------------------------------------------------------------------
 QStringList  KMAcctMgr::getAccounts() {
-  
+
   KMAccount *cur;
   QStringList strList;
   for (cur=mAcctList.first(); cur; cur=mAcctList.next()) {
@@ -365,7 +365,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   if (cur->folder() == 0)
   {
-    QString tmp; 
+    QString tmp;
     tmp = i18n("Account %1 has no mailbox defined!\n"
                      "Mail checking aborted\n"
                      "Check your account settings!")
@@ -379,7 +379,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
   kdDebug() << "checking mail, server busy" << endl;
   kernel->serverReady (false);
 
-  mAccountIt->toLast(); 
+  mAccountIt->toLast();
   ++(*mAccountIt);
 
   lastAccountChecked = cur;

@@ -25,7 +25,7 @@
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qradiobutton.h>
-#include <qvalidator.h> 
+#include <qvalidator.h>
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -46,11 +46,12 @@
 #include "kmglobal.h"
 
 #include "accountdialog.moc"
+#undef None
 
 AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
 			      QWidget *parent, const char *name, bool modal )
-  :KDialogBase( parent, name, modal, i18n("Configure Account"), 
-		Ok|Cancel|Help, Ok, true ), mAccount(account), 
+  :KDialogBase( parent, name, modal, i18n("Configure Account"),
+		Ok|Cancel|Help, Ok, true ), mAccount(account),
   mIdentityList( identity )
 {
   QString accountType = mAccount->type();
@@ -107,7 +108,7 @@ void AccountDialog::makeLocalAccountPage()
 
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Locking method"), page );
-  mLocal.lockMutt = new QRadioButton( 
+  mLocal.lockMutt = new QRadioButton(
     i18n("Mutt dotlock (recommended)"), group);
   mLocal.lockMuttPriv = new QRadioButton(
     i18n("Mutt dotlock privileged"), group);
@@ -118,12 +119,12 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.lockNone = new QRadioButton(
     i18n("none (use with care)"), group);
   topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
- 
-  mLocal.excludeCheck = 
+
+  mLocal.excludeCheck =
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
   topLayout->addMultiCellWidget( mLocal.excludeCheck, 5, 5, 0, 2 );
 
-  mLocal.intervalCheck = 
+  mLocal.intervalCheck =
     new QCheckBox( i18n("Enable interval mail checking"), page );
   topLayout->addMultiCellWidget( mLocal.intervalCheck, 6, 6, 0, 2 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
@@ -169,7 +170,7 @@ void AccountDialog::makePopAccountPage()
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   topLayout->setRowStretch( 15, 10 );
   topLayout->setColStretch( 1, 10 );
-  
+
   mPop.titleLabel = new QLabel( page );
   if( QString(mAccount->type()) == "pop" )
   {
@@ -201,18 +202,18 @@ void AccountDialog::makePopAccountPage()
   topLayout->addWidget( label, 4, 0 );
   mPop.passwordEdit = new QLineEdit( page );
   mPop.passwordEdit->setEchoMode( QLineEdit::Password );
-  topLayout->addWidget( mPop.passwordEdit, 4, 1 );  
+  topLayout->addWidget( mPop.passwordEdit, 4, 1 );
 
   label = new QLabel( i18n("Host:"), page );
   topLayout->addWidget( label, 5, 0 );
   mPop.hostEdit = new QLineEdit( page );
-  topLayout->addWidget( mPop.hostEdit, 5, 1 );  
+  topLayout->addWidget( mPop.hostEdit, 5, 1 );
 
   label = new QLabel( i18n("Port:"), page );
   topLayout->addWidget( label, 6, 0 );
   mPop.portEdit = new QLineEdit( page );
   mPop.portEdit->setValidator( new QIntValidator(this) );
-  topLayout->addWidget( mPop.portEdit, 6, 1 ); 
+  topLayout->addWidget( mPop.portEdit, 6, 1 );
 
   mPop.useSSLCheck =
     new QCheckBox( i18n("Use SSL for secure mail download") + " " +
@@ -221,19 +222,19 @@ void AccountDialog::makePopAccountPage()
   connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
   mPop.useSSLCheck->hide();
 
-  mPop.storePasswordCheck = 
+  mPop.storePasswordCheck =
     new QCheckBox( i18n("Store POP password in configuration file"), page );
   topLayout->addMultiCellWidget( mPop.storePasswordCheck, 8, 8, 0, 1 );
-  
-  mPop.deleteMailCheck = 
+
+  mPop.deleteMailCheck =
     new QCheckBox( i18n("Delete mail from server"), page );
   topLayout->addMultiCellWidget( mPop.deleteMailCheck, 9, 9, 0, 1 );
 
-  mPop.excludeCheck = 
+  mPop.excludeCheck =
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
   topLayout->addMultiCellWidget( mPop.excludeCheck, 10, 10, 0, 1 );
 
-  mPop.intervalCheck = 
+  mPop.intervalCheck =
     new QCheckBox( i18n("Enable interval mail checking"), page );
   topLayout->addMultiCellWidget( mPop.intervalCheck, 11, 11, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
@@ -261,7 +262,7 @@ void AccountDialog::makePopAccountPage()
   label = new QLabel( i18n("Precommand:"), page );
   topLayout->addWidget( label, 15, 0 );
   mPop.precommand = new QLineEdit( page );
-  topLayout->addWidget( mPop.precommand, 15, 1 ); 
+  topLayout->addWidget( mPop.precommand, 15, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -288,7 +289,7 @@ void AccountDialog::setupSettings()
     else if (((KMAcctLocal*)mAccount)->mLock == None)
       mLocal.lockNone->setChecked(true);
 
-    mLocal.intervalSpin->setValue( QMAX(1, interval) ); 
+    mLocal.intervalSpin->setValue( QMAX(1, interval) );
     mLocal.intervalCheck->setChecked( interval >= 1 );
     mLocal.excludeCheck->setChecked( mAccount->checkExclude() );
     mLocal.precommand->setText( mAccount->precommand() );
@@ -304,7 +305,7 @@ void AccountDialog::setupSettings()
     mPop.loginEdit->setText( ap.login() );
     mPop.passwordEdit->setText( ap.passwd());
     mPop.hostEdit->setText( ap.host() );
-    mPop.portEdit->setText( QString("%1").arg( ap.port() ) ); 
+    mPop.portEdit->setText( QString("%1").arg( ap.port() ) );
     mPop.useSSLCheck->setChecked( ap.useSSL() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
@@ -325,19 +326,19 @@ void AccountDialog::setupSettings()
   if( acctFolder == 0 )
   {
     acctFolder = (KMFolder*)fdir->first();
-  }  
+  }
   if( acctFolder == 0 )
   {
     folderCombo->insertItem( i18n("<none>") );
   }
   else
-  { 
+  {
     uint i=0;
     for( KMFolder *folder = (KMFolder*)fdir->first(); folder != 0;
 	 folder = (KMFolder*)fdir->next() )
     {
-      if( folder->isDir() || 
-	  (folder->isSystemFolder() && (folder->name() != "inbox" ))) 
+      if( folder->isDir() ||
+	  (folder->isSystemFolder() && (folder->name() != "inbox" )))
       {
 	continue;
       }
@@ -378,7 +379,7 @@ void AccountDialog::slotSSLChanged()
     } else {
       mPop.portEdit->setText("110");
     }
-  } 
+  }
 }
 
 
@@ -406,24 +407,24 @@ void AccountDialog::saveSettings()
       ((KMAcctLocal*)mAccount)->mLock = None;
     else ((KMAcctLocal*)mAccount)->mLock = FCNTL;
 
-    mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ? 
+    mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ?
 			     mLocal.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
- 
+
     mAccount->setPrecommand( mLocal.precommand->text() );
 
     KMFolder *folder;
     if (mLocal.folderCombo->currentText() == i18n("inbox"))
       folder = kernel->folderMgr()->find("inbox");
     else
-      folder = kernel->folderMgr()->find( mLocal.folderCombo->currentText() ); 
+      folder = kernel->folderMgr()->find( mLocal.folderCombo->currentText() );
     mAccount->setFolder( folder );
 
   }
   else if( accountType == "pop" )
   {
     mAccount->setName( mPop.nameEdit->text() );
-    mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ? 
+    mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ?
 			     mPop.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
 
@@ -431,9 +432,9 @@ void AccountDialog::saveSettings()
     if (mPop.folderCombo->currentText() == i18n("inbox"))
       folder = kernel->folderMgr()->find("inbox");
     else
-      folder = kernel->folderMgr()->find( mPop.folderCombo->currentText() );  
+      folder = kernel->folderMgr()->find( mPop.folderCombo->currentText() );
     mAccount->setFolder( folder );
-    
+
     KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
     epa.setHost( mPop.hostEdit->text() );
     epa.setPort( mPop.portEdit->text().toInt() );
@@ -454,7 +455,7 @@ void AccountDialog::saveSettings()
 void AccountDialog::slotLocationChooser()
 {
   static QString directory( "/" );
-  
+
   KFileDialog dialog( directory, "*", this, 0, true );
   dialog.setCaption( i18n("Choose Location") );
 
@@ -464,7 +465,7 @@ void AccountDialog::slotLocationChooser()
     return;
   }
 
-  KURL url = dialog.selectedURL();  
+  KURL url = dialog.selectedURL();
   if( url.isEmpty() )
   {
     return;
@@ -474,7 +475,7 @@ void AccountDialog::slotLocationChooser()
     KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
     return;
   }
-  
+
   mLocal.locationEdit->setText( url.path() );
   directory = url.directory();
 }
