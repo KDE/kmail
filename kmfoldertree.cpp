@@ -3,6 +3,7 @@
 
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
+#include "kmfoldercachedimap.h"
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
 #include "kmmainwidget.h"
@@ -1024,7 +1025,13 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
       folderMenu->insertItem(SmallIcon("reload"), i18n("Check Mail in this Folder"), mMainWidget,
           SLOT(slotRefreshFolder()));
     }
-
+    if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder() );
+      folderMenu->insertItem( SmallIcon("wizard"),
+			      i18n("&Troubleshoot IMAP Cache..."),
+			      folder, SLOT(slotTroubleshoot()) );
+      folder->slotTroubleshoot();
+    }
   }
 
   if (fti->folder() && !fti->folder()->noContent())
