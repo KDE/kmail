@@ -799,11 +799,7 @@ void KMFolderTree::prevUnreadFolder()
     --it; // don't find current item
   for ( ; it.current() ; --it ) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (fti && fti->folder() && (fti->folder()->countUnread() > 0)) {
-	prepareItem( fti );
-	doFolderSelected( fti );
-	return;
-    }
+    if (checkUnreadFolder(fti,false)) return;
   }
 }
 
