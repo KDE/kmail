@@ -10,6 +10,7 @@
 // other KMail headers:
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
+#include "kmmainwidget.h"
 
 // other KDE headers:
 #include <kmessagebox.h>
@@ -21,6 +22,7 @@
 #include <kwin.h>
 #include <kconfig.h>
 #include <kicondialog.h>
+#include <kkeybutton.h>
 
 // other Qt headers:
 #include <qlayout.h>
@@ -161,7 +163,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 			      1, 1, /*from to row*/
   			      0, 3 /*from to col*/ );
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
-      gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 3 );
+      gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 2 );
+      mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
+      gl->addMultiCellWidget( mKeyButton, 2, 2, 3, 3 );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
       gl->addMultiCellWidget( mConfigureToolbar, 3, 3, 1, 3 );
 
@@ -213,6 +217,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
+
+    connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
+             this, SLOT( slotCapturedShortcutChanged( const KShortcut& ) ) );
 
     connect( mConfigureToolbar, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
@@ -310,12 +317,14 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     const bool configureShortcut = aFilter->configureShortcut();
     const bool configureToolbar = aFilter->configureToolbar();
     const QString icon = aFilter->icon();
+    const KShortcut shortcut( aFilter->shortcut() );
 
     mApplyOnIn->setChecked( applyOnIn );
     mApplyOnOut->setChecked( applyOnOut );
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
+    mKeyButton->setShortcut( shortcut, false );
     mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
   }
@@ -345,52 +354,58 @@ void KMFilterDlg::slotUpdateFilter()
 
 void KMFilterDlg::slotApplicabilityChanged()
 {
-  if ( !mFilter )
-    return;
-
-  mFilter->setApplyOnInbound( mApplyOnIn->isChecked() );
-  mFilter->setApplyOnOutbound( mApplyOnOut->isChecked() );
-  mFilter->setApplyOnExplicit( mApplyOnCtrlJ->isChecked() );
-  kdDebug(5006) << "KMFilterDlg: setting filter to be applied at "
-		<< ( mFilter->applyOnInbound() ? "incoming " : "" )
-		<< ( mFilter->applyOnOutbound() ? "outgoing " : "" )
-		<< ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" )
-		<< endl;
+  if ( mFilter ) {
+    mFilter->setApplyOnInbound( mApplyOnIn->isChecked() );
+    mFilter->setApplyOnOutbound( mApplyOnOut->isChecked() );
+    mFilter->setApplyOnExplicit( mApplyOnCtrlJ->isChecked() );
+    kdDebug(5006) << "KMFilterDlg: setting filter to be applied at "
+                  << ( mFilter->applyOnInbound() ? "incoming " : "" )
+                  << ( mFilter->applyOnOutbound() ? "outgoing " : "" )
+                  << ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" )
+                  << endl;
+  }
 }
 
 void KMFilterDlg::slotStopProcessingButtonToggled( bool aChecked )
 {
-  if ( !mFilter )
-    return;
-
-  mFilter->setStopProcessingHere( aChecked );
+  if ( mFilter )
+    mFilter->setStopProcessingHere( aChecked );
 }
 
 void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
 {
-  if ( !mFilter )
-    return;
+  if ( mFilter ) {
+    mFilter->setConfigureShortcut( aChecked );
+    mConfigureToolbar->setEnabled( aChecked );
+    mFilterActionIconButton->setEnabled( aChecked );
+    mFilterActionLabel->setEnabled( aChecked );
+  }
+}
 
-  mFilter->setConfigureShortcut( aChecked );
-  mConfigureToolbar->setEnabled( aChecked );
-  mFilterActionIconButton->setEnabled( aChecked );
-  mFilterActionLabel->setEnabled( aChecked );
+void KMFilterDlg::slotCapturedShortcutChanged( const KShortcut& sc )
+{
+  if ( sc == mKeyButton->shortcut() ) return;
+  if ( !( kmkernel->getKMMainWidget()->shortcutIsValid( sc ) ) ) {
+    QString msg( i18n( "The selected shortcut is already used, "
+          "please select a different one." ) );
+    KMessageBox::sorry( this, msg );
+  } else {
+    mKeyButton->setShortcut( sc, false );
+    if ( mFilter )
+      mFilter->setShortcut( mKeyButton->shortcut() );
+  }
 }
 
 void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
 {
-  if ( !mFilter )
-    return;
-
-  mFilter->setConfigureToolbar( aChecked );
+  if ( mFilter )
+    mFilter->setConfigureToolbar( aChecked );
 }
 
 void KMFilterDlg::slotFilterActionIconChanged( QString icon )
 {
-  if ( !mFilter )
-    return;
-
-  mFilter->setIcon( icon );
+  if ( mFilter )
+    mFilter->setIcon( icon );
 }
 
 //=============================================================================

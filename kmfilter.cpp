@@ -61,6 +61,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bConfigureShortcut = aFilter.configureShortcut();
     bConfigureToolbar = aFilter.configureToolbar();
     mIcon = aFilter.icon();
+    mShortcut = aFilter.shortcut();
 
     QPtrListIterator<KMFilterAction> it( aFilter.mActions );
     for ( it.toFirst() ; it.current() ; ++it ) {
@@ -183,6 +184,11 @@ void KMFilter::readConfig(KConfig* config)
 
     bStopProcessingHere = config->readBoolEntry("StopProcessingHere", true);
     bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", false);
+    QString shortcut( config->readEntry( "Shortcut" ) );
+    if ( !shortcut.isEmpty() ) {
+      KShortcut sc( shortcut );
+      setShortcut( sc );
+    }
     bConfigureToolbar = config->readBoolEntry("ConfigureToolbar", false);
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config->readEntry( "Icon", "gear" );
@@ -257,6 +263,8 @@ void KMFilter::writeConfig(KConfig* config) const
 
     config->writeEntry( "StopProcessingHere", bStopProcessingHere );
     config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
+    if ( !mShortcut.isNull() ) 
+      config->writeEntry( "Shortcut", mShortcut.toString() );
     config->writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config->writeEntry( "Icon", mIcon );
     config->writeEntry( "AutomaticName", bAutoNaming );

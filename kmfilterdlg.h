@@ -29,6 +29,7 @@ class QComboBox;
 class QWidgetStack;
 class QCheckBox;
 class KIconButton;
+class KKeyButton;
 
 
 /** This is a complex widget that is used to manipulate KMail's filter
@@ -339,6 +340,7 @@ protected slots:
   void slotApplicabilityChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotConfigureShortcutButtonToggled( bool aChecked );
+  void slotCapturedShortcutChanged( const KShortcut& );
   void slotConfigureToolbarButtonToggled( bool aChecked );
   void slotFilterActionIconChanged( QString icon );
   void slotReset();
@@ -366,6 +368,7 @@ protected:
   QCheckBox *mConfigureToolbar;
   QLabel *mFilterActionLabel;
   KIconButton *mFilterActionIconButton;
+  KKeyButton *mKeyButton;
   QGroupBox *mAdvOptsGroup;
   QVGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;

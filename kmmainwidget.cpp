@@ -3350,7 +3350,7 @@ void KMMainWidget::initializeFilterActions()
       QString icon = (*it)->icon();
       if ( icon.isEmpty() )
         icon = "gear";
-      filterAction = new KAction(as, icon, 0, filterCommand,
+      filterAction = new KAction(as, icon, (*it)->shortcut(), filterCommand,
                                  SLOT(start()), actionCollection(),
                                  normalizedName.local8Bit());
       filterAction->plug( mApplyFilterActionsMenu->popupMenu() );

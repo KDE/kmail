@@ -12,6 +12,8 @@
 #include "kmsearchpattern.h"
 #include "kmpopheaders.h"
 
+#include <kshortcut.h>
+
 #include <qptrlist.h>
 
 class QString;
@@ -181,6 +183,17 @@ public:
   */
   bool configureToolbar() const { return bConfigureToolbar; }
 
+  /** Set the shortcut to be used if plugged into the filter menu
+      or toolbar. Default is no shortcut.
+      @see setConfigureShortcut setConfigureToolbar
+  */
+  void setShortcut( const KShortcut & shortcut ) { mShortcut = shortcut; };
+
+  /** @return The shortcut assigned to the filter.
+      @see setShortcut
+  */
+  const KShortcut & shortcut() const { return mShortcut; }
+
   /** Set the icon to be used if plugged into the filter menu
       or toolbar. Default is the gear icon.
       @see setConfigureShortcut setConfigureToolbar
@@ -230,6 +243,7 @@ private:
   QPtrList<KMFilterAction> mActions;
   KMPopFilterAction mAction;
   QString mIcon;
+  KShortcut mShortcut;
   bool bPopFilter : 1;
   bool bApplyOnInbound : 1;
   bool bApplyOnOutbound : 1;
