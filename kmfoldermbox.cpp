@@ -268,7 +268,7 @@ void KMFolderMbox::sync()
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
 	!mIndexStream || fsync(fileno(mIndexStream))) {
-    kmkernel->emergencyExit( i18n("Not enough free disk space." ));
+    kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2").arg( indexLocation() ).arg(errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
     }
 }
 
@@ -941,12 +941,12 @@ if( fileD1.open( IO_WriteOnly ) ) {
 
   error = ferror(mStream);
   if (error) {
-    kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
+    kdDebug(5006) << "Error: Could not add message to folder: " << strerror(errno) << endl;
     if (ftell(mStream) > revert) {
       kdDebug(5006) << "Undoing changes" << endl;
       truncate( QFile::encodeName(location()), revert );
     }
-    kmkernel->emergencyExit( i18n("Not enough free disk space.") );
+    kmkernel->emergencyExit( i18n("Could not add message to folder: ") + QString::fromLocal8Bit(strerror(errno)));
 
     /* This code is not 100% reliable
     bool busy = kmkernel->kbp()->isBusy();
@@ -1018,7 +1018,10 @@ if( fileD1.open( IO_WriteOnly ) ) {
 	kdWarning(5006) << "Undoing changes" << endl;
 	truncate( QFile::encodeName(indexLocation()), revert );
       }
-      kmkernel->emergencyExit( i18n("Not enough free disk space.") );
+      if ( errno )
+        kmkernel->emergencyExit( i18n("Could not add message to folder:") + QString::fromLocal8Bit(strerror(errno)));
+      else
+        kmkernel->emergencyExit( i18n("Could not add message to folder (No space left on device?)") );
 
       /* This code may not be 100% reliable
       bool busy = kmkernel->kbp()->isBusy();

@@ -1327,8 +1327,14 @@ void KMKernel::slotShowConfigurationDialog()
 
 void KMKernel::emergencyExit( const QString& reason )
 {
-  QString mesg = i18n("KMail encountered a fatal error and will "
+  QString mesg;
+  if ( reason.length() == 0 ) {
+    mesg = i18n("KMail encountered a fatal error and will terminate now");
+  }
+  else {
+    mesg = i18n("KMail encountered a fatal error and will "
                       "terminate now.\nThe error was:\n%1").arg( reason );
+  }
 
   kdWarning() << mesg << endl;
   KNotifyClient::userEvent( 0, mesg, KNotifyClient::Messagebox, KNotifyClient::Error );

@@ -1432,7 +1432,7 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
   int filterResult = kmkernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
   if (filterResult == 2) {
     // something went horribly wrong (out of space?)
-    kmkernel->emergencyExit( i18n("Unable to process messages (out of space?)" ));
+    kmkernel->emergencyExit( i18n("Unable to process messages: " ) + QString::fromLocal8Bit(strerror(errno)));
     return 2;
   }
   if (msg->parent()) { // unGet this msg

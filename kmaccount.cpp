@@ -248,7 +248,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
     KMessageBox::information(0,(i18n("Critical error: "
-      "Unable to collect mail (out of space?)")));
+      "Unable to collect mail: ")) + QString::fromLocal8Bit(strerror(errno)));
     return false;
   }
   else if (processResult == 1)

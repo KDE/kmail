@@ -369,7 +369,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   tmp_file += filename;
 
   if (!kCStringToFile(msgText, tmp_file, false, false, false))
-    kmkernel->emergencyExit( i18n("Not enough free disk space.") );
+    kmkernel->emergencyExit( "" ); // kCStringToFile already showed an errormessage
 
   QFile file(tmp_file);
   size = msgText.length();

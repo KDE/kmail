@@ -602,7 +602,8 @@ void KMComposeWin::deadLetter(void)
     fprintf(stderr,"appending message to ~/dead.letter.tmp\n");
   } else {
     perror("cannot open ~/dead.letter.tmp for saving the current message");
-    kmkernel->emergencyExit( i18n("Not enough free disk space." ));
+    kmkernel->emergencyExit( i18n("cannot open ~/dead.letter.tmp for saving the current message: ")  +
+                              QString::fromLocal8Bit(strerror(errno)));
   }
 }
 

@@ -1115,7 +1115,8 @@ void KMFilterActionCommand::execute()
     int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
-        kmkernel->emergencyExit( i18n("Not enough free disk space." ));
+      perror("Critical error");
+      kmkernel->emergencyExit( i18n("Not enough free disk space?" ));
     }
     msg->setTransferInProgress(true);
   }
