@@ -96,12 +96,15 @@ void KMKernel::openReader()
       if (ktmw->isA("KMMainWin"))
         break;
 
-  if (ktmw)
+  if (ktmw) {
     mWin = (KMMainWin *) ktmw;
-  else
+    mWin->show();
+    KWin::setActiveWindow(mWin->winId());
+  }
+  else {
     mWin = new KMMainWin;
-  mWin->show();
-  KWin::setActiveWindow(mWin->winId());
+    mWin->show();
+  }
 }
 
 int KMKernel::openComposer (const QString &to, const QString &cc,
