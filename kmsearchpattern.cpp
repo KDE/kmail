@@ -100,6 +100,9 @@ KMSearchRule::Function KMSearchRule::configValueToFunc( const char * str ) {
 bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
 			    const DwBoyerMoore * aHeaderField, int aHeaderLen ) const
 {
+  if ( isEmpty() )
+    return false;
+
   const DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
 
   const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : mField.length() ) + 2 ; // +1 for ': '
@@ -145,6 +148,9 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
 
 bool KMSearchRule::matches( const KMMessage * msg ) const {
   assert( msg );
+
+  if ( isEmpty() )
+    return false;
 
   QString msgContents;
   int numericalMsgContents = 0;
