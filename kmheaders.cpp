@@ -265,6 +265,8 @@ public:
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
     QString tmp;
 
+    assert(mMsgBase);
+
     if(col == headers->paintInfo()->flagCol) {
       if (headers->paintInfo()->flagCol >= 0)
 	tmp = QString( QChar( (char)mMsgBase->status() ));
