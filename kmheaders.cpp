@@ -492,7 +492,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
 
-  connect( this, SIGNAL( rightButtonPressed( QListViewItem*, const QPoint &, int )),
+  connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
 	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int )));
   connect(this, SIGNAL(doubleClicked(QListViewItem*)),
   	  this,SLOT(selectMessage(QListViewItem*)));
@@ -2460,7 +2460,7 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
   if (!lvi)
     return;
 
-  if ((lvi->isSelected())) {
+  if (!(lvi->isSelected())) {
     clearSelection();
   }
   setSelected( lvi, TRUE );
