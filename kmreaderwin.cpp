@@ -412,7 +412,18 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
     // process all mime parts that are not covered by one of the CRYPTPLUGs
     if( !curNode->mWasProcessed ) {
       bool bDone = false;
-      switch( curNode->type() ){
+      
+      // In order to correctly recognoze clearsigned data we threat the old
+      // "Content-Type=application/pgp" like plain text.
+      // Note: This does not cover "application/pgp-signature" nor 
+      //                    "application/pgp-encrypted".  (khz, 2002/08/28)
+      const int curNode_replacedType 
+        = ( DwMime::kTypeApplication       == curNode->type() &&
+            DwMime::kSubtypePgpClearsigned == curNode->subType() )
+        ? DwMime::kTypeText
+        : curNode->type();
+        
+      switch( curNode_replacedType ){
       case DwMime::kTypeText: {
 kdDebug(5006) << "* text *" << endl;
           switch( curNode->subType() ){
