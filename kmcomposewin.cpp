@@ -1708,7 +1708,8 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname, 0);
+  KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname,
+    KMMsgBase::codecForName(mCharset));
 }
 
 
