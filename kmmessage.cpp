@@ -30,7 +30,6 @@ using KMail::HeaderStrategy;
 #if KDE_IS_VERSION( 3, 1, 92 )
 #include <kuser.h>
 #else
-#include <unistd.h>
 #include <pwd.h>
 #endif
 
@@ -53,6 +52,7 @@ using namespace KMime::Types;
 #include <time.h>
 #include <klocale.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
