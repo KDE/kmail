@@ -10,6 +10,8 @@
 #include "kmsender.h"
 #include "kmkernel.h"
 #include "kmbroadcaststatus.h"
+#include "kmfoldercachedimap.h"
+
 using KMail::FolderJob;
 
 #include <kapplication.h>
@@ -214,6 +216,11 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
 
   assert(aMsg != 0);
 
+  // Save this one for readding
+  KMFolderCachedImap* parent = 0;
+  if( type() == "cachedimap" )
+    parent = static_cast<KMFolderCachedImap*>( aMsg->parent() );
+
   // checks whether we should send delivery receipts
   // and sends them.
   sendReceipt(aMsg);
@@ -254,8 +261,13 @@ if( fileD0.open( IO_WriteOnly ) ) {
   }
   else if (processResult == 1)
   {
-    kmkernel->filterMgr()->tempOpenFolder(mFolder);
-    rc = mFolder->addMsg(aMsg);
+    if( type() == "cachedimap" )
+      parent->addMsgInternal( aMsg, false );
+    else {
+      // TODO: Perhaps it would be best, if this if was handled by a virtual
+      // method, so the if( !dimap ) above could die?
+      kmkernel->filterMgr()->tempOpenFolder(mFolder);
+      rc = mFolder->addMsg(aMsg);
 /*
 QFile fileD0( "testdat_xx-kmaccount-1" );
 if( fileD0.open( IO_WriteOnly ) ) {
@@ -264,15 +276,16 @@ if( fileD0.open( IO_WriteOnly ) ) {
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */
-    if (rc) {
-      perror("failed to add message");
-      KMessageBox::information(0, i18n("Failed to add message:\n") +
-			       QString(strerror(rc)));
-      return false;
+      if (rc) {
+        perror("failed to add message");
+        KMessageBox::information(0, i18n("Failed to add message:\n") +
+                                 QString(strerror(rc)));
+        return false;
+      }
+      int count = mFolder->count();
+      // If count == 1, the message is immediately displayed
+      if (count != 1) mFolder->unGetMsg(count - 1);
     }
-    int count = mFolder->count();
-    // If count == 1, the message is immediately displayed
-    if (count != 1) mFolder->unGetMsg(count - 1);
   }
   return true; //Everything's fine - message has been added by filter  }
 }
