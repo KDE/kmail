@@ -645,6 +645,17 @@ public:
   /** Split a comma separated list of email addresses. */
   static QStringList splitEmailAddrList(const QString&);
 
+  /** Strips an address from an address list. This is for example used
+      when replying to all.
+  */
+  static QStringList stripAddressFromAddressList( const QString& address,
+                                                  const QStringList& addresses );
+
+  /** Returns true if the given address is contained in the given address list.
+  */
+  static bool addressIsInAddressList( const QString& address,
+                                      const QStringList& addresses );
+
   /** Get the default message charset.*/
   static QCString defaultCharset(void);
 

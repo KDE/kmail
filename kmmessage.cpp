@@ -983,24 +983,11 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
 
   msg->setCharset("utf-8");
 
-  if (replyToList && !headerField("Mail-Followup-To").isEmpty())
-  {
+  if( replyToList && !headerField( "Mail-Followup-To" ).isEmpty() ) {
+    // strip my own address from the list of recipients
     QStringList recipients =
       splitEmailAddrList( headerField( "Mail-Followup-To" ) );
-
-    // strip my own address from the list of recipients
-    QString myAddr = getEmailAddr( msg->from() );
-    for( QStringList::Iterator it = recipients.begin();
-         it != recipients.end(); ) {
-      if( (*it).find( myAddr, 0, false ) != -1 ) {
-        kdDebug(5006) << "Removing " << *it << " from the list of recipients"
-                      << endl;
-        it = recipients.remove( it );
-      }
-      else
-        ++it;
-    }
-    toStr = recipients.join(", ");
+    toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
   }
   else if (replyToList && parent() && parent()->isMailingList())
   {
@@ -1020,22 +1007,22 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
     QStringList recipients;
 
     // add addresses from the Reply-To header to the list of recipients
-    if (!replyToStr.isEmpty())
-      recipients += splitEmailAddrList(replyToStr);
+    if( !replyToStr.isEmpty() )
+      recipients += splitEmailAddrList( replyToStr );
 
     // add From address to the list of recipients if it's not already there
-    if (!from().isEmpty())
-      if (recipients.grep(getEmailAddr(from()), false).isEmpty()) {
+    if( !from().isEmpty() )
+      if( !addressIsInAddressList( from(), recipients ) ) {
         recipients += from();
         kdDebug(5006) << "Added " << from() << " to the list of recipients"
                       << endl;
       }
 
     // add only new addresses from the To header to the list of recipients
-    if (!to().isEmpty()) {
-      QStringList list = splitEmailAddrList(to());
-      for (QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
-        if (recipients.grep(getEmailAddr(*it), false).isEmpty()) {
+    if( !to().isEmpty() ) {
+      QStringList list = splitEmailAddrList( to() );
+      for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+        if( !addressIsInAddressList( *it, recipients ) ) {
           recipients += *it;
           kdDebug(5006) << "Added " << *it << " to the list of recipients"
                         << endl;
@@ -1044,37 +1031,25 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
     }
 
     // strip my own address from the list of recipients
-    QString myAddr = getEmailAddr(msg->from());
-    for (QStringList::Iterator it = recipients.begin();
-         it != recipients.end(); ) {
-      if ((*it).find(myAddr,0,false) != -1) {
-        kdDebug(5006) << "Removing " << *it << " from the list of recipients"
-                      << endl;
-        it = recipients.remove(it);
-      }
-      else
-        ++it;
-    }
-
-    toStr = recipients.join(", ");
+    toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
 
     // the same for the cc field
-    if (!cc().isEmpty()) {
-      recipients = splitEmailAddrList(cc());
-
-      // strip my own address
-      for (QStringList::Iterator it = recipients.begin();
-           it != recipients.end(); ) {
-        if ((*it).find(myAddr,0,false) != -1) {
-          kdDebug(5006) << "Removing " << *it << " from the cc recipients"
+    if( !cc().isEmpty() ) {
+      QStringList ccRecipients;
+      // add only new addresses from the CC header to the list of CC recipients
+      QStringList list = splitEmailAddrList( cc() );
+      for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+        if(    !addressIsInAddressList( *it, recipients )
+            && !addressIsInAddressList( *it, ccRecipients ) ) {
+          ccRecipients += *it;
+          kdDebug(5006) << "Added " << *it << " to the list of CC recipients"
                         << endl;
-          it = recipients.remove(it);
         }
-        else
-          ++it;
       }
 
-      msg->setCc(recipients.join(", "));
+      // strip my own address from the list of CC recipients
+      ccRecipients = stripAddressFromAddressList( msg->from(), ccRecipients );
+      msg->setCc( ccRecipients.join(", ") );
     }
 
   }
@@ -3518,6 +3493,42 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
                   << endl;
 
   return list;
+}
+
+
+//-----------------------------------------------------------------------------
+//static
+QStringList KMMessage::stripAddressFromAddressList( const QString& address,
+                                                    const QStringList& list )
+{
+  QStringList addresses = list;
+  QCString addrSpec = getEmailAddr( address ).lower();
+  for( QStringList::Iterator it = addresses.begin();
+       it != addresses.end(); ) {
+    if( addrSpec == getEmailAddr( *it ).lower() ) {
+      kdDebug(5006) << "Removing " << *it << " from the address list"
+                    << endl;
+      it = addresses.remove( it );
+    }
+    else
+      ++it;
+  }
+  return addresses;
+}
+
+
+//-----------------------------------------------------------------------------
+//static
+bool KMMessage::addressIsInAddressList( const QString& address,
+                                        const QStringList& addresses )
+{
+  QCString addrSpec = getEmailAddr( address ).lower();
+  for( QStringList::ConstIterator it = addresses.begin();
+       it != addresses.end(); ++it ) {
+    if( addrSpec == getEmailAddr( *it ).lower() )
+      return true;
+  }
+  return false;
 }
 
 
