@@ -27,7 +27,11 @@
 #    you do not wish to do so, delete this exception statement from
 #    your version.
 #
-export TEMPFILE=`mktemp`
+TEMPFILE=`mktemp` 
+if [ $? ] ; then 
+    TEMPFILE=`mktemp /tmp/kmail.XXXXXX` 
+fi 
+export TEMPFILE
 cat > $TEMPFILE
 if clamscan --stdout --no-summary --mbox $TEMPFILE | grep -q FOUND; then
 echo "X-Virus-Flag: yes"
