@@ -180,10 +180,30 @@ void KMIdentity::setVCardFile(const QString &str)
 //-----------------------------------------------------------------------------
 QString KMIdentity::fullEmailAddr(void) const
 {
+  if (mFullName.isEmpty()) return mEmailAddr;
+
+  const QString specials("()<>@,.;:[]");
+
   QString result;
 
-  if (mFullName.isEmpty()) result = mEmailAddr;
-  else result = mFullName + " <" + mEmailAddr + ">";
+  // add DQUOTE's if necessary:
+  bool needsQuotes=false;
+  for (unsigned int i=0; i < mFullName.length(); i++) {
+    if ( specials.contains( mFullName[i] ) )
+      needsQuotes = true;
+    else if ( mFullName[i] == '\\' || mFullName[i] == '"' ) {
+      needsQuotes = true;
+      result += '\\';
+    }
+    result += mFullName[i];
+  }
+
+  if (needsQuotes) {
+    result.insert(0,'"');
+    result += '"';
+  }
+
+  result += " <" + mEmailAddr + '>';
 
   return result;
 }
