@@ -782,6 +782,7 @@ void KMHeaders::reset(void)
   updateMessageList();
   setCurrentMsg(id);
   setTopItemByIndex(top);
+  ensureCurrentItemVisible();
 }
 
 //-----------------------------------------------------------------------------
