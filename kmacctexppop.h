@@ -41,6 +41,9 @@ public:
   /** Pop user password */
   const QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
+  
+  /** Set the password to "" (empty string) */
+  virtual void clearPasswd();
 
   /** Use SSL? */
   bool useSSL(void) const { return mUseSSL; }

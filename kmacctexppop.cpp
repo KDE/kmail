@@ -258,6 +258,14 @@ void KMAcctExpPop::setPasswd(const QString& aPasswd, bool aStoreInConfig)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctExpPop::clearPasswd()
+{
+  mPasswd = "";
+  mStorePasswd = FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::setHost(const QString& aHost)
 {
   mHost = aHost;

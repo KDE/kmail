@@ -37,6 +37,9 @@ public:
   const QString& name(void) const { return mName; }
   virtual void setName(const QString&);
 
+  /** Set password to "" (empty string) */
+  virtual void clearPasswd();
+  
   /** Set intelligent default values to the fields of the account. */
   virtual void init(void) = 0;
 

@@ -63,6 +63,12 @@ void KMAccount::setName(const QString& aName)
 
 
 //-----------------------------------------------------------------------------
+void KMAccount::clearPasswd()
+{
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAccount::setFolder(KMFolder* aFolder)
 {
   if(!aFolder)

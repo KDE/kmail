@@ -1889,10 +1889,14 @@ void ConfigureDialog::slotDoApply( bool everything )
     mModifiedAccounts.clear();
 
     // Delete accounts marked for deletion
-    for (it = mAccountsToDelete.begin(); it != mAccountsToDelete.end(); ++it )
+    for (it = mAccountsToDelete.begin(); it != mAccountsToDelete.end(); ++it ) {
+      // The old entries will never really disappear, so better at least clear the password:
+      (*it)->clearPasswd();
+      kernel->acctMgr()->writeConfig();
       if ((it == 0) || (!kernel->acctMgr()->remove(*it)))
         KMessageBox::sorry( this,
 			    i18n("Unable to locate account %1").arg((*it)->name()) );
+    }		    
     mAccountsToDelete.clear();
 
     // Incoming mail
