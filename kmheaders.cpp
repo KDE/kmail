@@ -1725,10 +1725,10 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   if ( !destFolder &&     // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
-         i18n("Do you really want to delete the selected message?\n"
-              "The message can not be restored!",
-              "Do you really want to delete the %n selected messages?\n"
-              "The messages can not be restored!", msgList->count() ),
+         i18n("<qt>Do you really want to delete the selected message?<br>"
+              "Once deleted, it cannot be restored!</qt>",
+              "<qt>Do you really want to delete the %n selected messages?<br>"
+              "Once deleted, they cannot be restored!</qt>", msgList->count() ),
          i18n("Delete Messages"), i18n("&Delete"), "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user cancelled the action
 
