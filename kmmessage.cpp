@@ -77,7 +77,8 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mIsComplete(false),
     mTransferInProgress(false),
     mDecodeHTML(false),
-    mCodec(0)
+    mCodec(0),
+    mUnencryptedMsg(NULL)
 {
 }
 
@@ -90,6 +91,8 @@ KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg
 void KMMessage::assign( const KMMessage& other )
 {
   delete mMsg;
+  if( mUnencryptedMsg )
+    delete mUnencryptedMsg;
 
   mNeedsAssembly = true;//other.mNeedsAssembly;
   mMsg = new DwMessage( *(other.mMsg) );
@@ -104,6 +107,10 @@ void KMMessage::assign( const KMMessage& other )
   mEncryptionState = other.mEncryptionState;
   mSignatureState = other.mSignatureState;
   mDate    = other.mDate;
+  if( other.hasUnencryptedMsg() )
+    mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
+  else
+    mUnencryptedMsg = NULL;
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //mMsgSerNum = other.mMsgSerNum; // what about serial number ?
   //KMMsgBase::assign( &other );
@@ -166,6 +173,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mDate    = 0;
   mFileName = "";
   mMsgSerNum = 0;
+  mUnencryptedMsg = NULL;
 }
 
 
@@ -188,6 +196,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mFileName = msgInfo.fileName();
   mMsgSerNum = msgInfo.getMsgSerNum();
   KMMsgBase::assign(&msgInfo);
+  mUnencryptedMsg = NULL;
 }
 
 
@@ -205,6 +214,14 @@ bool KMMessage::isMessage(void) const
   return TRUE;
 }
 
+
+//-----------------------------------------------------------------------------
+void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
+{
+  if( mUnencryptedMsg )
+    delete mUnencryptedMsg;
+  mUnencryptedMsg = unencrypted;
+}
 
 //-----------------------------------------------------------------------------
 const DwString& KMMessage::asDwString(void)

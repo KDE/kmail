@@ -596,12 +596,13 @@ private:
   bool signFlagOfAttachment(int idx);
 
 
-  bool encryptMessage( KMMessage* msg, const QStringList& recipients, bool doSign, bool doEncrypt,
-				     CryptPlugWrapper* cryptPlug,
-				     const QCString& encodedBody,int previousBoundaryLevel,
-				     const KMMessagePart& oldBodyPart,
-				     bool earlyAddAttachments, bool allAttachmentsAreInBody,
-                     KMMessagePart newBodyPart );
+  bool encryptMessage( KMMessage* msg,
+                       const QStringList& recipients, bool doSign, bool doEncrypt,
+                       CryptPlugWrapper* cryptPlug,
+                       const QCString& encodedBody,int previousBoundaryLevel,
+                       const KMMessagePart& oldBodyPart,
+                       bool earlyAddAttachments, bool allAttachmentsAreInBody,
+                       KMMessagePart newBodyPart );
 
   /**
    * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text

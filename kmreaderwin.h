@@ -225,6 +225,10 @@ public:
     static void deleteAllStandaloneWindows();
 
 signals:
+  /** Emitted after parsing of a message to have it stored
+      in unencrypted state in it's folder. */
+  void replaceMsgByUnencryptedVersion();
+  
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
 

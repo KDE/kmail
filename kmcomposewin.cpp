@@ -5,6 +5,8 @@
 // keep this in sync with the define in configuredialog.h
 #define DEFAULT_EDITOR_STR "kate %f"
 
+//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_01
+
 #undef GrayScale
 #undef Color
 #include <config.h>
@@ -1298,7 +1300,7 @@ bool KMComposeWin::applyChanges(void)
 {
   QString str, atmntStr;
   QString temp, replyAddr;
-
+  
   //assert(mMsg!=NULL);
   if(!mMsg)
   {
@@ -1704,6 +1706,70 @@ bool KMComposeWin::applyChanges(void)
                             earlyAddAttachments, allAttachmentsAreInBody,
                             newBodyPart );
       //        kdDebug() << "###AFTER ENCRYPTION\"" << mMsg->asString() << "\""<<endl;
+    
+
+      bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
+                                          : true;
+      bool saveMessagesEncrypted = cryptPlug ? cryptPlug->saveMessagesEncrypted()
+                                             : true;
+                                             
+// note: The following define is specified on top of this file, to compile
+//       a less strict version of KMail just comment it out there above.
+#ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01  
+      {  
+        // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
+        // of german government:
+        // --> Encrypted messages *must* be stored in unencrypted form after sending.
+        //     ( "Abspeichern ausgegangener Nachrichten in entschluesselter Form" )
+        // --> Signed messages *must* be stored including the signature after sending.
+        //     ( "Aufpraegen der Signatur" )
+        if(    cryptPlug 
+            && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
+            && (    ( doEncrypt && saveMessagesEncrypted )
+                 || ( doSign    && ! saveSentSignatures    ) ) ){
+        
+          QString headTxt =
+            i18n("Sorry, your S/MIME Plug-in configuration is invalid.");
+          QString sigTxt =
+            i18n("Signatures must be stored with the message, leaving them out is not allowed.");
+          QString encrTxt =
+            i18n("Encrypted messages must be stored in *unencrypted* form, local saving in encrypted form is not allowed.");
+          QString footTxt =
+            i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
+          if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
+            saveSentSignatures = true;
+            saveMessagesEncrypted = false;
+            KMessageBox::sorry(this, headTxt + "\n" + sigTxt + "\n" + encrTxt + "\n" + footTxt);
+          } else if( doSign && !saveSentSignatures ) {
+            saveSentSignatures = true;
+            KMessageBox::sorry(this, headTxt + "\n" + sigTxt + "\n" + footTxt);
+          } else if( doEncrypt && saveMessagesEncrypted ) {
+            saveMessagesEncrypted = false;
+            KMessageBox::sorry(this, headTxt + "\n" + encrTxt + "\n" + footTxt);
+          }
+        }
+      }
+#endif
+
+      if(    ( doEncrypt && ! saveMessagesEncrypted )
+          || ( doSign    && ! saveSentSignatures    ) ) {
+        KMMessage* unencryptedMessage = new KMMessage( *mMsg );
+        bOk = encryptMessage( unencryptedMessage,
+                              recipientsWithoutBcc,
+                              doSign    && saveSentSignatures, 
+                              doEncrypt && saveMessagesEncrypted,
+                              cryptPlug,
+                              encodedBody,
+                              previousBoundaryLevel,
+                              oldBodyPart,
+                              earlyAddAttachments,
+                              allAttachmentsAreInBody,
+                              newBodyPart );
+        if( bOk ) {
+          unencryptedMessage->cleanupHeader();
+          mMsg->setUnencryptedMsg( unencryptedMessage );
+        }
+      }
 
     }
   }
@@ -1735,14 +1801,24 @@ bool KMComposeWin::queryExit ()
   return true;
 }
 
-bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients, bool doSign, bool doEncrypt,
+bool KMComposeWin::encryptMessage( KMMessage* msg,
+                                   const QStringList& recipients,
+                                   bool doSign,
+                                   bool doEncrypt,
                                    CryptPlugWrapper* cryptPlug,
-                                   const QCString& encodedBody, int previousBoundaryLevel,
+                                   const QCString& encodedBody,
+                                   int previousBoundaryLevel,
                                    const KMMessagePart& oldBodyPart,
                                    bool earlyAddAttachments,
                                    bool allAttachmentsAreInBody,
                                    KMMessagePart newBodyPart )
 {
+  if(!msg)
+  {
+    kdDebug(5006) << "KMComposeWin::encryptMessage() : msg == NULL!\n" << endl;
+    return FALSE;
+  }
+  
   bool bOk = true;
   // encrypt message
   if( doEncrypt ) {
@@ -1754,70 +1830,73 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
       delete dwPart;
     } else
       innerContent = encodedBody;
+    
+    // now do the encrypting:
+    {
+      if( cryptPlug ) {
+        if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+            (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
+          // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
+          // according to RfC 2633, 3.1.1 Canonicalization
+          kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+          innerContent = KMMessage::lf2crlf( innerContent );
+          kdDebug(5006) << "                                                       done." << endl;
+        }
 
-    if( cryptPlug ) {
-      StructuringInfoWrapper structuring( cryptPlug );
+        StructuringInfoWrapper structuring( cryptPlug );
 
-      if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
-          (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
-        // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
-        // according to RfC 2633, 3.1.1 Canonicalization
-        kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-        innerContent = KMMessage::lf2crlf( innerContent );
-        kdDebug(5006) << "                                                       done." << endl;
-      }
+        QByteArray encryptedBody = pgpEncryptedMsg( innerContent,
+                                                    recipients,
+                                                    structuring );
 
-      QByteArray encryptedBody = pgpEncryptedMsg( innerContent,
-                                                  recipients,
-                                                  structuring );
+        bOk = ! (encryptedBody.isNull() || encryptedBody.isEmpty());
 
-      bOk = ! (encryptedBody.isNull() || encryptedBody.isEmpty());
-
-      if( bOk ) {
-        bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
-                                      previousBoundaryLevel + doEncrypt ? 2 : 1,
-                                      newBodyPart.contentDescription(),
-                                      newBodyPart.typeStr(),
-                                      newBodyPart.subtypeStr(),
-                                      newBodyPart.contentDisposition(),
-                                      newBodyPart.contentTransferEncodingStr(),
-                                      innerContent,
-                                      "encrypted data",
-                                      encryptedBody,
-                                      structuring,
-                                      newBodyPart );
         if( bOk ) {
-          if( newBodyPart.name().isEmpty() )
-            newBodyPart.setName("encrypted message part");
+          bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
+                                        previousBoundaryLevel + doEncrypt ? 2 : 1,
+                                        newBodyPart.contentDescription(),
+                                        newBodyPart.typeStr(),
+                                        newBodyPart.subtypeStr(),
+                                        newBodyPart.contentDisposition(),
+                                        newBodyPart.contentTransferEncodingStr(),
+                                        innerContent,
+                                        "encrypted data",
+                                        encryptedBody,
+                                        structuring,
+                                        newBodyPart );
+          if( bOk ) {
+            if( newBodyPart.name().isEmpty() )
+              newBodyPart.setName("encrypted message part");
+          } else
+            KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
         } else
-          KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
-      } else
           KMessageBox::sorry(this,
           i18n( "<qt><b>This message could not be encrypted!</b><br>&nbsp;<br>"
                 "The Crypto Plug-in %1<br>"
                 "did not return an encoded text block.<br>&nbsp;<br>"
                 "Recipient's public key was not found or is untrusted.</qt>").arg(cryptPlug->libName()));
-    } else {
-      // we try calling the *old* build-in code for OpenPGP encrypting
-      Kpgp::Block block;
-      block.setText( innerContent );
+      } else {
+        // we try calling the *old* build-in code for OpenPGP encrypting
+        Kpgp::Block block;
+        block.setText( innerContent );
 
-      // get PGP user id for the chosen identity
-      const KMIdentity & ident =
-        kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-      QCString pgpUserId = ident.pgpIdentity();
+        // get PGP user id for the chosen identity
+        const KMIdentity & ident =
+          kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+        QCString pgpUserId = ident.pgpIdentity();
 
-      // encrypt the message
-      bOk = block.encrypt( recipients, pgpUserId, doSign, mCharset );
+        // encrypt the message
+        bOk = block.encrypt( recipients, pgpUserId, doSign, mCharset );
 
-      if( bOk ) {
-        newBodyPart.setBodyEncodedBinary( block.text() );
-        if( newBodyPart.name().isEmpty() )
-          newBodyPart.setName("encrypted message part");
+        if( bOk ) {
+          newBodyPart.setBodyEncodedBinary( block.text() );
+          if( newBodyPart.name().isEmpty() )
+            newBodyPart.setName("encrypted message part");
+        }
+        else
+          KMessageBox::sorry(this,
+            i18n("Encrypting not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
       }
-      else
-        KMessageBox::sorry(this,
-          i18n("Encrypting not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
     }
   }
 
@@ -2397,7 +2476,6 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
     kdDebug() << "\nKMComposeWin::pgpSignedMsg calling CRYPTPLUG "
               << cryptPlug->libName() << endl;
                   
-    bool isSMIME = (0 <= cryptPlug->libName().find( "smime", 0, false ));
     const char* cleartext   = cText;
     char* ciphertext  = 0;
     char* certificate = 0;

@@ -1,6 +1,8 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
+//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+
 #include <config.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -53,9 +55,10 @@
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "linklocator.h"
-
+                                
 // for the MIME structure viewer (khz):
 #include "kmmimeparttree.h"
+
 
 // for selection
 //#include <X11/X.h>
@@ -2037,45 +2040,49 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 
     struct CryptPlugWrapper::SignatureMetaData sigMeta;
     sigMeta.status              = 0;
+    sigMeta.extended_info       = 0;
     sigMeta.extended_info_count = 0;
     sigMeta.nota_xml            = 0;
 
-    // PENDING(khz) Should we distinguish between an invalid signature
-    // and the incapability of the plugin to verify the signature?
     const char* cleartextP = cleartext;
-    bool bSignatureOk = cryptPlug->hasFeature( Feature_VerifySignatures ) &&
-                        cryptPlug->checkMessageSignature(
-                          data ? const_cast<char**>(&cleartextP)
-                               : &new_cleartext,
-                          signaturetext,
-                          signatureIsBinary,
-                          signatureLen,
-                          &sigMeta );
-
-    kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
-
-    QString txt;
     PartMetaData messagePart;
     messagePart.isSigned = true;
-    messagePart.isGoodSignature = bSignatureOk;
+    messagePart.isGoodSignature = false;
     messagePart.isEncrypted = false;
     messagePart.isDecryptable = false;
     messagePart.keyTrust = Kpgp::KPGP_VALIDITY_UNKNOWN;
-    messagePart.status      = sigMeta.status_code;
-    messagePart.status_code = sigMeta.status_code;
+    messagePart.status = i18n("Wrong Crypto Plug-In!");
+    
+    if( cryptPlug->hasFeature( Feature_VerifySignatures ) ) {
+    
+      if( cryptPlug->checkMessageSignature(
+                                data ? const_cast<char**>(&cleartextP)
+                                    : &new_cleartext,
+                                signaturetext,
+                                signatureIsBinary,
+                                signatureLen,
+                                &sigMeta ) ) {
+        messagePart.isGoodSignature = true;
+      }
+      
+      kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
+      
+      if( sigMeta.status && *sigMeta.status )
+        messagePart.status = QString::fromLatin1( sigMeta.status );
+      messagePart.status_code = sigMeta.status_code;
 
-    // only one signature supported
-    if (sigMeta.extended_info_count != 0) {
+      // only one signature supported
+      if( sigMeta.extended_info_count != 0 ) {
 
         kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
-        
+
         CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
         if( messagePart.status.isEmpty() )
             messagePart.status = ext.status_text;
         messagePart.keyId = ext.keyid;
         if( messagePart.keyId.isEmpty() )
             messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
-	// ### Ugh. We depend on two enums being in sync:
+    // ### Ugh. We depend on two enums being in sync:
         messagePart.keyTrust = (Kpgp::Validity)ext.validity;
         if( ext.userid && *ext.userid )
             messagePart.signer = QString::fromUtf8( ext.userid );
@@ -2104,11 +2111,18 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         }
 
         kdDebug(5006) << "\n  key id: " << messagePart.keyId << "\n  key trust: " << messagePart.keyTrust << "\n  signer: " << messagePart.signer << endl;
-
-    } else {
+        
+      } else {
         messagePart.creationTime.tm_year = 0;
         messagePart.creationTime.tm_mon  = 1;
         messagePart.creationTime.tm_mday = 1;
+      }
+    } else {
+      KMessageBox::information(reader,
+          i18n("problem: This Crypto Plug-Ins cannot verify message signatures.\n"
+               "Please specify an appropriate Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
+               QString::null,
+               "cryptoPluginBox");
     }
 
     QString unknown( i18n("(unknown)") );
@@ -2137,6 +2151,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       }
       else if( !hideErrors )
       {
+        QString txt;
         txt = "<hr><b><h2>";
         txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
         txt.append( "</h2></b>" );
@@ -2166,81 +2181,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
     }
 
-    if (bSignatureOk)
-        cryptPlug->freeSignatureMetaData( &sigMeta );
-
-/*
-    if( bSignatureOk ) {
-      txt = "<hr><b>";
-      txt.append( i18n( "Signature is OK." ).local8Bit() );
-      txt.append( "</b><br>&nbsp;<br>" );
-      txt.append( i18n( "Status: " ).local8Bit() );
-      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
-        txt.append( "<i>" );
-        txt.append( sigMeta.status );
-        txt.append( "</i>" );
-      }
-      else
-        txt.append( unknown );
-      txt.append( "<br>&nbsp;<br>" );
-      txt.append( i18n( "Signature key information:" ).local8Bit() );
-      txt.append( "<br>" );
-      if( 0 < sigMeta.extended_info_count ) {
-        txt.append( "<table border=1><tr><td>" );
-        txt.append( i18n( "<u>created</u>" ).local8Bit() );
-        txt.append( "</td><td>" );
-        txt.append( i18n( "<u>status</u>" ).local8Bit() );
-        txt.append( "</td><td>" );
-        txt.append( i18n( "<u>fingerprint</u>" ).local8Bit() );
-        txt.append( "</td></tr>" );
-        for( int i=0; i<sigMeta.extended_info_count; ++i ) {
-          CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[i];
-          // soll:
-          // txt.append( QString("<tr><td>%1<td/><td>").arg( ext.creation_time ).latin1() );
-          // ist:
-             txt.append( "<tr><td><i>?</i></td>" );
-
-<<<<<<< kmreaderwin.cpp
-          txt.append( QString(    "<td><i>%1</i></td>").arg( ext.status_text ).latin1() );
-          txt.append( QString(    "<td><i>%1</i></td></tr>").arg( ext.fingerprint ).latin1() );
-        }
-        txt.append( "</table>" );
-      }
-      else
-        txt.append( unknown );
-      txt.append( "<br><u>Notation (XML):</u><br>" );
-      if( sigMeta.nota_xml && 0 < sigMeta.nota_xml ) {
-        txt.append( "<i><pre>" );
-        txt.append( sigMeta.nota_xml );
-        txt.append( "</pre></i>" );
-      }
-      else
-        txt.append( unknown );
-      cryptPlug->freeSignatureMetaData( &sigMeta );
-=======
-    //if (bSignatureOk)
-	cryptPlug->freeSignatureMetaData( &sigMeta );
->>>>>>> 1.459
-
-<<<<<<< kmreaderwin.cpp
-      queueHtml(txt);
-    }
-    else {
-      txt = "<hr><b><h2>";
-      txt.append( i18n( "Signature could <em>not</em> be verified!" ) );
-      txt.append( "</h2></b>" );
-      txt.append( "<br>&nbsp;<br>" );
-      txt.append( i18n( "Status: " ).local8Bit() );
-      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
-        txt.append( "<i>" );
-        txt.append( sigMeta.status );
-        txt.append( "</i>" );
-      }
-      else
-        txt.append( unknown );
-      queueHtml(txt);
-    }
-*/
+    cryptPlug->freeSignatureMetaData( &sigMeta );
 
   } else {
     if( reader && !hideErrors ) {
@@ -2362,12 +2303,12 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
 {
-  QString s("\n#######\n#######\n#######  parseMsg(KMMessage* aMsg: ");
+  QString s("\n#######\n#######\n#######  parseMsg(KMMessage* aMsg ");
   if( aMsg == mMsg )
     s += "==";
   else
     s += "!=";
-  s += " mMsg, bool onlyProcessHeaders: ";
+  s += " mMsg, bool onlyProcessHeaders == ";
   if( onlyProcessHeaders )
     s += "true";
   else
@@ -2509,11 +2450,44 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
                      0,
                      mRootNode );
 
+
   // store encrypted/signed status information in the KMMessage
   //  - this can only be done *after* calling parseObjectTree()
-  aMsg->setEncryptionState( mRootNode->overallEncryptionState() );
+  KMMsgEncryptionState encryptionState = mRootNode->overallEncryptionState();
+  aMsg->setEncryptionState( encryptionState );
   aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
-
+  
+// note: The following define is specified on top of this file, to compile
+//       a less strict version of KMail just comment it out there above.
+#ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+  
+  // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
+  // of german government:
+  // --> Encrypted messages *must* be stored in unencrypted form
+  //     after they have been decrypted when the user has read them.
+  //     ( "Aufhebung der Verschluesselung nach dem Lesen" )
+  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  if(    !onlyProcessHeaders
+      && (aMsg == mMsg)
+      && cryptPlug 
+      && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
+      && (    (KMMsgFullyEncrypted == encryptionState)
+           || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
+kdDebug(5006) << "\n     1. This message was decrypted sucessfully." << endl;
+    KMMessage* unencryptedMessage = new KMMessage( *mMsg );
+kdDebug(5006) << "\n     2. This message was decrypted sucessfully." << endl;
+    mViewer->selectAll();
+kdDebug(5006) << "\n     3. This message was decrypted sucessfully." << endl;
+    QCString unencryptedBody = mViewer->selectedText().local8Bit();
+kdDebug(5006) << "\n     4. This message was decrypted sucessfully." << endl;
+    if( !unencryptedBody.isEmpty() ) {
+kdDebug(5006) << "\n     5. This message was decrypted sucessfully." << endl;
+      unencryptedMessage->setBody( unencryptedBody );
+      emit replaceMsgByUnencryptedVersion();
+    }
+  }
+#endif
+  
   // remove temp. CryptPlugList
   if( tmpPlugList )
     delete mCryptPlugList;

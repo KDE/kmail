@@ -130,6 +130,8 @@ public slots:
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
+  
+  void slotReplaceMsgByUnencryptedVersion();
 
   /** Update message menu */
   void updateMessageMenu();

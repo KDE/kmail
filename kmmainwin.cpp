@@ -549,6 +549,8 @@ void KMMainWin::createWidgets(void)
 
   mMsgView = new KMReaderWin(&mCryptPlugList, 0, &mShowMIMETreeMode, messageParent);
 
+  connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
+	  this, SLOT(slotReplaceMsgByUnencryptedVersion()));
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
   connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
@@ -1809,6 +1811,25 @@ void KMMainWin::slotSelectMessage(KMMessage* msg)
     mMsgView->setMsg(msg);
   }
 }
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotReplaceMsgByUnencryptedVersion()
+{
+  KMMessage* oldMsg = mHeaders->getMsg(-1);
+  if( oldMsg && oldMsg->hasUnencryptedMsg() ) {
+    // insert the unencrypted message
+    KMMessage* newMsg = oldMsg->unencryptedMsg();
+    mHeaders->copyMsgToFolder(mFolder, -1, newMsg);
+    // delete the encrypted message (this will delete newMsg too)
+    mHeaders->deleteMsg();
+    updateMessageActions();
+    //
+    // sorry, no idea how we can select the freshly added message now.  :-(
+    //
+    //     slotSelectMessage( ?? but what param to give it ?? );
+  }
+}
+
 
 
 //-----------------------------------------------------------------------------

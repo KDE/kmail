@@ -1882,7 +1882,9 @@ void KMHeaders::copySelectedToFolder(int menuId )
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
+void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
+                                int msgId,
+                                KMMessage* aMsg)
 {
   KMMessageList* msgList;
   KMMsgBase *msgBase;
@@ -1892,20 +1894,28 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   QPtrList<KMMessage> list;
 
   if (!destFolder) return;
+  
+  bool useParam_aMsg = (NULL != aMsg);
 
   kernel->kbp()->busy();
 
   destFolder->open();
-  msgList = selectedMsgs(msgId);
-  for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
+  msgList = useParam_aMsg ? NULL : selectedMsgs(msgId);
+  for ( rc=0, msgBase = (useParam_aMsg ? NULL : msgList->first());
+        useParam_aMsg || (msgBase && !rc);
+        msgBase = (useParam_aMsg ? NULL : msgList->next()) )
   {
-    if (isMessage = msgBase->isMessage())
-    {
-      msg = static_cast<KMMessage*>(msgBase);
-    } else {
-      idx = mFolder->find(msgBase);
-      assert(idx != -1);
-      msg = mFolder->getMsg(idx);
+    if( useParam_aMsg )
+      msg = aMsg;
+    else {
+      if (isMessage = msgBase->isMessage())
+      {
+        msg = static_cast<KMMessage*>(msgBase);
+      } else {
+        idx = mFolder->find(msgBase);
+        assert(idx != -1);
+        msg = mFolder->getMsg(idx);
+      }
     }
 
     if ((mFolder->protocol() == "imap") && (destFolder->protocol() == "imap") &&
@@ -1938,6 +1948,8 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
       assert(idx != -1);
       mFolder->unGetMsg( idx );
     }
+    if( useParam_aMsg )
+      break;
   } // end for
 
   if (!list.isEmpty())

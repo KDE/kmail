@@ -57,7 +57,33 @@ public:
 
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
-
+  
+  /** Specifies an unencrypted copy of this message to be stored
+      in a separate member variable to allow saving messages in
+      unencrypted form that were sent in encrypted form.
+      NOTE: Target of this pointer becomes property of KMMessage,
+            and will be deleted in the d'tor.
+  */
+  void setUnencryptedMsg( KMMessage* unencrypted );
+  
+  /** Returns TRUE is the massage contains an unencrypted copy of itself. */
+  virtual bool hasUnencryptedMsg() const { return NULL != mUnencryptedMsg; }
+  
+  /** Returns an unencrypted copy of this message or NULL if none exists. */
+  virtual KMMessage* unencryptedMsg() const { return mUnencryptedMsg; }
+  
+  /** Returns an unencrypted copy of this message or NULL if none exists.
+      \note This functions removed the internal unencrypted message pointer
+      from the message: the process calling takeUnencryptedMsg() must
+      delete the returned pointer when no longer needed.
+  */
+  virtual KMMessage* takeUnencryptedMsg()
+  { 
+    KMMessage* ret = mUnencryptedMsg;
+    mUnencryptedMsg = NULL;
+    return ret;
+  }
+  
   /** Mark the message as deleted */
   void del(void) { setStatus(KMMsgStatusDeleted); }
 
@@ -537,6 +563,7 @@ protected:
   unsigned long mMsgSerNum;
   KMMsgEncryptionState mEncryptionState;
   KMMsgSignatureState mSignatureState;
+  KMMessage* mUnencryptedMsg;
 };
 
 typedef KMMessage* KMMessagePtr;
