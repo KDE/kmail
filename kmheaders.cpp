@@ -1251,6 +1251,8 @@ void KMHeaders::msgAdded(int id)
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
 
+  emit msgAddedToListView( hi );
+
   END_TIMER(msgAdded);
   SHOW_TIMER(msgAdded);
 }

@@ -169,14 +169,21 @@ public:
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */
-  virtual void selected(KMMessage *);
+  void selected(KMMessage *);
   /** emitted when the list view item corresponding to this message
       has been double clicked */
-  virtual void activated(KMMessage *);
+  void activated(KMMessage *);
   /** emitted when we might be about to delete messages */
-  virtual void maybeDeleting();
+  void maybeDeleting();
   /** emitted when the list of messages has been completely rebuilt */
-  virtual void messageListUpdated();
+  void messageListUpdated();
+
+  /** emitted after a new item has been fully built and added to the 
+   * list view. We can't use KListView::itemAdded, as that is emitted
+   * from the ctor of the item, at which point the building of the item
+   * is not yet far enough along to update the quick search, which is 
+   * what is connected to this signal. */
+  void msgAddedToListView( QListViewItem* );
 
 public slots:
   /** For when a list view item has been double clicked */

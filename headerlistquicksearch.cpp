@@ -73,6 +73,16 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
            this, SLOT( slotStatusChanged( int ) ) );
 
   label->setBuddy( mStatusCombo );
+
+  /* Disable the signal connected by KListViewSearchLine since it will call 
+   * itemAdded during KMHeaders::readSortOrder() which will in turn result
+   * in getMsgBaseForItem( item ) wanting to access items which are no longer
+   * there. Rather rely on KMHeaders::msgAdded and its signal. */
+  disconnect(listView, SIGNAL(itemAdded(QListViewItem *)),
+             this, SLOT(itemAdded(QListViewItem *)));
+  KMHeaders *headers = static_cast<KMHeaders*>( listView );
+  connect( headers, SIGNAL( msgAddedToListView( QListViewItem * ) ),
+           this, SLOT( itemAdded( QListViewItem* ) ) );
 }
 
 HeaderListQuickSearch::~HeaderListQuickSearch()
