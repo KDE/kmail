@@ -492,6 +492,7 @@ kdDebug(5006) << "default " << endl;
                 if( reader )
                   reader->writeBodyStr( cstr.data(),
                                         reader->mCodec,
+                                        curNode->trueFromAddress(),
                                         &isInlineSigned, &isInlineEncrypted);
                 resultString = cstr;
                 bDone = true;
@@ -628,7 +629,10 @@ kdDebug(5006) << "       signed has data + signature" << endl;
                     data = curNode->mChild;
                   QCString cstr( data->msgPart().bodyDecoded() );
                   if( reader )
-                    reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
+                    reader->writeBodyStr(cstr,
+                                         reader->mCodec,
+                                         curNode->trueFromAddress(),
+                                         &isInlineSigned, &isInlineEncrypted);
                   resultString += cstr;
                   bDone = true;
                 } else if( sign && data && plugFound ) {
@@ -640,7 +644,8 @@ kdDebug(5006) << "       signed has data + signature" << endl;
                                                     cryptPlugList,
                                                     useThisCryptPlug,
                                                     data,
-                                                    *sign );
+                                                    *sign,
+                                                    curNode->trueFromAddress() );
                   bDone = true;
                 }
               }
@@ -654,7 +659,10 @@ kdDebug(5006) << "encrypted" << endl;
                 curNode->setEncrypted( true );
                 QCString cstr( curNode->msgPart().bodyDecoded() );
                 if( reader )
-                  reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
+                  reader->writeBodyStr(cstr,
+                                       reader->mCodec,
+                                       curNode->trueFromAddress(),
+                                       &isInlineSigned, &isInlineEncrypted);
                 resultString += cstr;
                 bDone = true;
               } else if( curNode->mChild ) {
@@ -715,7 +723,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                         messagePart.isSigned = false;
                         reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                        useThisCryptPlug,
-                                                                       reader->message()->from() ) );
+                                                                       curNode->trueFromAddress() ) );
                       }
                       insertAndParseNewChildNode( reader,
                                                   &resultString,
@@ -736,7 +744,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                           messagePart.isSigned = false;
                           reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                          useThisCryptPlug,
-                                                                         reader->message()->from() ) );
+                                                                         curNode->trueFromAddress() ) );
                         }
                         reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                         if( passphraseError )
@@ -797,7 +805,7 @@ kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 messag
                   messagePart.isEncapsulatedRfc822Message = true;
                   reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                  useThisCryptPlug,
-                                                                 reader->message()->from() ) );
+                                                                 curNode->trueFromAddress() ) );
                 }
                 QCString rfc822messageStr( curNode->msgPart().bodyDecoded() );
                 // display the headers of the encapsulated message
@@ -805,6 +813,8 @@ kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 messag
                 rfc822DwMessage->FromString( rfc822messageStr );
                 rfc822DwMessage->Parse();
                 KMMessage rfc822message( rfc822DwMessage );
+                curNode->setFromAddress( rfc822message.from() );
+kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822message.from() << "\"\n" << endl;
                 if( reader )
                   reader->parseMsg( &rfc822message, true );
                 // display the body of the encapsulated message
@@ -865,7 +875,10 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     if( keepEncryptions ) {
                     QCString cstr( curNode->msgPart().bodyDecoded() );
                     if( reader )
-                        reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
+                        reader->writeBodyStr(cstr,
+                                             reader->mCodec,
+                                             curNode->trueFromAddress(),
+                                             &isInlineSigned, &isInlineEncrypted);
                     resultString += cstr;
                     bDone = true;
                     } else {
@@ -890,7 +903,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                           messagePart.isSigned = false;
                           reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                          useThisCryptPlug,
-                                                                         reader->message()->from() ) );
+                                                                         curNode->trueFromAddress() ) );
                         }
                         // fixing the missing attachments bug #1090-b
                         insertAndParseNewChildNode( reader,
@@ -912,7 +925,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                             messagePart.isSigned = false;
                             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                            useThisCryptPlug,
-                                                                           reader->message()->from() ) );
+                                                                           curNode->trueFromAddress() ) );
                           }
                           reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                           if( passphraseError )
@@ -995,7 +1008,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         if( reader )
                           reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                          useThisCryptPlug,
-                                                                         reader->message()->from() ) );
+                                                                         curNode->trueFromAddress() ) );
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
                                                     cryptPlugList,
@@ -1019,7 +1032,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                           if( reader ) {
                             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                            useThisCryptPlug,
-                                                                           reader->message()->from() ) );
+                                                                           curNode->trueFromAddress() ) );
                             reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
                             reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                           }
@@ -1044,6 +1057,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                         useThisCryptPlug,
                                         0,
                                         *signTestNode,
+                                        curNode->trueFromAddress(),
                                         isEncrypted );
                       if( sigFound ) {
                         if( !isSigned ) {
@@ -1148,7 +1162,10 @@ kdDebug(5006) << "* model *" << endl;
           reader->mInlineImage = false;
         } else {
           QCString cstr( curNode->msgPart().bodyDecoded() );
-          reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
+          reader->writeBodyStr(cstr,
+                               reader->mCodec,
+                               curNode->trueFromAddress(),
+                               &isInlineSigned, &isInlineEncrypted);
         }
       }
       curNode->mWasProcessed = true;
@@ -2338,6 +2355,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                     CryptPlugWrapper*     useThisCryptPlug,
                                                     partNode* data,
                                                     partNode& sign,
+                                                    const QString& fromAddress,
                                                     bool hideErrors )
 {
   bool bIsOpaqueSigned = false;
@@ -2526,7 +2544,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         if( reader )
             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                            useThisCryptPlug,
-                                                           reader->message()->from() ) );
+                                                           fromAddress ) );
         bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
         deb += new_cleartext;
@@ -2569,7 +2587,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       if( reader )
         reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                        useThisCryptPlug,
-                                                       reader->message()->from() ) );
+                                                       fromAddress ) );
       parseObjectTree( reader,
                        resultString,
                        cryptPlugList,
@@ -2920,6 +2938,8 @@ kdDebug(5006) << s << endl;
                             mainType,
                             mainSubType );
 
+  mRootNode->setFromAddress( aMsg->from() );
+  
   QString cntDesc, cntSize, cntEnc;
   cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )
@@ -3890,6 +3910,7 @@ QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
+                                const QString& fromAddress,
                                 bool* flagSigned, bool* flagEncrypted )
 {
   QString line, htmlStr;
@@ -3985,7 +4006,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
 	      messagePart.keyId = keyId;
 	      messagePart.keyTrust = keyTrust;
 
-	      htmlStr += writeSigstatHeader( messagePart, 0, message()->from() );
+	      htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
 	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 	      htmlStr += writeSigstatFooter( messagePart );
@@ -4542,8 +4563,10 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
         //win->mViewer->write(win->codec()->toUnicode(str));
 	win->writeHTMLStr(win->codec()->toUnicode(str));
-      else  // plain text
-	win->writeBodyStr(str, win->codec());
+      else // plain text
+        win->writeBodyStr( str,
+                           win->codec(),
+                           win->message() ? win->message()->from() : "" );
       win->queueHtml("</body></html>");
       win->sendNextHtmlChunk();
       win->setCaption(i18n("View Attachment: ") + pname);

@@ -247,7 +247,13 @@ public:
         return mMimePartTreeItem;
     }
 
+    void setFromAddress( const QString& address ) {
+        mFromAddress = address;
+    }
+
     bool isAttachment() const;
+
+    const QString& trueFromAddress() const;
 
 public:
     partNode*     mRoot;
@@ -259,6 +265,7 @@ private:
     DwBodyPart*   mDwPart;   // may be zero
     KMMessagePart mMsgPart;  // is valid - even if mDwPart is zero
     QCString      mEncodedBody;
+    QString       mFromAddress;
     int           mType;
     int           mSubType;
     bool          mIsEncrypted;

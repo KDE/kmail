@@ -232,6 +232,7 @@ public:
                                                   CryptPlugWrapper*     useThisCryptPlug,
                                                   partNode* data,
                                                   partNode& sign,
+                                                  const QString& fromAddress,
                                                   bool hideErrors = false );
 
     /** Returns the contents of the given multipart/encrypted
@@ -351,6 +352,7 @@ protected:
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
   virtual void writeBodyStr( const QCString bodyString, QTextCodec *aCodec,
+                             const QString& fromAddress,
                              bool* isSigned = 0,
                              bool* isEncrypted = 0 );
 
