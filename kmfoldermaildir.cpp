@@ -799,7 +799,8 @@ int KMFolderMaildir::createIndexFromContents()
 
   needsCompact = true;
 
-  parent()->manager()->invalidateFolder(kernel->msgDict(), this);
+  if (parent())
+    parent()->manager()->invalidateFolder(kernel->msgDict(), this);
   return 0;
 }
 
