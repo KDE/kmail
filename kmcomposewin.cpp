@@ -1613,28 +1613,32 @@ void KMComposeWin::slotSpellMispelling(char *word, QStrList *, long pos)
 #endif //HAS_KSPELL
 }
 
-#ifdef CHARSETS
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotConfigureCharsets(){
-   
-   CharsetsDlg *dlg=new CharsetsDlg(mCharset,mComposeCharset
-                                    ,m7BitAscii,mQuoteUnknownCharacters);
+void KMComposeWin::slotConfigureCharsets()
+{
+#ifdef CHARSETS
+   CharsetsDlg *dlg=new CharsetsDlg((const char*)mCharset,
+				    (const char*)mComposeCharset,
+                                    m7BitAscii,mQuoteUnknownCharacters);
    connect(dlg,SIGNAL( setCharsets(const char *,const char *,bool,bool,bool) )
            ,this,SLOT(slotSetCharsets(const char *,const char *,bool,bool,bool)));
    dlg->show();
    delete dlg;	   
+#endif
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotSetCharsets(const char *message,const char *composer
-                                  ,bool ascii,bool quote,bool def){
-
+void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
+                                   bool ascii,bool quote,bool def)
+{
+#ifdef CHARSETS
   mCharset=message;
   mComposeCharset=composer;
   m7BitAscii=ascii;
   mQuoteUnknownCharacters=quote;
-  if (def){
+  if (def)
+  {
     mDefaultCharset=message;
     mDefComposeCharset=composer;
   }  
@@ -1646,15 +1650,19 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer
   else kcharset=mComposeCharset;
   cout<<"Setting font to: "<<kcharset.name()<<"\n";
   mEditor->setFont(kcharset.setQFont(fnt));
+#endif
 }
 
+#ifdef CHARSETS
 //-----------------------------------------------------------------------------
-bool KMComposeWin::is8Bit(const QString str){
- 
+bool KMComposeWin::is8Bit(const QString str)
+{
   const char *ptr=str;
-  while(*ptr){
+  while(*ptr)
+  {
     if ( (*ptr)&0x80 ) return TRUE;
-    else if ( (*ptr)=='&' && ptr[1]=='#' ){
+    else if ( (*ptr)=='&' && ptr[1]=='#' )
+    {
       int code=atoi(ptr+2);
       if (code>0x7f) return TRUE;
     }  
@@ -1664,12 +1672,13 @@ bool KMComposeWin::is8Bit(const QString str){
 }
 
 //-----------------------------------------------------------------------------
-QString KMComposeWin::convertToLocal(const QString str){
-
+QString KMComposeWin::convertToLocal(const QString str)
+{
   if (m7BitAscii && !is8Bit(str)) return str.copy();
   KCharset destCharset;
   KCharset srcCharset;
-  if (mCharset==""){
+  if (mCharset=="")
+  {
      if (mDefaultCharset=="default") mCharset=klocale->charset();
      else mCharset=mDefaultCharset;
   }   
@@ -1684,12 +1693,18 @@ QString KMComposeWin::convertToLocal(const QString str){
 }
 
 //-----------------------------------------------------------------------------
-QString KMComposeWin::convertToSend(const QString str){
-
+QString KMComposeWin::convertToSend(const QString str)
+{
   cout<<"Converting to send...\n";
-  if (m7BitAscii && !is8Bit(str)){ mCharset="us-ascii"; return str.copy(); }
-  if (mCharset==""){
-     if (mDefaultCharset=="default") mCharset=klocale->charset();
+  if (m7BitAscii && !is8Bit(str))
+  { 
+    mCharset="us-ascii";
+    return str.copy();
+  }
+  if (mCharset=="")
+  {
+     if (mDefaultCharset=="default") 
+          mCharset=klocale->charset();
      else mCharset=mDefaultCharset;
   }   
   cout<<"mCharset: "<<mCharset<<"\n";
@@ -1704,7 +1719,10 @@ QString KMComposeWin::convertToSend(const QString str){
   KCharsetConversionResult result=conv.convert(str);
   return result.copy();			  
 }
-#endif
+#endif //CHARSETS
+
+
+
 
 //=============================================================================
 //

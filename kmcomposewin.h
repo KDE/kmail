@@ -167,11 +167,9 @@ public slots:
 
    void updateCursorPosition();
 
-#ifdef CHARSETS
    void slotConfigureCharsets();
-   void slotSetCharsets(const char *message,const char *composer
-                        ,bool ascii,bool quote,bool def);
-#endif
+   void slotSetCharsets(const char *message,const char *composer,
+                        bool ascii,bool quote,bool def);
 
 protected:
   /** Install grid management and header fields. If fields exist that
