@@ -2809,6 +2809,13 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
 void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
   if ( charset.isEmpty() ) return;
 
+  // KCharsets::codecForName("us-ascii") returns "iso-8859-1" (cf. Bug #49812)
+  // therefore we have to treat this case specially
+  if ( charset.lower() == QString::fromLatin1("us-ascii") ) {
+    charset = QString::fromLatin1("us-ascii");
+    return;
+  }
+
   if ( charset.lower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
       .arg( QCString( kernel->networkCodec()->mimeName() ).lower() );
