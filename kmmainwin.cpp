@@ -136,7 +136,6 @@ KMMainWin::~KMMainWin()
   kapp->config()->sync();
 
   delete mHeaders;
-  delete mStatusBar;
   delete mFolderTree;
 
 
@@ -722,7 +721,7 @@ void KMMainWin::statusMsg(const QString& aText)
 void KMMainWin::displayStatusMsg(const QString& aText)
 {
   QString text = " " + aText + " ";
-  int statusWidth = mStatusBar->width() - littleProgress->width()
+  int statusWidth = statusBar()->width() - littleProgress->width()
     - fontMetrics().maxWidth();
 
   while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
@@ -735,7 +734,7 @@ void KMMainWin::displayStatusMsg(const QString& aText)
 //  text.replace(QRegExp("<"), "&lt;");
 //  text.replace(QRegExp(">"), "&gt;");
 
-  mStatusBar->changeItem(text, mMessageStatusId);
+  statusBar()->changeItem(text, mMessageStatusId);
 }
 
 
@@ -2692,14 +2691,12 @@ void KMMainWin::slotEditKeys()
 //-----------------------------------------------------------------------------
 void KMMainWin::setupStatusBar()
 {
-  mStatusBar = new KStatusBar(this);
+  littleProgress = new KMLittleProgressDlg( statusBar() );
 
-  littleProgress = new KMLittleProgressDlg( mStatusBar );
-
-  mStatusBar->addWidget( littleProgress, 0 , true );
+  statusBar()->addWidget( littleProgress, 0 , true );
   mMessageStatusId = 1;
-  mStatusBar->insertItem(i18n(" Initializing..."), 1, 1 );
-  mStatusBar->setItemAlignment( 1, AlignLeft | AlignVCenter );
+  statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
+  statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
   littleProgress->show();
   connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
 	   littleProgress, SLOT(slotEnable( bool )));
@@ -2711,7 +2708,6 @@ void KMMainWin::setupStatusBar()
 	   littleProgress, SLOT(slotClean()));
   connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
 	   this, SLOT(statusMsg( const QString& )));
-  setStatusBar(mStatusBar);
 }
 
 void KMMainWin::slotQuit()
