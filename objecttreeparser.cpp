@@ -730,6 +730,7 @@ public:
 							     fromAddress ) );
 	  bIsOpaqueSigned = true;
 
+#ifndef NDEBUG
 	  if( doCheck ){
 	    QCString deb;
 	    deb = "\n\nN E W    C O N T E N T = \"";
@@ -737,6 +738,7 @@ public:
 	    deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
 	    kdDebug(5006) << deb << endl;
 	  }
+#endif
 	  CryptPlugWrapper * oldCryptPlug = cryptPlugWrapper();
 	  setCryptPlugWrapper( cryptPlug );
 	  insertAndParseNewChildNode( sign,
