@@ -487,6 +487,9 @@ public:
   void defaults() {}
   void installProfile( KConfig * profile );
 
+protected:
+  void readCurrentOverrideCodec();
+
 private: // data
   QComboBox *mCharsetCombo;
   QComboBox *mOverrideCharsetCombo;
