@@ -1026,6 +1026,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   while (pos >= 0)
   {
     KMMessage *msg = new KMMessage;
+    msg->setComplete(false);
+    msg->setReadyToShow(false);
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
     ulong uid = msg->UID();

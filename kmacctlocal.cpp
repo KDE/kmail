@@ -177,6 +177,8 @@ void KMAcctLocal::processNewMail(bool)
         msg->headerField("X-Status").latin1());
       msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
       msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
+      msg->setComplete(true);
+      msg->updateAttachmentState();
 
       addedOk = processNewMsg(msg);
 

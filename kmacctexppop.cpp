@@ -352,6 +352,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
 {
   if (infoMsg != "message complete") return;
   KMMessage *msg = new KMMessage;
+  msg->setComplete(true);
   // Make sure to use LF as line ending to make the processing easier
   // when piping through external programs
   uint newSize = KMFolder::crlf2lf( curMsgData.data(), curMsgData.size() );

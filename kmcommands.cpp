@@ -1481,9 +1481,12 @@ void KMCopyCommand::execute()
       list.append(msg);
     } else {
       newMsg = new KMMessage;
+      newMsg->setComplete(msg->isComplete());
+      // make sure the attachment state is only calculated when it's complete
+      if (!newMsg->isComplete()) 
+        newMsg->setReadyToShow(false);
       newMsg->fromString(msg->asString());
       newMsg->setStatus(msg->status());
-      newMsg->setComplete(msg->isComplete());
 
       if (srcFolder && !newMsg->isComplete())
       {
