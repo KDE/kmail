@@ -1019,17 +1019,20 @@ static void swapEndian(QString &str)
 static int g_chunk_length = 0, g_chunk_offset=0;
 static uchar *g_chunk = 0;
 
-#define COPY_DATA(x, length) do { \
-     if(g_chunk_offset + ((int)length) > g_chunk_length) {\
-        g_chunk_offset = g_chunk_length; \
-        kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl; \
-        memset(x, length, '\0'); \
-     } else { \
-        memcpy(x, g_chunk+g_chunk_offset, length); \
-	g_chunk_offset += length; \
-     } } while(0)
-#define COPY_HEADER_TYPE(x) Q_ASSERT(sizeof(x) == sizeof(Q_UINT32)); COPY_DATA(&x, sizeof(x));
-#define COPY_HEADER_LEN(x)  Q_ASSERT(sizeof(x) == sizeof(Q_UINT16)); COPY_DATA(&x, sizeof(x));
+namespace {
+  template < typename T > void copy_from_stream( T & x ) {
+    if( g_chunk_offset + int(sizeof(T)) > g_chunk_length ) {
+      g_chunk_offset = g_chunk_length;
+      kdDebug( 5006 ) << "This should never happen.. "
+		      << __FILE__ << ":" << __LINE__ << endl;
+      memset( &x, sizeof(T), '\0' );
+    } else {
+      memcpy( &x, g_chunk + g_chunk_offset, sizeof(T) );
+      g_chunk_offset += sizeof(T);
+    }
+  }
+}
+
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
@@ -1059,8 +1062,8 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   Q_UINT16 l;
   while(g_chunk_offset < mIndexLength) {
     Q_UINT32 tmp;
-    COPY_HEADER_TYPE(tmp);
-    COPY_HEADER_LEN(l);
+    copy_from_stream(tmp);
+    copy_from_stream(l);
     if (swapByteOrder)
     {
        tmp = kmail_swap_32(tmp);
@@ -1130,8 +1133,8 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
   Q_UINT16 l;
   while (g_chunk_offset < mIndexLength) {
     Q_UINT32 tmp;
-    COPY_HEADER_TYPE(tmp);
-    COPY_HEADER_LEN(l);
+    copy_from_stream(tmp);
+    copy_from_stream(l);
     if (swapByteOrder)
     {
        tmp = kmail_swap_32(tmp);
@@ -1147,7 +1150,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
       assert(sizeOfLong == l);
       if (sizeOfLong == sizeof(ret))
       {
-         COPY_DATA(&ret, sizeof(ret));
+	 copy_from_stream(ret);
          if (swapByteOrder)
          {
             if (sizeof(ret) == 4)
@@ -1160,7 +1163,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
       {
          // Long is stored as 4 bytes in index file, sizeof(long) = 8
          Q_UINT32 ret_32;
-         COPY_DATA(&ret_32, sizeof(ret_32));
+         copy_from_stream(ret_32);
          if (swapByteOrder)
             ret_32 = kmail_swap_32(ret_32);
          ret = ret_32;
@@ -1170,8 +1173,8 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
          // Long is stored as 8 bytes in index file, sizeof(long) = 4
          Q_UINT32 ret_1;
          Q_UINT32 ret_2;
-         COPY_DATA(&ret_1, sizeof(ret_1));
-         COPY_DATA(&ret_2, sizeof(ret_2));
+         copy_from_stream(ret_1);
+         copy_from_stream(ret_2);
          if (!swapByteOrder)
          {
             // Index file order is the same as the order of this CPU.
@@ -1208,16 +1211,6 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
   }
   return ret;
 }
-#undef COPY_DATA
-
-//-----------------------------------------------------------------------------
-const uchar *KMMsgBase::asIndexString(int &length) const
-{
-  unsigned int csize = 256;
-  static uchar *ret = 0; //different static buffer here for we may use the other buffer in the functions below
-  if(!ret)
-    ret = (uchar *)malloc(csize);
-  length = 0;
 
 #ifndef WORDS_BIGENDIAN
 // We need to use swab to swap bytes to network byte order
@@ -1240,6 +1233,15 @@ const uchar *KMMsgBase::asIndexString(int &length) const
         length += len2+sizeof(t)+sizeof(l); \
     } while(0)
 #define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x), false)
+
+//-----------------------------------------------------------------------------
+const uchar *KMMsgBase::asIndexString(int &length) const
+{
+  unsigned int csize = 256;
+  static uchar *ret = 0; //different static buffer here for we may use the other buffer in the functions below
+  if(!ret)
+    ret = (uchar *)malloc(csize);
+  length = 0;
 
   unsigned long tmp;
   QString tmp_str;
@@ -1283,9 +1285,10 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   tmp = status();
   STORE_DATA(MsgStatusPart, tmp);
 
-#undef STORE_DATA_LEN
   return ret;
 }
+#undef STORE_DATA_LEN
+#undef STORE_DATA
 
 bool KMMsgBase::syncIndexString() const
 {
