@@ -9,9 +9,9 @@
 #include <qdialog.h>
 #include "kio/job.h"
 #include "kio/global.h"
-#include "qvaluelist.h"
-#include "qstringlist.h"
-#include "qtimer.h"
+#include <qvaluelist.h>
+#include <qstringlist.h>
+#include <qtimer.h>
 
 class QLineEdit;
 class QPushButton;

@@ -6,7 +6,7 @@
 #define __KMMAINWIN
 
 #include "kmtopwidget.h"
-#include "qvaluelist.h"
+#include <qvaluelist.h>
 #include <qmap.h>
 #include <kurl.h>
 

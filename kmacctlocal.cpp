@@ -4,7 +4,7 @@
 #include <config.h>
 #endif
 
-#include "qdatetime.h" 
+#include <qdatetime.h>
 #include "kmacctlocal.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
