@@ -2060,7 +2060,11 @@ QString KMMessage::replyToId(void) const
     replyTo = replyTo.mid( leftAngle );
 
   // if we have found a good message id we can return immediately
-  if (!replyTo.isEmpty() && (replyTo[0] == '<'))
+  // We ignore mangled In-Reply-To headers which are created by a
+  // missconfigured Mutt. They look like this <"from foo"@bar.baz>, i.e.
+  // they contain double quotes and spaces. We only check for '"'.
+  if (!replyTo.isEmpty() && (replyTo[0] == '<') &&
+      ( -1 == replyTo.find( '"' ) ) )
     return replyTo;
 
   references = headerField("References");
