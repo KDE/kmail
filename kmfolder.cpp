@@ -822,7 +822,7 @@ void KMFolder::sort(KMMsgList::SortField aField)
 //-----------------------------------------------------------------------------
 const char* KMFolder::type(void) const
 {
-  if (mAcctList) return "in";
+  if (mAcctList) return "In";
   return KMFolderInherited::type();
 }
 

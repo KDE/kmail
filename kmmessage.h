@@ -74,14 +74,18 @@ public:
 
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
-    if setAutomaticFields() is still required. */
+    of setAutomaticFields(), see below, is still required. */
   virtual void initHeader(void);
 
+  /** Removes empty fields from the header, e.g. an empty Cc: or Bcc: 
+    field. */
+  virtual void cleanupHeader(void);
+
   /** Set fields that are either automatically set (Message-id)
-   or that do not change from one message to another (MIME-Version).
-   Call this method before sending *after* all changes to the message
-   are done because this method does things different if there are
-   attachments / multiple body parts. */
+    or that do not change from one message to another (MIME-Version).
+    Call this method before sending *after* all changes to the message
+    are done because this method does things different if there are
+    attachments / multiple body parts. */
   virtual void setAutomaticFields(void);
     
   /** Get or set the 'Date' header field */

@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <mimelib/datetime.h>
 
+static QString result;
 
 //-----------------------------------------------------------------------------
 KMMsgInfo::KMMsgInfo(KMFolder* p): 

@@ -526,8 +526,6 @@ void KMHeaders::updateMessageList(void)
   KMMsgStatus flag;
   KMMsgBase* mb;
  
-  debug("updateMessageList() called");
-
   clear();
   if (!mFolder) return;
 

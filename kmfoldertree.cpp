@@ -59,11 +59,11 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   dict().insert("dir", &pixDir);
   dict().insert("node", &pixNode);
   dict().insert("plain", &pixPlain);
-  dict().insert("fld", &pixFld);
-  dict().insert("in", &pixIn);
-  dict().insert("out", &pixOut);
-  dict().insert("st", &pixSent);
-  dict().insert("tr", &pixTr);
+  dict().insert("Fld", &pixFld);
+  dict().insert("In", &pixIn);
+  dict().insert("Out", &pixOut);
+  dict().insert("St", &pixSent);
+  dict().insert("Tr", &pixTr);
 
   setAutoUpdate(TRUE);
   reload();
@@ -88,8 +88,8 @@ void KMFolderTree::reload(void)
   KMFolderDir* fdir;
   KMFolder* folder;
   QString str;
-  QString indent = "";
   bool upd = autoUpdate();
+  int i;
 
   setAutoUpdate(FALSE);
 
@@ -102,10 +102,7 @@ void KMFolderTree::reload(void)
        folder != NULL;
        folder = (KMFolder*)fdir->next())
   {
-    str = indent + "{" + folder->type() + "} " + folder->name();
-    insertItem(str);
-
-    mList.append(folder);
+    inSort(folder);
   }
   setAutoUpdate(upd);
   if (upd) repaint();
@@ -116,6 +113,26 @@ void KMFolderTree::reload(void)
 void KMFolderTree::doFolderListChanged()
 {
   reload();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::inSort(KMFolder* aFolder)
+{
+  KMFolder* cur;
+  QString str;
+  int i, cmp;
+
+  for (i=0,cur=(KMFolder*)mList.first(); cur; cur=(KMFolder*)mList.next(),i++)
+  {
+    cmp = strcmp(aFolder->type(), cur->type());
+    if (!cmp) cmp = stricmp(aFolder->name(), cur->name());
+    if (cmp < 0) break;
+  }
+
+  str = QString("{") + aFolder->type() + "} " + aFolder->name();
+  insertItem(str, i);
+  mList.insert(i, aFolder);
 }
 
 

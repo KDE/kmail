@@ -109,6 +109,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
   str += aMsg->headerAsString();
   str += "--------------------------------------------\n";
   newMsg->setBody(str);
+  newMsg->setAutomaticFields();
 
   msgSender->send(newMsg);
 }

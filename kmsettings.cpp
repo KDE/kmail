@@ -52,6 +52,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   createTabIdentity(this);
   createTabNetwork(this);
   createTabComposer(this);
+  createTabMisc(this);
 }
 
 
@@ -401,11 +402,45 @@ void KMSettings::createTabComposer(QWidget *parent)
   allow8Bit->setChecked(!i);
   quotedPrintable->setChecked(i);
 
-  //---------- ére we gø  (orcish battle cry)
+  //---------- ére we gø
   box->addStretch(10);
   box->activate();
  
   addTab(tab, nls->translate("Composer"));
+}
+
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::createTabMisc(QWidget *parent)
+{
+  QWidget *tab = new QWidget(parent);
+  QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
+  QGridLayout* grid;
+  QGroupBox* grp;
+  QLabel* lbl;
+  KConfig* config = app->getConfig();
+  QString str;
+
+  //---------- group: folders
+  grp = new QGroupBox(nls->translate("Folders"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 1, 3, 20, 4);
+
+  emptyTrashOnExit=new QCheckBox(nls->translate("empty trash on exit"),grp);
+  emptyTrashOnExit->setMinimumSize(emptyTrashOnExit->sizeHint());
+  grid->addMultiCellWidget(emptyTrashOnExit, 0, 0, 0, 2);
+  grid->activate();
+
+  //---------- set values
+  config->setGroup("General");
+  emptyTrashOnExit->setChecked(config->readNumEntry("empty-trash-on-exit",0));
+
+  //---------- ére we gø
+  box->addStretch(10);
+  box->activate();
+ 
+  addTab(tab, nls->translate("Misc"));
 }
 
 
@@ -630,7 +665,11 @@ void KMSettings::doApply()
   config->writeEntry("word-wrap",wordWrap->isChecked());
   config->writeEntry("break-at", atoi(wrapColumnEdit->text()));
   config->writeEntry("font", monospFont->isChecked()?"fixed":"variable");
-  config->writeEntry("pgp-auto-sign",pgpAutoSign->isChecked());
+  config->writeEntry("pgp-auto-sign", pgpAutoSign->isChecked());
+
+  //----- misc
+  config->setGroup("General");
+  config->writeEntry("empty-trash-on-exit", emptyTrashOnExit->isChecked());
 
   //-----
   config->sync();

@@ -16,6 +16,7 @@
 #include "kmmessage.h"
 #include "kmcomposewin.h"
 #include "kmaddrbook.h"
+#include "kcharsets.h"
 
 #include <kapp.h>
 #include <stdio.h>
@@ -72,8 +73,10 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)app->appName(), aMsg);
-    KMsgBox::message(NULL, appName+" "+nls->translate("warning"), aMsg, 
-		     KMsgBox::EXCLAMATION);
+    if (strncmp(aMsg,"KCharset:",9) != 0 &&
+	strncmp(aMsg,"QGManager:",10) != 0)
+      KMsgBox::message(NULL, appName+" "+nls->translate("warning"), aMsg, 
+		       KMsgBox::EXCLAMATION);
     break;
 
   case QtFatalMsg:
@@ -143,18 +146,18 @@ static void initFolders(KConfig* cfg)
   if (name.isEmpty()) name = "inbox";
   
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(name);
-  //inboxFolder->open();
+  inboxFolder->open();
 
   outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
-  outboxFolder->setType("out");
+  outboxFolder->setType("Out");
   outboxFolder->open();
 
   sentFolder = folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
-  sentFolder->setType("st");
+  sentFolder->setType("St");
   sentFolder->open();
 
   trashFolder  = folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
-  trashFolder->setType("tr");
+  trashFolder->setType("Tr");
   trashFolder->open();
 }
 
@@ -214,12 +217,20 @@ static void init(int argc, char *argv[])
 //-----------------------------------------------------------------------------
 static void cleanup(void)
 {
+  KConfig* config =  kapp->getConfig();
+
   shuttingDown = TRUE;
 
+  if (trashFolder)
+  {
+    trashFolder->close(TRUE);
+    config->setGroup("General");
+    if (config->readNumEntry("empty-trash-on-exit", 0))
+      trashFolder->expunge();
+  }
   if (inboxFolder) inboxFolder->close(TRUE);
   if (outboxFolder) outboxFolder->close(TRUE);
   if (sentFolder) sentFolder->close(TRUE);
-  if (trashFolder) trashFolder->close(TRUE);
 
   if (msgSender) delete msgSender;
   if (addrBook) delete addrBook;

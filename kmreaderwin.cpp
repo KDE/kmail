@@ -363,6 +363,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if (*pos=='\n') beg = pos+1;
   }
 
+  // check for PGP encryption/signing
   if (pgp->isSigned())
   {
     if (pgp->goodSignature()) sig = nls->translate("Message was signed by");
@@ -381,10 +382,9 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     {
       *pos = '\0';
       line = strToHtml(beg,TRUE,TRUE);
-      *pos = '\n';
+      *pos = ch;
       if (quoted && !lastQuoted) line.prepend("<I>");
       else if (!quoted && lastQuoted) line.prepend("</I>");
-
       mViewer->write(line + "<BR>");
 
       beg = pos+1;
@@ -458,7 +458,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	}
 	while((x&7) != 0);
       }
-      // else aPreserveBlanks = FALSE;
+      else aPreserveBlanks = FALSE;
     }
     if (ch=='<') htmlStr += "&lt;";
     else if (ch=='>') htmlStr += "&gt;";

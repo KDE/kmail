@@ -620,14 +620,14 @@ void KMComposeWin::applyChanges(void)
 
   assert(mMsg!=NULL);
 
-  if (!to().isEmpty()) mMsg->setTo(to());
-  if (!from().isEmpty()) mMsg->setFrom(from());
-  if (!cc().isEmpty()) mMsg->setCc(cc());
-  if (!subject().isEmpty()) mMsg->setSubject(subject());
-  if (!replyTo().isEmpty()) mMsg->setReplyTo(replyTo());
-  if (!bcc().isEmpty()) mMsg->setBcc(bcc());
-  if (!followupTo().isEmpty()) mMsg->setFollowup(followupTo());
-  if (!newsgroups().isEmpty()) mMsg->setGroups(newsgroups());
+  mMsg->setTo(to());
+  mMsg->setFrom(from());
+  mMsg->setCc(cc());
+  mMsg->setSubject(subject());
+  mMsg->setReplyTo(replyTo());
+  mMsg->setBcc(bcc());
+  mMsg->setFollowup(followupTo());
+  mMsg->setGroups(newsgroups());
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
@@ -684,6 +684,9 @@ void KMComposeWin::applyChanges(void)
 
   mMsg->setAutomaticFields();
   if (!mAutoDeleteMsg) mEditor->toggleModified(FALSE);
+
+  // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
+  mMsg->cleanupHeader();
 }
 
 
@@ -1050,6 +1053,27 @@ void KMComposeWin::slotAttachProperties()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachView()
 {
+  QString str, pname;
+  KMMessagePart* msgPart;
+  QMultiLineEdit* edt = new QMultiLineEdit;
+
+  int idx = mAtmListBox->currentItem();
+  if (idx < 0) return;
+
+  msgPart = mAtmList.at(idx);
+  pname = msgPart->name();
+  if (pname.isEmpty()) pname=msgPart->contentDescription();
+  if (pname.isEmpty()) pname="unnamed";
+
+  kbp->busy();
+  str = msgPart->bodyDecoded();
+
+  edt->setCaption(nls->translate("View Attachment: ") + pname);
+  edt->insertLine(str);
+  edt->setReadOnly(TRUE);
+  edt->show();
+
+  kbp->idle();
 }
 
 
@@ -1057,13 +1081,17 @@ void KMComposeWin::slotAttachView()
 void KMComposeWin::slotAttachSave()
 {
   KMMessagePart* msgPart;
-  QString fileName;
+  QString fileName, pname;
 
   int idx = mAtmListBox->currentItem();
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
-  fileName = QFileDialog::getSaveFileName(".", "*", NULL, msgPart->name());
+  pname = msgPart->name();
+  if (pname.isEmpty()) pname="unnamed";
+
+  fileName = QFileDialog::getSaveFileName(".", "*", NULL, pname);
+  if (fileName.isEmpty()) return;
   kStringToFile(msgPart->bodyDecoded(), fileName, TRUE);
 }
 

@@ -30,6 +30,9 @@ protected slots:
  void doFolderListChanged();
 
 protected:
+  // Insert folder sorted by type and name
+  virtual void inSort(KMFolder*);
+
   virtual void resizeEvent(QResizeEvent*);
 
   KMFolderNodeList mList;
