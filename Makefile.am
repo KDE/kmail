@@ -90,7 +90,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		maildirjob.cpp mboxjob.cpp imapjob.cpp \
 		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
 		folderIface.cpp folderIface.skel mailserviceimpl.cpp \
-		attachmentlistview.cpp ssllabel.cpp \
+		attachmentlistview.cpp \
 		isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
 		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
@@ -100,8 +100,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
 		pluginloaderbase.cpp partnodebodypart.cpp \
 		expirejob.cpp compactionjob.cpp jobscheduler.cpp callback.cpp \
-		overlaywidget.cpp progressmanager.cpp progressdialog.cpp \
-		statusbarprogresswidget.cpp listjob.cpp \
+		listjob.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui
 
