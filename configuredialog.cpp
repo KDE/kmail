@@ -1877,11 +1877,11 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.colorList->setColor(
     6, config.readColorEntry("FollowedColor",&defaultColor ) );
 
-  defaultColor = QColor("blue");
+  defaultColor = QColor("red");
   mAppearance.colorList->setColor(
     7, config.readColorEntry("NewMessage",&defaultColor ) );
 
-  defaultColor = QColor("red");
+  defaultColor = QColor("blue");
   mAppearance.colorList->setColor(
     8, config.readColorEntry("UnreadMessage",&defaultColor ) );
 

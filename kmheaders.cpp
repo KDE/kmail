@@ -365,8 +365,8 @@ void KMHeaders::readColorConfig (void)
   // Custom/System colors
   config->setGroup("Reader");
   QColor c1=QColor(kapp->palette().normal().text());
-  QColor c2=QColor("blue");
-  QColor c3=QColor("red");
+  QColor c2=QColor("red");
+  QColor c3=QColor("blue");
   QColor c4=QColor(kapp->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
