@@ -3,6 +3,7 @@
 // -1 -> status unchanged, 0 -> success, 1 -> failure, 2-> critical failure
 
 #include "kmmessage.h"
+#include "kmmsgpart.h"
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
@@ -10,6 +11,7 @@
 #include "kmglobal.h"
 #include "kmsender.h"
 #include "kmidentity.h"
+#include "kfileio.h"
 #include <kapp.h>
 #include <kconfig.h>
 #include <qcombobox.h>
@@ -272,14 +274,30 @@ void KMFilterActionExec::dummySigHandler(int)
 {
 }
 
-int KMFilterActionExec::process(KMMessage* /*aMsg*/, bool& /*stop*/)
+int KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/)
 {
   void (*oldSigHandler)(int);
   int rc;
   if (mCmd.isEmpty()) return 1;
+  QString fullCmd = mCmd + " ";
+  QList<KTempFile> atmList;
+  KMMessagePart msgPart;
+  int i, nr;
+  while (fullCmd.contains("%"))
+  {
+    i = fullCmd.find("%") + 1;
+    nr = fullCmd.mid(i, fullCmd.find(" ", i) - i).toInt();
+    aMsg->bodyPart(nr, &msgPart);
+    KTempFile *atmTempFile = new KTempFile();
+    atmList.append( atmTempFile );
+    atmTempFile->setAutoDelete( true );
+    kByteArrayToFile(msgPart.bodyDecoded(), atmTempFile->name(), false, false,
+      false);
+    fullCmd = fullCmd.arg( atmTempFile->name() );
+  }
   oldSigHandler = signal(SIGALRM, &KMFilterActionExec::dummySigHandler);
   alarm(30);
-  rc = system(mCmd);
+  rc = system(fullCmd.left(fullCmd.length() - 1 ));
   alarm(0);
   signal(SIGALRM, oldSigHandler);
   if (rc & 255)
