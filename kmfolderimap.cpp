@@ -468,7 +468,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotCopyMsgResult( FolderJob* job )
+void KMFolderImap::slotCopyMsgResult( KMail::FolderJob* job )
 {
   if ( job->error() ) // getFolder() will not be called in this case
     emit folderComplete( this, false );

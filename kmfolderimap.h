@@ -346,7 +346,7 @@ public slots:
   /**
    * Connected to the result signal of the copy/move job
    */ 
-  void slotCopyMsgResult( FolderJob* job );
+  void slotCopyMsgResult( KMail::FolderJob* job );
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
