@@ -564,9 +564,6 @@ void KMMainWin::createWidgets(void)
   new KAction( i18n("Copy Message to Folder"), Key_C, this,
                SLOT(slotCopyMsg()), actionCollection(),
                "copy_message_to_folder" );
-  new KAction( i18n("Delete Message"), Key_Delete, this,
-               SLOT(slotDeleteMsg()), actionCollection(),
-               "delete_message" );
 
   // create list of folders
   mFolderTree  = new KMFolderTree(&mCryptPlugList,
@@ -1057,7 +1054,7 @@ void KMMainWin::slotEmptyFolder()
   if (mFolder->protocol() == "imap")
   {
     slotMarkAll();
-    slotDeleteMsg();
+    slotTrashMsg();
     return;
   }
 
@@ -1492,9 +1489,16 @@ void KMMainWin::slotResendMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotDeleteMsg()
+void KMMainWin::slotTrashMsg()
 {
   mHeaders->deleteMsg();
+  updateMessageActions();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotDeleteMsg()
+{
+  mHeaders->moveMsgToFolder(0);
   updateMessageActions();
 }
 
@@ -2404,6 +2408,7 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
      printAction->plug(menu);
      saveAsAction->plug(menu);
      menu->insertSeparator();
+     trashAction->plug(menu);
      deleteAction->plug(menu);
   }
   menu->exec(aPoint, 0);
@@ -2520,8 +2525,12 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Copy Text"), KStdAccel::shortcut(KStdAccel::Copy), this,
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
 
-  deleteAction = new KAction( i18n("&Delete"), "editdelete", Key_D, this,
-		      SLOT(slotDeleteMsg()), actionCollection(), "delete" );
+  KShortcut trash(Key_Delete);
+  trash.append(KKey(Key_D));
+  trashAction = new KAction( i18n("&Move to Trash"), "edittrash", trash, this,
+                             SLOT(slotTrashMsg()), actionCollection(), "move_to_trash" );
+  deleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
+                              SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
   (void) new KAction( i18n("&Search Messages..."), "find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
@@ -3365,6 +3374,7 @@ void KMMainWin::updateMessageActions()
 				  mHeaders->isThreaded() );
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
+    trashAction->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
     action( "message_forward" )->setEnabled( mass_actions );
     forwardAction->setEnabled( mass_actions );

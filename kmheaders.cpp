@@ -1721,7 +1721,17 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   if (destFolder == mFolder)
     return;
 
-  KMMessageList* msgList;
+  KMMessageList* msgList = selectedMsgs(msgId);  // get list of selected messages
+
+  if ( !destFolder &&     // messages shall be deleted
+       KMessageBox::warningContinueCancel(this,
+         i18n("Do you really want to delete the selected message?\n"
+              "The message can not be restored!",
+              "Do you really want to delete the %n selected messages?\n"
+              "The messages can not be restored!", msgList->count() ),
+         i18n("Delete Messages"), i18n("&Delete"), "NoConfirmDelete") == KMessageBox::Cancel )
+    return;  // user cancelled the action
+
   KMMessage *msg;
   KMMsgBase *msgBase, *curMsg = 0;
   int rc;
@@ -1762,7 +1772,6 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   //
   // So we block all signals for awhile to avoid this.
 
-  msgList = selectedMsgs(msgId);
   blockSignals( true ); // don't emit signals when the current message is
 
   int index;
@@ -1878,7 +1887,7 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
   KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
   int rc, index, idx = -1;
-  bool isMessage;
+  bool isMessage = false;
   QPtrList<KMMessage> list;
 
   if (!destFolder) return;
@@ -2692,6 +2701,7 @@ void KMHeaders::slotRMB()
   mOwner->printAction->plug(menu);
   mOwner->saveAsAction->plug(menu);
   menu->insertSeparator();
+  mOwner->trashAction->plug(menu);
   mOwner->deleteAction->plug(menu);
   menu->exec (QCursor::pos(), 0);
   delete menu;

@@ -94,7 +94,7 @@ public:
 
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
     *forwardAction, *forwardAttachedAction, *redirectAction,
-    *deleteAction, *saveAsAction, *bounceAction, *editAction,
+    *trashAction, *deleteAction, *saveAsAction, *bounceAction, *editAction,
     *viewSourceAction, *printAction, *sendAgainAction;
   KToggleAction *toggleFixFontAction;
   KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
@@ -213,7 +213,8 @@ protected slots:
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
   void slotEditMsg(KMMessage*);
-  void slotDeleteMsg();
+  void slotTrashMsg();   // move to trash
+  void slotDeleteMsg();  // completely delete message
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();

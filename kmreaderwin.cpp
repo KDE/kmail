@@ -2008,6 +2008,9 @@ void KMReaderWin::clearCache()
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
+  I18N_NOOP("<big><b>IMPORTANT CHANGE:</b></big>"
+            " The 'Delete' Action now irrevocably deletes messages."
+            " Use 'Move to Trash' to put messages into the trashcan."),
   I18N_NOOP("PGP/MIME (RFC 3156) support for GnuPG users"),
   I18N_NOOP("S/MIME support"),
   I18N_NOOP("Optional MIME tree viewer, allowing direct access to all "
