@@ -1421,7 +1421,7 @@ void KMMainWin::setupMenuBar()
   mMenuBar->insertItem(i18n("&Edit"), editMenu);
   mMenuBar->insertItem(i18n("F&older"), mFolderMenu);
   mMenuBar->insertItem(i18n("&Message"), messageMenu);
-  mMenuBar->insertItem(i18n("&View"), mViewMenu);
+  mMenuBar->insertItem(i18n("things to show", "&View"), mViewMenu);
   mMenuBar->insertSeparator();
   mMenuBar->insertItem(i18n("&Help"), mHelpMenu);
 
