@@ -4033,51 +4033,35 @@ void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) cons
 }
 
 //-----------------------------------------------------------------------------
-DwBodyPart* KMMessage::findDwBodyPart( const QString & partSpecifier )
+DwBodyPart* KMMessage::findDwBodyPart( DwBodyPart* part, const QString & partSpecifier )
 {
-  DwBodyPart *part, *curpart;
-  QPtrList< DwBodyPart > parts;
+  if ( !part ) return 0;
+  DwBodyPart* current;
+  kdDebug(5006) << "findDwBodyPart " << part->partId() << endl;
 
-  curpart = getFirstDwBodyPart();
-  part = 0;
-
-  while (curpart && !part) {
-    //dive into multipart messages
-    while (   curpart
-           && curpart->hasHeaders()
-           && curpart->Headers().HasContentType()
-           && curpart->Body().FirstBodyPart()
-           && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
-    {
-      parts.append( curpart );
-      curpart = curpart->Body().FirstBodyPart();
-    }
-    if ( curpart->Body().Message() &&
-         curpart->Body().Message()->Body().FirstBodyPart() )
-    {
-      // dive into encapsulated message
-      parts.append( curpart->Body().Message()->Body().FirstBodyPart() );
-    }
-
-    // this is where currPart->msgPart contains a leaf message part
-    if (curpart->partId() == partSpecifier)
-        part = curpart;
-    // go up in the tree until reaching a node with next
-    // (or the last top-level node)
-    while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
-    {
-      curpart = parts.getLast();
-      parts.removeLast();
-    }
-    // re-check
-    if (curpart->partId() == partSpecifier)
-        part = curpart;
-
-    if (curpart) {
-      curpart = curpart->Next();
-    }
+  if ( part->partId() == partSpecifier )
+    return part;
+ 
+  // multipart
+  if ( part->hasHeaders() &&
+       part->Headers().HasContentType() &&
+       part->Body().FirstBodyPart() &&
+       (DwMime::kTypeMultipart == part->Headers().ContentType().Type() ) &&
+       (current = findDwBodyPart( part->Body().FirstBodyPart(), partSpecifier )) )
+  { 
+    return current;
   }
-  return part;
+
+  // encapsulated message
+  if ( part->Body().Message() &&
+       part->Body().Message()->Body().FirstBodyPart() &&
+       (current = findDwBodyPart( part->Body().Message()->Body().FirstBodyPart(), partSpecifier )) )
+  {
+    return current;
+  }
+
+  // next part
+  return findDwBodyPart( part->Next(), partSpecifier );
 }
 
 //-----------------------------------------------------------------------------
@@ -4097,7 +4081,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
 
     // search for the bodypart
-    mLastUpdated = findDwBodyPart( specifier );
+    mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
     if (!mLastUpdated)
     {
       kdWarning(5006) << "KMMessage::updateBodyPart - can not find part "

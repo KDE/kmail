@@ -565,7 +565,7 @@ public:
 
   /** Return the first DwBodyPart matching a given partSpecifier
       or zero, if no found. */
-  DwBodyPart* findDwBodyPart( const QString & partSpecifier );
+  DwBodyPart* findDwBodyPart( DwBodyPart* part, const QString & partSpecifier );
 
   /** Get the DwBodyPart at position in aIdx.  Indexing starts at 0.
       If there is no body part at that index, return value will be zero. */

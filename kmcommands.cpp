@@ -1873,7 +1873,7 @@ void KMLoadPartsCommand::start()
 
 void KMLoadPartsCommand::slotPartRetrieved( KMMessage* msg, QString partSpecifier )
 {
-  DwBodyPart* part = msg->findDwBodyPart( partSpecifier );
+  DwBodyPart* part = msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );
   if ( part )
   {
     // update the DwBodyPart in the partNode
