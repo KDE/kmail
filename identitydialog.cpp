@@ -86,22 +86,43 @@ namespace KMail {
     ++row;
     mNameEdit = new KLineEdit( tab );
     glay->addWidget( mNameEdit, row, 1 );
-    glay->addWidget( new QLabel( mNameEdit, i18n("&Your name:"), tab ), row, 0 );
+    label = new QLabel( mNameEdit, i18n("&Your name:"), tab );
+    glay->addWidget( label, row, 0 );
+    msg = i18n("<qt><h3>Your name</h3>"
+	       "<p>This field should have your name, as you'd like "
+	       "it to appear in the email header that is sent out.</p>"
+	       "<p>If you leave this blank, your real name won't "
+	       "appear, only the email address.</p></qt>");
+    QWhatsThis::add( label, msg );
+    QWhatsThis::add( mNameEdit, msg );
 
     // "Organization" line edit and label:
     ++row;
     mOrganizationEdit = new KLineEdit( tab );
     glay->addWidget( mOrganizationEdit, row, 1 );
-    glay->addWidget( new QLabel( mOrganizationEdit,
-				 i18n("Organi&zation:"), tab ), row, 0 );
+    label =  new QLabel( mOrganizationEdit, i18n("Organi&zation:"), tab );
+    glay->addWidget( label, row, 0 );
+    msg = i18n("<qt><h3>Organization</h3>"
+	       "<p>This field should have the name of your organization "
+	       "if you'd like it to be shown in the email header that "
+	       "is sent out.</p>"
+	       "<p>It is safe (and normal) to leave this blank.</p></qt>");
+    QWhatsThis::add( label, msg );
+    QWhatsThis::add( mOrganizationEdit, msg );
 
     // "Email Address" line edit and label:
     // (row 3: spacer)
     ++row;
     mEmailEdit = new KLineEdit( tab );
     glay->addWidget( mEmailEdit, row, 1 );
-    glay->addWidget( new QLabel( mEmailEdit, i18n("&Email address:"), tab ),
-		     row, 0 );
+    label = new QLabel( mEmailEdit, i18n("&Email address:"), tab );
+    glay->addWidget( label, row, 0 );
+    msg = i18n("<qt><h3>Email address</h3>"
+	       "<p>This field should have your full email address.</p>"
+	       "<p>If you leave this blank, or get it wrong, people "
+	       "will have trouble replying to you.</p></qt>");
+    QWhatsThis::add( label, msg );
+    QWhatsThis::add( mEmailEdit, msg );
 
     //
     // Tab Widget: Advanced
@@ -118,8 +139,20 @@ namespace KMail {
     ++row;
     mReplyToEdit = new KLineEdit( tab );
     glay->addWidget( mReplyToEdit, row, 1 );
-    glay->addWidget( new QLabel( mReplyToEdit,
-				 i18n("&Reply-To address:"), tab ), row, 0 );
+    label = new QLabel ( mReplyToEdit, i18n("&Reply-To address:"), tab);
+    glay->addWidget( label , row, 0 );
+    msg = i18n("<qt><h3>Reply-To addresses</h3>"
+	       "<p>This sets the <tt>Reply-to:</tt> header to contain a "
+	       "different email address to the normal <tt>From:</tt> "
+	       "address.</p>"
+	       "<p>This can be useful when you have a group of people "
+	       "working together in similar roles. For example, you "
+	       "might want any emails sent to have your email in the "
+	       "<tt>From:</tt> field, but any responses to go to "
+	       "a group address.</p>"
+	       "</p>If in doubt, leave this field blank.</p></qt>");
+    QWhatsThis::add( label, msg );
+    QWhatsThis::add( mReplyToEdit, msg );
 
     // "BCC addresses" line edit and label:
     ++row;
@@ -148,7 +181,11 @@ namespace KMail {
 					     "yourself.") );
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
 	       "to sign messages and to encrypt messages to "
-	       "yourself.</p></qt>");
+	       "yourself. You can also use GnuPG keys.</p>"
+	       "You can leave this blank, but KMail won't be able "
+	       "to cryptographically sign emails. Normal mail functions won't "
+	       "be affected.</p>"
+	       "You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
 
     label = new QLabel( mPgpKeyRequester, i18n("OpenPGP key:"), tab );
     QWhatsThis::add( mPgpKeyRequester, msg );
