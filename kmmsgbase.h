@@ -115,7 +115,7 @@ public:
   void setParent(KMFolderIndex* p) { mParent=p; }
 
   /** Convert the given message status to a string. */
-  static const QCString statusToStr(const KMMsgStatus status);
+  static QCString statusToStr(const KMMsgStatus status);
   
   /** Convert the given message status to a string. */
   QString statusToSortRank();
@@ -270,7 +270,7 @@ public:
   /** Convert all non-ascii characters to question marks
     * If ok is non-null, *ok will be set to true if all characters
     * where ascii, *ok will be set to false otherwise */
-  static const QCString toUsAscii(const QString& _str, bool *ok=0);
+  static QCString toUsAscii(const QString& _str, bool *ok=0);
 
   /** Return a list of the supported encodings */
   static QStringList supportedEncodings(bool usAscii);
@@ -311,6 +311,13 @@ public:
 
   /** Decode given string as described in RFC2231 */
   static QString decodeRFC2231String(const QCString& aStr);
+
+  /** Calculate the base64 encoded md5sum (sans the trailing equal
+      signs). If @p utf8 is false, uses QString::latin1() to calculate
+      the md5sum of, else uses QString::utf8() */
+  static QString base64EncodedMD5( const QString & aStr, bool utf8=false );
+  static QString base64EncodedMD5( const QCString & aStr );
+  static QString base64EncodedMD5( const char * aStr, int len=-1 );
 
   /**
    * Find out preferred charset for 'text'.

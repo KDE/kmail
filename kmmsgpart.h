@@ -14,7 +14,7 @@ class QTextCodec;
 class KMMessagePart
 {
 public:
-  static QString encodeBase64(const QString& aStr);
+  //static QString encodeBase64(const QString& aStr);
 
   KMMessagePart();
   virtual ~KMMessagePart();
@@ -71,10 +71,6 @@ public:
   /** Returns decoded length of body. */
   virtual int decodedSize(void) const;
 
-  /** Get or set name parameter */
-  QString name(void) const;
-  void setName(const QString& aStr);
-
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
@@ -83,14 +79,14 @@ public:
   {
     mOriginalContentTypeStr = txt;
   }
-  QCString typeStr(void) const;
-  int type(void) const;
-  void setTypeStr(const QCString &aStr);
+  QCString typeStr() const { return mType; }
+  void setTypeStr( const QCString & aStr ) { mType = aStr; }
+  int type() const;
   void setType(int aType);
   /** Subtype */
-  QCString subtypeStr(void) const;
-  int subtype(void) const;
-  void setSubtypeStr(const QCString &aStr);
+  QCString subtypeStr() const { return mSubtype; }
+  void setSubtypeStr( const QCString & aStr ) { mSubtype = aStr; }
+  int subtype() const;
   void setSubtype(int aSubtype);
 
   /** Set the 'Content-Type' by mime-magic from the contents of the body.
@@ -140,17 +136,21 @@ public:
   void setContentDescription(const QString &aStr);
 
   /** Get or set the 'Content-Disposition' header field */
-  QCString contentDisposition() const;
-  void setContentDisposition(const QCString &aStr);
+  QCString contentDisposition() const { return mContentDisposition; }
+  void setContentDisposition( const QCString & cd ) { mContentDisposition = cd; }
 
   /** Get the message part charset.*/
-  virtual QCString charset(void) const;
+  QCString charset() const { return mCharset; }
 
   /** Set the message part charset. */
-  virtual void setCharset(const QCString &aStr);
+  void setCharset( const QCString & c ) { mCharset = c; }
 
   /** Get a @ref QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
+
+  /** Get or set name parameter */
+  QString name() const { return mName; }
+  void setName( const QString & name ) { mName = name; }
 
   /** Returns name of filename part of 'Content-Disposition' header field,
       if present. */

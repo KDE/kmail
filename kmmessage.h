@@ -427,6 +427,12 @@ public:
   */
   QString strippedSubjectMD5() const;
 
+  /**
+    Get a hash of the subject.
+    Used for threading.
+  */
+  QString subjectMD5() const;
+
   /** Is the subject prefixed by Re: or similar? */
   bool subjectIsPrefixed() const;
   

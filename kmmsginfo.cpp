@@ -2,7 +2,7 @@
 
 #include "kmmsginfo.h"
 #include "kmmessage.h"
-#include "kmmsgpart.h" // for encode
+//#include "kmmsgpart.h" // for encode
 
 #include <stdlib.h>
 #include <string.h>
@@ -169,7 +169,6 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     return *this;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
@@ -189,10 +188,10 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     kd->subject = decodeRFC2047String(aSubject);
     kd->from = KMMessage::stripEmailAddr( decodeRFC2047String(aFrom) );
     kd->to = KMMessage::stripEmailAddr( decodeRFC2047String(aTo) );
-    kd->replyToIdMD5 = KMMessagePart::encodeBase64( replyToId );
-    kd->replyToAuxIdMD5 = KMMessagePart::encodeBase64( replyToAuxId );
-    kd->strippedSubjectMD5 = KMMessagePart::encodeBase64( KMMessage::stripOffPrefixes( kd->subject ) );
-    kd->msgIdMD5 = KMMessagePart::encodeBase64( msgId );
+    kd->replyToIdMD5 = base64EncodedMD5( replyToId );
+    kd->replyToAuxIdMD5 = base64EncodedMD5( replyToAuxId );
+    kd->strippedSubjectMD5 = base64EncodedMD5( KMMessage::stripOffPrefixes( kd->subject ), true /*utf8*/ );
+    kd->msgIdMD5 = base64EncodedMD5( msgId );
     kd->xmark = aXMark;
     kd->folderOffset = aFolderOffset;
     mStatus    = aStatus;
@@ -295,7 +294,7 @@ QString KMMsgInfo::strippedSubjectMD5() const
 //-----------------------------------------------------------------------------
 bool KMMsgInfo::subjectIsPrefixed() const
 {
-    return strippedSubjectMD5() != KMMessagePart::encodeBase64( subject() );
+    return strippedSubjectMD5() != base64EncodedMD5( subject(), true /*utf8*/ );
 }
 
 //-----------------------------------------------------------------------------
@@ -369,7 +368,7 @@ void KMMsgInfo::initStrippedSubjectMD5()
     if( kd && kd->modifiers & KMMsgInfoPrivate::STRIPPEDSUBJECT_SET )
 	return;
     QString rawSubject = KMMessage::stripOffPrefixes( subject() );
-    QString subjectMD5 = KMMessagePart::encodeBase64( rawSubject );
+    QString subjectMD5 = base64EncodedMD5( rawSubject, true /*utf8*/ );
     if( !kd )
 	kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::STRIPPEDSUBJECT_SET;

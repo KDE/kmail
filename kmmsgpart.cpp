@@ -87,26 +87,27 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
   return codec->toUnicode( bodyDecoded() );
 }
 
+#if 0
 //-----------------------------------------------------------------------------
 // Returns Base64 encoded MD5 digest of a QString
 QString KMMessagePart::encodeBase64(const QString& aStr)
 {
+  if (aStr.isEmpty())
+    return QString::null;
+
+  // Generate digest
+  KMD5 context( aStr.latin1() );
+
   DwString dwResult, dwSrc;
   QString result;
 
-  if (aStr.isEmpty())
-    return QString();
-
-  // Generate digest
-  KMD5 context(aStr.latin1());
-
-  dwSrc = DwString((const char*)context.rawDigest(), 16);
+  const DwString dwSrc = DwString( static_cast<const char*>( context.rawDigest() ), 16);
   DwEncodeBase64(dwSrc, dwResult);
   result = QString( dwResult.c_str() );
   result.truncate(22);
   return result;
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncoded(const QCString& aStr)
@@ -317,22 +318,13 @@ QCString KMMessagePart::bodyDecoded(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::magicSetType(bool aAutoDecode)
 {
-  QString mimetype;
-  QByteArray body;
-  KMimeMagicResult *result;
+  KMimeMagic::self()->setFollowLinks( true ); // is it necessary ?
 
-  int sep;
+  const QByteArray body = ( aAutoDecode ) ? bodyDecodedBinary() : mBody ;
+  KMimeMagicResult * result = KMimeMagic::self()->findBufferType( body );
 
-  KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
-
-  if (aAutoDecode)
-    body = bodyDecodedBinary();
-  else
-    body = mBody;
-
-  result = KMimeMagic::self()->findBufferType( body );
-  mimetype = result->mimeType();
-  sep = mimetype.find('/');
+  QString mimetype = result->mimeType();
+  const int sep = mimetype.find('/');
   mType = mimetype.left(sep).latin1();
   mSubtype = mimetype.mid(sep+1).latin1();
 }
@@ -350,24 +342,10 @@ QString KMMessagePart::iconName(const QString& mimeType) const
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessagePart::typeStr(void) const
-{
-  return mType;
-}
-
-
-//-----------------------------------------------------------------------------
 int KMMessagePart::type(void) const
 {
   int type = DwTypeStrToEnum(DwString(mType));
   return type;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMessagePart::setTypeStr(const QCString &aStr)
-{
-    mType = aStr;
 }
 
 
@@ -381,24 +359,10 @@ void KMMessagePart::setType(int aType)
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessagePart::subtypeStr(void) const
-{
-  return mSubtype;
-}
-
-
-//-----------------------------------------------------------------------------
 int KMMessagePart::subtype(void) const
 {
   int subtype = DwSubtypeStrToEnum(DwString(mSubtype));
   return subtype;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMessagePart::setSubtypeStr(const QCString &aStr)
-{
-  mSubtype = aStr;
 }
 
 
@@ -522,52 +486,9 @@ QString KMMessagePart::fileName(void) const
 }
 
 
-//-----------------------------------------------------------------------------
-QCString KMMessagePart::contentDisposition(void) const
-{
-  return mContentDisposition;
-}
 
-
-//-----------------------------------------------------------------------------
-void KMMessagePart::setContentDisposition(const QCString &aStr)
-{
-  mContentDisposition = aStr;
-}
-
-
-//-----------------------------------------------------------------------------
-QCString KMMessagePart::body(void) const
+QCString KMMessagePart::body() const
 {
   return QCString( mBody.data(), mBody.size() + 1 ); // space for trailing NUL
 }
-
-
-//-----------------------------------------------------------------------------
-QString KMMessagePart::name(void) const
-{
-  return mName;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMessagePart::setName(const QString &aStr)
-{
-  mName = aStr;
-}
-
-
-//-----------------------------------------------------------------------------
-QCString KMMessagePart::charset(void) const
-{
-   return mCharset;
-}
-
-//-----------------------------------------------------------------------------
-void KMMessagePart::setCharset(const QCString &aStr)
-{
-  mCharset=aStr;
-}
-
-
 

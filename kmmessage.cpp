@@ -2066,11 +2066,8 @@ QString KMMessage::replyToId(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::replyToIdMD5(void) const
-{
-  //  QString result = KMMessagePart::encodeBase64( decodeRFC2047String(replyToId()) );
-  QString result = KMMessagePart::encodeBase64( replyToId() );
-  return result;
+QString KMMessage::replyToIdMD5() const {
+  return base64EncodedMD5( replyToId() );
 }
 
 //-----------------------------------------------------------------------------
@@ -2097,28 +2094,29 @@ QString KMMessage::references() const
 //-----------------------------------------------------------------------------
 QString KMMessage::replyToAuxIdMD5() const
 {
-  int rightAngle;
   QString result = references();
   // references contains two items, use the first one
   // (the second to last reference)
-  rightAngle = result.find( '>' );
+  const int rightAngle = result.find( '>' );
   if( rightAngle != -1 )
     result.truncate( rightAngle + 1 );
 
-  return KMMessagePart::encodeBase64( result );
+  return base64EncodedMD5( result );
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::strippedSubjectMD5() const
-{
-  QString result = stripOffPrefixes( subject() );
-  return KMMessagePart::encodeBase64( result );
+QString KMMessage::strippedSubjectMD5() const {
+  return base64EncodedMD5( stripOffPrefixes( subject() ), true /*utf8*/ );
 }
 
 //-----------------------------------------------------------------------------
-bool KMMessage::subjectIsPrefixed() const
-{
-  return strippedSubjectMD5() != KMMessagePart::encodeBase64( subject() );
+QString KMMessage::subjectMD5() const {
+  return base64EncodedMD5( subject(), true /*utf8*/ );
+}
+
+//-----------------------------------------------------------------------------
+bool KMMessage::subjectIsPrefixed() const {
+  return subjectMD5() == strippedSubjectMD5();
 }
 
 //-----------------------------------------------------------------------------
@@ -2132,15 +2130,14 @@ void KMMessage::setReplyToId(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::msgId(void) const
 {
-  int leftAngle, rightAngle;
   QString msgId = headerField("Message-Id");
 
   // search the end of the message id
-  rightAngle = msgId.find( '>' );
+  const int rightAngle = msgId.find( '>' );
   if (rightAngle != -1)
     msgId.truncate( rightAngle + 1 );
   // now search the start of the message id
-  leftAngle = msgId.findRev( '<' );
+  const int leftAngle = msgId.findRev( '<' );
   if (leftAngle != -1)
     msgId = msgId.mid( leftAngle );
   return msgId;
@@ -2148,11 +2145,8 @@ QString KMMessage::msgId(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::msgIdMD5(void) const
-{
-  //  QString result = KMMessagePart::encodeBase64(  decodeRFC2047String(msgId()) );
-  QString result = KMMessagePart::encodeBase64( msgId() );
-  return result;
+QString KMMessage::msgIdMD5() const {
+  return base64EncodedMD5( msgId() );
 }
 
 
@@ -2200,26 +2194,21 @@ QCString KMMessage::rawHeaderField( const QCString & name ) const {
 
 QString KMMessage::headerField(const QCString& aName) const
 {
-  DwHeaders& header = mMsg->Headers();
-  DwField* field;
-  QString result;
+  if ( aName.isEmpty() )
+    return QString::null;
 
-  if (aName.isEmpty() || !(field = header.FindField(aName)))
-    result = "";
-  else
-    result = decodeRFC2047String(header.FieldBody(aName.data()).
-                    AsString().c_str());
-  return result;
+  if ( !mMsg->Headers().FindField( aName ) )
+    return QString::null;
+
+  return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::removeHeaderField(const QCString& aName)
 {
-  DwHeaders& header = mMsg->Headers();
-  DwField* field;
-
-  field = header.FindField(aName);
+  DwHeaders & header = mMsg->Headers();
+  DwField * field = header.FindField(aName);
   if (!field) return;
 
   header.RemoveField(field);

@@ -4,6 +4,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kcharsets.h>
+#include <kmdcodec.h>
 
 #include <mimelib/mimepp.h>
 #include <qtextcodec.h>
@@ -396,7 +397,7 @@ bool KMMsgBase::isIgnored(void) const
 }
 
 //-----------------------------------------------------------------------------
-const QCString KMMsgBase::statusToStr(const KMMsgStatus status)
+QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 {
   QCString sstr;
   if (status & KMMsgStatusNew) sstr += 'N';
@@ -498,7 +499,7 @@ QTextCodec* KMMsgBase::codecForName(const QCString& _str)
 
 
 //-----------------------------------------------------------------------------
-const QCString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
+QCString KMMsgBase::toUsAscii(const QString& _str, bool *ok)
 {
   bool all_ok =true;
   QString result = _str;
@@ -672,8 +673,8 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QCString especials = "()<>@,;:\"/[]?.= \033";
-const QString dontQuote = "\"()<>,@";
+static const QCString especials = "()<>@,;:\"/[]?.= \033";
+static const QString dontQuote = "\"()<>,@";
 
 QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
 {
@@ -865,6 +866,24 @@ QString KMMsgBase::decodeRFC2231String(const QCString& _str)
 
   return result;
 }
+
+QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
+  if ( utf8 )
+    return base64EncodedMD5( s.utf8() ); // QCString overload
+  else
+    return base64EncodedMD5( s.latin1() ); // const char * overload
+}
+
+QString KMMsgBase::base64EncodedMD5( const QCString & s ) {
+  return base64EncodedMD5( s.data() );
+}  
+
+QString KMMsgBase::base64EncodedMD5( const char * s, int len ) {
+  static const int Base64EncodedMD5Len = 22;
+  KMD5 md5( s, len );
+  return md5.base64Digest().left( Base64EncodedMD5Len );
+}  
+
 
 //-----------------------------------------------------------------------------
 QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringList &encodingList, const QString &text)

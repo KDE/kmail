@@ -53,7 +53,7 @@ using KMail::CSSHelper;
 using KMail::FileHtmlWriter;
 #include "teehtmlwriter.h"
 using KMail::TeeHtmlWriter;
-#endif // !NDEBUG
+#endif
 
 #include <kmime_mdn.h>
 #include <kmime_header_parsing.h>
