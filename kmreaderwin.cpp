@@ -84,9 +84,15 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   readConfig();
   mHtmlOverride = false;
 
-  if (mAttachDir.isNull()) makeAttachDir();
-  connect(&updateReaderWinTimer, SIGNAL(timeout()),
-  	  this,SLOT(updateReaderWin()));
+  if (mAttachDir.isNull())
+  {
+    makeAttachDir();
+  }
+
+  connect( &updateReaderWinTimer, SIGNAL(timeout()),
+  	   this, SLOT(updateReaderWin()) );
+  connect( &mResizeTimer, SIGNAL(timeout()), 
+	   this, SLOT(slotDelayedResize()) );
 }
 
 
@@ -1030,56 +1036,20 @@ int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 }
 
 
-static bool doDelayedResize=false;
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent(QResizeEvent *)
 {
   #warning Espen 2000-05-07. Using a delayed resize. Use direct resize
-  #warning from time to time to see how the html widget behaves.
+  #warning from time to time to see how the html widget and kwin behave.
 
-  #if 0
-  static QTimer *timer = 0;
-  if( timer == 0 )
-  {
-    timer = new QTimer( this );
-    connect( timer, SIGNAL(timeout()), SLOT(slotDelayedResize()) );
-  }
-  if( timer->isActive() )
+  if( !mResizeTimer.isActive() )
   {
     //
     // Combine all resize operations that are requested as long a 
     // the timer runs.
     //
-    //puts("delayed");
-    doDelayedResize = true;
-    return;
+    mResizeTimer.start( 100, true );
   }
-  
-  //
-  // Resize now, and start the timer which will cause any new resize
-  // operations to be igored as long as the timer is active
-  //
-  mViewer->widget()->setGeometry(0, 0, width(), height());
-  doDelayedResize = false;
-  timer->start( 150, true );
-  #endif
-
-
-  static QTimer *timer = 0;
-  if( timer == 0 )
-  {
-    timer = new QTimer( this );
-    connect( timer, SIGNAL(timeout()), SLOT(slotDelayedResize()) );
-  }
-  if( timer->isActive() )
-  {
-    //puts("ignored");
-    return;
-  }
-
-  doDelayedResize = true;
-  timer->start( 100, true );
 
   //
   // Orig
@@ -1090,12 +1060,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 
 void KMReaderWin::slotDelayedResize()
 {
-  if( doDelayedResize )
-  {
-    mViewer->widget()->setGeometry(0, 0, width(), height());
-    doDelayedResize = false;
-  }
-  //puts("DONE");
+  mViewer->widget()->setGeometry(0, 0, width(), height());
 }
 
 

@@ -207,6 +207,7 @@ protected:
   bool mBackingPixmapOn;
   QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
+  QTimer mResizeTimer;
 
   int fntSize;
   QString mBodyFamily;
