@@ -1187,6 +1187,13 @@ void KMHeaders::msgAdded(int id)
     }
     // The message we just added might be a better parent for one of the as of
     // yet imperfectly threaded messages. Let's find out.
+    
+    /* In case the current item is taken during reparenting, prevent qlistview
+     * from selecting some unrelated item as a result of take() emitting 
+     * currentChanged. */
+    disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
+           this, SLOT(highlightMessage(QListViewItem*)));
+
     if ( !msgId.isEmpty() ) {
       QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList);
       KMHeaderItem *cur;
@@ -1262,6 +1269,10 @@ void KMHeaders::msgAdded(int id)
     setSelectionAnchor( currentItem() );
     highlightMessage( currentItem() );
   }
+ 
+  /* restore signal */
+  connect( this, SIGNAL(currentChanged(QListViewItem*)),
+           this, SLOT(highlightMessage(QListViewItem*)));
 
   END_TIMER(msgAdded);
   SHOW_TIMER(msgAdded);
@@ -1277,6 +1288,13 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     return;
   CREATE_TIMER(msgRemoved);
   START_TIMER(msgRemoved);
+  /* 
+   * qlistview has its own ideas about what to select as the next
+   * item once this one is removed. Sine we have already selected
+   * something in prepare/finalizeMove that's counter productive 
+   */
+  disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
+              this, SLOT(highlightMessage(QListViewItem*)));
 
   KMHeaderItem *removedItem = mItems[id];
   KMHeaderItem *curItem = currentHeaderItem();
@@ -1358,9 +1376,13 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     setCurrentItem( curItem );
     setSelectionAnchor( currentItem() );
   }
+  
+  /* restore signal */
+  connect( this, SIGNAL(currentChanged(QListViewItem*)),
+           this, SLOT(highlightMessage(QListViewItem*)));
+
   END_TIMER(msgRemoved);
   SHOW_TIMER(msgRemoved);
-
 }
 
 
