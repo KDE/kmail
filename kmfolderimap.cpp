@@ -570,10 +570,6 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
                                    const ImapAccountBase::jobData& jobData )
 {
   QStringList subfolderNames( subfolderNames_ ); // for the clear() below.
-  //mSubfolderNames = subfolderNames;
-  //mSubfolderPaths = subfolderPaths;
-  //mSubfolderMimeTypes = subfolderMimeTypes;
-  //mSubfolderAttributes = subfolderAttributes;
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
   bool createInbox = jobData.createInbox;
@@ -616,9 +612,14 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       for (node = folder()->child()->first(); node;
            node = folder()->child()->next())
         if (!node->isDir() && node->name() == "INBOX") break;
-      if (node) f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
-      else f = static_cast<KMFolderImap*>
-        (folder()->child()->createFolder("INBOX", true)->storage());
+      if (node) {
+        f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+      } else {
+        f = static_cast<KMFolderImap*>
+          (folder()->child()->createFolder("INBOX", true)->storage());
+        if ( !mAccount->listOnlyOpenFolders() ) // should be ok as a default
+          f->setHasChildren( FolderStorage::HasNoChildren );
+      }
       f->setAccount(mAccount);
       f->setImapPath("/INBOX/");
       f->folder()->setLabel(i18n("inbox"));
