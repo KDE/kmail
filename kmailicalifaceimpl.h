@@ -126,6 +126,7 @@ private:
   static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks;
 
   bool mUseResourceIMAP;
+  bool mResourceQuiet;
 };
 
 #endif // KMAILICALIFACEIMPL_H

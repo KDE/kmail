@@ -52,7 +52,7 @@
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
-     mFolderLanguage( 0 ), mUseResourceIMAP( false )
+    mFolderLanguage( 0 ), mUseResourceIMAP( false ), mResourceQuiet( false )
 {
 }
 
@@ -63,6 +63,9 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 {
   kdDebug() << "KMailICalIfaceImpl::addIncidence( " << type << ", "
 	    << uid << ", " << ical << " )" << endl;
+
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
 
   // Find the folder
   KMFolder* folder = folderFromType( type );
@@ -81,6 +84,8 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
   msg->touch();
   folder->addMsg( msg );  
+
+  mResourceQuiet = quiet;
   return true;
 }
 
@@ -90,6 +95,9 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type, const QString& ui
   kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
 	    << uid << " )" << endl;
 
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+
   // Find the folder and the incidence in it
   KMFolder* folder = folderFromType( type );
   if( !folder ) return false;
@@ -98,6 +106,8 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type, const QString& ui
 
   // Message found - delete it and return happy
   deleteMsg( msg );
+
+  mResourceQuiet = quiet;
   return true;
 }
 
@@ -126,6 +136,9 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
 void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
 					     Q_UINT32 sernum )
 {
+  if( mResourceQuiet )
+    return;
+
   QString type = icalFolderType( folder );
   if( type.isNull() ) {
     kdError() << "Not an IMAP resource folder" << endl;
@@ -147,13 +160,15 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     emitDCOPSignal( "incidenceAdded(QString,QString)", data );
   }
   if( unget ) folder->unGetMsg(i);
-
 }
 
 // KMail deleted a file
 void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 					       Q_UINT32 sernum )
 {
+  if( mResourceQuiet )
+    return;
+
   QString type = icalFolderType( folder );
   if( type.isNull() ) {
     kdError() << "Not a groupware folder" << endl;
