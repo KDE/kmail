@@ -183,6 +183,8 @@ public:
 
   static QString formatDate( time_t otime, KMDateDisplay date );
 
+  QFont dateFont;
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */

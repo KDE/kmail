@@ -296,16 +296,8 @@ public:
 
     _cg.setColor( QColorGroup::Text, *color );
 
-    KConfig *conf = kapp->config();
-    KConfigGroupSaver saver(conf, "Fonts");
-    if( column == headers->paintInfo()->dateCol ) {
-      if (!conf->readBoolEntry("defaultFonts",TRUE)) {
-        QFont folderFont = QFont("courier");
-        p->setFont(conf->readFontEntry("list-date-font", &folderFont));
-      } else {
-        p->setFont(KGlobalSettings::generalFont());
-      }
-    }
+    if( column == headers->paintInfo()->dateCol )
+      p->setFont(headers->dateFont);
 
     KListViewItem::paintCell( p, _cg, column, width, align );
 
@@ -590,12 +582,16 @@ void KMHeaders::readConfig (void)
   // Custom/System fonts
   { // area for config group "General"
     KConfigGroupSaver saver(config, "Fonts");
-    if (!(config->readBoolEntry("defaultFonts",TRUE))) {
+    if (!(config->readBoolEntry("defaultFonts",TRUE)))
+    {
       QFont listFont = QFont("helvetica");
       setFont(config->readFontEntry("list-font", &listFont));
+      dateFont = QFont("courier");
+      dateFont = config->readFontEntry("list-date-font", &dateFont);
+    } else {
+      dateFont = KGlobalSettings::generalFont();
+      setFont(dateFont);
     }
-    else
-      setFont(KGlobalSettings::generalFont());
   }
 
   // Behavior
