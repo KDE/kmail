@@ -150,7 +150,7 @@ void AccountDialog::makePopAccountPage()
   }
   else
   {
-    mPop.titleLabel->setText( i18n("Account type: Experimental Pop Account") );
+    mPop.titleLabel->setText( i18n("Account type: Advanced Pop Account") );
   }
   QFont titleFont( mPop.titleLabel->font() );
   titleFont.setBold( true );

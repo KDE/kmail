@@ -47,7 +47,7 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   QRadioButton *radioButton2  = new QRadioButton(i18n("Pop3"),  group );
   vlay->addWidget( radioButton2 );
   QRadioButton *radioButton3  = 
-    new QRadioButton(i18n("Experimental Pop3"), group );
+    new QRadioButton(i18n("Advanced Pop3"), group );
   vlay->addWidget( radioButton3 );
 
   vlay->addStretch( 10 );
