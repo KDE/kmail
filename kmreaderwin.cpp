@@ -1943,7 +1943,8 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
-      kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ") " << aMsg->subject() << " " << aMsg->fromStrip() << endl;
+      kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " " 
+        << aMsg->fromStrip() << endl;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   if (!force && aMsg && mLastSerNum != 0 && aMsg->getMsgSerNum() == mLastSerNum)
@@ -1958,7 +1959,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
 
   // assume if a serial number exists it can be used to find the assoc KMMessage
-  if (!mLastSerNum)
+  if (mLastSerNum <= 0)
     mMessage = aMsg;
   else
     mMessage = 0;
@@ -1997,6 +1998,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
+  if (mLastSerNum > 0) // no risk for a dangling pointer
+    return;
   updateReaderWinTimer.stop();
   mDelayedMarkTimer.stop();
   mLastSerNum = 0;

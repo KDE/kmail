@@ -110,7 +110,10 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
     slotIntro();
   else
-    mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(kernel->inboxFolder()));
+  {
+    KMFolder* selected = kernel->inboxFolder();
+    mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(selected));
+  }
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
@@ -1790,7 +1793,8 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
-  if (msg && msg->parent() && (msg->parent()->protocol() == "imap"))
+  if (msg && msg->parent() && (msg->parent()->protocol() == "imap") &&
+      !msg->isComplete())
   {
     mMsgView->clear();
     KMImapJob *job = new KMImapJob(msg);
