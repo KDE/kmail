@@ -162,9 +162,11 @@ KMKernel::~KMKernel ()
   }
 
   delete mICalIface;
-  mICalIface = 0L;
-
+  mICalIface = 0;
   delete mMailService;
+  mMailService = 0;
+
+  GlobalSettings::writeConfig();
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
