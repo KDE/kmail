@@ -1709,7 +1709,7 @@ KMCommand::Result KMMoveCommand::execute()
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),
          mDestFolder ? i18n( "Moving messages" ) : i18n( "Deleting messages" ) );
-  connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+  connect( mProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotMoveCanceled() ) );
 
   KMMessage *msg;

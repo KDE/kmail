@@ -183,7 +183,7 @@ protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderCachedImap*, bool);
 
-  void slotProgressItemCanceled( ProgressItem* );
+  void slotProgressItemCanceled( KPIM::ProgressItem* );
 
   virtual void slotCheckQueuedFolders();
 

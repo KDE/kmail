@@ -849,9 +849,9 @@ namespace KMail {
           true,
           useSSL() || useTLS() );
       connect ( mListDirProgressItem,
-          SIGNAL( progressItemCanceled( ProgressItem* ) ),
-          this,
-          SLOT( slotAbortRequested( ProgressItem* ) ) );
+                SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
+                this,
+                SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
       // Start with a guessed value of the old folder count plus 5%. As long
       // as the list of folders doesn't constantly change, that should be good
       // enough.

@@ -144,8 +144,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
-    connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
-              account, SLOT( slotAbortRequested( ProgressItem* ) ) );
+    connect ( jd.progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+account, SLOT( slotAbortRequested( KPIM:ProgressItem* ) ) );
     KIO::SimpleJob *simpleJob = KIO::put( url, 0, FALSE, FALSE, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -184,8 +184,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
-    connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
-              account, SLOT( slotAbortRequested( ProgressItem* ) ) );
+    connect ( jd.progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
+              account, SLOT( slotAbortRequested(KPIM::ProgressItem* ) ) );
     KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -300,8 +300,8 @@ void ImapJob::slotGetNextMessage()
                           i18n("Message with subject: ") + msg->subject(),
                           true,
                           account->useSSL() || account->useTLS() );
-  connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
-            account, SLOT( slotAbortRequested( ProgressItem* ) ) );
+  connect ( jd.progressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
+            account, SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
   jd.progressItem->setTotalItems( jd.total );
 
   KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );

@@ -426,7 +426,7 @@ void KMSender::doSendMsg()
       i18n( "Sending messages" ),
       i18n("Initiating sender process..."),
       true );
-    connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+    connect( mProgressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
              this, SLOT( slotAbortSend() ) );
     kapp->ref();
     mSendInProgress = TRUE;

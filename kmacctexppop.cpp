@@ -280,7 +280,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 void KMAcctExpPop::slotAbortRequested()
 {
   if (stage == Idle) return;
-  disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+  disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotAbortRequested() ) );
   stage = Quit;
   if (job) job->kill();
@@ -328,7 +328,7 @@ void KMAcctExpPop::startJob()
     i18n("Preparing transmission from \"%1\"...").arg(mName),
     true, // can be canceled
     useSSL() || useTLS() );
-  connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+  connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
            this, SLOT( slotAbortRequested() ) );
 
   numBytes = 0;

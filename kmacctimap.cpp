@@ -257,7 +257,7 @@ void KMAcctImap::processNewMail(bool interactive)
 
   mMailCheckProgressItem->setTotalItems( mMailCheckFolders.count() );
   connect ( mMailCheckProgressItem,
-            SIGNAL( progressItemCanceled( ProgressItem*) ),
+            SIGNAL( progressItemCanceled( KPIM::ProgressItem*) ),
             this,
             SLOT( slotMailCheckCanceled() ) );
 

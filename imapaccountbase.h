@@ -49,8 +49,6 @@ namespace KPIM {
 }
 
 namespace KMail {
-
-  using KPIM::ProgressItem;
   struct ACLListEntry;
   typedef QValueVector<KMail::ACLListEntry> ACLList;
 
@@ -137,7 +135,7 @@ namespace KMail {
       KMFolder *parent;
       QPtrList<KMMessage> msgList;
       int total, done, offset;
-      ProgressItem *progressItem;
+      KPIM::ProgressItem *progressItem;
       bool inboxOnly, onlySubscribed, quiet,
            cancellable, createInbox;
     };
@@ -256,7 +254,7 @@ namespace KMail {
     /**
      * Progress item for listDir
      */
-    ProgressItem* listDirProgressItem();
+    KPIM::ProgressItem* listDirProgressItem();
 
     /**
      * @return the number of (subscribed, if applicable) folders in this
@@ -302,7 +300,7 @@ namespace KMail {
     /**
      * Kills all jobs
      */
-    void slotAbortRequested( ProgressItem* );
+    void slotAbortRequested( KPIM::ProgressItem* );
 
     /**
      * Only delete information about the job
@@ -376,7 +374,7 @@ namespace KMail {
     // the current message for the bodystructure
     KMMessage* mCurrentMsg;
 
-    QGuardedPtr<ProgressItem> mListDirProgressItem;
+    QGuardedPtr<KPIM::ProgressItem> mListDirProgressItem;
 
   signals:
     /**

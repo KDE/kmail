@@ -246,8 +246,8 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     QString::null,
     true, // can be cancelled
     useSSL() || useTLS() );
-  connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
-           this, SLOT( slotProgressItemCanceled( ProgressItem* ) ) );
+  connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem* ) ),
+           this, SLOT( slotProgressItemCanceled( KPIM::ProgressItem* ) ) );
 
   folder->setAccount(this);
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
