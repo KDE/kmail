@@ -700,12 +700,12 @@ void KMComposeWin::setupEditor(void)
 
   if (mWordWrap && (mLineBreak > 0))
   {
-    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWrap );
+    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
     mEditor->setWrapColumnOrWidth(mLineBreak);
   }
   else if (mWordWrap)
   {
-    mEditor->setWordWrap( QMultiLineEdit::DynamicWrap );
+    mEditor->setWordWrap( QMultiLineEdit::WidgetWidth );
   }
   else
   {
@@ -735,8 +735,8 @@ void KMComposeWin::setupEditor(void)
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
   mEditor->installRBPopup(menu);
-  connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
-  updateCursorPosition();
+    updateCursorPosition();
+connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
 }
 
 
@@ -1072,8 +1072,8 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 
 
 //-----------------------------------------------------------------------------
-const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) const
-{
+const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) {
+const
   unsigned int len;
   QString lenStr;
 
@@ -1723,8 +1723,8 @@ void KMComposeWin::slotConfigureCharsets()
 				    (const char*)mComposeCharset,
                                     m7BitAscii,mQuoteUnknownCharacters);
    connect(dlg,SIGNAL( setCharsets(const char *,const char *,bool,bool,bool) )
-           ,this,SLOT(slotSetCharsets(const char *,const char *,bool,bool,bool)));
-   dlg->show();
+           ,this,SLOT(slotSetCharsets(const char *,const char    dlg->show();
+*,bool,bool,bool)));
    delete dlg;	
 #endif
 }
@@ -2154,8 +2154,8 @@ void KMEdit::slotSpellDone()
   if (status == KSpell::Error)
   {
      KMessageBox::sorry(this, i18n("ISpell could not be started.\n"
-     "Please make sure you have ISpell properly configured and in your PATH."));
-  }
+     "Please make sure you have ISpell properly configured and in your   }
+PATH."));
   else if (status == KSpell::Crashed)
   {
      spellcheck_stop();
@@ -2166,6 +2166,7 @@ void KMEdit::slotSpellDone()
      emit spellcheck_done();
   }
 }
+
 
 
 
