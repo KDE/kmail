@@ -200,6 +200,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg)
 {
   mMsg = aMsg;
 
+  mViewer->stopParser();
+
   if (mMsg) parseMsg();
   else
   {
@@ -513,7 +515,8 @@ QString KMReaderWin::quotedHTML(char * pos)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 {
-  QString iconName, href(255), label, comment, tmpStr;
+  QString iconName, href(255), label, comment, tmpStr, contDisp;
+  QString fileName;
 
   if(aMsgPart == NULL) {
     debug("writePartIcon: aMsgPart == NULL\n");
@@ -522,9 +525,12 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
   debug("writePartIcon: PartNum: %i",aPartNum);
 
-  label = aMsgPart->name();
   comment = aMsgPart->contentDescription();
-  
+
+  fileName = aMsgPart->fileName();
+  if (fileName.isEmpty()) fileName = aMsgPart->name();
+  label = fileName;
+
 //--- Sven's save attachments to /tmp start ---
   QString fname("/tmp/kmail");
   fname.sprintf ("/tmp/kmail%d", getpid());
@@ -544,11 +550,11 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
   if (ok)
   {
-    if (aMsgPart->name().isEmpty())
+    if (fileName.isEmpty())
       fname += "/unnamed";
     else
     {
-      fname = fname + "/" + aMsgPart->name();
+      fname = fname + "/" + fileName;
       // remove quotes from the filename so that the shell does not get confused
       int c = 0;
       while ((c = fname.find('"', c)) >= 0)
@@ -579,8 +585,8 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
     iconName = aMsgPart->iconName();
   }
   mViewer->write("<TABLE><TR><TD><A HREF=\"" + href + "\"><IMG SRC=\"" + 
-		 iconName + "\">" + label + "</A></TD></TR></TABLE>" +
-		 comment + "<BR>");
+		 iconName + "\" BORDER=0>" + label + 
+		 "</A></TD></TR></TABLE>" + comment + "<BR>");
 }
 
 
@@ -754,6 +760,7 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
 {
   int id;
   KMMessagePart msgPart;
+  QString str;
 
   id = msgPartFromUrl(aUrl);
   if (id <= 0)
@@ -763,7 +770,9 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   else
   {
     mMsg->bodyPart(id-1, &msgPart);
-    emit statusMsg(i18n("Attachment: ") + msgPart.name());
+    str = msgPart.fileName();
+    if (str.isEmpty()) str = msgPart.name();
+    emit statusMsg(i18n("Attachment: ") + str);
   }
 }
 
@@ -831,7 +840,8 @@ void KMReaderWin::slotAtmView()
   QMultiLineEdit* edt = new QMultiLineEdit;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-  pname = msgPart.name();
+  pname = msgPart.fileName();
+  if (pname.isEmpty()) pname=msgPart.name();
   if (pname.isEmpty()) pname=msgPart.contentDescription();
   if (pname.isEmpty()) pname="unnamed";
 
@@ -870,7 +880,8 @@ void KMReaderWin::slotAtmOpen()
     return;
   }
 
-  pname = msgPart.name();
+  pname = msgPart.fileName();
+  if (pname.isEmpty()) pname=msgPart.name();
   if (pname.isEmpty()) pname="unnamed";
   //--- Sven's save attachments to /tmp start ---
   // Sven added:

@@ -227,7 +227,7 @@ const QString KMMessage::headerAsString(void)
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QString aStr, bool aSetStatus)
 {
-  int i, j, len;
+  int len;
   const char* strPos;
   char* resultPos;
   char ch;

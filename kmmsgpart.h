@@ -85,6 +85,10 @@ public:
   /** Set the message part charset. */
   virtual void setCharset(const QString aStr);
 #endif
+
+  /** Returns name of filename part of 'Content-Disposition' header field,
+      if present. */
+  const QString fileName(void) const;
    
 protected:
   QString mType;

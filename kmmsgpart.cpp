@@ -309,6 +309,25 @@ void KMMessagePart::setContentDescription(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
+const QString KMMessagePart::fileName(void) const
+{
+  int i, j, len;
+  QString str;
+
+  i = mContentDisposition.find("filename=", 0, FALSE);
+  if (i < 0) return 0;
+  j = mContentDisposition.find(';', i+9);
+
+  if (j < 0) j = 32767;
+  str = mContentDisposition.mid(i+9, j-i-9).stripWhiteSpace();
+
+  len = str.length();
+  if (str[0]=='"' && str[len-1]=='"') return str.mid(1, len-2);
+  return str;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMessagePart::contentDisposition(void) const
 {
   return mContentDisposition;
