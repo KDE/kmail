@@ -23,6 +23,7 @@
 #include <qcstring.h>
 
 class KMReaderWin;
+class KMMessagePart;
 class QString;
 class QWidget;
 class partNode;
@@ -31,6 +32,7 @@ namespace KMail {
 
   class AttachmentStrategy;
   class HtmlWriter;
+  class PartMetaData;
 
   class ProcessResult {
   public:
@@ -75,6 +77,7 @@ namespace KMail {
   };
 
   class ObjectTreeParser {
+    class CryptPlugWrapperSaver;
     /** Internal. Copies the context of @p other, but not it's @ref
 	resultString() */
     ObjectTreeParser( const ObjectTreeParser & other );
@@ -174,11 +177,32 @@ namespace KMail {
 
     bool processTextType( int subtype, partNode * node, ProcessResult & result );
 
+    bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
+    bool processTextVCalSubtype( partNode * node, ProcessResult & result );
+    bool processTextVCardSubtype( partNode * node, ProcessResult & result );
+    bool processTextRtfSubtype( partNode * node, ProcessResult & result );
+    bool processTextEnrichedSubtype( partNode * node, ProcessResult & result );
+    bool processTextPlainSubtype( partNode * node, ProcessResult & result );
+
     bool processMultiPartType( int subtype, partNode * node, ProcessResult & result );
+
+    bool processMultiPartMixedSubtype( partNode * node, ProcessResult & result );
+    bool processMultiPartAlternativeSubtype( partNode * node, ProcessResult & result );
+    bool processMultiPartDigestSubtype( partNode * node, ProcessResult & result );
+    bool processMultiPartParallelSubtype( partNode * node, ProcessResult & result );
+    bool processMultiPartSignedSubtype( partNode * node, ProcessResult & result );
+    bool processMultiPartEncryptedSubtype( partNode * node, ProcessResult & result );
 
     bool processMessageType( int subtype, partNode * node, ProcessResult & result );
 
+    bool processMessageRfc822Subtype( partNode * node, ProcessResult & result );
+
     bool processApplicationType( int subtype, partNode * node, ProcessResult & result );
+
+    bool processApplicationPostscriptSubtype( partNode * node, ProcessResult & result );
+    bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
+    bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
+    bool processApplicationMsTnefSubtype( partNode * node, ProcessResult & result );
 
     bool processImageType( int subtype, partNode * node, ProcessResult & result );
 
@@ -193,6 +217,32 @@ namespace KMail {
 			  const QString & fromAddress,
 			  const QTextCodec * codec,
 			  ProcessResult & result );
+
+    void writePartIcon( KMMessagePart * msgPart, int partNumber, bool inlineImage=false );
+
+    QString sigStatusToString( CryptPlugWrapper * cryptPlug,
+			       int status_code,
+			       CryptPlugWrapper::SigStatusFlags statusFlags,
+			       int & frameColor,
+			       bool & showKeyInfos );
+    QString writeSigstatHeader( KMail::PartMetaData & part,
+				CryptPlugWrapper * cryptPlug,
+				const QString & fromAddress );
+    QString writeSigstatFooter( KMail::PartMetaData & part );
+
+    void writeBodyStr( const QCString & bodyString,
+		       const QTextCodec * aCodec,
+		       const QString & fromAddress,
+		       KMMsgSignatureState &  inlineSignatureState,
+		       KMMsgEncryptionState & inlineEncryptionState );
+    void writeBodyStr( const QCString & bodyString,
+		       const QTextCodec * aCodec,
+		       const QString & fromAddress );
+
+
+    /** Change the string to `quoted' html (meaning, that the quoted
+	part of the message get italized */
+    QString quotedHTML(const QString& pos);
 
     const QTextCodec * codecFor( partNode * node ) const;
 

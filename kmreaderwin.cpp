@@ -23,7 +23,6 @@
 #include "mailsourceviewer.h"
 using KMail::MailSourceViewer;
 #include "partNode.h"
-#include "linklocator.h"
 #include "kmmsgdict.h"
 #include "kmsender.h"
 #include "kcursorsaver.h"
@@ -44,6 +43,8 @@ using KMail::HeaderStyle;
 #include "khtmlparthtmlwriter.h"
 using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
+#include "htmlstatusbar.h"
+using KMail::HtmlStatusBar;
 
 #ifdef KMAIL_READER_HTML_DEBUG
 #include "filehtmlwriter.h"
@@ -67,7 +68,6 @@ using namespace KMime;
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
-#include <kpgpblock.h>
 #include <krun.h>
 #include <ktempfile.h>
 #include <kprocess.h>
@@ -479,7 +479,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
-  mInlineImage = false;
   mIsFirstTextPart = true;
 
   initHtmlWidget();
@@ -679,10 +678,6 @@ void KMReaderWin::readColorConfig(void)
   cPgpOk0H  = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
   cPgpWarnH = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
   cPgpErrH  = QColor( 0xFF, 0x00, 0x00 ); // red
-  cCBnoHtmlB = Qt::lightGray;
-  cCBnoHtmlF = Qt::black;
-  cCBisHtmlB = Qt::black;
-  cCBisHtmlF = Qt::white;
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     c1 = config->readColorEntry("ForegroundColor",&c1);
@@ -695,10 +690,6 @@ void KMReaderWin::readColorConfig(void)
     cPgpWarnH = config->readColorEntry( "PGPMessageWarn", &cPgpWarnH );
     cPgpErrH  = config->readColorEntry( "PGPMessageErr", &cPgpErrH );
     cHtmlWarning = config->readColorEntry( "HTMLWarningColor", &cHtmlWarning );
-    cCBnoHtmlB = config->readColorEntry( "ColorbarBackgroundPlain", &cCBnoHtmlB );
-    cCBnoHtmlF = config->readColorEntry( "ColorbarForegroundPlain", &cCBnoHtmlF );
-    cCBisHtmlB = config->readColorEntry( "ColorbarBackgroundHTML",  &cCBisHtmlB );
-    cCBisHtmlF = config->readColorEntry( "ColorbarForegroundHTML",  &cCBisHtmlF );
   }
 
   // determine the frame and body color for PGP messages from the header color
@@ -933,9 +924,7 @@ void KMReaderWin::initHtmlWidget(void)
 {
   mBox = new QHBox(this);
 
-  mColorBar = new QLabel(" ", mBox);
-  mColorBar->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-  mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : c4 );
+  mColorBar = new HtmlStatusBar( mBox );
 
   if ( !mShowColorbar )
     mColorBar->hide();
@@ -1472,8 +1461,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   kdDebug(5006) << s << endl;
 #endif
 
-  mColorBar->setEraseColor( QColor( "white" ) );
-  mColorBar->setText("");
+  mColorBar->setNeutralMode();
 
   if( !onlyProcessHeaders )
     removeTempFiles();
@@ -1580,7 +1568,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
     if( isOk ) {
       hasVCard = true;
       kdDebug(5006) << "FOUND A VALID VCARD" << endl;
-      writePartIcon(&vCardNode->msgPart(), vCardNode->nodeId(), TRUE );
+      writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
   htmlWriter()->queue("<div id=\"header\">"
@@ -1698,12 +1686,8 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
                         (DwMime::kTypeMessage     == rootNodeCntType) ||
                         (DwMime::kTypeModel       == rootNodeCntType) );
   }
-  if( mColorBar->text().isEmpty() ) {
-    mColorBar->setEraseColor( cCBnoHtmlB );
-    mColorBar->setPaletteForegroundColor( cCBnoHtmlF );
-    mColorBar->setTextFormat( Qt::PlainText );
-    mColorBar->setText(i18n("\nN\no\n \nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
-  }
+  if( mColorBar->isNeutral() )
+    mColorBar->setNormalMode();
 }
 
 //-----------------------------------------------------------------------------
@@ -1724,857 +1708,12 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 
 
 
-#define SIG_FRAME_COL_UNDEF  99
-#define SIG_FRAME_COL_RED    -1
-#define SIG_FRAME_COL_YELLOW  0
-#define SIG_FRAME_COL_GREEN   1
-QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
-                                        int status_code,
-                                        CryptPlugWrapper::SigStatusFlags statusFlags,
-                                        int& frameColor,
-                                        bool& showKeyInfos )
-{
-    // note: At the moment frameColor and showKeyInfos are
-    //       used for CMS only but not for PGP signatures
-    // pending(khz): Implement usage of these for PGP sigs as well.
-    showKeyInfos = true;
-    QString result;
-    if( cryptPlug ) {
-        if( 0 <= cryptPlug->libName().find( "gpgme-openpgp", 0, false ) ) {
-            // process enum according to it's definition to be read in
-            // GNU Privacy Guard CVS repository /gpgme/gpgme/gpgme.h
-            switch( status_code ) {
-            case 0: // GPGME_SIG_STAT_NONE
-                result = i18n("Error: Signature not verified");
-                break;
-            case 1: // GPGME_SIG_STAT_GOOD
-                result = i18n("Good signature");
-                break;
-            case 2: // GPGME_SIG_STAT_BAD
-                result = i18n("BAD signature");
-                break;
-            case 3: // GPGME_SIG_STAT_NOKEY
-                result = i18n("No public key to verify the signature");
-                break;
-            case 4: // GPGME_SIG_STAT_NOSIG
-                result = i18n("No signature found");
-                break;
-            case 5: // GPGME_SIG_STAT_ERROR
-                result = i18n("Error verifying the signature");
-                break;
-            case 6: // GPGME_SIG_STAT_DIFF
-                result = i18n("Different results for signatures");
-                break;
-            /* PENDING(khz) Verify exact meaning of the following values:
-            case 7: // GPGME_SIG_STAT_GOOD_EXP
-                return i18n("Signature certificate is expired");
-            break;
-            case 8: // GPGME_SIG_STAT_GOOD_EXPKEY
-                return i18n("One of the certificate's keys is expired");
-            break;
-            */
-            default:
-                result = "";   // do *not* return a default text here !
-                break;
-            }
-        }
-        else if( 0 <= cryptPlug->libName().find( "gpgme-smime", 0, false ) ) {
-            // process status bits according to SigStatus_...
-            // definitions in kdenetwork/libkdenetwork/cryptplug.h
-
-            if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
-                result = i18n("No status information available.");
-                frameColor = SIG_FRAME_COL_YELLOW;
-                showKeyInfos = false;
-                return result;
-            }
-
-            if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
-                result = i18n("GOOD signature!");
-                // Note:
-                // Here we are work differently than KMail did before!
-                //
-                // The GOOD case ( == sig matching and the complete
-                // certificate chain was verified and is valid today )
-                // by definition does *not* show any key
-                // information but just states that things are OK.
-                //           (khz, according to LinuxTag 2002 meeting)
-                frameColor = SIG_FRAME_COL_GREEN;
-                showKeyInfos = false;
-                return result;
-            }
-
-            // we are still there?  OK, let's test the different cases:
-
-            // we assume green, test for yellow or red (in this order!)
-            frameColor = SIG_FRAME_COL_GREEN;
-            QString result2;
-            if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags ){
-                // still is green!
-                result2 += i18n("One key has expired.");
-            }
-            if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags ){
-                // and still is green!
-                result2 += i18n("The signature has expired.");
-            }
-
-            // test for yellow:
-            if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
-                result2 += i18n("Unable to verify: key missing.");
-                // if the signature certificate is missing
-                // we cannot show infos on it
-                showKeyInfos = false;
-                frameColor = SIG_FRAME_COL_YELLOW;
-            }
-            if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags ){
-                result2 += i18n("CRL not available.");
-                frameColor = SIG_FRAME_COL_YELLOW;
-            }
-            if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags ){
-                result2 += i18n("Available CRL is too old.");
-                frameColor = SIG_FRAME_COL_YELLOW;
-            }
-            if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags ){
-                result2 += i18n("A policy was not met.");
-                frameColor = SIG_FRAME_COL_YELLOW;
-            }
-            if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
-                result2 += i18n("A system error occurred.");
-                // if a system error occured
-                // we cannot trust any information
-                // that was given back by the plug-in
-                showKeyInfos = false;
-                frameColor = SIG_FRAME_COL_YELLOW;
-            }
-            if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
-                result2 += i18n("Internal system error #%1 occurred.")
-                        .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
-                // if an unsupported internal error occured
-                // we cannot trust any information
-                // that was given back by the plug-in
-                showKeyInfos = false;
-                frameColor = SIG_FRAME_COL_YELLOW;
-            }
-
-            // test for red:
-            if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags ){
-                // this is red!
-                result2 += i18n("One key has been revoked.");
-                frameColor = SIG_FRAME_COL_RED;
-            }
-            if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
-                if( result2.isEmpty() )
-                    // Note:
-                    // Here we are work differently than KMail did before!
-                    //
-                    // The BAD case ( == sig *not* matching )
-                    // by definition does *not* show any key
-                    // information but just states that things are BAD.
-                    //
-                    // The reason for this: In this case ALL information
-                    // might be falsificated, we can NOT trust the data
-                    // in the body NOT the signature - so we don't show
-                    // any key/signature information at all!
-                    //         (khz, according to LinuxTag 2002 meeting)
-                    showKeyInfos = false;
-                frameColor = SIG_FRAME_COL_RED;
-            }
-            else
-                result = "";
-
-            if( SIG_FRAME_COL_GREEN == frameColor ) {
-                if( result2.isEmpty() )
-                    result = i18n("GOOD signature!");
-                else
-                    result = i18n("Good signature.");
-            } else if( SIG_FRAME_COL_RED == frameColor ) {
-                if( result2.isEmpty() )
-                    result = i18n("BAD signature!");
-                else
-                    result = i18n("Bad signature.");
-            } else
-                result = "";
-
-            if( !result2.isEmpty() ) {
-                if( !result.isEmpty() )
-                    result.append("<br />");
-                result.append( result2 );
-            }
-        }
-        /*
-        // add i18n support for 3rd party plug-ins here:
-        else if (0 <= cryptPlug->libName().find( "yetanotherpluginname", 0, false )) {
-
-        }
-        */
-    }
-    return result;
-}
-
-//---------------------------------------------------
-
-QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
-                                         CryptPlugWrapper* cryptPlug,
-                                         const QString& fromAddress )
-{
-    bool isSMIME = cryptPlug && (0 <= cryptPlug->libName().find( "smime",   0, false ));
-    QString signer = block.signer;
-
-    QString htmlStr;
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    QString cellPadding("cellpadding=\"1\"");
-
-    if( block.isEncapsulatedRfc822Message )
-    {
-        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
-            "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
-        htmlStr += i18n("Encapsulated message");
-        htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
-    }
-
-    if( block.isEncrypted )
-    {
-        htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
-            "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
-        if( block.isDecryptable )
-            htmlStr += i18n("Encrypted message");
-        else {
-            htmlStr += i18n("Encrypted message (decryption not possible)");
-            if( !block.errorText.isEmpty() )
-                htmlStr += "<br />" + i18n("Reason: %1").arg( block.errorText );
-        }
-        htmlStr += "</td></tr><tr class=\"encrB\"><td>";
-    }
-
-    if( block.isSigned ) {
-        QStringList& blockAddrs( block.signerMailAddresses );
-        // note: At the moment frameColor and showKeyInfos are
-        //       used for CMS only but not for PGP signatures
-        // pending(khz): Implement usage of these for PGP sigs as well.
-        int frameColor = SIG_FRAME_COL_UNDEF;
-        bool showKeyInfos;
-        bool onlyShowKeyURL = false;
-        bool cannotCheckSignature = true;
-        QString statusStr = sigStatusToString( cryptPlug,
-                                               block.status_code,
-                                               block.sigStatusFlags,
-                                               frameColor,
-                                               showKeyInfos );
-        // if needed fallback to english status text
-        // that was reported by the plugin
-        if( statusStr.isEmpty() )
-            statusStr = block.status;
-        if( block.technicalProblem )
-            frameColor = SIG_FRAME_COL_YELLOW;
-
-        switch( frameColor ){
-            case SIG_FRAME_COL_RED:
-                cannotCheckSignature = false;
-                break;
-            case SIG_FRAME_COL_YELLOW:
-                cannotCheckSignature = true;
-                break;
-            case SIG_FRAME_COL_GREEN:
-                cannotCheckSignature = false;
-                break;
-        }
-
-        // compose the string for displaying the key ID
-        // either as URL or not linked (for PGP)
-        // note: Once we can start PGP key manager programs
-        //       from within KMail we could change this and
-        //       always show the URL.    (khz, 2002/06/27)
-        QString startKeyHREF;
-        if( isSMIME )
-            startKeyHREF =
-                QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
-                .arg( cryptPlug->displayName() )
-                .arg( cryptPlug->libName() )
-                .arg( block.keyId );
-        QString keyWithWithoutURL
-            = isSMIME
-            ? QString("%1%2</a>")
-                .arg( startKeyHREF )
-                .arg( cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
-            : "0x" + QString::fromUtf8( block.keyId );
-
-
-        // temporary hack: always show key infos!
-        showKeyInfos = true;
-
-        // Sorry for using 'black' as null color but .isValid()
-        // checking with QColor default c'tor did not work for
-        // some reason.
-        if( isSMIME && (SIG_FRAME_COL_UNDEF != frameColor) ) {
-
-            // new frame settings for CMS:
-            // beautify the status string
-            if( !statusStr.isEmpty() ) {
-                statusStr.prepend("<i>");
-                statusStr.append( "</i>");
-            }
-
-            // special color handling: S/MIME uses only green/yellow/red.
-            switch( frameColor ) {
-                case SIG_FRAME_COL_RED:
-                    block.signClass = "signErr";//"signCMSRed";
-                    onlyShowKeyURL = true;
-                    break;
-                case SIG_FRAME_COL_YELLOW:
-                    if( block.technicalProblem )
-                        block.signClass = "signWarn";
-                    else
-                        block.signClass = "signOkKeyBad";//"signCMSYellow";
-                    break;
-                case SIG_FRAME_COL_GREEN:
-                    block.signClass = "signOkKeyOk";//"signCMSGreen";
-                    // extra hint for green case
-                    // that email addresses in DN do not match fromAddress
-                    QString greenCaseWarning;
-                    QString msgFrom( KMMessage::getEmailAddr(fromAddress) );
-                    QString certificate;
-                    if( block.keyId.isEmpty() )
-                        certificate = "certificate";
-                    else
-                        certificate = QString("%1%2</a>")
-                                      .arg( startKeyHREF )
-                                      .arg( "certificate" );
-                    if( blockAddrs.count() ){
-                        if( blockAddrs.grep(
-                                msgFrom,
-                                false ).isEmpty() ) {
-                            greenCaseWarning =
-                                "<u>" +
-                                i18n("Warning:") +
-                                "</u> " +
-                                i18n("Sender's mail address is not stored "
-                                     "in the %1 used for signing.").arg(certificate) +
-                                "<br />" +
-                                i18n("sender: ") +
-                                "&lt;" +
-                                msgFrom +
-                                "&gt;<br />" +
-                                i18n("stored: ") +
-                                "&lt;";
-                            // We cannot use Qt's join() function here but
-                            // have to join the addresses manually to
-                            // extract the mail addresses (without '<''>')
-                            // before including it into our string:
-                            bool bStart = true;
-                            for(QStringList::ConstIterator it = blockAddrs.begin();
-                                it != blockAddrs.end(); ++it ){
-                                if( !bStart )
-                                    greenCaseWarning.append("&gt;, <br />&nbsp; &nbsp;&lt;");
-                                bStart = false;
-                                greenCaseWarning.append( KMMessage::getEmailAddr(*it) );
-                            }
-                            greenCaseWarning.append( "&gt;" );
-                        }
-                    } else {
-                        greenCaseWarning =
-                            "<u>" +
-                            i18n("Warning:") +
-                            "</u> " +
-                            i18n("No mail address is stored in the %1 used for signing, "
-                                 "so we cannot compare it to the sender's address &lt;%2&gt;.")
-                            .arg(certificate)
-                            .arg(msgFrom);
-                    }
-                    if( !greenCaseWarning.isEmpty() ) {
-                        if( !statusStr.isEmpty() )
-                            statusStr.append("<br />&nbsp;<br />");
-                        statusStr.append( greenCaseWarning );
-                    }
-                    break;
-            }
-
-            htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
-                "class=\"" + block.signClass + "\">"
-                "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-            if( block.technicalProblem ) {
-                htmlStr += block.errorText;
-            }
-            else if( showKeyInfos ) {
-                if( cannotCheckSignature ) {
-                    htmlStr += i18n( "Not enough information to check "
-                                     "signature. %1" )
-                                .arg( keyWithWithoutURL );
-                }
-                else {
-
-                    if (block.signer.isEmpty())
-                        signer = "";
-                    else {
-                        // HTMLize the signer's user id and try to create mailto: link
-                        signer = KMMessage::emailAddrAsAnchor( signer );
-                        if( blockAddrs.count() ){
-                            QString address = KMMessage::encodeMailtoUrl( blockAddrs.first() );
-                            signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
-                        }
-                    }
-
-                    if( block.keyId.isEmpty() ) {
-                        if( signer.isEmpty() || onlyShowKeyURL )
-                            htmlStr += i18n( "Message was signed with unknown key." );
-                        else
-                            htmlStr += i18n( "Message was signed by %1." )
-                                    .arg( signer );
-                    } else {
-                        bool dateOK = (0 < block.creationTime.tm_year);
-                        QDate created( 1900 + block.creationTime.tm_year,
-                                    block.creationTime.tm_mon,
-                                    block.creationTime.tm_mday );
-                        if( dateOK && created.isValid() ) {
-                            if( signer.isEmpty() ) {
-                                if( onlyShowKeyURL )
-                                    htmlStr += i18n( "Message was signed with key %1." )
-                                                .arg( keyWithWithoutURL );
-                                else
-                                    htmlStr += i18n( "Message was signed with key %1, created %2." )
-                                                .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
-                            }
-                            else {
-                                if( onlyShowKeyURL )
-                                    htmlStr += i18n( "Message was signed with key %1." )
-                                            .arg( keyWithWithoutURL );
-                                else
-                                    htmlStr += i18n( "Message was signed by %3 with key %1, created %2." )
-                                            .arg( keyWithWithoutURL )
-                                            .arg( created.toString( Qt::LocalDate ) )
-                                            .arg( signer );
-                            }
-                        }
-                        else {
-                            if( signer.isEmpty() || onlyShowKeyURL )
-                                htmlStr += i18n( "Message was signed with key %1." )
-                                        .arg( keyWithWithoutURL );
-                            else
-                                htmlStr += i18n( "Message was signed by %2 with key %1." )
-                                        .arg( keyWithWithoutURL )
-                                        .arg( signer );
-                        }
-                    }
-                }
-                htmlStr += "<br />";
-                if( !statusStr.isEmpty() ) {
-                    htmlStr += "&nbsp;<br />";
-                    htmlStr += i18n( "Status: " );
-                    htmlStr += statusStr;
-                }
-            } else {
-                htmlStr += statusStr;
-            }
-            htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-
-        } else {
-
-            // old frame settings for PGP:
-
-            if( block.signer.isEmpty() || block.technicalProblem ) {
-                block.signClass = "signWarn";
-                htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
-                    "class=\"" + block.signClass + "\">"
-                    "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-                if( block.technicalProblem ) {
-                    htmlStr += block.errorText;
-                }
-                else {
-                  if( !block.keyId.isEmpty() ) {
-                    bool dateOK = (0 < block.creationTime.tm_year);
-                    QDate created( 1900 + block.creationTime.tm_year,
-                                  block.creationTime.tm_mon,
-                                  block.creationTime.tm_mday );
-                    if( dateOK && created.isValid() )
-                        htmlStr += i18n( "Message was signed with unknown key %1, created %2." )
-                                .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
-                    else
-                        htmlStr += i18n( "Message was signed with unknown key %1." )
-                                .arg( keyWithWithoutURL );
-                  }
-                  else
-                    htmlStr += i18n( "Message was signed with unknown key." );
-                  htmlStr += "<br />";
-                  htmlStr += i18n( "The validity of the signature cannot be "
-                                   "verified." );
-                  if( !statusStr.isEmpty() ) {
-                    htmlStr += "<br />";
-                    htmlStr += i18n( "Status: " );
-                    htmlStr += "<i>";
-                    htmlStr += statusStr;
-                    htmlStr += "</i>";
-                  }
-                }
-                htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-            }
-            else
-            {
-                // HTMLize the signer's user id and create mailto: link
-                signer = KMMessage::quoteHtmlChars( signer, true );
-                signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
-
-                if (block.isGoodSignature) {
-                    if( block.keyTrust < Kpgp::KPGP_VALIDITY_MARGINAL )
-                        block.signClass = "signOkKeyBad";
-                    else
-                        block.signClass = "signOkKeyOk";
-                    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
-                        "class=\"" + block.signClass + "\">"
-                        "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-                    if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
-                                   .arg( keyWithWithoutURL )
-                                   .arg( signer );
-                    else
-                        htmlStr += i18n( "Message was signed by %1." ).arg( signer );
-                    htmlStr += "<br />";
-
-                    switch( block.keyTrust )
-                    {
-                        case Kpgp::KPGP_VALIDITY_UNKNOWN:
-                        htmlStr += i18n( "The signature is valid, but the key's "
-                                "validity is unknown." );
-                        break;
-                        case Kpgp::KPGP_VALIDITY_MARGINAL:
-                        htmlStr += i18n( "The signature is valid and the key is "
-                                "marginally trusted." );
-                        break;
-                        case Kpgp::KPGP_VALIDITY_FULL:
-                        htmlStr += i18n( "The signature is valid and the key is "
-                                "fully trusted." );
-                        break;
-                        case Kpgp::KPGP_VALIDITY_ULTIMATE:
-                        htmlStr += i18n( "The signature is valid and the key is "
-                                "ultimately trusted." );
-                        break;
-                        default:
-                        htmlStr += i18n( "The signature is valid, but the key is "
-                                "untrusted." );
-                    }
-                    htmlStr += "</td></tr>"
-                        "<tr class=\"" + block.signClass + "B\"><td>";
-                }
-                else
-                {
-                    block.signClass = "signErr";
-                    htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
-                        "class=\"" + block.signClass + "\">"
-                        "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-                    if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
-                        .arg( keyWithWithoutURL )
-                        .arg( signer );
-                    else
-                        htmlStr += i18n( "Message was signed by %1." ).arg( signer );
-                    htmlStr += "<br />";
-                    htmlStr += i18n("Warning: The signature is bad.");
-                    htmlStr += "</td></tr>"
-                        "<tr class=\"" + block.signClass + "B\"><td>";
-                }
-            }
-        }
-    }
-
-    return htmlStr;
-}
-
-QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
-{
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-
-    QString htmlStr;
-
-    if (block.isSigned) {
-	htmlStr += "</td></tr><tr class=\"" + block.signClass + "H\">";
-	htmlStr += "<td dir=\"" + dir + "\">" +
-	    i18n( "End of signed message" ) +
-	    "</td></tr></table>";
-    }
-
-    if (block.isEncrypted) {
-	htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
-		i18n( "End of encrypted message" ) +
-	    "</td></tr></table>";
-    }
-
-    if( block.isEncapsulatedRfc822Message )
-    {
-        htmlStr += "</td></tr><tr class=\"rfc822H\"><td dir=\"" + dir + "\">" +
-            i18n( "End of encapsulated message" ) +
-            "</td></tr></table>";
-    }
-
-    return htmlStr;
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
-                                const QString& fromAddress )
-{
-  KMMsgSignatureState dummy1;
-  KMMsgEncryptionState dummy2;
-  writeBodyStr( aStr, aCodec, fromAddress, dummy1, dummy2 );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
-                                const QString& fromAddress,
-                                KMMsgSignatureState&  inlineSignatureState,
-                                KMMsgEncryptionState& inlineEncryptionState )
-{
-  bool goodSignature = false;
-  Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-  assert(pgp != 0);
-  bool isPgpMessage = false; // true if the message contains at least one
-                             // PGP MESSAGE or one PGP SIGNED MESSAGE block
-  QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-  QString headerStr = QString("<div dir=\"%1\">").arg(dir);
-
-  inlineSignatureState  = KMMsgNotSigned;
-  inlineEncryptionState = KMMsgNotEncrypted;
-  QPtrList<Kpgp::Block> pgpBlocks;
-  QStrList nonPgpBlocks;
-  if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
-  {
-      bool isEncrypted = false, isSigned = false;
-      bool fullySignedOrEncrypted = true;
-      bool firstNonPgpBlock = true;
-      bool couldDecrypt = false;
-      QString signer;
-      QCString keyId;
-      QString decryptionError;
-      Kpgp::Validity keyTrust = Kpgp::KPGP_VALIDITY_FULL;
-
-      QPtrListIterator<Kpgp::Block> pbit( pgpBlocks );
-
-      QStrListIterator npbit( nonPgpBlocks );
-
-      QString htmlStr;
-      for( ; *pbit != 0; ++pbit, ++npbit )
-      {
-	  // insert the next Non-OpenPGP block
-	  QCString str( *npbit );
-	  if( !str.isEmpty() ) {
-	    htmlStr += quotedHTML( aCodec->toUnicode( str ) );
-            kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
-                            << "'" << endl;
-            // treat messages with empty lines before the first clearsigned
-            // block as fully signed/encrypted
-            if( firstNonPgpBlock ) {
-              // check whether str only consists of \n
-              for( QCString::ConstIterator c = str.begin(); *c; ++c ) {
-                if( *c != '\n' ) {
-                  fullySignedOrEncrypted = false;
-                  break;
-                }
-              }
-            }
-            else {
-              fullySignedOrEncrypted = false;
-            }
-          }
-          firstNonPgpBlock = false;
-
-	  //htmlStr += "<br>";
-
-	  Kpgp::Block* block = *pbit;
-	  if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-	      ( block->type() == Kpgp::ClearsignedBlock ) )
-	  {
-	      isPgpMessage = true;
-	      if( block->type() == Kpgp::PgpMessageBlock )
-	      {
-		  emit noDrag();
-		  // try to decrypt this OpenPGP block
-		  couldDecrypt = block->decrypt();
-		  isEncrypted = block->isEncrypted();
-		  if (!couldDecrypt) {
-		    decryptionError = pgp->lastErrorMsg();
-		  }
-	      }
-	      else
-	      {
-		  // try to verify this OpenPGP block
-		  block->verify();
-	      }
-
-	      isSigned = block->isSigned();
-	      if( isSigned )
-	      {
-                  keyId = block->signatureKeyId();
-		  signer = block->signatureUserId();
-		  if( !signer.isEmpty() )
-		  {
-		      goodSignature = block->goodSignature();
-
-		      if( !keyId.isEmpty() )
-			keyTrust = pgp->keyTrust( keyId );
-		      else
-			// This is needed for the PGP 6 support because PGP 6 doesn't
-			// print the key id of the signing key if the key is known.
-			keyTrust = pgp->keyTrust( signer );
-		  }
-	      }
-
-              if( isSigned )
-                inlineSignatureState = KMMsgPartiallySigned;
-	      if( isEncrypted )
-                inlineEncryptionState = KMMsgPartiallyEncrypted;
-
-	      PartMetaData messagePart;
-
-	      messagePart.isSigned = isSigned;
-	      messagePart.technicalProblem = false;
-	      messagePart.isGoodSignature = goodSignature;
-	      messagePart.isEncrypted = isEncrypted;
-	      messagePart.isDecryptable = couldDecrypt;
-	      messagePart.decryptionError = decryptionError;
-	      messagePart.signer = signer;
-	      messagePart.keyId = keyId;
-	      messagePart.keyTrust = keyTrust;
-
-	      htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
-
-	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
-	      htmlStr += writeSigstatFooter( messagePart );
-	  }
-	  else // block is neither message block nor clearsigned block
-	    htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
-      }
-
-      // add the last Non-OpenPGP block
-      QCString str( nonPgpBlocks.last() );
-      if( !str.isEmpty() ) {
-        htmlStr += quotedHTML( aCodec->toUnicode( str ) );
-        // Even if the trailing Non-OpenPGP block isn't empty we still
-        // consider the message part fully signed/encrypted because else
-        // all inline signed mailing list messages would only be partially
-        // signed because of the footer which is often added by the mailing
-        // list software. IK, 2003-02-15
-      }
-      if( fullySignedOrEncrypted ) {
-        if( inlineSignatureState == KMMsgPartiallySigned )
-          inlineSignatureState = KMMsgFullySigned;
-        if( inlineEncryptionState == KMMsgPartiallyEncrypted )
-          inlineEncryptionState = KMMsgFullyEncrypted;
-      }
-      htmlWriter()->queue( htmlStr );
-  }
-  else
-    htmlWriter()->queue( quotedHTML( aCodec->toUnicode( aStr ) ) );
-}
-
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeHTMLStr(const QString& aStr)
 {
-  mColorBar->setEraseColor( cCBisHtmlB );
-  mColorBar->setPaletteForegroundColor( cCBisHtmlF );
-  mColorBar->setTextFormat( Qt::RichText );
-  mColorBar->setText(i18n("<b><br>H<br>T<br>M<br>L<br> <br>M<br>e<br>s<br>s<br>a<br>g<br>e</b>"));
+  mColorBar->setHtmlMode();
   htmlWriter()->queue(aStr);
 }
-
-//-----------------------------------------------------------------------------
-
-QString KMReaderWin::quotedHTML(const QString& s)
-{
-  QString htmlStr;
-  QString normalStartTag;
-  const QString normalEndTag = "</div>";
-  const QString quoteEnd = "</div>";
-
-  unsigned int pos, beg;
-  unsigned int length = s.length();
-
-  QString style;
-  if( mBodyFont.bold() )
-    style += "font-weight:bold;";
-  if( mBodyFont.italic() )
-    style += "font-style:italic;";
-  if( style.isEmpty() )
-    normalStartTag = "<div>";
-  else
-    normalStartTag = QString("<div style=\"%1\">").arg( style );
-
-  // skip leading empty lines
-  for( pos = 0; pos < length && s[pos] <= ' '; pos++ );
-  while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
-  beg = pos;
-
-  int currQuoteLevel = -2; // -2 == no previous lines
-
-  while (beg<length)
-  {
-    QString line;
-
-    /* search next occurance of '\n' */
-    pos = s.find('\n', beg, FALSE);
-    if (pos == (unsigned int)(-1))
-	pos = length;
-
-    line = s.mid(beg,pos-beg);
-    beg = pos+1;
-
-    /* calculate line's current quoting depth */
-    int actQuoteLevel = -1;
-    for (unsigned int p=0; p<line.length(); p++) {
-      switch (line[p].latin1()) {
-        case '>':
-        case '|':
-          actQuoteLevel++;
-          break;
-        case ' ':  // spaces and tabs are allowed between the quote markers
-        case '\t':
-        case '\r':
-          break;
-        default:  // stop quoting depth calculation
-          p = line.length();
-          break;
-      }
-    } /* for() */
-
-    if ( actQuoteLevel != currQuoteLevel ) {
-      /* finish last quotelevel */
-      if (currQuoteLevel == -1)
-        htmlStr.append( normalEndTag );
-      else if (currQuoteLevel >= 0)
-        htmlStr.append( quoteEnd );
-
-      /* start new quotelevel */
-      currQuoteLevel = actQuoteLevel;
-      if (actQuoteLevel == -1)
-        htmlStr += normalStartTag;
-      else
-        htmlStr += mQuoteFontTag[currQuoteLevel%3];
-    }
-
-    // don't write empty <div ...></div> blocks (they have zero height)
-    if( !line.isEmpty() )
-    {
-      if( line.isRightToLeft() )
-        htmlStr += QString( "<div dir=\"rtl\">" );
-      else
-        htmlStr += QString( "<div dir=\"ltr\">" );
-      htmlStr += strToHtml( line, true );
-      htmlStr += QString( "</div>" );
-    }
-    else
-      htmlStr += "<br>";
-  } /* while() */
-
-  /* really finish the last quotelevel */
-  if (currQuoteLevel == -1)
-     htmlStr.append( normalEndTag );
-  else
-     htmlStr.append( quoteEnd );
-
-  //kdDebug(5006) << "KMReaderWin::quotedHTML:\n"
-  //              << "========================================\n"
-  //              << htmlStr
-  //              << "\n======================================\n";
-  return htmlStr;
-}
-
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
@@ -2595,88 +1734,26 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     // Not there or not writable
     if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
         || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
-      fname = QString::null; //failed create
+      return QString::null; //failed create
 
-  if( !fname.isNull() ) {
-    mTempDirs.append( fname );
-    // strip off a leading path
-    int slashPos = fileName.findRev( '/' );
-    if( -1 != slashPos )
-      fileName = fileName.mid( slashPos + 1 );
-    if( fileName.isEmpty() )
-      fileName = "unnamed";
-    fname += "/" + fileName;
+  assert( !fname.isNull() );
 
-    if( kByteArrayToFile( aMsgPart->bodyDecodedBinary(), fname, false, false,
-                          false ) )
-      mTempFiles.append( fname );
-    else
-      fname = QString::null;
-  }
+  mTempDirs.append( fname );
+  // strip off a leading path
+  int slashPos = fileName.findRev( '/' );
+  if( -1 != slashPos )
+    fileName = fileName.mid( slashPos + 1 );
+  if( fileName.isEmpty() )
+    fileName = "unnamed";
+  fname += "/" + fileName;
+
+  if( !kByteArrayToFile( aMsgPart->bodyDecodedBinary(), fname, false, false,
+			false ) )
+    return QString::null;
+
+  mTempFiles.append( fname );
 
   return fname;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::writePartIcon( KMMessagePart* aMsgPart, int aPartNum,
-                                 bool quiet )
-{
-  QString iconName, href, label, comment, contDisp;
-
-  if( aMsgPart == 0 ) {
-    kdDebug(5006) << "writePartIcon: aMsgPart == 0\n" << endl;
-    return;
-  }
-
-  kdDebug(5006) << "writePartIcon: PartNum: " << aPartNum << endl;
-
-  label = aMsgPart->fileName();
-  if( label.isEmpty() )
-    label = aMsgPart->name();
-  if( label.isEmpty() )
-    label = "unnamed";
-  label = KMMessage::quoteHtmlChars( label, true );
-
-  comment = aMsgPart->contentDescription();
-  comment = KMMessage::quoteHtmlChars( comment, true );
-
-  QString fileName = writeMessagePartToTempFile( aMsgPart, aPartNum );
-
-  if( !fileName.isEmpty() ) {
-    href = QString("file:") + KURL::encode_string( fileName );
-    //debug ("Wrote attachment to %s", href.data());
-  }
-  else {
-    href = QString("part://%1").arg( aPartNum + 1 );
-  }
-
-  // sven: for viewing images inline
-  if( mInlineImage )
-    iconName = href;
-  else {
-    iconName = aMsgPart->iconName();
-    if( iconName.right( 14 ) == "mime_empty.png" ) {
-      aMsgPart->magicSetType();
-      iconName = aMsgPart->iconName();
-    }
-  }
-
-  if( !quiet )
-    if( mInlineImage )
-      // show the filename of the image below the embedded image
-      htmlWriter()->queue( "<div><a href=\"" + href + "\">"
-                           "<img src=\"" + iconName + "\" border=\"0\"></a>"
-                           "</div>"
-                           "<div><a href=\"" + href + "\">" + label + "</a>"
-                           "</div>"
-                           "<div>" + comment + "</div><br>" );
-    else
-      // show the filename next to the image
-      htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
-                           iconName + "\" border=\"0\">" + label +
-                           "</a></div>"
-                           "<div>" + comment + "</div><br>" );
 }
 
 
@@ -2690,13 +1767,6 @@ void KMReaderWin::showVCard(KMMessagePart *msgPart, const QTextCodec *codec)
 
   return;
 }
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
-{
-  return LinkLocator::convertToHtml(aStr, aPreserveBlanks);
-}
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::printMsg()
@@ -3049,9 +2119,13 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
 	  writeHTMLStr(codec()->toUnicode(str));
       else // plain text
+#if 0
 	  writeBodyStr( str,
 		    codec(),
 		    message() ? message()->from() : QString("") );
+#else
+          htmlWriter()->queue( "FIXME" );
+#endif
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
       mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));

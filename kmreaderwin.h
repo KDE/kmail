@@ -17,7 +17,6 @@
 
 class QFrame;
 class QHBox;
-class QLabel;
 class QListViewItem;
 class QScrollBar;
 class QString;
@@ -41,6 +40,7 @@ namespace KMail {
   class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
+  class HtmlStatusBar;
 };
 
 class partNode; // might be removed when KMime is used instead of mimelib
@@ -350,17 +350,6 @@ protected:
     header style. */
   virtual QString writeMsgHeader(KMMessage* aMsg, bool hasVCard);
 
-  /** Feeds the HTML widget with the contents of the given message-body
-    string. May contain body parts. */
-  virtual void writeBodyStr( const QCString& bodyString,
-			     const QTextCodec *aCodec,
-                             const QString& fromAddress,
-                             KMMsgSignatureState&  inlineSignatureState,
-                             KMMsgEncryptionState& inlineEncryptionState );
-  virtual void writeBodyStr( const QCString& bodyString,
-                             const QTextCodec *aCodec,
-                             const QString& fromAddress );
-
   /** Feeds the HTML widget with the contents of the given HTML message-body
     string. May contain body parts. */
   virtual void writeHTMLStr(const QString& aStr);
@@ -370,25 +359,9 @@ protected:
   */
   QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
 
-  /** Create a nice icon with comment and name for the given
-    body part, appended to the HTML view. Content type and subtype
-    are set afterwards if they were not before. */
-  virtual void writePartIcon(KMMessagePart* msgPart, int partNumber,
-    bool quiet = FALSE);
-
   /** show window containing infos about a vCard. */
   virtual void showVCard(KMMessagePart *msgPart, const QTextCodec *codec);
   
-  /** Convert given string to HTML. Converts blanks and tabs at
-    beginning of line to non-breakable spaces if preserveLeadingBlanks
-    is TRUE. */
-  virtual QString strToHtml(const QString &str,
-                            bool preserveLeadingBlanks=FALSE) const;
-
-  /** Change the string to `quoted' html (meaning, that the quoted
-    part of the message get italized */
-  QString quotedHTML(const QString& pos);
-
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
 
@@ -402,18 +375,6 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
-private:
-  /** extracted parts from writeBodyStr() */
-  QString sigStatusToString(CryptPlugWrapper* cryptPlug,
-                            int status_code,
-                            CryptPlugWrapper::SigStatusFlags statusFlags,
-                            int& frameColor,
-                            bool& showKeyInfos);
-  QString writeSigstatHeader(KMail::PartMetaData& part,
-                             CryptPlugWrapper* cryptPlug,
-                             const QString& fromAddress);
-  QString writeSigstatFooter(KMail::PartMetaData& part);
-
 protected:
   bool mUseGroupware;
   bool mHtmlMail, mHtmlOverride;
@@ -421,14 +382,13 @@ protected:
   QString mAtmCurrentName;
   KMMessage *mMessage;
   QHBox *mBox;
-  QLabel *mColorBar;
+  KMail::HtmlStatusBar *mColorBar;
   KHTMLPart *mViewer;
   const KMail::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyle;
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
-  bool mInlineImage;
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
@@ -459,9 +419,6 @@ protected:
          cPgpEncrF, cPgpEncrH, cPgpEncrB;
   // color of frame of warning preceeding the source of HTML messages
   QColor cHtmlWarning;
-  // colors for colorbar
-  QColor cCBnoHtmlB, cCBnoHtmlF,
-         cCBisHtmlB, cCBisHtmlF;
   QString mQuoteFontTag[3];
   bool mShowColorbar;
   bool mShowCompleteMessage;
