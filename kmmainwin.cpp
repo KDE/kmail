@@ -9,6 +9,7 @@
 
 #undef Unsorted // X headers...
 #include <qregexp.h>
+#include <qaccel.h>
 
 
 #include <kopenwith.h>
@@ -19,6 +20,7 @@
 
 #include <kaction.h>
 #include <kstdaction.h>
+#include <kstdaccel.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>

@@ -57,7 +57,7 @@ class KURL;
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
 /* default key to toggle between fixed width font and default font */
-#define DEFAULT_FIXEDFONTS_KEY (CTRL+Key_E)
+#define DEFAULT_FIXEDFONTS_KEY (0)
 
 //-----------------------------------------------------------------------------
 #define KMEditInherited KEdit

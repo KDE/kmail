@@ -29,6 +29,7 @@
 #include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kstdaction.h>
+#include <kstdaccel.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
