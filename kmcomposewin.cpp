@@ -4036,25 +4036,27 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
 //-----------------------------------------------------------------------------
 void KMLineEdit::keyPressEvent(QKeyEvent *e)
 {
-    // ---sven's Return is same Tab and arrow key navigation start ---
-    if ((e->key() == Key_Enter || e->key() == Key_Return) &&
-        !completionBox()->isVisible())
-    {
-      mComposer->focusNextPrevEdit(this,TRUE);
-      return;
+    if ( mComposer ) {
+        // ---sven's Return is same Tab and arrow key navigation start ---
+        if ((e->key() == Key_Enter || e->key() == Key_Return) &&
+            !completionBox()->isVisible())
+        {
+          mComposer->focusNextPrevEdit(this,TRUE);
+          return;
+        }
+        if (e->key() == Key_Up)
+        {
+          mComposer->focusNextPrevEdit(this,FALSE); // Go up
+          return;
+        }
+        if (e->key() == Key_Down)
+        {
+          mComposer->focusNextPrevEdit(this,TRUE); // Go down
+          return;
+        }
+        // ---sven's Return is same Tab and arrow key navigation end ---
     }
-    if (e->key() == Key_Up)
-    {
-      mComposer->focusNextPrevEdit(this,FALSE); // Go up
-      return;
-    }
-    if (e->key() == Key_Down)
-    {
-      mComposer->focusNextPrevEdit(this,TRUE); // Go down
-      return;
-    }
-    // ---sven's Return is same Tab and arrow key navigation end ---
-  AddresseeLineEdit::keyPressEvent(e);
+    AddresseeLineEdit::keyPressEvent(e);
 }
 
 QPopupMenu *KMLineEdit::createPopupMenu()
