@@ -1605,8 +1605,8 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
 
     // set body content
     if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !(doSign || doEncrypt) ) { // add the boundary to the header
-      DwMediaType & contentType = msg->dwContentType();
-      contentType.SetBoundary(mSaveBoundary);
+      msg->headers().ContentType().SetBoundary( mSaveBoundary );
+      msg->headers().ContentType().Assemble();
     }
     msg->setBody(ourFineBodyPart.body() );
 
