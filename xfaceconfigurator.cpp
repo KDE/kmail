@@ -139,7 +139,7 @@ namespace KMail {
              mEnableCheck, SLOT(setFocus()) );
 
     int pageno = 0;
-    // page 0: create X-Face from image file or addressbook entry
+    // page 0: create X-Face from image file or address book entry
     page = new QWidget( widgetStack );
     widgetStack->addWidget( page, pageno ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
@@ -153,7 +153,7 @@ namespace KMail {
     page_vlay->addWidget( mFromFileBtn, 1 );
     connect( mFromFileBtn, SIGNAL(released()),
              this, SLOT(slotSelectFile()) );
-    mFromAddrbkBtn = new QPushButton( i18n("Set From Addressbook"), page );
+    mFromAddrbkBtn = new QPushButton( i18n("Set From Address Book"), page );
     QWhatsThis::add( mFromAddrbkBtn,
                      i18n( "You can use a scaled-down version of the picture "
                          "you have set in your address book entry." ) );
@@ -245,7 +245,7 @@ namespace KMail {
           mTextEdit->setText( xf.fromImage( photo ) );
         }
         else
-          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No Picture") );
+          KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
 
       }
       else
@@ -254,7 +254,7 @@ namespace KMail {
         if( !url.isEmpty() )
           setXfaceFromFile( url );
         else
-          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No Picture") );
+          KMessageBox::information( this, i18n("No picture set for your address book entry."), i18n("No Picture") );
       }
     }
     else
