@@ -167,10 +167,11 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
   mAtmListBox->addColumn(i18n("Name"), 200);
   mAtmListBox->addColumn(i18n("Size"), 80);
   mAtmListBox->addColumn(i18n("Encoding"), 120);
-  mAtmListBox->addColumn(i18n("Type"), 120);
+  int atmColType = mAtmListBox->addColumn(i18n("Type"), 120);
+  mAtmListBox->header()->setStretchEnabled(true, atmColType); // Stretch "Type".
   mAtmCryptoColWidth = 80;
-  mAtmColEncrypt= mAtmListBox->addColumn(i18n("encrypt"),mAtmCryptoColWidth);
-  mAtmColSign   = mAtmListBox->addColumn(i18n("sign"),   mAtmCryptoColWidth);
+  mAtmColEncrypt= mAtmListBox->addColumn(i18n("Encrypt"),mAtmCryptoColWidth);
+  mAtmColSign   = mAtmListBox->addColumn(i18n("Sign"),   mAtmCryptoColWidth);
   mAtmListBox->setAllColumnsShowFocus(true);
 
   connect(mAtmListBox,
