@@ -130,6 +130,8 @@ class ProgressItem : public QObject
     void addChild( ProgressItem *kiddo );
     void removeChild( ProgressItem *kiddo );
 
+    bool canceled() const { return mCanceled; }
+
 signals:
     /**
      * Emitted when a new ProgressItem is added.

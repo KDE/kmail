@@ -463,7 +463,6 @@ void KMFolderCachedImap::serverSync( bool recurse )
     account()->mailCheckProgressItem()->setProgress( 100 );
     mProgress = 100; // all done
     newState( mProgress, i18n("Synchronization skipped"));
-    mAccount->displayProgress();
     mSyncState = SYNC_STATE_INITIAL;
     emit folderComplete( this, true );
     return;
@@ -782,7 +781,6 @@ void KMFolderCachedImap::serverSyncInternal()
     mProgress = 100; // all done
     newState( mProgress, i18n("Synchronization done"));
     emit syncRunning( folder(), false );
-    mAccount->displayProgress();
 
     if ( !mRecurse ) // "check mail for this folder" only
       mSubfoldersForSync.clear();
@@ -1150,7 +1148,6 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
-    mAccount->displayProgress();
   }
 }
 
@@ -1289,7 +1286,6 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
     kmkernel->dimapFolderMgr()->remove( doomed );
 
   mProgress += 5;
-  mAccount->displayProgress();
   serverSyncInternal();
 }
 
@@ -1522,7 +1518,11 @@ void KMFolderCachedImap::resetSyncState()
   mSubfoldersForSync.clear();
   mSyncState = SYNC_STATE_INITIAL;
   close();
-  newState( mProgress, i18n("Aborted") );
+  // Don't use newState here, it would revert to mProgress (which is < current value when listing messages)
+  ProgressItem *progressItem = mAccount->mailCheckProgressItem();
+  QString str = i18n("Aborted");
+  progressItem->setStatus( str );
+  emit statusMsg( str );
 }
 
 void KMFolderCachedImap::slotIncreaseProgress()

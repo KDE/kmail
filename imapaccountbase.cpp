@@ -691,6 +691,9 @@ namespace KMail {
       // These mean that we'll have to reconnect on the next attempt, so set mSlave to 0.
       killAllJobs( true );
       break;
+    case KIO::ERR_USER_CANCELED:
+      killAllJobs( false );
+      break;
     default:
       if ( abortSync )
         killAllJobs( false );
@@ -700,7 +703,7 @@ namespace KMail {
     }
 
     // check if we still display an error
-    if ( !mErrorDialogIsActive )
+    if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED )
     {
       mErrorDialogIsActive = true;
       QString msg;

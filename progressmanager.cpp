@@ -34,6 +34,7 @@
 #include <kdebug.h>
 
 #include "progressmanager.h"
+#include <klocale.h>
 
 namespace KMail {
 
@@ -55,8 +56,9 @@ ProgressItem::~ProgressItem()
 void ProgressItem::setComplete()
 {
    kdDebug(5006) << "ProgressItem::setComplete - " << label() << endl;
-   setProgress( 100 );
-   if ( mChildren.count() == 0 ) {
+   if ( !mCanceled )
+     setProgress( 100 );
+   if ( mChildren.isEmpty() ) {
      emit progressItemCompleted( this );
      if ( parent() )
        parent()->removeChild( this );
@@ -95,6 +97,7 @@ void ProgressItem::cancel()
      if ( kid->canBeCanceled() )
        kid->cancel();
    }
+   setStatus( i18n( "Aborting..." ) );
    emit progressItemCanceled( this );
 }
 

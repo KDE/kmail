@@ -160,8 +160,7 @@ void TransactionItem::setStatus( const QString& status )
 
 void TransactionItem::slotItemCanceled()
 {
-  item()->setStatus( i18n("cancelling ... ") );
-  item()->cancel();
+  mItem->cancel();
 }
 
 
@@ -244,7 +243,6 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
 {
    if ( mTransactionsToListviewItems.contains( item ) ) {
      TransactionItem *ti = mTransactionsToListviewItems[ item ];
-     ti->setStatus(i18n("Completed"));
      mTransactionsToListviewItems.remove( item );
      QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
    }
@@ -253,7 +251,7 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
      QTimer::singleShot( 6000, this, SLOT( slotHide() ) );
 }
 
-void ProgressDialog::slotTransactionCanceled( ProgressItem* /* item */ )
+void ProgressDialog::slotTransactionCanceled( ProgressItem* )
 {
 }
 

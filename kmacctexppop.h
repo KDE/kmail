@@ -19,8 +19,9 @@ namespace KIO {
   class Job;
 }
 
-/** KMail account for experimental pop mail account
- *
+/**
+ * KMail account for pop mail account
+ * The Exp in the name used to mean Experimental, but it's the stable one now :)
  */
 class KMAcctExpPop: public KMail::NetworkAccount {
   Q_OBJECT

@@ -88,7 +88,6 @@ void KMAcctCachedImap::init() {
 
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::pseudoAssign( const KMAccount * a ) {
-  mIdleTimer.stop();
   killAllJobs( true );
   if (mFolder)
   {
@@ -122,50 +121,6 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctCachedImap::displayProgress()
-{
-   mIdle = false;
-   mIdleTimer.start( 15000 );
-  /*
-  if (mProgressEnabled == mapJobData.isEmpty())
-  {
-    mProgressEnabled = !mapJobData.isEmpty();
-    KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
-      mProgressEnabled );
-    if (!mProgressEnabled) kmkernel->filterMgr()->deref(true);
-  }
-  mIdle = FALSE;
-  if( mapJobData.isEmpty() )
-    mIdleTimer.start(0);
-  else
-    mIdleTimer.stop();
-  int total = 0, done = 0;
-  // This is a loop, but it seems that we can currently have only one job at a time in this map.
-  for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-    it != mapJobData.end(); ++it)
-  {
-    total += (*it).total; // always ==1 (in kmfoldercachedimap.cpp)
-    if( (*it).parent )
-      done += static_cast<KMFolderCachedImap*>((*it).parent)->progress();
-    else
-      done += (*it).done;
-  }
-  if (total == 0) // can't happen
-  {
-    mTotal = 0;
-    return;
-  }
-  //if (total > mTotal) mTotal = total;
-  //done += mTotal - total;
-
-  KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
-                                                           done / total );
-
-  //100*done / mTotal );
-  */
-}
-
-//-----------------------------------------------------------------------------
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
   //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
@@ -176,6 +131,11 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   for (; it != mapJobData.end(); ++it) {
     if ((*it).parent)
       folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
+    // Kill the job - except if it's the one that already died and is calling us
+    if ( !it.key()->error() && mSlave ) {
+      it.key()->kill();
+      mSlave = 0; // killing a job, kills the slave
+    }
   }
   mapJobData.clear();
 
@@ -183,7 +143,6 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   for( QPtrListIterator<CachedImapJob> it( mJobList ); it.current(); ++it )
     it.current()->setPassiveDestructor( true );
   KMAccount::deleteFolderJobs();
-  displayProgress();
 
   if ( disconnectSlave && slave() ) {
     KIO::Scheduler::disconnectSlave( slave() );
@@ -287,7 +246,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mMailCheckProgressItem = KMail::ProgressManager::createProgressItem(
     "MailCheck" + QString::number( id() ),
     folder->label(), // will be changed immediately in serverSync anyway
-    QString::null, false);
+    QString::null, true);
   connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
            this, SLOT( slotProgressItemCanceled( ProgressItem* ) ) );
 

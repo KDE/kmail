@@ -78,9 +78,9 @@ public:
   virtual void processNewMail( bool interactive );
 
   /**
-   * Update the progress bar
+   * Does nothing for cached imap
    */
-  virtual void displayProgress();
+  virtual void displayProgress() {}
 
   /**
    * Kill all jobs related the the specified folder
