@@ -2597,7 +2597,7 @@ void KMMainWidget::updateMessageActions()
         }
 
     applyFiltersAction->setEnabled(count);
-    applyFilterActionsMenu->setEnabled(count);
+    applyFilterActionsMenu->setEnabled(count && (applyFilterActionsMenu->popupMenu()->count()>0));
 }
 
 
