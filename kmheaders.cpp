@@ -40,7 +40,7 @@ using KMail::FolderJob;
 
 #include <stdlib.h>
 
-#if 0 //timing utilities
+#ifndef NDEBUG //timing utilities
 #include <qdatetime.h>
 #define CREATE_TIMER(x) int x=0, x ## _tmp=0; QTime x ## _tmp2
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
@@ -205,9 +205,9 @@ public:
     if ((threadingPolicy == AlwaysOpen) ||
 	(threadingPolicy == DefaultOpen)) {
       //Avoid opening items as QListView is currently slow to do so.
-      if (parent())
-	  parent()->setOpen(true);
+	setOpen(true);
 	return;
+        
     }
     if (threadingPolicy == DefaultClosed)
       return; //default to closed
@@ -224,7 +224,7 @@ public:
       setOpen(true);
       KMHeaderItem * topOfThread = this;
       while(topOfThread->parent())
-	topOfThread = (KMHeaderItem*)topOfThread->parent();
+  	topOfThread = (KMHeaderItem*)topOfThread->parent();
       topOfThread->setOpenRecursive(true);
     }
   }
@@ -3159,6 +3159,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key());
                 // If the parent is watched or ignored, propagate that to it's
                 // children
+ 
                 if (mFolder->getMsgBase(i->id())->isWatched())
                   mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusWatched);
                 if (mFolder->getMsgBase(i->id())->isIgnored()) {
@@ -3181,7 +3182,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
         if (mSortCol == paintInfo()->dateCol)
           compare_toplevel = false;
     } while(!s.isEmpty());
-
+    
     for(int x = 0; x < mFolder->count(); x++) {	    //cleanup
 	if (!sortCache[x]->item()) { // we missed a message, how did that happen ?
             kdDebug(5006) << "KMHeaders::readSortOrder - msg could not be threaded. " 
