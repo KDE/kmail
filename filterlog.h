@@ -46,7 +46,8 @@ namespace KMail {
     collected log information can get thrown away, the
     next added log entry is the first one until another 
     clearing.
-    A signal is emitted whenever a new logentry is added.
+    A signal is emitted whenever a new logentry is added,
+    when the log was cleared or any log state was changed.
   */
   class FilterLog : public QObject
   {
@@ -59,30 +60,59 @@ namespace KMail {
       /** log data types */
       enum ContentType { meta = 1, patternDesc, ruleResult, patternResult, appliedAction };
       
+      
       /** check the logging state */
-      bool isLogging() { return logging; };
+      bool isLogging() { return mLogging; };
       /** set the logging state */
-      void setLogging( bool active ) { logging = active; };
+      void setLogging( bool active )
+      {
+        mLogging = active; 
+        emit logStateChanged();
+      };
+      
       
       /** control the size of the log */
       void setMaxLogSize( long size = -1 );
       
+      
       /** add a content type to the set of logged ones */
-      void enableContentType( ContentType contentType )  { allowedTypes |= contentType; };
+      void enableContentType( ContentType contentType )
+      { 
+        mAllowedTypes |= contentType; 
+        emit logStateChanged();
+      };
       /** remove a content type from the set of logged ones */
-      void disableContentType( ContentType contentType ) { allowedTypes &= ~contentType; };
+      void disableContentType( ContentType contentType )
+      {
+        mAllowedTypes &= ~contentType;
+        emit logStateChanged();
+      };
+      /** check a content type for inclusion in the set of logged ones */
+      bool isContentTypeEnabled( ContentType contentType )
+      { 
+        return mAllowedTypes & contentType; 
+      };
 
+      
       /** add a log entry */
       void add( QString logEntry, ContentType contentType );
       /** add a separating line in the log */
       void addSeparator() { add( "------------------------------", meta ); };
       /** discard collected log data */
-      void clear() { logEntries.clear(); currentLogSize = 0; };
+      void clear() 
+      {
+        mLogEntries.clear(); 
+        mCurrentLogSize = 0;
+        emit logShrinked();
+      };
+      
       
       /** get access to the log entries */
-      const QStringList & getLogEntries() { return logEntries; };
+      const QStringList & getLogEntries() { return mLogEntries; };
       /** dump the log - for testing purposes */
       void dump();
+      /** save the log to a file - returns true if okay */
+      bool saveToFile( QString fileName );
       
       /** destructor */
       virtual ~FilterLog();
@@ -90,30 +120,31 @@ namespace KMail {
     signals:
       void logEntryAdded( QString );
       void logShrinked();
+      void logStateChanged();
 
     protected:
       /** Non-public constructor needed by the singleton implementation */
       FilterLog();
       
       /** The list contains the single log pieces */
-      QStringList logEntries;
+      QStringList mLogEntries;
       
       /** the log status */
-      bool logging;
+      bool mLogging;
       
       /** max size for kept log items, when reached 
           the last recently added items are discarded
           -1 means unlimited */
-      long maxLogSize;
-      long currentLogSize;
+      long mMaxLogSize;
+      long mCurrentLogSize;
       
       /** types currently allowed to be legged */
-      int allowedTypes;
+      int mAllowedTypes;
       
       void checkLogSize();
       
     private:
-      static FilterLog * self;
+      static FilterLog * mSelf;
   };
 
 } // namespace KMail

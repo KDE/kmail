@@ -260,11 +260,14 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     return false;
 
   QString msgContents;
+  bool logContents = true;
 
   if( field() == "<message>" ) {
     msgContents = msg->asString();
+    logContents = false;
   } else if ( field() == "<body>" ) {
     msgContents = msg->bodyDecoded();
+    logContents = false;
   } else if ( field() == "<any header>" ) {
     msgContents = msg->headerAsString();
   } else if ( field() == "<recipients>" ) {
@@ -286,7 +289,10 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
     QString msg = ( rc ? "1 = " : "0 = " );
-    msg += asString() + " (" + msgContents + ")";
+    msg += asString();
+    // only log headers bcause messages and bodies can be pretty large
+    if ( logContents )
+      msg += " (" + msgContents + ")";
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
@@ -720,14 +726,14 @@ void KMSearchPattern::init() {
 }
 
 QString KMSearchPattern::asString() const {
-  QString result = "\t";
+  QString result;
   if ( mOperator == OpOr )
-    result += i18n("(match any of the following)") + '\n';
+    result = i18n("(match any of the following)");
   else
-    result += i18n("(match all of the following)") + '\n';
+    result = i18n("(match all of the following)");
 
   for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
-    result += '\t' + (*it)->asString() + '\n';
+    result += "\n\t" + (*it)->asString();
 
   return result;
 }

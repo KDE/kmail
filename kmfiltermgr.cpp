@@ -210,7 +210,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
 	// filter is applicable
 
       if ( FilterLog::instance()->isLogging() ) {
-        QString logText( i18n( "Evaluating filter rules:\n" ) );
+        QString logText( i18n( "Evaluating filter rules: " ) );
         logText.append( (*it)->pattern()->asString() );
         FilterLog::instance()->add( logText, FilterLog::patternDesc );
       }

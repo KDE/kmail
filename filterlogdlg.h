@@ -32,6 +32,7 @@
 #include <kdialogbase.h>
 
 class QTextEdit;
+class QCheckBox;
 
 namespace KMail {
 
@@ -53,10 +54,17 @@ namespace KMail {
     protected slots:
       void slotLogEntryAdded( QString logEntry );
       void slotLogShrinked();
+      void slotLogStateChanged();
+      void slotSwitchLogState();
+      void slotSwitchLineWrap();
       
     protected:
       virtual void slotUser1();
-      QTextEdit * textEdit;
+      virtual void slotUser2();
+      
+      QTextEdit * mTextEdit;
+      QCheckBox * mLineWrapBox;
+      QCheckBox * mLogActiveBox;
   };
 
 } // namespace KMail

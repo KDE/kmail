@@ -31,10 +31,16 @@
 #include "filterlog.h"
 
 #include <kdebug.h>
+#include <kfiledialog.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
+#include <qcheckbox.h>
 #include <qstringlist.h>
 #include <qtextedit.h>
+#include <qvbox.h>
+
+#include <errno.h>
 
 
 using namespace KMail;
@@ -42,51 +48,111 @@ using namespace KMail;
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )
 : KDialogBase( parent, "FilterLogDlg", false, i18n( "KMail Filter Log Viewer" ),
-              User1|Close, Close, true, i18n("C&lear") )
+              User1|User2|Close, Close, true, i18n("Clea&r"), i18n("&Save...") )
 {
   setWFlags( WDestructiveClose );
-  textEdit = new QTextEdit( this );
-  setMainWidget( textEdit );
-  textEdit->setReadOnly( true );
+  QVBox *page = makeVBoxMainWidget();
+  
+  mTextEdit = new QTextEdit( page );
+  mTextEdit->setReadOnly( true );
+  mTextEdit->setWordWrap( QTextEdit::NoWrap );
+  mTextEdit->setTextFormat( QTextEdit::PlainText );
 
   QStringList logEntries = FilterLog::instance()->getLogEntries();
   for ( QStringList::Iterator it = logEntries.begin(); 
         it != logEntries.end(); ++it ) 
   {
-    textEdit->append( *it );
+    mTextEdit->append( *it );
   }
   
+  mLineWrapBox = new QCheckBox( i18n("&Wrap lines in viewer"), page );
+  mLineWrapBox->setChecked( false );
+  connect( mLineWrapBox, SIGNAL(clicked()),
+            this, SLOT(slotSwitchLineWrap(void)) );
+
+  mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
+  mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
+  connect( mLogActiveBox, SIGNAL(clicked()),
+            this, SLOT(slotSwitchLogState(void)) );
+
   connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)), 
           this, SLOT(slotLogEntryAdded(QString)));
   connect(FilterLog::instance(), SIGNAL(logShrinked(void)), 
           this, SLOT(slotLogShrinked(void)));
+  connect(FilterLog::instance(), SIGNAL(logStateChanged(void)), 
+          this, SLOT(slotLogStateChanged(void)));
   
-  setInitialSize( QSize( 500, 300 ) );
+  setInitialSize( QSize( 500, 400 ) );
 }
 
 
 void FilterLogDialog::slotLogEntryAdded( QString logEntry )
 {
-  textEdit->append( logEntry );
+  mTextEdit->append( logEntry );
 }
 
 
 void FilterLogDialog::slotLogShrinked()
 {
-  textEdit->clear();
+  mTextEdit->clear();
   QStringList logEntries = FilterLog::instance()->getLogEntries();
   for ( QStringList::Iterator it = logEntries.begin(); 
         it != logEntries.end(); ++it ) 
   {
-    textEdit->append( *it );
+    mTextEdit->append( *it );
   }
+}
+
+
+void FilterLogDialog::slotLogStateChanged()
+{
+  mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
+}
+
+
+void FilterLogDialog::slotSwitchLogState()
+{
+  FilterLog::instance()->setLogging( mLogActiveBox->isChecked() );
+}
+
+
+void FilterLogDialog::slotSwitchLineWrap()
+{
+  if ( mLineWrapBox->isChecked() )
+    mTextEdit->setWordWrap( QTextEdit::WidgetWidth );
+  else
+    mTextEdit->setWordWrap( QTextEdit::NoWrap );
 }
 
 
 void FilterLogDialog::slotUser1()
 {
   FilterLog::instance()->clear();
-  textEdit->clear();
+  mTextEdit->clear();
+}
+
+
+void FilterLogDialog::slotUser2()
+{
+  QString fileName;
+  KFileDialog fdlg( QString::null, QString::null, this, 0, true );
+  
+  fdlg.setMode( KFile::File );
+  fdlg.setSelection( "kmail-filter.log" );
+  fdlg.setOperationMode( KFileDialog::Saving );
+  if ( fdlg.exec() )
+  {
+    fileName = "/home/domino/kmail-filter.log";
+    if ( !FilterLog::instance()->saveToFile( fdlg.selectedFile() ) )
+    {
+      KMessageBox::error( this,
+                          i18n( "%1 is detailed error description",
+                                "Could not write the file:\n%2" )
+                          .arg( QString::fromLocal8Bit( strerror( errno ) ) )
+                          .arg( fileName ),
+                          i18n( "KMail Error" ) );
+    }
+  }
 }
 
 

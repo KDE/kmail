@@ -31,24 +31,29 @@
 
 #include <kdebug.h>
 
+#include <qdatetime.h>
+#include <qfile.h>
+
+#include <sys/stat.h>
+
 
 using namespace KMail;
 
 
-FilterLog * FilterLog::self = NULL;
+FilterLog * FilterLog::mSelf = NULL;
 
 
 FilterLog::FilterLog()
 { 
-  self = this;
+  mSelf = this;
   // start with logging enabled by default
-  logging = true;
+  mLogging = true;
   // better limit the log to 512 KByte to avoid out of memory situations
   // when the log i sgoing to become very long
-  maxLogSize = 512 * 1024;
-  currentLogSize = 0;
-  allowedTypes =  meta | patternDesc | ruleResult | 
-                  patternResult | appliedAction;
+  mMaxLogSize = 512 * 1024;
+  mCurrentLogSize = 0;
+  mAllowedTypes =  meta | patternDesc | ruleResult | 
+                   patternResult | appliedAction;
 };
 
 
@@ -58,8 +63,8 @@ FilterLog::~FilterLog()
 
 FilterLog * FilterLog::instance()
 {
-  if ( !self ) self = new FilterLog();
-  return self;
+  if ( !mSelf ) mSelf = new FilterLog();
+  return mSelf;
 }
 
 
@@ -68,11 +73,16 @@ void FilterLog::add( QString logEntry, ContentType contentType )
 #ifndef NDEBUG
   kdDebug(5006) << "New filter log entry: " << logEntry << endl;
 #endif
-  if ( isLogging() && ( allowedTypes & contentType ) )
+  if ( isLogging() && ( mAllowedTypes & contentType ) )
   {
-    logEntries.append( logEntry );
-    emit logEntryAdded( logEntry );
-    currentLogSize += logEntry.length();
+    QString timedLog = "[" + QTime::currentTime().toString() + "] ";
+    if ( contentType & ~meta )
+      timedLog += logEntry;
+    else
+      timedLog = logEntry;
+    mLogEntries.append( timedLog );
+    emit logEntryAdded( timedLog );
+    mCurrentLogSize += timedLog.length();
     checkLogSize();
   }
 }
@@ -85,7 +95,7 @@ void FilterLog::setMaxLogSize( long size )
   // do not allow less than 1 KByte except unlimited (-1)
   if ( size >= 0 && size < 1024 )
     size = 1024; 
-  maxLogSize = size; 
+  mMaxLogSize = size; 
   checkLogSize(); 
 };
 
@@ -94,8 +104,8 @@ void FilterLog::dump()
 {
 #ifndef NDEBUG
   kdDebug(5006) << "----- starting filter log -----" << endl;
-  for ( QStringList::Iterator it = logEntries.begin();
-        it != logEntries.end(); ++it )
+  for ( QStringList::Iterator it = mLogEntries.begin();
+        it != mLogEntries.end(); ++it )
   {
     kdDebug(5006) << *it << endl;
   }
@@ -106,19 +116,20 @@ void FilterLog::dump()
 
 void FilterLog::checkLogSize()
 {
-  if ( currentLogSize > maxLogSize && maxLogSize > -1 )
+  if ( mCurrentLogSize > mMaxLogSize && mMaxLogSize > -1 )
   {
     kdDebug(5006) << "Filter log: memory limit reached, starting to discard old items, size = "
-                  << QString::number( currentLogSize ) << endl;
+                  << QString::number( mCurrentLogSize ) << endl;
     // avoid some kind of hysteresis, shrink the log to 90% of its maximum
-    while ( currentLogSize > ( maxLogSize * 0.9 ) )
+    while ( mCurrentLogSize > ( mMaxLogSize * 0.9 ) )
     {
-      QValueListIterator<QString> it = logEntries.begin();
-      if ( it != logEntries.end())
+      QValueListIterator<QString> it = mLogEntries.begin();
+      if ( it != mLogEntries.end())
       {
-        currentLogSize -= (*it).length();
-        logEntries.remove( it );
-        kdDebug(5006) << "Filter log: new size = " << QString::number( currentLogSize ) << endl;
+        mCurrentLogSize -= (*it).length();
+        mLogEntries.remove( it );
+        kdDebug(5006) << "Filter log: new size = " 
+                      << QString::number( mCurrentLogSize ) << endl;
       }
       else
       {
@@ -128,6 +139,28 @@ void FilterLog::checkLogSize()
     }
     emit logShrinked();
   }
+}
+
+
+bool FilterLog::saveToFile( QString fileName )
+{
+    QFile file( fileName );
+    if( file.open( IO_WriteOnly ) ) {
+      fchmod( file.handle(), S_IRUSR | S_IWUSR );
+      {
+        QDataStream ds( &file );
+        for ( QStringList::Iterator it = mLogEntries.begin(); 
+              it != mLogEntries.end(); ++it ) 
+        {
+          QString tmpString = *it + '\n';
+          QCString cstr( tmpString.local8Bit() );
+          ds.writeRawBytes( cstr, cstr.size() );
+        }
+      }
+      return true;
+    } 
+    else
+      return false;
 }
 
 

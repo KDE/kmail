@@ -3305,6 +3305,6 @@ void KMMainWidget::slotAntiSpamWizard()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilterLogViewer()
 {
-  FilterLogDialog * dlg = new FilterLogDialog( this );
+  FilterLogDialog * dlg = new FilterLogDialog( 0 );
   dlg->show();
 }
