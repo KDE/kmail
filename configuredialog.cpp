@@ -3616,6 +3616,10 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
 }
 
 void SecurityPage::SMimeTab::load() {
+  if ( !mConfig ) {
+    setEnabled( false );
+    return;
+  }
   // Checkboxes
   mCheckUsingOCSPConfigEntry = configEntry( "gpgsm", "Security", "enable-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
   mEnableOCSPsendingConfigEntry = configEntry( "dirmngr", "OCSP", "allow-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
@@ -3652,6 +3656,9 @@ void SecurityPage::SMimeTab::installProfile( KConfig * ) {
 }
 
 void SecurityPage::SMimeTab::save() {
+  if ( !mConfig ) {
+    return;
+  }
   bool b = mWidget->OCSPRB->isChecked();
   if ( mCheckUsingOCSPConfigEntry && mCheckUsingOCSPConfigEntry->boolValue() != b )
     mCheckUsingOCSPConfigEntry->setBoolValue( b );
