@@ -49,6 +49,7 @@ protected:
 protected slots:
   void slotQuit();
   void slotConfigChanged();
+  void slotShowTipOnStart();
 
 private:
   KMMainWidget *mKMMainWidget;

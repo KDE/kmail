@@ -19,6 +19,7 @@
 #include <kmessagebox.h>
 #include <kstringhandler.h>
 #include <kdebug.h>
+#include <ktip.h>
 
 #include "kmmainwin.moc"
 
@@ -37,6 +38,9 @@ KMMainWin::KMMainWin(QWidget *)
   setupStatusBar();
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
+
+  if ( kmkernel->firstInstance() )
+    QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
 
   setStandardToolBarMenuEnabled(true);
 
@@ -184,3 +188,10 @@ bool KMMainWin::queryClose()
     return true;
   return kmkernel->canQueryClose();
 }
+
+void KMMainWin::slotShowTipOnStart()
+{
+  KTipDialog::showTip( this );
+}
+
+

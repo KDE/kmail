@@ -310,8 +310,6 @@ protected slots:
   void slotFind();
   void slotIntro();
   void slotShowStartupFolder();
-  /** Show tip-of-the-day on startup */
-  void slotShowTipOnStart();
   /** Show tip-of-the-day, forced */
   void slotShowTip();
   void slotAntiSpamWizard();
