@@ -792,9 +792,13 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   {
     folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                            SLOT(addChildFolder()));
-    if (fti->folder->protocol() != "imap")
+    if (!fti->folder)
       folderMenu->insertItem(i18n("Compact All &Folders"),
                      kernel->folderMgr(), SLOT(compactAll()));
+    else if (fti->folder->protocol() == "imap")
+      folderMenu->insertItem(i18n("Check &Mail"),
+        static_cast<KMFolderImap*>(fti->folder)->account(),
+        SLOT(processNewMail()));
   } else {
     if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
         folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),

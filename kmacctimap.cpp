@@ -125,7 +125,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   KMAcctImap *acct = static_cast<KMAcctImap*>(account);
   setName(acct->name());
   setCheckInterval( 0 );
-  setCheckExclude( TRUE );
+  setCheckExclude(acct->checkExclude());
   setFolder(acct->folder());
   setHost(acct->host());
   setPort(acct->port());

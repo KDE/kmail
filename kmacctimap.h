@@ -188,6 +188,9 @@ public:
    */
   static void initJobData(jobData &jd);
 
+public slots:
+  void processNewMail() { processNewMail(TRUE); }
+
 signals:
   /**
    * Emitted, when the account is deleted

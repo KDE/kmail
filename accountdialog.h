@@ -122,6 +122,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
       QCheckBox    *storePasswordCheck;
+      QCheckBox    *excludeCheck;
       QButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;

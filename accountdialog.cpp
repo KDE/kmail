@@ -608,9 +608,9 @@ void AccountDialog::makeImapAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 11, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 12, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 10, 10 );
+  grid->setRowStretch( 11, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -665,6 +665,10 @@ void AccountDialog::makeImapAccountPage()
   mImap.subscribedFoldersCheck = new QCheckBox(
     i18n("Show &only subscribed folders"), page1);
   grid->addMultiCellWidget( mImap.subscribedFoldersCheck, 9, 9, 0, 1 );
+
+  mImap.excludeCheck =
+    new QCheckBox( i18n("Exclude from \"Check Mail\""), page1 );
+  grid->addMultiCellWidget( mImap.excludeCheck, 10, 10, 0, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -796,6 +800,7 @@ void AccountDialog::setupSettings()
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
+    mImap.excludeCheck->setChecked( ai.checkExclude() );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( TRUE );
     else if (ai.useTLS())
@@ -1054,6 +1059,7 @@ void AccountDialog::saveSettings()
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
+    epa.setCheckExclude( mImap.excludeCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );
     if (mImap.authCramMd5->isChecked())
