@@ -28,7 +28,8 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
-		kmdisplayvcard.cpp vcard.cpp md5.c
+		kmdisplayvcard.cpp vcard.cpp md5.c \
+		smtp.cpp smtp.h
 
 
 include_HEADERS = kmailIface.h

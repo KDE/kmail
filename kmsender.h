@@ -8,6 +8,7 @@
 #include <mimelib/string.h>
 #include <mimelib/utility.h>
 #include <qstring.h>
+#include <qstringlist.h>
 #include <qobject.h>
 #include <qlabel.h>
 
@@ -21,6 +22,7 @@ class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
 class QDialog;
+class Smtp;
 
 class KMSender: public QObject
 {
@@ -34,7 +36,7 @@ public:
   virtual ~KMSender();
 
   /** Send given message. The message is either queued or sent
-    immediately. The default behaviour, as selected with 
+    immediately. The default behaviour, as selected with
     setSendImmediate(), can be overwritten with the parameter
     sendNow (by specifying TRUE or FALSE).
     The sender takes ownership of the given message on success,
@@ -92,12 +94,12 @@ public:
    */
   void quitWhenFinished();
 
-  /** sets a status msg and emits statusMsg() */  
+  /** sets a status msg and emits statusMsg() */
   void setStatusMsg(const QString&);
 
   /** returns current outgoing mail settings in string format */
   QString transportString(void) const;
-  
+
 signals:
   /** Emitted regularly to inform the user of what is going on */
   void statusMsg(const QString&);
@@ -105,9 +107,19 @@ signals:
 protected slots:
   virtual void slotIdle();
 
+  /** abort sending of the current message */
+  virtual void slotAbortSend();
+
+  /** initialization sequence has finised */
+  virtual void msgSendProcStarted(bool success);
+  virtual void sendProcStarted(bool success);
+
 protected:
   /** handle sending of messages */
   virtual void doSendMsg();
+
+  /** second part of handling sending of messages */
+  virtual void doSendMsgAux();
 
   /** cleanup after sending */
   virtual void cleanup(void);
@@ -117,25 +129,19 @@ protected:
       Returns TRUE if everything is Ok. */
   virtual bool settingsOk(void) const;
 
-  /** Save mMethod, mMail, mSmtpHost, and mSmtpPort */
-  virtual void saveTransportSettings(void);
-
-  /** Restore saved mMethod, mMail, mSmtpHost, and mSmtpPort */
-  virtual void restoreTransportSettings(void);
-
-  /** Parse protocol '://' (host port? | mailer) string and 
+  /** Parse protocol '://' (host port? | mailer) string and
       set transport settings */
-  virtual KMSendProc* parseTransportFromString(QString transport); 
+  virtual KMSendProc* createSendProcFromString(QString transport);
 
 private:
-  Method mMethod, mOldMethod;
+  Method mMethod;
   bool mSendImmediate, mSendQuotedPrintable;
-  QString mMailer, mOldMailer;
-  QString mSmtpHost, mOldSmtpHost;
-  unsigned short int mSmtpPort, mOldSmtpPort;
+  QString mMailer;
+  QString mSmtpHost;
+  unsigned short int mSmtpPort;
   QString mPrecommand;
 
-  bool mSentOk;
+  bool mSentOk, mSendAborted;
   QString mErrorMsg;
   KMIOStatusDlg* mSendDlg;
   KMSendProc *mSendProc, *mMsgSendProc;
@@ -159,7 +165,7 @@ public:
   KMSendProc(KMSender*);
 
   /** Initialize sending of one or more messages. */
-  virtual bool start(void);
+  virtual void start(void);
 
   /** Initializes variables directly before send() is called. */
   virtual void preSendInit(void);
@@ -168,7 +174,10 @@ public:
   virtual bool send(KMMessage* msg) = 0;
 
   /** Cleanup after sending messages. */
-  virtual bool finish(void);
+  virtual bool finish(bool destructive);
+
+  /** Abort sending the current message. Sets mSending to false */
+  virtual void abort() = 0;
 
   /** Returns TRUE if send was successful, and FALSE otherwise.
       Returns FALSE if sending is still in progress. */
@@ -184,21 +193,25 @@ signals:
   /** Emitted when the current message is sent or an error occured. */
   void idle();
 
+  /** Emitted when the initialization sequence has finished */
+  void started(bool);
+
+
 protected:
   /** Called to signal a transmission error. The sender then
-    calls finish() and terminates sending of messages. 
+    calls finish() and terminates sending of messages.
     Sets mSending to FALSE. */
   virtual void failed(const QString msg);
 
   /** Prepare message for sending. */
   virtual const QString prepareStr(const QString str, bool toCRLF=FALSE,
-    bool noSingleDot=TRUE);
+   bool noSingleDot=TRUE);
 
   /** Informs the user about what is going on. */
   virtual void statusMsg(const QString&);
 
   /** Called once for the contents of the header fields To, Cc, and Bcc.
-    Returns TRUE on success and FALSE on failure. 
+    Returns TRUE on success and FALSE on failure.
     Calls addOneRecipient() for each recipient in the list. Aborts and
     returns FALSE if addOneRecipient() returns FALSE. */
   virtual bool addRecipients(const QStrList& aRecpList);
@@ -206,7 +219,7 @@ protected:
   /** Called from within addRecipients() once for each recipient in
     the list after all surplus characters have been stripped. E.g.
     for: "Stefan Taferner" <taferner@kde.org>
-    addRecpient(taferner@kde.org) is called. 
+    addRecpient(taferner@kde.org) is called.
     Returns TRUE on success and FALSE on failure. */
   virtual bool addOneRecipient(const QString aRecipient) = 0;
 
@@ -223,11 +236,12 @@ class KMSendSendmail: public KMSendProc
 {
   Q_OBJECT
 public:
-  KMSendSendmail(KMSender*);
+  KMSendSendmail(KMSender*,QString);
   virtual ~KMSendSendmail();
-  virtual bool start(void);
+  virtual void start(void);
   virtual bool send(KMMessage* msg);
-  virtual bool finish(void);
+  virtual bool finish(bool destructive);
+  virtual void abort();
 
 protected slots:
   void receivedStderr(KProcess*,char*,int);
@@ -241,28 +255,34 @@ protected:
   char* mMsgPos;
   int mMsgRest;
   KProcess* mMailerProc;
+  QString mMailer;
 };
 
 //-----------------------------------------------------------------------------
 #define KMSendSMTPInherited KMSendProc
 class KMSendSMTP: public KMSendProc
 {
+  Q_OBJECT
 public:
-  KMSendSMTP(KMSender*);
+  KMSendSMTP(KMSender*,QString,unsigned short int);
   virtual ~KMSendSMTP();
-  virtual bool start(void);
+  virtual void start(void);
   virtual bool send(KMMessage* msg);
-  virtual bool finish(void);
+  virtual bool finish(bool destructive);
+  virtual void abort();
+
+public slots:
+  virtual void smtpFailed(const QString&, const QString &);
 
 protected:
   virtual bool smtpSend(KMMessage* msg);
-  virtual bool smtpFailed(const char* inCommand, int replyCode);
-  virtual void smtpDebug(const char* inCommand);
   virtual void smtpInCmd(const char* inCommand);
   virtual bool addOneRecipient(const QString aRecipient);
-  
-  void (*mOldHandler)(int);
-  DwSmtpClient* mClient;
+
+  Smtp *smtp;
+  QStringList recipients;
+  QString mSmtpHost;
+  unsigned short int mSmtpPort;
 };
 
 #endif /*kmsender_h*/
