@@ -2236,7 +2236,7 @@ AppearancePageProfileTab::AppearancePageProfileTab( QWidget * parent, const char
   mListView->setSorting( -1 );
 
   vlay->addWidget( new QLabel( mListView,
-			       i18n("&Select a profile and click Apply to take "
+			       i18n("&Select a profile and click 'Apply' to take "
 				    "on its settings:"), this ) );
   vlay->addWidget( mListView, 1 );
 
@@ -2385,7 +2385,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
   vlay->addWidget( mSmartQuoteCheck );
 
-  mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request Message Disposition Notifications"), this );
+  mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request message disposition notifications"), this );
   vlay->addWidget( mAutoRequestMDNCheck );
 
   // a checkbutton for "word wrap" and a spinbox for the column in

@@ -2241,7 +2241,7 @@ void KMMainWidget::setupActions()
   unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
   unreadMenu->insert( unreadColumnToggle );
 
-  unreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View after &Folder Name"), 0, this,
+  unreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_text" );
   unreadTextToggle->setExclusiveGroup( "view_unread_group" );
