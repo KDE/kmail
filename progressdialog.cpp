@@ -91,7 +91,7 @@ void TransactionItemView::resizeContents( int w, int h )
   QApplication::sendPostedEvents( 0, QEvent::LayoutHint );
   QSize sz = parentWidget()->sizeHint();
   int currentWidth = parentWidget()->width();
-  // Don't resize to sz.width() every time, but only if it's much smaller than currentWidth
+  // Don't resize to sz.width() every time when it only reduces a little bit
   if ( currentWidth < sz.width() || currentWidth > sz.width() + 100 )
     currentWidth = sz.width();
   parentWidget()->resize( currentWidth, sz.height() );
@@ -260,7 +260,7 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
    }
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.empty() )
-     QTimer::singleShot( 6000, this, SLOT( slotHide() ) );
+     QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
 }
 
 void ProgressDialog::slotTransactionCanceled( ProgressItem* )
