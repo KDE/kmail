@@ -109,7 +109,7 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
   //kbp->busy();
   KMIOStatusWdg *wid = 0;
   if (interactive) {
-    new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
+    wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
     wid->show();
   }
 
