@@ -100,7 +100,6 @@ noinst_HEADERS = adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmgroupwarefuncs.h startupwizard.h \
 		 signatureconfigurationdialogimpl.h \
 		 encryptionconfigurationdialogimpl.h \
-		 signatureconfigurationdialogimpl.h  \
 		 kmailicalifaceimpl.h mailserviceimpl.h \
 		 ssllabel.h
 
