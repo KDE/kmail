@@ -181,6 +181,7 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 {
   mHeaderStyle = aHeaderStyle;
   update();
+  writeConfig(FALSE);
 }
 
 
@@ -189,6 +190,7 @@ void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 {  
   mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
   update();
+  writeConfig(FALSE);
 }
 
 //-----------------------------------------------------------------------------
@@ -196,25 +198,14 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 {
   mAtmInline = aAtmInline;
   update();
+  writeConfig(FALSE);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg)
 {
-  if (!parent())
-  {
-    // do some additional work for a standalone window.
-    
-  }
-
   mMsg = aMsg;
-
-  if (!parent())
-  {
-    // do some additional work for a standalone window.
-    
-  }
 
   if (mMsg) parseMsg();
   else
@@ -241,7 +232,7 @@ void KMReaderWin::parseMsg(void)
 
   parseMsg(mMsg);
 
-  mViewer->write("<BR></BODY></HTML>");
+  mViewer->write("</BODY></HTML>");
   mViewer->end();
   mViewer->parse();
 }
@@ -390,13 +381,12 @@ void KMReaderWin::writeMsgHeader(void)
   case HdrAll:
     str = strToHtml(mMsg->headerAsString());
     mViewer->write(str);
-    mViewer->write("<br><br>");
+    mViewer->write("<BR><BR>");
     break;
 
   default:
     warning("Unsupported header style %d", mHeaderStyle);
   }
-  mViewer->write("<P>");
 }
 
 
@@ -407,7 +397,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   bool atStart = TRUE;
   bool quoted = FALSE;
   bool lastQuoted = FALSE;
-  QString line(256), sig;
+  QString line(256), sig, htmlStr;
   Kpgp* pgp = Kpgp::getKpgp();
   assert(pgp != NULL);
   assert(!aStr.isNull());
@@ -420,14 +410,14 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       {
 	line.sprintf("<B>%s</B><BR>",
 		     (const char*)i18n("Encrypted message"));
-	mViewer->write(line);
+	htmlStr += line;
       }
       else
       {
 	line.sprintf("<B>%s</B><BR>%s<BR><BR>",
 		     (const char*)i18n("Cannot decrypt message:"),
 		     (const char*)pgp->lastErrorMsg());
-	mViewer->write(line);
+	htmlStr += line;
       }
     }
     pos = pgp->message().data();
@@ -448,7 +438,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     
     line.sprintf("<B>%s %s</B><BR>", sig.data(), 
 		 pgp->signedBy().data());
-    mViewer->write(line);
+    htmlStr += line;
   }
 
   pos = beg;
@@ -462,7 +452,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       *pos = ch;
       if (quoted && !lastQuoted) line.prepend("<I>");
       else if (!quoted && lastQuoted) line.prepend("</I>");
-      mViewer->write(line + "<BR>");
+      htmlStr += line + "<BR>\n";
 
       beg = pos+1;
       atStart = TRUE;
@@ -477,6 +467,8 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if (!ch) break;
     pos++;
   }
+
+  mViewer->write(htmlStr);
 }
 
 

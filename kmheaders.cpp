@@ -130,11 +130,13 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *aFolder)
 {
+  QString str;
   bool autoUpd = autoUpdate();
   setAutoUpdate(FALSE);
 
   if (mFolder) 
   {
+    mFolder->markNewAsUnread();
     mFolder->close();
     writeFolderConfig();
     disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
@@ -169,8 +171,19 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   updateMessageList();
 
+  setCurrentItem(-1);
+  nextUnreadMessage();
+
   setAutoUpdate(autoUpd);
   if (autoUpd) repaint();
+
+  msgHeaderChanged(currentItem());
+  makeHeaderVisible();
+
+  str.sprintf(i18n("%d Messages, %d unread."),
+	      mFolder->count(), mFolder->countUnread());
+  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
+  mOwner->statusMsg(str);
 }
 
 
@@ -232,7 +245,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
   KMMsgBase* mb;
   QString fromStr, subjStr;
 
-  if (!autoUpdate()) return;
+  if (msgId<0 || !autoUpdate()) return;
 
   mb = mFolder->getMsgBase(msgId);
   assert(mb != NULL);
@@ -627,7 +640,6 @@ void KMHeaders::nextUnreadMessage()
   }
 
   if (i<cnt && msgBase) setCurrentMsg(i);
-  else mOwner->statusMsg(i18n("No next unread message."));    
 }
 
 
@@ -645,17 +657,21 @@ void KMHeaders::prevUnreadMessage()
   }
 
   if (i>=0 && msgBase) setCurrentMsg(i);
-  else mOwner->statusMsg(i18n("No previous unread message."));    
 }  
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::makeHeaderVisible()
 {
-  if(currentItem() >= lastRowVisible())
-    setTopItem(topItem() + currentItem() - lastRowVisible() + 1);
-  else if(currentItem() < topItem())
-    setTopItem(currentItem());
+  int top, cur;
+
+  cur = currentItem();
+  if (cur > topItem() && cur < lastRowVisible()) return;
+
+  top = cur - (lastRowVisible() - (topItem() + 1) >> 1);
+  if (top < 0) top = 0;
+
+  setTopItem(top);
 }
 
 
@@ -701,7 +717,6 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
 void KMHeaders::updateMessageList(void)
 {
   long i;
-  QString str(256);
   KMMsgStatus flag;
   KMMsgBase* mb;
   bool autoUpd;
@@ -732,11 +747,6 @@ void KMHeaders::updateMessageList(void)
   setAutoUpdate(autoUpd);
   if (autoUpd) repaint();
 
-  str.sprintf(i18n("%d Messages, %d unread."),
-	      mFolder->count(), mFolder->countUnread());
-  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
-
-  mOwner->statusMsg(str);
   kbp->idle();
 }
 

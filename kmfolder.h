@@ -105,7 +105,8 @@ public:
   /** Number of messages in this folder. */
   virtual long count(void) const { return mMsgList.count(); }
 
-  /** Number of unread messages in this folder. Rather slow (count loop) */
+  /** Number of new or unread messages in this folder. 
+    Rather slow (count loop) */
   virtual long countUnread(void) const;
 
   /** Open folder for access. Does not work if the parent is not set.
@@ -116,8 +117,11 @@ public:
   virtual int open(void);
 
   /** Close folder. If force is TRUE the files are closed even if
-   others still use it (e.g. other mail reader windows). */
+    others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
+
+  /** Mark all new messages as unread. */
+  virtual void markNewAsUnread(void);
 
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the 

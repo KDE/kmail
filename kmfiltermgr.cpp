@@ -8,7 +8,6 @@
 #include "kmfilter.h"
 #include "kmfilterdlg.h"
 #include "kmmessage.h"
-#include "kmfolder.h"
 
 
 //-----------------------------------------------------------------------------

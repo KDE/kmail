@@ -530,12 +530,32 @@ void KMFolder::readIndex(void)
       mDirty = TRUE;
       continue;
     }
+#ifdef OBSOLETE
     else if (mi->status() == KMMsgStatusNew)
     {
       mi->setStatus(KMMsgStatusUnread);
       mi->setDirty(FALSE);
     }
+#endif
     mMsgList.append(mi);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::markNewAsUnread(void)
+{
+  KMMsgBase* msgBase;
+  int i;
+
+  for (i=0; i<mMsgList.high(); i++)
+  {
+    if (!(msgBase = mMsgList[i])) continue;
+    if (msgBase->status() == KMMsgStatusNew)
+    {
+      msgBase->setStatus(KMMsgStatusUnread);
+      msgBase->setDirty(TRUE);
+    }
   }
 }
 
@@ -929,7 +949,9 @@ long KMFolder::countUnread(void) const
 
   for (i=0, unread=0; i<mMsgList.high(); i++)
   {
-    if (mMsgList[i]->status()==KMMsgStatusUnread) unread++;
+    if (mMsgList[i]->status()==KMMsgStatusUnread ||
+	mMsgList[i]->status()==KMMsgStatusNew)
+      unread++;
   }
 
   return unread;

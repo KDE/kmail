@@ -1,3 +1,15 @@
+1998-06-17  Stefan Taferner  <taferner@kde.org> (KMail-0.7.4)
+
+	* Message-list: now the first unread/new message is
+	displayed when opening a folder.
+
+	* Message-status: now messages change status from
+	"new" to "unread" when the user changes folder (and
+	not when the folder is closed somewhere within KMail).
+
+	* Reader: worked around problem of current HTML widget
+	with long lines (without '\n')
+
 1998-06-16  Stefan Taferner  <taferner@kde.org> (KMail-0.7.3)
 
 	* Headers: Improved switching between folders to do
@@ -21,7 +33,7 @@
 
 	* kmmsgbase.cpp: added isUnread() method.
 
-	* Headers: improved next/prev_unread_message methods.
+	* Message-list: improved next/prev_unread_message methods.
 	Improved code that ensures that current item is visible
 	and added it to several places in the headers code.
 

@@ -7,6 +7,7 @@
 #define kmfiltermgr_h
 
 #include <qlist.h>
+#include "kmfolder.h"
 #include "kmfilter.h"
 
 class KMFilterDlg;
