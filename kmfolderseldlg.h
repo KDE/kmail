@@ -34,15 +34,14 @@ class KMFolderSelDlg: public KDialogBase
 public:
   /** Constructor. @p parent @em must be a @ref KMMainWin, because we
       need it's foldertree. */
-  KMFolderSelDlg(KMMainWidget * parent, const QString& caption);
+  KMFolderSelDlg( KMMainWidget * parent, const QString& caption );
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */
   virtual KMFolder* folder( void );
 
 protected slots:
-  void slotSelect(int);
-  virtual void slotCancel();
+  void slotSelect();
 
 protected:
   KMail::SimpleFolderTree * mTreeView;

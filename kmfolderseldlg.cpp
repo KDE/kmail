@@ -163,7 +163,8 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption )
 
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft, oldSelection );
   mTreeView->setFocus();
-  //connect( mTreeView, SIGNAL( selected( int ) ), this, SLOT( slotSelect( int ) ) );
+  connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), 
+           this, SLOT( slotSelect() ) );
 
   resize(220, 300);
 }
@@ -185,17 +186,9 @@ KMFolder * KMFolderSelDlg::folder( void )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotSelect( int )
+void KMFolderSelDlg::slotSelect()
 {
   accept();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotCancel()
-{
-  //disconnect( mTreeView, SIGNAL( selected( int ) ), this, SLOT( slotSelect( int ) ) );
-  reject();
 }
 
 
