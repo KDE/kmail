@@ -50,11 +50,9 @@ using namespace KMail;
 #define COMPACTIONJOB_TIMERINTERVAL 100
 
 MboxCompactionJob::MboxCompactionJob( KMFolder* folder, bool immediate )
- : FolderJob( 0, tOther, folder ), mTimer( this ), mTmpFile( 0 ),
-   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false ), mSilent( false )
+ : ScheduledJob( folder, immediate ), mTimer( this ), mTmpFile( 0 ),
+   mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
-  mCancellable = true;
-  mSrcFolder = folder;
 }
 
 MboxCompactionJob::~MboxCompactionJob()
@@ -121,7 +119,9 @@ int MboxCompactionJob::executeNow( bool silent )
                     << " while creating " << mTempName << endl;
     return errno;
   }
+  mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open();
+  mOpeningFolder = false;
   mFolderOpen = true;
   mOffset = 0;
   mCurrentIndex = 0;
@@ -189,11 +189,9 @@ void MboxCompactionJob::done( int rc )
 ////
 
 MaildirCompactionJob::MaildirCompactionJob( KMFolder* folder, bool immediate )
- : FolderJob( 0, tOther, folder ), mTimer( this ),
-   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false ), mSilent( false )
+ : ScheduledJob( folder, immediate ), mTimer( this ),
+   mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
-  mCancellable = true;
-  mSrcFolder = folder;
 }
 
 MaildirCompactionJob::~MaildirCompactionJob()
@@ -216,7 +214,9 @@ int MaildirCompactionJob::executeNow( bool silent )
   KMFolderMaildir* storage = static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
   kdDebug(5006) << "Compacting " << mSrcFolder->idString() << endl;
 
+  mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open();
+  mOpeningFolder = false;
   mFolderOpen = true;
   QString subdirNew(storage->location() + "/new/");
   QDir d(subdirNew);
@@ -269,7 +269,7 @@ void MaildirCompactionJob::done( int rc )
 
 ////
 
-FolderJob* ScheduledCompactionTask::run()
+ScheduledJob* ScheduledCompactionTask::run()
 {
   if ( !folder() || !folder()->needsCompacting() )
     return 0;

@@ -36,7 +36,7 @@ using namespace KMail;
 
 JobScheduler::JobScheduler( QObject* parent, const char* name )
   : QObject( parent, name ), mTimer( this ),
-    mCurrentTask( 0 ), mCurrentJob( 0 ), mIgnoreOpenNotify( false )
+    mCurrentTask( 0 ), mCurrentJob( 0 )
 {
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotRunNextJob() ) );
   // No need to start the internal timer yet, we wait for a task to be scheduled
@@ -82,11 +82,10 @@ void JobScheduler::registerTask( ScheduledTask* task )
 void JobScheduler::notifyOpeningFolder( KMFolder* folder )
 {
   if ( mCurrentTask && mCurrentTask->folder() == folder ) {
-    if ( mIgnoreOpenNotify ) { // set when starting a job for this folder
+    if ( mCurrentJob->isOpeningFolder() ) { // set when starting a job for this folder
 #ifdef DEBUG_SCHEDULER
       kdDebug(5006) << "JobScheduler: got the opening-notification for " << folder->label() << " as expected." << endl;
 #endif
-      mIgnoreOpenNotify = false;
     } else {
       // Jobs scheduled from here should always be cancellable.
       // One exception though, is when ExpireJob does its final KMMoveCommand.
@@ -187,9 +186,7 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   // Register the job in the folder. This makes it autodeleted if the folder is deleted.
   mCurrentTask->folder()->storage()->addJob( mCurrentJob );
   connect( mCurrentJob, SIGNAL( finished() ), this, SLOT( slotJobFinished() ) );
-  mIgnoreOpenNotify = true; // Obviously we'll have to open the folder ourselves
   mCurrentJob->start();
-  mIgnoreOpenNotify = false;
 }
 
 void JobScheduler::slotJobFinished()
@@ -203,6 +200,16 @@ void JobScheduler::slotJobFinished()
   mCurrentJob = 0;
   if ( !mTaskList.isEmpty() )
     restartTimer();
+}
+
+////
+
+KMail::ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )
+  : FolderJob( 0, tOther, folder ), mImmediate( immediate ),
+    mOpeningFolder( false )
+{
+  mCancellable = true;
+  mSrcFolder = folder;
 }
 
 #include "jobscheduler.moc"

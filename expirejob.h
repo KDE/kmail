@@ -29,12 +29,11 @@
 #define EXPIREJOB_H
 
 #include "jobscheduler.h"
-#include "folderjob.h"
 #include "kmcommands.h"
 
 namespace KMail {
 
-class ExpireJob : public FolderJob
+class ExpireJob : public ScheduledJob
 {
   Q_OBJECT
 public:
@@ -57,7 +56,6 @@ private:
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;
-  bool mImmediate;
   bool mFolderOpen;
   KMFolder *mMoveToFolder;
 };
@@ -71,7 +69,7 @@ public:
   ScheduledExpireTask( KMFolder* folder, bool immediate )
     : ScheduledTask( folder ), mImmediate( immediate ) {}
   virtual ~ScheduledExpireTask() {}
-  virtual FolderJob* run() {
+  virtual ScheduledJob* run() {
     return folder() ? new ExpireJob( folder(), mImmediate ) : 0;
   }
   virtual int taskTypeId() const { return 1; }

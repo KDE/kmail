@@ -58,11 +58,9 @@ using namespace KMail;
 
 
 ExpireJob::ExpireJob( KMFolder* folder, bool immediate )
- : FolderJob( 0, tOther, folder ), mTimer( this ), mCurrentIndex( 0 ),
-   mImmediate( immediate ), mFolderOpen( false ), mMoveToFolder( 0 )
+ : ScheduledJob( folder, immediate ), mTimer( this ), mCurrentIndex( 0 ),
+   mFolderOpen( false ), mMoveToFolder( 0 )
 {
-  mSrcFolder = folder;
-  mCancellable = true;
 }
 
 ExpireJob::~ExpireJob()
@@ -102,7 +100,9 @@ void ExpireJob::execute()
   }
 
   FolderStorage* storage = mSrcFolder->storage();
+  mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open();
+  mOpeningFolder = false;
   mFolderOpen = true;
   mCurrentIndex = storage->count()-1;
   kdDebug(5006) << "ExpireJob: starting to expire in folder " << mSrcFolder->location() << endl;

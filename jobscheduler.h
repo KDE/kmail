@@ -34,14 +34,17 @@
 #include <qguardedptr.h>
 #include <qtimer.h>
 
+#include "folderjob.h"
+
 // If this define is set, JobScheduler will show debug output, and related kmkernel timers will be shortened
 // This is for debugging purposes only, don't commit with it.
-//#define DEBUG_SCHEDULER
+#define DEBUG_SCHEDULER
 
 class KMFolder;
 namespace KMail {
 
 class FolderJob;
+class ScheduledJob;
 
 /**
  * A scheduled task is some information about a folder job that should be run later.
@@ -61,7 +64,7 @@ public:
   /// Otherwise (if the open() is delayed) an unrelated open() could happen first
   /// and mess things up.
   /// If for some reason (e.g. folder deleted) nothing should be done, return 0.
-  virtual FolderJob* run() = 0;
+  virtual ScheduledJob* run() = 0;
 
   /// An identifier for the type of task (a bit like QListViewItem::rtti)
   /// This allows to automatically prevent two identical tasks from being scheduled
@@ -122,8 +125,22 @@ private:
 
   /// Information about the currently running job, if any
   ScheduledTask* mCurrentTask;
-  FolderJob* mCurrentJob;
-  bool mIgnoreOpenNotify;
+  ScheduledJob* mCurrentJob;
+};
+
+/**
+ * Base class for scheduled jobs
+ */
+class ScheduledJob : public FolderJob
+{
+public:
+  ScheduledJob( KMFolder* folder, bool immediate );
+
+  bool isOpeningFolder() const { return mOpeningFolder; }
+
+protected:
+  bool mImmediate;
+  bool mOpeningFolder;
 };
 
 } // namespace
