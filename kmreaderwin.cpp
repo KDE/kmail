@@ -1147,7 +1147,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	     // note: no "file:" for security reasons
     {
       for (i=0; aStr[pos] && aStr[pos] > ' ' && aStr[pos] != '\"' &&
-                aStr[pos] != '<' &&		// handle cases like this: <link>http://foobar.org/</link>
+                QString("<>()[]").find(aStr[pos]) == -1 &&		// handle cases like this: <link>http://foobar.org/</link>
 		i < 255; i++, pos++)
 	str[i] = aStr[pos];
       pos--;
@@ -1179,17 +1179,20 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       }
       pos--;
       len = iStr.length();
-      while (len>2 && aStr[pos].isPunct() && (pos > startpos))
+      while (len>2 && QString("._-*()=").find(aStr[pos]) != -1
+        && (pos > startpos))
       {
 	len--;
 	pos--;
       }
       iStr.truncate(len);
-
       result.truncate(result.length() - i1 + 1);
-      if (iStr.length()>3 && iStr[0] != '@'
+
+      if (iStr.length() >= 3 && iStr.contains("@") == 1 && iStr[0] != '@'
         && iStr[iStr.length() - 1] != '@')
-          iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
+      {
+        iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
+      }
       result += iStr;
       iStr = "";
     }
