@@ -434,9 +434,10 @@ static bool connectToKOrganizer()
     QCString dummy;
     // OK, so korganizer (or kontact) is running. Now ensure the object we want is available.
     if ( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dcopService, dummy ) ) {
-        KDCOPServiceStarter::self()->startServiceFor( "DCOP/Organizer", QString::null,
-                QString::null, &error, &dcopService );
-        assert( kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dcopService, dummy ) );
+      KDCOPServiceStarter::self()->startServiceFor( "DCOP/Organizer", QString::null,
+                                                    QString::null, &error, &dcopService );
+      if( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dcopService, dummy ) )
+        return false;
     }
 
     mKOrganizerIfaceStub = new KOrganizerIface_stub( kapp->dcopClient(),
