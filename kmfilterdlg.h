@@ -41,6 +41,7 @@ public:
   virtual QLineEdit* createEdit(const QString txt=0);
 
 protected slots:
+  void updateCurFilterName(const QString &text);
   void slotBtnUp();
   void slotBtnDown();
   void slotBtnNew();
@@ -64,6 +65,12 @@ protected:
 
   // Initialize static lists. Automatically called.
   static void initLists(void);
+
+  // disable/enabled relevant widgets
+  void enableControls();
+
+  // Update the position of the filter action field widgets
+  void resizeEvent(QResizeEvent *qre);
 
   KMFilter* mFilter;
   QGridLayout *mGrid;

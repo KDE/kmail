@@ -11,7 +11,6 @@
 #include "kmfoldermgr.h"
 
 #include <kapp.h>
-#include <ktablistbox.h>
 #include <kbuttonbox.h>
 #include <qbuttongroup.h>
 #include <qframe.h>
@@ -58,11 +57,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   initMetaObject();
 
   grid  = new QGridLayout(this, 4, 2, 4, 4);
-  mFilter = NULL;
+  mFilter = 0;
 
   setCaption(i18n("Filter Rules"));
-  //setOKButton(i18n("OK"));
-  //setCancelButton(i18n("Cancel"));
 
   mFilterList = new QListBox(this);
   mFilterList->setMinimumSize(100, 200);
@@ -132,8 +129,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
     connect(mFaType[i], SIGNAL(selectType(KMFaComboBox*, int)),
 	    SLOT(slotActionTypeSelected(KMFaComboBox*,int)));
 
-    mFaBtnDetails[i] = NULL;
-    mFaField[i] = NULL;
+    mFaBtnDetails[i] = 0;
+    mFaField[i] = 0;
   }
   mActLineHeight = mFaType[0]->size().height();
 
@@ -177,10 +174,13 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   grid->setRowStretch(3, 100);
   grid->activate();
 
+  enableControls();
   resize(buttonBox->sizeHint().width()*1.2, sizeHint().height());
   show();
 
   reloadFilterList();
+
+  mCurFilterIdx = -1;
   if(mFilterList->count() > 0)
     mFilterList->setCurrentItem(0);
 }
@@ -219,12 +219,12 @@ void KMFilterDlg::clear(void)
     if (mFaBtnDetails[i])
     {
       delete mFaBtnDetails[i];
-      mFaBtnDetails[i] = NULL;
+      mFaBtnDetails[i] = 0;
     }
     if (mFaField[i])
     {
       delete mFaField[i];
-      mFaField[i] = NULL;
+      mFaField[i] = 0;
     }
   }
 }
@@ -238,7 +238,11 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
   QWidget* pwidg;
   QSize sz;
 
-  assert(aFilter!=NULL); // Important assert
+  assert(aFilter!=0); // Important assert
+  disconnect(mRuleFieldA, SIGNAL(textChanged(const QString&)),
+	     this, SLOT(updateCurFilterName(const QString&)));
+  disconnect(mRuleValueA, SIGNAL(textChanged(const QString&)),
+	     this, SLOT(updateCurFilterName(const QString&)));
   clear();
 
   mRuleOp->setCurrentItem((int)aFilter->oper());
@@ -269,7 +273,7 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
   {
     action = aFilter->action(i);
     if (mFaField[i]) delete mFaField[i];
-    mFaField[i] = NULL;
+    mFaField[i] = 0;
 
     if (!action) mFaType[i]->setCurrentItem(0);
     else
@@ -294,8 +298,31 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
 
   mFilter = aFilter;
   mCurFilterIdx = mFilterList->currentItem();
+  connect(mRuleFieldA, SIGNAL(textChanged(const QString&)),
+	  this, SLOT(updateCurFilterName(const QString&)));
+  connect(mRuleValueA, SIGNAL(textChanged(const QString&)),
+	  this, SLOT(updateCurFilterName(const QString&)));
 }
 
+void KMFilterDlg::resizeEvent(QResizeEvent *qre)
+{
+  int i, w;
+  QWidget* pwidg;
+  QSize sz;
+
+  for (i=0; i<FILTER_MAX_ACTIONS; i++)
+    if (mFaField[i]) {
+      pwidg = mFaField[i];
+      QPoint pos = mFaType[i]->pos();
+      pos.setX(pos.x() + mFaType[i]->width() + 4);
+      w = qre->size().width() - pos.x();
+      if (w > 300) w = 300;
+      sz.setWidth(w);
+      sz.setHeight(pwidg->height());
+      pwidg->resize(sz);
+      pwidg->move(pos);
+    }
+}
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::applyFilterChanges(void)
@@ -313,10 +340,6 @@ void KMFilterDlg::applyFilterChanges(void)
 			mRuleValueB->text());
   mFilter->setOper((KMFilter::Operator)mRuleOp->currentItem());
 
-  mFilter->setName(QString("<")+mRuleFieldA->currentText()+">:"+
-		   mRuleValueA->text());
-  mFilterList->changeItem(mFilter->name(), mCurFilterIdx);
-
   for (i=0; i<FILTER_MAX_ACTIONS; i++)
   {
     action = mFilter->action(i);
@@ -325,12 +348,20 @@ void KMFilterDlg::applyFilterChanges(void)
   }
 }
 
+void KMFilterDlg::updateCurFilterName(const QString &text)
+{
+  if (mCurFilterIdx < 0)
+    return;
+  mFilter->setName(QString("<") + mRuleFieldA->currentText() + ">:" 
+		   + mRuleValueA->text());
+  mFilterList->changeItem(mFilter->name(), mCurFilterIdx);
+}
 
 //-----------------------------------------------------------------------------
 bool KMFilterDlg::testOpts(const QWidget* w) const
 {
   if (!w) debug("KMFilterDlg: no widget given");
-  return (w!=NULL);
+  return (w!=0);
 }
 
 
@@ -394,7 +425,7 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   if (i < 0) return;
 
   if (mFaField[i]) delete mFaField[i];
-  mFaField[i] = NULL;
+  mFaField[i] = 0;
   mGridRow = i;
 
   if (mFilter->action(i)) delete mFilter->action(i);
@@ -428,6 +459,9 @@ void KMFilterDlg::slotFilterSelected(int idx)
 {
   KMFilter* filter;
 
+  if (mCurFilterIdx == idx)
+    return;
+
   if (mFilter) applyFilterChanges();
   if ((uint)idx < filterMgr->count())
   {
@@ -437,8 +471,9 @@ void KMFilterDlg::slotFilterSelected(int idx)
   else
   {
     clear();
-    mFilter = NULL;
+    mFilter = 0;
   }
+  enableControls();
 }
 
 
@@ -449,10 +484,12 @@ void KMFilterDlg::slotBtnUp()
   KMFilter* filter;
 
   if (idx < 1) return;
+  applyFilterChanges();
+  mCurFilterIdx = -1;
   updown_move_semaphore = 0;
 
   filter = filterMgr->take(idx);
-  assert(filter != NULL);
+  assert(filter != 0);
   filterMgr->insert(idx-1, filter);
 
   // This next line is to work around a QT 2.0 CVS bug
@@ -463,6 +500,7 @@ void KMFilterDlg::slotBtnUp()
   mFilterList->insertItem(filter->name(), idx-1);
   mFilterList->setCurrentItem(idx-1);
 
+  enableControls();
   updown_move_semaphore = 1;
 }
 
@@ -474,17 +512,20 @@ void KMFilterDlg::slotBtnDown()
   KMFilter* filter;
 
   if (idx < 0 || idx >= (int)mFilterList->count()-1) return;
+  applyFilterChanges();
+  mCurFilterIdx = -1;
 
   updown_move_semaphore = 0;
 
   filter = filterMgr->take(idx);
-  assert(filter != NULL);
+  assert(filter != 0);
   filterMgr->insert(idx+1, filter);
 
   mFilterList->removeItem(idx);
   mFilterList->insertItem(filter->name(), idx+1);
   mFilterList->setCurrentItem(idx+1);
 
+  enableControls();
   updown_move_semaphore = 1;
 }
 
@@ -495,6 +536,8 @@ void KMFilterDlg::slotBtnNew()
   int idx;
   KMFilter* filter = new KMFilter;
   filter->setName(i18n("Unnamed"));
+  applyFilterChanges();
+  mCurFilterIdx = -1;
 
   idx = mFilterList->currentItem();
   if (idx >= 0) filterMgr->insert(idx, filter);
@@ -503,6 +546,7 @@ void KMFilterDlg::slotBtnNew()
   mFilterList->insertItem(filter->name(), idx);
   mFilterList->setCurrentItem(idx);
   slotFilterSelected(idx);
+  enableControls();
 }
 
 
@@ -513,6 +557,7 @@ void KMFilterDlg::slotBtnDelete()
   if (idx < 0) return;
 
   mFilter = 0;
+  mCurFilterIdx = -1;
 
   mFilterList->removeItem(idx);
   filterMgr->remove(idx);
@@ -520,7 +565,16 @@ void KMFilterDlg::slotBtnDelete()
   if (idx >= (int)filterMgr->count())
     idx = (int)filterMgr->count()-1;
 
-  if (idx >= 0) mFilterList->setCurrentItem(idx);
+  if (idx >= 0) {
+    mFilterList->setCurrentItem(idx);
+    // workaround QT bug where current item is not selected
+    // after item is deleted
+    mFilterList->setSelected(idx, TRUE);
+  }
+  else
+    mCurFilterIdx = -1;
+  enableControls();
+  slotFilterSelected( idx ); // workaround another QT bug
 }
 
 
@@ -618,6 +672,34 @@ void KMFilterDlg::initLists(void)
   }
 }
 
+void KMFilterDlg::enableControls()
+{
+  bool upEnabled = FALSE;
+  bool downEnabled = FALSE;
+  bool deleteEnabled = FALSE;
+  int i;
 
+  if (mFilterList->count() > 0)
+    deleteEnabled = TRUE;
+  if (deleteEnabled && (mFilterList->currentItem() != 0))
+    upEnabled = TRUE;
+  if (deleteEnabled && 
+      (mFilterList->currentItem() != (int)mFilterList->count() - 1))
+    downEnabled = TRUE;
+  mBtnUp->setEnabled( upEnabled );
+  mBtnDown->setEnabled( downEnabled );
+  mBtnDelete->setEnabled( deleteEnabled );
+
+  for (i=0; i<FILTER_MAX_ACTIONS; i++)
+    if (mFaType[i])
+      mFaType[i]->setEnabled( deleteEnabled );
+  mRuleFieldA->setEnabled( deleteEnabled );
+  mRuleFieldB->setEnabled( deleteEnabled );
+  mRuleFuncA->setEnabled( deleteEnabled );
+  mRuleFuncB->setEnabled( deleteEnabled );
+  mRuleValueA->setEnabled( deleteEnabled );
+  mRuleValueB->setEnabled( deleteEnabled );
+  mRuleOp->setEnabled( deleteEnabled );
+}
 //-----------------------------------------------------------------------------
 #include "kmfilterdlg.moc"
