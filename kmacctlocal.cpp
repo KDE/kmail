@@ -89,6 +89,8 @@ void KMAcctLocal::processNewMail(bool)
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( fi.size() == 0 ) {
+      QString statusMsg = i18n("Transmission completed, no new messages.");
+      KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
       emit finishedCheck(hasNewMail);
       return;
     }
@@ -107,6 +109,7 @@ void KMAcctLocal::processNewMail(bool)
 
   if (!mFolder) {
     emit finishedCheck(hasNewMail);
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
 
@@ -116,10 +119,10 @@ void KMAcctLocal::processNewMail(bool)
 
   // run the precommand
   if (!runPrecommand(precommand()))
-    {
-        kdDebug(5006) << "cannot run precommand " << precommand() << endl;
-	emit finishedCheck(hasNewMail);
-    }
+  {
+    kdDebug(5006) << "cannot run precommand " << precommand() << endl;
+    emit finishedCheck(hasNewMail);
+  }
 
   mailFolder.setAutoCreateIndex(FALSE);
 
@@ -133,7 +136,7 @@ void KMAcctLocal::processNewMail(bool)
     kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
       << mailFolder.name() << endl;
     emit finishedCheck(hasNewMail);
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
 
@@ -141,7 +144,9 @@ void KMAcctLocal::processNewMail(bool)
     kdDebug(5006) << "mailFolder could not be locked" << endl;
     mailFolder.close();
     emit finishedCheck(hasNewMail);
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
+    QString errMsg = i18n( "Transmission failed: Could not lock %1." )
+      .arg( mailFolder.location() );
+    KMBroadcastStatus::instance()->setStatusMsg( errMsg );
     return;
   }
 
@@ -153,6 +158,10 @@ void KMAcctLocal::processNewMail(bool)
   addedOk = true;
   t.start();
 
+  // prepare the static parts of the status message:
+  QString statusMsgStub = i18n("Moving message %3 of %2 from %1.")
+    .arg(mailFolder.location()).arg(num);
+
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   for (i=0; i<num; i++)
   {
@@ -160,8 +169,8 @@ void KMAcctLocal::processNewMail(bool)
     if (!addedOk) break;
     if (KMBroadcastStatus::instance()->abortRequested()) break;
 
-    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") +
-			                QString("%1/%2").arg(i).arg(num) );
+    QString statusMsg = statusMsgStub.arg(i);
+    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
     KMBroadcastStatus::instance()->setStatusProgressPercent( (i*100) / num );
 
     msg = mailFolder.take(0);
@@ -196,7 +205,13 @@ void KMAcctLocal::processNewMail(bool)
     rc = mailFolder.expunge();
     if (rc)
       KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
+    QString statusMsg;
+    if ( num ) 
+      statusMsg = i18n("Transmission completed, %n new message.",
+		       "Transmission completed, %n new messages.", num);
+    else
+      statusMsg = i18n("Transmission completed, no new messages.");
+    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
   }
   // else warning is written already
 

@@ -731,16 +731,23 @@ void KMAcctExpPop::slotJobFinished() {
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
       indexOfCurrentMsg : idsOfMsgs.count();
-    if (numMessages > 0) {
-      QString msg = i18n("Transmission completed. (%n message, %1 KB)",
-      "Transmission completed. (%n messages, %1 KB)", numMessages)
-        .arg(numBytesRead/1024);
+    QString statusMsg;
+    if (numMessages > 0)
       if (numBytesToRead != numBytes && mLeaveOnServer)
-        msg += " " + i18n("(%1 KB remain on the server)").arg(numBytes/1024);
-      KMBroadcastStatus::instance()->setStatusMsg( msg );
-    } else {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed." ));
-    }
+	statusMsg = i18n("Transmission completed, %n new message in %1 KB "
+			 "(%2 KB remain on the server).",
+			 "Transmission completed, %n new messages in %1 KB "
+			 "(%2 KB remain on the server).",
+			 numMessages)
+	  .arg(numBytesRead/1024).arg(numBytes/1024);
+      else
+	statusMsg = i18n("Transmission completed, %n message in %1 KB.",
+			 "Transmission completed, %n messages in %1 KB.",
+			 numMessages)
+	  .arg(numBytesRead/1024);
+    else
+      statusMsg = i18n("Transmission completed, no new messages." );
+    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
     KMBroadcastStatus::instance()->setStatusProgressEnable( false );
     KMBroadcastStatus::instance()->reset();
 
@@ -822,11 +829,20 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     dataCounter++;
     if (dataCounter % 5 == 0)
     {
-      QString msg = i18n("Message ") + QString("%1/%2 (%3/%4 KB)").
-        arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).
-        arg(numBytesToRead/1024);
+      QString msg;
       if (numBytes != numBytesToRead && mLeaveOnServer)
-        msg += " " + i18n("(%1 KB remain on the server)").arg(numBytes/1024);
+      {
+	msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5 "
+		   "(%6 KB remain on the server).")
+	  .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
+	  .arg(numBytesToRead/1024).arg(mHost).arg(numBytes/1024);
+      }
+      else
+      {
+	msg = i18n("Fetching message %1 of %2 (%3 of %4 KB) from %5.")
+	  .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
+	  .arg(numBytesToRead/1024).arg(mHost);
+      }
       KMBroadcastStatus::instance()->setStatusMsg( msg );
       KMBroadcastStatus::instance()->setStatusProgressPercent(
         numBytesRead * 100 / numBytesToRead );
