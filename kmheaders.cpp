@@ -2435,8 +2435,8 @@ void KMHeaders::slotRMB()
   if ( !out_folder )
       mOwner->filterMenu->plug( menu );
 
-  menu->insertItem(i18n("&Move to"), msgMoveMenu);
-  menu->insertItem(i18n("&Copy to"), msgCopyMenu);
+  menu->insertItem(i18n("&Move To"), msgMoveMenu);
+  menu->insertItem(i18n("&Copy To"), msgCopyMenu);
   if ( !out_folder )
       mOwner->statusMenu->plug( menu );
 

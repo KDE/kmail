@@ -596,7 +596,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    mLblIdentity, mIdentity, mBtnIdentity);
   if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sen&t-mail Folder:"),
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sen&t-Mail Folder:"),
 		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
@@ -741,7 +741,7 @@ void KMComposeWin::setupActions(void)
                         actionCollection(), "send_alternative");
   }
 
-  (void) new KAction (i18n("Save in &drafts folder"), 0,
+  (void) new KAction (i18n("Save in &Drafts Folder"), 0,
 		      this, SLOT(slotSaveDraft()),
 		      actionCollection(), "save_in_drafts");
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
@@ -773,17 +773,17 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
-  (void) new KToggleAction( i18n("Fixed font widths"), 0, this,
+  (void) new KToggleAction( i18n("Fixed Font Widths"), 0, this,
                       SLOT(slotToggleFixedFont()), actionCollection(), "toggle_fixedfont" );
 
   //these are checkable!!!
   urgentAction = new KToggleAction (i18n("&Urgent"), 0,
                                     actionCollection(),
                                     "urgent");
-  confirmDeliveryAction =  new KToggleAction (i18n("&Confirm delivery"), 0,
+  confirmDeliveryAction =  new KToggleAction (i18n("&Confirm Delivery"), 0,
                                               actionCollection(),
                                               "confirm_delivery");
-  confirmReadAction = new KToggleAction (i18n("Confirm &read"), 0,
+  confirmReadAction = new KToggleAction (i18n("Confirm &Read"), 0,
                                          actionCollection(), "confirm_read");
 //this is obsolete now, we use a pulldown menu
 #if defined CHARSETS
@@ -812,7 +812,7 @@ void KMComposeWin::setupActions(void)
   identityAction = new KToggleAction (i18n("&Identity"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_identity");
-  fccAction = new KToggleAction (i18n("Sen&t-mail Folder"), 0, this,
+  fccAction = new KToggleAction (i18n("Sen&t-Mail Folder"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_fcc");
   transportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
@@ -821,7 +821,7 @@ void KMComposeWin::setupActions(void)
   fromAction = new KToggleAction (i18n("&From"), 0, this,
                                   SLOT(slotView()),
                                   actionCollection(), "show_from");
-  replyToAction = new KToggleAction (i18n("&Reply to"), 0, this,
+  replyToAction = new KToggleAction (i18n("&Reply To"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_reply_to");
   toAction = new KToggleAction (i18n("&To"), 0, this,
@@ -869,10 +869,10 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
 
-  encryptAction = new KToggleAction (i18n("Encrypt message"),
+  encryptAction = new KToggleAction (i18n("Encrypt Message"),
                                      "unlock", 0,
                                      actionCollection(), "encrypt_message");
-  signAction = new KToggleAction (i18n("Sign message"),
+  signAction = new KToggleAction (i18n("Sign Message"),
                                   "signature", 0,
                                   actionCollection(), "sign_message");
 

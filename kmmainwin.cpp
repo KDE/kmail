@@ -738,7 +738,7 @@ void KMMainWin::slotModifyFolder()
 
   if (!mFolder) return;
   d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(),
-			 this, i18n("Properties of folder %1").arg( mFolder->label() ) );
+			 this, i18n("Properties of Folder %1").arg( mFolder->label() ) );
   if (d->exec() && (mFolder->protocol() != "imap")) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
@@ -1777,11 +1777,11 @@ void KMMainWin::setupMenuBar()
 
   printAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  (void) new KAction( i18n("Compact all &folders"), 0,
+  (void) new KAction( i18n("Compact All &Folders"), 0,
 		      this, SLOT(slotCompactAll()),
 		      actionCollection(), "compact_all_folders" );
 
-  (void) new KAction( i18n("&Expire all folders"), 0,
+  (void) new KAction( i18n("&Expire All Folders"), 0,
 		      this, SLOT(slotExpireAll()),
 		      actionCollection(), "expire_all_folders" );
 
@@ -1790,7 +1790,7 @@ void KMMainWin::setupMenuBar()
 		      actionCollection(), "check_mail" );
 
   KActionMenu *actActionMenu = new
-    KActionMenu( i18n("Check Mail in"), "mail_get", actionCollection(),
+    KActionMenu( i18n("Check Mail In"), "mail_get", actionCollection(),
 				   	"check_mail_in" );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
 
@@ -1815,22 +1815,22 @@ void KMMainWin::setupMenuBar()
   //----- Edit Menu
   KStdAction::undo( this, SLOT(slotUndo()), actionCollection(), "edit_undo");
 
-  (void) new KAction( i18n("&Copy text"), KStdAccel::key(KStdAccel::Copy), this,
+  (void) new KAction( i18n("&Copy Text"), KStdAccel::key(KStdAccel::Copy), this,
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
 
   deleteAction = new KAction( i18n("&Delete"), "editdelete", Key_D, this,
 		      SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
-  (void) new KAction( i18n("&Search messages..."), "find", Key_S, this,
+  (void) new KAction( i18n("&Search Messages..."), "find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
 
-  (void) new KAction( i18n("&Find in message..."), KStdAccel::key(KStdAccel::Find), this,
+  (void) new KAction( i18n("&Find in Message..."), KStdAccel::key(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
-  (void) new KAction( i18n("Sele&ct all messages"), Key_K, this,
+  (void) new KAction( i18n("Sele&ct All Messages"), Key_K, this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
-  (void) new KAction( i18n("Select message &text"), KStdAccel::key(KStdAccel::SelectAll), this,
+  (void) new KAction( i18n("Select Message &Text"), KStdAccel::key(KStdAccel::SelectAll), this,
 		      SLOT(slotSelectText()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
@@ -1852,10 +1852,10 @@ void KMMainWin::setupMenuBar()
   removeFolderAction = new KAction( i18n("&Remove"), 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
-  preferHtmlAction = new KToggleAction( i18n("&Prefer HTML to plain text"), 0, this,
+  preferHtmlAction = new KToggleAction( i18n("&Prefer HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
 
-  threadMessagesAction = new KToggleAction( i18n("&Thread messages"), 0, this,
+  threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
   //----- Message Menu
@@ -1865,19 +1865,19 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("next message","&Next"), Key_N, this,
 		      SLOT(slotNextMessage()), actionCollection(), "next" );
 
-  (void) new KAction( i18n("Next unread"), "next", Key_Plus, this,
+  (void) new KAction( i18n("Next Unread"), "next", Key_Plus, this,
 		      SLOT(slotNextUnreadMessage()), actionCollection(), "next_unread" );
 
   (void) new KAction( i18n("previous message","&Previous"), Key_P, this,
 		      SLOT(slotPrevMessage()), actionCollection(), "previous" );
 
-  (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, this,
+  (void) new KAction( i18n("Previous Unread"), "previous", Key_Minus, this,
 		      SLOT(slotPrevUnreadMessage()), actionCollection(), "previous_unread" );
 
   replyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
 
-  noQuoteReplyAction = new KAction( i18n("Reply &without quote..."), ALT+Key_R,
+  noQuoteReplyAction = new KAction( i18n("Reply &Without Quote..."), ALT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
   replyAllAction = new KAction( i18n("Reply &All..."), "mail_replyall",
@@ -1889,7 +1889,7 @@ void KMMainWin::setupMenuBar()
   forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
 
-  forwardAttachedAction = new KAction( i18n("&Forward as attachment"), SHIFT+Key_F, this,
+  forwardAttachedAction = new KAction( i18n("&Forward as Attachment"), SHIFT+Key_F, this,
 		      SLOT(slotForwardAttachedMsg()), actionCollection(), "forward_attached" );
 
   redirectAction = new KAction( i18n("R&edirect..."), Key_E, this,
@@ -1898,11 +1898,11 @@ void KMMainWin::setupMenuBar()
   bounceAction = new KAction( i18n("&Bounce..."), 0, this,
 		      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
-  sendAgainAction = new KAction( i18n("Send a&gain..."), 0, this,
+  sendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
   //----- Message-Encoding Submenu
-  mEncoding = new KSelectAction( i18n( "Set &Encoding" ), "charset", 0, this, 
+  mEncoding = new KSelectAction( i18n( "Set &Encoding" ), "charset", 0, this,
 		      SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
   QStringList encodings = KMMsgBase::supportedEncodings(FALSE);
   encodings.prepend( i18n( "Auto" ) );
@@ -1947,7 +1947,7 @@ void KMMainWin::setupMenuBar()
                                    "mlist_filter");
   filterMenu->insert( mlistFilterAction );
 
-  statusMenu = new KActionMenu ( i18n( "Mark as" ), actionCollection(), "set_status" );
+  statusMenu = new KActionMenu ( i18n( "Mark As" ), actionCollection(), "set_status" );
 
   //----- Set status submenu
   KAction *newAction= new KAction( i18n("&New"), "kmmsgnew", 0, this,
@@ -1985,18 +1985,18 @@ void KMMainWin::setupMenuBar()
                                    actionCollection(), "status_flag");
   statusMenu->insert( flagAction );
 
-  moveActionMenu = new KActionMenu( i18n("&Move to" ),
+  moveActionMenu = new KActionMenu( i18n("&Move To" ),
                                     actionCollection(), "move_to" );
 
-  copyActionMenu = new KActionMenu( i18n("&Copy to" ),
+  copyActionMenu = new KActionMenu( i18n("&Copy To" ),
                                     actionCollection(), "copy_to" );
 
-  (void) new KAction( i18n("Apply filters"), "filter", CTRL+Key_J, this,
+  (void) new KAction( i18n("Apply Filters"), "filter", CTRL+Key_J, this,
 		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
-  
+
   viewSourceAction = new KAction( i18n("View Source..."), Key_V, this,
 		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
-  
+
 
   //----- View Menu
   KActionMenu *viewMenuAction = new
@@ -2019,9 +2019,9 @@ void KMMainWin::setupMenuBar()
 		       KMReaderWin::HdrAll + KMReaderWin::InlineAttmnt);
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
-  
+
   mViewMenu->insertSeparator();
-  toggleFixFontAction = new KToggleAction( i18n("Fixed font widths"), 
+  toggleFixFontAction = new KToggleAction( i18n("Fixed Font Widths"),
 			0, this, SLOT(slotToggleFixedFont()),
 			actionCollection(), "toggle_fixedfont" );
   viewMenuAction->insert( toggleFixFontAction );
