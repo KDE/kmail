@@ -974,6 +974,7 @@ KpgpKey::KpgpKey( QStrList *keys, QWidget *parent, const char *name,
   combobox->setFocus();
   if( keys != 0 )
   {
+    keys->sort();
     combobox->insertStrList(keys);
   }
   vlay->addWidget( label );
