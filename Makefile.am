@@ -28,7 +28,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
-		kmreaderwin.cpp kmmsgdict.cpp \
+		kmreaderwin.cpp htmlstatusbar.cpp kmmsgdict.cpp \
 		kmgroupware.cpp kmgroupwarefuncs.cpp startupwizard.cpp \
 		klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
