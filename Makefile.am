@@ -36,7 +36,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
 		directoryservicesconfigurationdialog.ui \
-		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
+		kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp kmdict.cpp \
 		kmsystemtray.cpp kmacctlocal.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \

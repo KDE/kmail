@@ -6,14 +6,8 @@
 #ifndef kbusyptr_h_
 #define kbusyptr_h_
 
-#include "kalarmtimer.h"
-
-class QCursor;
-
-class KBusyPtr: public KAlarmTimer
+class KBusyPtr
 {
-  Q_OBJECT
-
 public:
   KBusyPtr();
   virtual ~KBusyPtr();
@@ -27,33 +21,8 @@ public:
   /** Returns true if the "busy level" is non zero. */
   virtual bool isBusy(void);
 
-  /** Stop pointer animation. This is necessary for some system calls. */
-  virtual void stopAnimation(void);
-
-  /** Continue pointer animation. */
-  virtual void continueAnimation(void);
-
-  /** Load cursor from given bitmap files. When the filename is relative
-    the $KDEDIR/lib/pics directory is searched. */
-  virtual void loadCursor(const char* cursorName, const char* maskName);
-
-
-
-protected:
-  virtual void timerEvent(void);
-
-private:
-  bool loadBitmap(QBitmap& bitmap, const QString& fileName);
-
 protected:
   int busyLevel;
-  int numCursors;
-  int frameDelay;
-  int currentCursor;
-  bool animated;
-  QCursor* cursorList;
-  /** avoid warning about hidden virtual */
-  virtual void timerEvent(QTimerEvent *e) { KAlarmTimer::timerEvent( e ); }
 };
 
 #endif /*kbusyptr_h_*/
