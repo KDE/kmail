@@ -178,15 +178,15 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   {
     pixmapsLoaded = TRUE;
 
-    pixDir   = new QPixmap( BarIcon("closed"));
-    pixNode  = new QPixmap( BarIcon("green-bullet"));
-    pixPlain = new QPixmap( BarIcon("kmfolder"));
-    pixFld   = new QPixmap( BarIcon("kmfolder"));
-    pixFull  = new QPixmap( BarIcon("kmfolderfull"));
-    pixIn    = new QPixmap( BarIcon("kmfldin"));
-    pixOut   = new QPixmap( BarIcon("kmfldout"));
-    pixSent  = new QPixmap( BarIcon("kmfldsent"));
-    pixTr    = new QPixmap( BarIcon("kmtrash"));
+    pixDir   = new QPixmap( UserIcon("closed"));
+    pixNode  = new QPixmap( UserIcon("green-bullet"));
+    pixPlain = new QPixmap( UserIcon("kmfolder"));
+    pixFld   = new QPixmap( UserIcon("kmfolder"));
+    pixFull  = new QPixmap( UserIcon("kmfolderfull"));
+    pixIn    = new QPixmap( UserIcon("kmfldin"));
+    pixOut   = new QPixmap( UserIcon("kmfldout"));
+    pixSent  = new QPixmap( UserIcon("kmfldsent"));
+    pixTr    = new QPixmap( UserIcon("kmtrash"));
   }
   setUpdatesEnabled(TRUE);
   reload();
@@ -848,4 +848,5 @@ void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
 }
 
 #include "kmfoldertree.moc"
+
 
