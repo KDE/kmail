@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Type=ServiceType
-X-KDE-ServiceType=DCOP/Mailer
+X-KDE-ServiceType=DCOP/ResourceBackend/IMAP
 Comment=Mail program with a DCOP interface
 Comment[be]=Паштовая праграма з DCOP інтэрфэйсам
 Comment[bg]=Клиент на електронна поща за КДЕ

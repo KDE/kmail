@@ -134,7 +134,7 @@ tipdir = $(kde_datadir)/kmail
 tip_DATA = tips
 
 servicetypedir = $(kde_servicetypesdir)
-servicetype_DATA = dcopmail.desktop
+servicetype_DATA = dcopmail.desktop dcopimap.desktop
 
 kde_services_DATA = kmail_config_misc.desktop kmail_config_appearance.desktop \
    kmail_config_identity.desktop kmail_config_network.desktop kmail_config_composer.desktop \
