@@ -156,6 +156,11 @@ void KMSystemTray::setMode(int newMode)
   }
 }
 
+int KMSystemTray::mode() const
+{
+  return mMode;
+}
+
 /**
  * Update the count of unread messages.  If there are unread messages,
  * overlay the count on top of a transparent version of the KMail icon.
@@ -391,7 +396,7 @@ void KMSystemTray::showKMail()
     KWin::activateWindow( mainWin->winId() );
     mParentVisible = true;
   }
-  
+
   //Fake that the folders have changed so that the icon status is correct
   foldersChanged();
 }
@@ -580,11 +585,6 @@ void KMSystemTray::selectedAccount(int id)
 
   ft->setCurrentItem(fldrIdx);
   ft->selectCurrentFolder();
-}
-
-int KMSystemTray::getMode()
-{
-  return mMode;
 }
 
 #include "kmsystemtray.moc"

@@ -1810,18 +1810,22 @@ void KMKernel::abortMailCheck()
 
 bool KMKernel::canQueryClose()
 {
-   if (KMMainWidget::mainWidgetList() && KMMainWidget::mainWidgetList()->count() > 1 )
-     return true;
-   KMMainWidget *widget = getKMMainWidget();
-   KMSystemTray* systray = widget->systray();
-   if (systray && systray->getMode() == KMSystemTray::AlwaysOn) {
-     systray->hideKMail();
-     return false;
-   } else if (systray && systray->getMode() == KMSystemTray::OnNewMail) {
-     systray->show();
-     systray->hideKMail();
-     return false;
-   }
-   return true;
+  if ( KMMainWidget::mainWidgetList() &&
+       KMMainWidget::mainWidgetList()->count() > 1 )
+    return true;
+  KMMainWidget *widget = getKMMainWidget();
+  if ( !widget )
+    return true;
+  KMSystemTray* systray = widget->systray();
+  if ( systray && systray->mode() == KMSystemTray::AlwaysOn ) {
+    systray->hideKMail();
+    return false;
+  } else if ( systray && systray->mode() == KMSystemTray::OnNewMail ) {
+    systray->show();
+    systray->hideKMail();
+    return false;
+  }
+  return true;
 }
+
 #include "kmkernel.moc"

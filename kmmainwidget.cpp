@@ -3416,7 +3416,8 @@ void KMMainWidget::slotToggleProgressDialog()
   }
 }
 
-KMSystemTray *KMMainWidget::systray()
+//-----------------------------------------------------------------------------
+KMSystemTray *KMMainWidget::systray() const
 {
   return mSystemTray;
 }

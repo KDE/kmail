@@ -48,8 +48,9 @@ public:
   ~KMSystemTray();
 
   void setMode(int mode);
+  int mode() const;
+
   void hideKMail();
-  int getMode();
 
   enum SystrayMode {
     AlwaysOn,

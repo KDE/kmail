@@ -20,7 +20,8 @@
 #include "kmmainwin.moc"
 
 KMMainWin::KMMainWin(QWidget *)
-    : KMainWindow( 0, "kmail-mainwindow#" )
+    : KMainWindow( 0, "kmail-mainwindow#" ),
+      mReallyClose( false )
 {
   kapp->ref();
   mKMMainWidget = new KMMainWidget( this, "KMMainWidget", actionCollection() );
@@ -56,7 +57,6 @@ KMMainWin::KMMainWin(QWidget *)
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
-  mReallyClose=false;
 }
 
 KMMainWin::~KMMainWin()
@@ -161,8 +161,8 @@ void KMMainWin::writeConfig(void)
 
 void KMMainWin::slotQuit()
 {
-    mReallyClose=true;
-    close();
+  mReallyClose = true;
+  close();
 }
 
 void KMMainWin::slotConfigChanged()
@@ -172,9 +172,9 @@ void KMMainWin::slotConfigChanged()
 
 //-----------------------------------------------------------------------------
 bool KMMainWin::queryClose() {
-   if (! kmkernel->canQueryClose() && !mReallyClose){
-     return false;
-   }
+  if ( !kmkernel->canQueryClose() && !mReallyClose ) {
+    return false;
+  }
 #if 0
   if (kmkernel->shuttingDown() || kapp->sessionSaving())
     return true;
