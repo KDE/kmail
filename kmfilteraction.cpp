@@ -1239,7 +1239,7 @@ void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
 
 
 //=============================================================================
-// KMFilterActionMove - file into folder
+// KMFilterActionMove - move into folder
 // File message into another mail folder
 //=============================================================================
 class KMFilterActionMove: public KMFilterActionWithFolder
@@ -1257,7 +1257,7 @@ KMFilterAction* KMFilterActionMove::newAction(void)
 }
 
 KMFilterActionMove::KMFilterActionMove()
-  : KMFilterActionWithFolder( "transfer", i18n("File into Folder") )
+  : KMFilterActionWithFolder( "transfer", i18n("Move Into Folder") )
 {
 }
 
@@ -1274,6 +1274,58 @@ bool KMFilterActionMove::requiresBody(KMMsgBase*) const
 {
     return false; //iff mFolder->folderMgr == msgBase->parent()->folderMgr;
 }
+
+
+//=============================================================================
+// KMFilterActionCopy - copy into folder
+// Copy message into another mail folder
+//=============================================================================
+class KMFilterActionCopy: public KMFilterActionWithFolder
+{
+public:
+  KMFilterActionCopy();
+  virtual ReturnCode process(KMMessage* msg) const;
+  virtual bool requiresBody(KMMsgBase*) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionCopy::newAction(void)
+{
+  return (new KMFilterActionCopy);
+}
+
+KMFilterActionCopy::KMFilterActionCopy()
+  : KMFilterActionWithFolder( "copy", i18n("Copy Into Folder") )
+{
+}
+
+KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
+{
+  if ( !mFolder )
+    return ErrorButGoOn;
+
+  // copy the message 1:1
+  KMMessage* msgCopy = new KMMessage;
+  msgCopy->fromDwString(msg->asDwString());
+  
+  // TODO opening and closing the folder is a trade off.
+  // Perhaps Copy is a seldomly used action for now,
+  // but I gonna look at improvements ASAP.
+  mFolder->open();
+  int index;
+  int rc = mFolder->addMsg(msgCopy, &index);
+  if (rc == 0 && index != -1)
+    mFolder->unGetMsg( mFolder->count() - 1 );
+  mFolder->close();
+  
+  return GoOn;
+}
+
+bool KMFilterActionCopy::requiresBody(KMMsgBase*) const
+{
+    return true;
+}
+
 
 //=============================================================================
 // KMFilterActionForward - forward to
@@ -1699,6 +1751,7 @@ const QString KMFilterActionWithUrl::argsAsString() const
 void KMFilterActionDict::init(void)
 {
   insert( KMFilterActionMove::newAction );
+  insert( KMFilterActionCopy::newAction );
   insert( KMFilterActionIdentity::newAction );
   insert( KMFilterActionSetStatus::newAction );
   insert( KMFilterActionFakeDisposition::newAction );
@@ -1715,10 +1768,10 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionExecSound::newAction );
   // Register custom filter actions below this line.
 }
-// The int in the QDict constructor (23) must be a prime
+// The int in the QDict constructor (41) must be a prime
 // and should be greater than the double number of KMFilterAction types
 KMFilterActionDict::KMFilterActionDict()
-  : QDict<KMFilterActionDesc>(23)
+  : QDict<KMFilterActionDesc>(41)
 {
   mList.setAutoDelete(TRUE);
   init();
