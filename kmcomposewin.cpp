@@ -52,6 +52,8 @@ extern KBusyPtr *kbp;
 extern KRNSender *msgSender;
 extern KMIdentity *identity;
 extern KMAddrBook *addrBook;
+typedef QList<QWidget> WindowList;
+WindowList* windowList=new WindowList;
 #define aboutText "KRN"
 /* end added for KRN */
 #else
