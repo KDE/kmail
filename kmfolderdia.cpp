@@ -811,6 +811,10 @@ bool FolderDiaGeneralTab::save()
         KMessageBox::error( this, message );
         return false;
       }
+      if ( fldName.find( '/' ) != -1 ) {
+        KMessageBox::error( this, i18n( "Folder names can't contain the / (slash) character, please choose another folder name" ) );
+        return false;
+      }
       message = i18n( "<qt>Failed to create folder <b>%1</b>."
             "</qt> " ).arg(fldName);
  
