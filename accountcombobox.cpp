@@ -47,6 +47,7 @@ AccountComboBox::AccountComboBox( bool needsInbox, QWidget* parent, const char* 
 
 void AccountComboBox::slotRefreshAccounts()
 {
+  KMAccount* curr = currentAccount();
   clear();
   // Note that this won't take into account newly-created-in-configuredialog accounts
   // until clicking OK or Apply. This would make this class much more complex
@@ -59,6 +60,8 @@ void AccountComboBox::slotRefreshAccounts()
     accountNames.append( (*it)->name() );
   kdDebug() << k_funcinfo << accountNames << endl;
   insertStringList( accountNames );
+  if ( curr )
+    setCurrentAccount( curr );
 }
 
 
