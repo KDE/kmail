@@ -1070,7 +1070,8 @@ void ConfigureDialog::show( void )
 void ConfigureDialog::makeIdentityPage( void )
 {
   QFrame *page = addPage( i18n("Identity"), i18n("Personal information"),
-			  QPixmap(user_xpm) );
+    KGlobal::instance()->iconLoader()->loadIcon( "identity", KIcon::NoGroup,
+    KIcon::SizeMedium ));                                                       
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mIdentity.pageIndex = pageIndex(page);
 
@@ -1195,7 +1196,8 @@ void ConfigureDialog::makeNetworkPage( void )
 {
   QFrame *page = addPage( i18n("Network"),
 			  i18n("Setup for sending and receiving messages"),
-			  QPixmap(network_xpm) /*UserIcon("network")*/ );
+    KGlobal::instance()->iconLoader()->loadIcon( "network", KIcon::NoGroup,
+    KIcon::SizeMedium ));                                                       
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mNetwork.pageIndex = pageIndex(page);
 
@@ -1327,7 +1329,8 @@ void ConfigureDialog::makeAppearancePage( void )
 {
   QVBox *vbox = addVBoxPage( i18n("Appearance"),
 			     i18n("Customize visual appearance"),
-			     QPixmap(appearance_xpm));
+    KGlobal::instance()->iconLoader()->loadIcon( "appearance", KIcon::NoGroup,
+    KIcon::SizeMedium ));                                                       
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
   mAppearance.pageIndex = pageIndex(vbox);
 
@@ -1519,7 +1522,8 @@ void ConfigureDialog::makeComposerPage( void )
 {
   QFrame *page = addPage( i18n("Composer"),
 			  i18n("Phrases and general behavior"),
-			  QPixmap(composer_xpm) );
+    KGlobal::instance()->iconLoader()->loadIcon( "edit", KIcon::NoGroup,
+    KIcon::SizeMedium ));                                                       
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mComposer.pageIndex = pageIndex(page);
 
@@ -1584,7 +1588,8 @@ void ConfigureDialog::makeMimePage( void )
 {
   QFrame *page = addPage( i18n("Mime Headers"),
     i18n("Define custom mime header tags for outgoing emails"),
-			  QPixmap(mime_xpm) );
+    KGlobal::instance()->iconLoader()->loadIcon( "readme", KIcon::NoGroup,
+    KIcon::SizeMedium ));                                                       
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMime.pageIndex = pageIndex(page);
 
@@ -1644,7 +1649,8 @@ void ConfigureDialog::makeSecurityPage( void )
 {
   QVBox *vbox = addVBoxPage( i18n("Security"),
 			     i18n("Security Settings"),
-			     QPixmap(security_xpm) /*UserIcon("security")*/ );
+    KGlobal::instance()->iconLoader()->loadIcon( "encrypted", KIcon::NoGroup,
+    KIcon::SizeMedium ));                                                       
   mSecurity.pageIndex = pageIndex(vbox);
 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
