@@ -22,7 +22,7 @@
 #include <kaction.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
-#include <kstdaccel.h>
+#include <kstdguiitem.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
@@ -857,14 +857,13 @@ void KMMainWin::slotRemoveFolder()
     return;
   }
 
-  str = i18n("Are you sure you want to remove the folder\n"
+  str = i18n("Are you sure you want to remove the folder "
 	     "\"%1\" and all subfolders, discarding their contents?")
 			     .arg(mFolder->label());
 
-  if (KMessageBox::warningContinueCancel(this, str,
-                              i18n("Remove folder"), i18n("&Remove") )
-      ==
-      KMessageBox::Continue)
+  if (KMessageBox::warningYesNo(this, str, i18n("Remove folder"),
+				i18n("&Remove"), KStdGuiItem::cancel() )
+      == KMessageBox::Yes)
   {
     if (mFolder->protocol() == "imap")
       static_cast<KMFolderImap*>(mFolder)->removeOnServer();
