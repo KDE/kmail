@@ -616,18 +616,19 @@ void KMFolderDialog::slotOk()
     // useCustomIcons changed.
     if ( mFolder->useCustomIcons() != mIconsCheckBox->isChecked() ) {
       mFolder->setUseCustomIcons( mIconsCheckBox->isChecked() );
-      if ( (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&
-            ( !mNormalIconButton->icon().isEmpty())) ||
-          (( mUnreadIconButton->icon() != mFolder->unreadIconPath() ) &&
-           ( !mUnreadIconButton->icon().isEmpty())) )
-        mFolder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+      // Reset icons, useCustomIcons was turned off.
       if ( !mFolder->useCustomIcons() ) {
-        // Reset icons, useCustomIcons was turned off.
         mFolder->setIconPaths( "", "" );
-      }
+      } 
     }
-
-    // set whoField
+    if ( mFolder->useCustomIcons() &&
+      (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&
+      ( !mNormalIconButton->icon().isEmpty())) ||
+      (( mUnreadIconButton->icon() != mFolder->unreadIconPath() ) &&
+      ( !mUnreadIconButton->icon().isEmpty())) ) {
+      mFolder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+    }
+        // set whoField
     if (senderType->currentItem() == 1)
       mFolder->setUserWhoField("From");
     else if (senderType->currentItem() == 2)
