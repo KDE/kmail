@@ -108,12 +108,9 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if ( !mErrorDialogIsActive )
   {
     mErrorDialogIsActive = true;
-    if ( KMessageBox::messageBox(kmkernel->mainWin(), KMessageBox::Error,
-          KIO::buildErrorString(errorCode, errorMsg),
-          i18n("Error")) == KMessageBox::Ok )
-    {
-      mErrorDialogIsActive = false;
-    }
+    KMessageBox::error(kmkernel->mainWin(),
+          KIO::buildErrorString(errorCode, errorMsg));
+    mErrorDialogIsActive = false;
   } else
     kdDebug(5006) << "suppressing error:" << errorMsg << endl;
 }
