@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>KMFolderDialogUI</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>379</width>
-            <height>487</height>
+            <width>344</width>
+            <height>437</height>
         </rect>
     </property>
     <property name="caption">
@@ -18,6 +18,9 @@
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
         </property>
         <widget class="QGroupBox">
             <property name="name">
@@ -30,7 +33,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLineEdit" row="0" column="2" rowspan="1" colspan="3">
+                <widget class="QLineEdit" row="0" column="2" rowspan="1" colspan="6">
                     <property name="name">
                         <cstring>mNameEdit</cstring>
                     </property>
@@ -52,28 +55,46 @@
                         <cstring>mNameEdit</cstring>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="5">
+                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="8">
                     <property name="name">
                         <cstring>mHoldsMailingList</cstring>
                     </property>
                     <property name="text">
                         <string>Folder holds a &amp;mailing list</string>
                     </property>
-                </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="5">
-                    <property name="name">
-                        <cstring>mIconsCheckBox</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use custom &amp;icons</string>
+                    <property name="accel">
+                        <string>Alt+M</string>
                     </property>
                 </widget>
-                <widget class="QLineEdit" row="5" column="4">
+                <spacer row="4" column="0">
                     <property name="name">
-                        <cstring>mMailingListPostAddress</cstring>
+                        <cstring>Spacer1_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLabel" row="4" column="1" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>TextLabel2_2</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>List &amp;address:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>mMailingListPostAddress</cstring>
                     </property>
                 </widget>
                 <spacer row="2" column="0">
@@ -93,9 +114,54 @@
                         </size>
                     </property>
                 </spacer>
-                <spacer row="5" column="0">
+                <widget class="QLabel" row="2" column="1" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>Spacer1_2</cstring>
+                        <cstring>TextLabel3</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>N&amp;ormal:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>mNormalIconButton</cstring>
+                    </property>
+                </widget>
+                <widget class="KIconButton" row="2" column="3">
+                    <property name="name">
+                        <cstring>mNormalIconButton</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>28</width>
+                            <height>28</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>28</width>
+                            <height>28</height>
+                        </size>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <spacer row="2" column="4">
+                    <property name="name">
+                        <cstring>Spacer1_4</cstring>
                     </property>
                     <property name="orientation">
                         <enum>Horizontal</enum>
@@ -110,52 +176,7 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLabel" row="5" column="1" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>TextLabel2_2</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>List address:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>mMailingListPostAddress</cstring>
-                    </property>
-                </widget>
-                <widget class="KIconButton" row="2" column="3" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>mNormalIconButton</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                        <size>
-                            <width>28</width>
-                            <height>28</height>
-                        </size>
-                    </property>
-                    <property name="maximumSize">
-                        <size>
-                            <width>28</width>
-                            <height>28</height>
-                        </size>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="KIconButton" row="3" column="3" rowspan="1" colspan="2">
+                <widget class="KIconButton" row="2" column="6">
                     <property name="name">
                         <cstring>mUnreadIconButton</cstring>
                     </property>
@@ -186,7 +207,7 @@
                         <string></string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="3" column="1" rowspan="1" colspan="2">
+                <widget class="QLabel" row="2" column="5">
                     <property name="name">
                         <cstring>TextLabel4</cstring>
                     </property>
@@ -194,24 +215,54 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Unread:</string>
+                        <string>Unr&amp;ead:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>mUnreadIconButton</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="1" rowspan="1" colspan="2">
+                <spacer row="2" column="7">
                     <property name="name">
-                        <cstring>TextLabel3</cstring>
+                        <cstring>spacer9</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>101</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="8">
+                    <property name="name">
+                        <cstring>mIconsCheckBox</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use custom &amp;icons</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+I</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit" row="4" column="4" rowspan="1" colspan="4">
+                    <property name="name">
+                        <cstring>mMailingListPostAddress</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
                     </property>
-                    <property name="text">
-                        <string>Normal:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>mNormalIconButton</cstring>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
                     </property>
                 </widget>
             </grid>
@@ -221,7 +272,7 @@
                 <cstring>GroupBox3</cstring>
             </property>
             <property name="title">
-                <string>Expiring Old Messages</string>
+                <string>Message Expiring</string>
             </property>
             <grid>
                 <property name="name">
@@ -235,7 +286,10 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Expire after:</string>
+                        <string>E&amp;xpire after:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>mExpireReadNum</cstring>
                     </property>
                 </widget>
                 <spacer row="1" column="0">
@@ -257,10 +311,13 @@
                 </spacer>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="4">
                     <property name="name">
-                        <cstring>CheckBox3</cstring>
+                        <cstring>mExpireRead</cstring>
                     </property>
                     <property name="text">
-                        <string>Expire read messages</string>
+                        <string>Expire &amp;read messages</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+R</string>
                     </property>
                 </widget>
                 <spacer row="3" column="0">
@@ -288,20 +345,26 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Expire after:</string>
+                        <string>Expire a&amp;fter:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>mExpireUnreadNum</cstring>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="4">
                     <property name="name">
-                        <cstring>CheckBox3_2</cstring>
+                        <cstring>mExpireUnread</cstring>
                     </property>
                     <property name="text">
-                        <string>Expire unread messages</string>
+                        <string>Expire &amp;unread messages</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+U</string>
                     </property>
                 </widget>
                 <widget class="KIntNumInput" row="1" column="2">
                     <property name="name">
-                        <cstring>KIntNumInput1</cstring>
+                        <cstring>mExpireReadNum</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -315,7 +378,7 @@
                 </widget>
                 <widget class="KIntNumInput" row="3" column="2">
                     <property name="name">
-                        <cstring>KIntNumInput1_2</cstring>
+                        <cstring>mExpireUnreadNum</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -344,7 +407,7 @@
                         </property>
                     </item>
                     <property name="name">
-                        <cstring>KComboBox1_2_2</cstring>
+                        <cstring>mExpireUnreadUnits</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -367,7 +430,7 @@
                         </property>
                     </item>
                     <property name="name">
-                        <cstring>KComboBox1_2</cstring>
+                        <cstring>mExpireReadUnits</cstring>
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
@@ -403,83 +466,50 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Sender Identit&amp;y:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>mIdentity</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="1" column="1">
+                    <property name="name">
+                        <cstring>mIdentity</cstring>
+                    </property>
+                </widget>
+                <widget class="KComboBox" row="0" column="1">
+                    <property name="name">
+                        <cstring>mMailboxType</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
                     <property name="name">
                         <cstring>TextLabel1_2</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Format:</string>
+                        <string>&amp;Storage Format:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>mMailboxType</cstring>
                     </property>
                 </widget>
-                <widget class="KComboBox" row="0" column="2">
+                <widget class="QLabel" row="2" column="0">
                     <property name="name">
-                        <cstring>mMailboxType</cstring>
+                        <cstring>TextLabel1_3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;List Displays:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>mListDisplays</cstring>
                     </property>
                 </widget>
-                <widget class="QButtonGroup" row="2" column="1" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>ButtonGroup1</cstring>
-                    </property>
-                    <property name="frameShape">
-                        <enum>NoFrame</enum>
-                    </property>
-                    <property name="title">
-                        <string></string>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <widget class="QRadioButton">
-                            <property name="name">
-                                <cstring>RadioButton1</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Default</string>
-                            </property>
-                        </widget>
-                        <widget class="QRadioButton">
-                            <property name="name">
-                                <cstring>RadioButton2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Sender</string>
-                            </property>
-                        </widget>
-                        <widget class="QRadioButton">
-                            <property name="name">
-                                <cstring>RadioButton3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Receiver</string>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <spacer row="2" column="0">
-                    <property name="name">
-                        <cstring>Spacer1_3</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="0" column="3">
+                <spacer row="0" column="2" rowspan="3" colspan="1">
                     <property name="name">
                         <cstring>Spacer7</cstring>
                     </property>
@@ -491,23 +521,49 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>20</width>
-                            <height>20</height>
+                            <width>120</width>
+                            <height>80</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLabel" row="1" column="0" rowspan="1" colspan="3">
+                <widget class="QComboBox" row="2" column="1">
+                    <item>
+                        <property name="text">
+                            <string>Sender</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Receiver</string>
+                        </property>
+                    </item>
                     <property name="name">
-                        <cstring>TextLabel1_3</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show sender/receiver:</string>
+                        <cstring>mListDisplays</cstring>
                     </property>
                 </widget>
             </grid>
         </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer11</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>31</height>
+                </size>
+            </property>
+        </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>mIconsCheckBox</sender>
@@ -546,39 +602,39 @@
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>CheckBox3</sender>
+        <sender>mExpireRead</sender>
         <signal>toggled(bool)</signal>
         <receiver>TextLabel2_3</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>CheckBox3</sender>
+        <sender>mExpireRead</sender>
         <signal>toggled(bool)</signal>
-        <receiver>KIntNumInput1</receiver>
+        <receiver>mExpireReadNum</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>CheckBox3</sender>
+        <sender>mExpireRead</sender>
         <signal>toggled(bool)</signal>
-        <receiver>KComboBox1_2</receiver>
+        <receiver>mExpireReadUnits</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>CheckBox3_2</sender>
+        <sender>mExpireUnread</sender>
         <signal>toggled(bool)</signal>
         <receiver>TextLabel2_3_2</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>CheckBox3_2</sender>
+        <sender>mExpireUnread</sender>
         <signal>toggled(bool)</signal>
-        <receiver>KIntNumInput1_2</receiver>
+        <receiver>mExpireUnreadNum</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>CheckBox3_2</sender>
+        <sender>mExpireUnread</sender>
         <signal>toggled(bool)</signal>
-        <receiver>KComboBox1_2_2</receiver>
+        <receiver>mExpireUnreadUnits</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
@@ -609,14 +665,7 @@
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>kicondialog.h</includehint>
-    <includehint>kicondialog.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>kcombobox.h</includehint>
-    <includehint>kcombobox.h</includehint>
-    <includehint>kcombobox.h</includehint>
 </includehints>
 </UI>
