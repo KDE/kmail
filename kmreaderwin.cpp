@@ -2065,7 +2065,9 @@ bool KMReaderWin::htmlMail()
 //-----------------------------------------------------------------------------
 void KMReaderWin::update( bool force )
 {
-  setMsg( message(), force );
+  KMMessage* msg = message();
+  if ( msg )
+    setMsg( msg, force );
 }
 
 
