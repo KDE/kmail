@@ -22,9 +22,8 @@
 
 //-----------------------------------------------------------------------------
 KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
- : QObject(parent)
+  : QObject(parent), mPrecommand(precommand)
 {
-  mPrecommand = precommand;
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
@@ -64,17 +63,17 @@ void KMPrecommand::precommandExited(KProcess *p)
 
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
+  : mName(aName),
+    mOwner(aOwner),
+    mFolder(0),
+    mTimer(0),
+    mInterval(0),
+    mExclude(false),
+    mCheckingMail(false),
+    mPrecommandSuccess(true)
 {
   assert(aOwner != NULL);
 
-  mOwner  = aOwner;
-  mName   = aName;
-  mFolder = NULL;
-  mTimer  = NULL;
-  mInterval = 0;
-  mExclude = false;
-  mCheckingMail = FALSE;
-  mPrecommandSuccess = TRUE;
   connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
 
