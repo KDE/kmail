@@ -977,8 +977,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader()
 {
-  QString headerStr;
   QString vcname;
+  QString dir = ( QApplication::reverseLayout() ? "RTL" : "LTR" );
+  QString headerStr = QString("<div dir=%1>").arg(dir);
 
   if (mVcnum >= 0) vcname = mTempFiles.last();
 
@@ -1025,13 +1026,13 @@ QString KMReaderWin::writeMsgHeader()
   case HdrFancy:
   {
     // the subject line and box below for details
-    headerStr = QString("<div class=\"fancyHeaderSubj\">"
+    headerStr += QString("<div class=\"fancyHeaderSubj\">"
                         "<b>%5</b></div>"
                         "<div class=\"fancyHeaderDtls\">"
                         "<table class=\"fancyHeaderDtls\">")
-                       .arg(mMsg->subject().isEmpty()?
-                            i18n("No Subject") :
-                            strToHtml(mMsg->subject()));
+		        .arg(mMsg->subject().isEmpty()?
+			     i18n("No Subject") :
+			     strToHtml(mMsg->subject()));
 
     // from line
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2%3%4</td></tr>")
@@ -1108,17 +1109,23 @@ QString KMReaderWin::writeMsgHeader()
     break;
 
   case HdrAll:
-    headerStr = strToHtml(mMsg->headerAsString(), true);
+      // we force the direction to LTR here, even in a arabic/hebrew UI,
+      // as the headers are almost all Latin1
+    headerStr += "<div dir=\"LTR\">";
+    headerStr += strToHtml(mMsg->headerAsString(), true);
     if (mVcnum >= 0) 
     {
       headerStr.append("<br><a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
+    headerStr += "</div>";
     break;
 
   default:
     kdDebug(5006) << "Unsupported header style " << mHeaderStyle << endl;
   }
 
+  headerStr += "</div>";
+  
   return headerStr;
 }
 
@@ -1330,21 +1337,23 @@ void KMReaderWin::writeHTMLStr(const QString& aStr)
 
 QString KMReaderWin::quotedHTML(const QString& s)
 {
-  QString htmlStr, line, normalStartTag, normalEndTag;
+  QString htmlStr, line;
+  QString normalStartTag;
+  QString normalEndTag;
   QString quoteEnd("</span>");
 
   unsigned int pos, beg;
   unsigned int length = s.length();
-
+  enum { First, New, Mid } paragState = First;
+  bool rightToLeft = false;
+  
   if (mBodyFont.bold()) { normalStartTag += "<b>"; normalEndTag += "</b>"; }
   if (mBodyFont.italic()) { normalStartTag += "<i>"; normalEndTag += "</i>"; }
-
+  
   // skip leading empty lines
   for( pos = 0; pos < length && s[pos] <= ' '; pos++ );
   while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
-
-  htmlStr = normalStartTag;
 
   int currQuoteLevel = -1;
   
@@ -1369,34 +1378,43 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	    case '|':	actQuoteLevel++;
 			break;
 	    case ' ':
-	    case '\t':	break;
+	    case '\t':
+	    case '\r':  break;
 	    default:	finish = TRUE;
 			break;
 	}
     } /* for() */
 
-    line = strToHtml(line, TRUE);
-    p = line.length();
-    line.append("<br>");
+    if ( (paragState != Mid && finish) || (actQuoteLevel != currQuoteLevel) ) {
+	if ( finish )
+	    rightToLeft = line.isRightToLeft();
 
-    /* continue with current quotelevel if it didn't changed */
-    if (actQuoteLevel == currQuoteLevel || p == 0) {
-	htmlStr.append(line);
-	continue;
+	/* finish last quotelevel */
+	if (currQuoteLevel == -1)
+	    htmlStr.append( normalEndTag );
+	else
+	    htmlStr.append( quoteEnd );
+
+	if ( paragState == New )
+	    htmlStr += "</div>";
+	
+	htmlStr += ( rightToLeft ? "<div dir=rtl>" : "<div dir=ltr>" );
+	
+	/* start new quotelevel */
+	currQuoteLevel = actQuoteLevel;
+	if (actQuoteLevel == -1)
+	    htmlStr += normalStartTag;
+	else
+	    htmlStr += mQuoteFontTag[currQuoteLevel%3];
+
+	paragState = Mid;
     }
 
-    /* finish last quotelevel */
-    if (currQuoteLevel == -1)
-	htmlStr.append( normalEndTag );
-    else
-	htmlStr.append( quoteEnd );
+    if ( !finish && paragState == Mid )
+	paragState = New;
 
-    /* start new quotelevel */
-    currQuoteLevel = actQuoteLevel;
-    if (actQuoteLevel == -1)
-	line.prepend(normalStartTag);
-    else
-        line.prepend( mQuoteFontTag[currQuoteLevel%3] );
+    line = strToHtml(line, TRUE);
+    line.append("<br>");
 
     htmlStr.append(line);
   } /* while() */
@@ -1405,7 +1423,8 @@ QString KMReaderWin::quotedHTML(const QString& s)
   if (currQuoteLevel == -1)
      htmlStr.append( normalEndTag );
   else
-     htmlStr.append( quoteEnd );	
+     htmlStr.append( quoteEnd );
+  htmlStr += "</div>";
 
   return htmlStr;
 }
