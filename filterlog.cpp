@@ -46,7 +46,7 @@ FilterLog * FilterLog::instance()
   if ( !self ) self = new FilterLog();
   return self;
 }
-      
+
 
 void FilterLog::add( QString logEntry )
 {
@@ -59,19 +59,19 @@ void FilterLog::add( QString logEntry )
     emit logEntryAdded( logEntry );
 // FIXME to be removed
 #ifndef NDEBUG
-    if ( !(logEntries.size() % 10) )
-      dump();
+    //if ( !(logEntries.size() % 10) )
+    //  dump();
 #endif
   }
 }
-      
+
 
 void FilterLog::dump()
 {
 #ifndef NDEBUG
   kdDebug(5006) << "----- starting filter log -----" << endl;
-  for ( QStringList::Iterator it = logEntries.begin(); 
-        it != logEntries.end(); ++it ) 
+  for ( QStringList::Iterator it = logEntries.begin();
+        it != logEntries.end(); ++it )
   {
     kdDebug(5006) << *it << endl;
   }
