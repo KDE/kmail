@@ -563,6 +563,11 @@ void KMAcctExpPop::startJob() {
   }
   else if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
+  if (!slave)
+  {
+    slotSlaveError(0, KIO::ERR_COULD_NOT_CONNECT, "");
+    return;
+  }
   url.setPath(QString("/index"));
   job = KIO::get( url.url(), false, false );
   connectJob();
