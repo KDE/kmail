@@ -458,9 +458,13 @@ public:
         tmp = msg->fromStrip();
       return ret + tmp.lower() + ' ' + sortArrival;
     } else if (column == paintInfo->subCol) {
-      if (paintInfo->status)
-        return ret + ' ' + msg->statusToSortRank() + ' ' + sortArrival;
-      return ret + KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
+      QString tmp;
+      tmp = ret; 
+      if (paintInfo->status) {
+        tmp += msg->statusToSortRank() + ' ';
+      }
+      tmp += KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
+      return tmp;
     }
     else if (column == paintInfo->sizeCol) {
       QString len;

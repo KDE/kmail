@@ -429,31 +429,26 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 //-----------------------------------------------------------------------------
 QString KMMsgBase::statusToSortRank()
 {
-  QString sstr;
+  QString sstr = "bcbbbbbb";
 
   // put watched ones first, then normal ones, ignored ones last
-  sstr = 'b';
-  if (status() & KMMsgStatusWatched) sstr = 'a';
-  if (status() & KMMsgStatusIgnored) sstr = 'c';
+  if (status() & KMMsgStatusWatched) sstr[0] = 'a';
+  if (status() & KMMsgStatusIgnored) sstr[0] = 'c';
 
   // Second level. One of new, old, read, unread
-  if (status() & KMMsgStatusNew) sstr += 'a';
-  if (status() & KMMsgStatusUnread) sstr += 'b';
-  if (status() & KMMsgStatusOld) sstr += 'c';
-  if (status() & KMMsgStatusRead) sstr += 'd';
+  if (status() & KMMsgStatusNew) sstr[1] = 'a';
+  if (status() & KMMsgStatusUnread) sstr[1] = 'b';
+  //if (status() & KMMsgStatusOld) sstr[1] = 'c';
+  //if (status() & KMMsgStatusRead) sstr[1] = 'c';
   
-  // Third level. Mulitple of these.
-  if (status() & KMMsgStatusDeleted) sstr += 'a';
-  if (status() & KMMsgStatusFlag) sstr += 'b';
-  if (status() & KMMsgStatusReplied) sstr += 'c';
-  if (status() & KMMsgStatusForwarded) sstr += 'd';
-  if (status() & KMMsgStatusQueued) sstr += 'e';
-  if (status() & KMMsgStatusSent) sstr += 'f';
+  // Third level. In somewhat arbitrary order. 
+  if (status() & KMMsgStatusDeleted) sstr[2] = 'a';
+  if (status() & KMMsgStatusFlag) sstr[3] = 'a';
+  if (status() & KMMsgStatusReplied) sstr[4] = 'a';
+  if (status() & KMMsgStatusForwarded) sstr[5] = 'a';
+  if (status() & KMMsgStatusQueued) sstr[6] = 'a';
+  if (status() & KMMsgStatusSent) sstr[7] = 'a';
 
-  // if the message has no flag at all, this will put it after all flagged
-  // ones. The flagged ones don't care about it.
-  sstr += 'g';
-  
   return sstr;
 }
 
