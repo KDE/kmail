@@ -262,6 +262,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       }
     }
     mCurrentMsg->setStatus(KMMsgStatusSent);
+    mCurrentMsg->setStatus(KMMsgStatusRead); // otherwise it defaults to new on imap
 
     const KMIdentity & id = kmkernel->identityManager()
       ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
