@@ -27,7 +27,7 @@ public:
   QString basePath() const { return mBasePath; }
 
   /** Set base path. Also calls reload() on the base directory. */
-  virtual void setBasePath(const QString&);
+  virtual void setBasePath(const QString&, bool);
 
   /** Provides access to base directory */
   KMFolderRootDir& dir();

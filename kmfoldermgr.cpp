@@ -35,7 +35,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath, bool aImap):
 {
   mQuiet = 0;
   mChanged = FALSE;
-  setBasePath(aBasePath);
+  setBasePath(aBasePath, aImap);
 }
 
 
@@ -92,7 +92,7 @@ void KMFolderMgr::compactAllAux(KMFolderDir* dir)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::setBasePath(const QString& aBasePath)
+void KMFolderMgr::setBasePath(const QString& aBasePath, bool aImap)
 {
   QDir dir;
 
@@ -111,7 +111,8 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   dir.setPath(mBasePath);
   if (!dir.exists())
   {
-    KMessageBox::information(0, i18n("Directory\n%1\ndoes not exist.\n\n"
+    if (!aImap)
+      KMessageBox::information(0, i18n("Directory\n%1\ndoes not exist.\n\n"
 				  "KMail will create it now.").arg(mBasePath));
     // FIXME: mkdir can fail!
     mkdir(QFile::encodeName(mBasePath), 0700);
