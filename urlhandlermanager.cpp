@@ -234,7 +234,7 @@ namespace {
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
       return false;
     KProcess cmp;
-    cmp << "kgpgcertmanager" << displayName << libName << "-query" << keyId;
+    cmp << "kleopatra" << "-query" << keyId;
     if ( !cmp.start( KProcess::DontCare ) )
       KMessageBox::error( w, i18n("Could not start certificate manager. "
 				  "Please check your installation."),

@@ -1387,9 +1387,7 @@ void KMMainWidget::slotStartCertManager()
   }
   KProcess certManagerProc; // save to create on the heap, since
   // there is no parent
-  certManagerProc << "kgpgcertmanager";
-  certManagerProc << wrapper->displayName();
-  certManagerProc << wrapper->libName();
+  certManagerProc << "kleopatra";
 
   if( !certManagerProc.start( KProcess::DontCare ) )
     KMessageBox::error( this, i18n( "Could not start certificate manager; "
@@ -2169,7 +2167,7 @@ void KMMainWidget::setupActions()
   act = new KAction( i18n("Certificate Manager..."), "pgp-keys", 0, this,
 		     SLOT(slotStartCertManager()), actionCollection(), "tools_start_certman");
   // disable action if no certman binary is around
-  if (KStandardDirs::findExe("kgpgcertmanager").isEmpty()) act->setEnabled(false);
+  if (KStandardDirs::findExe("kleopatra").isEmpty()) act->setEnabled(false);
 
   act = new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
 		     SLOT(slotImport()), actionCollection(), "import" );
