@@ -71,7 +71,7 @@ protected:
   virtual void searchDone();
 
   /** Return the KMMessage corresponding to the selected listviewitem */
-  KMMessage* KMFldSearch::getSelectedMsg();
+  KMMessage* getSelectedMsg();
 
   /** Reimplemented to react to Escape. */
   virtual void keyPressEvent(QKeyEvent*);
@@ -107,8 +107,8 @@ protected:
   // not owned by us
   KMMainWin* mMainWin;
   
-  const static int FOLDER_COLUMN = 3;
-  const static int MSGID_COLUMN = 4;
+  static const int FOLDER_COLUMN = 3;
+  static const int MSGID_COLUMN = 4;
 };
 
 
