@@ -1873,7 +1873,15 @@ void KMComposeWin::doSend(int aSendNow)
   kernel->kbp()->busy();
   //applyChanges();  // is called twice otherwise. Lars
   mMsg->setDateToday();
-  mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
+
+  // If a user sets up their outgoing messages preferences wrong and then
+  // sends mail that gets 'stuck' in their outbox, they should be able to
+  // rectify the problem by editing their outgoing preferences and
+  // resending.
+  // Hence this following conditional
+  if (mTransport.currentText() != kernel->msgSender()->transportString())    
+    mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
+
   sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
   kernel->kbp()->idle();
 
