@@ -95,7 +95,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
   connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 
-  connect( kmkernel->acctMgr(), SIGNAL( checkedMail(bool, bool) ),
+  connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
            SLOT( updateNewMessages() ) );
 }
 

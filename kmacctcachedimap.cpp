@@ -201,8 +201,8 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
     mMailCheckFolders.append( mFoldersQueuedForChecking.front() );
     mFoldersQueuedForChecking.pop_front();
     if ( mFoldersQueuedForChecking.isEmpty() )
-      disconnect (this, SIGNAL(finishedCheck(bool)),
-                  this, SLOT(slotCheckQueuedFolders()));
+      disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                  this, SLOT( slotCheckQueuedFolders() ) );
 
     kmkernel->acctMgr()->singleCheckMail(this, true);
     mMailCheckFolders.clear();
@@ -211,7 +211,7 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
 void KMAcctCachedImap::processNewMail( bool interactive )
 {
   if ( !mFolder ) { // happens if this is a pseudo-account (from configuredialog)
-    checkDone(false, 0);
+    checkDone( false, CheckIgnored );
     return;
   }
   if ( mMailCheckFolders.isEmpty() )
@@ -230,6 +230,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
   mCountLastUnread = 0;
+  mUnreadBeforeCheck.clear();
 
   if( interactive && isProgressDialogEnabled() ) {
     // Show progress dialog in all kmail-mainwidgets.
@@ -275,14 +276,26 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
   KMail::ImapAccountBase::postProcessNewMail();
 }
 
-void KMAcctCachedImap::addUnreadMsgCount( int msgs )
+void KMAcctCachedImap::addUnreadMsgCount( const KMFolderCachedImap *folder,
+                                          int countUnread )
 {
-  mCountUnread += msgs;
+  if ( folder->imapPath() != "/INBOX/" ) {
+    // new mail in INBOX is processed with KMAccount::processNewMsg() and
+    // therefore doesn't need to be counted here
+    const QString folderId = folder->folder()->idString();
+    int newInFolder = countUnread;
+    if ( mUnreadBeforeCheck.find( folderId ) != mUnreadBeforeCheck.end() )
+      newInFolder -= mUnreadBeforeCheck[folderId];
+    addToNewInFolder( folderId, newInFolder );
+  }
+  mCountUnread += countUnread;
 }
 
-void KMAcctCachedImap::addLastUnreadMsgCount( int msgs )
+void KMAcctCachedImap::addLastUnreadMsgCount( const KMFolderCachedImap *folder,
+                                              int countLastUnread )
 {
-  mCountLastUnread += msgs;
+  mUnreadBeforeCheck[folder->folder()->idString()] = countLastUnread;
+  mCountLastUnread += countLastUnread;
 }
 
 //
@@ -324,6 +337,7 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 						false );
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   mCountLastUnread = 0;
+  mUnreadBeforeCheck.clear();
 
   for( it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolder *f = *it;

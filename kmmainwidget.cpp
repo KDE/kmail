@@ -145,8 +145,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
 
-  connect(kmkernel->acctMgr(), SIGNAL( checkedMail(bool, bool)),
-          SLOT( slotMailChecked(bool, bool)));
+  connect( kmkernel->acctMgr(), SIGNAL( checkedMail( bool, bool, const QMap<QString, int> & ) ),
+           this, SLOT( slotMailChecked( bool, bool, const QMap<QString, int> & ) ) );
 
   connect(kmkernel, SIGNAL( configChanged() ),
           this, SLOT( slotConfigChanged() ));
@@ -793,22 +793,45 @@ void KMMainWidget::slotCheckOneAccount(int item)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
+void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
+                                    const QMap<QString, int> & newInFolder )
 {
   if(mSendOnCheck && sendOnCheck)
     slotSendQueued();
 
-  if (!newMail)
+  if ( !newMail || newInFolder.isEmpty() )
     return;
+
+  // build summary for new mail message
+  QString summary;
+  QStringList keys( newInFolder.keys() );
+  keys.sort();
+  for ( QStringList::const_iterator it = keys.begin();
+        it != keys.end();
+        ++it ) {
+    kdDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
+                  << *it << endl;
+
+    KMFolder *folder = kmkernel->findFolderById( *it );
+
+    summary += "<br>" + i18n( "1 new message in %1",
+                              "%n new messages in %1",
+                              newInFolder.find( *it ).data() )
+                        .arg( folder->prettyURL() );
+  }
+  summary = i18n( "%1 is a list of the number of new messages per folder",
+                  "<b>New mail arrived</b><br>%1" )
+            .arg( summary );
 
   if(kmkernel->xmlGuiInstance()) {
     KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
-    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived",
-      i18n("New mail arrived"));
+    KNotifyClient::event( topLevelWidget()->winId(), "new-mail-arrived",
+                          summary );
   }
   else
-    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived",
-      i18n("New mail arrived"));
+    KNotifyClient::event( topLevelWidget()->winId(), "new-mail-arrived",
+                          summary );
+
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }

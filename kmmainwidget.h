@@ -212,7 +212,8 @@ protected:
 
 protected slots:
   void slotCheckOneAccount(int);
-  void slotMailChecked(bool newMail, bool sendOnCheck);
+  void slotMailChecked( bool newMail, bool sendOnCheck,
+                        const QMap<QString, int> & newInFolder );
   void getAccountMenu();
   void slotHelp();
   void slotNewMailReader();

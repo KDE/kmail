@@ -99,6 +99,7 @@ void KMAccount::init() {
   mTrash = kmkernel->trashFolder()->idString();
   mExclude = false;
   mInterval = 0;
+  mNewInFolder.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -259,6 +260,18 @@ if( fileD0.open( IO_WriteOnly ) ) {
       if (count != 1) mFolder->unGetMsg(count - 1);
     }
   }
+
+  // Count number of new messages for each folder
+  QString folderId;
+  if ( processResult == 1 ) {
+    folderId = ( type() == "cachedimap" ) ? parent->folder()->idString()
+                                          : mFolder->idString();
+  }
+  else {
+    folderId = aMsg->parent()->idString();
+  }
+  addToNewInFolder( folderId, 1 );
+
   return true; //Everything's fine - message has been added by filter  }
 }
 
@@ -425,19 +438,28 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMAccount::checkDone( bool newmail, int newmailCount )
+void KMAccount::checkDone( bool newmail, CheckStatus status )
 {
   mCheckingMail = false;
   // Reset the timeout for automatic mailchecking. The user might have
   // triggered the check manually.
   if (mTimer)
     mTimer->start(mInterval*60000);
-
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->setComplete(); // that will delete it
     mMailCheckProgressItem = 0;
   }
-  emit newMailsProcessed(newmailCount);
-  emit finishedCheck(newmail);
+
+  emit newMailsProcessed( mNewInFolder );
+  emit finishedCheck( newmail, status );
+  mNewInFolder.clear();
 }
 
+//-----------------------------------------------------------------------------
+void KMAccount::addToNewInFolder( QString folderId, int num )
+{
+  if ( mNewInFolder.find( folderId ) == mNewInFolder.end() )
+    mNewInFolder[folderId] = num;
+  else
+    mNewInFolder[folderId] += num;
+}

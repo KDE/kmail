@@ -1,4 +1,5 @@
-/* KMail Account: Abstract base class for accounts.
+/* -*- mode: C++ -*-
+ * KMail Account: Abstract base class for accounts.
  *
  * Author: Stefan Taferner <taferner@alpin.or.at>
  */
@@ -14,6 +15,7 @@
 #include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
+#include <qmap.h>
 
 class KMAcctMgr;
 class KMFolder;
@@ -58,6 +60,9 @@ class KMAccount: public QObject, public KAccount
 
 public:
   virtual ~KMAccount();
+
+  enum CheckStatus { CheckOK, CheckIgnored, CheckCanceled, CheckAborted,
+                     CheckError };
 
   /** The default check interval */
   static const int DefaultCheckInterval = 5;
@@ -191,9 +196,11 @@ public:
   void setCheckingMail( bool checking ) { mCheckingMail = checking; }
 
   /**
-   * Call this if the newmail-check ended
+   * Call this if the newmail-check ended.
+   * @param newMail true if new mail arrived
+   * @param status the status of the mail check
    */
-  void checkDone( bool newmails, int newmailCount );
+  void checkDone( bool newMail, CheckStatus status );
 
   /**
    * Abort all running mail checks. Used when closing the last KMMainWin.
@@ -211,8 +218,18 @@ public:
   }
 
 signals:
-  virtual void finishedCheck(bool newMail);
-  virtual void newMailsProcessed(int numberOfNewMails);
+  /**
+   * Emitted after the mail check is finished.
+   * @param newMail true if there was new mail
+   * @param status the status of the mail check
+   **/
+  virtual void finishedCheck( bool newMail, CheckStatus status );
+
+  /**
+   * Emitted after the mail check is finished.
+   * @param newInFolder number of new messages for each folder
+   **/
+  virtual void newMailsProcessed( const QMap<QString, int> & newInFolder );
 
 protected slots:
   virtual void mailCheck();
@@ -243,6 +260,14 @@ protected:
   virtual void installTimer();
   virtual void deinstallTimer();
 
+  /**
+   * Call this to increase the number of new messages in a folder for
+   * messages which are _not_ processed with processNewMsg().
+   * @param folderId the id of the folder
+   * @param num the number of new message in this folder
+   */
+  void addToNewInFolder( QString folderId, int num );
+
 protected:
   QString       mPrecommand;
   QString       mTrash;
@@ -263,6 +288,10 @@ private:
      * avoid compiler warning about hidden virtual
      */
     virtual void setName( const char *name ) { QObject::setName( name ); }
+
+private:
+  // for detailed (per folder) new mail notification
+  QMap<QString, int> mNewInFolder;
 };
 
 class KMAcctList: public QPtrList<KMAccount>

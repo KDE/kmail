@@ -1,4 +1,5 @@
-/* KMail Account Manager
+/* -*- mode: C++ -*-
+ * KMail Account Manager
  *
  * Author: Stefan Taferner <taferner@alpin.or.at>
  */
@@ -77,11 +78,17 @@ public slots:
 
   /** this slot increases the count of new mails to show a total number
   after checking in multiple accounts. */
-  virtual void addToTotalNewMailCount(int numNewMails);
+  virtual void addToTotalNewMailCount( const QMap<QString, int> & newInFolder );
 
 signals:
-  /** emitted if new mail has been collected */
-  void checkedMail(bool, bool);
+  /**
+   * Emitted if new mail has been collected.
+   * @param newMail true if there was new mail
+   * @param interactive true if the mail check was initiated by the user
+   * @param newInFolder number of new messages for each folder
+   **/
+  void checkedMail( bool newMail, bool interactive,
+                    const QMap<QString, int> & newInFolder );
   /** emitted when an account is removed */
   void accountRemoved( KMAccount* account );
 
@@ -92,6 +99,9 @@ private:
   bool newMailArrived;
   bool interactive;
   int  mTotalNewMailsArrived;
+
+  // for detailed (per folder) new mail notification
+  QMap<QString, int> mTotalNewInFolder;
 };
 
 #endif /*kmacctmgr_h*/

@@ -152,12 +152,13 @@ public:
   /**
    * Add a folder's unread count to the new "unread messages count", done during a sync after getting new mail
    */
-  void addUnreadMsgCount( int msgs );
+  void addUnreadMsgCount( const KMFolderCachedImap *folder, int countUnread );
 
   /**
    * Add a folder's unread count to the last "unread messages count", i.e. the counts before getting new mail
    */
-  void addLastUnreadMsgCount( int msgs );
+  void addLastUnreadMsgCount( const KMFolderCachedImap *folder, 
+                              int countLastUnread );
 
 protected:
   friend class KMAcctMgr;

@@ -238,7 +238,7 @@ namespace KMail {
 					       QString::null, name(),
 					       i18n("Account:") )
           != QDialog::Accepted ) {
-        checkDone(false, 0);
+        checkDone( false, CheckCanceled );
         mPasswordDialogIsActive = false;
         return Error;
       }
@@ -268,16 +268,16 @@ namespace KMail {
   // Called when we're really all done.
   void ImapAccountBase::postProcessNewMail() {
     setCheckingMail(false);
-    if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
+    if ( mCountUnread > 0 && mCountUnread > mCountLastUnread ) {
       int newMails = mCountUnread  - mCountLastUnread;
       mCountLastUnread = mCountUnread;
       mCountUnread = 0;
       KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         name(), newMails);
-      checkDone(true, newMails);
+      checkDone( true, CheckOK );
     } else {
       mCountUnread = 0;
-      checkDone(false, 0);
+      checkDone( false, CheckOK );
     }
   }
 
@@ -781,10 +781,10 @@ namespace KMail {
     mFoldersQueuedForChecking.append(folder);
     if (checkingMail())
     {
-      disconnect (this, SIGNAL(finishedCheck(bool)),
-          this, SLOT(slotCheckQueuedFolders()));
-      connect (this, SIGNAL(finishedCheck(bool)),
-          this, SLOT(slotCheckQueuedFolders()));
+      disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                  this, SLOT( slotCheckQueuedFolders() ) );
+      connect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+               this, SLOT( slotCheckQueuedFolders() ) );
     } else {
       slotCheckQueuedFolders();
     }
@@ -793,8 +793,8 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotCheckQueuedFolders()
   {
-    disconnect (this, SIGNAL(finishedCheck(bool)),
-          this, SLOT(slotCheckQueuedFolders()));
+    disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                this, SLOT( slotCheckQueuedFolders() ) );
 
     QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
     mMailCheckFolders = mFoldersQueuedForChecking;

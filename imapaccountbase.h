@@ -363,6 +363,7 @@ namespace KMail {
     QTimer mIdleTimer;
     QString mPrefix;
     int mTotal, mCountUnread, mCountLastUnread;
+    QMap<QString, int> mUnreadBeforeCheck;
     bool mAutoExpunge : 1;
     bool mHiddenFolders : 1;
     bool mOnlySubscribedFolders : 1;

@@ -138,9 +138,8 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
       mAcctChecking.removeRef( acct );
       kmkernel->filterMgr()->deref();
-      disconnect( acct, SIGNAL(finishedCheck(bool)),
-                  this, SLOT(processNextCheck(bool)) );
-      emit checkedMail(newMailArrived, interactive);
+      disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                  this, SLOT( processNextCheck( bool ) ) );
     }
   }
   if (mAcctChecking.isEmpty())
@@ -148,7 +147,9 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     // all checks finished, display summary
     KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         mTotalNewMailsArrived );
+    emit checkedMail( newMailArrived, interactive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
+    mTotalNewInFolder.clear();
   }
   if (mAcctTodo.isEmpty()) return;
 
@@ -173,13 +174,14 @@ void KMAcctMgr::processNextCheck(bool _newMail)
         "check your account settings.")
       .arg(curAccount->name());
     KMessageBox::information(0,tmp);
-    emit checkedMail(false, interactive);
+    emit checkedMail( false, interactive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
+    mTotalNewInFolder.clear();
     return;
   }
 
-  connect( curAccount, SIGNAL(finishedCheck(bool)),
-	   this, SLOT(processNextCheck(bool)) );
+  connect( curAccount, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+	   this, SLOT( processNextCheck( bool ) ) );
 
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
@@ -226,8 +228,8 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id
   {
     if (aType != "imap" && aType != "cachedimap")
       act->setFolder(kmkernel->inboxFolder());
-    connect( act, SIGNAL(newMailsProcessed(int)),
-	this, SLOT(addToTotalNewMailCount(int)) );
+    connect( act, SIGNAL( newMailsProcessed( const QMap<QString, int> & ) ),
+             this, SLOT( addToTotalNewMailCount( const QMap<QString, int> & ) ) );
   }
 
   return act;
@@ -308,6 +310,7 @@ void KMAcctMgr::checkMail(bool _interactive)
   }
 
   mTotalNewMailsArrived=0;
+  mTotalNewInFolder.clear();
 
   for ( QPtrListIterator<KMAccount> it(mAcctList) ;
 	it.current() ; ++it )
@@ -358,6 +361,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
   newMailArrived = false;
 
   mTotalNewMailsArrived = 0;
+  mTotalNewInFolder.clear();
   int x = 0;
   cur = mAcctList.first();
   while (cur)
@@ -372,11 +376,18 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::addToTotalNewMailCount(int newmails)
+void KMAcctMgr::addToTotalNewMailCount( const QMap<QString, int> & newInFolder )
 {
-  if ( newmails == -1 ) mTotalNewMailsArrived = -1;
-  if ( mTotalNewMailsArrived == -1 ) return;
-  mTotalNewMailsArrived += newmails;
+  for ( QMap<QString, int>::const_iterator it = newInFolder.begin();
+        it != newInFolder.end();
+        ++it )
+  {
+    mTotalNewMailsArrived += it.data();
+    if ( mTotalNewInFolder.find( it.key() ) == mTotalNewInFolder.end() )
+      mTotalNewInFolder[it.key()] = it.data();
+    else
+      mTotalNewInFolder[it.key()] += it.data();
+  }
 }
 
 //-----------------------------------------------------------------------------

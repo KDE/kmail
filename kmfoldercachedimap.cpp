@@ -545,7 +545,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     open();
     if ( !noContent() )
-        mAccount->addLastUnreadMsgCount( countUnread() );
+        mAccount->addLastUnreadMsgCount( this, countUnread() );
 
     // Connect to the server (i.e. prepare the slave)
     ImapAccountBase::ConnectionState cs = mAccount->makeConnection();
@@ -796,7 +796,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
       if( mSubfoldersForSync.isEmpty() ) {
         mSyncState = SYNC_STATE_INITIAL;
-        mAccount->addUnreadMsgCount( countUnread() ); // before closing
+        mAccount->addUnreadMsgCount( this, countUnread() ); // before closing
         close();
         emit folderComplete( this, TRUE );
       } else {

@@ -139,7 +139,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
   // make sure that no new-mail-check is blocked
   if (mCountRemainChecks > 0)
   {
-    checkDone(false, 0);
+    checkDone( false, CheckOK ); // returned 0 new messages
     mCountRemainChecks = 0;
   }
   displayProgress();
@@ -233,7 +233,7 @@ void KMAcctImap::processNewMail(bool interactive)
       makeConnection() == ImapAccountBase::Error)
   {
     mCountRemainChecks = 0;
-    checkDone(false, 0);
+    checkDone( false, CheckError );
     return;
   }
   // if necessary then initialize the list of folders which should be checked
@@ -243,7 +243,7 @@ void KMAcctImap::processNewMail(bool interactive)
     // if no folders should be checked then the check is finished
     if( mMailCheckFolders.isEmpty() )
     {
-      checkDone(false, 0);
+      checkDone( false, CheckOK );
     }
   }
   // Ok, we're really checking, get a progress item;
@@ -264,13 +264,14 @@ void KMAcctImap::processNewMail(bool interactive)
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
-  mCountLastUnread = 0;
+  mCountUnread = 0;
+  mUnreadBeforeCheck.clear();
   for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
     {
-      mCountLastUnread += folder->countUnread();
+      mUnreadBeforeCheck[folder->idString()] = folder->countUnread();
     }
   }
   bool gotError = false;
@@ -329,11 +330,18 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
   mCountRemainChecks--;
 
   // count the unread messages
-  mCountUnread += folder->countUnread();
+  const QString folderId = folder->idString();
+  int newInFolder = folder->countUnread();
+  if ( mUnreadBeforeCheck.find( folderId ) != mUnreadBeforeCheck.end() )
+    newInFolder -= mUnreadBeforeCheck[folderId];
+  addToNewInFolder( folderId, newInFolder );
+  mCountUnread += newInFolder;
   if (mCountRemainChecks == 0)
   {
     // all checks are done
+    mCountLastUnread = 0; // => mCountUnread - mCountLastUnread == new count
     ImapAccountBase::postProcessNewMail();
+    mUnreadBeforeCheck.clear();
   }
 }
 

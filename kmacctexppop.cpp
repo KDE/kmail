@@ -122,7 +122,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
         "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
         != QDialog::Accepted)
       {
-        checkDone(false, 0);
+        checkDone( false, CheckAborted );
         return;
       } else {
         mPasswd = encryptStr(passwd);
@@ -153,7 +153,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     startJob();
   }
   else {
-    checkDone(false, -1);
+    checkDone( false, CheckIgnored );
     return;
   }
 }
@@ -295,7 +295,7 @@ void KMAcctExpPop::startJob() {
       KMessageBox::sorry(0,
                          i18n("Could not execute precommand: %1").arg(precommand()),
                          i18n("KMail Error Message"));
-      checkDone((idsOfMsgs.count() > 0), -1);
+      checkDone( false, CheckError );
       return;
     }
   // end precommand code
@@ -619,7 +619,7 @@ void KMAcctExpPop::slotJobFinished() {
         numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;
-      checkDone((numMessages > 0), numMessages);
+      checkDone( ( numMessages > 0 ), canceled ? CheckAborted : CheckOK );
     }
   }
 }
