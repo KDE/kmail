@@ -144,10 +144,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mCryptoModuleAction( 0 ),
     mComposer( 0 )
 {
-  // Set this to be the group leader for all subdialogs - this means
-  // modal subdialogs will only affect this dialog, not the other windows
-  setWFlags( getWFlags() | WGroupLeader );
-
   mSubjectTextWasSpellChecked = false;
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
