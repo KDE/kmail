@@ -207,10 +207,12 @@ void KMReaderMainWin::setupAccel()
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
+  connect( mForwardActionMenu, SIGNAL( activated() ), this,
+           SLOT( slotForwardMsg() ) );
 
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward" );
+				actionCollection(), "message_forward_inline" );
   mForwardActionMenu->insert( mForwardAction );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
