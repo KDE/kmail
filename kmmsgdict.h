@@ -11,7 +11,7 @@ class KMMsgBase;
 class KMMsgDictEntry;
 class KMMsgDictREntry;
 class KMDict;
-
+class QString;
 
 class KMMsgDict
 {
