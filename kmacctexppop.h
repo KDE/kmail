@@ -277,12 +277,6 @@ protected slots:
    * to get the next header
    */
   void slotGetNextHdr();
-
-  /**
-   * The Header has been retrieved successfully. The next data belongs to the
-   * next Header
-   */
-  void slotHdrRetrieved();
 };
 
 

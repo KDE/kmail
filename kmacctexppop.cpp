@@ -488,7 +488,6 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
   msg->fromString(QCString(curMsgData),TRUE);
   if (stage == Head)
   {
-    kdDebug(5006) << "slotHdrRetrieved: " << endl;
     kdDebug(5006) << "Size of Message: " << (*lensOfMsgsPendingDownload.at(
       uidsOfMsgs.findIndex(headerIt.current()->uid()))) << endl;
     msg->setMsgLength(*lensOfMsgsPendingDownload.at(
@@ -943,18 +942,4 @@ void KMAcctExpPop::slotGetNextHdr(){
   curMsgStrm = 0;
 
   curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
-}
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::slotHdrRetrieved(){
-  kdDebug(5006) << "slotHdrRetrieved: " << endl;
-  KMMessage *msg = new KMMessage;
-  curMsgData.resize(curMsgData.size() + 1);
-  curMsgData[curMsgData.size() - 1] = '\0';
-  msg->fromString(QCString(curMsgData),TRUE);
-  kdDebug(5006) << "Size of Message: " << (*lensOfMsgsPendingDownload.at(
-                              uidsOfMsgs.findIndex(headerIt.current()->uid()))) << endl;
-  msg->setMsgLength(*lensOfMsgsPendingDownload.at(
-                              uidsOfMsgs.findIndex(headerIt.current()->uid())));
-  headerIt.current()->setHeader(msg);
 }
