@@ -672,7 +672,7 @@ void KMKernel::init()
     KConfigGroupSaver saver(cfg, "Composer");
     if (cfg->readListEntry("pref-charsets").isEmpty())
     {
-      cfg->writeEntry("pref-charsets", "us-ascii,locale,utf-8");
+      cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
   // filterMgr->dump();
