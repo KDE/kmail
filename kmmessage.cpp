@@ -35,6 +35,7 @@
 
 #include <qtextcodec.h>
 #include <qstrlist.h>
+#include <qregexp.h>
 
 #include <kmime_util.h>
 #include <kmime_charfreq.h>
@@ -218,6 +219,10 @@ bool KMMessage::isMessage(void) const
   return TRUE;
 }
 
+bool KMMessage::isUrgent() const {
+  return headerField( "Priority" ).contains( "urgent", false )
+    || headerField( "X-Priority" ).startsWith( "2" );
+}
 
 //-----------------------------------------------------------------------------
 void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
@@ -1053,7 +1058,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::getRefStr()
+QCString KMMessage::getRefStr() const
 {
   QCString firstRef, lastRef, refStr, retRefStr;
   int i, j;

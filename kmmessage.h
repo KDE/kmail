@@ -73,6 +73,11 @@ public:
 
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
+
+  /** @return whether the priority: or x-priority headers indicate
+      that this message should be considered urgent
+  **/
+  bool isUrgent() const;
   
   /** Specifies an unencrypted copy of this message to be stored
       in a separate member variable to allow saving messages in
@@ -546,10 +551,10 @@ public:
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig(void);
 
-  /** Creates rference string for reply to messages.
+  /** Creates reference string for reply to messages.
    *  reference = original first reference + original last reference + original msg-id
    */
-  QCString getRefStr();
+  QCString getRefStr() const;
 
   /** Get/set offset in mail folder. */
   virtual off_t folderOffset(void) const { return mFolderOffset; }
@@ -593,11 +598,11 @@ public:
   virtual void setSignatureState( QChar status,
                                     int idx = -1 ) { KMMsgBase::setSignatureState( status, idx ); }
 
-    /** Encryption status of the message. */
-    virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }
+  /** Encryption status of the message. */
+  virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }
 
   /** Signature status of the message. */
-    virtual KMMsgSignatureState signatureState() const { return mSignatureState; }
+  virtual KMMsgSignatureState signatureState() const { return mSignatureState; }
 
   /** Links this message to @p aMsg, setting link type to @p aStatus. */
   void link(const KMMessage *aMsg, KMMsgStatus aStatus);
