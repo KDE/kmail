@@ -4,6 +4,8 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h" // for encode
 
+#include <kdebug.h>
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -338,7 +340,7 @@ void KMMsgInfo::setDate(time_t aUnixTime)
 }
 
 //--- For compatability with old index files
-void KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
+bool KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
 {
     char *start, *offset;
 
@@ -350,27 +352,56 @@ void KMMsgInfo::compat_fromOldIndexString(const QCString& str, bool toUtf8)
     kd->msgSize = str.mid(12,9).toULong();
     kd->date = (time_t)str.mid(22,10).toULong();
     mStatus = (KMMsgStatus)str.at(0);
+    // TODO: have stricter checks, e.g. for zero strings
+    if (str.length()<263+22)
+    {
+	kdDebug(5001) << "Index string too short: "
+		      << str.length()
+		      << "characters."
+		      << endl << "using default values." << endl;
+	kd->subject = QString();
+	kd->from = QString();
+	kd->to = QString();
+	kd->replyToIdMD5 = QString();
+	kd->msgIdMD5 = QString();
+	return false;
+    }
     if (toUtf8) {
 	kd->subject = str.mid(37, 100).stripWhiteSpace();
 	kd->from = str.mid(138, 50).stripWhiteSpace();
 	kd->to = str.mid(189, 50).stripWhiteSpace();
-    } else {
-	start = offset = str.data() + 37;
+    }
+    else
+    {
+	QCString midstr;
+	start = offset = str.data () + 37;
 	while (*start == ' ' && start - offset < 100) start++;
-	kd->subject = QString::fromUtf8(str.mid(start - str.data(),
-            100 - (start - offset)), 100 - (start - offset));
+	midstr = str.mid(start - str.data(), 100 - (start - offset));
+	if (!midstr.isNull())
+	    kd->subject = QString::fromUtf8(midstr,100 - (start - offset));
+	else
+	    kd->subject = QString();
+
 	start = offset = str.data() + 138;
 	while (*start == ' ' && start - offset < 50) start++;
-	kd->from = QString::fromUtf8(str.mid(start - str.data(),
-            50 - (start - offset)), 50 - (start - offset));
+	midstr = str.mid(start - str.data(), 50 - (start - offset));
+	if (!midstr.isNull())
+	    kd->from = QString::fromUtf8(midstr, 50 - (start - offset));
+	else
+	    kd->from = QString();
+
 	start = offset = str.data() + 189;
 	while (*start == ' ' && start - offset < 50) start++;
-	kd->to = QString::fromUtf8(str.mid(start - str.data(),
-            50 - (start - offset)), 50 - (start - offset));
+	midstr = str.mid(start - str.data(), 50 - (start - offset));
+	if (!midstr.isNull())
+	    kd->to = QString::fromUtf8(midstr, 50 - (start - offset));
+	else
+	    kd->to = QString();
     }
     kd->replyToIdMD5 = str.mid(240, 22).stripWhiteSpace();
     kd->msgIdMD5 = str.mid(263, 22).stripWhiteSpace();
     mDirty = FALSE;
+    return true;
 }
 
 bool KMMsgInfo::dirty(void) const

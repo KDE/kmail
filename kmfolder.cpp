@@ -870,6 +870,7 @@ bool KMFolder::readIndex()
   mMsgList.clear();
   while (!feof(mIndexStream))
   {
+    bool conversion_result;
     mi = NULL;
     if(version >= 1505) {
       if(!fread(&len, sizeof(len), 1, mIndexStream))
@@ -889,10 +890,16 @@ bool KMFolder::readIndex()
 	  return false;
       }
       mi = new KMMsgInfo(this);
-      mi->compat_fromOldIndexString(line, mConvertToUtf8);
+      // convert from old index file format.
+      // TODO: make use of return value from 
+      // compat_fromOldIndexString (tobias)
+      conversion_result = mi->compat_fromOldIndexString(line, mConvertToUtf8);
     }	
     if(!mi)
       break;
+     // could this be the desired solution? (tobias)
+     //    if (!conversion_result)
+     //      break;
 
     if (mi->status() == KMMsgStatusDeleted)
     {
