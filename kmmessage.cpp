@@ -418,8 +418,17 @@ KMMessage* KMMessage::createForward(void)
 void KMMessage::initHeader(void)
 {
   assert(identity != NULL);
-  setFrom(identity->fullEmailAddr());
-  setReplyTo(identity->replyToAddr());
+  
+  if(identity->fullEmailAddr().isEmpty())
+    setFrom("");
+  else
+    setFrom(identity->fullEmailAddr());
+
+  if(identity->replyToAddr().isEmpty()) 
+    setReplyTo("");
+  else
+    setReplyTo(identity->replyToAddr());
+
   setTo("");
   setSubject("");
   setDateToday();
