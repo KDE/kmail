@@ -422,8 +422,7 @@ void AccountDialog::makePopAccountPage()
   topLayout->addWidget( mPop.portEdit, 6, 1 );
 
   mPop.useSSLCheck =
-    new QCheckBox( i18n("Use SSL for secure mail download") + " " +
-      i18n("(experimental)"), page);
+    new QCheckBox( i18n("Use SSL for secure mail download"), page);
   topLayout->addMultiCellWidget( mPop.useSSLCheck, 7, 7, 0, 1);
   connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
 
@@ -754,7 +753,6 @@ void AccountDialog::saveSettings()
     epa.setLogin( mPop.loginEdit->text() );
     epa.setPasswd( mPop.passwordEdit->text(), true );
     epa.setUseSSL( mPop.useSSLCheck->isChecked() );
-    epa.setUseSSL( FALSE );
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
