@@ -782,11 +782,11 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::asQuotedString(const QString& aHeaderStr,
-                                   const QString& aIndentStr,
-                                   const QString& selection,
-                                   bool aStripSignature,
-                                   bool allowDecryption) const
+QCString KMMessage::asQuotedString( const QString& aHeaderStr,
+                                    const QString& aIndentStr,
+                                    const QString& selection /* = QString::null */,
+                                    bool aStripSignature /* = true */,
+                                    bool allowDecryption /* = true */) const
 {
   QString result;
   QString headerStr;
@@ -958,42 +958,71 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   return c;
 }
 
-QString KMMessage::cleanSubject() const {
-  return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
-		       true, QString::null ).stripWhiteSpace();
+//-----------------------------------------------------------------------------
+// static
+QString KMMessage::stripOffPrefixes( const QString& str )
+{
+  return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
+                          true, QString::null ).stripWhiteSpace();
 }
 
-QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace, const QString & newPrefix ) const {
+//-----------------------------------------------------------------------------
+// static
+QString KMMessage::replacePrefixes( const QString& str,
+                                    const QStringList& prefixRegExps,
+                                    bool replace,
+                                    const QString& newPrefix )
+{
   bool recognized = false;
   // construct a big regexp that
-  // 1. is anchored to the beginning of the subject (sans whitespace)
+  // 1. is anchored to the beginning of str (sans whitespace)
   // 2. matches at least one of the part regexps in prefixRegExps
   QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
                       .arg( prefixRegExps.join(")|(?:") );
-  kdDebug(5006) << "KMMessage::cleanSubject(): bigRegExp = \"" << bigRegExp
+  kdDebug(5006) << "KMMessage::replacePrefixes(): bigRegExp = \"" << bigRegExp
 		<< "\"" << endl;
   QRegExp rx( bigRegExp, false /*case insens.*/ );
   if ( !rx.isValid() ) {
     kdWarning(5006) << "prefix regexp is invalid!" << endl;
     // try good ole Re/Fwd:
-    recognized = subject().startsWith( newPrefix );
+    recognized = str.startsWith( newPrefix );
   } else { // valid rx
-    QString subj = subject();
-    if ( rx.search( subj ) == 0 ) {
+    QString tmp = str;
+    if ( rx.search( tmp ) == 0 ) {
       recognized = true;
       if ( replace )
-	return subj.replace( 0, rx.matchedLength(), newPrefix + ' ' );
+	return tmp.replace( 0, rx.matchedLength(), newPrefix + ' ' );
     }
   }
   if ( !recognized )
-    return newPrefix + ' ' + subject();
+    return newPrefix + ' ' + str;
   else
-    return subject();
+    return str;
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
-  QString selection, bool noQuote, bool allowDecryption, bool selectionIsBody)
+QString KMMessage::cleanSubject() const
+{
+  return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
+		       true, QString::null ).stripWhiteSpace();
+}
+
+//-----------------------------------------------------------------------------
+QString KMMessage::cleanSubject( const QStringList & prefixRegExps,
+                                 bool replace,
+                                 const QString & newPrefix ) const
+{
+  return KMMessage::replacePrefixes( subject(), prefixRegExps, replace,
+                                     newPrefix );
+}
+
+//-----------------------------------------------------------------------------
+KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
+                                   bool replyToList /* = false */,
+                                   QString selection /* = QString::null */,
+                                   bool noQuote /* = false */,
+                                   bool allowDecryption /* = true */,
+                                   bool selectionIsBody /* = false */)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
