@@ -64,9 +64,9 @@ using KMail::AddressesDialog;
 #include <kspell.h>
 #include <kspelldlg.h>
 #include "spellingfilter.h"
-#include "syntaxhighlighter.h"
-using KMail::DictSpellChecker;
-using KMail::SpellChecker;
+#include <syntaxhighlighter.h>
+using Syntaxhighlighter::DictSpellChecker;
+using Syntaxhighlighter::SpellChecker;
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -5406,7 +5406,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   QColor col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
   QColor c = QColor("red");
-  mSpellChecker = new DictSpellChecker(this, /*active*/ true, /*autoEnabled*/ true, 
+  mSpellChecker = new DictSpellChecker(this, /*active*/ true, /*autoEnabled*/ true,
     /*spellColor*/ config->readColorEntry("NewMessage", &c),
     /*colorQuoting*/ true, col1, col2, col3, col4);
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),

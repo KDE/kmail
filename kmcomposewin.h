@@ -37,7 +37,7 @@ class _StringPair {
    QString value;
 };
 
-namespace KMail {
+namespace Syntaxhighlighter {
   class DictSpellChecker;
 }
 
@@ -125,7 +125,7 @@ private:
   bool      extEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
-  KMail::DictSpellChecker *mSpellChecker;
+  Syntaxhighlighter::DictSpellChecker *mSpellChecker;
 };
 
 
