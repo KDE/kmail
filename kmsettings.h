@@ -61,9 +61,11 @@ private slots:
   void slotSendLater();
   void slotAllow8Bit();
   void slotQuotedPrintable();
+  void slotDefaultFontSelect();
   void slotBodyFontSelect();
   void slotListFontSelect();
   void slotFolderlistFontSelect();
+  void slotDefaultColorSelect();
 
 private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
@@ -80,9 +82,13 @@ private:
   QPushButton *addButton,*modifyButton,*removeButton;
   QCheckBox *defaultFonts, *defaultColors;
   QLabel *bodyFontLabel, *listFontLabel, *folderListFontLabel;
+  QLabel *bodyFontLabel2, *listFontLabel2, *folderListFontLabel2;
+  QPushButton *bodyFontButton, *listFontButton, *folderListFontButton;
   QColor cFore, cBack, cNew, cUnread;
   KColorButton *foregroundColorBtn, *backgroundColorBtn, *newColorBtn, 
     *unreadColorBtn;
+  QLabel *foregroundColorLbl, *backgroundColorLbl, *newColorLbl, 
+    *unreadColorLbl;
   KpgpConfig *pgpConfig;
 };
 

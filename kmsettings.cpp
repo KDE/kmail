@@ -125,7 +125,8 @@ static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
 static void addLabeledWidget(QWidget* parent, QGridLayout* grid,
 			     const char* aLabel, QWidget* widg,
 			     int gridy, int gridx,
-			     QPushButton** detail_return=NULL)
+			     QPushButton** detail_return,
+                             QLabel** label_return)
 {
   QLabel* label = new QLabel(parent);
   QPushButton* sel;
@@ -145,9 +146,12 @@ static void addLabeledWidget(QWidget* parent, QGridLayout* grid,
     sel = new QPushButton("...", parent);
     sel->setFocusPolicy(QWidget::NoFocus);
     sel->setFixedSize(sel->sizeHint().width(), label->height());
+    label->setBuddy(sel);
     grid->addWidget(sel, gridy, gridx++);
     *detail_return = sel;
   }
+  if (label_return)
+    *label_return = label;
 }
 
 
@@ -313,7 +317,6 @@ void KMSettings::createTabAppearance(QWidget* parent)
   QGridLayout* grid;
   QGroupBox* grp;
   KConfig* config = app->config();
-  QPushButton* btn;
   QFont fnt;
 
   //----- group: fonts
@@ -321,23 +324,24 @@ void KMSettings::createTabAppearance(QWidget* parent)
   box->addWidget(grp);
   grid = new QGridLayout(grp, 7, 4, 20, 4);
 
-  defaultFonts = new QCheckBox( i18n( "Default Fonts" ), grp );
+  defaultFonts = new QCheckBox( i18n( "&Default Fonts" ), grp );
   grid->addMultiCellWidget(defaultFonts, 2, 2, 0, 2);
+  connect(defaultFonts, SIGNAL(clicked()), this, SLOT(slotDefaultFontSelect()));
 
   bodyFontLabel = new QLabel(grp);
-  addLabeledWidget(grp, grid, i18n("Message Body Font:"), bodyFontLabel, 
-		   3, 0, &btn);
-  connect(btn,SIGNAL(clicked()),this,SLOT(slotBodyFontSelect()));
+  addLabeledWidget(grp, grid, i18n("Message &Body Font:"), bodyFontLabel, 
+		   3, 0, &bodyFontButton, &bodyFontLabel2);
+  connect(bodyFontButton,SIGNAL(clicked()),this,SLOT(slotBodyFontSelect()));
 
   listFontLabel = new QLabel(grp);
-  addLabeledWidget(grp, grid, i18n("Message List Font:"), listFontLabel,
-		   4, 0, &btn);
-  connect(btn,SIGNAL(clicked()),this,SLOT(slotListFontSelect()));
+  addLabeledWidget(grp, grid, i18n("Message &List Font:"), listFontLabel,
+		   4, 0, &listFontButton, &listFontLabel2);
+  connect(listFontButton,SIGNAL(clicked()),this,SLOT(slotListFontSelect()));
 
   folderListFontLabel = new QLabel(grp);
-  addLabeledWidget(grp, grid, i18n("Folder List Font:"), folderListFontLabel,
-		   5, 0, &btn);
-  connect(btn,SIGNAL(clicked()),this,SLOT(slotFolderlistFontSelect()));
+  addLabeledWidget(grp, grid, i18n("&Folder List Font:"), folderListFontLabel,
+		   5, 0, &folderListFontButton, &folderListFontLabel2);
+  connect(folderListFontButton,SIGNAL(clicked()),this,SLOT(slotFolderlistFontSelect()));
 
   grid->setColStretch(0,1);
   grid->setColStretch(1,10);
@@ -348,6 +352,7 @@ void KMSettings::createTabAppearance(QWidget* parent)
   config->setGroup("Fonts");
 
   defaultFonts->setChecked( config->readBoolEntry("defaultFonts",TRUE) );
+  slotDefaultFontSelect();
 
   fnt = kstrToFont(config->readEntry("body-font", "helvetica-medium-r-12"));
   bodyFontLabel->setAutoResize(TRUE);
@@ -381,31 +386,40 @@ void KMSettings::createTabAppearance(QWidget* parent)
   box->addWidget(grp);
   grid = new QGridLayout(grp, 7, 2, 20, 10);
 
-  defaultColors = new QCheckBox( i18n( "Default Colors" ), grp );
+  defaultColors = new QCheckBox( i18n( "Default &Colors" ), grp );
   defaultColors->setChecked( config->readBoolEntry("defaultColors",TRUE) );
   grid->addMultiCellWidget(defaultColors, 2, 2, 0, 1);
+  connect(defaultColors, SIGNAL(clicked()), this, SLOT(slotDefaultColorSelect()));
 
-  QLabel *lbl;
   backgroundColorBtn = new KColorButton( cBack, grp );
   backgroundColorBtn->setMinimumSize( backgroundColorBtn->sizeHint() );
   foregroundColorBtn = new KColorButton( cFore, grp );
   newColorBtn = new KColorButton( cNew, grp );
   unreadColorBtn = new KColorButton( cUnread, grp );
 
-  lbl = new QLabel( i18n( "Background Color" ), grp );
-  grid->addWidget(lbl, 3, 0);
+  backgroundColorLbl = new QLabel( backgroundColorBtn, 
+                                   i18n( "B&ackground Color" ), grp );
+  grid->addWidget(backgroundColorLbl, 3, 0);
   grid->addWidget(backgroundColorBtn, 3, 1);
-  lbl =  new QLabel( i18n( "Normal Text Color" ), grp );
-  grid->addWidget(lbl, 4, 0);
+
+  foregroundColorLbl = new QLabel( foregroundColorBtn,
+                                   i18n( "&Normal Text Color" ), grp );
+  grid->addWidget(foregroundColorLbl, 4, 0);
   grid->addWidget(foregroundColorBtn, 4, 1);
-  lbl =  new QLabel( i18n( "URL Link/New Color" ), grp );
-  grid->addWidget(lbl, 5, 0);
+
+  newColorLbl = new QLabel( newColorBtn, 
+                            i18n( "&URL Link/New Color" ), grp );
+  grid->addWidget(newColorLbl, 5, 0);
   grid->addWidget(newColorBtn, 5, 1);
-  lbl = new QLabel( i18n( "Followed Link/Unread Color" ), grp );
-  grid->addWidget(lbl, 6, 0);
+
+  unreadColorLbl = new QLabel( unreadColorBtn,
+                               i18n( "F&ollowed Link/Unread Color" ), grp );
+  grid->addWidget(unreadColorLbl, 6, 0);
   grid->addWidget(unreadColorBtn, 6, 1);
   grid->setColStretch( 0, 0 );
   grid->setColStretch( 1, 1 );
+
+  slotDefaultColorSelect();
 
   //----- group: layout
   grp = new QGroupBox(i18n("Layout"), tab);
@@ -669,6 +683,37 @@ const QString KMSettings::tabNetworkAcctStr(const KMAccount* act) const
   if (act->folder()) str += act->folder()->name();
 
   return str;
+}
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotDefaultColorSelect()
+{
+   bool enabled = !defaultColors->isChecked();
+ 
+   backgroundColorLbl->setEnabled(enabled);   
+   backgroundColorBtn->setEnabled(enabled);   
+   foregroundColorLbl->setEnabled(enabled);   
+   foregroundColorBtn->setEnabled(enabled);   
+   newColorLbl->setEnabled(enabled);   
+   newColorBtn->setEnabled(enabled);   
+   unreadColorLbl->setEnabled(enabled);   
+   unreadColorBtn->setEnabled(enabled);   
+}
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotDefaultFontSelect()
+{
+   bool enabled = !defaultFonts->isChecked();
+
+   bodyFontLabel->setEnabled(enabled);   
+   bodyFontButton->setEnabled(enabled);   
+   bodyFontLabel2->setEnabled(enabled);   
+   listFontLabel->setEnabled(enabled);   
+   listFontButton->setEnabled(enabled);   
+   listFontLabel2->setEnabled(enabled);   
+   folderListFontLabel->setEnabled(enabled);   
+   folderListFontButton->setEnabled(enabled);   
+   folderListFontLabel2->setEnabled(enabled);   
 }
 
 
