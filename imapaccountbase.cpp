@@ -574,20 +574,21 @@ namespace KMail {
     if ( !mErrorDialogIsActive && errorCode != KIO::ERR_USER_CANCELED )
     {
       mErrorDialogIsActive = true;
-      QString msg;
-      QString caption;
-      if ( errors.count() >= 3 ) {
-        msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
-        caption = errors[0];
-      } else {
-        msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
-        caption = i18n("Error");
-      }
+      QString msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
+      QString caption = i18n("Error");
 
-      if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN )
-        KMessageBox::error( kapp->activeWindow(), msg, caption );
+      if ( jobsKilled || errorCode == KIO::ERR_COULD_NOT_LOGIN ) {
+        if ( !errors.isEmpty() )
+            KMessageBox::detailedError( kapp->activeWindow(), msg, errors.join("\n").prepend("<qt>"), caption );
+        else
+            KMessageBox::error( kapp->activeWindow(), msg, caption );
+      }
       else // i.e. we have a chance to continue, ask the user about it
       {
+        if ( errors.count() >= 3 ) { // there is no detailedWarningContinueCancel... (#86517)
+          msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
+          caption = errors[0];
+        }
         int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
         if ( ret == KMessageBox::Cancel ) {
           jobsKilled = true;
