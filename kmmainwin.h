@@ -9,6 +9,7 @@
 #include "cryptplugwrapperlist.h"
 #include <kurl.h>
 #include <kdockwidget.h>
+#include <qlistview.h>
 
 class ConfigureDialog;
 class KMFolder;
@@ -349,6 +350,9 @@ protected slots:
 
   /** the KMImapJob is finished */
   void slotJobFinished();
+
+  /** changes the caption and displays the foldername */
+  void slotChangeCaption(QListViewItem*);
 
 protected:
   KRadioAction * actionForHeaderStyle(int);

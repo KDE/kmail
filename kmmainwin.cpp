@@ -117,7 +117,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   connect(kernel->acctMgr(), SIGNAL( checkedMail(bool, bool)),
           SLOT( slotMailChecked(bool, bool)));
 
-  setCaption( i18n("KDE Mail Client") );
+  // display the full path to the folder in the caption
+  connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
+      this, SLOT(slotChangeCaption(QListViewItem*)));  
 
   if ( kernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
@@ -3668,4 +3670,13 @@ void KMMainWin::slotShowTip() {
   KTipDialog::showTip( 0, QString::null, true );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotChangeCaption(QListViewItem * i)
+{
+  // set the caption to the current full path
+  QStringList names;
+  for ( QListViewItem * item = i ; item ; item = item->parent() )
+    names.prepend( item->text(0) );
+  setCaption( names.join("/") );  
+}
 
