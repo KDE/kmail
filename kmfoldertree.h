@@ -220,10 +220,6 @@ public slots:
   /** Select the item and switch to the folder */
   void doFolderSelected(QListViewItem*);
 
-  /** autoscroll support */
-  void startAutoScroll();
-  void stopAutoScroll();
-
   /**
    * Reset current folder and all childs
    * If no item is given we take the current one
@@ -265,8 +261,6 @@ protected slots:
   /** slots for the unread/total-popup */
   void slotToggleUnreadColumn();
   void slotToggleTotalColumn();
-
-  void autoScroll();
 
   void slotContextMenuRequested( QListViewItem *, const QPoint & );
 
@@ -314,10 +308,6 @@ protected:
   void connectSignals();
 
 private:
-  QTimer autoscroll_timer;
-  int autoscroll_time;
-  int autoscroll_accel;
-
   /** total column */
   QListViewItemIterator mUpdateIterator;
 

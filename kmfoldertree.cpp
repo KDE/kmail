@@ -318,9 +318,6 @@ void KMFolderTree::connectSignals()
   connect( &autoopen_timer, SIGNAL( timeout() ),
            this, SLOT( openFolder() ) );
 
-  connect( &autoscroll_timer, SIGNAL( timeout() ),
-           this, SLOT( autoScroll() ) );
-
   connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
            this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
 
@@ -1215,85 +1212,26 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   e->accept( acceptDrag(e) );
 }
 
-static const int autoscroll_margin = 16;
-static const int initialScrollTime = 30;
-static const int initialScrollAccel = 5;
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::startAutoScroll()
-{
-    if ( !autoscroll_timer.isActive() ) {
-        autoscroll_time = initialScrollTime;
-        autoscroll_accel = initialScrollAccel;
-        autoscroll_timer.start( autoscroll_time );
-    }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::stopAutoScroll()
-{
-    autoscroll_timer.stop();
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::autoScroll()
-{
-    QPoint p = viewport()->mapFromGlobal( QCursor::pos() );
-
-    if ( autoscroll_accel-- <= 0 && autoscroll_time ) {
-        autoscroll_accel = initialScrollAccel;
-        autoscroll_time--;
-        autoscroll_timer.start( autoscroll_time );
-    }
-    int l = QMAX(1,(initialScrollTime-autoscroll_time));
-
-    int dx=0,dy=0;
-    if ( p.y() < autoscroll_margin ) {
-        dy = -l;
-    } else if ( p.y() > visibleHeight()-autoscroll_margin ) {
-        dy = +l;
-    }
-    if ( p.x() < autoscroll_margin ) {
-        dx = -l;
-    } else if ( p.x() > visibleWidth()-autoscroll_margin ) {
-        dx = +l;
-    }
-    if ( dx || dy ) {
-        scrollBy(dx,dy);
-    } else {
-        stopAutoScroll();
-    }
-}
-
 //-----------------------------------------------------------------------------
 void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
 {
     QPoint vp = contentsToViewport(e->pos());
-    QRect inside_margin((contentsX() > 0) ? autoscroll_margin : 0,
-                        (contentsY() > 0) ? autoscroll_margin : 0,
-      visibleWidth() - ((contentsX() + visibleWidth() < contentsWidth())
-        ? autoscroll_margin*2 : 0),
-      visibleHeight() - ((contentsY() + visibleHeight() < contentsHeight())
-        ? autoscroll_margin*2 : 0));
     QListViewItem *i = itemAt( vp );
     if ( i ) {
         bool dragAccepted = acceptDrag( e );
         if ( dragAccepted ) {
             setCurrentItem( i );
         }
-        if ( !inside_margin.contains(vp) ) {
-            startAutoScroll();
-            e->accept(QRect(0,0,0,0)); // Keep sending move events
+
+        if ( i != dropItem ) {
             autoopen_timer.stop();
-        } else {
-            e->accept( dragAccepted );
-            if ( i != dropItem ) {
-                autoopen_timer.stop();
-                dropItem = i;
-                autoopen_timer.start( autoopenTime );
-            }
+            dropItem = i;
+            autoopen_timer.start( autoopenTime );
         }
+
         if ( dragAccepted ) {
+            e->accept( itemRect(i) );
+
             switch ( e->action() ) {
                 case QDropEvent::Copy:
                 break;
@@ -1306,6 +1244,8 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
                 default:
                 ;
             }
+        } else {
+            e->accept( false );
         }
     } else {
         e->accept( false );
@@ -1320,7 +1260,6 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
     if (!oldCurrent) return;
 
     autoopen_timer.stop();
-    stopAutoScroll();
     dropItem = 0;
 
     setCurrentItem( oldCurrent );
@@ -1332,7 +1271,6 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
 void KMFolderTree::contentsDropEvent( QDropEvent *e )
 {
     autoopen_timer.stop();
-    stopAutoScroll();
 
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
