@@ -328,6 +328,11 @@ class ConfigureDialog : public KDialogBase
       QPushButton *addForwardPrefixButton;
       QPushButton *removeForwardPrefixButton;
       QCheckBox *replaceForwardPrefixCheck;
+      QListBox *charsetListBox;
+      QPushButton *addCharsetButton;
+      QPushButton *removeCharsetButton;
+      QPushButton *charsetUpButton;
+      QPushButton *charsetDownButton;
       QComboBox *defaultCharsetCombo;
       QCheckBox* forceReplyCharsetCheck;
     };
@@ -453,6 +458,11 @@ class ConfigureDialog : public KDialogBase
     void slotAddForwardPrefix( void );
     void slotRemoveSelForwardPrefix( void );
     void slotForwardPrefixSelected( void );
+    void slotAddCharset( void );
+    void slotRemoveSelCharset( void );
+    void slotCharsetUp( void );
+    void slotCharsetDown( void );
+    void slotCharsetSelectionChanged( void );
     void slotMimeHeaderSelectionChanged( void );
     void slotMimeHeaderNameChanged( const QString &text );
     void slotMimeHeaderValueChanged( const QString &text );

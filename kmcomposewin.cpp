@@ -720,25 +720,11 @@ void KMComposeWin::setupActions(void)
   wordWrapAction->setChecked(mWordWrap);
   connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
-  // availableCharsetNames seems more reasonable than availableEncodingNames
-  QStringList encodings = KGlobal::charsets()->availableCharsetNames();
-  encodings.remove(QString("*-*"));  //this doesn't make sense
-  encodings.prepend( "utf-8" );
-  encodings.prepend( "us-ascii" );
+  KConfig *config = kapp->config();
+  config->setGroup("Composer");
+  QStringList encodings = config->readListEntry("charsets");
   encodingAction->setItems( encodings );
-  //default is given by mDefCharset
-  int i = 0;
-  bool found = false;
-  QFont::CharSet defCharset = KGlobal::charsets()->nameToID(mDefCharset);
-  for ( QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it, i++ )
-    if ((*it) == KGlobal::charsets()->xCharsetName(defCharset))
-    {
-      encodingAction->setCurrentItem(i);
-      found = true;
-      break;
-    }
-  if (!found)
-    encodingAction->setCurrentItem(0);
+  encodingAction->setCurrentItem( -1 );
 
   //these are checkable!!!
   allFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
@@ -999,6 +985,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     if (KGlobal::charsets()->nameToID(*it) == KGlobal::charsets()->nameToID(mCharset))
     {
       encodingAction->setCurrentItem( i );
+      slotSetCharset();
       break;
     }
 
@@ -1510,14 +1497,8 @@ void KMComposeWin::slotInsertFile()
 void KMComposeWin::slotSetCharset()
 {
   mCharset = encodingAction->currentText();
-  if (encodingAction->currentItem() != 0)  //i.e. <none>
-  {
-    QFont::CharSet c = KGlobal::charsets()->nameToID(mCharset);
-    if (mCharset != "utf-8") mCharset = KGlobal::charsets()->name(c);
-  }
   if (mAtmList.count() <= 0)
     mMsg->setCharset(mCharset);
-  writeConfig();
   setEditCharset();
 }
 

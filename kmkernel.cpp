@@ -463,6 +463,14 @@ void KMKernel::init()
 
   the_server_is_ready = true;
 
+  cfg->setGroup("Composer");
+  if (cfg->readListEntry("charsets").isEmpty())
+  {
+    cfg->writeEntry("charsets", "us-ascii,utf-8,iso-8859-1,iso-8859-2,"
+    "iso-8859-3,iso-8859-4,iso-8859-5,iso-8859-6,iso-8859-7,iso-8859-8,"
+    "iso-8859-9,iso-8859-10,iso-8859-13,iso-8859-14,iso-8859-15,koi8-r,koi8-u,"
+    "iso-2022-jp,iso-2022-jp-2,iso-2022-kr,euc-jp,euc-kr,Big5,gb2312");
+  }
   // filterMgr->dump();
   kdDebug() << "exiting KMKernel::init()" << endl;
 }

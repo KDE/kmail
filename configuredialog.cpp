@@ -977,7 +977,7 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.LanguageList = NULL;
   QHBoxLayout *languageHlay = new QHBoxLayout( group, 0, spacingHint() );
   glay->addLayout( languageHlay, 3, 1 );
-  QPushButton *newButton = new QPushButton( i18n("New..."), group );
+  QPushButton *newButton = new QPushButton( i18n("Add..."), group );
   mComposer.removeButton = new QPushButton( i18n("Remove"), group );
   newButton->setAutoDefault( false );
   mComposer.removeButton->setAutoDefault( false );
@@ -1113,24 +1113,53 @@ void ConfigureDialog::makeComposerPage( void )
   QWidget *charsetPage = new QWidget( tabWidget );
   tabWidget->addTab( charsetPage, i18n("Charset") );
   QVBoxLayout *topLevel3 = new QVBoxLayout( charsetPage, spacingHint() );
-  //list of charsets
-  QHBoxLayout *charsetHLay = new QHBoxLayout( topLevel3 );
-  label = new QLabel( i18n("Default charset:"), charsetPage );
-  charsetHLay->addWidget( label );
-  mComposer.defaultCharsetCombo = new QComboBox( charsetPage );
-  QStringList charsetList = KGlobal::charsets()->availableCharsetNames();
-  charsetList.remove(QString("*-*"));  //this doesn't make sense
-  charsetList.prepend( "us-ascii" );
-  charsetList.prepend( i18n("Use language encoding") );
-  mComposer.defaultCharsetCombo->insertStringList(charsetList);
-  charsetHLay->addWidget( mComposer.defaultCharsetCombo );
-  charsetHLay->addStretch(10);
-  topLevel3->addSpacing( spacingHint() );
-  mComposer.forceReplyCharsetCheck =
-    new QCheckBox( i18n("Use own default charset when replying"), charsetPage );
-  topLevel3->addWidget( mComposer.forceReplyCharsetCheck );
 
-  topLevel3->addStretch(10);
+  //list of charsets
+  QGroupBox *charsetsGroup = new QGroupBox( i18n("Available charsets"),
+    charsetPage );
+  QGridLayout *charsetsGridLay = new QGridLayout( charsetsGroup, 6, 2,
+    spacingHint() );
+  charsetsGridLay->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  charsetsGridLay->setRowStretch( 1, 10 );
+  mComposer.charsetListBox = new QListBox( charsetsGroup );
+  charsetsGridLay->addMultiCellWidget( mComposer.charsetListBox, 1, 5, 0, 0 );
+  mComposer.addCharsetButton = new QPushButton( i18n("Add..."), charsetsGroup );
+  charsetsGridLay->addWidget( mComposer.addCharsetButton, 2, 1 );
+  mComposer.removeCharsetButton = new QPushButton( i18n("Remove"),
+    charsetsGroup );
+  charsetsGridLay->addWidget( mComposer.removeCharsetButton, 3, 1 );
+  mComposer.charsetUpButton = new QPushButton( i18n("Up"), charsetsGroup );
+  mComposer.charsetUpButton->setAutoRepeat( TRUE );
+  charsetsGridLay->addWidget( mComposer.charsetUpButton, 4, 1 );
+  mComposer.charsetDownButton = new QPushButton( i18n("Down"), charsetsGroup );
+  mComposer.charsetDownButton->setAutoRepeat( TRUE );
+  charsetsGridLay->addWidget( mComposer.charsetDownButton, 5, 1 );
+  topLevel3->addWidget( charsetsGroup );
+  connect( mComposer.addCharsetButton, SIGNAL(clicked()),
+  	   this, SLOT(slotAddCharset()) );
+  connect( mComposer.removeCharsetButton, SIGNAL(clicked()),
+  	   this, SLOT(slotRemoveSelCharset()) );
+  connect( mComposer.charsetUpButton, SIGNAL(clicked()),
+           this, SLOT(slotCharsetUp()) );
+  connect( mComposer.charsetDownButton, SIGNAL(clicked()),
+           this, SLOT(slotCharsetDown()) );
+  connect( mComposer.charsetListBox, SIGNAL(selectionChanged()),
+           this, SLOT(slotCharsetSelectionChanged()) );
+
+  //default charset
+  QGroupBox *defaultCharsetGroup = new QGroupBox( i18n("Default charset"),
+    charsetPage );
+  QVBoxLayout *charsetVLay = new QVBoxLayout( defaultCharsetGroup,
+    spacingHint() );
+  charsetVLay->addSpacing( fontMetrics().lineSpacing() );
+  mComposer.defaultCharsetCombo = new QComboBox( defaultCharsetGroup );
+  charsetVLay->addWidget( mComposer.defaultCharsetCombo );
+  mComposer.forceReplyCharsetCheck =
+    new QCheckBox( i18n("Use own default charset when replying"),
+    defaultCharsetGroup );
+  charsetVLay->addWidget( mComposer.forceReplyCharsetCheck );
+  topLevel3->addWidget( defaultCharsetGroup );
+  topLevel3->addSpacing( spacingHint() );
 }
 
 
@@ -1354,7 +1383,7 @@ void ConfigureDialog::setupNetworkPage( void )
   mNetwork.smtpServerEdit->setText( kernel->msgSender()->smtpHost() );
   mNetwork.smtpPortEdit->setText(
     QString().setNum(kernel->msgSender()->smtpPort()) );
- mNetwork.precommandEdit->setText( kernel->msgSender()->precommand() );
+  mNetwork.precommandEdit->setText( kernel->msgSender()->precommand() );
 
   KConfig &config = *kapp->config();
   config.setGroup("Composer");
@@ -1552,21 +1581,22 @@ void ConfigureDialog::setupComposerPage( void )
   slotWordWrapSelectionChanged();
 
   //charsets
+  QStringList charsets = config.readListEntry("charsets");
+  mComposer.charsetListBox->clear();
+  mComposer.charsetListBox->insertStringList( charsets );
+  mComposer.charsetListBox->setCurrentItem( 0 );
+
+  charsets.prepend( i18n("Use language encoding") );
+  mComposer.defaultCharsetCombo->clear();
+  mComposer.defaultCharsetCombo->insertStringList(charsets);
   QString str = config.readEntry( "charset", "" );
   if (str.isNull() || str.isEmpty() || str == "default")
     mComposer.defaultCharsetCombo->setCurrentItem( 0 );
   else
   {
     bool found = false;
-    if (str == "us-ascii")
-    {
-      mComposer.defaultCharsetCombo->setCurrentItem( 1 );
-      found = true;
-    }
-    //we start from 2, because 0 stands for "Use language def", 1 stands for "us-ascii"
-    for (int j = 2; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
-      if (mComposer.defaultCharsetCombo->text( j ) == KGlobal::charsets()->xCharsetName(
-                                    KGlobal::charsets()->nameToID(str)))
+    for (int j = 1; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
+      if (mComposer.defaultCharsetCombo->text( j ) == str)
       {
         mComposer.defaultCharsetCombo->setCurrentItem( j );
         found = true;
@@ -1964,6 +1994,12 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry("replace-forward-prefix",
                             mComposer.replaceForwardPrefixCheck->isChecked() );
 
+    QStringList charsetList;
+    int charsetCount = mComposer.charsetListBox->count();
+    for (j = 0; j < charsetCount; j++)
+      charsetList.append( mComposer.charsetListBox->item( j )->text() );
+    config.writeEntry("charsets", charsetList);
+
     bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
     config.writeEntry("signature", autoSignature ? "auto" : "manual" );
     config.writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
@@ -1974,9 +2010,9 @@ void ConfigureDialog::slotDoApply( bool everything )
     // charset settings
     if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
       config.writeEntry("charset", "default");
-    else //charset should be e.g. iso-8889-1, on the list we have iso8859-1
-      config.writeEntry("charset", KGlobal::charsets()->name(
-         KGlobal::charsets()->nameToID( mComposer.defaultCharsetCombo->currentText())));
+    else
+      config.writeEntry("charset", mComposer.defaultCharsetCombo->
+        currentText());
     config.writeEntry("force-reply-charset",
                       mComposer.forceReplyCharsetCheck->isChecked() );
   }
@@ -2825,6 +2861,73 @@ void ConfigureDialog::slotForwardPrefixSelected( void )
   mComposer.removeForwardPrefixButton->setEnabled( true );
 }
 
+void ConfigureDialog::slotAddCharset( void )
+{
+  KLineEditDlg * linedlg = new KLineEditDlg(i18n("Enter charset to add"), "",
+    this);
+  if ( linedlg->exec() == QDialog::Accepted )
+  {
+    if (linedlg->text().lower() == "us-ascii" || 
+      QTextCodec::codecForName( linedlg->text() ))
+    {
+      mComposer.charsetListBox->insertItem( linedlg->text(),
+        mComposer.charsetListBox->currentItem() + 1 );
+      mComposer.charsetListBox->setSelected( mComposer.charsetListBox->
+        currentItem() + 1, TRUE );
+      mComposer.defaultCharsetCombo->insertItem( linedlg->text() );
+    } else {
+      KMessageBox::sorry( this, i18n("This charset is not supported.") );
+    }
+  }
+}
+
+void ConfigureDialog::slotRemoveSelCharset( void )
+{
+  int crItem = mComposer.charsetListBox->currentItem();
+  if( crItem != -1 )
+  {
+    for (int i = 0; i < mComposer.defaultCharsetCombo->count(); i++)
+    {
+      if (mComposer.defaultCharsetCombo->text( i ) ==
+          mComposer.charsetListBox->currentText())
+      {
+        mComposer.defaultCharsetCombo->removeItem( i );
+        break;
+      }
+    }
+    mComposer.charsetListBox->removeItem( crItem );
+    if (crItem - mComposer.charsetListBox->count() <= 0) crItem--;
+    mComposer.charsetListBox->setSelected( crItem, TRUE );
+  }
+}
+
+void ConfigureDialog::slotCharsetUp( void )
+{
+  int crItem = mComposer.charsetListBox->currentItem();
+  QString text = mComposer.charsetListBox->text( crItem );
+  mComposer.charsetListBox->removeItem( crItem );
+  mComposer.charsetListBox->insertItem( text, crItem - 1 );
+  mComposer.charsetListBox->setSelected( crItem - 1, TRUE );
+}
+
+void ConfigureDialog::slotCharsetDown( void )
+{
+  int crItem = mComposer.charsetListBox->currentItem();
+  QString text = mComposer.charsetListBox->text( crItem );
+  mComposer.charsetListBox->removeItem( crItem );
+  mComposer.charsetListBox->insertItem( text, crItem + 1 );
+  mComposer.charsetListBox->setSelected( crItem + 1, TRUE );
+}
+
+void ConfigureDialog::slotCharsetSelectionChanged( void )
+{
+  mComposer.charsetUpButton->setEnabled( mComposer.charsetListBox->
+    currentItem() > 0 );
+  mComposer.charsetDownButton->setEnabled( mComposer.charsetListBox->
+    count() - mComposer.charsetListBox->currentItem() > 1 );
+  mComposer.removeCharsetButton->setEnabled( mComposer.charsetListBox->
+    count() != 0 );
+}
 
 void ConfigureDialog::slotMimeHeaderSelectionChanged( void )
 {
