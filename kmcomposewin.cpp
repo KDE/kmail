@@ -2923,6 +2923,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                         i18n("Enter different address for recipient %1 "
                              "or enter \" * \" to see all certificates:").arg(*it),
                         addressee, &bOk, this ).stripWhiteSpace().utf8();
+          askForDifferentSearchString = false;
           if( bOk ) {
             addressee = addressee.simplifyWhiteSpace();
             if( ("\"*\"" == addressee) ||
@@ -2992,7 +2993,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
           if( useDialog ) {
             dialog.setCommentBelow(
               i18n("(Certificates matching address \"%1\", "
-                  " press [Esc] to use different address for recipient %2.)")
+                  " press [Cancel] to use different address for recipient %2.)")
               .arg(addressee)
               .arg(*it) );
             dialog.entriesLB->setFocus();
