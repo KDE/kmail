@@ -1,3 +1,19 @@
+2000-02-02  George Staikos <staikos@0wned.org> (KMail-1.1.33)
+	Mail Sending
+	* External editor support
+	* Confirm before send
+	* Attach custom mime headers
+
+	POP3
+	* Settings entry for the POP3 timer
+
+	Security
+	* Changed tpmnam to mkstemp
+
+	General
+	* New mail received notification
+	* Sigfile editor
+
 1999-12-15  Don Sanders  <sanders@kde.org> (KMail-1.1.32)
 
         General
