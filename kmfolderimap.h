@@ -45,6 +45,8 @@ namespace KMail {
   class FolderJob;
   class ImapJob;
   class AttachmentStrategy;
+}
+namespace KPIM {
   class ProgressItem;
 }
 using KMail::FolderJob;
