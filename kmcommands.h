@@ -10,6 +10,7 @@
 #include <kio/job.h>
 #include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
+#include <kdepimmacros.h>
 
 class QPopupMenu;
 class QTextCodec;
@@ -32,7 +33,7 @@ namespace KIO { class Job; }
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
 
-class KMCommand : public QObject
+class KDE_EXPORT KMCommand : public QObject
 {
   Q_OBJECT
 
@@ -142,7 +143,7 @@ private:
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 };
 
-class KMMailtoComposeCommand : public KMCommand
+class KDE_EXPORT KMMailtoComposeCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -156,7 +157,7 @@ private:
   KMMessage *mMessage;
 };
 
-class KMMailtoReplyCommand : public KMCommand
+class KDE_EXPORT KMMailtoReplyCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -171,7 +172,7 @@ private:
   QString mSelection;
 };
 
-class KMMailtoForwardCommand : public KMCommand
+class KDE_EXPORT KMMailtoForwardCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -185,7 +186,7 @@ private:
   KURL mUrl;
 };
 
-class KMMailtoAddAddrBookCommand : public KMCommand
+class KDE_EXPORT KMMailtoAddAddrBookCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -198,7 +199,7 @@ private:
   KURL mUrl;
 };
 
-class KMAddBookmarksCommand : public KMCommand
+class KDE_EXPORT KMAddBookmarksCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -212,7 +213,7 @@ private:
 };
 
 
-class KMMailtoOpenAddrBookCommand : public KMCommand
+class KDE_EXPORT KMMailtoOpenAddrBookCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -225,7 +226,7 @@ private:
   KURL mUrl;
 };
 
-class KMUrlCopyCommand : public KMCommand
+class KDE_EXPORT KMUrlCopyCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -239,7 +240,7 @@ private:
   KMMainWidget *mMainWidget;
 };
 
-class KMUrlOpenCommand : public KMCommand
+class KDE_EXPORT KMUrlOpenCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -253,7 +254,7 @@ private:
   KMReaderWin *mReaderWin;
 };
 
-class KMUrlSaveCommand : public KMCommand
+class KDE_EXPORT KMUrlSaveCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -269,7 +270,7 @@ private:
   KURL mUrl;
 };
 
-class KMEditMsgCommand : public KMCommand
+class KDE_EXPORT KMEditMsgCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -280,7 +281,7 @@ private:
   virtual Result execute();
 };
 
-class KMShowMsgSrcCommand : public KMCommand
+class KDE_EXPORT KMShowMsgSrcCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -294,7 +295,7 @@ private:
   bool mMsgWasComplete;
 };
 
-class KMSaveMsgCommand : public KMCommand
+class KDE_EXPORT KMSaveMsgCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -324,7 +325,7 @@ private:
   KIO::TransferJob *mJob;
 };
 
-class KMOpenMsgCommand : public KMCommand
+class KDE_EXPORT KMOpenMsgCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -345,7 +346,7 @@ private:
   KIO::TransferJob *mJob;
 };
 
-class KMSaveAttachmentsCommand : public KMCommand
+class KDE_EXPORT KMSaveAttachmentsCommand : public KMCommand
 {
   Q_OBJECT
 public:
@@ -383,7 +384,7 @@ private:
   bool mEncoded;
 };
 
-class KMReplyToCommand : public KMCommand
+class KDE_EXPORT KMReplyToCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -398,7 +399,7 @@ private:
   QString mSelection;
 };
 
-class KMNoQuoteReplyToCommand : public KMCommand
+class KDE_EXPORT KMNoQuoteReplyToCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -424,7 +425,7 @@ private:
   QString mSelection;
 };
 
-class KMReplyToAllCommand : public KMCommand
+class KDE_EXPORT KMReplyToAllCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -439,7 +440,7 @@ private:
   QString mSelection;
 };
 
-class KMReplyAuthorCommand : public KMCommand
+class KDE_EXPORT KMReplyAuthorCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -454,7 +455,7 @@ private:
   QString mSelection;
 };
 
-class KMForwardCommand : public KMCommand
+class KDE_EXPORT KMForwardCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -471,7 +472,7 @@ private:
   uint mIdentity;
 };
 
-class KMForwardAttachedCommand : public KMCommand
+class KDE_EXPORT KMForwardAttachedCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -488,7 +489,7 @@ private:
   QGuardedPtr<KMComposeWin> mWin;
 };
 
-class KMRedirectCommand : public KMCommand
+class KDE_EXPORT KMRedirectCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -499,7 +500,7 @@ private:
   virtual Result execute();
 };
 
-class KMPrintCommand : public KMCommand
+class KDE_EXPORT KMPrintCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -517,7 +518,7 @@ private:
   const QTextCodec *mCodec;
 };
 
-class KMSetStatusCommand : public KMCommand
+class KDE_EXPORT KMSetStatusCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -535,7 +536,7 @@ private:
   bool mToggle;
 };
 
-class KMFilterCommand : public KMCommand
+class KDE_EXPORT KMFilterCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -550,7 +551,7 @@ private:
 };
 
 
-class KMFilterActionCommand : public KMCommand
+class KDE_EXPORT KMFilterActionCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -566,7 +567,7 @@ private:
 };
 
 
-class KMMetaFilterActionCommand : public QObject
+class KDE_EXPORT KMMetaFilterActionCommand : public QObject
 {
   Q_OBJECT
 
@@ -583,7 +584,7 @@ private:
   KMMainWidget *mMainWidget;
 };
 
-class FolderShortcutCommand : public QObject
+class KDE_EXPORT FolderShortcutCommand : public QObject
 {
   Q_OBJECT
 
@@ -605,7 +606,7 @@ private:
 };
 
 
-class KMMailingListFilterCommand : public KMCommand
+class KDE_EXPORT KMMailingListFilterCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -624,7 +625,7 @@ private:
       copied.
       Am empty @see KMMenuToFolder must be passed in. */
 
-class KMMenuCommand : public KMCommand
+class KDE_EXPORT KMMenuCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -636,7 +637,7 @@ public:
     QObject *receiver, KMMenuToFolder *aMenuToFolder, QPopupMenu *menu );
 };
 
-class KMCopyCommand : public KMMenuCommand
+class KDE_EXPORT KMCopyCommand : public KMMenuCommand
 {
   Q_OBJECT
 
@@ -655,7 +656,7 @@ private:
 namespace KPIM {
   class ProgressItem;
 }
-class KMMoveCommand : public KMMenuCommand
+class KDE_EXPORT KMMoveCommand : public KMMenuCommand
 {
   Q_OBJECT
 
@@ -689,7 +690,7 @@ private:
   KPIM::ProgressItem *mProgressItem;
 };
 
-class KMDeleteMsgCommand : public KMMoveCommand
+class KDE_EXPORT KMDeleteMsgCommand : public KMMoveCommand
 {
   Q_OBJECT
 
@@ -703,7 +704,7 @@ private:
 
 };
 
-class KMUrlClickedCommand : public KMCommand
+class KDE_EXPORT KMUrlClickedCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -721,7 +722,7 @@ private:
   KMMainWidget *mMainWidget;
 };
 
-class KMLoadPartsCommand : public KMCommand
+class KDE_EXPORT KMLoadPartsCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -746,7 +747,7 @@ private:
   PartNodeMessageMap mPartMap;
 };
 
-class KMResendMessageCommand : public KMCommand
+class KDE_EXPORT KMResendMessageCommand : public KMCommand
 {
   Q_OBJECT
 
@@ -757,7 +758,7 @@ private:
   virtual Result execute();
 };
 
-class KMMailingListCommand : public KMCommand
+class KDE_EXPORT KMMailingListCommand : public KMCommand
 {
   Q_OBJECT
 public:
@@ -772,7 +773,7 @@ protected:
   KMFolder *mFolder;
 };
 
-class KMMailingListPostCommand : public KMMailingListCommand
+class KDE_EXPORT KMMailingListPostCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
@@ -781,7 +782,7 @@ protected:
   virtual KURL::List urls() const;
 };
 
-class KMMailingListSubscribeCommand : public KMMailingListCommand
+class KDE_EXPORT KMMailingListSubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
@@ -790,7 +791,7 @@ protected:
   virtual KURL::List urls() const;
 };
 
-class KMMailingListUnsubscribeCommand : public KMMailingListCommand
+class KDE_EXPORT KMMailingListUnsubscribeCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
@@ -799,7 +800,7 @@ protected:
   virtual KURL::List urls() const;
 };
 
-class KMMailingListArchivesCommand : public KMMailingListCommand
+class KDE_EXPORT KMMailingListArchivesCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
@@ -808,7 +809,7 @@ protected:
   virtual KURL::List urls() const;
 };
 
-class KMMailingListHelpCommand : public KMMailingListCommand
+class KDE_EXPORT KMMailingListHelpCommand : public KMMailingListCommand
 {
   Q_OBJECT
 public:
@@ -817,7 +818,7 @@ protected:
   virtual KURL::List urls() const;
 };
 
-class KMIMChatCommand : public KMCommand
+class KDE_EXPORT KMIMChatCommand : public KMCommand
 {
   Q_OBJECT
 

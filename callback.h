@@ -37,6 +37,8 @@
 
 class KMMessage;
 
+#include <kdepimmacros.h>
+
 namespace KMail {
 
 /** This class is used for callback hooks needed by bodypart
@@ -45,7 +47,7 @@ namespace KMail {
     Feel free to put whatever you want in here. It's not supposed to be
     a nicely formatted class, but simply include everything necessary
     for the plugins. */
-class Callback {
+class KDE_EXPORT Callback {
 public:
   Callback( KMMessage* msg );
 

@@ -60,7 +60,7 @@ namespace KMail {
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
 
-class KMMainWidget : public QWidget
+class KDE_EXPORT KMMainWidget : public QWidget
 {
   Q_OBJECT
 

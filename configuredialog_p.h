@@ -17,6 +17,7 @@
 #include <klistview.h>
 #include <kcmodule.h>
 #include <klocale.h>
+#include <kdepimmacros.h>
 
 class QPushButton;
 class QLabel;
@@ -233,7 +234,7 @@ private:
 //
 //
 
-class IdentityPage : public ConfigModule {
+class KDE_EXPORT IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
   IdentityPage( QWidget * parent=0, const char * name=0 );
@@ -360,7 +361,7 @@ protected:
   QValueList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
-class AccountsPage : public ConfigModuleWithTabs {
+class KDE_EXPORT AccountsPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   AccountsPage( QWidget * parent=0, const char * name=0 );
@@ -513,7 +514,7 @@ private: // data
   QButtonGroup *mSystemTrayGroup;
 };
 
-class AppearancePage : public ConfigModuleWithTabs {
+class KDE_EXPORT AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   AppearancePage( QWidget * parent=0, const char * name=0 );
@@ -681,7 +682,7 @@ protected:
   SimpleStringListEditor *mAttachWordsListEditor;
 };
 
-class ComposerPage : public ConfigModuleWithTabs {
+class KDE_EXPORT ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   ComposerPage( QWidget * parent=0, const char * name=0 );
@@ -819,7 +820,7 @@ private:
   Kleo::BackendConfigWidget * mBackendConfig;
 };
 
-class SecurityPage : public ConfigModuleWithTabs {
+class KDE_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   SecurityPage(	QWidget * parent=0, const char * name=0 );
@@ -909,7 +910,7 @@ private:
   QCheckBox* mAutomaticSending;
 };
 
-class MiscPage : public ConfigModuleWithTabs {
+class KDE_EXPORT MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   MiscPage( QWidget * parent=0, const char * name=0 );

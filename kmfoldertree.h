@@ -25,6 +25,7 @@
 #include <kpopupmenu.h>
 #include <kfoldertree.h>
 #include <kiconloader.h>
+#include <kdepimmacros.h>
 
 #include <qwidget.h>
 #include <qtimer.h>
@@ -39,7 +40,7 @@ class KMMainWidget;
 class KMAccount;
 template <typename T> class QGuardedPtr;
 
-class KMFolderTreeItem : public QObject, public KFolderTreeItem
+class KDE_EXPORT KMFolderTreeItem : public QObject, public KFolderTreeItem
 {
   Q_OBJECT
 public:

@@ -12,6 +12,7 @@
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kimproxy.h>
+#include <kdepimmacros.h>
 
 #include "kmailIface.h"
 
@@ -62,7 +63,7 @@ class KMReaderWin;
 class KSystemTray;
 class KMMainWidget;
 
-class KMKernel : public QObject, virtual public KMailIface
+class KDE_EXPORT KMKernel : public QObject, virtual public KMailIface
 {
   Q_OBJECT
 

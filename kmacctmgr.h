@@ -8,12 +8,13 @@
 
 #include <qobject.h>
 #include "kmaccount.h"
+#include <kdepimmacros.h>
 
 class QString;
 class QStringList;
 
 
-class KMAcctMgr: public QObject
+class KDE_EXPORT KMAcctMgr: public QObject
 {
   Q_OBJECT
   friend class KMAccount;

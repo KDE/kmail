@@ -35,6 +35,7 @@
 #include <kparts/part.h>
 
 #include <qwidget.h>
+#include <kdepimmacros.h>
 
 class KInstance;
 class KAboutData;
@@ -49,7 +50,7 @@ class KMFolderTreeItem;
 
 class ActionManager;
 
-class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
+class KDE_EXPORT KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
 {
     Q_OBJECT
   public:

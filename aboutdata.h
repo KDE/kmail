@@ -33,10 +33,11 @@
 #define __KMAIL_ABOUTDATA_H__
 
 #include <kaboutdata.h>
+#include <kdepimmacros.h>
 
 namespace KMail {
 
-  class AboutData : public KAboutData {
+  class KDE_EXPORT AboutData : public KAboutData {
   public:
     AboutData();
     ~AboutData();
