@@ -434,15 +434,9 @@ void KMFolderDialog::slotOk()
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
       if (folder->parent() != selectedFolderDir)
-{
-kdDebug() << "moving... " << endl;
         folder->rename(fldName, selectedFolderDir );
-}
       else
-{
-kdDebug() << "renaming... " << endl;
         folder->rename(fldName);
-}
 
       kernel->folderMgr()->contentsChanged();
     }
@@ -473,7 +467,7 @@ kdDebug() << "renaming... " << endl;
       folder->setUserWhoField("To");
     else
       folder->setUserWhoField(QString());
-    folder->close();
+    if (!mFolder) folder->close();
   }
 // reload the headers to show the changes if the folder was modified
   if (mFolder) static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
