@@ -64,6 +64,7 @@ bool KMBroadcastStatus::abortRequested()
 void KMBroadcastStatus::requestAbort()
 {
   abortRequested_ = true;
+  emit signalAbortRequested();
 }
 
 

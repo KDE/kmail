@@ -467,6 +467,19 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   mProcessing = false;
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::slotAbortRequested()
+{
+  if (stage != List) return;
+  stage = Idle;
+  job->kill();
+  job = 0L;
+  slotCancel();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::startJob() {
   QString text;
 
@@ -504,6 +517,8 @@ void KMAcctExpPop::startJob() {
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from %1...").arg(mHost));
+  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
+          this, SLOT(slotAbortRequested()));
 
   numBytes = 0;
   numBytesRead = 0;

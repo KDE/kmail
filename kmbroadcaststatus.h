@@ -59,6 +59,8 @@ signals:
   void statusProgressPercent( unsigned long );
   /* Emitted when reset is called. */
   void resetRequested();
+  /* Emitted when user wants to abort the connection. */
+  void signalAbortRequested();
 
 public slots:
   

@@ -163,6 +163,9 @@ protected slots:
   /** Cleans up after a user cancels the current job */
   void slotCancel();
 
+  /** Kills the job if still stage == List */
+  void slotAbortRequested();
+
   /* Called when a job is finished. Basically a finite state machine for
    cycling through the Idle, List, Uidl, Retr, Quit stages */
   void slotJobFinished();
