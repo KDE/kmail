@@ -238,6 +238,7 @@ protected slots:
   void slotSearchClosed();
   void slotFind();
   void slotUpdateImapMessage(KMMessage *msg);
+  void slotIntro();
 
 
   // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)

@@ -71,7 +71,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   searchWin = 0;
   mStartupDone = FALSE;
   mbNewMBVisible = false;
-  QListViewItem* idx;
   mIntegrated  = TRUE;
   mFolder = NULL;
   mFolderThreadPref = false;
@@ -106,12 +105,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
 
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
-    idx = mFolderTree->firstChild();
+    slotIntro();
   else
-    idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
-  if (idx!=0) {
-    mFolderTree->doFolderSelected(idx);
-  }
+    mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(kernel->inboxFolder()));
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
@@ -1589,13 +1585,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   kernel->kbp()->busy();
 
   if( !aFolder && mFolderTree->currentItem() == mFolderTree->firstChild() ) {
-    mMsgView->setMsg( 0, TRUE );
-    if( mHeaders && mWindowLayout < 3 )
-      mHeaders->hide();
-    if( mMimePartTree && (0 < mShowMIMETreeMode) &&
-        (mWindowLayout != 2) && (mWindowLayout != 3) )
-        mMimePartTree->hide();
-    mMsgView->displayAboutPage();
+    slotIntro();
   } else if( !mFolder ) {
     mMsgView->enableMsgDisplay();
     mMsgView->setMsg( 0, TRUE );
@@ -2795,6 +2785,11 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Configure &Pop Filters..."), 0, this,
  		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
 
+  (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,
+				i18n("Display KMail's Welcome Page") ),
+		      0, this, SLOT(slotIntro()),
+		      actionCollection(), "help_kmail_welcomepage" );
+
   createGUI( "kmmainwin.rc", false );
 
   connect( guiFactory()->container("folder", this),
@@ -3226,4 +3221,23 @@ bool KMMainWin::queryClose() {
   }
 
   return true;
+}
+
+void KMMainWin::slotIntro() {
+  if ( !mFolderTree || !mMsgView ) return;
+
+  // ### select "Mail" in folder tree until Carsten Burghard removes it.
+  if ( !mFolderTree->firstChild() ) return;
+  if ( mFolderTree->currentItem() != mFolderTree->firstChild() ) // don't loop
+    mFolderTree->doFolderSelected( mFolderTree->firstChild() );
+
+  mMsgView->setMsg( 0, true );
+  // hide widgets that are in the way:
+  if ( mHeaders && mWindowLayout < 3 )
+    mHeaders->hide();
+  if ( mMimePartTree && mShowMIMETreeMode > 0 &&
+       mWindowLayout != 2 && mWindowLayout != 3 )
+    mMimePartTree->hide();
+
+  mMsgView->displayAboutPage();
 }
