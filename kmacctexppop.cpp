@@ -47,7 +47,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   mProtocol = 3;
   struct servent *serv = getservbyname("pop-3", "tcp");
   if (serv) {
-    mPort = serv->s_port;
+    mPort = ntohs(serv->s_port);
   } else {
     mPort = 110;
   }
@@ -85,7 +85,7 @@ void KMAcctExpPop::init(void)
   mHost   = "";
   struct servent *serv = getservbyname("pop-3", "tcp");
   if (serv) {
-    mPort = serv->s_port;
+    mPort = ntohs(serv->s_port);
   } else {
     mPort = 110;
   }
