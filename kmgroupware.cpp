@@ -865,19 +865,21 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   QString sDtStart = event->dtStartTimeStr();
   QString sDescr = event->description().simplifyWhiteSpace();
   QString sMethod; // = event->method(); //###TODO actually the scheduler needs to do that
-  Attendee::List attendees = event->attendees();
+
   QString sAttendee;
+  Attendee::List attendees = event->attendees();
+  if( attendees.count() == 0 ) {
+    kdDebug(5006) << "No attendees in the iCal!\n";
+    return false;
+  }
+  if( attendees.count() != 1 )
+    kdDebug(5006) << "Warning: attendeecount in the reply should be 1 but is "
+		  << attendees.count() << endl;
+  Attendee* attendee = *attendees.begin();
 
   // FIXME: This is a temporary workaround to get the method
   sMethod = "METHOD";
   vPartMicroParser( vCal.utf8(), sMethod );
-
-  Attendee::List::ConstIterator it;
-  for( it = attendees.begin(); it != attendees.end(); ++it ) {
-    sAttendee += (*it)->name();
-    Attendee::List::ConstIterator it2 = it;
-    if ( ++it2 != attendees.end() ) sAttendee += ",";
-  }
 
   QString sSummary = event->summary();
 
@@ -888,14 +890,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   string2HTML( sLocation );
   string2HTML( sDescr );
 
-#if 0
-  sDtStart = ISOToLocalQDateTime( sDtStart );
-  sDtEnd = ISOToLocalQDateTime( sDtEnd );
-  sDtStart = sDtStart.right( sDtStart.length() - sDtStart.find( '@' ) - 1 ) ;
-  sDtEnd = sDtEnd.right( sDtEnd.length() - sDtEnd.find( '@' ) - 1 );
-#endif
   sMethod = sMethod.lower();
-  sAttendee = sAttendee.upper();
 
   QString typeString;
   if( type == vCalEvent )
@@ -905,10 +900,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
 
   if( sMethod == "request" ) {
     if( type == vCalEvent ) {
-      if( aUpdateCounter == 0 )
-	prefix = i18n("You have been invited to a meeting");
-      else
-	prefix = i18n("This is an update of a previous invitation.");
+      prefix = i18n("You have been invited to a meeting");
       prefix += "<br>";
       if( !sLocation.isEmpty() )
 	prefix.append( i18n( "The meeting will take place in %1 from %2 to %3" )
@@ -920,27 +912,34 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
     } else {
       prefix = i18n( "You have been assigned a task:<br>%1" ).arg( sSummary );
     }
-  } else if( sMethod == "reply" ){
-    if( 0 < sAttendee.contains("PARTSTAT=ACCEPTED") ) {
+  } else if( sMethod == "reply" ) {
+    switch( attendee->status() ) {
+    case Attendee::Accepted:
       if( type == vCalEvent )
 	prefix = i18n("Sender <b>accepts</b> the invitation to meet in %1<br>from %2 to %3.")
 	  .arg( sLocation ).arg( sDtStart ).arg( sDtEnd );
       else if( type == vCalTodo )
 	prefix = i18n( "Sender <b>accepts</b> the task <b>%1</b>." ).arg(sSummary );
-    } else if( 0 < sAttendee.contains("PARTSTAT=TENTATIVE") ) {
+      break;
+
+    case Attendee::Tentative:
       if( type == vCalEvent )
 	prefix = i18n("Sender <b>tentatively accepts</b> the invitation to meet in %1<br>from %2 to %3.")
 	  .arg( sLocation ).arg( sDtStart ).arg( sDtEnd );
       else if( type == vCalTodo )
 	prefix = i18n( "Sender <b>tentatively accepts</b> the task <b>%1</b>." ).
 	  arg(sSummary );
-    } else if( 0 < sAttendee.contains("PARTSTAT=DECLINED") ) {
+      break;
+
+    case Attendee::Declined:
       if( type == vCalEvent )
 	prefix = i18n("Sender <b>declines</b> the invitation to meet in %1<br>from %2 to %3.")
 	  .arg( sLocation ).arg( sDtStart ).arg( sDtEnd );
       else if( vCalTodo )
 	prefix = i18n( "Sender <b>declines</b> the task %1." ).arg( sSummary );
-    } else {
+      break;
+
+    default:
       if( type == vCalEvent ) {
 	prefix = i18n("This is an unknown reply to the event in %1 from %2 to %3")
 	  .arg( sLocation ).arg( sDtStart ).arg( sDtEnd );
