@@ -1107,7 +1107,7 @@ void KMComposeWin::setupActions(void)
   connect(mSignAction,    SIGNAL(toggled(bool)),
                          SLOT(slotSignToggled(    bool )));
 
-  if( KMail::CryptPlugFactory::instance()->list().count() ){
+  if ( KMail::CryptPlugFactory::instance()->list().count() > 0 ) {
     QStringList lst;
     lst << i18n( "inline OpenPGP (built-in)" );
     CryptPlugWrapper* current;
@@ -1133,9 +1133,10 @@ void KMComposeWin::setupActions(void)
     // Set last chosen one if possible
     QString last = composerConfig.readEntry( "CryptPlug" );
     if ( !last.isEmpty() )
-      for ( int i=0; i<lst.count(); ++i )
+      for ( unsigned int i=0; i<lst.count(); ++i )
         if ( last == lst[i] ) {
           mCryptoModuleAction->setCurrentItem( i );
+          slotSelectCryptoModule();
           break;
         }
   }
