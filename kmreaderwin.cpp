@@ -3997,10 +3997,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                         signer = "";
                     else {
                         // HTMLize the signer's user id and try to create mailto: link
-                        signer.replace( QRegExp("&"), "&amp;" );
-                        signer.replace( QRegExp("<"), "&lt;" );
-                        signer.replace( QRegExp(">"), "&gt;" );
-                        signer.replace( QRegExp("\""), "&quot;" );
+                        signer = KMMessage::quoteHtmlChars( signer, true );
                         if( blockAddrs.count() ){
                             QString address = KMMessage::encodeMailtoUrl( blockAddrs.first() );
                             signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
@@ -4442,17 +4439,11 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
   kdDebug(5006) << "writePartIcon: PartNum: " << aPartNum << endl;
 
   comment = aMsgPart->contentDescription();
-  comment.replace(QRegExp("&"), "&amp;");
-  comment.replace(QRegExp("<"), "&lt;");
-  comment.replace(QRegExp(">"), "&gt;");
+  comment = KMMessage::quoteHtmlChars( comment, true );
 
   fileName = aMsgPart->fileName();
   if (fileName.isEmpty()) fileName = aMsgPart->name();
-  label = fileName;
-      /* HTMLize label */
-  label.replace(QRegExp("&"), "&amp;");
-  label.replace(QRegExp("<"), "&lt;");
-  label.replace(QRegExp(">"), "&gt;");
+  label = KMMessage::quoteHtmlChars( fileName, true );
 
 //--- Sven's save attachments to /tmp start ---
   KTempFile *tempFile = new KTempFile(QString::null,
@@ -4471,7 +4462,11 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
   if (ok)
   {
     mTempDirs.append(fname);
-    fileName.replace(QRegExp("[/\"\']"),"");
+    //fileName.replace(QRegExp("[/\"\']"),"");
+    // strip off a leading path
+    int slashPos = fileName.findRev( '/' );
+    if( -1 != slashPos )
+      fileName = fileName.mid( slashPos + 1 );
     if (fileName.isEmpty()) fileName = "unnamed";
     fname += "/" + fileName;
 
@@ -4481,7 +4476,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
   }
   if (ok)
   {
-    href = QString("file:")+fname;
+    href = QString("file:")+KURL::encode_string(fname);
     //debug ("Wrote attachment to %s", href.data());
   }
   else {
@@ -4863,7 +4858,11 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
                            win->message() ? win->message()->from() : "" );
       win->queueHtml("</body></html>");
       win->sendNextHtmlChunk();
+      // ##### FIXME-AFTER-MSG-FREEZE: Use this
+      // win->setCaption(i18n("View Attachment: %1").arg(pname));
+      // instead of the following line:
       win->setCaption(i18n("View Attachment: ") + pname);
+      // ##### end of FIXME-AFTER-MSG-FREEZE
       win->show();
     }
     else if (    partTypeStr == "image"
@@ -4877,17 +4876,28 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       if( iio->read() ) {
         QImage img = iio->image();
         int scnum = QApplication::desktop()->screenNumber(win);
-	if( img.width() > 50 && img.width() > 50	// avoid super small windows
-	    && img.width() < QApplication::desktop()->screen(scnum)->width()	// avoid super large windows
-	    && img.height() < QApplication::desktop()->screen(scnum)->height() ) {
-	  win->resize(img.width()+10, img.height()+10);
-	}
+        // determine a reasonable window size
+        int width, height;
+        if( img.width() < 50 )
+          width = 70;
+        else if( img.width()+20 < QApplication::desktop()->screen(scnum)->width() )
+          width = img.width()+20;
+        else
+          width = QApplication::desktop()->screen(scnum)->width();
+        if( img.height() < 50 )
+          height = 70;
+        else if( img.height()+20 < QApplication::desktop()->screen(scnum)->height() )
+          height = img.height()+20;
+        else
+          height = QApplication::desktop()->screen(scnum)->height();
+        win->resize( width, height );
       }
       // Just write the img tag to HTML:
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
 			  "Transitional//EN\">\n<html><title></title><body>");
-      QString linkName = QString("<img src=\"file:%1\" border=0>").arg(aFileName);
+      QString linkName = QString("<img src=\"file:%1\" border=0>")
+                         .arg(KURL::encode_string(aFileName));
       win->mViewer->write(linkName);
       win->mViewer->write("</body></html>");
       win->mViewer->end();
@@ -4973,7 +4983,7 @@ void KMReaderWin::slotAtmOpen()
 
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
   // TODO: show full path for Service, not only name
-  QString mimetype = KMimeType::findByURL(KURL(mAtmCurrentName))->name();
+  QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(mAtmCurrentName)))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
   QString question;
   QString open_text = i18n("&Open");
@@ -5035,19 +5045,20 @@ void KMReaderWin::slotAtmSave()
 {
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   if( node ) {
-    QString fileName;
-
     KMMessagePart& msgPart = node->msgPart();
 
-    if (!msgPart.fileName().isEmpty())
-      fileName = msgPart.fileName();
-    else
-      fileName = msgPart.name();
+    QString fileName = mAtmCurrentName;
+    
+    // strip off the leading path
+    int slashPos = fileName.findRev( '/' );
+    if( -1 != slashPos )
+      fileName = fileName.mid( slashPos + 1 );
+    
+    // replace all ':' with '_' because ':' isn't allowed on FAT volumes
+    int colonPos = -1;
+    while( -1 != ( colonPos = fileName.find(':', colonPos + 1) ) )
+      fileName[colonPos] = '_';
 
-    while (fileName.find(':') != -1)
-      fileName = fileName.mid(fileName.find(':') + 1).stripWhiteSpace();
-    // remove all occurrences of '/' from the file name
-    fileName.replace(QRegExp("/"), "");
     // prepend the previously used save dir
     fileName.prepend(mSaveAttachDir);
     KURL url = KFileDialog::getSaveURL( fileName, QString::null, this );
