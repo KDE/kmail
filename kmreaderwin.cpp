@@ -4598,7 +4598,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 		    message() ? message()->from() : "" );
       queueHtml("</body></html>");
       sendNextHtmlChunk();
-      mMainWindow->setCaption(i18n("View Attachment: ") + pname);
+      mMainWindow->setCaption(i18n("View x Attachment: ") + pname);
   } else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
              (qstricmp(aMsgPart->typeStr(), "application")==0 &&
               qstricmp(aMsgPart->subtypeStr(), "postscript")))
@@ -4619,7 +4619,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 	    && img.height() < QApplication::desktop()->screen(scnum)->height() ) {
 	
 	}
-	resize(img.width()+10, img.height()+10);
+	mMainWindow->resize(img.width()+25, img.height()+25);
       }
       // Just write the img tag to HTML:
       mViewer->begin( KURL( "file:/" ) );
