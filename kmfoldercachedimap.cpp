@@ -226,10 +226,13 @@ void KMFolderCachedImap::writeConfig()
 void KMFolderCachedImap::writeAnnotationConfig()
 {
   KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
-  configGroup.writeEntry( "AnnotationFolderTypeChanged", mAnnotationFolderTypeChanged );
-  configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
-  configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
-  configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
+  if ( !folder()->noContent() )
+  {
+    configGroup.writeEntry( "AnnotationFolderTypeChanged", mAnnotationFolderTypeChanged );
+    configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
+    configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
+    configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
+  }
   configGroup.writeEntry( "UserRights", mUserRights );
 }
 
@@ -1912,8 +1915,12 @@ KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& 
   kdDebug(5006) << k_funcinfo << entry << " " << attribute << " " << value << endl;
   if ( entry == KOLAB_FOLDERTYPE )
     mAnnotationFolderTypeChanged = false;
-  else if ( entry == KOLAB_INCIDENCESFOR )
+  else if ( entry == KOLAB_INCIDENCESFOR ) {
     mIncidencesForChanged = false;
+    // The incidences-for changed, we must trigger the freebusy creation.
+    // HACK: in theory we would need a new enum value for this.
+    kmkernel->iCalIface().addFolderChange( folder(), KMailICalIfaceImpl::ACL );
+  }
 }
 
 void
