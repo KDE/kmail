@@ -1591,16 +1591,18 @@ void KMHeaders::nextMessage()
 
 void KMHeaders::selectNextMessage()
 {
- QListViewItem *lvi = currentItem();
-  if (lvi && lvi->itemBelow()) {
-    QListViewItem *temp = lvi;
+  QListViewItem *lvi = currentItem();
+  QListViewItem *below = lvi->itemBelow();
+  QListViewItem *temp = lvi;
+  if (lvi && below ) {
     while (temp) {
       temp->firstChild();
       temp = temp->parent();
     }
     lvi->repaint();
-    setSelected( lvi->itemBelow(), TRUE );
-    setCurrentItem(lvi->itemBelow());
+    /* test to see if we need to unselect messages on back track */
+    (below->isSelected() ? setSelected(lvi, FALSE) : setSelected(below, TRUE));
+    setCurrentItem(below);
     makeHeaderVisible();
     setFolderInfoStatus();
   }
@@ -1620,15 +1622,18 @@ void KMHeaders::prevMessage()
 void KMHeaders::selectPrevMessage()
 {
   QListViewItem *lvi = currentItem();
-  if (lvi && lvi->itemAbove()) {
-    QListViewItem *temp = lvi;
+  QListViewItem *above = lvi->itemAbove();
+  QListViewItem *temp = lvi;
+
+  if (lvi && above) {
     while (temp) {
       temp->firstChild();
       temp = temp->parent();
     }
     lvi->repaint();
-    setSelected( lvi->itemAbove(), TRUE );
-    setCurrentItem(lvi->itemAbove());
+    /* test to see if we need to unselect messages on back track */
+    (above->isSelected() ? setSelected(lvi, FALSE) : setSelected(above, TRUE));
+    setCurrentItem(above);
     makeHeaderVisible();
     setFolderInfoStatus();
   }
