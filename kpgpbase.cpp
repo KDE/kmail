@@ -58,7 +58,7 @@ KpgpBase::setMessage(const QString mess)
     decrypt();
 }
 
-QString 
+QString
 KpgpBase::message() const
 {
   // do we have a deciphered text?
@@ -81,6 +81,11 @@ KpgpBase::run(const char *cmd, const char *passphrase)
   int len, status;
   FILE *pass;
   pid_t child_pid, rc;
+
+  /* set the ID which one a passphrase is required for
+   * to the current PGP identity
+   */
+  requiredID = pgpUser;
 
   if(passphrase)
   {
@@ -190,6 +195,11 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
   pid_t child_pid, rc;
   char gpgcmd[1024] = "\0";
 
+  /* set the ID which one a passphrase is required for
+   * to currently nothing
+   */
+  requiredID = QString::null;
+
   if(passphrase)
   {
     pipe(ppass);
@@ -215,9 +225,9 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
 
 
     if(passphrase) {
-      snprintf(gpgcmd, 1023, "LANG=C; gpg --passphrase-fd %d %s",ppass[0],cmd);
+      snprintf(gpgcmd, 1023, "LANGUAGE=C gpg --passphrase-fd %d %s",ppass[0],cmd);
     } else {
-      snprintf(gpgcmd, 1023, "LANG=C; gpg %s",cmd);
+      snprintf(gpgcmd, 1023, "LANGUAGE=C gpg %s",cmd);
     }
 
   QApplication::flushX();
@@ -227,7 +237,7 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     close(pin[1]);
     dup2(pin[0], 0);
     close(pin[0]);
-	  
+
     close(pout[0]);
     dup2(pout[1], 1);
     close(pout[1]);
@@ -239,26 +249,26 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     //#warning FIXME: there has to be a better way to do this
      /* this is nasty nasty nasty (but it works) */
     if(passphrase) {
-      snprintf(gpgcmd, 1023, "LANG=C; gpg --passphrase-fd %d %s",ppass[0],cmd);
+      snprintf(gpgcmd, 1023, "LANGUAGE=C gpg --passphrase-fd %d %s",ppass[0],cmd);
     } else {
-      snprintf(gpgcmd, 1023, "LANG=C; gpg %s",cmd);
+      snprintf(gpgcmd, 1023, "LANGUAGE=C gpg %s",cmd);
     }
 
     execl("/bin/sh", "sh", "-c", gpgcmd,  NULL);
     _exit(127);
-  }                
-     
+  }
+
   /*Only get here if we're the parent.*/
   close(pin[0]);
   close(pout[1]);
   close(perr[1]);
 
-  if (!input.isEmpty()) 
+  if (!input.isEmpty())
     write(pin[1], input.data(), input.length());
   else
     write(pin[1], "\n", 1);
   close(pin[1]);
- 
+
   if (pout[0] >= 0)
   {
     while ((len=read(pout[0],str,1023))>0)
@@ -268,7 +278,7 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     }
    close(pout[0]);
   }
- 
+
   if (perr[0] >= 0)
   {
     while ((len=read(perr[0],str,1023))>0)
@@ -278,17 +288,17 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     }
     close(perr[0]);
   }
- 
+
   if(passphrase)
     close(ppass[0]);
-     
+
   //printf("output = %s\n",output.data());
   //printf("info = %s\n",info.data());
 
   // we don't want a zombie, do we?  ;-)
   rc = waitpid(0/*child_pid*/, &status, 0);
   if (rc==-1) printf("waitpid: %s\n", strerror(errno));
-  
+
   return OK;
 }
 
@@ -453,7 +463,7 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
   return status;
 }
 
-int 
+int
 KpgpBaseG::decrypt(const char *passphrase)
 {
   QString cmd;
@@ -694,12 +704,12 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
       _recipients = 0;
 
   if(_recipients != 0 && passphrase != 0)
-    cmd = "pgp +batchmode +language=C -seat ";
+    cmd = "pgp +batchmode +language=en -seat ";
   else if( _recipients != 0 )
-    cmd = "pgp +batchmode +language=C -eat";
+    cmd = "pgp +batchmode +language=en -eat";
   else if(passphrase != 0 )
-    cmd = "pgp +batchmode +language=C -sat ";
-  else 
+    cmd = "pgp +batchmode +language=en -sat ";
+  else
   {
     kdDebug() << "kpgpbase: Neither recipients nor passphrase specified." << endl;
     return OK;
@@ -821,7 +831,7 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
   return status;
 }
 
-int 
+int
 KpgpBase2::decrypt(const char *passphrase)
 {
   QString cmd;
@@ -829,7 +839,7 @@ KpgpBase2::decrypt(const char *passphrase)
   output = "";
 
 
-  cmd = "pgp +batchmode +language=C -f";
+  cmd = "pgp +batchmode +language=en -f";
 
   status = run(cmd, passphrase);
 
@@ -848,7 +858,7 @@ KpgpBase2::decrypt(const char *passphrase)
     input.remove(index1, index2 - index1);
     status = run(cmd, passphrase);
   }
- 
+
   if(status == RUN_ERR)
   {
     errMsg = i18n("error running pgp");
@@ -866,14 +876,14 @@ KpgpBase2::decrypt(const char *passphrase)
     status |= ENCRYPTED;
     if( info.find("Bad pass phrase") != -1)
     {
-      if(passphrase != 0) 
+      if(passphrase != 0)
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
 	kdDebug() << "KpgpBase: passphrase is bad" << endl;
 	status |= BADPHRASE;
 	status |= ERROR;
       }
-    } 
+    }
     else
     {
       // no secret key fitting this message
@@ -884,11 +894,11 @@ KpgpBase2::decrypt(const char *passphrase)
     }
     // check for persons
     index = info.find("can only be read by:");
-    if(index != -1) 
+    if(index != -1)
     {
       index = info.find("\n",index);
       int end = info.find("\n\n",index);
-      
+
       recipients.clear();
       while( (index2 = info.find("\n",index+1)) <= end )
       {
@@ -918,7 +928,7 @@ KpgpBase2::decrypt(const char *passphrase)
       index = info.find("\"",index);
       index2 = info.find("\"", index+1);
       signature = info.mid(index+1, index2-index-1);
-      
+
       // get key ID of signer
       index = info.find("key ID ",index2);
       signatureID = info.mid(index+7,8);
@@ -947,7 +957,7 @@ KpgpBase2::pubKeys()
   QString cmd;
   int index, index2;
 
-  cmd = "pgp +batchmode +language=C -kv -f";
+  cmd = "pgp +batchmode +language=en -kv -f";
   status = run(cmd);
   if(status == RUN_ERR) return 0;
 
@@ -964,12 +974,12 @@ KpgpBase2::pubKeys()
       // skip last line
     {
       int index3 = output.find("pub ",index);
-      
+
       if( (index3 >index2) || (index3 == -1) )
       {
 	// second adress for the same key
 	line = output.mid(index+1,index2-index-1);
-	line = line.stripWhiteSpace();	       
+	line = line.stripWhiteSpace();
 	line = line.lower();
       } else {
 	// line with new key
@@ -986,7 +996,7 @@ KpgpBase2::pubKeys()
       break;
     index = index2;
   }
-  
+
   return publicKeys;
 }
 
@@ -995,7 +1005,7 @@ KpgpBase2::signKey(const char *key, const char *passphrase)
 {
   QString cmd;
 
-  cmd = "pgp +batchmode +language=C -ks -f";
+  cmd = "pgp +batchmode +language=en -ks -f";
   cmd += addUserId();
   if(passphrase != 0)
   {
@@ -1013,7 +1023,7 @@ QString KpgpBase2::getAsciiPublicKey(QString _person)
 {
   if (_person.isEmpty()) return _person;
   QString toexec;
-  toexec.sprintf("pgp +language=C -kxaf \"%s\"", _person.data());
+  toexec.sprintf("pgp +language=en -kxaf \"%s\"", _person.data());
 
   status = run(toexec.data());
   if(status == RUN_ERR) return QString::null;
@@ -1032,19 +1042,19 @@ KpgpBase5::~KpgpBase5()
 {
 }
 
-int 
+int
 KpgpBase5::encrypt(const QStrList *_recipients, bool ignoreUntrusted)
 {
   return encsign(_recipients, 0, ignoreUntrusted);
 }
 
-int 
+int
 KpgpBase5::sign(const char *passphrase)
 {
   return encsign( 0, passphrase);
 }
-  
-int 
+
+int
 KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
 		   bool ignoreUntrusted)
 {
@@ -1054,9 +1064,9 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
   // with non ascii chars (umlauts, etc...) as binary files, but
   // we wan't a clear signature
   bool signonly = false;
-  
+
   output = "";
-  
+
   if(_recipients != 0)
     if(_recipients->isEmpty())
       _recipients = 0;
@@ -1070,7 +1080,7 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
     cmd = "pgps -bat -f +batchmode=1 ";
     signonly = true;
   }
-  else 
+  else
   {
     errMsg = "Neither recipients nor passphrase specified.";
     return OK;
@@ -1155,7 +1165,7 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
     status |= ERROR;
     status |= MISSINGKEY;
   }
-  
+
   if(signonly)
     output = "-----BEGIN PGP SIGNED MESSAGE-----\n\n" + input + "\n" + output;
 
@@ -1272,7 +1282,7 @@ QStrList
 KpgpBase5::pubKeys()
 {
   int index,index2;
-	
+
   status = run("pgpk -l");
   if(status == RUN_ERR) return 0;
 
@@ -1371,8 +1381,8 @@ KpgpBase6::decrypt(const char *passphrase)
       // Find out the key for which the phrase is needed
       index  = info.find(":", index) + 2;
       index2 = info.find("\n", index);
-      QString keyId = info.mid(index, index2 - index);
-      //kdDebug() << "KpgpBase: key needed is \"" << keyId << "\"!" << endl;
+      requiredID = info.mid(index, index2 - index);
+      //kdDebug() << "KpgpBase: key needed is \"" << requiredID << "\"!" << endl;
       //kdDebug() << "KpgpBase: pgp user is \"" << pgpUser << "\"." << endl;
 
       // Test output length to find out, if the passphrase is
