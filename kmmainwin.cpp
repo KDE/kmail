@@ -816,18 +816,25 @@ void KMMainWin::slotBounceMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotMessageQueuedOrDrafted()
+{
+  if((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
+      return;
+  mMsgView->update(true);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotEditMsg()
 {
   KMMessage *msg;
   int aIdx;
 
-  if(mFolder != kernel->outboxFolder())
+  if((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
   {
       KMessageBox::sorry(0,
-         i18n("Sorry, only messages in the outbox folder can be edited."));
+         i18n("Sorry, only messages in the outbox folder and drafts folder can be edited."));
       return;
   }
-
 
   if((aIdx = mHeaders->currentItemIndex()) <= -1)
     return;
@@ -835,6 +842,8 @@ void KMMainWin::slotEditMsg()
     return;
 
   KMComposeWin *win = new KMComposeWin;
+  QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
+		    this, SLOT( slotMessageQueuedOrDrafted()) );
   win->setMsg(msg,FALSE);
   win->show();
 }
@@ -1297,7 +1306,7 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
     menu->insertItem(i18n("&Move..."), this,
                      SLOT(slotMoveMsg()), Key_M);
     menu->insertItem(i18n("&Copy..."), this,
-                     SLOT(slotCopyMsg()), Key_C); 
+                     SLOT(slotCopyMsg()), Key_C);
     menu->insertSeparator();
     deleteAction->plug(menu);
     menu->popup(aPoint, 0);

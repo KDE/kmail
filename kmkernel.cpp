@@ -308,6 +308,12 @@ void KMKernel::initFolders(KConfig* cfg)
   the_trashFolder->setSystemFolder(TRUE);
   the_trashFolder->open();
 
+  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
+  the_draftsFolder->setType("Df");
+  the_draftsFolder->setWhoField("To");
+  the_draftsFolder->setSystemFolder(TRUE);
+  the_draftsFolder->open();
+
 }
 
 
@@ -405,6 +411,7 @@ void KMKernel::cleanup(void)
   if (the_inboxFolder) the_inboxFolder->close(TRUE);
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
   if (the_sentFolder) the_sentFolder->close(TRUE);
+  if (the_draftsFolder) the_draftsFolder->close(TRUE);
 
   if (the_msgSender) delete the_msgSender;
   if (the_addrBook) delete the_addrBook;

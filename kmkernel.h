@@ -33,7 +33,7 @@ public:
   ~KMKernel ();
 
 // dcop calable stuff
-  
+
   void checkMail ();
   //returns id of composer if more are opened
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
@@ -48,7 +48,7 @@ public:
   // normal control stuff
 
   static KMKernel *self() { return mySelf; }
-  
+
   void init ();
   void testDir(const char *_name);
   void recoverDeadLetters(void);
@@ -63,11 +63,12 @@ public:
   void action (bool mailto, bool check, const QString &to, const QString &cc,
                const QString &bcc, const QString &subj, const QString &body,
                const KURL &messageFile);
-  
+
   inline KMFolder *inboxFolder() { return the_inboxFolder; }
   inline KMFolder *outboxFolder() { return the_outboxFolder; }
   inline KMFolder *sentFolder() { return the_sentFolder; }
   inline KMFolder *trashFolder() { return the_trashFolder; }
+  inline KMFolder *draftsFolder() { return the_draftsFolder; }
 
   inline KBusyPtr *kbp() { return the_kbp; }
   inline KMFolderMgr *folderMgr() { return the_folderMgr; }
@@ -89,6 +90,7 @@ private:
   KMFolder *the_outboxFolder;
   KMFolder *the_sentFolder;
   KMFolder *the_trashFolder;
+  KMFolder *the_draftsFolder;
 
   KBusyPtr *the_kbp;
   KMFolderMgr *the_folderMgr;

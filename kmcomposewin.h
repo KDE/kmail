@@ -181,6 +181,7 @@ public slots:
   void slotAttachFile();
   void slotSendNow();
   void slotSendLater();
+  void slotSaveDraft();
   void slotDropAction(QDropEvent *e);
   void slotNewComposer();
   void slotNewMailReader();
@@ -276,6 +277,10 @@ public slots:
   void slotAttachFileData(KIO::Job *, const QByteArray &);
   void slotAttachFileResult(KIO::Job *);
 
+signals:
+  /** A message has been queued or saved in the drafts folder */
+  void messageQueuedOrDrafted();
+
 protected:
   /** Install grid management and header fields. If fields exist that
     should not be there they are removed. Those that are needed are
@@ -339,7 +344,7 @@ private:
   void setEditCharset();
 
   /** Send the message */
-  void doSend(int sendNow=-1);
+  void doSend(int sendNow=-1, bool saveInDrafts = false);
 
   /** get default charset from locale settings */
   const QString defaultCharset(void);
@@ -374,6 +379,7 @@ protected:
   bool useExtEditor;
   QList<_StringPair> mCustHeaders;
   bool mConfirmSend;
+  bool disableBreaking;
 #endif
   int mNumHeaders;
   int mLineBreak;

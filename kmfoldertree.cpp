@@ -129,6 +129,8 @@ virtual QString key( int /*column*/, bool /*ascending*/ ) const {
       return "\t2";
     else if (folder->label() == i18n("trash"))
       return "\t3";
+    else if (folder->label() == i18n("drafts"))
+      return "\t4";
     return text(0).lower();
   }
 };

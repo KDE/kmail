@@ -24,9 +24,10 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmidentity.h"
+#include "kmfolder.h"
+
 #include <kabapi.h>
 #include <kfontutils.h>
-
 #include <kaction.h>
 #include <kcharsets.h>
 #include <kcursor.h>
@@ -133,7 +134,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
   mEditor = NULL;
-
+  disableBreaking = false;
+      
   mSpellCheckInProgress=FALSE;
 
   setCaption( i18n("Composer") );
@@ -664,6 +666,9 @@ void KMComposeWin::setupActions(void)
                         actionCollection(), "send_alternative");
   }
 
+  (void) new KAction (i18n("Save in &drafts folder"), "", 0,
+		      this, SLOT(slotSaveDraft()),
+		      actionCollection(), "save_in_drafts");
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
@@ -1008,6 +1013,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
   }
   mEditor->setModified(FALSE);
+    
 
   //put font charset as default charset: jstolarz@kde.org
 //  QString defCharset = mMsg->charset();
@@ -1186,10 +1192,16 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   QString _to, receiver;
   int index, lastindex;
   QStrList persons;
+  QString text;
+  
+  if (disableBreaking)
+      text = mEditor->text();
+  else
+      text = mEditor->brokenText();
 
-  if (!doSign && !doEncrypt) return mEditor->brokenText();
+  if (!doSign && !doEncrypt) return text;
 
-  pgp->setMessage(mEditor->brokenText());
+  pgp->setMessage(text);
 
   if (!doEncrypt)
   {
@@ -1873,9 +1885,10 @@ void KMComposeWin::slotDropAction(QDropEvent *e)
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::doSend(int aSendNow)
+void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
-    QString hf = mMsg->headerField("X-KMail-Transport");
+  QString hf = mMsg->headerField("X-KMail-Transport");
+  QString msgId = mMsg->msgId();
   bool sentOk;
 
   kernel->kbp()->busy();
@@ -1891,14 +1904,24 @@ void KMComposeWin::doSend(int aSendNow)
       (!hf.isEmpty() && (hf != kernel->msgSender()->transportString())))
     mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
 
-  sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
+  disableBreaking = saveInDrafts || !aSendNow;
+  if (saveInDrafts)
+      sentOk = (applyChanges() && !(kernel->draftsFolder()->addMsg(mMsg)));
+  else
+      sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
+  disableBreaking = false;
+
   kernel->kbp()->idle();
 
+  if (saveInDrafts || !aSendNow)
+      emit messageQueuedOrDrafted();
+ 
   if (sentOk)
   {
     mAutoDeleteMsg = FALSE;
     close();
   }
+  
 }
 
 
@@ -1907,6 +1930,13 @@ void KMComposeWin::doSend(int aSendNow)
 void KMComposeWin::slotSendLater()
 {
   doSend(FALSE);
+}
+
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSaveDraft()
+{
+  doSend(FALSE, TRUE);
 }
 
 
