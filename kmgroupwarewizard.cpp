@@ -535,10 +535,10 @@ void KMGroupwareWizard::guessExistingFolderLanguage()
   KMFolderDir* dir = folder()->child();
   KMGroupware* gw = &(KMKernel::self()->groupware());
 
-  if(  checkSubfolders( dir, gw, 0 ) ) {
+  if( dir && checkSubfolders( dir, gw, 0 ) ) {
     // Check English
     setLanguage( 0, true );
-  } else if( checkSubfolders( dir, gw, 1 ) ) {
+  } else if( dir && checkSubfolders( dir, gw, 1 ) ) {
     // Check German
     setLanguage( 1, true );
   } else {
