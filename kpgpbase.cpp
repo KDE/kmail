@@ -407,17 +407,13 @@ KpgpBase2::decrypt(const char *passphrase)
     {
       index = info.find("Key ID ",index);
       signatureID = info.mid(index+7,8);
-      signature = "unknown key ID " + signatureID + " ";
+      signature = i18n("unknown key ID ") + signatureID + " ";
       status |= UNKNOWN_SIG;
       status |= GOODSIG;
     }
-    else
+    else if( info.find("Good signature") != -1 )
     {
-      if( info.find("Good signature") != -1 )
-	status |= GOODSIG;
-      else
-	status |= ERROR;
-
+      status |= GOODSIG;
       // get signer
       index = info.find("\"",index);
       index2 = info.find("\"", index+1);
@@ -426,6 +422,19 @@ KpgpBase2::decrypt(const char *passphrase)
       // get key ID of signer
       index = info.find("key ID ",index2);
       signatureID = info.mid(index+7,8);
+    }
+    else if( info.find("Can't find the right public key") != -1 )
+    {
+      status |= UNKNOWN_SIG;
+      status |= GOODSIG; // this is a hack...
+      signature = i18n("??? (file ~/.pgp/pubring.pgp not found)");
+      signatureID = "???";
+    }
+    else
+    {
+      status |= ERROR;
+      signature = "";
+      signatureID = "";
     }
   }
   //debug("status = %d",status);

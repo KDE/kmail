@@ -1,3 +1,6 @@
+1998-10-21  Lars Knoll <knoll@mpi-hd.mpg.de>
+	* fixed a bug in the support for pgp-2.6
+
 1998-10-08  Stefan Taferner  <taferner@kde.org> (KMail-1.0.5)
 
 	* Sorting messages: replaced sorting algorithm, which caused
@@ -12,6 +15,13 @@
 
 	* Added call to kapp->quit() when last window is closed.
 
+1998-10-05  Lars Knoll <knoll@mpi-hd.mpg.de>
+	* Added new pgp classes. They should fix a lot of problems
+	with the current support of pgp5.0 and pgp2.6, and fix all
+	security problems with the old versions of kpgp, since all
+	comunication with pgp (including the passphrase) is done via
+	pipes.
+	
 1998-09-26  Stefan Taferner  <taferner@kde.org> (KMail-0.8.1)
 
 	* Fixed crash upon close of a main- or composer window.

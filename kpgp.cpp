@@ -259,7 +259,7 @@ Kpgp::sign(void)
 bool 
 Kpgp::encryptFor(const QStrList& aPers, bool sign)
 {
-  QStrList persons;
+  QStrList persons, noKeyFor;
   char* pers;
   int status = 0;
   errMsg = "";
@@ -267,6 +267,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   QString aStr;
 
   persons.clear();
+  noKeyFor.clear();
 
   if(!aPers.isEmpty()) 
   {
@@ -276,6 +277,8 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
       QString aStr = getPublicKey(pers);
       if(!aStr.isEmpty()) 
         persons.append(aStr);
+      else
+	noKeyFor.append(pers);
       ++it;
     }
     if(persons.isEmpty())
@@ -284,6 +287,29 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 			       i18n("Could not find the public keys for the\n" 
 				    "recipients of this mail.\n"
 				    "Message will not be encrypted."),
+			       KMsgBox::EXCLAMATION, 
+			       i18n("Continue"), i18n("Cancel"));
+      if(ret == 2) return false;
+    }
+    else if(!noKeyFor.isEmpty())
+    {
+      QString aStr = i18n("Could not find the public keys for\n");
+      QStrListIterator it(noKeyFor);
+      aStr += it.current();
+      ++it;
+      while((pers = it.current()))
+      {
+	aStr += ",\n";
+	aStr += pers;
+	++it;
+      }
+      if(it.count() > 1)
+	aStr += i18n("These persons will not be able to\n");
+      else
+	aStr += i18n("This person will not be able to\n");
+
+      aStr += i18n("decrypt the message.");
+      int ret = KMsgBox::yesNo(0,i18n("PGP Warning"), aStr,
 			       KMsgBox::EXCLAMATION, 
 			       i18n("Continue"), i18n("Cancel"));
       if(ret == 2) return false;
@@ -442,11 +468,6 @@ Kpgp::getPublicKey(QString _person)
     if(str.contains(adress)) return str;
   
   // FIXME: let user set the key/ get from keyserver
-  QString aStr;
-  aStr.sprintf(i18n("public key for %s not found.\n"
-		    "This person will not be able to " 
-		    "decrypt the message."),(const char *)_person);
-  KMsgBox::message(0,i18n("PGP Warning"),aStr);
 
   return 0;
 }
