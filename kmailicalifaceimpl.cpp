@@ -282,14 +282,14 @@ QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language
     // English
     folderNames[0][KFolderTreeItem::Calendar] = QString::fromLatin1("Calendar");
     folderNames[0][KFolderTreeItem::Tasks] = QString::fromLatin1("Tasks");
-    folderNames[0][KFolderTreeItem::Journals] = QString::fromLatin1("Journals");
+    folderNames[0][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
     folderNames[0][KFolderTreeItem::Contacts] = QString::fromLatin1("Contacts");
     folderNames[0][KFolderTreeItem::Notes] = QString::fromLatin1("Notes");
 
-    // German (TODO: Journals)
+    // German
     folderNames[1][KFolderTreeItem::Calendar] = QString::fromLatin1("Kalender");
     folderNames[1][KFolderTreeItem::Tasks] = QString::fromLatin1("Aufgaben");
-    folderNames[1][KFolderTreeItem::Journals] = QString::fromLatin1("Journals");
+    folderNames[1][KFolderTreeItem::Journals] = QString::fromLatin1("Journal");
     folderNames[1][KFolderTreeItem::Contacts] = QString::fromLatin1("Kontakte");
     folderNames[1][KFolderTreeItem::Notes] = QString::fromLatin1("Notizen");
 
