@@ -78,6 +78,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   initHtmlWidget();
   readConfig();
   mHtmlOverride = false;
+  mUseFixedFont = false;
 
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
@@ -278,7 +279,7 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
     }
   }
 
-  QString str = QString("<font color=\"%1\">").arg( color.name() );
+  QString str = QString("<span style=\"color:%1\">").arg( color.name() );
   if( font.italic() ) { str += "<i>"; }
   if( font.bold() ) { str += "<b>"; }
   return( str );
@@ -430,6 +431,7 @@ void KMReaderWin::displayAboutPage()
     "<li>DIGEST-MD5 authentication</li>\n"
     "<li>Identity based sent-mail folders</li>\n"
     "<li>Expiry of old messages</li>\n"
+    "<li>Hotkey to temporary switch to fixed width fonts</li>\n"
     "</ul>\n");
   if( kernel->firstStart() ) {
     info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
@@ -896,94 +898,90 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 
 QString KMReaderWin::quotedHTML(const QString& s)
 {
-  QString htmlStr, line, tmpStr, normalStartTag, normalEndTag;
-  QChar ch;
+  QString htmlStr, line, normalStartTag, normalEndTag;
+  QString quoteEnd("</span>");
 
-  bool atStartOfLine;
-  int pos, beg;
+  unsigned int pos, beg;
+  unsigned int length = s.length();
 
-  int currQuoteLevel = -1;
-  int prevQuoteLevel = -1;
-  int newlineCount = 0;
   if (mBodyFont.bold()) { normalStartTag += "<b>"; normalEndTag += "</b>"; }
   if (mBodyFont.italic()) { normalStartTag += "<i>"; normalEndTag += "</i>"; }
-  tmpStr = "<div>" + normalStartTag; //work around KHTML slowness
 
   // skip leading empty lines
-  for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
+  for( pos = 0; pos < length && s[pos] <= ' '; pos++ );
   while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
 
-  atStartOfLine = TRUE;
-  while( pos < (int)s.length() )
+  htmlStr = normalStartTag;
+  if (mUseFixedFont)
+     htmlStr.append("<pre>");
+
+  int currQuoteLevel = -1;
+  
+  while (beg<length)
   {
-    ch = s[pos];
-    if(( ch == '\n' ) || ((unsigned)pos == s.length() - 1))
-    {
-      int adj = (ch == '\n') ? 0 : 1;
-      newlineCount ++;
-      line = strToHtml(s.mid(beg,pos-beg+adj),TRUE);
-      if( currQuoteLevel >= 0 )
-      {
-	if( currQuoteLevel != prevQuoteLevel )
-	{
-	  line.prepend( mQuoteFontTag[currQuoteLevel%3] );
-	  if( prevQuoteLevel >= 0 )
-	  {
-	    line.prepend( "</font>" );
-	  } else line.prepend( normalEndTag );
+    /* search next occurance of '\n' */
+    pos = s.find('\n', beg, FALSE);
+    if (pos == (unsigned int)(-1))
+	pos = length;
+
+    line = s.mid(beg,pos-beg);
+    beg = pos+1;
+
+    /* calculate line's current quoting depth */
+    int p, actQuoteLevel = -1;
+    bool finish = FALSE;
+    for (p=0; p<line.length() && !finish; p++) {
+	switch (line[p].latin1()) {
+	    /* case ':': */
+	    case '>':
+	    case '|':	actQuoteLevel++;
+			break;
+	    case ' ':
+	    case '\t':	break;
+	    default:	finish = TRUE;
+			break;
 	}
-	prevQuoteLevel = currQuoteLevel;
-      }
-      else if( prevQuoteLevel >= 0 )
-      {
-        line.prepend( normalStartTag );
-	line.prepend( "</font>" );
-	prevQuoteLevel = -1;
-      }
+    } /* for() */
 
-      tmpStr += line + "<br>";
-      if( (newlineCount % 100) == 0 )
-      {
-	htmlStr += tmpStr;
-	if (currQuoteLevel >= 0)
-	  htmlStr += "</font>";
-        else htmlStr += normalEndTag;
-	htmlStr += "</div><div>"; //work around KHTML slowness
-	if (currQuoteLevel >= 0)
-	  htmlStr += mQuoteFontTag[currQuoteLevel%3];
-        else htmlStr += normalStartTag;
-	tmpStr.truncate(0);
-      }
+    line = strToHtml(line, TRUE);
+    p = line.length();
+    line.append("<br>\n");
 
-      beg = pos + 1;
-      atStartOfLine = TRUE;
-      currQuoteLevel = -1;
-
-    }
-    else if( ch > ' ' )
-    {
-      if( atStartOfLine == TRUE && (ch=='>' || /*ch==':' ||*/ ch=='|') )
-      {
-	if( mRecyleQouteColors == true || currQuoteLevel < 2 )
-	{
-	  currQuoteLevel += 1;
-	}
-      }
-      else
-      {
-	atStartOfLine = FALSE;
-      }
+    /* continue with current quotelevel if it didn't changed */
+    if (actQuoteLevel == currQuoteLevel || p == 0) {
+	htmlStr.append(line);
+	continue;
     }
 
-    pos++;
-  }
+    /* finish last quotelevel */
+    if (mUseFixedFont)
+        htmlStr.append("</pre>");
+    if (currQuoteLevel == -1)
+	htmlStr.append( normalEndTag );
+    else
+	htmlStr.append( quoteEnd );
 
-  if (prevQuoteLevel >= 0)
-    tmpStr += "</font>";
+    /* start new quotelevel */
+    currQuoteLevel = actQuoteLevel;
+    if (actQuoteLevel == -1)
+	line.prepend(normalStartTag);
+    else
+        line.prepend( mQuoteFontTag[currQuoteLevel%3] );
+    if (mUseFixedFont)
+        line.prepend("<pre>");
 
-  htmlStr += tmpStr;
-  htmlStr += "</div>"; //work around KHTML slowness
+    htmlStr.append(line);
+  } /* while() */
+
+  /* really finish the last quotelevel */
+  if (mUseFixedFont)
+     htmlStr.append("</pre>");
+  if (currQuoteLevel == -1)
+     htmlStr.append( normalEndTag );
+  else
+     htmlStr.append( quoteEnd );	
+
   return htmlStr;
 }
 
@@ -1333,6 +1331,14 @@ void KMReaderWin::slotFind()
   KAction *act = mViewer->actionCollection()->action("find");
   if( act )
     act->activate();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotToggleFixedFont()
+{
+  mUseFixedFont = !mUseFixedFont;
+  update(true);  
 }
 
 //-----------------------------------------------------------------------------

@@ -1082,8 +1082,15 @@ void KMMainWin::slotShowMsgSrc()
        if (!cset.isEmpty())
          codec = KMMsgBase::codecForName(cset);
     }
-    msg->viewSource(i18n("Message as Plain Text"), codec);
+    msg->viewSource(i18n("Message as Plain Text"), codec,
+		    mMsgView->isfixedFont());
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotToggleFixedFont()
+{
+  mMsgView->slotToggleFixedFont();
 }
 
 
@@ -1168,17 +1175,20 @@ void KMMainWin::slotViewChange()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetHeaderStyle(int id)
 {
-  if(id <= 5)
+  if (id >= KMReaderWin::HdrBrief && id <= KMReaderWin::HdrAll)
   {
     mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
     mMsgView->setHeaderStyle((KMReaderWin::HeaderStyle)id);
     mViewMenu->setItemChecked(id, TRUE);
+    return;
   }
-  else
+  
+  if (id >= 5+KMReaderWin::IconicAttmnt && id <= 5+KMReaderWin::InlineAttmnt)
   {
     mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, FALSE);
     mViewMenu->setItemChecked(id, TRUE);
     mMsgView->setAttachmentStyle(id-5);
+    return;
   }
 }
 
@@ -1474,11 +1484,11 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 	// It is correct to convert to latin1() as URL should not contain
 	// anything except ascii.
 	msg->setBody( KURL::decode_string(queryPart.mid(6)).latin1() );
-      else if (queryPart.left(6) == "?cc=")
+      else if (queryPart.left(4) == "?cc=")
 	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
-    win = new KMComposeWin(msg,id);
+    win = new KMComposeWin(msg, id);
     win->setCharset("", TRUE);
     win->show();
   }
@@ -1516,7 +1526,7 @@ void KMMainWin::slotMailtoCompose()
   msg->setCharset("utf-8");
   msg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(msg,id);
+  win = new KMComposeWin(msg, id);
   win->setCharset("", TRUE);
   win->show();
 }
@@ -1536,7 +1546,7 @@ void KMMainWin::slotMailtoReply()
   rmsg = msg->createReply(FALSE, FALSE, mMsgView->copyText());
   rmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(rmsg,id);
+  win = new KMComposeWin(rmsg, id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1661,6 +1671,10 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
            copyActionMenu->plug( menu );
 
            menu->insertSeparator();
+           toggleFixFontAction->plug(menu);
+           viewSourceAction->plug(menu);
+
+           menu->insertSeparator();
            printAction->plug(menu);
            saveAsAction->plug(menu);
            menu->insertSeparator();
@@ -1688,7 +1702,8 @@ void KMMainWin::getAccountMenu()
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
-  (void) new KAction( i18n("&New Mail Client..."), "window_new", 0, this, SLOT(slotNewMailReader()),
+  (void) new KAction( i18n("&New Mail Client..."), "window_new", 0,
+		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
   saveAsAction = new KAction( i18n("Save &As..."), "filesave",
@@ -1822,7 +1837,8 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
   //----- Message-Encoding Submenu
-  mEncoding = new KSelectAction( i18n( "Set &Encoding" ), "charset", 0, this, SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
+  mEncoding = new KSelectAction( i18n( "Set &Encoding" ), "charset", 0, this, 
+		      SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
   QStringList encodings = KMMsgBase::supportedEncodings(FALSE);
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
@@ -1912,13 +1928,14 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("Apply filters"), "filter", CTRL+Key_J, this,
 		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
-
-  (void) new KAction( i18n("View Source..."), 0, this,
+  
+  viewSourceAction = new KAction( i18n("View Source..."), Key_V, this,
 		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
+  
 
   //----- View Menu
   KActionMenu *viewMenuAction = new
-    KActionMenu( i18n("things to show", "&View"), actionCollection(), "view" );
+    KActionMenu( i18n("&View"), actionCollection(), "view" );
 
   mViewMenu = viewMenuAction->popupMenu();
   mViewMenu->setCheckable(TRUE);
@@ -1937,6 +1954,13 @@ void KMMainWin::setupMenuBar()
 		       KMReaderWin::HdrAll + KMReaderWin::InlineAttmnt);
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
+  
+  mViewMenu->insertSeparator();
+  toggleFixFontAction = new KToggleAction( i18n("Fixed font widths"), 
+			DEFAULT_FIXEDFONTS_KEY, this, SLOT(slotToggleFixedFont()),
+			actionCollection(), "toggle_fixedfont" );
+  viewMenuAction->insert( toggleFixFontAction );
+
 
   //----- Settings Menu
   toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
@@ -2184,7 +2208,7 @@ void KMMainWin::updateMessageActions()
     sendAgainAction->setEnabled( single_actions );
     printAction->setEnabled( single_actions );
     saveAsAction->setEnabled( mass_actions );
-    action( "view_source" )->setEnabled( single_actions );
+    viewSourceAction->setEnabled( single_actions );
 
     if ( count == 1 ) {
         KMMessage *msg;

@@ -50,7 +50,7 @@ public:
   virtual void setInlineAttach(int maxLines);
 
   /** Style of the message header. */
-  enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
+  enum HeaderStyle { HdrBrief=1, HdrFancy=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
   /** Style of attachments. */
   enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3};
@@ -118,6 +118,8 @@ public:
 
   bool atBottom() const;
 
+  bool isfixedFont() { return mUseFixedFont; }
+
 signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
@@ -163,6 +165,9 @@ public slots:
 
   /** The user selected "Find" from the menu. */
   void slotFind();
+
+  /** The user toggled the "Fixed Font" flag from the view menu. */
+  void slotToggleFixedFont();
 
 protected slots:
   /** Some attachment operations. */
@@ -250,6 +255,7 @@ protected:
   bool mMsgDisplay;
 
   int fntSize;
+  bool mUseFixedFont;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
   QString mQuoteFontTag[3];

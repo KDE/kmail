@@ -16,6 +16,7 @@
 #include "kmidentity.h"
 
 #include <kapplication.h>
+#include <kglobalsettings.h>
 #include <khtml_part.h>
 
 // we need access to the protected member DwBody::DeleteBodyParts()...
@@ -2075,19 +2076,23 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec)
+void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixedfont)
 {
   QString str = (codec) ? codec->toUnicode(asString()) : asString();
 
 #if ALLOW_GUI
-  QMultiLineEdit* edt;
+  QMultiLineEdit *edt;
 
   edt = new QMultiLineEdit;
   KWin::setIcons(edt->winId(), kapp->icon(), kapp->miniIcon());
   if (!aCaption.isEmpty()) edt->setCaption(aCaption);
 
-  edt->insertLine(str);
+  edt->setTextFormat(Qt::PlainText);
+  edt->setText(str);
+  if (fixedfont)
+    edt->setFont(KGlobalSettings::fixedFont());
   edt->setReadOnly(TRUE);
+  
   edt->resize(KApplication::desktop()->width()/2,
 	      2*KApplication::desktop()->height()/3);
   edt->setCursorPosition(0, 0);  edt->show();

@@ -55,6 +55,8 @@ class KURL;
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
+/* default key to toggle between fixed width font and default font */
+#define DEFAULT_FIXEDFONTS_KEY (CTRL+Key_E)
 
 //-----------------------------------------------------------------------------
 #define KMEditInherited KEdit
@@ -157,7 +159,7 @@ class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
   friend class KMHeaders;         // needed for the digest forward
 
 public:
-  KMComposeWin(KMMessage* msg=0L, QString id = "unknown" );
+  KMComposeWin(KMMessage* msg=0L, QString id = "unknown");
   ~KMComposeWin();
 
   /**
@@ -261,6 +263,12 @@ public slots:
   void slotCopy();
   void slotPaste();
   void slotMarkAll();
+  
+  /**
+   * toggle fixed width font.
+   */
+  void slotToggleFixedFont();
+
   /**
    * Open addressbook editor dialog.
    */
@@ -528,7 +536,6 @@ protected:
 
   QCString mCharset;
   QCString mDefCharset;
-  QFont mSavedEditorFont;
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;

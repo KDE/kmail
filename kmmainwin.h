@@ -79,7 +79,8 @@ public:
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
     *forwardAction, *forwardAttachedAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *printAction, *sendAgainAction;
+    *viewSourceAction, *printAction, *sendAgainAction;
+  KToggleAction *toggleFixFontAction;
   KActionMenu *filterMenu, *statusMenu, *moveActionMenu, *copyActionMenu;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
@@ -174,6 +175,7 @@ protected slots:
   void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
   void slotShowMsgSrc();
+  void slotToggleFixedFont();
   void slotSetHeaderStyle(int);
   void slotSetEncoding();
   void slotSendQueued();

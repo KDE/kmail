@@ -20,6 +20,7 @@
 #include "kmtransport.h"
 
 #include <kaction.h>
+#include <kglobalsettings.h>
 #include <kcharsets.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
@@ -62,7 +63,7 @@
 #include "kmcomposewin.moc"
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
+KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   : KMTopLevelWidget (), MailComposerIface(),
   mId( id )
 
@@ -105,6 +106,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
   mEditor = new KMEdit(mMainWidget, this);
+  mEditor->setTextFormat(Qt::PlainText);
   disableBreaking = false;
   QString tip = i18n("Select email address(es)");
   QToolTip::add( mBtnTo, tip );
@@ -171,9 +173,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
     mEditor->setExternalEditor(true);
     mEditor->setExternalEditorPath(mExtEditor);
   }
-
-  // As family may change with charset, we must save original settings
-  mSavedEditorFont=mEditor->font();
 
   mMsg = NULL;
   if (aMsg)
@@ -792,6 +791,9 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
+  (void) new KToggleAction( i18n("Fixed font widths"), DEFAULT_FIXEDFONTS_KEY, this,
+                      SLOT(slotToggleFixedFont()), actionCollection(), "toggle_fixedfont" );
+
   //these are checkable!!!
   urgentAction = new KToggleAction (i18n("&Urgent"), 0,
                                     actionCollection(),
@@ -983,6 +985,8 @@ void KMComposeWin::setupEditor(void)
   menu->insertSeparator();
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
+  menu->insertSeparator();
+  menu->insertItem(i18n("Fixed font widths"), this, SLOT(slotToggleFixedFont()));
   mEditor->installRBPopup(menu);
   updateCursorPosition();
   connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
@@ -1960,6 +1964,14 @@ void KMComposeWin::slotReplace()
   mEditor->replace();
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotToggleFixedFont()
+{
+  if (!mEditor) return;
+ 
+  QFont fixedfont = KGlobalSettings::fixedFont();
+  mEditor->setFont( (mEditor->font() == fixedfont) ? mBodyFont : fixedfont );
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUndo()

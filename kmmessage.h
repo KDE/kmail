@@ -281,7 +281,8 @@ public:
   virtual void deleteBodyParts(void);
 
   /** Open a window containing the complete, unparsed, message. */
-  virtual void viewSource(const QString& windowCaption, QTextCodec *codec);
+  virtual void viewSource(const QString& windowCaption, QTextCodec *codec,
+					bool fixedfont);
 
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
