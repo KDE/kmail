@@ -86,6 +86,7 @@
   <Action name="new_message" />
   <Action name="save_as" />
   <Action name="file_print" />
+  <Action name="check_mail" />
   <Action name="check_mail_in" />
   <Separator/>
   <Action name="reply" />
@@ -95,5 +96,7 @@
   <Separator/>
   <Action name="search_messages" />
   <Action name="addressbook" />
+  <Action name="previous_unread" />
+  <Action name="next_unread" />
  </ToolBar>
 </kpartgui>
