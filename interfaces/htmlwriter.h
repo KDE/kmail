@@ -35,7 +35,38 @@
 class QString;
 
 namespace KMail {
-
+  /**
+   * @short An interface to HTML sinks
+   * @author Marc Mutz <mutz@kde.org>
+   *
+   * Operate this interface in one and only one of the following two
+   * modes:
+   *
+   * @sect Sync Mode
+   *
+   * In sync mode, use @ref #begin() to initiate a session, then @ref
+   * #write() some chunks of HTML code and finally @ref #end() the session.
+   *
+   * @sect Async Mode
+   *
+   * In async mode, use @ref #begin() to initialize a session, then
+   * @ref #queue() some chunks of HTML code and finally end()
+   * the session by calling @ref #flush().
+   *
+   * Queued HTML code is fed to the html sink using a timer. For this
+   * to work, control must return to the event loop so timer events
+   * are delivered.
+   *
+   * @sect Combined mode
+   *
+   * You may combine the two modes in the following way only. Any
+   * number of @ref #write() calls can precede @ref #queue() calls,
+   * but once a chunk has been queued, you @em must @em not @ref
+   * #write() more data, only @ref #queue() it.
+   *
+   * Naturally, whenever you queued data in a given session, that
+   * session must be ended by calling @ref #flush(), not @ref #end().
+   */
   class HtmlWriter {
   public:
     virtual ~HtmlWriter() {}
