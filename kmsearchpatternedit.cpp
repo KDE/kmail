@@ -3,8 +3,6 @@
 // This code is under GPL
 
 #include "kmsearchpatternedit.h"
-//#include "kmfilter.h"
-//#include "kmfilterdlg.h"
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -31,7 +29,6 @@ static QStringList sFilterFieldList, sFilterFuncList;
 KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name)
   : QHBox(parent,name)
 {
-  kdDebug() << "KMSearchRuleWidget::KMSearchRuleWidget" << endl;
   initLists(); // sFilter{Func,Field}List are local to KMSearchRuleWidget
   initWidget();
   
@@ -43,9 +40,6 @@ KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, con
 
 void KMSearchRuleWidget::initWidget()
 {
-  kdDebug() << "KMSearchRuleWidget::initWidget" << endl;
-  //  QHBoxLayout *l = new QHBoxLayout(this,0,4); // with margin 0 and spacing 4
-  
   setSpacing(4);
 
   mRuleField = new QComboBox( true, this, "mRuleField" );
@@ -71,8 +65,6 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
   
-  kdDebug() << aRule->function() << endl;
-
   if ( i<0 ) { // not found -> user defined field
     mRuleField->changeItem( aRule->field(), 0 );
     i=0;
@@ -80,8 +72,6 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
     mRuleField->changeItem( " ", 0 );
   
   mRuleField->setCurrentItem( i );
-
-  kdDebug() << aRule->function() << endl;
 
   //--------------set function and contents
   mRuleFunc->setCurrentItem( (int)aRule->function() );

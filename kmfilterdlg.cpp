@@ -10,9 +10,6 @@
 #include "kmfilteraction.h"
 #include "kmfiltermgr.h"
 #include "kmglobal.h"
-//#include "kmfolder.h"
-//#include "kmfolderdir.h"
-//#include "kmfoldermgr.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -43,19 +40,16 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
 		 Help|Ok|Apply|Cancel /* button mask */,
 		 Ok /* default btn */, FALSE /* separator */)
 {
-  kdDebug() << "KMFilterDlg::KMFilterDlg: entered" << endl;
-
   setHelp( KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget(this);
   setMainWidget(w);
-  QHBoxLayout *hbl = new QHBoxLayout( w, 0, spacingHint() );
+  QHBoxLayout *hbl = new QHBoxLayout( w, 0, spacingHint(), "kmfd_hbl" );
 
   mFilterList = new KMFilterListBox( i18n("Available Filters"), w);
   hbl->addWidget( mFilterList, 1 /*stretch*/ );
 
-  QVBoxLayout *vbl = new QVBoxLayout( w, 0, spacingHint() );
-  hbl->addLayout( vbl, 2 );
+  QVBoxLayout *vbl = new QVBoxLayout( hbl, spacingHint(), "kmfd_vbl" );
 
   mPatternEdit = new KMSearchPatternEdit( i18n("Filter Criteria"), w );
   vbl->addWidget( mPatternEdit, 0, Qt::AlignTop );
@@ -96,14 +90,11 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
 
   // load the filter list (emits filterSelected())
   mFilterList->loadFilterList();
-
-  kdDebug() << "KMFilterDlg::KMFilterDlg: left" << endl;
 }
 
 void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 {
   assert( aFilter );
-  kdDebug() << "KMFilterDlg::slotFilterSelected" << endl;
   mPatternEdit->setSearchPattern( aFilter->pattern() );
   mActionLister->setActionList( aFilter->actions() );
 }
@@ -159,6 +150,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 
   // the dialog should call loadFilterList()
   // when all signals are connected.
+  enableControls();
 }
 
 
@@ -205,6 +197,7 @@ void KMFilterListBox::slotUpdateFilterName()
 
 void KMFilterListBox::slotApplyFilterChanges()
 {
+  int oIdxSelItem = mIdxSelItem;
   // unselect all filters:
   mListBox->selectAll( FALSE );
   // maybe QListBox doesn't emit selected(-1) on unselect,
@@ -237,12 +230,16 @@ void KMFilterListBox::slotApplyFilterChanges()
   // allow usage of the filters again.
   fm->endUpdate();
   fm->writeConfig();
+
+  if ( oIdxSelItem >= 0 ) {
+    mIdxSelItem = oIdxSelItem;
+    mListBox->setSelected( oIdxSelItem, TRUE);
+    slotSelected( mListBox->currentItem() );
+  }
 }
 
 void KMFilterListBox::slotSelected( int aIdx )
 {
-  kdDebug() << "KMFilterListBox: slotSelected( " << aIdx << " )" << endl;
-  //  if ( mIdxSelItem == aIdx ) return;
   mIdxSelItem = aIdx;
   // QList::at(i) will return NULL if i is out of range.
   KMFilter *f = mFilterList.at(aIdx);
@@ -398,6 +395,8 @@ void KMFilterListBox::loadFilterList()
     emit resetWidgets();
     mIdxSelItem = -1;
   }
+
+  enableControls();
 }
 
 void KMFilterListBox::insertFilter( KMFilter* aFilter )
@@ -450,7 +449,6 @@ void KMFilterListBox::swapNeighbouringFilters( int untouchedOne, int movedOne )
 KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   : QHBox( parent, name )
 {
-  kdDebug() << "KMFilterActionWidget::KMFilterActionWidget entered" << endl;
   int i;
   mActionList.setAutoDelete(TRUE);
 
@@ -490,25 +488,14 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   // now connect the combo box and the widget stack
   connect( mComboBox, SIGNAL(activated(int)),
 	   mWidgetStack, SLOT(raiseWidget(int)) );
-
-  kdDebug() << "KMFilterActionWidget::KMFilterActionWidget left" << endl;
 }
 
 void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 {
-  if ( aAction )
-    kdDebug() << "KMFilterActionWidget: setAction called for action:\nLabel: "
-	      << aAction->label() << "\nName: " << aAction->name()
-	      << "\nParam: " << aAction->argsAsString() << endl;
-  else
-    kdDebug() << "KMfilterActionWidget: setAction called for NULL action!" << endl;
-
   int i=0;
   bool found = FALSE;
   int count = mComboBox->count() - 1 ; // last entry is the empty one
   QString label = ( aAction ) ? aAction->label() : QString::null ;
-
-  kdDebug() << "  searching for label == \"" << label << "\"" << endl;
 
   // find the index of typeOf(aAction) in mComboBox
   // and clear the other widgets on the way.
@@ -516,22 +503,16 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
     if ( aAction && mComboBox->text(i) == label ) {
       //...set the parameter widget to the settings
       // of aAction...
-      kdDebug() << "***> setting widget " << i << " (" 
-		<< mComboBox->text(i) << ")" << endl;
       aAction->setParamWidgetValue( mWidgetStack->widget(i) );
       //...and show the correct entry of
       // the combo box
       mComboBox->setCurrentItem(i); // (mm) also raise the widget, but doesn't
       mWidgetStack->raiseWidget(i);
       found = TRUE;
-    } else { // clear the parameter widget
-      kdDebug() << "---> clearing widget " << i << " (" 
-		<< mComboBox->text(i) << ")" << endl;
+    } else // clear the parameter widget
       mActionList.at(i)->clearParamWidget( mWidgetStack->widget(i) );
-    }
   if ( found ) return;
 
-  kdDebug() << "<--- not found!" << endl;
   // not found, so set the empty widget
   mComboBox->setCurrentItem( count ); // last item
   mWidgetStack->raiseWidget( count) ;
@@ -539,7 +520,6 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 
 KMFilterAction * KMFilterActionWidget::action()
 {
-  kdDebug() << "KMFilterActionWidget::action" << endl;
   // look up the action description via the label
   // returned by QComboBox::currentText()...
   KMFilterActionDesc *desc = (*kernel->filterActionDict())[ mComboBox->currentText() ];
@@ -565,7 +545,6 @@ KMFilterAction * KMFilterActionWidget::action()
 KMFilterActionWidgetLister::KMFilterActionWidgetLister( QWidget *parent, const char* name )
   : KWidgetLister( 1, FILTER_MAX_ACTIONS, parent, name )
 {
-  kdDebug() << "KMFilterActionWidgetLister::KMFilterActionWidgetLister" << endl;
   mActionList = 0;
 }
 
@@ -576,8 +555,6 @@ KMFilterActionWidgetLister::~KMFilterActionWidgetLister()
 void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction> *aList )
 {
   assert ( aList );
-  kdDebug() << "KMFilterActionWidgetLister::setActionList called with a list containing "
-	    << aList->count() << " items" << endl;
 
   if ( mActionList )
     regenerateActionListFromWidgets();
@@ -607,11 +584,8 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction> *aList )
   QListIterator<KMFilterAction> aIt( *mActionList );
   QListIterator<QWidget> wIt( mWidgetList );
   for ( aIt.toFirst(), wIt.toFirst() ;
-	aIt.current() && wIt.current() ; ++aIt, ++wIt ) {
-    kdDebug() << "about to call setAction for action: " 
-	      << (*aIt)->label() << " " << (*aIt)->argsAsString() << endl;
+	aIt.current() && wIt.current() ; ++aIt, ++wIt )
     ((KMFilterActionWidget*)(*wIt))->setAction( (*aIt) );
-  }
 }
 
 void KMFilterActionWidgetLister::reset()
@@ -637,7 +611,6 @@ void KMFilterActionWidgetLister::clearWidget( QWidget *aWidget )
 
 void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
 {
-  kdDebug() << "KMFilterActionWidgetLister::regenerateActionListFromWidgets" << endl;
   if ( !mActionList ) return;
 
   mActionList->clear();

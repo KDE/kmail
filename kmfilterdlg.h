@@ -17,14 +17,9 @@
 #include <qstring.h>
 #include <qlist.h>
 
-//class QString;
-//class KMFilterListBox;
-//class KMFilterActionLister;
 class KMSearchPatternEdit;
 class QListBox;
-//class QList<KMFilter>;
 class QPushButton;
-//class QList<KMFilterAction>;
 class QComboBox;
 class QWidgetStack;
 
@@ -40,8 +35,9 @@ class QWidgetStack;
     and @ref KMFilterActionEdit) to do that.
 
     Communication with this widget is quite easy: simply create an
-    instance, connect the signal @ref filterSelected with a slot that
-    does the right thing and there you go...
+    instance, connect the signals @ref filterSelected and
+    @ref resetWidgets with a slot that does the right thing and there you
+    go...
 
     This widget will operate on it's own copy of the filter list as
     long as you don't call @ref slotApplyFilterChanges. It will then
@@ -95,8 +91,8 @@ public slots:
 
 protected slots:
   /** Called when the user clicks on a filter in the filter
-      list. Calculates the corresponding filter and emits the @ref
-      filterSelected signal. */
+      list. Calculates the corresponding filter and emits the
+      @ref filterSelected signal. */
   void slotSelected( int aIdx );
   /** Called when the user clicks the 'New' button. Creates a new
       empty filter just before the current one. */
@@ -130,25 +126,20 @@ private:
 };
 
 /** This widgets allows to edit a single @ref KMFilterAction (in fact
-    any derived class that is registered in @ref
-    KMFilterActionDict). It consists of a combo box which allows to
-    select the type of actions this widget should act upon and a @ref
-    QWidgetStack, which holds the parameter widgets for the different
+    any derived class that is registered in
+    @ref KMFilterActionDict). It consists of a combo box which allows to
+    select the type of actions this widget should act upon and a
+    @ref QWidgetStack, which holds the parameter widgets for the different
     rule types.
 
     You can load a @ref KMFilterAction into this widget with @ref
-    setAction, but you should be aware of the fact that it may be
-    destroyed during editing. This is because @ref KMFilterAction is
-    simply an abstract base class, from which all the filter actions
-    derive. The widget internally creates an instance of every @ref
-    KMFilterAction in @ref KMFilterActionDict and asks each one to
-    create a parameter widget. The parameter widgets are put on the
-    widget stack and are raised when their corresponding action type
-    is selected in the combo box.
-
-    If an action is loaded using @ref setAction, all of the actions
-    are destroyed and new ones created. Therefore your original action
-    object is lost whenever you set a new action!
+    setAction, and retrieve the result of user action with @ref action.
+    The widget will copy it's setting into the corresponding
+    parameter widget. For that, it internally creates an instance of
+    every @ref KMFilterAction in @ref KMFilterActionDict and asks each
+    one to create a parameter widget. The parameter widgets are put on
+    the widget stack and are raised when their corresponding action
+    type is selected in the combo box.
 
     @short A widget to edit a single KMFilterAction.
     @author Marc Mutz <Marc@Mutz.com>
@@ -176,11 +167,11 @@ public:
 private:
   /** This list holds an instance of every @ref KMFilterAction
       subclass. The only reason that these 'slave' actions exist is
-      that ther are 'forced' to create parameter widgets for the
+      that they are 'forced' to create parameter widgets for the
       widget stack and to clear them on @ref setAction. */
   QList<KMFilterAction> mActionList;
-  /** The combo box that contains the labels of all @ref
-      KMFilterActions. It's @p activated(int) signal is internally
+  /** The combo box that contains the labels of all @ref KMFilterActions.
+      It's @p activated(int) signal is internally
       connected to the @p raiseWidget(int) slot of @p mWidgetStack. */
   QComboBox      *mComboBox;
   /** The widget stack that holds all the parameter widgets for the
@@ -216,7 +207,7 @@ private:
 /** The filter dialog. This is a non-modal dialog used to manage
     KMail's filters. It should only be called through @ref
     KMFilterMgr::openDialog. The dialog consists of three main parts:
-    
+
     @li The @ref KMFilterListBox in the left half allows the user to
     select a filter to be displayed using the widgets on the right
     half. It also has buttons to delete filters, add new ones, to
@@ -247,11 +238,17 @@ private:
     is made by @ref KMFilterListBox. The changed filters are local to
     @ref KMFilterListBox until the user clicks the 'Apply' button.
 
+    NOTE: Though this dialog is non-modal, it completely ignores all
+    the stuff that goes on behind the scenes with folders esp. folder
+    creation, move and create. The widgets that depend on the filter
+    list and the filters that use folders as parameters are not
+    updated as you expect. I hope this will change sometime soon.
+    
     KMFilterDlg supports the creation of new filters through context
-    menues, dubbed "rapid filters". Call @ref
-    KMFilterMgr::createFilter to use this. That call will be delivered
-    to this dialog, which in turn delivers it to the @ref
-    KMFilterListBox.
+    menues, dubbed "rapid filters". Call @ref KMFilterMgr::createFilter
+    to use this. That call will be delivered
+    to this dialog, which in turn delivers it to the
+    @ref KMFilterListBox.
 
     If you change the (DocBook) anchor for the filter dialog help,
     make sure to change @p const @p QString @p KMFilterDlgHelpAnchor

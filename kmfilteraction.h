@@ -7,8 +7,6 @@
 #ifndef kmfilteraction_h
 #define kmfilteraction_h
 
-#define KMFILTERACTION_NO_BOUNCE
-
 #include <qstring.h>
 #include <qdict.h>
 #include <qlist.h>

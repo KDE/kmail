@@ -17,8 +17,6 @@
 KWidgetLister::KWidgetLister( int minWidgets, int maxWidgets, QWidget *parent, const char* name )
   : QWidget( parent, name )
 {
-  kdDebug() << "KWidgetLister::KWidgetLister entered" << endl;
-
   mWidgetList.setAutoDelete(TRUE);
 
   mMinWidgets = QMAX( minWidgets, 1 );
@@ -50,7 +48,6 @@ KWidgetLister::KWidgetLister( int minWidgets, int maxWidgets, QWidget *parent, c
 	   this, SLOT(slotClear()) );
 
   enableControls();
-  kdDebug() << "KWidgetLister::KWidgetLister left" << endl;
 }
 
 KWidgetLister::~KWidgetLister()
@@ -59,7 +56,6 @@ KWidgetLister::~KWidgetLister()
 
 void KWidgetLister::slotMore()
 {
-  kdDebug() << "KWidgetLister::slotMore" << endl;
   // the class should make certain that slotMore can't
   // be called when mMaxWidgets are on screen.
   assert( (int)mWidgetList.count() < mMaxWidgets );
@@ -71,7 +67,6 @@ void KWidgetLister::slotMore()
 
 void KWidgetLister::slotFewer()
 {
-  kdDebug() << "KWidgetLister::slotFewer" << endl;
   // the class should make certain that slotFewer can't
   // be called when mMinWidgets are on screen.
   assert( (int)mWidgetList.count() > mMinWidgets );
@@ -83,7 +78,6 @@ void KWidgetLister::slotFewer()
 
 void KWidgetLister::slotClear()
 {
-  kdDebug() << "KWidgetLister::slotClear" << endl;
   setNumberOfShownWidgetsTo( mMinWidgets );
 
   // clear remaining widgets
@@ -97,7 +91,6 @@ void KWidgetLister::slotClear()
 
 void KWidgetLister::addWidgetAtEnd()
 {
-  kdDebug() << "KWidgetLister::addWidgetAtEnd" << endl;
   QWidget *w = this->createWidget(this);
 
   mLayout->insertWidget( mLayout->findWidget( mButtonBox ), w );
@@ -107,7 +100,6 @@ void KWidgetLister::addWidgetAtEnd()
 
 void KWidgetLister::removeLastWidget()
 {
-  kdDebug() << "KWidgetLister::removeLastWidget" << endl;
   // The layout will take care that the
   // widget is removed from screen, too.
   mWidgetList.removeLast();
@@ -119,20 +111,13 @@ void KWidgetLister::clearWidget( QWidget* /*aWidget*/ )
 
 QWidget* KWidgetLister::createWidget( QWidget* parent )
 {
-  kdDebug() << "WRONG!!!!!!!" << endl;
   return new QWidget( parent );
 }
 
 void KWidgetLister::setNumberOfShownWidgetsTo( int aNum )
 {
-  kdDebug() << "KWidgetLister::setNumberOfShownWidgetsTo: " << aNum << endl;
-  kdDebug() << "KWidgetLister: current number: " << mWidgetList.count() << endl;
   int superfluousWidgets = QMAX( (int)mWidgetList.count() - aNum, 0 );
   int missingWidgets     = QMAX( aNum - (int)mWidgetList.count(), 0 );
-
-  kdDebug() << "KWidgetLister: superfluousWidgets == " << superfluousWidgets << endl;
-  kdDebug() << "KWidgetLister: missingWidgets == " << missingWidgets << endl;
-
 
   // remove superfluous widgets
   for ( ; superfluousWidgets ; superfluousWidgets-- )
@@ -145,7 +130,6 @@ void KWidgetLister::setNumberOfShownWidgetsTo( int aNum )
 
 void KWidgetLister::enableControls()
 {
-  kdDebug() << "KWidgetLister::enableControls" << endl;
   int count = mWidgetList.count();
   bool isMaxWidgets = ( count >= mMaxWidgets );
   bool isMinWidgets = ( count <= mMinWidgets );
@@ -153,4 +137,5 @@ void KWidgetLister::enableControls()
   mBtnMore->setEnabled( !isMaxWidgets );
   mBtnFewer->setEnabled( !isMinWidgets );
 }
+
 #include "kwidgetlister.moc"
