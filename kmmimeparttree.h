@@ -34,19 +34,21 @@ class KMMimePartTreeItem :public QListViewItem
 public:
   KMMimePartTreeItem( KMMimePartTree& parent,
                       partNode* node,
-                      const QString& labelDescr,
-                      QString labelCntType  = QString::null,
-                      QString labelEncoding = QString::null,
+                      const QString & labelDescr,
+                      const QString & labelCntType  = QString::null,
+                      const QString & labelEncoding = QString::null,
                       KIO::filesize_t size=0 );
   KMMimePartTreeItem( KMMimePartTreeItem& parent,
                       partNode* node,
-                      const QString& labelDescr,
-                      QString labelCntType  = QString::null,
-                      QString labelEncoding = QString::null,
+                      const QString & labelDescr,
+                      const QString & labelCntType  = QString::null,
+                      const QString & labelEncoding = QString::null,
                       KIO::filesize_t size=0  );
   partNode* node() const { return mPartNode; }
 
 private:
+  void setIconAndTextForType( const QString & mimetype );
+
   partNode* mPartNode;
 };
 

@@ -314,11 +314,6 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         cntSize = size;
     }
 
-    cntType = KMComposeWin::prettyMimeType( cntType );
-
-    cntDesc += "  ";
-    cntType += "  ";
-    cntEnc  += "  ";
 kdDebug(5006) << "      Inserting one item into MimePartTree" << endl;
 kdDebug(5006) << "                Content-Type: " << cntType << endl;
     if( parentItem )

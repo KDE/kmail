@@ -1,15 +1,25 @@
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
 #include "kmmimeparttree.h"
+
 #include "kmreaderwin.h"
+#include "kmcomposewin.h"
 #include "partNode.h"
-#include <qheader.h>
+#include "kmkernel.h"
+
 #include <kdebug.h>
 #include <klocale.h>
-#include <qpopupmenu.h>
 #include <kfiledialog.h>
-#include <qfile.h>
 #include <kmessagebox.h>
-#include "kmkernel.h"
+#include <kmimetype.h>
+#include <kiconloader.h>
+
+#include <qheader.h>
+#include <qpopupmenu.h>
+#include <qfile.h>
 
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
@@ -186,35 +196,51 @@ void KMMimePartTree::slotSaveAsEncoded()
 
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree& parent,
                                         partNode* node,
-                                        const QString& labelDescr,
-                                        QString labelCntType,
-                                        QString labelEncoding,
+                                        const QString & description,
+                                        const QString & mimetype,
+                                        const QString & encoding,
                                         KIO::filesize_t size )
-    : QListViewItem( &parent, labelDescr,
-                     labelCntType,
-                     labelEncoding,
-                     KIO::convertSize( size ) ),
-      mPartNode( node )
+  : QListViewItem( &parent, description,
+		   QString::null, // set by setIconAndTextForType()
+		   encoding,
+		   KIO::convertSize( size ) ),
+    mPartNode( node )
 {
-    if( node )
-        node->setMimePartTreeItem( this );
+  if( node )
+    node->setMimePartTreeItem( this );
+  setIconAndTextForType( mimetype );
 }
 
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem& parent,
                                         partNode* node,
-                                        const QString& labelDescr,
-                                        QString labelCntType,
-                                        QString labelEncoding,
+                                        const QString & description,
+                                        const QString & mimetype,
+                                        const QString & encoding,
                                         KIO::filesize_t size )
-    : QListViewItem( &parent, labelDescr,
-                     labelCntType,
-                     labelEncoding,
-                     KIO::convertSize( size ) ),
-      mPartNode( node )
+  : QListViewItem( &parent, description,
+		   QString::null, // set by setIconAndTextForType()
+		   encoding,
+		   KIO::convertSize( size ) ),
+    mPartNode( node )
 {
-    if( node )
-        node->setMimePartTreeItem( this );
+  if( node )
+    node->setMimePartTreeItem( this );
+  setIconAndTextForType( mimetype );
 }
+
+void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
+{
+  QString mimetype = mime.lower();
+  if ( mimetype.startsWith( "multipart/" ) ) {
+    setText( 1, mimetype );
+    setPixmap( 0, SmallIcon("folder") );
+  } else {
+    KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
+    setText( 1, mtp ? mtp->comment() : mimetype );
+    setPixmap( 0, mtp ? mtp->pixmap( KIcon::Small) : SmallIcon("unknown") );
+  }
+}
+
 
 
 #include "kmmimeparttree.moc"
