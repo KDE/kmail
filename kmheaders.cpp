@@ -1053,8 +1053,8 @@ void KMHeaders::msgRemoved(int id, QString msgId )
         mRoot->addSortedChild( sci );
       }
 
-      if (!parent || (sci->isImperfectlyThreaded()
-                      && !mImperfectlyThreadedList.containsRef(item)))
+      if ((!parent || sci->isImperfectlyThreaded())
+                      && !mImperfectlyThreadedList.containsRef(item))
         mImperfectlyThreadedList.append(item);
       if (parent && !sci->isImperfectlyThreaded()
           && mImperfectlyThreadedList.containsRef(item))
