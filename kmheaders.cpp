@@ -99,8 +99,8 @@ public:
     flag = mMsgBase->status();
     setText( 0, " " + QString( QChar( (char)flag )));
 
-    if (flag == KMMsgStatusQueued || flag == KMMsgStatusSent)
-      fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
+    if (mFolder == outboxFolder || mFolder == sentFolder)
+       fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
     else
       fromStr = KMMessage::stripEmailAddr(mMsgBase->from());
     if (fromStr.isEmpty()) fromStr = i18n("Unknown");
@@ -1626,4 +1626,5 @@ void KMHeaders::setSorting( int column, bool ascending )
 
 //-----------------------------------------------------------------------------
 #include "kmheaders.moc"
+
 
