@@ -603,31 +603,33 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     colText = colText + i18n( " (Status)" );
   setColumnText( mPaintInfo.subCol, colText);
 
-  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
-  QString path = mFolder->path().right( pathLen );
+  if (mFolder) {
+    int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
+    QString path = mFolder->path().right( pathLen );
 
-  if (!path.isEmpty())
+    if (!path.isEmpty())
     path = path.right( path.length() - 1 ) + "/";
-  KConfig *config = kapp->config();
-  config->setGroup("Folder-" + path + mFolder->name());
+    KConfig *config = kapp->config();
+    config->setGroup("Folder-" + path + mFolder->name());
 
-  if (mPaintInfo.showSize) {
-    colText = i18n( "Size" );
-    if (showingSize) {
-      setColumnText( mPaintInfo.sizeCol, colText);
+    if (mPaintInfo.showSize) {
+      colText = i18n( "Size" );
+      if (showingSize) {
+        setColumnText( mPaintInfo.sizeCol, colText);
+      } else {
+        // add in the size field
+        int x = config->readNumEntry("SizeWidth", 80);
+        addColumn(colText, x>0?x:10);
+      }
+      showingSize = true;
     } else {
-      // add in the size field
-      int x = config->readNumEntry("SizeWidth", 80);
-      addColumn(colText, x>0?x:10);
+      if (showingSize) {
+        // remove the size field
+        config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
+        removeColumn(mPaintInfo.sizeCol);
+      }
+      showingSize = false;
     }
-    showingSize = true;
-  } else {
-    if (showingSize) {
-      // remove the size field
-      config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
-      removeColumn(mPaintInfo.sizeCol);
-    }
-    showingSize = false;
   }
 
   if (!mSortDescending)
