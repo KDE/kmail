@@ -107,6 +107,7 @@ using KMime::DateFormatter;
 
 // other headers:
 #include <assert.h>
+#include <stdlib.h>
 
 #ifndef _PATH_SENDMAIL
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
@@ -3793,6 +3794,29 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
   connect( mWidget->doNotCheckCertPolicyCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->neverConsultCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->fetchMissingCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+
+  connect( mWidget->ignoreServiceURLCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->ignoreHTTPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->disableHTTPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->honorHTTPProxyRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->useCustomHTTPProxyRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->customHTTPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->ignoreLDAPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->disableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->customLDAPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
+}
+
+static void disableDirmngrWidget( QWidget* w ) {
+  w->setEnabled( false );
+  QWhatsThis::remove( w );
+  QWhatsThis::add( w, i18n( "This option requires dirmngr >= 0.9.0" ) );
+}
+
+static void initializeDirmngrCheckbox( QCheckBox* cb, Kleo::CryptoConfigEntry* entry ) {
+  if ( entry )
+    cb->setChecked( entry->boolValue() );
+  else
+    disableDirmngrWidget( cb );
 }
 
 void SecurityPage::SMimeTab::load() {
@@ -3806,9 +3830,18 @@ void SecurityPage::SMimeTab::load() {
   mDoNotCheckCertPolicyConfigEntry = configEntry( "gpgsm", "Security", "disable-policy-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
   mNeverConsultConfigEntry = configEntry( "gpgsm", "Security", "disable-crl-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
   mFetchMissingConfigEntry = configEntry( "gpgsm", "Security", "auto-issuer-key-retrieve", Kleo::CryptoConfigEntry::ArgType_None, false );
+  // dirmngr-0.9.0 options
+  mIgnoreServiceURLEntry = configEntry( "dirmngr", "OCSP", "ignore-ocsp-service-url", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mIgnoreHTTPDPEntry = configEntry( "dirmngr", "HTTP", "ignore-http-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mDisableHTTPEntry = configEntry( "dirmngr", "HTTP", "disable-http", Kleo::CryptoConfigEntry::ArgType_None, false );
+
+  mIgnoreLDAPDPEntry = configEntry( "dirmngr", "LDAP", "ignore-ldap-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mDisableLDAPEntry = configEntry( "dirmngr", "LDAP", "disable-ldap", Kleo::CryptoConfigEntry::ArgType_None, false );
   // Other widgets
   mOCSPResponderURLConfigEntry = configEntry( "dirmngr", "OCSP", "ocsp-responder", Kleo::CryptoConfigEntry::ArgType_String, false );
   mOCSPResponderSignature = configEntry( "dirmngr", "OCSP", "ocsp-signer", Kleo::CryptoConfigEntry::ArgType_String, false );
+  mCustomHTTPProxy = configEntry( "dirmngr", "HTTP", "http-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
+  mCustomLDAPProxy = configEntry( "dirmngr", "LDAP", "ldap-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
 
   // Initialize GUI items from the config entries
 
@@ -3817,6 +3850,8 @@ void SecurityPage::SMimeTab::load() {
     mWidget->OCSPRB->setChecked( b );
     mWidget->CRLRB->setChecked( !b );
     mWidget->OCSPGroupBox->setEnabled( b );
+  } else {
+    mWidget->OCSPGroupBox->setEnabled( false );
   }
   if ( mDoNotCheckCertPolicyConfigEntry )
     mWidget->doNotCheckCertPolicyCB->setChecked( mDoNotCheckCertPolicyConfigEntry->boolValue() );
@@ -3830,9 +3865,43 @@ void SecurityPage::SMimeTab::load() {
   if ( mOCSPResponderSignature ) {
     mWidget->OCSPResponderSignature->setFingerprint( mOCSPResponderSignature->stringValue() );
   }
+
+  // dirmngr-0.9.0 options
+  initializeDirmngrCheckbox( mWidget->ignoreServiceURLCB, mIgnoreServiceURLEntry );
+  initializeDirmngrCheckbox( mWidget->ignoreHTTPDPCB, mIgnoreHTTPDPEntry );
+  initializeDirmngrCheckbox( mWidget->disableHTTPCB, mDisableHTTPEntry );
+  initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, mIgnoreLDAPDPEntry );
+  initializeDirmngrCheckbox( mWidget->disableLDAPCB, mDisableLDAPEntry );
+  if ( mCustomHTTPProxy ) {
+    const QString systemProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
+    if ( !systemProxy.isEmpty() )
+      mWidget->systemHTTPProxy->setText( systemProxy );
+    const QString currentProxy = mCustomHTTPProxy->stringValue();
+    const bool honor = ( systemProxy == currentProxy );
+    mWidget->honorHTTPProxyRB->setChecked( honor );
+    mWidget->useCustomHTTPProxyRB->setChecked( !honor );
+    mWidget->customHTTPProxy->setText( currentProxy );
+  } else {
+    disableDirmngrWidget( mWidget->honorHTTPProxyRB );
+    disableDirmngrWidget( mWidget->useCustomHTTPProxyRB );
+    disableDirmngrWidget( mWidget->systemHTTPProxy );
+    disableDirmngrWidget( mWidget->customHTTPProxy );
+  }
+  if ( mCustomLDAPProxy )
+    mWidget->customLDAPProxy->setText( mCustomLDAPProxy->stringValue() );
+  else {
+    disableDirmngrWidget( mWidget->customLDAPProxy );
+    disableDirmngrWidget( mWidget->customLDAPLabel );
+  }
 }
 
 void SecurityPage::SMimeTab::installProfile( KConfig * ) {
+}
+
+static void saveCheckBoxToKleoEntry( QCheckBox* cb, Kleo::CryptoConfigEntry* entry ) {
+  const bool b = cb->isChecked();
+  if ( entry && entry->boolValue() != b )
+    entry->setBoolValue( b );
 }
 
 void SecurityPage::SMimeTab::save() {
@@ -3846,17 +3915,9 @@ void SecurityPage::SMimeTab::save() {
   if ( mEnableOCSPsendingConfigEntry && mEnableOCSPsendingConfigEntry->boolValue() != b )
     mEnableOCSPsendingConfigEntry->setBoolValue( b );
 
-  b = mWidget->doNotCheckCertPolicyCB->isChecked();
-  if ( mDoNotCheckCertPolicyConfigEntry && mDoNotCheckCertPolicyConfigEntry->boolValue() != b )
-    mDoNotCheckCertPolicyConfigEntry->setBoolValue( b );
-
-  b = mWidget->neverConsultCB->isChecked();
-  if ( mNeverConsultConfigEntry && mNeverConsultConfigEntry->boolValue() != b )
-    mNeverConsultConfigEntry->setBoolValue( b );
-
-  b = mWidget->fetchMissingCB->isChecked();
-  if ( mFetchMissingConfigEntry && mFetchMissingConfigEntry->boolValue() != b )
-    mFetchMissingConfigEntry->setBoolValue( b );
+  saveCheckBoxToKleoEntry( mWidget->doNotCheckCertPolicyCB, mDoNotCheckCertPolicyConfigEntry );
+  saveCheckBoxToKleoEntry( mWidget->neverConsultCB, mNeverConsultConfigEntry );
+  saveCheckBoxToKleoEntry( mWidget->fetchMissingCB, mFetchMissingConfigEntry );
 
   QString txt = mWidget->OCSPResponderURL->text();
   if ( mOCSPResponderURLConfigEntry && mOCSPResponderURLConfigEntry->stringValue() != txt )
@@ -3866,6 +3927,26 @@ void SecurityPage::SMimeTab::save() {
   if ( mOCSPResponderSignature && mOCSPResponderSignature->stringValue() != txt ) {
     mOCSPResponderSignature->setStringValue( txt );
   }
+
+  //dirmngr-0.9.0 options
+  saveCheckBoxToKleoEntry( mWidget->ignoreServiceURLCB, mIgnoreServiceURLEntry );
+  saveCheckBoxToKleoEntry( mWidget->ignoreHTTPDPCB, mIgnoreHTTPDPEntry );
+  saveCheckBoxToKleoEntry( mWidget->disableHTTPCB, mDisableHTTPEntry );
+  saveCheckBoxToKleoEntry( mWidget->ignoreLDAPDPCB, mIgnoreLDAPDPEntry );
+  saveCheckBoxToKleoEntry( mWidget->disableLDAPCB, mDisableLDAPEntry );
+  if ( mCustomHTTPProxy ) {
+    QString chosenProxy;
+    if ( mWidget->honorHTTPProxyRB->isChecked() )
+      chosenProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
+    else
+      chosenProxy = mWidget->customHTTPProxy->text();
+    if ( chosenProxy != mCustomHTTPProxy->stringValue() )
+      mCustomHTTPProxy->setStringValue( chosenProxy );
+  }
+  txt = mWidget->customLDAPProxy->text();
+  if ( mCustomLDAPProxy && mCustomLDAPProxy->stringValue() != txt )
+    mCustomLDAPProxy->setStringValue( mWidget->customLDAPProxy->text() );
+
   mConfig->sync( true );
 }
 
