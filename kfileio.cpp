@@ -12,7 +12,7 @@
 #include <qdir.h>
 
 #include <klocale.h>
-
+#include <kstdguiitem.h>
 
 //-----------------------------------------------------------------------------
 static void msgDialog(const QString &msg)
@@ -196,7 +196,7 @@ bool kBytesToFile(const char* aBuffer, int len,
 	rc = KMessageBox::warningContinueCancel(0,
 	     i18n("Failed to make a backup copy of %1.\nContinue anyway?")
 	     .arg(aFileName),
-             i18n("Save to File"), i18n("&Save"));
+             i18n("Save to File"), KStdGuiItem::save().text() );
 	if (rc != KMessageBox::Continue) return FALSE;
       }
     }
