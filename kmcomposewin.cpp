@@ -816,7 +816,7 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "setup_spellchecker");
 
   encryptAction = new KToggleAction (i18n("Encrypt message"),
-                                     "lock", 0,
+                                     "unlock", 0,
                                      actionCollection(), "encrypt_message");
   signAction = new KToggleAction (i18n("Sign message"),
                                   "feather_white", 0,
@@ -832,8 +832,9 @@ void KMComposeWin::setupActions(void)
 
   signAction->setChecked(mAutoPgpSign);
 
-
   createGUI("kmcomposerui.rc");
+
+  connect(encryptAction, SIGNAL(toggled(bool)), SLOT(slotEncryptToggled(bool)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1816,6 +1817,14 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
   if (text.isEmpty())
        setCaption("("+QString(i18n("unnamed"))+")");
   else setCaption(text);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotEncryptToggled(bool on)
+{
+  if (on) encryptAction->setIcon("lock");
+    else encryptAction->setIcon("unlock");
 }
 
 

@@ -219,6 +219,9 @@ public slots:
 
   void slotUpdWinTitle(const QString& ); // Change window title to given string.
 
+  /** Switch the icon to lock or unlock respectivly. */
+  void slotEncryptToggled(bool);
+
   /** Append signature file to the end of the text in the editor. */
   void slotAppendSignature();
 
