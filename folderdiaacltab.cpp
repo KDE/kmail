@@ -280,8 +280,12 @@ void KMail::FolderDiaACLTab::load()
 {
   // First ensure we are connected
   ImapAccountBase* account = imapAccount();
-  mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( account->host() ) );
   mStack->raiseWidget( mLabel );
+  if ( !account ) { // hmmm?
+    mLabel->setText( i18n( "Error: no IMAP account defined for this folder" ) );
+    return;
+  }
+  mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( account->host() ) );
   ImapAccountBase::ConnectionState state = account->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
     slotConnectionResult( 1 ); // any error code != 0
@@ -433,7 +437,7 @@ void KMail::FolderDiaACLTab::slotRemoveACL()
 
 bool KMail::FolderDiaACLTab::accept()
 {
-  if ( !mChanged )
+  if ( !mChanged || !imapAccount() )
     return true; // no change, ok for accepting the dialog immediately
   // If there were changes, we need to apply them first (which is async)
   mAccepting = true;
@@ -447,6 +451,8 @@ void KMail::FolderDiaACLTab::save()
     return;
   mJobCounter = 0;
   ImapAccountBase* account = imapAccount();
+  if ( !account )
+      return;
   for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
     if ( ACLitem->isModified() ) {
