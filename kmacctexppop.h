@@ -6,6 +6,7 @@
 
 #include <qvaluelist.h>
 #include <qstringlist.h>
+#include <qvaluevector.h>
 #include <qtimer.h>
 #include <qdict.h>
 
@@ -45,12 +46,12 @@ public:
   virtual void setUsePipelining(bool);
 
   /**
-    * If value is positive, delete mail from server after that many days.
-    */
-   int deleteAfterDays(void) const { return mDeleteAfterDays; }
-   virtual void setDeleteAfterDays(int);
+   * If value is positive, delete mail from server after that many days.
+   */
+  int deleteAfterDays(void) const { return mDeleteAfterDays; }
+  virtual void setDeleteAfterDays(int);
  
-   /**
+  /**
    * Shall messages be left on the server upon retreival (TRUE)
    * or deleted (FALSE).
    */
@@ -131,7 +132,7 @@ protected:
   QValueList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
   QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
-  QValueList<int> mTimeOfSeenMsgs; // list of times of previously seen messages
+  QValueVector<int> mTimeOfSeenMsgsVector; // list of times of previously seen messages
   QDict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
   QMap<QString, int> mTimeOfNextSeenMsgsMap; // map of uid to times of seen messages
   QStringList idsOfMsgsToDelete;

@@ -158,7 +158,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
                                        mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     QStringList uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
-    mTimeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
+    QValueList<int> timeOfSeenMsgs = config.readIntListEntry( "seenUidTimeList" );
     mUidsOfSeenMsgsDict.clear();
     mUidsOfSeenMsgsDict.resize( KMail::nextPrime( ( uidsOfSeenMsgs.count() * 11 ) / 10 ) );
     int idx = 1;
@@ -166,9 +166,19 @@ void KMAcctExpPop::processNewMail(bool _interactive)
           it != uidsOfSeenMsgs.end(); ++it, idx++ ) {
       // we use mUidsOfSeenMsgsDict to just provide fast random access to the
       // keys, so we can store the index(+1) that corresponds to the index of
-      // mTimeOfSeenMsgs for use in KMAcctExpPop::slotData()
+      // mTimeOfSeenMsgsVector for use in KMAcctExpPop::slotData()
       mUidsOfSeenMsgsDict.insert( *it, (const int *)idx );
     }
+    mTimeOfSeenMsgsVector.clear();
+    for ( QValueList<int>::ConstIterator it = timeOfSeenMsgs.begin();
+          it != timeOfSeenMsgs.end(); ++it) {
+      mTimeOfSeenMsgsVector.append( *it );
+    }
+    // If the counts differ then the config file has presumably been tampered
+    // with and so to avoid possible unwanted message deletion we'll treat
+    // them all as newly seen by clearing the seen times vector
+    if ( mTimeOfSeenMsgsVector.count() != mUidsOfSeenMsgsDict.count() )
+      mTimeOfSeenMsgsVector.clear();
     QStringList downloadLater = config.readListEntry( "downloadLater" );
     for ( QStringList::Iterator it = downloadLater.begin(); it != downloadLater.end(); ++it ) {
         mHeaderLaterUids.insert( *it, true );
@@ -233,6 +243,7 @@ void KMAcctExpPop::setDeleteAfterDays(int days)
   else
     mDeleteAfterDays = days;
 }
+
 //---------------------------------------------------------------------------
 void KMAcctExpPop::setFilterOnServer(bool b)
 {
@@ -638,16 +649,21 @@ void KMAcctExpPop::slotJobFinished() {
       QStringList::Iterator cur = idsOfMsgsToDelete.begin();
       while (cur != idsOfMsgsToDelete.end()) {
         QDateTime msgTime;
-        msgTime.setTime_t( mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]] );
-        kdDebug() << "uid: "
-                  << mUidForIdMap[*cur]
-                  << " msgTime: " << msgTime
-                  << ", timeLimit: " << timeLimit << endl;
-        if (msgTime >= timeLimit) {
+        if ( !mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]] ) {
           cur = idsOfMsgsToDelete.remove( cur );
         }
         else {
-          ++cur;
+          msgTime.setTime_t( mTimeOfNextSeenMsgsMap[mUidForIdMap[*cur]] );
+          kdDebug() << "uid: "
+                    << mUidForIdMap[*cur]
+                    << " msgTime: " << msgTime
+                    << ", timeLimit: " << timeLimit << endl;
+          if (msgTime >= timeLimit) {
+            cur = idsOfMsgsToDelete.remove( cur );
+          }
+          else {
+            ++cur;
+          }
         }
       }
     }
@@ -851,8 +867,11 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
           kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
         idsOfMsgsToDelete.append( id );
         mUidsOfNextSeenMsgsDict.insert( uid, (const int *)1 );
-        mTimeOfNextSeenMsgsMap.insert( uid,
-          mTimeOfSeenMsgs[(int)mUidsOfSeenMsgsDict[uid] - 1] );
+        if ( mTimeOfSeenMsgsVector.empty() )
+          mTimeOfNextSeenMsgsMap.insert( uid, time(0) );
+        else
+          mTimeOfNextSeenMsgsMap.insert( uid,
+            mTimeOfSeenMsgsVector[(int)mUidsOfSeenMsgsDict[uid] - 1] );
       }
       mUidForIdMap.insert( id, uid );
     }
