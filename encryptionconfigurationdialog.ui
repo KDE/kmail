@@ -30,7 +30,7 @@
                 <cstring>encryptMessagesBG</cstring>
             </property>
             <property name="title">
-                <string>Encrypt messages</string>
+                <string>Encrypt Messages</string>
             </property>
             <vbox>
                 <property name="name">
@@ -129,7 +129,7 @@ It is recommended to leave this option turned on for maximum integrity.
                 <cstring>crlBG</cstring>
             </property>
             <property name="title">
-                <string>Certificate revocation lists</string>
+                <string>Certificate Revocation Lists</string>
             </property>
             <vbox>
                 <property name="name">
@@ -233,7 +233,7 @@ The recommended setting for the SPHINX environment is 7 days.
                 <cstring>encryptionSettingsBG</cstring>
             </property>
             <property name="title">
-                <string>Encryption settings</string>
+                <string>Encryption Settings</string>
             </property>
             <vbox>
                 <property name="name">
@@ -499,7 +499,7 @@ It is recommended to leave this option turned on for maximum security.
                 <cstring>saveMessagesBG</cstring>
             </property>
             <property name="title">
-                <string>Save messages</string>
+                <string>Save Messages</string>
             </property>
             <vbox>
                 <property name="name">
@@ -540,7 +540,7 @@ However, there may be local rules that require you to turn this option on. When 
                 <cstring>certificatePathCheckBG</cstring>
             </property>
             <property name="title">
-                <string>Certificate path check</string>
+                <string>Certificate Path Check</string>
             </property>
             <vbox>
                 <property name="name">

@@ -44,7 +44,7 @@
                         <cstring>signMessagesBG</cstring>
                     </property>
                     <property name="title">
-                        <string>Sign &amp;messages</string>
+                        <string>Sign &amp;Messages</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -143,7 +143,7 @@ It is recommended to leave this option turned out for maximum integrity.
                         <cstring>sendCertificatesBG</cstring>
                     </property>
                     <property name="title">
-                        <string>S&amp;ending certificates</string>
+                        <string>S&amp;ending Certificates</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -240,7 +240,7 @@ It is recommended to leave this option turned out for maximum integrity.
                         <cstring>signatureSettingsBG</cstring>
                     </property>
                     <property name="title">
-                        <string>&amp;Signature settings</string>
+                        <string>&amp;Signature Settings</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -556,7 +556,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>pinEntryBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Entering the PIN is required</string>
+                                <string>Entering the PIN is Required</string>
                             </property>
                             <vbox>
                                 <property name="name">
@@ -686,7 +686,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>saveMessagesBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Sa&amp;ve messages</string>
+                                <string>Sa&amp;ve Messages</string>
                             </property>
                             <vbox>
                                 <property name="name">
