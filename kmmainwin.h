@@ -329,7 +329,7 @@ protected:
   bool          mConfirmEmpty;
   QString       mNewMailCmd;
   int		mMessageStatusId;
-  QValueList<int> *mPanner1Sep, *mPanner2Sep, *mPanner3Sep;
+  QValueList<int> mPanner1Sep, mPanner2Sep, mPanner3Sep;
   KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
