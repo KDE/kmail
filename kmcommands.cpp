@@ -68,6 +68,7 @@ using KMail::ActionScheduler;
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmheaders.h"
+#include "headeritem.h"
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmsender.h"
@@ -1437,7 +1438,7 @@ void KMMetaFilterActionCommand::start()
   scheduler->setAutoDestruct( true );
 
   int contentX, contentY;
-  KMHeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
+  HeaderItem *nextItem = mHeaders->prepareMove( &contentX, &contentY );
   QPtrList<KMMsgBase> msgList = *mHeaders->selectedMsgs(true);
   mHeaders->finalizeMove( nextItem, contentX, contentY );
 
@@ -1449,7 +1450,7 @@ void KMMetaFilterActionCommand::start()
   *mHeaders->selectedMsgs(), mFilter);
   filterCommand->start();
   int contentX, contentY;
-  KMHeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
+  HeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
   mHeaders->finalizeMove( item, contentX, contentY );
 #endif
 }

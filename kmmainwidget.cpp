@@ -84,6 +84,7 @@ using KMail::AntiSpamWizard;
 using KMail::FilterLogDialog;
 #include <headerlistquicksearch.h>
 using KMail::HeaderListQuickSearch;
+#include "kmheaders.h"
 
 #include <assert.h>
 #include <kstatusbar.h>

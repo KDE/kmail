@@ -49,6 +49,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		identitydrag.cpp identitylistview.cpp identitydialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
+    headeritem.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp htmlstatusbar.cpp kmmsgdict.cpp \
 		kmgroupware.cpp folderstorage.cpp \

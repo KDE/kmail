@@ -39,6 +39,7 @@
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
+#include "kmheaders.h"
 #include "kmkernel.h"
 #include "kmcommands.h"
 #include "mailinglist-magic.h"
@@ -49,7 +50,6 @@
 #include "kmmainwidget.h"
 #include "globalsettings.h"
 #include "folderrequester.h"
-using KMail::FolderRequester;
 
 #include <keditlistbox.h>
 #include <klineedit.h>

@@ -6,6 +6,9 @@
 #include "kmmessage.h"
 #include "kmime_util.h"
 #include "kmcommands.h"
+#include "headeritem.h"
+using KMail::KMSortCacheItem;
+using KMail::HeaderItem;
 
 #include <klistview.h>
 #include <kfoldertree.h>
@@ -23,23 +26,29 @@ class KMMessage;
 class KMMsgBase;
 class KMMainWidget;
 class QPalette;
-class KMHeaderItem;
 class QPixmap;
 class QIconSet;
 class QDateTime;
-class KMSortCacheItem;
 
 typedef QPtrList<KMMsgBase> KMMessageList;
 typedef QValueList<Q_UINT32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
+
+#define KMAIL_SORT_VERSION 1012
+#define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
+#define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
+#define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
+#define KMAIL_MAX_KEY_LEN 16384
+#define KMAIL_RESERVED 3
+
 /** The widget that shows the contents of folders */
 class KMHeaders : public KListView
 {
   Q_OBJECT
 
-  friend class KMHeaderItem; // For easy access to the pixmaps
+  friend class HeaderItem; // For easy access to the pixmaps
 
 public:
   KMHeaders(KMMainWidget *owner, QWidget *parent=0, const char *name=0);
@@ -77,8 +86,8 @@ public:
   virtual void applyFiltersOnMsg();
   virtual void undo();
   virtual bool canUndo() const;
-  virtual KMHeaderItem * prepareMove( int *contentX, int *contentY );
-  virtual void finalizeMove( KMHeaderItem *item, int contentX, int contentY );
+  virtual HeaderItem * prepareMove( int *contentX, int *contentY );
+  virtual void finalizeMove( HeaderItem *item, int contentX, int contentY );
 
   /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. The second parameter is usefull when the
@@ -124,7 +133,7 @@ public:
   /** Return the current message */
   virtual KMMessage* currentMsg();
   /** Return the current list view item */
-  virtual KMHeaderItem* currentHeaderItem();
+  virtual HeaderItem* currentHeaderItem();
   /** Return the index of the message corresponding to the current item */
   virtual int currentItemIndex();
   /** Set the current item to the one corresponding to the given msg id */
@@ -264,7 +273,7 @@ protected:
   void makeHeaderVisible();
 
   /** Auxillary method to findUnread */
-  void findUnreadAux( KMHeaderItem*&, bool &, bool, bool );
+  void findUnreadAux( HeaderItem*&, bool &, bool, bool );
 
   /** Returns message index of first selected message of the messages
     where the message with the given id is in. This for finding the correct
@@ -332,8 +341,8 @@ private:
   int mCurrentItem;
   /** Serial number of the current item */
   unsigned long mCurrentItemSerNum;
-  /** Map messages ids into KMHeaderItems */
-  QMemArray<KMHeaderItem*> mItems;
+  /** Map messages ids into HeaderItems */
+  QMemArray<HeaderItem*> mItems;
 
   // ===== threading and sorting ==========
   bool mNested, mNestedOverride, mSubjThreading;
@@ -355,7 +364,7 @@ private:
   /** */
   QDict< QPtrList< KMSortCacheItem > > mSubjectLists;
   /** */
-  QPtrList<KMHeaderItem> mImperfectlyThreadedList;
+  QPtrList<HeaderItem> mImperfectlyThreadedList;
 
   /** Initializes the mSortCacheItems tree with the contents of the folder */
   void buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
@@ -367,7 +376,7 @@ private:
   KMSortCacheItem* findParentBySubject(KMSortCacheItem *item);
 
   /** */
-  void appendItemToSortFile(KMHeaderItem *);
+  void appendItemToSortFile(HeaderItem *);
   /** */
   bool writeSortOrder();
   /** */
@@ -379,11 +388,11 @@ private:
   /** ditto */
   bool getMsgMulti;
   /** ditto */
-  KMHeaderItem* getMsgItem;
+  HeaderItem* getMsgItem;
   /** @see KMHeaders::selectedMsgs isn't reentrant */
   KMMessageList mSelMsgBaseList;
   QPtrList<KMMessage> mSelMsgList;
-  KMHeaderItem* mPrevCurrent;
+  HeaderItem* mPrevCurrent;
 
   /** Current colours and backing pixmap */
   KPaintInfo mPaintInfo;
@@ -403,6 +412,6 @@ private:
 
   /** popup to switch columns */
   KPopupMenu* mPopup;
-};
 
+}; // class 
 #endif

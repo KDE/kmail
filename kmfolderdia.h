@@ -55,10 +55,9 @@ namespace KPIM { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
 template <typename T> class QGuardedPtr;
-namespace KMail { class FolderRequester; }
 
 namespace KMail {
-
+  class FolderRequester; 
 /**
  * This is the base class for tabs in the folder dialog.
  * It uses the API from ConfigModuleTab (basically: it's a widget that can load and save)
