@@ -4882,16 +4882,16 @@ void GeneralPage::slotPlugUpdateURLChanged( const QString &text )
 
 void GeneralPage::slotNewPlugIn( void )
 {
+    CryptPlugWrapper* newWrapper = new CryptPlugWrapper( this, "", "", "" );
+    _pluginPage->mCryptPlugList->append( newWrapper );
+
+    currentPlugItem = plugList->selectedItem();
     QListViewItem *listItem = new QListViewItem( plugList,
                                                  plugList->lastItem(),
                                                  "", "", "", "" );
     plugList->setCurrentItem( listItem );
     plugList->setSelected( listItem, true );
 
-    CryptPlugWrapper* newWrapper = new CryptPlugWrapper( this, "", "", "" );
-    _pluginPage->mCryptPlugList->append( newWrapper );
-
-    currentPlugItem = plugList->selectedItem();
     if( currentPlugItem != 0 ) {
         plugNameEdit->setEnabled(      true);
         plugLocationRequester->setEnabled(  true);
