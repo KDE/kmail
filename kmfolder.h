@@ -107,7 +107,8 @@ public:
     in the index. Whenever you only need subject, from, date, status
     you should use this method instead of getMsg() because getMsg()
     will load the message if necessary and this method does not. */
-  virtual KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
+  virtual const KMMsgBase* getMsgBase(int idx) const { return mMsgList[idx]; }
+  virtual KMMsgBase* getMsgBase(int idx) { return mMsgList[idx]; }
 
   /** Same as getMsgBase(int). */
   const KMMsgBase* operator[](int idx) const { return mMsgList[idx]; }
@@ -134,7 +135,7 @@ public:
 
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(KMMsgBasePtr msg);
+  virtual void removeMsg(const KMMsgBase* msg);
   virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE);
 
   /** Delete messages in the folder that are older than days. Return the
@@ -153,7 +154,7 @@ public:
   virtual int moveMsg(QPtrList<KMMessage>, int* index_return = NULL);
 
   /** Returns the index of the given message or -1 if not found. */
-  virtual int find(const KMMsgBasePtr msg) const { return mMsgList.find(msg); }
+  virtual int find(const KMMsgBase* msg) const { return mMsgList.find((KMMsgBase*)msg); }
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const QString& msgIdMD5) const;

@@ -26,7 +26,7 @@ KMMsgList::~KMMsgList()
 //-----------------------------------------------------------------------------
 void KMMsgList::clear(bool doDelete, bool syncDict)
 {
-  KMMsgBasePtr msg = 0;
+  KMMsgBase* msg = 0;
   long i;
   
   KMMsgDict *dict = 0;
@@ -52,7 +52,7 @@ void KMMsgList::clear(bool doDelete, bool syncDict)
 bool KMMsgList::resize(int aSize)
 {
   int i, oldSize = size();
-  KMMsgBasePtr msg;
+  KMMsgBase* msg;
 
   assert(aSize>=0);
 
@@ -92,7 +92,7 @@ bool KMMsgList::reset(int aSize)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::set(int idx, KMMsgBasePtr aMsg)
+void KMMsgList::set(int idx, KMMsgBase* aMsg)
 {
   int doubleSize;
 
@@ -116,7 +116,7 @@ void KMMsgList::set(int idx, KMMsgBasePtr aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::insert(int idx, KMMsgBasePtr aMsg, bool syncDict)
+void KMMsgList::insert(int idx, KMMsgBase* aMsg, bool syncDict)
 {
   int i, doubleSize;
 
@@ -150,7 +150,7 @@ void KMMsgList::insert(int idx, KMMsgBasePtr aMsg, bool syncDict)
 
 
 //-----------------------------------------------------------------------------
-int KMMsgList::append(KMMsgBasePtr aMsg, bool syncDict)
+int KMMsgList::append(KMMsgBase* aMsg, bool syncDict)
 {
   int idx = mHigh;
   insert(idx, aMsg, syncDict); // mHigh gets modified in here
@@ -186,9 +186,9 @@ void KMMsgList::remove(int idx)
 
 
 //-----------------------------------------------------------------------------
-KMMsgBasePtr KMMsgList::take(int idx)
+KMMsgBase* KMMsgList::take(int idx)
 {
-  KMMsgBasePtr msg=at(idx);
+  KMMsgBase* msg=at(idx);
   remove(idx);
   return msg;
 }

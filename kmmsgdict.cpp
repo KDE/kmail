@@ -176,7 +176,7 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   
   KMFolder *folder = msg->parent();
   if (folder && index == -1)
-    index = folder->find((const KMMsgBasePtr)msg);
+    index = folder->find(msg);
   
   KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
   dict->replace((long)msn, entry);

@@ -492,7 +492,7 @@ void KMFolder::markNewAsUnread()
 
 void KMFolder::markUnreadAsRead()
 {
-  KMMsgBase* msgBase;
+  const KMMsgBase* msgBase;
   QValueList<int> items;
 
   for (int i=count()-1; i>=0; --i)
@@ -549,7 +549,7 @@ int KMFolder::reduceSize( int aSize )
   kdDebug(5006) << "Reducing folder to size of " << aSize << " Mo" << endl;
   QSortedList<KMMsgBase> * slice=0L;
   QPtrList< QSortedList<KMMsgBase> > sliceArr;
-  KMMsgBase* mb;
+  const KMMsgBase* mb;
   ulong folderSize, msgSize, sliceSize, firstSliceSize, lastSliceSize, size;
   int sliceIndex;
   int delMsg = 0;
@@ -630,7 +630,7 @@ int KMFolder::expungeOldMsg(int days)
 {
   int i, msgnb=0;
   time_t msgTime, maxTime;
-  KMMsgBase* mb;
+  const KMMsgBase* mb;
   QValueList<int> rmvMsgList;
 
   maxTime = time(0L) - days * 3600 * 24;
@@ -682,7 +682,7 @@ void KMFolder::expireOldMessages() {
   int             days = 0;
   int             maxUnreadTime = 0;
   int             maxReadTime = 0;
-  KMMsgBase       *mb = NULL;
+  const KMMsgBase       *mb = NULL;
   QValueList<int> rmvMsgList;
   int             i = 0;
   time_t          msgTime, maxTime = 0;
@@ -775,7 +775,7 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::removeMsg(KMMsgBasePtr aMsg)
+void KMFolder::removeMsg(const KMMsgBase* aMsg)
 {
   int idx = find(aMsg);
   assert( idx != -1);
@@ -1224,7 +1224,7 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
     return;
   }
   if (idx < 0)
-    idx = mMsgList.find((KMMsgBasePtr)aMsg);
+    idx = mMsgList.find((KMMsgBase*)aMsg);
   if (idx >= 0)
     emit msgHeaderChanged(idx);
   else

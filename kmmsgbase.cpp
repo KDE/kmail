@@ -766,7 +766,7 @@ unsigned long KMMsgBase::getMsgSerNum() const
 {
   unsigned long msn = 0;
   if (mParent) {
-    int index = mParent->find((KMMsgBasePtr)this);
+    int index = mParent->find((KMMsgBase*)this);
     msn = kernel->msgDict()->getMsgSerNum(mParent, index);
   }
   return msn;

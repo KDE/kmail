@@ -263,6 +263,4 @@ public:
   bool syncIndexString() const;
 };
 
-typedef KMMsgBase* KMMsgBasePtr;
-
 #endif /*kmmsgbase_h*/
