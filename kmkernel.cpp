@@ -1926,18 +1926,21 @@ int KMKernel::timeOfLastMessageCountChange() const
 }
 
 Wallet *KMKernel::wallet() {
+  static bool walletOpenFailed = false;
   if ( mWallet && mWallet->isOpen() )
     return mWallet;
 
-  if ( !Wallet::isEnabled() )
+  if ( !Wallet::isEnabled() || walletOpenFailed )
     return 0;
 
   delete mWallet;
   mWallet = Wallet::openWallet( Wallet::NetworkWallet(),
         getKMMainWidget() ? getKMMainWidget()->topLevelWidget()->winId() : 0 );
 
-  if ( !mWallet )
+  if ( !mWallet ) {
+    walletOpenFailed = true;
     return 0;
+  }
 
   if ( !mWallet->hasFolder( "kmail" ) )
     mWallet->createFolder( "kmail" );
