@@ -1052,12 +1052,7 @@ void KMHeaders::msgAdded(int id)
 
     if(mIdTree.isEmpty()) {
       buildIdTrees(mFolder->count()-1);
-    } else {
-      mIdTree.resize(mFolder->count());
-      if (mSubjThreading)
-        mMsgSubjects.resize(mFolder->count());
-    }
-
+    } 
     bool perfectParent = false;
     KMHeaderItem *parent = findParent(id, &perfectParent);
     if (parent && !perfectParent) {
@@ -1239,6 +1234,9 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
         mImperfectlyThreadedList.removeRef(item);
     }
   }
+  // Make sure our data structures are cleared.
+  if (!mFolder->count())
+      folderCleared();
 
   // Housekeeping.
   if (currentItem() == removedItem)
