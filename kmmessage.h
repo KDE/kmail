@@ -137,6 +137,7 @@ public:
   virtual const QString from(void) const;
   virtual void setFrom(const QString& aStr);
   virtual const QString fromStrip(void) const;
+  virtual const QString fromEmail(void) const;
 
   /** Get or set the 'Who' header field. The actual field that is
     returned depends on the contents of the owning folders whoField().
@@ -270,6 +271,11 @@ public:
    * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
    * "joe@nowhere.com" returns "joe@nowhere.com" */
   static const QString stripEmailAddr(const QString& emailAddr);
+
+  /** Return email address from string. Examples:
+   * "Stefan Taferner <taferner@kde.org>" returns "taferner@kde.org"
+   * "joe@nowhere.com" returns "joe@nowhere.com" */
+  static const QString getEmailAddr(const QString& emailAddr);
 
   /** Converts given email address to a nice HTML mailto: anchor. 
    * If stripped is TRUE then the visible part of the anchor contains
