@@ -263,6 +263,9 @@ const QString KMMessage::formatString(const QString& aStr) const
       case '_':
         result += ' ';
         break;
+      case 'L':
+        result += "\n";
+        break;
       case '%':
         result += '%';
         break;
@@ -510,6 +513,7 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 //-----------------------------------------------------------------------------
 const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 					const QString& aIndentStr,
+					const QString selection,
 					bool aIncludeAttach,
                                         bool aStripSignature) const
 {
@@ -537,18 +541,21 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
-  if (numBodyParts() == 0) {
+  if (numBodyParts() == 0 || selection != QString::null ) {
     Kpgp* pgp = Kpgp::getKpgp();
     assert(pgp != NULL);
     cStr = bodyDecoded();
 
     pgp->setMessage(cStr);
-    if(pgp->isEncrypted()) {
+    if( selection != QString::null ) {
+      result = selection;
+    } else if(pgp->isEncrypted()) {
       pgp->decrypt();
       result = codec->toUnicode(pgp->message());
-    } else
+    } else {
       result = codec->toUnicode(cStr);
-
+    }
+    
     // Remove blank lines at the beginning
     for( i = 0; i < (int)result.length() && result[i] <= ' '; i++ );
     while (i > 0 && result[i-1] == ' ') i--;
@@ -595,7 +602,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
           inlineHeaderStr.replace(reNL, '\n' + indentStr);
           result += "\n" + indentStr;
           result += inlineHeaderStr;
-          result += QString::fromUtf8(inlineMsg.asQuotedString("", indentStr,
+          result += QString::fromUtf8(inlineMsg.asQuotedString("", indentStr, selection,
             TRUE, FALSE));
         } else
           isInline = FALSE;
@@ -624,7 +631,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList)
+KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString selection)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
@@ -737,7 +744,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList)
   if (replyToAll || !mailingListStr.isEmpty()) replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
 
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr));
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection));  
 
   QStringList::Iterator it;
   bool recognized = false;
@@ -806,7 +813,7 @@ KMMessage* KMMessage::createRedirect(void)
   QCString str = "";
   int i;
 
-  str = asQuotedString(str, "", FALSE, false);
+  str = asQuotedString(str, "", QString::null, FALSE, false);
 
   msg->setHeaderField("Content-Type","text/plain; charset=\"utf-8\"");
   msg->setBody(str);
@@ -854,7 +861,7 @@ KMMessage* KMMessage::createForward(void)
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n";
     s += asString();
-    str = asQuotedString(s, "", FALSE, false);
+    str = asQuotedString(s, "", QString::null, FALSE, false);
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n";
@@ -864,7 +871,7 @@ KMMessage* KMMessage::createForward(void)
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
-    str = asQuotedString(s, "", FALSE, false);
+    str = asQuotedString(s, "", QString::null, FALSE, false);
     str += "\n-------------------------------------------------------\n";
   }
 

@@ -48,7 +48,7 @@ public:
   /** Create a new message that is a reply to this message, filling all 
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as replied. */
-  virtual KMMessage* createReply(bool replyToAll=FALSE, bool replyToList=FALSE);
+  virtual KMMessage* createReply(bool replyToAll=FALSE, bool replyToList=FALSE, QString selection=QString::null);
 
   /** Create a new message that is a redirect to this message, filling all 
     required header fields with the proper values. The returned message
@@ -86,6 +86,7 @@ public:
     smart quoting is turned on. */
   virtual const QCString asQuotedString(const QString& headerStr, 
 				       const QString& indentStr,
+				       const QString selection=QString::null,
 				       bool includeAttach=true,
 				       bool aStripSignature=true) const;
 

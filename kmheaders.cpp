@@ -1154,7 +1154,7 @@ void KMHeaders::forwardMsg ()
           msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
           msgText += thisMsg->asString();
           msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
-            "", FALSE, false));
+            "", QString::null, FALSE, false));
           msgText += "\n-------------------------------------------------------\n";
         } else {
           msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
@@ -1165,7 +1165,7 @@ void KMHeaders::forwardMsg ()
 	  if (!thisMsg->cc().isEmpty()) msgText += "Cc: " + thisMsg->cc() + "\n";
           msgText += "\n";
           msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
-            "", FALSE, false));
+            "", QString::null, FALSE, false));
           msgText += "\n-------------------------------------------------------\n";
         }
       }
@@ -1214,7 +1214,7 @@ void KMHeaders::redirectMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyToMsg ()
+void KMHeaders::replyToMsg (QString selection)
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
@@ -1223,7 +1223,7 @@ void KMHeaders::replyToMsg ()
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE),
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection),
 			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
   win->show();
@@ -1232,7 +1232,7 @@ void KMHeaders::replyToMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyAllToMsg ()
+void KMHeaders::replyAllToMsg (QString selection)
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
@@ -1240,14 +1240,14 @@ void KMHeaders::replyAllToMsg ()
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(TRUE));
+  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection));
   win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyListToMsg ()
+void KMHeaders::replyListToMsg (QString selection)
 {
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
@@ -1255,7 +1255,7 @@ void KMHeaders::replyListToMsg ()
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(true, true));
+  win = new KMComposeWin(msg->createReply(true, true, selection));
   win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();

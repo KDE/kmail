@@ -871,7 +871,7 @@ void ConfigureDialog::makeAppearancePage( void )
   QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
   vlay2->addSpacing( fontMetrics().lineSpacing() );
   mAppearance.htmlMailCheck =
-    new QCheckBox( i18n("Prefer plain text to HTML rendering"), group );
+    new QCheckBox( i18n("Prefer HTML to plain text"), group );
   vlay2->addWidget( mAppearance.htmlMailCheck );
   QLabel *label = new QLabel( group );
   label->setAlignment( WordBreak);
@@ -983,7 +983,7 @@ void ConfigureDialog::makeComposerPage( void )
   QLabel *label = new QLabel( group );
   label->setText(
      i18n( "The following placeholders are supported in the reply phrases:\n"
-	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space"));
+	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space, %L=linebreak"));
   glay->addMultiCellWidget( label, 1, 1, 0, 1 );
   label = new QLabel( i18n("Language:"), group );
   glay->addWidget( label, 2, 0 );
@@ -1532,7 +1532,7 @@ void ConfigureDialog::setupAppearancePage( void )
   }
   config.setGroup("Reader");
   state = config.readBoolEntry( "htmlMail", false );
-  mAppearance.htmlMailCheck->setChecked( !state );
+  mAppearance.htmlMailCheck->setChecked( state );
 
   config.setGroup("General");
   state = config.readBoolEntry( "showMessageSize", false );
@@ -1748,7 +1748,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
-    mAppearance.htmlMailCheck->setChecked( true );
+    mAppearance.htmlMailCheck->setChecked( false );
   }
   else if( item == mAppearance.mListItemNewFeature )
   {
@@ -1773,7 +1773,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.htmlMailCheck->setChecked( false );
+    mAppearance.htmlMailCheck->setChecked( true );
   }
   else if( item == mAppearance.mListItemContrast )
   {
@@ -1999,7 +1999,7 @@ void ConfigureDialog::slotDoApply( bool everything )
 
     config.setGroup("Reader");
     bool htmlMail = mAppearance.htmlMailCheck->isChecked();
-    config.writeEntry( "htmlMail", !htmlMail );
+    config.writeEntry( "htmlMail", htmlMail );
 
     config.setGroup("General");
     bool messageSize = mAppearance.messageSizeCheck->isChecked();

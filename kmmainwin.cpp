@@ -812,21 +812,21 @@ void KMMainWin::slotPrintMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyToMsg()
 {
-  mHeaders->replyToMsg();
+  mHeaders->replyToMsg(mMsgView->copyText());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyAllToMsg()
 {
-  mHeaders->replyAllToMsg();
+  mHeaders->replyAllToMsg(mMsgView->copyText());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyListToMsg()
 {
-  mHeaders->replyListToMsg();
+  mHeaders->replyListToMsg(mMsgView->copyText());
 }
 
 

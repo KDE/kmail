@@ -84,10 +84,10 @@ public:
   virtual void undo();
   virtual void forwardMsg();
   virtual void bounceMsg();
-  virtual void replyToMsg();
+  virtual void replyToMsg(QString selection=QString::null);
   virtual void redirectMsg();
-  virtual void replyAllToMsg();
-  virtual void replyListToMsg();
+  virtual void replyAllToMsg(QString selection=QString::null);
+  virtual void replyListToMsg(QString selection=QString::null);
   virtual void resendMsg();
 
   /** If destination==NULL the messages are deleted, otherwise
