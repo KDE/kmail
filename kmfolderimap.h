@@ -176,6 +176,10 @@ public:
   static QStringList makeSets( QValueList<ulong>&, bool sort = true);
   static QStringList makeSets(const QStringList&, bool sort = true);
 
+  /** splits the message list according to sets. Modifies the @msgList. */
+  static QPtrList<KMMessage> splitMessageList(const QString& set, 
+                                              QPtrList<KMMessage>& msgList);
+
   /** gets the uids of the given ids */
   void getUids(QValueList<int>& ids, QValueList<ulong>& uids);
 
@@ -282,7 +286,6 @@ public slots:
   /** Copy the messages to this folder */
   void copyMsg(QPtrList<KMMessage>& msgList/*, KMFolder* parent*/);
 
-  QPtrList<KMMessage> splitMessageList(QString set, QPtrList<KMMessage>& msgList);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
@@ -294,21 +297,20 @@ public slots:
    */
   void slotSimpleData(KIO::Job * job, const QByteArray & data);
 
+  /**
+   * Convert IMAP flags to a message status
+   * @param newMsg specifies whether unseen messages are new or unread
+   */
+  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
+
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                                   KMFolder *folder, QString partSpecifier,
                                   const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
-  /**
-   * Convert IMAP flags to a message status
-   * @param newMsg specifies whether unseen messages are new or unread
-   */
-  void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
-
+  
   void getMessagesResult(KIO::Job * job, bool lastSet);
-
-  bool    gotMsgs;
 
   QString mUidValidity;
 

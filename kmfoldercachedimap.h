@@ -156,21 +156,11 @@ public:
   virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
     { FolderStorage::removeMsg(msgList, imapQuiet); }
 
-  /* Utility methods: */
-  static QStringList makeSets(QStringList& uids, bool sort);
-  static QStringList makeSets(QValueList<ulong>& uids, bool sort);
-
   /**
    * Emit the folderComplete signal
    */
   void sendFolderComplete(bool success)
   { emit folderComplete(this, success); }
-
-  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
- /**
-   * Convert message status to a list of IMAP flags
-   */
-  static QCString statusToFlags(KMMsgStatus status);
 
   /**
    * The silentUpload can be set to remove the folder upload error dialog

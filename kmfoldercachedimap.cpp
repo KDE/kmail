@@ -818,7 +818,7 @@ void KMFolderCachedImap::uploadFlags()
      QMapIterator< QString, QStringList > dit;
      for ( dit = groups.begin(); dit != groups.end(); ++dit ) {
         QCString flags = dit.key().latin1();
-        QStringList sets = makeSets( (*dit), true );
+        QStringList sets = KMFolderImap::makeSets( (*dit), true );
         // Send off a status setting job for each set.
         for (  QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
            QString imappath = imapPath() + ";UID=" + ( *slit );
@@ -901,7 +901,7 @@ bool KMFolderCachedImap::deleteMessages()
   /* Delete messages from the server that we dont have anymore */
   if( !uidsForDeletionOnServer.isEmpty() ) {
     emit statusMsg( i18n("%1: Deleting removed messages from server").arg(name()) );
-    QStringList sets = makeSets( uidsForDeletionOnServer, true );
+    QStringList sets = KMFolderImap::makeSets( uidsForDeletionOnServer, true );
     uidsForDeletionOnServer.clear();
     if( sets.count() > 1 ) {
       // Rerun the sync until the messages are all deleted
@@ -1018,7 +1018,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
          uidsForDeletionOnServer << uid;
       } else {
          /* The message is OK, update flags */
-         flagsToStatus( existingMessage, flags );
+         KMFolderImap::flagsToStatus( existingMessage, flags );
          //kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
       delete msg;
@@ -1062,24 +1062,6 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
   // Progress info while retrieving new emails
   // (going from mProgress to mProgress+20)
   emit newState( name(), mProgress + (20 * done) / total, QString::null);
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderCachedImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
-{
-  if (flags & 4)
-    msg->setStatus( KMMsgStatusFlag );
-  if (flags & 2)
-    msg->setStatus( KMMsgStatusReplied );
-  if (flags & 1)
-    msg->setStatus( KMMsgStatusOld );
-
-  if (msg->isOfUnknownStatus()) {
-    if (newMsg)
-      msg->setStatus( KMMsgStatusNew );
-    else
-      msg->setStatus( KMMsgStatusUnread );
-  }
 }
 
 
@@ -1291,67 +1273,6 @@ void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   buff.close();
 }
 
-
-QStringList KMFolderCachedImap::makeSets(QStringList& uids, bool sort)
-{
-  QValueList<ulong> tmp;
-  for ( QStringList::Iterator it = uids.begin(); it != uids.end(); ++it )
-    tmp.append( (*it).toInt() );
-  return makeSets(tmp, sort);
-}
-
-QStringList KMFolderCachedImap::makeSets(QValueList<ulong>& uids, bool sort)
-{
-  QStringList sets;
-  QString set;
-
-  if (uids.size() == 1)
-  {
-    sets.append(QString::number(uids.first()));
-    return sets;
-  }
-
-  if (sort) qHeapSort(uids);
-
-  ulong last = 0;
-  // needed to make a uid like 124 instead of 124:124
-  bool inserted = false;
-  /* iterate over uids and build sets like 120:122,124,126:150 */
-  for ( QValueList<ulong>::Iterator it = uids.begin(); it != uids.end(); ++it )
-  {
-    if (it == uids.begin() || set.isEmpty()) {
-      set = QString::number(*it);
-      inserted = true;
-    } else
-    {
-      if (last+1 != *it)
-      {
-        // end this range
-        if (inserted)
-          set += ',' + QString::number(*it);
-        else
-          set += ':' + QString::number(last) + ',' + QString::number(*it);
-        inserted = true;
-        if (set.length() > 100)
-        {
-          // just in case the server has a problem with longer lines..
-          sets.append(set);
-          set = "";
-        }
-      } else {
-        inserted = false;
-      }
-    }
-    last = *it;
-  }
-  // last element
-  if (!inserted)
-    set += ':' + QString::number(uids.last());
-
-  if (!set.isEmpty()) sets.append(set);
-
-  return sets;
-}
 
 FolderJob*
 KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,

@@ -443,7 +443,8 @@ void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
 }
 
 //-----------------------------------------------------------------------------
-QPtrList<KMMessage> KMFolderImap::splitMessageList(QString set, QPtrList<KMMessage>& msgList)
+QPtrList<KMMessage> KMFolderImap::splitMessageList(const QString& set, 
+                                                   QPtrList<KMMessage>& msgList)
 {
   int lastcomma = set.findRev(",");
   int lastdub = set.findRev(":");
@@ -453,7 +454,7 @@ QPtrList<KMMessage> KMFolderImap::splitMessageList(QString set, QPtrList<KMMessa
   last++;
   if (last < 0) last = set.length();
   // the last uid of the current set
-  QString last_uid = set.right(set.length() - last);
+  const QString last_uid = set.right(set.length() - last);
   QPtrList<KMMessage> temp_msgs;
   QString uid;
   if (!last_uid.isEmpty())
