@@ -248,8 +248,9 @@ void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
 kdDebug(5006) << "* text *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypeHtml: {
-kdDebug(5006) << "html" << endl;
+	    kdDebug(5006) << "html, attachmentstyle = " << mAttachmentStyle << endl;
               QCString cstr( curNode->msgPart().bodyDecoded() );
+	      if( mAttachmentStyle != IconicAttmnt || !curNode->isAttachment() ) {
               if( htmlMail() ) {
                 // ---Sven's strip </BODY> and </HTML> from end of attachment start-
                 // We must fo this, or else we will see only 1st inlined html
@@ -284,6 +285,7 @@ kdDebug(5006) << "html" << endl;
               bDone = true;
             }
             break;
+	  }
           case DwMime::kSubtypeXVCard: {
 kdDebug(5006) << "v-card" << endl;
               // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
@@ -301,8 +303,10 @@ kdDebug(5006) << "enriched " << endl;
 kdDebug(5006) << "plain " << endl;
           default: {
 kdDebug(5006) << "default " << endl;
-              writeBodyStr(curNode->msgPart().bodyDecoded().data(), mCodec, &isInlineSigned, &isInlineEncrypted);
-              bDone = true;
+	      if( mAttachmentStyle != IconicAttmnt || !curNode->isAttachment() ) {
+		writeBodyStr(curNode->msgPart().bodyDecoded().data(), mCodec, &isInlineSigned, &isInlineEncrypted);
+		bDone = true;
+	      }
             }
             break;
           }

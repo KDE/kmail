@@ -247,6 +247,8 @@ public:
         return mMimePartTreeItem;
     }
 
+    bool isAttachment() const;
+
 public:
     partNode*     mRoot;
     partNode*     mPrev;
