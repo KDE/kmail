@@ -35,9 +35,6 @@ public:
   static bool addVCard( const KABC::Addressee& addressee, QWidget *parent );
 
 private:
-#if !KDE_IS_VERSION( 3, 1, 92 )
-  static bool checkForAddressBook();
-#endif
   static bool addAddressee( const KABC::Addressee& addressee );
 };
 

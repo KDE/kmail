@@ -304,11 +304,7 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
-#if KDE_IS_VERSION( 3, 1, 92 )
   KSharedConfig::Ptr mConfig;
-#else
-  static KConfig * myConfig;
-#endif
   QTextCodec *netCodec;
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;

@@ -28,9 +28,7 @@ KMMainWin::KMMainWin(QWidget *)
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
 
-#if KDE_IS_VERSION( 3, 1, 90 )
   setStandardToolBarMenuEnabled(true);
-#endif
 
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
 				actionCollection());
@@ -38,21 +36,8 @@ KMMainWin::KMMainWin(QWidget *)
   KStdAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
                           actionCollection());
 
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  mToolbarAction = KStdAction::showToolbar(this,
-					   SLOT(slotToggleToolBar()),
-					   actionCollection());
-  mStatusbarAction = KStdAction::showStatusbar(this,
-					       SLOT(slotToggleStatusBar()),
-					       actionCollection());
-#endif
-
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
   createGUI( "kmmainwin.rc", false );
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  mToolbarAction->setChecked(!toolBar()->isHidden());
-  mStatusbarAction->setChecked(!statusBar()->isHidden());
-#endif
 
   conserveMemory();
   applyMainWindowSettings(KMKernel::config(), "Main Window");
@@ -107,26 +92,6 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   statusBar()->changeItem(text, mMessageStatusId);
 }
 
-void KMMainWin::slotToggleToolBar()
-{
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  if(toolBar("mainToolBar")->isVisible())
-    toolBar("mainToolBar")->hide();
-  else
-    toolBar("mainToolBar")->show();
-#endif
-}
-
-void KMMainWin::slotToggleStatusBar()
-{
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  if (statusBar()->isVisible())
-    statusBar()->hide();
-  else
-    statusBar()->show();
-#endif
-}
-
 void KMMainWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::config(), "Main Window");
@@ -142,9 +107,6 @@ void KMMainWin::slotUpdateToolbars()
 {
   createGUI("kmmainwin.rc");
   applyMainWindowSettings(KMKernel::config(), "Main Window");
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  mToolbarAction->setChecked(!toolBar()->isHidden());
-#endif
 }
 
 void KMMainWin::setupStatusBar()

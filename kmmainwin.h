@@ -11,9 +11,6 @@
 
 class KMMainWidget;
 class KMLittleProgressDlg;
-#if !KDE_IS_VERSION( 3, 1, 90 )
-class KToggleAction;
-#endif
 
 class KMMainWin : public KMainWindow
 {
@@ -37,10 +34,6 @@ public slots:
   void statusMsg(const QString&);
   void htmlStatusMsg(const QString&);
   void displayStatusMsg(const QString&);
-  // FIXME: Remove this if KMail requires KDE 3.2
-  void slotToggleToolBar();
-  void slotToggleStatusBar();
-  // end of FIXME
   void slotEditToolbars();
   void slotUpdateToolbars();
   void setupStatusBar();
@@ -53,10 +46,6 @@ protected slots:
   void slotConfigChanged();
 
 private:
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  KToggleAction *mToolbarAction;
-  KToggleAction *mStatusbarAction;
-#endif
   KMMainWidget *mKMMainWidget;
   QString      mLastStatusMsg;
   KMLittleProgressDlg *littleProgress;

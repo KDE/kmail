@@ -117,11 +117,9 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mReaderWin->setMsg( msg, true );
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
-#if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
-#endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
   kmkernel->inboxFolder()->close();
@@ -131,7 +129,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
-#if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
   new KParts::SideBarExtension( mainWidget->folderTree(),
@@ -150,7 +147,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
-#endif
   KGlobal::iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmmainwin.rc" );
 #endif
@@ -261,7 +257,6 @@ KMailBrowserExtension::~KMailBrowserExtension()
 {
 }
 
-#if KDE_IS_VERSION( 3, 1, 90 )
 KMailStatusBarExtension::KMailStatusBarExtension( KMailPart *parent )
   : KParts::StatusBarExtension( parent ), mParent( parent )
 {
@@ -271,8 +266,6 @@ KMainWindow * KMailStatusBarExtension::mainWindow() const
 {
   return static_cast<KMainWindow*>( mParent->parentWidget() );
 }
-
-#endif
 
 
 #include "kmail_part.moc"

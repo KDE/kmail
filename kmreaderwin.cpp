@@ -463,11 +463,7 @@ void KMReaderWin::createWidgets() {
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
   mViewer = new KHTMLPart( mBox, "mViewer" );
-#if KDE_IS_VERSION( 3, 1, 92 )
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-#else
-  mSplitter->setOpaqueResize( true );
-#endif
   mSplitter->setResizeMode( mMimePartTree, QSplitter::KeepSize );
 }
 
@@ -1626,11 +1622,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       iio->setFileName(aFileName);
       if( iio->read() ) {
           QImage img = iio->image();
-#if KDE_IS_VERSION( 3, 1, 90 )
           QRect desk = KGlobalSettings::desktopGeometry(mMainWindow);
-#else
-          QRect desk = QApplication::desktop()->screen(QApplication::desktop()->screenNumber(mMainWindow))->rect();
-#endif
           // determine a reasonable window size
           int width, height;
           if( img.width() < 50 )

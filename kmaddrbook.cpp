@@ -19,11 +19,6 @@
 #include <kabc/distributionlist.h>
 #include <kabc/vcardconverter.h>
 #include <dcopref.h>
-#if !KDE_IS_VERSION( 3, 1, 92 )
-#include <kstandarddirs.h>
-#include <kprocess.h>
-#include <krun.h>
-#endif
 
 #include <qregexp.h>
 
@@ -152,7 +147,6 @@ QStringList KabcBridge::categories()
 
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
-#if KDE_IS_VERSION( 3, 1, 92 )
   QString email = KMMessage::getEmailAddr(addr);
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::Addressee::List addresseeList = addressBook->findByEmail(email);
@@ -164,11 +158,6 @@ void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
   else {
     call.send( "addEmail(QString)", addr );
   }
-#else
-  if ( checkForAddressBook() ) {
-    KRun::runCommand( "kaddressbook -a " + KProcess::quote(addr) );
-  }
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -207,41 +196,15 @@ void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
 }
 
 void KMAddrBookExternal::openAddressBook(QWidget *) {
-#if KDE_IS_VERSION( 3, 1, 92 )
   kapp->startServiceByDesktopName( "kaddressbook" );
-#else
-  if ( checkForAddressBook() ) {
-    KRun::runCommand( "kaddressbook" );
-  }
-#endif
 }
-
-#if !KDE_IS_VERSION( 3, 1, 92 )
-bool KMAddrBookExternal::checkForAddressBook()
-{
-  if ( KStandardDirs::findExe( "kaddressbook" ).isEmpty() ) {
-    KMessageBox::information( 0,
-        i18n("No external address book application found. You might want to "
-             "install KAddressBook from the kdepim module.") );
-    return false;
-  } else {
-    return true;
-  }
-}
-#endif
 
 void KMAddrBookExternal::addNewAddressee( QWidget* )
 {
-#if KDE_IS_VERSION( 3, 1, 92 )
   kapp->startServiceByDesktopName("kaddressbook");
   sleep(2);
   DCOPRef call("kaddressbook", "KAddressBookIface");
   call.send("newContact()");
-#else
-  if ( checkForAddressBook() ) {
-    KRun::runCommand( "kaddressbook --editor-only --new-contact" );
-  }
-#endif
 }
 
 bool KMAddrBookExternal::addVCard( const KABC::Addressee& addressee, QWidget *parent )

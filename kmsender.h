@@ -191,13 +191,6 @@ protected:
     Sets mSending to FALSE. */
   virtual void failed(const QString &msg);
 
-#if !KDE_IS_VERSION( 3, 1, 90 ) // dotstuffing and LF->CRLF is now
-				// done by the SMTP kioslave
-  /** Prepare message for sending. */
-  virtual QCString prepareStr(const QCString &str, bool toCRLF=FALSE,
-   bool noSingleDot=TRUE);
-#endif
-
   /** Informs the user about what is going on. */
   virtual void statusMsg(const QString&);
 

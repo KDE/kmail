@@ -293,13 +293,13 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       }
     }
 
-    // Disable the emitting of msgAdded signal, because the message is taken out of the 
+    // Disable the emitting of msgAdded signal, because the message is taken out of the
     // current folder (outbox) and re-added, to make filter actions changing the message
     // work. We don't want that to screw up message counts.
     if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( true );
     int processResult = kmkernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
     if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( false );
-    
+
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
     switch (processResult) {
     case 2:
@@ -723,102 +723,6 @@ bool KMSendProc::finish(bool destructive)
   return TRUE;
 }
 
-#if !KDE_IS_VERSION( 3, 1, 90 ) // dotstuffing and LF->CRLF is not
-				// done by the SMTP kioslave
-QCString KMSendProc::prepareStr(const QCString &aStr, bool toCRLF,
- bool noSingleDot)
-{
-  int tlen;
-  const int len = aStr.length();
-
-  if (aStr.isEmpty()) return QCString();
-
-  QCString target( "" );
-
-  if ( toCRLF ) {
-    // (mmutz) headroom so we actually don't need to resize the target
-    // array. Five percent should suffice. I measured a mean line
-    // length of 42 (no joke) over the my last month's worth of mails.
-    tlen = int(len * 1.05);
-    target.resize( tlen );
-
-    QCString::Iterator t = target.begin();
-    QCString::Iterator te = target.end();
-    te -= 5; // 4 is the max. #(chars) appended in one round, plus one for the \0.
-    QCString::ConstIterator s = aStr.begin();
-    while( (*s) ) {
-
-      char c = *s++;
-
-      if ( c == '\n' ) {
-	*t++ = '\r';
-	*t++ = c;
-
-	if ( noSingleDot && (*s) == '.' ) {
-	  s++;
-	  *t++ = '.';
-	  *t++ = '.';
-	}
-      } else
-	*t++ = c;
-
-      if ( t >= te ) { // nearing the end of the target buffer.
-	int tskip = t - target.begin();
-	tlen += QMAX( len/128, 128 );
-	if ( !target.resize( tlen ) )
-	  // OOM, what else can we do?
-	  return aStr;
-	t = target.begin() + tskip;
-      }
-    }
-    *t = '\0';
-  } else {
-    if ( !noSingleDot ) return aStr;
-
-    tlen = 0;
-
-    QCString::Iterator t = target.begin();
-    QCString::ConstIterator olds = aStr.begin();
-    QCString::ConstIterator s = aStr.begin();
-
-    while ( (*s) ) {
-      if ( *s++ == '\n' && *s == '.' ) {
-
-	int skip = s - olds + 1;
-
-	if ( tlen ) {
-	  if ( tlen + skip >= (int)target.size() ) {
-	    // resize to 128 + <currently used> + <yet to be copied>
-	    target.resize( 128 + tlen + len - ( olds - aStr.begin() ) );
-	    t = target.begin() + tlen;
-	  }
-	} else {
-	  target.resize( int( len * 1.02 ) );
-	  t = target.begin();
-	}
-
-	memcpy( t, olds, skip );
-	tlen += skip; // incl. '.'
-	t += skip;
-	olds = s; // *olds == '.', thus we double the dot in the next round
-      }
-    }
-    // *s == \0 here.
-
-    if ( !tlen ) return aStr; // didn't change anything
-
-    // copy last chunk.
-    if ( tlen + s - olds + 1 /* incl. \0 */ >= (int)target.size() ) {
-      target.resize( tlen + s - olds + 1 );
-      t = target.begin() + tlen;
-    }
-    memcpy( t, olds, s - olds + 1 );
-  }
-
-  return target;
-}
-#endif
-
 //-----------------------------------------------------------------------------
 void KMSendProc::statusMsg(const QString& aMsg)
 {
@@ -1108,12 +1012,8 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     return false;
   }
 
-#if KDE_IS_VERSION( 3, 1, 90 )
   // dotstuffing is now done by the slave (see setting of metadata)
   mMessage = aMsg->asSendableString();
-#else
-  mMessage = prepareStr(aMsg->asSendableString(), TRUE);
-#endif
   mMessageLength = mMessage.length();
   mMessageOffset = 0;
 
@@ -1128,9 +1028,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   if ((mJob = KIO::put(destination, -1, false, false, false)))
   {
-#if KDE_IS_VERSION( 3, 1, 90 )
     mJob->addMetaData( "lf2crlf+dotstuff", "slave" );
-#endif
     KIO::Scheduler::assignJobToSlave(mSlave, mJob);
     connect(mJob, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
     connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),

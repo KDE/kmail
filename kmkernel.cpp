@@ -1710,7 +1710,6 @@ void KMKernel::slotEmptyTrash()
   }
 }
 
-#if KDE_IS_VERSION( 3, 1, 92 )
 KConfig* KMKernel::config()
 {
   assert(mySelf);
@@ -1722,17 +1721,6 @@ KConfig* KMKernel::config()
   }
   return mySelf->mConfig;
 }
-#else
-KConfig *KMKernel::myConfig = 0;
-static KStaticDeleter<KConfig> myConfigSD;
-
-KConfig* KMKernel::config()
-{
-  if (!myConfig)
-    myConfig = myConfigSD.setObject(myConfig, new KConfig( "kmailrc"));
-  return myConfig;
-}
-#endif
 
 KMGroupware & KMKernel::groupware()
 {

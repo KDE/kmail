@@ -49,12 +49,7 @@ static const char configKeyDefaultIdentity[] = "Default Identity";
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
-#if KDE_IS_VERSION( 3, 1, 92 )
 #include <kuser.h>
-#else
-#include <pwd.h> // for struct pw;
-#include <unistd.h> // for getuid
-#endif
 
 #include <qregexp.h>
 
@@ -378,7 +373,6 @@ KMIdentity & IdentityManager::newFromExisting( const KMIdentity & other,
 }
 
 void IdentityManager::createDefaultIdentity() {
-#if KDE_IS_VERSION( 3, 1, 92 )
   KUser user;
   QString fullName = user.fullName();
 
@@ -393,15 +387,6 @@ void IdentityManager::createDefaultIdentity() {
       emailAddress = QString::null;
     }
   }
-#else
-  QString fullName, emailAddress;
-  if ( const struct passwd * pw = getpwuid( getuid() ) ) {
-    // extract possible full name from /etc/passwd
-    fullName = QString::fromLocal8Bit( pw->pw_gecos );
-    const int i = fullName.find(',');
-    if ( i > 0 ) fullName.truncate( i );
-  }
-#endif
   mShadowIdentities << KMIdentity( i18n("Default"), fullName, emailAddress );
   mShadowIdentities.last().setIsDefault( true );
   mShadowIdentities.last().setUoid( newUoid() );

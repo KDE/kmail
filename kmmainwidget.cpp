@@ -426,11 +426,7 @@ void KMMainWidget::createWidgets(void)
   QWidget *headerParent = 0, *folderParent = 0,
             *mimeParent = 0, *messageParent = 0;
 
-#if KDE_IS_VERSION( 3, 1, 92 )
   const bool opaqueResize = KGlobalSettings::opaqueResize();
-#else
-  const bool opaqueResize = true;
-#endif
   if ( mLongFolderList ) {
     // superior splitter: folder tree vs. rest
     // inferior splitter: headers vs. message vs. mime tree

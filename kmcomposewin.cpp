@@ -4306,7 +4306,6 @@ void KMEdit::spellcheck()
           this, SLOT (slotSpellResult (const QString&)));
 }
 
-#if KDE_IS_VERSION( 3, 1, 92 )
 void KMEdit::cut()
 {
   KEdit::cut();
@@ -4327,12 +4326,6 @@ void KMEdit::del()
   if ( textFormat() != Qt::RichText )
     mSpellChecker->restartBackgroundSpellCheck();
 }
-#else
-// can't #ifdef slots :-(
-void KMEdit::cut() { KEdit::cut(); }
-void KMEdit::clear() { KEdit::clear(); }
-void KMEdit::del() { KEdit::del(); }
-#endif
 
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
@@ -4468,10 +4461,8 @@ void KMEdit::slotSpellDone()
   {
       if( mSpellLineEdit )
           spellcheck();
-#if KDE_IS_VERSION( 3, 1, 90 )
       else if( status == KSpell::FinishedNoMisspellingsEncountered )
           KMessageBox::information( topLevelWidget(),
                                     i18n("No misspellings encountered.") );
-#endif
   }
 }
