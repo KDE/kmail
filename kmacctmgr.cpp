@@ -362,8 +362,10 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   int x = 0;
   cur = mAcctList.first();
-  for(x=0; x < item; x++)
+  while (cur)
   {
+    if (cur->type() != QString("imap")) x++;
+    if (x > item) break;
     cur=mAcctList.next();
   }
 
