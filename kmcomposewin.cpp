@@ -847,8 +847,7 @@ void KMComposeWin::setupActions(void)
     attachMPK->setEnabled(false);
     encryptAction->setEnabled(false);
     signAction->setEnabled(false);
-  }
-
+  } else
   signAction->setChecked(mAutoPgpSign);
 
   createGUI("kmcomposerui.rc");
