@@ -172,7 +172,7 @@ public:
     mFolderToItem.remove( folder );
   }
 
-  /** Generate a popup menu that contains all folders */
+  /** Generate a popup menu that contains all folders that can have content */
   void folderToPopupMenu( bool move, QObject *receiver, KMMenuToFolder *, 
       QPopupMenu *menu, QListViewItem *start = 0 );
   

@@ -1654,9 +1654,15 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
   if ( !item )
     item = firstChild();
 
-  while( item ) 
+  while ( item ) 
   {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( item );
+    if ( fti->protocol() == KFolderTreeItem::Search )
+    {
+      // skip search folders
+      item = item->nextSibling();
+      continue;
+    }
     QString label = fti->text( 0 );
     label.replace( "&","&&" );
     if ( fti->firstChild() )
