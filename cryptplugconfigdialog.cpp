@@ -7,7 +7,6 @@
 
 #include "signatureconfigurationdialogimpl.h"
 #include "encryptionconfigurationdialogimpl.h"
-#include "directoryservicesconfigurationdialogimpl.h"
 
 #include <cryptplugwrapper.h>
 
@@ -37,9 +36,6 @@ CryptPlugConfigDialog::CryptPlugConfigDialog( CryptPlugWrapper * wrapper,
 		 false /* no <hr> */, i18n("Start Certificate &Manager") ),
   mWrapper( wrapper ), mPluginNumber( plugno )
 {
-  //    addVBoxPage( i18n("Directory Services") )
-  mDirServiceTab = new DirectoryServicesConfigurationDialogImpl( this );
-  mDirServiceTab->hide();
   mSignatureTab = new SignatureConfigurationDialogImpl( addVBoxPage( i18n("&Signature Configuration") ) );
   mSignatureTab->layout()->setMargin( 0 );
   mEncryptionTab = new EncryptionConfigurationDialogImpl( addVBoxPage( i18n("&Encryption Configuration") ) );
@@ -273,64 +269,6 @@ void CryptPlugConfigDialog::slotOk() {
   mWrapper->setCheckEncryptionCertificatePathToRoot( checkToRoot );
   config->writeEntry( "CheckEncryptCertToRoot", checkToRoot );
 
-  // The directory services tab - everything here needs to be written both
-  // into config and into the crypt plug wrapper.
-
-  uint numDirServers = mDirServiceTab->x500LV->childCount();
-  CryptPlugWrapper::DirectoryServer* servers = new CryptPlugWrapper::DirectoryServer[numDirServers];
-  config->writeEntry( "NumDirServers", numDirServers );
-  QListViewItemIterator lvit( mDirServiceTab->x500LV );
-  QListViewItem* current;
-  int pos = 0;
-  while( ( current = lvit.current() ) ) {
-    ++lvit;
-    const char* servername = current->text( 0 ).utf8();
-    int port = current->text( 1 ).toInt();
-    const char* description = current->text( 2 ).utf8();
-    servers[pos].servername = new char[strlen( servername )+1];
-    strcpy( servers[pos].servername, servername );
-    servers[pos].port = port;
-    servers[pos].description = new char[strlen( description)+1];
-    strcpy( servers[pos].description, description );
-    config->writeEntry( QString( "DirServer%1Name" ).arg( pos ),
-			current->text( 0 ) );
-    config->writeEntry( QString( "DirServer%1Port" ).arg( pos ),
-			port );
-    config->writeEntry( QString( "DirServer%1Descr" ).arg( pos ),
-			current->text( 2 ) );
-    pos++;
-  }
-  mWrapper->setDirectoryServers( servers, numDirServers );
-  for( uint i = 0; i < numDirServers; i++ ) {
-    delete[] servers[i].servername;
-    delete[] servers[i].description;
-  }
-  delete[] servers;
-
-  // Local/Remote Certificates group box
-  if( mDirServiceTab->firstLocalThenDSCertRB->isChecked() ) {
-    mWrapper->setCertificateSource( CertSrc_ServerLocal );
-    config->writeEntry( "CertSource", CertSrc_ServerLocal );
-  } else if( mDirServiceTab->localOnlyCertRB->isChecked() ) {
-    mWrapper->setCertificateSource( CertSrc_Local );
-    config->writeEntry( "CertSource", CertSrc_Local );
-  } else {
-    mWrapper->setCertificateSource( CertSrc_Server );
-    config->writeEntry( "CertSource", CertSrc_Server );
-  }
-
-  // Local/Remote CRLs group box
-  if( mDirServiceTab->firstLocalThenDSCRLRB->isChecked() ) {
-    mWrapper->setCRLSource( CertSrc_ServerLocal );
-    config->writeEntry( "CRLSource", CertSrc_ServerLocal );
-  } else if( mDirServiceTab->localOnlyCRLRB->isChecked() ) {
-    mWrapper->setCRLSource( CertSrc_Local );
-    config->writeEntry( "CRLSource", CertSrc_Local );
-  } else {
-    mWrapper->setCRLSource( CertSrc_Server );
-    config->writeEntry( "CRLSource", CertSrc_Server );
-  }
-
   accept();
 }
 
@@ -342,7 +280,6 @@ void CryptPlugConfigDialog::setPluginInformation() {
   // according to the plugin capabilities.
   mSignatureTab->enableDisable( mWrapper );
   mEncryptionTab->enableDisable( mWrapper );
-  mDirServiceTab->enableDisable( mWrapper );
 
   // Fill the fields of the tab pages with the data from
   // the current plugin.
@@ -511,50 +448,6 @@ void CryptPlugConfigDialog::setPluginInformation() {
   else
     mEncryptionTab->pathMayEndLocallyCB->setChecked( true );
 
-  // Directory Services tab page
-
-  int numServers;
-  CryptPlugWrapper::DirectoryServer* servers = mWrapper->directoryServers( &numServers );
-  if( servers ) {
-    QListViewItem* previous = 0;
-    for( int i = 0; i < numServers; i++ ) {
-      previous = new QListViewItem( mDirServiceTab->x500LV,
-				    previous,
-				    QString::fromUtf8( servers[i].servername ),
-				    QString::number( servers[i].port ),
-				    QString::fromUtf8( servers[i].description ) );
-    }
-  }
-
-  // Local/Remote Certificates group box
-  switch( mWrapper->certificateSource() ) {
-  case CertSrc_ServerLocal:
-    mDirServiceTab->firstLocalThenDSCertRB->setChecked( true );
-    break;
-  case CertSrc_Local:
-    mDirServiceTab->localOnlyCertRB->setChecked( true );
-    break;
-  case CertSrc_Server:
-    mDirServiceTab->dsOnlyCertRB->setChecked( true );
-    break;
-  default:
-    kdDebug( 5006 ) << "Unknown certificate source" << endl;
-  }
-
-  // Local/Remote CRL group box
-  switch( mWrapper->crlSource() ) {
-  case CertSrc_ServerLocal:
-    mDirServiceTab->firstLocalThenDSCRLRB->setChecked( true );
-    break;
-  case CertSrc_Local:
-    mDirServiceTab->localOnlyCRLRB->setChecked( true );
-    break;
-  case CertSrc_Server:
-    mDirServiceTab->dsOnlyCRLRB->setChecked( true );
-    break;
-  default:
-    kdDebug( 5006 ) << "Unknown certificate source" << endl;
-  }
 }
 
 void CryptPlugConfigDialog::slotStartCertManager() {

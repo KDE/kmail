@@ -42,7 +42,6 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		csshelper.cpp klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
-		directoryservicesconfigurationdialog.ui \
 		actionscheduler.cpp messageproperty.cpp \
 		kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp kmdict.cpp \
@@ -63,9 +62,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		accountdialog.cpp kmfldsearch.cpp vcardviewer.cpp \
 		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
-		directoryservicesconfigurationdialogimpl.cpp \
-		adddirectoryservicedialog.ui  \
-		adddirectoryservicedialogimpl.cpp kmmimeparttree.cpp \
+		kmmimeparttree.cpp \
 		certificatehandlingdialog.ui \
 		certificatehandlingdialogimpl.cpp \
 		certificatewizard.ui certificatewizardimpl.cpp \

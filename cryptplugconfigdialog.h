@@ -8,7 +8,6 @@ class CryptPlugWrapper;
 
 class SignatureConfigurationDialogImpl;
 class EncryptionConfigurationDialogImpl;
-class DirectoryServicesConfigurationDialogImpl;
 
 class CryptPlugConfigDialog : public KDialogBase {
   Q_OBJECT
@@ -29,7 +28,6 @@ protected:
 protected:
   SignatureConfigurationDialogImpl * mSignatureTab;
   EncryptionConfigurationDialogImpl * mEncryptionTab;
-  DirectoryServicesConfigurationDialogImpl * mDirServiceTab;
 
   CryptPlugWrapper * mWrapper;
   int mPluginNumber;
