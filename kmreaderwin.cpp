@@ -69,7 +69,7 @@
 #include <kurl.h>
 #include <kmimemagic.h>
 #include <kmimetype.h>
-		    		    
+		    		
 // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
 
@@ -111,7 +111,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
-  connect( &mResizeTimer, SIGNAL(timeout()), 
+  connect( &mResizeTimer, SIGNAL(timeout()),
   	   this, SLOT(slotDelayedResize()) );
 
   mCodec = 0;
@@ -215,7 +215,7 @@ void KMReaderWin::readConfig(void)
 #ifndef KRN
   int i, diff;
   fntSize = 0;
-  
+
   config->setGroup("Fonts");
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
@@ -271,7 +271,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
 QString KMReaderWin::quoteFontTag( int quoteLevel )
 {
   KConfig &config = *kapp->config();
- 
+
   QColor color;
   config.setGroup("Reader");
   if( config.readBoolEntry( "defaultColors", true ) == true )
@@ -306,7 +306,7 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
     else if( quoteLevel == 1 )
       font  = kstrToFont(config.readEntry( "quote2-font", defaultFont ) );
     else if( quoteLevel == 2 )
-      font  = kstrToFont(config.readEntry( "quote3-font", defaultFont ) );    
+      font  = kstrToFont(config.readEntry( "quote3-font", defaultFont ) );
     else
     {
       font = KGlobalSettings::generalFont();
@@ -328,7 +328,7 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
 
-  // Espen 2000-05-14: Getting rid of thick ugly frames 
+  // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
 
   connect(mViewer->browserExtension(),
@@ -423,9 +423,9 @@ void KMReaderWin::clearCache()
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if (mMsgBuf && mMsg && 
-      !mMsg->msgIdMD5().isEmpty() && 
-      (mMsgBufMD5 == mMsg->msgIdMD5()) && 
+  if (mMsgBuf && mMsg &&
+      !mMsg->msgIdMD5().isEmpty() &&
+      (mMsgBufMD5 == mMsg->msgIdMD5()) &&
       ((unsigned)mMsgBufSize == mMsg->msgSize()))
     return;
 
@@ -484,23 +484,23 @@ void KMReaderWin::parseMsg(void)
 		 "</style></head><body " +
 		 // TODO: move these to stylesheet, too:
                  QString(" text=\"#%1\"").arg(colorToString(c1)) +
-  		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) + 
+  		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) +
                  bkgrdStr + ">" );
 
   if( mAutoDetectEncoding ) {
-      printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
+  //  printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
       QString encoding = mMsg->charset();
       if( encoding.isEmpty() )
 	  encoding = "iso8859-1";
       mCodec = KGlobal::charsets()->codecForName( encoding );
-      if( !mCodec )
-	  mCodec = KGlobal::charsets()->codecForName( "iso8859-1" );
-      if(mViewer) mViewer->setCharset( mCodec->name(), true );
   }
+  if( !mCodec )
+      mCodec = KGlobal::charsets()->codecForName( "iso8859-1" );
+  if(mViewer) mViewer->setCharset( mCodec->name(), true );
 
   if( !parent() )
       setCaption( mCodec->toUnicode( mMsg->subject() ) );
-  
+
   parseMsg(mMsg);
 
   mViewer->write("</body></html>");
@@ -531,7 +531,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
        && !stricmp(msgPart.subtypeStr(), "x-vcard")) {
         int vcerr;
         vc = VCard::parseVCard(msgPart.body(), &vcerr);
- 
+
         if (vc) {
           delete vc;
           kdDebug() << "FOUND A VALID VCARD" << endl;
@@ -563,14 +563,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
           mViewer->write(str);              // write it...
           return;                           // return, finshed.
         }
-	else if (!htmlMail() && (stricmp(subtype, "plain")==0))    
+	else if (!htmlMail() && (stricmp(subtype, "plain")==0))
 	                                    // wasn't html show only if
 	{                                   // support for html is turned off
           str = QString(msgPart.bodyDecoded());      // decode it...
           writeBodyStr(str);
           return;
 	}
-      }                                     
+      }
       // if we are here we didnt find any html part. Handle it normaly then
     }
     // This works only for alternative msgs without attachments. Alternative
@@ -673,7 +673,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
       int c = 0;
       while ((c = vcFileName.find('"', c)) >= 0)
         vcFileName.remove(c, 1);
- 
+
       c = 0;
       while ((c = vcFileName.find('\'', c)) >= 0)
         vcFileName.remove(c, 1);
@@ -905,7 +905,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
       }
 
       tmpStr += line + "<br>\n";
-      if( (newlineCount % 100) == 0 ) 
+      if( (newlineCount % 100) == 0 )
       {
 	htmlStr += tmpStr;
 	if (currQuoteLevel >= 0)
@@ -929,13 +929,13 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	{
 	  currQuoteLevel += 1;
 	}
-      } 
+      }
       else
       {
 	atStartOfLine = FALSE;
       }
     }
-    
+
     pos++;
   }
 
@@ -1180,7 +1180,7 @@ int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
     int i = num.find('/');
     if (i > 0)
        num = num.left(i);
-    
+
     return num.toInt();
   }
   return -1;
@@ -1193,7 +1193,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
   if( !mResizeTimer.isActive() )
   {
     //
-    // Combine all resize operations that are requested as long a 
+    // Combine all resize operations that are requested as long a
     // the timer runs.
     //
     mResizeTimer.start( 100, true );
@@ -1258,7 +1258,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   KURL url( aUrl );
 
   int id = msgPartFromUrl(url);
-  if (id <= 0) 
+  if (id <= 0)
   {
     emit popupMenu(url, aPos);
   }
@@ -1326,25 +1326,33 @@ void KMReaderWin::slotAtmView()
         KMDisplayVCard *vcdlg;
         int vcerr;
         VCard *vc = VCard::parseVCard(msgPart.body(), &vcerr);
- 
+
         if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
           errstring += VCard::getError(vcerr);
           KMessageBox::error(this, i18n(errstring), i18n("vCard error"));
           return;
         }
- 
+
         vcdlg = new KMDisplayVCard(vc);
         vcdlg->show();
         return;
       }
+      win->readConfig();
+      win->setCodec( mCodec );
       win->mViewer->begin( KURL( "file:/" ) );
-      win->mViewer->write("<html><body>");
+      win->mViewer->write("<html><head><style type=\"text/css\">" +
+		 QString("a { color: #%1;").arg(colorToString(c2)) +
+		 "text-decoration: none; }" + // just playing
+		 "</style></head><body " +
+                 QString(" text=\"#%1\"").arg(colorToString(c1)) +
+  		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) + ">" );
+      
       QString str = msgPart.bodyDecoded();
       if (htmlMail() && (stricmp(msgPart.subtypeStr(), "html")==0))  // HTML
         win->mViewer->write(str);
       else  // plain text
-        win->writeBodyStr(str);
+	win->writeBodyStr(str);
       win->mViewer->write("</body></html>");
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
@@ -1464,7 +1472,7 @@ void KMReaderWin::slotAtmOpen()
   } else {					// Cancel
     kdDebug() << "Cancelled opening attachment" << endl;
   }
-  
+
 }
 
 
@@ -1473,7 +1481,7 @@ void KMReaderWin::slotAtmOpenWith()
 {
   // It makes sense to have an extra "Open with..." entry in the menu
   // so the user can change filetype associations.
-  
+
   KMMessagePart msgPart;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
@@ -1501,7 +1509,7 @@ QString KMReaderWin::getAtmFilename(QString pname, QString msgpartname) {
   c = 0;
   while ((c = fileName.find('\'', c)) >= 0)
     fileName.remove(c, 1);
-    
+
   return fileName;
 }
 
