@@ -173,7 +173,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   int i = 1;
   while (mFolders.at(i - 1) != mFolders.end()) {
     curFolder = *mFolders.at(i - 1);
-    if (curFolder->isSystemFolder() && curFolder->protocol() != "imap") {
+    if (curFolder->isSystemFolder() && curFolder->protocol() != "imap" &&
+	curFolder->protocol() != "cachedimap")
+    {
       mFolders.remove(mFolders.at(i-1));
       str.remove(str.at(i));
     } else
@@ -325,7 +327,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     if (curFolder->child() == aFolderDir) {
       fileInFolder->setCurrentItem( i );
       slotUpdateItems( i );
-    }
+    }	
   }
 
 //   hl = new QHBoxLayout();
@@ -435,7 +437,8 @@ void KMFolderDialog::slotUpdateItems ( int current )
   KMFolder* selectedFolder = 0;
   // check if the index is valid (the top level has no entrance in the mFolders)
   if (current > 0) selectedFolder = *mFolders.at(current - 1);
-  if (selectedFolder && selectedFolder->protocol() == "imap")
+  if (selectedFolder && (selectedFolder->protocol() == "imap" ||
+			 selectedFolder->protocol() == "cachedimap"))
   {
     // deactivate stuff that is not available for imap
     mtGroup->setEnabled( false );
@@ -528,14 +531,19 @@ void KMFolderDialog::slotOk()
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
-      }
+      }	
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
-      if (folder->parent() != selectedFolderDir)
-        folder->rename(fldName, selectedFolderDir );
-      else
+      if (folder->parent() != selectedFolderDir) {
+	if (folder->protocol() == "cachedimap") {
+	  QString message = i18n("Moving IMAP folders is not supported");
+	  KMessageBox::error( this, message );
+	} else
+	  folder->rename(fldName, selectedFolderDir );
+      } else
         folder->rename(fldName);
+
       kernel->folderMgr()->contentsChanged();
     }
   }
