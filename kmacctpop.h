@@ -65,7 +65,7 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool interactive);
-
+  virtual void pseudoAssign(KMAccount*);
   
 protected:
   friend class KMAcctMgr;

@@ -1031,6 +1031,8 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   setHelp( "kmail/kmail.html", QString::null );
   setIconListAllVisible( true );
   enableButton( Default, false ); 
+  connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancelOrClose() ));
+  connect( this, SIGNAL( closeClicked() ), this, SLOT( slotCancelOrClose() ));
 
   makeIdentityPage();
   makeNetworkPage();
@@ -2083,10 +2085,28 @@ void ConfigureDialog::slotDefault( void )
   KMessageBox::sorry( this, i18n( "This feature is not working yet." ) );
 }
 
+void ConfigureDialog::slotCancelOrClose( void )
+{
+  QValueList< QGuardedPtr<KMAccount> >::Iterator it; 
+  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
+    delete *it;
+  QValueList<mModifiedAccountsType*>::Iterator j;
+  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j ) {
+    delete (*j)->newAccount;
+    delete (*j);
+  }
+
+  mAccountsToDelete.clear();
+  mNewAccounts.clear();
+  mModifiedAccounts.clear();
+}
 
 void ConfigureDialog::slotOk( void )
 {
   slotApply();
+  mModifiedAccounts.clear();
+  mAccountsToDelete.clear();  
+  mNewAccounts.clear();
   accept();
 }
 
@@ -2129,6 +2149,26 @@ void ConfigureDialog::slotApply( void )
 
     // Incoming mail
     kernel->acctMgr()->writeConfig(FALSE);
+
+    // Add accounts marked as new
+    QValueList< QGuardedPtr<KMAccount> >::Iterator it;
+    for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
+      kernel->acctMgr()->add( *it );
+    mNewAccounts.clear();
+
+    // Update accounts that have been modified
+    QValueList<mModifiedAccountsType*>::Iterator j;
+    for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
+      (*j)->oldAccount->pseudoAssign( (*j)->newAccount );
+    mModifiedAccounts.clear();
+
+    // Delete accounts marked for deletion
+    for (it = mAccountsToDelete.begin(); it != mAccountsToDelete.end(); ++it )
+      if ((it == 0) || (!kernel->acctMgr()->remove(*it)))
+        KMessageBox::sorry( this, 
+			    i18n("Unable to locate account ") + (*it)->name() );
+    mAccountsToDelete.clear();
+
   }
   else if( activePage == mAppearance.pageIndex )
   {
@@ -2665,7 +2705,31 @@ void ConfigureDialog::slotAccountSelected( void )
   mNetwork.removeAccountButton->setEnabled( true );
 }
 
+QStringList ConfigureDialog::occupiedNames( void )
+{
+  QStringList accountNames = kernel->acctMgr()->getAccounts();
 
+  QValueList<mModifiedAccountsType*>::Iterator k;
+  for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
+    if ((*k)->oldAccount)
+      accountNames.remove( (*k)->oldAccount->name() );
+  
+  QValueList< QGuardedPtr<KMAccount> >::Iterator l; 
+  for (l = mAccountsToDelete.begin(); l != mAccountsToDelete.end(); ++l )
+    if (*l)
+      accountNames.remove( (*l)->name() );
+
+  QValueList< QGuardedPtr<KMAccount> >::Iterator it; 
+  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
+    if (*it)
+      accountNames += (*it)->name();
+  
+  QValueList<mModifiedAccountsType*>::Iterator j;
+  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
+    accountNames += (*j)->newAccount->name();
+
+  return accountNames;
+}
 
 void ConfigureDialog::slotAddAccount( void )
 {
@@ -2707,18 +2771,33 @@ void ConfigureDialog::slotAddAccount( void )
 
   AccountDialog *dialog = new AccountDialog( account, identityStrings(), this);
   dialog->setCaption( i18n("Add account") );
+
+  QStringList accountNames = occupiedNames();
+
   if( dialog->exec() == QDialog::Accepted )
   {
-    QListViewItem *listItem = 
-      new QListViewItem(mNetwork.accountList,account->name(),account->type());
-    if( account->folder() ) 
-    {
-      listItem->setText( 2, account->folder()->name() );
+    QString accountName = account->name();
+    int suffix = 1;
+    while (accountNames.find( account->name() ) != accountNames.end()) {
+      account->setName( QString( "%1 %2" ).arg( accountName ).arg( suffix ));
+      ++suffix;
     }
+
+    QListViewItem *after = mNetwork.accountList->firstChild();
+    while (after && after->nextSibling())
+      after = after->nextSibling();
+
+    QListViewItem *listItem =
+      new QListViewItem(mNetwork.accountList, after, 
+			account->name(), account->type());
+    if( account->folder() ) 
+      listItem->setText( 2, account->folder()->name() );
+
+    mNewAccounts.append( account );
   }
   else
   {
-    kernel->acctMgr()->remove(account);
+    delete account;
   }
   delete dialog;
 }
@@ -2733,17 +2812,55 @@ void ConfigureDialog::slotModifySelectedAccount( void )
     return;
   }
 
-  KMAccount *account = kernel->acctMgr()->find( listItem->text(0) );
-  if( account == 0 )
-  {
-    KMessageBox::sorry( this, i18n("Unable to locate account") );
-    return;
+  KMAccount *account = 0;
+  QValueList<mModifiedAccountsType*>::Iterator j;
+  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
+    if ((*j)->newAccount->name() == listItem->text(0)) 
+    {
+      account = (*j)->newAccount;
+      break;
+    }
+
+  if (!account) {
+    QValueList< QGuardedPtr<KMAccount> >::Iterator it; 
+    for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
+      if ((*it)->name() == listItem->text(0)) 
+      {
+	account = *it;
+	break;
+      }
+
+    if (!account) {
+      account = kernel->acctMgr()->find( listItem->text(0) );
+
+      mModifiedAccountsType *mod = new mModifiedAccountsType;
+      mod->oldAccount = account;
+      mod->newAccount = kernel->acctMgr()->create(account->type(),account->name());
+      mod->newAccount->pseudoAssign(account);
+      mModifiedAccounts.append( mod );
+      account = mod->newAccount;
+    }
+
+    if( account == 0 )
+    {
+      KMessageBox::sorry( this, i18n("Unable to locate account") );
+      return;
+    }
   }
 
+  QStringList accountNames = occupiedNames();
+  accountNames.remove( account->name() );
   AccountDialog *dialog = new AccountDialog( account, identityStrings(), this);
   dialog->setCaption( i18n("Modify account") );
   if( dialog->exec() == QDialog::Accepted )
   {
+    QString accountName = account->name();
+    int suffix = 1;
+    while (accountNames.find( account->name() ) != accountNames.end()) {
+      account->setName( QString( "%1 %2" ).arg( accountName ).arg( suffix ));
+      ++suffix;
+    }
+
     listItem->setText( 0, account->name() );
     listItem->setText( 1, account->type() );
     if( account->folder() ) 
@@ -2763,16 +2880,34 @@ void ConfigureDialog::slotRemoveSelectedAccount( void )
   {
     return;
   }
-  
-  KMAccount *account = kernel->acctMgr()->find( listItem->text(0) );
-  if( account == 0 )
-  {
-    KMessageBox::sorry( this, i18n("Unable to locate account") );
-    return;
-  }
 
-  if( !kernel->acctMgr()->remove(account) )
+  KMAccount *acct = 0;
+  QValueList<mModifiedAccountsType*>::Iterator j;
+  for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
+    if ((*j)->newAccount->name() == listItem->text(0)) {
+      acct = (*j)->oldAccount;
+      mAccountsToDelete.append( acct );
+      mModifiedAccounts.remove( j );
+      break;
+    }
+  QValueList< QGuardedPtr<KMAccount> >::Iterator it; 
+  if (!acct) {
+    for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
+      if ((*it)->name() == listItem->text(0)) {
+	acct = *it;
+	mNewAccounts.remove( it );
+	break;
+      }
+  }
+  if (!acct) {
+    acct = kernel->acctMgr()->find( listItem->text(0) );
+    if (acct)
+      mAccountsToDelete.append( acct );
+  }
+  if ( acct == 0 )
   {
+    KMessageBox::sorry( this,  i18n("Unable to locate account ") 
+			+ listItem->text(0) );
     return;
   }
 
@@ -3209,7 +3344,6 @@ void IdentityList::exportData()
 
 
 
-
 void IdentityList::add( const IdentityEntry &entry )
 {
   if( get( entry.identity() ) != 0 )
@@ -3283,12 +3417,6 @@ void IdentityList::add( const QString &identity, QWidget *parent,
 }
 
 
-
-
-
-
-
-
 void IdentityList::update( const IdentityEntry &entry )
 {
   for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
@@ -3300,10 +3428,3 @@ void IdentityList::update( const IdentityEntry &entry )
     }
   }
 }
-
-
-
-
-
-
-

@@ -10,6 +10,7 @@
 #include <qvaluelist.h>
 #include <qtimer.h>
 #include <qsignal.h>
+#include <qguardedptr.h>
 #include "kmnewiostatuswdg.h"
 
 // The defualt check interval
@@ -39,9 +40,12 @@ public:
   /** Set intelligent default values to the fields of the account. */
   virtual void init(void) = 0;
 
+  // A weak assignment operator
+  virtual void pseudoAssign(KMAccount*) = 0;
+
   /** There can be exactly one folder that is fed by messages from an
     account. */
-  KMFolder* folder(void) const { return ((KMFolder*)mFolder); }
+  KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
   virtual void setFolder(KMFolder*);
 
   /** Process new mail for this account if one arrived. Returns TRUE if new
@@ -106,7 +110,7 @@ protected:
   QString       mName;
   QString       mPrecommand;
   KMAcctMgr*    mOwner;
-  KMAcctFolder* mFolder;
+  QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer, mReceiptTimer;
   int mInterval;
   bool mExclude;

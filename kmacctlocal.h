@@ -28,6 +28,7 @@ public:
   virtual void processNewMail(bool);
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
+  virtual void pseudoAssign(KMAccount*);
 
 protected:
   QString mLocation;

@@ -35,10 +35,12 @@ class KColorButton;
 class KFontChooser;
 class KpgpConfig;
 class ColorListBox;
+class KMAccount;
 
 #include <klistview.h>
 #include <kdialogbase.h>
-
+#include <qguardedptr.h>
+#include <qvaluelist.h>
 
 class NewIdentityDialog : public KDialogBase
 {
@@ -359,8 +361,10 @@ class ConfigureDialog : public KDialogBase
     void saveActiveIdentity( void );
     void setIdentityInformation( const QString &identityName );
     QStringList identityStrings( void );
+    QStringList occupiedNames( void );
 
   private slots:
+    void slotCancelOrClose( void );
     void slotNewIdentity( void );
     void slotRenameIdentity( void );
     void slotRemoveIdentity( void );
@@ -400,6 +404,14 @@ class ConfigureDialog : public KDialogBase
     MiscWidget       mMisc;
 
     IdentityList     mIdentityList;
+    QValueList<QGuardedPtr<KMAccount> > mAccountsToDelete;
+    QValueList<QGuardedPtr<KMAccount> > mNewAccounts;
+    struct mModifiedAccountsType
+    {
+      QGuardedPtr<KMAccount> oldAccount;
+      QGuardedPtr<KMAccount> newAccount;
+    };
+    QValueList<mModifiedAccountsType*> mModifiedAccounts;
 };
 
 

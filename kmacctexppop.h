@@ -76,7 +76,7 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool _interactive);
-
+  virtual void pseudoAssign(KMAccount*);
   
 protected:
   enum Stage { Idle, List, Uidl, Retr, Dele, Quit };

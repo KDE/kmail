@@ -44,6 +44,9 @@ public:
    the types "local" for local mail folders and "pop" are supported. */
   virtual KMAccount* create(const QString type, const QString name);
 
+  /** Adds an account to the list of accounts */
+  virtual void add(KMAccount *account);
+
   /** Find account by name. Returns NULL if account does not exist.
     Search is done case sensitive. */
   virtual KMAccount* find(const QString name);

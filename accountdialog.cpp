@@ -254,7 +254,7 @@ void AccountDialog::makePopAccountPage()
 
 void AccountDialog::setupSettings()
 {
-  QComboBox *folderCombo;
+  QComboBox *folderCombo = 0;
   int interval = mAccount->checkInterval();
 
   QString accountType = mAccount->type();
@@ -271,7 +271,7 @@ void AccountDialog::setupSettings()
     folderCombo = mLocal.folderCombo;
     //    mLocal.identityCombo->insertStringList( mIdentityList );
   }
-  else
+  else if( accountType == "pop" )
   {
     KMAcctPop &ap = *(KMAcctPop*)mAccount;
     mPop.nameEdit->setText( mAccount->name() );
@@ -292,6 +292,30 @@ void AccountDialog::setupSettings()
     folderCombo = mPop.folderCombo;
     //    mPop.identityCombo->insertStringList( mIdentityList );
   }
+  else if(( accountType == "advanced pop" ) ||
+	  ( accountType == "experimental pop" ))
+  {
+    KMAcctExpPop &ap = *(KMAcctExpPop*)mAccount;
+    mPop.nameEdit->setText( mAccount->name() );
+    mPop.loginEdit->setText( ap.login() );
+    mPop.passwordEdit->setText( ap.passwd());
+    mPop.hostEdit->setText( ap.host() );
+    mPop.portEdit->setText( QString("%1").arg( ap.port() ) ); 
+    mPop.useSSLCheck->setChecked( ap.useSSL() );
+    mPop.storePasswordCheck->setChecked( ap.storePasswd() );
+    mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
+    mPop.retriveAllCheck->setChecked( ap.retrieveAll() );
+    mPop.intervalCheck->setChecked( interval >= 1 );
+    mPop.intervalSpin->setValue( QMAX(1, interval) );
+    mPop.excludeCheck->setChecked( mAccount->checkExclude() );
+    mPop.precommand->setText( ap.precommand() );
+
+    slotEnablePopInterval( interval >= 1 );
+    folderCombo = mPop.folderCombo;
+    //    mPop.identityCombo->insertStringList( mIdentityList );
+  }
+  else // Unknown account type
+    return;
 
   KMFolderDir *fdir = (KMFolderDir*)&kernel->folderMgr()->dir();
   KMFolder *acctFolder = mAccount->folder();

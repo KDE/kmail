@@ -76,6 +76,27 @@ void KMAcctPop::init(void)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctPop::pseudoAssign(KMAccount* account)
+{
+  assert(account->type() == "pop");
+  KMAcctPop *acct = static_cast<KMAcctPop*>(account);
+  setName(acct->name());
+  setCheckInterval(acct->checkInterval());
+  setCheckExclude(acct->checkExclude());
+  setFolder(acct->folder());
+  setHost(acct->host());
+  setPort(acct->port());
+  setLogin(acct->login());
+  setPasswd(acct->passwd());
+  setUseSSL(acct->useSSL());
+  setStorePasswd(acct->storePasswd());
+  setPasswd(acct->passwd());
+  setLeaveOnServer(acct->leaveOnServer());
+  setRetrieveAll(acct->retrieveAll());
+  setPrecommand(acct->precommand());
+}
+
+//-----------------------------------------------------------------------------
 void KMAcctPop::processNewMail(bool interactive)
 {
   void (*oldHandler)(int);

@@ -63,6 +63,19 @@ void KMAcctLocal::init(void)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctLocal::pseudoAssign(KMAccount *account)
+{
+  assert(account->type() == "local");
+  KMAcctLocal *acct = static_cast<KMAcctLocal*>(account);
+  setName(acct->name());
+  setLocation(acct->location());
+  setCheckInterval(acct->checkInterval());
+  setCheckExclude(acct->checkExclude());
+  setFolder(acct->folder());
+  setPrecommand(acct->precommand());
+}
+
+//-----------------------------------------------------------------------------
 void KMAcctLocal::processNewMail(bool)
 {
   QTime t; 
@@ -74,7 +87,7 @@ void KMAcctLocal::processNewMail(bool)
   bool addedOk;
 
   hasNewMail = false;
-  if (mFolder==NULL) {
+  if (!mFolder) {
     emit finishedCheck(hasNewMail);
     return;
   }

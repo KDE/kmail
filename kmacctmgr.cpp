@@ -100,6 +100,7 @@ void KMAcctMgr::readConfig(void)
     acctName = config->readEntry("Name");
     acct = create(acctType, acctName);
     if (!acct) continue;
+    add(acct);
     acct->readConfig(*config);
   }
 }
@@ -158,12 +159,17 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
     act = new KMAcctExpPop(this, aName);
 
   if (act) 
-  {
-    mAcctList.append(act);
     act->setFolder(kernel->inboxFolder());
-  }
 
   return act;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctMgr::add(KMAccount *account) 
+{
+  if (account)
+    mAcctList.append(account);
 }
 
 
