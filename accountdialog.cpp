@@ -309,7 +309,8 @@ void AccountDialog::setupSettings()
     for( KMFolder *folder = (KMFolder*)fdir->first(); folder != 0;
 	 folder = (KMFolder*)fdir->next() )
     {
-      if( folder->isDir() || folder->isSystemFolder() ) 
+      if( folder->isDir() || 
+	  (folder->isSystemFolder() && (folder->name() != "inbox" ))) 
       {
 	continue;
       }
