@@ -674,11 +674,11 @@ void AccountDialog::makeImapAccountPage()
   grid->addMultiCellWidget( mImap.hiddenFoldersCheck, 8, 8, 0, 1 );
 
   mImap.subscribedFoldersCheck = new QCheckBox(
-    i18n("Show &only subscribed folders"), page1);
+    i18n("Sho&w only subscribed folders"), page1);
   grid->addMultiCellWidget( mImap.subscribedFoldersCheck, 9, 9, 0, 1 );
 
   mImap.excludeCheck =
-    new QCheckBox( i18n("Exclude from \"Check Mail\""), page1 );
+    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
   grid->addMultiCellWidget( mImap.excludeCheck, 10, 10, 0, 1 );
 
   mImap.intervalCheck =
