@@ -425,7 +425,7 @@ void KMReaderWin::updateReaderWin()
 
     if (mBackingPixmapOn)
       mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
-    mViewer->write("></body></html>");
+    mViewer->write(QString("></body></html>"));
     mViewer->end();
   }
 
@@ -468,7 +468,7 @@ void KMReaderWin::parseMsg(void)
 
   parseMsg(mMsg);
 
-  mViewer->write("</body></html>");
+  mViewer->write(QString("</body></html>"));
   mViewer->end();
 }
 
@@ -573,7 +573,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	if ((type == "") || (stricmp(type, "text")==0))
 	{
 	  str = QString(msgPart.bodyDecoded());
-	  if (i>0) mViewer->write("<br><hr><br>");
+	  if (i>0) mViewer->write(QString("<br><hr><br>"));
 
 	  if (htmlMail() && (stricmp(subtype, "html")==0))
           {
@@ -659,7 +659,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (vcpartnum >= 0) {
       mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("<br>\n");
+    mViewer->write(QString("<br>\n"));
     break;
 
   case HdrStandard:
@@ -670,7 +670,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (vcpartnum >= 0) {
       mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("<br>\n");
+    mViewer->write(QString("<br>\n"));
     mViewer->write(i18n("To: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
     if (!mMsg->cc().isEmpty())
@@ -681,7 +681,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
         mViewer->write(i18n("References: ") +
                        KMMessage::refsAsAnchor(mMsg->references()) + "<br>");
 #endif
-    mViewer->write("<br>");
+    mViewer->write(QString("<br>"));
     break;
 
   case HdrFancy:
@@ -694,7 +694,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (vcpartnum >= 0) {
       mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("<br>\n");
+    mViewer->write(QString("<br>\n"));
     mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
     if (!mMsg->cc().isEmpty())
@@ -707,7 +707,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
         mViewer->write(i18n("References: ") +
                        KMMessage::refsAsAnchor(mMsg->references()) + "<br><br>\n");
 #endif
-    mViewer->write("</b></td></tr></table><br>\n");
+    mViewer->write(QString("</b></td></tr></table><br>\n"));
     break;
 
   case HdrLong:
@@ -719,7 +719,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (vcpartnum >= 0) {
       mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("<br>\n");
+    mViewer->write(QString("<br>\n"));
     mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
     if (!mMsg->cc().isEmpty())
@@ -738,23 +738,23 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (!mMsg->groups().isEmpty())
         mViewer->write(i18n("Groups: ") + mMsg->groups()+"<br>\n");
 #endif
-    mViewer->write("<br>\n");
+    mViewer->write(QString("<br>\n"));
     break;
 
   case HdrAll:
     str = strToHtml(mMsg->headerAsString());
     mViewer->write(str);
-    mViewer->write("\n<br>\n");
+    mViewer->write(QString("\n<br>\n"));
     if (vcpartnum >= 0) {
       mViewer->write("<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("\n<br>\n");
+    mViewer->write(QString("\n<br>\n"));
     break;
 
   default:
     warning("Unsupported header style %d", mHeaderStyle);
   }
-  mViewer->write("<br>\n");
+  mViewer->write(QString("<br>\n"));
 }
 
 
@@ -1301,13 +1301,13 @@ void KMReaderWin::slotAtmView()
         return;
       }
       win->mViewer->begin( KURL( "file:/" ) );
-      win->mViewer->write("<html><body>");
+      win->mViewer->write(QString("<html><body>"));
       QString str = msgPart.bodyDecoded();
       if (htmlMail() && (stricmp(msgPart.subtypeStr(), "html")==0))  // HTML
         win->mViewer->write(str);
       else  // plain text
         win->writeBodyStr(str);
-      win->mViewer->write("</body></html>");
+      win->mViewer->write(QString("</body></html>"));
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
@@ -1330,10 +1330,10 @@ void KMReaderWin::slotAtmView()
       }
       // Just write the img tag to HTML:
       win->mViewer->begin( KURL( "file:/" ) );
-      win->mViewer->write("<html><body>");
+      win->mViewer->write(QString("<html><body>"));
       QString linkName = QString("<img src=\"file:%1\" border=0>").arg(fileName);
       win->mViewer->write(linkName.data());
-      win->mViewer->write("</body></html>");
+      win->mViewer->write(QString("</body></html>"));
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
