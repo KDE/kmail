@@ -316,14 +316,14 @@ namespace KMail {
     if ( email.isEmpty() || atCount == 0 )
       KMessageBox::sorry( this, "<qt>"+
                           i18n("Your email address is not valid because it "
-                               "doesn't contain a <emph>@</emph>. "
+                               "doesn't contain a <strong>@</strong>. "
                                "You won't create valid messages if you don't "
                                "change your address.") + "</qt>",
                           i18n("Invalid Email Address") );
     else if ( atCount > 1 ) {
       KMessageBox::sorry( this, "<qt>" +
                           i18n("Your email address is not valid because it "
-                               "contains more than one <emph>@</emph>. "
+                               "contains more than one <strong>@</strong>. "
                                "You won't create valid messages if you don't "
                                "change your address.") + "</qt>",
                           i18n("Invalid Email Address") );
