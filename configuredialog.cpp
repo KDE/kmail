@@ -849,9 +849,22 @@ void ConfigureDialog::makeAppearancePage( void )
     new QCheckBox( i18n("Display message sizes"), page3 );
   vlay->addWidget( mAppearance.messageSizeCheck );
 
-  mAppearance.nestedMessagesCheck =
+   mAppearance.nestedMessagesCheck =
     new QCheckBox( i18n("Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
+
+  QButtonGroup *threadGroup = new QButtonGroup( i18n("Message header threading options"), page3 );
+  vlay->addWidget( threadGroup );
+  QVBoxLayout * vthread = new QVBoxLayout( threadGroup, spacingHint() );
+  vthread->addSpacing( fontMetrics().lineSpacing() );
+  mAppearance.rdAlwaysOpen = new QRadioButton( i18n("Always keep threads open"), threadGroup );
+  vthread->addWidget( mAppearance.rdAlwaysOpen );
+  mAppearance.rdDefaultOpen = new QRadioButton( i18n("Threads default to open"), threadGroup );
+  vthread->addWidget( mAppearance.rdDefaultOpen );
+  mAppearance.rdDefaultClosed = new QRadioButton( i18n("Threads default to closed"), threadGroup );
+  vthread->addWidget( mAppearance.rdDefaultClosed );
+  mAppearance.rdUnreadOpen = new QRadioButton( i18n("Open threads that contain new or unread messages"), threadGroup );
+  vthread->addWidget( mAppearance.rdUnreadOpen );
 
   QButtonGroup *group = new QButtonGroup( i18n("HTML"), page3 );
   vlay->addWidget( group );
@@ -1499,6 +1512,24 @@ void ConfigureDialog::setupAppearancePage( void )
   state = config.readBoolEntry( "nestedMessages", false );
   mAppearance.nestedMessagesCheck->setChecked( state );
 
+  switch( config.readNumEntry( "nestingPolicy", 3 ) )
+  {
+  case 0:
+     mAppearance.rdAlwaysOpen->setChecked( true );
+     break;
+  case 1:
+     mAppearance.rdDefaultOpen->setChecked( true );
+     break;
+  case 2:
+     mAppearance.rdDefaultClosed->setChecked( true );
+     break;
+  case 3:
+     mAppearance.rdUnreadOpen->setChecked( true );
+     break;
+  default:
+     mAppearance.rdUnreadOpen->setChecked( true );
+     break;
+  }
   config.setGroup("Reader");
   state = config.readBoolEntry( "htmlMail", false );
   mAppearance.htmlMailCheck->setChecked( !state );
@@ -1955,6 +1986,16 @@ void ConfigureDialog::slotDoApply( bool everything )
 
     bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
     config.writeEntry( "nestedMessages", nestedMessages );
+
+    int threadPolicy = 3;
+    if( mAppearance.rdAlwaysOpen->isChecked() )
+       threadPolicy = 0;
+    else if( mAppearance.rdDefaultOpen->isChecked() )
+       threadPolicy = 1;
+    else if( mAppearance.rdDefaultClosed->isChecked() )
+       threadPolicy = 2;
+
+    config.writeEntry( "nestingPolicy", threadPolicy );
 
     config.setGroup("Reader");
     bool htmlMail = mAppearance.htmlMailCheck->isChecked();

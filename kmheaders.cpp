@@ -120,6 +120,11 @@ public:
     KMMsgStatus flag;
     QString fromStr, subjStr;
     KMMsgBase *mMsgBase = mFolder->getMsgBase( mMsgId );
+    KMHeaderItem * topOfThread = this;
+    int threadingPolicy = ((KMHeaders*)listView())->getNestingPolicy();
+    while(topOfThread->parent())
+    	topOfThread = (KMHeaderItem*)topOfThread->parent();
+
     if(mMsgBase==NULL)
        return;
 
@@ -147,15 +152,20 @@ public:
       setText( mPaintInfo->sizeCol, QString( "%1" ).arg( mMsgBase->msgSize()));
 
     mColor = &mPaintInfo->colFore;
+
     switch (flag)
     {
     case KMMsgStatusNew:
       setPixmap( 0, *KMHeaders::pixNew );
       mColor = &mPaintInfo->colNew;
+      if(threadingPolicy==3)
+         threadingPolicy=1;
       break;
     case KMMsgStatusUnread:
       setPixmap( 0, *KMHeaders::pixUns );
       mColor = &mPaintInfo->colUnread;
+      if(threadingPolicy==3)
+         threadingPolicy=1;
       break;
     case KMMsgStatusDeleted:
       setPixmap( 0, *KMHeaders::pixDel );
@@ -176,6 +186,9 @@ public:
       setPixmap( 0, *KMHeaders::pixOld );
       break;
     };
+
+    if(threadingPolicy < 2)
+       topOfThread->setOpen( true );
 
     mSortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
 
@@ -205,6 +218,21 @@ public:
     mColor = c;
     repaint();
   }
+  //Opens all children in the thread
+  void setOpen( bool open )
+  {
+  	if(open){
+		QListViewItem * lvchild;
+        lvchild = firstChild();
+        while(lvchild){
+        	lvchild->setOpen( true );
+            lvchild = lvchild->nextSibling();
+		}
+		QListViewItem::setOpen( true );
+	}else
+		QListViewItem::setOpen( false );
+  }
+
 
   void paintCell( QPainter * p, const QColorGroup & cg,
 				int column, int width, int align )
@@ -276,6 +304,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   setMultiSelection( TRUE );
   setAllColumnsShowFocus( TRUE );
   mNested = false;
+  nestingPolicy = 3;
   mNestedOverride = false;
   mousePressed = FALSE;
 
@@ -441,11 +470,22 @@ void KMHeaders::reset(void)
 void KMHeaders::refreshNestedState(void)
 {
   bool oldState = mNested;
+  int oldNestPolicy = nestingPolicy;
   KConfig* config = kapp->config();
   config->setGroup("Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
-  if (oldState != mNested)
+
+  nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
+  if ((nestingPolicy!=oldNestPolicy)||(oldState != mNested))
+  {
+    if( (nestingPolicy == 0)||(!mNested) )
+      setRootIsDecorated( false );
+    else
+      setRootIsDecorated( !mNestedOverride );
+
     reset();
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -480,6 +520,13 @@ void KMHeaders::readFolderConfig (void)
 
   config->setGroup("Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
+  nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
+
+  if( (nestingPolicy == 0)||(!mNested) )
+     setRootIsDecorated( false );
+  else
+     setRootIsDecorated( !mNestedOverride );
+
 }
 
 
@@ -705,10 +752,10 @@ void KMHeaders::msgAdded(int id)
     if (replyToId.isEmpty() || !mIdTree[replyToId])
       hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
     else {
+
       KMHeaderItem *parent = mIdTree[replyToId];
       assert(parent);
       hi = new KMHeaderItem( parent, mFolder, id, &mPaintInfo );
-      parent->setOpen( true );
     }
     if (!mIdTree[msgId])
       mIdTree.replace( msgId, hi );
@@ -1717,7 +1764,6 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
     recursivelyAddChildren( *it, hi );
   }
 
-  parent->setOpen( true );
 }
 
 
@@ -1970,8 +2016,8 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     mousePressed = TRUE;
     if (!(lvi->isSelected())) {
       clearSelection();
-      KMHeadersInherited::contentsMousePressEvent(e);
     }
+    KMHeadersInherited::contentsMousePressEvent(e);
   }
   else if ((e->button() == LeftButton) && (e->state() & ShiftButton)) {
     if (!shiftSelection( beginSelection, lvi ))
@@ -2179,14 +2225,20 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
 void KMHeaders::setNestedOverride( bool override )
 {
   mNestedOverride = override;
+
+  if( (nestingPolicy == 0)||(!mNested) )
+    setRootIsDecorated( false );
+  else
+    setRootIsDecorated( !mNestedOverride );
+
   reset();
 }
 
 //-----------------------------------------------------------------------------
 void KMHeaders::setOpen( QListViewItem *item, bool open )
 {
-  if (open)
-    KMHeadersInherited::setOpen( item, open );
+	if( (nestingPolicy) || open )
+   	KMHeadersInherited::setOpen( item, open );
 }
 
 //-----------------------------------------------------------------------------

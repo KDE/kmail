@@ -142,6 +142,7 @@ public:
   // Double force items to always be open
   virtual void setOpen ( QListViewItem *, bool );
 
+  int getNestingPolicy(){ return nestingPolicy; }
 signals:
   // emitted when the list view item corresponding to this message
   // has been selected
@@ -256,6 +257,7 @@ private:
   QDict< bool > mTreeSeen;
   QDict< bool > mTreeToplevel;
   bool mNested, mNestedOverride;
+  int nestingPolicy;
 
   static bool mTrue, mFalse;    // These must replaced by something better!
 

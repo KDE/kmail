@@ -1528,7 +1528,6 @@ QString KMFolder::idString()
     relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
   return relativePath + QString(name());
 }
-
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {

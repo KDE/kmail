@@ -293,6 +293,10 @@ class ConfigureDialog : public KDialogBase
       QCheckBox     *longFolderCheck;
       QCheckBox     *messageSizeCheck;
       QCheckBox     *nestedMessagesCheck;
+      QRadioButton  *rdAlwaysOpen;
+      QRadioButton  *rdDefaultOpen;
+      QRadioButton  *rdDefaultClosed;
+      QRadioButton  *rdUnreadOpen;
       QCheckBox     *htmlMailCheck;
       int           activeFontIndex;
       QFont         font[6];
