@@ -1,7 +1,7 @@
 /*
     This file is part of KMail.
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
-    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@sonofthor.dk>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -120,7 +120,7 @@ k_dcop_signals:
                        const QString& entry );
   void asyncLoadResult( const QStringList& list, const QString& type,
                         const QString& folder );
- 
+
   // For xml kolab style storage
   void incidenceAdded( const QString& type, const QString& folder,
                        Q_UINT32 sernum, int format, const QString& entry );
@@ -131,7 +131,7 @@ k_dcop_signals:
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );
   void subresourceAdded( const QString& type, const QString& resource );
-  void subresourceAdded( const QString& type, const QString& resource, 
+  void subresourceAdded( const QString& type, const QString& resource,
                          const QString& label );
   void subresourceDeleted( const QString& type, const QString& resource );
 
