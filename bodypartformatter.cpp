@@ -65,17 +65,17 @@ namespace {
     } \
   }; \
   \
-  const subtype##BodyPartFormatter * subtype##BodyPartFormatter::self = 0; \
+  const subtype##BodyPartFormatter * subtype##BodyPartFormatter::self; \
   \
   bool subtype##BodyPartFormatter::process( KMail::ObjectTreeParser * otp, partNode * node, KMail::ProcessResult & result ) const { \
     return otp->process##subtype##Subtype( node, result ); \
   }
 
-  CREATE_BODY_PART_FORMATTER(TextPlain);
-  CREATE_BODY_PART_FORMATTER(TextHtml);
-  CREATE_BODY_PART_FORMATTER(TextRtf);
-  CREATE_BODY_PART_FORMATTER(TextVCal);
-  CREATE_BODY_PART_FORMATTER(TextVCard);
+  CREATE_BODY_PART_FORMATTER(TextPlain)
+  CREATE_BODY_PART_FORMATTER(TextHtml)
+  CREATE_BODY_PART_FORMATTER(TextRtf)
+  CREATE_BODY_PART_FORMATTER(TextVCal)
+  CREATE_BODY_PART_FORMATTER(TextVCard)
   //CREATE_BODY_PART_FORMATTER(TextEnriched)
 
   CREATE_BODY_PART_FORMATTER(ApplicationPostscript)
