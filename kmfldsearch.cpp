@@ -113,12 +113,20 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
       mFolder = searchFolder;
   }
   mPatternEdit->setSearchPattern( mSearchPattern );
-  QObject *object = mPatternEdit->queryList( 0, "mRuleField" )->first();
+  QObjectList *list = mPatternEdit->queryList( 0, "mRuleField" );
+  QObject *object = 0;
+  if ( list )
+      object = list->first();
+  delete list;
   if (!searchFolder && object && object->inherits( "QComboBox" )) {
       QComboBox *combo = (QComboBox*)object;
       combo->setCurrentText("Subject");
   }
-  object = mPatternEdit->queryList( 0, "mRuleValue" )->first();
+  list = mPatternEdit->queryList( 0, "mRuleValue" );
+  object = 0;
+  if ( list )
+      object = list->first();
+  delete list;
   if (object && object->inherits( "QWidget" )) {
       QWidget *widget = (QComboBox*)object;
       widget->setFocus();

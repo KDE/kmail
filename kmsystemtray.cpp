@@ -344,13 +344,17 @@ KMMainWidget * KMSystemTray::getKMMainWidget()
   while ( (wid = it.current()) != 0 ) {
     ++it;
     QObjectList *l2 = wid->topLevelWidget()->queryList("KMMainWidget");
-    if (l2->first())
+    if (l2 && l2->first())
 	{
 	  KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>(l2->first());
 	  assert (kmmw);
+	  delete l2;
+	  delete l;
 	  return kmmw;
 	}
+    delete l2;
   }
+  delete l;
   return 0;
 }
 
