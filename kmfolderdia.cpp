@@ -444,12 +444,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
   nml->setSpacing( 6 );
-  QLabel *newmailLabel = new QLabel( i18n("Include in check:" ), newmailGroup );
-  nml->addWidget( newmailLabel );
-  mNewMailCheckBox = new QCheckBox(newmailGroup);
+  mNewMailCheckBox = new QCheckBox( i18n("Include in check" ), newmailGroup );
   // default is on
   mNewMailCheckBox->setChecked(true);
-  newmailLabel->setBuddy(mNewMailCheckBox);
   nml->addWidget( mNewMailCheckBox );
   nml->addStretch( 1 );
 
