@@ -19,7 +19,6 @@
 #include "kmtopwidget.h"
 
 #include <kapp.h>
-#include <kapp.h>
 #include <kfiledialog.h>
 #include <ktablistbox.h>
 #include <qbuttongroup.h>

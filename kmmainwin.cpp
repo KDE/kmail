@@ -8,7 +8,6 @@
 #include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
-#include "kmmessage.h"
 #include "kmfoldertree.h"
 #include "kmheaders.h"
 #include "kmreaderwin.h"

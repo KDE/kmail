@@ -13,13 +13,11 @@
 #include "kmiostatusdlg.h"
 
 #include <kconfig.h>
-#include <kapp.h>
 #include <kprocess.h>
 #include <kapp.h>
 #include <qregexp.h>
 
 #ifdef KRN
-#include <kapp.h>
 #include <kapp.h>
 extern KApplication *app;
 extern KMIdentity *identity;

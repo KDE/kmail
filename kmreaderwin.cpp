@@ -28,7 +28,6 @@
 #include <kcursor.h>
 #include <krun.h>
 #include <mimelib/mimepp.h>
-#include <qregexp.h>
 #include <qstring.h>
 #include <errno.h>
 #include <stdio.h>

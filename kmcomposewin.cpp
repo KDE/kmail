@@ -24,7 +24,6 @@
 #include <assert.h>
 #include <kapp.h>
 #include <kiconloader.h>
-#include <kapp.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
 #include <ktablistbox.h>

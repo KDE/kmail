@@ -6,7 +6,6 @@
 
 
 #include <qstring.h>
-#include <qlineedit.h>
 #include <qlabel.h>
 #include <qlist.h>
 #include <qevent.h>

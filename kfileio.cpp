@@ -2,7 +2,6 @@
 // Author: Stefan Taferner <taferner@kde.org>
 
 #include <kapp.h>
-#include <kapp.h>
 #include <qmessagebox.h>
 #include <qstring.h>
 #include <unistd.h>

@@ -21,7 +21,6 @@
 #include "kmsettings.h"
 #include "kmreaderwin.h"
 
-#include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <kapp.h>

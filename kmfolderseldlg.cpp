@@ -6,7 +6,6 @@
 #include "kmglobal.h"
 #include "kmfolderdir.h"
 
-#include <kapp.h>
 #include <qpushbutton.h>
 #include <qlistbox.h>
 #include <qlayout.h>

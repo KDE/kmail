@@ -2,7 +2,6 @@
 
 #include "charsetsDlg.h"
 
-#include <qlayout.h>
 #include <qlabel.h>
 #include <qframe.h>
 #include <qcheckbox.h>

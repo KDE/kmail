@@ -10,7 +10,6 @@
 #include <assert.h>
 #include <kconfig.h>
 #include <kapp.h>
-#include <kapp.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
