@@ -1,4 +1,21 @@
 // kmfoldertree.cpp
+#include "kmfoldertree.h"
+
+#include "kmfoldermgr.h"
+#include "kmfolderimap.h"
+#include "kmfolderdia.h"
+#include "kmcomposewin.h"
+#include "kmmainwidget.h"
+#include "kmgroupware.h"
+#include "kmacctmgr.h"
+#include "kmkernel.h"
+
+#include <kapplication.h>
+#include <kiconloader.h>
+#include <kmessagebox.h>
+#include <kconfig.h>
+#include <kdebug.h>
+
 #include <qpainter.h>
 #include <qcursor.h>
 #include <qregexp.h>
@@ -6,20 +23,6 @@
 #include <unistd.h>
 #include <assert.h>
 
-#include <kapplication.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <kconfig.h>
-
-#include "kmfoldermgr.h"
-#include "kmfolderimap.h"
-#include "kmfoldertree.h"
-#include "kmfolderdia.h"
-#include "kmcomposewin.h"
-#include "kmmainwidget.h"
-#include "kmgroupware.h"
-#include "kmacctmgr.h"
 #include <X11/Xlib.h>
 #undef KeyPress
 

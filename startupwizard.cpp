@@ -20,17 +20,7 @@
     Boston, MA 02111-1307, USA.
 */
 
-#include <qvbox.h>
-#include <qvbuttongroup.h>
-#include <qtextbrowser.h>
-#include <qwhatsthis.h>
-#include <qvalidator.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-#include <knuminput.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include "startupwizard.h"
 
 #include "kmfoldercombobox.h"
 #include "configuredialog_p.h"
@@ -44,9 +34,19 @@
 #include "kmtransport.h"
 #include "kmsender.h"
 #include "kmgroupware.h"
+#include "kmkernel.h"
 
-#include "startupwizard.h"
+#include <kdebug.h>
+#include <klocale.h>
+#include <knuminput.h>
+#include <kapplication.h>
+#include <kconfig.h>
 
+#include <qvbox.h>
+#include <qvbuttongroup.h>
+#include <qtextbrowser.h>
+#include <qwhatsthis.h>
+#include <qvalidator.h>
 
 WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   : QWidget( parent, name )

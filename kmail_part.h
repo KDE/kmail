@@ -25,6 +25,9 @@
 #ifndef KMail_PART_H
 #define KMail_PART_H
 
+#include "kmailpartIface.h"
+
+#include <kdeversion.h>
 #include <kparts/browserextension.h>
 #if KDE_IS_VERSION( 3, 1, 90 )
 #include <kparts/statusbarextension.h>
@@ -32,8 +35,6 @@
 #include <kparts/factory.h>
 #include <kparts/event.h>
 #include <qwidget.h>
-
-#include "kmailpartIface.h"
 
 class KInstance;
 class KAboutData;

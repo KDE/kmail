@@ -23,15 +23,8 @@
     Boston, MA 02111-1307, USA.
 */
 
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <klibloader.h>
-#include <kiconloader.h>
-#include <dcopclient.h>
-#include <kparts/part.h>
-#include <kconfig.h>
-
 #include "kmgroupware.h"
+
 #include "kfileio.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
@@ -45,12 +38,26 @@
 #include "kmcommands.h"
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
+#include "kmkernel.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
+
+#include <kmessagebox.h>
+#include <klibloader.h>
+#include <kiconloader.h>
+#include <dcopclient.h>
+#include <kparts/part.h>
+#include <kconfig.h>
+#include <kdebug.h>
 
 #include <ktnef/ktnefparser.h>
 #include <ktnef/ktnefmessage.h>
 #include <ktnef/ktnefdefs.h>
+
+#include <qregexp.h>
+#include <qbuffer.h>
+#include <qfile.h>
+#include <qinputdialog.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/headers.h>
@@ -59,11 +66,6 @@ using KMail::ObjectTreeParser;
 #include <mimelib/text.h>
 
 #include <assert.h>
-
-#include <qregexp.h>
-#include <qbuffer.h>
-#include <qfile.h>
-#include <qinputdialog.h>
 
 // groupware folder icons:
 QPixmap* KMGroupware::pixContacts = 0;

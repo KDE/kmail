@@ -1,7 +1,20 @@
 // kmfolderdia.cpp
-
 #include <config.h>
-#include <assert.h>
+
+#include "kmacctfolder.h"
+#include "kmfoldermgr.h"
+#include "identitycombo.h"
+#include "kmfolderimap.h"
+#include "kmfolder.h"
+#include "kmkernel.h"
+
+#include <klineedit.h>
+#include <klocale.h>
+#include <knuminput.h>
+#include <kmessagebox.h>
+#include <kicondialog.h>
+#include <kconfig.h>
+#include <kdebug.h>
 
 #include <qcheckbox.h>
 #include <qlayout.h>
@@ -9,19 +22,9 @@
 #include <qregexp.h>
 #include <qlabel.h>
 
-#include <klineedit.h>
-#include <klocale.h>
-#include <knuminput.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <kicondialog.h>
-#include <kconfig.h>
+#include <assert.h>
 
-#include "kmacctfolder.h"
-#include "kmfoldermgr.h"
-#include "identitycombo.h"
-#include "kmfolderimap.h"
-
+#include "kmfolderdia.h" //has to be later becuase of KMFolder* fdcls
 #include "kmfolderdia.moc"
 
 

@@ -17,16 +17,16 @@
 #ifndef __KMFOLDERTREE
 #define __KMFOLDERTREE
 
-#include <qwidget.h>
-#include <qtimer.h>
-#include <qheader.h>
+#include "kmheaders.h"
+#include "kmfolder.h"
 
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kfoldertree.h>
 
-#include "kmheaders.h"
-#include "kmfolder.h"
+#include <qwidget.h>
+#include <qtimer.h>
+#include <qheader.h>
 
 class QDropEvent;
 class QPixmap;
@@ -34,6 +34,7 @@ class QPainter;
 class KMFolderImap;
 class KMFolderTree;
 class KMMainWidget;
+template <typename T> class QGuardedPtr;
 
 class KMFolderTreeItem : public QObject, public KFolderTreeItem
 

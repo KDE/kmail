@@ -5,8 +5,9 @@
 #ifndef kmmsglist_h
 #define kmmsglist_h
 
-#include <qmemarray.h>
 #include "kmmsgbase.h"
+
+#include <qmemarray.h>
 
 class KMMsgDict;
 
@@ -40,7 +41,7 @@ public:
     If @p syncDict, also updates message dictionary. */
   virtual int append(KMMsgBase* msg, bool syncDict = true);
 
-  /** Clear messages. If autoDelete is set (default) the messages are 
+  /** Clear messages. If autoDelete is set (default) the messages are
       deleted. The array is not resized.  If @p syncDict, also updates
       the message dictionary. */
   virtual void clear(bool autoDelete=TRUE, bool syncDict = false);

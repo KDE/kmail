@@ -2,20 +2,26 @@
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
 #include <config.h>
-#include "kmfolderimap.h"
+
+#include "kmfolder.h"
+
+#include "kmfolderimap.h" //for the nasty imap hacks, FIXME
 #include "kmundostack.h"
 #include "kmmsgdict.h"
 #include "identitymanager.h"
 #include "kmidentity.h"
 #include "kmfoldermgr.h"
+#include "kmkernel.h"
 
-#include <mimelib/mimepp.h>
-#include <qregexp.h>
 #include <kmessagebox.h>
-#include <kdebug.h>
-#include <errno.h>
 #include <klocale.h>
 #include <kconfig.h>
+#include <kdebug.h>
+
+#include <qregexp.h>
+
+#include <mimelib/mimepp.h>
+#include <errno.h>
 
 //-----------------------------------------------------------------------------
 

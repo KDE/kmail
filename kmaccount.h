@@ -5,15 +5,15 @@
 #ifndef kmaccount_h
 #define kmaccount_h
 
+#include <kprocess.h>
+#include <kaccount.h>
+
+#include <qtimer.h>
+#include <qsignal.h>
 #include <qstring.h>
 #include <qptrlist.h>
 #include <qvaluelist.h>
-#include <qtimer.h>
-#include <qsignal.h>
 #include <qguardedptr.h>
-#include <kprocess.h>
-#include <kdeversion.h>
-#include <kaccount.h>
 
 class KMAcctMgr;
 class KMFolder;
@@ -88,7 +88,7 @@ public:
    * account. */
   KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
   virtual void setFolder(KMFolder*, bool addAccount = false);
-  
+
   /**
    * the id of the trash folder (if any) for this account
    */
@@ -180,7 +180,7 @@ public:
    * If this account is a disconnected IMAP account, invalidate it.
    */
   virtual void invalidateIMAPFolders();
-    
+
   // stuff for resource-handling
   void addInterval( const QPair<QDateTime,QDateTime>& );
   QValueList<QPair<QDateTime, QDateTime> > intervals() const;
@@ -190,15 +190,15 @@ public:
 
   /**
    * Set/Get if this account is currently checking mail
-   */ 
+   */
   bool checkingMail() { return mCheckingMail; }
   void setCheckingMail( bool checking ) { mCheckingMail = checking; }
 
   /**
    * Call this if the newmail-check ended
    */
-  void checkDone( bool newmails, int newmailCount );   
-    
+  void checkDone( bool newmails, int newmailCount );
+
 signals:
   virtual void finishedCheck(bool newMail);
   virtual void newMailsProcessed(int numberOfNewMails);
@@ -246,7 +246,7 @@ protected:
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
   QPtrList<FolderJob>  mJobList;
-  bool mHasInbox : 1;  
+  bool mHasInbox : 1;
 
   // for resource handling
   QValueList<QPair<QDateTime, QDateTime> > mIntervals;

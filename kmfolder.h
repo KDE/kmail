@@ -9,24 +9,26 @@
 
 // for large file support
 #include <config.h>
-#include <sys/types.h>
+
 #include "kmfoldernode.h"
 #include "kmfoldertype.h"
 #include "kmmsginfo.h"
-#include "kmmsglist.h"
 #include "kmglobal.h"
-#include "mimelib/string.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 
-#include <stdio.h>
+#include "mimelib/string.h"
+
 #include <qptrvector.h>
+#include <sys/types.h>
+#include <stdio.h>
 
 class KMMessage;
 class KMFolderDir;
 class KMAcctList;
 class KMMsgDict;
 class KMMsgDictREntry;
+class QTimer;
 
 #define KMFolderInherited KMFolderNode
 
@@ -445,7 +447,7 @@ signals:
   /** Emitted when the contents of a folder have been cleared
      (new search in a search folder, for example) */
   void cleared();
-      
+
   /** Emitted after an expunge. If not quiet, changed() will be
       emmitted first. */
   void expunged();

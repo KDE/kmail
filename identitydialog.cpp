@@ -36,6 +36,7 @@
 #include "kmfoldercombobox.h"
 #include "kmfoldermgr.h"
 #include "transportmanager.h"
+#include "kmkernel.h"
 
 
 // other kdenetwork headers:

@@ -7,6 +7,7 @@
 #define kmfolderindex_h
 
 #include "kmfolder.h"
+#include "kmmsglist.h"
 
 class KMFolderIndex: public KMFolder
 {

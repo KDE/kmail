@@ -1,12 +1,13 @@
 // Author: Sam Magnuson <zachsman@wiw.org>
 // License GPL -- indexing logic for KMail
 
+#include "kmmsgindex.h"
+
 #include "kmsearchpattern.h"
 #include "kmfoldersearch.h"
-#include "kmmsgindex.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
-#include "kdebug.h"
+#include "kmkernel.h"
 
 #include "mimelib/message.h"
 #include "mimelib/headers.h"
@@ -15,6 +16,8 @@
 #include "mimelib/body.h"
 #include "mimelib/bodypart.h"
 #include "mimelib/field.h"
+
+#include <kdebug.h>
 
 #include <qdict.h>
 #include <qapplication.h>

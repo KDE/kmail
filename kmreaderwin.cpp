@@ -8,62 +8,26 @@
 // #define KMAIL_READER_HTML_DEBUG
 
 #include <config.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
 
-#include <qclipboard.h>
-#include <qhbox.h>
-#include <qtextcodec.h>
-#include <qpaintdevicemetrics.h>
-
-#include <kapplication.h>
-#include <kcharsets.h>
-#include <kcursor.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kglobalsettings.h>
-#include <kpgpblock.h>
-#include <krun.h>
-#include <ktempfile.h>
-#include <kprocess.h>
-
-// khtml headers
-#include <khtml_part.h>
-#include <khtmlview.h> // So that we can get rid of the frames
-#include <dom/html_element.h>
-#include <dom/html_block.h>
-
-
-#include <mimelib/mimepp.h>
-#include <mimelib/body.h>
-#include <mimelib/utility.h>
-
-#include <kmime_mdn.h>
-using namespace KMime;
+#include "kmreaderwin.h"
 
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kmgroupware.h"
-
 #include "kfileio.h"
 #include "kmfolderindex.h"
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
 #include "kmtextbrowser.h"
-#include "kmreaderwin.h"
 #include "partNode.h"
 #include "linklocator.h"
 #include "kmmsgdict.h"
 #include "kmsender.h"
 #include "kcursorsaver.h"
 #include "mailinglist-magic.h"
+#include "kmdisplayvcard.h"
+#include "kmkernel.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #include "partmetadata.h"
@@ -85,26 +49,52 @@ using KMail::FileHtmlWriter;
 using KMail::TeeHtmlWriter;
 #endif // !NDEBUG
 
-// for the MIME structure viewer (khz):
+#include <kmime_mdn.h>
+using namespace KMime;
 
+#include <kapplication.h>
+// for the click on attachment stuff (dnaber):
+#include <kuserprofile.h>
+#include <kcharsets.h>
+#include <kpopupmenu.h>
+#include <kstandarddirs.h>  // Sven's : for access and getpid
+#include <kcursor.h>
+#include <kdebug.h>
+#include <kfiledialog.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kglobalsettings.h>
+#include <kpgpblock.h>
+#include <krun.h>
+#include <ktempfile.h>
+#include <kprocess.h>
+
+// khtml headers
+#include <khtml_part.h>
+#include <khtmlview.h> // So that we can get rid of the frames
+#include <dom/html_element.h>
+#include <dom/html_block.h>
+
+#include <qclipboard.h>
+#include <qhbox.h>
+#include <qtextcodec.h>
+#include <qpaintdevicemetrics.h>
+
+#include <mimelib/mimepp.h>
+#include <mimelib/body.h>
+#include <mimelib/utility.h>
 
 // X headers...
 #undef Never
 #undef Always
 
-//--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
-#include <kstandarddirs.h>  // for access and getpid
-//--- Sven's save attachments to /tmp end ---
-
-// for the click on attachment stuff (dnaber):
-#include <kuserprofile.h>
-
-// Do the tmp stuff correctly - thanks to Harri Porten for
-// reminding me (sven)
-
-#include "kmdisplayvcard.h"
-#include <kpopupmenu.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

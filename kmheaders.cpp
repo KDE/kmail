@@ -1,8 +1,29 @@
 // kmheaders.cpp
 
 #include <config.h>
-#include <stdlib.h>
+
+#include "kmheaders.h"
+
+#include "kcursorsaver.h"
+#include "kmcommands.h"
+#include "kmfolderimap.h"
+#include "kmmainwidget.h"
+#include "kmcomposewin.h"
+#include "kmfiltermgr.h"
+#include "kmundostack.h"
+#include "kmmsgdict.h"
+#include "kmkernel.h"
+using KMail::FolderJob;
+#include "kmbroadcaststatus.h"
+
+#include <kapplication.h>
+#include <kmessagebox.h>
 #include <kiconloader.h>
+#include <kimageio.h>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kdebug.h>
+
 #include <qbuffer.h>
 #include <qheader.h>
 #include <qptrstack.h>
@@ -10,25 +31,6 @@
 #include <qpainter.h>
 #include <qtextcodec.h>
 #include <qbitmap.h>
-
-#include <kapplication.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kimageio.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-
-#include "kcursorsaver.h"
-#include "kmcommands.h"
-#include "kmfolderimap.h"
-#include "kmheaders.h"
-#include "kmmainwidget.h"
-#include "kmcomposewin.h"
-#include "kmfiltermgr.h"
-#include "kmundostack.h"
-#include "kmmsgdict.h"
-using KMail::FolderJob;
-#include "kmbroadcaststatus.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>

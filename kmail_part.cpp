@@ -23,32 +23,36 @@
     without including the source code for Qt in the source distribution.
 */
 
-#include <qlayout.h>
-
-#include <kapplication.h>
-#include <kiconloader.h>
-#include <kdebug.h>
-#include <kparts/genericfactory.h>
-
-#include "aboutdata.h"
-#include "kmmainwin.h"
 #include "kmail_part.h"
-#include <knotifyclient.h>
-#include <dcopclient.h>
+
+#include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmstartup.h"
 #include "kmbroadcaststatus.h"
+#include "aboutdata.h"
+#include "kmkernel.h"
 #if KDE_IS_VERSION( 3, 1, 90 )
 #  include "sidebarextension.h"
 #endif
+
+
+#include <kapplication.h>
+#include <kparts/genericfactory.h>
+#include <knotifyclient.h>
+#include <dcopclient.h>
+#include <kiconloader.h>
+#include <kdebug.h>
+
+#include <qlayout.h>
+
 
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
 K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory );
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
-  DCOPObject("KMailIface"), KParts::ReadOnlyPart(parent, name), 
+  DCOPObject("KMailIface"), KParts::ReadOnlyPart(parent, name),
   mParentWidget( parentWidget )
 {
   kdDebug(5006) << "KMailPart()" << endl;

@@ -1,26 +1,27 @@
 // KMail Account
+#include <config.h>
 
 #include "kmaccount.h"
-
-#include <config.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#include <assert.h>
-#include <kapplication.h>
-
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <kconfig.h>
 
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmsender.h"
+#include "kmkernel.h"
 #include "kmbroadcaststatus.h"
 using KMail::FolderJob;
+
+#include <kapplication.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kdebug.h>
+#include <kconfig.h>
+
+#include <stdlib.h>
+#include <unistd.h>
+
+#include <assert.h>
 
 //----------------------
 #include "kmaccount.moc"

@@ -26,11 +26,9 @@
 #ifndef KMGROUPWARE_H
 #define KMGROUPWARE_H
 
-#include <qguardedptr.h>
-
-#include <kfoldertree.h>
-
 #include "kmfoldertype.h"
+#include <kfoldertree.h>
+#include <qguardedptr.h>
 
 class QSplitter;
 class QDateTime;
@@ -48,6 +46,7 @@ class KMHeaders;
 class KMReaderWin;
 class KMMimePartTree;
 class KMMsgBase;
+class KURL;
 
 namespace KParts {
   class ReadOnlyPart;
@@ -64,8 +63,8 @@ public:
 
   ////////////////////////////////////////////////////////////////
   // Resource IMAP interface - See also kmailicalifaceimap.(h|cpp)
-  bool addIncidence( const QString& type, 
-		     const QString& uid, 
+  bool addIncidence( const QString& type,
+		     const QString& uid,
 		     const QString& ical );
   bool deleteIncidence( const QString& type, const QString& uid );
   QStringList incidences( const QString& type );
@@ -206,7 +205,7 @@ protected:
   // Figure out if a vCal is a todo, event or neither
   enum VCalType { vCalEvent, vCalTodo, vCalUnknown };
   static VCalType getVCalType( const QString &vCard );
-  
+
   /** This class functions as an event filter while showing groupware widgets */
   bool eventFilter( QObject *o, QEvent *e ) const;
 

@@ -8,37 +8,36 @@
 #include "mailinglist-magic.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
-#include <kpgpblock.h>
-#include <kdebug.h>
-#include <kconfig.h>
-
-#include <cryptplugwrapperlist.h>
-
 #include "kmfolderindex.h"
 #include "kmundostack.h"
 #include "kmversion.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
+#include "kmkernel.h"
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
 
+#include <cryptplugwrapperlist.h>
+#include <kpgpblock.h>
+
 #include <kapplication.h>
 #include <kglobalsettings.h>
+#include <kdebug.h>
+#include <kconfig.h>
 #include <khtml_part.h>
+
 #include <qcursor.h>
-
-#include <mimelib/body.h>
-#include <mimelib/field.h>
-
 #include <qtextcodec.h>
 #include <qmessagebox.h>
-
 #include <kmime_util.h>
 #include <kmime_charfreq.h>
+
 #include <kmime_header_parsing.h>
 using KMime::HeaderParsing::parseAddressList;
 using namespace KMime::Types;
 
+#include <mimelib/body.h>
+#include <mimelib/field.h>
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
 #include <assert.h>

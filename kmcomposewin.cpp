@@ -10,12 +10,12 @@
 #undef GrayScale
 #undef Color
 #include <config.h>
-#include <qtooltip.h>
-#include <qtextcodec.h>
-#include <qheader.h>
 
-#include "addressesdialog.h"
-using KPIM::AddressesDialog;
+#include "kmcomposewin.h"
+
+#include "kmmainwin.h"
+#include "kmreaderwin.h"
+#include "kmreadermainwin.h"
 #include "kmsender.h"
 #include "identitymanager.h"
 #include "identitycombo.h"
@@ -31,6 +31,13 @@ using KPIM::AddressesDialog;
 #include "kmtransport.h"
 #include "kmcommands.h"
 #include "kcursorsaver.h"
+#include "kmkernel.h"
+#include "addressesdialog.h"
+using KPIM::AddressesDialog;
+#include "recentaddresses.h"
+using KRecentAddress::RecentAddresses;
+
+#include "klistboxdialog.h"
 
 #include <kcharsets.h>
 #include <kcompletionbox.h>
@@ -40,19 +47,16 @@ using KPIM::AddressesDialog;
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
-
-#include "kmmainwin.h"
-#include "kmreaderwin.h"
-#include "kmreadermainwin.h"
-
-#include <assert.h>
-#include <mimelib/mimepp.h>
 #include <kfiledialog.h>
 #include <kwin.h>
 #include <klineeditdlg.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
 #include <kio/scheduler.h>
+#include <ktempfile.h>
+#include <klocale.h>
+#include <kapplication.h>
+#include <kstatusbar.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -64,23 +68,19 @@ using Syntaxhighlighter::SpellChecker;
 #include <qtabdialog.h>
 #include <qregexp.h>
 #include <qbuffer.h>
+#include <qtooltip.h>
+#include <qtextcodec.h>
+#include <qheader.h>
+#include <qpopupmenu.h>
 
+#include <mimelib/mimepp.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
-#include <ktempfile.h>
 #include <fcntl.h>
-
-#include "recentaddresses.h"
-using KRecentAddress::RecentAddresses;
-#include <klocale.h>
-#include <kapplication.h>
-#include <kstatusbar.h>
-#include <qpopupmenu.h>
-
-#include "klistboxdialog.h"
+#include <assert.h>
 
 #include "kmcomposewin.moc"
 
