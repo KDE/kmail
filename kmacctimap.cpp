@@ -125,6 +125,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setPrefix(acct->prefix());
   setLogin(acct->login());
   setAuth(acct->auth());
+  setHiddenFolders(acct->hiddenFolders());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
 }
@@ -216,7 +217,8 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
         mimeType = (*eIt).m_str;
     }
     if ((mimeType == "inode/directory" || mimeType == "message/digest")
-        && name != ".." && name != "INBOX")
+        && name != ".." && name != "INBOX"
+        && (mHiddenFolders || name.at(0) != '.'))
     {
       static_cast<KMFolderTree*>((*it).parent->listView())
       ->addImapChildFolder((*it).parent, name, mimeType == "inode/directory",
@@ -613,6 +615,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mAuth = config.readEntry("auth", "*");
   mPrefix = config.readEntry("prefix");
+  mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
 }
 
 
@@ -630,6 +633,7 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("port", static_cast<int>(mPort));
   config.writeEntry("auth", mAuth);
   config.writeEntry("prefix", mPrefix);
+  config.writeEntry("hidden-folders", mHiddenFolders);
 }
 
 
@@ -709,6 +713,13 @@ void KMAcctImap::setPrefix(const QString& aPrefix)
   mPrefix = aPrefix;
   if (mPrefix.isEmpty() || mPrefix.at(0) != '/') mPrefix = '/' + mPrefix;
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setHiddenFolders(bool aHiddenFolders)
+{
+  mHiddenFolders = aHiddenFolders;
 }
 
 

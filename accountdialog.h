@@ -88,6 +88,7 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *prefixEdit;
+      QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *storePasswordCheck;
       QRadioButton *authAuto;
       QRadioButton *authLogin;

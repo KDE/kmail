@@ -276,9 +276,9 @@ void AccountDialog::makePopAccountPage()
 void AccountDialog::makeImapAccountPage()
 {
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 11, 2, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 12, 2, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  topLayout->setRowStretch( 10, 10 );
+  topLayout->setRowStretch( 11, 10 );
   topLayout->setColStretch( 1, 10 );
   
   mImap.titleLabel = new QLabel( page );
@@ -323,9 +323,12 @@ void AccountDialog::makeImapAccountPage()
   mImap.prefixEdit = new QLineEdit( page );
   topLayout->addWidget( mImap.prefixEdit, 7, 1 );
 
+  mImap.hiddenFoldersCheck = new QCheckBox( i18n("Show hidden folders"), page);
+  topLayout->addMultiCellWidget( mImap.hiddenFoldersCheck, 8, 8, 0, 1 );
+
   mImap.storePasswordCheck = 
     new QCheckBox( i18n("Store IMAP password in configuration file"), page );
-  topLayout->addMultiCellWidget( mImap.storePasswordCheck, 8, 8, 0, 1 );
+  topLayout->addMultiCellWidget( mImap.storePasswordCheck, 9, 9, 0, 1 );
   
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentification method"), page );
@@ -337,7 +340,7 @@ void AccountDialog::makeImapAccountPage()
     i18n("CRAM-MD5"), group);
   mImap.authAnonymous = new QRadioButton(
     i18n("Anonymous"), group);
-  topLayout->addMultiCellWidget( group, 9, 9, 0, 1 );
+  topLayout->addMultiCellWidget( group, 10, 10, 0, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -402,6 +405,7 @@ void AccountDialog::setupSettings()
     mImap.hostEdit->setText( ai.host() );
     mImap.portEdit->setText( QString("%1").arg( ai.port() ) ); 
     mImap.prefixEdit->setText( ai.prefix() );
+    mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     if (ai.auth() == "CRAM-MD5")
       mImap.authCramMd5->setChecked( TRUE );
@@ -553,6 +557,7 @@ void AccountDialog::saveSettings()
     epa.setPort( mImap.portEdit->text().toInt() );
     epa.setPrefix( mImap.prefixEdit->text() );
     epa.setLogin( mImap.loginEdit->text() );
+    epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
 

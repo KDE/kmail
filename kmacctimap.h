@@ -110,6 +110,10 @@ public:
   const QString& prefix(void) const { return mPrefix; }
   virtual void setPrefix(const QString&);
 
+  /** Show hidden files on the server */
+  bool hiddenFolders() { return mHiddenFolders; }
+  virtual void setHiddenFolders(bool);
+
   /** List a directory and add the contents to a KMFolderTreeItem */
   void listDirectory(KMFolderTreeItem * fti);
 
@@ -177,6 +181,7 @@ protected:
   QString mPrefix;
   unsigned short int mPort;
   bool    mStorePasswd;
+  bool    mHiddenFolders;
   bool    gotMsgs;
   bool    mProgressEnabled;
 
