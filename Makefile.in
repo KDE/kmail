@@ -1,8 +1,8 @@
 CXX	=	@CXX@
 INCLUDES=	-I.. @all_includes@
-CXXFLAGS=	@CXXFLAGS@ -DHAVE_CONFIG_H -DKDEDIR="$(KDEDIR)" $(INCLUDES)
+CXXFLAGS=	@CXXFLAGS@ -DHAVE_CONFIG_H  $(INCLUDES)
 LDFLAGS	=	@LDFLAGS@  @all_libraries@ -lkdeui -lkdecore -lkhtmlw\
--ljscript -lqt -lXext -lmimelib
+-ljscript -lqt -lXext ../../kdesupport/mimelib/.libs/libmimelib.a
 BIN	=	kmail
 MOC	=	@MOC@
 install =	@INSTALL@
@@ -15,8 +15,8 @@ bindir	= 	$(prefix)/bin
 
 SRCS=kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp kmsettings.cpp util.cpp kmaccount.cpp kmheaders.cpp ktablistbox.cpp kmcomposewin.cpp kmfolder.cpp kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp kmfoldermgr.cpp kmfoldernode.cpp
 OBJS=kmmainwin.o kmfolderdia.o kmfoldertree.o kmsettings.o util.o kmaccount.o kmheaders.o ktablistbox.o kmcomposewin.o kbusyptr.o kalarmtimer.o KEdit.o kmreaderwin.o kmfolder.o kmmessage.o kmmsgpart.o kmmsginfo.o kmacctmgr.o main.o kmmainview.o kmacctfolder.o kmacctlocal.o kmacctpop.o kmfolderdir.o kmfoldermgr.o kmfoldernode.o
-HDRS=kmmainwin.h kmfolderdia.h kmfoldertree.h kmsettings.h util.h kmaccount.h kmheaders.h ktablistbox.h kmcomposewin.h kbusyptr.h kalarmtimer.h KEdit.h kmreaderwin.h kmfolder.h kmmessage.h kmmsgpart.h kmmsginfo.h kmacctmgr.h kmmainview.h kmacctfolder.h kmacctlocal.h kmacctpop.h kmfolderdir.h kmfoldermgr.h kmfoldernode.h
-MOCS=kmmainwin.moc kmfolderdia.moc kmfoldertree.moc kmsettings.moc kmheaders.moc ktablistbox.moc kmcomposewin.moc kbusyptr.moc kalarmtimer.moc KEdit.moc kmreaderwin.moc kmmainview.moc kmacctmgr.moc
+HDRS=kmmainwin.h kmfolderdia.h kmfolder.h kmfoldertree.h kmsettings.h util.h kmaccount.h kmheaders.h ktablistbox.h kmcomposewin.h kbusyptr.h kalarmtimer.h KEdit.h kmreaderwin.h kmfolder.h kmmessage.h kmmsgpart.h kmmsginfo.h kmacctmgr.h kmmainview.h kmacctfolder.h kmacctlocal.h kmacctpop.h kmfolderdir.h kmfoldermgr.h kmfoldernode.h kmfolderdir.h kmfoldernode.h
+MOCS=kmmainwin.moc kmfolderdia.moc kmfolder.moc kmfoldertree.moc kmsettings.moc kmheaders.moc ktablistbox.moc kmcomposewin.moc kbusyptr.moc kalarmtimer.moc KEdit.moc kmreaderwin.moc kmmainview.moc kmacctmgr.moc kmfolderdir.moc kmfoldernode.moc
 
 .PHONY: clean depend
 .SUFFIXES: .cpp

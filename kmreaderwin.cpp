@@ -10,12 +10,19 @@
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
-#define PICS "file:$(KDEDIR)/lib/pics"
 
 KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,KMFolder *f = 0)
 	:QWidget(parent,name)
 {
 	printf("Entering view:  msgno = %i \n",msgno);
+
+	kdeDir = getenv("KDEDIR");
+	if(!kdeDir)
+		{KMsgBox::message(0,"Ouuch","$KDEDIR not set.\nPlease do so");
+		qApp->quit();
+		}
+	picsDir.append(kdeDir);
+	picsDir +="/lib/pics";
 
 	currentFolder = new KMFolder();
 	currentFolder = f;
@@ -40,10 +47,11 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 	separator->setFrameStyle(QFrame::HLine | QFrame::Raised);
 	separator->setLineWidth(4);
 
-	messageCanvas = new KHTMLWidget(this,0,"/kde/lib/pics/");
+	messageCanvas = new KHTMLWidget(this,0,picsDir);
 	messageCanvas->setURLCursor(upArrowCursor);
 	messageCanvas->resize(parent->width()-16,parent->height()-110); //16
 	connect(messageCanvas,SIGNAL(URLSelected(const char *,int)),this,SLOT(openURL(const char *,int)));
+	connect(messageCanvas,SIGNAL(popupMenu(const char *, const QPoint &)), SLOT(popupMenu(const char *, const QPoint &)));
 	vert = new QScrollBar( 0, 110, 12, messageCanvas->height()-110, 0,
                         QScrollBar::Vertical, this, "vert" );
         horz = new QScrollBar( 0, 0, 24, messageCanvas->width()-16, 0,
@@ -79,12 +87,12 @@ void KMReaderView::clearCanvas()
 {
 	// Produce a white canvas
 
-	headerCanvas->begin(PICS);
+	headerCanvas->begin(picsDir);
 	headerCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
 	headerCanvas->end();
 	headerCanvas->parse();
 
-	messageCanvas->begin(PICS);
+	messageCanvas->begin(picsDir);
 	messageCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
 	messageCanvas->end();
 	messageCanvas->parse();
@@ -99,11 +107,11 @@ void KMReaderView::updateDisplay()
 
 void KMReaderView::resizeEvent(QResizeEvent *)
 {
-  headerCanvas->setGeometry(0,0,this->width(),100);
-  separator->setGeometry(0,101,this->width(),4);
-  messageCanvas->setGeometry(0,106,this->width()-16,this->height()-120); //16
+  headerCanvas->setGeometry(0,0,this->width(),75);
+  separator->setGeometry(0,76,this->width(),4);
+  messageCanvas->setGeometry(0,81,this->width()-16,this->height()-87); //16
   horz->setGeometry(0,height()-16,width()-16,16);
-  vert->setGeometry(width()-16,106,16,height()-112);
+  vert->setGeometry(width()-16,81,16,height()-87);
 }
 
 
@@ -121,35 +129,19 @@ void KMReaderView::parseMessage(KMMessage *message)
 
 	currentMessage = message; // To make sure currentMessage is set.
 
-	KConfig *config = new KConfig();
-	config = KApplication::getKApplication()->getConfig();
-	text = config->readEntry("Header");
-	if( !text.isEmpty() && text.find("full",0,false) == 0 )
-		displayFull = true;
-	else
-		displayFull = false;
-
 	int noAttach = (message->numBodyParts() <= 1);
 
 	text = message->body(&length);
 	if (noAttach) text.truncate(length);	
 
-	//header = message->getHeader();
-
-	// Ok. Convert the text to html
-	
-	header.replace(QRegExp("\n"),"<BR>");
-	text.replace(QRegExp("\n"),"<BR>");
-
-	printf("We are here\n");
-	headerCanvas->begin(PICS);
+	headerCanvas->begin(picsDir);
 	headerCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
 	headerCanvas->write("<BODY BGCOLOR=WHITE>");
 
 	dateStr.sprintf("Date: %s<br>",message->dateStr());
 	fromStr.sprintf("From: %s<br>",message->from());
 	ccStr.sprintf("Cc: %s<br>",message->cc());
-        subjStr.sprintf("Subject: %s<br><P>",message->subject());
+             subjStr.sprintf("Subject: %s<br><P>",message->subject());
 
 	headerCanvas->write(dateStr);
 	headerCanvas->write(fromStr);
@@ -158,11 +150,30 @@ void KMReaderView::parseMessage(KMMessage *message)
 	headerCanvas->write("</BODY></HTML>");
 	headerCanvas->end();
 	headerCanvas->parse();
-		
 
-	messageCanvas->begin(PICS);
-	messageCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
-	messageCanvas->write("<BODY BGCOLOR=WHITE>");
+	// Init messageCanvas
+        messageCanvas->begin(picsDir);
+
+	// Prepare text
+
+//***** 1. Search for hyperlinks (http, ftp , @) ********//
+
+
+//  ****** 2. Check if message body is html. Search for <html> tag ********//
+
+	if((text.find(QRegExp("<html>",0,0)) != -1) && (text.find(QRegExp("</html>",0,0)) != -1)) // we found the tags
+		printf("Found html tags!\n");
+
+	else
+	        {// First of all convert escape sequences etc to html
+		text.replace(QRegExp("\n"),"<BR>");
+		text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
+		
+		messageCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
+		messageCanvas->write("<BODY BGCOLOR=WHITE>");
+		}
+
+	// Okay! Let's write it to the canvas
 	messageCanvas->write(text);
 		
 #ifdef BROKEN
@@ -172,7 +183,7 @@ void KMReaderView::parseMessage(KMMessage *message)
 			printf("OK: Writing image for attachment\n");
 			Attachment *atmnt = new Attachment();
 			messageCanvas->write("<hr><center><table><td><tr><IMG SRC=\"");
-			QString t="/usr/local/kde";
+			QString t.append(kdeDir);
 			t += "/lib/pics/kmattach.jpg";
 			messageCanvas->write(t);
 			messageCanvas->write("\">");
@@ -262,40 +273,12 @@ void KMReaderView::deleteMessage()
 
 void KMReaderView::saveMail()
 {
-  QString pwd;
-  QString file;
-  char buf[511];
 
-#ifdef BROKEN
-  pwd.sprintf("%s",getcwd(buf,sizeof(buf)));
-  file = QFileDialog::getSaveFileName(pwd,0,this);
-
-  if(!file.isEmpty())
-    {printf("EMail will be saved\n");
-    QFile *f = new QFile(file);
-    if(!f->open(IO_ReadWrite))
-	return;
-    else
-	   f->close();
-
-     KMFolder *saveFolder = new KMFolder();
-     if(!saveFolder->open(file))
-		{KMsgBox::message(0,"Ouch","SaveFile could not be opened\n");
-		return;
-		}
-    if(!saveFolder->addMsg(currentMessage))
-		{KMsgBox::message(0,"Ouch","Could not save message\n");
-		saveFolder->close();
-		return;
-		}
-    saveFolder->close();	
-    }
-
-  else
-    {}
-#endif
 }
 
+void KMReaderView::printMail()
+{
+}
 
 void KMReaderView::slotScrollVert( int _y )
 {
@@ -324,6 +307,7 @@ void KMReaderView::slotScrollLeRi()
 	vert->setValue(i);
 }
 
+
 void KMReaderView::slotDocumentChanged()
 {
         if ( messageCanvas->docHeight() > messageCanvas->height() )
@@ -346,43 +330,92 @@ void KMReaderView::slotDocumentDone()
 
 void KMReaderView::openURL(const char *url, int)
 {
-	QString temp;
-	int number;
 	printf("URL selected\n");
-	cout << url << "\n";
-	temp = url;
-	temp.replace(QRegExp(":/"),"");
-	cout << temp << "\n";
-	number = temp.toUInt();
-	printf("Attachment : %i",number);
-	saveURL(number);	
+	QString fullURL;
+	fullURL = url;
+	cout << fullURL << "\n";
+
+        if ( fullURL.find( "http:" ) >= 0 )
+                {QString cmd = "kfmclient exec ";
+                cmd += fullURL;
+                cmd += " Open";
+                system( cmd );
+		}
+        else if ( fullURL.find( "ftp:" ) >= 0 )
+        {
+                QString cmd = "kfmclient exec ";
+                cmd += fullURL;
+                cmd += " Open";
+                system( cmd );
+        }
+        else if ( fullURL.find( "mailto:" ) >= 0 )
+        {
+                KMsgBox::message(0,"Ouuch","Sorry not yet implemented!");
+        }
+
 }
 
+void KMReaderView::popupMenu(const char *_url, const QPoint &cords)
+{
+        char buf[30];
+        QString temp;
+        int number;
 
-void KMReaderView::saveURL(int num)
+        printf("Right mouse button pressed\n");
+
+        strcpy(buf,"");
+        if(!strcpy(buf,_url))
+                {printf("Mouse was not over an url!\n"); // Pressed outside url
+		QPopupMenu *p = new QPopupMenu();
+		p->insertItem("Reply to Sender",this,SLOT(replyMessage()));
+		p->insertItem("Reply to All Recipients",this,SLOT(replyAll()));		
+		p->insertItem("Forward Message",this,SLOT(forwardMessage()));
+		p->insertSeparator();
+		QPopupMenu *folderMenu = new QPopupMenu(); // dummy
+		folderMenu->insertItem("Inbox");
+		folderMenu->insertItem("Sent messages");
+		folderMenu->insertItem("Trash");
+		p->insertItem("Send Message to Folder",folderMenu);
+		p->insertItem("Delete Message");
+		p->insertItem("Save Message",this,SLOT(saveMail()));		
+		p->insertItem("Print Message",this,SLOT(printMail()));
+		p->popup(cords,0);
+                }
+        else
+		{printf("Mouse was pressed over an url: %s\n",_url); // Pressed over url
+	        temp = _url;
+        	temp.replace(QRegExp("file:/"),"");
+	        cout << temp << "\n";
+        	number = temp.toUInt();
+	        printf("Attachment : %i",number);
+        	currentAtmnt = number;
+	        QPopupMenu *p = new QPopupMenu();
+        	p->insertItem("Open...",this,SLOT(openAtmnt()));
+	        p->insertItem("Print...",this,SLOT(printAtmnt()));
+        	p->insertItem("Save as...",this,SLOT(saveAtmnt()));
+	        p->insertItem("Quick View...",this,SLOT(viewAtmnt()));
+	        p->popup(cords,0);
+		}
+} 
+
+
+void KMReaderView::saveURL(int)
 {
 	printf("Entering saveURL()\n");
 
-#ifdef BROKEN
-	Attachment *a = new Attachment();
-	a = currentMessage->getAttch(num);
-
-	QString pwd;
-	QString file;
- 	char buf[511];
-
-  	pwd.sprintf("%s",getcwd(buf,sizeof(buf)));
-  	file = QFileDialog::getSaveFileName(pwd,0,this);
-  	if(!file.isEmpty())
-    		{printf("Attachment will be saved\n");
-           	a->save(file);	
-		}
-	else
-		{}
-#endif
-	return;
-
 }
+
+void KMReaderView::copy()
+{
+	messageCanvas->getSelectedText(selectedText);
+}
+
+void KMReaderView::markAll()
+{
+}
+
+
+
 /***************************************************************************/
 /***************************************************************************/
 
@@ -436,11 +469,6 @@ void KMReaderWin::parseConfiguration()
 	showToolBar = 1;
 
 
-  o = config->readEntry("Header");
-  if( !o.isEmpty() && o.find("half",0,false) ==0)
-	displayFull = false;
-  else
-	displayFull = true;
 }
 
 // ***************** Private slots ********************
@@ -452,7 +480,7 @@ void KMReaderWin::setupMenuBar()
   QPopupMenu *menu = new QPopupMenu();
   menu->insertItem("Save...",newView,SLOT(saveMail()),ALT+Key_S);
   menu->insertItem("Address Book...",this,SLOT(toDo()),ALT+Key_B);
-  menu->insertItem("Print...",this,SLOT(toDo()),ALT+Key_P);
+  menu->insertItem("Print...",newView,SLOT(printMail()),ALT+Key_P);
   menu->insertSeparator();
   menu->insertItem("New Composer",this,SLOT(newComposer()),ALT+Key_C);
   menu->insertItem("New Mailreader",this,SLOT(newReader()),ALT+Key_R);
@@ -461,8 +489,8 @@ void KMReaderWin::setupMenuBar()
   menuBar->insertItem("File",menu);
 
   menu = new QPopupMenu();
-  menu->insertItem("Copy",this,SLOT(toDo()),CTRL+Key_C);
-  menu->insertItem("Mark all",this,SLOT(toDo()));
+  menu->insertItem("Copy",newView,SLOT(copy()),CTRL+Key_C);
+  menu->insertItem("Mark all",newView,SLOT(markAll()));
   menu->insertSeparator();
   menu->insertItem("Find...",this,SLOT(toDo()));
   menuBar->insertItem("Edit",menu);
@@ -500,35 +528,40 @@ void KMReaderWin::setupToolBar()
 	QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
 	char *kdedir = getenv("KDEDIR");
 	if (kdedir) pixdir.append(kdedir);
-	 else pixdir.append("/usr/local/kde");
-	pixdir.append("/lib/pics/toolbar/");
+	 else 
+		{KMsgBox::message(0,"Oucch","$KDEDIR not set. Please do so");
+		qApp->quit();
+		}
+	pixdir += "/lib/pics/toolbar/";
+
+
 
 	toolBar = new KToolBar(this);
 
 	QPixmap pixmap;
 
-	pixmap.load(pixdir+"mailsave.xpm");
-	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),newView,SLOT(saveMail()),TRUE,"Save Mail");
-	pixmap.load(pixdir+"fileprint.xpm");
-	toolBar->insertItem(pixmap,1,SIGNAL(clicked()),this,SLOT(toDo()),TRUE,"Print");
+	pixmap.load(pixdir+"kmsave.xpm");
+	toolBar->insertButton(pixmap,0,SIGNAL(clicked()),newView,SLOT(saveMail()),TRUE,"Save Mail");
+	pixmap.load(pixdir+"kmprint.xpm");
+	toolBar->insertButton(pixmap,1,SIGNAL(clicked()),newView,SLOT(printMail()),TRUE,"Print");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"reply.xpm");
-	toolBar->insertItem(pixmap,2,SIGNAL(clicked()),newView,SLOT(replyMessage()),TRUE,"Reply");
-	pixmap.load(pixdir+"reply.xpm");
-	toolBar->insertItem(pixmap,3,SIGNAL(clicked()),newView,SLOT(replyAll()),TRUE,"Reply all");
+	pixmap.load(pixdir+"kmreply.xpm");
+	toolBar->insertButton(pixmap,2,SIGNAL(clicked()),newView,SLOT(replyMessage()),TRUE,"Reply");
+	pixmap.load(pixdir+"kmreply.xpm");
+	toolBar->insertButton(pixmap,3,SIGNAL(clicked()),newView,SLOT(replyAll()),TRUE,"Reply all");
 	pixmap.load(pixdir+"kmforward.xpm");
-	toolBar->insertItem(pixmap,4,SIGNAL(clicked()),newView,SLOT(forwardMessage()),TRUE,"Forward");
+	toolBar->insertButton(pixmap,4,SIGNAL(clicked()),newView,SLOT(forwardMessage()),TRUE,"Forward");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"down.xpm");
-	toolBar->insertItem(pixmap,5,SIGNAL(clicked()),newView,SLOT(nextMessage()),TRUE,"Next message");
+	toolBar->insertButton(pixmap,5,SIGNAL(clicked()),newView,SLOT(nextMessage()),TRUE,"Next message");
 	pixmap.load(pixdir+"up.xpm");
-	toolBar->insertItem(pixmap,6,SIGNAL(clicked()),newView,SLOT(previousMessage()),TRUE,"Previous message");
+	toolBar->insertButton(pixmap,6,SIGNAL(clicked()),newView,SLOT(previousMessage()),TRUE,"Previous message");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"maildel.xpm");
-	toolBar->insertItem(pixmap,7,SIGNAL(clicked()),newView,SLOT(deleteMessage()),TRUE,"Delete Message");
+	pixmap.load(pixdir+"kmdel.xpm");
+	toolBar->insertButton(pixmap,7,SIGNAL(clicked()),newView,SLOT(deleteMessage()),TRUE,"Delete Message");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"help.xpm");
-	toolBar->insertItem(pixmap,8,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
+	toolBar->insertButton(pixmap,8,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
 
 	addToolBar(toolBar);
 }
@@ -542,8 +575,6 @@ void KMReaderWin::invokeHelp()
 
 void KMReaderWin::toDo()
 {
-	//  KMMainWin::doUnimplemented(); //is private :-(
-
    KMsgBox::message(this,"Ouch",
 			 "Not yet implemented!\n"
 			 "We are sorry for the inconvenience :-)",1);
@@ -578,76 +609,6 @@ void KMReaderWin::toggleToolBar()
 {
 	enableToolBar(KToolBar::Toggle);
 }
-
-/*void KMReaderWin::setSettings()
-{
-   setWidget = new QWidget(0,NULL);
-   setWidget->setMinimumSize(400,300);
-   setWidget->setMaximumSize(400,300);
-   setWidget->setCaption("Settings");
-
-   QPushButton *ok_bt = new QPushButton("OK",setWidget,NULL);
-   ok_bt->setGeometry(220,240,70,30);
-   connect(ok_bt,SIGNAL(clicked()),this,SLOT(applySettings()));
-
-   QPushButton *cancel_bt = new QPushButton("Cancel",setWidget,NULL);
-   cancel_bt->setGeometry(310,240,70,30);
-   connect(cancel_bt,SIGNAL(clicked()),this,SLOT(cancelSettings()));
-
-   QButtonGroup *btGrp = new QButtonGroup(setWidget,NULL);
-   btGrp->setTitle("Options");
-   btGrp->setGeometry(20,20,360,200);
-
-   QLabel *headerLabel = new QLabel("The Reader should display",btGrp,NULL);
-   headerLabel->setGeometry(20,20,200,30);
-
-   fullHeader = new QRadioButton("'the full header'",btGrp,NULL);
-   fullHeader->setGeometry(30,50,150,20);
-
-   halfHeader = new QRadioButton("'the most important'",btGrp,NULL);
-   halfHeader->setGeometry(30,80,150,20);
-
-   if(displayFull == false)
-        halfHeader->setChecked(true);
-   else
-        fullHeader->setChecked(true);
-
-   setWidget->show();
-
-}
-
-void KMReaderWin::applySettings()
-{
-  KConfig *config;
-  if(halfHeader->isChecked())
-        displayFull=false;
-  else
-        displayFull=true;
-
-  config = KApplication::getKApplication()->getConfig();
-  config->setGroup("Settings");
-
-  if(halfHeader->isChecked())
-        {displayFull=false;
-        config->writeEntry("Header","half");
-        }
-  else
-        {displayFull=true;
-        config->writeEntry("Header","full");
-        }
-
-  config->sync();
-
-  newView->updateDisplay();
-
-  delete setWidget;
-}
-
-void KMReaderWin::cancelSettings()
-{
-  delete setWidget;
-}
-*/
 
 void KMReaderWin::abort()
 {

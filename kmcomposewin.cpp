@@ -718,31 +718,31 @@ void KMComposeWin::setupToolBar()
 	QPixmap pixmap;
 
 	pixmap.load(pixdir+"kmnew.xpm");
-	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),composeView,SLOT(newComposer()),TRUE,"New Composer");
+	toolBar->insertButton(pixmap,0,SIGNAL(clicked()),composeView,SLOT(newComposer()),TRUE,"New Composer");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"kmsend.xpm");
-	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),composeView,SLOT(sendIt()),TRUE,"Send");
+	toolBar->insertButton(pixmap,0,SIGNAL(clicked()),composeView,SLOT(sendIt()),TRUE,"Send");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"reload.xpm");
-	toolBar->insertItem(pixmap,2,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Undo");
+	toolBar->insertButton(pixmap,2,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Undo");
 	pixmap.load(pixdir+"editcopy.xpm");
-	toolBar->insertItem(pixmap,3,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Copy");
+	toolBar->insertButton(pixmap,3,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Copy");
 	pixmap.load(pixdir+"editcut.xpm");
-	toolBar->insertItem(pixmap,4,SIGNAL(clicked()),composeView,SLOT(cutText()),TRUE,"Cut");
+	toolBar->insertButton(pixmap,4,SIGNAL(clicked()),composeView,SLOT(cutText()),TRUE,"Cut");
 	pixmap.load(pixdir+"editpaste.xpm");
-	toolBar->insertItem(pixmap,5,SIGNAL(clicked()),composeView,SLOT(pasteText()),TRUE,"Paste");
+	toolBar->insertButton(pixmap,5,SIGNAL(clicked()),composeView,SLOT(pasteText()),TRUE,"Paste");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"thumb_up.xpm");
-	toolBar->insertItem(pixmap,6,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Recipients");
+	toolBar->insertButton(pixmap,6,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Recipients");
 	pixmap.load(pixdir+"kmaddressbook.xpm");
-	toolBar->insertItem(pixmap,7,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Addressbook");
+	toolBar->insertButton(pixmap,7,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Addressbook");
 	pixmap.load(pixdir+"kmattach.xpm");
-	toolBar->insertItem(pixmap,8,SIGNAL(clicked()),composeView,SLOT(attachFile()),TRUE,"Attach");
+	toolBar->insertButton(pixmap,8,SIGNAL(clicked()),composeView,SLOT(attachFile()),TRUE,"Attach");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"kmprint.xpm");
-	toolBar->insertItem(pixmap,12,SIGNAL(clicked()),composeView,SLOT(printIt()),TRUE,"Print");
+	toolBar->insertButton(pixmap,12,SIGNAL(clicked()),composeView,SLOT(printIt()),TRUE,"Print");
 	pixmap.load(pixdir+"help.xpm");
-	toolBar->insertItem(pixmap,13,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
+	toolBar->insertButton(pixmap,13,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
 
 	addToolBar(toolBar);
 }

@@ -467,6 +467,8 @@ protected:
     int 	doReplace(QString s_pattern, bool case_sensitive, 
 			  bool regex, bool forward,int line, int col,bool replace);
 
+    QFileDialog* getFileDialog(const char* captiontext);
+
 
 protected:
 
@@ -493,9 +495,11 @@ private:
     KEdGotoLine *gotodialog;
     QPopupMenu  *rb_popup;
     KApplication* mykapp;
+    QFileDialog *file_dialog;
 
     QString 	filename;
     QString     pattern;
+    QString     current_directory;
 
     bool 	modified;
     bool 	autoIndentMode;

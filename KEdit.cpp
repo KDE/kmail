@@ -51,9 +51,11 @@ KEdit::KEdit(KApplication *a, QWidget *parent, const char *name,
     line_pos = col_pos = 0;
     fill_column_is_set = TRUE;
     word_wrap_is_set = TRUE;
-    fill_column_value = 79;
+    fill_column_value = 80;
     autoIndentMode = false;
-    
+
+    current_directory = QDir::currentDirPath();
+
     make_backup_copies = TRUE;
     
     installEventFilter( this );     
@@ -131,7 +133,15 @@ int KEdit::loadFile(QString name, int mode){
       return KEDIT_RETRY;
     }
 
-    if(!info.isReadable()){
+    if(info.isDir()){
+      QMessageBox::message("Sorry","You have specificated a directory","OK");		
+// TODO: finer error control
+//       change to directory ? 
+      return KEDIT_RETRY;
+    }
+
+
+   if(!info.isReadable()){
       QMessageBox::message("Sorry","You do not have read permission to this file.","OK");
 // TODO: finer error control
       return KEDIT_RETRY;
@@ -313,27 +323,21 @@ int KEdit::insertFile(){
     QFileDialog *box;
     QString file_to_insert;
       
-    box = new QFileDialog( this, "fbox", TRUE);
-    
-    box->setCaption("Select Document to Insert");
+    box = getFileDialog("Select Document to Insert");
 
     box->show();
     
     if (!box->result()) {
-      delete box;
       return KEDIT_USER_CANCEL;
     }
     
     if(box->selectedFile().isEmpty()) {  /* no selection */
-      delete box;
       return KEDIT_USER_CANCEL;
     }
     
     file_to_insert = box->selectedFile();
     file_to_insert.detach();
     
-    delete box;
-
     
     int result = loadFile(file_to_insert, OPEN_INSERT);
 
@@ -365,10 +369,8 @@ int KEdit::openFile(int mode)
       }
     }
             
-    box = new QFileDialog( this, "fbox", TRUE);
+    box = getFileDialog("Select Document to Open");
     
-    box->setCaption("Select Document to Open");
-
     box->show();
     
     if (!box->result())   /* cancelled */
@@ -378,7 +380,6 @@ int KEdit::openFile(int mode)
     }
     
     fname =  box->selectedFile();
-    delete box;
     
     int result =  loadFile(fname, mode);
     
@@ -499,7 +500,7 @@ void KEdit::keyPressEvent ( QKeyEvent *e){
     if(isprint(e->ascii())){
  
       // printf("col_pos %d\n",col_pos);
-      if( col_pos > fill_column_value - 1){ 
+      if( col_pos +1 > fill_column_value - 1){ 
 
 	if (e->ascii() == 32 ){ // a space we can just break here
 	  mynewLine();
@@ -583,7 +584,7 @@ void KEdit::keyPressEvent ( QKeyEvent *e){
 
     if(isprint(e->ascii())){
     
-      if( col_pos > fill_column_value - 1){ 
+      if( col_pos +1> fill_column_value - 1){ 
 	  mynewLine();
 	  //  setModified();
       }
@@ -683,7 +684,7 @@ void KEdit::setAutoIndentMode(bool mode){
 
 QString KEdit::prefixString(QString string){
   
-  // This routine return the whitespace before the first none white space
+  // This routine return the whitespace before the first non white space
   // character in string. This is  used in mynewLine() for indent mode.
   // It is assumed that string contains at least one non whitespace character
   // ie \n \r \t \v \f and space
@@ -746,6 +747,9 @@ void KEdit::mouseReleaseEvent (QMouseEvent* e){
 
 int KEdit::saveFile(){
 
+    struct stat st;
+    int stat_ok = -1;
+    bool exists_already;
 
     if(!modified) {
       emit saving();
@@ -755,9 +759,10 @@ int KEdit::saveFile(){
 
     QFile file(filename);
     QString backup_filename;
+    exists_already = file.exists();
 
-    if(file.exists()){
-
+    if(exists_already){
+      stat_ok = stat(filename.data(), &st);
       backup_filename = filename;
       backup_filename.detach();
       backup_filename += '~';
@@ -784,63 +789,74 @@ int KEdit::saveFile(){
 
     modified = FALSE;    
     file.close();
+
+    if(exists_already)
+      chmod(filename.data(),st.st_mode);// preseve filepermissions
     
     return KEDIT_OK;
 
 }
 
-int KEdit::saveAs()
-{
+QFileDialog* KEdit::getFileDialog(const char* captiontext){
 
-    QFileDialog *box;
-    QFileInfo info;
-    QString tmpfilename;
-    int result;
+  if(!file_dialog){
+
+    file_dialog = new QFileDialog(current_directory.data(),"*",this,"file_dialog",TRUE);
+  }
+
+  file_dialog->setCaption(captiontext);
+  file_dialog->rereadDir();
+
+  return file_dialog;
+}
+
+int KEdit::saveAs(){
     
-    box = new QFileDialog( this, "box", TRUE);
-    box->setCaption("Save Document As");
+  QFileDialog *box;
+
+  QFileInfo info;
+  QString tmpfilename;
+  int result;
+  
+  box = getFileDialog("Save Document As");
 
 try_again:
 
-    box->show();
-
-    if (!box->result())
-      {
-	delete box;
-	return KEDIT_USER_CANCEL;
-      }
-
-    if(box->selectedFile().isEmpty()){
-      delete box;
+  box->show();
+  
+  if (!box->result())
+    {
       return KEDIT_USER_CANCEL;
     }
-
-    info.setFile(box->selectedFile());
-
-    if(info.exists()){
-        if(!(QMessageBox::query("Warning:", 
-				"A Document with this Name exists already\n"\
-				"Do you want to overwrite it ?")))
-	  goto try_again;  
-
-    }
-
-
-    tmpfilename = filename;
-
-    filename = box->selectedFile();
-
-    // we need this for saveFile();
-    modified = TRUE; 
+  
+  if(box->selectedFile().isEmpty()){
+    return KEDIT_USER_CANCEL;
+  }
+  
+  info.setFile(box->selectedFile());
+  
+  if(info.exists()){
+    if(!(QMessageBox::query("Warning:", 
+			    "A Document with this Name exists already\n"\
+			    "Do you want to overwrite it ?")))
+	  goto try_again;  	
     
-    delete box;
-
-    result =  saveFile();
-    
-    if( result != KEDIT_OK)
-      filename = tmpfilename; // revert filename
-	
-    return result;
+  }
+  
+  
+  tmpfilename = filename;
+  
+  filename = box->selectedFile();
+  
+  // we need this for saveFile();
+  modified = TRUE; 
+  
+  result =  saveFile();
+  
+  if( result != KEDIT_OK)
+    filename = tmpfilename; // revert filename
+  
+  return result;
       
 }
 
@@ -981,7 +997,7 @@ void KEdit::doGotoLine() {
 	// this seems to be not necessary
 	// gotodialog->setFocus();
 	if( gotodialog->result() ) {
-		setCursorPosition( gotodialog->getLineNumber() , 0, FALSE );
+		setCursorPosition( gotodialog->getLineNumber()-1 , 0, FALSE );
 		emit CursorPositionChanged();
 		setFocus();
 	}

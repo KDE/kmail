@@ -31,19 +31,25 @@ public:
 	KMReaderView(QWidget *parent=0, const char *name=0, int msgno=0, KMFolder *f=0);
 	KHTMLWidget *messageCanvas;
 	KHTMLWidget *headerCanvas;
+	QString selectedText;
 private:
 	KMMessage *currentMessage;
 	int currentIndex;
-	bool displayFull;
 	QScrollBar *vert;
 	QScrollBar *horz;
 	QFrame *separator;
 	KMFolder *currentFolder;
 	long allMessages;
+	char *kdeDir;
+	QString picsDir;
+	int currentAtmnt;
 public slots:
  	void updateDisplay();
 	void clearCanvas();
 	void parseMessage(KMMessage*);
+	void copy();
+	void markAll();
+	void printMail();
 private slots:
 	void slotScrollVert(int);
 	void slotScrollHorz(int);
@@ -59,6 +65,7 @@ private slots:
 	void nextMessage();
 	void previousMessage();
 	void openURL(const char *, int);
+        void popupMenu(const char *, const QPoint &);	        
 	void saveURL(int);
 protected:
 	void resizeEvent(QResizeEvent *);
@@ -73,7 +80,6 @@ public:
 	KMReaderView *newView;
 	KToolBar *toolBar;
 	KMenuBar *menuBar;
-	bool displayFull;	
 private:
 	bool showToolBar;
 	QRadioButton *fullHeader;
