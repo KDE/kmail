@@ -73,10 +73,10 @@ bool KMSearch::write(QString location) const
   config.setGroup("Search Folder");
   if (mSearchPattern)
       mSearchPattern->writeConfig(&config);
-  if (mRoot)
-      config.writeEntry("Base", mRoot->idString());
-  else
+  if (mRoot.isNull())
       config.writeEntry("Base", "");
+  else
+      config.writeEntry("Base", mRoot->idString());
   config.writeEntry("Recursive", recursive());
   return true;
 }
@@ -90,7 +90,7 @@ bool KMSearch::read(QString location)
   mSearchPattern->readConfig(&config);
   QString rootString = config.readEntry("Base");
   mRoot = kernel->folderMgr()->findIdString(rootString);
-  if (!mRoot)
+  if (mRoot.isNull())
       mRoot = kernel->imapFolderMgr()->findIdString(rootString);
   mRecursive = config.readBoolEntry("Recursive");
   return true;
@@ -108,16 +108,16 @@ void KMSearch::setSearchPattern(KMSearchPattern *searchPattern)
 
 bool KMSearch::inScope(KMFolder* folder) const
 {
-    if (folder == mRoot || !mRoot)
+    if (mRoot.isNull() || QGuardedPtr<KMFolder>(folder) == mRoot)
 	return true;
     if (!recursive())
 	return false;
 
     KMFolderDir *rootDir = 0;
-    if (mRoot)
-	rootDir = mRoot->child();
-    else
+    if (mRoot.isNull())
 	rootDir = &kernel->folderMgr()->dir();
+    else
+	rootDir = mRoot->child();
     KMFolderDir *ancestorDir = folder->parent();
     while (ancestorDir) {
 	if (ancestorDir == rootDir)
@@ -360,7 +360,7 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
     connect(kernel->folderMgr(), SIGNAL(folderAdded(KMFolder*)),
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+	    this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kernel->folderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
 	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
@@ -375,7 +375,7 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
     connect(kernel->imapFolderMgr(), SIGNAL(folderAdded(KMFolder*)),
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+	    this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
 	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 }
@@ -1072,11 +1072,16 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
 	open();
 	mTempOpened = true;
     }
+    QTimer::singleShot(0, this, SLOT(executeSearch()));
+}
+
+void KMFolderSearch::examineRemovedFolder(KMFolder *folder)
+{
+    examineInvalidatedFolder(folder);
     if (mSearch->root() == folder) {
 	delete mSearch;
 	mSearch = 0;
     }
-    QTimer::singleShot(0, this, SLOT(executeSearch()));
 }
 
 void KMFolderSearch::propagateHeaderChanged(KMFolder *folder, int idx)

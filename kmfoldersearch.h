@@ -118,6 +118,8 @@ protected slots:
   void examineChangedMessage(KMFolder *folder, Q_UINT32 serNum, int delta);
   // The serial numbers for a folder have been invalidated, deal with it
   void examineInvalidatedFolder(KMFolder *folder);
+  // A folder has been deleted, deal with it
+  void examineRemovedFolder(KMFolder *folder);
   // Propagate the msgHeaderChanged signal
   void propagateHeaderChanged(KMFolder *folder, int idx);
 
