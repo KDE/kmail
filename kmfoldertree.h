@@ -194,7 +194,7 @@ protected:
   void writeIsListViewItemOpen(KMFolderTreeItem *fti);
 
   KMFolderNodeList mList;
-  QTimer* mUpdateTimer;
+  QTimer mUpdateTimer;
   static QPixmap *pixDir, *pixNode, *pixPlain, *pixFld, *pixFull, *pixIn,
     *pixOut, *pixTr, *pixSent;
 

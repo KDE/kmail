@@ -188,9 +188,10 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
-  mUpdateTimer = NULL;
   setSelectionMode( Extended );
 
+  connect(&mUpdateTimer, SIGNAL(timeout()),
+          this, SLOT(delayedUpdate()));
   connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	  this, SLOT(doFolderSelected(QListViewItem*)));
   connect(kernel->folderMgr(), SIGNAL(changed()),
@@ -358,7 +359,6 @@ void KMFolderTree::readConfig (void)
 KMFolderTree::~KMFolderTree()
 {
   disconnect(kernel->folderMgr(), SIGNAL(changed()), this, SLOT(doFolderListChanged()));
-  delete mUpdateTimer;
 }
 
 //-----------------------------------------------------------------------------
@@ -522,12 +522,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
 // when the user manually checks for mail and none was found.
 void KMFolderTree::refresh(KMFolder* )
 {
-  if (!mUpdateTimer)
-  {
-    mUpdateTimer = new QTimer(this);
-    connect(mUpdateTimer, SIGNAL(timeout()), this, SLOT(delayedUpdate()));
-  }
-  mUpdateTimer->changeInterval(200);
+  mUpdateTimer.changeInterval(200);
 }
 
 //-----------------------------------------------------------------------------
@@ -571,7 +566,7 @@ void KMFolderTree::delayedUpdate()
     ++it;
   }
   setUpdatesEnabled(upd);
-  mUpdateTimer->stop();
+  mUpdateTimer.stop();
 }
 
 //-----------------------------------------------------------------------------
@@ -1275,6 +1270,7 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
       delete ftic;
     }
     fti->folder->account()->displayProgress();
+    fti->folder->account()->setIdle(TRUE);
     fti->mImapState = KMFolderTreeItem::imapNoInformation;
   }
 }
