@@ -38,7 +38,7 @@
 
 // If this define is set, JobScheduler will show debug output, and related kmkernel timers will be shortened
 // This is for debugging purposes only, don't commit with it.
-#define DEBUG_SCHEDULER
+//#define DEBUG_SCHEDULER
 
 class KMFolder;
 namespace KMail {
