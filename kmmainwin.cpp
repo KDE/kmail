@@ -383,15 +383,16 @@ void KMMainWin::createWidgets(void)
   accel->connectItem(accel->insertItem(Key_Next),
 		     mMsgView, SLOT(slotScrollNext()));
 
-  // FIXME: these should be actions instead of hard-coded accels,
-  //  so that the M, C, and Delete keys are configurable.
-  accel->connectItem(accel->insertItem(Key_M),
-                     this, SLOT(slotMoveMsg()));
-  accel->connectItem(accel->insertItem(Key_C),
-                     this, SLOT(slotCopyMsg()));
-  accel->connectItem(accel->insertItem(Key_Delete),
-		     this, SLOT(slotDeleteMsg()));
-
+  new KAction( i18n("Move Message to Folder"), Key_M, this,
+               SLOT(slotMoveMsg()), actionCollection(), 
+               "move_message_to_folder" );
+  new KAction( i18n("Copy Message to Folder"), Key_C, this,
+               SLOT(slotCopyMsg()), actionCollection(), 
+               "copy_message_to_folder" );
+  new KAction( i18n("Delete Message"), Key_Delete, this,
+               SLOT(slotDeleteMsg()), actionCollection(), 
+               "delete_message" );
+  
   // create list of folders
   mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
