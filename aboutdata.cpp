@@ -44,7 +44,7 @@ namespace KMail {
 
   static const about_data authors[] = {
     { "Ingo Kl\303\266cker", I18N_NOOP("Maintainer"),
-      "kloecker@kde.de", 0 },
+      "kloecker@kde.org", 0 },
     { "Don Sanders", I18N_NOOP("Adopter and co-maintainer"),
       "sanders@kde.org", 0 },
     { "Stefan Taferner", I18N_NOOP("Original author"),
