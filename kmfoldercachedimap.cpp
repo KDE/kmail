@@ -141,6 +141,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
     // Only write configuration when the folder haven't been deleted
     KConfig* config = KMKernel::config();
     KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
+    Q_ASSERT( !mImapPath.isEmpty() );
     config->writeEntry("ImapPath", mImapPath);
     config->writeEntry("NoContent", mNoContent);
     config->writeEntry("ReadOnly", mReadOnly);
@@ -176,12 +177,15 @@ void KMFolderCachedImap::readConfig()
   mNoContent = config->readBoolEntry( "NoContent", false );
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
 
+  // must be done before so that setContentsType can see the storageformat
+  mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
+  if ( !mAnnotationFolderType.isEmpty() )
+    kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
+
   KMFolderMaildir::readConfig();
 
   // Must be done afterwards since FolderStorage::readConfig sets mContentsTypeChanged
   mContentsTypeChanged = config->readBoolEntry( "ContentsTypeChanged", false );
-
-  mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
 }
 
 void KMFolderCachedImap::remove()
