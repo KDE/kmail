@@ -7,6 +7,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinf.h>
+#include <errno.h>
 
 
 //=============================================================================
@@ -72,6 +73,8 @@ KMFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
   rc = fld->create();
   if (rc)
   {
+    debug("Error while creating folder %s: %s", aFolderName,
+	  sys_errlist[rc]);
     delete fld;
     return NULL;
   }

@@ -183,10 +183,9 @@ void KMFolder::close(bool aForced)
 {
   int i;
 
-  if (mDirty && mAutoCreateIndex) writeIndex();
-
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
+  if (mDirty && mAutoCreateIndex) writeIndex();
 
   unlock();
 
@@ -371,7 +370,7 @@ int KMFolder::createIndexFromContents(void)
 //-----------------------------------------------------------------------------
 int KMFolder::writeIndex(void)
 {
-  int rc=0, i=0;
+  int i=0;
 
   if (mIndexStream) fclose(mIndexStream);
   mIndexStream = fopen(indexLocation(), "w");
@@ -576,10 +575,9 @@ void KMFolder::readMsg(int msgno)
 
   msg = new KMMessage(this);
   msg->fromString(msgText);
-  //msg->viewSource("KMFolder::readMsg: directly after parsing");
 
+  mMsgInfo[msgno].setMsg(msg); // must be before setStatus call.
   msg->setStatus(mMsgInfo[msgno].status());
-  mMsgInfo[msgno].setMsg(msg);
 }
 
 
@@ -644,6 +642,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   fwrite("From ???@??? 00:00:00 1997 +0000\n", 33, 1, mStream);
   fwrite(msgText, len, 1, mStream);
+  if (msgText[len-1]!='\n') fwrite("\n", 1, 1, mStream);
   fflush(mStream);
 
   size = ftell(mStream) - offs;
@@ -653,7 +652,6 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (mAutoCreateIndex)
   {
-    debug("writing new index entry to index file");
     assert(mIndexStream != NULL);
     fseek(mIndexStream, 0, SEEK_END);
     fprintf(mIndexStream, "%s\n", (const char*)mMsgInfo[mMsgs].asString()); 
@@ -735,33 +733,37 @@ int KMFolder::compact(void)
 {
   KMFolder* tempFolder;
   KMMessage* msg;
-  int i, num;
-  QString tempName = tempnam(NULL, "kmail");
+  QString tempName;
   int openCount = mOpenCount;
 
+  tempName = name();
+  tempName.detach();
+  tempName += ".compacted";
   tempFolder = parent()->createFolder(tempName);
   assert(tempFolder != NULL);
 
-  tempFolder->setAutoCreateIndex(FALSE);
+  quiet(TRUE);
   tempFolder->open();
+  open();
 
-  num = numMsgs();
-  for(i=1; i<=num; i++)
+  while(numMsgs() > 0)
   {
-    if(!(msg = getMsg(i))) continue;
+    msg = getMsg(1);
     tempFolder->moveMsg(msg);
   }
   tempName = tempFolder->location();
   tempFolder->close(TRUE);
   close(TRUE);
 
-  rename((const char*)tempName, (const char*)location());
+  rename(tempName, location());
+  rename(tempFolder->indexLocation(), indexLocation());
 
   if (openCount > 0)
   {
     open();
     mOpenCount = openCount;
   }
+  quiet(FALSE);
 
   if (!mQuiet) emit changed();
   return 0;
