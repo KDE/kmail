@@ -263,13 +263,12 @@ public:
    * That's usefull for storing decrypted versions of messages which
    * were sent in encrypted form.                  (khz, 2002/06/24)
    */
-   Kpgp::Result composeMessage( CryptPlugWrapper* cryptPlug,
-                        QCString pgpUserId,
-                        KMMessage& theMessage,
-                        bool doSign,
-                        bool doEncrypt,
-                        bool ignoreBcc,
-                        QCString& signCertFingerprint );
+   Kpgp::Result composeMessage( QCString pgpUserId,
+                                KMMessage& theMessage,
+                                bool doSign,
+                                bool doEncrypt,
+                                bool ignoreBcc,
+                                QCString& signCertFingerprint );
 
   /**
    * If this flag is set the message of the composer is deleted when
@@ -360,6 +359,12 @@ public slots:
   void slotSpellcheckConfig();
 
   /**
+   * Change crypto plugin to be used for signing/encrypting messages,
+   * or switch to built-in OpenPGP code.
+   */
+  void slotSelectCryptoModule();
+  
+  /**
    * XML-GUI stuff
    */
   void slotToggleToolBar();
@@ -386,11 +391,6 @@ public slots:
    * Change states of all sign check boxes in the attachments listview
    */
   void slotSignToggled(bool);
-
-  /**
-   * Let the user select another crypto engine
-   */
-  void slotSelectCrypto();
 
   /**
    * Switch wordWrap on/off
@@ -628,7 +628,6 @@ private:
 
   Kpgp::Result encryptMessage( KMMessage* msg,
                        const QStringList& recipients, bool doSign, bool doEncrypt,
-                       CryptPlugWrapper* cryptPlug,
                        const QCString& encodedBody,int previousBoundaryLevel,
                        const KMMessagePart& oldBodyPart,
                        bool earlyAddAttachments, bool allAttachmentsAreInBody,
@@ -702,7 +701,7 @@ protected:
   QString mOldSigText;
   QStringList mTransportHistory;
 
-  KAction *selectCryptoAction, *attachPK, *attachMPK,
+  KAction *attachPK, *attachMPK,
           *attachRemoveAction, *attachSaveAction, *attachPropertiesAction;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
@@ -713,6 +712,7 @@ protected:
   KToggleAction *wordWrapAction, *fixedFontAction;
 
   KSelectAction *encodingAction;
+  KSelectAction *cryptoModuleAction;
 
   QCString mCharset;
   QCString mDefCharset;
@@ -739,10 +739,18 @@ private:
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
   bool mForceReplyCharset;
-
-  CryptPlugWrapperList * mCryptPlugList;
+  
   QString mErrorProcessingStructuringInfo;
   QString mErrorNoCryptPlugAndNoBuildIn;
+
+  /**
+   * Store the cryptplug that was selected for signing and/or encrypting.
+   *
+   * This is either the 'active' cryptplug of the global wrapper list
+   * or another plugin (or 0 if none selected) if the user decided to
+   * override the global setting using KDComposeWin's options_select_crypto action.
+   */
+  CryptPlugWrapper* mSelectedCryptPlug;
 };
 #endif
 
