@@ -2,14 +2,27 @@
 #include <qfiledlg.h>
 #include <qaccel.h>
 #include <qlabel.h>
-#include "util.h"
-#include "kmmainwin.h"
 #include "kmcomposewin.moc"
+#include "kmmainwin.h"
+#include <iostream.h>
+#include <qwidget.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress) : QWidget(parent,name)
+KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, Message *message, int action) : QWidget(parent,name)
 {
+	printf("Entering composeView\n");
+	
+	attWidget = NULL;
+	currentMessage = new Message(); 
+	if(message !=0)
+		currentMessage = message;
+	indexAttachment =0;
+
+
 	toLEdit = new QLineEdit(this);
-	if (emailAddress) toLEdit->setText(emailAddress);
+	if (emailAddress) 
+		toLEdit->setText(emailAddress);
 	ccLEdit = new QLineEdit(this);
 	subjLEdit = new QLineEdit(this);
 
@@ -22,8 +35,373 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 	label = new QLabel(ccLEdit, "&Subject:", this);
 	label->setGeometry(14,80,50,20);
 
-	editor = new QMultiLineEdit(this);
+	editor = new KEdit(0,this);
+
+	if(message && action==FORWARD)
+	  {printf("Message will be forwarded\n");
+	  forwardMessage();	
+	  }
+	else if(message && action==REPLY)
+		{ printf("Message will be a reply message\n");
+		  replyMessage();
+		}
+	else if(message && action ==REPLYALL)
+		{printf("Reply all (compo)\n");
+		replyAll();
+		}
+	else
+		printf("Normal message\n");
+
+	parseConfiguration();	
+
+	printf("Leaving constructor\n");		
+
 }
+
+
+// ******************  Public slots *************
+
+void KMComposeView::printIt()
+{
+	// QPrinter is extremly broken. Even the Trolls admitted
+	// that. They said they would fix it in version 1.3.
+	// For now printing is crap.
+
+    QPrinter *printer = new QPrinter();
+    if ( printer->setup(this) ) {
+        QPainter paint;
+        paint.begin( printer );
+	QString text;
+	//text.sprintf("From: %s \n",EMailAddress); 
+	text += "To: \n";
+	text += toLEdit->text();
+	text += "\nSubject: ";
+	text += subjLEdit->text();
+	text += "Date: \n\n";
+	text += editor->text();
+	text.replace(QRegExp("\n"),"\n");
+        paint.drawText(30,30,text);
+        paint.end();
+    }
+   delete printer;
+}
+
+
+void KMComposeView::attachFile()
+{
+	QString atmntFile;
+        const char *B[] = BODYTYPE;
+	struct stat atmntStat;
+	QString fileName;
+
+
+        QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
+        d->setCaption("Attach File");
+        if (d->exec()) 
+		{atmntFile = d->selectedFile();
+		Attachment *a = new Attachment();
+		if(!a->guess(atmntFile))
+			KMsgBox::message(0,"Ouch","Trouble guessing attachment!\n");			
+		else
+			{printf("Guessing successfull...\n");
+			if(!attWidget)
+				{printf("Creating Attachment Widget\n");
+				attWidget = new KTabListBox(this);
+				attWidget->setNumCols(3);
+				attWidget->setColumn(0,"Filename",width()/2-20);
+				attWidget->setColumn(1,"File Type",width()/4); 
+				attWidget->setColumn(2,"File Size",width()/4);
+				cout << "Attachment File: " << atmntFile << "\n";
+				fileName =atmntFile.copy();
+				attachmentList.append( new KMAttachmentItem(fileName,indexAttachment));
+				KMAttachmentItem *itm;
+ 				printf("About to display list:\n\n");
+ 				for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next() )
+ 					cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
+				printf("\nDone displaying list\n");
+				::stat(atmntFile,&atmntStat);
+				QString temp;
+				temp.sprintf("%s",B[a->getType()]);
+				atmntFile += "\t";
+				atmntFile += temp;
+				atmntFile += "\t";
+				temp.sprintf("%ld bytes",atmntStat.st_size);
+				atmntFile +=temp;
+				attWidget->insertItem(atmntFile);
+				indexAttachment++;
+				attWidget->setAutoUpdate(TRUE);
+				attWidget->show();
+				connect(attWidget,SIGNAL(highlighted(int,int)),SLOT(detachFile(int,int)));
+				resizeEvent(NULL);
+				delete itm;
+				atmntFile="";
+				}
+			else
+				{printf("We already have a widget\n");
+				cout << "Attachment File: " << atmntFile << "\n";
+				fileName = atmntFile.copy();
+				attachmentList.append( new KMAttachmentItem(fileName,indexAttachment));
+				KMAttachmentItem *itm;
+				printf("About to display list:\n\n");
+	 			for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next())
+					cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
+				printf("\nDone displaying list\n");
+				::stat(atmntFile,&atmntStat);
+     				QString temp;
+     				temp.sprintf("%s",B[a->getType()]);
+				atmntFile += "\t";
+     				atmntFile += temp;
+     				atmntFile += "\t";
+     				temp.sprintf("%ld bytes",atmntStat.st_size);
+     				atmntFile +=temp;
+     				attWidget->insertItem(atmntFile);
+     				indexAttachment++;
+    				attWidget->setAutoUpdate(TRUE);
+     				attWidget->show();
+     				connect(attWidget,SIGNAL(selected(int,int)),SLOT(detachFile(int,int)));
+				attWidget->repaint();
+				delete itm;
+				atmntFile="";
+				
+				}
+			fileName ="";	
+			delete a;
+			}
+		}
+        delete d;
+
+
+}
+
+void KMComposeView::sendIt()
+{
+	KConfig *config;
+	QString option;
+
+	// Now, what are we going to do: sendNow() or sendLater()?
+
+	config = KApplication::getKApplication()->getConfig();
+	config->setGroup("Settings");
+	option = config->readEntry("Send Button");
+	if(!strcmp(option,"now"))
+		sendNow();
+	else
+		toDo();
+
+
+}
+
+void KMComposeView::sendNow()
+{
+	Message *msg = new Message();
+	msg = currentMessage;
+
+	// Now all items in the attachment queue are being displayed.
+
+	KMAttachmentItem *itm;
+ 	printf("About to display list (sendNow()):\n\n");
+ 	for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next())
+	 	cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
+	printf("\nDone displaying list\n");
+
+	// All attachments in the queue are being attached here.
+
+	if(indexAttachment !=0)
+	        {int x;
+		QList<KMAttachmentItem> tempList;
+		tempList = attachmentList;
+		tempList.first();
+        	for(x=1; x <= indexAttachment; x++)
+                	{printf("Attaching No.%i\n",x);
+			Attachment *a = new Attachment();
+			if(!a->guess(tempList.current()->fileName))
+				printf("Error\n");
+			msg->attach(a);
+			tempList.next();
+			delete a;
+			}
+		printf("Attached files\n");
+		}
+
+	QString temp=toLEdit->text();
+	if (temp.isEmpty()) {
+		KMsgBox::message(0,"Ouch","No recipients defined. aborting ....");
+		return;
+		}
+
+	// Now, I have a problems with the CRLF. Everything works fine under 
+	// Unix (of course ;-) ) but under MS-Windowz the CRLF is not inter-
+	// preted. Why??
+
+	temp = editor->text();
+	temp.replace(QRegExp("\r"),"\r\n");
+	
+	// The the necessary Message() stuff
+
+	msg->setFrom(EMailAddress);
+	msg->setTo(toLEdit->text());
+	msg->setCc(ccLEdit->text());
+	msg->setSubject(subjLEdit->text());
+	msg->setText(temp);
+	msg->setCharset(C_USASCII);
+	if (!msg->sendSMTP(SMTPServer))
+		{KMsgBox::message(0,"Ouch","Trouble sending mail\nPlease check your mailserver configuration");
+		delete msg;
+		return;
+		}
+	delete msg;
+	((KMComposeWin *)parentWidget())->close();
+}
+
+// ********************* Private slots ****************
+
+void KMComposeView::parseConfiguration()
+{
+	printf("View : parseConfiguration\n");
+        KConfig *config = new KConfig();
+        config = KApplication::getKApplication()->getConfig();
+	config->setGroup("Settings");
+        QString o = config->readEntry("Signature");
+        if( !o.isEmpty() && o.find("auto",0,false) ==0)
+                appendSignature();
+
+	config->setGroup("Network");
+	SMTPServer = config->readEntry("SMTP Server");
+	cout << SMTPServer << "\n";
+
+	config->setGroup("Identity");
+	EMailAddress = config->readEntry("Email Address");
+	cout << EMailAddress << "\n";
+
+        printf("Leaving View: parseConfiguration\n");
+ 
+}
+
+void KMComposeView::forwardMessage()
+{
+	  printf("Entering forwarding message\n");
+          char subject[512];
+          char date[256];
+          char from[256];
+          char to[256];
+          char cc[256];
+          QString temp;
+          ulong length;
+          currentMessage->getSubject(subject);
+          currentMessage->getLongDate(date);
+          currentMessage->getFrom(from);
+          currentMessage->getTo(to);
+          currentMessage->getCc(cc);
+          temp.sprintf("Fwd: %s",subject);
+          subjLEdit->setText(temp);
+          temp ="\n\n---------Forwarded message-----------";
+          editor->append(temp);
+          temp.sprintf("Date: %s",date);
+          editor->append(temp);
+          temp.sprintf("From: %s",from);
+          editor->append(temp);
+          temp.sprintf("To: %s",to);
+          editor->append(temp);
+          temp.sprintf("Cc: %s",cc);
+          editor->append(temp);
+          temp.sprintf("Subject: %s\n", subject);
+          editor->append(temp);
+          if(!currentMessage->numAttch())
+                  {printf("Message is none MULTIPART\n");
+                  temp = currentMessage->getText(&length);
+                  editor->append(temp);
+                  }
+        else
+                {printf("Message is MULTIPART!\n");
+		//temp = currentMessage->getText(&length);
+                //editor->append(temp);
+                }
+          editor->update();
+          editor->repaint();
+	
+}
+
+void KMComposeView::replyAll()
+{
+          Message *msg = new Message();
+          char subject[512];
+          char from[256];
+          char date[256];
+	  char cc[512];
+          QString temp;
+          ulong length;
+          int lines;
+          printf("before getFrom\n");
+          currentMessage->getReplyTo(from);
+	  currentMessage->getCc(cc);
+          currentMessage->getSubject(subject);
+          currentMessage->getDate(date);
+          printf("after getS\n");
+          temp.sprintf("Re: %s",subject);
+          toLEdit->setText(from);
+	  ccLEdit->setText(cc);
+          subjLEdit->setText(temp);
+	  printf("Checkion if replyAll is MP\n");
+          if(!currentMessage->numAttch())
+                  {printf("No, it is not a MP message\n");
+		  temp.sprintf("\nOn %s %s wrote:\n",from ,date);
+                  editor->append(temp);
+                  temp = currentMessage->getText(&length);
+                  editor->append(temp);
+		  printf("Leaving test\n");
+                  }
+          printf("After\n");
+          lines = editor->numLines();
+          printf("We are here\n");
+          for(int x=2;x < lines;x++)
+                {editor->insertAt("> ",x,0);
+                }
+          editor->update();
+	  
+          currentMessage = currentMessage->reply();
+          delete msg;
+
+
+}
+
+void KMComposeView::replyMessage()
+{
+	  Message *msg = new Message();
+          char subject[512];
+          char from[256];
+	  char date[256];
+          QString temp;
+          ulong length;
+          int lines;
+          printf("before getFrom\n");
+          currentMessage->getReplyTo(from);
+          currentMessage->getSubject(subject);
+	  currentMessage->getDate(date);
+          printf("after getS\n");
+          temp.sprintf("Re: %s",subject);
+          toLEdit->setText(from);
+          subjLEdit->setText(temp);
+	  printf("Checking if msg is MP\n");
+	  if(!currentMessage->numAttch())
+	          {printf("Yes, it is a MP mes\n");
+		  temp.sprintf("\nOn %s %s wrote:\n",date ,from);
+		  editor->append(temp);
+		  temp =  currentMessage->getText(&length);
+        	  editor->append(temp);
+		  printf("Leaving cM->gA()\n");
+		  }
+	  printf("After\n");
+          lines = editor->numLines();
+          printf("We are here\n");
+          for(int x=2;x < lines;x++)
+                {editor->insertAt("> ",x,0);
+                }
+          editor->update();
+	  currentMessage = currentMessage->reply();
+  	  delete msg;
+
+}
+
 
 void KMComposeView::undoEvent()
 {
@@ -49,24 +427,30 @@ void KMComposeView::markAll()
   editor->selectAll();
 }
 
-void KMComposeView::saveMail()
+void KMComposeView::find()
 {
-  QString pwd;
-  QString file;
-  char buf[511];
-  pwd.sprintf("%s",getcwd(buf,sizeof(buf)));
-  file = QFileDialog::getSaveFileName(pwd,0,this);
-  if(!file.isEmpty())
-    {printf("EMail will be saved\n");
-    }
-  else
-    {}
+  editor->Search();
+}
+
+
+
+void KMComposeView::detachFile(int index, int col)
+{
+	printf("Detaching file at index : %i\n",index);
+	attachmentList.remove(index);
+	attWidget->removeItem(index);
+	indexAttachment--;
+	if(!indexAttachment)
+		{printf("Removing attachWidget\n");
+		delete attWidget;
+		attWidget=NULL;
+		resize(size());
+		}
+	
 }
 
 void KMComposeView::toDo()
 {
-	//  KMMainWin::doUnimplemented(); //is private :-(
-
    KMsgBox::message(this,"Ouch",
 			 "Not yet implemented!\n"
 			 "We are sorry for the inconvenience :-)",1);
@@ -74,80 +458,247 @@ void KMComposeView::toDo()
 
 void KMComposeView::resizeEvent(QResizeEvent *)
 {
-  toLEdit->setGeometry(80,10,width()-90,25);
-  ccLEdit->setGeometry(80,45,width()-90,25);
-  subjLEdit->setGeometry(80,80,width()-90,25);
-  editor->setGeometry(10,115,width()-20,height()-125);
+  toLEdit->setGeometry(70,10,width()-80,25);
+  ccLEdit->setGeometry(70,45,width()-80,25);
+  subjLEdit->setGeometry(70,80,width()-80,25);
+  if(!attWidget)
+  	editor->setGeometry(10,115,width()-20,height()-125); //115
+  else
+	{editor->setGeometry(10,115,width()-20,height()-200); //115
+	attWidget->setGeometry(10,height()-77,width()-20,67);
+	attWidget->setColumn(0,"Filename",width()/2-20);
+        attWidget->setColumn(1,"File Type",width()/4);
+        attWidget->setColumn(2,"File Size",width()/4);	
+	attWidget->repaint();
+	}
+}
+
+void KMComposeView::newComposer()
+{
+  KMComposeWin *newComposer = new KMComposeWin(NULL,NULL,NULL,NULL);
+  newComposer->show();
+  newComposer->resize(newComposer->size());
+
 }
 
 
-// This constructor is used if you want to start the Composer from the command line (e.g. kmail markus.wuebben@kde.org)
 
-KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress) : KTopLevelWidget(name)
+
+/*void KMComposeWin::setSettings()
+{
+   setWidget = new QWidget(0,NULL);
+   setWidget->setMinimumSize(400,320);
+   setWidget->setMaximumSize(400,320);
+   setWidget->setCaption("Settings");
+ 
+   QPushButton *ok_bt = new QPushButton("OK",setWidget,NULL);
+   ok_bt->setGeometry(220,260,70,30);
+   connect(ok_bt,SIGNAL(clicked()),this,SLOT(applySettings()));
+
+   QPushButton *cancel_bt = new QPushButton("Cancel",setWidget,NULL);
+   cancel_bt->setGeometry(310,260,70,30);
+   connect(cancel_bt,SIGNAL(clicked()),this,SLOT(cancelSettings()));			
+
+   QButtonGroup *btGrp = new QButtonGroup(setWidget,NULL);
+   btGrp->setGeometry(20,20,360,110);   
+  
+   QButtonGroup *btGrpII = new QButtonGroup(setWidget,NULL);	
+   btGrpII->setGeometry(20,140,360,110); 
+ 
+   QLabel *sendLabel = new QLabel("Send button in the toolbar is a",btGrp,NULL);
+   sendLabel->setGeometry(20,10,200,30);
+
+   QRadioButton *isNow = new QRadioButton("'send now' Button",btGrp,NULL);
+   isNow->setGeometry(30,40,150,20);
+
+   isLater = new QRadioButton("'send later' Button",btGrp,NULL); 
+   isLater->setGeometry(30,70,150,20); 
+
+   QLabel *sigLabel = new QLabel("Signature is appended",btGrpII,NULL);
+   sigLabel->setGeometry(20,10,150,20);
+
+   QRadioButton *autoSig = new QRadioButton("'automatically'",btGrpII,NULL);
+   autoSig->setGeometry(30,40,150,20);
+
+   manualSig = new QRadioButton("'manually'",btGrpII,NULL);
+   manualSig->setGeometry(30,70,150,20);
+
+   if(sendButton == false)
+	isLater->setChecked(true);
+   else
+	isNow->setChecked(true);
+
+   if(sigStatus == true)
+	manualSig->setChecked(true);
+   else
+	autoSig->setChecked(true);
+
+   setWidget->show();
+
+}
+
+void KMComposeWin::applySettings()
+{
+  KConfig *config;
+
+  if(isLater->isChecked())
+	sendButton=false;
+  else
+	sendButton=true;
+
+  if(manualSig->isChecked())
+	sigStatus=true;
+  else
+	sigStatus=false;
+
+
+  config = KApplication::getKApplication()->getConfig();
+  config->setGroup("Settings");
+  
+  if(isLater->isChecked())
+	{sendButton=false;
+	config->writeEntry("Send Button","later");
+	}
+  else
+	{sendButton=true;
+	config->writeEntry("Send Button","now");
+	}
+
+  if(manualSig->isChecked())
+	config->writeEntry("Signature","manual");
+  else
+	config->writeEntry("Signature","auto");
+
+  config->sync();
+
+  delete setWidget;
+}
+
+void KMComposeWin::cancelSettings()
+{
+  delete setWidget;
+}
+
+*/
+
+KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, Message
+*message, int action) : KTopLevelWidget(name)
 {
   setCaption("KMail Composer");
 
-  composeView = new KMComposeView(this,NULL,emailAddress);
+  parseConfiguration();
+
+  composeView = new KMComposeView(this,NULL,emailAddress,message,action);
   setView(composeView);
 
   setupMenuBar();
 
   setupToolBar();
 
+  printf("toolBarStatus in Constr. = %i\n",toolBarStatus);
+  if(toolBarStatus==false)
+	enableToolBar(KToolBar::Hide);	
+	
   resize(480, 510);
-  windowCount++;
 }
 
+void KMComposeWin::parseConfiguration()
+{
+  KConfig *config;
+  QString o;
+
+  config = KApplication::getKApplication()->getConfig();
+  config->setGroup("Settings");
+  o = config->readEntry("ShowToolBar");
+  if((!o.isEmpty() && o.find("no",0,false)) == 0)
+	{toolBarStatus = false;
+	printf("tStat = %i\n",toolBarStatus);
+	}
+  else
+	{toolBarStatus = true;
+	printf("tStat = %i\n",toolBarStatus);
+	}
+
+  o = config->readEntry("Signature");
+  if((!o.isEmpty() && o.find("auto",0,false)) == 0)
+	{sigStatus = false;
+         printf("sigStatus = %i\n",sigStatus);
+	}
+  else
+	{sigStatus = true;
+	printf("sigStatus = %i\n",sigStatus);
+	}
+
+  o = config->readEntry("Send button");
+  if((!o.isEmpty() && o.find("later",0,false)) == 0)
+	{sendButton = false;
+	printf("sendButton = %i\n",sendButton);
+	}
+  else
+	sendButton = true;
+}	
 
 /**********************************************************************************************/
 void KMComposeWin::setupMenuBar()
 {
   menuBar = new KMenuBar(this);
 
-  QPopupMenu *menu = new QPopupMenu();
-  menu->insertItem("Send",composeView,SLOT(toDo()));
-  menu->insertSeparator();
-  menu->insertItem("Save...",composeView,SLOT(saveMail()));
-  menu->insertItem("Address Book...",composeView,SLOT(toDo()));
-  menu->insertItem("Print...",composeView,SLOT(toDo()));
-  menu->insertSeparator();
-  menu->insertItem("New Composer",this,SLOT(newComposer()));
-  menu->insertItem("New Mailreader",this,SLOT(newMailReader()));
-  menu->insertSeparator();
-  menu->insertItem("Close",this,SLOT(abort()));
-  menu->insertItem("Quit",qApp,SLOT(quit()),ALT + Key_Q);
-  menuBar->insertItem("File",menu);
+  QPopupMenu *fmenu = new QPopupMenu();
+  fmenu->insertItem("Send",composeView,SLOT(sendNow()), ALT+Key_X);
+  fmenu->insertItem("Send &later",composeView,SLOT(toDo()),ALT+Key_L);
+  fmenu->insertSeparator();
+  fmenu->insertItem("Address &Book...",composeView,SLOT(toDo()),ALT+Key_B);
+  fmenu->insertItem("&Print...",composeView,SLOT(printIt()),ALT+Key_P);
+  fmenu->insertSeparator();
+  fmenu->insertItem("New &Composer",composeView,SLOT(newComposer()),ALT+Key_C);
+  fmenu->insertItem("New Mail&reader",this,SLOT(doNewMailReader()),ALT+Key_R);
+  fmenu->insertSeparator();
+  fmenu->insertItem("&Close",this,SLOT(abort()),CTRL+ALT+Key_C);
+  menuBar->insertItem("File",fmenu);
+  
 
-  menu = new QPopupMenu();
-  menu->insertItem("Undo",composeView,SLOT(undoEvent()));
-  menu->insertSeparator();
-  menu->insertItem("Copy",composeView,SLOT(copyText()),CTRL + Key_C);
-  menu->insertItem("Cut",composeView,SLOT(cutText()),CTRL + Key_X);
-  menu->insertItem("Paste",composeView,SLOT(pasteText()),CTRL + Key_V);
-  menu->insertItem("Mark all",composeView,SLOT(markAll()));
-  menu->insertSeparator();
-  menu->insertItem("Find...",composeView,SLOT(toDo()));
-  menuBar->insertItem("Edit",menu);
+  QPopupMenu  *emenu = new QPopupMenu();
+  emenu->insertItem("Undo",composeView,SLOT(undoEvent()));
+  emenu->insertSeparator();
+  emenu->insertItem("Copy",composeView,SLOT(copyText()),CTRL + Key_C);
+  emenu->insertItem("Cut",composeView,SLOT(cutText()),CTRL + Key_X);
+  emenu->insertItem("Paste",composeView,SLOT(pasteText()),CTRL + Key_V);
+  emenu->insertItem("Mark all",composeView,SLOT(markAll()),CTRL + Key_A);
+  emenu->insertSeparator();
+  emenu->insertItem("Find...",composeView,SLOT(find()));
+  menuBar->insertItem("Edit",emenu);
 
-  menu = new QPopupMenu();
-  menu->insertItem("Recipients...",composeView,SLOT(toDo()));
-  menu->insertSeparator();
-  menu->insertItem("Attach...",composeView,SLOT(toDo()));
-  menu->insertSeparator();
+  QPopupMenu *mmenu = new QPopupMenu();
+  mmenu->insertItem("Recip&ients...",composeView,SLOT(toDo()),ALT+Key_I);
+  mmenu->insertSeparator();
   QPopupMenu *menv = new QPopupMenu();
   menv->insertItem("High");
   menv->insertItem("Normal");
   menv->insertItem("Low");
-  menu->insertItem("Priority",menv);
-  menuBar->insertItem("Message",menu);
+  mmenu->insertItem("Priority",menv);
+  menuBar->insertItem("Message",mmenu);
+
+  QPopupMenu *amenu = new QPopupMenu();
+  amenu->insertItem("&File...",composeView,SLOT(attachFile()),ALT+Key_F);
+  amenu->insertItem("Si&gnature",composeView,SLOT(appendSignature()),ALT+Key_G);
+  if(sigStatus == true)
+  	amenu->setItemEnabled(amenu->idAt(2),FALSE);
+  menuBar->insertItem("Attach",amenu);
+
+  QPopupMenu *omenu = new QPopupMenu();
+//  omenu->insertItem("General S&ettings",this,SLOT(setSettings()),ALT+Key_E);
+  omenu->insertItem("Toggle T&oolbar",this,SLOT(toggleToolBar()),ALT+Key_O);
+  omenu->setItemChecked(omenu->idAt(2),TRUE);
+  menuBar->insertItem("Options",omenu);
 
   menuBar->insertSeparator();
 
-  menu = new QPopupMenu();
-  menu->insertItem("Help",this,SLOT(invokeHelp()),ALT + Key_H);
-  menu->insertSeparator();
-  menu->insertItem("About",this,SLOT(about()));
-  menuBar->insertItem("Help",menu);
+
+  QPopupMenu *hmenu = new QPopupMenu();
+  hmenu->insertItem("Help",this,SLOT(invokeHelp()),ALT + Key_H);
+  hmenu->insertSeparator();
+  hmenu->insertItem("About",this,SLOT(about()));
+  menuBar->insertItem("Help",hmenu);
 
   setMenu(menuBar);
 }
@@ -165,10 +716,10 @@ void KMComposeWin::setupToolBar()
 	QPixmap pixmap;
 
 	pixmap.load(pixdir+"kmnew.xpm");
-	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"New Composer");
+	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),composeView,SLOT(newComposer()),TRUE,"New Composer");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"kmsend.xpm");
-	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Send");
+	toolBar->insertItem(pixmap,0,SIGNAL(clicked()),composeView,SLOT(sendIt()),TRUE,"Send");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"reload.xpm");
 	toolBar->insertItem(pixmap,2,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Undo");
@@ -184,17 +735,56 @@ void KMComposeWin::setupToolBar()
 	pixmap.load(pixdir+"kmaddressbook.xpm");
 	toolBar->insertItem(pixmap,7,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Addressbook");
 	pixmap.load(pixdir+"kmattach.xpm");
-	toolBar->insertItem(pixmap,8,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Attach");
+	toolBar->insertItem(pixmap,8,SIGNAL(clicked()),composeView,SLOT(attachFile()),TRUE,"Attach");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"kmsave.xpm");
-	toolBar->insertItem(pixmap,11,SIGNAL(clicked()),composeView,SLOT(saveMail()),TRUE,"Save");
 	pixmap.load(pixdir+"kmprint.xpm");
-	toolBar->insertItem(pixmap,12,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Print");
+	toolBar->insertItem(pixmap,12,SIGNAL(clicked()),composeView,SLOT(printIt()),TRUE,"Print");
 	pixmap.load(pixdir+"help.xpm");
 	toolBar->insertItem(pixmap,13,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
 
 	addToolBar(toolBar);
 }
+
+void KMComposeWin::doNewMailReader()
+{
+   KMMainWin *newReader = new KMMainWin(NULL);
+   newReader->show();
+   newReader->resize(newReader->size());
+}
+
+void KMComposeWin::toggleToolBar()
+{
+  enableToolBar(KToolBar::Toggle);
+  if(toolBarStatus==false)
+	toolBarStatus=true;
+  else
+	toolBarStatus=false;
+  
+  repaint();
+}
+
+void KMComposeView::appendSignature()
+{
+   KConfig *configFile = new KConfig();
+   QString sigFile;
+   char temp[255];
+   QString text;
+   int col; 
+   int line;
+   editor->getCursorPosition(&line,&col);
+   configFile = KApplication::getKApplication()->getConfig();
+   configFile->setGroup("Identity");
+   sigFile = configFile->readEntry("Signature File");
+   QFile *contFile= new QFile(sigFile);
+   contFile->open(IO_ReadOnly);
+   while((contFile->readLine(temp,100)) != 0)
+        text.append(temp);
+   editor->insertAt(text,line,col);
+   editor->update();
+   editor->repaint();
+
+}
+
 
 
 void KMComposeWin::abort()
@@ -202,38 +792,11 @@ void KMComposeWin::abort()
   close();
 }
 
-void KMComposeWin::about()
-{
-	KMsgBox::message(this,"About",
-	 "kmail [ALPHA]\n\n"
-	 "Yat-Nam Lo <lynx@topaz.hknet.com>\n"
-	 "Stephan Meyer <Stephan.Meyer@munich.netsurf.de>\n"
-	 "Stefan Taferner <taferner@alpin.or.at>\n"
-	 "Markus Wübben <markus.wuebben@kde.org>\n\n"
-	 "This program is covered by the GPL.",1);
-}
-
 void KMComposeWin::invokeHelp()
 {
 
   KApplication::getKApplication()->invokeHTMLHelp("","");
 
-}
-
-void KMComposeWin::newComposer()
-{
-	KMComposeWin *d;
-	d = new KMComposeWin(NULL);
-	d->show();
-	d->resize(d->size());
-}
-
-void KMComposeWin::newMailReader()
-{
-	KMMainWin *d;
-	d = new KMMainWin(NULL);
-	d->show();
-	d->resize(d->size());
 }
 
 void KMComposeWin::toDo()
@@ -245,10 +808,39 @@ void KMComposeWin::toDo()
 			 "We are sorry for the inconvenience :-)",1);
 }
 
+void KMComposeWin::about()
+{
+	KMsgBox::message(this,"About",
+	 "kmail [ALPHA]\n\n"
+	 "Lynx <lynx@topaz.hknet.com>\n"
+	 "Stephan Meyer <Stephan.Meyer@munich.netsurf.de>\n"
+	 "Stefan Taferner <taferner@alpin.or.at>\n"
+	 "Markus Wübben <markus.wuebben@kde.org>\n\n"
+	 "This program is covered by the GPL.",1);
+}
+
 void KMComposeWin::closeEvent(QCloseEvent *e)
 {
 	KTopLevelWidget::closeEvent(e);
 	delete this;
-	if (!(--windowCount)) qApp->quit();
+	KConfig *config = new KConfig();
+ 	config = KApplication::getKApplication()->getConfig();
+	config->setGroup("Settings");
+	if(toolBarStatus)
+		config->writeEntry("ShowToolBar","yes");
+	else
+		config->writeEntry("ShowToolBar","no");
+	config->sync();
+
 }
 
+KMAttachmentItem::KMAttachmentItem(QString _name, int _index)
+{
+	
+	fileName = _name;
+	index =  _index;
+	printf("In AttachmentItem constructor\n");
+	cout << fileName << "\n";
+	cout << index << "\n";
+	printf("Leaving item constructor\n");
+}
