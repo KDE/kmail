@@ -9,8 +9,8 @@
 
 
 #define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
-#ifdef HAVE_MMAP
 #include <unistd.h>
+#ifdef HAVE_MMAP
 #include <sys/mman.h>
 #endif
 
