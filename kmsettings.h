@@ -106,10 +106,11 @@ protected slots:
 
 private slots:
   void chooseLocation();
+  void slotIntervalChange();
 
 private:
   QLineEdit *mEdtName, *mEdtLocation, *mEdtLogin, *mEdtPasswd, *mEdtHost;
-  QLineEdit *mEdtPort;
+  QLineEdit *mEdtPort, *mChkInt;
   QComboBox *mFolders;
   KMAccount *mAcct;
   QCheckBox *mStorePasswd, *mChkDelete, *mChkInterval, *mChkExclude;

@@ -30,6 +30,7 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
+#include <qvalidator.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcolorbtn.h>
@@ -45,6 +46,7 @@
 //------
 #include "kmsettings.moc"
 
+static QIntValidator intValidator(1, 0xFFFF, NULL);
 
 //-----------------------------------------------------------------------------
 KMSettings::KMSettings(QWidget *parent, const char *name) :
@@ -1074,21 +1076,31 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     tmpStr.sprintf("%u",((KMAcctPop*)mAcct)->port());
     mEdtPort = createLabeledEntry(this, grid, i18n("Port:"),
 				  tmpStr, 5, 0);
+    tmpStr.sprintf("%u", ((KMAccount*)mAcct)->checkInterval());
+    mChkInt = createLabeledEntry(this, grid, i18n("Check interval(minutes):"),
+                                  tmpStr, 6, 0);
+    if (((KMAccount*)mAcct)->checkInterval() < 1) {
+       mChkInt->setEnabled(false);
+    }
+    // The range on this validator is 1..0xFFFF which should be fine for
+    // both fields.
+    mEdtPort->setValidator(&intValidator);
+    mChkInt->setValidator(&intValidator);
 
     mStorePasswd = new QCheckBox(i18n("Store POP password in config file"), this);
     mStorePasswd->setMinimumSize(mStorePasswd->sizeHint());
     mStorePasswd->setChecked(((KMAcctPop*)mAcct)->storePasswd());
-    grid->addMultiCellWidget(mStorePasswd, 6, 6, 1, 2);
+    grid->addMultiCellWidget(mStorePasswd, 7, 7, 1, 2);
 
     mChkDelete = new QCheckBox(i18n("Delete mail from server"), this);
     mChkDelete->setMinimumSize(mChkDelete->sizeHint());
     mChkDelete->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
-    grid->addMultiCellWidget(mChkDelete, 7, 7, 1, 2);
+    grid->addMultiCellWidget(mChkDelete, 8, 8, 1, 2);
 
     mChkRetrieveAll=new QCheckBox(i18n("Retrieve all mail from server"), this);
     mChkRetrieveAll->setMinimumSize(mChkRetrieveAll->sizeHint());
     mChkRetrieveAll->setChecked(((KMAcctPop*)mAcct)->retrieveAll());
-    grid->addMultiCellWidget(mChkRetrieveAll, 8, 8, 1, 2);
+    grid->addMultiCellWidget(mChkRetrieveAll, 9, 9, 1, 2);
 
   }
   else 
@@ -1100,12 +1112,12 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mChkInterval = new QCheckBox(i18n("Enable interval Mail checking"), this);
   mChkInterval->setMinimumSize(mChkInterval->sizeHint());
   mChkInterval->setChecked(mAcct->checkInterval() > 0);
-  grid->addMultiCellWidget(mChkInterval, 9, 9, 1, 2);
+  grid->addMultiCellWidget(mChkInterval, 10, 10, 1, 2);
 
   mChkExclude = new QCheckBox(i18n("Exclude from \"Check Mail\""), this);
   mChkExclude->setMinimumSize(mChkExclude->sizeHint());
   mChkExclude->setChecked(mAcct->checkExclude());
-  grid->addMultiCellWidget(mChkExclude, 10, 10, 1, 2);
+  grid->addMultiCellWidget(mChkExclude, 11, 11, 1, 2);
 
   // label with "Local Account" or "Pop Account" created previously
   lbl->adjustSize();
@@ -1115,7 +1127,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   lbl = new QLabel(i18n("Store new mail in account:"), this);
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
-  grid->addMultiCellWidget(lbl, 11, 11, 0, 2);
+  grid->addMultiCellWidget(lbl, 12, 12, 0, 2);
 
   // combobox of all folders with current account folder selected
   acctFolder = mAcct->folder();
@@ -1140,7 +1152,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mFolders->adjustSize();
   mFolders->setMinimumSize(100, mEdtName->minimumSize().height());
   mFolders->setMaximumSize(500, mEdtName->minimumSize().height());
-  grid->addWidget(mFolders, 12, 1);
+  grid->addWidget(mFolders, 13, 1);
 
 
   // buttons at bottom
@@ -1161,7 +1173,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   btnBox->setMinimumSize(230, ok->size().height()+10);
   btnBox->setMaximumSize(2048, ok->size().height()+10);
-  grid->addMultiCellWidget(btnBox, 15, 15, 0, 2);
+  grid->addMultiCellWidget(btnBox, 16, 16, 0, 2);
 
   resize(350,350);
   grid->activate();
@@ -1197,7 +1209,10 @@ void KMAccountSettings::accept()
   fld = folderMgr->find(mFolders->currentText());
   mAcct->setFolder((KMFolder*)fld);
 
-  mAcct->setCheckInterval(mChkInterval->isChecked() ? 3 : 0);
+  int _ChkInt = atoi(mChkInt->text());
+  if (_ChkInt < 1)
+     _ChkInt = ((KMAccount*)mAcct)->defaultCheckInterval();
+  mAcct->setCheckInterval(mChkInterval->isChecked() ? _ChkInt : 0);
   mAcct->setCheckExclude(mChkExclude->isChecked());
 
   if (acctType == "local")
@@ -1224,3 +1239,11 @@ void KMAccountSettings::accept()
 }
 
 
+
+//-----------------------------------------------------------------------------
+void KMAccountSettings::slotIntervalChange()
+{
+   if (mChkInterval->isChecked())
+      mChkInt->setEnabled(true);
+   else mChkInt->setEnabled(false);
+}

@@ -11,6 +11,9 @@
 #include <qsignal.h>
 #include "kmnewiostatuswdg.h"
 
+// The defualt check interval
+#define DEFAULT_CK_INT 5
+
 class KMAcctMgr;
 class KMFolder;
 class KMAcctFolder;
@@ -57,6 +60,9 @@ public:
     An interval of zero (or less) disables the automatic checking. */
   virtual void setCheckInterval(int aInterval);
   int checkInterval(void) const { return mInterval; }
+
+  // This can be used to provide a more complex calculation later if we want
+  inline const int defaultCheckInterval(void) const { return DEFAULT_CK_INT; }
 
   /** Set/get whether account should be part of the accounts checked
     with "Check Mail". */
