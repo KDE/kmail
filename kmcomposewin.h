@@ -575,7 +575,7 @@ protected:
    * Disables the controls of the composer window unless @dontDisable
    * is true.
    */
-   void applyChanges( bool dontSign, bool dontEncrypt, 
+   void applyChanges( bool dontSign, bool dontEncrypt,
                       bool dontDisable = false );
 
   /**
@@ -737,7 +737,7 @@ protected:
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
-  bool useHTMLEditor;
+  bool mUseHTMLEditor;
   bool mUseExtEditor;
   QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;

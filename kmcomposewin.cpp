@@ -33,6 +33,7 @@
 #include "kmcommands.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"
+#include "partNode.h"
 #include "attachmentlistview.h"
 using KMail::AttachmentListView;
 #include "dictionarycombobox.h"
@@ -107,6 +108,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   : MailComposerIface(), KMail::SecondaryWindow( "kmail-composer#" ),
     mMsg( 0 ),
     mAutoRequestMDN( false ),
+    mUseHTMLEditor( false ),
     mId( id ), mComposer( 0 ), mNeverSign( false ), mNeverEncrypt( false )
 {
   if (kmkernel->xmlGuiInstance())
@@ -226,28 +228,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
            SLOT( slotUpdateAttachActions() ) );
   mAttachMenu = 0;
 
-  useHTMLEditor = false;
   readConfig();
   setupStatusBar();
   setupEditor();
   setupActions();
-
-  // configuration is read now
-  if ( useHTMLEditor )
-    toggleMarkup(true);
-  else {
-    if ( aMsg ) {
-      if ( aMsg->typeStr()=="multipart" && aMsg->subtypeStr()=="alternative" ) {
-        toggleMarkup(true);
-      }
-      else {
-        toggleMarkup(false);
-      }
-    }
-    else
-      toggleMarkup(false);
-  }
-
 
   applyMainWindowSettings(KMKernel::config(), "Composer");
   // html-toolbar always default off
@@ -994,9 +978,10 @@ void KMComposeWin::setupActions(void)
   mEncodingAction->setCurrentItem( -1 );
 
   //these are checkable!!!
-  markupAction = new KToggleAction (i18n("Formatting (HTML)"), 0, this, SLOT(slotToggleMarkup()),
+  markupAction = new KToggleAction (i18n("Formatting (HTML)"), 0, this,
+                                    SLOT(slotToggleMarkup()),
                       actionCollection(), "html");
-  markupAction->setChecked(useHTMLEditor);
+  markupAction->setChecked(mUseHTMLEditor);
 
   mAllFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
@@ -1318,13 +1303,6 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
                           bool allowDecryption, bool isModified)
 {
-#ifdef DEBUG
-  kdDebug(5006) << "entering KMComposeWin::setMsg()" << endl;
-#endif
-  KMMessagePart bodyPart, *msgPart;
-  int i, num;
-
-
   //assert(newMsg!=0);
   if(!newMsg)
     {
@@ -1441,38 +1419,40 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  kdDebug(5006) << "KMComposeWin::setMsg() mMsg=" << mMsg->asString() << endl;
-  num = mMsg->numBodyParts();
-  kdDebug(5006) << "KMComposeWin::setMsg() mMsg->numBodyParts=" << mMsg->numBodyParts() << endl;
+  const int num = mMsg->numBodyParts();
+  kdDebug(5006) << "KMComposeWin::setMsg() mMsg->numBodyParts="
+                << mMsg->numBodyParts() << endl;
 
-  if (num > 0)
-  {
-    QCString bodyDecoded;
-    int firstAttachment=0;
+  if ( num > 0 ) {
+    KMMessagePart bodyPart;
+    int firstAttachment = 0;
 
     mMsg->bodyPart(1, &bodyPart);
-    if ( bodyPart.typeStr().lower() == "text" && bodyPart.subtypeStr().lower() == "html" ) {
-      // we have a mp/al header with a text and an html body
-      kdDebug(5006) << "KMComposeWin::setMsg() : text/html found" << endl;
-      firstAttachment = 2;
-      toggleMarkup(true);
-    } else {
-      mMsg->bodyPart(0, &bodyPart);
-      if ( bodyPart.typeStr().lower() == "multipart" && bodyPart.subtypeStr().lower() == "alternative" ) {
-       // we have a mp/mx header with a mp/al, text and an html body
+    if ( bodyPart.typeStr().lower() == "text" &&
+         bodyPart.subtypeStr().lower() == "html" ) {
+      // check whether we are inside a mp/al body part
+      partNode *root = partNode::fromMessage( mMsg );
+      partNode *node = root->findType( DwMime::kTypeText,
+                                       DwMime::kSubtypeHtml );
+      if ( node && node->parentNode() &&
+           node->parentNode()->hasType( DwMime::kTypeMultipart ) &&
+           node->parentNode()->hasSubType( DwMime::kSubtypeAlternative ) ) {
+        // we have a mp/al body part with a text and an html body
         kdDebug(5006) << "KMComposeWin::setMsg() : text/html found" << endl;
+        firstAttachment = 2;
+        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" )
+          toggleMarkup( true );
+      }
+      delete root; root = 0;
+    }
+    if ( firstAttachment == 0 ) {
+      mMsg->bodyPart(0, &bodyPart);
+      if ( bodyPart.typeStr().lower() == "text" ) {
+        // we have a mp/mx body with a text body
+        kdDebug(5006) << "KMComposeWin::setMsg() : text/* found" << endl;
         firstAttachment = 1;
-        toggleMarkup(true);
       }
-      else {
-        mMsg->bodyPart(0, &bodyPart);
-        if ( bodyPart.typeStr().lower() == "text" ) {
-          // we have a mp/mx body with a text body
-          kdDebug(5006) << "KMComposeWin::setMsg() : text/ found" << endl;
-          firstAttachment = 1;
-        }
-      }
-     }
+    }
 
     if ( firstAttachment != 0 ) // there's text to show
     {
@@ -1480,7 +1460,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       if ( mCharset.isEmpty() || mCharset == "default" )
         mCharset = mDefCharset;
 
-      bodyDecoded = bodyPart.bodyDecoded();
+      QCString bodyDecoded = bodyPart.bodyDecoded();
 
       if( allowDecryption )
         decryptOrStripOffCleartextSignature( bodyDecoded );
@@ -1498,9 +1478,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
         mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
       //mEditor->insertLine("\n", -1); <-- why ?
     } else mEditor->setText("");
-    for(i=firstAttachment; i<num; i++)
+    for( int i = firstAttachment; i < num; ++i )
     {
-      msgPart = new KMMessagePart;
+      KMMessagePart *msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);
       QCString mimeType = msgPart->typeStr().lower() + '/'
                         + msgPart->subtypeStr().lower();
@@ -2900,6 +2880,10 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
 
+  if ( mEditor->textFormat() == Qt::RichText )
+    mMsg->setHeaderField( "X-KMail-Markup", "true" );
+  else
+    mMsg->removeHeaderField( "X-KMail-Markup" );
   if ( mEditor->textFormat() == Qt::RichText && inlineSigningEncryptionSelected() ) {
     int ret = KMessageBox::warningYesNoCancel(this,
                                       i18n("<qt><p>Inline signing/encrypting of HTML messages is not possible;</p>"
@@ -2918,11 +2902,15 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     }
   }
 
+  kdDebug(5006) << "KMComposeWin::doSend() - calling applyChanges()"
+                << endl;
   applyChanges( neverSign, neverEncrypt );
 }
 
 void KMComposeWin::slotContinueDoSend( bool sentOk )
 {
+  kdDebug(5006) << "KMComposeWin::slotContinueDoSend( " << sentOk << " )"
+                << endl;
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
               this, SLOT( slotContinueDoSend( bool ) ) );
 
@@ -3109,8 +3097,8 @@ void KMComposeWin::slotCleanSpace()
 void KMComposeWin::slotToggleMarkup()
 {
  if ( markupAction->isChecked() ) {
-    toolBar("htmlToolBar")->show();
-   //toggleMarkup(true);
+   toolBar("htmlToolBar")->show();
+   // markup will be toggled as soon as markup is actually used
  }
  else
    toggleMarkup(false);
@@ -3120,9 +3108,9 @@ void KMComposeWin::slotToggleMarkup()
 void KMComposeWin::toggleMarkup(bool markup)
 {
   if ( markup ) {
-    if ( !useHTMLEditor ) {
+    if ( !mUseHTMLEditor ) {
     kdDebug(5006) << "setting RichText editor" << endl;
-    useHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+    mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
 
     // set all highlighted text caused by spelling back to black
     int paraFrom, indexFrom, paraTo, indexTo;
@@ -3133,15 +3121,16 @@ void KMComposeWin::toggleMarkup(bool markup)
 
     mEditor->setTextFormat(Qt::RichText);
     mEditor->setModified(true);
-    //markupAction->setChecked(true);
+    markupAction->setChecked(true);
+    toolBar( "htmlToolBar" )->show();
     mEditor->deleteAutoSpellChecking();
     mAutoSpellCheckingAction->setChecked(false);
     slotAutoSpellCheckingToggled(false);
    }
   }
-  else if ( useHTMLEditor ) {
+  else if ( mUseHTMLEditor ) {
     kdDebug(5006) << "setting PlainText editor" << endl;
-    useHTMLEditor = false;
+    mUseHTMLEditor = false;
     mEditor->setTextFormat(Qt::PlainText);
     QString text = mEditor->text();
     mEditor->setText(text); // otherwise the text still looks formatted
