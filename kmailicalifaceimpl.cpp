@@ -697,6 +697,30 @@ KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
   return 0;
 }
 
+KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* folder ) const
+{
+  FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() )
+    return (*it).mStorageFormat;
+  return GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
+}
+
+void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
+{
+  FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() )
+    (*it).mStorageFormat = format;
+  else {
+    FolderInfo info;
+    info.mStorageFormat = format;
+    mFolderInfoMap.insert( folder, info );
+  }
+  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+  configGroup.writeEntry( folder->idString() + "-storageFormat",
+                          format == StorageXML ? "xml" : "icalvcard" );
+}
+
+
 
 /****************************
  * The config stuff
@@ -881,6 +905,16 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
       parentFolder->createFolder( folderName( itemType ) );
       static_cast<KMFolderImap*>( folder->storage() )->setAccount( parentFolder->account() );
     }
+    // Groupware folder created, use the global setting for storage format
+    setStorageFormat( folder, GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard );
+  } else {
+    KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+    QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "icalvcard" );
+    FolderInfo info;
+    info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
+    mFolderInfoMap.insert( folder, info );
+
+    //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
   }
 
   if( folder->canAccess() != 0 ) {

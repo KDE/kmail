@@ -155,6 +155,11 @@ public:
   /** Called when a folders contents have changed */
   void folderContentsTypeChanged( KMFolder*, KMail::FolderContentsType );
 
+  /// @return the storage format of a given folder
+  StorageFormat storageFormat( KMFolder* folder ) const;
+  /// Set the storage format of a given folder. Called when seeing the kolab annotation.
+  void setStorageFormat( KMFolder* folder, StorageFormat format );
+
 public slots:
   /* (Re-)Read configuration file */
   void readConfig();
@@ -190,9 +195,15 @@ private:
 
   // The extra IMAP resource folders
   QDict<ExtraFolder> mExtraFolders;
-
   // used for collecting incidences during async loading
   QDict<Accumulator> mAccumulators;
+  // More info for each folder we care about (mContacts etc. as well as the extra folders)
+  struct FolderInfo {
+    StorageFormat mStorageFormat;
+  };
+  // The storage format used for each folder that we care about
+  typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;
+  FolderInfoMap mFolderInfoMap;
 
   unsigned int mFolderLanguage;
 
