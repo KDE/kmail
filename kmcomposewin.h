@@ -605,10 +605,12 @@ protected:
   /**
    * Show or hide header lines
    */
-  void rethinkHeaderLine( int value, int mask, int& row,
-                          const QString& labelStr, QLabel* lbl,
-                          QLineEdit* edt, QPushButton* btn = 0,
-                          const QString& toolTip = QString::null );
+  void rethinkHeaderLine( int aValue, int aMask, int& aRow,
+                          const QString &aLabelStr, QLabel* aLbl,
+                          QLineEdit* aEdt, QPushButton* aBtn = 0,
+                          const QString &toolTip = QString::null ,
+			  const QString &whatsThis = QString::null  );
+  
   void rethinkHeaderLine( int value, int mask, int& row,
                           const QString& labelStr, QLabel* lbl,
                           QComboBox* cbx, QCheckBox *chk );
