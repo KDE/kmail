@@ -55,10 +55,12 @@ const char* KMAcctLocal::type(void) const
 //-----------------------------------------------------------------------------
 void KMAcctLocal::init(void)
 {
-  mLocation = _PATH_MAILDIR;
-  
-  mLocation += "/";
-  mLocation += getenv("USER");
+  mLocation = getenv("MAIL");
+  if (mLocation.isNull()) {
+    mLocation = _PATH_MAILDIR;
+    mLocation += "/";
+    mLocation += getenv("USER");
+  }
 }
 
 
