@@ -280,6 +280,9 @@ public:
   /** Open KDE wallet and set it to kmail folder */
   KWallet::Wallet *wallet();
 
+  /** Get first mainwidget */
+  KMMainWidget *getKMMainWidget();
+
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
@@ -310,7 +313,6 @@ signals:
 
 private:
   void openReader( bool onlyCheck );
-  KMMainWidget *getKMMainWidget();
 
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;

@@ -33,10 +33,15 @@ void KMFolderComboBox::init()
   mOutboxShown = true;
   mImapShown = true;
   refreshFolders();
-  connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );
-  connect( kmkernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
-  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
-  if (mImapShown) connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  connect( this, SIGNAL( activated(int) ), 
+      this, SLOT( slotActivated(int) ) );
+  connect( kmkernel->folderMgr(), SIGNAL(changed()), 
+      this, SLOT(refreshFolders()) );
+  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), 
+      this, SLOT(refreshFolders()) );
+  if (mImapShown) 
+    connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), 
+        this, SLOT(refreshFolders()) );
 }
 
 
@@ -55,9 +60,11 @@ void KMFolderComboBox::showImapFolders(bool shown)
   mImapShown = shown;
   refreshFolders();
   if (shown)
-    connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+    connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), 
+        this, SLOT(refreshFolders()) );
   else
-    disconnect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+    disconnect( kmkernel->imapFolderMgr(), SIGNAL(changed()), 
+        this, SLOT(refreshFolders()) );
 }
 
 //-----------------------------------------------------------------------------

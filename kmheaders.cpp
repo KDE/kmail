@@ -15,6 +15,7 @@
 #include "kmmsgdict.h"
 #include "kmkernel.h"
 #include "kmdebug.h"
+#include "kmfoldertree.h"
 using KMail::FolderJob;
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
@@ -2766,7 +2767,7 @@ void KMHeaders::slotRMB()
   menu->insertSeparator();
 
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  KMCopyCommand::folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
+  mOwner->folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
 
   if ( mFolder->isReadOnly() ) {
@@ -2774,7 +2775,7 @@ void KMHeaders::slotRMB()
     menu->setItemEnabled( id, false );
   } else {
     QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-    KMMoveCommand::folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
+    mOwner->folderTree()->folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
   }
 

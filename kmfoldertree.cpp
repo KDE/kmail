@@ -250,6 +250,7 @@ void KMFolderTreeItem::properties()
   return;
 }
 
+
 //=============================================================================
 
 
@@ -1658,6 +1659,72 @@ void KMFolderTree::showFolder( KMFolder* folder )
   {
     doFolderSelected( item );
     ensureItemVisible( item );
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver, 
+    KMMenuToFolder *aMenuToFolder, QPopupMenu *menu, QListViewItem *item )
+{
+  while ( menu->count() )
+  {
+    QPopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
+    if ( popup )
+      delete popup;
+    else
+      menu->removeItemAt( 0 );
+  }
+  // connect the signals
+  if ( move )
+  {
+    disconnect( menu, SIGNAL(activated(int)), receiver,
+        SLOT(moveSelectedToFolder(int)) );
+    connect( menu, SIGNAL(activated(int)), receiver,
+        SLOT(moveSelectedToFolder(int)) );
+  } else {
+    disconnect( menu, SIGNAL(activated(int)), receiver,
+        SLOT(copySelectedToFolder(int)) );
+    connect( menu, SIGNAL(activated(int)), receiver,
+        SLOT(copySelectedToFolder(int)) );
+  }
+  if ( !item )
+    item = firstChild();
+
+  while( item ) 
+  {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( item );
+    QString label = fti->text( 0 );
+    label.replace( "&","&&" );
+    if ( fti->firstChild() )
+    {
+      // new level
+      QPopupMenu* popup = new QPopupMenu( menu, "subMenu" );
+      folderToPopupMenu( move, receiver, aMenuToFolder, popup, fti->firstChild() );
+      if ( fti->folder() && !fti->folder()->noContent() )
+      {
+        int menuId;
+        if ( move )
+          menuId = popup->insertItem( i18n("Move to This Folder"), -1, 0 );
+        else
+          menuId = popup->insertItem( i18n("Copy to This Folder"), -1, 0 );
+        popup->insertSeparator( 1 );
+        aMenuToFolder->insert( menuId, fti->folder() );
+      }
+      menu->insertItem( label, popup );
+    } else
+    {
+      // insert an item
+      int menuId = menu->insertItem( label );
+      if ( fti->folder() )
+        aMenuToFolder->insert( menuId, fti->folder() );
+      bool enabled = (fti->folder() ? true : false);
+      if ( fti->folder() && 
+           ( fti->folder()->isReadOnly() || fti->folder()->noContent() ) )
+        enabled = false;
+      menu->setItemEnabled( menuId, enabled );
+    }
+
+    item = item->nextSibling();
   }
 }
 

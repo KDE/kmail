@@ -40,7 +40,6 @@ class KMAccount;
 template <typename T> class QGuardedPtr;
 
 class KMFolderTreeItem : public QObject, public KFolderTreeItem
-
 {
   Q_OBJECT
 public:
@@ -172,6 +171,10 @@ public:
   {
     mFolderToItem.remove( folder );
   }
+
+  /** Generate a popup menu that contains all folders */
+  void folderToPopupMenu( bool move, QObject *receiver, KMMenuToFolder *, 
+      QPopupMenu *menu, QListViewItem *start = 0 );
   
 signals:
   /** The selected folder has changed */

@@ -701,9 +701,9 @@ void KMFldSearch::slotContextMenuRequested( QListViewItem *lvi, const QPoint &, 
 
     mMenuToFolder.clear();
     QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-    KMMoveCommand::folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
+    mKMMainWidget->folderTree()->folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
     QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-    KMCopyCommand::folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
+    mKMMainWidget->folderTree()->folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
 
     // show most used actions
     mReplyAction->plug(menu);

@@ -76,7 +76,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
 
   setPixmap(mDefaultIcon);
 
-  KMMainWidget * mainWidget = getKMMainWidget();
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( mainWidget ) {
     QWidget * mainWin = mainWidget->topLevelWidget();
     if ( mainWin ) {
@@ -108,7 +108,7 @@ void KMSystemTray::buildPopupMenu()
   mPopupMenu = 0;
 
   mPopupMenu = new KPopupMenu();
-  KMMainWidget * mainWidget = getKMMainWidget();
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return;
 
@@ -127,7 +127,7 @@ void KMSystemTray::buildPopupMenu()
     action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
 
-  KMainWindow *mainWin = ::qt_cast<KMainWindow*>(getKMMainWidget()->topLevelWidget());
+  KMainWindow *mainWin = ::qt_cast<KMainWindow*>(kmkernel->getKMMainWidget()->topLevelWidget());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
       action->plug( mPopupMenu );
@@ -368,11 +368,11 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
 
 bool KMSystemTray::mainWindowIsOnCurrentDesktop()
 {
-  KMMainWidget * mainWidget = getKMMainWidget();
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if ( !mainWidget )
     return false;
 
-  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
+  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
   if ( !mainWin )
     return false;
 
@@ -386,9 +386,9 @@ bool KMSystemTray::mainWindowIsOnCurrentDesktop()
  */
 void KMSystemTray::showKMail()
 {
-  if (!getKMMainWidget())
+  if (!kmkernel->getKMMainWidget())
     return;
-  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
+  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
   assert(mainWin);
   if(mainWin)
   {
@@ -411,9 +411,9 @@ void KMSystemTray::showKMail()
 
 void KMSystemTray::hideKMail()
 {
-  if (!getKMMainWidget())
+  if (!kmkernel->getKMMainWidget())
     return;
-  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
+  QWidget *mainWin = kmkernel->getKMMainWidget()->topLevelWidget();
   assert(mainWin);
   if(mainWin)
   {
@@ -425,32 +425,6 @@ void KMSystemTray::hideKMail()
     mainWin->hide();
     mParentVisible = false;
   }
-}
-
-/**
- * Grab a pointer to the first KMMainWidget.
- */
-KMMainWidget * KMSystemTray::getKMMainWidget()
-{
-  QWidgetList *l = kapp->topLevelWidgets();
-  QWidgetListIt it( *l );
-  QWidget *wid;
-
-  while ( (wid = it.current()) != 0 ) {
-    ++it;
-    QObjectList *l2 = wid->topLevelWidget()->queryList("KMMainWidget");
-    if (l2 && l2->first())
-	{
-	  KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>(l2->first());
-	  assert (kmmw);
-	  delete l2;
-	  delete l;
-	  return kmmw;
-	}
-    delete l2;
-  }
-  delete l;
-  return 0;
 }
 
 /**
@@ -577,11 +551,11 @@ void KMSystemTray::selectedAccount(int id)
 {
   showKMail();
 
-  KMMainWidget * mainWidget = getKMMainWidget();
+  KMMainWidget * mainWidget = kmkernel->getKMMainWidget();
   if (!mainWidget)
   {
     kmkernel->openReader();
-    mainWidget = getKMMainWidget();
+    mainWidget = kmkernel->getKMMainWidget();
   }
 
   assert(mainWidget);

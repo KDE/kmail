@@ -25,6 +25,8 @@
 #include "kpopupmenu.h"
 #include "kmreaderwin.h"
 #include "kmfolder.h"
+#include "kmmainwidget.h"
+#include "kmfoldertree.h"
 
 #include "kmreadermainwin.h"
 #include "kmreadermainwin.moc"
@@ -318,7 +320,9 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     menu->insertSeparator();
 
     QPopupMenu* copyMenu = new QPopupMenu(menu);
-    KMMenuCommand::folderToPopupMenu( false, this, &mMenuToFolder, copyMenu );
+    KMMainWidget* mainwin = kmkernel->getKMMainWidget();
+    if ( mainwin )
+      mainwin->folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();
     mReaderWin->toggleFixFontAction()->plug( menu );

@@ -21,6 +21,8 @@ public:
 
   /** Select whether the outbox folder is shown.  Default is yes. */
   void showOutboxFolder(bool shown);
+
+  /** Select whether the IMAP folders should be shown.  Default is yes. */
   void showImapFolders(bool shown);
 
   void setFolder( KMFolder *aFolder );

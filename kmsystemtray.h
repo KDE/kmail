@@ -66,7 +66,6 @@ protected:
   void updateCount();
 
   QString prettyName(KMFolder *);
-  KMMainWidget * getKMMainWidget();
 
 private:
 
