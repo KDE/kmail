@@ -115,15 +115,17 @@ bool KMSender::sendSMTP(KMMessage* msg)
   cout << mSmtpPort << endl;
   client.Open(mSmtpHost,mSmtpPort); // Open connection
   cout << client.Response().c_str();
-  if(!client.IsOpen) // Check if connection succeded
-    {KMsgBox::message(0,"Network Error!","Could not open connection to " +
-		      mSmtpHost +"!");
+
+  /*  printf("before kFailNoF\n");
+  if(client.LastFailure != DwProtocolClient::kFailNoFailure)
+    {KMsgBox::message(0,"Error opening connection",client.LastFailureStr());
+    client.Close(); // Just to make sure
     return false;
-    }
-  
+    }*/
+
   replyCode = client.Helo(); // Send HELO command
   if(replyCode != 250 && replyCode != 0)
-    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Error!",client.Response().c_str());
     if(client.Close() != 0)
       {KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -132,7 +134,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
     return false;
     }
   else if(replyCode == 0 )
-    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
     return false;
     }
   else  
@@ -151,7 +153,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
 
   replyCode = client.Mail(msg->from());
   if(replyCode != 250 && replyCode != 0) // Send MAIL command
-     {KMsgBox::message(0,"Error",client.LastErrorStr());
+     {KMsgBox::message(0,"Error",client.Response().c_str());
      if(client.Close() != 0)
       {KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -160,7 +162,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
      return false;
      }
   else if(replyCode == 0 )
-    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
     return false;
     }    
   else
@@ -178,7 +180,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
     }
   replyCode = client.Rcpt(msg->to()); // Send RCPT command
   if(replyCode != 250 && replyCode != 251 && replyCode != 0)
-    {KMsgBox::message(0,"Error",client.LastErrorStr());
+    {KMsgBox::message(0,"Error",client.Response().c_str());
     if(client.Close() != 0)
       {KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -187,7 +189,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
     return false;
     }  
   else if(replyCode == 0 )
-    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
     return false;
     }    
   else
@@ -197,8 +199,8 @@ bool KMSender::sendSMTP(KMMessage* msg)
   if(!str.isEmpty())  // Check if cc is set.
     {replyCode = client.Rcpt(msg->cc()); // Send RCPT command
     if(replyCode != 250 && replyCode != 251 && replyCode != 0)
-      {KMsgBox::message(0,"Error",client.LastErrorStr());
-      if(client.Close() !=0)
+      {KMsgBox::message(0,"Error",client.Response().c_str());
+      if(client.Close() !=0 )
 	{KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
 	return false;
@@ -206,7 +208,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
       return false;
       }
     else if(replyCode == 0 )
-      {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+      {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
       return false;
       }    
     else
@@ -217,7 +219,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
   if(!str.isEmpty())
     {replyCode = client.Rcpt(msg->bcc()); // Send RCPT command
     if(replyCode != 250 && replyCode != 251 && replyCode != 0)
-      {KMsgBox::message(0,"Error",client.LastErrorStr());
+      {KMsgBox::message(0,"Error",client.Response().c_str());
       if(client.Close() != 0)
 	{KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -226,7 +228,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
       return false;
       }
     else if(replyCode == 0 )
-      {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+      {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
       return false;
       }    
     else
@@ -235,7 +237,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
 
   replyCode = client.Data();
   if(replyCode != 354 && replyCode != 0) // Send DATA command
-    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Error!",client.Response().c_str());
     if(client.Close() != 0)
       {KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -244,7 +246,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
     return false;
     }
   else if(replyCode == 0 )
-    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error!",client.Response().c_str());
     return false;
     }    
   else
@@ -252,7 +254,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
 
   replyCode = client.SendData(dwString);
   if(replyCode != 250 && replyCode != 0) // Send data.
-    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Error!",client.Response().c_str());
     if(client.Close() != 0 )
       {KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -261,7 +263,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
     return false;
     }
   else if(replyCode == 0 )
-    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
     return false;
     }    
   else
@@ -269,7 +271,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
 
   replyCode = client.Quit(); // Send QUIT command
   if(replyCode != 221 && replyCode != 0)
-    {KMsgBox::message(0,"Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Error!",client.Response().c_str());
     if(client.Close() != 0 )
       {KMsgBox::message(0,"Network Error!","Could not close connection to " +
 		       mSmtpHost + "!");
@@ -278,7 +280,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
     return false;
     }
   else if(replyCode == 0 )
-    {KMsgBox::message(0,"Network Error!",client.LastErrorStr());
+    {KMsgBox::message(0,"Network Error!",client.LastFailureStr());
     return false;
     }    
   else

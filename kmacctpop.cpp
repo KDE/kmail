@@ -60,20 +60,55 @@ bool KMAcctPop::processNewMail(void)
   cout << mLogin << endl;
   cout << mPasswd << endl;
 
-  client.Open(mHost, mPort); 
-  if(!client.IsOpen())
+  replyCode = client.Open(mHost, mPort);
+  printf("replyCode for Open: %i\n",replyCode);
+
+  if((replyCode=client.IsOpen()) == 0)
     {KMsgBox::message(0,"Network error!","Could not open connection to " +
 		      mHost +"!");
     return false;
     }
-  cout << client.SingleLineResponse().c_str();
+  printf("Reply Code for isOpen :%i\n",replyCode);
+
+  while (1) {
+    response = client.SingleLineResponse().c_str();
+    printf("Entering loop\n");
+    cout << "Response: " << response;
+    // check for an error here, and break if an error occurs
+    // for example, you could get a time out
+    if (client.LastError() != DwProtocolClient::kErrNoError) 
+      {printf("There was an error %i\n",client.LastError());
+	break;
+      }
+    // check for a valid response
+    // you will probably want to do something better than this
+    if (response != "") 
+      break;
+   }
+
+
   replyCode = client.User(mLogin); // Send USER command
-  cout << client.SingleLineResponse().c_str();
+  printf("replyCode for User: %i\n",replyCode);
+  if(replyCode != 43 && replyCode != 0)
+    {KMsgBox::message(0,"","");
+    return false;
+    }
+  else if(replyCode == 0)
+    {KMsgBox::message(0,"Network Error",client.LastErrorStr());
+    return false;
+    }
+  else
+    cout << client.SingleLineResponse().c_str();
+
   replyCode = client.Pass(mPasswd); // Send PASS command
+  printf("replyCode for Pass: %i\n",replyCode);
   cout << client.SingleLineResponse().c_str();
-  replyCode = client.Stat(); // Send STAT command
+  replyCode = client.Stat();// Send STAT command
+  printf("reply Code1 for stat: %i\n",replyCode);
+  replyCode = client.Stat();
+  printf("reply Code2 for stat: %i\n",replyCode);
   response = client.SingleLineResponse().c_str();
-    
+  cout << response;  
   QTextStream str(response, IO_ReadOnly);
   str >> status >> num >> size;
   debug("GOT POP %s %d %d",status.data(), num, size);
