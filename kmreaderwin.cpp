@@ -199,35 +199,6 @@ bool KMReaderWin::foundMatchingCryptPlug( const QString & libName,
 }
 
 
-void KMReaderWin::insertAndParseNewChildNode( KMReaderWin* reader,
-                                              QCString* resultStringPtr,
-                                              CryptPlugWrapper*     useThisCryptPlug,
-                                              partNode& startNode,
-                                              const char* content,
-                                              const char* cntDesc,
-                                              bool append )
-{
-  ObjectTreeParser::insertAndParseNewChildNode( reader, resultStringPtr, useThisCryptPlug,
-						startNode, content, cntDesc, append );
-}
-
-
-// this STATIC function will be replaced once KMime is alive (khz, 29.11.2001)
-void KMReaderWin::parseObjectTree( KMReaderWin* reader,
-                                   QCString* resultStringPtr,
-                                   CryptPlugWrapper*     useThisCryptPlug,
-                                   partNode* node,
-                                   bool showOneMimePart,
-                                   bool keepEncryptions,
-                                   bool includeSignatures/*,
-                                   NewByteArray* resultingRawDataPtr*/ )
-{
-  ObjectTreeParser::parseObjectTree( reader, resultStringPtr, useThisCryptPlug,
-				     node, showOneMimePart, keepEncryptions,
-				     includeSignatures );
-};
-
-
 // This function returns the complete data that were in this
 // message parts - *after* all encryption has been removed that
 // could be removed.
@@ -1515,23 +1486,6 @@ void KMReaderWin::showMessageAndSetData( const QString& txt0,
 }
 
 
-bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
-                                                    QCString* resultString,
-                                                    CryptPlugWrapper* useThisCryptPlug,
-                                                    partNode* data,
-                                                    partNode& sign,
-                                                    const QString& fromAddress,
-                                                    bool doCheck,
-                                                    QCString* cleartextData,
-                                                    struct CryptPlugWrapper::SignatureMetaData* paramSigMeta,
-                                                    bool hideErrors )
-{
-  return ObjectTreeParser::writeOpaqueOrMultipartSignedData( reader, resultString,
-							     useThisCryptPlug, data, sign,
-							     fromAddress, doCheck,
-							     cleartextData, paramSigMeta, hideErrors );
-}
-
 //pending(khz): replace this and put it into CryptPlugWrapper class  (khz, 2002/06/27)
 class tmpHelper {
 public:
@@ -1927,10 +1881,10 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   mIsFirstTextPart = true;
   // show message content
   if( !onlyProcessHeaders )
-    parseObjectTree( this,
-                     0,
-                     0,
-                     mRootNode );
+    ObjectTreeParser::parseObjectTree( this,
+				       0,
+				       0,
+				       mRootNode );
 
 
   // store encrypted/signed status information in the KMMessage

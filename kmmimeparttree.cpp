@@ -8,6 +8,8 @@
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "kmkernel.h"
+#include "objecttreeparser.h"
+using KMail::ObjectTreeParser;
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -84,11 +86,11 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
         if( mReaderWin->mRootNode == i->node() )
           mReaderWin->update( true ); // Force update
         else
-          mReaderWin->parseObjectTree( mReaderWin,
-                                       0,
-                                       0,
-                                       i->node(),
-                                       true );
+          ObjectTreeParser::parseObjectTree( mReaderWin,
+					     0,
+					     0,
+					     i->node(),
+					     true );
     }
 }
 
@@ -165,13 +167,13 @@ void KMMimePartTree::slotSaveAs()
                     ds.writeRawBytes( cstr, cstr.size() );
                 } else {
 
-                    mReaderWin->parseObjectTree( mReaderWin,
-                                                 0,
-                                                 0,
-                                                 mCurrentContextMenuItem->node(),
-                                                 true,
-                                                 bSaveEncrypted,
-                                                 bSaveWithSig );
+                    ObjectTreeParser::parseObjectTree( mReaderWin,
+						       0,
+						       0,
+						       mCurrentContextMenuItem->node(),
+						       true,
+						       bSaveEncrypted,
+						       bSaveWithSig );
 
                 }
                 file.close();

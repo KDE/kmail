@@ -216,30 +216,6 @@ public:
                                         QWidget* parent=0,
                                         const QString & verboseName=QString::null );
 
-    /** 1. Create a new partNode using 'content' data and Content-Description
-            found in 'cntDesc'.
-        2. Make this node the child of 'node'.
-        3. Insert the respective entries in the Mime Tree Viewer.
-        3. Parse the 'node' to display the content. */
-    //  Function will be replaced once KMime is alive.
-    static void insertAndParseNewChildNode( KMReaderWin* reader,
-                                            QCString* resultString,
-                                            CryptPlugWrapper*     useThisCryptPlug,
-                                            partNode& node,
-                                            const char* content,
-                                            const char* cntDesc,
-                                            bool append = false );
-    /** Parse beginning at a given node and recursively parsing
-        the children of that node and it's next sibling. */
-    //  Function is called internally by "parseMsg(KMMessage* msg)"
-    //  and it will be replaced once KMime is alive.
-    static void parseObjectTree( KMReaderWin* reader,
-                                 QCString* resultString,
-                                 CryptPlugWrapper*     useThisCryptPlug,
-                                 partNode* node,
-                                 bool showOneMimePart=false,
-                                 bool keepEncryptions=false,
-                                 bool includeSignatures=true );
  public:
     // This function returns the complete data that were in this
     // message parts - *after* all encryption has been removed that
@@ -250,27 +226,6 @@ public:
                                    KMMessage& theMessage,
                                    bool weAreReplacingTheRootNode = false,
                                    int recCount = 0 );
-
-    /** if data is 0:
-            Feeds the HTML widget with the contents of the opaque signed
-            data found in partNode 'sign'.
-        if data is set:
-            Feeds the HTML widget with the contents of the given
-            multipart/signed object.
-        Signature is tested.  May contain body parts.
-
-        Returns whether a signature was found or not: use this to
-        find out if opaque data is signed or not. */
-    static bool writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
-                                                  QCString* resultString,
-                                                  CryptPlugWrapper* useThisCryptPlug,
-                                                  partNode* data,
-                                                  partNode& sign,
-                                                  const QString& fromAddress,
-                                                  bool doCheck = true,
-                                                  QCString* cleartextData = 0,
-                                                  struct CryptPlugWrapper::SignatureMetaData* paramSigMeta = 0,
-                                                  bool hideErrors = false );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
