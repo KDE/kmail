@@ -573,7 +573,7 @@ void KMComposeWin::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::deadLetter()
 {
-  if (!mMsg) return;
+  if (!mMsg || mComposer) return;
 
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinueDeadLetter( bool ) ) );
