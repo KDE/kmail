@@ -158,7 +158,8 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
     fti->setText(0, name);
     fti->folder->setLabel(name);
   }
-  if (mimeType == "message/directory" || mimeType == "inode/directory")
+  if ((mimeType == "message/directory" || mimeType == "inode/directory")
+      && !noPrefix)
   {
     if (mimeType == "inode/directory") fti->folder->setDir( TRUE );
     if (readIsListViewItemOpen( fti )) setOpen( fti, TRUE );
