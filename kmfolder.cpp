@@ -743,6 +743,7 @@ int KMFolder::remove()
 //-----------------------------------------------------------------------------
 int KMFolder::expunge()
 {
+  if ( count() == 0 ) return 0;
   int openCount = mOpenCount;
 
   assert(!name().isEmpty());

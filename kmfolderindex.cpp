@@ -425,6 +425,7 @@ void KMFolderIndex::clearIndex(bool autoDelete, bool syncDict)
 
 void KMFolderIndex::truncateIndex()
 {
+    assert( mHeaderOffset );
     truncate(QFile::encodeName(indexLocation()), mHeaderOffset);
 }
 
