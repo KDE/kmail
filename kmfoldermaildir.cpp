@@ -262,7 +262,7 @@ int KMFolderMaildir::compact()
       mDirty = TRUE;
     }
   }
-  close(true);
+  close();
 
   needsCompact = false;
 
