@@ -3,6 +3,10 @@
 
 // #define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
+// define this to copy all html that is written to the readerwindow to
+// filehtmlwriter.out in the current working directory
+// #define KMAIL_READER_HTML_DEBUG
+
 #include <config.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -80,6 +84,13 @@ using KMail::HeaderStrategy;
 #include "khtmlparthtmlwriter.h"
 using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
+
+#ifdef KMAIL_READER_HTML_DEBUG
+#include "filehtmlwriter.h"
+using KMail::FileHtmlWriter;
+#include "teehtmlwriter.h"
+using KMail::TeeHtmlWriter;
+#endif // !NDEBUG
 
 // for the MIME structure viewer (khz):
 #include "kmmimeparttree.h"
@@ -598,6 +609,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  delete mHtmlWriter;
   delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete message();
   delete mRootNode;
@@ -946,7 +958,12 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->view()->setLineWidth(0);
 
   if ( !htmlWriter() )
+#ifdef KMAIL_READER_HTML_DEBUG
+    mHtmlWriter = new TeeHtmlWriter( new FileHtmlWriter( QString::null ),
+				     new KHtmlPartHtmlWriter( mViewer, this ) );
+#else
     mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, this );
+#endif
 
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
@@ -1681,36 +1698,6 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
     mColorBar->setTextFormat( Qt::PlainText );
     mColorBar->setText(i18n("\nN\no\n \nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
   }
-}
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::visibleHeadersToString(KMMessage* aMsg, QString const & formatString,  QStringList const &ignoreFieldsList)
-{
-  QString returnstring;
-  DwHeaders headers = aMsg->headers();
-  DwField *field = headers.FirstField();
-  while (field) {
-    const char *fname = field->FieldNameStr().c_str();
-    QString fieldname(fname);
-    // match case insensitive
-    QRegExp fnameRegExp("^"+fieldname+"$", false);
-    if ( mShowAllHeaders[mHeaderStyle - 1]
-         ? (mHeadersHide[mHeaderStyle - 1].grep(fnameRegExp).isEmpty()
-            && ignoreFieldsList.grep(fnameRegExp).isEmpty())
-         : !mHeadersShow[mHeaderStyle - 1].grep(fnameRegExp).isEmpty())
-    {
-      QString fs = formatString;
-      if (fs.contains("%1")) fs = fs.arg(fname);
-      if (fs.contains("%2")) {
-        fs = fs.arg(i18n((fieldname+": ").latin1()));
-      }
-      if (fs.contains("%3")) fs = fs.arg(strToHtml(field->FieldBodyStr().c_str()));
-        returnstring.append(fs);
-    }
-
-    field = field->Next();
-  }
-  return returnstring;
 }
 
 //-----------------------------------------------------------------------------

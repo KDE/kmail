@@ -348,21 +348,6 @@ protected:
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
-  /** write all headers that are not listed in mHideExtraHeaders[mHeaderStyle-1]
-      to a string, using the formatString.
-      @param aMsg The Message from which to extract the headers
-      @param formatString Format String for a header, expected to
-        take 3 Arguments:
-        <ul>
-          <li><b>%1</b>:&nbsp;Headerfield Name</li>
-          <li><b>%2</b>:&nbsp;Translated Headerfield Name</li>
-          <li><b>%3</b>:&nbsp;Headerfield Body</li>
-        </ul>
-      @param ignoreFieldsList contains the fieldnames that should not be displayed by this method
-         (mostly used because those are displayed in the mail already)
-  */
-  QString visibleHeadersToString(KMMessage* aMsg, QString const &formatString, QStringList const &ignoreFieldsList);
-
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg(KMMessage* msg, bool onlyProcessHeaders=false);
 
