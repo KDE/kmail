@@ -47,6 +47,8 @@ KMSender::KMSender()
   mSendAborted = false;
   mSentMessages = 0;
   mTotalMessages = 0;
+  mSentBytes = 0;
+  mTotalBytes = 0;
 }
 
 
@@ -160,17 +162,14 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 }
 
 
-bool KMSender::sendSingleMail( KMMessage*)
-{
-
-  return true;
-
-}
-
 //-----------------------------------------------------------------------------
-void KMSender::outboxMsgAdded()
+void KMSender::outboxMsgAdded(int idx)
 {
     ++mTotalMessages;
+    KMMsgBase* msg = kernel->outboxFolder()->getMsgBase(idx);
+    Q_ASSERT(msg);
+    if ( msg )
+        mTotalBytes += msg->msgSize();
 }
 
 
@@ -186,10 +185,15 @@ bool KMSender::sendQueued(void)
   }
 
   // open necessary folders
-  kernel->outboxFolder()->open();
-  mTotalMessages = kernel->outboxFolder()->count();
-  connect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
-          this, SLOT(outboxMsgAdded()));
+  KMFolder* outbox = kernel->outboxFolder();
+  outbox->open();
+  mTotalMessages = outbox->count();
+  mTotalBytes = 0;
+  for( int i = 0 ; i<mTotalMessages ; ++i )
+      mTotalBytes += outbox->getMsgBase(i)->msgSize();
+
+  connect(outbox, SIGNAL(msgAdded(int)),
+          this, SLOT(outboxMsgAdded(int)));
   mCurrentMsg = 0;
 
   kernel->sentFolder()->open();
@@ -199,6 +203,13 @@ bool KMSender::sendQueued(void)
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+void KMSender::emitProgressInfo( int currentFileProgress )
+{
+  int percent = (mTotalBytes) ? ( 100 * (mSentBytes+currentFileProgress) / mTotalBytes ) : 0;
+  if (percent > 100) percent = 100;
+  KMBroadcastStatus::instance()->setStatusProgressPercent("Sender", percent);
+}
 
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
@@ -209,10 +220,11 @@ void KMSender::doSendMsg()
   KMFolder *sentFolder = 0, *imapSentFolder = 0;
   bool someSent = mCurrentMsg;
   int rc;
-  if (someSent) mSentMessages++;
-  int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
-  if (percent > 100) percent = 100;
-  KMBroadcastStatus::instance()->setStatusProgressPercent("SMTP", percent);
+  if (someSent) {
+      mSentMessages++;
+      mSentBytes += mCurrentMsg->msgSize();
+  }
+  emitProgressInfo( 0 );
 
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kernel->filterMgr())
@@ -338,7 +350,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
   if (!mSendInProgress)
   {
     KMBroadcastStatus::instance()->reset();
-    KMBroadcastStatus::instance()->setStatusProgressEnable( "SMTP", true );
+    KMBroadcastStatus::instance()->setStatusProgressEnable( "Sender", true );
     connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
       SLOT(slotAbortSend()));
     kapp->ref();
@@ -447,7 +459,7 @@ void KMSender::cleanup(void)
     mCurrentMsg = 0;
   }
   disconnect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
-             this, SLOT(outboxMsgAdded()));
+             this, SLOT(outboxMsgAdded(int)));
   kernel->sentFolder()->close();
   kernel->outboxFolder()->close();
   if (kernel->outboxFolder()->count()<0)
@@ -456,9 +468,10 @@ void KMSender::cleanup(void)
 
   mSendAborted = false;
   mSentMessages = 0;
+  mSentBytes = 0;
   disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
     this, SLOT(slotAbortSend()));
-  KMBroadcastStatus::instance()->setStatusProgressEnable( "SMTP", false );
+  KMBroadcastStatus::instance()->setStatusProgressEnable( "Sender", false );
   KMBroadcastStatus::instance()->reset();
   kernel->filterMgr()->cleanup();
 }
@@ -1024,6 +1037,8 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   mQuery = "";
 
   mMessage = prepareStr(aMsg->asSendableString(), TRUE);
+  mMessageLength = mMessage.length();
+  mMessageOffset = 0;
 
   if ((mJob = KIO::put(destination, -1, false, false, false)))
   {
@@ -1077,11 +1092,17 @@ bool KMSendSMTP::addOneRecipient(const QString& _addr)
 
 void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
 {
-  if(!mMessage.isEmpty())
+  // Send it by 32K chuncks
+  int chunkSize = QMIN( mMessageLength - mMessageOffset, 0x8000 );
+  if ( chunkSize > 0 ) {
+    array.duplicate(mMessage.data() + mMessageOffset, chunkSize);
+    mMessageOffset += chunkSize;
+  } else
   {
-    array.duplicate(mMessage, mMessage.length());
-    mMessage = "";
+    array.resize(0);
+    mMessage.resize(0);
   }
+  mSender->emitProgressInfo( mMessageOffset );
 }
 
 void KMSendSMTP::result(KIO::Job *_job)

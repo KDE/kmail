@@ -49,7 +49,6 @@ public:
   /** Start sending all queued messages. Returns TRUE on success. */
   virtual bool sendQueued();
 
-  virtual bool sendSingleMail(KMMessage *msg);
   /** Returns TRUE if sending is in progress. */
   bool sending(void) const { return mSendInProgress; }
 
@@ -74,10 +73,13 @@ public:
 
   /** sets a status msg and emits statusMsg() */
   void setStatusMsg(const QString&);
-  
+
   /** sets replied/forwarded status in the linked message for @p aMsg. */
   void setStatusByLink(const KMMessage *aMsg);
-  
+
+  /** Emit progress info - calculates a percent value based on the amount of bytes sent */
+  void emitProgressInfo( int currentFileProgress );
+
 signals:
   /** Emitted regularly to inform the user of what is going on */
   void statusMsg(const QString&);
@@ -95,7 +97,7 @@ protected slots:
   virtual void sendProcStarted(bool success);
 
   /** note when a msg gets added to outbox during sending */
-  void outboxMsgAdded();
+  void outboxMsgAdded(int idx);
 
 protected:
   /** handle sending of messages */
@@ -131,6 +133,7 @@ private:
   bool mSendInProgress;
   KMMessage * mCurrentMsg;
   int mSentMessages, mTotalMessages;
+  int mSentBytes, mTotalBytes;
 };
 
 
@@ -143,7 +146,7 @@ class KMSendProc: public QObject
 public:
   KMSendProc(KMSender*);
   virtual ~KMSendProc() {}
-  
+
   /** Initialize sending of one or more messages. */
   virtual void start(void);
 
@@ -244,7 +247,7 @@ Q_OBJECT
 public:
   KMSendSMTP(KMSender *sender);
   ~KMSendSMTP();
-  
+
   virtual bool send(KMMessage *);
   virtual void abort();
   virtual bool finish(bool);
@@ -261,9 +264,11 @@ private:
   QString mQuery;
   QString mQueryField;
   QCString mMessage;
+  uint mMessageLength;
+  uint mMessageOffset;
 
   bool mInProcess;
-  
+
   KIO::TransferJob *mJob;
   KIO::Slave *mSlave;
 };
