@@ -54,7 +54,7 @@ namespace KMail {
     //
     // HtmlWriter Interface
     //
-    void begin();
+    void begin( const QString & cssDefs );
     void end();
     void reset();
     void write( const QString & str );

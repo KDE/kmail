@@ -46,7 +46,7 @@ namespace KMail {
     FileHtmlWriter( const QString & filename );
     virtual ~FileHtmlWriter();
 
-    void begin();
+    void begin( const QString & cssDefs );
     void end();
     void reset();
     void write( const QString & str );

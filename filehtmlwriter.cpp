@@ -51,8 +51,10 @@ namespace KMail {
     }
   }
 
-  void FileHtmlWriter::begin() {
+  void FileHtmlWriter::begin( const QString & css ) {
     openOrWarn();
+    if ( !css.isEmpty() )
+      write( "<!-- CSS Definitions \n" + css + "-->\n" );
   }
 
   void FileHtmlWriter::end() {

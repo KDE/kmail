@@ -54,9 +54,9 @@ namespace KMail {
       mWriters.append( writer );
   }
 
-  void TeeHtmlWriter::begin() {
+  void TeeHtmlWriter::begin( const QString & css ) {
     for ( QPtrListIterator<HtmlWriter> it( mWriters ) ; it.current() ; ++it )
-      it.current()->begin();
+      it.current()->begin( css );
   }
 
   void TeeHtmlWriter::end() {

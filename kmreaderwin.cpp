@@ -992,7 +992,7 @@ void KMReaderWin::updateReaderWin()
     mColorBar->hide();
     mMimePartTree->hide();
     mMimePartTree->clear();
-    htmlWriter()->begin();
+    htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
     htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
   }
@@ -1032,7 +1032,7 @@ void KMReaderWin::displayMessage() {
 
   msg->setOverrideCodec( overrideCodec() );
 
-  htmlWriter()->begin();
+  htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
   htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
   if (!parent())
@@ -1695,7 +1695,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
         showVCard( aMsgPart );
 	return;
       }
-      htmlWriter()->begin();
+      htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0)) { // HTML
@@ -1747,7 +1747,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
           mMainWindow->resize( width, height );
       }
       // Just write the img tag to HTML:
-      htmlWriter()->begin();
+      htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
       htmlWriter()->write( "<img src=\"file:" +
 			   KURL::encode_string( aFileName ) +

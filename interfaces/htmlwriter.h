@@ -70,8 +70,8 @@ namespace KMail {
   class HtmlWriter {
   public:
     virtual ~HtmlWriter() {}
-    /** Signal the begin of stuff to write */
-    virtual void begin() = 0;
+    /** Signal the begin of stuff to write, and give the CSS definitions */
+    virtual void begin( const QString & cssDefinitions ) = 0;
     /** Signal the end of stuff to write. */
     virtual void end() = 0;
     /** Stop all possibly pending processing in order to be able to

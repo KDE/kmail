@@ -55,7 +55,7 @@ namespace KMail {
 
   }
 
-  void KHtmlPartHtmlWriter::begin() {
+  void KHtmlPartHtmlWriter::begin( const QString & css ) {
     if ( mState != Ended ) {
       kdWarning( 5006 ) << "KHtmlPartHtmlWriter: begin() called on non-ended session!" << endl;
       reset();
@@ -67,6 +67,8 @@ namespace KMail {
     static_cast<QScrollView *>(mHtmlPart->widget())->ensureVisible( 0, 0 );
 
     mHtmlPart->begin( KURL( "file:/" ) );
+    if ( !css.isEmpty() )
+      mHtmlPart->setUserStyleSheet( css );
     mState = Begun;
   }
 
@@ -90,7 +92,7 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::write( const QString & str ) {
-    kdWarning( mState != Begun ) << "KHtmlPartHtmlWriter: write() called in Ended or Queued state!" << endl;
+    kdWarning( mState != Begun, 5006 ) << "KHtmlPartHtmlWriter: write() called in Ended or Queued state!" << endl;
     mHtmlPart->write( str );
   }
 

@@ -50,7 +50,7 @@ namespace KMail {
 			 QObject * parent=0, const char * name = 0 );
     virtual ~KHtmlPartHtmlWriter();
 
-    void begin();
+    void begin( const QString & cssDefs );
     void end();
     void reset();
     void write( const QString & str );

@@ -300,14 +300,9 @@ namespace KMail {
   QString CSSHelper::htmlHead( bool fixed ) const {
     return
       "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-      "<html><head><title></title>\n"
-      "<style type=\"text/css\">\n\n"
+      "<html><head><title></title></head>\n"
       +
-      cssDefinitions( fixed )
-      +
-      "</style></head>\n"
-      +
-      ( fixed ? "<body class\"fixedfont\">\n" : "<body>\n" );
+      QString( fixed ? "<body class\"fixedfont\">\n" : "<body>\n" );
   }
 
   QString CSSHelper::quoteFontTag( int level ) const {
