@@ -80,9 +80,6 @@ QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
 
-bool KMHeaders::mTrue = true;
-bool KMHeaders::mFalse = false;
-
 #define KMAIL_SORT_VERSION 1012
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
@@ -546,22 +543,22 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
                      const char *name) :
   KListView(parent, name)
 {
-    static bool pixmapsLoaded = FALSE;
+    static bool pixmapsLoaded = false;
   //qInitImageIO();
   KImageIO::registerFormats();
   mOwner  = aOwner;
   mFolder = 0;
-  noRepaint = FALSE;
+  noRepaint = false;
   getMsgIndex = -1;
   mTopItem = 0;
-  setMultiSelection( TRUE );
-  setAllColumnsShowFocus( TRUE );
+  setMultiSelection( true );
+  setAllColumnsShowFocus( true );
   mNested = false;
   nestingPolicy = OpenUnread;
   mNestedOverride = false;
   mSubjThreading = true;
-  mousePressed = FALSE;
-  mSortInfo.dirty = TRUE;
+  mMousePressed = false;
+  mSortInfo.dirty = true;
   mSortInfo.fakeSort = 0;
   mSortInfo.removed = 0;
   mSortInfo.column = 0;
@@ -585,7 +582,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPaintInfo.orderOfArrival = false;
   mPaintInfo.status = false;
   mSortCol = KMMsgList::sfDate;
-  mSortDescending = FALSE;
+  mSortDescending = false;
 
   readConfig();
   restoreLayout(KMKernel::config(), "Header-Geometry");
@@ -606,7 +603,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
 
   if (!pixmapsLoaded)
   {
-    pixmapsLoaded = TRUE;
+    pixmapsLoaded = true;
     pixNew   = new QPixmap( UserIcon("kmmsgnew") );
     pixUns   = new QPixmap( UserIcon("kmmsgunseen") );
     pixDel   = new QPixmap( UserIcon("kmmsgdel") );
@@ -636,8 +633,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
           this,SLOT(highlightMessage(QListViewItem*)));
   resetCurrentTime();
 
-  beginSelection = 0;
-  endSelection = 0;
+  mBeginSelection = 0;
+  mEndSelection = 0;
 
   mSubjectLists.setAutoDelete( true );
 }
@@ -720,7 +717,7 @@ void KMHeaders::readColorConfig (void)
   QColor c5=QColor(0,0x7F,0);
   QColor c6=KGlobalSettings::alternateBackgroundColor();
 
-  if (!config->readBoolEntry("defaultColors",TRUE)) {
+  if (!config->readBoolEntry("defaultColors",true)) {
     mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
     mPaintInfo.colBack = config->readColorEntry("BackgroundColor",&c4);
     QPalette newPal = kapp->palette();
@@ -755,9 +752,9 @@ void KMHeaders::readConfig (void)
   { // area for config group "Pixmaps"
     KConfigGroupSaver saver(config, "Pixmaps");
     QString pixmapFile = config->readEntry("Headers");
-    mPaintInfo.pixmapOn = FALSE;
+    mPaintInfo.pixmapOn = false;
     if (!pixmapFile.isEmpty()) {
-      mPaintInfo.pixmapOn = TRUE;
+      mPaintInfo.pixmapOn = true;
       mPaintInfo.pixmap = QPixmap( pixmapFile );
     }
   }
@@ -779,7 +776,7 @@ void KMHeaders::readConfig (void)
   // Custom/System fonts
   { // area for config group "General"
     KConfigGroupSaver saver(config, "Fonts");
-    if (!(config->readBoolEntry("defaultFonts",TRUE)))
+    if (!(config->readBoolEntry("defaultFonts",true)))
     {
       QFont listFont( KGlobalSettings::generalFont() );
       setFont(config->readFontEntry("list-font", &listFont));
@@ -807,9 +804,9 @@ void KMHeaders::reset(void)
 {
   int top = topItemIndex();
   int id = currentItemIndex();
-  noRepaint = TRUE;
+  noRepaint = true;
   clear();
-  noRepaint = FALSE;
+  noRepaint = false;
   mItems.resize(0);
   updateMessageList();
   setCurrentMsg(id);
@@ -824,7 +821,7 @@ void KMHeaders::refreshNestedState(void)
   NestingPolicy oldNestPolicy = nestingPolicy;
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Geometry");
-  mNested = config->readBoolEntry( "nestedMessages", FALSE );
+  mNested = config->readBoolEntry( "nestedMessages", false );
 
   nestingPolicy = (NestingPolicy)config->readNumEntry( "nestingPolicy", OpenUnread );
   if ((nestingPolicy != oldNestPolicy) ||
@@ -851,12 +848,12 @@ void KMHeaders::readFolderConfig (void)
   mTopItem = config->readNumEntry("Top", 0);
   mCurrentItem = config->readNumEntry("Current", 0);
 
-  mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", TRUE );
-  mPaintInfo.status = config->readBoolEntry( "Status", FALSE );
+  mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", true );
+  mPaintInfo.status = config->readBoolEntry( "Status", false );
 
   { //area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
-    mNested = config->readBoolEntry( "nestedMessages", FALSE );
+    mNested = config->readBoolEntry( "nestedMessages", false );
     nestingPolicy = (NestingPolicy)config->readNumEntry( "nestingPolicy", OpenUnread );
   }
 
@@ -938,7 +935,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
     mSortInfo.removed = 0;
     mFolder = aFolder;
-    mSortInfo.dirty = TRUE;
+    mSortInfo.dirty = true;
     mOwner->editAction()->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
     mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingList() :
       false);
@@ -963,9 +960,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       // in the folderConfig below then we need to do this otherwise
       // updateMessageList would do something unspeakable
       if (isThreaded()) {
-        noRepaint = TRUE;
+        noRepaint = true;
         clear();
-        noRepaint = FALSE;
+        noRepaint = false;
         mItems.resize( 0 );
       }
 
@@ -978,9 +975,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       SHOW_TIMER(kmfolder_open);
 
       if (isThreaded()) {
-        noRepaint = TRUE;
+        noRepaint = true;
         clear();
-        noRepaint = FALSE;
+        noRepaint = false;
         mItems.resize( 0 );
       }
     }
@@ -1071,7 +1068,7 @@ void KMHeaders::msgChanged()
   updateMessageList();
   setTopItemByIndex( i );
   setCurrentMsg(cur);
-  setSelected( currentItem(), TRUE );
+  setSelected( currentItem(), true );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
 
@@ -1560,11 +1557,11 @@ void KMHeaders::applyFiltersOnMsg()
   emit selected( 0 );
   if (next) {
     setCurrentItem( next );
-    setSelected( next, TRUE );
+    setSelected( next, true );
     highlightMessage( next, true);
   }
   else if (currentItem()) {
-    setSelected( currentItem(), TRUE );
+    setSelected( currentItem(), true );
     highlightMessage( currentItem(), true);
   }
   else
@@ -1632,7 +1629,7 @@ void KMHeaders::resendMsg ()
   newMsg->removeHeaderField( "Message-Id" );
 
   win = new KMComposeWin();
-  win->setMsg(newMsg, FALSE, true);
+  win->setMsg(newMsg, false, true);
   win->show();
 }
 
@@ -1679,7 +1676,7 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
   if ( item ) {
     clearSelection();
     setCurrentItem( item );
-    setSelected( item, TRUE );
+    setSelected( item, true );
     mPrevCurrent = 0;
     highlightMessage( item, false);
   }
@@ -1803,7 +1800,7 @@ void KMHeaders::setCurrentMsg(int cur)
   if ((cur >= 0) && (cur < (int)mItems.size())) {
     clearSelection();
     setCurrentItem( mItems[cur] );
-    setSelected( mItems[cur], TRUE );
+    setSelected( mItems[cur], true );
   }
   makeHeaderVisible();
   setFolderInfoStatus();
@@ -1864,7 +1861,7 @@ void KMHeaders::nextMessage()
   QListViewItem *lvi = currentItem();
   if (lvi && lvi->itemBelow()) {
     clearSelection();
-    setSelected( lvi, FALSE );
+    setSelected( lvi, false );
     selectNextMessage();
     ensureCurrentItemVisible();
   }
@@ -1883,7 +1880,7 @@ void KMHeaders::selectNextMessage()
       }
       lvi->repaint();
       /* test to see if we need to unselect messages on back track */
-      (below->isSelected() ? setSelected(lvi, FALSE) : setSelected(below, TRUE));
+      (below->isSelected() ? setSelected(lvi, false) : setSelected(below, true));
       setCurrentItem(below);
       makeHeaderVisible();
       setFolderInfoStatus();
@@ -1897,7 +1894,7 @@ void KMHeaders::prevMessage()
   QListViewItem *lvi = currentItem();
   if (lvi && lvi->itemAbove()) {
     clearSelection();
-    setSelected( lvi, FALSE );
+    setSelected( lvi, false );
     selectPrevMessage();
     ensureCurrentItemVisible();
   }
@@ -1917,7 +1914,7 @@ void KMHeaders::selectPrevMessage()
       }
       lvi->repaint();
       /* test to see if we need to unselect messages on back track */
-      (above->isSelected() ? setSelected(lvi, FALSE) : setSelected(above, TRUE));
+      (above->isSelected() ? setSelected(lvi, false) : setSelected(above, true));
       setCurrentItem(above);
       makeHeaderVisible();
       setFolderInfoStatus();
@@ -2045,12 +2042,12 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
 bool KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
-  int i = findUnread(TRUE, -1, false, acceptCurrent);
+  int i = findUnread(true, -1, false, acceptCurrent);
   if ( i < 0 && mLoopOnGotoUnread != DontLoop )
   {
     KMHeaderItem * first = static_cast<KMHeaderItem*>(firstChild());
     if ( first )
-      i = findUnread(TRUE, first->msgId(), false, acceptCurrent); // from top
+      i = findUnread(true, first->msgId(), false, acceptCurrent); // from top
   }
   if ( i < 0 )
     return false;
@@ -2070,11 +2067,11 @@ void KMHeaders::ensureCurrentItemVisible()
 bool KMHeaders::prevUnreadMessage()
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
-  int i = findUnread(FALSE);
+  int i = findUnread(false);
   if ( i < 0 && mLoopOnGotoUnread != DontLoop ) {
     KMHeaderItem * last = static_cast<KMHeaderItem*>(lastItem());
     if ( last )
-      i = findUnread(FALSE, last->msgId() ); // from bottom
+      i = findUnread(false, last->msgId() ); // from bottom
   }
   if ( i < 0 )
     return false;
@@ -2087,7 +2084,7 @@ bool KMHeaders::prevUnreadMessage()
 //-----------------------------------------------------------------------------
 void KMHeaders::slotNoDrag()
 {
-  mousePressed = FALSE;
+  mMousePressed = false;
 }
 
 
@@ -2175,9 +2172,9 @@ void KMHeaders::updateMessageList(bool set_selection)
   mPrevCurrent = 0;
   KListView::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
-    noRepaint = TRUE;
+    noRepaint = true;
     clear();
-    noRepaint = FALSE;
+    noRepaint = false;
     mItems.resize(0);
     repaint();
     return;
@@ -2257,7 +2254,7 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
   if (!(lvi->isSelected())) {
     clearSelection();
   }
-  setSelected( lvi, TRUE );
+  setSelected( lvi, true );
   slotRMB();
 }
 
@@ -2273,8 +2270,8 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
   // This slot isn't called anymore if the RMB is pressed (Qt 3.0.1)
   //kdDebug(5006) << "MB pressed: " << e->button() << endl;
-  beginSelection = currentItem();
-  presspos = e->pos();
+  mBeginSelection = currentItem();
+  mPressPos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
 
   if (!lvi) {
@@ -2287,9 +2284,9 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   // doesn't cause a flicker.
   if (e->button() == LeftButton && !lvi->isOpen()) {
     bool rootDecoClicked =
-         ( presspos.x() <= header()->cellPos( header()->mapToActual( 0 ) ) +
+         ( mPressPos.x() <= header()->cellPos( header()->mapToActual( 0 ) ) +
           treeStepSize() * ( lvi->depth() + ( rootIsDecorated() ? 1 : 0) ) + itemMargin() )
-      && ( presspos.x() >= header()->cellPos( header()->mapToActual( 0 ) ) );
+      && ( mPressPos.x() >= header()->cellPos( header()->mapToActual( 0 ) ) );
     if (rootDecoClicked) {
       clearSelection();
       lvi->setSelected( true );
@@ -2300,52 +2297,52 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   if ((e->button() == LeftButton) &&
       !(e->state() & ControlButton) &&
       !(e->state() & ShiftButton)) {
-    mousePressed = TRUE;
+    mMousePressed = true;
     if (!(lvi->isSelected())) {
       clearSelection();
       KListView::contentsMousePressEvent(e);
     } else {
       KListView::contentsMousePressEvent(e);
-      setSelected(lvi, TRUE);
+      setSelected(lvi, true);
     }
   }
   else if ((e->button() == LeftButton) && (e->state() & ShiftButton)) {
-    if (!shiftSelection( beginSelection, lvi ))
-      shiftSelection( lvi, beginSelection );
-    mousePressed = TRUE;
+    if (!shiftSelection( mBeginSelection, lvi ))
+      shiftSelection( lvi, mBeginSelection );
+    mMousePressed = true;
   }
   else if ((e->button() == LeftButton) && (e->state() & ControlButton)) {
     setSelected( lvi, !lvi->isSelected() );
-    mousePressed = TRUE;
+    mMousePressed = true;
   }
 }
 
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
-  QListViewItem *endSelection = itemAt( contentsToViewport( e->pos() ));
+  QListViewItem *mEndSelection = itemAt( contentsToViewport( e->pos() ));
 
   if ((e->button() == LeftButton)
       && !(e->state() & ControlButton)
       && !(e->state() & ShiftButton)) {
-    clearSelectionExcept( endSelection );
+    clearSelectionExcept( mEndSelection );
   }
 
   if (e->button() != RightButton)
     KListView::contentsMouseReleaseEvent(e);
 
-  beginSelection = 0;
-  endSelection = 0;
-  mousePressed = FALSE;
+  mBeginSelection = 0;
+  mEndSelection = 0;
+  mMousePressed = false;
 }
 
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 {
-  if (mousePressed &&
-      (e->pos() - presspos).manhattanLength() > KGlobalSettings::dndEventDelay()) {
-    mousePressed = FALSE;
-    QListViewItem *item = itemAt( contentsToViewport(presspos) );
+  if (mMousePressed &&
+      (e->pos() - mPressPos).manhattanLength() > KGlobalSettings::dndEventDelay()) {
+    mMousePressed = false;
+    QListViewItem *item = itemAt( contentsToViewport(mPressPos) );
     if ( item ) {
       MailList mailList;
       unsigned int count = 0;
@@ -2398,13 +2395,13 @@ bool KMHeaders::shiftSelection( QListViewItem *begin, QListViewItem *end )
     search = search->itemBelow();
   if (search && (search == end)) {
     while (search && (search != begin)) {
-      setSelected( search, TRUE );
+      setSelected( search, true );
       search = search->itemAbove();
     }
-    setSelected( search, TRUE );
-    return TRUE;
+    setSelected( search, true );
+    return true;
   }
-  return FALSE;
+  return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -2422,9 +2419,9 @@ void KMHeaders::slotRMB()
   mOwner->updateMessageMenu();
 
   QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-  KMMoveCommand::folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
+  KMMoveCommand::folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  KMCopyCommand::folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
+  KMCopyCommand::folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
 
   bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
@@ -2509,7 +2506,7 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
     clearSelection();
     bool unchanged = (currentItem() == mItems[msgIdx]);
     setCurrentItem( mItems[msgIdx] );
-    setSelected( mItems[msgIdx], TRUE );
+    setSelected( mItems[msgIdx], true );
     if (unchanged)
        highlightMessage( mItems[msgIdx], false);
   }
@@ -2554,7 +2551,7 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
 //-----------------------------------------------------------------------------
 void KMHeaders::setNestedOverride( bool override )
 {
-  mSortInfo.dirty = TRUE;
+  mSortInfo.dirty = true;
   mNestedOverride = override;
   setRootIsDecorated( nestingPolicy != AlwaysOpen
                       && isThreaded() );
@@ -2566,7 +2563,7 @@ void KMHeaders::setNestedOverride( bool override )
 //-----------------------------------------------------------------------------
 void KMHeaders::setSubjectThreading( bool aSubjThreading )
 {
-  mSortInfo.dirty = TRUE;
+  mSortInfo.dirty = true;
   mSubjThreading = aSubjThreading;
   QString sortFile = mFolder->indexLocation() + ".sorted";
   unlink(QFile::encodeName(sortFile));
@@ -2588,7 +2585,7 @@ void KMHeaders::setSorting( int column, bool ascending )
       setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
     if(mSortInfo.dirty || column != mSortInfo.column || ascending != mSortInfo.ascending) { //dirtied
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-        mSortInfo.dirty = TRUE;
+        mSortInfo.dirty = true;
     }
 
     mSortCol = column;
@@ -2617,7 +2614,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 //Flatten the list and write it to disk
 static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
                               int parent_id, QString key,
-                              bool update_discover=TRUE)
+                              bool update_discover=true)
 {
   unsigned long msgSerNum;
   unsigned long parentSerNum;
@@ -2660,21 +2657,21 @@ bool KMHeaders::writeSortOrder()
   if (!mSortInfo.dirty) {
     struct stat stat_tmp;
     if(stat(QFile::encodeName(sortFile), &stat_tmp) == -1) {
-        mSortInfo.dirty = TRUE;
+        mSortInfo.dirty = true;
     }
   }
   if (mSortInfo.dirty) {
     if (!mFolder->count()) {
       // Folder is empty now, remove the sort file.
       unlink(QFile::encodeName(sortFile));
-      return TRUE;
+      return true;
     }
     QString tempName = sortFile + ".temp";
     unlink(QFile::encodeName(tempName));
     FILE *sortStream = fopen(QFile::encodeName(tempName), "w");
     if (!sortStream)
-      return FALSE;
-    mSortInfo.dirty = FALSE;
+      return false;
+    mSortInfo.dirty = false;
     fprintf(sortStream, KMAIL_SORT_HEADER, KMAIL_SORT_VERSION);
     //magic header information
     Q_INT32 byteOrder = 0x12345678;
@@ -2737,7 +2734,7 @@ bool KMHeaders::writeSortOrder()
         // them will show up. (Ingo suggests a month.) -till
       }
       internalWriteItem(sortStream, mFolder, i->mMsgId, parent_id,
-                        i->key(mSortCol, !mSortDescending), FALSE);
+                        i->key(mSortCol, !mSortDescending), false);
       //double check for magic headers
       sorted_count++;
     }
@@ -2762,7 +2759,7 @@ bool KMHeaders::writeSortOrder()
     ::rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
   }
 
-  return TRUE;
+  return true;
 }
 
 void KMHeaders::appendItemToSortFile(KMHeaderItem *khi)
@@ -2800,15 +2797,15 @@ void KMHeaders::appendItemToSortFile(KMHeaderItem *khi)
     }
     fclose(sortStream);
   } else {
-    mSortInfo.dirty = TRUE;
+    mSortInfo.dirty = true;
   }
 }
 
 void KMHeaders::dirtySortOrder(int column)
 {
-    mSortInfo.dirty = TRUE;
+    mSortInfo.dirty = true;
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-    setSorting(column, mSortInfo.column == column ? !mSortInfo.ascending : TRUE);
+    setSorting(column, mSortInfo.column == column ? !mSortInfo.ascending : true);
 }
 void KMSortCacheItem::updateSortFile( FILE *sortStream, KMFolder *folder,
                                       bool waiting_for_parent, bool update_discover)
@@ -2828,7 +2825,7 @@ void KMSortCacheItem::updateSortFile( FILE *sortStream, KMFolder *folder,
     internalWriteItem(sortStream, folder, mId, parent_id, mKey, update_discover);
 }
 
-static bool compare_ascending = FALSE;
+static bool compare_ascending = false;
 static bool compare_toplevel = true;
 static int compare_KMSortCacheItem(const void *s1, const void *s2)
 {
@@ -2977,9 +2974,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
     mImperfectlyThreadedList.clear();
 
     //cleanup
-    noRepaint = TRUE;
+    noRepaint = true;
     clear();
-    noRepaint = FALSE;
+    noRepaint = false;
     mItems.resize( mFolder->count() );
     for (int i=0; i<mFolder->count(); i++) {
         sortCache[i] = 0;
@@ -3011,7 +3008,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
             header()->setSortIndicator(column, ascending);
             QObject::connect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
             //setup mSortInfo here now, as above may change it
-            mSortInfo.dirty = FALSE;
+            mSortInfo.dirty = false;
             mSortInfo.column = (short)column;
             mSortInfo.ascending = (compare_ascending = ascending);
 
@@ -3121,7 +3118,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     }
 
     if (!sortStream) {
-        mSortInfo.dirty = TRUE;
+        mSortInfo.dirty = true;
         mSortInfo.column = column = mSortCol;
         mSortInfo.ascending = ascending = !mSortDescending;
         threaded = (isThreaded());
@@ -3309,7 +3306,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if(sortStream) { //update the .sorted file now
         // heuristic for when it's time to rewrite the .sorted file
         if( discovered_count * discovered_count > sorted_count - deleted_count ) {
-            mSortInfo.dirty = TRUE;
+            mSortInfo.dirty = true;
         } else {
             //update the appended flag
             appended = 0;
@@ -3366,7 +3363,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if(sortStream)
         fclose(sortStream);
 
-    return TRUE;
+    return true;
 }
 
 //-----------------------------------------------------------------------------

@@ -260,12 +260,12 @@ protected:
   /** Unselect all items except one */
   virtual void clearSelectionExcept( QListViewItem *exception );
 
-  /** Select all items in list from begin to end, return FALSE
+  /** Select all items in list from begin to end, return false
      if end occurs before begin in the list */
   virtual bool shiftSelection( QListViewItem *begin, QListViewItem *end );
 
   /** Called when a header is clicked */
-  virtual void setSorting( int column, bool ascending = TRUE);
+  virtual void setSorting( int column, bool ascending = true);
 
   /** To initiate a drag operation */
   void contentsMouseMoveEvent( QMouseEvent *e );
@@ -298,7 +298,7 @@ private slots:
 private:
   /** Is equivalent to clearing the list and inserting an item for
       each message in the current folder */
-  virtual void updateMessageList(bool set_selection=FALSE);
+  virtual void updateMessageList( bool set_selection=false );
 
   /** Currently associated folder */
   KMFolder* mFolder;
@@ -310,20 +310,44 @@ private:
   int mCurrentItem;
   /** Map messages ids into KMHeaderItems */
   QMemArray<KMHeaderItem*> mItems;
-  QDict< KMSortCacheItem > mSortCacheItems;
-  QDict< QPtrList< KMSortCacheItem > > mSubjectLists;	
-  void buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
-  void buildSubjectThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
-  /** Find a msg to thread mb below */
-  KMSortCacheItem* findParent(KMSortCacheItem *item);
-  KMSortCacheItem* findParentBySubject(KMSortCacheItem *item);
-
+  
+  // ===== threading and sorting ==========
   bool mNested, mNestedOverride, mSubjThreading;
   NestingPolicy nestingPolicy;
-  QPtrList<KMHeaderItem> mImperfectlyThreadedList;
+  int mSortCol;
+  bool mSortDescending;
 
-  /** These must replaced by something better! */
-  static bool mTrue, mFalse;
+  struct {
+      uint ascending : 1;
+      uint dirty : 1;
+      short column;
+      uint fakeSort : 1;
+      uint removed : 1;
+  } mSortInfo;
+
+ 
+  /** */
+  QDict< KMSortCacheItem > mSortCacheItems;
+  /** */
+  QDict< QPtrList< KMSortCacheItem > > mSubjectLists;	
+  /** */
+  QPtrList<KMHeaderItem> mImperfectlyThreadedList;
+  
+  /** Initializes the mSortCacheItems tree with the contents of the folder */
+  void buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
+  /** Initializes the mSubjectLists tree with the contents of the folder */
+  void buildSubjectThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
+  /** Find a msg to thread item below */
+  KMSortCacheItem* findParent(KMSortCacheItem *item);
+  /** Find a msg to thread item below by subject */
+  KMSortCacheItem* findParentBySubject(KMSortCacheItem *item);
+
+  /** */
+  void appendItemToSortFile(KMHeaderItem *);
+  /** */
+  bool writeSortOrder();
+  /** */
+  bool readSortOrder(bool set_selection=false);
 
   /** are we currently showing the size field? */
   bool showingSize;
@@ -339,12 +363,9 @@ private:
   KMHeaderItem* mPrevCurrent;
 
   /** For shift selection */
-  QListViewItem *beginSelection, *endSelection;
+  QListViewItem *mBeginSelection, *mEndSelection;
   /** Current colours and backing pixmap */
   KPaintInfo mPaintInfo;
-
-  int mSortCol;
-  bool mSortDescending;
 
   /** Icons shown in header */
   static QIconSet *up, *down;
@@ -352,20 +373,9 @@ private:
   KMMenuToFolder mMenuToFolder;
 
   /** Drag and drop support */
-  bool mousePressed;
+  bool mMousePressed;
   /** ditto */
-  QPoint presspos;
-
-  struct {
-      uint ascending : 1;
-      uint dirty : 1;
-      short column;
-      uint fakeSort : 1;
-      uint removed : 1;
-  } mSortInfo;
-  void appendItemToSortFile(KMHeaderItem *);
-  bool writeSortOrder();
-  bool readSortOrder(bool set_selection=FALSE);
+  QPoint mPressPos;
 
   KMime::DateFormatter mDate;
   /** value of config key Behaviour/LoopOnGotoUnread */
