@@ -141,6 +141,7 @@ void AntiSpamWizard::accept()
                     << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
+  QPtrList<KMFilter> filterList;
 
   // Let's start with virus detection and handling,
   // so we can avoid spam checks for viral messages
@@ -168,7 +169,7 @@ void AntiSpamWizard::accept()
         pipeFilter->setStopProcessingHere( FALSE );
         pipeFilter->setConfigureShortcut( FALSE );
 
-        KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
+        filterList.append( pipeFilter );
       }
     }
 
@@ -213,7 +214,7 @@ void AntiSpamWizard::accept()
       virusFilter->setStopProcessingHere( TRUE );
       virusFilter->setConfigureShortcut( FALSE );
 
-      KMKernel::self()->filterMgr()->appendFilter( virusFilter );
+      filterList.append( virusFilter );
     }
   }
   else { // AntiSpam mode
@@ -240,7 +241,7 @@ void AntiSpamWizard::accept()
         pipeFilter->setStopProcessingHere( FALSE );
         pipeFilter->setConfigureShortcut( FALSE );
 
-        KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
+        filterList.append( pipeFilter );
       }
     }
 
@@ -288,7 +289,7 @@ void AntiSpamWizard::accept()
       spamFilter->setStopProcessingHere( TRUE );
       spamFilter->setConfigureShortcut( FALSE );
 
-      KMKernel::self()->filterMgr()->appendFilter( spamFilter );
+      filterList.append( spamFilter );
     }
 
     if ( mSpamRulesPage->classifyRulesSelected() )
@@ -323,7 +324,7 @@ void AntiSpamWizard::accept()
       classSpamFilter->setApplyOnExplicit( FALSE );
       classSpamFilter->setStopProcessingHere( TRUE );
       classSpamFilter->setConfigureShortcut( TRUE );
-      KMKernel::self()->filterMgr()->appendFilter( classSpamFilter );
+      filterList.append( classSpamFilter );
 
       // Classify messages manually as not Spam / as Ham
       KMFilter* classHamFilter = new KMFilter();
@@ -350,8 +351,14 @@ void AntiSpamWizard::accept()
       classHamFilter->setApplyOnExplicit( FALSE );
       classHamFilter->setStopProcessingHere( TRUE );
       classHamFilter->setConfigureShortcut( TRUE );
-      KMKernel::self()->filterMgr()->appendFilter( classHamFilter );
+      filterList.append( classHamFilter );
 
+      /* Now that all the filters have been added to the list, tell
+       * the filter manager about it. That will emit filterListUpdate
+       * which will result in the filter list in kmmainwidget being 
+       * initialized. This should happend only once. */
+      KMKernel::self()->filterMgr()->appendFilters( filterList );
+      
       // add the classification filter actions to the toolbar
       QString filterNameSpam =
           QString( "Filter %1" ).arg( classSpamFilterPattern->name() );

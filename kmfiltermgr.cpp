@@ -315,10 +315,12 @@ void KMFilterMgr::createFilter( const QCString & field, const QString & value )
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::appendFilter( KMFilter* filter )
+void KMFilterMgr::appendFilters( const QPtrList<KMFilter> filters )
 {
   beginUpdate();
-  append( filter );
+  QPtrListIterator<KMFilter> it(filters);
+  for ( it.toFirst(); it.current() ; ++it )
+    append( *it );
   writeConfig( TRUE );
   endUpdate();
 }
