@@ -110,11 +110,6 @@ public:
   void setAccount(KMAcctCachedImap *acct);
   KMAcctCachedImap* account();
 
-  /** Create a new folder with the name of this object and open it.
-      Returns zero on success and an error code equal to the
-      c-library fopen call otherwise. */
-  virtual int create(bool imap = FALSE);
-
   /** Returns the filename of the uidcache file */
   QString uidCacheLocation() const;
 

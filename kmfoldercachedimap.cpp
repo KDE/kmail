@@ -205,8 +205,6 @@ int KMFolderCachedImap::readUidCache()
 
 int KMFolderCachedImap::writeUidCache()
 {
-  kdDebug( 5006 ) << "KMFolderCachedImap::writeUidCache() " << lastUid()
-		  << uidValidity() << endl;
   if( lastUid() == 0 || uidValidity().isEmpty() )
     // No info from the server yet
     return 0;
@@ -224,15 +222,6 @@ int KMFolderCachedImap::writeUidCache()
   } else {
     return errno; /* does QFile set errno? */
   }
-}
-
-int KMFolderCachedImap::create(bool imap)
-{
-  int rc = KMFolderMaildir::create(imap);
-  mLastUid = 0;
-  mUidValidity = "";
-  if( !rc ) return readUidCache();
-  return rc;
 }
 
 void KMFolderCachedImap::reloadUidMap()
