@@ -345,6 +345,7 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
   bool isImage = false;
   bool isInlineSigned = false;
   bool isInlineEncrypted = false;
+  bool bNeverDisplayInline = false;
 
   if( node ) {
     partNode* curNode = node;
@@ -491,8 +492,13 @@ kdDebug(5006) << "v-card" << endl;
               //             _before_ calling parseObjectTree()
             }
             break;
-          // Every 'Text' type that is not 'Html' or 'V-Card'
-          // is processed like 'Plain' text:
+          case DwMime::kSubtypeRtf:
+kdDebug(5006) << "rtf" << endl;
+            // RTF shouldn't be displayed inline
+            bNeverDisplayInline = true;
+            break;
+          // All 'Text' types which are not treated above are processed like
+          // 'Plain' text:
           case DwMime::kSubtypeRichtext:
 kdDebug(5006) << "rich text" << endl;
           case DwMime::kSubtypeEnriched:
@@ -1340,6 +1346,10 @@ kdDebug(5006) << "* model *" << endl;
         if (showOneMimePart)
         {
           asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+        }
+        else if (bNeverDisplayInline)
+        {
+          asIcon = true;
         }
         else
         {
