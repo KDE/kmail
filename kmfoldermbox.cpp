@@ -714,7 +714,7 @@ int KMFolderMbox::createIndexFromContents()
     {
       sizeServerStr = QCString(line+9);
       sizeServer = sizeServerStr.toULong();
-      kdDebug() << "mbox got length " << sizeServer << endl;
+      kdDebug(5006) << "mbox got length " << sizeServer << endl;
       lastStr = &sizeServerStr;
     }
     else if (strncasecmp(line,"X-UID:",6)==0)

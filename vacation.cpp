@@ -59,7 +59,7 @@ namespace {
       : KSieve::ScriptBuilder(),
 	mContext( None ), mNotificationInterval( 0 )
     {
-      kdDebug() << "VacationDataExtractor instantiated" << endl;
+      kdDebug(5006) << "VacationDataExtractor instantiated" << endl;
     }
     virtual ~VacationDataExtractor() {}
 
@@ -150,7 +150,7 @@ namespace {
     QStringList mAliases;
 
     void reset() {
-      kdDebug() << "VacationDataExtractor::reset()" << endl;
+      kdDebug(5006) << "VacationDataExtractor::reset()" << endl;
       mContext = None;
       mNotificationInterval = 0;
       mAliases.clear();
@@ -259,7 +259,7 @@ namespace KMail {
     // slave somehow omits the last \n, which results in a lone \r at
     // the end, leading to a parse error.
     const QCString scriptUTF8 = script.stripWhiteSpace().utf8();
-    kdDebug() << "scriptUtf8 = \"" + scriptUTF8 + "\"" << endl;
+    kdDebug(5006) << "scriptUtf8 = \"" + scriptUTF8 + "\"" << endl;
     KSieve::Parser parser( scriptUTF8.begin(),
 			   scriptUTF8.begin() + scriptUTF8.length() );
     VacationDataExtractor vdx;

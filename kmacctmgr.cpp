@@ -115,7 +115,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
   if (account->checkingMail())
   {
-    kdDebug() << "account " << account->name() << " busy, queuing" << endl;
+    kdDebug(5006) << "account " << account->name() << " busy, queuing" << endl;
     return;
   }
 

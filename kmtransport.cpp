@@ -521,7 +521,7 @@ void KMTransportDialog::slotRequiresAuthClicked()
 
 void KMTransportDialog::slotSmtpEncryptionChanged(int id)
 {
-  kdDebug() << "KMTransportDialog::slotSmtpEncryptionChanged( " << id << " )" << endl;
+  kdDebug(5006) << "KMTransportDialog::slotSmtpEncryptionChanged( " << id << " )" << endl;
   // adjust SSL port:
   if (id == SSL || mSmtp.portEdit->text() == "465")
     mSmtp.portEdit->setText((id == SSL) ? "465" : "25");
@@ -535,7 +535,7 @@ void KMTransportDialog::slotSmtpEncryptionChanged(int id)
 }
 
 void KMTransportDialog::enableAuthMethods( unsigned int auth ) {
-  kdDebug() << "KMTransportDislaog::enableAuthMethods( " << auth << " )" << endl;
+  kdDebug(5006) << "KMTransportDislaog::enableAuthMethods( " << auth << " )" << endl;
   mSmtp.authPlain->setEnabled( auth & PLAIN );
   // LOGIN doesn't offer anything over PLAIN, requires more server
   // roundtrips and is not an official SASL mechanism, but a MS-ism,
@@ -602,7 +602,7 @@ void KMTransportDialog::checkHighest(QButtonGroup *btnGroup)
 void KMTransportDialog::slotSmtpCapabilities(const QStringList & list,
     const QString & authNone, const QString & authSSL, const QString & authTLS )
 {
-  kdDebug() << "KMTransportDialog::slotSmtpCapabilities( ..., "
+  kdDebug(5006) << "KMTransportDialog::slotSmtpCapabilities( ..., "
 	    << authNone << ", " << authSSL << ", " << authTLS << " )" << endl;
   mSmtp.checkCapabilities->setEnabled(TRUE);
   bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
@@ -616,7 +616,7 @@ void KMTransportDialog::slotSmtpCapabilities(const QStringList & list,
     mAuthNone = authMethodsFromString( authNone );
     mAuthSSL = authMethodsFromString( authSSL );
     mAuthTLS = authMethodsFromString( authTLS );
-    kdDebug() << "mAuthNone = " << mAuthNone
+    kdDebug(5006) << "mAuthNone = " << mAuthNone
 	      << "; mAuthSSL = " << mAuthSSL
 	      << "; mAuthTLS = " << mAuthTLS << endl;
   }

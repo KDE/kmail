@@ -622,7 +622,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_HANDLE_INBOX:
     // Wrap up the 'download emails' stage (which has a 20% span)
     mProgress += 20;
-    //kdDebug() << name() << ": +20 -> " << mProgress << "%" << endl;
+    //kdDebug(5006) << name() << ": +20 -> " << mProgress << "%" << endl;
 
     if( mResync ) {
       // Some conflict have been resolved, so restart the sync
@@ -731,7 +731,7 @@ void KMFolderCachedImap::uploadNewMessages()
   QValueList<unsigned long> newMsgs = findNewMessages();
   emit syncState( SYNC_STATE_PUT_MESSAGES, newMsgs.count() );
   mProgress += 10;
-  //kdDebug() << name() << ": +10 (uploadNewMessages) -> " << mProgress << "%" << endl;
+  //kdDebug(5006) << name() << ": +10 (uploadNewMessages) -> " << mProgress << "%" << endl;
   if( !newMsgs.isEmpty() ) {
     emit statusMsg( i18n("%1: Uploading messages to server").arg(name()) );
 
@@ -750,7 +750,7 @@ void KMFolderCachedImap::uploadNewMessages()
 void KMFolderCachedImap::uploadFlags()
 {
   mProgress += 10;
-  //kdDebug() << name() << ": +10 (uploadFlags) -> " << mProgress << "%" << endl;
+  //kdDebug(5006) << name() << ": +10 (uploadFlags) -> " << mProgress << "%" << endl;
 
   emit statusMsg( i18n("%1: Uploading status of messages to server").arg(name()) );
   emit newState( name(), mProgress, i18n("Uploading status of messages to server"));
@@ -791,7 +791,7 @@ void KMFolderCachedImap::createNewFolders()
   QValueList<KMFolderCachedImap*> newFolders = findNewFolders();
   //emit syncState( SYNC_STATE_CREATE_SUBFOLDERS, newFolders.count() );
   mProgress += 10;
-  //kdDebug() << name() << ": +10 (createNewFolders) -> " << mProgress << "%" << endl;
+  //kdDebug(5006) << name() << ": +10 (createNewFolders) -> " << mProgress << "%" << endl;
   if( !newFolders.isEmpty() ) {
     emit statusMsg( i18n("%1: Creating subfolders on server").arg(name()) );
     emit newState( name(), mProgress, i18n("Creating subfolders on server"));
@@ -847,7 +847,7 @@ bool KMFolderCachedImap::deleteMessages()
   }
 
   mProgress += 10;
-  //kdDebug() << name() << ": +10 (deleteMessages) -> " << mProgress << "%" << endl;
+  //kdDebug(5006) << name() << ": +10 (deleteMessages) -> " << mProgress << "%" << endl;
   emit newState( name(), mProgress, i18n("Deleting removed messages from server"));
 
   /* Delete messages from the server that we dont have anymore */
@@ -878,7 +878,7 @@ void KMFolderCachedImap::checkUidValidity() {
     serverSyncInternal();
   else {
     mProgress += 10;
-    //kdDebug() << name() << ": +10 (checkUidValidity) -> " << mProgress << "%" << endl;
+    //kdDebug(5006) << name() << ": +10 (checkUidValidity) -> " << mProgress << "%" << endl;
     emit newState( name(), mProgress, i18n("Checking folder validity"));
     emit statusMsg( i18n("%1: Checking folder validity").arg(name()) );
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
@@ -1013,7 +1013,7 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
 
 void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
 {
-  //kdDebug() << "KMFolderCachedImap::slotProgress done=" << done << " total=" << total << "=> progress=" << mProgress + ( 20 * done ) / total << endl;
+  //kdDebug(5006) << "KMFolderCachedImap::slotProgress done=" << done << " total=" << total << "=> progress=" << mProgress + ( 20 * done ) / total << endl;
   // Progress info while retrieving new emails
   // (going from mProgress to mProgress+20)
   emit newState( name(), mProgress + (20 * done) / total, QString::null);

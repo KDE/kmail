@@ -1744,7 +1744,7 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
 
 void KMKernel::selectFolder( QString folderPath )
 {
-  kdDebug()<<"Selecting a folder "<<folderPath<<endl;
+  kdDebug(5006)<<"Selecting a folder "<<folderPath<<endl;
   const QString localPrefix = i18n( "/Local" );
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )

@@ -82,7 +82,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
                                        const QString& uid, 
                                        const QString& ical )
 {
-  kdDebug() << "KMailICalIfaceImpl::addIncidence( " << type << ", "
+  kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << type << ", "
             << uid << ", " << ical << " )" << endl;
 
   if( !mUseResourceIMAP )
@@ -130,7 +130,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   if( !mUseResourceIMAP )
     return false;
 
-  kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
+  kdDebug(5006) << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
             << uid << " )" << endl;
 
   bool rc = false;
@@ -160,7 +160,7 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
   if( !mUseResourceIMAP )
     return QStringList();
 
-  kdDebug() << "KMailICalIfaceImpl::incidences( " << type << " )" << endl;
+  kdDebug(5006) << "KMailICalIfaceImpl::incidences( " << type << " )" << endl;
   QStringList ilist;
 
   KMFolder* folder = folderFromType( type );
@@ -268,7 +268,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
       arg << type << s;
-      kdDebug() << "Emitting DCOP signal incidenceAdded( " << type
+      kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                 << ", " << s << " )" << endl;
       emitDCOPSignal( "incidenceAdded(QString,QString)", data );
     }
@@ -301,7 +301,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
       arg << type << uid;
-      kdDebug() << "Emitting DCOP signal incidenceDeleted( "
+      kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
                 << type << ", " << uid << " )" << endl;
       emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
     }
@@ -317,7 +317,7 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
     QByteArray data;
     QDataStream arg(data, IO_WriteOnly );
     arg << type;
-    kdDebug() << "Emitting DCOP signal signalRefresh( " << type << " )"
+    kdDebug(5006) << "Emitting DCOP signal signalRefresh( " << type << " )"
               << endl;
     emitDCOPSignal( "signalRefresh(QString)", data );
   }

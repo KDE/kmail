@@ -3986,7 +3986,7 @@ void KMEdit::del() { KEdit::del(); }
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
-    kdDebug()<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;
+    kdDebug(5006)<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;
     if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
     else
@@ -3995,7 +3995,7 @@ void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsign
 
 void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos)
 {
-    kdDebug()<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) : "<<oldWord<<endl;
+    kdDebug(5006)<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) : "<<oldWord<<endl;
     if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerCorrected( oldWord, newWord, pos);
      else
@@ -4068,12 +4068,12 @@ void KMEdit::slotSpellResult(const QString &s)
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellDone()
 {
-    kdDebug()<<" void KMEdit::slotSpellDone()**********************************************\n";
+    kdDebug(5006)<<" void KMEdit::slotSpellDone()**********************************************\n";
   KSpell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;
 
-  kdDebug() << "spelling: delete SpellingFilter" << endl;
+  kdDebug(5006) << "spelling: delete SpellingFilter" << endl;
   delete mSpellingFilter;
   mSpellingFilter = 0;
   mComposer->sujectLineWidget()->deselect();
