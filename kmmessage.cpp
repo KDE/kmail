@@ -137,7 +137,7 @@ const QString KMMessage::refsAsAnchor(const QString references)
             refsdata=refsdata.stripWhiteSpace();
             refsdata=refsdata.mid(1,refsdata.length()-2);
             t.setNum(count++);
-            t="<a href=\"news:///"+refsdata+"\">"+t+"</a> ";
+            t="<a href=\"news:/"+refsdata+"\">"+t+"</a> ";
             result+=t;
         }
         else
@@ -145,7 +145,7 @@ const QString KMMessage::refsAsAnchor(const QString references)
             t.setNum(count++);
             t2=refsdata.left(index+1).stripWhiteSpace();
             t2=t2.mid(1,t2.length()-2);
-            t="<a href=\"news:///"+t2+"\">"+t+"</a> ";
+            t="<a href=\"news:/"+t2+"\">"+t+"</a> ";
             refsdata=refsdata.right(refsdata.length()-index-1);
             result+=t;
         }
