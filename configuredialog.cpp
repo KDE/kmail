@@ -732,6 +732,8 @@ void IdentityPage::slotNewIdentity()
     case NewIdentityDialog::ExistingEntry:
       // this uses operator=
       entry = mIdentities[ dialog.duplicateIdentity() ];
+      // We might be duplicating the default entry!
+      entry.setIsDefault(false);
       break;
     case NewIdentityDialog::ControlCenter:
       entry = IdentityEntry::fromControlCenter();
@@ -749,16 +751,8 @@ void IdentityPage::slotNewIdentity()
     // identity combo and make the new identity the current item.
     //
     mIdentityCombo->clear();
-
-    //
-    // Default -must- be the top entry
-    //
-    QStringList identitiesNameList = mIdentities.names();
-    identitiesNameList.remove(i18n("Default"));
-    identitiesNameList.prepend(i18n("Default"));
-
-    mIdentityCombo->insertStringList( identitiesNameList );
-    mIdentityCombo->setCurrentItem( identitiesNameList.findIndex( identityName ) );
+    mIdentityCombo->insertStringList( mIdentities.names() );
+    mIdentityCombo->setCurrentItem( mIdentities.names().findIndex( identityName ) );
     
     slotIdentitySelectorChanged();
   }
