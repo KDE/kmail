@@ -152,6 +152,7 @@ void KMMimePartTree::slotSaveAll()
     if( childCount() == 0)
         return;
 
+    QPtrList<QListViewItem> items;
     for ( QListViewItemIterator lit( firstChild() ); lit.current();  ++lit ) {
         KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( lit.current() );
 
@@ -160,7 +161,7 @@ void KMMimePartTree::slotSaveAll()
         if( item->node()->msgPart().fileName().isNull() )
             continue;
 
-        items.append( item.current() );
+        items.append( item );
     }
 
     saveMultipleFiles( items, false );
