@@ -229,9 +229,9 @@ public:
   /// Applies to Calendar and Task folders only.
   ///
   /// IncForNobody: not relevant for free-busy and alarms to anybody
-  /// IncForOwner: free-busy and alarms relevant for the owner of the calendar only
-  /// IncForReaders: free-busy relevant for all readers of this calendar
-  enum IncidencesFor { IncForNobody, IncForOwner, IncForReaders };
+  /// IncForAdmins: apply to persons with admin permissions on this calendar
+  /// IncForReaders: apply to all readers of this calendar
+  enum IncidencesFor { IncForNobody, IncForAdmins, IncForReaders };
 
   IncidencesFor incidencesFor() const { return mIncidencesFor; }
   /// For the folder properties dialog

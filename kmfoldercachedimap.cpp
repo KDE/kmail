@@ -76,7 +76,7 @@ using namespace KMail;
 static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r ) {
   switch (r) {
   case KMFolderCachedImap::IncForNobody: return "nobody";
-  case KMFolderCachedImap::IncForOwner: return "owner";
+  case KMFolderCachedImap::IncForAdmins: return "admins";
   case KMFolderCachedImap::IncForReaders: return "readers";
   }
   return QString::null; // can't happen
@@ -84,9 +84,9 @@ static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r ) {
 
 static KMFolderCachedImap::IncidencesFor incidencesForFromString( const QString& str ) {
   if ( str == "nobody" ) return KMFolderCachedImap::IncForNobody;
-  if ( str == "owner" ) return KMFolderCachedImap::IncForOwner;
+  if ( str == "admins" ) return KMFolderCachedImap::IncForAdmins;
   if ( str == "readers" ) return KMFolderCachedImap::IncForReaders;
-  return KMFolderCachedImap::IncForOwner; // by default
+  return KMFolderCachedImap::IncForAdmins; // by default
 }
 
 DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
@@ -139,7 +139,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   : KMFolderMaildir( folder, aName ),
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ),
-    mIncidencesFor( IncForOwner ),
+    mIncidencesFor( IncForAdmins ),
     mIsSelected( false ),
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
