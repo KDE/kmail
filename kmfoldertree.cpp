@@ -371,7 +371,7 @@ void KMFolderTree::reload(bool openFolders)
 
   // construct the root of the local folders
   root = new KMFolderTreeItem( this, i18n("Local Folders") );
-  root->setOpen( true );
+  root->setOpen( readIsListViewItemOpen(root) );
 
   fdir = &kernel->folderMgr()->dir();
   addDirectory(fdir, root);
@@ -978,11 +978,19 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 {
   KConfig* config = kapp->config();
   KMFolder *folder = fti->folder();
-  if (!folder)
-    return TRUE;
-  KConfigGroupSaver saver(config, "Folder-" + folder->idString());
+  QString name;
+  if (folder)
+  {
+    name = "Folder-" + folder->idString();
+  } else if (fti->type() == KFolderTreeItem::Root) {
+    // local root, we don't have an idString
+    name = "Folder_local_root";
+  } else {
+    return false;
+  }
+  KConfigGroupSaver saver(config, name);
 
-  return config->readBoolEntry("isOpen", false);
+  return config->readBoolEntry("isOpen", true);
 }
 
 //-----------------------------------------------------------------------------
@@ -991,9 +999,17 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 {
   KConfig* config = kapp->config();
   KMFolder *folder = fti->folder();
-  if (!folder)
+  QString name;
+  if (folder)
+  {
+    name = "Folder-" + folder->idString();
+  } else if (fti->type() == KFolderTreeItem::Root) {
+    // local root, we don't have an idString
+    name = "Folder_local_root";
+  } else {
     return;
-  KConfigGroupSaver saver(config, "Folder-" + folder->idString());
+  }
+  KConfigGroupSaver saver(config, name);
   config->writeEntry("isOpen", fti->isOpen());
 }
 

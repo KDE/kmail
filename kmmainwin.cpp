@@ -109,8 +109,19 @@ KMMainWin::KMMainWin(QWidget *) :
     slotIntro();
   else
   {
-    KMFolder* selected = kernel->inboxFolder();
-    mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(selected));
+    KMFolder* startup = 0;
+    if (!mStartupFolder.isEmpty())
+    {
+      // find the startup-folder with this ugly folderMgr switch
+      startup = kernel->folderMgr()->findIdString(mStartupFolder);
+      if (!startup)
+        startup = kernel->imapFolderMgr()->findIdString(mStartupFolder);
+      if (!startup)
+        startup = kernel->inboxFolder();
+    } else {
+      startup = kernel->inboxFolder();
+    }
+    mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(startup));
   }
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
@@ -319,6 +330,8 @@ void KMMainWin::readConfig(void)
     mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
     mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
+    // startup-Folder, defaults to system-inbox
+    mStartupFolder = config->readEntry("startupFolder", kernel->inboxFolder()->idString());
   }
 
   // Re-activate panners
@@ -427,6 +440,8 @@ void KMMainWin::writeConfig(void)
 
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("encoding", QString(mEncodingStr));
+  // TODO: change that via GUI in 3.2 (cb)
+  config->writeEntry("startupFolder", mStartupFolder);
 }
 
 
