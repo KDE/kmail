@@ -209,26 +209,11 @@ void KMReaderView::parseMessage(KMMessage *message)
 		//}
 
 	// Okay! Let's write it to the canvas
-
-
 	 messageCanvas->write(text);
 
-	printf("before part\n");
-
-/*	int x=0;
-	for(x=1;x <= numParts;x++)
-		{printf("x : %i\n",x);
-		KMMessagePart *part = new KMMessagePart;
-		currentMessage->bodyPart(x,part);
-		cout << part->typeStr();
-		cout << part->subtypeStr();
-		delete part;
-		}*/
-
-	messageCanvas->write("</BODY></HTML>");
-	messageCanvas->end();
-	messageCanvas->parse();
-	printf("Leaving parsing\n");
+  messageCanvas->write("</BODY></HTML>");
+  messageCanvas->end();
+  messageCanvas->parse();
 }
 
 const char* KMReaderView::decodeString(const char* data, QString type)
@@ -255,6 +240,7 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p)
 	QString text;
 	text = decodeString(p->body(),p->cteStr());
 	printf("Returned from decoding\n");
+	text +="<br><br>";
 	return text;
 
 }
