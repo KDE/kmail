@@ -32,6 +32,9 @@
 #include "attachmentstrategy.h"
 
 #include "partNode.h"
+#include "kmmsgpart.h"
+
+#include <qstring.h>
 
 #include <kdebug.h>
 
@@ -62,7 +65,8 @@ namespace KMail {
   //
   // SmartAttachmentStrategy:
   //   in addition to Iconic, show all body parts
-  //   with content-disposition == "inline" inline
+  //   with content-disposition == "inline" and
+  //   all text parts without a filename or name parameter inline
   //
 
   class SmartAttachmentStrategy : public AttachmentStrategy {
@@ -78,7 +82,18 @@ namespace KMail {
 
     bool inlineNestedMessages() const { return true; }
     Display defaultDisplay( const partNode * node ) const {
-      return node->hasContentDispositionInline() ? Inline : AsIcon ;
+      if ( node->hasContentDispositionInline() )
+	// explict "inline" disposition:
+	return Inline;
+      if ( node->isAttachment() )
+	// explicit "attachment" disposition:
+	return AsIcon;
+      if ( node->type() == DwMime::kTypeText &&
+	   node->msgPart().fileName().stripWhiteSpace().isEmpty() &&
+	   node->msgPart().name().stripWhiteSpace().isEmpty() )
+	// text/* w/o filename parameter:
+	return Inline;
+      return AsIcon;
     }
   };
 
