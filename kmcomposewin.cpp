@@ -1788,9 +1788,8 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   //  it inserts a <CR><LF> pair on the last line of the data to be
   //  signed and transmitted (signed message and transmitted message
   //  MUST be identical).
-  // So make sure that the body ends with a <LF> if the message body
-  // is about to be signed with a crypto plugin.
-  if( doSign && mSelectedCryptPlug && ( body[body.length()-1] != '\n' ) ) {
+  // So make sure that the body ends with a <LF>.
+  if( body[body.length()-1] != '\n' ) {
     kdDebug(5006) << "Added an <LF> on the last line" << endl;
     body += "\n";
   }
