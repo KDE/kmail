@@ -15,6 +15,7 @@
 #include <qregexp.h>
 #include <qstringlist.h>
 #include <qstring.h>
+#include <qfile.h>
 
 // other headers
 #include <assert.h>
@@ -114,6 +115,14 @@ void KMFilterMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 {
+/*
+QFile fileD0( "testdat_xx-kmfiltermngr-0" );
+if( fileD0.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD0 );
+    ds.writeRawBytes( msg->asString(), msg->asString().length() );
+    fileD0.close();  // If data is 0 we just create a zero length file.
+}
+*/
   if(bPopFilter) {
     QPtrListIterator<KMFilter> it(*this);
     for (it.toFirst() ; it.current() ; ++it) {
@@ -174,7 +183,14 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
     // readd the message if it wasn't moved:
     if ( msgTaken && parent && !msg->parent() )
       parent->addMsg( msg );
-
+/*
+QFile fileD1( "testdat_xx-kmfiltermngr-1" );
+if( fileD1.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD1 );
+    ds.writeRawBytes( msg->asString(), msg->asString().length() );
+    fileD1.close();  // If data is 0 we just create a zero length file.
+}
+*/
     if (status < 0) // No filters matched, keep copy of message
       status = 1;
 

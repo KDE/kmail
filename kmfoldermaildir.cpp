@@ -303,6 +303,14 @@ int KMFolderMaildir::compact()
 
 int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 {
+/*
+QFile fileD0( "testdat_xx-kmfoldermaildir-0" );
+if( fileD0.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD0 );
+    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    fileD0.close();  // If data is 0 we just create a zero length file.
+}
+*/  
   if (!canAddMsgNow(aMsg, index_return)) return 0;
 
   long len;
@@ -448,6 +456,14 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   needsCompact = true;
 
   if (opened) close();
+/*
+QFile fileD1( "testdat_xx-kmfoldermaildir-1" );
+if( fileD1.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD1 );
+    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    fileD1.close();  // If data is 0 we just create a zero length file.
+}
+*/  
   return 0;
 }
 

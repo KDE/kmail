@@ -184,7 +184,14 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
     aMsg->setStatus(KMMsgStatusUnread);  // -sanders
   //    aMsg->setStatus(KMMsgStatusRead);
   else aMsg->setStatus(KMMsgStatusNew);
-
+/*
+QFile fileD0( "testdat_xx-kmaccount-0" );
+if( fileD0.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD0 );
+    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    fileD0.close();  // If data is 0 we just create a zero length file.
+}
+*/
   // 0==message moved; 1==processing ok, no move; 2==critical error, abort!
   processResult = kernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
   if (processResult == 2) {
@@ -197,6 +204,14 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   {
     kernel->filterMgr()->tempOpenFolder(mFolder);
     rc = mFolder->addMsg(aMsg);
+/*
+QFile fileD0( "testdat_xx-kmaccount-1" );
+if( fileD0.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD0 );
+    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    fileD0.close();  // If data is 0 we just create a zero length file.
+}
+*/
     if (rc) {
       perror("failed to add message");
       KMessageBox::information(0, i18n("Failed to add message:\n") +

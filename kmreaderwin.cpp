@@ -2406,7 +2406,18 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       cleartext = data->dwPart()->AsString().c_str();
     else
       new_cleartext = 0;
-
+    
+// #define KHZ_TEST
+#ifdef KHZ_TEST
+    QFile fileD0( "testdat_xx-0" );
+    if( fileD0.open( IO_WriteOnly ) ) {
+        if( data ) {
+          QDataStream ds( &fileD0 );
+          ds.writeRawBytes( cleartext, cleartext.length() );
+        }
+        fileD0.close();  // If data is 0 we just create a zero length file.
+    }
+#endif
     if( data &&
         ( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
           (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) ) {

@@ -287,6 +287,12 @@ void KMMessage::setStatusFields(void)
   qDebug( "Setting SignatureState header field to %c", str[0] );
   setHeaderField("X-KMail-SignatureState", str);
 
+  // We better do the assembling ourselves now to prevent the
+  // mimelib from changing the message *body*.  (khz, 10.8.2002)
+  mNeedsAssembly = false;
+  mMsg->Headers().Assemble();
+  mMsg->Assemble( mMsg->Headers(),
+                  mMsg->Body() );
 }
 
 

@@ -686,7 +686,6 @@ QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
 int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
-
   bool opened = FALSE;
   QCString msgText;
   char endStr[3];
@@ -732,7 +731,23 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (protocol() != "imap")
   {
+
+QFile fileD0( "testdat_xx-kmfoldermbox-0" );
+if( fileD0.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD0 );
+    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    fileD0.close();  // If data is 0 we just create a zero length file.
+}
+  
     aMsg->setStatusFields();
+  
+QFile fileD1( "testdat_xx-kmfoldermbox-1" );
+if( fileD1.open( IO_WriteOnly ) ) {
+    QDataStream ds( &fileD1 );
+    ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
+    fileD1.close();  // If data is 0 we just create a zero length file.
+}
+  
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }

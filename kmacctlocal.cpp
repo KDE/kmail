@@ -186,6 +186,16 @@ void KMAcctLocal::processNewMail(bool)
     msg = mailFolder.take(0);
     if (msg)
     {
+/*
+QFile fileD0( "testdat_xx-0-0" );
+if( fileD0.open( IO_WriteOnly ) ) {
+    if( data ) {
+    QDataStream ds( &fileD0 );
+    ds.writeRawBytes( msg->asString(), msg->asString.length() );
+    }
+    fileD0.close();  // If data is 0 we just create a zero length file.
+}
+*/
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
       msg->setEncryptionState( msg->headerField( "X-KMail-EncryptionState" ).latin1() );
