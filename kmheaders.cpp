@@ -2363,7 +2363,8 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
 //                item the current item.
 void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
-  kdDebug(5006) << "MB pressed: " << e->button() << endl;
+  // This slot isn't called anymore if the RMB is pressed (Qt 3.0.1)
+  //kdDebug(5006) << "MB pressed: " << e->button() << endl;
   beginSelection = currentItem();
   presspos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
@@ -2391,14 +2392,6 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   }
   else if ((e->button() == LeftButton) && (e->state() & ControlButton)) {
     setSelected( lvi, !lvi->isSelected() );
-  }
-  else if (e->button() == RightButton)
-  {
-    if (!(lvi->isSelected())) {
-      clearSelection();
-      setSelected( lvi, TRUE );
-    }
-    slotRMB();
   }
 }
 
