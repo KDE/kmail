@@ -1,3 +1,5 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
+
 #ifndef KMReaderMainWin_h
 #define KMReaderMainWin_h
 
@@ -35,6 +37,8 @@ private slots:
   void slotPrintMsg();
   void slotReplyToMsg();
   void slotReplyAllToMsg();
+  void slotReplyAuthorToMsg();
+  void slotReplyListToMsg();
   void slotForwardMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
@@ -50,8 +54,10 @@ private:
   KURL mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
   // a few actions duplicated from kmmainwidget
-  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mForwardAction,
-          *mForwardAttachedAction, *mRedirectAction, *mBounceAction; 
+  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
+          *mReplyListAction, *mForwardAction,
+          *mForwardAttachedAction, *mRedirectAction, *mBounceAction;
+  KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
 
 };

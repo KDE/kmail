@@ -1,4 +1,5 @@
-/* kmail main window
+/* -*- mode: C++; c-file-style: "gnu" -*-
+ * kmail main window
  * Copyright 2002 Don Sanders <sanders@kde.org>
  * Based on the work of Stefan Taferner <taferner@kde.org>
  *
@@ -66,7 +67,7 @@ class KMMainWidget : public QWidget
 
 public:
   KMMainWidget(QWidget *parent, const char *name,
-	       KActionCollection *actionCollection, 
+	       KActionCollection *actionCollection,
          KConfig*config = KMKernel::config() );
   virtual ~KMMainWidget();
   void destruct();
@@ -94,6 +95,7 @@ public:
 
   KAction *action( const char *name ) { return mActionCollection->action( name ); }
   KAction *replyAction() { return mReplyAction; }
+  KAction *replyAuthorAction() { return mReplyAuthorAction; }
   KAction *replyAllAction() { return mReplyAllAction; }
   KAction *replyListAction() { return mReplyListAction; }
   KActionMenu *forwardMenu() { return mForwardActionMenu; }
@@ -330,6 +332,7 @@ protected slots:
 
   /** Slot to reply to a message */
   void slotReplyToMsg();
+  void slotReplyAuthorToMsg();
   void slotReplyListToMsg();
   void slotReplyAllToMsg();
   void slotForwardMsg();
@@ -351,9 +354,11 @@ private:
     *mSendAgainAction, *mApplyFiltersAction, *mFindInMessageAction,
     *mSaveAttachmentsAction;
   // Composition actions
-  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyListAction,
+  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
+      *mReplyListAction,
       *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
       *mBounceAction, *mNoQuoteReplyAction;
+  KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   // Filter actions
   KActionMenu *mFilterMenu;
@@ -416,9 +421,9 @@ private:
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId, htmlId, threadId;
-  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref, 
+  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref,
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
-  
+
 //  QPopupMenu *mMessageMenu;
   KMFldSearch *mSearchWin;
 

@@ -861,16 +861,15 @@ QString KMMessage::cleanSubject( const QStringList & prefixRegExps,
 }
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
-                                   bool replyToList /* = false */,
+KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    QString selection /* = QString::null */,
                                    bool noQuote /* = false */,
                                    bool allowDecryption /* = true */,
                                    bool selectionIsBody /* = false */)
 {
   KMMessage* msg = new KMMessage;
-  QString str, replyStr, mailingListStr, replyToStr, toStr,
-    mailingListPostAddress;
+  QString str, replyStr, mailingListStr, replyToStr, toStr;
+  QStringList mailingListAddresses;
   QCString refStr, headerName;
 
   msg->initFromMessage(this);
@@ -881,23 +880,48 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
   msg->setCharset("utf-8");
 
   // determine the mailing list posting address
-  if ( parent() && parent()->isMailingList() ) {
-    mailingListPostAddress = parent()->mailingListPostAddress();
+  if ( parent() && parent()->isMailingList() &&
+       !parent()->mailingListPostAddress().isEmpty() ) {
+    mailingListAddresses << parent()->mailingListPostAddress();
   }
-  if ( mailingListPostAddress.isEmpty() &&
-       headerField("List-Post").find( "mailto:", 0, false ) != -1 ) {
+  if ( headerField("List-Post").find( "mailto:", 0, false ) != -1 ) {
     QString listPost = headerField("List-Post");
     QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
     if ( rx.search( listPost, 0 ) != -1 ) // matched
-      mailingListPostAddress = rx.cap(1) + '@' + rx.cap(2);
+      mailingListAddresses << rx.cap(1) + '@' + rx.cap(2);
   }
 
-  if ( replyToList ) {
+  // use the "On ... Joe User wrote:" header by default
+  replyStr = sReplyAllStr;
+
+  switch( replyStrategy ) {
+  case KMail::ReplySmart : {
     if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
       toStr = headerField( "Mail-Followup-To" );
     }
-    else if ( !mailingListPostAddress.isEmpty() ) {
-      toStr = mailingListPostAddress;
+    else if ( !mailingListAddresses.isEmpty() ) {
+      toStr = mailingListAddresses[0];
+    }
+    else if ( !replyToStr.isEmpty() ) {
+      // assume a Reply-To header mangling mailing list
+      toStr = replyToStr;
+    }
+    else {
+      // doesn't seem to be a mailing list, reply to From: address
+      toStr = from();
+      replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+    }
+    // strip all my addresses from the list of recipients
+    QStringList recipients = splitEmailAddrList( toStr );
+    toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
+    break;
+  }
+  case KMail::ReplyList : {
+    if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
+      toStr = headerField( "Mail-Followup-To" );
+    }
+    else if ( !mailingListAddresses.isEmpty() ) {
+      toStr = mailingListAddresses[0];
     }
     else if ( !replyToStr.isEmpty() ) {
       // assume a Reply-To header mangling mailing list
@@ -915,24 +939,31 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       // fallback to From if everything else fails
       toStr = from();
     }
+    break;
   }
-  else if ( replyToAll ) {
+  case KMail::ReplyAll : {
     QStringList recipients;
     QStringList ccRecipients;
 
     // add addresses from the Reply-To header to the list of recipients
     if( !replyToStr.isEmpty() ) {
       recipients += splitEmailAddrList( replyToStr );
-      // strip the mailing list post address from the list of Reply-To
+      // strip all possible mailing list addresses from the list of Reply-To
       // addresses
-      if( !mailingListPostAddress.isEmpty() )
-        recipients = stripAddressFromAddressList( mailingListPostAddress,
-                                                  recipients );
+      for ( QStringList::const_iterator it = mailingListAddresses.begin();
+            it != mailingListAddresses.end();
+            ++it ) {
+        recipients = stripAddressFromAddressList( *it, recipients );
+      }
     }
+
+    // if it is a mailing list, add the posting address
+    if ( !mailingListAddresses.isEmpty() )
+      recipients.prepend( mailingListAddresses[0] );
 
     // add From address if appropriate
     if ( !from().isEmpty() ) {
-      if ( !mailingListPostAddress.isEmpty() ) {
+      if ( !mailingListAddresses.isEmpty() ) {
         // in case of replying to a mailing list message add the From address
         // to the list of CC recipients if it's not already there
         if ( !addressIsInAddressList( from(), recipients ) ) {
@@ -951,25 +982,16 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       }
     }
 
-    // add only new addresses from the To header to the list of recipients
-    if( !to().isEmpty() ) {
-      QStringList list = splitEmailAddrList( to() );
-      for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
-        if( !addressIsInAddressList( *it, recipients ) ) {
-          recipients += *it;
-          kdDebug(5006) << "Added " << *it << " to the list of recipients"
-                        << endl;
-        }
-      }
-    }
-
     // strip all my addresses from the list of recipients
     toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
 
-    // the same for the cc field
-    if( !cc().isEmpty() ) {
-      // add only new addresses from the CC header to the list of CC recipients
-      QStringList list = splitEmailAddrList( cc() );
+    // merge To header and CC header into a list of CC recipients
+    if( !cc().isEmpty() || !to().isEmpty() ) {
+      QStringList list;
+      if (!to().isEmpty())
+        list += splitEmailAddrList(to());
+      if (!cc().isEmpty())
+        list += splitEmailAddrList(cc());
       for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
         if(    !addressIsInAddressList( *it, recipients )
             && !addressIsInAddressList( *it, ccRecipients ) ) {
@@ -985,15 +1007,17 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       ccRecipients = stripMyAddressesFromAddressList( ccRecipients );
       msg->setCc( ccRecipients.join(", ") );
     }
+    break;
   }
-  else {
+  case KMail::ReplyAuthor : {
     if ( !replyToStr.isEmpty() ) {
       QStringList recipients = splitEmailAddrList( replyToStr );
       // strip the mailing list post address from the list of Reply-To
       // addresses since we want to reply in private
-      if ( !mailingListPostAddress.isEmpty() ) {
-        recipients = stripAddressFromAddressList( mailingListPostAddress,
-                                                  recipients );
+      for ( QStringList::const_iterator it = mailingListAddresses.begin();
+            it != mailingListAddresses.end();
+            ++it ) {
+        recipients = stripAddressFromAddressList( *it, recipients );
       }
       if ( !recipients.isEmpty() ) {
         toStr = recipients.join(", ");
@@ -1007,6 +1031,12 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
     else if ( !from().isEmpty() ) {
       toStr = from();
     }
+    replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
+    break;
+  }
+  case KMail::ReplyNone : {
+    // the addressees will be set by the caller
+  }
   }
 
   msg->setTo(toStr);
@@ -1017,18 +1047,12 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
   //In-Reply-To = original msg-id
   msg->setReplyToId(msgId());
 
-  if (replyToAll || replyToList || !mailingListStr.isEmpty()
-      || (parent() && parent()->isMailingList()))
-    replyStr = sReplyAllStr;
-  else replyStr = sReplyStr;
-  replyStr += "\n";
-
   if (!noQuote) {
     if( selectionIsBody ){
       QCString cStr = selection.latin1();
       msg->setBody( cStr );
     }else{
-      msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection,
+      msg->setBody(asQuotedString(replyStr + "\n", sIndentPrefixStr, selection,
 				  sSmartQuote, allowDecryption).utf8());
     }
   }

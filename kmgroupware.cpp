@@ -138,7 +138,7 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
 	    if (dwPart) {
       		KMMessagePart msgPart;
 		KMMessage::bodyPart(dwPart, &msgPart);
-		s = msgPart.body();    
+		s = msgPart.body();
 		return true;
 	    }
     }
@@ -691,7 +691,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
 
         /// ###  FIXME Need to get this attribute written
         ScheduleMessage schedMsg(event, method, ScheduleMessage::Unknown /*???*/);
-		
+
         QString sSenderSearchKeyEmail( tnefMsg->findProp(0x0C1D) );
 
         if( !sSenderSearchKeyEmail.isEmpty() ){
@@ -783,7 +783,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
         // event->setDtStamp(QDateTime::fromString(s)); // ### libkcal always uses currentDateTime()
 
 
-		
+
         s = tnefMsg->findNamedProp("Keywords");
 		event->setCategories(s);
 
@@ -1108,7 +1108,7 @@ bool KMGroupware::incomingResourceMessage( KMAccount* /*acct*/, KMMessage* /*msg
   // Everything went fine so far, now attach the answer
   KMMessage* msgNew = 0;
   if( msg ){
-    msgNew = msg->createReply( false, false, vCalOut, false, true, TRUE );
+    msgNew = msg->createReply( KMail::ReplyAuthor, vCalOut, false, true, TRUE );
     msgNew->setType( DwMime::kTypeText );
     msgNew->setSubtype( DwMime::kSubtypeVCal );
     msgNew->setHeaderField("Content-Type", "text/calendar; method=REPLY; charset=\"utf-8\"");

@@ -1175,6 +1175,15 @@ void KMMainWidget::slotReplyToMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotReplyAuthorToMsg()
+{
+  QString text = mMsgView? mMsgView->copyText() : "";
+  KMCommand *command = new KMReplyAuthorCommand( this, mHeaders->currentMsg(), text );
+  command->start();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotReplyAllToMsg()
 {
   QString text = mMsgView? mMsgView->copyText() : "";
@@ -1941,6 +1950,8 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     else {
       mReplyAction->plug(menu);
       mReplyAllAction->plug(menu);
+      mReplyAuthorAction->plug( menu );
+      mReplyListAction->plug( menu );
       mForwardActionMenu->plug(menu);
       mBounceAction->plug(menu);
     }
@@ -2180,15 +2191,32 @@ void KMMainWidget::setupActions()
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
+  mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
+                                      "mail_reply", actionCollection(),
+                                      "message_reply_menu" );
+  connect( mReplyActionMenu, SIGNAL(activated()), this,
+	   SLOT(slotReplyToMsg()) );
+
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
+  mReplyActionMenu->insert( mReplyAction );
+
+  mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
+                                    SHIFT+Key_A, this,
+                                    SLOT(slotReplyAuthorToMsg()),
+                                    actionCollection(), "reply_author" );
+  mReplyActionMenu->insert( mReplyAuthorAction );
+
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
 				 Key_A, this, SLOT(slotReplyAllToMsg()),
 				 actionCollection(), "reply_all" );
+  mReplyActionMenu->insert( mReplyAllAction );
+
   mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
 				  "mail_replylist", Key_L, this,
 				  SLOT(slotReplyListToMsg()), actionCollection(),
 				  "reply_list" );
+  mReplyActionMenu->insert( mReplyListAction );
 
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
 				 Key_E, this, SLOT(slotRedirectMsg()),
@@ -2836,6 +2864,7 @@ void KMMainWidget::updateMessageActions()
     bounceAction()->setEnabled( single_actions );
     replyAction()->setEnabled( single_actions );
     noQuoteReplyAction()->setEnabled( single_actions );
+    replyAuthorAction()->setEnabled( single_actions );
     replyAllAction()->setEnabled( single_actions );
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );

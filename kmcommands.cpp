@@ -351,7 +351,7 @@ void KMMailtoReplyCommand::execute()
   //TODO : consider factoring createReply into this method.
   KMMessage *msg = retrievedMessage();
   KMComposeWin *win;
-  KMMessage *rmsg = msg->createReply(FALSE, FALSE, mSelection );
+  KMMessage *rmsg = msg->createReply( KMail::ReplyNone, mSelection );
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   win = new KMComposeWin(rmsg, 0);
@@ -732,8 +732,8 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
   }
 }
 
-//TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll are all similar
-//and should be factored
+//TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll, ReplyAuthor
+//      are all similar and should be factored
 KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMessage *msg,
                                     const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
@@ -744,7 +744,7 @@ void KMReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
-  KMMessage *reply = msg->createReply( FALSE, FALSE, mSelection );
+  KMMessage *reply = msg->createReply( KMail::ReplySmart, mSelection );
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();
@@ -762,7 +762,7 @@ void KMNoQuoteReplyToCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
-  KMMessage *reply = msg->createReply(FALSE, FALSE, "", TRUE);
+  KMMessage *reply = msg->createReply( KMail::ReplySmart, "", TRUE);
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
@@ -780,7 +780,7 @@ void KMReplyListCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
-  KMMessage *reply = msg->createReply(false, true, mSelection);
+  KMMessage *reply = msg->createReply( KMail::ReplyList, mSelection);
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
@@ -798,7 +798,25 @@ void KMReplyToAllCommand::execute()
 {
   KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
-  KMMessage *reply = msg->createReply( TRUE, FALSE, mSelection );
+  KMMessage *reply = msg->createReply( KMail::ReplyAll, mSelection );
+  KMComposeWin *win = new KMComposeWin( reply );
+  win->setCharset( msg->codec()->mimeName(), TRUE );
+  win->setReplyFocus();
+  win->show();
+}
+
+
+KMReplyAuthorCommand::KMReplyAuthorCommand( QWidget *parent, KMMessage *msg,
+                                            const QString &selection )
+  : KMCommand( parent, msg ), mSelection( selection )
+{
+}
+
+void KMReplyAuthorCommand::execute()
+{
+  KCursorSaver busy(KBusyPtr::busy());
+  KMMessage *msg = retrievedMessage();
+  KMMessage *reply = msg->createReply( KMail::ReplyAuthor, mSelection );
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();

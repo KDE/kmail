@@ -2463,6 +2463,7 @@ void KMHeaders::slotRMB()
      // show most used actions
      mOwner->replyAction()->plug(menu);
      mOwner->replyAllAction()->plug(menu);
+     mOwner->replyAuthorAction()->plug( menu );
      mOwner->replyListAction()->plug(menu);
      mOwner->forwardMenu()->plug(menu);
      mOwner->bounceAction()->plug(menu);

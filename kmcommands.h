@@ -308,7 +308,7 @@ class KMReplyToCommand : public KMCommand
 
 public:
   KMReplyToCommand( QWidget *parent, KMMessage *msg,
-		    const QString &selection = QString::null );
+                    const QString &selection = QString::null );
 
 private:
   virtual void execute();
@@ -350,6 +350,21 @@ class KMReplyToAllCommand : public KMCommand
 public:
   KMReplyToAllCommand( QWidget *parent, KMMessage *msg,
 		       const QString &selection = QString::null );
+
+private:
+  virtual void execute();
+
+private:
+  QString mSelection;
+};
+
+class KMReplyAuthorCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMReplyAuthorCommand( QWidget *parent, KMMessage *msg,
+                        const QString &selection = QString::null );
 
 private:
   virtual void execute();

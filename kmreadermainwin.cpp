@@ -87,7 +87,7 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotPrintMsg()
 {
-  KMCommand *command = new KMPrintCommand( this, mReaderWin->message(), 
+  KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
       mReaderWin->htmlOverride() );
   command->start();
 }
@@ -95,16 +95,32 @@ void KMReaderMainWin::slotPrintMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotReplyToMsg()
 {
-  KMCommand *command = new KMReplyToCommand( this, mReaderWin->message(), 
+  KMCommand *command = new KMReplyToCommand( this, mReaderWin->message(),
       mReaderWin->copyText() );
   command->start();
 }
 
 
 //-----------------------------------------------------------------------------
+void KMReaderMainWin::slotReplyAuthorToMsg()
+{
+  KMCommand *command = new KMReplyAuthorCommand( this, mReaderWin->message(),
+      mReaderWin->copyText() );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::slotReplyAllToMsg()
 {
-  KMCommand *command = new KMReplyToAllCommand( this, mReaderWin->message(), 
+  KMCommand *command = new KMReplyToAllCommand( this, mReaderWin->message(),
+      mReaderWin->copyText() );
+  command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotReplyListToMsg()
+{
+  KMCommand *command = new KMReplyListCommand( this, mReaderWin->message(),
       mReaderWin->copyText() );
   command->start();
 }
@@ -120,7 +136,7 @@ void KMReaderMainWin::slotForwardMsg()
 void KMReaderMainWin::slotForwardAttachedMsg()
 {
   KMCommand *command =
-    new KMForwardAttachedCommand( this, mReaderWin->message(), 
+    new KMForwardAttachedCommand( this, mReaderWin->message(),
         mReaderWin->message()->parent()->identity() );
   command->start();
 }
@@ -167,7 +183,7 @@ void KMReaderMainWin::setupAccel()
 	  this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
   connect(mReaderWin, SIGNAL(urlClicked(const KURL&,int)),
 	  mReaderWin, SLOT(slotUrlClicked()));
-  
+
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
 					"message_forward" );
@@ -176,7 +192,7 @@ void KMReaderMainWin::setupAccel()
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
 				actionCollection(), "message_forward" );
   mForwardActionMenu->insert( mForwardAction );
-  
+
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
 					SLOT(slotForwardAttachedMsg()), actionCollection(),
@@ -187,17 +203,38 @@ void KMReaderMainWin::setupAccel()
 				 Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
-  
+
   mBounceAction = new KAction( i18n("&Bounce..."), 0, this,
 			      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
 
+  mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
+                                      "mail_reply", actionCollection(),
+                                      "message_reply_menu" );
+  connect( mReplyActionMenu, SIGNAL(activated()), this,
+	   SLOT(slotReplyToMsg()) );
+
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
+  mReplyActionMenu->insert( mReplyAction );
+
+  mReplyAuthorAction = new KAction( i18n("Reply to A&uthor..."), "mail_reply",
+                                    SHIFT+Key_A, this,
+                                    SLOT(slotReplyAuthorToMsg()),
+                                    actionCollection(), "reply_author" );
+  mReplyActionMenu->insert( mReplyAuthorAction );
+
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
 				 Key_A, this, SLOT(slotReplyAllToMsg()),
 				 actionCollection(), "reply_all" );
- 
+  mReplyActionMenu->insert( mReplyAllAction );
+
+  mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
+				  "mail_replylist", Key_L, this,
+				  SLOT(slotReplyListToMsg()), actionCollection(),
+				  "reply_list" );
+  mReplyActionMenu->insert( mReplyListAction );
+
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
   createGUI( "kmreadermainwin.rc" );
   menuBar()->hide();
@@ -241,20 +278,22 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
 
     mReplyAction->plug( menu );
     mReplyAllAction->plug( menu );
+    mReplyAuthorAction->plug( menu );
+    mReplyListAction->plug( menu );
     mForwardActionMenu->plug( menu );
     mBounceAction->plug( menu );
-    
+
     menu->insertSeparator();
-    
+
     QPopupMenu* copyMenu = new QPopupMenu(menu);
     KMMenuCommand::folderToPopupMenu( false, this, &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();
     mReaderWin->toggleFixFontAction()->plug( menu );
     mReaderWin->viewSourceAction()->plug( menu );
-    
+
     mPrintAction->plug( menu );
-    
+
     menu->insertItem( i18n("Save &As..."), mReaderWin, SLOT(slotSaveMsg()) );
     menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );
   }
