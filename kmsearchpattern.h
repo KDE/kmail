@@ -130,9 +130,7 @@ public:
   void setContents( const QString & aContents ) { mContents = aContents; }
 
   /** Returns the rule as string. For debugging.*/
-#ifndef NDEBUG
   const QString asString() const;
-#endif
 
 private:
   static Function configValueToFunc( const char * str );
@@ -323,9 +321,7 @@ public:
   void setOp( KMSearchPattern::Operator aOp ) { mOperator = aOp; }
 
   /** Returns the pattern as string. For debugging.*/
-#ifndef NDEBUG
   QString asString() const;
-#endif
 
   /** Overloaded assignment operator. Makes a deep copy. */
   const KMSearchPattern & operator=( const KMSearchPattern & aPattern );
