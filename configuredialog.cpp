@@ -2226,6 +2226,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4" ) );
   mLayout4PB->setFixedSize( mLayout4PB->sizeHint() );
   mLayout4PB->setToggleButton( true );
+  QPushButton* mLayout5PB = new QPushButton( layoutHB );
+  mWindowLayoutVBG->insert( mLayout5PB, 4 );
+  mLayout5PB->setPixmap( UserIcon( "kmailwindowlayout5" ) );
+  mLayout5PB->setFixedSize( mLayout5PB->sizeHint() );
+  mLayout5PB->setToggleButton( true );
 
   mShowMIMETreeCB = new QCheckBox( i18n( "Show &MIME tree" ),
                                    visibleVBG );
@@ -2313,7 +2318,7 @@ void AppearancePage::LayoutTab::setup() {
 
 
   int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
-  if( windowLayout < 0 || windowLayout > 3 )
+  if( windowLayout < 0 || windowLayout > 4 )
       windowLayout = 0;
   mWindowLayoutVBG->setButton( windowLayout );
   bool showMIME = geometry.readBoolEntry( "showMIME", true );
@@ -2355,7 +2360,7 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
 
   if( geometry.hasKey( "windowLayout" ) ) {
       int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
-      if( windowLayout < 0 || windowLayout > 3 )
+      if( windowLayout < 0 || windowLayout > 4 )
           windowLayout = 0;
       mWindowLayoutVBG->setButton( windowLayout );
   }

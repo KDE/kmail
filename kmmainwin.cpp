@@ -253,12 +253,19 @@ void KMMainWin::readConfig(void)
     case 1:
         (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneWidth", 0 );
         (*mPanner1Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
+        (*mPanner2Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
+        (*mPanner2Sep)[1] = config->readNumEntry( "MessagePaneHeight", 100 );
+        (*mPanner2Sep)[2] = config->readNumEntry( "MimePaneHeight", 300 );
+        break;
+    case 2:
+        (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneWidth", 0 );
+        (*mPanner1Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
         (*mPanner2Sep)[0] = config->readNumEntry( "FolderPaneHeight", 400 );
         (*mPanner2Sep)[1] = config->readNumEntry( "MimePaneHeight", 200 );
         (*mPanner3Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
         (*mPanner3Sep)[1] = config->readNumEntry( "MessagePaneHeight", 400 );
         break;
-    case 2:
+    case 3:
         (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneHeight", 300 );
         (*mPanner1Sep)[1] = config->readNumEntry( "MessagePaneHeight", 300 );
         (*mPanner2Sep)[0] = config->readNumEntry( "FolderPaneWidth", 160 );
@@ -266,7 +273,7 @@ void KMMainWin::readConfig(void)
         (*mPanner3Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 150 );
         (*mPanner3Sep)[1] = config->readNumEntry( "MimePaneHeight", 150 );
         break;
-    case 3:
+    case 4:
         (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneHeight", 200 );
         (*mPanner1Sep)[1] = config->readNumEntry( "MimePaneHeight", 100 );
         (*mPanner1Sep)[2] = config->readNumEntry( "MessagePaneHeight", 300 );
@@ -375,12 +382,19 @@ void KMMainWin::writeConfig(void)
     case 1:
         config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
         config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
+        config->writeEntry( "HeaderPaneHeight", mPanner2->sizes()[0] );
+        config->writeEntry( "MessagePaneHeight", mPanner2->sizes()[1] );
+        config->writeEntry( "MimePaneHeight", mPanner2->sizes()[2] );
+        break;
+    case 2:
+        config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
+        config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
         config->writeEntry( "FolderPaneHeight", mPanner2->sizes()[0] );
         config->writeEntry( "MimePaneHeight", mPanner2->sizes()[1] );
         config->writeEntry( "HeaderPaneHeight", mPanner3->sizes()[0] );
         config->writeEntry( "MessagePaneHeight", mPanner3->sizes()[1] );
         break;
-    case 2:
+    case 3:
         config->writeEntry( "FolderPaneHeight", mPanner1->sizes()[0] );
         config->writeEntry( "MessagePaneHeight", mPanner1->sizes()[1] );
         config->writeEntry( "FolderPaneWidth", mPanner2->sizes()[0] );
@@ -388,7 +402,7 @@ void KMMainWin::writeConfig(void)
         config->writeEntry( "HeaderPaneHeight", mPanner3->sizes()[0] );
         config->writeEntry( "MimePaneHeight", mPanner3->sizes()[1] );
         break;
-    case 3:
+    case 4:
         config->writeEntry( "FolderPaneHeight", mPanner1->sizes()[0] );
         config->writeEntry( "MimePaneHeight", mPanner1->sizes()[1] );
         config->writeEntry( "MessagePaneHeight", mPanner1->sizes()[2] );
@@ -417,6 +431,7 @@ void KMMainWin::createWidgets(void)
             *mimeParent = 0, *messageParent = 0;
   switch( mWindowLayout ) {
   case 0:
+  case 1:
       mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
       mPanner1->setOpaqueResize( true );
       mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
@@ -427,7 +442,7 @@ void KMMainWin::createWidgets(void)
       mimeParent = mPanner2;
       messageParent = mPanner2;
       break;
-  case 1:
+  case 2:
       mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
       mPanner1->setOpaqueResize( true );
       mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
@@ -439,7 +454,7 @@ void KMMainWin::createWidgets(void)
       mimeParent = mPanner2;
       messageParent = mPanner3;
       break;
-  case 2:
+  case 3:
       mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
       mPanner1->setOpaqueResize( true );
       mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
@@ -451,7 +466,7 @@ void KMMainWin::createWidgets(void)
       mimeParent = mPanner3;
       messageParent = mPanner1;
       break;
-  case 3:
+  case 4:
       mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
       mPanner1->setOpaqueResize( true );
       mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
@@ -616,6 +631,18 @@ void KMMainWin::activatePanners(void)
         mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
         break;
     case 1:
+        mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+        mPanner1->moveToLast( mPanner2 );
+        mPanner1->setSizes( *mPanner1Sep );
+        mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
+        mPanner2->setSizes( *mPanner2Sep );
+        mPanner2->setResizeMode( mHeaders, QSplitter::KeepSize );
+        mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+        break;
+    case 2:
         mHeaders->reparent( mPanner3, 0, QPoint( 0, 0 ) );
         mMsgView->reparent( mPanner3, 0, QPoint( 0, 0 ) );
         mPanner3->moveToLast( mMsgView );
@@ -628,7 +655,7 @@ void KMMainWin::activatePanners(void)
         mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
         mPanner3->setResizeMode( mHeaders, QSplitter::KeepSize );
         break;
-    case 2:
+    case 3:
         mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
         mPanner2->moveToFirst( mFolderTree );
         mHeaders->reparent( mPanner3, 0, QPoint( 0, 0 ) );
@@ -643,7 +670,7 @@ void KMMainWin::activatePanners(void)
         mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
         mPanner3->setResizeMode( mMimePartTree, QSplitter::KeepSize );
         break;
-    case 3:
+    case 4:
         mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
         mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
         mPanner2->moveToLast( mHeaders );

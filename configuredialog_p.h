@@ -456,7 +456,7 @@ protected:
     QCheckBox  *mCryptoIconsCheck;
     QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
-    QPushButton  *mLayout1PB, *mLayout2PB, *mLayout3PB, *mLayout4PB;
+    QPushButton  *mLayout1PB, *mLayout2PB, *mLayout3PB, *mLayout4PB, *mLayout5PB;
     QCheckBox    *mShowMIMETreeCB;
     QButtonGroup *mWindowLayoutVBG;
     
