@@ -45,8 +45,11 @@ public:
   KMHeaders(KMMainWidget *owner, QWidget *parent=0, const char *name=0);
   virtual ~KMHeaders();
 
-  /** A new folder has been selected update the list of headers shown */
-  virtual void setFolder(KMFolder *);
+  /** A new folder has been selected update the list of headers shown
+   * To override the global settings for jumping to the first unread msg
+   * use @p forceJumpToUnread 
+   */
+  virtual void setFolder(KMFolder *, bool forceJumpToUnread = false);
 
   /** Return the folder whose message headers are being displayed */
   KMFolder* folder(void) { return mFolder; }
@@ -309,7 +312,8 @@ private slots:
 private:
   /** Is equivalent to clearing the list and inserting an item for
       each message in the current folder */
-  virtual void updateMessageList( bool set_selection=false );
+  virtual void updateMessageList( bool set_selection=false,
+      bool forceJumpToUnread = false );
 
   /** Currently associated folder */
   QGuardedPtr<KMFolder> mFolder;
@@ -360,7 +364,8 @@ private:
   /** */
   bool writeSortOrder();
   /** */
-  bool readSortOrder(bool set_selection=false);
+  bool readSortOrder( bool set_selection = false, 
+      bool forceJumpToUnread = false );
 
   /** Updated as side effect of KMHeaders::getMsg */
   int getMsgIndex;

@@ -1618,18 +1618,10 @@ void KMMainWidget::slotCycleAttachmentStrategy() {
   action->setChecked( true );
 }
 
-void KMMainWidget::folderSelectedUnread(KMFolder* aFolder)
+void KMMainWidget::folderSelectedUnread( KMFolder* aFolder )
 {
-  mHeaders->blockSignals( true );
-  folderSelected( aFolder );
-  QListViewItem *item = mHeaders->firstChild();
-  while (item && item->itemAbove())
-    item = item->itemAbove();
-  mHeaders->setCurrentItem( item );
-  mHeaders->nextUnreadMessage(true);
-  mHeaders->blockSignals( false );
-  mHeaders->highlightMessage( mHeaders->currentItem() );
-  slotChangeCaption(mFolderTree->currentItem());
+  folderSelected( aFolder, true );
+  slotChangeCaption( mFolderTree->currentItem() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1639,7 +1631,7 @@ void KMMainWidget::folderSelected()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::folderSelected(KMFolder* aFolder)
+void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
 {
   KCursorSaver busy(KBusyPtr::busy());
 
@@ -1681,15 +1673,19 @@ void KMMainWidget::folderSelected(KMFolder* aFolder)
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
     if ( newFolder )
     {
+      // first get new headers before we select the folder
       imap->setSelected( true );
       connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
           this, SLOT( folderSelected() ) );
       imap->getAndCheckFolder();
       mHeaders->setFolder( 0 );
+      mForceJumpToUnread = forceJumpToUnread;
       return;
     } else {
+      // the folder is complete now - so go ahead
       disconnect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
           this, SLOT( folderSelected() ) );
+      forceJumpToUnread = mForceJumpToUnread;
     }
   }
 
@@ -1706,7 +1702,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder)
   readFolderConfig();
   if (mMsgView)
     mMsgView->setHtmlOverride(mFolderHtmlPref);
-  mHeaders->setFolder( mFolder );
+  mHeaders->setFolder( mFolder, forceJumpToUnread );
   updateMessageActions();
   updateFolderMenu();
   if (!aFolder)

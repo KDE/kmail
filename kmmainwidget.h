@@ -153,7 +153,7 @@ public slots:
    * Select the given folder
    * If the folder is 0 the intro is shown
    */
-  void folderSelected( KMFolder* );
+  void folderSelected( KMFolder*, bool forceJumpToUnread = false );
 
   /** Reselect current folder */
   void folderSelected();
@@ -461,7 +461,7 @@ private:
   QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
   QVBoxLayout *mTopLayout;
-  bool mDestructed;
+  bool mDestructed, mForceJumpToUnread;
   QPtrList<KAction> mFilterActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
   QGuardedPtr <KMail::FolderJob> mJob;

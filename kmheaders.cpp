@@ -883,7 +883,7 @@ void KMHeaders::writeConfig (void)
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setFolder (KMFolder *aFolder)
+void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 {
   CREATE_TIMER(set_folder);
   START_TIMER(set_folder);
@@ -989,7 +989,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   CREATE_TIMER(updateMsg);
   START_TIMER(updateMsg);
-  updateMessageList(true);
+  updateMessageList(true, forceJumpToUnread);
   END_TIMER(updateMsg);
   SHOW_TIMER(updateMsg);
   makeHeaderVisible();
@@ -2226,7 +2226,7 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::updateMessageList(bool set_selection)
+void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
 {
   mPrevCurrent = 0;
   KListView::setSorting( mSortCol, !mSortDescending );
@@ -2238,7 +2238,7 @@ void KMHeaders::updateMessageList(bool set_selection)
     repaint();
     return;
   }
-  readSortOrder(set_selection);
+  readSortOrder( set_selection, forceJumpToUnread );
   emit messageListUpdated();
 }
 
@@ -3013,7 +3013,7 @@ KMSortCacheItem* KMHeaders::findParentBySubject(KMSortCacheItem *item)
     return parent;
 }
 
-bool KMHeaders::readSortOrder(bool set_selection)
+bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
     //all cases
     Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
@@ -3317,8 +3317,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
             new_kci->setItem(mItems[new_kci->id()] = khi);
             if(new_kci->hasChildren())
                 s.enqueue(new_kci);
-            if ( mFolder->getMsgBase(new_kci->id())->isNew() ||
-                 ( GlobalSettings::jumpToUnread() &&
+            if ( ( GlobalSettings::jumpToUnread() || forceJumpToUnread ) &&  
+                 ( mFolder->getMsgBase(new_kci->id())->isNew() ||
                    mFolder->getMsgBase(new_kci->id())->isUnread() ) ) {
               unread_exists = true;
             }
@@ -3378,13 +3378,12 @@ bool KMHeaders::readSortOrder(bool set_selection)
         if (unread_exists) {
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
-                if ( mFolder->getMsgBase( item->msgId() )->isNew() ||
-                     ( GlobalSettings::jumpToUnread() &&
-                       mFolder->getMsgBase( item->msgId() )->isUnread() ) ) {
-                    first_unread = item->msgId();
-                    break;
-                }
-                item = static_cast<KMHeaderItem*>(item->itemBelow());
+              if ( mFolder->getMsgBase( item->msgId() )->isNew() ||
+                   mFolder->getMsgBase( item->msgId() )->isUnread() ) {
+                first_unread = item->msgId();
+                break;
+              }
+              item = static_cast<KMHeaderItem*>(item->itemBelow());
             }
         }
 
