@@ -1,4 +1,5 @@
-/* Virtual base class for mail folder
+/* -*- mode: C++ -*-
+ * Virtual base class for mail folder
  *
  * Author: Stefan Taferner <taferner@kde.org>
  * This code is under GPL
@@ -486,6 +487,13 @@ public:
   bool putRepliesInSameFolder() const { return mPutRepliesInSameFolder; }
   void setPutRepliesInSameFolder( bool b ) { mPutRepliesInSameFolder = b; }
 
+  /**
+   * Returns true if the user doesn't want to get notified about new mail
+   * in this folder.
+   */
+  bool ignoreNewMail() const { return mIgnoreNewMail; }
+  void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
+
   void setContentsType( int type );
   int contentsType() const { return mContentsType; }
 
@@ -584,6 +592,9 @@ private:
 
   /** Should replies to messages in this folder be put in here? */
   bool mPutRepliesInSameFolder;
+
+  /** Should new mail in this folder be ignored? */
+  bool mIgnoreNewMail;
 
   /** Type of contents in this folder. */
   // TODO: Make this an enum

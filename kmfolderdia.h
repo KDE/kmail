@@ -146,6 +146,7 @@ private:
   KIconButton *mUnreadIconButton;
   QCheckBox   *mIconsCheckBox;
   QCheckBox   *mNewMailCheckBox;
+  QCheckBox   *mIgnoreNewMailCheckBox;
 
   KPIM::IdentityCombo *mIdentityComboBox;
   QGroupBox *mMailboxTypeGroupBox;

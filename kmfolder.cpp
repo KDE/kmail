@@ -118,6 +118,7 @@ void KMFolder::readConfig( KConfig* config )
   setUserWhoField( config->readEntry("WhoField"), false );
   mId = config->readUnsignedNumEntry("Id", 0);
   mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
+  mIgnoreNewMail = config->readBoolEntry( "IgnoreNewMail", false );
 
   setContentsType( config->readNumEntry( "ContentsType", 0 ) );
 
@@ -148,6 +149,7 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("WhoField", mUserWhoField);
   config->writeEntry("Id", mId);
   config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
+  config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
 
   config->writeEntry( "ContentsType", mContentsType );
 }

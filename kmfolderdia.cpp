@@ -62,6 +62,7 @@
 #include <qregexp.h>
 #include <qlabel.h>
 #include <qvbox.h>
+#include <qwhatsthis.h>
 
 #include <assert.h>
 #include <qhbuttongroup.h>
@@ -251,6 +252,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                                                  QWidget* parent, const char* name )
   : FolderDiaTab( parent, name ), mDlg( dlg )
 {
+  QLabel *label;
+
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
   QGroupBox *fpGroup = new QGroupBox( i18n("Folder Position"), this, "fpGroup" );
@@ -261,7 +264,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QHBoxLayout *hl = new QHBoxLayout( fpGroup->layout() );
   hl->setSpacing( 6 );
 
-  QLabel *label = new QLabel( i18n("&Name:"), fpGroup );
+  label = new QLabel( i18n("&Name:"), fpGroup );
   hl->addWidget( label );
 
   mNameEdit = new KLineEdit( fpGroup );
@@ -450,6 +453,23 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   nml->addWidget( mNewMailCheckBox );
   nml->addStretch( 1 );
 
+  // should new mail in this folder be ignored?
+  QGroupBox* notifyGroup = new QGroupBox( i18n("New Mail Notification"), this,
+                                          "notifyGroup" );
+  notifyGroup->setColumnLayout( 0, Qt::Vertical );
+  topLayout->addWidget( notifyGroup );
+
+  QHBoxLayout *hbl = new QHBoxLayout( notifyGroup->layout() );
+  hbl->setSpacing( KDialog::spacingHint() );
+  mIgnoreNewMailCheckBox =
+    new QCheckBox( i18n("Ignore new mail in this folder" ), notifyGroup );
+  QWhatsThis::add( mIgnoreNewMailCheckBox,
+                   i18n( "Check this option if you don't want to be notified "
+                         "about new mail that is moved to this folder. This "
+                         "is for example useful for ignoring spam." ) );
+  hbl->addWidget( mIgnoreNewMailCheckBox );
+  hbl->addStretch( 1 );
+
   topLayout->addStretch( 100 ); // eat all superfluous space
 
   KMFolder* parentFolder = mDlg->parentFolder();
@@ -561,6 +581,9 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 
   // folder identity
   mIdentityComboBox->setCurrentIdentity( folder->identity() );
+
+  // ignore new mail
+  mIgnoreNewMailCheckBox->setChecked( folder->ignoreNewMail() );
 
   if (folder->folderType() == KMFolderTypeImap)
   {
@@ -727,6 +750,8 @@ bool FolderDiaGeneralTab::save()
     // Set type field
     if ( mContentsComboBox )
       mDlg->folder()->setContentsType( mContentsComboBox->currentItem() );
+
+    folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
 
     if( mDlg->isNewFolder() )
       folder->close();

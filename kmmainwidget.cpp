@@ -802,24 +802,36 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if ( !newMail || newInFolder.isEmpty() )
     return;
 
+  kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
+
   // build summary for new mail message
+  bool showNotification = false;
   QString summary;
-  if ( GlobalSettings::verboseNewMailNotification() ) {
-    QStringList keys( newInFolder.keys() );
-    keys.sort();
-    for ( QStringList::const_iterator it = keys.begin();
-          it != keys.end();
-          ++it ) {
-      kdDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
-                    << *it << endl;
+  QStringList keys( newInFolder.keys() );
+  keys.sort();
+  for ( QStringList::const_iterator it = keys.begin();
+        it != keys.end();
+        ++it ) {
+    kdDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
+                  << *it << endl;
 
-      KMFolder *folder = kmkernel->findFolderById( *it );
+    KMFolder *folder = kmkernel->findFolderById( *it );
 
-      summary += "<br>" + i18n( "1 new message in %1",
-                                "%n new messages in %1",
-                                newInFolder.find( *it ).data() )
-                          .arg( folder->prettyURL() );
+    if ( !folder->ignoreNewMail() ) {
+      showNotification = true;
+      if ( GlobalSettings::verboseNewMailNotification() ) {
+        summary += "<br>" + i18n( "1 new message in %1",
+                                  "%n new messages in %1",
+                                  newInFolder.find( *it ).data() )
+                            .arg( folder->prettyURL() );
+      }
     }
+  }
+
+  if ( !showNotification )
+    return;
+
+  if ( GlobalSettings::verboseNewMailNotification() ) {
     summary = i18n( "%1 is a list of the number of new messages per folder",
                     "<b>New mail arrived</b><br>%1" )
               .arg( summary );
@@ -840,7 +852,6 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
-  kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
 
   // Todo:
   // scroll mHeaders to show new items if current item would
