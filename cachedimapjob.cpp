@@ -228,8 +228,10 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       mMsg->setUID(uid);
       mMsg->setMsgSizeServer(size);
       mMsg->setTransferInProgress( false );
-      mFolder->addMsgInternal( mMsg, true );
+      int index = 0;
+      mFolder->addMsgInternal( mMsg, true, &index );
       emit messageRetrieved( mMsg );
+      if ( index > 0 ) mFolder->unGetMsg( index );
     } else {
       emit messageRetrieved( 0 );
     }
