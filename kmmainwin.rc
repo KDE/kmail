@@ -69,6 +69,7 @@
    <Action name="compact" />
    <Action name="expire" />
    <Action name="remove_duplicate_messages" />
+   <Action name="refresh_folder" />
    <Separator/>
    <Action name="empty" />
    <Action name="delete_folder" />

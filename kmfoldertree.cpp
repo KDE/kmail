@@ -1019,7 +1019,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
     if (!fti->folder()->noContent())
     {
-      folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh"), mMainWidget,
+      folderMenu->insertItem(SmallIcon("reload"), i18n("Check Mail in this Folder"), mMainWidget,
           SLOT(slotRefreshFolder()));
     }
 

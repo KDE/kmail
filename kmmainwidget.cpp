@@ -2068,7 +2068,7 @@ void KMMainWidget::setupActions()
   mCompactFolderAction = new KAction( i18n("&Compact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  mRefreshFolderAction = new KAction( i18n("&Refresh"), "reload", Key_F5 , this,
+  mRefreshFolderAction = new KAction( i18n("Ch&eck Mail in this Folder"), "reload", Key_F5 , this,
                      SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
 
   mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
@@ -2810,7 +2810,9 @@ void KMMainWidget::updateFolderMenu()
 {
   mModifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   mCompactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() 
+                                            && mFolder->folderType()==KMFolderTypeImap 
+                                            : false );
   mEmptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
                                              && ( mFolder->count() > 0 ) )
                                          : false );
