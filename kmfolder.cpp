@@ -334,7 +334,9 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
 {
   if (aIndex_ret) *aIndex_ret = -1;
   KMFolder *msgParent = aMsg->parent();
-  if (aMsg->transferInProgress())
+  // If the message has a parent and is in transfer, bail out. If it does not
+  // have a parent we want to be able to add it even if it is in transfer.
+  if (aMsg->transferInProgress() && msgParent)
       return false;
   if (!aMsg->isComplete() && msgParent && msgParent->folderType() == KMFolderTypeImap)
   {

@@ -508,7 +508,7 @@ void KMEditMsgCommand::execute()
   // edit is discarded, for n > 1.
   KMFolder *parent = msg->parent();
   if ( parent )
-    parent->removeMsg( parent->find( msg ) );
+    parent->take( parent->find( msg ) );
 #if 0
   // Useful?
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
@@ -521,6 +521,7 @@ void KMEditMsgCommand::execute()
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
                     this, SLOT( slotMessageQueuedOrDrafted()) );
 #endif
+  msg->setTransferInProgress(false); // From here on on, the composer owns the message.
   win->setMsg(msg, FALSE, TRUE);
   win->setFolder( parent );
   win->show();
