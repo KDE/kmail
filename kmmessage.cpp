@@ -573,7 +573,6 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 QCString KMMessage::asQuotedString(const QString& aHeaderStr,
                                    const QString& aIndentStr,
                                    const QString& selection,
-                                   bool aIncludeAttach,
                                    bool aStripSignature,
                                    bool allowDecryption) const
 {
@@ -583,7 +582,6 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
   QString indentStr;
-  bool isInline;
   int i;
 
   QTextCodec *codec = mCodec;
@@ -652,61 +650,29 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       smartQuote(result, '\n' + indentStr, sWrapCol, aStripSignature);
   } else {
     result = "";
-    for (i = 0; i < numBodyParts(); i++) {
-      bodyPart(i, &msgPart);
+    bodyPart(0, &msgPart);
 
-      if (i==0)
-        isInline = TRUE;
-      else
-        isInline = (qstricmp(msgPart.contentDisposition(), "inline") == 0);
-
-      if (isInline) {
-        if (qstricmp(msgPart.typeStr(),"text") == 0 ||
-          msgPart.typeStr().isEmpty())
-        {
-          Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-          assert(pgp != NULL);
-          QString part;
-          if (allowDecryption && ((pgp->setMessage(msgPart.bodyDecoded())) &&
-             ((pgp->isEncrypted()) && (pgp->decrypt()) || pgp->isSigned())))
-          {
-            part = codec->toUnicode(pgp->frontmatter())
-                 + codec->toUnicode(pgp->message())
-                 + codec->toUnicode(pgp->backmatter());
-          } else {
-            part = codec->toUnicode(msgPart.bodyDecoded());
-            //	    debug ("part\n" + part ); inexplicably crashes -sanders
-          }
-          part.replace(reNL, '\n' + indentStr);
-          part = indentStr + part + '\n';
-          if (sSmartQuote)
-            smartQuote(part, '\n' + indentStr, sWrapCol, aStripSignature);
-          result += part;
-        } else
-        if (qstricmp(msgPart.typeStr(),"message") == 0) {
-          KMMessage inlineMsg;
-          inlineMsg.fromString(msgPart.bodyDecoded());
-          inlineMsg.setDecodeHTML(mDecodeHTML);
-          QString inlineHeaderStr = inlineMsg.headerAsString();
-          inlineHeaderStr.replace(reNL, '\n' + indentStr);
-          result += "\n" + indentStr;
-          result += inlineHeaderStr;
-          result += QString::fromUtf8(inlineMsg.asQuotedString("", indentStr, selection,
-            TRUE, FALSE, allowDecryption));
-        } else
-          isInline = FALSE;
+    if (qstricmp(msgPart.typeStr(),"text") == 0 ||
+      msgPart.typeStr().isEmpty())
+    {
+      Kpgp::Module* pgp = Kpgp::Module::getKpgp();
+      assert(pgp != NULL);
+      QString part;
+      if (allowDecryption && ((pgp->setMessage(msgPart.bodyDecoded())) &&
+         ((pgp->isEncrypted()) && (pgp->decrypt()) || pgp->isSigned())))
+      {
+        part = codec->toUnicode(pgp->frontmatter())
+             + codec->toUnicode(pgp->message())
+             + codec->toUnicode(pgp->backmatter());
+      } else {
+        part = codec->toUnicode(msgPart.bodyDecoded());
+        //	    debug ("part\n" + part ); inexplicably crashes -sanders
       }
-      if (!isInline && aIncludeAttach) {
-        result += "\n----------------------------------------"
-                  "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
-        if (!msgPart.name().isEmpty())
-          result += "; name=\"" + msgPart.name() + '"';
-
-        result += "\nContent-Transfer-Encoding: " + msgPart.cteStr();
-	result += "\nContent-Description: " +
-                  msgPart.contentDescription() +
-                  "\n----------------------------------------\n";
-      }
+      part.replace(reNL, '\n' + indentStr);
+      part = indentStr + part + '\n';
+      if (sSmartQuote)
+        smartQuote(part, '\n' + indentStr, sWrapCol, aStripSignature);
+      result += part;
     }
   }
 
@@ -818,7 +784,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   replyStr += "\n";
 
   if (!noQuote)
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, false, true, allowDecryption));
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, true, allowDecryption));
 
   QStringList::Iterator it;
   bool recognized = false;
@@ -894,7 +860,7 @@ KMMessage* KMMessage::createRedirect(void)
   /// ### FIXME: ??Add some Resent-* headers?? (c.f. RFC2822 3.6.6)
 
   QString st = QString::fromUtf8(asQuotedString("", "", QString::null,
-    FALSE, false, false));
+    false, false));
   QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
   if (encoding.isEmpty()) encoding = "utf-8";
   QCString str = codecForName(encoding)->fromUnicode(st);
@@ -1022,7 +988,7 @@ QCString KMMessage::createForwardBody(void)
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
     s += headerAsString();
-    str = asQuotedString(s, "", QString::null, FALSE, false, false);
+    str = asQuotedString(s, "", QString::null, false, false);
     str += "\n-------------------------------------------------------\n";
   } else {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1032,7 +998,7 @@ QCString KMMessage::createForwardBody(void)
     s += "To: " + to() + "\n";
     if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
-    str = asQuotedString(s, "", QString::null, FALSE, false, false);
+    str = asQuotedString(s, "", QString::null, false, false);
     str += "\n-------------------------------------------------------\n";
   }
   
@@ -1068,12 +1034,8 @@ KMMessage* KMMessage::createForward(void)
     for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if ((qstricmp(msgPart.contentDisposition(),"inline")!=0 && i > 0) ||
-	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
-	   qstricmp(msgPart.typeStr(),"message")!=0))
-      {
+      if (i > 0 || qstricmp(msgPart.typeStr(),"text") != 0)
         msg->addBodyPart(&msgPart);
-      }
     }
   }
 

@@ -123,7 +123,6 @@ public:
   virtual QCString asQuotedString(const QString& headerStr,
                                   const QString& indentStr,
                                   const QString& selection=QString::null,
-                                  bool includeAttach=true,
                                   bool aStripSignature=true,
                                   bool allowDecryption=true) const;
 
