@@ -1699,13 +1699,15 @@ bool KMComposeWin::applyChanges(void)
         mMsg->setHeaderField( "X-KMail-Recipients", recipientsWithoutBcc.join(",") );
       }
 
+      // must use tmp since original newBodyPart may still be needed below...
+      KMMessagePart tmpNewBodyPart = newBodyPart;
       bOk = encryptMessage( mMsg,
                             recipientsWithoutBcc,
                             doSign, doEncrypt, cryptPlug, encodedBody,
                             previousBoundaryLevel,
                             oldBodyPart,
                             earlyAddAttachments, allAttachmentsAreInBody,
-                            newBodyPart );
+                            tmpNewBodyPart );
       //        kdDebug() << "###AFTER ENCRYPTION\"" << mMsg->asString() << "\""<<endl;
     
 
@@ -1717,60 +1719,69 @@ bool KMComposeWin::applyChanges(void)
 // note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01  
-      {  
+      if( bOk ){  
         // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
         // of german government:
         // --> Encrypted messages *must* be stored in unencrypted form after sending.
         //     ( "Abspeichern ausgegangener Nachrichten in entschluesselter Form" )
         // --> Signed messages *must* be stored including the signature after sending.
         //     ( "Aufpraegen der Signatur" )
-        if(  /*  cryptPlug 
+        // So we provide the user with a non-deactivateble warning and let her/him
+        // choose to obey the rules or to ignore them explicitely.
+        if(    cryptPlug 
             && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
-            &&*/ (    ( doEncrypt && saveMessagesEncrypted )
+            && (    ( doEncrypt && saveMessagesEncrypted )
                  || ( doSign    && ! saveSentSignatures    ) ) ){
         
           QString headTxt =
-            i18n("Sorry, your S/MIME Plug-in configuration is invalid.");
+            i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
           QString sigTxt =
-            i18n("Signatures must be stored with the message, leaving them out is not allowed.");
+            i18n("Signatures should be stored with the message, leaving them out is not allowed.");
           QString encrTxt =
-            i18n("Encrypted messages must be stored in *unencrypted* form, local saving in encrypted form is not allowed.");
+            i18n("Encrypted messages should be stored in *unencrypted* form, local saving in encrypted form is not allowed.");
           QString footTxt =
             i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
+          QString question =
+            i18n("Store message in the recommended way?");
           if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
-            saveSentSignatures = true;
-            saveMessagesEncrypted = false;
-            KMessageBox::sorry(this, headTxt + "\n" + sigTxt + "\n" + encrTxt + "\n" + footTxt);
+            if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt + "<br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+                saveSentSignatures    = true;
+                saveMessagesEncrypted = false;
+            }
           } else if( doSign && !saveSentSignatures ) {
-            saveSentSignatures = true;
-            KMessageBox::sorry(this, headTxt + "\n" + sigTxt + "\n" + footTxt);
+            if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt  + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+                saveSentSignatures = true;
+            }
           } else if( doEncrypt && saveMessagesEncrypted ) {
-            saveMessagesEncrypted = false;
-            KMessageBox::sorry(this, headTxt + "\n" + encrTxt + "\n" + footTxt);
+            if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+                saveMessagesEncrypted = false;
+            }
           }
         }
       }
 #endif
 
-      if(    ( doEncrypt && ! saveMessagesEncrypted )
-          || ( doSign    && ! saveSentSignatures    ) ) {
+      if( bOk &&
+          (    ( doEncrypt && ! saveMessagesEncrypted )
+            || ( doSign    && ! saveSentSignatures    ) ) ) {
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
+        doSign    = doSign    && saveSentSignatures;
+        doEncrypt = doEncrypt && saveMessagesEncrypted;
         oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
         oldBodyPart.setCharset(mCharset);
         oldBodyPart.setContentDisposition( "inline" );
         KMMessage* unencryptedMessage = new KMMessage( *mMsg );
-        bool bOk2 = encryptMessage( unencryptedMessage,
-                                    recipientsWithoutBcc,
-                                    doSign    && saveSentSignatures, 
-                                    doEncrypt && saveMessagesEncrypted,
-                                    cryptPlug,
-                                    encodedBody,
-                                    previousBoundaryLevel,
-                                    oldBodyPart,
-                                    earlyAddAttachments,
-                                    allAttachmentsAreInBody,
-                                    newBodyPart );
-        if( bOk2 ) {
+        if( encryptMessage( unencryptedMessage,
+                            recipientsWithoutBcc,
+                            doSign, 
+                            doEncrypt,
+                            cryptPlug,
+                            encodedBody,
+                            previousBoundaryLevel,
+                            oldBodyPart,
+                            earlyAddAttachments,
+                            allAttachmentsAreInBody,
+                            newBodyPart ) ) {
           unencryptedMessage->cleanupHeader();
           mMsg->setUnencryptedMsg( unencryptedMessage );
         }
