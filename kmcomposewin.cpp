@@ -29,6 +29,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
+#include <kdebug.h>
 
 #ifndef KRN
 #include "kmmainwin.h"
@@ -339,7 +340,7 @@ void KMComposeWin::readConfig(void)
   else
       mDefaultCharset=str;
 
-  debug("Default charset: %s", (const char*)mDefaultCharset);
+  kdDebug() << "Default charset: " << (const char*)mDefaultCharset << endl;
 
   str = config->readEntry("composer-charset", "");
   if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
@@ -347,7 +348,7 @@ void KMComposeWin::readConfig(void)
   else
       mDefComposeCharset=str;
 
-  debug("Default composer charset: %s", (const char*)mDefComposeCharset);
+  kdDebug() << "Default composer charset: " << (const char*)mDefComposeCharset << endl;
 #endif
 
   config->setGroup("Geometry");
@@ -478,7 +479,7 @@ void KMComposeWin::slotView(void)
    else
    {
      id = 0;
-     debug("Something is wrong (Oh, yeah?)");
+     kdDebug() << "Something is wrong (Oh, yeah?)" << endl;
      return;
    }
 
@@ -526,7 +527,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   mEdtList.clear();
   row = 0;
-  debug( "KMComposeWin::rethinkFields" );
+  kdDebug() << "KMComposeWin::rethinkFields" << endl;
   if (!fromSlot) allFieldsAction->setChecked(showHeaders==HDR_ALL);
 
   if (!fromSlot) identityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
@@ -918,7 +919,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   //assert(newMsg!=NULL);
   if(!newMsg)
     {
-      debug("KMComposeWin::setMsg() : newMsg == NULL!\n");
+      kdDebug() << "KMComposeWin::setMsg() : newMsg == NULL!\n" << endl;
       return;
     }
   mMsg = newMsg;
@@ -1033,7 +1034,7 @@ bool KMComposeWin::applyChanges(void)
   //assert(mMsg!=NULL);
   if(!mMsg)
   {
-    debug("KMComposeWin::applyChanges() : mMsg == NULL!\n");
+    kdDebug() << "KMComposeWin::applyChanges() : mMsg == NULL!\n" << endl;
     return FALSE;
   }
 
@@ -1220,7 +1221,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   }
 
   // in case of an error we end up here
-  //warning(i18n("Error during PGP:") + QString("\n") +
+  //qWarning(i18n("Error during PGP:") + QString("\n") +
   //	  pgp->lastErrorMsg());
 
   return QString::null;
@@ -1352,7 +1353,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
   //assert(aLineEdit!=NULL);
   if(!aLineEdit)
     {
-      debug("KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n");
+      kdDebug() << "KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n" << endl;
       return;
     }
   if (dlg.exec()==QDialog::Rejected) return;
@@ -1676,7 +1677,7 @@ void KMComposeWin::slotCut()
     ((QMultiLineEdit*)fw)->cut();
   else if (fw->inherits("KMLineEdit"))
     ((KMLineEdit*)fw)->cut();
-  else debug("wrong focus widget");
+  else kdDebug() << "wrong focus widget" << endl;
 }
 
 
@@ -1758,7 +1759,7 @@ void KMComposeWin::slotNewMailReader()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotToDo()
 {
-  warning(i18n("Sorry, but this feature\nis still missing"));
+  qWarning(i18n("Sorry, but this feature\nis still missing"));
 }
 
 
@@ -1973,7 +1974,7 @@ void KMComposeWin::slotSpellcheck()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone()
 {
-  debug( "spell check complete" );
+  kdDebug() << "spell check complete" << endl;
   mSpellCheckInProgress=FALSE;
   statusBar()->changeItem(i18n("Spellcheck complete."),0);
 

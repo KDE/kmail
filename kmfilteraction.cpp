@@ -14,6 +14,8 @@
 #include <qlineedit.h>
 #include <qguardedptr.h>
 #include <ktempfile.h>
+#include <kdebug.h>
+
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h> //for alarm (sven)
@@ -120,7 +122,7 @@ int KMFilterActionMove::process(KMMessage* msg, bool&stopIt)
     return 0; // ok, added
   else
   {
-    debug ("KMfilteraction - couldn't move msg");
+    kdDebug() << "KMfilteraction - couldn't move msg" << endl;
     stopIt = TRUE;
     return 2; // critical error: couldn't add
   }
@@ -201,7 +203,7 @@ int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
   msg->setTo(mTo);
   if (!kernel->msgSender()->send(msg))
   {
-    debug("KMFilterActionForward: could not forward message (sending failed)");
+    kdDebug() << "KMFilterActionForward: could not forward message (sending failed)" << endl;
     return 1; // error: couldn't send
   }
   return -1;

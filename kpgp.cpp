@@ -23,6 +23,7 @@
 #include <qgroupbox.h>
 #include <qlayout.h>
 
+#include <kdebug.h>
 #include <kapp.h>
 #include <kiconloader.h>
 #include <kglobal.h>
@@ -180,7 +181,7 @@ Kpgp::setMessage(const QString mess)
 
     return TRUE;
   }
-  //  debug("Kpgp: message does not contain PGP parts");
+  //  kdDebug() << "Kpgp: message does not contain PGP parts" << endl;
   return FALSE;
 }
 
@@ -255,7 +256,7 @@ Kpgp::decrypt(void)
 
   if((retval & KpgpBase::BADPHRASE))
   {
-    //debug("Kpgp: bad passphrase");
+    //kdDebug() << "Kpgp: bad passphrase" << endl;
     havePassPhrase = false;
   }
 
@@ -706,7 +707,7 @@ Kpgp::checkForPGP(void)
        ++it;
   }
 
-  debug("Kpgp: no pgp found");
+  kdDebug() << "Kpgp: no pgp found" << endl;
   return FALSE;
 }
 

@@ -18,9 +18,10 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <iostream.h>
+
 #include <klocale.h>
 #include <kmessagebox.h>
-
+#include <kdebug.h>
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
@@ -128,7 +129,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
   checking = true;
 
-  debug ("checking mail, server busy");
+  kdDebug() << "checking mail, server busy" << endl;
   kernel->serverReady (false);
 
   mAccountIt->toLast(); 
@@ -249,7 +250,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 
   if (!cur) {
     kernel->filterMgr()->cleanup();
-    debug ("checked mail, server ready");
+    kdDebug() << "checked mail, server ready" << endl;
     kernel->serverReady (true);
     checking = false;
     emit checkedMail(newMailArrived);
@@ -333,7 +334,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   checking = true;
 
-  debug ("checking mail, server busy");
+  kdDebug() << "checking mail, server busy" << endl;
   kernel->serverReady (false);
 
   mAccountIt->toLast(); 

@@ -85,7 +85,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 //-----------------------------------------------------------------------------
 KMSettings::~KMSettings()
 {
-  debug("~KMSettings");
+  kdDebug() << "~KMSettings" << endl;
   accountList->clear();
 }
 

@@ -16,7 +16,7 @@
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <kstdaccel.h>
-
+#include <kdebug.h>
 #include <kimageio.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
@@ -744,7 +744,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
     mPrevCurrent = 0;
   delete mItems[id];
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
-    //    debug( QString("i = %1, id =%2").arg(i).arg(mItems[i+1]->msgId()));
+    //    kdDebug() << QString("i = %1, id =%2").arg(i).arg(mItems[i+1]->msgId()) << endl;
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
   }
@@ -1029,7 +1029,7 @@ void KMHeaders::forwardMsg ()
       msgPartText = i18n("\nThis is a MIME digest forward.  The content of the"
                          " message is contained in the attachment(s).\n\n\n"
                          "--\n");
-      debug("Doing a mime digest forward\n");
+      kdDebug() << "Doing a mime digest forward\n" << endl;
       // iterate through all the messages to be forwarded
       for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
         int idx = mFolder->find(mb);
@@ -1047,7 +1047,7 @@ void KMHeaders::forwardMsg ()
           msgPartText += QString("; CHARSET=%1").arg(charset());
         #endif
         msgPartText += "\n";
-        debug("Adding message ID %s\n", thisMsg->id().ascii());
+        kdDebug() << "Adding message ID " << thisMsg->id() << "\n" << endl;
         DwHeaders dwh;
         dwh.MessageId().CreateDefault();
         msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
@@ -1062,7 +1062,7 @@ void KMHeaders::forwardMsg ()
         msgPartText += "\n";     // eot
         msgCnt++;
       }
-      debug("Done adding messages to the digest\n");
+      kdDebug() << "Done adding messages to the digest\n" << endl;
       msgPart->setTypeStr("MULTIPART");
       msgPart->setSubtypeStr(QString("Digest; boundary=\"%1\"").arg(fwdMsg->mMsg->Headers().ContentType().Boundary().c_str()));
       msgPart->setName("unnamed");
@@ -1070,7 +1070,7 @@ void KMHeaders::forwardMsg ()
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
       // THIS HAS TO BE AFTER setCte()!!!!
       msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
-      debug("Launching composer window\n");
+      kdDebug() << "Launching composer window\n" << endl;
       kernel->kbp()->busy();
       win = new KMComposeWin(fwdMsg, id);
       win->addAttach(msgPart);
@@ -1243,7 +1243,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   emit selected( 0 );
   if (curMsg) {
-    debug ("new message should be current!");
+    kdDebug() << "new message should be current!" << endl;
     setSelected( currentItem(), TRUE );
     setCurrentMsg( mFolder->find( curMsg ) );
     // sanders QListView isn't emitting a currentChanged signal?
@@ -1499,7 +1499,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   if (((unread == 0) && foundUnreadMessage) ||
       ((unread > 0) && !foundUnreadMessage)) {
     mFolder->correctUnreadMsgsCount();
-    debug( "count corrupted" );
+    kdDebug() << "count corrupted" << endl;
   }
   return -1;
 }
@@ -1679,12 +1679,12 @@ void KMHeaders::updateMessageList(void)
       QString msgId = mb->msgIdMD5();
       if (msgId.isEmpty()) {
 	// pathological case, message with no id
-	debug( "Message without id detected" );
+	kdDebug() << "Message without id detected" << endl;
 	msgId = "";
       }
       if (mTree[msgId])
 	; // pathological case, duplicate ids
-	//debug( "duplicate msgIds detected: Id " + msgId );
+	//kdDebug() << "duplicate msgIds detected: Id " << endl;
       else
 	mTree.replace( msgId, new QValueList< int > );
       mTree[msgId]->append( i ); // head of list is parent, rest children
@@ -1741,7 +1741,7 @@ void KMHeaders::updateMessageList(void)
 	// It turns out this can happen when different messages have the same ids;
 	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
 	mItems[i] = hi;	
-	debug( QString("%1 ").arg(i) + mFolder->getMsgBase(i)->subject() + " " +  mFolder->getMsgBase(i)->fromStrip() );
+	kdDebug() << QString("%1 ").arg(i) + mFolder->getMsgBase(i)->subject() + " " +  mFolder->getMsgBase(i)->fromStrip() << endl;
 	//	assert(mItems[i] != 0);
       }
 

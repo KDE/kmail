@@ -29,10 +29,13 @@
 #include <qlayout.h>
 #include <qstring.h>
 #include <qstringlist.h>
+
 #include <kdialogbase.h>
 #include <klocale.h>
 #include <kabapi.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
+
 #include "kmmainwin.h"
 #include "kmkernel.h"
 #include "addtoaddressbook.h"
@@ -93,7 +96,7 @@ void AddToKabDialog::addToEntry()
   // ----- get the selected entries key:
   if(list->currentItem()<0)
     {
-      debug("AddToKabDialog::addToEntry: called, but no selection.");
+      kdDebug() << "AddToKabDialog::addToEntry: called, but no selection." << endl;
       accept(); // this should not return
       return;
     }
@@ -109,11 +112,10 @@ void AddToKabDialog::addToEntry()
 	  if(api->addressbook()->change(key, entry)
 	     ==AddressBook::NoError)
 	    {
-	      debug("AddToKabDialog::addToEntry: changes done.");
+	      kdDebug() << "AddToKabDialog::addToEntry: changes done." << endl;
 	      if(api->save(true)==AddressBook::NoError)
 		{
-		  debug("AddToKabDialog::addToEntry: "
-			"changes done.");
+		  kdDebug() << "AddToKabDialog::addToEntry: " << endl;
 		} else {
 		  KMessageBox::information
 		    (this,
@@ -194,11 +196,10 @@ void AddToKabDialog::newEntry()
       entry.emails.append(address);
       if(api->add(entry, dummy)==AddressBook::NoError)
 	{
-	  debug("AddToKabDialog::newEntry: entry added.");
+	  kdDebug() << "AddToKabDialog::newEntry: entry added." << endl;
 	  if(api->save(true)==AddressBook::NoError)
 	    {
-	      debug("AddToKabDialog::newEntry: "
-		    "changes saved.");
+	      kdDebug() << "AddToKabDialog::newEntry: " << endl;
 	      accept();
 	    } else {
 	      KMessageBox::information

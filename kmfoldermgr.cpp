@@ -177,7 +177,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
   if (!folder)
   {
     // Are these const char* casts really necessary? -sanders
-    warning(i18n("Creating missing folder `%s'.\n"), (const char*)aFolderName);
+    qWarning(i18n("Creating missing folder `%s'.\n"), (const char*)aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
     if (!folder) {

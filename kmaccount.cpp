@@ -12,6 +12,11 @@
 #include <kapp.h>
 #include <qregexp.h>
 
+#include <klocale.h>
+#include <kprocess.h>
+#include <kmessagebox.h>
+#include <kdebug.h>
+
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmaccount.h"
@@ -21,9 +26,6 @@
 #include "kmsender.h"
 #include "kmmessage.h"
 #include "kmbroadcaststatus.h"
-#include <klocale.h>
-#include <kprocess.h>
-#include <kmessagebox.h>
 
 //----------------------
 #include "kmaccount.moc"
@@ -65,7 +67,7 @@ void KMAccount::setFolder(KMFolder* aFolder)
 {
   if(!aFolder) 
     {
-    debug("KMAccount::setFolder() : aFolder == NULL");
+    kdDebug() << "KMAccount::setFolder() : aFolder == NULL" << endl;
     mFolder = NULL;
     return;
     }
@@ -94,8 +96,7 @@ void KMAccount::readConfig(KConfig& config)
       mFolder = folder;
       mFolder->addAccount(this);
     }
-    else debug("Cannot find folder `%s' for account `%s'.", 
-	       (const char*)folderName, (const char*)mName);
+    else kdDebug() << "Cannot find folder `" << (const char*)folderName << "' for account `" << (const char*)mName << "'." << endl;
   }
 }
 
@@ -258,21 +259,21 @@ bool KMAccount::runPrecommand(const QString &precommand)
 	  args << parseString;
       else
 	{
-	  //qDebug("Adding arg: %s", parseString.left(left).latin1());
+	  //kdDebug() << "Adding arg: " << parseString.left(left) << endl;
 	  args << parseString.left(left);
 	  parseString = parseString.right(parseString.length() - (left+1));
-	  //qDebug("ParseString: %s", parseString.latin1());
+	  //kdDebug() << "ParseString: " << parseString << endl;
 	}
     }
 
   for (unsigned int i = 0; i < args.count(); i++)
     {
-      //qDebug("KMAccount::runPrecommand: arg %d = %s", i, args[i].latin1());
+      //kdDebug() << "KMAccount::runPrecommand: arg " << i << " = " << args[i] << endl;
       precommandProcess << args[i];
     }
 
   kapp->processEvents();
-  qDebug("Running precommand %s", precommand.latin1());
+  kdDebug() << "Running precommand " << precommand << endl;
   if (!precommandProcess.start(KProcess::Block))
     return false;
 

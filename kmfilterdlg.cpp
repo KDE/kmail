@@ -11,6 +11,7 @@
 #include "kmfoldermgr.h"
 
 #include <kapp.h>
+#include <kdebug.h>
 #include <kbuttonbox.h>
 #include <qbuttongroup.h>
 #include <qframe.h>
@@ -321,8 +322,8 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
 //-----------------------------------------------------------------------------
 void KMFilterDlg::resizeEvent(QResizeEvent *qre)
 {
-  debug( "KMFilterDlg::resizeEvent" );
-  debug( QString( "width %1" ).arg( qre->size().width() ));
+  kdDebug() << "KMFilterDlg::resizeEvent" << endl;
+  kdDebug() << QString( "width %1" ).arg( qre->size().width() ) << endl;
   int i, w;
   QWidget* pwidg;
   QSize sz;
@@ -338,7 +339,7 @@ void KMFilterDlg::resizeEvent(QResizeEvent *qre)
       sz.setHeight(pwidg->height());
       pwidg->resize(sz);
       pwidg->move(pos);
-      debug( QString( "posx %1" ).arg( pos.x() ));
+      kdDebug() << QString( "posx %1" ).arg( pos.x() ) << endl;
     }
 }
 
@@ -391,7 +392,7 @@ void KMFilterDlg::updateCurFilterName(const QString &/*text*/)
 //-----------------------------------------------------------------------------
 bool KMFilterDlg::testOpts(const QWidget* w) const
 {
-  if (!w) debug("KMFilterDlg: no widget given");
+  if (!w) kdDebug() << "KMFilterDlg: no widget given" << endl;
   return (w!=0);
 }
 
@@ -485,7 +486,7 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   mFilter->setAction(i, action);
   if (!action || idx < 0) 
   {
-    debug("no action selected");
+    kdDebug() << "no action selected" << endl;
     return;
   }
 
@@ -509,7 +510,7 @@ void KMFilterDlg::slotFilterSelected(int idx)
 {
   KMFilter* filter;
 
-  debug( QString( "mCurFilterIdx %1 idx %2" ).arg( mCurFilterIdx ).arg( idx ) );
+  kdDebug() << QString( "mCurFilterIdx %1 idx %2" ).arg( mCurFilterIdx ).arg( idx ) << endl;
   if (mCurFilterIdx == idx)
     return;
 

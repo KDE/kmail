@@ -17,8 +17,9 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <assert.h>
-#include <klocale.h>
 
+#include <klocale.h>
+#include <kdebug.h>
 #include <kapp.h>
 #include <kbuttonbox.h>
 #include <qlistview.h>
@@ -232,7 +233,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   kapp->processEvents();
   if (aFld->open() != 0)
   {
-    debug("Cannot open folder '%s'", (const char*)aFld->name());
+    kdDebug() << "Cannot open folder '" << (const char*)aFld->name() << "'" << endl;
     return;
   }
 
@@ -370,7 +371,7 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   if (!fld) 
     return;
   // This could goto the wrong folder if the folder list has been modified
-  debug( "fld " + item->text(LOCATION_COLUMN) + " msgid " + item->text(MSGID_COLUMN) );
+  kdDebug() << "fld " << endl;
 
   mMainWin->slotSelectFolder(fld);
   msg = fld->getMsg(item->text(MSGID_COLUMN).toInt());
@@ -477,7 +478,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   case NotMatchesRegExp:
     return (value.find(QRegExp(mValue, FALSE)) < 0);
   default:
-    debug("KMFldSearchRule::matches: wrong rule func #%d", mFunc);
+    kdDebug() << "KMFldSearchRule::matches: wrong rule func #" << mFunc << endl;
     return false;
   }
 }

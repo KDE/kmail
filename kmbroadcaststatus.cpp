@@ -11,6 +11,8 @@
 
 #include "kmbroadcaststatus.h"
 #include <kprogress.h>
+#include <kdebug.h>
+
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qtooltip.h>
@@ -108,7 +110,7 @@ void KMLittleProgressDlg::slotEnable( bool enabled )
 {
   if (enabled) {
     mode = Progress;
-    debug( "enable progress" );
+    kdDebug() << "enable progress" << endl;
   }
   else {
     mode = None;

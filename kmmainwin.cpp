@@ -503,7 +503,7 @@ void KMMainWin::slotAddrBook()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUnimplemented()
 {
-  warning(i18n("Sorry, but this feature\nis still missing"));
+  qWarning(i18n("Sorry, but this feature\nis still missing"));
 }
 
 //-----------------------------------------------------------------------------
@@ -666,7 +666,7 @@ void KMMainWin::slotRemoveFolder()
   if (!mFolder) return;
   if (mFolder->isSystemFolder() || strcmp(mFolder->type(),"plain")!=0)
   {
-    warning(i18n("Cannot remove a\nsystem folder."));
+    qWarning(i18n("Cannot remove a\nsystem folder."));
     return;
   }
 

@@ -14,6 +14,7 @@
 #include "kbusyptr.h"
 #include "kmaccount.h"
 
+#include <kdebug.h>
 #include <kconfig.h>
 #include <kprocess.h>
 #include <kapp.h>
@@ -155,7 +156,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   //assert(aMsg != NULL);
   if(!aMsg)
     {
-      debug("KMSender::send() : aMsg == NULL\n");
+      kdDebug() << "KMSender::send() : aMsg == NULL\n" << endl;
       return false;
     }
   if (!settingsOk()) return FALSE;
@@ -404,7 +405,7 @@ void KMSender::cleanup(void)
   labelDialog->hide();
   if (quitOnDone)
   {
-    debug ("Done sending messages.");
+    kdDebug() << "Done sending messages." << endl;
     kapp->quit();
   }
 #endif
@@ -985,7 +986,7 @@ void KMSendSMTP::smtpDebug(const char* /*inCommand*/)
 #ifdef SMTP_DEBUG_OUTPUT
   const char* errorStr = mClient->Response().c_str();
   int replyCode = mClient->ReplyCode();
-  debug("SMTP '%s': rc=%d, msg='%s'", inCommand, replyCode, errorStr);
+  kdDebug() << "SMTP '" << inCommand << "': rc=" << replyCode << ", msg='" << errorStr << "'" << endl;
 #endif
 }
 

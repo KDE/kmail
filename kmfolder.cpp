@@ -15,6 +15,7 @@
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -184,8 +185,7 @@ int KMFolder::open()
   mStream = fopen(location(), "r+"); // messages file
   if (!mStream) 
   {
-    debug("Cannot open folder `%s': %s", (const char*)location(), 
-	  strerror(errno));
+    kdDebug() << "Cannot open folder `" << (const char*)location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
     return errno;
   }
@@ -228,11 +228,11 @@ int KMFolder::create()
   assert(name() != "");
   assert(mOpenCount == 0);
 
-  debug( "Creating folder " + location() );
+  kdDebug() << "Creating folder " << endl;
   if (access(location(), F_OK) == 0) {
-    debug("KMFolder::create call to access function failed.");
-    debug("File:: " + location());
-    debug("Error " + QString( strerror(errno) ));
+    kdDebug() << "KMFolder::create call to access function failed." << endl;
+    kdDebug() << "File:: " << endl;
+    kdDebug() << "Error " << endl;
     return EEXIST;
   }
 
@@ -311,8 +311,7 @@ int KMFolder::lock()
 
   if (rc < 0)
   {
-    debug("Cannot lock folder `%s': %s (%d)", (const char*)location(),
-	  strerror(errno), errno);
+    kdDebug() << "Cannot lock folder `" << (const char*)location() << "': " << strerror(errno) << " (" << errno << ")" << endl;
     return errno;
   }
 
@@ -322,8 +321,7 @@ int KMFolder::lock()
 
     if (rc < 0) 
     {
-      debug("Cannot lock index of folder `%s': %s", (const char*)location(),
-	    strerror(errno));
+      kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': " << strerror(errno) << endl;
       rc = errno;
       fl.l_type = F_UNLCK;
       rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
@@ -408,8 +406,7 @@ int KMFolder::createIndexFromContents()
   whoFieldName = QString(whoField()) + ':'; //unused (sven)
   whoFieldLen = whoFieldName.length();      //unused (sven)
 
-  //debug("***whoField: %s (%d)",
-  //      (const char*)whoFieldName, whoFieldLen);
+  //kdDebug() << "***whoField: " << //      (const char*)whoFieldName << " (" << whoFieldLen << ")" << endl;
 
   while (!atEof)
   {
@@ -605,8 +602,7 @@ bool KMFolder::readIndexHeader()
   fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
   if (indexVersion < INDEX_VERSION)
   {
-    debug("Index file %s is out of date. Re-creating it.", 
-	  (const char*)indexLocation());
+    kdDebug() << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
     createIndexFromContents();
     return FALSE;
   }
@@ -708,7 +704,7 @@ void KMFolder::removeMsg(int idx)
   //assert(idx>=0);
   if(idx < 0)
     {
-      debug("KMFolder::removeMsg() : idx < 0\n");
+      kdDebug() << "KMFolder::removeMsg() : idx < 0\n" << endl;
       return;
     }
   QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
@@ -876,7 +872,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   {
     opened = TRUE;
     rc = open();
-    debug("addMsg-open: %d", rc);
+    kdDebug() << "addMsg-open: " << rc << endl;
     if (rc) return rc;
   }
 
@@ -907,8 +903,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   clearerr(mStream);
   if (len <= 0)
   {
-    debug("Message added to folder `%s' contains no data. Ignoring it.",
-	  (const char*)name());
+    kdDebug() << "Message added to folder `" << (const char*)name() << "' contains no data. Ignoring it." << endl;
     if (opened) close();
     return 0;
   }
@@ -950,9 +945,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   error = ferror(mStream);
   if (error) {
-    debug( "Error: Could not add message to folder (No space left on device?)" );
+    kdDebug() << "Error: Could not add message to folder (No space left on device?)" << endl;
     if (ftell(mStream) > revert) {
-      debug("Undoing changes");
+      kdDebug() << "Undoing changes" << endl;
       truncate( location(), revert );
     }
     kernel->kbp()->idle();
@@ -992,9 +987,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     fflush(mIndexStream);
     error = ferror(mIndexStream);
     if (error) {
-      debug( "Error: Could not add message to folder (No space left on device?)" );
+      kdDebug() << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
-	debug("Undoing changes");
+	kdDebug() << "Undoing changes" << endl;
 	truncate( indexLocation(), revert );
       }
       kernel->kbp()->idle();
@@ -1157,14 +1152,14 @@ int KMFolder::compact()
 
   if (!needsCompact)
     return 0;
-  debug( "Compacting " + name() );
+  kdDebug() << "Compacting " << endl;
   tempName = "." + name();
   
   tempName += ".compacted";
   unlink(path() + "/" + tempName);
   tempFolder = new KMFolder(parent(), tempName);   //sven: we create it
   if(tempFolder->create()) {
-    debug("KMFolder::compact() Creating tempFolder failed!\n");
+    kdDebug() << "KMFolder::compact() Creating tempFolder failed!\n" << endl;
     delete tempFolder;                             //sven: and we delete it
     return 0;
   }
@@ -1200,8 +1195,8 @@ int KMFolder::compact()
   }
   else
   {
-    debug( "Error occurred while compacting" );
-    debug( "Compaction aborted." );
+    kdDebug() << "Error occurred while compacting" << endl;
+    kdDebug() << "Compaction aborted." << endl;
   }
 
   // Now really free all memory

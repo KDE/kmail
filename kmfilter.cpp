@@ -6,6 +6,8 @@
 #include "kmmessage.h"
 
 #include <kconfig.h>
+#include <kdebug.h>
+
 #include <qregexp.h>
 #include <assert.h>
 #include <string.h>
@@ -34,7 +36,7 @@ static int findInStrList(const char* strList[], const char* str)
   //assert(strList != NULL);
   if(!strList)
     {
-      debug("KMFilter::findInStrList() : strList == NULL\n");
+      kdDebug() << "KMFilter::findInStrList() : strList == NULL\n" << endl;
       return -1; // we return -1 here. Fake unsuccessfull search
     }
 

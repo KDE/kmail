@@ -1,10 +1,37 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-#include <qdir.h>
-#include <kfiledialog.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <errno.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#include <qstring.h>
+#include <qdir.h>
+#include <qbitmap.h>
+#include <qclipboard.h>
+#include <qcursor.h>
+#include <qmultilineedit.h>
+#include <qregexp.h>
+#include <qscrollbar.h>
+#include <qimage.h>
+#include <kaction.h>
+
+#include <kfiledialog.h>
+#include <khtml_part.h>
+#include <khtmlview.h> // So that we can get rid of the frames
+#include <kapp.h>
+#include <kconfig.h>
+#include <kcursor.h>
+#include <krun.h>
+#include <kpopupmenu.h>
+#include <kopenwith.h>
+#include <kmessagebox.h>
+#include <kdebug.h>
+
+#include <mimelib/mimepp.h>
 
 #ifndef KRN
 #include "kmglobal.h"
@@ -21,30 +48,6 @@
 #include "kpgp.h"
 #include "kfontutils.h"
 #include "kurl.h"
-
-#include <khtml_part.h>
-#include <khtmlview.h> // So that we can get rid of the frames
-#include <kapp.h>
-#include <kconfig.h>
-#include <kcursor.h>
-#include <krun.h>
-#include <kpopupmenu.h>
-#include <kopenwith.h>
-#include <kmessagebox.h>
-#include <mimelib/mimepp.h>
-#include <qstring.h>
-#include <errno.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
-#include <qbitmap.h>
-#include <qclipboard.h>
-#include <qcursor.h>
-#include <qmultilineedit.h>
-#include <qregexp.h>
-#include <qscrollbar.h>
-#include <qimage.h>
-#include <kaction.h>
 
 // for selection
 #include <X11/X.h>
@@ -130,7 +133,7 @@ void KMReaderWin::makeAttachDir(void)
 		    KStandardDirs::kde_default("data") + directory);
   mAttachDir = locateLocal( "kmail_tmp", "" );
 
-  if (mAttachDir.isNull()) warning(i18n("Failed to create temporary "
+  if (mAttachDir.isNull()) qWarning(i18n("Failed to create temporary "
 					"attachment directory '%2': %1")
 					.arg(strerror(errno))
 					.arg(directory));
@@ -499,7 +502,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
  
         if (vc) {
           delete vc;
-          debug("FOUND A VALID VCARD");
+          kdDebug() << "FOUND A VALID VCARD" << endl;
           vcnum = j;
           break;
         }
@@ -516,7 +519,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     // text/html
     if (type.find("multipart/alternative") != -1 && numParts == 2)
     {
-      debug("Alternative message, type: %s",type.data());
+      kdDebug() << "Alternative message, type: " << type.data() << endl;
       //Now: Only two attachments one of them is html
       for (i=0; i<2; i++)                   // count parts...
       {
@@ -551,9 +554,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       type = msgPart.typeStr();
       subtype = msgPart.subtypeStr();
       contDisp = msgPart.contentDisposition();
-      debug("type: %s",type.data());
-      debug("subtye: %s",subtype.data());
-      debug("contDisp %s",contDisp.data());
+      kdDebug() << "type: " << type.data() << endl;
+      kdDebug() << "subtye: " << subtype.data() << endl;
+      kdDebug() << "contDisp " << contDisp.data() << endl;
 
       if (i <= 0) asIcon = FALSE;
       else switch (mAttachmentStyle)
@@ -752,7 +755,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   default:
-    warning("Unsupported header style %d", mHeaderStyle);
+    qWarning("Unsupported header style %d", mHeaderStyle);
   }
   mViewer->write("<br>\n");
 }
@@ -918,11 +921,11 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   QString fileName;
 
   if(aMsgPart == NULL) {
-    debug("writePartIcon: aMsgPart == NULL\n");
+    kdDebug() << "writePartIcon: aMsgPart == NULL\n" << endl;
     return;
   }
 
-  debug("writePartIcon: PartNum: %i",aPartNum);
+  kdDebug() << "writePartIcon: PartNum: " << aPartNum << endl;
 
   comment = aMsgPart->contentDescription();
 
@@ -1424,7 +1427,7 @@ void KMReaderWin::slotAtmOpen()
       openhandler->displayOpenWithDialog(*lst);
     }
   } else {					// Cancel
-    debug("Cancelled opening attachment");
+    kdDebug() << "Cancelled opening attachment" << endl;
   }
   
 }
@@ -1495,7 +1498,7 @@ void KMReaderWin::slotAtmSave()
 
   kernel->kbp()->busy();
   if (!kByteArrayToFile(msgPart.bodyDecoded(), fileName, TRUE))
-    warning(i18n("Could not save file"));
+    qWarning(i18n("Could not save file"));
   kernel->kbp()->idle();
 }
 
@@ -1506,7 +1509,7 @@ void KMReaderWin::slotAtmPrint()
   KMMessagePart msgPart;
   mMsg->bodyPart(mAtmCurrent, &msgPart);
 
-  warning("KMReaderWin::slotAtmPrint()\nis not implemented");
+  qWarning("KMReaderWin::slotAtmPrint()\nis not implemented");
 }
 
 

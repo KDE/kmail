@@ -2,14 +2,17 @@
 
 #include <qdir.h>
 
-#include "kmmsgpart.h"
-#include "kmmessage.h"
 #include <kmimemagic.h>
 #include <kapp.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <kstddirs.h>
 #include <kiconloader.h>
+#include <kdebug.h>
+
+#include "kmmsgpart.h"
+#include "kmmessage.h"
+
 extern "C" {
 #include "md5.h"
 };
@@ -115,8 +118,7 @@ void KMMessagePart::setBodyEncoded(const QByteArray& aStr)
     memcpy(mBody.data(), dwResult.c_str(), len);
     break;
   default:
-    debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
-	  (const char*)cteStr());
+    kdDebug() << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
@@ -151,8 +153,7 @@ QByteArray KMMessagePart::bodyDecoded(void) const
     memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
     break;
   default:
-    debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
-	  (const char*)cteStr());
+    kdDebug() << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:

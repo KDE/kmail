@@ -43,14 +43,14 @@ KMKernel *KMKernel::mySelf = 0;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent, name),  DCOPObject("KMailIface")
 {
-  //debug ("KMKernel::KMKernel");
+  //kdDebug() << "KMKernel::KMKernel" << endl;
   mySelf = this;
 }
 
 KMKernel::~KMKernel ()
 {
   mySelf = 0;
-  debug ("KMKernel::~KMKernel");
+  kdDebug() << "KMKernel::~KMKernel" << endl;
 }
 
 
@@ -59,7 +59,7 @@ KMKernel::~KMKernel ()
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won´t show!!
 {
-  debug ("KMKernel::checkMail called");
+  kdDebug() << "KMKernel::checkMail called" << endl;
   KMMainWin *mWin = 0;
 
   if (kapp->mainWidget() && kapp->mainWidget()->isA("KMMainWin"))
@@ -74,7 +74,7 @@ void KMKernel::openReader()
 #warning Ugly hack! (sven)
   KMMainWin *mWin = 0;
   KMainWindow *ktmw = 0;
-  debug ("KMKernel::openReader called");
+  kdDebug() << "KMKernel::openReader called" << endl;
 
   if (KMainWindow::memberList)
     for (ktmw = KMainWindow::memberList->first(); ktmw;
@@ -94,7 +94,7 @@ int KMKernel::openComposer (QString to, QString cc,
                             QString bcc, QString subject, int hidden,
 			    KURL messageFile )
 {
-  debug ("KMKernel::openComposer called");
+  kdDebug() << "KMKernel::openComposer called" << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
@@ -114,26 +114,26 @@ int KMKernel::openComposer (QString to, QString cc,
 
 int KMKernel::setBody (int /*composerId*/, QString /*body*/)
 {
-  debug ("KMKernel::setBody called");
+  kdDebug() << "KMKernel::setBody called" << endl;
   return 1;
 }
 
 int KMKernel::addAttachment(int /*composerId*/, KURL /*url*/,
                             QString /*comment*/)
 {
-  debug ("KMKernel::addAttachment called");
+  kdDebug() << "KMKernel::addAttachment called" << endl;
   return 1;
 }
 
 int KMKernel::send(int /*composerId*/, int /*when*/)
 {
-  debug ("KMKernel::send called");
+  kdDebug() << "KMKernel::send called" << endl;
   return 1;
 }
 
 int KMKernel::ready()
 {
-  debug ("KMKernel::ready called");
+  kdDebug() << "KMKernel::ready called" << endl;
   return 1;
 }
 
@@ -300,7 +300,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
 void KMKernel::init()
 {
-  debug ("entering KMKernel::init()");
+  kdDebug() << "entering KMKernel::init()" << endl;
   QCString  acctPath, foldersPath;
   KConfig* cfg;
 
@@ -310,9 +310,9 @@ void KMKernel::init()
 
   the_kbp = new KBusyPtr;
   cfg = kapp->config();
-  //debug ("1");
+  //kdDebug() << "1" << endl;
   // Stefan: Yes, we really want this message handler. Without it,
-  // kmail does not show vital warning() dialogs.
+  // kmail does not show vital qWarning() dialogs.
   //qInstallMsgHandler(&kmailMsgHandler);
 
   QDir dir;
@@ -352,7 +352,7 @@ void KMKernel::init()
   the_server_is_ready = true;
 
   // filterMgr->dump();
-  debug ("exiting KMKernel::init()");
+  kdDebug() << "exiting KMKernel::init()" << endl;
 }
 
 bool KMKernel::doSessionManagement()
@@ -403,7 +403,7 @@ void KMKernel::cleanup(void)
   //qInstallMsgHandler(oldMsgHandler);
   kapp->config()->sync();
   //--- Sven's save attachments to /tmp start ---
-  //debug ("cleaned");
+  //kdDebug() << "cleaned" << endl;
   QString cmd;
   // This is a dir with attachments and it is not critical if they are
   // left behind.
@@ -526,11 +526,11 @@ KabAPI* KMKernel::KABaddrBook()
   CHECK_PTR(the_KAB_addrBook);
   if(KABaddrBook()->init()!=AddressBook::NoError)
   { // this connects to the default address book and opens it:
-    debug( "Error initializing the connection to your KAB address book." );
+    kdDebug() << "Error initializing the connection to your KAB address book." << endl;
     the_KAB_addrBook=0;
   }
   else {
-    debug ("KMKernel::init: KabApi initialized.");
+    kdDebug() << "KMKernel::init: KabApi initialized." << endl;
   }
 
   return the_KAB_addrBook;

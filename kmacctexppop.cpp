@@ -15,6 +15,7 @@
 #include <kconfig.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+#include <kdebug.h>
 #include <kapp.h>
 #include <kstddirs.h>
 #include <qlayout.h>
@@ -473,7 +474,7 @@ void KMAcctExpPop::startJob() {
   if (!runPrecommand(precommand()))
     {
       QMessageBox::warning(0, i18n("Kmail Error Message"), 
-			    i18n(QString("Couldn't execute precommand:") + precommand()) );  
+			    i18n("Couldn't execute precommand: %1").arg(precommand()) );  
       emit finishedCheck(idsOfMsgs.count() > 0);
       return;
     }
@@ -514,7 +515,7 @@ void KMAcctExpPop::startJob() {
 void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
-    debug( "stage == List" );
+    kdDebug() << "stage == List" << endl;
     QString command;
     if (mUseSSL) {
       command = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
@@ -528,7 +529,7 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Uidl;
   }
   else if (stage == Uidl) {
-    debug( "stage == Uidl" );
+    kdDebug() << "stage == Uidl" << endl;
     stage = Retr;
     numMsgs = idsOfMsgsPendingDownload.count();
     slotGetNextMsg();
@@ -536,10 +537,10 @@ void KMAcctExpPop::slotJobFinished() {
 
   }
   else if (stage == Retr) {
-    debug( "stage == Retr" );
+    kdDebug() << "stage == Retr" << endl;
     KMMessage *msg = new KMMessage;
     msg->fromString(curMsgData,TRUE);
-    debug( QString( "curMsgData.size() %1" ).arg( curMsgData.size() ));
+    kdDebug() << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
 
     msgsAwaitingProcessing.append(msg);
     msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
@@ -549,7 +550,7 @@ void KMAcctExpPop::slotJobFinished() {
     ss->start( 0, true );
   }
   else if (stage == Dele) {
-    debug( "stage == Dele" );
+    kdDebug() << "stage == Dele" << endl;
     QString prefix;
     if (mUseSSL) {
       prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
@@ -563,7 +564,7 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Quit;
   }
   else if (stage == Quit) {
-    debug( "stage == Quit" );
+    kdDebug() << "stage == Quit" << endl;
     job = 0L;
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
@@ -643,7 +644,7 @@ void KMAcctExpPop::slotGetNextMsg()
 
     job = KIO::get( *next, false, false );
     idsOfMsgsPendingDownload.remove( next );
-    debug( QString("Length of message about to get %1").arg( *nextLen ));
+    kdDebug() << QString("Length of message about to get %1").arg( *nextLen ) << endl;
     lensOfMsgsPendingDownload.remove( nextLen ); //xxx
   }
   connectJob();
@@ -652,7 +653,7 @@ void KMAcctExpPop::slotGetNextMsg()
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
-    debug( "Data: <End>");
+    kdDebug() << "Data: <End>" << endl;
     if (numMsgBytesRead < curMsgLen)
       numBytesRead += curMsgLen - numMsgBytesRead;
     return;
@@ -705,7 +706,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 	    uidsOfMsgs.remove( uid );
 	  }
 	  else
-	    debug( "KMAcctExpPop::slotData synchronization failure." );
+	    kdDebug() << "KMAcctExpPop::slotData synchronization failure." << endl;
 	}
 	uidsOfNextSeenMsgs.append( uid );
       }

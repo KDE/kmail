@@ -2,6 +2,7 @@
 
 #include <kapp.h>
 #include <kconfig.h>
+#include <kdebug.h>
 
 #include "kmglobal.h"
 #include "kmfiltermgr.h"
@@ -82,8 +83,7 @@ int KMFilterMgr::process(KMMessage* msg)
   for (filter=first(); !stopIt && filter; filter=next())
   {
     if (!filter->matches(msg)) continue;
-    //    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
-    //    msg->subject().data());
+    //    kdDebug() << "KMFilterMgr: filter " << filter->name().data() << " matches message " << //    msg->subject().data() << endl;
     //    if (status < 0)
     //      status = 0;
     result = filter->execActions(msg, stopIt);
@@ -175,6 +175,6 @@ void KMFilterMgr::dump(void)
 
   for (i=0, filter=first(); filter; filter=next(), i++)
   {
-    debug(filter->asString());
+    kdDebug() << filter->asString() << endl;
   }
 }

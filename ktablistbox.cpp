@@ -237,8 +237,7 @@ void KTabListBoxColumn::paintCell(QPainter* paint, int row,
 	pix = parent->dict().find(pixName);
 	if (!pix)
 	{
-	  debug("KTabListBox %s"
-		":\nno pixmap for\n`%s' registered.", name(), pixName.latin1());
+	  kdDebug() << "KTabListBox " << ":\nno pixmap for\n`%s' registered." << endl;
 	}
 	if (!pix->isNull()) paint->drawPixmap(x, 0, *pix);
 	x += pix->width()+1;

@@ -1,5 +1,7 @@
 // kmmsgbase.cpp
 
+#include <kdebug.h>
+
 #include "kmmsgbase.h"
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -208,7 +210,7 @@ const QString KMMsgBase::asIndexString(void) const
 	      (char)status(), folderOffset(), msgSize(), dateTen,
 	      (const char*)xmark() );
   if (str.length() != 37)
-    debug( "Invalid length " + str );
+    kdDebug() << "Invalid length " << endl;
   str += a.rightJustify( 100, ' ' );
   str += " ";
   str += b.rightJustify( 50, ' ' );
@@ -225,8 +227,8 @@ const QString KMMsgBase::asIndexString(void) const
       str[i] = ' ';
 
   if (str.length() != 285) {
-    debug( QString( "Error invalid index entry %1").arg(str.length()) );
-    debug( str );
+    kdDebug() << QString( "Error invalid index entry %1").arg(str.length()) << endl;
+    kdDebug() << str << endl;
   }
   return str;
 }

@@ -1777,8 +1777,7 @@ void KMMessage::viewSource(const QString& aCaption) const
   edt->setCursorPosition(0, 0);  edt->show();
 
 #else //not ALLOW_GUI
-  debug("Message source: %s\n%s\n--- end of message ---", 
-	aCaption.isEmpty() ? "" : (const char*)aCaption, str);
+  kdDebug() << "Message source: " << (aCaption.isEmpty() ? "" : (const char*)aCaption) << "\n" << str << "\n--- end of message ---" << endl;
 
 #endif
 }

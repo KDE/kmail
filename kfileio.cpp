@@ -3,6 +3,8 @@
 
 #include <kapp.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
+
 #include <qstring.h>
 #include <unistd.h>
 #include <string.h>
@@ -145,7 +147,7 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
 
   result.resize(len);
   readLen = file.readBlock(result.data(), len);
-  debug( QString( "len %1" ).arg(len));
+  kdDebug() << QString( "len %1" ).arg(len) << endl;
 
   if (readLen < len)
   {

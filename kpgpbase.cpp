@@ -4,6 +4,7 @@
 
 #include <kapp.h>
 #include <ksimpleconfig.h>
+#include <kdebug.h>
 
 #include <qregexp.h>
 
@@ -64,7 +65,7 @@ KpgpBase::message() const
   if(!output.isEmpty()) return output;
 
   // no, then return the original one
-  //debug("KpgpBase: No output!");
+  //kdDebug() << "KpgpBase: No output!" << endl;
   return input;
 }
 
@@ -373,7 +374,7 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
     cmd = "--batch --escape-from --armor --always-trust --clearsign ";
   else 
   {
-    debug("kpgpbase: Neither recipients nor passphrase specified.");
+    kdDebug() << "kpgpbase: Neither recipients nor passphrase specified." << endl;
     return OK;
   }
 
@@ -434,7 +435,7 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
   {
     if(info.find("Pass phrase is good") != -1)
     {
-      //debug("KpgpBase: Good Passphrase!");
+      //kdDebug() << "KpgpBase: Good Passphrase!" << endl;
       status |= SIGNED;
     }
     if( info.find("bad passphrase") != -1)
@@ -445,7 +446,7 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
       status |= ERROR;
     }
   }
-  //debug("status = %d",status);
+  //kdDebug() << "status = " << status << endl;
   return status;
 }
 
@@ -464,7 +465,7 @@ KpgpBaseG::decrypt(const char *passphrase)
   // this hack can solve parts of the problem
   if(info.find("ASCII armor corrupted.") != -1)
   {
-    debug("removing ASCII armor header");
+    kdDebug() << "removing ASCII armor header" << endl;
     int index1 = input.find("-----BEGIN PGP SIGNED MESSAGE-----");
     if(index1 != -1)
       index1 = input.find("-----BEGIN PGP SIGNATURE-----", index1);
@@ -490,14 +491,14 @@ KpgpBaseG::decrypt(const char *passphrase)
   if ((info.find("secret key not available") != -1)
       || (info.find("key not found") != -1))
   {
-    //debug("kpgpbase: message is encrypted");
+    //kdDebug() << "kpgpbase: message is encrypted" << endl;
     status |= ENCRYPTED;
     if( info.find("bad passphrase") != -1)
     {
       if(passphrase != 0)
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
-	debug("KpgpBase: passphrase is bad");
+	kdDebug() << "KpgpBase: passphrase is bad" << endl;
 	status |= BADPHRASE;
 	status |= ERROR;
       }
@@ -508,7 +509,7 @@ KpgpBaseG::decrypt(const char *passphrase)
       status |= NO_SEC_KEY;
       status |= ERROR;
       errMsg = i18n("Do not have the public key for this message");
-      debug("KpgpBase: no public key for this message");
+      kdDebug() << "KpgpBase: no public key for this message" << endl;
     }
     // check for persons
     index = info.find("can only be read by:");
@@ -529,7 +530,7 @@ KpgpBaseG::decrypt(const char *passphrase)
   }
   if((index = info.find("Signature made")) != -1)
   {
-    //debug("KpgpBase: message is signed");
+    //kdDebug() << "KpgpBase: message is signed" << endl;
     status |= SIGNED;
     if( info.find("Key matching expected") != -1)
     {
@@ -553,7 +554,7 @@ KpgpBaseG::decrypt(const char *passphrase)
     }
     else if( info.find("CRC error") != -1 )
     {
-      //debug("BAD signature");
+      //kdDebug() << "BAD signature" << endl;
       status |= SIGNED;
       status |= ERROR;
 
@@ -580,7 +581,7 @@ KpgpBaseG::decrypt(const char *passphrase)
       signatureID = "";
     }
   }
-  //debug("status = %d",status);
+  //kdDebug() << "status = " << status << endl;
   return status;
 }
 
@@ -612,7 +613,7 @@ KpgpBaseG::pubKeys()
       }
       if(!line.isEmpty())
       {
-	//debug("KpgpBase: found key for %s.",(const char *)line);
+	//kdDebug() << "KpgpBase: found key for " << (const char *)line << "." << endl;
 	publicKeys.append(line);
       }
     }
@@ -620,7 +621,7 @@ KpgpBaseG::pubKeys()
       break;
     index = index2;
   }
-  //debug("finished reading keys");
+  //kdDebug() << "finished reading keys" << endl;
   return publicKeys;
 }
 
@@ -692,7 +693,7 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
     cmd = "pgp +batchmode +language=C -sat ";
   else 
   {
-    debug("kpgpbase: Neither recipients nor passphrase specified.");
+    kdDebug() << "kpgpbase: Neither recipients nor passphrase specified." << endl;
     return OK;
   }
 
@@ -790,7 +791,7 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
   {
     if(info.find("Pass phrase is good") != -1)
     {
-      //debug("KpgpBase: Good Passphrase!");
+      //kdDebug() << "KpgpBase: Good Passphrase!" << endl;
       status |= SIGNED;
     }
     if( info.find("Bad pass phrase") != -1)
@@ -808,7 +809,7 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
     status |= BADKEYS;
     status |= ERROR;
   }
-  //debug("status = %d",status);
+  //kdDebug() << "status = " << status << endl;
   return status;
 }
 
@@ -828,7 +829,7 @@ KpgpBase2::decrypt(const char *passphrase)
   // this hack can solve parts of the problem
   if(info.find("ASCII armor corrupted.") != -1)
   {
-    debug("removing ASCII armor header");
+    kdDebug() << "removing ASCII armor header" << endl;
     int index1 = input.find("-----BEGIN PGP SIGNED MESSAGE-----");
     if(index1 != -1)
       index1 = input.find("-----BEGIN PGP SIGNATURE-----", index1);
@@ -853,14 +854,14 @@ KpgpBase2::decrypt(const char *passphrase)
 
   if(info.find("You do not have the secret key") != -1)
   {
-    //debug("kpgpbase: message is encrypted");
+    //kdDebug() << "kpgpbase: message is encrypted" << endl;
     status |= ENCRYPTED;
     if( info.find("Bad pass phrase") != -1)
     {
       if(passphrase != 0) 
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
-	debug("KpgpBase: passphrase is bad");
+	kdDebug() << "KpgpBase: passphrase is bad" << endl;
 	status |= BADPHRASE;
 	status |= ERROR;
       }
@@ -871,7 +872,7 @@ KpgpBase2::decrypt(const char *passphrase)
       status |= NO_SEC_KEY;
       status |= ERROR;
       errMsg = i18n("Do not have the secret key for this message");
-      debug("KpgpBase: no secret key for this message");
+      kdDebug() << "KpgpBase: no secret key for this message" << endl;
     }
     // check for persons
     index = info.find("can only be read by:");
@@ -892,7 +893,7 @@ KpgpBase2::decrypt(const char *passphrase)
   }
   if((index = info.find("File has signature")) != -1)
   {
-    //debug("KpgpBase: message is signed");
+    //kdDebug() << "KpgpBase: message is signed" << endl;
     status |= SIGNED;
     if( info.find("Key matching expected") != -1)
     {
@@ -928,7 +929,7 @@ KpgpBase2::decrypt(const char *passphrase)
       signatureID = "";
     }
   }
-  //debug("status = %d",status);
+  //kdDebug() << "status = " << status << endl;
   return status;
 }
 
@@ -970,7 +971,7 @@ KpgpBase2::pubKeys()
 	line = output.mid(index3+7,index2-index3-7);
 	line = line.lower();
       }
-      //debug("KpgpBase: found key for %s",(const char *)line);
+      //kdDebug() << "KpgpBase: found key for " << (const char *)line << endl;
       publicKeys.append(line);
     }
     else
@@ -1167,7 +1168,7 @@ KpgpBase5::decrypt(const char *passphrase)
   index = info.find("Cannot decrypt message");
   if(index != -1)
   {
-    //debug("message is encrypted");
+    //kdDebug() << "message is encrypted" << endl;
     status |= ENCRYPTED;
 
     // ok. we have an encrypted message. Is the passphrase bad,
@@ -1177,7 +1178,7 @@ KpgpBase5::decrypt(const char *passphrase)
       if(passphrase != 0) 
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
-	debug("KpgpBase: passphrase is bad");
+	kdDebug() << "KpgpBase: passphrase is bad" << endl;
 	status |= BADPHRASE;
 	status |= ERROR;
       }
@@ -1188,7 +1189,7 @@ KpgpBase5::decrypt(const char *passphrase)
       status |= NO_SEC_KEY;
       status |= ERROR;
       errMsg = i18n("Do not have the secret key for this message");
-      debug("KpgpBase: no secret key for this message");
+      kdDebug() << "KpgpBase: no secret key for this message" << endl;
     }
     // check for persons
     index = info.find("can only be decrypted by:");
@@ -1211,7 +1212,7 @@ KpgpBase5::decrypt(const char *passphrase)
   index = info.find("Good signature");
   if(index != -1)
   {
-    //debug("good signature");
+    //kdDebug() << "good signature" << endl;
     status |= SIGNED;
     status |= GOODSIG;
  
@@ -1228,7 +1229,7 @@ KpgpBase5::decrypt(const char *passphrase)
   index = info.find("BAD signature");
   if(index != -1)
   {
-    //debug("BAD signature");
+    //kdDebug() << "BAD signature" << endl;
     status |= SIGNED;
     status |= ERROR;
 
@@ -1254,7 +1255,7 @@ KpgpBase5::decrypt(const char *passphrase)
     status |= GOODSIG;
   }
 
-  //debug("status = %d",status);
+  //kdDebug() << "status = " << status << endl;
   return status;
 }
 
@@ -1284,7 +1285,7 @@ KpgpBase5::pubKeys()
       }
       if(!line.isEmpty())
       {
-	//debug("KpgpBase: found key for %s.",(const char *)line);
+	//kdDebug() << "KpgpBase: found key for " << (const char *)line << "." << endl;
 	publicKeys.append(line);
       }
     }
@@ -1292,7 +1293,7 @@ KpgpBase5::pubKeys()
       break;
     index = index2;
   }
-  //debug("finished reading keys");
+  //kdDebug() << "finished reading keys" << endl;
   return publicKeys;
 }     
 
@@ -1352,7 +1353,7 @@ KpgpBase6::decrypt(const char *passphrase)
   // encrypted message
   if( info.find("File is encrypted.") != -1)
   {
-    //debug("kpgpbase: message is encrypted");
+    //kdDebug() << "kpgpbase: message is encrypted" << endl;
     status |= ENCRYPTED;
     if( info.find("Key for user ID") != -1)
     {
@@ -1361,7 +1362,7 @@ KpgpBase6::decrypt(const char *passphrase)
       if (!passphrase || !output.length())
       {
 	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
-	//debug("KpgpBase: passphrase is bad");
+	//kdDebug() << "KpgpBase: passphrase is bad" << endl;
         status |= BADPHRASE;
         status |= ERROR;
       }
@@ -1369,7 +1370,7 @@ KpgpBase6::decrypt(const char *passphrase)
     else if( info.find("Secret key is required to read it.") != -1)
     {
       errMsg = i18n("Do not have the secret key for this message");
-      //debug("KpgpBase: no secret key for this message");
+      //kdDebug() << "KpgpBase: no secret key for this message" << endl;
       status |= NO_SEC_KEY;
       status |= ERROR;
     }
@@ -1379,7 +1380,7 @@ KpgpBase6::decrypt(const char *passphrase)
   if(((index = info.find("File is signed.")) != -1)
     || (info.find("Good signature") != -1 ))
   {
-    //debug("KpgpBase: message is signed");
+    //kdDebug() << "KpgpBase: message is signed" << endl;
     status |= SIGNED;
     if( info.find("signature not checked") != -1)
     {
@@ -1419,7 +1420,7 @@ KpgpBase6::decrypt(const char *passphrase)
       signatureID = "";
     }
   }
-  //debug("status = %d",status);
+  //kdDebug() << "status = " << status << endl;
   return status;
 }
 
@@ -1493,7 +1494,7 @@ KpgpBase6::pubKeys()
 	line = info.mid(index4+7,index2-index4-7);
 	line = line.lower();
       }
-      //debug("KpgpBase: found key for %s",(const char *)line);
+      //kdDebug() << "KpgpBase: found key for " << (const char *)line << endl;
       publicKeys.append(line);
     }
     else
@@ -1521,10 +1522,10 @@ KpgpBase6::isVersion6()
 
   if( info.find("Version 6") != -1)
   {
-    //debug("kpgpbase: pgp version 6.x detected");
+    //kdDebug() << "kpgpbase: pgp version 6.x detected" << endl;
     return 1;
   }
 
-  //debug("kpgpbase: not pgp version 6.x");
+  //kdDebug() << "kpgpbase: not pgp version 6.x" << endl;
   return 0;
 }

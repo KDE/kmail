@@ -8,13 +8,16 @@
 #include <unistd.h>
 #include <signal.h>
 #include <mimelib/mimepp.h>
-#include <kmfolder.h>
-#include <kmmessage.h>
+
 #include <qtextstream.h>
-#include <kconfig.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
+
+#include <kmfolder.h>
+#include <kmmessage.h>
+#include <kconfig.h>
 #include <kapp.h>
+#include <kdebug.h>
 
 #include "kmacctpop.h"
 #include "kalarmtimer.h"
@@ -296,7 +299,7 @@ bool KMAcctPop::doProcessNewMail(bool /* interactive */)
 	    strnicmp(status,"OR",2)==0)
 	{
 	  doFetchMsg=FALSE;
-	  debug("message %d is old -- no need to download it", id);
+	  kdDebug() << "message " << id << " is old -- no need to download it" << endl;
 	}
       }
     }
