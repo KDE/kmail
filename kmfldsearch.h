@@ -1,52 +1,58 @@
 /* kmfldsearch
- * (c) 1999 Stefan Taferner
+ * (c) 1999 Stefan Taferner, (c) 2001 Aaron J. Seigo
  * This code is under GPL
  */
 #ifndef kmfldsearch_h
 #define kmfldsearch_h
 
-#include <qdialog.h>
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qguardedptr.h>
 
-class QLineEdit;
-class QPushButton;
+#include <kdialogbase.h>
+
+class QCheckBox;
 class QComboBox;
 class QGridLayout;
-class KMFldSearchRule;
-class QListView;
-class KMFolder;
-class KMMessage;
 class QLabel;
-class KMMainWin;
-class KMFolderMgr;
+class QLineEdit;
+class QListView;
 class QListViewItem;
-class KMFolderImap;
-class QCheckBox;
+class QPushButton;
+class QRadioButton;
 
-#define KMFldSearchInherited QDialog
-class KMFldSearch: public QDialog
+class KMFldSearchRule;
+class KMFolder;
+class KMFolderComboBox;
+class KMFolderImap;
+class KMFolderMgr;
+class KMMainWin;
+class KMMessage;
+class KStatusBar;
+
+class KMFldSearch: public KDialogBase
 {
   Q_OBJECT
+
 public:
   KMFldSearch(KMMainWin* parent, const char* name=NULL,
-	       KMFolder *curFolder=NULL, bool modal=FALSE, WFlags f=0);
+              KMFolder *curFolder=NULL, bool modal=FALSE);
   virtual ~KMFldSearch();
+
+  void activateFolder(KMFolder* curFolder);
 
 protected slots:
   virtual void slotClose();
   virtual void slotSearch();
   virtual void slotStop();
-  virtual void slotShowMsg(QListViewItem *);
+  virtual bool slotShowMsg(QListViewItem *);
   virtual void slotFolderActivated(int nr);
   virtual void slotFolderComplete(KMFolderImap *folder, bool success);
+  virtual void slotSearchAllFolders(bool on);
+  virtual void slotSearchSpecificFolder(bool on);
 
 protected:
   void enableGUI();
-
-  /** Create combo-box with list of folders */
-  virtual QComboBox* createFolderCombo(KMFolder *curFolder);
 
   /** Test if message matches. */
   virtual bool searchInMessage(KMMessage*, const QCString&);
@@ -64,6 +70,9 @@ protected:
   /** GUI cleanup after search */
   virtual void searchDone();
 
+  /** Return the KMMessage corresponding to the selected listviewitem */
+  KMMessage* KMFldSearch::getSelectedMsg();
+
   /** Reimplemented to react to Escape. */
   virtual void keyPressEvent(QKeyEvent*);
 
@@ -71,21 +80,35 @@ protected:
   virtual void closeEvent(QCloseEvent*);
 
 protected:
-  QGridLayout* mGrid;
-  QComboBox *mCbxFolders;
-  QPushButton *mBtnSearch, *mBtnStop, *mBtnClose;
-  QCheckBox *mChkSubFolders;
-  KMFldSearchRule **mRules;
-  QListView* mLbxMatches;
-  QLabel* mLblStatus;
-  int mNumRules, mNumMatches;
+  bool mSearchAllFolders;
+  bool mSearching;
+  bool mStopped;
+  bool mCloseRequested;
+  int mNumRules;
+  int mNumMatches;
   int mCount;
   QString mSearchFolder;
-  bool mSearching, mStopped, mCloseRequested;
+
+  // Ours to delete
+  KMFldSearchRule **mRules;
+
+  // GC'd by Qt
+  QGridLayout* mGrid;
+  QRadioButton *mChkbxAllFolders;
+  QRadioButton *mChkbxSpecificFolders;
+  KMFolderComboBox *mCbxFolders;
+  QPushButton *mBtnSearch;
+  QPushButton *mBtnStop;
+  QCheckBox *mChkSubFolders;
+  QListView* mLbxMatches;	
+  KStatusBar* mStatusBar;
+  QWidget* mLastFocus; // to remember the position of the focus
+
+  // not owned by us
   KMMainWin* mMainWin;
-  QWidget* mLastFocus;
-  QStringList mFolderNames;
-  QValueList<QGuardedPtr<KMFolder> > mFolders;
+  
+  const static int FOLDER_COLUMN = 3;
+  const static int MSGID_COLUMN = 4;
 };
 
 
@@ -106,18 +129,20 @@ public:
   /** Enable or disable all the push buttons */
   virtual void setEnabled(bool);
 
+  /** Make this rule gain the focus **/
+  virtual void setFocus();
+
   /** The header field to search in (or whole message) */
   virtual bool isHeaderField() const;
 
   /** Update the functions according to the searching capabilites in the
    * selected folder */
-  virtual void updateFunctions(QComboBox *cbx,
-    const QValueList<QGuardedPtr<KMFolder> > &folders);
+  virtual void updateFunctions(KMFolder* folder);
 
   /** Fill in the header fiels where to search */
   virtual void insertFieldItems(bool all);
 
-  enum Func { Contains=0, NotContains, Equal, NotEqual, 
+  enum Func { Contains=0, NotContains, Equal, NotEqual,
               MatchesRegExp, NotMatchesRegExp };
 
 protected:

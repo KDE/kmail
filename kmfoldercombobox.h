@@ -22,7 +22,7 @@ public:
   /** Select wheather the outbox folder is shown.  Default is yes. */
   void showOutboxFolder(bool shown);
   void showImapFolders(bool shown);
-  
+
   void setFolder( KMFolder *aFolder );
   void setFolder( const QString &idString );
   KMFolder *getFolder();
@@ -38,7 +38,8 @@ private:
   /** Create folder list using the folder manager. */
   void createFolderList(QStringList *names,
                         QValueList<QGuardedPtr<KMFolder> > *folders);
-  
+  void init();
+
   QGuardedPtr<KMFolder> mFolder;
   bool mOutboxShown;
   bool mImapShown;

@@ -599,7 +599,11 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
 void KMFolderImap::getFolder()
 {
   mGuessedUnreadMsgs = -1;
-  if (mNoContent) return;
+  if (mNoContent)
+  {
+    emit folderComplete(this, true);
+    return;
+  }
   mImapState = imapInProgress;
   checkValidity();
 }

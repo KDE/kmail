@@ -575,10 +575,15 @@ void KMMainWin::slotClose()
 //-------------------------------------------------------------------------
 void KMMainWin::slotSearch()
 {
-  if(!searchWin) {
+  if(!searchWin) 
+  {
     searchWin = new KMFldSearch(this, "Search", mFolder, false);
     connect(searchWin, SIGNAL(destroyed()),
 	    this, SLOT(slotSearchClosed()));
+  }
+  else 
+  {
+    searchWin->activateFolder(mFolder);
   }
 
   searchWin->show();
@@ -587,14 +592,15 @@ void KMMainWin::slotSearch()
 
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotSearchClosed() {
-  if(searchWin)
-    searchWin = 0;
+void KMMainWin::slotSearchClosed() 
+{
+  searchWin = 0;
 }
 
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotFind() {
+void KMMainWin::slotFind() 
+{
   if( mMsgView )
     mMsgView->slotFind();
 }

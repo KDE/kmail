@@ -10,13 +10,31 @@
 KMFolderComboBox::KMFolderComboBox( QWidget *parent, char *name )
   : QComboBox( parent, name )
 {
+  init();
+}
+
+
+//-----------------------------------------------------------------------------
+
+KMFolderComboBox::KMFolderComboBox( bool rw, QWidget *parent, char *name )
+  : QComboBox( rw, parent, name )
+{
+  init();
+}
+
+
+//-----------------------------------------------------------------------------
+
+void KMFolderComboBox::init()
+{
   mOutboxShown = true;
   mImapShown = true;
   refreshFolders();
-  connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );  
+  connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );
   connect( kernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
   if (mImapShown) connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
+
 
 //-----------------------------------------------------------------------------
 
