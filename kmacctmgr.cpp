@@ -267,6 +267,7 @@ void KMAcctMgr::checkMail(bool _interactive)
   newMailArrived = false;
 
   if (checking) {
+#ifndef NDEBUG
       kdDebug(5006) << "already checking mail" << endl;
       if (lastAccountChecked)
 	  kdDebug(5006) << "currently checking " << lastAccountChecked->name() << endl;
@@ -274,6 +275,7 @@ void KMAcctMgr::checkMail(bool _interactive)
       KMAccount* cur;
       for (cur=mAcctList.first(); cur; cur=mAcctList.next())
 	  kdDebug(5006) << "queued " << cur->name() << endl;
+#endif
 //      sorryCheckAlreadyInProgress(_interactive);
       return;
   }
