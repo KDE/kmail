@@ -39,7 +39,7 @@
 
 #include <addressesdialog.h>
 #include <kabc/addresseelist.h>
-#include <kabc/distributionlist.h>
+#include <distributionlist.h>
 #include <kabc/stdaddressbook.h>
 #include <kaddrbook.h>
 #include <kpushbutton.h>
@@ -206,7 +206,7 @@ public:
       mModified( false ), mNew( false ) {}
 
   void load( const ACLListEntry& entry );
-  void save( ACLList& list, KABC::DistributionListManager& manager, IMAPUserIdFormat userIdFormat );
+  void save( ACLList& list, KABC::AddressBook* addressBook, IMAPUserIdFormat userIdFormat );
 
   QString userId() const { return text( 0 ); }
   void setUserId( const QString& userId ) { setText( 0, userId ); }
@@ -266,15 +266,14 @@ void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
   mModified = entry.changed; // for dimap, so that earlier changes are still marked as changes
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList, KABC::DistributionListManager& manager, IMAPUserIdFormat userIdFormat )
+void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList, KABC::AddressBook* addressBook, IMAPUserIdFormat userIdFormat )
 {
   // expand distribution lists
-  // kaddrbook.cpp has a strange two-pass case-insensitive lookup; is it ok to be case sensitive?
-  KABC::DistributionList* list = manager.list( userId() );
-  if ( list ) {
+  KPIM::DistributionList list = KPIM::DistributionList::findByName( addressBook, userId(), false );
+  if ( !list.isEmpty() ) {
     Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
-    KABC::DistributionList::Entry::List entryList = list->entries();
-    KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
+    KPIM::DistributionList::Entry::List entryList = list.entries(addressBook);
+    KPIM::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
     for( it = entryList.begin(); it != entryList.end(); ++it ) {
       QString email = (*it).email;
       if ( email.isEmpty() )
@@ -648,12 +647,10 @@ bool KMail::FolderDiaACLTab::save()
   // listviewitems at the same time sounds dangerous, so let's just save into
   // ACLList and reload that.
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-  KABC::DistributionListManager manager( addressBook );
-  manager.load();
   ACLList aclList;
   for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-    ACLitem->save( aclList, manager, mUserIdFormat );
+    ACLitem->save( aclList, addressBook, mUserIdFormat );
   }
   loadListView( aclList );
 
