@@ -1541,7 +1541,7 @@ void KMComposeWin::slotInsertMyPublicKey()
 
   // load the file
   kernel->kbp()->busy();
-  str=Kpgp::getKpgp()->getAsciiPublicKey(from());
+  str=Kpgp::getKpgp()->getAsciiPublicKey(Kpgp::getKpgp()->user());
   if (str.isEmpty())
   {
     kernel->kbp()->idle();
