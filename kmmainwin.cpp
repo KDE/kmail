@@ -1070,16 +1070,28 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     msg->initHeader();
     msg->setTo(aUrl.path());
     QString query=aUrl.query();
-    if (query.left(9) == "?subject=")
-    {
-       msg->setSubject( KURL::decode_string(query.mid(9)) ); 
+    while (!query.isEmpty()) {
+      QString queryPart;
+      int secondQuery = query.find('?',1);
+      if (secondQuery != -1)
+	queryPart = query.left(secondQuery);
+      else
+	queryPart = query;
+      query = query.mid(queryPart.length());
+      
+      if (queryPart.left(9) == "?subject=")
+	msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
+      else if (queryPart.left(6) == "?body=")
+	msg->setBody( KURL::decode_string(queryPart.mid(6)) );
+      else if (queryPart.left(6) == "?cc=")
+	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
     win = new KMComposeWin(msg);
     win->show();
   }
-  else if ((aUrl.protocol() == "http") || (aUrl.protocol() ==  "ftp") ||
-           (aUrl.protocol() == "file"))
+  else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") || 
+	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file"))
   {
     statusMsg(i18n("Opening URL..."));
     // -- David : replacement for KFM::openURL
