@@ -81,6 +81,8 @@ static QStringList sPrefCharsets;
 
 QString KMMessage::sForwardStr;
 const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
+//helper
+static void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart );
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
@@ -1153,34 +1155,67 @@ QCString KMMessage::createForwardBody()
 KMMessage* KMMessage::createForward()
 {
   KMMessage* msg = new KMMessage();
-  KMMessagePart msgPart;
   QString id;
 
-  msg->fromDwString( this->asDwString() );
-  // remember the type and subtype, initFromMessage sets the contents type to 
-  // text/plain, via initHeader, for unclear reasons
-  const int type = msg->type();
-  const int subtype = msg->subtype();
+  // If this is a multipart mail or if the main part is only the text part,
+  // Make an identical copy of the mail, minus headers, so attachments are 
+  // preserved
+  if ( type() == DwMime::kTypeMultipart ||
+     ( type() == DwMime::kTypeText && subtype() == DwMime::kSubtypePlain ) ) {
+    msg->fromDwString( this->asDwString() );
+    // remember the type and subtype, initFromMessage sets the contents type to 
+    // text/plain, via initHeader, for unclear reasons
+    const int type = msg->type();
+    const int subtype = msg->subtype();
 
-  // Strip out all headers apart from the content description ones, because we
-  // don't want to inherit them.
-  DwHeaders& header = msg->mMsg->Headers();
-  DwField* field = header.FirstField();
-  DwField* nextField;
-  while (field)
-  {
-    nextField = field->Next();
-    if ( ! QString( field->FieldNameStr().c_str() ).contains( "ontent" ) )
-      header.RemoveField(field);
-    field = nextField;
+    // Strip out all headers apart from the content description ones, because we
+    // don't want to inherit them.
+    DwHeaders& header = msg->mMsg->Headers();
+    DwField* field = header.FirstField();
+    DwField* nextField;
+    while (field)
+    {
+      nextField = field->Next();
+      if ( field->FieldNameStr().find( "ontent" ) == DwString::npos ) 
+        header.RemoveField(field);
+      field = nextField;
+    }
+    msg->mMsg->Assemble();
+
+    msg->initFromMessage( this );
+    //restore type
+    msg->setType( type );
+    msg->setSubtype( subtype );
+  } else {
+    // This is a non-multipart, non-text mail (e.g. text/calendar). Construct
+    // a multipart/mixed mail and add the original body as an attachment.
+    msg->initFromMessage( this );
+    msg->removeHeaderField("Content-Type");
+    msg->removeHeaderField("Content-Transfer-Encoding");
+    // Modify the ContentType directly (replaces setAutomaticFields(true))
+    DwHeaders & header = msg->mMsg->Headers();
+    header.MimeVersion().FromString("1.0");
+    DwMediaType & contentType = msg->dwContentType();
+    contentType.SetType( DwMime::kTypeMultipart );
+    contentType.SetSubtype( DwMime::kSubtypeMixed );
+    contentType.CreateBoundary(0);
+    contentType.Assemble();
+
+    // empty text part
+    KMMessagePart msgPart;
+    bodyPart( 0, &msgPart );
+    msg->addBodyPart(&msgPart);
+    // the old contents of the mail
+    KMMessagePart secondPart;
+    secondPart.setType( type() );
+    secondPart.setSubtype( subtype() );
+    secondPart.setBody( mMsg->Body().AsString().c_str() );
+    // use the headers of the original mail
+    applyHeadersToMessagePart( mMsg->Headers(), &secondPart );
+    msg->addBodyPart(&secondPart);
+    msg->mNeedsAssembly = true;
+    msg->cleanupHeader();
   }
-  msg->mMsg->Assemble();
-
-  msg->initFromMessage( this );
-  //restore type
-  msg->setType( type );
-  msg->setSubtype( subtype );
-
   QString st = QString::fromUtf8(createForwardBody());
   QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
   if (encoding.isEmpty()) encoding = "utf-8";
@@ -2767,6 +2802,67 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
   return part;
 }
 
+void applyHeadersToMessagePart( DwHeaders& headers, KMMessagePart* aPart )
+{
+  // Content-type
+  QCString additionalCTypeParams;
+  if (headers.HasContentType())
+  {
+    DwMediaType& ct = headers.ContentType();
+    aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
+    aPart->setTypeStr(ct.TypeStr().c_str());
+    aPart->setSubtypeStr(ct.SubtypeStr().c_str());
+    DwParameter *param = ct.FirstParameter();
+    while(param)
+    {
+      if (!qstricmp(param->Attribute().c_str(), "charset"))
+        aPart->setCharset(QCString(param->Value().c_str()).lower());
+      else if (param->Attribute().c_str()=="name*")
+        aPart->setName(KMMsgBase::decodeRFC2231String(
+              param->Value().c_str()));
+      else {
+        additionalCTypeParams += ';';
+        additionalCTypeParams += param->AsString().c_str();
+      }
+      param=param->Next();
+    }
+  }
+  else
+  {
+    aPart->setTypeStr("text");      // Set to defaults
+    aPart->setSubtypeStr("plain");
+  }
+  aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
+  // Modification by Markus
+  if (aPart->name().isEmpty())
+  {
+    if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
+      aPart->setName(KMMsgBase::decodeRFC2047String(headers.
+            ContentType().Name().c_str()) );
+    } else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
+      aPart->setName( KMMsgBase::decodeRFC2047String(headers.
+            Subject().AsString().c_str()) );
+    }
+  }
+
+  // Content-transfer-encoding
+  if (headers.HasContentTransferEncoding())
+    aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
+  else
+    aPart->setCteStr("7bit");
+
+  // Content-description
+  if (headers.HasContentDescription())
+    aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
+  else
+    aPart->setContentDescription("");
+
+  // Content-disposition
+  if (headers.HasContentDisposition())
+    aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
+  else
+    aPart->setContentDisposition("");
+}
 
 //-----------------------------------------------------------------------------
 void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
@@ -2786,68 +2882,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
     aPart->setPartSpecifier( partId );
 
     DwHeaders& headers = aDwBodyPart->Headers();
-    // Content-type
-    QCString additionalCTypeParams;
-    if (headers.HasContentType())
-    {
-      DwMediaType& ct = headers.ContentType();
-      aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
-      aPart->setTypeStr(ct.TypeStr().c_str());
-      aPart->setSubtypeStr(ct.SubtypeStr().c_str());
-      DwParameter *param = ct.FirstParameter();
-      while(param)
-      {
-        if ( kasciistricmp( param->Attribute().c_str(), "charset" ) == 0 ) {
-          QCString charset( param->Value().c_str() );
-          KPIM::kAsciiToLower( charset.data() );
-          aPart->setCharset( charset );
-        }
-        else if ( kasciistricmp( param->Attribute().c_str(), "name*" ) == 0 ) {
-          aPart->setName(KMMsgBase::decodeRFC2231String(
-            param->Value().c_str()));
-        }
-        else {
-          additionalCTypeParams += ';';
-          additionalCTypeParams += param->AsString().c_str();
-        }
-        param=param->Next();
-      }
-    }
-    else
-    {
-      aPart->setTypeStr("text");      // Set to defaults
-      aPart->setSubtypeStr("plain");
-    }
-    aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
-    // Modification by Markus
-    if (aPart->name().isEmpty())
-    {
-      if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
-        aPart->setName(KMMsgBase::decodeRFC2047String(headers.
-      						ContentType().Name().c_str()) );
-      } else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
-        aPart->setName( KMMsgBase::decodeRFC2047String(headers.
-      						 Subject().AsString().c_str()) );
-      }
-    }
-
-    // Content-transfer-encoding
-    if (headers.HasContentTransferEncoding())
-      aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
-    else
-      aPart->setCteStr("7bit");
-
-    // Content-description
-    if (headers.HasContentDescription())
-      aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
-    else
-      aPart->setContentDescription("");
-
-    // Content-disposition
-    if (headers.HasContentDisposition())
-      aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
-    else
-      aPart->setContentDisposition("");
+    applyHeadersToMessagePart( headers, aPart );
 
     // Body
     if (withBody)
