@@ -65,7 +65,7 @@ static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static QStringList sPrefCharsets;
 
-QString KMMessage::sForwardStr = "";
+QString KMMessage::sForwardStr;
 const HeaderStrategy * KMMessage::sHeaderStrategy = HeaderStrategy::rich();
 
 //-----------------------------------------------------------------------------
