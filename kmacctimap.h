@@ -102,7 +102,6 @@ protected:
 
   QPtrList<KMail::ImapJob> mJobList;
   QGuardedPtr<KMFolderImap> mFolder;
-  QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
 
 protected slots:
   /**

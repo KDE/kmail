@@ -632,6 +632,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   if (job->error()) {
     mAccount->slotSlaveError(mAccount->slave(), job->error(), job->errorText());
     emit folderComplete(this, FALSE);
+    mAccount->displayProgress();
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
@@ -698,6 +699,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   if (!mAccount->makeConnection())
   {
     emit folderComplete(this, FALSE);
+    mAccount->displayProgress();
     return;
   }
   if (startUid.isEmpty())
@@ -740,6 +742,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
         job->errorText() );
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
+    mAccount->displayProgress();
     return;
   }
   mCheckFlags = FALSE;
@@ -785,6 +788,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mContentState = imapFinished;
     emit folderComplete(this, TRUE);
     mAccount->removeJob(it);
+    mAccount->displayProgress();
     return;
   }
 
@@ -1010,6 +1014,8 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
   mAccount->removeJob(it);
   if (!job->error() && lastSet)
       emit folderComplete(this, TRUE);
+
+  mAccount->displayProgress();
 }
 
 
