@@ -34,6 +34,9 @@ private slots:
 	void messageSelected(Message *);
 	void pannerHasChanged();
 	void resizeEvent(QResizeEvent *);
+	void doDeleteMessage();
+	void doForwardMessage();
+	void doReplyMessage();
 };
 
 class KMMainWin : public KTopLevelWidget

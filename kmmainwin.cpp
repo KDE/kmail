@@ -12,6 +12,9 @@
 #include "kmaccount.h"
 #include "kmmainwin.moc"
 #include "mclass.h"
+#include "kbusyptr.h"
+
+KBusyPtr* kbp;
 
 KMMainView::KMMainView(QWidget *parent, const char *name) : QWidget(parent,name)
 {
@@ -160,6 +163,18 @@ void KMMainView::folderSelected(QDir *d) {
 	messageView->clear();
 }
 
+void KMMainView::doDeleteMessage() {
+	headers->toggleDeleteMsg();
+}
+
+void KMMainView::doForwardMessage() {
+	headers->forwardMsg();
+}
+
+void KMMainView::doReplyMessage() {
+	headers->replyToMsg();
+}
+
 void KMMainView::messageSelected(Message *m) {
 	unsigned long int l;
 	messageView->setAutoUpdate(FALSE);
@@ -288,18 +303,18 @@ void KMMainWin::setupToolBar()
 
 	pixmap.load(pixdir+"kmreply.xpm");
 	toolBar->insertItem(pixmap, 0,
-			    SIGNAL(clicked()), this,
-			    SLOT(doUnimplemented()), TRUE, "reply to message");
+			    SIGNAL(clicked()), mainView,
+			    SLOT(doReplyMessage()), TRUE, "reply to message");
 
 	pixmap.load(pixdir+"kmforward.xpm");
 	toolBar->insertItem(pixmap, 0,
-			    SIGNAL(clicked()), this,
-			    SLOT(doUnimplemented()), TRUE, "forward message");
+			    SIGNAL(clicked()), mainView,
+			    SLOT(doForwardMessage()), TRUE, "forward message");
 
 	pixmap.load(pixdir+"kmdel.xpm");
 	toolBar->insertItem(pixmap, 0,
-			    SIGNAL(clicked()), this,
-			    SLOT(doUnimplemented()), TRUE, "delete message");
+			    SIGNAL(clicked()), mainView,
+			    SLOT(doDeleteMessage()), TRUE, "delete message");
 
 	pixmap.load(pixdir+"kmsave.xpm");
 	toolBar->insertItem(pixmap, 0,
@@ -394,6 +409,7 @@ main(int argc, char *argv[])
 	initCC();
 	a = new KApplication(argc, argv, "kmail");
 	k = new KMMainWin();
+	kbp = new KBusyPtr(a);
 	k->show();
 	k->resize(k->size()); // necessary despite resize in constructor
 	a->exec();
