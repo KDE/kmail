@@ -87,6 +87,7 @@ protected slots:
   void folderSelected(KMFolder*);
   void slotMsgSelected(KMMessage*);
   void slotMsgActivated(KMMessage*);
+  void quit();
   //void pannerHasChanged();
   //void resizeEvent(QResizeEvent*);
   //void initIntegrated();

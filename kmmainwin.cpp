@@ -546,7 +546,7 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("&Close"), this, 
 		       SLOT(slotClose()), keys->close());
-  fileMenu->insertItem(nls->translate("&Quit"), qApp,
+  fileMenu->insertItem(nls->translate("&Quit"), this,
 		       SLOT(quit()), keys->quit());
 
   //----- Edit Menu
@@ -702,4 +702,11 @@ void KMMainWin::setupStatusBar()
   mMessageStatusId = statusBarAddItem(nls->translate("Initializing..."));
   mStatusBar->enable(KStatusBar::Show);
   setStatusBar(mStatusBar);
+}
+
+void KMMainWin::quit()
+{
+  if((KMsgBox::yesNo(0,"KMail Confirm","Do you really want to quit?") ==2))
+    return;
+  qApp->quit();
 }

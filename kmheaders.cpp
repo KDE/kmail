@@ -295,6 +295,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
   KMMessageList* msgList;
   KMMessage* msg;
+  int top;
   int rc, cur = currentItem();
 
   assert(destFolder != NULL);

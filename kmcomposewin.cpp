@@ -63,6 +63,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget)
 {
+
   mGrid = NULL;
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
@@ -420,7 +421,7 @@ void KMComposeWin::setupStatusBar(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor(void)
 {
-  QPopupMenu* popup;
+  //QPopupMenu* popup;
   mEditor = new KEdit(kapp, &mMainWidget);
 
 #ifdef BROKEN
@@ -530,6 +531,9 @@ void KMComposeWin::applyChanges(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
+  if(mEditor->isModified())
+    if((KMsgBox::yesNo(0,"KMail Confirm","Close unsend message?") == 2))
+      return;   
   writeConfig();
   KMComposeWinInherited::closeEvent(e);
 }
@@ -909,8 +913,60 @@ void KMComposeWin::slotHelp()
   app->invokeHTMLHelp("","");
 }
 
+//Class KMLineEdit ------------------------------------------------------------
 
+KMLineEdit::KMLineEdit(QWidget *parent = NULL, const char *name = NULL)
+  :QLineEdit(parent,name)
+{
+}
 
+//-----------------------------------------------------------------------------
+
+void KMLineEdit::mousePressEvent(QMouseEvent *e)
+{
+  if(e->button() == MidButton) {
+    QKeyEvent k( Event_KeyPress, Key_V, 0 , ControlButton);
+    keyPressEvent(&k);
+    return;
+  }
+  else if(e->button() == RightButton){
+    QPopupMenu *p = new QPopupMenu;
+    p->insertItem("Copy",this,SLOT(copy()));
+    p->insertItem("Cut",this,SLOT(cut()));
+    p->insertItem("Paste",this,SLOT(paste()));
+    p->insertItem("Mark all",this,SLOT(markAll()));
+    p->popup(QCursor::pos());
+    }
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::copy()
+{
+  QString t = markedText();
+  QApplication::clipboard()->setText(t);
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::cut()
+{
+    if(hasMarkedText()) {
+    copy();
+    // Delete text is missing
+    }
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::paste()
+{
+  QKeyEvent k( Event_KeyPress, Key_V , 0 , ControlButton);
+  keyPressEvent(&k);
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::markAll()
+{
+  selectAll();
+}
 
 
 

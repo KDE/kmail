@@ -9,6 +9,10 @@
 #include <qlined.h>
 #include <qlabel.h>
 #include <qlist.h>
+#include <qevent.h>
+#include <qwidget.h>
+#include <qclipbrd.h>
+#include <kmsgbox.h>
 #include "kmmsgpart.h"
 
 class QLineEdit;
@@ -25,6 +29,25 @@ class QPushButton;
 class QCloseEvent;
 
 typedef QList<KMMessagePart> KMMsgPartList;
+
+class KMLineEdit : public QLineEdit
+{
+  Q_OBJECT
+
+public:
+  KMLineEdit(QWidget *parent = NULL, const char *name = NULL);
+
+public slots:
+  void copy();
+  void cut();
+  void paste();
+  void markAll();
+
+private:
+
+protected:
+  virtual void mousePressEvent(QMouseEvent *);
+};
 
 //-----------------------------------------------------------------------------
 #define KMComposeWinInherited KTopLevelWidget
@@ -137,7 +160,7 @@ protected:
 
 protected:
   QWidget   mMainWidget;
-  QLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
+  KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
 
   QPopupMenu* mMnuView;
