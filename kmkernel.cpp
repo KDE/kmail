@@ -677,7 +677,7 @@ void KMKernel::transferMail(void)
 	    "KMail can move the contents of the directory ~/KMail into "
 	    "~/Mail, but this will replace existing files with the same "
 	    "name in the directory ~/Mail (e.g. inbox).\n"
-	    "Shall KMail move the mail folders now ?"));
+	    "Should KMail move the mail folders now?"));
 
   if (rc == KMessageBox::No) return;
 

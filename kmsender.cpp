@@ -460,7 +460,7 @@ void KMSender::slotIdle()
         "The message will stay in the 'outbox' folder until you either "
         "fix the problem (e.g. a broken address) or remove the message "
 	"from the 'outbox' folder.\n"
-	"Note: other messages will also be blocked by this message, as "
+	"Note: Other messages will also be blocked by this message, as "
 	"long as it is in the 'outbox' folder\n"
 	"The following transport protocol was used:\n  %2")
     .arg(errString)

@@ -928,11 +928,11 @@ void AccountDialog::slotPipeliningClicked()
       i18n("Please note that this feature can cause some POP3 servers "
       "that don't support pipelining to send corrupted mails.\n"
       "This is configurable, because some servers support pipelining "
-      "but don't announce their capabilities. To check, if your POP3 server "
+      "but don't announce their capabilities. To check if your POP3 server "
       "announces pipelining support, use the button at the bottom of "
       "the dialog.\n"
-      "If your server doesn't announce it, but you want more speed "
-      "you should do some testing first by sending yourself a bunch "
+      "If your server doesn't announce it, but you want more speed then "
+      "you should do some testing first by sending yourself a batch "
       "of mails and downloading them."), QString::null,
       "pipelining");
 }
