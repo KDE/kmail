@@ -2902,14 +2902,12 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    center( contentsX(), itemPos(mItems[first_unread]), 0, 9.0 );
 	}
     } else {
-      // make sure the changes to current item are not shown
-      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(highlightMessage(QListViewItem*)));
-      setTopItemByIndex(mTopItem);
-      setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
-      // reconnect again
-      connect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(highlightMessage(QListViewItem*)));
+	  // only reset the selection if we have no current item
+	  if (mCurrentItem <= 0)
+	  {
+		setTopItemByIndex(mTopItem);
+		setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
+	  }
     }
     END_TIMER(selection);
     SHOW_TIMER(selection);
