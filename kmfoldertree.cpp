@@ -1027,7 +1027,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   {
     folderMenu->insertSeparator();
     folderMenu->insertItem(SmallIconSet("configure_shortcuts"),
-        i18n("&Assign Shortcut"),
+        i18n("&Assign Shortcut..."),
         fti,
         SLOT(assignShortcut()));
     folderMenu->insertItem(SmallIconSet("configure"),
