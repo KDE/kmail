@@ -344,6 +344,7 @@ protected:
   bool          mSendOnCheck;
   bool          mBeepOnNew;
   bool          mConfirmEmpty;
+  QString       mStartupFolder;
   int		mMessageStatusId;
   QValueList<int> mPanner1Sep, mPanner2Sep, mPanner3Sep;
   KMMessage     *mMsgCurrent;
