@@ -3907,6 +3907,7 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     }
     int colWidth = mListview->header()->sectionSize( column );
     r.setX( mListview->header()->sectionPos( column )
+            - mListview->header()->offset()
             + colWidth / 2
             - r.height() / 2
             - 1 );
