@@ -16,7 +16,7 @@ public:
     enum {
 	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
 	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40,
-	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x300,
+	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400,
 
 	ALL_SET = 0xFFFF, NONE_SET = 0x0000
     };
@@ -185,12 +185,9 @@ QString KMMsgInfo::fromStrip(void) const
 //-----------------------------------------------------------------------------
 QString KMMsgInfo::fileName(void) const
 {
-    QString filename;
     if (kd && kd->modifiers & KMMsgInfoPrivate::FILE_SET)
-	filename = kd->file;
-    else
-        filename = getStringPart(MsgFilePart);
-    return filename;
+        return kd->file;
+    return getStringPart(MsgFilePart);
 }
 
 
