@@ -92,21 +92,21 @@ public:
   // WARNING: Do not add new member variables to the class
 
   // Constuction a new list view item with the given colors and pixmap
-    KMHeaderItem( QListView* parent, int msgId, QString key = QString::null )
+    KMHeaderItem( QListView* parent, int msgId, QString key = QString::null, bool openNow=true )
     : KListViewItem( parent ),
 	  mMsgId( msgId ),
 	  mKey(key)
   {
-    irefresh();
+    irefresh(openNow);
   }
 
   // Constuction a new list view item with the given parent, colors, & pixmap
-    KMHeaderItem( QListViewItem* parent, int msgId, QString key = QString::null )
+    KMHeaderItem( QListViewItem* parent, int msgId, QString key = QString::null, bool openNow=true )
     : KListViewItem( parent ),
 	  mMsgId( msgId ),
 	  mKey(key)
   {
-    irefresh();
+    irefresh(openNow);
   }
 
   // Update the msgId this item corresponds to.
@@ -118,7 +118,7 @@ public:
   // Profiling note: About 30% of the time taken to initialize the
   // listview is spent in this function. About 60% is spent in operator
   // new and QListViewItem::QListViewItem.
-  void irefresh()
+  void irefresh(bool openNow=true)
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
     int threadingPolicy = headers->getNestingPolicy();
@@ -127,8 +127,13 @@ public:
       if (mMsgBase->status() == KMMsgStatusNew ||
 	  mMsgBase->status() == KMMsgStatusUnread ||
           mMsgBase->status() == KMMsgStatusFlag)
+      {
         threadingPolicy = 1;
+        openNow=true;
+      }
     }
+    if (!openNow)
+       return;
     if (threadingPolicy < 2) {
       KMHeaderItem * topOfThread = this;
       while(topOfThread->parent())
@@ -153,16 +158,10 @@ public:
   //Opens all children in the thread
   void setOpen( bool open )
   {
-    if (open){
-      QListViewItem * lvchild;
-      lvchild = firstChild();
-      while (lvchild){
+       KListViewItem::setOpen(open);
+       if (open)
+          for (QListViewItem * lvchild = firstChild(); lvchild!=0; lvchild=lvchild->nextSibling())
 	lvchild->setOpen( true );
-	lvchild = lvchild->nextSibling();
-      }
-      KListViewItem::setOpen( true );
-    } else
-	KListViewItem::setOpen( false );
   }
 
   QString text( int col) const
@@ -2825,9 +2824,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		continue;
 
 	    if(threaded && i->item())
-		khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key());
+		khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key(),false);
 	    else
-		khi = new KMHeaderItem(this, new_kci->id(), new_kci->key());
+		khi = new KMHeaderItem(this, new_kci->id(), new_kci->key(),false);
 	    new_kci->setItem(mItems[new_kci->id()] = khi);
 	    if(new_kci->hasChildren())
 		s.enqueue(new_kci);
@@ -2845,6 +2844,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	delete sortCache[x];
 	sortCache[x] = 0;
     }
+    if (getNestingPolicy()<2)
+    for (KMHeaderItem *khi=static_cast<KMHeaderItem*>(firstChild()); khi!=0;khi=static_cast<KMHeaderItem*>(khi->nextSibling()))
+       khi->setOpen(true);
+
+
     END_TIMER(header_creation);
     SHOW_TIMER(header_creation);
 
