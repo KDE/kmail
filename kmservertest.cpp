@@ -146,11 +146,11 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
       mList.append("NORMAL-CONNECTION");
     startOffSlave();
   } else {
+    if (error)
+      mJob->showErrorDialog( 0L );
+
     mJob = 0;
     if (!error) mList.append("SSL");
-    if (mList.isEmpty())
-      KMessageBox::error(0, i18n("<qt>Could not connect to server <b>%1</b>.</qt>")
-      .arg(mHost));
     emit capabilities(mList);
     emit capabilities(mList, mAuthNone, mAuthSSL, mAuthTLS);
   }
