@@ -115,7 +115,7 @@ int KMCommand::mCountJobs = 0;
 void KMCommand::preTransfer()
 {
   connect(this, SIGNAL(messagesTransfered(bool)),
-	  this, SLOT(slotPostTransfer(bool)));
+          this, SLOT(slotPostTransfer(bool)));
 
   if (mMsgList.find(0) != -1) {
       emit messagesTransfered(false);
@@ -148,7 +148,7 @@ void KMCommand::preTransfer()
 void KMCommand::slotPostTransfer(bool success)
 {
   disconnect(this, SIGNAL(messagesTransfered(bool)),
-	     this, SLOT(slotPostTransfer(bool)));
+             this, SLOT(slotPostTransfer(bool)));
   if (success)
     execute();
   QPtrListIterator<KMMessage> it( mRetrievedMsgs );
@@ -310,7 +310,7 @@ void KMCommand::slotTransferCancelled()
 }
 
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KURL &url,
-						KMMessage *msg )
+                                                KMMessage *msg )
   :mUrl( url ), mMessage( msg )
 {
 }
@@ -507,7 +507,7 @@ void KMEditMsgCommand::execute()
 #if 0
   // FIXME: Poor solution, won't work for multiple readerwins should use kmkernel as an observer
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
-		    this, SLOT( slotMessageQueuedOrDrafted()) );
+                    this, SLOT( slotMessageQueuedOrDrafted()) );
 #endif
   win->setMsg(msg, FALSE, TRUE);
   win->setFolder( msg->parent() );
@@ -549,9 +549,9 @@ void KMShowMsgSrcCommand::execute()
 namespace {
   KURL subjectToUrl( const QString & subject ) {
     return KFileDialog::getSaveURL( subject.mid( subject.findRev(':') + 1 )
-				            .stripWhiteSpace()
-				            .replace( QDir::separator(), '_' ),
-				    QString::null );
+                                            .stripWhiteSpace()
+                                            .replace( QDir::separator(), '_' ),
+                                    QString::null );
   }
 }
 
@@ -722,7 +722,7 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll are all similar
 //and should be factored
 KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMessage *msg,
-				    const QString &selection )
+                                    const QString &selection )
   : KMCommand( parent, msg ), mSelection( selection )
 {
 }
@@ -740,7 +740,7 @@ void KMReplyToCommand::execute()
 
 
 KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
-						  KMMessage *msg )
+                                                  KMMessage *msg )
   : KMCommand( parent, msg )
 {
 }
@@ -815,8 +815,8 @@ void KMForwardCommand::execute()
     // ask if they want a mime digest forward
 
     if (KMessageBox::questionYesNo(mParent, i18n("Forward selected messages as"
-						 " a MIME digest?"))
-	== KMessageBox::Yes) {
+                                                 " a MIME digest?"))
+        == KMessageBox::Yes) {
       // we default to the first identity to save prompting the user
       // (the messages could have different identities)
       uint id = 0;
@@ -1094,8 +1094,8 @@ KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
 }
 
 KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
-					      const QPtrList<KMMsgBase> &msgList,
-					      KMFilter *filter )
+                                              const QPtrList<KMMsgBase> &msgList,
+                                              KMFilter *filter )
   : KMCommand( parent, msgList ), mFilter( filter  )
 {
 }
@@ -1113,7 +1113,7 @@ void KMFilterActionCommand::execute()
     int filterResult = kernel->filterMgr()->process(msg, mFilter);
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
-	kernel->emergencyExit( i18n("Not enough free disk space." ));
+        kernel->emergencyExit( i18n("Not enough free disk space." ));
     }
     msg->setTransferInProgress(true);
   }
@@ -1122,8 +1122,8 @@ void KMFilterActionCommand::execute()
 
 
 KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
-						      KMHeaders *headers,
-						      KMMainWidget *main )
+                                                      KMHeaders *headers,
+                                                      KMMainWidget *main )
     : QObject( main ),
       mFilter( filter ), mHeaders( headers ), mMainWidget( main )
 {
@@ -1233,7 +1233,7 @@ QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
     if (child->child() && child->child()->first()) {
       // descend
       QPopupMenu *subMenu = makeFolderMenu(child, move, receiver,
-	aMenuToFolder, new QPopupMenu(menu, "subMenu"));
+        aMenuToFolder, new QPopupMenu(menu, "subMenu"));
       menu->insertItem(label, subMenu);
     } else {
       // insert an item
@@ -1246,7 +1246,7 @@ QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
 
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
-			      const QPtrList<KMMsgBase> &msgList )
+                              const QPtrList<KMMsgBase> &msgList )
   :mDestFolder( destFolder ), mMsgList( msgList )
 {
 }
@@ -1280,10 +1280,10 @@ void KMCopyCommand::execute()
     }
 
     if (srcFolder &&
-	(srcFolder->folderType()== KMFolderTypeImap) &&
-	(mDestFolder->folderType() == KMFolderTypeImap) &&
-	(static_cast<KMFolderImap*>(srcFolder)->account() ==
-	 static_cast<KMFolderImap*>(mDestFolder)->account()))
+        (srcFolder->folderType()== KMFolderTypeImap) &&
+        (mDestFolder->folderType() == KMFolderTypeImap) &&
+        (static_cast<KMFolderImap*>(srcFolder)->account() ==
+         static_cast<KMFolderImap*>(mDestFolder)->account()))
     {
       list.append(msg);
     } else {
@@ -1294,18 +1294,18 @@ void KMCopyCommand::execute()
 
       if (srcFolder && !newMsg->isComplete())
       {
-	newMsg->setParent(msg->parent());
+        newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-		mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+                mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
         // msg musn't be deleted
         newMsg->setTransferInProgress(true);
         job->start();
       } else {
-	int rc, index;
-	rc = mDestFolder->addMsg(newMsg, &index);
-	if (rc == 0 && index != -1)
-	  mDestFolder->unGetMsg( mDestFolder->count() - 1 );
+        int rc, index;
+        rc = mDestFolder->addMsg(newMsg, &index);
+        if (rc == 0 && index != -1)
+          mDestFolder->unGetMsg( mDestFolder->count() - 1 );
       }
     }
 
@@ -1332,13 +1332,13 @@ void KMCopyCommand::execute()
 
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-			      const QPtrList<KMMsgBase> &msgList)
+                              const QPtrList<KMMsgBase> &msgList)
   :mDestFolder( destFolder ), mMsgList( msgList )
 {
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-			      KMMessage *msg )
+                              KMMessage *msg )
   :mDestFolder( destFolder )
 {
   mMsgList.append( &msg->toMsgBase() );
@@ -1405,8 +1405,6 @@ void KMMoveCommand::execute()
         delete msg;
       }
     }
-    // adjust the remembered number, numbering is changed during delete.
-    //if ( nextId > idx ) nextId--;
   }
   if (!list.isEmpty() && mDestFolder)
     mDestFolder->moveMsg(list, &index);
@@ -1490,19 +1488,19 @@ void KMUrlClickedCommand::execute()
       QString queryPart;
       int secondQuery = query.find('?',1);
       if (secondQuery != -1)
-	queryPart = query.left(secondQuery);
+        queryPart = query.left(secondQuery);
       else
-	queryPart = query;
+        queryPart = query;
       query = query.mid(queryPart.length());
 
       if (queryPart.left(9) == "?subject=")
-	msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
+        msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
       else if (queryPart.left(6) == "?body=")
-	// It is correct to convert to latin1() as URL should not contain
-	// anything except ascii.
-	msg->setBody( KURL::decode_string(queryPart.mid(6)).latin1() );
+        // It is correct to convert to latin1() as URL should not contain
+        // anything except ascii.
+        msg->setBody( KURL::decode_string(queryPart.mid(6)).latin1() );
       else if (queryPart.left(4) == "?cc=")
-	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
+        msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
     win = new KMComposeWin(msg, mIdentity);
