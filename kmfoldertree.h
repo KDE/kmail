@@ -150,10 +150,10 @@ public slots:
   void delayedUpdate();
   /** Remove all items associated with the given IMAP account */
   void slotAccountDeleted(KMFolderImap*);
-
-protected slots:
+  /** Select the item and switch to the folder */
   void doFolderSelected(QListViewItem*);
 
+protected slots:
   //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
   void doFolderListChanged();

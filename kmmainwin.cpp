@@ -95,8 +95,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   else
     idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
   if (idx!=0) {
-    mFolderTree->setCurrentItem(idx);
-    mFolderTree->setSelected(idx,TRUE);
+    mFolderTree->doFolderSelected(idx);
   }
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
