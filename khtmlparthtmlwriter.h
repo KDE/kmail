@@ -71,6 +71,6 @@ namespace KMail {
     } mState;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_KHTMLPARTHTMLWRITER_H__

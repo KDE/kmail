@@ -267,7 +267,7 @@ namespace KMail {
     notificationInterval = vdx.notificationInterval();
     aliases = vdx.aliases();
     return true;
-  };
+  }
 
   QString Vacation::defaultMessageText() {
     return i18n("I am out of office till %1.\n"
@@ -390,6 +390,6 @@ namespace KMail {
   }
   
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "vacation.moc"

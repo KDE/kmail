@@ -36,4 +36,4 @@ namespace KMail {
     return transportNames;
   }
 
-}; // namespace KMail
+} // namespace KMail

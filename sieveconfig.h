@@ -113,6 +113,6 @@ namespace KMail {
     QLineEdit * mAlternateURLEdit;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_SIEVECONFIG_H__

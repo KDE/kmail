@@ -74,7 +74,7 @@ namespace KMail {
     QTextEdit     * mTextEdit;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_SIGNATURECONFIGURATOR_H__
 

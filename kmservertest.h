@@ -42,7 +42,7 @@ namespace KIO {
   class Slave;
   class SimpleJob;
   class MetaData;
-};
+}
 
 class KMServerTest : public QObject
 {

@@ -42,7 +42,7 @@ namespace KMail {
   class KHtmlPartHtmlWriter;
   class HtmlStatusBar;
   class CSSHelper;
-};
+}
 
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)

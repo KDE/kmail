@@ -510,6 +510,6 @@ namespace KMail {
     mFoldersQueuedForChecking.clear();
   }
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "imapaccountbase.moc"

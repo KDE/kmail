@@ -304,4 +304,4 @@ namespace KMail {
     return customStrategy;
   }
 
-}; // namespace KMail
+} // namespace KMail

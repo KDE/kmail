@@ -42,11 +42,11 @@ class QPoint;
 class CryptPlugWrapperList;
 namespace Kpgp {
   class Config;
-};
+}
 namespace KMail {
   class IdentityDialog;
   class IdentityListView;
-};
+}
 
 class NewIdentityDialog : public KDialogBase
 {

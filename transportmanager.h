@@ -34,6 +34,6 @@ namespace KMail {
     static QStringList transportNames();
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // _KMAIL_TRANSPORTMANAGER_H_

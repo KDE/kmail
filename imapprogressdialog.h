@@ -82,6 +82,6 @@ protected:
 };
 
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_IMAPPROGRESSDIALOG_H__

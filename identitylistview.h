@@ -83,6 +83,6 @@ namespace KMail {
   };
 
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_IDENTITYLISTVIEW_H__

@@ -60,6 +60,6 @@ namespace KMail {
     KMIdentity mIdent;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_IDENTITYDRAG_H__

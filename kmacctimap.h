@@ -31,7 +31,7 @@ namespace KMail {
 }
 namespace KIO {
   class Job;
-};
+}
 
 //-----------------------------------------------------------------------------
 class KMAcctImap: public KMail::ImapAccountBase

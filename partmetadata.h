@@ -55,7 +55,7 @@ namespace KMail {
     bool isEncapsulatedRfc822Message;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // _KMAIL_PARTMETADATA_H_
 

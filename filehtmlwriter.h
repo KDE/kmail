@@ -61,6 +61,6 @@ namespace KMail {
     QTextStream mStream;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_FILEHTMLWRITER_H__

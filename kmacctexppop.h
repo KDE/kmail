@@ -16,7 +16,7 @@ namespace KIO {
   class Slave;
   class SimpleJob;
   class Job;
-};
+}
 
 /** KMail account for experimental pop mail account
  *

@@ -66,6 +66,6 @@ namespace KMail {
     QPtrList<KMail::HtmlWriter> mWriters;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_TEEHTMLWRITER_H__

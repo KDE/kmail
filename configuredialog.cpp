@@ -737,7 +737,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
                       "</p></qt>" );
   QWhatsThis::add( l, msg );
   QWhatsThis::add( mDefaultDomainEdit, msg );
-};
+}
 
 
 void NetworkPage::SendingTab::slotTransportSelected()
@@ -2364,7 +2364,7 @@ QString ComposerPage::GeneralTab::title() {
 
 QString ComposerPage::GeneralTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-general");
-};
+}
 
 
 ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * name )
@@ -2584,7 +2584,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   glay->addMultiCellWidget( mPhraseIndentPrefixEdit, 6, 6, 1, 2 );
 
   // row 7: spacer
-};
+}
 
 
 void ComposerPage::PhrasesTab::setLanguageItemInformation( int index ) {
@@ -3418,7 +3418,7 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
       if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
       mOrigQuoteGroup->setButton( num );
   }
-};
+}
 
 void SecurityPage::GeneralTab::apply() {
   KConfigGroup general( KMKernel::config(), "General" );
@@ -3519,7 +3519,7 @@ void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
     mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign" ) );
   if ( composer.hasKey( "pgp-auto-encrypt" ) )
     mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
-};
+}
 
 void SecurityPage::OpenPgpTab::apply() {
   KConfigGroup composer( KMKernel::config(), "Composer" );

@@ -25,14 +25,14 @@ namespace KIO {
   class Job;
   class TransferJob;
   class Slave;
-};
+}
 
 namespace KMime {
   namespace Types {
     class AddrSpec;
     typedef QValueList<AddrSpec> AddrSpecList;
-  };
-};
+  }
+}
 
 class KMSender: public QObject
 {

@@ -77,6 +77,6 @@ namespace KMail {
     return false;
   }
 
-};
+}
 
 #include "identitydrag.moc"

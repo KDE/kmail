@@ -85,7 +85,7 @@ namespace KMail {
     virtual void flush() = 0;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_INTERFACES_HTMLWRITER_H__
 

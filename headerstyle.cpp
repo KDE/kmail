@@ -466,4 +466,4 @@ namespace KMail {
     return fancyStyle;
   }
 
-}; // namespace KMail
+} // namespace KMail

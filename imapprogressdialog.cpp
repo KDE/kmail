@@ -209,6 +209,6 @@ IMAPProgressDialog::~IMAPProgressDialog()
 }
 
 
-};
+}
 
 #include "imapprogressdialog.moc"

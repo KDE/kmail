@@ -118,6 +118,6 @@ namespace KMail {
 
   
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "khtmlparthtmlwriter.moc"

@@ -47,7 +47,7 @@ class KURL;
 
 namespace KParts {
   class ReadOnlyPart;
-};
+}
 
 
 class KMGroupware : public QObject

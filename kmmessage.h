@@ -35,12 +35,12 @@ namespace KMime {
     class Address;
     typedef QValueList<Address> AddressList;
     typedef QValueList<AddrSpec> AddrSpecList;
-  };
-};
+  }
+}
 
 namespace KMail {
   class HeaderStrategy;
-};
+}
 
 class DwBodyPart;
 class DwMediaType;

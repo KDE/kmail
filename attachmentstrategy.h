@@ -70,6 +70,6 @@ namespace KMail {
     virtual bool inlineNestedMessages() const = 0;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_ATTACHMENTSTRATEGY_H__

@@ -179,6 +179,6 @@ void SubscriptionDialog::slotLoadFolders()
   ai->listDirectory(ai->prefix(), true);
 }
 
-};
+}
 
 #include "subscriptiondialog.moc"

@@ -43,10 +43,10 @@ class QString;
 class QStringList;
 namespace Kpgp {
   class SecretKeyRequester;
-};
+}
 namespace KMail {
   class SignatureConfigurator;
-};
+}
 
 namespace KMail {
 
@@ -83,6 +83,6 @@ namespace KMail {
     KMail::SignatureConfigurator *mSignatureConfigurator;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_IDENTITYDIALOG_H__

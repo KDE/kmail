@@ -76,7 +76,7 @@ class  CryptPlugWrapperList;
 
 namespace KMail {
 class AttachmentListView;
-};
+}
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 

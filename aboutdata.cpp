@@ -181,4 +181,4 @@ namespace KMail {
 
   }
 
-}; // namespace KMail
+} // namespace KMail

@@ -205,6 +205,6 @@ namespace KMail {
     setSieveConfig( n->sieveConfig() );
   }
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "networkaccount.moc"

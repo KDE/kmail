@@ -135,6 +135,6 @@ namespace KMail {
     mMailAliasesEdit->setText( aliases );
   }
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "vacationdialog.moc"

@@ -2698,4 +2698,4 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
 #endif // !NDEBUG
 
 
-}; // namespace KMail
+} // namespace KMail

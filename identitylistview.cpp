@@ -136,7 +136,7 @@ namespace KMail {
     return drag;
   }
 
-}; // namespace KMail
+} // namespace KMail
 
 
 #include "identitylistview.moc"

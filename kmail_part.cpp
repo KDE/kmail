@@ -50,7 +50,7 @@
 
 
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
-K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory );
+K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory )
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :

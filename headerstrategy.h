@@ -75,6 +75,6 @@ namespace KMail {
     virtual bool showHeader( const QString & header ) const;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_HEADERSTRATEGY_H__

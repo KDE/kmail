@@ -13,7 +13,9 @@ class KMMimePartTreeItem;
 
 class KMMimePartTree : public KListView
 {
-Q_OBJECT
+  Q_OBJECT
+  friend class KMReaderWin;
+
 public:
   KMMimePartTree( KMReaderWin* readerWin,
                   QWidget* parent,

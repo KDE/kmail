@@ -128,6 +128,6 @@ namespace KMail {
 
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_NETWORKACCOUNT_H__

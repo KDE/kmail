@@ -42,7 +42,7 @@ private:
   KMComposeWin* mComposer;
 };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // _KMAIL_ATTACHMENTLISTVIEW_H_
 

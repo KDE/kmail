@@ -82,6 +82,6 @@ namespace KMail {
 			    bool printing=false ) const = 0;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_HEADERSTYLE_H__

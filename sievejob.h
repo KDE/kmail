@@ -27,7 +27,7 @@
 class QTextDecoder;
 namespace KIO {
   class Job;
-};
+}
 
 namespace KMail {
 
@@ -81,6 +81,6 @@ namespace KMail {
     QValueStack<Command> mCommands;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_SIEVE_JOB_H__

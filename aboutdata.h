@@ -42,7 +42,7 @@ namespace KMail {
     ~AboutData();
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_ABOUTDATA_H__
      

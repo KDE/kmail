@@ -32,13 +32,13 @@ namespace KMail {
   class FolderJob;
   class ImapJob;
   class CachedImapJob;
-};
+}
 using KMail::ImapJob;
 using KMail::CachedImapJob;
 
 namespace KIO {
   class Job;
-};
+}
 
 class KMAcctCachedImap: public KMail::ImapAccountBase
 {

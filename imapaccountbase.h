@@ -36,7 +36,7 @@ class KMessage;
 
 namespace KIO {
   class Job;
-};
+}
 
 namespace KMail {
 
@@ -267,6 +267,6 @@ namespace KMail {
   };
 
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_IMAPACCOUNTBASE_H__

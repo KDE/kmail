@@ -286,8 +286,8 @@ namespace KMail {
     mTransportCombo->insertStringList( sl );
     // restore saved setting:
     mTransportCombo->setEditText( content );
-  };
+  }
 
-};
+}
 
 #include "identitydialog.moc"

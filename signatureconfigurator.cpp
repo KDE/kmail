@@ -152,7 +152,7 @@ namespace KMail {
     case 2:  return Signature::Inlined;
     default: return Signature::Disabled;
     }
-  };
+  }
 
   void SignatureConfigurator::setSignatureType( Signature::Type type ) {
     setSignatureEnabled( type != Signature::Disabled );
@@ -166,7 +166,7 @@ namespace KMail {
     };
 
     mSourceCombo->setCurrentItem( idx );
-  };
+  }
 
   QString SignatureConfigurator::inlineText() const {
     return mTextEdit->text();
@@ -235,6 +235,6 @@ namespace KMail {
     (void)KRun::runURL( url, QString::fromLatin1("text/plain") );
   }
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "signatureconfigurator.moc"

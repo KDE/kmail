@@ -37,7 +37,7 @@ class KMServerTest;
 class QButtonGroup;
 namespace KMail {
   class SieveConfigEditor;
-};
+}
 
 class AccountDialog : public KDialogBase
 {

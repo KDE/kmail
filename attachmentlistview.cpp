@@ -126,5 +126,5 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
 }
 
 
-}; // namespace KMail
+} // namespace KMail
 

@@ -148,6 +148,6 @@ namespace KMail {
     setAlternateURL( config.alternateURL() );
   }
 
-}; // namespace KMail
+} // namespace KMail
 
 #include "sieveconfig.moc"

@@ -5425,13 +5425,13 @@ void KMAtmListViewItem::enableCryptoCBs(bool on)
     else
       mCBSign->hide();
   }
-};
+}
 
 void KMAtmListViewItem::setEncrypt(bool on)
 {
   if( mCBEncrypt )
     mCBEncrypt->setChecked( on );
-};
+}
 
 bool KMAtmListViewItem::isEncrypt()
 {
@@ -5439,13 +5439,13 @@ bool KMAtmListViewItem::isEncrypt()
     return mCBEncrypt->isChecked();
   else
     return false;
-};
+}
 
 void KMAtmListViewItem::setSign(bool on)
 {
   if( mCBSign )
     mCBSign->setChecked( on );
-};
+}
 
 bool KMAtmListViewItem::isSign()
 {
@@ -5453,7 +5453,7 @@ bool KMAtmListViewItem::isSign()
     return mCBSign->isChecked();
   else
     return false;
-};
+}
 
 
 

@@ -270,7 +270,7 @@ namespace KMail {
     KMail::CSSHelper * mCSSHelper;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // _KMAIL_OBJECTTREEPARSER_H_
 

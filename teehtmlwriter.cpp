@@ -84,4 +84,4 @@ namespace KMail {
       it.current()->flush();
   }
 
-}; // namespace KMail
+} // namespace KMail
