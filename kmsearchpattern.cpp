@@ -56,9 +56,10 @@ KMSearchRule::KMSearchRule()
 
 KMSearchRule::~KMSearchRule()
 {
-	delete mBmEndHeader;
-	delete mBmEndHeaders2;
-	delete mBmEndHeaders1;
+  delete mBmHeaderField;
+  delete mBmEndHeader;
+  delete mBmEndHeaders2;
+  delete mBmEndHeaders1;
 }
 
 //-----------------------------------------------------------------------------
