@@ -5,7 +5,7 @@
 #ifndef kmmsglist_h
 #define kmmsglist_h
 
-#include <qarray.h>
+#include <qmemarray.h>
 #include "kmmsgbase.h"
 
 class KMMsgDict;

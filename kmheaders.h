@@ -5,7 +5,7 @@
 #include <qstrlist.h>
 #define private public
 #include <klistview.h>
-#include <qarray.h>
+#include <qmemarray.h>
 #include <qmap.h>
 #include <qdragobject.h>
 #include <qdict.h>
