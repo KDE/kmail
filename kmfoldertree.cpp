@@ -872,10 +872,13 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
 //-----------------------------------------------------------------------------
 QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
 {
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
-    if ( static_cast<KMFolderTreeItem*>(it.current())->folder() == folder )
-      return it.current();
-  return 0;
+   QListViewItem *i  = firstChild();
+   while ( i ) {
+      if ( static_cast<KMFolderTreeItem*>(i)->folder() == folder )
+         return i;
+      i = i->itemBelow();
+   }
+   return 0;
 }
 
 //-----------------------------------------------------------------------------
