@@ -42,14 +42,15 @@ class KMFolderTreeItem : public QObject, public KFolderTreeItem
   Q_OBJECT
 public:
   /** Construct a root item _without_ folder */
-  KMFolderTreeItem( KFolderTree *parent, QString name );
+  KMFolderTreeItem( KFolderTree *parent, const QString & name,
+                    KFolderTreeItem::Protocol protocol=KFolderTreeItem::NONE );
 
   /** Construct a root item _with_ folder */
-  KMFolderTreeItem( KFolderTree *parent, QString name,
+  KMFolderTreeItem( KFolderTree *parent, const QString & name,
                     KMFolder* folder );
 
   /** Construct a child item */
-  KMFolderTreeItem( KFolderTreeItem* parent, QString name,
+  KMFolderTreeItem( KFolderTreeItem* parent, const QString & name,
                     KMFolder* folder );
   virtual ~KMFolderTreeItem();
 
@@ -61,6 +62,10 @@ public:
   /** associated folder */
   KMFolder* folder() { return mFolder; }
   QListViewItem* parent() { return KFolderTreeItem::parent(); }
+
+  /** Adjust the unread count from the folder.
+      @return true if a repaint is necessary */
+  bool adjustUnreadCount();
 
   /** dnd */
   virtual bool acceptDrag(QDropEvent* ) const;
@@ -238,11 +243,6 @@ protected:
   void writeIsListViewItemOpen(KMFolderTreeItem *fti);
 
   QTimer mUpdateTimer;
-
-  /** We need out own root, otherwise the @ref QListView will create
-      its own root of type @ref QListViewItem, hence no overriding
-      paintBranches and no backing pixmap */
-  KMFolderTreeItem *root;
 
   /** Drag and drop methods */
   void contentsDragEnterEvent( QDragEnterEvent *e );
