@@ -103,13 +103,13 @@ void KMReaderView::resizeEvent(QResizeEvent *)
 
 void KMReaderView::parseMessage(KMMessage *message)
 {
-	QString fromStr;
 	QString strTemp;
 	QString str1Temp;
 	QString subjStr;
 	QString text;
 	QString header;
 	QString dateStr;
+	QString fromStr;
 	QString toStr;
 	QString ccStr;
 	long length;
@@ -137,12 +137,12 @@ void KMReaderView::parseMessage(KMMessage *message)
 	strTemp = strTemp.stripWhiteSpace();
 	fromStr.append(strTemp + "</A>"+"<br>");
 
-	strTemp.sprintf("%s",message->cc());
-	strTemp = strTemp.stripWhiteSpace();
-	if(strTemp.isEmpty())
+	ccStr = message->cc();
+	if(ccStr.isEmpty())
 		ccStr = "";
 	else
-		ccStr.sprintf("Cc: %s<br>",message->cc());
+		{ccStr="";
+		ccStr.sprintf("Cc: %s<br>",message->cc());}
 			 
              subjStr.sprintf("Subject: %s<br><P>",message->subject());
 	
@@ -154,6 +154,7 @@ void KMReaderView::parseMessage(KMMessage *message)
 	// header
 	messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
 	messageCanvas->write(subjStr);
+	messageCanvas->write(fromStr);
 	messageCanvas->write(toStr);
 	messageCanvas->write(ccStr);
 	messageCanvas->write(dateStr);
@@ -467,7 +468,6 @@ KMReaderWin::KMReaderWin(QWidget *, const char *, int msgno = 0,KMFolder *f =0)
 
   if(!showToolBar)
 	enableToolBar(KToolBar::Hide);
-
   resize(480, 510);
 }
 

@@ -23,6 +23,7 @@
 #include <kapp.h>
 #include <kmsgbox.h>
 #include "ktablistbox.h"
+#include <kstatusbar.h>
 #include <qpainter.h>
 #include <drag.h>
 #define FORWARD 0
@@ -99,9 +100,11 @@ public:
 private:
 	KToolBar *toolBar;
 	KMenuBar *menuBar;
+	KStatusBar *statusBar;
 	KMComposeView *composeView;
 	void setupMenuBar();
 	void setupToolBar();
+	void setupStatusBar();
 	bool toolBarStatus, sigStatus, sendButton;
 	QWidget *setWidget;
 	QRadioButton *isLater;

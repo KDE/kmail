@@ -16,7 +16,7 @@
 KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, KMMessage *message, int action) : QWidget(parent, name)
 {
 	printf("Entering composeView\n");
-	grid = new QGridLayout(this,10,2,4,4);	
+	grid = new QGridLayout(this,10,2,2,4);	
 
 	attWidget = NULL;
 	if (message) currentMessage = message;
@@ -58,8 +58,8 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 	
 	zone = new KDNDDropZone(editor,DndURL);
 	connect(zone,SIGNAL(dropAction(KDNDDropZone *)),SLOT(getDNDAttachment()));
-	 
 	urlList = new QStrList;
+	
 
 	grid->setColStretch(1,100);
 
@@ -88,14 +88,16 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 
 void KMComposeView::getDNDAttachment()
 {
-	const char *element;
-	printf("Attachment droped\n");
-	*urlList = zone->getURLList();
+	QString element;
+	printf("File droped\n");
+	QStrList *tempList = new QStrList(); 
+	*tempList= zone->getURLList();
+	urlList->append(tempList->first());
 	element = urlList->first();
-	cout << element << "\n";
 	cout << "Elements in the list: " << urlList->count() << "\n";
-	while(urlList->next() != 0)
-		cout << element << "\n";
+	while(element.isEmpty() == FALSE)
+		{cout << element << "\n";
+		element = urlList->next();}
 }
 
 KMComposeView::~KMComposeView()
@@ -130,89 +132,16 @@ void KMComposeView::printIt()
 
 void KMComposeView::attachFile()
 {
-#ifdef BROKEN
 	QString atmntFile;
-        const char *B[] = BODYTYPE;
-	struct stat atmntStat;
 	QString fileName;
 
 
         QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
         d->setCaption("Attach File");
         if (d->exec()) 
-		{atmntFile = d->selectedFile();
-		Attachment *a = new Attachment();
-		if(!a->guess(atmntFile))
-			KMsgBox::message(0,"Ouch","Trouble guessing attachment!\n");			
-		else
-			{printf("Guessing successfull...\n");
-			if(!attWidget)
-				{printf("Creating Attachment Widget\n");
-				attWidget = new KTabListBox(this);
-				attWidget->setNumCols(3);
-				attWidget->setColumn(0,"Filename",width()/2-20);
-				attWidget->setColumn(1,"File Type",width()/4); 
-				attWidget->setColumn(2,"File Size",width()/4);
-				cout << "Attachment File: " << atmntFile << "\n";
-				fileName =atmntFile.copy();
-				attachmentList.append( new KMAttachmentItem(fileName,indexAttachment));
-				KMAttachmentItem *itm;
- 				printf("About to display list:\n\n");
- 				for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next() )
- 					cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
-				printf("\nDone displaying list\n");
-				::stat(atmntFile,&atmntStat);
-				QString temp;
-				temp.sprintf("%s",B[a->getType()]);
-				atmntFile += "\t";
-				atmntFile += temp;
-				atmntFile += "\t";
-				temp.sprintf("%ld bytes",atmntStat.st_size);
-				atmntFile +=temp;
-				attWidget->insertItem(atmntFile);
-				indexAttachment++;
-				attWidget->setAutoUpdate(TRUE);
-				attWidget->show();
-				connect(attWidget,SIGNAL(highlighted(int,int)),SLOT(detachFile(int,int)));
-				resizeEvent(NULL);
-				delete itm;
-				atmntFile="";
-				}
-			else
-				{printf("We already have a widget\n");
-				cout << "Attachment File: " << atmntFile << "\n";
-				fileName = atmntFile.copy();
-				attachmentList.append( new KMAttachmentItem(fileName,indexAttachment));
-				KMAttachmentItem *itm;
-				printf("About to display list:\n\n");
-	 			for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next())
-					cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
-				printf("\nDone displaying list\n");
-				::stat(atmntFile,&atmntStat);
-     				QString temp;
-     				temp.sprintf("%s",B[a->getType()]);
-				atmntFile += "\t";
-     				atmntFile += temp;
-     				atmntFile += "\t";
-     				temp.sprintf("%ld bytes",atmntStat.st_size);
-     				atmntFile +=temp;
-     				attWidget->insertItem(atmntFile);
-     				indexAttachment++;
-    				attWidget->setAutoUpdate(TRUE);
-     				attWidget->show();
-     				connect(attWidget,SIGNAL(selected(int,int)),SLOT(detachFile(int,int)));
-				attWidget->repaint();
-				delete itm;
-				atmntFile="";
-				
-				}
-			fileName ="";	
-			delete a;
-			}
-		}
+		atmntFile = d->selectedFile();		
         delete d;
-#endif
-
+	urlList->append(atmntFile);
 }
 
 void KMComposeView::sendIt()
@@ -492,11 +421,11 @@ KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, KM
   parseConfiguration();
 
   composeView = new KMComposeView(this,NULL,emailAddress,message,action);
-  setView(composeView);
+  setView(composeView,FALSE);
 
   setupMenuBar();
-
   setupToolBar();
+  setupStatusBar();
 
   printf("toolBarStatus in Constr. = %i\n",toolBarStatus);
   if(toolBarStatus==false)
@@ -655,6 +584,14 @@ void KMComposeWin::setupToolBar()
 
 	addToolBar(toolBar);
 }
+
+void KMComposeWin::setupStatusBar()
+{
+	statusBar = new KStatusBar(this);
+	statusBar->insertItem("Status:",0);
+	setStatusBar(statusBar);
+}
+
 
 void KMComposeWin::doNewMailReader()
 {
