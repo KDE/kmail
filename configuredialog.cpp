@@ -4056,7 +4056,7 @@ void MiscPage::FolderTab::setup() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
-  mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
+  mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
   mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
