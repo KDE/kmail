@@ -10,6 +10,7 @@
 #include <qdragobject.h>
 #include <qlistview.h>
 #include <qcombobox.h>
+#include <qtooltip.h>
 
 #include "kmcomposewin.h"
 #include "kmmessage.h"
@@ -114,6 +115,10 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mFolder = NULL;
   mEditor = new KMEdit(&mMainWidget, this);
   disableBreaking = false;
+  QString tip = i18n("Select email address(es)");
+  QToolTip::add( &mBtnTo, tip );
+  QToolTip::add( &mBtnCc, tip );
+  QToolTip::add( &mBtnReplyTo, tip );
 
   mSpellCheckInProgress=FALSE;
 
@@ -2418,7 +2423,7 @@ void KMComposeWin::slotIdentityActivated(int)
     mEditor->setText( edtText );
   }
   mOldSigText = ident.signature();
-  
+
   // disable certain actions if there is no PGP user identity set
   // for this profile
   if (ident.pgpIdentity().isEmpty()) {
@@ -2690,11 +2695,11 @@ void KMLineEdit::doCompletion(bool ctrlT)
             setText(prevAddr + box->text(0));
         else
             box->hide();
-        
+
         cursorAtEnd();
         return;
     }
-        
+
     switch ( mode )
     {
         case KGlobalSettings::CompletionPopup:
