@@ -1,14 +1,22 @@
 // kmfiltermgr.cpp
 
+// my header
+#include "kmfiltermgr.h"
+
+// other kmail headers
+#include "kmfilterdlg.h"
+
+// other KDE headers
 #include <kapplication.h>
 #include <kdebug.h>
 
-#include "kmfiltermgr.h"
-#include "kmfilterdlg.h"
+// other Qt headers
+#include <qregexp.h>
+#include <qstringlist.h>
+#include <qstring.h>
 
+// other headers
 #include <assert.h>
-
-//todo
 
 
 //-----------------------------------------------------------------------------
@@ -38,7 +46,6 @@ void KMFilterMgr::readConfig(void)
   int i, numFilters;
   QString grpName;
   KMFilter* filter;
-  QString group;
 
   clear();
 
@@ -47,14 +54,12 @@ void KMFilterMgr::readConfig(void)
   if (bPopFilter) {
     numFilters = config->readNumEntry("popfilters",0);
     mShowLater = config->readNumEntry("popshowDLmsgs",0);
-    group = "PopFilter";
   } else {
     numFilters = config->readNumEntry("filters",0);
-    group = "Filter";
   }
 
   for (i=0; i<numFilters; i++) {
-    grpName.sprintf("%s #%d", group.latin1(), i);
+    grpName.sprintf("%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i);
     KConfigGroupSaver saver(config, grpName);
     filter = new KMFilter(config, bPopFilter);
     filter->purify();
@@ -72,34 +77,34 @@ void KMFilterMgr::readConfig(void)
 void KMFilterMgr::writeConfig(bool withSync)
 {
   KConfig* config = kapp->config();
-  QString grpName;
+
+  // first, delete all groups:
+  QStringList filterGroups =
+    config->groupList().grep( QRegExp( bPopFilter ? "PopFilter #\\d+" : "Filter #\\d+" ) );
+  for ( QStringList::Iterator it = filterGroups.begin() ;
+	it != filterGroups.end() ; ++it )
+    config->deleteGroup( *it );
+
+  // Now, write out the new stuff:
   int i = 0;
-  QString group;
-
-  if (bPopFilter) 
-    group = "PopFilter";
-  else 
-    group = "Filter";
-
-  QPtrListIterator<KMFilter> it(*this);
-  it.toFirst();
-  while ( it.current() ) {
+  QString grpName;
+  for ( QPtrListIterator<KMFilter> it(*this) ; it.current() ; ++it )
     if ( !(*it)->isEmpty() ) {
-      grpName.sprintf("%s #%d", group.latin1(), i);
-      //grpName.sprintf("Filter #%d", i);
+      if ( bPopFilter )
+	grpName.sprintf("PopFilter #%d", i);
+      else
+	grpName.sprintf("Filter #%d", i);
       KConfigGroupSaver saver(config, grpName);
       (*it)->writeConfig(config);
       ++i;
     }
-    ++it;
-  }
+
   KConfigGroupSaver saver(config, "General");
   if (bPopFilter) { 
     config->writeEntry("popfilters", i);
     config->writeEntry("popshowDLmsgs", mShowLater);
-  } else  {
+  } else
     config->writeEntry("filters", i);
-  }
 
   if (withSync) config->sync();
 }

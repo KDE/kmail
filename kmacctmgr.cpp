@@ -19,6 +19,9 @@
 #include <kdebug.h>
 #include <kapplication.h>
 
+#include <qstringlist.h>
+#include <qregexp.h>
+
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
@@ -44,18 +47,25 @@ KMAcctMgr::~KMAcctMgr()
 void KMAcctMgr::writeConfig(bool withSync)
 {
   KConfig* config = kapp->config();
-  KMAccount* acct;
   QString groupName;
-  int i;
 
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("accounts", mAcctList.count());
 
-  for (i=1,acct=mAcctList.first(); acct; acct=mAcctList.next(),i++)
-  {
+  // first delete all account groups in the config file:
+  QStringList accountGroups =
+    config->groupList().grep( QRegExp( "Account \\d+" ) );
+  for ( QStringList::Iterator it = accountGroups.begin() ;
+	it != accountGroups.end() ; ++it )
+    config->deleteGroup( *it );
+
+  // now write new account groups:
+  int i = 1;
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ;
+	it.current() ; ++it, ++i ) {
     groupName.sprintf("Account %d", i);
     KConfigGroupSaver saver(config, groupName);
-    acct->writeConfig(*config);
+    (*it)->writeConfig(*config);
   }
   if (withSync) config->sync();
 }
