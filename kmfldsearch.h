@@ -48,8 +48,6 @@ protected slots:
   virtual bool slotShowMsg(QListViewItem *);
   virtual void slotFolderActivated(int nr);
   virtual void slotFolderComplete(KMFolderImap *folder, bool success);
-  virtual void slotSearchAllFolders(bool on);
-  virtual void slotSearchSpecificFolder(bool on);
 
 protected:
   void enableGUI();
@@ -81,7 +79,6 @@ protected:
   virtual void closeEvent(QCloseEvent*);
 
 protected:
-  bool mSearchAllFolders;
   bool mSearching;
   bool mStopped;
   bool mCloseRequested;

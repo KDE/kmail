@@ -30,6 +30,7 @@
 #include <qpopupmenu.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
+#include <qbuttongroup.h>
 #include <qregexp.h>
 #include <qtextcodec.h>
 
@@ -58,7 +59,6 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   KDialogBase(NULL, name, modal, i18n("Search in Folders"),
               KDialogBase::User1 | KDialogBase::User2 | KDialogBase::Close,
               KDialogBase::User1, false, i18n("&Search"), i18n("S&top")),
-  mSearchAllFolders(false),
   mSearching(false),
   mStopped(false),
   mCloseRequested(false),
@@ -76,20 +76,19 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   QWidget* searchWidget = new QWidget(this);
   mGrid = new QGridLayout(searchWidget, mNumRules+5, 5, 0, spacingHint());
 
+  QButtonGroup * radioGroup = new QButtonGroup( searchWidget );
+  radioGroup->hide();
+
   mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), searchWidget);
   mGrid->addMultiCellWidget(mChkbxAllFolders, 0, 0, 0, 3);
-  connect(mChkbxAllFolders, SIGNAL(toggled(bool)),
-          this, SLOT(slotSearchAllFolders(bool)));
+  radioGroup->insert( mChkbxAllFolders );
 
   mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget);
   mGrid->addWidget(mChkbxSpecificFolders, 1, 0);
   mChkbxSpecificFolders->setChecked(true);
-  connect(mChkbxSpecificFolders, SIGNAL(toggled(bool)),
-          this, SLOT(slotSearchSpecificFolder(bool)));
+  radioGroup->insert( mChkbxSpecificFolders );
 
   mCbxFolders = new KMFolderComboBox(false, searchWidget);
-  mCbxFolders->setMinimumSize(mCbxFolders->sizeHint());
-  mCbxFolders->setMaximumSize(1024, mCbxFolders->sizeHint().height());
   mCbxFolders->setFolder(curFolder);
   mGrid->addMultiCellWidget(mCbxFolders, 1, 1, 1, 2);
 
@@ -109,6 +108,12 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
   mGrid->addWidget(mChkSubFolders, 1, 3);
+
+  // enable/disable widgets depending on radio buttons:
+  connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
+	   mCbxFolders, SLOT(setEnabled(bool)) );
+  connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
+	   mChkSubFolders, SLOT(setEnabled(bool)) );
 
   mLbxMatches = new QListView(searchWidget, "Search in Folders");
   /* Default is to sort by date. TODO: Unfortunately this sorts *while*
@@ -463,7 +468,7 @@ void KMFldSearch::slotSearch()
   for (int i = 0; i < mNumRules; ++i)
     mRules[i]->prepare();
 
-  if (mSearchAllFolders)
+  if (mChkbxAllFolders->isChecked())
   {
     searchInAllFolders();
   }
@@ -524,40 +529,6 @@ void KMFldSearch::closeEvent(QCloseEvent *e)
   else 
   {
     KDialogBase::closeEvent(e);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMFldSearch::slotSearchAllFolders(bool on)
-{
-  if (on)
-  {
-    mChkbxSpecificFolders->setChecked(false);
-    mCbxFolders->setEnabled(false);
-    mChkSubFolders->setEnabled(false);
-    mSearchAllFolders = true;
-  }
-  else if (!mChkbxSpecificFolders->isChecked())
-  {
-    mChkbxAllFolders->setChecked(true);
-//    mChkbxSpecificFolders->setChecked(true);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMFldSearch::slotSearchSpecificFolder(bool on)
-{
-  if (on)
-  {
-    mChkbxAllFolders->setChecked(false);
-    mCbxFolders->setEnabled(true);
-    mChkSubFolders->setEnabled(true);
-    mSearchAllFolders = false;
-  }
-  else if (!mChkbxAllFolders->isChecked())
-  {
-    mChkbxSpecificFolders->setChecked(true);
-//    mChkbxAllFolders->setChecked(true);
   }
 }
 
