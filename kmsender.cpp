@@ -561,13 +561,30 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
     {
       mTransportInfo->type = "smtp";
       mTransportInfo->auth = FALSE;
+      mTransportInfo->encryption = "NONE";
       QString serverport = transport.mid(7);
-      mTransportInfo->host = serverport;
-      mTransportInfo->port = "25";
       int colon = serverport.find(':');
       if (colon != -1) {
         mTransportInfo->host = serverport.left(colon);
         mTransportInfo->port = serverport.mid(colon + 1);
+      } else {
+        mTransportInfo->host = serverport;
+        mTransportInfo->port = "25";
+      }
+    } else
+    if (transport.startsWith("smtps://"))
+    {
+      mTransportInfo->type = "smtps";
+      mTransportInfo->auth = FALSE;
+      mTransportInfo->encryption = "ssl";
+      QString serverport = transport.mid(7);
+      int colon = serverport.find(':');
+      if (colon != -1) {
+        mTransportInfo->host = serverport.left(colon);
+        mTransportInfo->port = serverport.mid(colon + 1);
+      } else {
+        mTransportInfo->host = serverport;
+        mTransportInfo->port = "465";
       }
     }
     else if (transport.startsWith("file://"))
@@ -579,10 +596,10 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
 
   if (mTransportInfo->type == "sendmail")
     return new KMSendSendmail(this);
-  if (mTransportInfo->type == "smtp")
+  if (mTransportInfo->type == "smtp" || mTransportInfo->type == "smtps")
     return new KMSendSMTP(this);
 
-  return 0;
+  return 0L;
 }
 
 //-----------------------------------------------------------------------------
