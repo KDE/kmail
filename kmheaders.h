@@ -41,6 +41,7 @@ struct KMPaintInfo {
   QColor colNew;
   QColor colUnread;
   bool orderOfArrival;
+  bool status;
   int flagCol;
   int senderCol;
   int subCol;

@@ -220,8 +220,12 @@ public:
     }
     else if (column == mPaintInfo->subCol)
       return mSortSubject;
-    else if (column == mPaintInfo->senderCol)
-      return mSortSender;
+    else if (column == mPaintInfo->senderCol) {
+      if (mPaintInfo->status)
+	return QString( QChar( (char)mFolder->getMsgBase( mMsgId )->status() ));
+      else
+	return mSortSender;
+    }
     else
       return text(column);
   }
@@ -406,6 +410,7 @@ void KMHeaders::readFolderConfig (void)
   mCurrentItem = config->readNumEntry("Current", 0);
 
   mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", TRUE );
+  mPaintInfo.status = config->readBoolEntry( "Status", TRUE );
 
   config->setGroup("Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
@@ -431,6 +436,7 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
   config->writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival);
+  config->writeEntry("Status", mPaintInfo.status);
 }
 
 
@@ -550,6 +556,10 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   if (mPaintInfo.orderOfArrival)
     colText = i18n( "Date (Order of Arrival)" );
   setColumnText( mPaintInfo.dateCol, colText);
+  colText = i18n( "Sender" );
+  if (mPaintInfo.status)
+    colText = i18n( "Sender (Status)" );
+  setColumnText( mPaintInfo.senderCol, colText);
   if (!mSortDescending)
     setColumnText( mSortCol, *up, columnText( mSortCol ));
   else
@@ -1791,10 +1801,17 @@ void KMHeaders::setSorting( int column, bool ascending )
     if (!ascending && (column == mPaintInfo.dateCol))
       mPaintInfo.orderOfArrival = !mPaintInfo.orderOfArrival;
 
+    if (!ascending && (column == mPaintInfo.senderCol))
+      mPaintInfo.status = !mPaintInfo.status;
+
     QString colText = i18n( "Date" );
     if (mPaintInfo.orderOfArrival)
       colText = i18n( "Date (Order of Arrival)" );
     setColumnText( mPaintInfo.dateCol, colText);
+    colText = i18n( "Sender" );
+    if (mPaintInfo.status)
+      colText = i18n( "Sender (Status)" );
+    setColumnText( mPaintInfo.senderCol, colText);
     
     if (ascending)
       setColumnText( column, *up, columnText(column));
