@@ -45,7 +45,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
-  mRetrieveAll = TRUE;
+  mRetrieveAll = FALSE;
   mProtocol = 3;
   struct servent *serv = getservbyname("pop-3", "tcp");
   if (serv) {
@@ -80,7 +80,7 @@ KMAcctExpPop::~KMAcctExpPop()
 //-----------------------------------------------------------------------------
 const char* KMAcctExpPop::type(void) const
 {
-  return "advanced pop";
+  return "pop";
 }
 
 
@@ -100,13 +100,13 @@ void KMAcctExpPop::init(void)
   mUseSSL = FALSE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
-  mRetrieveAll = TRUE;
+  mRetrieveAll = FALSE;
 }
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::pseudoAssign(KMAccount* account)
 {
-  assert(account->type() == "advanced pop");
+  assert(account->type() == "pop");
   KMAcctExpPop *acct = static_cast<KMAcctExpPop*>(account);
   setName(acct->name());
   setCheckInterval(acct->checkInterval());

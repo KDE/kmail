@@ -38,7 +38,6 @@
 #include "accountdialog.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
-#include "kmacctpop.h"
 #include "kmacctexppop.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
@@ -58,7 +57,7 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
   {
     makeLocalAccountPage();
   }
-  else if( accountType == "pop" || accountType == "advanced pop" )
+  else if( accountType == "pop" )
   {
     makePopAccountPage();
   }
@@ -275,28 +274,6 @@ void AccountDialog::setupSettings()
   }
   else if( accountType == "pop" )
   {
-    KMAcctPop &ap = *(KMAcctPop*)mAccount;
-    mPop.nameEdit->setText( mAccount->name() );
-    mPop.loginEdit->setText( ap.login() );
-    mPop.passwordEdit->setText( ap.passwd());
-    mPop.hostEdit->setText( ap.host() );
-    mPop.portEdit->setText( QString("%1").arg( ap.port() ) ); 
-    mPop.useSSLCheck->setChecked( ap.useSSL() );
-    mPop.storePasswordCheck->setChecked( ap.storePasswd() );
-    mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
-    mPop.retriveAllCheck->setChecked( ap.retrieveAll() );
-    mPop.intervalCheck->setChecked( interval >= 1 );
-    mPop.intervalSpin->setValue( QMAX(1, interval) );
-    mPop.excludeCheck->setChecked( mAccount->checkExclude() );
-    mPop.precommand->setText( ap.precommand() );
-
-    slotEnablePopInterval( interval >= 1 );
-    folderCombo = mPop.folderCombo;
-    //    mPop.identityCombo->insertStringList( mIdentityList );
-  }
-  else if(( accountType == "advanced pop" ) ||
-	  ( accountType == "experimental pop" ))
-  {
     KMAcctExpPop &ap = *(KMAcctExpPop*)mAccount;
     mPop.nameEdit->setText( mAccount->name() );
     mPop.loginEdit->setText( ap.login() );
@@ -404,7 +381,7 @@ void AccountDialog::saveSettings()
     mAccount->setFolder( folder );
 
   }
-  else if( accountType == "pop" || accountType == "advanced pop" )
+  else if( accountType == "pop" )
   {
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ? 
@@ -415,34 +392,18 @@ void AccountDialog::saveSettings()
       = kernel->folderMgr()->find( mPop.folderCombo->currentText() );
     mAccount->setFolder( folder );
     
-    if( accountType == "pop" )
-    {
-      KMAcctPop &pa = *(KMAcctPop*)mAccount;
-      pa.setHost( mPop.hostEdit->text() );
-      pa.setPort( mPop.portEdit->text().toInt() );
-      pa.setLogin( mPop.loginEdit->text() );
-      pa.setPasswd( mPop.passwordEdit->text(), true );
-      pa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
-      pa.setPasswd( mPop.passwordEdit->text(), pa.storePasswd() );
-      pa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
-      pa.setRetrieveAll( mPop.retriveAllCheck->isChecked() );
-      pa.setPrecommand( mPop.precommand->text() );
-    }
-    else
-    {
-      KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
-      epa.setHost( mPop.hostEdit->text() );
-      epa.setPort( mPop.portEdit->text().toInt() );
-      epa.setLogin( mPop.loginEdit->text() );
-      epa.setPasswd( mPop.passwordEdit->text(), true );
-      epa.setUseSSL( mPop.useSSLCheck->isChecked() );
-      epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
-      epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
-      epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
-      epa.setRetrieveAll( mPop.retriveAllCheck->isChecked() ); 
-      epa.setPrecommand( mPop.precommand->text() );
+    KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
+    epa.setHost( mPop.hostEdit->text() );
+    epa.setPort( mPop.portEdit->text().toInt() );
+    epa.setLogin( mPop.loginEdit->text() );
+    epa.setPasswd( mPop.passwordEdit->text(), true );
+    epa.setUseSSL( mPop.useSSLCheck->isChecked() );
+    epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
+    epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
+    epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
+    epa.setRetrieveAll( mPop.retriveAllCheck->isChecked() ); 
+    epa.setPrecommand( mPop.precommand->text() );
 
-    }
   }
   kernel->acctMgr()->writeConfig(TRUE);
 }

@@ -2808,10 +2808,6 @@ void ConfigureDialog::slotAddAccount( void )
       accountType = "pop";
     break;
 
-    case 2:
-      accountType = "experimental pop";
-    break;
-
     default:
       KMessageBox::sorry( this, i18n("Unknown account type selected") );
       return;

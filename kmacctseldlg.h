@@ -36,7 +36,7 @@ class KMAcctSelDlg: public KDialogBase
 
     /** 
      * Returns selected button from the account selection group:
-     * 0=local mail, 1=pop3, 2=experimental pop3. 
+     * 0=local mail, 1=pop3. 
      */
     int selected(void) const;
 

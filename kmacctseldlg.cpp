@@ -46,14 +46,11 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   vlay->addWidget( radioButton1 );
   QRadioButton *radioButton2  = new QRadioButton(i18n("Pop3"),  group );
   vlay->addWidget( radioButton2 );
-  QRadioButton *radioButton3  = 
-    new QRadioButton(i18n("Advanced Pop3"), group );
-  vlay->addWidget( radioButton3 );
 
   vlay->addStretch( 10 );
 
-  radioButton3->setChecked(true); // Advanced Pop is most common ?
-  buttonClicked(2);
+  radioButton2->setChecked(true); // Pop is most common ?
+  buttonClicked(1);
 }
 
 

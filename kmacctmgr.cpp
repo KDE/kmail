@@ -2,7 +2,6 @@
 
 #include "kmacctmgr.h"
 #include "kmacctlocal.h"
-#include "kmacctpop.h"
 #include "kmacctexppop.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
@@ -98,6 +97,9 @@ void KMAcctMgr::readConfig(void)
     groupName.sprintf("Account %d", i);
     config->setGroup(groupName);
     acctType = config->readEntry("Type");
+    // Provide backwards compatibility
+    if (acctType == "advanced pop" || acctType == "experimental pop")
+      acctType = "pop";
     acctName = config->readEntry("Name");
     acct = create(acctType, acctName);
     if (!acct) continue;
@@ -151,12 +153,6 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
     act = new KMAcctLocal(this, aName);
 
   else if (stricmp(aType,"pop")==0) 
-    act = new KMAcctPop(this, aName);
-
-  else if (stricmp(aType,"experimental pop")==0) 
-    act = new KMAcctExpPop(this, aName);
-
-  else if (stricmp(aType,"advanced pop")==0) 
     act = new KMAcctExpPop(this, aName);
 
   if (act) 

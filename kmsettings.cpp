@@ -5,7 +5,6 @@
 
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
-#include "kmacctpop.h"
 #include "kmacctexppop.h"
 #include "kmacctseldlg.h"
 #include "kmfolder.h"
@@ -1169,9 +1168,6 @@ void KMSettings::addAccount()
   case 1:
     acctType = "pop";
     break;
-  case 2:
-    acctType = "experimental pop";
-    break;
   default:
     fatal("KMSettings: unsupported account type selected");
   }
@@ -1483,24 +1479,22 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
     connect(btnDetail,SIGNAL(clicked()), SLOT(chooseLocation()));
   }
-  else if ((acctType == "pop") || (acctType == "experimental pop"))
+  else if (acctType == "pop")
   {
     lbl->setText(i18n("Pop Account"));
-    if (acctType == "experimental pop")
-      lbl->setText(i18n("Experimental Pop Account"));
 
     mEdtLogin = createLabeledEntry(this, grid, i18n("Login:"),
-				   ((KMAcctPop*)mAcct)->login(), 2, 0);
+				   ((KMAcctExpPop*)mAcct)->login(), 2, 0);
 
     mEdtPasswd = createLabeledEntry(this, grid, i18n("Password:"),
-				    ((KMAcctPop*)mAcct)->passwd(), 3, 0);
+				    ((KMAcctExpPop*)mAcct)->passwd(), 3, 0);
     mEdtPasswd->setEchoMode(QLineEdit::Password);
 
     mEdtHost = createLabeledEntry(this, grid, i18n("Host:"),
-				  ((KMAcctPop*)mAcct)->host(), 4, 0);
+				  ((KMAcctExpPop*)mAcct)->host(), 4, 0);
 
     QString tmpStr;
-    tmpStr.sprintf("%u",((KMAcctPop*)mAcct)->port());
+    tmpStr.sprintf("%u",((KMAcctExpPop*)mAcct)->port());
     mEdtPort = createLabeledEntry(this, grid, i18n("Port:"),
 				  tmpStr, 5, 0);
     tmpStr.sprintf("%u", ((KMAccount*)mAcct)->checkInterval());
@@ -1516,17 +1510,17 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
     mStorePasswd = new QCheckBox(i18n("Store POP password in config file"), this);
     mStorePasswd->setMinimumSize(mStorePasswd->sizeHint());
-    mStorePasswd->setChecked(((KMAcctPop*)mAcct)->storePasswd());
+    mStorePasswd->setChecked(((KMAcctExpPop*)mAcct)->storePasswd());
     grid->addMultiCellWidget(mStorePasswd, 7, 7, 1, 2);
 
     mChkDelete = new QCheckBox(i18n("Delete mail from server"), this);
     mChkDelete->setMinimumSize(mChkDelete->sizeHint());
-    mChkDelete->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
+    mChkDelete->setChecked(!((KMAcctExpPop*)mAcct)->leaveOnServer());
     grid->addMultiCellWidget(mChkDelete, 8, 8, 1, 2);
 
     mChkRetrieveAll=new QCheckBox(i18n("Retrieve all mail from server"), this);
     mChkRetrieveAll->setMinimumSize(mChkRetrieveAll->sizeHint());
-    mChkRetrieveAll->setChecked(((KMAcctPop*)mAcct)->retrieveAll());
+    mChkRetrieveAll->setChecked(((KMAcctExpPop*)mAcct)->retrieveAll());
     grid->addMultiCellWidget(mChkRetrieveAll, 9, 9, 1, 2);
 
   }
@@ -1666,19 +1660,6 @@ void KMAccountSettings::accept()
   }
 
   else if (acctType == "pop")
-  {
-    ((KMAcctPop*)mAcct)->setHost(mEdtHost->text());
-    ((KMAcctPop*)mAcct)->setPort(atoi(mEdtPort->text()));
-    ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
-    ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
-    ((KMAcctPop*)mAcct)->setStorePasswd(mStorePasswd->isChecked());
-    ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(),
-                 ((KMAcctPop*)mAcct)->storePasswd());
-    ((KMAcctPop*)mAcct)->setLeaveOnServer(!mChkDelete->isChecked());
-    ((KMAcctPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
-  }
-
-  else if (acctType == "experimental pop")
   {
     ((KMAcctExpPop*)mAcct)->setHost(mEdtHost->text());
     ((KMAcctExpPop*)mAcct)->setPort(atoi(mEdtPort->text()));
