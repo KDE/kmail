@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
                    description,
 		   KAboutData::License_GPL,
                    "(c) 1997-2000, The KMail developers",
-		   I18N_NOOP("http://kmail.kde.org"));
+		   "http://kmail.kde.org");
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
