@@ -201,7 +201,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       msgPart->setSubtype(DwMime::kSubtypeOctetStream);
       msgPart->setContentDisposition( QString("attachment;\n\tfilename=\"%1\"")
           .arg( fileName ).latin1() );
-      
+
       // quickly searching for our message part: since Kolab parts are
       // top-level parts we do *not* have to travel into embedded multiparts
       DwBodyPart* part = msg.getFirstDwBodyPart();
@@ -234,7 +234,7 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
   }else{
     kdDebug(5006) << "Attachment " << attachmentURL << " not a local file." << endl;
   }
-  
+
   return bOK;
 }
 
@@ -274,7 +274,7 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   if( !bOK ){
     kdDebug(5006) << "Attachment " << attachmentURL << " not found." << endl;
   }
-  
+
   return bOK;
 }
 
@@ -308,7 +308,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
       break;
     }
   }
-    
+
   if( bAttachOK ){
     // Mark the message as read and store it in the folder
     msg->touch();
@@ -442,7 +442,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
                 << resource << " )" << endl;
 
-  KMFolder* f = kmkernel->findFolderById( resource );
+  KMFolder* f = findResourceFolder( resource );
   if( f && storageFormat( f ) == StorageXML ) {
     f->open();
     QString s;
@@ -504,10 +504,13 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
 {
   QMap<QString, bool> map;
 
+  kdDebug(5006) << k_funcinfo << endl;
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
-  if ( f && storageFormat( f ) == StorageXML )
+  if ( f && storageFormat( f ) == StorageXML ) {
     map.insert( f->location(), !f->isReadOnly() );
+    kdDebug(5006) << "Adding(1) folder " << f->location() << endl;
+  }
 
   // get the extra ones
   const KMail::FolderContentsType t = folderContentsType( contentsType );
@@ -515,8 +518,10 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
     if ( f->storage()->contentsType() == t
-         && storageFormat( f ) == StorageXML )
+         && storageFormat( f ) == StorageXML ) {
       map.insert( f->location(), !f->isReadOnly() );
+      kdDebug(5006) << "Adding(2) folder " << f->location() << endl;
+    }
   }
 
   return map;
@@ -619,13 +624,14 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     return false;
 
   kdDebug(5006) << "KMailICalIfaceImpl::update( " << resource << ", " << sernum << " )\n";
-  
+
   Q_UINT32 rc = 0;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
   // Find the folder
-  KMFolder* f = kmkernel->findFolderById( resource );
+  KMFolder* f = findResourceFolder( resource );
+  kdDebug(5006) << "Updating in folder " << f << endl;
   if( f && storageFormat( f ) == StorageXML ){
     KMMessage* msg = findMessageBySerNum( sernum, f );
     if( msg ) {
@@ -642,7 +648,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 
       // Add all attachments by reading them from their temp. files
       for( QStringList::ConstIterator it2 = attachments.begin();
-          it2 != attachments.end(); 
+          it2 != attachments.end();
           ++it2 ){
         if( !updateAttachment( *msg, *it2 ) ){
           kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
@@ -672,9 +678,9 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
 
   kdDebug(5006) << "KMailICalIfaceImpl::getAttachment( "
                 << resource << ", " << sernum << ", " << filename << " )\n";
-  
+
   KURL url;
-  
+
   bool bOK = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
@@ -695,24 +701,24 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
           KMMessagePart aPart;
           msg->bodyPart( part, &aPart );
           QByteArray rawData( aPart.bodyDecodedBinary() );
-          
+
           KTempFile file;
           file.setAutoDelete( true );
           QTextStream* stream = file.textStream();
           stream->setEncoding( QTextStream::UnicodeUTF8 );
           stream->writeRawBytes( rawData.data(), rawData.size() );
           file.close();
-        
+
           // Compose the return value
           url.setPath( file.name() );
           url.setFileEncoding( "UTF-8" );
-          
+
           bOK = true;
           break;
         }
         part = part->Next();
       }
-    
+
       if( !bOK ){
         kdDebug(5006) << "Attachment " << filename << " not found." << endl;
       }
@@ -1044,6 +1050,36 @@ KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
   return 0;
 }
 
+KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* folder ) const
+{
+  FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() )
+    return (*it).mStorageFormat;
+  return StorageIcalVcard;
+}
+
+KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
+{
+  // Try the standard folders
+  if( mCalendar->location() == resource )
+    return mCalendar;
+  if ( mContacts->location() == resource )
+    return mContacts;
+  if ( mNotes->location() == resource )
+    return mNotes;
+  if ( mTasks->location() == resource )
+    return mTasks;
+  if ( mJournals->location() == resource )
+    return mJournals;
+
+  // No luck. Try the extrafolders
+  ExtraFolder* ef = mExtraFolders.find( resource );
+  if ( ef )
+    return ef->folder;
+
+  // No luck at all
+  return 0;
+}
 
 /****************************
  * The config stuff
@@ -1336,13 +1372,5 @@ static void vPartMicroParser( const QString& str, QString& s )
   s.truncate(0);
 }
 
-
-KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* folder ) const
-{
-  FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
-  if ( it != mFolderInfoMap.end() )
-    return (*it).mStorageFormat;
-  return StorageIcalVcard;
-}
 
 #include "kmailicalifaceimpl.moc"

@@ -182,6 +182,8 @@ private:
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
+  KMFolder* findResourceFolder( const QString& resource );
+
   bool deleteIncidence( KMFolder& folder, const QString& uid, Q_UINT32 serNum );
   bool updateAttachment( KMMessage& msg, const QString& attachmentURL );
   bool deleteAttachment( KMMessage& msg, const QString& attachmentURL );
