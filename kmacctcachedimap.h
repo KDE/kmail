@@ -133,11 +133,6 @@ public slots:
 protected:
   friend class KMAcctMgr;
   KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
-   /**
-   * Handle an error coming from a KIO job
-   * See ImapAccountBase::handleJobError for details.
-   */
-  virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */

@@ -86,36 +86,16 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 //-----------------------------------------------------------------------------
 
-bool KMAcctImap::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* /*job*/, const QString& /*context*/, bool /*abortSync*/ )
+bool KMAcctImap::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
 {
-  if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
-  if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
-  if (errorCode == KIO::ERR_DOES_NOT_EXIST)
-  {
+  /* TODO check where to handle this one better. */
+  if ( errorCode == KIO::ERR_DOES_NOT_EXIST ) {
     // folder is gone, so reload the folderlist
-    if (mFolder) mFolder->listDirectory();
+    if ( mFolder )
+      mFolder->listDirectory();
     return true;
   }
-  // killAllJobs needs to disconnect the slave explicitely if the connection
-  // went down.
-  killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
-  // check if we still display an error
-  if ( !mErrorDialogIsActive )
-  {
-    mErrorDialogIsActive = true;
-    // TODO use "context" in error message
-    KMessageBox::error(kmkernel->mainWin(),
-          KIO::buildErrorString(errorCode, errorMsg));
-    mErrorDialogIsActive = false;
-  } else {
-    kdDebug(5006) << "suppressing error:" << errorMsg << endl;
-  }
-  if ( errorCode == KIO::ERR_COULD_NOT_MKDIR ) {
-     // Creating a folder failed, remove it from the tree.
-     if ( mFolder )
-        mFolder->listDirectory( );
-  }
-  return false; // abort
+  return ImapAccountBase::handleJobErrorInternal( errorCode, errorMsg, job, context, abortSync );
 }
 
 

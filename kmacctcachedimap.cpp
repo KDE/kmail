@@ -123,60 +123,6 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 }
 
 //-----------------------------------------------------------------------------
-bool KMAcctCachedImap::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
-{
-  // Copy job's data before a possible killAllJobs
-  QStringList errors;
-  if ( job && job->error() != KIO::ERR_SLAVE_DEFINED /*workaround for kdelibs-3.2*/)
-    errors = job->detailedErrorStrings();
-
-  bool jobsKilled = true;
-  switch( errorCode ) {
-  case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
-  case KIO::ERR_COULD_NOT_LOGIN: mAskAgain = TRUE; break;
-  default:
-    if ( abortSync )
-      killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
-    else
-      jobsKilled = false;
-    break;
-  }
-
-  // check if we still display an error
-  if ( !mErrorDialogIsActive )
-  {
-    mErrorDialogIsActive = true;
-    QString msg;
-    QString caption;
-    if ( errors.count() >= 3 ) {
-      msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
-      caption = errors[0];
-    } else {
-      msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
-      caption = i18n("Error");
-    }
-
-    if ( jobsKilled )
-      KMessageBox::error( kapp->activeWindow(), msg, caption );
-    else // i.e. we have a chance to continue, ask the user about it
-    {
-      int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
-      if ( ret == KMessageBox::Cancel ) {
-        jobsKilled = true;
-        killAllJobs( false );
-      }
-    }
-    mErrorDialogIsActive = false;
-  } else
-    kdDebug(5006) << "suppressing error:" << errorMsg << endl;
-
-  if ( job && !jobsKilled )
-    removeJob( job );
-  return !jobsKilled; // jobsKilled==false -> continue==true
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctCachedImap::displayProgress()
 {
    mIdle = false;

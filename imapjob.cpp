@@ -41,6 +41,7 @@
 
 #include <kio/scheduler.h>
 #include <kdebug.h>
+#include <klocale.h>
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/string.h>
@@ -313,7 +314,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   bool gotData = true;
   if (job->error())
   {
-    account->slotSlaveError( account->slave(), job->error(), job->errorText() );
+    account->handleJobError( job, i18n( "Error while retrieving messages from the server." ) );
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -403,8 +404,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
 
   if (job->error())
   {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
+    account->handleJobError( job, i18n( "Error while retrieving information on the structure of a message." ) );
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -450,8 +450,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
 
   if (job->error())
   {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
+    account->handleJobError( job, i18n("Error while uploading messages to the server.") );
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )
@@ -551,8 +550,7 @@ void ImapJob::slotCopyMessageResult( KIO::Job *job )
 
   if (job->error())
   {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
+    account->handleJobError( job, i18n("Error while copying messages.") );
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )

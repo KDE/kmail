@@ -42,6 +42,7 @@ using KMail::BodyVisitor;
 using KMail::ImapJob;
 #include "protocols.h"
 
+#include <kapplication.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
@@ -629,28 +630,61 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-#if 0 // KMAcctImap and KMAcctCachedImap have their own reimplementation, so this one isn't useful
-      // KMAcctCachedImap has an improved version (with support for continue/cancel)
-      // Someone should port KMAcctImap to it, and then it can be moved here.
-  void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
-      const QString &errorMsg)
+  bool ImapAccountBase::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
   {
-    if (aSlave != mSlave) return;
-    if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
-    if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
-    killAllJobs();
+    // Copy job's data before a possible killAllJobs
+    QStringList errors;
+    if ( job && job->error() != KIO::ERR_SLAVE_DEFINED /*workaround for kdelibs-3.2*/)
+      errors = job->detailedErrorStrings();
+
+    bool jobsKilled = true;
+    switch( errorCode ) {
+    case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
+    case KIO::ERR_COULD_NOT_LOGIN:
+      if ( !mStorePasswd )
+        mAskAgain = true;
+      break;
+    default:
+      if ( abortSync )
+        killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
+      else
+        jobsKilled = false;
+      break;
+    }
+
     // check if we still display an error
     if ( !mErrorDialogIsActive )
     {
       mErrorDialogIsActive = true;
-      KMessageBox::messageBox(kmkernel->mainWin(), KMessageBox::Error,
-            KIO::buildErrorString(errorCode, errorMsg),
-            i18n("Error"));
+      QString msg;
+      QString caption;
+      if ( errors.count() >= 3 ) {
+        msg = QString( "<qt>") + context + errors[1] + '\n' + errors[2];
+        caption = errors[0];
+      } else {
+        msg = context + '\n' + KIO::buildErrorString( errorCode, errorMsg );
+        caption = i18n("Error");
+      }
+
+      if ( jobsKilled )
+        KMessageBox::error( kapp->activeWindow(), msg, caption );
+      else // i.e. we have a chance to continue, ask the user about it
+      {
+        int ret = KMessageBox::warningContinueCancel( kapp->activeWindow(), msg, caption );
+        if ( ret == KMessageBox::Cancel ) {
+          jobsKilled = true;
+          killAllJobs( false );
+        }
+      }
       mErrorDialogIsActive = false;
     } else
       kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+
+    if ( job && !jobsKilled )
+      removeJob( job );
+    return !jobsKilled; // jobsKilled==false -> continue==true
   }
-#endif
+
 
   //-----------------------------------------------------------------------------
   QString ImapAccountBase::jobData::htmlURL() const

@@ -337,7 +337,7 @@ namespace KMail {
      * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
      * @return false when aborting, true when continuing
      */
-    virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false ) = 0;
+    virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;

@@ -199,13 +199,12 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
 {
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
-  mAccount->removeJob(it);
   if (job->error())
   {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+    mAccount->handleJobError( job, i18n("Error while removing a folder.") );
     emit removed(folder(), false);
   } else {
+    mAccount->removeJob(it);
     mAccount->displayProgress();
     FolderStorage::remove();
   }
@@ -279,8 +278,7 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
    KIO::SimpleJob* sj = static_cast<KIO::SimpleJob*>(job);
   if ( job->error() ) {
     setImapPath( sj->url().path() );
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-                              job->errorText() );
+    mAccount->handleJobError( job, i18n("Error while renaming a folder.") );
     return;
   }
   QString path = imapPath();
@@ -716,7 +714,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error()) {
-    mAccount->slotSlaveError(mAccount->slave(), job->error(), job->errorText());
+    mAccount->handleJobError( job, i18n("Error while querying the server status.") );
     emit folderComplete(this, FALSE);
     mAccount->displayProgress();
   } else {
@@ -828,8 +826,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   QString uids;
   if (job->error())
   {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+    mAccount->handleJobError( job, i18n("Error while listing the contents of a folder.") );
     quiet( false );
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
@@ -1131,8 +1128,7 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error())
   {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+    mAccount->handleJobError( job, i18n("Error while retrieving messages.") );
     mContentState = imapNoInformation;
     quiet( false );
     emit folderComplete(this, false);
@@ -1190,12 +1186,15 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error())
   {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+    if ( job->error() == KIO::ERR_COULD_NOT_MKDIR ) {
+      // Creating a folder failed, remove it from the tree.
+      mAccount->listDirectory( );
+    }
+    mAccount->handleJobError( job, i18n("Error while creating a folder.") );
   } else {
     listDirectory();
+    mAccount->removeJob(job);
   }
-  mAccount->removeJob(job);
 }
 
 
@@ -1488,8 +1487,7 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
   mAccount->removeJob(it);
   if (job->error())
   {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+    mAccount->handleJobError( job, i18n("Error while getting folder information.") );
   } else {
     KIO::UDSEntry uds = static_cast<KIO::StatJob*>(job)->statResult();
     for (KIO::UDSEntry::ConstIterator it = uds.begin(); it != uds.end(); it++)
