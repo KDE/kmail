@@ -126,8 +126,8 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   mGrid.setColStretch(3,10);
   mGrid.activate();
 
-  connect(&mListBox, SIGNAL(highlighted(const char*)), 
-	  SLOT(slotLbxHighlighted(const char*)));
+  connect(&mListBox, SIGNAL(highlighted(const QString&)), 
+	  SLOT(slotLbxHighlighted(const QString&)));
   connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
   connect(&mBtnAdd, SIGNAL(clicked()), SLOT(slotAdd()));
@@ -147,7 +147,7 @@ KMAddrBookEditDlg::~KMAddrBookEditDlg()
 
 
 //-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotLbxHighlighted(const char* aItem)
+void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 {
   if (mIndex>=0)
     mListBox.changeItem(mEdtAddress.text(), mIndex);

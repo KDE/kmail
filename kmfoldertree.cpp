@@ -368,8 +368,8 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
        folderNode = fdir->next())
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
-      if (parent)
-	fti = new KMFolderTreeItem( parent, folder, &mPaintInfo );
+      ASSERT(parent);
+      fti = new KMFolderTreeItem( parent, folder, &mPaintInfo );
 
       if (folder->label() == i18n("inbox"))
 	fti->setPixmap( 0, *pixIn );

@@ -821,8 +821,8 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
   win->setMsg(msg);
   win->resize(550,600);
 
-  connect(win, SIGNAL(statusMsg(const char*)),
-          this, SLOT(statusMsg(const char*)));
+  connect(win, SIGNAL(statusMsg(const QString&)),
+          this, SLOT(statusMsg(const QString&)));
   connect(win, SIGNAL(popupMenu(const char*,const QPoint&)),
           this, SLOT(slotMsgPopup(const char*,const QPoint&)));
   connect(win, SIGNAL(urlClicked(const char*,int)),

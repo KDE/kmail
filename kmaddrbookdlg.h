@@ -54,7 +54,7 @@ protected slots:
   void slotCancel();
   void slotAdd();
   void slotRemove();
-  void slotLbxHighlighted(const char* item);
+  void slotLbxHighlighted(const QString& item);
 
 protected:
   KMAddrBook* mAddrBook;
