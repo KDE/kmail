@@ -552,6 +552,7 @@ KMMessage* KMMessage::createForward(void)
   str += "Subject: " + subject() + "\n";
   str += "Date: " + dateStr() + "\n";
   str += "From: " + from() + "\n";
+  str += "To: " + to() + "\n";
   str += "\n";
   str = asQuotedString(str, "", FALSE);
   str += "\n-------------------------------------------------------\n";
