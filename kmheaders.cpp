@@ -592,6 +592,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
     mFolder = aFolder;
 
+    mOwner->editAction->setEnabled(mFolder ?  ( (mFolder == kernel->draftsFolder()) || (mFolder == kernel->outboxFolder()) ): false );
+
+
     if (mFolder)
     {
       connect(mFolder, SIGNAL(msgHeaderChanged(int)),
@@ -653,13 +656,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   }
 
   if (mFolder)
-  {
-    str = i18n("%1 Messages, %2 unread.")
-      .arg(mFolder->count())
-      .arg(mFolder->countUnread());
-    if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
-    mOwner->statusMsg(str);
-  }
+   setFolderInfoStatus();
 
   QString colText = i18n( "Sender" );
   if (mFolder && (qstricmp(mFolder->whoField(), "To")==0))
@@ -850,6 +847,17 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
   return filterResult;
 }
 
+
+//-----------------------------------------------------------------------------
+void KMHeaders::setFolderInfoStatus ()
+{
+    QString str;
+    str = i18n("%1 Messages, %2 unread.")
+      .arg(mFolder->count())
+      .arg(mFolder->countUnread());
+    if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
+    mOwner->statusMsg(str);
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
@@ -1483,6 +1491,7 @@ void KMHeaders::setCurrentMsg(int cur)
     setSelected( mItems[cur], TRUE );
   }
   makeHeaderVisible();
+  setFolderInfoStatus();
 }
 
 
@@ -1589,6 +1598,7 @@ void KMHeaders::nextMessage()
     setSelected( lvi->itemBelow(), TRUE );
     setCurrentItem(lvi->itemBelow());
     makeHeaderVisible();
+    setFolderInfoStatus();
    }
 }
 
@@ -1609,6 +1619,7 @@ void KMHeaders::prevMessage()
     setSelected( lvi->itemAbove(), TRUE );
     setCurrentItem(lvi->itemAbove());
     makeHeaderVisible();
+    setFolderInfoStatus();
   }
 }
 
@@ -1766,6 +1777,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
     mPrevCurrent = item;
   }
   emit selected(mFolder->getMsg(idx));
+  setFolderInfoStatus();
 }
 
 
@@ -2188,15 +2200,20 @@ void KMHeaders::slotRMB()
   mOwner->folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, msgCopyMenu );
   QPopupMenu *setStatusMenu = new QPopupMenu();
 
-  mOwner->replyAction->plug(menu);
-  mOwner->replyAllAction->plug(menu);
-  mOwner->forwardAction->plug(menu);
-  mOwner->bounceAction->plug(menu);
+  if ((mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder()))
+     mOwner->editAction->plug(menu);
+  else {
+     mOwner->replyAction->plug(menu);
+     mOwner->replyAllAction->plug(menu);
+     mOwner->forwardAction->plug(menu);
+     mOwner->redirectAction->plug(menu);
+     mOwner->bounceAction->plug(menu);
+       }
   menu->insertSeparator();
-  mOwner->saveAsAction->plug(menu);
-  mOwner->editAction->plug(menu);
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
+  if ((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
+       {
   menu->insertItem(i18n("&Set Status"), setStatusMenu);
   mOwner->newAction->plug(setStatusMenu);
   mOwner->unreadAction->plug(setStatusMenu);
@@ -2204,6 +2221,11 @@ void KMHeaders::slotRMB()
    mOwner->repliedAction->plug(setStatusMenu);
    mOwner->queueAction->plug(setStatusMenu);
    mOwner->sentAction->plug(setStatusMenu);
+       }
+  menu->insertSeparator();
+  mOwner->printAction->plug(menu);
+  mOwner->saveAsAction->plug(menu);
+  menu->insertSeparator();
   mOwner->deleteAction->plug(menu);
   menu->exec (QCursor::pos(), 0);
   delete menu;

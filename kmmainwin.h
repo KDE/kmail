@@ -76,10 +76,10 @@ public:
 
   static void cleanup();
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
-      *forwardAction, *redirectAction,
+    *forwardAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *newAction,*unreadAction,*readAction,*repliedAction,*queueAction,*sentAction,
-    *printAction;
+    *newAction, *unreadAction, *readAction, *repliedAction, *queueAction,
+    *sentAction, *printAction;
 
 public slots:
   virtual void show();

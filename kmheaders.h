@@ -73,6 +73,9 @@ public:
     if id>count() the last message is shown. */
   virtual void setCurrentMsg(int msgId);
 
+  // Provide information about number of messages in a folder
+  void setFolderInfoStatus();
+
   /** The following methods process the message in the folder with
     the given msgId, or if no msgId is given all selected
     messages are processed. */

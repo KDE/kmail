@@ -875,13 +875,6 @@ void KMMainWin::slotEditMsg()
   KMMessage *msg;
   int aIdx;
 
-  if((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
-  {
-      KMessageBox::sorry(0,
-         i18n("Sorry, only messages in the outbox folder and drafts folder can be edited."));
-      return;
-  }
-
   if((aIdx = mHeaders->currentItemIndex()) <= -1)
     return;
   if(!(msg = mHeaders->getMsg(aIdx)))
@@ -1354,7 +1347,11 @@ void KMMainWin::slotUrlOpen()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 {
+
   KPopupMenu* menu = new KPopupMenu;
+  KPopupMenu *setStatusMenu = new KPopupMenu();
+  (void) KMMainWin::updateMessageMenu();
+
 
   mUrlCurrent = aUrl;
 
@@ -1388,22 +1385,39 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
   }
   else
   {
-    // popup somewhere else on the document
+    // popup somewhere else (i.e., not a URL) on the message
+
+
+    if ((mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder()))
+       editAction->plug(menu);
+    else {
     replyAction->plug(menu);
     replyAllAction->plug(menu);
     forwardAction->plug(menu);
     redirectAction->plug(menu);
+    bounceAction->plug(menu);
+         }
     menu->insertSeparator();
-    menu->insertItem(i18n("&Move..."), this,
-                     SLOT(slotMoveMsg()), Key_M);
-    menu->insertItem(i18n("&Copy..."), this,
-                     SLOT(slotCopyMsg()), Key_C);
+    menu->insertItem(i18n("&Move to"), moveMenu);
+    menu->insertItem(i18n("&Copy to"), copyMenu);
+    if ((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
+         {
+       menu->insertItem(i18n("&Set Status"), setStatusMenu);
+       newAction->plug(setStatusMenu);
+       unreadAction->plug(setStatusMenu);
+       readAction->plug(setStatusMenu);
+       repliedAction->plug(setStatusMenu);
+       queueAction->plug(setStatusMenu);
+       sentAction->plug(setStatusMenu);
+         }
+    menu->insertSeparator();
+    printAction->plug(menu);
+    saveAsAction->plug(menu);
     menu->insertSeparator();
     deleteAction->plug(menu);
     menu->popup(aPoint, 0);
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMainWin::getAccountMenu()
@@ -1430,7 +1444,7 @@ void KMMainWin::setupMenuBar()
     KStdAccel::key(KStdAccel::Save),
     this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
 
-  KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
+  printAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
   (void) new KAction( i18n("Compact all &folders"), 0,
 		      kernel->folderMgr(), SLOT(compactAll()),
@@ -1452,7 +1466,7 @@ void KMMainWin::setupMenuBar()
   connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
   (void) new KAction( i18n("&Send Queued"), 0, this,
-		      SLOT(slotSendQueued()), actionCollection(), "send_queued");
+		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
@@ -1559,7 +1573,7 @@ void KMMainWin::setupMenuBar()
       i++;
   }
 
-  editAction = new KAction( i18n("Edi&t..."), Key_T, this,
+  editAction = new KAction( i18n("Edi&t"), Key_T, this,
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
 
   //----- Set status submenu
