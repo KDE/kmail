@@ -2,8 +2,6 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-// #define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
-
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
 //#define KMAIL_READER_HTML_DEBUG 1
@@ -656,11 +654,14 @@ bool KMReaderWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
+  const KConfigGroup mdnGroup( KMKernel::config(), "MDN" );
   /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
 
   delete mCSSHelper;
   mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
 
+  mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
+  
   // initialize useFixedFont from the saved value; the corresponding toggle
   // action is initialized in the main window
   mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
@@ -926,9 +927,12 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
+  I18N_NOOP("Support for 3rd-party CryptPlugs has been discontinued. "
+	    "Support for the GnuPG cryptographic backend is now included "
+	    "directly in KMail.")
 };
-static const int numKMailChanges = 0;
-//  sizeof kmailChanges / sizeof *kmailChanges;
+static const int numKMailChanges =
+  sizeof kmailChanges / sizeof *kmailChanges;
 
 // enter items for the "new features" list here, so the main body of
 // the welcome page can be left untouched (probably much easier for
@@ -942,6 +946,11 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP( "View/open message files" ),
   I18N_NOOP( "HTML message composing" ),
   I18N_NOOP( "New filter criteria: in address book, in category, has attachment" )
+  I18N_NOOP("Cryptographic backend auto-configuration"),
+  I18N_NOOP("Sign/encrypt key separation"),
+  I18N_NOOP("Per-identity S/MIME key preselection"),
+  I18N_NOOP("Per-identity cryptographic message format preselection"),
+  I18N_NOOP("Per-contact crypto preferences"),
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1182,9 +1191,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   aMsg->setSignatureState(  signatureState  );
 
   bool emitReplaceMsgByUnencryptedVersion = false;
-// note: The following define is specified on top of this file. To compile
-//       a less strict version of KMail just comment it out there above.
-#ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
+  if ( reader.readBoolEntry( "store-displayed-messages-unencrypted", false ) ) {
 
   // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
   // of german government:
@@ -1249,7 +1257,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
       emitReplaceMsgByUnencryptedVersion = true;
     }
   }
-#endif // STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+  }
 
   // save current main Content-Type before deleting mRootNode
   const int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeText;
@@ -1399,12 +1407,13 @@ void KMReaderWin::slotTouchMessage()
       serNums.append( message()->getMsgSerNum() );
       KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
       command->start();
-      KMMessage * receipt = message()->createMDN( MDN::ManualAction,
-                                                  MDN::Displayed,
-                                                  true /* allow GUI */ );
-      if ( receipt )
-        if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-          KMessageBox::error( this, i18n("Could not send MDN.") );
+      if ( ! ( mNoMDNsWhenEncrypted &&
+               KMMsgNotEncrypted != message()->encryptionState() ) )
+	if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
+							 MDN::Displayed,
+							 true /* allow GUI */ ) )
+	  if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
+	    KMessageBox::error( this, i18n("Could not send MDN.") );
     }
   }
 }

@@ -415,6 +415,7 @@ private:
   QTimer mDelayedMarkTimer;
   const QTextCodec * mOverrideCodec;
   bool mMsgDisplay;
+  bool mNoMDNsWhenEncrypted;
   unsigned long mLastSerNum;
   KMMsgStatus mLastStatus;
 
