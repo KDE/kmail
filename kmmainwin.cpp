@@ -1567,9 +1567,9 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 
   if( !aFolder && mFolderTree->currentItem() == mFolderTree->firstChild() ) {
     mMsgView->setMsg( 0, TRUE );
-    if( mHeaders )
+    if( mHeaders && mWindowLayout < 3 )
       mHeaders->hide();
-    if( mShowMIME && mMimePartTree )
+    if( mShowMIME && mMimePartTree && mWindowLayout != 3 )
         mMimePartTree->hide();
     mMsgView->displayAboutPage();
   } else if( !mFolder ) {
