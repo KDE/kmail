@@ -283,6 +283,11 @@ public:
       and if that fails queries the @see #parent() folder for a default.
    **/
   uint identityUoid() const;
+  
+
+  /** Set the from, to, cc, bcc, encrytion etc headers as specified in the 
+   * given identity. */
+  void applyIdentity( uint id );
 
   /** Removes empty fields from the header, e.g. an empty Cc: or Bcc:
     field. */

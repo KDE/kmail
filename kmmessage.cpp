@@ -817,6 +817,9 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       mailingListAddresses << rx.cap(1) + '@' + rx.cap(2);
   }
 
+  if ( parent() && parent()->identity() )
+    msg->applyIdentity( parent()->identity() );
+
   // use the "On ... Joe User wrote:" header by default
   replyStr = sReplyAllStr;
 
@@ -1567,8 +1570,8 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   return receipt;
 }
 
-//-----------------------------------------------------------------------------
-void KMMessage::initHeader( uint id )
+
+void KMMessage::applyIdentity( uint id )
 {
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
@@ -1612,7 +1615,12 @@ void KMMessage::initHeader( uint id )
     setDrafts( QString::null );
   else
     setDrafts( ident.drafts() );
+}
 
+//-----------------------------------------------------------------------------
+void KMMessage::initHeader( uint id )
+{
+  applyIdentity( id );
   setTo("");
   setSubject("");
   setDateToday();
