@@ -44,7 +44,7 @@ const char *aboutText =
   "Don Sanders <don@sanders.org>,\n"
   "Andreas Gungl <Andreas.Gungle@osp-dd.de>,\n"
   "George Staikos <staikos@kde.org>,\n"
-  "Espen Sand <espensa@online.no>,\n"
+  "Espen Sand <espen@kde.org>,\n"
   "Daniel Naber <dnaber@mini.gt.owl.de>,\n"
   "Mario Weilguni <mweilguni@sime.com>\n\n"
   "based on the work of:\n"
