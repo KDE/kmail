@@ -12,18 +12,21 @@
 #include <kstatusbar.h>
 #include "kmfoldertree.h"
 #include "kmheaders.h"
+#include "kmreaderwin.h"
+#include "mclass.h"
 
 class KMMainView : public QWidget   // separated now because of KTopLevelWidget
 {
 	Q_OBJECT
 public:
 	KMMainView(QWidget *parent=0,const char *name=0);
-
 	KMFolderTree *folderTree;
 private:
-	QMultiLineEdit *messageView;
+	KMReaderView *messageView;
 	KPanner *horzPanner,*vertPanner;
 	KMHeaders *headers;
+	Folder *currentFolder;
+	bool Integrated;
 private slots:
 	void doAddFolder();
 	void doCheckMail();
@@ -37,6 +40,8 @@ private slots:
 	void doDeleteMessage();
 	void doForwardMessage();
 	void doReplyMessage();
+	void initIntegrated();
+	void initSeparated();
 };
 
 class KMMainWin : public KTopLevelWidget

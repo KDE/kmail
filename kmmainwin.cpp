@@ -18,25 +18,53 @@ KBusyPtr* kbp;
 
 KMMainView::KMMainView(QWidget *parent, const char *name) : QWidget(parent,name)
 {
-	////////////////////
-	// Set up Panners //
-	////////////////////
-	horzPanner=new KPanner(this, NULL, KPanner::O_HORIZONTAL,40);
-	connect(horzPanner, SIGNAL(positionChanged()), this, SLOT(pannerHasChanged()));
-	vertPanner=new KPanner(horzPanner->child0(), NULL, KPanner::O_VERTICAL, 30);
-	connect(vertPanner, SIGNAL(positionChanged()), this, SLOT(pannerHasChanged()));
+        KConfig *config = new KConfig();
+        config = KApplication::getKApplication()->getConfig();
+        config->setGroup("Settings");
+        QString o;
+        o = config->readEntry("Reader");
+        if( !o.isEmpty() && o.find("separated",0,false) ==0)
+                initSeparated();
+        else
+                initIntegrated();
 
-	////////////////////////
-	// Set up all widgets //#
-	////////////////////////
-	folderTree = new KMFolderTree(vertPanner->child0());
-	connect(folderTree,SIGNAL(folderSelected(QDir *)),this,SLOT(folderSelected(QDir *)));
+        currentFolder = new Folder();
 
-	headers = new KMHeaders(vertPanner->child1());
-	connect(headers,SIGNAL(messageSelected(Message *)),this,SLOT(messageSelected(Message *)));
 
-	messageView = new QMultiLineEdit(horzPanner->child1());
-	messageView->setReadOnly(TRUE);
+}
+
+
+void KMMainView::initSeparated()
+{
+        printf("initSeparated()\n");
+        vertPanner=new KPanner(this, NULL,KPanner::O_VERTICAL,30);
+        connect(vertPanner, SIGNAL(positionChanged()),this,SLOT(pannerHasChanged()));
+        folderTree = new KMFolderTree(vertPanner->child0());
+	connect(folderTree,SIGNAL(folderSelected(QDir*)),this,SLOT(folderSelected(QDir*)));
+        headers = new KMHeaders(vertPanner->child1());
+	connect(headers,SIGNAL(messageSelected(Message*)),this,SLOT(messageSelected(Message *)));
+        horzPanner = NULL;
+        printf("Leaving initSeparated()\n");
+        Integrated = 0;
+
+}
+
+
+void KMMainView::initIntegrated()
+{
+        printf("Entering initIntegrated()\n");
+        horzPanner=new KPanner(this, NULL,KPanner::O_HORIZONTAL,40);
+        connect(horzPanner, SIGNAL(positionChanged()),this,SLOT(pannerHasChanged()));
+        vertPanner=new KPanner(horzPanner->child0(), NULL,KPanner::O_VERTICAL,30);
+        connect(vertPanner, SIGNAL(positionChanged()),this,SLOT(pannerHasChanged()));
+        folderTree = new KMFolderTree(vertPanner->child0());
+        connect(folderTree,SIGNAL(folderSelected(QDir *)),this,SLOT(folderSelected(QDir *)));
+        headers = new KMHeaders(vertPanner->child1());
+	connect(headers,SIGNAL(messageSelected(Message*)),this,SLOT(messageSelected(Message*)));
+        messageView = new KMReaderView(horzPanner->child1());
+        printf("Leaving initIntegrated()\n");
+        Integrated =1;
+
 }
 
 void KMMainView::doAddFolder() {
@@ -67,10 +95,8 @@ void KMMainView::doCheckMail() {
 	am=new KMAccountMan();
 
 	for (i=1;i<folderTree->count();i++) {
-
 		folderTree->cdFolder(&dir,i);
 		if (!dir.exists("accounts")) continue;
-
 		f=new QFile(dir.absFilePath("accounts"));
 		if (!f->open(IO_ReadWrite)) { delete f; continue; }
 		g=new QTextStream(f);
@@ -111,7 +137,7 @@ void KMMainView::doCheckMail() {
 
 void KMMainView::doCompose() {
 	KMComposeWin *d;
-	d = new KMComposeWin(NULL,NULL,NULL);
+	d = new KMComposeWin;
 	d->show();
 	d->resize(d->size());
 }
@@ -141,7 +167,7 @@ void KMMainView::doRemoveFolder() {
 	 folderTree->getCurrentItem()->getText());
 	if ((KMsgBox::yesNo(this,"Confirmation",s))==1) {
 		headers->clear();
-		messageView->clear();
+		if ( horzPanner) messageView->clearCanvas();
 		folderTree->cdFolder(&dir);
 		removeDirectory(dir.path());
 		folderTree->getList();
@@ -159,8 +185,9 @@ void KMMainView::folderSelected(QDir *d) {
 
 	Folder *f=new Folder();
 	f->open(s);
+	currentFolder = f;
 	headers->setFolder(f);
-	messageView->clear();
+	if (horzPanner) messageView->clearCanvas();
 }
 
 void KMMainView::doDeleteMessage() {
@@ -176,12 +203,13 @@ void KMMainView::doReplyMessage() {
 }
 
 void KMMainView::messageSelected(Message *m) {
-	unsigned long int l;
-	messageView->setAutoUpdate(FALSE);
-	messageView->setText(m->getHeader());
-	messageView->append(m->getText(&l));
-	messageView->setAutoUpdate(TRUE);
-	messageView->repaint();
+	if(horzPanner)
+		messageView->parseMessage(m);
+	else
+		{KMReaderWin *w = new KMReaderWin(0,0,headers->currentItem()+1,currentFolder);
+		w->show();
+		w->resize(w->size());	
+		}
 }
 
 void KMMainView::pannerHasChanged() {
@@ -190,11 +218,19 @@ void KMMainView::pannerHasChanged() {
 
 void KMMainView::resizeEvent(QResizeEvent *e) {
 	QWidget::resizeEvent(e);
-	horzPanner->setGeometry(0, 0, width(), height());
-	vertPanner->resize(horzPanner->child0()->width(), horzPanner->child0()->height());
-	folderTree->resize(vertPanner->child0()->width(), vertPanner->child0()->height());
-	headers->resize(vertPanner->child1()->width(), vertPanner->child1()->height());
-	messageView->resize(horzPanner->child1()->width(), horzPanner->child1()->height());
+	if(horzPanner)
+		{horzPanner->setGeometry(0, 0, width(), height());
+		vertPanner->resize(horzPanner->child0()->width(),horzPanner->child0()->height());
+		folderTree->resize(vertPanner->child0()->width(),vertPanner->child0()->height());
+		headers->resize(vertPanner->child1()->width(),vertPanner->child1()->height());
+		messageView->resize(horzPanner->child1()->width(), horzPanner->child1()->height());
+		}
+	else	
+	   {vertPanner->resize(width(), height());
+	   folderTree->resize(vertPanner->child0()->width(),vertPanner->child0()->height());
+	   headers->resize(vertPanner->child1()->width(), vertPanner->child1()->height());
+	  }
+
 }
 
 KMMainWin::KMMainWin(QWidget *, char *name) : KTopLevelWidget(name)
