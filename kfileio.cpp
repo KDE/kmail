@@ -179,7 +179,7 @@ bool kBytesToFile(const char* aBuffer, int len,
     if (aAskIfExists)
     {
       QString str;
-      str = i18n("File %1 exists.\nDo you want to replace it ?")
+      str = i18n("File %1 exists.\nDo you want to replace it?")
 		  .arg(aFileName);
       rc = KMessageBox::warningContinueCancel(0, 
 	   str, i18n("Save to file"), i18n("&Replace"));
@@ -197,7 +197,7 @@ bool kBytesToFile(const char* aBuffer, int len,
 	// failed to rename file
 	if (!aVerbose) return FALSE;
 	rc = KMessageBox::warningContinueCancel(0,
-	     i18n("Failed to make a backup copy of %1.\nContinue anyway ?")
+	     i18n("Failed to make a backup copy of %1.\nContinue anyway?")
 	     .arg(aFileName),
              i18n("Save to file"), i18n("&Save"));
 	if (rc != KMessageBox::Continue) return FALSE;
