@@ -772,7 +772,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
   case HdrFancy:
     mViewer->write(QString("<table><tr><td><img src=") +
-		   locate("data", "kmail/pics/kdelogo.xpm") +
+		   locate("data", "kmail/pics/kdelogo.png") +
                    "></td><td hspace=\"50\"><b style=\"font-size:160%\">");
     mViewer->write(strToHtml(mMsg->subject()) + "</b><br>");
     mViewer->write(i18n("From: ")+
