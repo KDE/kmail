@@ -192,6 +192,9 @@ protected:
   // Ensure the current item is visible
   void makeHeaderVisible();
 
+  /** Auxillary method to findUnread */
+  void findUnreadAux( KMHeaderItem*&, bool &, bool, bool );
+
   /** Find next/prev unread message. Starts at currentItem() if startAt
     is unset. */
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = FALSE);

@@ -251,6 +251,11 @@ public:
     else
       return text(column);
   }
+
+  QListViewItem* firstChildNonConst() /* Non const! */ {
+    enforceSortOrder(); // Try not to rely on QListView implementation details
+    return firstChild();
+  }
 };
 
 //-----------------------------------------------------------------------------
@@ -1464,10 +1469,31 @@ void KMHeaders::prevMessage()
 }
 
 //-----------------------------------------------------------------------------
-int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
+void KMHeaders::findUnreadAux( KMHeaderItem*& item, 
+					bool & foundUnreadMessage,
+					bool onlyNew,
+					bool aDirNext )
 {
-  KMMsgBase* msgBase = NULL;
-  KMHeaderItem* item;
+  KMMsgBase* msgBase = 0;
+
+  while (item) {
+    msgBase = mFolder->getMsgBase(item->msgId());
+    if (msgBase && msgBase->isUnread())
+      foundUnreadMessage = true;
+
+    if (!onlyNew && msgBase && msgBase->isUnread()) break;
+    if (onlyNew && msgBase && msgBase->isNew()) break;
+    if (aDirNext)
+      item = static_cast<KMHeaderItem*>(item->itemBelow());
+    else
+      item = static_cast<KMHeaderItem*>(item->itemAbove());
+  }
+}
+
+//-----------------------------------------------------------------------------
+int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
+{
+  KMHeaderItem *item, *pitem;
   bool foundUnreadMessage = false;
 
   if (!mFolder) return -1;
@@ -1488,17 +1514,42 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
       item = static_cast<KMHeaderItem*>(item->itemAbove());
   }
 
-  while (item) {
-    msgBase = mFolder->getMsgBase(item->msgId());
-    if (msgBase && msgBase->isUnread())
-      foundUnreadMessage = true;
-    if (!onlyNew && msgBase && msgBase->isUnread()) break;
-    if (onlyNew && msgBase && msgBase->isNew()) break;
-    if (aDirNext)
-      item = static_cast<KMHeaderItem*>(item->itemBelow());
-    else
-      item = static_cast<KMHeaderItem*>(item->itemAbove());
+  pitem =  item;
+
+  findUnreadAux( item, foundUnreadMessage, onlyNew, aDirNext );
+
+  // We have found an unread item, but it is not necessary the
+  // first unread item.
+  //
+  // Find the ancestor of the unread item closest to the
+  // root and recursively sort all of that ancestors children.
+  if (item) {
+    QListViewItem *next = item;
+    while (next->parent())
+      next = next->parent();
+    next = static_cast<KMHeaderItem*>(next)->firstChildNonConst();
+    while (next && (next != item))
+      if (static_cast<KMHeaderItem*>(next)->firstChildNonConst())
+	next = next->firstChild();
+      else if (next->nextSibling())
+	next = next->nextSibling();
+      else {
+	while (next && (next != item)) {
+	  next = next->parent();
+	  if (next == item)
+	    break;
+	  if (next && next->nextSibling()) {
+	    next = next->nextSibling();
+	    break;
+	  }
+	}
+      }
   }
+
+  item = pitem;
+
+  findUnreadAux( item, foundUnreadMessage, onlyNew, aDirNext );
+
   if (item)
     return item->msgId();
 
@@ -1508,7 +1559,6 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   if (((unread == 0) && foundUnreadMessage) ||
       ((unread > 0) && !foundUnreadMessage)) {
     mFolder->correctUnreadMsgsCount();
-    kdDebug() << "count corrupted" << endl;
   }
   return -1;
 }
