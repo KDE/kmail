@@ -1330,9 +1330,11 @@ void ConfigureDialog::makeMimePage( void )
   mMime.messageIdSuffixEdit->setFocus();
   glay0->addWidget( mMime.messageIdSuffixEdit,  0, 1 );
 
-  lblTxt = i18n("(Name must be unique, you may use a domain name that you are the owner of.)");
+  lblTxt = i18n("(Name must be unique, you may use a domain name\n"
+    "that you are the owner of.)");
   mMime.messageIdSuffixHintLabel = new QLabel( lblTxt, page );
-  mMime.messageIdSuffixHintLabel->setAlignment( AlignLeft | WordBreak );
+  mMime.messageIdSuffixHintLabel->setAlignment( AlignLeft );
+  mMime.messageIdSuffixHintLabel->setFixedHeight( mMime.messageIdSuffixHintLabel->sizeHint().height() );
   mMime.messageIdSuffixHintLabel->setIndent( indent );
   topLevel->addWidget( mMime.messageIdSuffixHintLabel );
 
@@ -1353,6 +1355,7 @@ void ConfigureDialog::makeMimePage( void )
   mMime.tagList->setAllColumnsShowFocus( true );
   mMime.tagList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mMime.tagList->setSorting( -1 );
+  mMime.tagList->setMinimumSize( 0, 0 );
   connect( mMime.tagList, SIGNAL(selectionChanged()),
 	   this, SLOT(slotMimeHeaderSelectionChanged()) );
   topLevel->addWidget( mMime.tagList );
