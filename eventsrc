@@ -1,12 +1,15 @@
 [!Global!]
 IconName=kmail
 Comment=KMail
+Comment[sv]=Kmail
 
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
 Comment[bs]=Stigla vam je nova pošta.
+Comment[hu]=Új e-mail érkezett
 Comment[ja]=新規メールが到着しました
+Comment[sv]=Ny post har anlänt
 Comment[tr]=Yeni İleti Geldi
 default_sound=
 default_presentation=0
