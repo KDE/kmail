@@ -4,7 +4,7 @@
 
 #include "kmaddrbook.h"
 #include <kapp.h>
-#include <kapp.h>
+#include <kconfig.h>
 #include <kmsgbox.h>
 #include <qfile.h>
 #include <assert.h>

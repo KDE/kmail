@@ -4,6 +4,7 @@
 #include <qfileinfo.h>
 #include <qpixmap.h>
 #include <kapp.h>
+#include <kconfig.h>
 #include <kiconloader.h>
 
 #include "kmglobal.h"
