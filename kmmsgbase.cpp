@@ -187,8 +187,11 @@ const QString KMMsgBase::asIndexString(void) const
   int i, len;
   QString str; 
   unsigned long dateTen = date();
-  dateTen %= 10000000000; // In index only 10 chars are reserved for the date
-
+//  dateTen %= 10000000000; // In index only 10 chars are reserved for the date
+//  This is nonsense because 10000000000 is bigger than the highest unsigned
+//  long. (Or is there any compiler that defines unsigned long as something
+//  really huge??)
+  
   QString a((const char*)decodeQuotedPrintableString(subject()));
   a.truncate(100);
   QString b((const char*)decodeQuotedPrintableString(from()));
