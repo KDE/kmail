@@ -289,6 +289,7 @@ void KMSender::doSendMsg()
     label->setText(i18n("Initiating sender process..."));
     label->resize(400, label->sizeHint().height());
     labelDialog->show();
+    kapp->processEvents(50); // Not sure this is safe -sanders
 
     // Run the precommand if there is one
     setStatusMsg(i18n(QString("Executing precommand ") + mPrecommand));
@@ -297,7 +298,6 @@ void KMSender::doSendMsg()
 	KMessageBox::error(0, QString("Couldn't execute precommand:\n") + mPrecommand);
       }
 
-    //kapp->processEvents();
     setStatusMsg(i18n("Initiating sender process..."));
     if (!mSendProc->start())
     {
@@ -385,7 +385,6 @@ void KMSender::slotIdle()
     cleanup();
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMSender::setMethod(Method aMethod)
@@ -509,7 +508,7 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 void KMSendProc::statusMsg(const QString& aMsg)
 {
   if (mSender) mSender->setStatusMsg(aMsg);
-  kapp->processEvents(500);
+  kapp->processEvents(50); // Not sure this is safe -sanders
 }
 
 //-----------------------------------------------------------------------------
@@ -717,7 +716,7 @@ bool KMSendSMTP::start(void)
     KMessageBox::information(0,str);
     return FALSE;
   }
-  kapp->processEvents(1000);
+  kapp->processEvents(50); // not sure this is safe -sanders
 
   smtpInCmd("HELO");
   replyCode = mClient->Helo(); // Send HELO command
@@ -785,7 +784,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
     aMsg->removeHeaderField("Bcc");
   }
 
-  kapp->processEvents(500);
+  kapp->processEvents(50); // not sure this is safe -sanders
 
   smtpInCmd("DATA");
   replyCode = mClient->Data(); // Send DATA command
