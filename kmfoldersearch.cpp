@@ -259,8 +259,10 @@ void KMSearch::slotProcessNextBatch()
 	    int idx = -1;
 	    KMFolder *folder = 0;
 	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
-	    if (!folder || (idx == -1))
+	    if (!folder || (idx == -1) || (idx >= folder->count())) {
 		continue;
+	    }
+	    
 	    DwString str = folder->getDwString(idx);
 	    //TODO: matches should try header rules first
 	    if (mSearchPattern && !mSearchPattern->matches(str))
