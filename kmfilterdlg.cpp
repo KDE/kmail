@@ -369,7 +369,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 }
 
 
-void KMFilterListBox::createFilter( const QCString field, const QString value )
+void KMFilterListBox::createFilter( const QCString & field,
+				    const QString & value )
 {
   KMSearchRule *newRule = new KMSearchRule();
   newRule->init( field, KMSearchRule::FuncContains, value );
