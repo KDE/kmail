@@ -74,7 +74,7 @@ namespace KMail {
     ++row;
     mNameEdit = new QLineEdit( tab );
     glay->addWidget( mNameEdit, row, 1 );
-    glay->addWidget( new QLabel( mNameEdit, i18n("Name:"), tab ), row, 0 );
+    glay->addWidget( new QLabel( mNameEdit, i18n("&Your name:"), tab ), row, 0 );
 
     // "Organization" line edit and label:
     ++row;
@@ -96,7 +96,7 @@ namespace KMail {
     //
     row = -1;
     tab = new QWidget( tabWidget );
-    tabWidget->addTab( tab, i18n("Ad&vanced") );
+    tabWidget->addTab( tab, i18n("&Advanced") );
     glay = new QGridLayout( tab, 7, 2, marginHint(), spacingHint() );
     // the last (empty) row takes all the remaining space
     glay->setRowStretch( 7-1, 1 );
@@ -107,7 +107,7 @@ namespace KMail {
     mReplyToEdit = new QLineEdit( tab );
     glay->addWidget( mReplyToEdit, row, 1 );
     glay->addWidget( new QLabel( mReplyToEdit,
-				 i18n("Re&ply-To address:"), tab ), row, 0 );
+				 i18n("&Reply-To address:"), tab ), row, 0 );
 
     // "BCC addresses" line edit and label:
     ++row;
@@ -138,7 +138,7 @@ namespace KMail {
 	       "to sign messages and to encrypt messages to "
 	       "yourself.</p></qt>");
 
-    label = new QLabel( mPgpKeyRequester, i18n("OpenPGP &key:"), tab );
+    label = new QLabel( mPgpKeyRequester, i18n("OpenPGP key:"), tab );
     QWhatsThis::add( mPgpKeyRequester, msg );
     QWhatsThis::add( label, msg );
 
@@ -158,7 +158,7 @@ namespace KMail {
     mDraftsCombo = new KMFolderComboBox( tab );
     mDraftsCombo->showOutboxFolder( false );
     glay->addWidget( mDraftsCombo, row, 1 );
-    glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts fo&lder:"), tab ),
+    glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts folder:"), tab ),
 		     row, 0 );
 
     // "Special transport" combobox and label:
