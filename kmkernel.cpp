@@ -503,10 +503,9 @@ void KMKernel::dumpDeadLetters()
   {
     win = KTMainWindow::memberList->take();
     if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
-    delete win;
+//    delete win; // WABA: Don't delete, we might crash in there!
   }
   cleanup();
-  ::exit (1);
 }
 
 

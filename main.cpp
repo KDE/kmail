@@ -14,6 +14,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <dcopclient.h>
+#include <kcrash.h>
 
 #include "kmkernel.h" //control center
 
@@ -93,24 +94,31 @@ void processArgs (KCmdLineArgs *args, bool remoteCall);
 // Crash recovery signal handler
 static void signalHandler(int sigId)
 {
-  fprintf(stderr, "*** KMail got signal %d\n", sigId);
-
-  debug ("setting signal handler to default");
   setSignalHandler(SIG_DFL);
+  fprintf(stderr, "*** KMail got signal %d (Exiting)\n", sigId);
   // try to cleanup all windows
-  kernel->dumpDeadLetters(); // exits there.
+  kernel->dumpDeadLetters(); 
+  ::exit(-1); // 
+}
+
+// Crash recovery signal handler
+static void crashHandler(int sigId)
+{
+  setSignalHandler(SIG_DFL);
+  fprintf(stderr, "*** KMail got signal %d (Crashing)\n", sigId);
+  // try to cleanup all windows
+  kernel->dumpDeadLetters();
+  // Return to DrKonqi.
 }
 //-----------------------------------------------------------------------------
 
 
 static void setSignalHandler(void (*handler)(int))
 {
-  signal(SIGSEGV, handler);
   signal(SIGKILL, handler);
   signal(SIGTERM, handler);
   signal(SIGHUP,  handler);
-  signal(SIGFPE,  handler);
-  signal(SIGABRT, handler);
+  KCrash::setEmergencySaveFunction(crashHandler);
 }
 //-----------------------------------------------------------------------------
 
