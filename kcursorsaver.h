@@ -47,7 +47,7 @@ private:
 };
 
 /**
- * convencience functions
+ * convenience functions
  */
 namespace KBusyPtr {
     inline KCursorSaver idle() {
