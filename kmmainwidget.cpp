@@ -2034,7 +2034,7 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotInvalidateIMAPFolders()),
 		      actionCollection(), "file_invalidate_imap_cache" );
 
-  (void) new KAction( i18n("Empty T&rash"), 0,
+  (void) new KAction( i18n("Empty &Trash"), 0,
 		      KMKernel::self(), SLOT(slotEmptyTrash()),
 		      actionCollection(), "empty_trash" );
 
@@ -2269,7 +2269,7 @@ void KMMainWidget::setupActions()
                                  actionCollection(), "status_flag");
   mStatusMenu->insert( mToggleFlagAction );
 
-  mMarkAsSpamAction = new KAction(i18n("Mark Message as S&pam"), "mark_as_spam",
+  mMarkAsSpamAction = new KAction(i18n("Mark Message as Spa&m"), "mark_as_spam",
                                  0, this, SLOT(slotSetMsgStatusSpam()),
                                  actionCollection(), "status_spam");
   mStatusMenu->insert( mMarkAsSpamAction );
@@ -2882,7 +2882,7 @@ void KMMainWidget::updateFolderMenu()
                                              && ( mFolder->count() > 0 ) )
                                          : false );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
-    ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );
+    ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   mMarkAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );

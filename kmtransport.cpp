@@ -364,7 +364,7 @@ void KMTransportDialog::makeSmtpPage()
                        "may not be set correctly or to mask your "
                        "system's true hostname."));
 
-  mSmtp.localHostnameLabel = new QLabel( i18n("H&ostname:"), page1 );
+  mSmtp.localHostnameLabel = new QLabel( i18n("Hos&tname:"), page1 );
   grid->addWidget( mSmtp.localHostnameLabel, 13, 0);
   mSmtp.localHostnameEdit = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.localHostnameEdit,
