@@ -2520,6 +2520,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
+#define KMAIL_MAX_KEY_LEN 16384
 static void internalWriteItem(FILE *sortStream, int msgid, int parent_id,
 			      QString key, bool update_discover=TRUE)
 {
@@ -2528,7 +2529,7 @@ static void internalWriteItem(FILE *sortStream, int msgid, int parent_id,
   int len = key.length() * 2;
   fwrite(&len, sizeof(len), 1, sortStream);
   if (len)
-    fwrite(key.unicode(), len, 1, sortStream);
+    fwrite(key.unicode(), QMIN(len, KMAIL_MAX_KEY_LEN), 1, sortStream);
 
   if (update_discover) {
     //update the discovered change count
@@ -2807,10 +2808,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
 	    fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
 	
-	    kdDebug(5006) << "foo sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", foler count " << mFolder->count() << endl;
-
             if (sorted_count + discovered_count > mFolder->count()) { //sanity check
-		kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+		kdDebug(5006) << "Whoa.0! " << __FILE__ << ":" << __LINE__ << endl;
 		fclose(sortStream);
 		sortStream = NULL;
 	    }
@@ -2832,11 +2831,13 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		int id, len, parent, offset, x;
 		QChar *tmp_qchar = NULL;
 		int tmp_qchar_len = 0;
+		const int mFolderCount = mFolder->count();
+		bool error = false;
 		QString key;
 
 		CREATE_TIMER(parse);
 		START_TIMER(parse);
-		for(x = 0; !feof(sortStream); x++) {
+		for(x = 0; !feof(sortStream) && !error; x++) {
 		    offset = ftell(sortStream);
 		    //parse
 		    if(!fread(&id, sizeof(id), 1, sortStream) || //short read means to end
@@ -2844,9 +2845,22 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		       !fread(&len, sizeof(len), 1, sortStream)) {
 			break;
 		    }
+		    if ((id < 0) || (id >= mFolderCount) ||
+			(parent < -2) || (parent >= mFolderCount)) { // sanity checking
+			kdDebug(5006) << "Whoa.1! " << __FILE__ << ":" << __LINE__ << endl;
+			error = true;
+			continue;
+		    }
+		    if ((len < 0) || (len > KMAIL_MAX_KEY_LEN)) {
+			kdDebug(5006) << "Whoa.2! len " << len << " " << __FILE__ << ":" << __LINE__ << endl;
+			error = true;
+			continue;
+		    }
 		    if(len) {
-			if(len > tmp_qchar_len)
+			if(len > tmp_qchar_len) {
 			    tmp_qchar = (QChar *)realloc(tmp_qchar, len);
+			    tmp_qchar_len = len;
+			}
 			if(!fread(tmp_qchar, len, 1, sortStream))
 			    break;
 			key = QString(tmp_qchar, len / 2);
@@ -2855,6 +2869,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		    }
 
 		    if ((item=sortCache[id])) {
+			if (item->id() != -1) {
+			    kdDebug(5006) << "Whoa.3! " << __FILE__ << ":" << __LINE__ << endl;
+			    error = true;
+			    continue;
+			}
 			item->setKey(key);
 			item->setId(id);
 			item->setOffset(offset);
@@ -2878,7 +2897,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 			}
 		    }
 		}
-		if (x != sorted_count + discovered_count) {// sanity check
+		if (error || (x != sorted_count + discovered_count)) {// sanity check
 		    kdDebug(5006) << "Whoa: x " << x << ", sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", count " << mFolder->count() << endl;
 		    fclose(sortStream);
 		    sortStream = NULL;
