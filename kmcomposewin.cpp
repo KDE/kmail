@@ -1584,6 +1584,14 @@ bool KMComposeWin::applyChanges(void)
 
     if(    ( doEncrypt && ! saveMessagesEncrypted )
         || ( doSign    && ! saveSentSignatures    ) ){
+      if( cryptPlug ){
+        for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
+             entry;
+             entry = (KMAtmListViewItem*)mAtmItemList.next() ){
+          entry->setEncrypt( saveMessagesEncrypted );
+          entry->setEncrypt( saveSentSignatures );
+        }
+      }
       bOk = composeMessage( cryptPlug, pgpUserId,
                             *extraMessage,
                             doSign    && saveSentSignatures,
