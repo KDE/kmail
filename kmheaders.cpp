@@ -827,6 +827,31 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 
 
 //-----------------------------------------------------------------------------
+int KMHeaders::slotFilterMsg(KMMessage *msg)
+{
+  int filterResult;
+  KMFolder *parent = msg->parent();
+  if (parent)
+    parent->removeMsg( msg );
+  msg->setParent(0);
+  filterResult = kernel->filterMgr()->process(msg);
+  if (filterResult == 2) {
+    // something went horribly wrong (out of space?)
+    perror("Critical error: Unable to process messages (out of space?)");
+    KMessageBox::information(0,
+  	i18n("Critical error: Unable to process messages (out of space?)"));
+    return 2;
+  }
+  if (!msg->parent()) {
+    parent->addMsg( msg );
+  }
+  if (msg->parent()) // unGet this msg
+    msg->parent()->unGetMsg( msg->parent()->count() -1 );
+  return filterResult;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
 {
   KMMsgBase* msgBase;
@@ -858,24 +883,15 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     int idx = mFolder->find(msgBase);
     assert(idx != -1);
     msg = mFolder->getMsg(idx);
-    int filterResult;
-    KMFolder *parent = msg->parent();
-    if (parent)
-      parent->removeMsg( msg );
-    msg->setParent(0);
-    filterResult = kernel->filterMgr()->process(msg);
-    if (filterResult == 2) {
-      // something went horribly wrong (out of space?)
-      perror("Critical error: Unable to process messages (out of space?)");
-      KMessageBox::information(0,
-	i18n("Critical error: Unable to process messages (out of space?)"));
-      break;
+    if (mFolder->account() && !msg->isComplete())
+    {
+      msg->setTransferInProgress(TRUE);
+      KMImapJob *imapJob = new KMImapJob(msg);
+      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+        SLOT(slotFilterMsg(KMMessage*)));
+    } else {
+      if (slotFilterMsg(msg) == 2) break;
     }
-    if (!msg->parent()) {
-      parent->addMsg( msg );
-    }
-    if (msg->parent()) // unGet this msg
-      msg->parent()->unGetMsg( msg->parent()->count() -1 );
   }
 
   setContentsPos( topX, topY );
@@ -908,7 +924,7 @@ void KMHeaders::setMsgRead (int msgId)
     {
       st = msg->status();
       if (st==KMMsgStatusNew || st==KMMsgStatusUnread ||
-	  st==KMMsgStatusRead || st==KMMsgStatusOld)
+	  st==KMMsgStatusRead)
 	{
 	  msg->setStatus(KMMsgStatusOld);
           if (mFolder->account())
@@ -1742,7 +1758,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   if (lvi != mPrevCurrent) {
     if (mPrevCurrent)
     {
-      if (mFolder->account()) KMImapJob::killJobsForMessage(
+      if (mFolder->account()) KMImapJob::ignoreJobsForMessage(
         mFolder->getMsg(mPrevCurrent->msgId()));
       if (!mFolder->getMsg(mPrevCurrent->msgId())->transferInProgress())
         mFolder->unGetMsg(mPrevCurrent->msgId());

@@ -240,6 +240,8 @@ protected slots:
   virtual void moveSelectedToFolder( int menuId );
   // Same thing but copy 
   virtual void copySelectedToFolder( int menuId );
+  // Apply the filter Rules to a single message
+  virtual int slotFilterMsg( KMMessage * );
 
 private:
   // Is equivalent to clearing the list and inserting an item for
