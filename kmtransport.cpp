@@ -123,8 +123,8 @@ void KMTransportInfo::writeConfig(int id)
   if ( storePasswd() && auth && mPasswdDirty ) {
     Wallet *wallet = kmkernel->wallet();
     if ( !wallet || wallet->writePassword( "transport-" + QString::number(mId), passwd() ) ) {
-      KMessageBox::information(0, i18n("KWallet is not running. It is strongly recommend to use "
-          "KWallet for managing your password"),
+      KMessageBox::information(0, i18n("KWallet is not running. It is strongly recommended to use "
+          "KWallet for managing your passwords"),
           i18n("KWallet is Not Running."), "KWalletWarning" );
       config->writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
     } else

@@ -192,8 +192,8 @@ namespace KMail {
     if ( storePasswd() && mPasswdDirty ) {
       Wallet *wallet = kmkernel->wallet();
       if ( !wallet || wallet->writePassword( "account-" + QString::number(mId), passwd() ) ) {
-        KMessageBox::information( 0, i18n("KWallet is not running. It is strongly recommend to use "
-            "KWallet for managing your password"),
+        KMessageBox::information( 0, i18n("KWallet is not running. It is strongly recommended to use "
+            "KWallet for managing your passwords"),
             i18n("KWallet is Not Running."), "KWalletWarning" );
         config.writeEntry( "pass", encryptStr( passwd() ) );
       }
