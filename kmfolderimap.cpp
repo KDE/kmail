@@ -1019,7 +1019,8 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
        mAccount && mAccount->loadOnDemand() &&
-       msg->signatureState() == KMMsgNotSigned )
+       ( msg->signatureState() == KMMsgNotSigned || 
+         msg->signatureState() == KMMsgSignatureStateUnknown ) )
   {
     // retrieve the BODYSTRUCTURE and to speed things up also the headers
     ImapJob *job = new ImapJob( msg, jt, kmfi, "HEADER" );

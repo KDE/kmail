@@ -576,15 +576,18 @@ bool KMReaderWin::update( KMail::ISubject * subject )
   }
   if ( mAtmUpdate )
   {
-    kdDebug(5006) << "KMReaderWin::update - attachment" << endl;
+    kdDebug(5006) << "KMReaderWin::update - attachment " << mAtmCurrentName << endl;
     partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
     if ( node )
     {
       // replace the dwpart of the node
       node->setDwPart( static_cast<KMMessage*>(subject)->lastUpdatedPart() );
       // update the tmp file
+      // we have to set it writeable temporarily
+      ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
       kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
-          false, false, false );
+          false, false, true );
+      ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
     } else
       kdWarning(5006) << "KMReaderWin::update - Could not find node for attachment!" << endl;
   } else {
@@ -837,21 +840,21 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     mLastStatus = KMMsgStatusUnknown;
   }
 
-  if ( !complete ) {
-    kdDebug(5006) << "msg incomplete, return" << endl;
-    return;
+  // only display the msg if it is complete
+  // otherwise we'll get flickering with progressively loaded messages
+  if ( complete )
+  {
+    // Avoid flicker, somewhat of a cludge
+    if (force) {
+      // stop the timer to avoid calling updateReaderWin twice
+      updateReaderWinTimer.stop();
+      updateReaderWin();
+    }
+    else if (updateReaderWinTimer.isActive())
+      updateReaderWinTimer.changeInterval( delay );
+    else
+      updateReaderWinTimer.start( 0, TRUE );
   }
-
-  // Avoid flicker, somewhat of a cludge
-  if (force) {
-    // stop the timer to avoid calling updateReaderWin twice
-    updateReaderWinTimer.stop();
-    updateReaderWin();
-  }
-  else if (updateReaderWinTimer.isActive())
-    updateReaderWinTimer.changeInterval( delay );
-  else
-    updateReaderWinTimer.start( 0, TRUE );
 
   if (mDelayedMarkAsRead) {
     if (mDelayedMarkTimeout != 0)
