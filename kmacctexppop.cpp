@@ -805,14 +805,17 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   const QString &errorMsg)
 {
   if (aSlave != slave) return;
-  if (error == KIO::ERR_SLAVE_DIED)
+  if (interactive)
   {
-    slave = NULL;
-    KMessageBox::error(0,
-    i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
-  } else
-    KMessageBox::error(0, i18n("Error connecting to %1:\n\n%2")
-      .arg(mHost).arg(errorMsg));
+    if (error == KIO::ERR_SLAVE_DIED)
+    {
+      slave = NULL;
+      KMessageBox::error(0,
+      i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
+    } else
+      KMessageBox::error(0, i18n("Error connecting to %1:\n\n%2")
+        .arg(mHost).arg(errorMsg));
+  }
   stage = Quit;
   slotCancel();
 }
