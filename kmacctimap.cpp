@@ -358,4 +358,14 @@ void KMAcctImap::setPrefixHook() {
   if ( mFolder ) mFolder->setImapPath( prefix() );
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::readConfig(KConfig& config)
+{
+  ImapAccountBase::readConfig( config );
+  if ( checkExclude() ) {
+    disconnect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
+        this, SLOT(slotUpdateFolderList()));
+  }
+}
+
 #include "kmacctimap.moc"
