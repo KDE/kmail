@@ -113,7 +113,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool quiet = FALSE);
+  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool quiet = FALSE);
 
   virtual int rename( const QString& newName, KMFolderDir *aParent = 0 );
 
@@ -160,7 +160,7 @@ public:
    * Delete a message
    */
   void deleteMessage(KMMessage * msg);
-  void deleteMessage(QPtrList<KMMessage> msgList);
+  void deleteMessage(const QPtrList<KMMessage>& msgList);
 
   /**
    * Change the status of the message indicated by @p index
@@ -185,7 +185,7 @@ public:
   void getUids(QValueList<int>& ids, QValueList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
-  void getUids(QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent = 0);
+  void getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent = 0);
 
   /**
    * Expunge deleted messages from the folder
@@ -228,7 +228,8 @@ public:
   /**
    * Return the filename of the folder (reimplemented from KFolder)
    */
-  virtual QString fileName() const { return encodeFileName(name()); }
+  virtual QString fileName() const { 
+    return encodeFileName( KMFolderMbox::fileName() ); }
 
   /**
    * Insert a new entry into the uid <=> sernum cache
@@ -267,9 +268,10 @@ public:
 
   /**
    * Mark the folder as already removed from the server
-   * If the folder is removed the server will not be queried anymore
+   * If set to true the folder will only be deleted locally
+   * This will recursively be applied to all children
    */
-  void setAlreadyRemoved(bool removed) { mAlreadyRemoved = removed; }
+  void setAlreadyRemoved(bool removed);
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }
@@ -408,6 +410,13 @@ protected slots:
    */
   void slotProcessNewMail( int errorCode, const QString& errorMsg );
 
+  /**
+   * Is connected when there are folders to be created on startup and the
+   * account is still connecting. Once the account emits the connected
+   * signal this slot is called and the folders created.
+   */
+  void slotCreatePendingFolders();
+
 protected:
   QString     mImapPath;
   ulong       mLastUid;
@@ -425,8 +434,9 @@ private:
   bool        mCheckingValidity;
   QDict<KMMsgMetaData> mMetaDataMap;
   bool        mAlreadyRemoved;
-  ProgressItem *mMailCheckProgressItem;
+  QGuardedPtr<ProgressItem> mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
+  QStringList mFoldersPendingCreation;
 };
 
 #endif // kmfolderimap_h

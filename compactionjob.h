@@ -29,7 +29,6 @@
 #define COMPACTIONJOB_H
 
 #include "jobscheduler.h"
-#include "folderjob.h"
 #include <qstringlist.h>
 
 namespace KMail {
@@ -37,7 +36,7 @@ namespace KMail {
 /**
  * A job that runs in the background and compacts mbox folders.
  */
-class MboxCompactionJob : public FolderJob
+class MboxCompactionJob : public ScheduledJob
 {
   Q_OBJECT
 public:
@@ -63,7 +62,6 @@ private:
   FILE *mTmpFile;
   off_t mOffset;
   int mCurrentIndex;
-  bool mImmediate;
   bool mFolderOpen;
   bool mSilent;
 };
@@ -71,7 +69,7 @@ private:
 /**
  * A job that runs in the background and compacts maildir folders.
  */
-class MaildirCompactionJob : public FolderJob
+class MaildirCompactionJob : public ScheduledJob
 {
   Q_OBJECT
 public:
@@ -93,7 +91,6 @@ private:
   QTimer mTimer;
   QStringList mEntryList;
   int mCurrentIndex;
-  bool mImmediate;
   bool mFolderOpen;
   bool mSilent;
 };
@@ -105,12 +102,10 @@ public:
   /// If immediate is set, the job will execute synchronously. This is used when
   /// the user requests explicitely that the operation should happen immediately.
   ScheduledCompactionTask( KMFolder* folder, bool immediate )
-    : ScheduledTask( folder ), mImmediate( immediate ) {}
+    : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledCompactionTask() {}
-  virtual FolderJob* run();
+  virtual ScheduledJob* run();
   virtual int taskTypeId() const { return 2; }
-private:
-  bool mImmediate;
 };
 
 } // namespace

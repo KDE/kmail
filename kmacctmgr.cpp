@@ -13,8 +13,9 @@
 #include "networkaccount.h"
 using KMail::NetworkAccount;
 #include "kmacctcachedimap.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
 #include "kmfiltermgr.h"
+#include "globalsettings.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -24,6 +25,8 @@ using KMail::NetworkAccount;
 
 #include <qregexp.h>
 #include <qvaluelist.h>
+
+using KPIM::BroadcastStatus;
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(): QObject()
@@ -141,13 +144,21 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       kmkernel->filterMgr()->deref();
       disconnect( acct, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                   this, SLOT( processNextCheck( bool ) ) );
+      QString hostname = hostForAccount( acct );
+      if ( !hostname.isEmpty() ) {
+        if ( mServerConnections.find( hostname ) != mServerConnections.end() ) {
+          mServerConnections[hostname] -= 1;
+          kdDebug(5006) << "connections to server " << hostname
+                        << " now " << mServerConnections[hostname] << endl;
+        }
+      }
     }
   }
   if (mAcctChecking.isEmpty())
   {
     // all checks finished, display summary
     if ( mDisplaySummary )
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
           mTotalNewMailsArrived );
     emit checkedMail( newMailArrived, interactive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
@@ -156,12 +167,27 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   }
   if (mAcctTodo.isEmpty()) return;
 
+  QString accountHostName;
+
   curAccount = 0;
   KMAcctList::Iterator it ( mAcctTodo.begin() );
   KMAcctList::Iterator last ( mAcctTodo.end() );
   for ( ; it != last; it++ )
   {
-    if ( !(*it)->checkingMail() ) {
+    accountHostName = hostForAccount(*it);
+    kdDebug(5006) << "for host " << accountHostName
+                  << " current connections="
+                  << (mServerConnections.find(accountHostName)==mServerConnections.end() ? 0 : mServerConnections[accountHostName])
+                  << " and limit is " << GlobalSettings::maxConnectionsPerHost()
+                  << endl;
+    bool connectionLimitForHostReached =
+      !accountHostName.isNull() &&
+      GlobalSettings::maxConnectionsPerHost() > 0 &&
+      mServerConnections.find( accountHostName ) != mServerConnections.end() &&
+      mServerConnections[accountHostName] >= GlobalSettings::maxConnectionsPerHost();
+    kdDebug(5006) << "connection limit reached: "
+                  << connectionLimitForHostReached << endl;
+    if ( !(*it)->checkingMail() && !connectionLimitForHostReached ) {
       curAccount = (*it);
       mAcctTodo.remove( curAccount );
       break;
@@ -186,7 +212,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   connect( curAccount, SIGNAL( finishedCheck( bool, CheckStatus ) ),
 	   this, SLOT( processNextCheck( bool ) ) );
 
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
 
   kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
@@ -195,6 +221,16 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   mAcctChecking.append(curAccount);
   kmkernel->filterMgr()->ref();
   curAccount->processNewMail(interactive);
+
+  if ( !accountHostName.isEmpty() ) {
+    if ( mServerConnections.find( accountHostName ) != mServerConnections.end() )
+      mServerConnections[accountHostName] += 1;
+    else
+      mServerConnections[accountHostName] = 1;
+    kdDebug(5006) << "check mail started - connections for host "
+                  << accountHostName << " now is "
+                  << mServerConnections[accountHostName] << endl;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -234,8 +270,10 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id
 //-----------------------------------------------------------------------------
 void KMAcctMgr::add(KMAccount *account)
 {
-  if (account)
-    mAcctList.append(account);
+  if (account) {
+    mAcctList.append( account );
+    emit accountAdded( account );
+  }
 }
 
 
@@ -411,6 +449,13 @@ void KMAcctMgr::cancelMailCheck()
 	it.current() ; ++it ) {
     it.current()->cancelMailCheck();
   }
+}
+
+//-----------------------------------------------------------------------------
+QString KMAcctMgr::hostForAccount( const KMAccount *acct ) const
+{
+  const NetworkAccount *net_acct = dynamic_cast<const NetworkAccount*>( acct );
+  return net_acct ? net_acct->host() : QString::null;
 }
 
 #include "kmacctmgr.moc"

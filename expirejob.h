@@ -29,12 +29,11 @@
 #define EXPIREJOB_H
 
 #include "jobscheduler.h"
-#include "folderjob.h"
 #include "kmcommands.h"
 
 namespace KMail {
 
-class ExpireJob : public FolderJob
+class ExpireJob : public ScheduledJob
 {
   Q_OBJECT
 public:
@@ -57,7 +56,6 @@ private:
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;
-  bool mImmediate;
   bool mFolderOpen;
   KMFolder *mMoveToFolder;
 };
@@ -69,14 +67,12 @@ public:
   /// If immediate is set, the job will execute synchronously. This is used when
   /// the user requests explicitely that the operation should happen immediately.
   ScheduledExpireTask( KMFolder* folder, bool immediate )
-    : ScheduledTask( folder ), mImmediate( immediate ) {}
+    : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledExpireTask() {}
-  virtual FolderJob* run() {
-    return folder() ? new ExpireJob( folder(), mImmediate ) : 0;
+  virtual ScheduledJob* run() {
+    return folder() ? new ExpireJob( folder(), isImmediate() ) : 0;
   }
   virtual int taskTypeId() const { return 1; }
-private:
-  bool mImmediate;
 };
 
 } // namespace

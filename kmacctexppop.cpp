@@ -8,7 +8,8 @@
 
 #include "kmacctexppop.h"
 
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
@@ -644,7 +645,7 @@ void KMAcctExpPop::slotJobFinished() {
     if( mMailCheckProgressItem ) { // do this only once...
       bool canceled = kmkernel->mailCheckAborted() || mMailCheckProgressItem->canceled();
       int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer, mMailCheckProgressItem );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;
@@ -796,7 +797,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     if (job) job->kill();
     job = 0;
     mSlave = 0;
-    KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
+    KMessageBox::error(0, i18n( "Unable to complete LIST operation." ),
                           i18n("Invalid Response From Server"));
     return;
   }

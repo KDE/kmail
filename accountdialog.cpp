@@ -292,7 +292,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   }
   else
   {
-    QString msg = i18n( "Account type is not supported" );
+    QString msg = i18n( "Account type is not supported." );
     KMessageBox::information( topLevelWidget(),msg,i18n("Configure Account") );
     return;
   }
@@ -352,7 +352,7 @@ void AccountDialog::makeLocalAccountPage()
   groupLayout->setSpacing( 6 );
   groupLayout->setMargin( 11 );
 
-  mLocal.lockProcmail = new QRadioButton( i18n("Procmail loc&kfile"), group);
+  mLocal.lockProcmail = new QRadioButton( i18n("Procmail loc&kfile:"), group);
   groupLayout->addWidget(mLocal.lockProcmail, 0, 0);
 
   mLocal.procmailLockFileName = new QComboBox( true, group );
@@ -856,6 +856,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
     ++row;
     mImap.loadOnDemandCheck = new QCheckBox(
         i18n("Load attach&ments on demand"), page1);
+    QWhatsThis::add( mImap.loadOnDemandCheck,
+        i18n("Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.") );
     grid->addMultiCellWidget( mImap.loadOnDemandCheck, row, row, 0, 1 );
   }
 
@@ -864,6 +866,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
     ++row;
     mImap.listOnlyOpenCheck = new QCheckBox(
         i18n("List only open folders"), page1);
+    QWhatsThis::add( mImap.listOnlyOpenCheck,
+        i18n("Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.") );
     grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
   }
 
@@ -1351,23 +1355,24 @@ unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l
 {
   unsigned int capa = 0;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    if ( *it == "PLAIN" )
+    QString cur = (*it).upper();
+    if ( cur == "PLAIN" )
       capa |= Plain;
-    else if ( *it == "LOGIN" )
+    else if ( cur == "LOGIN" )
       capa |= Login;
-    else if ( *it == "CRAM-MD5" )
+    else if ( cur == "CRAM-MD5" )
       capa |= CRAM_MD5;
-    else if ( *it == "DIGEST-MD5" )
+    else if ( cur == "DIGEST-MD5" )
       capa |= Digest_MD5;
-    else if ( *it == "APOP" )
+    else if ( cur == "APOP" )
       capa |= APOP;
-    else if ( *it == "PIPELINING" )
+    else if ( cur == "PIPELINING" )
       capa |= Pipelining;
-    else if ( *it == "TOP" )
+    else if ( cur == "TOP" )
       capa |= TOP;
-    else if ( *it == "UIDL" )
+    else if ( cur == "UIDL" )
       capa |= UIDL;
-    else if ( *it == "STLS" )
+    else if ( cur == "STLS" )
       capa |= STLS;
   }
   return capa;
@@ -1456,17 +1461,18 @@ unsigned int AccountDialog::imapCapabilitiesFromStringList( const QStringList & 
 {
   unsigned int capa = 0;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    if ( *it == "AUTH=PLAIN" )
+    QString cur = (*it).upper();
+    if ( cur == "AUTH=PLAIN" )
       capa |= Plain;
-    else if ( *it == "AUTH=LOGIN" )
+    else if ( cur == "AUTH=LOGIN" )
       capa |= Login;
-    else if ( *it == "AUTH=CRAM-MD5" )
+    else if ( cur == "AUTH=CRAM-MD5" )
       capa |= CRAM_MD5;
-    else if ( *it == "AUTH=DIGEST-MD5" )
+    else if ( cur == "AUTH=DIGEST-MD5" )
       capa |= Digest_MD5;
-    else if ( *it == "AUTH=ANONYMOUS" )
+    else if ( cur == "AUTH=ANONYMOUS" )
       capa |= Anonymous;
-    else if ( *it == "STARTTLS" )
+    else if ( cur == "STARTTLS" )
       capa |= STARTTLS;
   }
   return capa;

@@ -68,7 +68,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   mStatusCombo->insertItem( i18n("Any Status") );
   for ( int i = 0; i < KMail::StatusValueCount; i++ )
     mStatusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
-  mStatusCombo->setCurrentItem( KMail::StatusValueCount );
+  mStatusCombo->setCurrentItem( 0 );
   connect( mStatusCombo, SIGNAL ( activated( int ) ),
            this, SLOT( slotStatusChanged( int ) ) );
 

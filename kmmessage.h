@@ -175,6 +175,8 @@ public:
     the email address of the original sender
    */
   KMMessage* createRedirect();
+  // new implementation, ATM only used for redirect filter action
+  KMMessage* createRedirect2( const QString &toStr ); 
 
   /** Create a new message that is a "failed delivery" reply to this
     message, filling all required header fields with the proper
@@ -357,40 +359,6 @@ public:
   /** Calculate strippedSubject */
   void initStrippedSubjectMD5() {};
 
-  /** Check for prefixes @p prefixRegExps in @p str. If none
-      is found, @p newPrefix + ' ' is prepended to @p str and the
-      resulting string is returned. If @p replace is true, any
-      sequence of whitespace-delimited prefixes at the beginning of
-      @p str is replaced by @p newPrefix.
-  **/
-  static QString replacePrefixes( const QString& str,
-                                  const QStringList& prefixRegExps,
-                                  bool replace,
-                                  const QString& newPrefix );
-
-  /** Returns @p str with all "forward" and "reply" prefixes stripped off.
-   **/
-  static QString stripOffPrefixes( const QString& str );
-
-  /** Check for prefixes @p prefixRegExps in @ref #subject(). If none
-      is found, @p newPrefix + ' ' is prepended to the subject and the
-      resulting string is returned. If @p replace is true, any
-      sequence of whitespace-delimited prefixes at the beginning of
-      @ref #subject() is replaced by @p newPrefix
-  **/
-  QString cleanSubject(const QStringList& prefixRegExps, bool replace,
-		       const QString& newPrefix) const;
-
-  /** Return this mails subject, with all "forward" and "reply"
-      prefixes removed */
-  QString cleanSubject() const;
-
-  /** Return this mails subject, formatted for "forward" mails */
-  QString forwardSubject() const;
-
-  /** Return this mails subject, formatted for "reply" mails */
-  QString replySubject() const;
-
   /** Get or set the 'X-Mark' header field */
   QString xmark() const;
   void setXMark(const QString& aStr);
@@ -455,9 +423,13 @@ public:
 
   enum HeaderFieldType { Unstructured, Structured, Address };
 
-  /** Set the header field with the given name to the given value. */
+  /** Set the header field with the given name to the given value.
+      If prepend is set to true, the header is inserted at the beginning
+      and does not overwrite an existing header field with the same name.
+  */
   void setHeaderField( const QCString& name, const QString& value,
-                       HeaderFieldType type = Unstructured );
+                       HeaderFieldType type = Unstructured, 
+                       bool prepend = false );
 
   /** Returns a list of the values of all header fields with the given name. */
   QStringList headerFields( const QCString& name ) const;

@@ -8,7 +8,10 @@
 #include "kmacctmaildir.h"
 #include "kmfoldermaildir.h"
 #include "kmacctfolder.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
+#include "progressmanager.h"
+using KPIM::ProgressManager;
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -81,7 +84,7 @@ void KMAcctMaildir::processNewMail(bool)
     QFileInfo fi( location() );
     if ( !fi.exists() ) {
       checkDone( hasNewMail, CheckOK );
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
       return;
     }
   }
@@ -96,13 +99,20 @@ void KMAcctMaildir::processNewMail(bool)
 
   if (!mFolder) {
     checkDone( hasNewMail, CheckError );
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
 
-  //KMBroadcastStatus::instance()->reset();
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
+
+  Q_ASSERT( !mMailCheckProgressItem );
+  mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
+    "MailCheck" + mName,
+    mName,
+    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    false, // cannot be canceled
+    false ); // no tls/ssl
 
   // run the precommand
   if (!runPrecommand(precommand()))
@@ -120,7 +130,7 @@ void KMAcctMaildir::processNewMail(bool)
     KMessageBox::sorry(0, aStr);
     kdDebug(5006) << "cannot open folder " << mailFolder.location() << endl;
     checkDone( hasNewMail, CheckError );
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
 
@@ -136,20 +146,22 @@ void KMAcctMaildir::processNewMail(bool)
   QString statusMsgStub = i18n("Moving message %3 of %2 from %1.")
     .arg(mailFolder.location()).arg(num);
 
-  //KMBroadcastStatus::instance()->setStatusProgressEnable( "M" + mName, true );
+  mMailCheckProgressItem->setTotalItems( num );
+
   for (i=0; i<num; i++)
   {
 
     if( kmkernel->mailCheckAborted() ) {
-      KMBroadcastStatus::instance()->setStatusMsg( i18n("Transmission aborted.") );
+      BroadcastStatus::instance()->setStatusMsg( i18n("Transmission aborted.") );
       num = i;
       addedOk = false;
     }
     if (!addedOk) break;
 
     QString statusMsg = statusMsgStub.arg(i);
-    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
-    //KMBroadcastStatus::instance()->setStatusProgressPercent( "M" + mName, (i*100) / num );
+    mMailCheckProgressItem->incCompletedItems();
+    mMailCheckProgressItem->updateProgress();
+    mMailCheckProgressItem->setStatus( statusMsg );
 
     msg = mailFolder.take(0);
     if (msg)
@@ -170,19 +182,21 @@ void KMAcctMaildir::processNewMail(bool)
     }
 
   }
-  //KMBroadcastStatus::instance()->setStatusProgressEnable( "M" + mName, false );
-  //KMBroadcastStatus::instance()->reset();
 
+  if( mMailCheckProgressItem ) { // do this only once...
+    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
+    // FIXME Message reused from KMAcctExpPop, due to feature freeze
+    mMailCheckProgressItem->setStatus(
+      i18n( "Fetched 1 message from %1. Terminating transmission...",
+            "Fetched %n messages from %1. Terminating transmission...",
+            num )
+      .arg( "localhost" ) );
+    mMailCheckProgressItem->setComplete();
+    mMailCheckProgressItem = 0;
+  }
   if (addedOk)
   {
-    rc = mailFolder.expunge();
-    if (rc)
-      KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
-                                     i18n( "<qt>Cannot remove mail from "
-                                           "mailbox <b>%1</b>:<br>%2</qt>" )
-                                     .arg( mailFolder.location() )
-                                     .arg( strerror( rc ) ) );
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
+    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
   }
   // else warning is written already
 

@@ -91,6 +91,8 @@ signals:
                     const QMap<QString, int> & newInFolder );
   /** emitted when an account is removed */
   void accountRemoved( KMAccount* account );
+  /** emitted when an account is added */
+  void accountAdded( KMAccount* account );
 
 private:
   KMAcctList   mAcctList;
@@ -103,8 +105,13 @@ private:
   // for detailed (per folder) new mail notification
   QMap<QString, int> mTotalNewInFolder;
 
+  // for restricting number of concurrent connections to the same server
+  QMap<QString, int> mServerConnections;
+  QString hostForAccount(const KMAccount *acct) const;
+
   // if a summary should be displayed
   bool mDisplaySummary;
+
 };
 
 #endif /*kmacctmgr_h*/

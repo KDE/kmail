@@ -27,7 +27,8 @@
  */
 #include "compactionjob.h"
 #include "kmfolder.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldermbox.h"
 #include "kmfoldermaildir.h"
 
@@ -50,11 +51,9 @@ using namespace KMail;
 #define COMPACTIONJOB_TIMERINTERVAL 100
 
 MboxCompactionJob::MboxCompactionJob( KMFolder* folder, bool immediate )
- : FolderJob( 0, tOther, folder ), mTimer( this ), mTmpFile( 0 ),
-   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false ), mSilent( false )
+ : ScheduledJob( folder, immediate ), mTimer( this ), mTmpFile( 0 ),
+   mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
-  mCancellable = true;
-  mSrcFolder = folder;
 }
 
 MboxCompactionJob::~MboxCompactionJob()
@@ -98,7 +97,7 @@ int MboxCompactionJob::executeNow( bool silent )
     kdDebug(5006) << storage->location() << " compaction skipped." << endl;
     if ( !mSilent ) {
       QString str = i18n( "For safety reasons, compaction has been disabled for %1" ).arg( mbox->label() );
-      KMBroadcastStatus::instance()->setStatusMsg( str );
+      BroadcastStatus::instance()->setStatusMsg( str );
     }
     return 0;
   }
@@ -121,7 +120,9 @@ int MboxCompactionJob::executeNow( bool silent )
                     << " while creating " << mTempName << endl;
     return errno;
   }
+  mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open();
+  mOpeningFolder = false;
   mFolderOpen = true;
   mOffset = 0;
   mCurrentIndex = 0;
@@ -180,7 +181,7 @@ void MboxCompactionJob::done( int rc )
   mErrorCode = rc;
 
   if ( !mSilent )
-    KMBroadcastStatus::instance()->setStatusMsg( str );
+    BroadcastStatus::instance()->setStatusMsg( str );
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"
@@ -189,11 +190,9 @@ void MboxCompactionJob::done( int rc )
 ////
 
 MaildirCompactionJob::MaildirCompactionJob( KMFolder* folder, bool immediate )
- : FolderJob( 0, tOther, folder ), mTimer( this ),
-   mCurrentIndex( 0 ), mImmediate( immediate ), mFolderOpen( false ), mSilent( false )
+ : ScheduledJob( folder, immediate ), mTimer( this ),
+   mCurrentIndex( 0 ), mFolderOpen( false ), mSilent( false )
 {
-  mCancellable = true;
-  mSrcFolder = folder;
 }
 
 MaildirCompactionJob::~MaildirCompactionJob()
@@ -216,7 +215,9 @@ int MaildirCompactionJob::executeNow( bool silent )
   KMFolderMaildir* storage = static_cast<KMFolderMaildir *>( mSrcFolder->storage() );
   kdDebug(5006) << "Compacting " << mSrcFolder->idString() << endl;
 
+  mOpeningFolder = true; // Ignore open-notifications while opening the folder
   storage->open();
+  mOpeningFolder = false;
   mFolderOpen = true;
   QString subdirNew(storage->location() + "/new/");
   QDir d(subdirNew);
@@ -258,8 +259,10 @@ void MaildirCompactionJob::done( int rc )
   mErrorCode = rc;
   storage->setNeedsCompacting( false );
   storage->close();
+  if ( storage->isOpened() )
+    storage->updateIndex();
   if ( !mSilent )
-    KMBroadcastStatus::instance()->setStatusMsg( str );
+    BroadcastStatus::instance()->setStatusMsg( str );
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"
@@ -267,16 +270,16 @@ void MaildirCompactionJob::done( int rc )
 
 ////
 
-FolderJob* ScheduledCompactionTask::run()
+ScheduledJob* ScheduledCompactionTask::run()
 {
   if ( !folder() || !folder()->needsCompacting() )
     return 0;
   switch( folder()->storage()->folderType() ) {
   case KMFolderTypeMbox:
-    return new MboxCompactionJob( folder(), mImmediate );
+    return new MboxCompactionJob( folder(), isImmediate() );
   case KMFolderTypeCachedImap:
   case KMFolderTypeMaildir:
-    return new MaildirCompactionJob( folder(), mImmediate );
+    return new MaildirCompactionJob( folder(), isImmediate() );
   default: // imap, search, unknown...
     return 0;
   }

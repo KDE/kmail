@@ -9,7 +9,8 @@
 #include "kmfiltermgr.h"
 #include "kmsender.h"
 #include "kmkernel.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldercachedimap.h"
 
 #include "progressmanager.h"
@@ -39,7 +40,7 @@ using KMail::FolderJob;
 KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   : QObject(parent), mPrecommand(precommand)
 {
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
   mPrecommandProcess.setUseShell(true);
@@ -234,7 +235,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   else if (processResult == 1)
   {
     if( type() == "cachedimap" )
-      parent->addMsgInternal( aMsg, false );
+      ; // already done by caller: parent->addMsgInternal( aMsg, false );
     else {
       // TODO: Perhaps it would be best, if this if was handled by a virtual
       // method, so the if( !dimap ) above could die?
@@ -352,7 +353,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
 
   KMPrecommand precommandProcess(precommand, this);
 
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
   connect(&precommandProcess, SIGNAL(finished(bool)),
