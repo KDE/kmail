@@ -301,10 +301,7 @@ public:
 	node->setProcessed( false );
     }
 
-    bool isImage = false;
-    bool isInlineSigned = false;
-    bool isInlineEncrypted = false;
-    bool bNeverDisplayInline = false;
+    ProcessResult processResult;
 
     if( node ) {
       partNode* curNode = node;
@@ -391,58 +388,42 @@ public:
 	case DwMime::kTypeText:
 	  bDone = processTextType( curNode_replacedSubType, curNode,
 				   showOneMimePart, keepEncryptions,
-				   includeSignatures, isInlineSigned,
-				   isInlineEncrypted, bNeverDisplayInline,
-				   isImage );
+				   includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeMultipart:
 	  bDone = processMultiPartType( curNode_replacedSubType, curNode,
 					showOneMimePart, keepEncryptions,
-					includeSignatures, isInlineSigned,
-					isInlineEncrypted, bNeverDisplayInline,
-					isImage );
+					includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeMessage:
 	  bDone = processMessageType( curNode_replacedSubType, curNode,
 				      showOneMimePart, keepEncryptions,
-				      includeSignatures, isInlineSigned,
-				      isInlineEncrypted, bNeverDisplayInline,
-				      isImage );
+				      includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeApplication:
 	  bDone = processApplicationType( curNode_replacedSubType, curNode,
 					  showOneMimePart, keepEncryptions,
-					  includeSignatures, isInlineSigned,
-					  isInlineEncrypted, bNeverDisplayInline,
-					  isImage );
+					  includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeImage:
 	  bDone = processImageType( curNode_replacedSubType, curNode,
 				    showOneMimePart, keepEncryptions,
-				    includeSignatures, isInlineSigned,
-				    isInlineEncrypted, bNeverDisplayInline,
-				    isImage );
+				    includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeAudio:
 	  bDone = processAudioType( curNode_replacedSubType, curNode,
 				    showOneMimePart, keepEncryptions,
-				    includeSignatures, isInlineSigned,
-				    isInlineEncrypted, bNeverDisplayInline,
-				    isImage );
+				    includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeVideo:
 	  bDone = processVideoType( curNode_replacedSubType, curNode,
 				    showOneMimePart, keepEncryptions,
-				    includeSignatures, isInlineSigned,
-				    isInlineEncrypted, bNeverDisplayInline,
-				    isImage );
+				    includeSignatures, processResult );
 	  break;
 	case DwMime::kTypeModel:
 	  bDone = processModelType( curNode_replacedSubType, curNode,
 				    showOneMimePart, keepEncryptions,
-				    includeSignatures, isInlineSigned,
-				    isInlineEncrypted, bNeverDisplayInline,
-				    isImage );
+				    includeSignatures, processResult );
 	  break;
 	}
 
@@ -454,7 +435,7 @@ public:
 	  if (showOneMimePart) {
 	    asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
 	  }
-	  else if (bNeverDisplayInline) {
+	  else if ( processResult.neverDisplayInline() ) {
 	    asIcon = true;
 	  } else {
 	    switch (mReader->mAttachmentStyle) {
@@ -472,21 +453,25 @@ public:
               asIcon = false;
 	    }
 	  }
-	  bool forcedIcon = !isImage && curNode->type() != DwMime::kTypeText;
+	  bool forcedIcon = !processResult.isImage() && curNode->type() != DwMime::kTypeText;
 	  if (forcedIcon) asIcon = TRUE;
 	  if( asIcon ) {
 	    if (!forcedIcon || mReader->mAttachmentStyle != KMReaderWin::HideAttmnt)
 	      mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
-	  } else if (isImage) {
+	  } else if ( processResult.isImage() ) {
 	    mReader->mInlineImage = true;
 	    mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
 	    mReader->mInlineImage = false;
 	  } else {
+	    bool isInlineSigned = processResult.isInlineSigned();
+	    bool isInlineEncrypted = processResult.isInlineEncrypted();
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
 	    mReader->writeBodyStr(cstr,
 				 mReader->mCodec,
 				 curNode->trueFromAddress(),
 				 &isInlineSigned, &isInlineEncrypted);
+	    processResult.setIsInlineSigned( isInlineSigned );
+	    processResult.setIsInlineEncrypted( isInlineEncrypted );
 	  }
 	}
 	curNode->mWasProcessed = true;
@@ -498,14 +483,14 @@ public:
 			 keepEncryptions,
 			 includeSignatures );
       // adjust signed/encrypted flags if inline PGP was found
-      if( isInlineSigned || isInlineEncrypted ){
+      if( processResult.isInlineSigned() || processResult.isInlineEncrypted() ){
 	if(    partNode::CryptoTypeUnknown == curNode->cryptoType()
 	       || partNode::CryptoTypeNone    == curNode->cryptoType() ){
 	  curNode->setCryptoType( partNode::CryptoTypeInlinePGP );
 	}
-	if( isInlineSigned )
+	if( processResult.isInlineSigned() )
 	  curNode->setSigned( true );
-	if( isInlineEncrypted )
+	if( processResult.isInlineEncrypted() )
 	  curNode->setEncrypted( true );
       }
       if( partNode::CryptoTypeUnknown == curNode->cryptoType() )
@@ -1006,10 +991,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 
   bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
 					  bool showOneMimePart, bool, bool,
-					  bool & isInlineSigned,
-					  bool & isInlineEncrypted,
-					  bool & bNeverDisplayInline,
-					  bool & /*isImage*/ ) {
+					  ProcessResult & result ) {
     bool bDone = false;
     kdDebug(5006) << "* text *" << endl;
     switch( subtype ){
@@ -1102,10 +1084,14 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  vCal.replace( '<',  "&lt;"   );
 		  vCal.replace( '>',  "&gt;"   );
 		  vCal.replace( '\"', "&quot;" );
+		  bool isInlineSigned = result.isInlineSigned();
+		  bool isInlineEncrypted = result.isInlineEncrypted();
 		  mReader->writeBodyStr( vCal,
 					 mReader->mCodec,
 					 curNode->trueFromAddress(),
 					 &isInlineSigned, &isInlineEncrypted );
+		  result.setIsInlineSigned( isInlineSigned );
+		  result.setIsInlineEncrypted( isInlineEncrypted );
 		  mReader->queueHtml( postfix );
 		}
 	      }
@@ -1126,7 +1112,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     case DwMime::kSubtypeRtf:
       kdDebug(5006) << "rtf" << endl;
       // RTF shouldn't be displayed inline
-      bNeverDisplayInline = true;
+      result.setNeverDisplayInline( true );
       break;
       // All 'Text' types which are not treated above are processed like
       // 'Plain' text:
@@ -1263,11 +1249,16 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		}
 	      }
 	    }
-	    if( !bDone )
+	    if( !bDone ) {
+	      bool isInlineSigned = result.isInlineSigned();
+	      bool isInlineEncrypted = result.isInlineEncrypted();
 	      mReader->writeBodyStr( cstr.data(),
 				     mReader->mCodec,
 				     curNode->trueFromAddress(),
 				     &isInlineSigned, &isInlineEncrypted);
+	      result.setIsInlineSigned( isInlineSigned );
+	      result.setIsInlineEncrypted( isInlineEncrypted );
+	    }
 	  }
 	  mResultString = cstr;
 	  bDone = true;
@@ -1282,10 +1273,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					       bool /*showOneMimePart*/,
 					       bool keepEncryptions,
 					       bool includeSignatures,
-					       bool & isInlineSigned,
-					       bool & isInlineEncrypted,
-					       bool & /*bNeverDisplayInline*/,
-					       bool & /*isImage*/ ) {
+					       ProcessResult & result ) {
     bool bDone = false;
     kdDebug(5006) << "* multipart *" << endl;
     switch( subtype ){
@@ -1430,11 +1418,16 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  if( !data )
 	    data = curNode->mChild;
 	  QCString cstr( data->msgPart().bodyDecoded() );
-	  if( mReader )
+	  if( mReader ) {
+	    bool isInlineSigned = result.isInlineSigned();
+	    bool isInlineEncrypted = result.isInlineEncrypted();
 	    mReader->writeBodyStr(cstr,
 				  mReader->mCodec,
 				  curNode->trueFromAddress(),
 				  &isInlineSigned, &isInlineEncrypted);
+	    result.setIsInlineSigned( isInlineSigned );
+	    result.setIsInlineEncrypted( isInlineEncrypted );
+	  }
 	  mResultString += cstr;
 	  bDone = true;
 	} else if( sign && data && plugFound ) {
@@ -1456,11 +1449,16 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       if( keepEncryptions ) {
 	curNode->setEncrypted( true );
 	QCString cstr( curNode->msgPart().bodyDecoded() );
-	if( mReader )
+	if( mReader ) {
+	  bool isInlineSigned = result.isInlineSigned();
+	  bool isInlineEncrypted = result.isInlineEncrypted();
 	  mReader->writeBodyStr(cstr,
 				mReader->mCodec,
 				curNode->trueFromAddress(),
 				&isInlineSigned, &isInlineEncrypted);
+	  result.setIsInlineSigned( isInlineSigned );
+	  result.setIsInlineEncrypted( isInlineEncrypted );
+	}
 	mResultString += cstr;
 	bDone = true;
       } else if( curNode->mChild ) {
@@ -1606,10 +1604,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					     bool showOneMimePart,
 					     bool /*keepEncryptions*/,
 					     bool /*includeSignatures*/,
-					     bool & /*isInlineSigned*/,
-					     bool & /*isInlineEncrypted*/,
-					     bool & /*bNeverDisplayInline*/,
-					     bool & /*isImage*/ ) {
+					     ProcessResult & /*result*/ ) {
     bool bDone = false;
     kdDebug(5006) << "* message *" << endl;
     switch( subtype  ){
@@ -1666,16 +1661,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 						 bool showOneMimePart,
 						 bool keepEncryptions,
 						 bool /*includeSignatures*/,
-						 bool & isInlineSigned,
-						 bool & isInlineEncrypted,
-						 bool & /*bNeverDisplayInline*/,
-						 bool & isImage ) {
+						 ProcessResult & result ) {
     bool bDone = false;
     kdDebug(5006) << "* application *" << endl;
     switch( subtype  ){
     case DwMime::kSubtypePostscript: {
       kdDebug(5006) << "postscript" << endl;
-      isImage = true;
+      result.setIsImage( true );
     }
       break;
     case DwMime::kSubtypeOctetStream: {
@@ -1695,11 +1687,16 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
 	  if( keepEncryptions ) {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
-	    if( mReader )
+	    if( mReader ) {
+	      bool isInlineSigned = result.isInlineSigned();
+	      bool isInlineEncrypted = result.isInlineEncrypted();
 	      mReader->writeBodyStr(cstr,
 				    mReader->mCodec,
 				    curNode->trueFromAddress(),
 				    &isInlineSigned, &isInlineEncrypted);
+	      result.setIsInlineSigned( isInlineSigned );
+	      result.setIsInlineEncrypted( isInlineEncrypted );
+	    }
 	    mResultString += cstr;
 	    bDone = true;
 	  } else {
@@ -1925,10 +1922,14 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  vPart.replace( '<',  "&lt;"   );
 	  vPart.replace( '>',  "&gt;"   );
 	  vPart.replace( '\"', "&quot;" );
+	  bool isInlineSigned = result.isInlineSigned();
+	  bool isInlineEncrypted = result.isInlineEncrypted();
 	  mReader->writeBodyStr( vPart.latin1(),
 				 mReader->mCodec,
 				 curNode->trueFromAddress(),
 				 &isInlineSigned, &isInlineEncrypted );
+	  result.setIsInlineSigned( isInlineSigned );
+	  result.setIsInlineEncrypted( isInlineEncrypted );
 	  mReader->queueHtml( postfix );
 	}
       }
@@ -1944,11 +1945,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool /*showOneMimePart*/,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
-					   bool & /*isInlineSigned*/,
-					   bool & /*isInlineEncrypted*/,
-					   bool & /*bNeverDisplayInline*/,
-					   bool & isImage ) {
-    isImage = true;
+					   ProcessResult & result ) {
+    result.setIsImage( true );
     return false;
   }
 
@@ -1956,10 +1954,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool showOneMimePart,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
-					   bool & /*isInlineSigned*/,
-					   bool & /*isInlineEncrypted*/,
-					   bool & /*bNeverDisplayInline*/,
-					   bool & /*isImage*/ ) {
+					   ProcessResult & /*result*/ ) {
     // We always show audio as icon.
     if( mReader && ( mReader->mAttachmentStyle != KMReaderWin::HideAttmnt || showOneMimePart ) )
       mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
@@ -1970,10 +1965,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool /*showOneMimePart*/,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
-					   bool & /*isInlineSigned*/,
-					   bool & /*isInlineEncrypted*/,
-					   bool & /*bNeverDisplayInline*/,
-					   bool & /*isImage*/ ) {
+					   ProcessResult & /*result*/ ) {
     return false;
   }
 
@@ -1981,10 +1973,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool /*showOneMimePart*/,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
-					   bool & /*isInlineSigned*/,
-					   bool & /*isInlineEncrypted*/,
-					   bool & /*bNeverDisplayInline*/,
-					   bool & /*isImage*/ ) {
+					   ProcessResult & /*result*/ ) {
     return false;
   }
 

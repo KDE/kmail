@@ -27,6 +27,42 @@ class partNode;
 
 namespace KMail {
 
+  class ProcessResult {
+  public:
+    ProcessResult( bool isInlineSigned=false, bool isInlineEncrypted=false,
+		   bool neverDisplayInline=false, bool isImage=false )
+      : mIsInlineSigned( isInlineSigned ),
+	mIsInlineEncrypted( isInlineEncrypted ),
+	mNeverDisplayInline( neverDisplayInline ),
+	mIsImage( isImage ) {}
+
+    bool isInlineSigned() const { return mIsInlineSigned; }
+    void setIsInlineSigned( bool isSigned ) {
+      mIsInlineSigned = isSigned;
+    }
+
+    bool isInlineEncrypted() const { return mIsInlineEncrypted; }
+    void setIsInlineEncrypted( bool isEncrypted ) {
+      mIsInlineEncrypted = isEncrypted;
+    }
+
+    bool neverDisplayInline() const { return mNeverDisplayInline; }
+    void setNeverDisplayInline( bool display ) {
+      mNeverDisplayInline = display;
+    }
+
+    bool isImage() const { return mIsImage; }
+    void setIsImage( bool image ) {
+      mIsImage = image;
+    }
+    
+  private:
+    bool mIsInlineSigned : 1;
+    bool mIsInlineEncrypted : 1;
+    bool mNeverDisplayInline : 1;
+    bool mIsImage : 1;
+  };
+
   class ObjectTreeParser {
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0 );
@@ -107,45 +143,35 @@ namespace KMail {
 
     bool processTextType( int subtype, partNode * node, bool showOneMimePart,
 			  bool keepEncryptions, bool includeSignatures,
-			  bool & isInlineSigned, bool & isInlineEncrypted,
-			  bool & bNeverDisplayInline, bool & isImage );
+			  ProcessResult & result );
 
     bool processMultiPartType( int subtype, partNode * node, bool showOneMimePart,
 			       bool keepEncryptions, bool includeSignatures,
-			       bool & isInlineSigned, bool & isInlineEncrypted,
-			       bool & bNeverDisplayInline, bool & isImage );
-
+			       ProcessResult & result );
 
     bool processMessageType( int subtype, partNode * node, bool showOneMimePart,
 			     bool keepEncryptions, bool includeSignatures,
-			     bool & isInlineSigned, bool & isInlineEncrypted,
-			     bool & bNeverDisplayInline, bool & isImage );
+			     ProcessResult & result );
 
     bool processApplicationType( int subtype, partNode * node, bool showOneMimePart,
 				 bool keepEncryptions, bool includeSignatures,
-				 bool & isInlineSigned, bool & isInlineEncrypted,
-				 bool & bNeverDisplayInline, bool & isImage );
+				 ProcessResult & result );
 
     bool processImageType( int subtype, partNode * node, bool showOneMimePart,
 			   bool keepEncryptions, bool includeSignatures,
-			   bool & isInlineSigned, bool & isInlineEncrypted,
-			   bool & bNeverDisplayInline, bool & isImage );
-
+			   ProcessResult & result );
 
     bool processAudioType( int subtype, partNode * node, bool showOneMimePart,
 			   bool keepEncryptions, bool includeSignatures,
-			   bool & isInlineSigned, bool & isInlineEncrypted,
-			   bool & bNeverDisplayInline, bool & isImage );
+			   ProcessResult & result );
 
     bool processVideoType( int subtype, partNode * node, bool showOneMimePart,
 			   bool keepEncryptions, bool includeSignatures,
-			   bool & isInlineSigned, bool & isInlineEncrypted,
-			   bool & bNeverDisplayInline, bool & isImage );
+			   ProcessResult & result );
 
     bool processModelType( int subtype, partNode * node, bool showOneMimePart,
 			   bool keepEncryptions, bool includeSignatures,
-			   bool & isInlineSigned, bool & isInlineEncrypted,
-			   bool & bNeverDisplayInline, bool & isImage );
+			   ProcessResult & result );
 
 
   private:
