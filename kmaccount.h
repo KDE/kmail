@@ -60,7 +60,7 @@ public:
   /**
    * Returns account name
    */
-  QString& name(void) const { return mName; }
+  QString name(void) const { return mName; }
   virtual void setName(const QString&);
 
   /**
@@ -114,7 +114,7 @@ public:
   /**
    * This can be used to provide a more complex calculation later if we want
    */
-  inline const int defaultCheckInterval(void) const { return DefaultCheckInterval; }
+  inline int defaultCheckInterval(void) const { return DefaultCheckInterval; }
 
   /**
    * Set/get whether account should be part of the accounts checked
