@@ -43,7 +43,7 @@ public:
     /**
      * @returns the current maximum number of entries.
      */
-    int maxCount() const { return m_maxCount; }
+    uint maxCount() const { return m_maxCount; }
 
     /**
      * Loads the list of recently used addresses from the configfile.
@@ -63,7 +63,7 @@ private:
 
     void adjustSize();
 
-    int m_maxCount;
+    uint m_maxCount;
     QStringList m_addresses;
 
     static KMRecentAddresses *s_self;

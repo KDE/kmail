@@ -2176,11 +2176,11 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
     return list;
 
   QString addr;
-  int addrstart = 0;
+  uint addrstart = 0;
   int commentlevel = 0;
   bool insidequote = false;
 
-  for (int index=0; index<aStr.length(); index++) {
+  for (uint index=0; index<aStr.length(); index++) {
     // the following conversion to latin1 is o.k. because
     // we can safely ignore all non-latin1 characters
     switch (aStr[index].latin1()) {

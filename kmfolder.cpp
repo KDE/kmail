@@ -657,7 +657,6 @@ KMMessage* KMFolder::getMsg(int idx)
       msg = ((KMMessage*)mb);
   } else {
       QString mbSubject = mb->subject();
-      time_t mbDate = mb->date();
       msg = readMsg(idx);
       // sanity check
       if (mCompactable && (!msg || (msg->subject().isEmpty() != mbSubject.isEmpty()))) {

@@ -274,8 +274,7 @@ void KMComposeWin::addAttachment(const QString &name,
 //-----------------------------------------------------------------------------
 void KMComposeWin::setBody(QString body)
 {
-  // TODO: implement KMComposeWin::setBody().
-  kdDebug() << "KMComposeWin::setBody() isn't implemented yet." << endl;
+  mEditor->setText(body);
 }
 
 //-----------------------------------------------------------------------------
@@ -1372,11 +1371,11 @@ QCString KMComposeWin::pgpProcessedMsg(void)
     //            ignore '"' and ',' inside comments
     if (!_to.isEmpty()) {
       QString recipient;
-      int addrstart = 0;
+      uint addrstart = 0;
       int commentlevel = 0;
       bool insidequote = false;
 
-      for (int index=0; index<_to.length(); index++) {
+      for (uint index=0; index<_to.length(); index++) {
         // the following conversion to latin1 is o.k. because
         // we can safely ignore all non-latin1 characters
         switch (_to[index].latin1()) {
