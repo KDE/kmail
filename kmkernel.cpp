@@ -57,6 +57,7 @@ using KMail::FolderIface;
 #include <ksystemtray.h>
 #include <kpgp.h>
 #include <kdebug.h>
+#include <kio/netaccess.h>
 #include <kwallet.h>
 using KWallet::Wallet;
 
@@ -1036,29 +1037,29 @@ void KMKernel::initFolders(KConfig* cfg)
 
 void KMKernel::init()
 {
-  QString foldersPath;
-  KConfig* cfg;
-
   the_shuttingDown = false;
   the_server_is_ready = false;
 
-  cfg = KMKernel::config();
+  KConfig* cfg = KMKernel::config();
 
   QDir dir;
-  QString d = locateLocal("data", "kmail/");
 
   KConfigGroupSaver saver(cfg, "General");
   the_firstStart = cfg->readBoolEntry("first-start", true);
   cfg->writeEntry("first-start", false);
   the_previousVersion = cfg->readEntry("previous-version");
   cfg->writeEntry("previous-version", KMAIL_VERSION);
-  foldersPath = cfg->readEntry("folders");
+  QString foldersPath = cfg->readPathEntry( "folders" );
+  kdDebug(5006) << k_funcinfo << "foldersPath (from config): '" << foldersPath << "'" << endl;
 
-  if (foldersPath.isEmpty())
-  {
-    foldersPath = QDir::homeDirPath() + QString("/Mail");
-    transferMail();
+  if ( foldersPath.isEmpty() ) {
+    foldersPath = localDataPath() + "mail";
+    if ( transferMail( foldersPath ) ) {
+      cfg->writePathEntry( "folders", foldersPath );
+    }
+    kdDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
   }
+
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
@@ -1322,34 +1323,86 @@ void KMKernel::cleanup(void)
   KMKernel::config()->sync();
 }
 
-//Isn´t this obsolete? (sven)
-void KMKernel::transferMail(void)
+bool KMKernel::transferMail( QString & destinationDir )
 {
-  QDir dir = QDir::home();
-  int rc;
+  QString dir;
 
-  // Stefan: This function is for all the whiners who think that KMail is
-  // broken because they cannot read mail with pine and do not
-  // know how to fix this problem with a simple symbolic link  =;-)
-  // Markus: lol ;-)
-  if (!dir.cd("KMail")) return;
+  // check whether the user has a ~/KMail folder
+  QFileInfo fi( QDir::home(), "KMail" );
+  if ( fi.exists() && fi.isDir() ) {
+    dir = QDir::homeDirPath() + "/KMail";
+    // the following two lines can be removed once moving mail is reactivated
+    destinationDir = dir;
+    return true;
+  }
 
-  rc = KMessageBox::questionYesNo(0,
-         i18n(
-	    "The directory ~/KMail exists. From now on, KMail uses the "
-	    "directory ~/Mail for its messages.\n"
-	    "KMail can move the contents of the directory ~/KMail into "
-	    "~/Mail, but this will replace existing files with the same "
-	    "name in the directory ~/Mail (e.g. inbox).\n"
-	    "Should KMail move the mail folders now?"));
+  if ( dir.isEmpty() ) {
+    // check whether the user has a ~/Mail folder
+    fi.setFile( QDir::home(), "Mail" );
+    if ( fi.exists() && fi.isDir() &&
+         QFile::exists( QDir::homeDirPath() + "/Mail/.inbox.index" ) ) {
+      // there's a ~/Mail folder which seems to be used by KMail (because of the
+      // index file)
+      dir = QDir::homeDirPath() + "/Mail";
+      // the following two lines can be removed once moving mail is reactivated
+      destinationDir = dir;
+      return true;
+    }
+  }
 
-  if (rc == KMessageBox::No) return;
+  if ( dir.isEmpty() ) {
+    return true; // there's no old mail folder
+  }
 
-  dir.cd("/");  // otherwise we lock the directory
-  testDir("/Mail");
-  system("mv -f ~/KMail/* ~/Mail");
-  system("mv -f ~/KMail/.??* ~/Mail");
-  system("rmdir ~/KMail");
+#if 0
+  // disabled for now since moving fails in certain cases (e.g. if symbolic links are involved)
+  const QString kmailName = kapp->aboutData()->programName();
+  QString msg;
+  if ( KIO::NetAccess::exists( destinationDir, true, 0 ) ) {
+    // if destinationDir exists, we need to warn about possible
+    // overwriting of files. otherwise, we don't have to
+    msg = i18n( "%1-%3 is the application name, %4-%7 are folder path",
+                "<qt>The <i>%4</i> folder exists. "
+                "%1 now uses the <i>%5</i> folder for "
+                "its messages.<p>"
+                "%2 can move the contents of <i>%6<i> into this folder for "
+                "you, though this may replace any existing files with "
+                "the same name in <i>%7</i>.<p>"
+                "<strong>Would you like %3 to move the mail "
+                "files now?</strong></qt>" )
+          .arg( kmailName, kmailName, kmailName )
+          .arg( dir, destinationDir, dir, destinationDir );
+  }
+  else {
+    msg = i18n( "%1-%3 is the application name, %4-%6 are folder path",
+                "<qt>The <i>%4</i> folder exists. "
+                "%1 now uses the <i>%5</i> folder for "
+                "its messages. %2 can move the contents of <i>%6</i> into "
+                "this folder for you.<p>"
+                "<strong>Would you like %3 to move the mail "
+                "files now?</strong></qt>" )
+          .arg( kmailName, kmailName, kmailName )
+          .arg( dir, destinationDir, dir );
+  }
+  QString title = i18n( "Migrate Mail Files?" );
+  QString buttonText = i18n( "Move" );
+
+  if ( KMessageBox::questionYesNo( 0, msg, title, buttonText ) ==
+       KMessageBox::No ) {
+    destinationDir = dir;
+    return true;
+  }
+
+  if ( !KIO::NetAccess::move( dir, destinationDir ) ) {
+    kdDebug(5006) << k_funcinfo << "Moving " << dir << " to " << destinationDir << " failed: " << KIO::NetAccess::lastErrorString() << endl;
+    kdDebug(5006) << k_funcinfo << "Deleting " << destinationDir << endl;
+    KIO::NetAccess::del( destinationDir, 0 );
+    destinationDir = dir;
+    return false;
+  }
+#endif
+
+  return true;
 }
 
 

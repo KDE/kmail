@@ -160,7 +160,12 @@ public:
   void closeAllKMailWindows();
   void cleanup(void);
   void quit();
-  void transferMail(void);
+  /**
+   * Returns true if the transfer was successful, otherwise false. In any case
+   * destinationDir contains the path to the current mail storage when the
+   * method returns.
+   */
+  bool transferMail( QString & destinationDir );
   void ungrabPtrKb(void);
   void kmailMsgHandler(QtMsgType aType, const char* aMsg);
   bool doSessionManagement();
