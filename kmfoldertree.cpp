@@ -405,10 +405,7 @@ void KMFolderTree::reload(void)
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
   if (fti && fti->folder && fti->folder->account())
-  {
-    fti->folder->account()->killAllJobs();
-    emit folderSelected(0);
-  }
+    doFolderSelected(0);
   QListViewItemIterator it( this );
   while (it.current()) {
     fti = static_cast<KMFolderTreeItem*>(it.current());
