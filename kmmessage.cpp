@@ -1098,18 +1098,18 @@ KMMessage* KMMessage::createRedirect2( const QString &toStr )
     id = strId.toUInt();
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
-  
+
   // X-KMail-Redirect-From: content
   QString strByWayOf = QString("%1 (by way of %2 <%3>)")
     .arg( from() )
     .arg( ident.fullName() )
     .arg( ident.emailAddr() );
-    
+
   // Resent-From: content
   QString strFrom = QString("%1 <%2>")
     .arg( ident.fullName() )
     .arg( ident.emailAddr() );
-    
+
   // format the current date to be used in Resent-Date:
   QString origDate = msg->headerField( "Date" );
   msg->setDateToday();
@@ -1121,7 +1121,7 @@ KMMessage* KMMessage::createRedirect2( const QString &toStr )
     msg->setHeaderField( "Date", origDate );
 
   // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
-  msg->setHeaderField( "Resent-Message-ID", generateMessageId( msg->sender() ), 
+  msg->setHeaderField( "Resent-Message-ID", generateMessageId( msg->sender() ),
                        Structured, true);
   msg->setHeaderField( "Resent-Date", newDate, Structured, true );
   msg->setHeaderField( "Resent-To",   toStr,   Address, true );
@@ -2879,96 +2879,97 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 			 bool withBody)
 {
-  if( aPart ) {
-    if( aDwBodyPart && aDwBodyPart->hasHeaders()  ) {
-      // This must not be an empty string, because we'll get a
-      // spurious empty Subject: line in some of the parts.
-      //aPart->setName(" ");
-      // partSpecifier
-      QString partId( aDwBodyPart->partId() );
-      aPart->setPartSpecifier( partId );
+  if ( !aPart )
+    return;
 
-      DwHeaders& headers = aDwBodyPart->Headers();
-      // Content-type
-      QCString additionalCTypeParams;
-      if (headers.HasContentType())
+  if( aDwBodyPart && aDwBodyPart->hasHeaders()  ) {
+    // This must not be an empty string, because we'll get a
+    // spurious empty Subject: line in some of the parts.
+    //aPart->setName(" ");
+    // partSpecifier
+    QString partId( aDwBodyPart->partId() );
+    aPart->setPartSpecifier( partId );
+
+    DwHeaders& headers = aDwBodyPart->Headers();
+    // Content-type
+    QCString additionalCTypeParams;
+    if (headers.HasContentType())
+    {
+      DwMediaType& ct = headers.ContentType();
+      aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
+      aPart->setTypeStr(ct.TypeStr().c_str());
+      aPart->setSubtypeStr(ct.SubtypeStr().c_str());
+      DwParameter *param = ct.FirstParameter();
+      while(param)
       {
-        DwMediaType& ct = headers.ContentType();
-        aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
-        aPart->setTypeStr(ct.TypeStr().c_str());
-        aPart->setSubtypeStr(ct.SubtypeStr().c_str());
-        DwParameter *param = ct.FirstParameter();
-        while(param)
-        {
-          if (!qstricmp(param->Attribute().c_str(), "charset"))
-            aPart->setCharset(QCString(param->Value().c_str()).lower());
-          else if (param->Attribute().c_str()=="name*")
-            aPart->setName(KMMsgBase::decodeRFC2231String(
-              param->Value().c_str()));
-          else {
-            additionalCTypeParams += ';';
-            additionalCTypeParams += param->AsString().c_str();
-          }
-          param=param->Next();
+        if (!qstricmp(param->Attribute().c_str(), "charset"))
+          aPart->setCharset(QCString(param->Value().c_str()).lower());
+        else if (param->Attribute().c_str()=="name*")
+          aPart->setName(KMMsgBase::decodeRFC2231String(
+            param->Value().c_str()));
+        else {
+          additionalCTypeParams += ';';
+          additionalCTypeParams += param->AsString().c_str();
         }
+        param=param->Next();
       }
-      else
-      {
-        aPart->setTypeStr("text");      // Set to defaults
-        aPart->setSubtypeStr("plain");
-      }
-      aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
-      // Modification by Markus
-      if (aPart->name().isEmpty())
-      {
-	if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
-	  aPart->setName(KMMsgBase::decodeRFC2047String(headers.
-							ContentType().Name().c_str()) );
-	} else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
-	  aPart->setName( KMMsgBase::decodeRFC2047String(headers.
-							 Subject().AsString().c_str()) );
-	}
-      }
-
-      // Content-transfer-encoding
-      if (headers.HasContentTransferEncoding())
-        aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
-      else
-        aPart->setCteStr("7bit");
-
-      // Content-description
-      if (headers.HasContentDescription())
-        aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
-      else
-        aPart->setContentDescription("");
-
-      // Content-disposition
-      if (headers.HasContentDisposition())
-        aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
-      else
-        aPart->setContentDisposition("");
-
-      // Body
-      if (withBody)
-        aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
-      else
-        aPart->setBody( "" );
-
     }
-    // If no valid body part was given,
-    // set all MultipartBodyPart attributes to empty values.
     else
     {
-      aPart->setTypeStr("");
-      aPart->setSubtypeStr("");
-      aPart->setCteStr("");
-      // This must not be an empty string, because we'll get a
-      // spurious empty Subject: line in some of the parts.
-      //aPart->setName(" ");
-      aPart->setContentDescription("");
-      aPart->setContentDisposition("");
-      aPart->setBody("");
+      aPart->setTypeStr("text");      // Set to defaults
+      aPart->setSubtypeStr("plain");
     }
+    aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
+    // Modification by Markus
+    if (aPart->name().isEmpty())
+    {
+      if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
+        aPart->setName(KMMsgBase::decodeRFC2047String(headers.
+      						ContentType().Name().c_str()) );
+      } else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
+        aPart->setName( KMMsgBase::decodeRFC2047String(headers.
+      						 Subject().AsString().c_str()) );
+      }
+    }
+
+    // Content-transfer-encoding
+    if (headers.HasContentTransferEncoding())
+      aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
+    else
+      aPart->setCteStr("7bit");
+
+    // Content-description
+    if (headers.HasContentDescription())
+      aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
+    else
+      aPart->setContentDescription("");
+
+    // Content-disposition
+    if (headers.HasContentDisposition())
+      aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
+    else
+      aPart->setContentDisposition("");
+
+    // Body
+    if (withBody)
+      aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+    else
+      aPart->setBody( "" );
+
+  }
+  // If no valid body part was given,
+  // set all MultipartBodyPart attributes to empty values.
+  else
+  {
+    aPart->setTypeStr("");
+    aPart->setSubtypeStr("");
+    aPart->setCteStr("");
+    // This must not be an empty string, because we'll get a
+    // spurious empty Subject: line in some of the parts.
+    //aPart->setName(" ");
+    aPart->setContentDescription("");
+    aPart->setContentDisposition("");
+    aPart->setBody("");
   }
 }
 
@@ -4352,7 +4353,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 void KMMessage::updateAttachmentState( DwBodyPart* part )
 {
   static const char cSMIMEData[] = "smime.p7s";
-  
+
   if ( !part )
     part = getFirstDwBodyPart();
   if ( !part )
