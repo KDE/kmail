@@ -346,8 +346,9 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
 void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
   KMFolderNode  *cur = NULL;
   KMFolderDir   *fdir = adir ? adir : &mDir;
+  QPtrListIterator<KMFolderNode> it(*fdir);
 
-  for (cur = fdir->first(); cur; cur = fdir->next()) {
+  for (; (cur = it.current()); ++it) {
     if (cur->isDir()) {
 	  continue;
     }
