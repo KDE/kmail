@@ -319,6 +319,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 					const QString aIndentStr,
 					bool aIncludeAttach) const
 {
+  QString result;
   QString headerStr;
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
@@ -335,13 +336,16 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   {
      Kpgp* pgp = Kpgp::getKpgp();
      assert(pgp != NULL);
-     pgp->setMessage(bodyDecoded());
-     if( pgp->isEncrypted() )
-         pgp->decrypt();
-
-     result = QString(pgp->message()).stripWhiteSpace();
-
-     result.replace(reNL,nlIndentStr) + '\n';
+     if ( pgp->setMessage(bodyDecoded()) ) {
+	 if( pgp->isEncrypted() )
+	     pgp->decrypt();
+	 result = pgp->message();
+     } else {
+	 result = bodyDecoded();
+     }
+     result = result.stripWhiteSpace();
+     result.replace(reNL,nlIndentStr);
+     result += '\n';
   }
   else
   {
@@ -372,7 +376,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
           else
 	  {
 	    part = QString(msgPart.bodyDecoded());
-	    part = part.replace(reNL,(const char*)nlIndentStr);
+	    part = part.replace(reNL,nlIndentStr);
 	  }
 	  result += part + '\n';
 	}
@@ -393,8 +397,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
     }
   }
 
-  result = headerStr + nlIndentStr + result.data();
-  return result;
+  return headerStr + nlIndentStr + result;
 }
 
 
