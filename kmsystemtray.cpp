@@ -67,12 +67,9 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
   /** Initiate connections between folders and this object */
   foldersChanged();
 
-  KMFolderMgr * mgr = kernel->folderMgr();
-  KMFolderMgr * imgr = kernel->imapFolderMgr();
-  KMFolderMgr * smgr = kernel->searchFolderMgr();
-  connect(mgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
-  connect(imgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
-  connect(smgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
+  connect( kernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 }
 
 KMSystemTray::~KMSystemTray()
@@ -197,12 +194,9 @@ void KMSystemTray::foldersChanged()
 
   QStringList folderNames;
   QValueList<QGuardedPtr<KMFolder> > folderList;
-  KMFolderMgr * mgr = kernel->folderMgr();
-  KMFolderMgr * imgr = kernel->imapFolderMgr();
-  KMFolderMgr * smgr = kernel->searchFolderMgr();
-  mgr->createFolderList(&folderNames, &folderList);
-  imgr->createFolderList(&folderNames, &folderList);
-  smgr->createFolderList(&folderNames, &folderList);
+  kernel->folderMgr()->createFolderList(&folderNames, &folderList);
+  kernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
+  kernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
 
   QStringList::iterator strIt = folderNames.begin();
 
