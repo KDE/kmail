@@ -82,7 +82,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
 
 
 //-----------------------------------------------------------------------------
-FolderStorage :: ~FolderStorage()
+FolderStorage::~FolderStorage()
 {
   delete mAcctList;
   mJobList.setAutoDelete( true );
