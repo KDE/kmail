@@ -201,6 +201,7 @@ class ConfigureDialog : public KDialogBase
       int            pageIndex;
       QComboBox      *identityCombo;
       QPushButton    *removeIdentityButton;
+      QPushButton    *renameIdentityButton;
       QLineEdit      *nameEdit;
       QLineEdit      *organizationEdit;
       QLineEdit      *emailEdit;

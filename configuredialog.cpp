@@ -1104,19 +1104,19 @@ void ConfigureDialog::makeIdentityPage( void )
   glay->addMultiCellWidget( helper, 1, 1, 1, 2 );
   QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
   QPushButton *newButton = new QPushButton( i18n("New..."), helper );
-  QPushButton *renameButton = new QPushButton( i18n("Rename..."), helper );
+  mIdentity.renameIdentityButton = new QPushButton( i18n("Rename..."), helper);
   mIdentity.removeIdentityButton = new QPushButton( i18n("Remove"), helper );
   newButton->setAutoDefault( false );
-  renameButton->setAutoDefault( false );
+  mIdentity.renameIdentityButton->setAutoDefault( false );
   mIdentity.removeIdentityButton->setAutoDefault( false );
   connect( newButton, SIGNAL(clicked()),
 	   this, SLOT(slotNewIdentity()) );
-  connect( renameButton, SIGNAL(clicked()),
+  connect( mIdentity.renameIdentityButton, SIGNAL(clicked()),
 	   this, SLOT(slotRenameIdentity()) );
   connect( mIdentity.removeIdentityButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveIdentity()) );
   hlay->addWidget( newButton );
-  hlay->addWidget( renameButton );
+  hlay->addWidget( mIdentity.renameIdentityButton );
   hlay->addWidget( mIdentity.removeIdentityButton );
 
 
@@ -2468,6 +2468,7 @@ void ConfigureDialog::slotIdentitySelectorChanged( void )
 {
   int currentItem = mIdentity.identityCombo->currentItem();
   mIdentity.removeIdentityButton->setEnabled( currentItem != 0 );
+  mIdentity.renameIdentityButton->setEnabled( currentItem != 0 );
   setIdentityInformation( mIdentity.identityCombo->currentText() );
 }
 
