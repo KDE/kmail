@@ -928,10 +928,14 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   KPopupMenu *folderMenu = new KPopupMenu;
   if (fti->folder()) folderMenu->insertTitle(fti->folder()->label());
 
+  // outbox specific, but there it's the most used action
+  if ( (fti->folder() == kmkernel->outboxFolder()) && fti->folder()->count() )
+        mMainWidget->action("send_queued")->plug( folderMenu );
   // Mark all as read is supposedly used often, therefor it is first
-  if ( fti->folder() && !fti->folder()->noContent() )
+  if ( fti->folder() && !fti->folder()->noContent() && fti->folder()->count() )
       mMainWidget->action("mark_all_as_read")->plug( folderMenu );
 
+  /* Treat the special case of the root and account folders */
   if ((!fti->folder() || (fti->folder()->noContent()
     && !fti->parent())))
   {
@@ -951,11 +955,10 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         this,
         SLOT(slotCheckMail()));
     }
-  } else {
-    if ((fti->folder() == kmkernel->outboxFolder()) && (fti->folder()->count()) )
-        mMainWidget->action("send_queued")->plug(folderMenu);
-    if (!fti->folder()->noChildren())
-    {
+  } else { // regular folders
+  
+    folderMenu->insertSeparator();
+    if ( !fti->folder()->noChildren() ) {
       folderMenu->insertItem(SmallIconSet("folder_new"),
                              i18n("&New Subfolder..."), this,
                              SLOT(addChildFolder()));
@@ -968,23 +971,22 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     {
       mMainWidget->action("search_messages")->plug(folderMenu);
 
-      mMainWidget->action("mark_all_as_read")->plug(folderMenu);
-
       mMainWidget->action("compact")->plug(folderMenu);
 
+      if ( !fti->folder()->isSystemFolder() )
+        mMainWidget->action("delete_folder")->plug(folderMenu);
+
       folderMenu->insertSeparator();
-
       mMainWidget->action("empty")->plug(folderMenu);
+      folderMenu->insertSeparator();
     }
-    if ( !fti->folder()->isSystemFolder() )
-      mMainWidget->action("delete_folder")->plug(folderMenu);
-
   }
+
+  /* plug in IMAP and DIMAP specific things */
   if (fti->folder() &&
       (fti->folder()->folderType() == KMFolderTypeImap ||
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
-    folderMenu->insertSeparator();
     folderMenu->insertItem(SmallIconSet("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
