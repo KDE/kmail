@@ -475,8 +475,14 @@ namespace KMail {
       for( int iMail = 0; iMail < ext.emailCount; ++iMail )
         // The following if /should/ always result in TRUE but we
         // won't trust implicitely the plugin that gave us these data.
-        if ( ext.emailList[ iMail ] && *ext.emailList[ iMail ] )
-          messagePart.signerMailAddresses.append( QString::fromUtf8( ext.emailList[ iMail ] ) );
+        if ( ext.emailList[ iMail ] && *ext.emailList[ iMail ] ) {
+	  QString email = QString::fromUtf8( ext.emailList[ iMail ] );
+	  // ### work around gpgme 0.3.x / cryptplug bug where the
+	  // ### email addresses are specified as angle-addr, not addr-spec:
+	  if ( email.startsWith( "<" ) && email.endsWith( ">" ) )
+	    email = email.mid( 1, email.length() - 2 );
+          messagePart.signerMailAddresses.append( email );
+	}
       if ( ext.creation_time )
         messagePart.creationTime = *ext.creation_time;
       if (     70 > messagePart.creationTime.tm_year
@@ -492,12 +498,11 @@ namespace KMail {
       if ( messagePart.signer.isEmpty() ) {
         if ( ext.name && *ext.name )
           messagePart.signer = QString::fromUtf8( ext.name );
-        if ( messagePart.signerMailAddresses.count() ) {
-          if ( !messagePart.signer.isEmpty() )
-            messagePart.signer += " ";
-          messagePart.signer += "<";
-          messagePart.signer += messagePart.signerMailAddresses.first();
-          messagePart.signer += ">";
+        if ( !messagePart.signerMailAddresses.empty() ) {
+          if ( messagePart.signer.isEmpty() )
+	    messagePart.signer = messagePart.signerMailAddresses.front();
+	  else 
+            messagePart.signer += " <" + messagePart.signerMailAddresses.front() + '>';
         }
       }
 
@@ -2059,8 +2064,6 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     if (block.signer.isEmpty())
                         signer = "";
                     else {
-                        // HTMLize the signer's user id and try to create mailto: link
-                        signer = KMMessage::emailAddrAsAnchor( signer );
                         if( blockAddrs.count() ){
                             QString address = KMMessage::encodeMailtoUrl( blockAddrs.first() );
                             signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
