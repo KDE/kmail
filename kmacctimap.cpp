@@ -1104,6 +1104,7 @@ void KMAcctImap::setPort(unsigned short int aPort)
 void KMAcctImap::setPrefix(const QString& aPrefix)
 {
   mPrefix = aPrefix;
+  mPrefix.replace(QRegExp("[%*\"]"), "");
   if (mPrefix.isEmpty() || mPrefix.at(0) != '/') mPrefix = '/' + mPrefix;
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
 }
