@@ -669,8 +669,9 @@ public:
                                 mComposer->mSignature, mStructuring,
                                 *mNewBodyPart );
       if( mComposer->mRc ) {
-        if( !mStructuring.data.makeMultiMime )
+        if( !mStructuring.data.makeMultiMime ) {
           mNewBodyPart->setCharset( mCharset );
+        }
       } else
         KMessageBox::sorry( mComposer->mComposeWin,
                             mErrorProcessingStructuringInfo );
@@ -1376,7 +1377,8 @@ void MessageComposer::encryptMessage( KMMessage* msg,
       }
       //msg->headers().Assemble();
       //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      D.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-      msg->setCharset( ourFineBodyPart.charset() );
+      if ( !ourFineBodyPart.charset().isEmpty() )
+        msg->setCharset( ourFineBodyPart.charset() );
       //msg->headers().Assemble();
       //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      E.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
       msg->setHeaderField( "Content-Transfer-Encoding",
@@ -2017,7 +2019,7 @@ void MessageComposer::pgpSignedMsg( QCString cText,
 
   // PENDING(khz,kalle) Warn if there was no signature? (because of
   // a problem or because the plugin does not allow signing?
-  
+
   /* ----------------------------- */
   kdDebug(5006) << "\nMessageComposer::pgpSignedMsg returning from CRYPTPLUG.\n" << endl;
 
