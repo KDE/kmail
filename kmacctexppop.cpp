@@ -526,12 +526,11 @@ void KMAcctExpPop::slotJobFinished() {
     for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
       if (headersOnServer.current()->action() == Delete ||
           headersOnServer.current()->action() == Later) {
-        //remove entries form the lists when the mails sould not be downloaded
+        //remove entries from the lists when the mails should not be downloaded
         //(deleted or downloaded later)
-          //int idx = idsOfMsgsPendingDownload.findIndex(headersOnServer.current()->id());
-        mMsgsPendingDownload.remove( headersOnServer.current()->id() );
         int idx = idsOfMsgs.findIndex( headersOnServer.current()->id() );
         if (idx != -1) {
+          mMsgsPendingDownload.remove( headersOnServer.current()->id() );
           idsOfMsgs.remove(idsOfMsgs.at( idx ));
           uidsOfMsgs.remove(uidsOfMsgs.at( idx ));
         }
