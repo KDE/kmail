@@ -228,8 +228,6 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       msg->setHeaderField("X-UID",uid);
       msg->setComplete( TRUE );
       emit messageRetrieved(msg);
-    } else {
-      emit finished();
     }
     msg = 0;
   }
