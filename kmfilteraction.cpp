@@ -16,6 +16,8 @@
 #include <stdlib.h>
 #include <unistd.h> //for alarm (sven)
 #include <klocale.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 static QString resultStr;
 
@@ -230,7 +232,7 @@ const QString KMFilterActionForward::argsAsString(void) const
 class KMFilterActionExec:public KMFilterAction
 {
 public:
-  KMFilterActionExec();
+  KMFilterActionExec(const char* name = "execute");
   virtual const QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
@@ -250,10 +252,11 @@ KMFilterAction* KMFilterActionExec::newAction(void)
  
 const QString KMFilterActionExec::label(void) const
 {
-  return i18n("forward to");
+  return i18n("execute");
 }
  
-KMFilterActionExec::KMFilterActionExec(): KMFilterAction("execute")
+KMFilterActionExec::KMFilterActionExec(const char* aName)
+  : KMFilterAction(aName)
 {
 }
  
@@ -298,6 +301,95 @@ void KMFilterActionExec::argsFromString(const QString argsStr)
 const QString KMFilterActionExec::argsAsString(void) const
 {
   return mCmd;
+}
+
+//=============================================================================
+// External message filter: executes a shell command with message
+// on stdin; altered message is expected on stdout.
+//=============================================================================
+class KMFilterActionExtFilter: public KMFilterActionExec
+{
+public:
+  KMFilterActionExtFilter(const char* name = "external filter");
+  virtual const QString label(void) const;
+  static KMFilterAction* newAction(void);
+  virtual int process(KMMessage* msg, bool& stopIt);
+};
+ 
+KMFilterAction* KMFilterActionExtFilter::newAction(void)
+{
+  return (new KMFilterActionExtFilter);
+}
+ 
+const QString KMFilterActionExtFilter::label(void) const
+{
+  return i18n("external filter");
+}
+ 
+KMFilterActionExtFilter::KMFilterActionExtFilter(const char* aName)
+  : KMFilterActionExec(aName)
+{
+}
+ 
+int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
+{
+  int rc=0, len;
+  QString infileName, outfileName;
+  QString msgText, origCmd;
+  char buf[8192];
+  int old_umask;
+  FILE *fh;
+  bool ok = TRUE;
+
+  if (mCmd.isEmpty()) return 1;
+
+  old_umask = umask(077);
+
+  infileName = tempnam("/tmp/kmail-ext-filter-in", "");
+  outfileName = tempnam("/tmp/kmail-ext-filter-out", "");
+
+  // write message to file
+  fh = fopen(infileName, "w");
+  if (fh)
+  {
+    msgText = aMsg->asString();
+    if (!fwrite(msgText, msgText.length(), 1, fh)) ok = FALSE;
+    fclose(fh);
+  }
+  else ok = FALSE;
+
+  if (ok)
+  {
+    // execute filter
+    origCmd = mCmd;
+    mCmd = mCmd + " <" + infileName + " >" + outfileName;
+    rc = KMFilterActionExec::process(aMsg, stop);
+    mCmd = origCmd;
+
+    // read altered message
+    fh = fopen(outfileName, "r");
+    if (fh)
+    {
+      msgText = "";
+      while (1)
+      {
+	len = fread(buf, 1, 1023, fh);
+	if (len <= 0) break;
+	buf[len] = 0;
+	msgText += buf;
+      }
+      fclose(fh);
+      if (!msgText.isEmpty()) aMsg->fromString(msgText);
+    }
+    else ok = FALSE;
+  }
+
+  // cleanup
+  unlink(infileName);
+  unlink(outfileName);
+  umask(old_umask);
+
+  return rc;
 }
 
 //=============================================================================
@@ -425,6 +517,8 @@ void KMFilterActionDict::init(void)
          KMFilterActionForward::newAction);
   insert("execute", i18n("execute"),
          KMFilterActionExec::newAction);
+  insert("filter app", i18n("filter app"),
+         KMFilterActionExtFilter::newAction);
   // Register custom filter actions below this line.
 }
 
