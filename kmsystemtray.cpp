@@ -136,19 +136,18 @@ void KMSystemTray::updateCount()
     /** Scale the font size down with each increase in the number
      * of digits in the count, to a minimum point size of 6 */
     int numDigits = ((int) log10((double) mCount) + 1);
+    QString testString;
+    testString.fill( '0', numDigits );
     QFont countFont = KGlobalSettings::generalFont();
     countFont.setBold(true);
 
-    int countFontSize = countFont.pointSize();
-    while(countFontSize > 5)
+    float countFontSize = countFont.pointSizeFloat();
+    QFontMetrics qfm( countFont );
+    int width = qfm.width( testString );
+    if( width > oldPixmapWidth )
     {
-      QFontMetrics qfm( countFont );
-      int fontWidth = qfm.width( QChar( '0' ) );
-      if((fontWidth * numDigits) > oldPixmapWidth)
-      {
-        --countFontSize;
-        countFont.setPointSize(countFontSize);
-      } else break;
+      countFontSize *= float( oldPixmapWidth ) / float( width );
+      countFont.setPointSizeFloat( countFontSize );
     }
 
     QPixmap bg(oldPixmapWidth, oldPixmapHeight);
