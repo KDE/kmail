@@ -816,23 +816,58 @@ bool FolderDiaGeneralTab::save()
         KMessageBox::error( this, message );
         return false;
       }
+      message = i18n( "<qt>Failed to create folder <b>%1</b>."
+            "</qt> " ).arg(fldName);
+ 
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
-        mDlg->setFolder( kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir ) );
-        KMFolderImap* selectedStorage = static_cast<KMFolderImap*>(selectedFolder->storage());
-        selectedStorage->createFolder(fldName); // create it on the server
-        static_cast<KMFolderImap*>(mDlg->folder()->storage())->setAccount( selectedStorage->account() );
+        KMFolder *newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
+        if ( newFolder ) {
+          mDlg->setFolder( newFolder );
+          KMFolderImap* selectedStorage = static_cast<KMFolderImap*>(selectedFolder->storage());
+          selectedStorage->createFolder(fldName); // create it on the server
+          static_cast<KMFolderImap*>(mDlg->folder()->storage())->setAccount( selectedStorage->account() );
+        } else {
+          KMessageBox::error( this, message );
+          return false;
+        }
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
-        mDlg->setFolder( kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir ) );
-        KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>(selectedFolder->storage());
-        KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mDlg->folder()->storage());
-        newStorage->initializeFrom( selectedStorage );
+        KMFolder *newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
+        if ( newFolder ) {
+          mDlg->setFolder( newFolder );
+          KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>(selectedFolder->storage());
+          KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mDlg->folder()->storage());
+          newStorage->initializeFrom( selectedStorage );
+        } else {
+          KMessageBox::error( this, message );
+          return false;
+        }
       } else if (mMailboxTypeComboBox->currentItem() == 2) {
-        mDlg->setFolder( kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() ) );
+        KMFolder *folder = kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() );
+        if ( folder ) {
+          mDlg->setFolder( folder );
+        } else {
+          KMessageBox::error( this, message );
+          return false;
+        }
       } else if (mMailboxTypeComboBox->currentItem() == 1) {
-        mDlg->setFolder( kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir ) );
+        KMFolder *folder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
+        if ( folder ) {
+          mDlg->setFolder( folder );
+        } else {
+          KMessageBox::error( this, message );
+          return false;
+        }
+
       } else {
-        mDlg->setFolder( kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir ) );
+        KMFolder *folder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
+        if ( folder ) {
+          mDlg->setFolder( folder );
+        } else {
+          KMessageBox::error( this, message );
+          return false;
+        }
+
       }
     }
     else if( ( oldFldName != fldName )
@@ -906,15 +941,13 @@ bool FolderDiaGeneralTab::save()
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
     }
+    // make sure everything is on disk, connected slots will call readConfig()
+    // when creating a new folder.
+    folder->storage()->writeConfig();
   }
-
-  // make sure everything is on disk, connected slots will call readConfig()
-  // when creating a new folder.
-  folder->storage()->writeConfig();
-
   kmkernel->folderMgr()->contentsChanged();
 
-  if ( mDlg->isNewFolder() )
+  if ( mDlg->isNewFolder() && folder )
     folder->close();
   return true;
 }
