@@ -1511,10 +1511,7 @@ void KMHeaders::resendMsg ()
   KCursorSaver busy(KBusyPtr::busy());
   newMsg = new KMMessage;
   newMsg->fromString(msg->asString());
-  newMsg->initFromMessage(msg, true);
   newMsg->setCharset(msg->codec()->mimeName());
-  newMsg->setTo(msg->to());
-  newMsg->setSubject(msg->subject());
   // the message needs a new Message-Id
   newMsg->removeHeaderField( "Message-Id" );
 
