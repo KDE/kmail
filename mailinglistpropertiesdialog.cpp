@@ -55,69 +55,61 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   QLabel* label;
   mLastItem = 0;
 
-  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint(),
+  QVBoxLayout *topLayout = new QVBoxLayout( layout(), spacingHint(),
                                             "topLayout" );
 
   QGroupBox *mlGroup = new QGroupBox( i18n("Associated Mailing List" ), this );
   mlGroup->setColumnLayout( 0,  Qt::Vertical );
-  QVBoxLayout *groupLayout = new QVBoxLayout( mlGroup->layout() );
+  QGridLayout *groupLayout = new QGridLayout( mlGroup->layout(), 6, 3, spacingHint() );
   topLayout->addWidget( mlGroup );
   setMainWidget( mlGroup );
 
   mHoldsMailingList = new QCheckBox( i18n("&Folder holds a mailing list"), mlGroup );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
                     SLOT(slotHoldsML(bool)) );
-  groupLayout->addWidget( mHoldsMailingList );
+  groupLayout->addMultiCellWidget( mHoldsMailingList, 0, 0, 0, 2 );
 
-  groupLayout->addSpacing( 10 );
+  groupLayout->addItem( new QSpacerItem( 0, 10 ), 1, 0 );
 
   mDetectButton = new QPushButton( i18n("Detect Automatically"), mlGroup );
   mDetectButton->setEnabled( false );
   QObject::connect( mDetectButton, SIGNAL(pressed()), SLOT(slotDetectMailingList()) );
-  groupLayout->addWidget( mDetectButton, 0, Qt::AlignHCenter );
+  groupLayout->addWidget( mDetectButton, 2, 1 );
 
-  groupLayout->addSpacing( 10 );
+  groupLayout->addItem( new QSpacerItem( 0, 10 ), 3, 0 );
 
-  QHBoxLayout *handlerLayout = new QHBoxLayout( groupLayout );
-  //FIXME: add QWhatsThis
-  label = new QLabel( i18n("Preferred handler: "), mlGroup );
+  label = new QLabel( i18n("Mailing list description:"), mlGroup );
+  label->setEnabled( false );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
-  handlerLayout->addWidget( label, 0, Qt::AlignCenter );
+  groupLayout->addWidget( label, 4, 0 );
+  mMLId = new QLabel( label, "", mlGroup );
+  groupLayout->addMultiCellWidget( mMLId, 4, 4, 1, 2 );
+  mMLId->setEnabled( false );
+
+  //FIXME: add QWhatsThis
+  label = new QLabel( i18n("Preferred handler:"), mlGroup );
+  label->setEnabled(false);
+  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+		    label, SLOT(setEnabled(bool)) );
+  groupLayout->addWidget( label, 5, 0 );
   mMLHandlerCombo = new QComboBox( mlGroup );
   mMLHandlerCombo->insertItem( i18n("KMail"), MailingList::KMail );
   mMLHandlerCombo->insertItem( i18n("Browser"), MailingList::Browser );
   mMLHandlerCombo->setEnabled( false );
-  handlerLayout->addWidget( mMLHandlerCombo, 0, Qt::AlignCenter );
+  groupLayout->addMultiCellWidget( mMLHandlerCombo, 5, 5, 1, 2 );
   QObject::connect( mMLHandlerCombo, SIGNAL(activated(int)),
                     SLOT(slotMLHandling(int)) );
   label->setBuddy( mMLHandlerCombo );
-
-  //groupLayout->addSpacing( 10 );
-
-  QVBoxLayout *idLayout = new QVBoxLayout( groupLayout );
-  label = new QLabel( i18n("<b>Mailing list description: </b>"), mlGroup );
-  label->setEnabled( false );
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-		    label, SLOT(setEnabled(bool)) );
-  idLayout->addWidget( label, 0 );
-  mMLId = new QLabel( label, "", mlGroup );
-  idLayout->addWidget( mMLId, 0 );
-  mMLId->setEnabled( false );
-
-  QGridLayout *mlLayout = new QGridLayout( groupLayout );
-  mlLayout->setSpacing( 6 );
-  // mlLayout->setColStretch(0, 1);
-  // mlLayout->setColStretch(1, 100);
 
   label = new QLabel( i18n("&Address type:"), mlGroup );
   label->setEnabled(false);
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
-  mlLayout->addWidget( label, 0, 0, Qt::AlignTop );
+  groupLayout->addWidget( label, 6, 0 );
   mAddressCombo = new QComboBox( mlGroup );
   label->setBuddy( mAddressCombo );
-  mlLayout->addWidget( mAddressCombo, 0, 1, Qt::AlignTop );
+  groupLayout->addWidget( mAddressCombo, 6, 1 );
   mAddressCombo->setEnabled( false );
 
   //FIXME: if the mailing list actions have either KAction's or toolbar buttons
@@ -132,11 +124,11 @@ MailingListFolderPropertiesDialog::MailingListFolderPropertiesDialog( QWidget* p
   	QObject::connect( handleButton, SIGNAL(clicked()),
                     SLOT(slotInvokeHandler()) );
   }
-  mlLayout->addWidget( handleButton, 0, 2, Qt::AlignTop );
+  groupLayout->addWidget( handleButton, 6, 2 );
 
   mEditList = new KEditListBox( mlGroup );
   mEditList->setEnabled( false );
-  mlLayout->addMultiCellWidget( mEditList, 1, 2, 0, 3, Qt::AlignTop );
+  groupLayout->addMultiCellWidget( mEditList, 7, 7, 0, 3 );
 
   QStringList el;
 
