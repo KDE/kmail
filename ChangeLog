@@ -1,4 +1,12 @@
+1998-03-31  Stefan Taferner  <taferner@kde.org> (KMail-0.6.5)
+
+	* Folders: fixed bug introduced on 1998-03-26: open failed on
+	folders where lock() returned an error.
+
 1998-03-28  Stefan Taferner  <taferner@kde.org>
+
+	* Headers: when opening a folder the contents was not automatically
+	sorted, now is.
 
 	* Pop: new messages retrieved from pop accounts were not
 	marked new. Now fixed.

@@ -143,8 +143,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	    this, SLOT(msgChanged()));
     connect(mFolder, SIGNAL(statusMsg(const char*)),
 	    mOwner, SLOT(statusMsg(const char*)));
-    readFolderConfig();
     mFolder->open();
+    readFolderConfig();
   }
 
   updateMessageList();

@@ -157,7 +157,7 @@ int KMFolder::open(void)
     rc = createIndexFromContents();
   }
 
-  if (!rc) rc = lock();
+  if (!rc) lock();
   mQuiet = 0;
 
   return rc;
