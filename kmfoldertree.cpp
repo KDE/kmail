@@ -420,12 +420,6 @@ void KMFolderTree::updateUnreadAll()
 // Draw empty area of list view with support for a backing pixmap
 void KMFolderTree::paintEmptyArea( QPainter * p, const QRect & rect )
 {
-  if (mPaintInfo.pixmapOn)
-    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(),
-                        mPaintInfo.pixmap,
-                        rect.left() + contentsX(),
-                        rect.top() + contentsY() );
-  else
     p->fillRect( rect, colorGroup().base() );
 }
 
