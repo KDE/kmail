@@ -164,7 +164,7 @@ void KMFilter::readConfig(KConfig* config)
     mAction = (KMPopFilterAction) config->readNumEntry( "action" );
   else {
     QStringList sets = config->readListEntry("apply-on");
-    if ( sets.isEmpty() ) {
+    if ( sets.isEmpty() && !config->hasKey("apply-on") ) {
       bApplyOnOutbound = false;
       bApplyOnInbound = true;
       bApplyOnExplicit = true;
