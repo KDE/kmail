@@ -21,14 +21,13 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     addColumn( i18n("Encoding") );
     addColumn( i18n("Size") );
     setColumnAlignment(3, Qt::AlignRight);
-    setResizeMode( QListView::LastColumn );
+    setResizeMode( QListView::AllColumns );
     connect( this, SIGNAL( clicked( QListViewItem* ) ),
              this, SLOT( itemClicked( QListViewItem* ) ) );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*,
                                                  const QPoint&, int ) ),
              this, SLOT( itemRightClicked( QListViewItem*, const QPoint& ) ) );
     setRootIsDecorated( false );
-    setShowToolTips( true );
     setAllColumnsShowFocus( true );
     setShowToolTips( true );
     setSorting(-1);
