@@ -66,6 +66,8 @@ public:
   // Put messages
   CachedImapJob( const QPtrList<KMMessage>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
+  CachedImapJob( const QValueList<unsigned long>& msgs,
+                 JobType type, KMFolderCachedImap* folder=0 );
   // Add sub folders
   CachedImapJob( const QValueList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
@@ -111,6 +113,7 @@ private:
   KMAcctCachedImap   *mAccount;
   QValueList<KMFolderCachedImap*> mFolderList;
   QValueList<MsgForDownload> mMsgsForDownload;
+  QValueList<unsigned long> mSerNumMsgList;
   ulong mSentBytes; // previous messages
   ulong mTotalBytes;
   QStringList mFolderPathList; // Used only for folder deletion

@@ -803,16 +803,30 @@ void KMKernel::cleanupImapFolders()
   while (node)
   {
     if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
-			  && ( acct->type() == "imap" || acct->type() == "cachedimap" )) )
+			  && ( acct->type() == "imap" )) )
     {
       node = the_imapFolderMgr->dir().next();
     } else {
-      the_imapFolderMgr->remove(static_cast<KMFolder*>(node));
+      the_imapFolderMgr->remove(static_cast<KMFolderImap*>(node));
       node = the_imapFolderMgr->dir().first();
     }
   }
 
-  the_imapFolderMgr->quiet(TRUE);
+  node = the_dimapFolderMgr->dir().first();
+  while (node)
+  {
+    if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
+			  && ( acct->type() == "cachedimap" )) )
+    {
+      node = the_dimapFolderMgr->dir().next();
+    } else {
+      static_cast<KMFolderCachedImap*>(node)->removeRightAway();
+      the_dimapFolderMgr->remove(static_cast<KMFolderCachedImap*>(node));
+      node = the_imapFolderMgr->dir().first();
+    }
+  }
+
+  the_imapFolderMgr->quiet(true);
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
   {
     KMFolderImap *fld;
@@ -820,14 +834,14 @@ void KMKernel::cleanupImapFolders()
 
     if (acct->type() != "imap") continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
-      ->findOrCreate(acct->name(), FALSE));
-    fld->setNoContent(TRUE);
+      ->findOrCreate(acct->name(), false));
+    fld->setNoContent(true);
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
     fld->close();
   }
-  the_imapFolderMgr->quiet(FALSE);
+  the_imapFolderMgr->quiet(false);
 
   the_dimapFolderMgr->quiet( true );
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
@@ -836,7 +850,6 @@ void KMKernel::cleanupImapFolders()
     KMAcctCachedImap *cachedImapAcct;
 
     if (acct->type() != "cachedimap" ) continue;
-    kdDebug(5006) << "findorCreating " << acct->name() << endl;
 
     cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->find(acct->name()));
     if (cfld == 0) {

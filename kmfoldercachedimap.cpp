@@ -105,7 +105,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolderDir* aParent,
   : KMFolderMaildir( aParent, aName ),
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
-    mCheckFlags( true ), mAccount( NULL ), mLastUid( 0 ),
+    mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
+    mLastUid( 0 ), uidWriteTimer( -1 ),
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
     mSuppressDialog( false ), mHoldSyncs( false ), mRemoveRightAway( false )
 {
@@ -204,6 +205,12 @@ int KMFolderCachedImap::readUidCache()
 
 int KMFolderCachedImap::writeUidCache()
 {
+  kdDebug( 5006 ) << "KMFolderCachedImap::writeUidCache() " << lastUid()
+		  << uidValidity() << endl;
+  if( lastUid() == 0 || uidValidity().isEmpty() )
+    // No info from the server yet
+    return 0;
+
   QFile uidcache( uidCacheLocation() );
   if( uidcache.open( IO_WriteOnly ) ) {
     QTextStream str( &uidcache );
@@ -224,14 +231,13 @@ int KMFolderCachedImap::create(bool imap)
   int rc = KMFolderMaildir::create(imap);
   mLastUid = 0;
   mUidValidity = "";
-  if( !rc ) return writeUidCache();
+  if( !rc ) return readUidCache();
   return rc;
 }
 
 void KMFolderCachedImap::reloadUidMap()
 {
   uidMap.clear();
-  uidRevMap.clear();
   open();
   for( int i = 0; i < count(); ++i ) {
     bool unget = !isMessage(i);
@@ -242,21 +248,17 @@ void KMFolderCachedImap::reloadUidMap()
     if (unget) unGetMsg(i);
     if( ok ) {
       uidMap.insert( uid, i );
-      uidRevMap.insert( i, uid );
       if( uid > mLastUid ) setLastUid( uid );
     }
   }
   close();
+  uidMapDirty = false;
 }
 
 /* Reimplemented from KMFolderMaildir */
 KMMessage* KMFolderCachedImap::take(int idx)
 {
-  QMap<int,ulong>::Iterator it = uidRevMap.find(idx);
-  if( it != uidRevMap.end() ) {
-    uidMap.remove( it.data() );
-    uidRevMap.remove( idx );
-  }
+  uidMapDirty = true;
   return KMFolderMaildir::take(idx);
 }
 
@@ -264,21 +266,17 @@ KMMessage* KMFolderCachedImap::take(int idx)
 int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
                                         int* index_return )
 {
+  // Possible optimization: Only dirty if not filtered below
   bool ok;
-  int idx_return;
+  ulong uid = msg->headerField("X-UID").toULong( &ok );
+  if( ok ) {
+    uidMapDirty = true;
+    if( uid > mLastUid )
+      setLastUid( uid );
+  }
 
   // Add the message
-  ulong uid = msg->headerField("X-UID").toULong(&ok);
-  int rc = KMFolderMaildir::addMsg(msg, &idx_return);
-  if( index_return ) *index_return = idx_return;
-
-  // Put it in the uid maps
-  // TODO: Do we really want to add it if there is no X-UID header?
-  if( ok && !rc && idx_return >= 0 ) {
-    uidMap.insert( uid, idx_return );
-    uidRevMap.insert( idx_return, uid );
-    if( uid > mLastUid ) setLastUid( uid );
-  }
+  int rc = KMFolderMaildir::addMsg(msg, index_return);
 
   if( newMail && imapPath() == "/INBOX/" )
     // This is a new message. Filter it
@@ -290,8 +288,6 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
 /* Reimplemented from KMFolderMaildir */
 int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 {
-  assert(msg);
-
   // Strip the IMAP UID
   msg->removeHeaderField( "X-UID" );
 
@@ -303,15 +299,7 @@ int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 /* Reimplemented from KMFolderMaildir */
 void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
 {
-  // kdDebug(5006) << "KMFolderCachedImap::removeMsg(" << idx << ", " << imapQuiet << ")" << endl;
-
-  // Remove it from the maps
-  QMap<int,ulong>::Iterator it = uidRevMap.find(idx);
-  if( it != uidRevMap.end() ) {
-    ulong uid = it.data();
-    uidMap.remove( uid );
-    uidRevMap.remove( idx );
-  }
+  uidMapDirty = true;
 
   // Remove it from disk
   KMFolderMaildir::removeMsg(idx,imapQuiet);
@@ -358,6 +346,15 @@ int KMFolderCachedImap::rename( const QString& aName,
 void KMFolderCachedImap::setLastUid( ulong uid )
 {
   mLastUid = uid;
+  if( uidWriteTimer == -1 )
+    // Write in one minute
+    uidWriteTimer = startTimer( 60000 );
+}
+
+void KMFolderCachedImap::timerEvent( QTimerEvent* )
+{
+  killTimer( uidWriteTimer );
+  uidWriteTimer = -1;
   writeUidCache();
 }
 
@@ -368,6 +365,12 @@ ulong KMFolderCachedImap::lastUid()
 
 KMMessage* KMFolderCachedImap::findByUID( ulong uid )
 {
+  bool mapReloaded = false;
+  if( uidMapDirty ) {
+    reloadUidMap();
+    mapReloaded = true;
+  }
+
   QMap<ulong,int>::Iterator it = uidMap.find( uid );
   if( it != uidMap.end() ) {
     bool unget = !isMessage(count() - 1);
@@ -378,10 +381,13 @@ KMMessage* KMFolderCachedImap::findByUID( ulong uid )
       unGetMsg( *it );
   }
 
-  // Not found by now. That probably mean there is a problem in the
-  // maps. Rebuild them and try again
-  reloadUidMap();
+  // Not found by now
+  if( mapReloaded )
+    // Not here then
+    return 0;
 
+  // There could be a problem in the maps. Rebuild them and try again
+  reloadUidMap();
   it = uidMap.find( uid );
   if( it != uidMap.end() )
     // Since the uid map is just rebuilt, no need for the sanity check
@@ -446,8 +452,6 @@ void KMFolderCachedImap::serverSync( bool suppressDialog )
   }
 
   assert( account() );
-
-  reloadUidMap();
 
   // Connect to the imap progress dialog
   mSuppressDialog = suppressDialog;
@@ -679,9 +683,6 @@ void KMFolderCachedImap::serverSyncInternal()
     {
       emit newState( name(), mProgress, i18n("Updating cache file"));
 
-      // last state got new messages, update cache file
-      writeUidCache();
-
       mSyncState = SYNC_STATE_SYNC_SUBFOLDERS;
       mSubfoldersForSync.clear();
       mCurrentSubfolder = 0;
@@ -757,15 +758,15 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode )
 }
 
 /* find new messages (messages without a UID) */
-QPtrList<KMMessage> KMFolderCachedImap::findNewMessages()
+QValueList<unsigned long> KMFolderCachedImap::findNewMessages()
 {
-  QPtrList<KMMessage> result;
+  QValueList<unsigned long> result;
   for( int i = 0; i < count(); ++i ) {
     bool unget = !isMessage(i);
     KMMessage *msg = getMsg(i);
     if( !msg ) continue; /* what goes on if getMsg() returns 0? */
     if( msg->headerField("X-UID").isEmpty() ) {
-      result.append( msg );
+      result.append( msg->getMsgSerNum() );
     } else {
       if (unget) unGetMsg(i);
     }
@@ -776,7 +777,7 @@ QPtrList<KMMessage> KMFolderCachedImap::findNewMessages()
 /* Upload new messages to server */
 void KMFolderCachedImap::uploadNewMessages()
 {
-  QPtrList<KMMessage> newMsgs = findNewMessages();
+  QValueList<unsigned long> newMsgs = findNewMessages();
   emit syncState( SYNC_STATE_PUT_MESSAGES, newMsgs.count() );
   mProgress += 10;
   //kdDebug() << name() << ": +10 (uploadNewMessages) -> " << mProgress << "%" << endl;
@@ -838,35 +839,27 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 bool KMFolderCachedImap::deleteMessages()
 {
   /* Delete messages from cache that are gone from the server */
-  QPtrList<KMMsgBase> msgsForDeletion;
-  reloadUidMap();
-  // It is not possible to just go over all indices and remove them one by one
-  // because the index list can get resized under us. So use msg pointers instead
-  for( QMap<ulong,int>::Iterator it = uidMap.begin(); it != uidMap.end(); ++it ) {
-    // kdDebug(5006) << "looking at " << it.key() << " in cache " << imapPath() << endl;
-    if( !uidsOnServer.contains( it.key() ) ) {
-      // kdDebug(5006) << "Uid" << it.key() << "(idx="<<it.data()<< ") not present on server" << endl;
-      msgsForDeletion.append( mMsgList[it.data()] );
-    }
+  QPtrList<KMMessage> msgsForDeletion;
+
+  // It is not possible to just go over all indices and remove
+  // them one by one because the index list can get resized under
+  // us. So use msg pointers instead
+  for( int i = 0; i < count(); ++i ) {
+    bool unget = !isMessage(i);
+    KMMessage *msg = getMsg(i);
+    if( !msg ) continue;
+    bool ok;
+    ulong uid = msg->headerField( "X-UID" ).toULong( &ok );
+    if( ok && !uidsOnServer.contains( uid ) )
+      msgsForDeletion.append( msg );
+    else
+      if (unget) unGetMsg(i);
   }
 
   if( !msgsForDeletion.isEmpty() ) {
     emit statusMsg( i18n("%1: Deleting removed messages from cache").arg(name()) );
-    open();
-    for( KMMsgBase *msg = msgsForDeletion.first(); msg; msg = msgsForDeletion.next() ) {
-      int idx = find(msg);
-      assert( idx != -1);
-      removeMsg(idx);
-    }
-    compact();
-    close();
-
-    // It is quite possible that the list have been resized, so we need
-    // to rebuild the entire uid map
-    reloadUidMap();
+    removeMsg( msgsForDeletion );
   }
-
-  //emit syncState( SYNC_STATE_DELETE_MESSAGES, uidsForDeletionOnServer.count() );
 
   mProgress += 10;
   //kdDebug() << name() << ": +10 (deleteMessages) -> " << mProgress << "%" << endl;
@@ -1090,8 +1083,6 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 // This synchronizes the subfolders with the server
 bool KMFolderCachedImap::listDirectory()
 {
-  reloadUidMap();
-
   mSubfolderState = imapInProgress;
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";TYPE="

@@ -139,6 +139,8 @@ public:
 
   /* Reimplemented from KMFolderMaildir */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+    { KMFolder::removeMsg(msgList, imapQuiet); }
 
   /* Utility methods: */
   static QStringList makeSets(QStringList& uids, bool sort);
@@ -211,7 +213,7 @@ protected:
 
   /** Utility methods for syncing. Finds new messages
       in the local cache that must be uploaded */
-  virtual QPtrList<KMMessage> findNewMessages();
+  virtual QValueList<unsigned long> findNewMessages();
   /** Utility methods for syncing. Finds new subfolders
       in the local cache that must be created in the server */
   virtual QValueList<KMFolderCachedImap*> findNewFolders();
@@ -224,6 +226,8 @@ protected:
                                   QString partSpecifier, const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
+
+  virtual void timerEvent( QTimerEvent* );
 
 public slots:
   /**
@@ -300,11 +304,12 @@ private:
   QValueList<KMFolderCachedImap*> mSubfoldersForSync;
   KMFolderCachedImap* mCurrentSubfolder;
 
-  /* Mapping between index<->uid
+  /* Mapping uid ->index
      Keep updated in addMsg, take and removeMsg */
-  QMap<ulong,int> uidMap; /* maps uid -> idx */
-  QMap<int,ulong> uidRevMap; /* maps isx -> uid */
-  ulong       mLastUid;
+  QMap<ulong,int> uidMap;
+  bool uidMapDirty;
+  ulong mLastUid;
+  int uidWriteTimer;
   void reloadUidMap();
 
   QString state2String( int state ) const;

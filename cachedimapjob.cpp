@@ -35,6 +35,7 @@
 #include "kmfoldermgr.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
+#include "kmmsgdict.h"
 
 #include <kio/scheduler.h>
 #include <kio/job.h>
@@ -62,6 +63,13 @@ CachedImapJob::CachedImapJob( const QPtrList<KMMessage>& msgs, JobType type,
                               KMFolderCachedImap* folder )
   : FolderJob( msgs, QString::null, type, folder ), mFolder( folder ),
     mTotalBytes( 0 ), mMsg( 0 )
+{
+}
+
+CachedImapJob::CachedImapJob( const QValueList<unsigned long>& msgs,
+			      JobType type, KMFolderCachedImap* folder )
+  : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder ),
+    mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( 0 ), mMsg( 0 )
 {
 }
 
@@ -252,13 +260,34 @@ void CachedImapJob::slotProcessedSize(KIO::Job *, KIO::filesize_t processed)
 
 void CachedImapJob::slotPutNextMessage()
 {
-  if( mMsgList.isEmpty() ) {
+  mMsg = 0;
+
+  // First try the message list
+  if( !mMsgList.isEmpty() ) {
+    mMsg = mMsgList.first();
+    mMsgList.removeFirst();
+  }
+
+  // Now try the serial number list
+  while( mMsg == 0 && !mSerNumMsgList.isEmpty() ) {
+    unsigned long serNum = mSerNumMsgList.first();
+    mSerNumMsgList.pop_front();
+
+    // Find the message with this serial number
+    int i = 0;
+    KMFolder* aFolder = 0;
+    kmkernel->msgDict()->getLocation( serNum, &aFolder, &i );
+    if( mFolder != aFolder )
+      // This message was moved or something
+      continue;
+    mMsg = mFolder->getMsg( i );
+  }
+
+  if( !mMsg ) {
+    // No message found for upload
     delete this;
     return;
   }
-
-  mMsg = mMsgList.first(); mMsgList.removeFirst();
-  assert( mMsg );
 
   QCString status = KMFolderCachedImap::statusToFlags( mMsg->status() );
   KURL url = mAccount->getUrl();
