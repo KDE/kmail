@@ -1276,17 +1276,23 @@ KMMessage* KMMessage::createForward()
     msgPart.setBody(str);
     msg->addBodyPart(&msgPart);
 
+    bool outsideRfc822 = true;
     for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
       QCString mimeType = msgPart.typeStr().lower() + '/'
                         + msgPart.subtypeStr().lower();
+      if( mimeType != "message/rfc822" )
+        outsideRfc822 = true;
       // don't add the detached signature as attachment when forwarding a
       // PGP/MIME signed message inline
-      if( mimeType != "application/pgp-signature" ) {
+      if( mimeType != "application/pgp-signature" && outsideRfc822 ) {
         if (i > 0 || qstricmp(msgPart.typeStr(),"text") != 0)
           msg->addBodyPart(&msgPart);
       }
+      // avoid kind of recursive attaching of rfc822 parts
+      if( mimeType == "message/rfc822" )
+        outsideRfc822 = false;
     }
   }
 
