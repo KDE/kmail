@@ -1107,10 +1107,11 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     }
   }
 
+  emit selected( 0 );
   if (curMsg) {
     debug ("new message should be current!");
-    setCurrentMsg( mFolder->find( curMsg ) );
     setSelected( currentItem(), TRUE );
+    setCurrentMsg( mFolder->find( curMsg ) );
     // sanders QListView isn't emitting a currentChanged signal?
     highlightMessage( currentItem() );
   }
@@ -1119,11 +1120,11 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   
   setContentsPos( contentX, contentY );
   makeHeaderVisible();
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
 
   if (destFolder) destFolder->close();
   kernel->kbp()->idle();
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-	     this,SLOT(highlightMessage(QListViewItem*)));
 }
 
 //-----------------------------------------------------------------------------
