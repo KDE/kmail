@@ -581,6 +581,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   oldSubDirLoc = folder()->subdirLocation();
   if (kmkernel->msgDict())
     oldIdsLoc = kmkernel->msgDict()->getFolderIdsLocation( folder() );
+  QString oldConfigString = "Folder-" + folder()->idString();
 
   close(TRUE);
 
@@ -647,6 +648,10 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
     open();
     mOpenCount = openCount;
   }
+  writeConfig();
+
+  // delete the old entry as we get two entries with the same ID otherwise
+  KMKernel::config()->deleteGroup( oldConfigString );
 
   emit nameChanged();
   return rc;

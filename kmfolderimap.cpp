@@ -302,13 +302,19 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
   if ( it == mAccount->jobsEnd() ) return;
   KIO::SimpleJob* sj = static_cast<KIO::SimpleJob*>(job);
   if ( job->error() ) {
+    // rollback
     setImapPath( sj->url().path() );
     mAccount->handleJobError( job, i18n("Error while renaming a folder.") );
     return;
   }
+  // unsubscribe old (we don't want ghosts)
+  mAccount->changeSubscription( false, sj->url().path() );
+  // subscribe new
+  mAccount->changeSubscription( true, imapPath() );
+  // ATTENTION port me to maildir
   KMFolderMbox::rename( (*it).path );
-  kmkernel->folderMgr()->contentsChanged();
   mAccount->removeJob(it);
+  kmkernel->folderMgr()->contentsChanged();
 }
 
 //-----------------------------------------------------------------------------

@@ -228,7 +228,8 @@ public:
   /**
    * Return the filename of the folder (reimplemented from KFolder)
    */
-  virtual QString fileName() const { return encodeFileName(name()); }
+  virtual QString fileName() const { 
+    return encodeFileName( KMFolderMbox::fileName() ); }
 
   /**
    * Insert a new entry into the uid <=> sernum cache
