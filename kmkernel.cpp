@@ -604,15 +604,15 @@ int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlSt
 
 int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 {
-  if ( foldername.isEmpty() )
-    return -1;
-  if ( foldername.contains("/"))
+  kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
+
+  if ( foldername.isEmpty() || foldername.startsWith("."))
     return -1;
 
   int retval;
   bool readFolderMsgIds = false;
-
-  //kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
+  QString _foldername = foldername.stripWhiteSpace();
+  _foldername = _foldername.replace('\\',""); //try to prevent ESCAPE Sequences
 
   if ( foldername != mAddMessageLastFolder ) {
     mAddMessageMsgIds.clear();
@@ -637,9 +637,48 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
     KMMessage *msg = new KMMessage();
     msg->fromString( messageText );
 
-    KMFolder *folder = the_folderMgr->findOrCreate(foldername, false);
+    if (readFolderMsgIds) {
+      if ( foldername.contains("/")) {
+        QString tmp_fname = "";
+        KMFolder *folder = NULL;
+        KMFolderDir *subfolder;
+        bool root = true;
 
-    if ( folder ) {
+        QStringList subFList = QStringList::split("/",_foldername,FALSE);
+
+        for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
+          QString _newFolder = *it;
+          if(_newFolder.startsWith(".")) return -1;
+
+          if(root) {
+            folder = the_folderMgr->findOrCreate(*it, false);
+            if (folder) {
+              root = false;
+              tmp_fname = "/" + *it;
+            }
+            else return -1;
+          }
+          else {
+            subfolder = folder->createChildFolder();
+            tmp_fname += "/" + *it;
+            if(!the_folderMgr->getFolderByURL( tmp_fname )) {
+             folder = the_folderMgr->createFolder(*it, FALSE, folder->folderType(), subfolder);
+            }
+
+            if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
+          }
+        }
+
+        mAddMsgCurrentFolder = the_folderMgr->getFolderByURL( tmp_fname );
+        if(!folder) return -1;
+
+      }
+      else {
+        mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
+      }
+    }
+
+    if ( mAddMsgCurrentFolder ) {
       if (readFolderMsgIds) {
 
       	// OLD COMMENT:
@@ -665,9 +704,9 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 
         int i;
 
-        folder->open();
-        for( i=0; i<folder->count(); i++) {
-          KMMsgBase *mb = folder->getMsgBase(i);
+        mAddMsgCurrentFolder->open();
+        for( i=0; i<mAddMsgCurrentFolder->count(); i++) {
+          KMMsgBase *mb = mAddMsgCurrentFolder->getMsgBase(i);
 	  QString id = mb->msgIdMD5();
 	  if ( id.isEmpty() ) {
             id = mb->subject();
@@ -684,7 +723,7 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
             mAddMessageMsgIds.append(id);
           }
         }
-        folder->close();
+        mAddMsgCurrentFolder->close();
       }
 
       QString msgId = msg->msgIdMD5();
@@ -706,8 +745,8 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
           mAddMessageMsgIds.append( msgId );
         }
         int index;
-        if ( folder->addMsg( msg, &index ) == 0 ) {
-          folder->unGetMsg( index );
+        if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
+          mAddMsgCurrentFolder->unGetMsg( index );
           retval = 1;
         } else {
           retval =- 2;
@@ -742,13 +781,22 @@ int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & 
 {
   // Use this function to import messages without
   // search for already existing emails.
+  kdDebug(5006) << "KMKernel::dcopAddMessage_fastImport called" << endl;
 
-  if ( foldername.isEmpty() )
-    return -1;
-  if ( foldername.contains("/"))
+  if ( foldername.isEmpty() || foldername.startsWith("."))
     return -1;
 
   int retval;
+  bool createNewFolder = false;
+
+  QString _foldername = foldername.stripWhiteSpace();
+  _foldername = _foldername.replace('\\',""); //try to prevent ESCAPE Sequences
+
+  if ( foldername != mAddMessageLastFolder ) {
+    createNewFolder = true;
+    mAddMessageLastFolder = foldername;
+  }
+
 
   if ( !msgUrl.isEmpty() && msgUrl.isLocalFile() ) {
     const QCString messageText =
@@ -759,12 +807,50 @@ int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & 
     KMMessage *msg = new KMMessage();
     msg->fromString( messageText );
 
-    KMFolder *folder = the_folderMgr->findOrCreate( foldername, false );
+    if (createNewFolder) {
+      if ( foldername.contains("/")) {
+        QString tmp_fname = "";
+        KMFolder *folder = NULL;
+        KMFolderDir *subfolder;
+        bool root = true;
 
-    if ( folder ) {
+        QStringList subFList = QStringList::split("/",_foldername,FALSE);
+
+        for ( QStringList::Iterator it = subFList.begin(); it != subFList.end(); ++it ) {
+          QString _newFolder = *it;
+          if(_newFolder.startsWith(".")) return -1;
+
+          if(root) {
+            folder = the_folderMgr->findOrCreate(*it, false);
+            if (folder) {
+              root = false;
+              tmp_fname = "/" + *it;
+            }
+            else return -1;
+          }
+          else {
+            subfolder = folder->createChildFolder();
+            tmp_fname += "/" + *it;
+            if(!the_folderMgr->getFolderByURL( tmp_fname )) {
+              folder = the_folderMgr->createFolder(*it, FALSE, folder->folderType(), subfolder);
+            }
+            if(!(folder = the_folderMgr->getFolderByURL( tmp_fname ))) return -1;
+          }
+        }
+
+      mAddMsgCurrentFolder = the_folderMgr->getFolderByURL( tmp_fname );
+      if(!folder) return -1;
+
+      }
+      else {
+        mAddMsgCurrentFolder = the_folderMgr->findOrCreate(_foldername, false);
+      }
+    }
+
+    if ( mAddMsgCurrentFolder ) {
       int index;
-      if ( folder->addMsg( msg, &index ) == 0 ) {
-        folder->unGetMsg( index );
+      if ( mAddMsgCurrentFolder->addMsg( msg, &index ) == 0 ) {
+        mAddMsgCurrentFolder->unGetMsg( index );
         retval = 1;
       } else {
         retval =- 2;
