@@ -32,7 +32,7 @@ MaildirJob::~MaildirJob()
 }
 
 //-----------------------------------------------------------------------------
-void MaildirJob::setParentFolder( KMFolderMaildir* parent )
+void MaildirJob::setParentFolder( const KMFolderMaildir* parent )
 {
   mParentFolder = parent;
 }

@@ -31,6 +31,8 @@ using KMail::SieveConfig;
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmmainwin.h"
+#include "imapjob.h"
+using KMail::ImapJob;
 
 #include <kmfolderimap.h>
 #include <kio/scheduler.h>
@@ -153,7 +155,7 @@ void KMAcctImap::displayProgress()
     {
       QPtrListIterator<QGuardedPtr<KMFolder> > it(mOpenFolders);
       for ( it.toFirst() ; it.current() ; ++it )
-        if (*it) (*(*it))->close();
+        if ( it.current() ) (*(it.current()))->close();
       mOpenFolders.clear();
     }
   }
@@ -251,21 +253,18 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::ignoreJobsForMessage( KMMessage*  )
+void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
-    /* TODO: doesn't yet compile because kmfolderimap.h needs to be merged (coolo)
-  KMImapJob *job;
-  for (KMFolderJob *it = mJobList.first(); it;
-       it = mJobList.next()) {
-    if ((*it).msgList().first() == msg) {
-      job = dynamic_cast<KMImapJob*>(it);
+  ImapJob *job;
+  for( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
+    if ( it.current()->msgList().first() == msg) {
+      job = dynamic_cast<ImapJob*>( it.current() );
       mapJobData.remove( job->mJob );
       mJobList.remove( job );
       delete job;
       break;
     }
   }
-    */
 }
 
 //-----------------------------------------------------------------------------

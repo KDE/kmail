@@ -8,6 +8,8 @@
 #define kmfoldermbox_h
 
 #include "kmfolder.h"
+#include "mboxjob.h"
+using KMail::MboxJob;
 
 #define KMFolderMboxInherited KMFolder
 
@@ -24,6 +26,7 @@
 class KMFolderMbox : public KMFolder
 {
   Q_OBJECT
+  friend class MboxJob;
 public:
 
 
@@ -79,6 +82,9 @@ public:
   virtual QCString protocol() const { return "mbox"; }
 
 protected:
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx);
@@ -103,17 +109,17 @@ protected:
       is not older than the mbox file.
   */
   virtual IndexStatus indexStatus();
-  
+
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int removeContents();
-  
+
   /** Called by KMFolder::expunge() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
-  
+
 private:
   FILE *mStream;
   bool mFilesLocked; // TRUE if the files of the folder are locked (writable)

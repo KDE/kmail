@@ -35,6 +35,8 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 #include "mailinglist-magic.h"
 
 #include <mimelib/enum.h>
@@ -1248,16 +1250,17 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   clearSelection();
 
   for (msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
-    int idx = mFolder->find(msgBase);
+    int idx = msgBase->parent()->find(msgBase);
     assert(idx != -1);
     msg = mFolder->getMsg(idx);
-    if ((mFolder->protocol() == "imap") && !msg->isComplete())
+    if (msg->transferInProgress()) continue;
+    msg->setTransferInProgress(true);
+    if ( !msg->isComplete() )
     {
-      if (msg->transferInProgress()) continue;
-      msg->setTransferInProgress(TRUE);
-      KMImapJob *imapJob = new KMImapJob(msg);
-      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-        SLOT(slotFilterMsg(KMMessage*)));
+      FolderJob *job = mFolder->createJob( msg );
+      connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+              SLOT(slotFilterMsg(KMMessage*)));
+      job->start();
     } else {
       if (slotFilterMsg(msg) == 2) break;
     }
@@ -1818,7 +1821,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
       KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
       if (prevMsg)
       {
-        if (mFolder->protocol() == "imap") KMImapJob::ignoreJobsForMessage(prevMsg);
+        mFolder->ignoreJobsForMessage(prevMsg);
         if (!prevMsg->transferInProgress())
           mFolder->unGetMsg(mPrevCurrent->msgId());
       }

@@ -216,7 +216,6 @@ void KMSender::doSendMsg()
   int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
   if (percent > 100) percent = 100;
   KMBroadcastStatus::instance()->setStatusProgressPercent("SMTP", percent);
-
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kernel->filterMgr())
   {
@@ -314,7 +313,6 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
        // unGet this message:
       mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
     }
-
     mCurrentMsg = 0;
   }
 
@@ -405,7 +403,7 @@ void KMSender::sendProcStarted(bool success)
     mSendProc = 0;
     mSendProcStarted = false;
     cleanup();
-    return;    
+    return;
   }
   doSendMsgAux();
 }
@@ -802,7 +800,7 @@ bool KMSendSendmail::finish(bool destructive)
   delete mMailerProc;
   mMailerProc = 0;
   if (destructive)
-    	deleteLater(); 
+    	deleteLater();
   return TRUE;
 }
 
@@ -825,7 +823,7 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
-  
+
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
     // extended BCC handling to prevent TOs and CCs from seeing
     // BBC information by looking at source of an OpenPGP encrypted mail

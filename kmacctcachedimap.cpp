@@ -36,6 +36,7 @@ using KMail::IMAPProgressDialog;
 #include "kmfoldercachedimap.h"
 #include "kmfolderimap.h"
 #include "kmmainwin.h"
+#include "cachedimapjob.h"
 
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
@@ -237,8 +238,8 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   mapJobData.clear();
 
   // Clear the joblist. Make SURE to stop the job emitting "finished"
-  for( KMCachedImapJob *job=mJobList.first(); job; job=mJobList.next() )
-    job->setPassiveDestructor(true);
+  for( QPtrListIterator<CachedImapJob> it( mJobList ); it.current(); ++it )
+    it.current()->setPassiveDestructor( true );
   mJobList.setAutoDelete(true);
   mJobList.clear();
   mJobList.setAutoDelete(false);

@@ -68,6 +68,8 @@
 #include "kmsystemtray.h"
 #include "vacation.h"
 using KMail::Vacation;
+#include "folderjob.h"
+using KMail::FolderJob;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1503,7 +1505,7 @@ void KMMainWin::slotMsgSelected(KMMessage *msg)
   if (msg && msg->parent() && !msg->isComplete())
   {
     mMsgView->clear();
-    KMFolderJob *job = msg->parent()->createJob(msg);
+    FolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
     job->start();
@@ -1722,7 +1724,7 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
   if (msg->parent() && !msg->isComplete())
   {
-    KMFolderJob *job = msg->parent()->createJob(msg);
+    FolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotMsgActivated(KMMessage*)));
     job->start();

@@ -187,7 +187,7 @@ bool KMFolderDir::reload(void)
         append(folder);
         folderList.append(folder);
       } else {
-	kdDebug() << fname << " is *not* a cached imap dir" << endl;
+        //kdDebug() << fname << " is *not* a cached imap dir" << endl;
 	// see if this is a maildir before assuming a subdir
 	if (!mImap && dir.exists(maildir))
 	{

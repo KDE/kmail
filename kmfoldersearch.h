@@ -58,7 +58,7 @@ protected slots:
   void slotFolderComplete(KMFolderImap *folder, bool success);
 
 protected:
-  friend class KMIndexSearchTarget; 
+  friend class KMIndexSearchTarget;
   void setRunning(bool b) { mRunning = b; }
   void setFoundCount(int f) { mFoundCount = f; }
   void setSearchedCount(int f) { mSearchedCount = f; }
@@ -72,7 +72,7 @@ private:
   QValueList<QGuardedPtr<KMFolder> > mFolders, mOpenedFolders;
   QValueList<QGuardedPtr<KMFolderImap> > mIncompleteFolders;
   SerNumList mSerNums;
-  QString mLastFolder;	
+  QString mLastFolder;
   int mSearchedCount, mFoundCount;
 };
 
@@ -131,12 +131,6 @@ public:
   virtual int compact();
   virtual bool isReadOnly() const;
   virtual QCString protocol() const { return "search"; }
-  virtual KMFolderJob* createJob(KMMessage *msg,
-				 KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
-				 KMFolder *folder = 0);
-  virtual KMFolderJob* createJob(QPtrList<KMMessage>& msgList, const QString& sets,
-				 KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
-				 KMFolder *folder = 0);
   virtual const KMMsgBase* getMsgBase(int idx) const;
   virtual KMMsgBase* getMsgBase(int idx);
   virtual int find(const KMMsgBase* msg) const;
@@ -151,6 +145,10 @@ public:
   virtual QString unreadIconPath() { return "mail_find"; }
 
 protected:
+  virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
+                                 KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob(QPtrList<KMMessage>& msgList, const QString& sets,
+                                 FolderJob::JobType jt, KMFolder *folder) const;
   virtual KMMessage* readMsg(int idx);
   virtual bool readIndex();
   virtual int removeContents();

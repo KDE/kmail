@@ -39,7 +39,7 @@ public:
 protected:
   void execute();
   void expireMessages();
-  void setParent( KMFolderMbox *parent );
+  void setParent( const KMFolderMbox *parent );
 protected slots:
   void startJob();
 private:

@@ -16,9 +16,12 @@
 #include "kmglobal.h"
 #include "mimelib/string.h"
 #include "kmfoldertype.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 
 #include <stdio.h>
 #include <qptrvector.h>
+#include <qobjectlist.h>
 
 class KMMessage;
 class KMFolderDir;
@@ -27,40 +30,6 @@ class KMMsgDict;
 class KMMsgDictREntry;
 
 #define KMFolderInherited KMFolderNode
-
-
-class KMFolderJob : public QObject
-{
-  Q_OBJECT
-
-public:
-  enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
-                 tGetMessage, tPutMessage, tCopyMessage, tExpireMessages };
-  KMFolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0  );
-  KMFolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
-               JobType jt = tGetMessage, KMFolder *folder = 0 );
-  virtual ~KMFolderJob();
-
-  QPtrList<KMMessage> msgList() const;
-  void start();
-  //void KMFolder* srcFolder() const;
-  //void KMFolder* destFolder() const;
-
-signals:
-  void messageRetrieved(KMMessage *);
-  void messageStored(KMMessage *);
-  void messageCopied(KMMessage *);
-  void messageCopied(QPtrList<KMMessage>);
-  void finished();
-protected:
-  virtual void execute()=0;
-  virtual void expireMessages()=0;
-
-  QPtrList<KMMessage> mMsgList;
-  JobType             mType;
-  QString             mSets;
-  KMFolder*           mDestFolder;
-};
 
 /** Mail folder.
  * (description will be here).
@@ -77,7 +46,7 @@ class KMFolder: public KMFolderNode
   Q_OBJECT
   friend class KMMsgBase;
   friend class KMMessage;
-
+  friend class FolderJob;
 public:
 
   /** This enum indicates the status of the index file. It's returned by
@@ -137,6 +106,20 @@ public:
 
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest) = 0;
+
+  /**
+   * These methods create respective FolderJob (You should derive FolderJob
+   * for each derived KMFolder).
+   */
+  virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
+                                KMFolder *folder = 0 ) const;
+  virtual FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                FolderJob::JobType jt = FolderJob::tGetMessage,
+                                KMFolder *folder = 0 ) const;
+  /**
+   * Removes and deletes all jobs associated with the particular message
+   */
+  virtual void ignoreJobsForMessage( KMMessage* );
 
   /** Provides access to the basic message fields that are also stored
     in the index. Whenever you only need subject, from, date, status
@@ -522,9 +505,23 @@ public slots:
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
 
+protected slots:
+  virtual void removeJob( QObject* );
+
 protected:
+  /**
+   * These two methods actually create the jobs. They have to be implemented
+   * in all folders.
+   * @see createJob
+   */
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const = 0;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const = 0;
   /** Escape a leading dot */
   virtual QString dotEscape(const QString&) const;
+
+  /** Adds a job to the folder*/
+  virtual void addJob( FolderJob* ) const;
 
   /** Load message from file and store it at given index. Returns 0
     on failure. */
@@ -534,7 +531,7 @@ protected:
   virtual bool readIndex();
 
   /** Read index header. Called from within readIndex(). */
-    virtual bool readIndexHeader(int *gv=0);
+  virtual bool readIndexHeader(int *gv=0);
 
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on
@@ -631,6 +628,11 @@ protected:
 
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
+  /** List of jobs created by this folder.
+   *  REMEBER to add jobs created via createJob
+   *  to this list.
+   */
+  mutable QPtrList<FolderJob> mJobList;
 };
 
 #endif /*kmfolder_h*/

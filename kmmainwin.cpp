@@ -68,6 +68,8 @@
 #include "kmsystemtray.h"
 #include "vacation.h"
 using KMail::Vacation;
+#include "folderjob.h"
+using KMail::FolderJob;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1668,13 +1670,13 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
-  if (msg && msg->parent() && (msg->parent()->protocol() == "imap") &&
-      !msg->isComplete())
+  if (msg && msg->parent() && !msg->isComplete())
   {
     mMsgView->clear();
-    KMImapJob *job = new KMImapJob(msg);
+    FolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
+    job->start();
   } else {
     mMsgView->setMsg(msg);
   }
@@ -1921,11 +1923,12 @@ void KMMainWin::slotPrevImportantMessage() {
 //called from headers. Message must not be deleted on close
 void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
-  if (!msg->isComplete() && mFolder->protocol() == "imap")
+  if (msg->parent() && !msg->isComplete())
   {
-    KMImapJob *job = new KMImapJob(msg);
+    FolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotMsgActivated(KMMessage*)));
+    job->start();
     return;
   }
 

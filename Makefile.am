@@ -67,7 +67,9 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
 		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
 		kmcommands.cpp transportmanager.cpp kmreadermainwin.cpp \
-		kmstartup.cpp folderpropertiesdialog.ui 
+		kmstartup.cpp folderpropertiesdialog.ui \
+		folderjob.cpp mboxjob.cpp \
+                maildirjob.cpp imapjob.cpp cachedimapjob.cpp
 
 #  kmail_part.cpp kmmainwidget.cpp kmmsgindex.cpp kmfolderindex.cpp kmfoldersearch.cpp 
 

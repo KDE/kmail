@@ -3,11 +3,18 @@
 
 #include "kmfolder.h"
 
+namespace KMail {
+  class FolderJob;
+  class MaildirJob;
+}
+using KMail::FolderJob; using KMail::MaildirJob;
+
 #define KMFolderMaildirInherited KMFolder
 
 class KMFolderMaildir : public KMFolder
 {
   Q_OBJECT
+  friend class MaildirJob;
 public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -69,20 +76,23 @@ public:
   virtual QCString protocol() const { return "maildir"; }
 
 protected:
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx);
-  
+
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int removeContents();
-  
+
   /** Called by KMFolder::expunge() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
-  
+
 private:
   void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
   QString constructValidFileName(QString& file, KMMsgStatus status);

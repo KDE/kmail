@@ -28,6 +28,8 @@
 #include "kmfoldertree.h"
 #include "kmundostack.h"
 #include "kmfoldermgr.h"
+#include "imapjob.h"
+using KMail::ImapJob;
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -165,7 +167,7 @@ void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
-  if (folder) 
+  if (folder)
   {
     if (aMsg->enableUndo())
     {
@@ -219,7 +221,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
     msg->setTransferInProgress(true);
 
-  KMImapJob *imapJob = 0;
+  ImapJob *imapJob = 0;
   if (msgParent)
   {
     mAccount->tempOpenFolder(msgParent);
@@ -235,9 +237,10 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             int idx = msgParent->find(msg);
             assert(idx != -1);
             msg = msgParent->getMsg(idx);
-            imapJob = new KMImapJob(msg, KMImapJob::tPutMessage, this);
+            imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
             connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
                 SLOT(addMsgQuiet(KMMessage*)));
+            imapJob->start();
           }
 
         } else {
@@ -255,9 +258,10 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             // we need the messages that belong to the current set to pass them to the ImapJob
             QPtrList<KMMessage> temp_msgs = splitMessageList(*it, msgList);
 
-            imapJob = new KMImapJob(temp_msgs, *it, KMImapJob::tMoveMessage, this);
+            imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
             connect(imapJob, SIGNAL(messageCopied(QPtrList<KMMessage>)),
                 SLOT(addMsgQuiet(QPtrList<KMMessage>)));
+            imapJob->start();
           }
         }
         if (aIndex_ret) *aIndex_ret = -1;
@@ -287,9 +291,10 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
       assert(idx != -1);
       msg = msgParent->getMsg(idx);
     }
-    imapJob = new KMImapJob(msg, KMImapJob::tPutMessage, this);
+    imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
     connect(imapJob, SIGNAL(messageStored(KMMessage*)),
         SLOT(addMsgQuiet(KMMessage*)));
+    imapJob->start();
   }
 
   if (aIndex_ret) *aIndex_ret = -1;
@@ -314,7 +319,8 @@ void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
     // we need the messages that belong to the current set to pass them to the ImapJob
     QPtrList<KMMessage> temp_msgs = splitMessageList(*it, msgList);
 
-    new KMImapJob(temp_msgs, *it, KMImapJob::tCopyMessage, this);
+    ImapJob *job = new ImapJob(temp_msgs, *it, ImapJob::tCopyMessage, this);
+    job->start();
   }
 }
 
@@ -409,7 +415,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
   connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
           this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
   mAccount->displayProgress();
-  
+
   return TRUE;
 }
 
@@ -847,6 +853,36 @@ QCString KMFolderImap::statusToFlags(KMMsgStatus status)
   return flags;
 }
 
+//-------------------------------------------------------------
+FolderJob*
+KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
+                           KMFolder *folder ) const
+{
+  ImapJob *job = new ImapJob( msg, jt, dynamic_cast<KMFolderImap*>(folder) );
+  return job;
+}
+
+//-------------------------------------------------------------
+FolderJob*
+KMFolderImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                           FolderJob::JobType jt, KMFolder *folder ) const
+{
+  ImapJob *job = new ImapJob( msgList, sets, jt, dynamic_cast<KMFolderImap*>(folder) );
+  return job;
+}
+
+//-------------------------------------------------------------
+void
+KMFolderImap::ignoreJobsForMessage( KMMessage* msg )
+{
+  if (!msg || msg->transferInProgress())
+    return;
+  KMAcctImap *account;
+  if ( !(account = static_cast<KMFolderImap*>(msg->parent())->account()) )
+    return;
+
+  account->ignoreJobsForMessage( msg );
+}
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
@@ -1066,353 +1102,6 @@ bool KMFolderImap::autoExpunge()
 }
 
 //-----------------------------------------------------------------------------
-KMImapJob::KMImapJob(KMMessage *msg, JobType jt, KMFolderImap* folder)
-{
-  mMsg = msg;
-  QPtrList<KMMessage> list; list.append(msg);
-  init(jt, msg->headerField("X-UID"), folder, list);
-}
-
-//-----------------------------------------------------------------------------
-KMImapJob::KMImapJob(QPtrList<KMMessage>& msgList, QString sets, 
-    JobType jt, KMFolderImap* folder)
-{
-  mMsg = msgList.first();
-  init(jt, sets, folder, msgList);
-}
-
-//-----------------------------------------------------------------------------
-void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder, 
-    QPtrList<KMMessage>& msgList)
-{
-  assert(jt == tGetMessage || folder);
-  KMMessage* msg = msgList.first();
-  mType = jt;
-  mDestFolder = folder;
-  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->parent());
-  KMAcctImap *account = (folder) ? folder->account() : msg_parent->account();
-  account->mJobList.append(this);
-  if (jt == tPutMessage)
-  {
-    // transfers the complete message to the server
-    KURL url = account->getUrl();
-    url.setPath(folder->imapPath() + ";SECTION="
-      + QString::fromLatin1(KMFolderImap::statusToFlags(msg->status())));
-    KMAcctImap::jobData jd;
-    jd.parent = 0; jd.offset = 0;
-    jd.total = 1; jd.done = 0;
-    jd.msgList.append(msg);
-    QCString cstr(msg->asString());
-    int a = cstr.find("\nX-UID: ");
-    int b = cstr.find('\n', a);
-    if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-    mData.resize(cstr.length() + cstr.contains('\n'));
-    unsigned int i = 0;
-    for (char *ch = cstr.data(); *ch; ch++)
-    {
-      if (*ch == '\n') { mData.at(i) = '\r'; i++; }
-      mData.at(i) = *ch; i++;
-    }
-    jd.data = mData;
-    if (!account->makeConnection())
-    {
-      account->mJobList.remove(this);
-      delete this;
-      return;
-    }
-    KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
-    KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
-    mJob = simpleJob;
-    account->mapJobData.insert(mJob, jd);
-    connect(mJob, SIGNAL(result(KIO::Job *)),
-        SLOT(slotPutMessageResult(KIO::Job *)));
-    connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
-        SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)));
-    connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-        SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)));    
-    account->displayProgress();
-  }
-  else if (jt == tCopyMessage || jt == tMoveMessage)
-  {
-    KURL url = account->getUrl();
-    KURL destUrl = account->getUrl();
-    destUrl.setPath(folder->imapPath());
-    url.setPath(msg_parent->imapPath() + ";UID=" + sets);
-    KMAcctImap::jobData jd;
-    jd.parent = 0; mOffset = 0;
-    jd.total = 1; jd.done = 0;
-    jd.msgList = msgList;
-
-    QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly);
-
-    stream << (int) 'C' << url << destUrl;
-
-    if (!account->makeConnection())
-    {
-      account->mJobList.remove(this);
-      delete this;
-      return;
-    }
-    KIO::SimpleJob *simpleJob = KIO::special(url, packedArgs, FALSE);
-    KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
-    mJob = simpleJob;
-    account->mapJobData.insert(mJob, jd);
-    connect(mJob, SIGNAL(result(KIO::Job *)),
-        SLOT(slotCopyMessageResult(KIO::Job *)));
-    if (jt == tMoveMessage)
-    {
-      connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-          SLOT(slotCopyMessageInfoData(KIO::Job *, const QString &)));    
-    }
-    account->displayProgress();
-  } else {
-    slotGetNextMessage();
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-KMImapJob::~KMImapJob()
-{
-  if (mDestFolder)
-  {
-    KMAcctImap *account = mDestFolder->account();
-    if (!account || !mJob) return;
-    QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-      account->mapJobData.find(mJob);
-    if (it == account->mapJobData.end()) return;
-    if ( !(*it).msgList.isEmpty() )
-    {
-      for ( KMMessage* msg = (*it).msgList.first(); msg; msg = (*it).msgList.next() )
-        msg->setTransferInProgress(false);
-    }
-  }
-  emit finished();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotGetNextMessage()
-{
-  KMFolderImap *msgParent = static_cast<KMFolderImap*>(mMsg->parent());
-  KMAcctImap *account = msgParent->account();
-  if (mMsg->headerField("X-UID").isEmpty())
-  {
-    emit messageRetrieved(mMsg);
-    account->mJobList.remove(this);
-    delete this;
-    return;
-  }
-  KURL url = account->getUrl();
-  url.setPath(msgParent->imapPath() + ";UID="
-    + mMsg->headerField("X-UID"));
-  KMAcctImap::jobData jd;
-  jd.parent = 0;
-  jd.total = 1; jd.done = 0;
-  if (!account->makeConnection())
-  {
-    account->mJobList.remove(this);
-    delete this;
-    return;
-  }
-  KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
-  KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
-  mJob = simpleJob;
-  account->mapJobData.insert(mJob, jd);
-  connect(mJob, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotGetMessageResult(KIO::Job *)));
-  connect(mJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
-  account->displayProgress();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotGetMessageResult(KIO::Job * job)
-{
-  if( !mMsg || !mMsg->parent() )
-    return;
-  KMAcctImap *account = static_cast<KMFolderImap*>(mMsg->parent())->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    account->mapJobData.find(job);
-  if (it == account->mapJobData.end()) return;
-  if (job->error())
-  {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
-    return;
-  } else {
-    if ((*it).data.size() > 0)
-    {
-      QString uid = mMsg->headerField("X-UID");
-      (*it).data.resize((*it).data.size() + 1);
-      (*it).data[(*it).data.size() - 1] = '\0';
-      mMsg->fromString(QCString((*it).data));
-      mMsg->setHeaderField("X-UID",uid);
-      mMsg->setComplete( TRUE );
-      emit messageRetrieved(mMsg);
-    } else {
-      emit messageRetrieved(0);
-    }
-    mMsg = 0;
-  }
-  if (account->slave()) account->mapJobData.remove(it);
-  account->displayProgress();
-  if (account->slave()) account->mJobList.remove(this);
-  delete this;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
-{
-  KMAcctImap *account = mDestFolder->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    account->mapJobData.find(job);
-  if (it == account->mapJobData.end()) return;
-
-  if ((*it).data.size() - (*it).offset > 0x8000)
-  {
-    data.duplicate((*it).data.data() + (*it).offset, 0x8000);
-    (*it).offset += 0x8000;
-  }
-  else if ((*it).data.size() - (*it).offset > 0)
-  {
-    data.duplicate((*it).data.data() + (*it).offset, (*it).data.size() - (*it).offset);
-    (*it).offset = (*it).data.size();
-  } else data.resize(0);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotPutMessageResult(KIO::Job *job)
-{
-  KMAcctImap *account = mDestFolder->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    account->mapJobData.find(job);
-  if (it == account->mapJobData.end()) return;
-  if (job->error())
-  {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
-    return;
-  } else {
-    if ( !(*it).msgList.isEmpty() )
-    {
-      emit messageStored((*it).msgList.last());
-      (*it).msgList.removeLast();
-    } else if (mMsg)
-    {
-      emit messageStored(mMsg);
-    }
-    mMsg = 0;
-  }
-  if (account->slave()) account->mapJobData.remove(it);
-  account->displayProgress();
-  if (account->slave()) account->mJobList.remove(this);
-  delete this;
-}
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
-{
-  KMAcctImap *account = mDestFolder->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    account->mapJobData.find(job);
-  if (it == account->mapJobData.end()) return;
-  if (data.find("UID") != -1)
-  {
-    int uid = (data.right(data.length()-4)).toInt();
-
-    if ( !(*it).msgList.isEmpty() )
-    {
-      const ulong * sernum = (ulong *)(*it).msgList.last()->getMsgSerNum();
-      kdDebug() << "insert sernum " << (*it).msgList.last()->getMsgSerNum() << " for " << uid << endl;
-      mDestFolder->insertUidSerNumEntry(uid, sernum);
-    } else if (mMsg)
-    {
-      const ulong * sernum = (ulong *)mMsg->getMsgSerNum();
-      kdDebug() << "insert sernum " << mMsg->getMsgSerNum() << " for " << uid << endl;
-      mDestFolder->insertUidSerNumEntry(uid, sernum);
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotCopyMessageResult(KIO::Job *job)
-{
-  KMAcctImap *account = mDestFolder->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    account->mapJobData.find(job);
-  if (it == account->mapJobData.end()) return;
-  if (job->error())
-  {
-    account->slotSlaveError( account->slave(), job->error(),
-        job->errorText() );
-    return;
-  } else {
-    if ( !(*it).msgList.isEmpty() )
-    {
-      emit messageCopied((*it).msgList);
-    } else if (mMsg) {
-      emit messageCopied(mMsg);
-      mMsg = 0;
-    }
-  }
-  if (account->slave()) account->mapJobData.remove(it);
-  account->displayProgress();
-  if (account->slave()) account->mJobList.remove(this);
-  delete this;
-}
-
-//-----------------------------------------------------------------------------
-void KMImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
-{
-  KMAcctImap *account = mDestFolder->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    account->mapJobData.find(job);
-  if (it == account->mapJobData.end()) return;
-
-  if (data.find("UID") != -1)
-  {
-    // split
-    QString oldUid = data.section(' ', 1, 1);
-    QString newUid = data.section(' ', 2, 2);
-
-    // get lists of uids
-    QValueList<int> olduids = KMFolderImap::splitSets(oldUid);
-    QValueList<int> newuids = KMFolderImap::splitSets(newUid);
-
-    int index = -1;
-    if ( !(*it).msgList.isEmpty() )
-    {
-      KMMessage * msg;
-      for ( msg = (*it).msgList.first(); msg; msg = (*it).msgList.next() )
-      {
-        uint uid = msg->headerField("X-UID").toInt();
-        index = olduids.findIndex(uid);
-        if (index > -1)
-        {
-          // found, get the new uid
-          const ulong * sernum = (ulong *)msg->getMsgSerNum();
-          mDestFolder->insertUidSerNumEntry(newuids[index], sernum);
-        }
-      }
-    } else if (mMsg) {
-      uint uid = mMsg->headerField("X-UID").toInt();
-      index = olduids.findIndex(uid);
-      if (index > -1)
-      {
-        // found, get the new uid
-        const ulong * sernum = (ulong *)mMsg->getMsgSerNum();
-        mDestFolder->insertUidSerNumEntry(newuids[index], sernum);
-      }
-    }
-  }
-}
-
-//-----------------------------------------------------------------------------
 void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
@@ -1424,28 +1113,6 @@ void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
   buff.writeBlock(data.data(), data.size());
   buff.close();
 }
-
-
-//-----------------------------------------------------------------------------
-void KMImapJob::ignoreJobsForMessage(KMMessage *msg)
-{
-  if (!msg || msg->transferInProgress()) return;
-  KMAcctImap *account;
-  if (!msg->parent() || !(account = static_cast<KMFolderImap*>(msg->parent())
-    ->account())) return;
-  for (KMImapJob *it = account->mJobList.first(); it;
-    it = account->mJobList.next())
-  {
-    if ((*it).mMsg == msg)
-    {
-      account->mapJobData.remove( (*it).mJob );
-      account->mJobList.remove( it );
-      delete it;
-      break;
-    }
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::deleteMessage(KMMessage * msg)

@@ -28,10 +28,15 @@
 
 class KMFolderCachedImap;
 class KMFolderTreeItem;
-class KMImapJob;
 namespace KMail {
   class IMAPProgressDialog;
+  class FolderJob;
+  class ImapJob;
+  class CachedImapJob;
 };
+using KMail::ImapJob;
+using KMail::CachedImapJob;
+
 namespace KIO {
   class Job;
 };
@@ -39,8 +44,8 @@ namespace KIO {
 class KMAcctCachedImap: public KMail::ImapAccountBase
 {
   Q_OBJECT
-  friend class KMImapJob;
-  friend class KMCachedImapJob;
+  friend class ImapJob;
+  friend class CachedImapJob;
 
 protected: // ### Hacks
   void setPrefixHook();
@@ -155,7 +160,7 @@ protected slots:
   void postProcessNewMail( KMFolder * f ) { base::postProcessNewMail( f ); }
 
 private:
-  QPtrList<KMCachedImapJob> mJobList;
+  QPtrList<CachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;
   mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;

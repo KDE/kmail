@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <qvaluelist.h>
+#include <qptrlist.h>
 
 #include <qdialog.h>
 
@@ -11,79 +12,13 @@
 #include "kmacctimap.h"
 #include "kmfoldertype.h"
 
+namespace KMail {
+  class FolderJob;
+}
+using KMail::FolderJob;
 class KMAcctCachedImap;
-class KMFolderCachedImap;
 
 #define KMFolderCachedImapInherited KMFolderMaildir
-
-class KMCachedImapJob : public QObject {
-  Q_OBJECT
-public:
-  enum JobType { tListDirectory, tGetFolders, tCreateFolder, tExpungeFolder,
-		 tDeleteMessage, tGetMessage, tPutMessage, tAddSubfolders,
-		 tDeleteFolders, tCheckUidValidity, tRenameFolder };
-
-  KMCachedImapJob( const QValueList<KMMessage*>& msgs,
-		   JobType type = tGetMessage, KMFolderCachedImap* folder=0 );
-  KMCachedImapJob( const QValueList<KMFolderCachedImap*>& folders,
-		   JobType type = tAddSubfolders,
-		   KMFolderCachedImap* folder = 0 );
-  KMCachedImapJob( const QValueList<ulong>& uids,
-		   JobType type = tGetMessage, KMFolderCachedImap* folder = 0,
-		   const QValueList<int>& flags = QValueList<int>() );
-  KMCachedImapJob( const QString& string1, JobType type,
-		   KMFolderCachedImap* folder );
-  KMCachedImapJob( const QStringList& folders, JobType type, KMFolderCachedImap* folder = 0 );
-  KMCachedImapJob( JobType type, KMFolderCachedImap* folder );
-
-  ~KMCachedImapJob();
-
-  void setPassiveDestructor( bool passive ) { mPassiveDestructor = passive; }
-  bool passiveDestructor() { return mPassiveDestructor; }
-
-signals:
-  void messageRetrieved( KMMessage * );
-  void messageStored( KMMessage * );
-  void finished();
-
-protected:
-  virtual void deleteMessages( const QString& uids );
-  virtual void expungeFolder();
-  virtual void checkUidValidity();
-  virtual void renameFolder( const QString &newName );
-
-protected slots:
-  virtual void slotGetNextMessage( KIO::Job *job = 0 );
-  virtual void slotAddNextSubfolder( KIO::Job *job = 0 );
-  virtual void slotPutNextMessage();
-  virtual void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );
-  virtual void slotPutMessageResult( KIO::Job *job );
-  virtual void slotDeleteResult( KIO::Job *job );
-  virtual void slotDeleteNextFolder( KIO::Job *job = 0 );
-  virtual void slotCheckUidValidityResult( KIO::Job *job );
-  virtual void slotRenameFolderResult( KIO::Job *job );
-
-private:
-  void init( JobType type );
-
-  JobType mType;
-  KMFolderCachedImap *mFolder;
-  KMAcctCachedImap   *mAccount;
-  QValueList<KMMessage*> mMsgList;
-  QValueList<KMFolderCachedImap*> mFolderList;
-  QValueList<ulong> mUidList;
-  QValueList<int> mFlags;
-  QStringList mFolderPathList; // Used only for folder deletion
-  ulong mUid;
-  int mFlag;
-  KMMessage* mMsg;
-  QString mString; // Used as uids and as rename target
-  KIO::Job *mJob;
-  QByteArray mData;
-
-  // If this is true, the destructor won't emit finished()
-  bool mPassiveDestructor;
-};
 
 class KMFolderCachedImap : public KMFolderMaildir
 {
@@ -220,13 +155,18 @@ protected slots:
 
   /** Utility methods for syncing. Finds new messages
       in the local cache that must be uploaded */
-  virtual QValueList<KMMessage*> findNewMessages();
+  virtual QPtrList<KMMessage> findNewMessages();
   /** Utility methods for syncing. Finds new subfolders
       in the local cache that must be created in the server */
   virtual QValueList<KMFolderCachedImap*> findNewFolders();
 
   /** This returns false if we have subfolders. Otherwise it returns ::canRemoveFolder() */
   virtual bool canRemoveFolder() const;
+
+    /** Reimplemented from KMFolder */
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const;
 
 public slots:
   /**
@@ -245,7 +185,7 @@ signals:
 
   /* emitted at each state */
   void newState( const QString& folderName, int progressLevel, const QString& syncStatus );
- 
+
   /** emitted when we enter the state "state" and
      have to process "number" items (for example messages
   */

@@ -56,6 +56,8 @@
 #include "kmreaderwin.h"
 #include "kmsender.h"
 #include "kmundostack.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 
 #include "kmcommands.h"
 #include "kmcommands.moc"
@@ -164,19 +166,19 @@ void KMCommand::transferSelectedMsgs()
     KMMessage *thisMsg = mFolder->getMsg(idx);
     if (!thisMsg) continue;
 
-    if (thisMsg->parent() && thisMsg->parent()->protocol() == "imap" &&
-        !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
+    if (thisMsg->parent()  && !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
     {
       // the message needs to be transferred first
       complete = false;
       KMCommand::mCountJobs++;
-      KMImapJob *imapJob = new KMImapJob(thisMsg);
+      FolderJob *job = thisMsg->parent()->createJob(thisMsg);
       // emitted when the message was transferred successfully
-      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-          this, SLOT(slotMsgTransfered(KMMessage*)));
+      connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+              this, SLOT(slotMsgTransfered(KMMessage*)));
       // emitted when the job is destroyed
-      connect(imapJob, SIGNAL(finished()),
-          this, SLOT(slotJobFinished()));
+      connect(job, SIGNAL(finished()),
+              this, SLOT(slotJobFinished()));
+      job->start();
       // msg musn't be deleted
       thisMsg->setTransferInProgress(true);
     } else {
@@ -1054,14 +1056,14 @@ void KMCopyCommand::execute()
       newMsg->setStatus(msg->status());
       newMsg->setComplete(msg->isComplete());
 
-      if (mSrcFolder && (mSrcFolder->protocol() == "imap") &&
-	  !newMsg->isComplete())
+      if ( mSrcFolder && !newMsg->isComplete())
       {
         kernel->filterMgr()->tempOpenFolder(mDestFolder);
 	newMsg->setParent(msg->parent());
-        KMImapJob *imapJob = new KMImapJob(newMsg);
-        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+        FolderJob *job = mSrcFolder->createJob(newMsg);
+        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
 		mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+        job->start();
       } else {
 	int rc, index;
 	rc = mDestFolder->addMsg(newMsg, &index);

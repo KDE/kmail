@@ -506,6 +506,25 @@ KMFolder::IndexStatus KMFolderMbox::indexStatus()
          : KMFolder::IndexOk;
 }
 
+//-------------------------------------------------------------
+FolderJob*
+KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
+                           KMFolder *folder ) const
+{
+  KMail::MboxJob *job = new KMail::MboxJob( msg, jt, folder );
+  job->setParent( this );
+  return job;
+}
+
+//-------------------------------------------------------------
+FolderJob*
+KMFolderMbox::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                           FolderJob::JobType jt, KMFolder *folder ) const
+{
+  KMail::MboxJob *job = new KMail::MboxJob( msgList, sets, jt, folder );
+  job->setParent( this );
+  return job;
+}
 
 //-----------------------------------------------------------------------------
 int KMFolderMbox::createIndexFromContents()
@@ -571,7 +590,7 @@ int KMFolderMbox::createIndexFromContents()
 	    replyToIdStr = referencesStr;
 	  }
 	  mi = new KMMsgInfo(this);
-	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, 
+	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr,
 		   KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
 		   KMMsgMDNStateUnknown, offs, size);
 	  mi->setStatus("RO","O");
@@ -803,16 +822,16 @@ if( fileD0.open( IO_WriteOnly ) ) {
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
-*/  
+*/
     aMsg->setStatusFields();
-/*  
+/*
 QFile fileD1( "testdat_xx-kmfoldermbox-1" );
 if( fileD1.open( IO_WriteOnly ) ) {
     QDataStream ds( &fileD1 );
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD1.close();  // If data is 0 we just create a zero length file.
 }
-*/  
+*/
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
@@ -1117,7 +1136,6 @@ int KMFolderMbox::compact()
   return 0;
 
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFolderMbox::setLockType( LockType ltype )

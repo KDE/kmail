@@ -20,7 +20,8 @@ class KMAcctFolder;
 class KConfig;
 class KMMessage;
 class KMFolderChachedImap;
-
+namespace  KMail { class FolderJob; }
+using KMail::FolderJob;
 
 class KMPrecommand : public QObject
 {
@@ -51,7 +52,7 @@ class KMAccount: public QObject
 {
   Q_OBJECT
   friend class KMAcctMgr;
-  friend class KMFolderJob;
+  friend class FolderJob;
   friend class KMFolderCachedImap; /* HACK for processNewMSg() */
 
 public:
@@ -91,7 +92,7 @@ public:
    * account. */
   KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
   virtual void setFolder(KMFolder*, bool addAccount = false);
-  
+
   /**
    * the id of the trash folder (if any) for this account
    */
@@ -219,7 +220,7 @@ protected:
   bool mCheckingMail;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
-  QPtrList<KMFolderJob>  mJobList;
+  QPtrList<FolderJob>  mJobList;
 
 private:
     /**

@@ -36,7 +36,7 @@ public:
               JobType jt = tGetMessage, KMFolder *folder = 0 );
   virtual ~MaildirJob();
 
-  void setParentFolder( KMFolderMaildir* parent );
+  void setParentFolder( const KMFolderMaildir* parent );
 protected:
   void execute();
   void expireMessages();
