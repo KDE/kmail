@@ -64,8 +64,6 @@
 #include <qfile.h>
 #include <qdom.h>
 #include "kmfoldercachedimap.h"
-#include "kmacctcachedimap.h"
-#include "kmacctimap.h"
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
@@ -75,13 +73,15 @@ static void reloadFolderTree();
 static const struct {
   const char* contentsTypeStr; // the string used in the DCOP interface
   const char* mimetype;
+  KFolderTreeItem::Type treeItemType;
+  const char* annotation;
 } s_folderContentsType[] = {
-  { "Mail", "application/x-vnd.kolab.mail" },
-  { "Calendar", "application/x-vnd.kolab.event" },
-  { "Contact", "application/x-vnd.kolab.contact" },
-  { "Note", "application/x-vnd.kolab.note" },
-  { "Task", "application/x-vnd.kolab.task" },
-  { "Journal", "application/x-vnd.kolab.journal" }
+  { "Mail", "application/x-vnd.kolab.mail", KFolderTreeItem::Other, "mail"},
+  { "Calendar", "application/x-vnd.kolab.event", KFolderTreeItem::Calendar, "event" },
+  { "Contact", "application/x-vnd.kolab.contact", KFolderTreeItem::Contacts, "contact" },
+  { "Note", "application/x-vnd.kolab.note", KFolderTreeItem::Notes, "note" },
+  { "Task", "application/x-vnd.kolab.task", KFolderTreeItem::Tasks, "task" },
+  { "Journal", "application/x-vnd.kolab.journal", KFolderTreeItem::Journals, "journal" }
 };
 
 static QString folderContentsType( KMail::FolderContentsType type )
@@ -100,6 +100,11 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
     if ( type == s_folderContentsType[i].contentsTypeStr )
       return static_cast<KMail::FolderContentsType>( i );
   return KMail::ContentsTypeMail;
+}
+
+const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContentsType type )
+{
+  return s_folderContentsType[type].annotation;
 }
 
 /*
@@ -212,14 +217,14 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const QString& attachment
 #if 0
 static void debugBodyParts( const char* foo, const KMMessage& msg )
 {
-  kdDebug() << "--debugBodyParts " << foo << "--" << endl;
+  kdDebug(5006) << "--debugBodyParts " << foo << "--" << endl;
   for ( DwBodyPart* part = msg.getFirstDwBodyPart(); part; part = part->Next() ) {
     if ( part->hasHeaders() ) {
-      kdDebug() << " bodypart: " << part << endl;
-      kdDebug() << "        " << part->Headers().AsString().c_str() << endl;
+      kdDebug(5006) << " bodypart: " << part << endl;
+      kdDebug(5006) << "        " << part->Headers().AsString().c_str() << endl;
     }
     else
-      kdDebug() << " part " << part << " has no headers" << endl;
+      kdDebug(5006) << " part " << part << " has no headers" << endl;
   }
 }
 #else
@@ -1152,16 +1157,7 @@ KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
         || folder == mNotes || folder == mTasks
         || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
       KMail::FolderContentsType ct = folder->storage()->contentsType();
-      if ( ct == KMail::ContentsTypeCalendar )
-        return KFolderTreeItem::Calendar;
-      if ( ct == KMail::ContentsTypeContact )
-        return KFolderTreeItem::Contacts;
-      if ( ct == KMail::ContentsTypeNote )
-        return KFolderTreeItem::Notes;
-      if ( ct == KMail::ContentsTypeTask )
-        return KFolderTreeItem::Tasks;
-      if ( ct == KMail::ContentsTypeJournal )
-        return KFolderTreeItem::Journals;
+      return s_folderContentsType[ct].treeItemType;
     }
   }
 
@@ -1404,10 +1400,6 @@ void KMailICalIfaceImpl::readConfig()
 
   // Read remaining options
   const bool hideFolders = GlobalSettings::hideGroupwareFolders();
-  unsigned int folderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
-  if( folderLanguage > 3 ) folderLanguage = 0;
-  if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
-    folderLanguage = 0; // xml storage -> English
   QString parentName = GlobalSettings::theIMAPResourceFolderParent();
 
   // Find the folder parent
@@ -1443,29 +1435,34 @@ void KMailICalIfaceImpl::readConfig()
 
   // Make sure the folder parent has the subdirs
   bool makeSubFolders = false;
-  KMFolderNode* node;
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Calendar, folderLanguage ) );
-  if( !node || node->isDir() ) {
+  KMFolder* folder;
+  folder = findStandardResourceFolder( folderParentDir, KMail::ContentsTypeCalendar );
+  if( !folder ) {
+    kdDebug(5006) << "Calendar folder not found in " << parentName << endl;
     makeSubFolders = true;
     mCalendar = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks, folderLanguage ) );
-  if( !node || node->isDir() ) {
+  folder = findStandardResourceFolder( folderParentDir, KMail::ContentsTypeTask );
+  if( !folder ) {
+    kdDebug(5006) << "Tasks folder not found in " << parentName << endl;
     makeSubFolders = true;
     mTasks = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Journals, folderLanguage ) );
-  if( !node || node->isDir() ) {
+  folder = findStandardResourceFolder( folderParentDir, KMail::ContentsTypeJournal );
+  if( !folder ) {
+    kdDebug(5006) << "Journals folder not found in " << parentName << endl;
     makeSubFolders = true;
     mJournals = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Contacts, folderLanguage ) );
-  if( !node || node->isDir() ) {
+  folder = findStandardResourceFolder( folderParentDir, KMail::ContentsTypeContact );
+  if( !folder ) {
+    kdDebug(5006) << "Contacts folder not found in " << parentName << endl;
     makeSubFolders = true;
     mContacts = 0;
   }
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Notes, folderLanguage ) );
-  if( !node || node->isDir() ) {
+  folder = findStandardResourceFolder( folderParentDir, KMail::ContentsTypeNote );
+  if( !folder ) {
+    kdDebug(5006) << "Notes folder not found in " << parentName << endl;
     makeSubFolders = true;
     mNotes = 0;
   }
@@ -1499,7 +1496,8 @@ void KMailICalIfaceImpl::readConfig()
 
   // Make the new settings work
   mUseResourceIMAP = true;
-  mFolderLanguage = folderLanguage;
+  mFolderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
+  if( mFolderLanguage > 3 ) mFolderLanguage = 0;
   mFolderParentDir = folderParentDir;
   mFolderParent = folderParent;
   mFolderType = folderType;
@@ -1509,17 +1507,29 @@ void KMailICalIfaceImpl::readConfig()
   cleanup();
 
   // Set the new folders
-  mCalendar = initFolder( KFolderTreeItem::Calendar, "GCa", KMail::ContentsTypeCalendar );
-  mTasks    = initFolder( KFolderTreeItem::Tasks, "GTa", KMail::ContentsTypeTask );
-  mJournals = initFolder( KFolderTreeItem::Journals, "GTa", KMail::ContentsTypeJournal );
-  mContacts = initFolder( KFolderTreeItem::Contacts, "GCo", KMail::ContentsTypeContact );
-  mNotes    = initFolder( KFolderTreeItem::Notes, "GNo", KMail::ContentsTypeNote );
+  mCalendar = initFolder( "GCa", KMail::ContentsTypeCalendar );
+  mTasks    = initFolder( "GTa", KMail::ContentsTypeTask );
+  mJournals = initFolder( "GTa", KMail::ContentsTypeJournal );
+  mContacts = initFolder( "GCo", KMail::ContentsTypeContact );
+  mNotes    = initFolder( "GNo", KMail::ContentsTypeNote );
 
   mCalendar->setLabel( i18n( "Calendar" ) );
   mTasks->setLabel( i18n( "Tasks" ) );
   mJournals->setLabel( i18n( "Journal" ) );
   mContacts->setLabel( i18n( "Contacts" ) );
   mNotes->setLabel( i18n( "Notes" ) );
+
+  // Store final annotation (with .default) so that we won't ask again on next startup
+  if ( mCalendar->folderType() == KMFolderTypeCachedImap )
+    static_cast<KMFolderCachedImap *>( mCalendar->storage() )->updateAnnotationFolderType();
+  if ( mTasks->folderType() == KMFolderTypeCachedImap )
+    static_cast<KMFolderCachedImap *>( mTasks->storage() )->updateAnnotationFolderType();
+  if ( mJournals->folderType() == KMFolderTypeCachedImap )
+    static_cast<KMFolderCachedImap *>( mJournals->storage() )->updateAnnotationFolderType();
+  if ( mContacts->folderType() == KMFolderTypeCachedImap )
+    static_cast<KMFolderCachedImap *>( mContacts->storage() )->updateAnnotationFolderType();
+  if ( mNotes->folderType() == KMFolderTypeCachedImap )
+    static_cast<KMFolderCachedImap *>( mNotes->storage() )->updateAnnotationFolderType();
 
   // Connect the expunged signal
   connect( mCalendar, SIGNAL( expunged() ), this, SLOT( slotRefreshCalendar() ) );
@@ -1532,8 +1542,8 @@ void KMailICalIfaceImpl::readConfig()
   connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
 
   // BEGIN TILL CHECKME
-  kdDebug() << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
-  kdDebug() << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
+  kdDebug(5006) << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
+  kdDebug(5006) << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
 
   // Find all extra folders
   QStringList folderNames;
@@ -1587,7 +1597,7 @@ void KMailICalIfaceImpl::slotCheckDone()
 {
   QString parentName = GlobalSettings::theIMAPResourceFolderParent();
   KMFolder* folderParent = kmkernel->findFolderById( parentName );
-  kdDebug() << k_funcinfo << " folderParent=" << folderParent << endl;
+  kdDebug(5006) << k_funcinfo << " folderParent=" << folderParent << endl;
   if ( folderParent )  // cool it exists now
   {
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
@@ -1604,19 +1614,29 @@ void KMailICalIfaceImpl::slotRefreshJournals() { slotRefresh( "Journal" ); }
 void KMailICalIfaceImpl::slotRefreshContacts() { slotRefresh( "Contact" ); }
 void KMailICalIfaceImpl::slotRefreshNotes() { slotRefresh( "Notes" ); }
 
-KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
-                                          const char* typeString,
+KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
                                           KMail::FolderContentsType contentsType )
 {
   // Figure out what type of folder this is supposed to be
   KMFolderType type = mFolderType;
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 
+  KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
+  //kdDebug(5006) << "KMailICalIfaceImpl::initFolder " << folderName( itemType ) << endl;
+
   // Find the folder
-  KMFolder* folder = 0;
-  KMFolderNode* node = mFolderParentDir->hasNamedFolder( folderName( itemType ) );
-  if( node && !node->isDir() ) folder = static_cast<KMFolder*>(node);
-  if( !folder ) {
+  KMFolder* folder = findStandardResourceFolder( mFolderParentDir, contentsType );
+  if( !folder && GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) {
+    // Maybe there's a folder with the right name - well, change its type then
+    KMFolderNode* node = mFolderParentDir->hasNamedFolder( folderName( itemType ) );
+    if ( node && !node->isDir() ) {
+      folder = static_cast<KMFolder *>( node );
+      folder->storage()->setContentsType( contentsType );
+      kdDebug(5006) << "Adjusted type of " << folder->location() << " to contentsType " << contentsType << endl;
+    }
+  }
+
+  if ( !folder ) {
     // The folder isn't there yet - create it
     folder =
       mFolderParentDir->createFolder( folderName( itemType ), false, type );
@@ -1758,5 +1778,37 @@ static void vPartMicroParser( const QString& str, QString& s )
   s.truncate(0);
 }
 
+
+KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType )
+{
+  if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML )
+  {
+    // Look for a folder with an annotation like "event.default"
+    QPtrListIterator<KMFolderNode> it( *folderParentDir );
+    for ( ; it.current(); ++it ) {
+      if ( !it.current()->isDir() ) {
+        KMFolder* folder = static_cast<KMFolder *>( it.current() );
+        if ( folder->folderType() == KMFolderTypeCachedImap ) {
+          QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
+          //kdDebug(5006) << "findStandardResourceFolder: " << folder->name() << " has annotation " << annotation << endl;
+          if ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
+            return folder;
+        }
+      }
+    }
+    kdDebug(5006) << "findStandardResourceFolder: no standard resource folder for " << s_folderContentsType[contentsType].annotation << endl;
+    return 0;
+  }
+  else // icalvcard: look up standard resource folders by name
+  {
+    KFolderTreeItem::Type itemType = s_folderContentsType[contentsType].treeItemType;
+    unsigned int folderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
+    if( folderLanguage > 3 ) folderLanguage = 0;
+    KMFolderNode* node = folderParentDir->hasNamedFolder( folderName( itemType, folderLanguage ) );
+    if ( !node || node->isDir() )
+      return 0;
+    return static_cast<KMFolder*>( node );
+  }
+}
 
 #include "kmailicalifaceimpl.moc"
