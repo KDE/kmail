@@ -15,7 +15,6 @@ using KMail::MessageProperty;
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
-#include "kmmsgdict.h"
 #include "undostack.h"
 #include "kmversion.h"
 #include <libkpimidentities/identity.h>
@@ -208,13 +207,13 @@ QCString KMMessage::id() const
 
 
 //-----------------------------------------------------------------------------
+//WARNING: This method updates the memory resident cache of serial numbers
+//WARNING: held in MessageProperty, but it does not update the persistent
+//WARNING: store of serial numbers on the file system that is managed by
+//WARNING: KMMsgDict
 void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 {
-  unsigned long oldMsgSerNum = getMsgSerNum();
   MessageProperty::setSerialCache( this, newMsgSerNum );
-
-  if ( newMsgSerNum && oldMsgSerNum )
-    kmkernel->msgDict()->replace( newMsgSerNum, this );
 }
 
 
