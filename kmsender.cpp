@@ -23,6 +23,7 @@
 #include "kmaccount.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
+#include "kmmsgdict.h"
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -271,6 +272,7 @@ void KMSender::doSendMsg()
     }
     if (!mCurrentMsg->parent())
       parent->addMsg( mCurrentMsg );
+    setStatusByLink( mCurrentMsg );
     if (mCurrentMsg->parent() && !imapSentFolder) // unGet this message
       mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
 
@@ -524,6 +526,26 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
   return NULL;
 }
 
+//-----------------------------------------------------------------------------
+void KMSender::setStatusByLink(const KMMessage *aMsg)
+{
+  ulong msn;
+  KMMsgStatus status;
+  aMsg->getLink(&msn, &status);
+
+  if (msn) {
+    KMFolder *folder;
+    int index;
+    kernel->msgDict()->getLocation(msn, &folder, &index);
+
+    if (folder) {
+      folder->open();
+      KMMsgBase *link = folder->getMsgBase(index);
+      link->setStatus(status);
+      folder->close();
+    }
+  }
+}
 
 //=============================================================================
 //=============================================================================

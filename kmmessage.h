@@ -399,6 +399,11 @@ public:
     virtual void setStatus(const KMMsgStatus status);
     virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
+    /** Links this message to @p aMsg, setting link type to @p aStatus. */
+    void link(const KMMessage *aMsg, KMMsgStatus aStatus);
+    /** Returns the link information into @p retMsg and @p retStatus. */
+    void getLink(ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
+    
 protected:
     /** Convert wildcards into normal string */
     QString formatString(const QString&) const;

@@ -74,7 +74,10 @@ public:
 
   /** sets a status msg and emits statusMsg() */
   void setStatusMsg(const QString&);
-
+  
+  /** sets replied/forwarded status in the linked message for @p aMsg. */
+  void setStatusByLink(const KMMessage *aMsg);
+  
 signals:
   /** Emitted regularly to inform the user of what is going on */
   void statusMsg(const QString&);

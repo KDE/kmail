@@ -182,6 +182,8 @@ QCString KMMessage::asSendableString()
   msg.removeHeaderField("X-KMail-Identity");
   msg.removeHeaderField("X-KMail-Fcc");
   msg.removeHeaderField("X-KMail-Redirect-From");
+  msg.removeHeaderField("X-KMail-Link-Message");
+  msg.removeHeaderField("X-KMail-Link-Type");
   msg.removeHeaderField("Bcc");
   return msg.asString();
 }
@@ -844,7 +846,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   if (!recognized)
     msg->setSubject("Re: " + subject());
 
-  setStatus(KMMsgStatusReplied);
+  // setStatus(KMMsgStatusReplied);
+  msg->link(this, KMMsgStatusReplied);
 
   return msg;
 }
@@ -918,7 +921,9 @@ KMMessage* KMMessage::createRedirect(void)
   msg->setHeaderField("X-KMail-Redirect-From", from());
   msg->setSubject(subject());
   msg->setFrom(from());
-  setStatus(KMMsgStatusForwarded);
+  
+  // setStatus(KMMsgStatusForwarded);
+  msg->link(this, KMMsgStatusForwarded);
 
   return msg;
 }
@@ -1078,7 +1083,9 @@ KMMessage* KMMessage::createForward(void)
   }
   if (!recognized)
     msg->setSubject("Fwd: " + subject());
-  setStatus(KMMsgStatusForwarded);
+
+  // setStatus(KMMsgStatusForwarded);
+  msg->link(this, KMMsgStatusForwarded);
 
   return msg;
 }
@@ -2465,3 +2472,38 @@ void KMMessage::setStatus(const KMMsgStatus aStatus)
     mDirty = TRUE;
 }
 
+//-----------------------------------------------------------------------------
+void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)
+{
+  Q_ASSERT(aStatus == KMMsgStatusReplied || aStatus == KMMsgStatusForwarded);
+  
+  QString message = QString::number(aMsg->getMsgSerNum());
+  QString type = "";
+  if (aStatus == KMMsgStatusReplied)
+    type = "reply";
+  else if (aStatus == KMMsgStatusForwarded)
+    type = "forward";
+  
+  QString status = QString::number((int)aStatus);
+  setHeaderField("X-KMail-Link-Message", message);
+  setHeaderField("X-KMail-Link-Type", type);
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::getLink(ulong *retMsgSerNum, KMMsgStatus *retStatus) const
+{
+  *retStatus = KMMsgStatusUnknown;
+
+  QString message = headerField("X-KMail-Link-Message");
+  if (message.isEmpty())
+    *retMsgSerNum = 0;
+
+  else {
+    *retMsgSerNum = message.toULong();
+    QString type = headerField("X-KMail-Link-Type");
+    if (type == "reply")
+      *retStatus = KMMsgStatusReplied;
+    else if (type == "forward")
+      *retStatus = KMMsgStatusForwarded;
+  }
+}
