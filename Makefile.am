@@ -106,8 +106,7 @@ dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 
-appsdir = $(kde_appsdir)/Internet
-apps_DATA = KMail.desktop
+xdg_apps_DATA = KMail.desktop
 
 EXTRA_DIST = KMail.desktop
 
