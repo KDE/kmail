@@ -304,6 +304,7 @@ void FolderStorage::reallyAddMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void FolderStorage::reallyAddCopyOfMsg(KMMessage* aMsg)
 {
+  if ( !aMsg ) return; // messageRetrieved(0) is always possible
   aMsg->setParent( 0 );
   aMsg->setTransferInProgress( false );
   addMsg( aMsg );

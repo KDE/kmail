@@ -2007,6 +2007,7 @@ void KMMainWidget::slotDisplayCurrentMessage()
 //called from headers. Message must not be deleted on close
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
 {
+  if ( !msg ) return;
   if (msg->parent() && !msg->isComplete())
   {
     FolderJob *job = msg->parent()->createJob(msg);

@@ -770,28 +770,30 @@ void KMSaveMsgCommand::slotSaveDataReq()
 
 void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
 {
-  QCString str( msg->mboxMessageSeparator() );
-  str += KMFolderMbox::escapeFrom( msg->asString() );
-  str += "\n";
-  msg->setTransferInProgress(false);
+  if ( msg ) {
+    QCString str( msg->mboxMessageSeparator() );
+    str += KMFolderMbox::escapeFrom( msg->asString() );
+    str += "\n";
+    msg->setTransferInProgress(false);
 
-  mData = str;
-  mData.resize(mData.size() - 1);
-  mOffset = 0;
-  QByteArray data;
-  int size;
-  // Unless it is great than 64 k send the whole message. kio buffers for us.
-  if( mData.size() > (unsigned int) MAX_CHUNK_SIZE )
-    size = MAX_CHUNK_SIZE;
-  else
-    size = mData.size();
+    mData = str;
+    mData.resize(mData.size() - 1);
+    mOffset = 0;
+    QByteArray data;
+    int size;
+    // Unless it is great than 64 k send the whole message. kio buffers for us.
+    if( mData.size() > (unsigned int) MAX_CHUNK_SIZE )
+      size = MAX_CHUNK_SIZE;
+    else
+      size = mData.size();
 
-  data.duplicate( mData, size );
-  mJob->sendAsyncData( data );
-  mOffset += size;
+    data.duplicate( mData, size );
+    mJob->sendAsyncData( data );
+    mOffset += size;
+  }
   ++mMsgListIndex;
   // Get rid of the message.
-  if (msg->parent()) {
+  if ( msg && msg->parent()) {
     int idx = -1;
     KMFolder * p = 0;
     kmkernel->msgDict()->getLocation( msg, &p, &idx );

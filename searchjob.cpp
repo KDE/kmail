@@ -227,33 +227,30 @@ void SearchJob::slotSearchFolderComplete()
 void SearchJob::slotSearchMessageArrived( KMMessage* msg )
 {
   --mRemainingMsgs;
-  if ( mLocalSearchPattern->op() == KMSearchPattern::OpAnd )
-  {
-    // imap and local search have to match
-    if ( mLocalSearchPattern->matches( msg ) &&
-         ( mImapSearchData.contains( QString::number(msg->UID()) ) ||
-           mImapSearchData.isEmpty() ) )
-    {
-      Q_UINT32 serNum = msg->getMsgSerNum();
-      mSearchSerNums.append( serNum );
+  if ( msg ) { // messageRetrieved(0) is always possible
+    if ( mLocalSearchPattern->op() == KMSearchPattern::OpAnd ) {
+      // imap and local search have to match
+      if ( mLocalSearchPattern->matches( msg ) &&
+          ( mImapSearchData.contains( QString::number(msg->UID()) ) ||
+            mImapSearchData.isEmpty() ) ) {
+        Q_UINT32 serNum = msg->getMsgSerNum();
+        mSearchSerNums.append( serNum );
+      }
+    } else if ( mLocalSearchPattern->op() == KMSearchPattern::OpOr ) {
+      // imap or local search have to match
+      if ( mLocalSearchPattern->matches( msg ) ||
+          mImapSearchData.contains( QString::number(msg->UID()) ) ) {
+        Q_UINT32 serNum = msg->getMsgSerNum();
+        mSearchSerNums.append( serNum );
+      }
     }
-  } else if ( mLocalSearchPattern->op() == KMSearchPattern::OpOr )
-  {
-    // imap or local search have to match
-    if ( mLocalSearchPattern->matches( msg ) ||
-         mImapSearchData.contains( QString::number(msg->UID()) ) )
-    {
-      Q_UINT32 serNum = msg->getMsgSerNum();
-      mSearchSerNums.append( serNum );
-    }
+    int idx = -1;
+    KMFolder * p = 0;
+    kmkernel->msgDict()->getLocation( msg, &p, &idx );
+    if ( idx != -1 )
+      mFolder->unGetMsg( idx );
   }
-  int idx = -1;
-  KMFolder * p = 0;
-  kmkernel->msgDict()->getLocation( msg, &p, &idx );
-  if ( idx != -1 )
-    mFolder->unGetMsg( idx );
-  if ( mRemainingMsgs == 0 )
-  {
+  if ( mRemainingMsgs == 0 ) {
     emit searchDone( mSearchSerNums, mSearchPattern );
   }
 }
@@ -330,7 +327,7 @@ void SearchJob::slotSearchDataSingleMessage( KIO::Job* job, const QString& data 
 //-----------------------------------------------------------------------------
 void SearchJob::slotSearchSingleMessage( KMMessage* msg )
 {
-  if ( mLocalSearchPattern->matches( msg ) )
+  if ( msg && mLocalSearchPattern->matches( msg ) )
     emit searchDone( mSerNum, mSearchPattern );
   else
     emit searchDone( 0, mSearchPattern );

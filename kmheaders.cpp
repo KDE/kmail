@@ -1728,6 +1728,7 @@ void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
 //-----------------------------------------------------------------------------
 int KMHeaders::slotFilterMsg(KMMessage *msg)
 {
+  if ( !msg ) return 2; // messageRetrieve(0) is always possible
   msg->setTransferInProgress(false);
   int filterResult = kmkernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
   if (filterResult == 2) {
