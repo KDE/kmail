@@ -2435,7 +2435,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
               keyTrust = pgp->keyTrust( signer );
 
             // HTMLize the signer's user id and create mailto: link
-            signer.replace( QRegExp("&"), "&;" );
+            signer.replace( QRegExp("&"), "&amp;" );
             signer.replace( QRegExp("<"), "&lt;" );
             signer.replace( QRegExp(">"), "&gt;" );
             signer.replace( QRegExp("\""), "&quot;" );
