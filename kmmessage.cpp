@@ -3320,8 +3320,8 @@ QString KMMessage::encodeIDN( const QString & addrSpec )
 //-----------------------------------------------------------------------------
 QString KMMessage::normalizeAddressesAndDecodeIDNs( const QString & str )
 {
-  kdDebug(5006) << "KMMessage::normalizeAddressesAndDecodeIDNs( \""
-                << str << "\" )" << endl;
+//  kdDebug(5006) << "KMMessage::normalizeAddressesAndDecodeIDNs( \""
+//                << str << "\" )" << endl;
   if( str.isEmpty() )
     return str;
 
@@ -3348,10 +3348,11 @@ QString KMMessage::normalizeAddressesAndDecodeIDNs( const QString & str )
       }
     }
   }
-
+/*
   kdDebug(5006) << "normalizedAddressList: \""
                 << normalizedAddressList.join( ", " )
                 << "\"" << endl;
+*/
   return normalizedAddressList.join( ", " );
 }
 
@@ -3420,7 +3421,7 @@ KMMessage::AddressParseResult KMMessage::splitAddress( const QCString& address,
                                                        QCString & addrSpec,
                                                        QCString & comment )
 {
-  kdDebug(5006) << "KMMessage::splitAddress( " << address << " )" << endl;
+//  kdDebug(5006) << "KMMessage::splitAddress( " << address << " )" << endl;
 
   displayName = "";
   addrSpec = "";
@@ -3546,11 +3547,11 @@ KMMessage::AddressParseResult KMMessage::splitAddress( const QCString& address,
       displayName.truncate( 0 );
     }
   }
-
+/*
   kdDebug(5006) << "display-name : \"" << displayName << "\"" << endl;
   kdDebug(5006) << "comment      : \"" << comment << "\"" << endl;
   kdDebug(5006) << "addr-spec    : \"" << addrSpec << "\"" << endl;
-
+*/
   return AddressOk;
 }
 
