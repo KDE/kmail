@@ -1432,8 +1432,13 @@ KMReaderWin* KMKernel::activeReaderWin()
     }
   }
   if ( startupMode ) // return the first window which will probably get focus shortly
-    return static_cast<KMMainWin*>(KMainWindow::memberList->first())->mainKMWidget()->messageView();
-
+  {
+    KMMainWin *win = static_cast<KMMainWin*>(KMainWindow::memberList->first());  
+    if ( win && win->inherits("KMTopLevelWidget") && win->isA("KMMainWin") )
+    {
+      return win->mainKMWidget()->messageView();
+    }
+  }
   return 0;
 }
 
