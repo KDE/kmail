@@ -1,7 +1,41 @@
 [KMail Profile]
 Name=Purist
+Name[af]=suiwerheid
+Name[bg]=Пурист
+Name[de]=Puristisch
+Name[es]=Purista
+Name[fi]=Puristi
+Name[fr]=Puriste
+Name[he]=טהור
+Name[hu]=Egyszerű
+Name[lt]=Itin paprastas
+Name[lv]=Puritānis
+Name[pt]=Purista
+Name[pt_BR]=Purista
+Name[sk]=Puristický
+Name[sv]=Ren
+Name[xh]=isiPurist
 Name[xx]=xx
 Comment=Most features turned off, KDE global settings are used
+Comment[af]=mees funksies geskakel af, kde globale instellings word gebruik word
+Comment[ar]=أغلب الميزات غبر عاملة, سيتم استخدام اعدادات KDE العامة
+Comment[az]=Bir çox xüsusiyyət açıq deyil, KDE qlobal qurğuları işlədilir
+Comment[da]=De fleste egenskabe slået fra, KDE's globale opsætning brugt
+Comment[de]=Die meisten Funktionen werden zugunsten von KDE-Voreinstellungen deaktiviert
+Comment[es]=La mayor parte de las propiedades desactivadas, se utilizan las opciones globales de KDE
+Comment[fi]=Suurin osa ominaisuuksia poissa päältä, KDE:n jjärjestelmänlaajuisia asetuksia käytetään
+Comment[fr]=Presque toutes les fonctionnalités désactivées, utilisation de la configuration globale de KDE
+Comment[he]=רוב התכונות כבויות, שימוש בהגדרות הגלובליות של KDE
+Comment[hu]=A legtöbb csingilingi kikapcsolva, a KDE globális beállításait használja
+Comment[lt]=Dauguma savybių išjungta, naudojami globalūs KDE nustatymai
+Comment[lv]=Vairums īpašību izslēgtas, tiek izmantoti KDE globālie uzstādījumi
+Comment[nl]=meeste mogelijkheden uitgezet, de globale KDE-instellingen worden gebruikt
+Comment[pt]=A maioria das funcionalidades desligada, são usadas as opções globais do KDE
+Comment[pt_BR]=A maioria das funcionalidades desligada, são usadas as opções globais do KDE
+Comment[sk]=Väčšina funkcií vypnutá a použije sa globálne nastavenie KDE
+Comment[sl]=Večina možnosti izključenih, uporabljene splošne nastavitve KDE
+Comment[sv]=De flesta funktioner avstängda, KDE:s allmänna inställningar används
+Comment[xh]=Imisebenzi emininzi icinyiwe, izicwangciso ezingqukuva ze KDE ziyasetyenziswa
 Comment[xx]=xx
 
 [Reader]

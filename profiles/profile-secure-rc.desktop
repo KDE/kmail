@@ -1,7 +1,47 @@
 [KMail Profile]
 Name=Most secure
+Name[af]=mees beveilig
+Name[ar]=الأكثر أمنا
+Name[az]=Ən etibarlı
+Name[bg]=Повече сигурност
+Name[cs]=Nejbezpečnější
+Name[da]=Mest sikker
+Name[de]=Am sichersten
+Name[es]=Lo más seguro
+Name[fi]=Turvallisin
+Name[fr]=Sécurisé
+Name[he]=אבטחה מירבית
+Name[hu]=Maximális biztonság
+Name[lt]=Saugiausias
+Name[lv]=Vissdrošāks
+Name[nl]=Meest veilig
+Name[pt]=Mais seguro
+Name[pt_BR]=Mais seguro
+Name[sk]=Najbezpečnejšie
+Name[sl]=Najvarneje
+Name[sv]=Säkrast
+Name[tr]=En güvenli
+Name[xh]=Ukhuseleko olukhulu
 Name[xx]=xx
 Comment=Sets all necessary options to achive maximum security
+Comment[ar]=تقوم بتغيير كل الخيارات لتحقيق أعلى أمان
+Comment[az]=Maksimal təhlükəsizlik üçün bütün mümkün seçənəyi həyata keçirir
+Comment[da]=Sætter alle nødvendige tilvalg til højest mulige sikkerhed
+Comment[de]=Aktivierung aller nötigen Optionen zur Erreichung der höchstmöglichen Sicherheitsstufe
+Comment[es]=Establece todas las opciones necesarias para conseguir un máximo de seguridad
+Comment[fi]=Asettaa kaikki tarvittavat asetukset suurimman turvallisuuden saavuttamiseksi
+Comment[fr]=Règle les options pour une sécurité maximale
+Comment[he]=מגדיר את כל האפשרויות הנחוצות על מנת להשיג אבטחה מירבית
+Comment[hu]=Az összes, adatvédelmi kockázatot jelentő lehetőség kikapcsolva
+Comment[lt]=Nustato visas būtinas maksimaliam saugumui parinktis
+Comment[lv]=Uzstāda visas nepieciešamās opcijas maksimālas drošības iegūšanai
+Comment[nl]=stelt alle benodigde opties in om de maximale veiligheid te verkrijgen
+Comment[pt]=Configura todas as opções necessárias para uma maior segurança
+Comment[pt_BR]=Configura todas as opções necessárias para uma maior segurança
+Comment[sk]=Zapne všetky nutné možnosti pre dosiahnutie najvyššej bezpečnosti
+Comment[sl]=Nastavi vse potrebne možnosti za največjo varnost
+Comment[sv]=Ställer in alla nödvändiga alternativ för att uppnå maximal säkerhet
+Comment[xh]=Icwangcisa zonke iinketho eziyimfuneko ukufumana ukhuseleko olukhulu
 Comment[xx]=xx
 
 [Composer]

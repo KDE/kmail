@@ -1,16 +1,29 @@
 [KMail Profile]
 Name=HTML
+Name[af]=html
+Name[he]=עם HTML
+Name[xx]=xx
 Comment=Standard profile with HTML preview enabled - less secure!
+Comment[af]=standaard profiel met html voorskou geaktiveer - minder beveilig!
+Comment[ar]=تشكيل قياسي مع تمكين استعراض HTML - أقل أمانا!
 Comment[az]=HTML nümayişli standard - ən az etibarlı!
 Comment[da]=Standard-profil med HTML-forhåndsvisning aktiveret - mindre sikkert!
+Comment[de]=Standardprofil mit aktivierter HTML-Vorschau - weniger sicher
 Comment[es]=Perfil estándar con previsualizaión HTML activada - menos seguro
+Comment[fi]=Normaali profiili HTML esikatselua käyttäville - vähemmän turvallinen!
 Comment[fr]=Profil standard avec l'aperçu HTML activé - Moins sécurisé !
 Comment[he]=הפרופיל הסטנדרטי עם תצוגה מקדימה של HTML - פחות בטוח
+Comment[hu]=Normál profil HTML-előnézettel - biztonsági kockázatot jelent!
+Comment[lt]=Standartinis profilis su HTML peržiūra – mažiau saugus!
 Comment[lv]=Standarta profils ar atļautu HTML apskati - nedrošāks!
+Comment[nl]=standaardprofiel met HTML -oorbeeld geactiveerd - minder veilig !
 Comment[pt]=Perfil padrão com antevisão de HTML activada - menos segura!
 Comment[pt_BR]=Perfil padrão com antevisão de HTML activada - menos segura!
 Comment[sk]=Štandardný profil pre povolený náhlad HTML - menej bezpečné!
+Comment[sl]=Standardni profil z vključenim ogledom HTML - manj varno!
 Comment[sv]=Standardprofil med HTML-förhandsgranskning aktiverad - mindre säker!
+Comment[xh]=Imboniselo yabucala esezantsi nge HTML imboniso yenziwe - ukhuseleko oluncinane!
+Comment[xx]=xx
 
 [Reader]
 BackgroundColor=255,255,255
