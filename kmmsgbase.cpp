@@ -406,6 +406,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
     }
     if (cr < latinLen)
     {
+      if (latin[start] == 34) start++;
       numQuotes = 1;
       while (cr < latinLen)
       {
@@ -420,6 +421,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
       {
         stop = cr - 1;
         while (stop >= start && latin[stop] != 32) stop--;
+        if (latin[stop - 1] == 34) stop--;
         if (stop <= start) stop = cr;
       } else stop = cr;
       while (pos < start) { result += latin[pos]; pos++; }
