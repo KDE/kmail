@@ -232,7 +232,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     viewOnly = true;
     const QString filename =
       QString::fromLocal8Bit( args->getOption( "view" ) );
-    messageFile = KURL( filename );
+    messageFile = KURL::fromPathOrURL( filename );
     if ( !messageFile.isValid() ) {
       messageFile = KURL();
       messageFile.setPath( filename );
