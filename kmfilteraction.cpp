@@ -8,6 +8,8 @@
 #endif
 
 #include "kmfilteraction.h"
+#include "kmfilteraction.moc"
+
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
@@ -19,6 +21,8 @@
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
 #include "kmmessage.h"
+#include <kiconloader.h>
+#include <kicontheme.h>
 
 #include <kregexp3.h>
 #include <ktempfile.h>
@@ -26,6 +30,11 @@
 #include <klocale.h>
 #include <kprocess.h>
 #include <kdeversion.h>
+#include <kaudioplayer.h>
+#include <kurlrequester.h>
+#include <qpushbutton.h>
+#include <kfiledialog.h>
+#include <kstandarddirs.h>
 
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
 #include <qlabel.h>
@@ -33,7 +42,7 @@
 #include <qcombobox.h>
 #include <klineedit.h>
 #include <qtextcodec.h>
-
+#include <qfile.h>
 #include <assert.h>
 
 
@@ -94,7 +103,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
     //delete mdn;
   }
 }
-					
+
 
 //=============================================================================
 //
@@ -1452,6 +1461,7 @@ public:
   KMFilterActionExtFilter();
   virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
+
 };
 
 KMFilterAction* KMFilterActionExtFilter::newAction(void)
@@ -1468,6 +1478,174 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
 {
   return KMFilterActionWithCommand::genericProcess( aMsg, true ); // use output
 }
+
+
+//=============================================================================
+// KMFilterActionExecSound - execute command
+// Execute a sound
+//=============================================================================
+KMSoundTestWidget::KMSoundTestWidget(QWidget *parent, const char *name)
+    : QWidget( parent, name)
+{
+    QHBoxLayout *lay1 = new QHBoxLayout( this );
+    m_playButton = new QPushButton( this, "m_playButton" );
+    m_playButton->setPixmap( SmallIcon( "1rightarrow" ) );
+    connect( m_playButton, SIGNAL( clicked() ), SLOT( playSound() ));
+    lay1->addWidget( m_playButton );
+
+    m_urlRequester = new KURLRequester( this );
+    lay1->addWidget( m_urlRequester );
+    connect( m_urlRequester, SIGNAL( openFileDialog( KURLRequester * )),
+             SLOT( openSoundDialog( KURLRequester * )));
+
+}
+
+KMSoundTestWidget::~KMSoundTestWidget()
+{
+}
+
+void KMSoundTestWidget::openSoundDialog( KURLRequester * )
+{
+    static bool init = true;
+    if ( !init )
+        return;
+
+    init = false;
+
+    KFileDialog *fileDialog = m_urlRequester->fileDialog();
+    fileDialog->setCaption( i18n("Select Sound File") );
+    QStringList filters;
+    filters << "audio/x-wav" << "audio/x-mp3" << "application/x-ogg"
+            << "audio/x-adpcm";
+    fileDialog->setMimeFilter( filters );
+
+   QStringList soundDirs = KGlobal::dirs()->resourceDirs( "sound" );
+
+    if ( !soundDirs.isEmpty() ) {
+        KURL soundURL;
+        QDir dir;
+        dir.setFilter( QDir::Files | QDir::Readable );
+        QStringList::ConstIterator it = soundDirs.begin();
+        while ( it != soundDirs.end() ) {
+            dir = *it;
+            if ( dir.isReadable() && dir.count() > 2 ) {
+                soundURL.setPath( *it );
+                fileDialog->setURL( soundURL );
+                break;
+            }
+            ++it;
+        }
+    }
+
+}
+
+void KMSoundTestWidget::playSound()
+{
+    QString parameter= m_urlRequester->lineEdit()->text();
+    if ( parameter.isEmpty() )
+        return ;
+    QString play = parameter;
+    QString file = QString::fromLatin1("file:");
+    if (parameter.startsWith(file))
+        play = parameter.mid(file.length());
+    KAudioPlayer::play(QFile::encodeName(play));
+}
+
+
+QString KMSoundTestWidget::url() const
+{
+    return m_urlRequester->lineEdit()->text();
+}
+
+void KMSoundTestWidget::setUrl(const QString & url)
+{
+    m_urlRequester->lineEdit()->setText(url);
+}
+
+void KMSoundTestWidget::clear()
+{
+    m_urlRequester->lineEdit()->clear();
+}
+
+//=============================================================================
+//
+// KMFilterActionExecSound
+//
+//=============================================================================
+class KMFilterActionExecSound : public KMFilterActionWithTest
+{
+public:
+  KMFilterActionExecSound();
+  virtual ReturnCode process(KMMessage* msg) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterActionWithTest::KMFilterActionWithTest( const char* aName, const QString aLabel )
+  : KMFilterAction( aName, aLabel )
+{
+}
+
+KMFilterActionWithTest::~KMFilterActionWithTest()
+{
+}
+
+QWidget* KMFilterActionWithTest::createParamWidget( QWidget* parent ) const
+{
+  KMSoundTestWidget *le = new KMSoundTestWidget(parent);
+  le->setUrl( mParameter );
+  return le;
+}
+
+
+void KMFilterActionWithTest::applyParamWidgetValue( QWidget* paramWidget )
+{
+  mParameter = ((KMSoundTestWidget*)paramWidget)->url();
+}
+
+void KMFilterActionWithTest::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  ((KMSoundTestWidget*)paramWidget)->setUrl( mParameter );
+}
+
+void KMFilterActionWithTest::clearParamWidget( QWidget* paramWidget ) const
+{
+  ((KMSoundTestWidget*)paramWidget)->clear();
+}
+
+void KMFilterActionWithTest::argsFromString( const QString argsStr )
+{
+  mParameter = argsStr;
+}
+
+const QString KMFilterActionWithTest::argsAsString() const
+{
+  return mParameter;
+}
+
+
+KMFilterActionExecSound::KMFilterActionExecSound()
+  : KMFilterActionWithTest( "execute sound", i18n("execute sound") )
+{
+}
+
+KMFilterAction* KMFilterActionExecSound::newAction(void)
+{
+  return (new KMFilterActionExecSound());
+}
+
+
+KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage */*aMsg*/) const
+{
+    if ( mParameter.isEmpty() )
+        return ErrorButGoOn;
+    QString play = mParameter;
+    QString file = QString::fromLatin1("file:");
+    if (mParameter.startsWith(file))
+        play = mParameter.mid(file.length());
+    KAudioPlayer::play(QFile::encodeName(play));
+    return GoOn;
+}
+
 
 
 //=============================================================================
@@ -1493,6 +1671,7 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionAddHeader::newAction );
   insert( KMFilterActionRewriteHeader::newAction );
   // Register custom filter actions below this line.
+  insert( KMFilterActionExecSound::newAction );
 }
 // The int in the QDict constructor (23) must be a prime
 // and should be greater than the double number of KMFilterAction types

@@ -15,12 +15,35 @@
 #include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
+#include <qobject.h>
+#include <qwidget.h>
 
 class KMMessage;
 class QWidget;
 class KMFolder;
 class KTempFile;
+class KURLRequester;
+class QPushButton;
 
+class KMSoundTestWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    KMSoundTestWidget(QWidget *parent, const char *name=0L);
+    ~KMSoundTestWidget();
+    QString url() const;
+    void setUrl(const QString & url);
+    void clear();
+signals:
+    void testPressed();
+protected slots:
+    void playSound();
+    void openSoundDialog( KURLRequester * );
+
+private:
+    KURLRequester *m_urlRequester;
+    QPushButton *m_playButton;
+};
 
 //=========================================================
 //
@@ -74,7 +97,7 @@ public:
       critical error has occurred (eg. disk full), @p ErrorButGoOn if
       there was a non-critical error (e.g. invalid address in
       'forward' action), @p GoOn if the message shall be processed by
-      further filters and @p Ok otherwise. 
+      further filters and @p Ok otherwise.
   */
   virtual ReturnCode process(KMMessage* msg) const = 0;
 
@@ -499,6 +522,48 @@ public:
   virtual ReturnCode genericProcess( KMMessage * aMsg, bool filtering ) const;
 };
 
+
+
+class KMFilterActionWithTest : public KMFilterAction
+{
+public:
+  /** Initialize filter action with (english) name @p aName. This is
+      the name under which this action is known in the config file. */
+  KMFilterActionWithTest(const char* aName, const QString aLabel);
+    ~KMFilterActionWithTest();
+  /** Determines whether this action is valid. But this is just a
+      quick test. Eg., actions that have a mail address as parameter
+      shouldn't try real address validation, but only check if the
+      string representation is empty. */
+  virtual bool isEmpty() const { return mParameter.stripWhiteSpace().isEmpty(); }
+
+  /** Creates a widget for setting the filter action parameter. Also
+      sets the value of the widget. */
+  virtual QWidget* createParamWidget(QWidget* parent) const;
+
+  /** The filter action shall set it's parameter from the widget's
+      contents. It is allowed that the value is read by the action
+      before this function is called. */
+  virtual void applyParamWidgetValue(QWidget* paramWidget);
+
+  /** The filter action shall set it's widget's contents from it's
+      parameter. */
+  virtual void setParamWidgetValue(QWidget* paramWidget) const;
+
+  /** The filter action shall clear it's parameter widget's
+      contents. */
+  virtual void clearParamWidget(QWidget* paramWidget) const;
+
+  /** Read extra arguments from given string. */
+  virtual void argsFromString(const QString argsStr);
+
+  /** Return extra arguments as string. Must not contain newlines. */
+  virtual const QString argsAsString() const;
+
+    virtual void testFile() {};
+protected:
+  QString mParameter;
+};
 
 
 typedef KMFilterAction* (*KMFilterActionNewFunc)(void);
