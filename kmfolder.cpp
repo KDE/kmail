@@ -1784,7 +1784,9 @@ void KMFolder::readConfig()
   mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
   mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
   mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
-  mMailingListIdentity = config->readEntry("MailingListIdentity");
+  mIdentity = config->readEntry("Identity");
+  if ( mIdentity.isEmpty() ) // backward compatiblity
+      mIdentity = config->readEntry("MailingListIdentity");
 }
 
 //-----------------------------------------------------------------------------
@@ -1796,7 +1798,7 @@ void KMFolder::writeConfig()
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
-  config->writeEntry("MailingListIdentity", mMailingListIdentity);
+  config->writeEntry("Identity", mIdentity);
 }
 
 //-----------------------------------------------------------------------------

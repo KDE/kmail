@@ -690,17 +690,17 @@ void KMMainWin::slotCompose()
   KMComposeWin *win;
   KMMessage* msg = new KMMessage;
 
-  if (mFolder && mFolder->isMailingList()) {
-      kdDebug()<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
-    msg->initHeader(mFolder->mailingListIdentity());
-    msg->setTo(mFolder->mailingListPostAddress());
+  if ( mFolder ) {
+      msg->initHeader( mFolder->identity() );
 
-    win = new KMComposeWin(msg,mFolder->mailingListIdentity());
-  }
-  else {
-    msg->initHeader();
-    win = new KMComposeWin(msg);
-  }
+      if (mFolder->isMailingList()) {
+          kdDebug()<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
+
+          msg->setTo(mFolder->mailingListPostAddress());
+      }
+      win = new KMComposeWin(msg, mFolder->identity());
+  } else
+      win = new KMComposeWin(msg);
 
   win->show();
 
@@ -1364,8 +1364,8 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
   if (aUrl.protocol() == "mailto")
   {
     QString id = "";
-    if (mFolder && mFolder->isMailingList())
-      id = mFolder->mailingListIdentity();
+    if ( mFolder )
+      id = mFolder->identity();
 
     msg = new KMMessage;
     msg->initHeader(id);
@@ -1421,8 +1421,8 @@ void KMMainWin::slotMailtoCompose()
   KMMessage *msg = new KMMessage;
   QString id = "";
 
-  if (mFolder && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( mFolder )
+    id = mFolder->identity();
   msg->initHeader(id);
   msg->setTo(mUrlCurrent.path());
 

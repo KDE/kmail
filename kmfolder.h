@@ -248,18 +248,18 @@ public:
 
   void setMailingListPostAddress(const QString &address)
   { mMailingListPostingAddress = address; writeConfig(); }
-  const QString& mailingListPostAddress() const
+  QString mailingListPostAddress() const
   { return mMailingListPostingAddress; }
 
   void setMailingListAdminAddress(const QString &address)
   { mMailingListAdminAddress = address; writeConfig(); }
-  const QString& mailingListAdminAddress() const
+  QString mailingListAdminAddress() const
   { return mMailingListAdminAddress; }
 
-  void setMailingListIdentity(const QString &identity)
-  { mMailingListIdentity = identity; writeConfig(); }
-  const QString& mailingListIdentity() const
-  { return mMailingListIdentity; }
+  void setIdentity(const QString &identity)
+  { mIdentity = identity; writeConfig(); }
+  QString identity() const
+  { return mIdentity; }
 
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
@@ -384,7 +384,7 @@ protected:
   bool    mMailingListEnabled;
   QString mMailingListPostingAddress;
   QString mMailingListAdminAddress;
-  QString mMailingListIdentity;
+  QString mIdentity;
 
   QString    mImapPath;
   QString    mUidValidity;

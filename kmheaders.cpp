@@ -1255,8 +1255,8 @@ void KMHeaders::forwardMsg ()
   if (!msg) return;
 
   QString id = msg->headerField( "X-KMail-Identity" );
-  if (id.isEmpty() && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = mFolder->identity();
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createForward(), id);
   win->setCharset(msg->codec()->name(), TRUE);
@@ -1275,16 +1275,15 @@ void KMHeaders::forwardAttachedMsg ()
   if (msgList->count() >= 2) {
     // don't respect X-KMail-Identity headers because they might differ for
     // the selected mails
-    if (mFolder->isMailingList())
-      id = mFolder->mailingListIdentity();
+    id = mFolder->identity();
   }
   else if (msgList->count() == 1) {
     KMMessage *msg = currentMsg();
     id = msg->headerField( "X-KMail-Identity" );
-    if (id.isEmpty() && mFolder->isMailingList())
-      id = mFolder->mailingListIdentity();
+    if ( id.isEmpty() )
+      id = mFolder->identity();
   }
-      
+
   KMMessage *fwdMsg = new KMMessage;
 
   fwdMsg->initHeader(id);
@@ -1312,7 +1311,7 @@ void KMHeaders::forwardAttachedMsg ()
     // THIS HAS TO BE AFTER setCte()!!!!
     msgPart->setBodyEncoded(QCString(thisMsg->asString()));
     msgPart->setCharset("");
-    
+
     thisMsg->setStatus(KMMsgStatusForwarded);
 
     win->addAttach(msgPart);
@@ -1352,8 +1351,8 @@ void KMHeaders::noQuoteReplyToMsg()
 
   kernel->kbp()->busy();
   id = msg->headerField( "X-KMail-Identity" );
-  if (id.isEmpty() && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus(false);
@@ -1373,8 +1372,8 @@ void KMHeaders::replyToMsg (QString selection)
 
   kernel->kbp()->busy();
   id = msg->headerField( "X-KMail-Identity" );
-  if (id.isEmpty() && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();
@@ -1394,8 +1393,8 @@ void KMHeaders::replyAllToMsg (QString selection)
 
   kernel->kbp()->busy();
   id = msg->headerField( "X-KMail-Identity" );
-  if (id.isEmpty() && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();
@@ -1414,8 +1413,8 @@ void KMHeaders::replyListToMsg (QString selection)
 
   kernel->kbp()->busy();
   id = msg->headerField( "X-KMail-Identity" );
-  if (id.isEmpty() && mFolder->isMailingList())
-    id = mFolder->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(true, true, selection),id);
   win->setCharset(msg->codec()->name(), TRUE);
   win->setReplyFocus();

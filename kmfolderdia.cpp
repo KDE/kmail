@@ -130,10 +130,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   label = new QLabel( i18n("&Sender:"), idGroup );
   idLayout->addWidget( label );
-  mailingListIdentity = new QComboBox( idGroup );
-  mailingListIdentity->insertStringList( KMIdentity::identities() );
-  label->setBuddy( mailingListIdentity );
-  idLayout->addWidget( mailingListIdentity, 3 );
+  identity = new QComboBox( idGroup );
+  identity->insertStringList( KMIdentity::identities() );
+  label->setBuddy( identity );
+  idLayout->addWidget( identity, 3 );
 
   QGroupBox *mcGroup = new QGroupBox(  i18n("Misc" ), page );
   mcGroup->setColumnLayout( 0, Qt::Vertical );
@@ -163,10 +163,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     holdsMailingList->setChecked(folder->isMailingList());
     // markAnyMessage->setChecked( folder->isAnyMessageMarked() );
 
-    for (int i=0; i < mailingListIdentity->count(); ++i)
-      if (mailingListIdentity->text(i) == folder->mailingListIdentity()) {
-        mailingListIdentity->setCurrentItem(i);
-        break;
+    for (int i=0; i < identity->count(); ++i)
+      if (identity->text(i) == folder->identity()) {
+         identity->setCurrentItem(i);
+         break;
       }
   }
 
@@ -248,7 +248,7 @@ void KMFolderDialog::slotOk()
     folder->setMailingListPostAddress( mailingListPostAddress->text() );
 //   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
     folder->setMailingListAdminAddress( QString::null );
-    folder->setMailingListIdentity( mailingListIdentity->currentText() );
+    folder->setIdentity( identity->currentText() );
 // folder->setMarkAnyMessage( markAnyMessage->isChecked() );
   }
 

@@ -647,8 +647,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
   QString id;
 
   id = headerField("X-KMail-Identity");
-  if (id.isEmpty() && parent()->isMailingList())
-    id = parent()->mailingListIdentity();
+  if ( id.isEmpty() )
+    id = parent()->identity();
   msg->initHeader(id);
   if (!headerField("X-KMail-Transport").isEmpty())
     msg->setHeaderField("X-KMail-Transport", headerField("X-KMail-Transport"));
@@ -948,8 +948,8 @@ KMMessage* KMMessage::createForward(void)
   int i;
 
   id = headerField("X-KMail-Identity");
-  if (id.isEmpty() && parent() && parent()->isMailingList())
-    id = parent()->mailingListIdentity();
+  if ( id.isEmpty() && parent() )
+    id = parent()->identity();
   msg->initHeader(id);
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
