@@ -388,272 +388,10 @@ public:
 	}
 
 	switch( curNode_replacedType ){
-	case DwMime::kTypeText: {
-	  kdDebug(5006) << "* text *" << endl;
-          switch( curNode_replacedSubType ){
-          case DwMime::kSubtypeHtml: {
-            if( mReader )
-              kdDebug(5006) << "html, attachmentstyle = " << mReader->mAttachmentStyle << endl;
-            else
-              kdDebug(5006) << "html" << endl;
-            QCString cstr( curNode->msgPart().bodyDecoded() );
-	    //resultingRawData += cstr;
-            mResultString = cstr;
-            if( !mReader ) {
-              bDone = true;
-            } else if( mReader->mAttachmentStyle == KMReaderWin::InlineAttmnt ||
-                       (mReader->mAttachmentStyle == KMReaderWin::SmartAttmnt &&
-                        !curNode->isAttachment()) ||
-                       (mReader->mAttachmentStyle == KMReaderWin::IconicAttmnt &&
-                        mReader->mIsFirstTextPart) ||
-                       showOneMimePart )
-            {
-              mReader->mIsFirstTextPart = false;
-              if( mReader->htmlMail() ) {
-                // ---Sven's strip </BODY> and </HTML> from end of attachment start-
-                // We must fo this, or else we will see only 1st inlined html
-                // attachment.  It is IMHO enough to search only for </BODY> and
-                // put \0 there.
-                int i = cstr.findRev("</body>", -1, false); //case insensitive
-                if( 0 <= i )
-                  cstr.truncate(i);
-                else // just in case - search for </html>
-                {
-                  i = cstr.findRev("</html>", -1, false); //case insensitive
-                  if( 0 <= i ) cstr.truncate(i);
-                }
-                // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-              } else {
-                mReader->writeHTMLStr(QString("<div style=\"margin:0px 5%;"
-                                  "border:2px solid %1;padding:10px;"
-                                  "text-align:left;font-size:90%\">")
-                                  .arg( mReader->cHtmlWarning.name() ) );
-                mReader->writeHTMLStr(i18n("<b>Note:</b> This is an HTML message. For "
-                                  "security reasons, only the raw HTML code "
-                                  "is shown. If you trust the sender of this "
-                                  "message then you can activate formatted "
-                                  //"HTML display by enabling <em>Prefer HTML "
-                                  //"to Plain Text</em> in the <em>Folder</em> "
-                                  //"menu."));
-                                  "HTML display for this message by clicking "
-                                  "<a href=\"kmail:showHTML\">here</a>."));
-                mReader->writeHTMLStr(     "</div><br /><br />");
-              }
-              mReader->writeHTMLStr(mReader->mCodec->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
-              bDone = true;
-            }
-            break;
-	  }
-          case DwMime::kSubtypeVCal: {
-	    kdDebug(5006) << "calendar" << endl;
-	    DwMediaType ct = curNode->dwPart()->Headers().ContentType();
-            DwParameter* param = ct.FirstParameter();
-            QCString method( "" );
-            while( param && !bDone ) {
-              if( DwStrcasecmp(param->Attribute(), "method") == 0 ){
-                // Method parameter found, here we are!
-                bDone = true;
-                method = QCString( param->Value().c_str() ).lower();
-		kdDebug(5006) << "         method=" << method << endl;
-		if( method == "request" || // an invitation to a meeting *or*
-                    method == "reply" ||   // a reply to an invitation we sent
-		    method == "cancel" ) { // Outlook uses this when cancelling
-                  QCString vCal( curNode->msgPart().bodyDecoded() );
-                  if( mReader ){
-                    QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
-                    QString fname( byteArrayToTempFile( mReader,
-							"groupware",
-							"vCal_request.raw",
-							theBody ) );
-                    if( !fname.isEmpty() && !showOneMimePart ){
-                      QString prefix;
-                      QString postfix;
-                      // We let KMGroupware do most of our 'print formatting':
-                      // generates text preceeding to and following to the vCal
-                      if( KMGroupware::vPartToHTML( KMGroupware::NoUpdateCounter,
-                                                    vCal,
-                                                    fname,
-                                                    mReader->mUseGroupware,
-                                                    prefix, postfix ) ){
-                        mReader->queueHtml( prefix );
-                        vCal.replace( '&',  "&amp;"  );
-                        vCal.replace( '<',  "&lt;"   );
-                        vCal.replace( '>',  "&gt;"   );
-                        vCal.replace( '\"', "&quot;" );
-                        mReader->writeBodyStr( vCal,
-                                              mReader->mCodec,
-                                              curNode->trueFromAddress(),
-                                              &isInlineSigned, &isInlineEncrypted );
-                        mReader->queueHtml( postfix );
-                      }
-                    }
-                  }
-                  mResultString = vCal;
-                }
-              }
-              param = param->Next();
-            }
-            break;
-          }
-          case DwMime::kSubtypeXVCard: {
-	    kdDebug(5006) << "v-card" << endl;
-	    // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
-	    //             _before_ calling parseObjectTree()
-	  }
-            break;
-          case DwMime::kSubtypeRtf:
-	    kdDebug(5006) << "rtf" << endl;
-            // RTF shouldn't be displayed inline
-            bNeverDisplayInline = true;
-            break;
-	    // All 'Text' types which are not treated above are processed like
-	    // 'Plain' text:
-          case DwMime::kSubtypeRichtext:
-	    kdDebug(5006) << "rich text" << endl;
-          case DwMime::kSubtypeEnriched:
-	    kdDebug(5006) << "enriched " << endl;
-          case DwMime::kSubtypePlain:
-	    kdDebug(5006) << "plain " << endl;
-          default: {
-	    kdDebug(5006) << "default " << endl;
-	    QCString cstr( curNode->msgPart().bodyDecoded() );
-	    //resultingRawData += cstr;
-	    if( !mReader || mReader->mAttachmentStyle == KMReaderWin::InlineAttmnt ||
-		(mReader->mAttachmentStyle == KMReaderWin::SmartAttmnt &&
-		 !curNode->isAttachment()) ||
-		(mReader->mAttachmentStyle == KMReaderWin::IconicAttmnt &&
-		 mReader->mIsFirstTextPart) ||
-		showOneMimePart )
-            {
-	      if (mReader) mReader->mIsFirstTextPart = false;
-	      if ( mReader && curNode->isAttachment() && !showOneMimePart )
-		mReader->queueHtml("<br><hr><br>");
-	      if ( mReader ) {
-		// process old style not-multipart Mailman messages to
-		// enable verification of the embedded messages' signatures
-		if ( DwMime::kSubtypePlain == curNode_replacedSubType &&
-		     curNode->dwPart() &&
-		     curNode->dwPart()->hasHeaders() ) {
-		  DwHeaders& headers( curNode->dwPart()->Headers() );
-		  bool bIsMailman = headers.HasField("X-Mailman-Version");
-		  if ( !bIsMailman ) {
-		    if ( headers.HasField("X-Mailer") )
-		      bIsMailman =
-			( 0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
-                                   .find("MAILMAN", 0, false) );
-		  }
-		  if ( bIsMailman ) {
-		    const QCString delim1( "--__--__--\n\nMessage:");
-		    const QCString delim2( "--__--__--\r\n\r\nMessage:");
-		    const QCString delimZ2("--__--__--\n\n_____________");
-		    const QCString delimZ1("--__--__--\r\n\r\n_____________");
-		    QCString partStr, digestHeaderStr;
-		    int thisDelim = cstr.find(delim1, 0, false);
-		    if ( -1 == thisDelim )
-		      thisDelim = cstr.find(delim2, 0, false);
-		    if ( -1 == thisDelim ) {
-		      kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
-		    } else {
-		      int nextDelim = cstr.find(delim1, thisDelim+1, false);
-		      if ( -1 == nextDelim )
-			nextDelim = cstr.find(delim2, thisDelim+1, false);
-		      if ( -1 == nextDelim )
-			nextDelim = cstr.find(delimZ1, thisDelim+1, false);
-		      if ( -1 == nextDelim )
-			nextDelim = cstr.find(delimZ2, thisDelim+1, false);
-		      if( -1 < nextDelim ){
-			kdDebug(5006) << "        processing old style Mailman digest" << endl;
-			//if( curNode->mRoot )
-			//  curNode = curNode->mRoot;
-
-			// at least one message found: build a mime tree
-			digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
-			digestHeaderStr += cstr.mid( 0, thisDelim );
-			insertAndParseNewChildNode( *curNode,
-						    &*digestHeaderStr,
-						    "Digest Header", true );
-			//mReader->queueHtml("<br><hr><br>");
-			// temporarily change curent node's Content-Type
-			// to get our embedded RfC822 messages properly inserted
-			curNode->setType(    DwMime::kTypeMultipart );
-			curNode->setSubType( DwMime::kSubtypeDigest );
-			while( -1 < nextDelim ){
-			  int thisEoL = cstr.find("\nMessage:", thisDelim, false);
-			  if( -1 < thisEoL )
-			    thisDelim = thisEoL+1;
-			  else{
-			    thisEoL = cstr.find("\n_____________", thisDelim, false);
-			    if( -1 < thisEoL )
-			      thisDelim = thisEoL+1;
-			  }
-			  thisEoL = cstr.find('\n', thisDelim);
-			  if( -1 < thisEoL )
-			    thisDelim = thisEoL+1;
-			  else
-			    thisDelim = thisDelim+1;
-			  //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
-			  //  ++thisDelim;
-
-			  partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
-			  partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
-			  QCString subject("embedded message");
-			  QCString subSearch("\nSubject:");
-			  int subPos = partStr.find(subSearch, 0, false);
-			  if( -1 < subPos ){
-			    subject = partStr.mid(subPos+subSearch.length());
-			    thisEoL = subject.find('\n');
-			    if( -1 < thisEoL )
-			      subject.truncate( thisEoL );
-			  }
-			  kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
-			  insertAndParseNewChildNode( *curNode,
-						      &*partStr,
-						      subject, true );
-			  //mReader->queueHtml("<br><hr><br>");
-			  thisDelim = nextDelim+1;
-			  nextDelim = cstr.find(delim1, thisDelim, false);
-			  if( -1 == nextDelim )
-			    nextDelim = cstr.find(delim2, thisDelim, false);
-			  if( -1 == nextDelim )
-			    nextDelim = cstr.find(delimZ1, thisDelim, false);
-			  if( -1 == nextDelim )
-			    nextDelim = cstr.find(delimZ2, thisDelim, false);
-			}
-			// reset curent node's Content-Type
-			curNode->setType(    DwMime::kTypeText );
-			curNode->setSubType( DwMime::kSubtypePlain );
-			int thisEoL = cstr.find("_____________", thisDelim);
-			if( -1 < thisEoL ){
-			  thisDelim = thisEoL;
-			  thisEoL = cstr.find('\n', thisDelim);
-			  if( -1 < thisEoL )
-			    thisDelim = thisEoL+1;
-			}
-			else
-			  thisDelim = thisDelim+1;
-			partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
-			partStr += cstr.mid( thisDelim );
-			insertAndParseNewChildNode( *curNode,
-						    &*partStr,
-						    "Digest Footer", true );
-			bDone = true;
-		      }
-		    }
-		  }
-		}
-		if( !bDone )
-		  mReader->writeBodyStr( cstr.data(),
-					mReader->mCodec,
-					curNode->trueFromAddress(),
-					&isInlineSigned, &isInlineEncrypted);
-	      }
-	      mResultString = cstr;
-	      bDone = true;
-	    }
-	  }
-            break;
-          }
-        }
+	case DwMime::kTypeText:
+	  bDone = processTextType( curNode_replacedSubType, curNode,
+				   showOneMimePart, isInlineSigned,
+				   isInlineEncrypted, bNeverDisplayInline );
 	  break;
 	case DwMime::kTypeMultipart: {
 	  kdDebug(5006) << "* multipart *" << endl;
@@ -1906,6 +1644,277 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   return bOk ? fname : QString();
 }
 
+  bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
+					  bool showOneMimePart,
+					  bool & isInlineSigned,
+					  bool & isInlineEncrypted,
+					  bool & bNeverDisplayInline ) {
+    bool bDone = false;
+    kdDebug(5006) << "* text *" << endl;
+    switch( subtype ){
+    case DwMime::kSubtypeHtml: {
+      if( mReader )
+	kdDebug(5006) << "html, attachmentstyle = " << mReader->mAttachmentStyle << endl;
+      else
+	kdDebug(5006) << "html" << endl;
+      QCString cstr( curNode->msgPart().bodyDecoded() );
+      //resultingRawData += cstr;
+      mResultString = cstr;
+      if( !mReader ) {
+	bDone = true;
+      } else if( mReader->mAttachmentStyle == KMReaderWin::InlineAttmnt ||
+		 (mReader->mAttachmentStyle == KMReaderWin::SmartAttmnt &&
+		  !curNode->isAttachment()) ||
+		 (mReader->mAttachmentStyle == KMReaderWin::IconicAttmnt &&
+		  mReader->mIsFirstTextPart) ||
+		 showOneMimePart )
+      {
+	mReader->mIsFirstTextPart = false;
+	if( mReader->htmlMail() ) {
+	  // ---Sven's strip </BODY> and </HTML> from end of attachment start-
+	  // We must fo this, or else we will see only 1st inlined html
+	  // attachment.  It is IMHO enough to search only for </BODY> and
+	  // put \0 there.
+	  int i = cstr.findRev("</body>", -1, false); //case insensitive
+	  if( 0 <= i )
+	    cstr.truncate(i);
+	  else // just in case - search for </html>
+	  {
+	    i = cstr.findRev("</html>", -1, false); //case insensitive
+	    if( 0 <= i ) cstr.truncate(i);
+	  }
+	  // ---Sven's strip </BODY> and </HTML> from end of attachment end-
+	} else {
+	  mReader->writeHTMLStr(QString("<div style=\"margin:0px 5%;"
+					"border:2px solid %1;padding:10px;"
+					"text-align:left;font-size:90%\">")
+				.arg( mReader->cHtmlWarning.name() ) );
+	  mReader->writeHTMLStr(i18n("<b>Note:</b> This is an HTML message. For "
+				     "security reasons, only the raw HTML code "
+				     "is shown. If you trust the sender of this "
+				     "message then you can activate formatted "
+				     //"HTML display by enabling <em>Prefer HTML "
+				     //"to Plain Text</em> in the <em>Folder</em> "
+				     //"menu."));
+				     "HTML display for this message by clicking "
+				     "<a href=\"kmail:showHTML\">here</a>."));
+	  mReader->writeHTMLStr(     "</div><br /><br />");
+	}
+	mReader->writeHTMLStr(mReader->mCodec->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
+	bDone = true;
+      }
+      break;
+    }
+    case DwMime::kSubtypeVCal: {
+      kdDebug(5006) << "calendar" << endl;
+      DwMediaType ct = curNode->dwPart()->Headers().ContentType();
+      DwParameter* param = ct.FirstParameter();
+      QCString method( "" );
+      while( param && !bDone ) {
+	if( DwStrcasecmp(param->Attribute(), "method") == 0 ){
+	  // Method parameter found, here we are!
+	  bDone = true;
+	  method = QCString( param->Value().c_str() ).lower();
+	  kdDebug(5006) << "         method=" << method << endl;
+	  if( method == "request" || // an invitation to a meeting *or*
+	      method == "reply" ||   // a reply to an invitation we sent
+	      method == "cancel" ) { // Outlook uses this when cancelling
+	    QCString vCal( curNode->msgPart().bodyDecoded() );
+	    if( mReader ){
+	      QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
+	      QString fname( byteArrayToTempFile( mReader,
+						  "groupware",
+						  "vCal_request.raw",
+						  theBody ) );
+	      if( !fname.isEmpty() && !showOneMimePart ){
+		QString prefix;
+		QString postfix;
+		// We let KMGroupware do most of our 'print formatting':
+		// generates text preceeding to and following to the vCal
+		if( KMGroupware::vPartToHTML( KMGroupware::NoUpdateCounter,
+					      vCal,
+					      fname,
+					      mReader->mUseGroupware,
+					      prefix, postfix ) ){
+		  mReader->queueHtml( prefix );
+		  vCal.replace( '&',  "&amp;"  );
+		  vCal.replace( '<',  "&lt;"   );
+		  vCal.replace( '>',  "&gt;"   );
+		  vCal.replace( '\"', "&quot;" );
+		  mReader->writeBodyStr( vCal,
+					 mReader->mCodec,
+					 curNode->trueFromAddress(),
+					 &isInlineSigned, &isInlineEncrypted );
+		  mReader->queueHtml( postfix );
+		}
+	      }
+	    }
+	    mResultString = vCal;
+	  }
+	}
+	param = param->Next();
+      }
+      break;
+    }
+    case DwMime::kSubtypeXVCard: {
+      kdDebug(5006) << "v-card" << endl;
+      // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
+      //             _before_ calling parseObjectTree()
+    }
+      break;
+    case DwMime::kSubtypeRtf:
+      kdDebug(5006) << "rtf" << endl;
+      // RTF shouldn't be displayed inline
+      bNeverDisplayInline = true;
+      break;
+      // All 'Text' types which are not treated above are processed like
+      // 'Plain' text:
+    case DwMime::kSubtypeRichtext:
+      kdDebug(5006) << "rich text" << endl;
+    case DwMime::kSubtypeEnriched:
+      kdDebug(5006) << "enriched " << endl;
+    case DwMime::kSubtypePlain:
+      kdDebug(5006) << "plain " << endl;
+    default: {
+      kdDebug(5006) << "default " << endl;
+      QCString cstr( curNode->msgPart().bodyDecoded() );
+      //resultingRawData += cstr;
+      if( !mReader || mReader->mAttachmentStyle == KMReaderWin::InlineAttmnt ||
+	  (mReader->mAttachmentStyle == KMReaderWin::SmartAttmnt &&
+	   !curNode->isAttachment()) ||
+	  (mReader->mAttachmentStyle == KMReaderWin::IconicAttmnt &&
+	   mReader->mIsFirstTextPart) ||
+	  showOneMimePart )
+	{
+	  if (mReader) mReader->mIsFirstTextPart = false;
+	  if ( mReader && curNode->isAttachment() && !showOneMimePart )
+	    mReader->queueHtml("<br><hr><br>");
+	  if ( mReader ) {
+	    // process old style not-multipart Mailman messages to
+	    // enable verification of the embedded messages' signatures
+	    if ( subtype == DwMime::kSubtypePlain &&
+		 curNode->dwPart() &&
+		 curNode->dwPart()->hasHeaders() ) {
+	      DwHeaders& headers( curNode->dwPart()->Headers() );
+	      bool bIsMailman = headers.HasField("X-Mailman-Version");
+	      if ( !bIsMailman ) {
+		if ( headers.HasField("X-Mailer") )
+		  bIsMailman =
+		    ( 0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
+		      .find("MAILMAN", 0, false) );
+	      }
+	      if ( bIsMailman ) {
+		const QCString delim1( "--__--__--\n\nMessage:");
+		const QCString delim2( "--__--__--\r\n\r\nMessage:");
+		const QCString delimZ2("--__--__--\n\n_____________");
+		const QCString delimZ1("--__--__--\r\n\r\n_____________");
+		QCString partStr, digestHeaderStr;
+		int thisDelim = cstr.find(delim1, 0, false);
+		if ( -1 == thisDelim )
+		  thisDelim = cstr.find(delim2, 0, false);
+		if ( -1 == thisDelim ) {
+		  kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
+		} else {
+		  int nextDelim = cstr.find(delim1, thisDelim+1, false);
+		  if ( -1 == nextDelim )
+		    nextDelim = cstr.find(delim2, thisDelim+1, false);
+		  if ( -1 == nextDelim )
+		    nextDelim = cstr.find(delimZ1, thisDelim+1, false);
+		  if ( -1 == nextDelim )
+		    nextDelim = cstr.find(delimZ2, thisDelim+1, false);
+		  if( -1 < nextDelim ){
+		    kdDebug(5006) << "        processing old style Mailman digest" << endl;
+		    //if( curNode->mRoot )
+		    //  curNode = curNode->mRoot;
 
+		    // at least one message found: build a mime tree
+		    digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
+		    digestHeaderStr += cstr.mid( 0, thisDelim );
+		    insertAndParseNewChildNode( *curNode,
+						&*digestHeaderStr,
+						"Digest Header", true );
+		    //mReader->queueHtml("<br><hr><br>");
+		    // temporarily change curent node's Content-Type
+		    // to get our embedded RfC822 messages properly inserted
+		    curNode->setType(    DwMime::kTypeMultipart );
+		    curNode->setSubType( DwMime::kSubtypeDigest );
+		    while( -1 < nextDelim ){
+		      int thisEoL = cstr.find("\nMessage:", thisDelim, false);
+		      if( -1 < thisEoL )
+			thisDelim = thisEoL+1;
+		      else{
+			thisEoL = cstr.find("\n_____________", thisDelim, false);
+			if( -1 < thisEoL )
+			  thisDelim = thisEoL+1;
+		      }
+		      thisEoL = cstr.find('\n', thisDelim);
+		      if( -1 < thisEoL )
+			thisDelim = thisEoL+1;
+		      else
+			thisDelim = thisDelim+1;
+		      //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
+		      //  ++thisDelim;
+
+		      partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
+		      partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
+		      QCString subject("embedded message");
+		      QCString subSearch("\nSubject:");
+		      int subPos = partStr.find(subSearch, 0, false);
+		      if( -1 < subPos ){
+			subject = partStr.mid(subPos+subSearch.length());
+			thisEoL = subject.find('\n');
+			if( -1 < thisEoL )
+			  subject.truncate( thisEoL );
+		      }
+		      kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
+		      insertAndParseNewChildNode( *curNode,
+						  &*partStr,
+						  subject, true );
+		      //mReader->queueHtml("<br><hr><br>");
+		      thisDelim = nextDelim+1;
+		      nextDelim = cstr.find(delim1, thisDelim, false);
+		      if( -1 == nextDelim )
+			nextDelim = cstr.find(delim2, thisDelim, false);
+		      if( -1 == nextDelim )
+			nextDelim = cstr.find(delimZ1, thisDelim, false);
+		      if( -1 == nextDelim )
+			nextDelim = cstr.find(delimZ2, thisDelim, false);
+		    }
+		    // reset curent node's Content-Type
+		    curNode->setType(    DwMime::kTypeText );
+		    curNode->setSubType( DwMime::kSubtypePlain );
+		    int thisEoL = cstr.find("_____________", thisDelim);
+		    if( -1 < thisEoL ){
+		      thisDelim = thisEoL;
+		      thisEoL = cstr.find('\n', thisDelim);
+		      if( -1 < thisEoL )
+			thisDelim = thisEoL+1;
+		    }
+		    else
+		      thisDelim = thisDelim+1;
+		    partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
+		    partStr += cstr.mid( thisDelim );
+		    insertAndParseNewChildNode( *curNode,
+						&*partStr,
+						"Digest Footer", true );
+		    bDone = true;
+		  }
+		}
+	      }
+	    }
+	    if( !bDone )
+	      mReader->writeBodyStr( cstr.data(),
+				     mReader->mCodec,
+				     curNode->trueFromAddress(),
+				     &isInlineSigned, &isInlineEncrypted);
+	  }
+	  mResultString = cstr;
+	  bDone = true;
+	}
+    }
+      break;
+    }
+    return bDone;
+  }
 
 }; // namespace KMail

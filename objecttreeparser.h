@@ -105,6 +105,10 @@ namespace KMail {
 			bool& passphraseError,
 			QString& aErrorText );
 
+    bool processTextType( int subtype, partNode * node, bool showOneMimePart,
+			  bool & isInlineSigned, bool & isInlineEncrypted,
+			  bool & bNeverDisplayInline );
+
   private:
     KMReaderWin * mReader;
     QCString mResultString;
