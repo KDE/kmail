@@ -1582,12 +1582,12 @@ void KMHeaders::applyFiltersOnMsg()
     setCurrentItem( next );
     setSelected( next, true );
     setSelectionAnchor( currentItem() );
-    highlightMessage( next, true);
+    highlightMessage( next );
   }
   else if (currentItem()) {
     setSelected( currentItem(), true );
     setSelectionAnchor( currentItem() );
-    highlightMessage( currentItem(), true);
+    highlightMessage( currentItem() );
   }
   else
     emit selected( 0 );
