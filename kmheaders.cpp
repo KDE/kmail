@@ -284,6 +284,7 @@ public:
 				int column, int width, int align )
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    if (headers->noPaint()) return;
     QColorGroup _cg( cg );
     QColor c = _cg.text();
     QColor *color;
@@ -413,6 +414,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortInfo.dirty = TRUE;
   mSortInfo.fakeSort = 0;
   mSortInfo.removed = 0;
+  mNoPaint = FALSE;
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
@@ -756,7 +758,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       // in the folderConfig below then we need to do this otherwise
       // updateMessageList would do something unspeakable
       if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
+        mNoPaint = TRUE;
 	clear();
+        mNoPaint = FALSE;
 	mItems.resize( 0 );
       }
 
