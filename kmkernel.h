@@ -10,6 +10,8 @@
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
 
+#include "kmmainwin.h"
+
 #include <cryptplugwrapperlist.h>
 
 #define kernel KMKernel::self()
@@ -158,6 +160,9 @@ public:
   /** See @ref slotCollectStdErr */
   QByteArray getCollectedStdErr(KProcess*);
 
+  /** returns a reference to the first Mainwin or a temporary Mainwin */
+  KMMainWin* mainWin();
+
 public slots:
   /** Connect the received* signals of K(Shell)Process to these slots
       to let the kernel collect the output for you.
@@ -240,6 +245,9 @@ private:
   ConfigureDialog *mConfigureDialog;
 
   CryptPlugWrapperList mCryptPlugList;
+
+  // temporary mainwin
+  KMMainWin *mWin;
 };
 
 #endif

@@ -19,7 +19,6 @@
 #include <kprocess.h>
 #include <kprogress.h>
 
-#include "kmmainwin.h"
 #include "kmreaderwin.h"
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
@@ -79,6 +78,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_filterActionDict = 0;
   the_msgSender = 0;
   the_msgDict = 0;
+  mWin = 0;
 
   new KMpgpWrap();
   // register our own (libkdenetwork) utf-7 codec as long as Qt
@@ -114,6 +114,8 @@ KMKernel::~KMKernel ()
   }
   delete mConfigureDialog;
   mConfigureDialog = 0;
+  delete mWin;
+  mWin = 0;
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
@@ -125,21 +127,7 @@ KMKernel::~KMKernel ()
 void KMKernel::checkMail () //might create a new reader but won´t show!!
 {
   kdDebug(5006) << "KMKernel::checkMail called" << endl;
-  KMMainWin *mWin = 0;
-  KMainWindow *kmWin = 0;
-
-  for (kmWin = KMainWindow::memberList->first(); kmWin;
-    kmWin = KMainWindow::memberList->next())
-      if (kmWin->isA("KMMainWin")) break;
-  if (kmWin && kmWin->isA("KMMainWin")) {
-    mWin = (KMMainWin *) kmWin;
-    mWin->slotCheckMail();
-  } else {
-    mWin = new KMMainWin;
-    mWin->slotCheckMail();
-    delete mWin;
-    mWin = 0;
-  }
+  mainWin()->slotCheckMail();
 }
 
 QStringList KMKernel::accounts()
@@ -150,20 +138,6 @@ QStringList KMKernel::accounts()
 void KMKernel::checkAccount (const QString &account) //might create a new reader but won´t show!!
 {
   kdDebug(5006) << "KMKernel::checkMail called" << endl;
-  KMMainWin *mWin = 0;
-  KMainWindow *kmWin = 0;
-
-  for (kmWin = KMainWindow::memberList->first(); kmWin;
-    kmWin = KMainWindow::memberList->next())
-      if (kmWin->isA("KMMainWin")) break;
-
-  bool deleteWin = false;
-  if (kmWin && kmWin->isA("KMMainWin")) {
-    mWin = (KMMainWin *) kmWin;
-  } else {
-    mWin = new KMMainWin;
-    deleteWin = true;
-  }
 
   if (!checkingMail())
   {
@@ -174,11 +148,6 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
        kernel->acctMgr()->singleCheckMail(acct, false);
 
     setCheckingMail(false);
-  }
-
-  if (deleteWin) {
-    delete mWin;
-    mWin = 0;
   }
 }
 
@@ -1166,6 +1135,21 @@ IdentityManager * KMKernel::identityManager() {
     mIdentityManager = new IdentityManager( this, "mIdentityManager" );
   }
   return mIdentityManager;
+}
+
+KMMainWin* KMKernel::mainWin()
+{
+  KMainWindow *kmWin = 0;
+
+  for (kmWin = KMainWindow::memberList->first(); kmWin;
+    kmWin = KMainWindow::memberList->next())
+      if (kmWin->isA("KMMainWin")) break;
+  if (kmWin && kmWin->isA("KMMainWin")) {
+    return (KMMainWin *) kmWin;
+  } else {
+    mWin = new KMMainWin;
+    return mWin;
+  }
 }
 
 #include "kmkernel.moc"

@@ -390,7 +390,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if ( !errorDialogIsActive )
   {
     errorDialogIsActive = true;
-    if ( KMessageBox::messageBox(0, KMessageBox::Error,
+    if ( KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
           KIO::buildErrorString(errorCode, errorMsg),
           i18n("Error")) == KMessageBox::Ok )
     {
