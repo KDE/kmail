@@ -46,14 +46,14 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   setColumn(3, i18n("Date"), 300, KTabListBox::TextColumn);
   readConfig();
 
-  pixNew   = loader->loadIcon("kmmsgnew.xpm");
-  pixUns   = loader->loadIcon("kmmsgunseen.xpm");
-  pixDel   = loader->loadIcon("kmmsgdel.xpm");
-  pixOld   = loader->loadIcon("kmmsgold.xpm");
-  pixRep   = loader->loadIcon("kmmsgreplied.xpm");
-  pixQueued= loader->loadIcon("kmmsgqueued.xpm");
-  pixSent  = loader->loadIcon("kmmsgsent.xpm");
-  pixFwd   = loader->loadIcon("kmmsgforwarded.xpm");
+  pixNew   = loader->loadIcon("kmmsgnew");
+  pixUns   = loader->loadIcon("kmmsgunseen");
+  pixDel   = loader->loadIcon("kmmsgdel");
+  pixOld   = loader->loadIcon("kmmsgold");
+  pixRep   = loader->loadIcon("kmmsgreplied");
+  pixQueued= loader->loadIcon("kmmsgqueued");
+  pixSent  = loader->loadIcon("kmmsgsent");
+  pixFwd   = loader->loadIcon("kmmsgforwarded");
 
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusNew), &pixNew);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusUnread), &pixUns);

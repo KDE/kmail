@@ -31,13 +31,13 @@ public:
   virtual ~KMMainWin();
 
   /** Read configuration options before widgets are created. */
-  virtual void readPreConfig(void);
+  virtual void readPreConfig();
 
   /** Read configuration options after widgets are created. */
-  virtual void readConfig(void);
+  virtual void readConfig();
 
   /** Write configuration options. */
-  virtual void writeConfig(void);
+  virtual void writeConfig();
 
   /** Insert a text field to the status bar and return ID of this field. */
   virtual int statusBarAddItem(const char* text);
@@ -46,10 +46,13 @@ public:
   virtual void statusBarChangeItem(int id, const char* text);
 
   /** Easy access to main components of the window. */
-  KMReaderWin* messageView(void) const { return mMsgView; }
-  KToolBar* toolBar(void) const     { return mToolBar; }
-  KStatusBar* statusBar(void) const   { return mStatusBar; }
-  KMFolderTree* folderTree(void) const  { return mFolderTree; }
+  KMReaderWin* messageView() const { return mMsgView; }
+  KToolBar* toolBar() const     { return mToolBar; }
+  KStatusBar* statusBar() const   { return mStatusBar; }
+  KMFolderTree* folderTree() const  { return mFolderTree; }
+
+  /** Returns folder popup menu. */
+  QPopupMenu* folderMenu();
 
 public slots:
   virtual void show();
@@ -79,10 +82,11 @@ protected slots:
   void slotAddrBook();
   void slotUnimplemented();
   void slotViewChange();
-  void slotAddFolder();
+  void slotCreateFolder();
+  void slotCreateDirectory();
   //void slotCheckMail(); sven - moved to public slots
   void slotCompose();
-  void slotModifyFolder();
+  void slotRename();
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
@@ -146,6 +150,7 @@ protected:
   QString       mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
+  QPopupMenu	*mFolderMenu;
   bool		mLongFolderList;
   bool		mStartupDone;
 };

@@ -55,6 +55,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   // must be the first line of the constructor:
   mStartupDone = FALSE;
 
+  mFolderMenu = NULL;
   mIntegrated  = TRUE;
   mFolder = NULL;
   mHorizPannerSep = new QValueList<int>;
@@ -74,7 +75,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupStatusBar();
 
   // set active folder to `inbox' folder
-  mFolderTree->setCurrentFolderNode(inboxFolder);
+  mFolderTree->setCurrentFolder(inboxFolder);
 
   connect(msgSender, SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
@@ -101,7 +102,7 @@ KMMainWin::~KMMainWin()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readPreConfig(void)
+void KMMainWin::readPreConfig()
 {
   KConfig *config = app->config();
   QString str;
@@ -112,7 +113,7 @@ void KMMainWin::readPreConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readConfig(void)
+void KMMainWin::readConfig()
 {
   KConfig *config = app->config();
   bool oldLongFolderList=false;
@@ -167,7 +168,7 @@ void KMMainWin::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::writeConfig(void)
+void KMMainWin::writeConfig()
 {
   QString s;
   KConfig *config = app->config();
@@ -186,7 +187,7 @@ void KMMainWin::writeConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::createWidgets(void)
+void KMMainWin::createWidgets()
 {
   QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
   QAccel *accel = new QAccel(this);
@@ -251,7 +252,7 @@ void KMMainWin::createWidgets(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::activatePanners(void)
+void KMMainWin::activatePanners()
 {
   // glue everything together
   if (mLongFolderList)
@@ -373,12 +374,67 @@ void KMMainWin::slotUnimplemented()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotAddFolder() 
+void KMMainWin::slotCreateFolder() 
 {
-  KMFolderDialog dlg(NULL, this);
+  KMFolder* fld = mFolderTree->currentFolder();
+  QCString path;
+  if (fld) path = fld->path();
 
-  dlg.setCaption(i18n("New Folder"));
-  if (dlg.exec()) mFolderTree->reload();
+  KMFolderDialog dlg(path, 0, this, i18n("Create Folder"));
+  while (dlg.exec())
+    if (folderMgr->createFolder(dlg.folderName())) break;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotCreateDirectory() 
+{
+  KMFolder* fld = mFolderTree->currentFolder();
+  QCString path;
+  if (fld) path = fld->path();
+
+  KMFolderDialog dlg(path, 0, this, i18n("Create Directory"));
+  while (dlg.exec())
+    if (folderMgr->createDirectory(dlg.folderName())) break;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotRename()
+{
+  KMFolder* fld = mFolderTree->currentFolder();
+  QCString path, fname;
+  int rc;
+
+  if (fld) path = fld->path();
+  else return;
+
+  if (fld->isDir())
+  {
+    KMFolderDir* fdir = (KMFolderDir*)fld;
+    KMFolderDialog dlg(path, fdir->name(), this, i18n("Rename Directory"));
+    while (dlg.exec())
+    {
+      fname = dlg.folderName();
+      rc = fdir->rename(fname);
+      if (!rc) break;
+      warning(i18n("Cannot rename directory to '%s':\n%s"),
+	      (const char*)fname, strerror(rc));
+    }
+  }
+  else
+  {
+    KMFolderDialog dlg(path, fld->name(), this, i18n("Rename Folder"));
+
+    while (dlg.exec())
+    {
+      fname = dlg.folderName();
+      rc = fld->rename(fname);
+      if (!rc) break;
+      warning(i18n("Cannot rename folder to '%s':\n%s"),
+	      (const char*)fname, strerror(rc));
+    }
+  }
 }
 
 
@@ -460,19 +516,6 @@ void KMMainWin::slotCompose()
 
   win = new KMComposeWin(msg);
   win->show();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotModifyFolder()
-{
-  KMFolderDialog *d;
-
-  if (!mFolder) return;
-  d = new KMFolderDialog((KMFolder*)mFolder, this);
-  d->setCaption(i18n("Modify Folder"));
-  if (d->exec()) mFolderTree->reload();
-  delete d;
 }
 
 
@@ -721,10 +764,18 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
   if (mFolder == aFolder) return;
 
   kbp->busy();
-  mFolder = (KMFolder*)aFolder;
-  mMsgView->clear();
-  mHeaders->setFolder(mFolder);
-
+  if (aFolder->isDir())
+  {
+    mMsgView->clear();
+    mHeaders->setFolder(NULL);
+    mFolder = NULL;
+  }
+  else
+  {
+    mFolder = (KMFolder*)aFolder;
+    mMsgView->clear();
+    mHeaders->setFolder(mFolder);
+  }
   kbp->idle();
 }
 
@@ -954,6 +1005,30 @@ void KMMainWin::getAccountMenu()
 
 
 //-----------------------------------------------------------------------------
+QPopupMenu* KMMainWin::folderMenu()
+{
+  if (!mFolderMenu)
+  {
+    mFolderMenu = new QPopupMenu();
+    mFolderMenu->insertItem(i18n("&Create..."), this, 
+			    SLOT(slotCreateFolder()));
+    mFolderMenu->insertItem(i18n("&Create Directory..."), this, 
+			    SLOT(slotCreateDirectory()));
+    mFolderMenu->insertItem(i18n("&Rename..."), this, 
+			    SLOT(slotRename()));
+    mFolderMenu->insertItem(i18n("C&ompact"), this, 
+			    SLOT(slotCompactFolder()));
+    mFolderMenu->insertSeparator();
+    mFolderMenu->insertItem(i18n("&Empty"), this, 
+			    SLOT(slotEmptyFolder()));
+    mFolderMenu->insertItem(i18n("&Remove"), this, 
+			    SLOT(slotRemoveFolder()));
+  }
+  return mFolderMenu;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
@@ -1003,20 +1078,6 @@ void KMMainWin::setupMenuBar()
   editMenu->insertItem(i18n("&Find..."), this, 
 		       SLOT(slotUnimplemented()), keys->find());
 #endif
-  //----- Folder Menu
-  QPopupMenu *folderMenu = new QPopupMenu();
-  folderMenu->insertItem(i18n("&Create..."), this, 
-			 SLOT(slotAddFolder()));
-  folderMenu->insertItem(i18n("&Modify..."), this, 
-			 SLOT(slotModifyFolder()));
-  folderMenu->insertItem(i18n("C&ompact"), this, 
-			 SLOT(slotCompactFolder()));
-  folderMenu->insertSeparator();
-  folderMenu->insertItem(i18n("&Empty"), this, 
-			 SLOT(slotEmptyFolder()));
-  folderMenu->insertItem(i18n("&Remove"), this, 
-			 SLOT(slotRemoveFolder()));
-
   //----- Message-Status Submenu
   QPopupMenu *msgStatusMenu = new QPopupMenu;
   connect(msgStatusMenu, SIGNAL(activated(int)), this, 
@@ -1099,7 +1160,7 @@ void KMMainWin::setupMenuBar()
   mMenuBar  = new KMenuBar(this);
   mMenuBar->insertItem(i18n("&File"), fileMenu);
   mMenuBar->insertItem(i18n("&Edit"), editMenu);
-  mMenuBar->insertItem(i18n("F&older"), folderMenu);
+  mMenuBar->insertItem(i18n("F&older"), folderMenu());
   mMenuBar->insertItem(i18n("&Message"), messageMenu);
   mMenuBar->insertItem(i18n("&View"), mViewMenu);
   mMenuBar->insertSeparator();
@@ -1116,51 +1177,51 @@ void KMMainWin::setupToolBar()
 
   mToolBar = new KToolBar(this);
 
-  mToolBar->insertButton(loader->loadIcon("filenew.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filenew"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotCompose()), TRUE, 
 			i18n("Compose new message"));
 
-  mToolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filefloppy"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotSaveMsg()), TRUE,
 			i18n("Save message to file"));
 
-  mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("fileprint"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotPrintMsg()), TRUE,
 			i18n("Print message"));
 
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("checkmail.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("checkmail"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
 			i18n("Get new mail"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("filereply.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filereply"), 0, 
 			SIGNAL(clicked()), this, 
 			SLOT(slotReplyToMsg()), TRUE,
 			i18n("Reply to author"));
 
-  mToolBar->insertButton(loader->loadIcon("filereplyall.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filereplyall"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyAllToMsg()), TRUE,
 			i18n("Reply to all recipients"));
 
-  mToolBar->insertButton(loader->loadIcon("fileforward.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("fileforward"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotForwardMsg()), TRUE,
 			i18n("Forward message"));
 
-  mToolBar->insertButton(loader->loadIcon("filedel2.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filedel2"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			i18n("Delete message"));
 
   mToolBar->insertSeparator();
-  mToolBar->insertButton(loader->loadIcon("openbook.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("openbook"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotAddrBook()), TRUE,
 			i18n("Open addressbook..."));

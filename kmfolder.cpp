@@ -56,7 +56,7 @@ static int _rename(const char* oldname, const char* newname)
 
 
 //-----------------------------------------------------------------------------
-KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) : 
+KMFolder :: KMFolder(KMFolderDir* aParent, const QCString& aName) : 
   KMFolderInherited(aParent, aName), mMsgList(INIT_MSGS)
 {
   //-- in case that the compiler has problems with the static version above:
@@ -93,9 +93,9 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::location(void) const
+const QCString KMFolder::location(void) const
 {
-  QString sLocation;
+  QCString sLocation;
 
   sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
@@ -106,9 +106,9 @@ const QString KMFolder::location(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::indexLocation(void) const
+const QCString KMFolder::indexLocation(void) const
 {
-  QString sLocation;
+  QCString sLocation;
 
   sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
@@ -824,9 +824,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::rename(const QString aName)
+int KMFolder::rename(const QCString& aName)
 {
-  QString oldLoc, oldIndexLoc, newLoc, newIndexLoc, oldName;
+  QCString oldLoc, oldIndexLoc, newLoc, newIndexLoc, oldName;
   int rc=0, openCount=mOpenCount;
 
   assert(!aName.isEmpty());
@@ -855,6 +855,7 @@ int KMFolder::rename(const QString aName)
     mOpenCount = openCount;
   }
 
+  if (!rc) folderMgr->unreadChanged(this);
   return rc;
 }
 
@@ -911,7 +912,8 @@ int KMFolder::compact(void)
 {
   KMFolder* tempFolder;
   KMMessage* msg;
-  QString tempName, msgStr;
+  QCString tempName;
+  QString msgStr;
   int openCount = mOpenCount;
   int num, numStatus;
 
@@ -1018,13 +1020,17 @@ const char* KMFolder::type(void) const
 const QString KMFolder::label(void) const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-  if (unreadMsgs > 0) {
-    QString num;
+#if 1
+  return name();
+#else
+  if (unreadMsgs > 0)
+  {
+    QCString num;
     num.setNum(unreadMsgs);
     return (name() + " (" + num + ")");
   }
-  else
-    return name();
+  else return name();
+#endif
 }
 
 
@@ -1046,12 +1052,14 @@ long KMFolder::countUnread(void)
   return unreadMsgs;
 }
 
+
 //-----------------------------------------------------------------------------
 void KMFolder::unreadChanged(void)
 {
   emit numUnreadMsgsChanged(this);
   emit folderMgr->unreadChanged(this);
 }
+
 
 //-----------------------------------------------------------------------------
 void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,

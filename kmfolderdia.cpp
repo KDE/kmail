@@ -1,20 +1,16 @@
 // kmfolderdia.cpp
 
 #include <qstring.h>
+#include <qcstring.h>
 #include <qlabel.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qtextstream.h>
 #include <kapp.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qlistbox.h>
+#include <qlayout.h>
 
 #include "kmmainwin.h"
 #include "kmglobal.h"
-#include "kmaccount.h"
-#include "kmacctmgr.h"
-#include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 
 #include <assert.h>
@@ -24,184 +20,51 @@
 
 
 //-----------------------------------------------------------------------------
-KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
-			       const char *name) :
-  KMFolderDialogInherited(parent, name, TRUE)
+KMFolderDialog::KMFolderDialog(const QCString& aPath, const QCString& aName,
+			       QWidget *aParent, const QString& aCap):
+  KMFolderDialogInherited(KDialogBase::Plain, aCap, 
+			  KDialogBase::Ok|KDialogBase::Cancel,
+			  KDialogBase::Ok, aParent, 0, true)
 {
-  KMAccount* acct;
   QLabel *label;
-  QString type;
+  QGridLayout* grid;
+  QString str;
+  int ulx, uly, lrx, lry; 
 
-  folder = (KMAcctFolder*)aFolder;
+  mPath = aPath;
 
-  label = new QLabel(this);
-  label->setGeometry(20,20,60,25);
-  label->setText(i18n("Name:"));
-  label->setAlignment(290);
+  grid = new QGridLayout(this, 3, 2, 20, 6, "grid");
 
-  nameEdit = new QLineEdit(this);
-  nameEdit->setGeometry(90,20,320,25);
-  nameEdit->setFocus();
-  nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
+  label = new QLabel(i18n("Path:"), this);
+  label->setMinimumSize(label->sizeHint());
+  grid->addWidget(label, 0, 0);
 
-  if (folder)
-  {
-    type = folder->type();
-    if (!type.isEmpty() && type!="plain")
-      nameEdit->setEnabled(false);
-  }
+  label = new QLabel(aPath, this);
+  label->setMinimumSize(label->sizeHint());
+  grid->addWidget(label, 0, 1);
 
-  label = new QLabel(this);
-  label->setText(i18n("Associated with"));
-  label->adjustSize();
-  label->move(20,74);
+  mNameEdit = new QLineEdit(this);
+  mNameEdit->setMinimumSize(mNameEdit->sizeHint());
+  mNameEdit->setFocus();
+  if (aName.isEmpty()) str = i18n("Unnamed");
+  else str = aName;
+  mNameEdit->setText(str);
+  grid->addWidget(mNameEdit, 1, 1);
 
-  assocList = new QListBox(this);
-  assocList->setGeometry(20,95,160,140);
-  connect(assocList,SIGNAL(highlighted(int)),this,SLOT(doAssocHighlighted(int)));
-  connect(assocList,SIGNAL(selected(int)),this,SLOT(doAssocSelected(int)));
+  label = new QLabel(i18n("Name:"), this);
+  label->setMinimumSize(label->sizeHint().width(),mNameEdit->sizeHint().height());
+  grid->addWidget(label, 1, 0);
 
-  label = new QLabel(this);
-  label->setText(i18n("Unassociated Accounts"));
-  label->adjustSize();
-  label->move(250,74);
+  getBorderWidths(ulx, uly, lrx, lry);
+  grid->addRowSpacing(2, lry);
 
-  accountList = new QListBox(this);
-  accountList->setGeometry(250,95,160,140);
-  connect(accountList,SIGNAL(highlighted(int)),this,SLOT(doAccountHighlighted(int)));
-  connect(accountList,SIGNAL(selected(int)),this,SLOT(doAccountSelected(int)));
-
-  addButton = new QPushButton(this);
-  addButton->setGeometry(190,115,50,40);
-  addButton->setText("<<");
-  addButton->setEnabled(FALSE);
-  connect(addButton,SIGNAL(clicked()),this,SLOT(doAdd()));
-
-  removeButton = new QPushButton(this);
-  removeButton->setGeometry(190,175,50,40);
-  removeButton->setText(">>");
-  removeButton->setEnabled(FALSE);
-  connect(removeButton,SIGNAL(clicked()),this,SLOT(doRemove()));
-
-  QPushButton *button = new QPushButton(this);
-  button->setGeometry(190,260,100,30);
-  button->setText(i18n("OK"));
-  connect(button,SIGNAL(clicked()),this,SLOT(doAccept()));
-
-  if (type=="Out" || type=="St")
-    button->setEnabled(false);
-
-  button = new QPushButton(this);
-  button->setGeometry(310,260,100,30);
-  button->setText(i18n("Cancel"));
-  connect(button,SIGNAL(clicked()),this,SLOT(reject()));
-
-  resize(430,340);
-  setFixedSize(430,340);
-
-  if (folder)
-  {
-    // Grab the list of accounts associated with the given folder.
-    for (acct=folder->account(); acct; acct=folder->nextAccount())
-    {
-      assocList->inSort(acct->name());
-    }
-  }
-
-  // insert list of available accounts that are not associated with
-  // any account
-  for (acct=acctMgr->first(); acct; acct=acctMgr->next())
-  {
-    if (!acct->folder())
-      accountList->inSort(acct->name());
-  }
+  grid->activate();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderDialog::doAccept()
+QCString KMFolderDialog::folderName() const
 {
-  QString acctName;
-  KMAccount* acct;
-  unsigned int i;
-  QString fldName, oldFldName;
-
-  if (folder) oldFldName = folder->name();
-  if (*nameEdit->text()) fldName = nameEdit->text();
-  else fldName = oldFldName;
-  if (fldName.isEmpty()) fldName = i18n("unnamed");
-
-  if (!folder) folder = (KMAcctFolder*)folderMgr->createFolder(fldName);
-  else if (oldFldName != fldName)
-  {
-    folder->rename(fldName);
-    folderMgr->contentsChanged();
-  }
-
-  if (folder)
-  {
-    folder->clearAccountList();
-
-    for (i=0; i<assocList->count(); i++)
-    {
-      acctName = assocList->text(i);
-      if (!(acct = acctMgr->find(acctName))) continue;
-      folder->addAccount(acct);
-    }
-  }
-
-  KMFolderDialogInherited::accept();
+  return QCString(mNameEdit->text());
 }
 
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::doAdd()
-{
-  int i;
-  QString s;
-  s=accountList->text(i=accountList->currentItem());
-  accountList->removeItem(i);
-  if (accountList->currentItem()==-1) addButton->setEnabled(FALSE);
-  assocList->inSort(s);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::doAccountHighlighted(int)
-{
-  addButton->setEnabled(TRUE);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::doAccountSelected(int)
-{
-  doAdd();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::doAssocHighlighted(int)
-{
-  removeButton->setEnabled(TRUE);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::doAssocSelected(int)
-{
-  doRemove();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderDialog::doRemove()
-{
-  int i;
-  QString s;
-
-  s=assocList->text(i=assocList->currentItem());
-  assocList->removeItem(i);
-  if (assocList->currentItem()==-1) removeButton->setEnabled(FALSE);
-  accountList->inSort(s);
-}

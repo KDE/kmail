@@ -12,14 +12,20 @@
 #include <errno.h>
 #include <klocale.h>
 
+#include <errno.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
 
 //=============================================================================
 //=============================================================================
-KMFolderRootDir::KMFolderRootDir(const char* path):
+KMFolderRootDir::KMFolderRootDir(const QCString& path):
   KMFolderDir(NULL, path)
 {
   initMetaObject();
-
   setPath(path);
 }
 
@@ -33,15 +39,14 @@ KMFolderRootDir::~KMFolderRootDir()
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderRootDir::setPath(const char* aPath)
+void KMFolderRootDir::setPath(const QCString& aPath)
 {
-  mPath = aPath;
-  
+  mPath = aPath;  
 }
 
 
 //-----------------------------------------------------------------------------
-const QString& KMFolderRootDir::path(void) const
+const QCString KMFolderRootDir::path() const
 {
   return mPath;
 }
@@ -50,13 +55,11 @@ const QString& KMFolderRootDir::path(void) const
 
 //=============================================================================
 //=============================================================================
-KMFolderDir::KMFolderDir(KMFolderDir* parent, const char* name):
+KMFolderDir::KMFolderDir(KMFolderDir* parent, const QCString& name):
   KMFolderNode(parent,name), KMFolderNodeList()
 {
   initMetaObject();
-
   setAutoDelete(TRUE);
-
   mType = "dir";
 }
 
@@ -69,12 +72,32 @@ KMFolderDir::~KMFolderDir()
 
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
+bool KMFolderDir::createDirectory(const QCString& aDirName)
+{
+  int rc;
+  QCString p;
+
+  assert(!aDirName.isEmpty());
+
+  p = path() + '/' + aDirName;
+  if (mkdir((const char*)p, 0700) != 0)
+  {
+    warning(i18n("Cannot create directory %s:\n%s"),
+	    (const char*)p, strerror(errno));
+    return false;
+  }
+
+  return true;
+}
+
+
+//-----------------------------------------------------------------------------
+KMFolder* KMFolderDir::createFolder(const QCString& aFolderName, bool aSysFldr)
 {
   KMFolder* fld;
   int rc;
 
-  assert(aFolderName != NULL);
+  assert(!aFolderName.isEmpty());
 
   fld = new KMFolder(this, aFolderName);
   assert(fld != NULL);
@@ -85,21 +108,35 @@ KMFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
   if (rc)
   {
     warning(i18n("Error while creating folder `%s':\n%s"),
-	    aFolderName, strerror(rc));
+	    (const char*)aFolderName, strerror(rc));
     delete fld;
     return NULL;
   }
 
   append(fld);
-
   return fld;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString& KMFolderDir::path(void) const
+int KMFolderDir::rename(const QCString& aName)
 {
-  static QString p;
+  QCString oldPath = path() + '/' + name();
+  QCString newPath = path() + '/' + aName;
+  int rc = ::rename(oldPath, newPath);
+  if (!rc)
+  {
+    setName(aName);
+    return 0;
+  }
+  return errno;
+}
+
+
+//-----------------------------------------------------------------------------
+const QCString KMFolderDir::path() const
+{
+  QCString p;
 
   if (parent())
   {
@@ -114,57 +151,64 @@ const QString& KMFolderDir::path(void) const
 
 
 //-----------------------------------------------------------------------------
-bool KMFolderDir::reload(void)
+bool KMFolderDir::reload()
 {
-  QDir      dir;
-  KMFolderDir* folderDir;
+  clear();
+  return loadFolders();
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMFolderDir::loadFolders(const QCString aPath, int aDepth)
+{
+  QDir dir;
   KMFolder* folder;
   QFileInfo* fileInfo;
   QFileInfoList* fiList;
-  QString fname;
-  QString fldPath;
+  QCString p, fname;
 
-  clear();
-  
-  fldPath = path();
-  //dir.setFilter(QDir::Files | QDir::Hidden);
+  if (aDepth >= 10) return false;
+
+  if (aPath.isEmpty()) p = path();
+  else p = path() + '/' + aPath;
+
   dir.setNameFilter("*");
-  
-  if (!dir.cd(fldPath, TRUE))
+  if (!dir.cd(p, true))
   {
-    warning("Cannot enter directory '" + fldPath + "'.\n");
-    return FALSE;
+    warning(i18n("Cannot enter directory %s."), (const char*)p);
+    return false;
   }
 
   if (!(fiList=(QFileInfoList*)dir.entryInfoList()))
   {
-    warning("Directory '" + fldPath + "' is unreadable.\n");
-    return FALSE;
+    warning(i18n("Directory %s/%s is unreadable."), (const char*)p);
+    return false;
   }
 
   for (fileInfo=fiList->first(); fileInfo; fileInfo=fiList->next())
   {
     fname = fileInfo->fileName();
 
-    if (fname[0]=='.') // skip table of contents files
+    if (fname[0]=='.') // skip administrative files
       continue;
 
     else if (fileInfo->isDir()) // a directory
     {
-      folderDir = new KMFolderDir(this, fname);
-      append(folderDir);
-      folderDir->reload();
+      if (!aPath.isEmpty()) fname = aPath + '/' + fname;
+      append(new KMFolderDir(this, fname));
+      loadFolders(fname, aDepth+1);
     }
 
-    else // all other files are folders (at the moment ;-)
+    else // all other files are considered folders
     {
+      if (!aPath.isEmpty()) fname = aPath + '/' + fname;
       folder = new KMFolder(this, fname);
       append(folder);
+      debug("folder found: %s", (const char*)folder->location());
     }
   }
-  //delete fiList;
-
-  return TRUE;
+  return true;
 }
+
 
 #include "kmfolderdir.moc"

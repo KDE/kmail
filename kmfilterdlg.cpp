@@ -304,6 +304,7 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
 	  this, SLOT(updateCurFilterName(const QString&)));
 }
 
+//-----------------------------------------------------------------------------
 void KMFilterDlg::resizeEvent(QResizeEvent *qre)
 {
   int i, w;
@@ -348,6 +349,7 @@ void KMFilterDlg::applyFilterChanges(void)
   }
 }
 
+//-----------------------------------------------------------------------------
 void KMFilterDlg::updateCurFilterName(const QString &text)
 {
   if (mCurFilterIdx < 0)
@@ -363,7 +365,6 @@ bool KMFilterDlg::testOpts(const QWidget* w) const
   if (!w) debug("KMFilterDlg: no widget given");
   return (w!=0);
 }
-
 
 //-----------------------------------------------------------------------------
 QPushButton* KMFilterDlg::createDetailsButton(void)
@@ -388,26 +389,28 @@ QLineEdit* KMFilterDlg::createEdit(const QString aTxt)
   return edt;
 }
 
-
 //-----------------------------------------------------------------------------
 QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
 {
   QComboBox* cbx = new QComboBox(false, this);
-  KMFolderDir* fdir = &(folderMgr->dir());
-  KMFolder* cur;
+  KMCStringList& folderList = folderMgr->folderList();
+  KMCStringList::Iterator it;
+  QCString name, curName;
   int i, idx=-1;
 
   cbx->setFixedHeight(mCbxHeight);
+  curName = QCString(curFolder);
 
-  for (i=0,cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
+  for (i=0,it=folderList.begin(); it!=folderList.end(); it++,i++)
   {
-    cbx->insertItem(cur->name());
-    if (cur->name() == curFolder) idx=i;
+    name = *it;
+    cbx->insertItem(QString(name));
+    if (name == curName) idx = i;
   }
+
   if (idx>=0) cbx->setCurrentItem(idx);
   return cbx;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
@@ -453,7 +456,6 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   widg->show();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotFilterSelected(int idx)
 {
@@ -475,7 +477,6 @@ void KMFilterDlg::slotFilterSelected(int idx)
   }
   enableControls();
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnUp()
@@ -504,7 +505,6 @@ void KMFilterDlg::slotBtnUp()
   updown_move_semaphore = 1;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnDown()
 {
@@ -529,7 +529,6 @@ void KMFilterDlg::slotBtnDown()
   updown_move_semaphore = 1;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnNew()
 {
@@ -548,7 +547,6 @@ void KMFilterDlg::slotBtnNew()
   slotFilterSelected(idx);
   enableControls();
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnDelete()
@@ -576,7 +574,6 @@ void KMFilterDlg::slotBtnDelete()
   enableControls();
   slotFilterSelected( idx ); // workaround another QT bug
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnOk()
@@ -620,7 +617,7 @@ int KMFilterDlg::indexOfRuleField(const QString aName) const
 
 
 //-----------------------------------------------------------------------------
-void KMFilterDlg::initLists(void)
+void KMFilterDlg::initLists()
 {
   QString name;
 

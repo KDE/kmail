@@ -24,7 +24,6 @@
 
 #include <stdio.h>
 #include <qvector.h>
-#include <qstring.h>
 
 class KMMessage;
 class KMFolderDir;
@@ -52,14 +51,14 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolder(KMFolderDir* parent=NULL, const char* name=NULL);
+  KMFolder(KMFolderDir* parent=NULL, const QCString& name=0);
   virtual ~KMFolder();
 
   /** Returns full path to folder file */
-  const QString location(void) const;
+  const QCString location(void) const;
 
   /** Returns full path to index file */
-  const QString indexLocation(void) const;
+  const QCString indexLocation(void) const;
 
   /** Read message at given index. Indexing starts at one to stay
     compatible with imap-lib */
@@ -155,7 +154,7 @@ public:
 
   /** Physically rename the folder. Returns zero on success and an errno 
     on failure. */
-  virtual int rename(const QString newName);
+  virtual int rename(const QCString& newName);
 
   /** Returns TRUE if a table of contents file is automatically created. */
   bool autoCreateIndex(void) const { return mAutoCreateIndex; }

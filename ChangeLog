@@ -1,3 +1,12 @@
+1999-10-10  Stefan Taferner  <taferner@kde.org> (KMail-1.1.25)
+
+	* Switched folder-tree widget to QListView. Currently
+	  drag&drop of messages is therefore broken.
+	* Added support for subdirectories in ~/Mail -> hierarchical
+	  folders!
+	* Changed ancient folder edit/create dialog to something
+	  more useful.
+
 1999-02-21  Stefan Taferner  <taferner@kde.org>
 
 	* Added extra ungrabbing of pointer and keyboard to avoid

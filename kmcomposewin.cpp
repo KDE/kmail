@@ -208,7 +208,7 @@ void KMComposeWin::readConfig(void)
   int w, h;
 
   config->setGroup("Composer");
-  mAutoSign = (stricmp(config->readEntry("signature","manual"),"auto")==0);
+  mAutoSign = (stricmp(config->readEntry("signature","manual"),"manual")==0);
   mShowToolBar = config->readNumEntry("show-toolbar", 1);
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
@@ -564,61 +564,61 @@ void KMComposeWin::setupToolBar(void)
 
   mToolBar = new KToolBar(this);
 
-  mToolBar->insertButton(loader->loadIcon("send.xpm"),0,
+  mToolBar->insertButton(loader->loadIcon("send"),0,
 			SIGNAL(clicked()),this,
 			SLOT(slotSend()),TRUE,i18n("Send message"));
   mToolBar->insertSeparator();
-  mToolBar->insertButton(loader->loadIcon("filenew.xpm"), 0,
+  mToolBar->insertButton(loader->loadIcon("filenew"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotNewComposer()), TRUE,
 			i18n("Compose new message"));
 
 #ifdef BROKEN
-  mToolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0,
+  mToolBar->insertButton(loader->loadIcon("filefloppy"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotToDo()), TRUE,
 			i18n("Save message to file"));
 #endif
 
-  mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0,
+  mToolBar->insertButton(loader->loadIcon("fileprint"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotPrint()), TRUE,
 			i18n("Print message"));
   mToolBar->insertSeparator();
 #ifdef BROKEN
-  mToolBar->insertButton(loader->loadIcon("reload.xpm"),2,
+  mToolBar->insertButton(loader->loadIcon("reload"),2,
 			SIGNAL(clicked()),this,
 			SLOT(slotCopyText()),TRUE,"Undo last change");
 #endif
-  mToolBar->insertButton(loader->loadIcon("editcut.xpm"),4,
+  mToolBar->insertButton(loader->loadIcon("editcut"),4,
 			SIGNAL(clicked()),this,
 			SLOT(slotCut()),TRUE,i18n("Cut selection"));
-  mToolBar->insertButton(loader->loadIcon("editcopy.xpm"),3,
+  mToolBar->insertButton(loader->loadIcon("editcopy"),3,
 			SIGNAL(clicked()),this,
 			SLOT(slotCopy()),TRUE,i18n("Copy selection"));
-  mToolBar->insertButton(loader->loadIcon("editpaste.xpm"),5,
+  mToolBar->insertButton(loader->loadIcon("editpaste"),5,
 			SIGNAL(clicked()),this,
 			SLOT(slotPaste()),TRUE,i18n("Paste clipboard contents"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("attach.xpm"),8,
+  mToolBar->insertButton(loader->loadIcon("attach"),8,
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAttachFile()),TRUE,i18n("Attach file"));
-  mToolBar->insertButton(loader->loadIcon("openbook.xpm"),7,
+  mToolBar->insertButton(loader->loadIcon("openbook"),7,
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAddrBook()),TRUE,
 			 i18n("Open addressbook..."));
-  mToolBar->insertButton(loader->loadIcon("spellcheck.xpm"),7,
+  mToolBar->insertButton(loader->loadIcon("spellcheck"),7,
 			SIGNAL(clicked()),this,
 			SLOT(slotSpellcheck()),TRUE,"Spellcheck message");
   mToolBar->insertSeparator();
   mBtnIdSign = 9;
-  mToolBar->insertButton(loader->loadIcon("feather_white.xpm"), mBtnIdSign,
+  mToolBar->insertButton(loader->loadIcon("feather_white"), mBtnIdSign,
 			 TRUE, i18n("sign message"));
   mToolBar->setToggle(mBtnIdSign);
   mToolBar->setButton(mBtnIdSign, mAutoPgpSign);
   mBtnIdEncrypt = 10;
-  mToolBar->insertButton(loader->loadIcon("pub_key_red.xpm"), mBtnIdEncrypt,
+  mToolBar->insertButton(loader->loadIcon("pub_key_red"), mBtnIdEncrypt,
 			 TRUE, i18n("encrypt message"));
   mToolBar->setToggle(mBtnIdEncrypt);
   // these buttons should only be enabled, if pgp is actually installed

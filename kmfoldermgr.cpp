@@ -31,11 +31,10 @@
 
 
 //-----------------------------------------------------------------------------
-KMFolderMgr::KMFolderMgr(const char* aBasePath):
+KMFolderMgr::KMFolderMgr(const QCString& aBasePath):
   KMFolderMgrInherited(), mDir()
 {
   initMetaObject();
-  assert(aBasePath != NULL);
   setBasePath(aBasePath);
 }
 
@@ -43,16 +42,16 @@ KMFolderMgr::KMFolderMgr(const char* aBasePath):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  mBasePath = "";
+  mBasePath = 0;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::setBasePath(const char* aBasePath)
+void KMFolderMgr::setBasePath(const QCString& aBasePath)
 {
   QDir dir;
 
-  assert(aBasePath != NULL);
+  assert(!aBasePath.isEmpty());
 
   if (aBasePath[0] == '~')
   {
@@ -114,6 +113,15 @@ KMFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
 
 
 //-----------------------------------------------------------------------------
+bool KMFolderMgr::createDirectory(const char* fName)
+{
+  bool rc = mDir.createDirectory(fName);
+  if (rc) emit changed();
+  return rc;
+}
+
+
+//-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
 {
   KMFolderNode* node;
@@ -141,6 +149,36 @@ KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
 		       aFolderName, (const char*)mBasePath);
   }
   return folder;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::folderListRecursive(KMCStringList* aList, KMFolderDir* aDir,
+				      const QCString& aPath)
+{
+  KMFolderNode* node;
+  QCString path;
+
+  assert(aList!=NULL);
+  assert(aDir!=NULL);
+
+  for (node=aDir->first(); node; node=aDir->next())
+  {
+    if (aPath.isEmpty()) path = node->name();
+    else path = aPath + '/' + node->name();
+    if (!node->isDir()) aList->append(path);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+KMCStringList& KMFolderMgr::folderList()
+{
+  static KMCStringList lst;
+
+  lst.clear();
+  folderListRecursive(&lst, &mDir, 0);
+  return lst;
 }
 
 

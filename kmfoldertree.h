@@ -3,11 +3,12 @@
 
 #include <qwidget.h>
 #include <qlistview.h>
-#include "kmfolder.h"
 
 class QDropEvent;
 class QTimer;
 class KMFolderTreeItem;
+class KMFolder;
+class QPoint;
 
 #define KMFolderTreeInherited QListView
 class KMFolderTree : public QListView
@@ -21,13 +22,13 @@ public:
   virtual void reload(void);
 
   /** Set current (selected) folder-node */
-  virtual void setCurrentFolderNode(const KMFolderNode*);
+  virtual void setCurrentFolder(const KMFolder*);
 
   /** Returns folder-node of current item or NULL if none. */
-  virtual KMFolderNode* currentFolderNode() const;
+  virtual KMFolder* currentFolder() const;
 
   /** Search for folder-node in list-view */
-  virtual KMFolderTreeItem* findItem(const KMFolderNode*) const;
+  virtual KMFolderTreeItem* findItem(const KMFolder*) const;
 
 signals:
   void folderSelected(KMFolder*);
@@ -35,7 +36,9 @@ signals:
 protected slots:
   void doClicked(QListViewItem*);
 
-  void slotRMB(int, int);
+  /** called when right mouse button is pressed */
+  void slotRightButtonPressed(QListViewItem*, const QPoint&, int);
+
   /** called by the folder-manager when the list of folders changed */
   void doFolderListChanged();
 
@@ -52,19 +55,30 @@ protected:
   // Updates the number of unread messages for all folders
   virtual void updateUnreadAll( );
 
-  // Insert folder sorted by type and name
-  virtual void inSort(KMFolder*);
-
   virtual void resizeEvent(QResizeEvent*);
-
-  virtual KMFolderTreeItem* appendFolderNode(KMFolderNode* node, KMFolderTreeItem* parent=0);
 
   /** Returns pixmap for given folder type */
   virtual QPixmap folderTypePixmap(const QString folderType);
 
   /** Search for folder-node in list-view -- recursive worker method. */
-  virtual KMFolderTreeItem* findItemRecursive(const KMFolderNode*,
+  virtual KMFolderTreeItem* findItemRecursive(const KMFolder*,
 					      KMFolderTreeItem*) const;
+
+  /** Append a new item to the list. Position in the list is searched
+      according to the path given. If needed, directory nodes are
+      created during the process. */
+  virtual KMFolderTreeItem* appendItem(const QCString& path,
+				       KMFolderTreeItem* aRoot,
+				       bool bold=FALSE, char sepChar='/');
+
+  /** Read config file and set geometry from it */
+  virtual void writeConfig();
+
+  /** Write geometry to config file */
+  virtual void readConfig();
+
+  void delayedUpdateRecursive(KMFolderTreeItem*);
+
 protected:
   QTimer* mUpdateTimer;
 };
@@ -78,14 +92,11 @@ public:
   KMFolderTreeItem(KMFolderTree* t, const QString& str);
 
   // Get/set folder node pointer
-  KMFolderNode* node(void) const { return mNode; }
-  void setNode(KMFolderNode* n) { mNode=n; }
-
-  // Returns type of folder node or NULL if no folder node is set
-  const char* type(void) const { return (mNode ? mNode->type() : 0); }
+  KMFolder* folder(void) const { return mFolder; }
+  void setFolder(KMFolder* f) { mFolder=f; }
 
 protected:
-  KMFolderNode* mNode;
+  KMFolder* mFolder;
 };
 
 

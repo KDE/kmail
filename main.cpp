@@ -2,6 +2,7 @@
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
 #include <qstring.h>
+#include <qcstring.h>
 #include <qdir.h>
 #include "kmglobal.h"
 #include "kmmainwin.h"
@@ -152,6 +153,9 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
   recurse--;
 }
+
+
+//-----------------------------------------------------------------------------
 //--- Sven's pseudo IPC&locking start ---
 void serverReady(bool flag)
 {
@@ -160,6 +164,8 @@ void serverReady(bool flag)
     checkMessage(); //check for any pending mesages
 }
 
+
+//-----------------------------------------------------------------------------
 static void writePid (bool ready)
 {
   FILE* lck;
@@ -173,6 +179,8 @@ static void writePid (bool ready)
   fclose (lck);
 }
 
+
+//-----------------------------------------------------------------------------
 static void checkMessage()
 {
   char lf[80];
@@ -358,7 +366,7 @@ static void recoverDeadLetters(void)
   KMComposeWin* win;
   KMMessage* msg;
   QDir dir = QDir::home();
-  QString fname = dir.path();
+  QCString fname = QCString(dir.path());
   int i, rc, num;
 
   if (!dir.exists("dead.letter")) return;
@@ -461,7 +469,7 @@ static void initFolders(KConfig* cfg)
 //-----------------------------------------------------------------------------
 static void init(int& argc, char *argv[])
 {
-  QString  acctPath, foldersPath;
+  QCString  acctPath, foldersPath;
   KConfig* cfg;
   //--- Sven's pseudo IPC&locking start ---
   if (!app) // because we might have constructed it before to remove KDE args
@@ -472,7 +480,9 @@ static void init(int& argc, char *argv[])
 
   keys = new KStdAccel(cfg);
 
-  //oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
+  // Stefan: Yes, we really want this message handler. Without it,
+  // kmail does not show vital warning() dialogs.
+  oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
 
   QDir dir;
   QString d = locateLocal("data", "kmail/");
@@ -563,7 +573,6 @@ static void cleanup(void)
 }
 
 //-----------------------------------------------------------------------------
-
 // Sven: new from Jens Kristian Soegard:
 static void processArgs(int argc, char *argv[])
 {
@@ -635,62 +644,6 @@ static void processArgs(int argc, char *argv[])
   }
 }
 
-// Old original
-/*
-static void processArgs(int argc, char *argv[])
-{
-  KMComposeWin* win;
-  KMMessage* msg = new KMMessage;
-  QString to, cc, bcc, subj;
-  int i;
-
-  for (i=0; i<argc; i++)
-  {
-    if (strcmp(argv[i],"-s")==0)
-    {
-      if (i<argc-1) subj = argv[++i];
-      mailto = TRUE;
-    }
-    else if (strcmp(argv[i],"-c")==0)
-    {
-      if (i<argc-1) cc = argv[++i];
-      mailto = TRUE;
-    }
-    else if (strcmp(argv[i],"-b")==0)
-    {
-      if (i<argc-1) bcc = argv[++i];
-      mailto = TRUE;
-    }
-    else if (strcmp(argv[i],"-check")==0)
-      checkNewMail = TRUE;
-    else if (argv[i][0]=='-')
-    {
-      warning(i18n("Unknown command line option: %s"), argv[i]);
-      // unknown parameter
-    }
-    else
-    {
-      if (!to.isEmpty()) to += ", ";
-      if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
-      else to += argv[i];
-      mailto = TRUE;
-    }
-  }
-
-  if (mailto)
-  {
-    msg->initHeader();
-    if (!cc.isEmpty()) msg->setCc(cc);
-    if (!bcc.isEmpty()) msg->setBcc(bcc);
-    if (!subj.isEmpty()) msg->setSubject(subj);
-    if (!to.isEmpty()) msg->setTo(to);
-
-    win = new KMComposeWin(msg);
-    assert(win != NULL);
-    win->show();
-  }
-}
-*/
 
 //-----------------------------------------------------------------------------
 main(int argc, char *argv[])

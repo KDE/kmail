@@ -49,9 +49,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   box->addWidget(butbox);
 
   QAccel *acc = new QAccel(this);
-  acc->connectItem(acc->insertItem(Key_Escape),
-		   this,
-		   SLOT(slotCancel()));
+  acc->connectItem(acc->insertItem(Key_Escape), this, SLOT(slotCancel()));
 
   resize(100, 300);
   box->activate();
@@ -64,7 +62,8 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   }
   
   // make sure item is visible
-  if(mListBox->currentItem() != -1) {
+  if(mListBox->currentItem() != -1) 
+  {
     unsigned idx = 0;
     while(mListBox->numItemsVisible()-2 + mListBox->topItem() < mListBox->currentItem() && idx < mListBox->count())
 	  mListBox->setTopItem(idx++);

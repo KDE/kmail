@@ -17,6 +17,9 @@
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
 #include "kmfolder.h"
+#include "kmmainwin.h"
+
+#include <assert.h>
 
 #include "kmfoldertree.moc"
 
@@ -24,12 +27,6 @@
 KMFolderTree::KMFolderTree(QWidget *parent,const char *name):
   KMFolderTreeInherited(parent, name)
 {
-  KConfig* conf = app->config();
-  static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr,
-		 pixSent;
-  static bool pixmapsLoaded = FALSE;
-  int width;
-
   initMetaObject();
   mUpdateTimer = NULL;
 
@@ -39,20 +36,14 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name):
 	  this, SLOT(doClicked(QListViewItem*)));
   connect(folderMgr, SIGNAL(changed()),
 	  this, SLOT(doFolderListChanged()));
-  connect(this, SIGNAL(popupMenu(int,int)),
-          this, SLOT(slotRMB(int,int)));
+  connect(this, SIGNAL(rightButtonPressed(QListViewItem*,const QPoint&,int)),
+          this, SLOT(slotRightButtonPressed(QListViewItem*,const QPoint&,int)));
   connect(folderMgr, SIGNAL(unreadChanged(KMFolder*)),
 	  this, SLOT(refresh(KMFolder*)));
 
-  conf->setGroup("Geometry");
-  width = conf->readNumEntry(name, 80);
-  resize(width, size().height());
-
-  // clearFlags();
-  // setFlags (Tbl_smoothVScrolling | Tbl_autoVScrollBar);
-
   addColumn(i18n("Folders"));
-  addColumn(i18n(""));
+  addColumn(i18n("Unread"));
+  readConfig();
 
   // setAutoUpdate(TRUE);
   reload();
@@ -65,12 +56,12 @@ QPixmap KMFolderTree::folderTypePixmap(const QString aType)
   KIconLoader* loader = KGlobal::iconLoader();
   const char* fname = 0;
 
-  if (aType == "dir") fname = "kmflddir.xpm";
-  else if (aType == "In") fname = "kmfldin.xpm";
-  else if (aType == "Out") fname = "kmfldout.xpm";
-  else if (aType == "St") fname = "kmfldsent.xpm";
-  else if (aType == "Tr") fname = "kmtrash.xpm";
-  else fname = "kmfolder.xpm";
+  if (aType == "dir") fname = "kmflddir";
+  else if (aType == "In") fname = "kmfldin";
+  else if (aType == "Out") fname = "kmfldout";
+  else if (aType == "St") fname = "kmfldsent";
+  else if (aType == "Tr") fname = "kmtrash";
+  else fname = "kmfolder";
 
   return loader->loadIcon(fname);
 }
@@ -100,34 +91,119 @@ void KMFolderTree::updateUnreadAll()
 //-----------------------------------------------------------------------------
 KMFolderTree::~KMFolderTree()
 {
-  KConfig* conf = app->config();
-
-  conf->setGroup("Geometry");
-  conf->writeEntry(name(), size().width());
-
   disconnect(folderMgr, SIGNAL(changed()),
 	     this, SLOT(doFolderListChanged()));
   disconnect(folderMgr, SIGNAL(unreadChanged(KMFolder*)),
 	     this, SLOT(refresh(KMFolder*)));
-
   delete mUpdateTimer;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::setCurrentFolderNode(const KMFolderNode* aNode)
+void KMFolderTree::readConfig()
 {
-  KMFolderTreeItem* it = findItem(aNode);
-  if (it) setCurrentItem(it);
+  KConfig* conf = app->config();
+  QCString key;
+  int i, w, h;
+
+  conf->setGroup("Geometry");
+  key.sprintf("%s-width", name());
+  w = conf->readNumEntry(key, 80);
+  key.sprintf("%s-height", name());
+  h = conf->readNumEntry(key, 120);
+  resize(w, h);
+
+  for (i=0; i<2; i++)
+  {
+    key.sprintf("Column-%d", i);
+    w = conf->readNumEntry(key, -1);
+    if (w >= 0) setColumnWidth(i, w);
+  }
 }
 
 
 //-----------------------------------------------------------------------------
-KMFolderNode* KMFolderTree::currentFolderNode() const
+void KMFolderTree::writeConfig()
+{
+  KConfig* conf = app->config();
+  QCString key;
+  int i;
+
+  conf->setGroup("Geometry");
+  key.sprintf("%s-width", name());
+  conf->writeEntry(key, size().width());
+  key.sprintf("%s-height", name());
+  conf->writeEntry(key, size().height());
+
+  for (i=0; i<2; i++)
+  {
+    key.sprintf("Column-%d", i);
+    conf->writeEntry(key, columnWidth(i));
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::setCurrentFolder(const KMFolder* aFolder)
+{
+  KMFolderTreeItem* it = findItem(aFolder);
+  if (it)
+  {
+    setCurrentItem(it);
+    setSelected(it, true);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+KMFolder* KMFolderTree::currentFolder() const
 {
   KMFolderTreeItem* cur = (KMFolderTreeItem*)currentItem();
   if (!cur) return NULL;
-  return cur->node();
+  return cur->folder();
+}
+
+
+//-----------------------------------------------------------------------------
+KMFolderTreeItem* KMFolderTree::appendItem(const QCString& aPath,
+					   KMFolderTreeItem* aParent,
+					   bool aBold, char sepChar)
+{
+  KMFolderTreeItem *item=NULL, *parentItem;
+  const char *pos, *beg;
+  QCString name;
+
+  assert(aParent!=NULL);
+
+  parentItem = aParent;
+  beg = aPath;
+  while (beg)
+  {
+    pos = strchr(beg, sepChar);
+    if (pos) name = QCString(beg, pos-beg+1);
+    else name = QCString(beg);
+
+    item = (KMFolderTreeItem*)parentItem->firstChild();
+    while (item)
+    {
+      if (QCString(item->text(0)) == name) break;
+      item = (KMFolderTreeItem*)item->nextSibling();
+    }
+    if (!item)
+    {
+      item = new KMFolderTreeItem(parentItem, name);
+      item->setPixmap(0, folderTypePixmap("dir"));
+      item->setOpen(true);
+      // if (aBold) item->setBold(true);
+    }
+    parentItem = item;
+
+    if (!pos) break;
+    beg = pos+1;
+  }
+
+  //  if (item== firstChild()) return NULL;
+  return item;  
 }
 
 
@@ -135,61 +211,35 @@ KMFolderNode* KMFolderTree::currentFolderNode() const
 void KMFolderTree::reload(void)
 {
   KMFolderTreeItem* rootItem;
-  //  bool upd = autoUpdate();
-  //  setAutoUpdate(FALSE);
+  KMFolderTreeItem* item;
+  KMFolderDir* fdir;
+  KMFolder* fld;
+  QString str;
+  long numUnread;
 
   clear();
-  rootItem = appendFolderNode(&folderMgr->dir());
+  rootItem = (KMFolderTreeItem*)new KMFolderTreeItem(this, i18n("Local Folders"));
   if (rootItem) rootItem->setOpen(true);
 
-  //  setAutoUpdate(upd);
-  //  if (upd) repaint();
-}
-
-
-//-----------------------------------------------------------------------------
-KMFolderTreeItem* KMFolderTree::appendFolderNode(KMFolderNode* aNode,
-						 KMFolderTreeItem* aParent)
-{
-  KMFolderTreeItem* item;
-  KMFolderNode* node;
-  KMFolderDir* fdir;
-  QString type, label, str;
-  KMFolder* fld = NULL;
-  QPixmap pix;
-  long numUnread = -1;
-
-  label = aNode->label();
-  if (label.isEmpty()) label = i18n("Local Folders");
-
-  type = aNode->type();
-  if (!aNode->isDir())
+  fdir = &folderMgr->dir();
+  for (fld = (KMFolder*)fdir->first(); fld; fld = (KMFolder*)fdir->next())
   {
-    fld = (KMFolder*)aNode;
-    fld->open();
-    numUnread = fld->countUnread();
-    fld->close();
-  }
+    if (!fld->isDir())
+    {
+      fld->open();
+      numUnread = fld->countUnread();
+      fld->close();
+    }
 
-  if (aParent) item = new KMFolderTreeItem(aParent, label);
-  else item = new KMFolderTreeItem(this, label);
-  item->setNode(aNode);
-
-  pix = folderTypePixmap(type);
-  if (!pix.isNull()) item->setPixmap(0, pix);
-
-  if (aNode->isDir())
-  {
-    fdir = (KMFolderDir*)aNode;
-    for (node = fdir->first(); node; node = fdir->next())
-      appendFolderNode(node, item);
+    item = appendItem(fld->name(), rootItem, numUnread>0);
+    item->setFolder(fld);
+    item->setPixmap(0, folderTypePixmap(fld->type()));
+    if (!fld->isDir())
+    {
+      str.sprintf("%ld", numUnread);
+      item->setText(1, str);
+    }
   }
-  else
-  {
-    str.setNum(numUnread);
-    item->setText(1, str);
-  }
-  return item;
 }
 
 
@@ -206,7 +256,7 @@ void KMFolderTree::refresh(KMFolder*)
 
 
 //-----------------------------------------------------------------------------
-KMFolderTreeItem* KMFolderTree::findItemRecursive(const KMFolderNode* aNode,
+KMFolderTreeItem* KMFolderTree::findItemRecursive(const KMFolder* aFolder,
 						  KMFolderTreeItem* aItem) const 
 {
   KMFolderTreeItem* item;
@@ -216,11 +266,11 @@ KMFolderTreeItem* KMFolderTree::findItemRecursive(const KMFolderNode* aNode,
   for (item = (KMFolderTreeItem*)aItem; item;
        item = (KMFolderTreeItem*)item->nextSibling())
   {
-    if (item->node() == aNode) return item;
+    if (item->folder() == aFolder) return item;
     child = (KMFolderTreeItem*)item->firstChild();
     if (child)
     {
-      found = findItemRecursive(aNode, child);
+      found = findItemRecursive(aFolder, child);
       if (found) return found;
     }
   }
@@ -229,43 +279,42 @@ KMFolderTreeItem* KMFolderTree::findItemRecursive(const KMFolderNode* aNode,
 
 
 //-----------------------------------------------------------------------------
-KMFolderTreeItem* KMFolderTree::findItem(const KMFolderNode* aNode) const 
+KMFolderTreeItem* KMFolderTree::findItem(const KMFolder* aFolder) const 
 {
-  return findItemRecursive(aNode, (KMFolderTreeItem*)firstChild());
+  return findItemRecursive(aFolder, (KMFolderTreeItem*)firstChild());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::delayedUpdate()
 {
-#ifdef BROKEN
-  int i;
+  delayedUpdateRecursive((KMFolderTreeItem*)firstChild());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::delayedUpdateRecursive(KMFolderTreeItem* aItem)
+{
   KMFolder* folder;
+  KMFolderTreeItem* item;
   QString str;
-  bool upd = autoUpdate();
-  bool repaintRequired = false;
+  long unread;
 
-  setAutoUpdate(FALSE);
-
-  for (i=0, folder = (KMFolder*)mList.first();
-    folder != NULL;
-    folder = (KMFolder*)mList.next(),i++)
+  for (item = (KMFolderTreeItem*)aItem; item;
+       item = (KMFolderTreeItem*)item->nextSibling())
   {
-    str = QString("{") + folder->type() + "} " + folder->label();
-    if (text(i) != str) {
-       repaintRequired = true;
-       changeItem(str, i);
-    if (folder->countUnread()>0)
-       changeItemColor(darkRed, i);
-    else
-       changeItemColor(kapp->palette().normal().foreground(), i);
+    folder = item->folder();
+    if (folder)
+    {
+      folder->open();
+      str.setNum(folder->countUnread());
+      folder->close();
+      item->setText(1, str);
     }
+    else delayedUpdateRecursive((KMFolderTreeItem*)item->firstChild());
   }
-  setAutoUpdate(upd);
-  if (upd && repaintRequired) repaint();
 
   mUpdateTimer->stop();
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -317,43 +366,13 @@ void KMFolderTree::dropEvent(QDropEvent * event)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::inSort(KMFolder* aFolder)
-{
-#ifdef BROKEN
-  KMFolder* cur;
-  QString str;
-  int i, cmp;
-
-  for (i=0,cur=(KMFolder*)mList.first(); cur; cur=(KMFolder*)mList.next(),i++)
-  {
-    cmp = strcmp(aFolder->type(), cur->type());
-    if (!cmp) cmp = stricmp(aFolder->label(), cur->label());
-    if (cmp < 0) break;
-  }
-
-  str = QString("{") + aFolder->type() + "} " + aFolder->label();
-  insertItem(str, i);
-  mList.insert(i, aFolder);
-
-  if (aFolder->countUnread()>0)
-    changeItemColor(darkRed, i);
-  else
-    changeItemColor(kapp->palette().normal().foreground(), i);
-#endif
-}
-
-
-//-----------------------------------------------------------------------------
 void KMFolderTree::doClicked(QListViewItem* aItem)
 {
   KMFolderTreeItem* it = (KMFolderTreeItem*)aItem;
-  KMFolderNode* node;
   KMFolder* fld = NULL;
 
   if (!it) return;
-  if (!(node = it->node())) return;
-
-  if (!node->isDir()) fld = (KMFolder*)node;
+  if (!(fld = it->folder())) return;
 
   debug("doClicked: %s\n", fld ? (const char*)fld->label() : "(none)");
   emit folderSelected(fld);
@@ -364,46 +383,44 @@ void KMFolderTree::doClicked(QListViewItem* aItem)
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
   KConfig* conf = app->config();
+  int i;
+  QCString key;
 
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
+
+  for (i=0; i<2; i++)
+  {
+    key.sprintf("Column-%d", i);
+    conf->writeEntry(key, columnWidth(i));
+  }
 
   KMFolderTreeInherited::resizeEvent(e);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotRMB(int index, int)
+void KMFolderTree::slotRightButtonPressed(QListViewItem* aItem,
+					  const QPoint& aPos, int)
 {
-#ifdef BROKEN
-  doFolderSelected(index, 0);
-  setCurrentItem(index);
+  KMFolderTreeItem* it = (KMFolderTreeItem*)aItem;
+  if (!it) return;
+
+  setCurrentItem(it);
+  setSelected(it, true);
 
   if (!topLevelWidget()) return; // safe bet
-
-  QPopupMenu *folderMenu = new QPopupMenu;
-
-  folderMenu->insertItem(i18n("&Create..."), topLevelWidget(),
-              SLOT(slotAddFolder()));
-  folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
-              SLOT(slotModifyFolder()));
-  folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
-              SLOT(slotCompactFolder()));
-  folderMenu->insertSeparator();
-  folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
-              SLOT(slotEmptyFolder()));
-  folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
-              SLOT(slotRemoveFolder()));
-  folderMenu->exec (QCursor::pos(), 0);
-  delete folderMenu;
-#endif
+  QPopupMenu *folderMenu = ((KMMainWin*)topLevelWidget())->folderMenu();
+  folderMenu->exec(aPos, 0);
 }
 
 
-//-----------------------------------------------------------------------------
+//=============================================================================
+//=============================================================================
 KMFolderTreeItem::KMFolderTreeItem(KMFolderTreeItem* i, const QString& str):
   QListViewItem(i, str)
 {
+  mFolder = NULL;
 }
 
 
@@ -411,5 +428,6 @@ KMFolderTreeItem::KMFolderTreeItem(KMFolderTreeItem* i, const QString& str):
 KMFolderTreeItem::KMFolderTreeItem(KMFolderTree* t, const QString& str):
   QListViewItem(t, str)
 {
+  mFolder = NULL;
 }
 

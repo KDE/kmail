@@ -3,10 +3,9 @@
 #include "kmfoldernode.h"
 #include "kmfolderdir.h"
 
-static QString sEmpty("");
 
 //-----------------------------------------------------------------------------
-KMFolderNode::KMFolderNode(KMFolderDir* aParent, const char* aName):
+KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QCString& aName):
   KMFolderNodeInherited(aParent)
 {
   initMetaObject();
@@ -46,10 +45,10 @@ bool KMFolderNode::isDir(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString& KMFolderNode::path(void) const
+const QCString KMFolderNode::path(void) const
 {
   if (parent()) return parent()->path();
-  return sEmpty;
+  return 0;
 }
 
 

@@ -63,7 +63,7 @@ void KMAcctLocal::init(void)
 //-----------------------------------------------------------------------------
 bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 {
-  KMFolder mailFolder(NULL, location());
+  KMFolder mailFolder(NULL, QCString(location()));
   long num = 0;
   long i;
   int rc;
