@@ -868,7 +868,8 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     if(!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
   }
 
-  if(!aMsg->bcc().isEmpty())
+  QString bccStr = aMsg->bcc();
+  if(!bccStr.isEmpty())
   {
     mQueryField = "&bcc=";
     if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
@@ -924,6 +925,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   mQuery = "";
 
   mMessage = prepareStr(aMsg->asString(), TRUE);
+  if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
   
   if ((mJob = KIO::put(destination, -1, false, false, false)))
   {
