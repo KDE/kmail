@@ -25,7 +25,7 @@
 </Menu>
 <Menu noMerge="1" name="options" >
 <text>
-&amp;Options</text>
+Message &amp;Options</text>
 <Action name="urgent" />
 <Action name="confirm_delivery" />
 <Action name="confirm_read" />
