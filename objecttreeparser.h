@@ -68,7 +68,9 @@ namespace KMail {
 	resultString() */
     ObjectTreeParser( const ObjectTreeParser & other );
   public:
-    ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0 );
+    ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
+		      bool showOneMimePart=false, bool keepEncryptions=false,
+		      bool includeSignatures=true );
     virtual ~ObjectTreeParser();
 
     QCString resultString() const { return mResultString; }
@@ -80,14 +82,26 @@ namespace KMail {
       return mCryptPlugWrapper;
     }
 
+    bool showOnlyOneMimePart() const { return mShowOnlyOneMimePart; }
+    void setShowOnlyOneMimePart( bool show ) {
+      mShowOnlyOneMimePart = show;
+    }
+
+    bool keepEncryptions() const { return mKeepEncryptions; }
+    void setKeepEncryptions( bool keep ) {
+      mKeepEncryptions = keep;
+    }
+
+    bool includeSignatures() const { return mIncludeSignatures; }
+    void setIncludeSignatures( bool include ) {
+      mIncludeSignatures = include;
+    }
+
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
     //  Function is called internally by "parseMsg(KMMessage* msg)"
     //  and it will be replaced once KMime is alive.
-    void parseObjectTree( partNode * node,
-			  bool showOneMimePart=false,
-			  bool keepEncryptions=false,
-			  bool includeSignatures=true );
+    void parseObjectTree( partNode * node );
 
     /** Save a QByteArray into a new temp. file using the extention
         given in dirExt to compose the directory name and
@@ -144,37 +158,21 @@ namespace KMail {
 			bool& passphraseError,
 			QString& aErrorText );
 
-    bool processTextType( int subtype, partNode * node, bool showOneMimePart,
-			  bool keepEncryptions, bool includeSignatures,
-			  ProcessResult & result );
+    bool processTextType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processMultiPartType( int subtype, partNode * node, bool showOneMimePart,
-			       bool keepEncryptions, bool includeSignatures,
-			       ProcessResult & result );
+    bool processMultiPartType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processMessageType( int subtype, partNode * node, bool showOneMimePart,
-			     bool keepEncryptions, bool includeSignatures,
-			     ProcessResult & result );
+    bool processMessageType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processApplicationType( int subtype, partNode * node, bool showOneMimePart,
-				 bool keepEncryptions, bool includeSignatures,
-				 ProcessResult & result );
+    bool processApplicationType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processImageType( int subtype, partNode * node, bool showOneMimePart,
-			   bool keepEncryptions, bool includeSignatures,
-			   ProcessResult & result );
+    bool processImageType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processAudioType( int subtype, partNode * node, bool showOneMimePart,
-			   bool keepEncryptions, bool includeSignatures,
-			   ProcessResult & result );
+    bool processAudioType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processVideoType( int subtype, partNode * node, bool showOneMimePart,
-			   bool keepEncryptions, bool includeSignatures,
-			   ProcessResult & result );
+    bool processVideoType( int subtype, partNode * node, ProcessResult & result );
 
-    bool processModelType( int subtype, partNode * node, bool showOneMimePart,
-			   bool keepEncryptions, bool includeSignatures,
-			   ProcessResult & result );
+    bool processModelType( int subtype, partNode * node, ProcessResult & result );
 
 
     void writeBodyString( const QCString & bodyString,
@@ -185,6 +183,9 @@ namespace KMail {
     KMReaderWin * mReader;
     QCString mResultString;
     CryptPlugWrapper * mCryptPlugWrapper;
+    bool mShowOnlyOneMimePart;
+    bool mKeepEncryptions;
+    bool mIncludeSignatures;
   };
 
 }; // namespace KMail

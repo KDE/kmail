@@ -55,16 +55,24 @@ using KMail::PartMetaData;
 
 namespace KMail {
 
-  ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, CryptPlugWrapper * wrapper )
+  ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, CryptPlugWrapper * wrapper,
+				      bool showOnlyOneMimePart, bool keepEncryptions,
+				      bool includeSignatures )
     : mReader( reader ),
-      mCryptPlugWrapper( wrapper )
+      mCryptPlugWrapper( wrapper ),
+      mShowOnlyOneMimePart( showOnlyOneMimePart ),
+      mKeepEncryptions( keepEncryptions ),
+      mIncludeSignatures( includeSignatures )
   {
-
+    
   }
-
+  
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
     : mReader( other.mReader ),
-      mCryptPlugWrapper( other.cryptPlugWrapper() )
+      mCryptPlugWrapper( other.cryptPlugWrapper() ),
+      mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
+      mKeepEncryptions( other.keepEncryptions() ),
+      mIncludeSignatures( other.includeSignatures() )
   {
 
   }
@@ -245,20 +253,16 @@ public:
     }
     kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
     ObjectTreeParser otp( mReader, cryptPlugWrapper() );
-    otp.parseObjectTree( newNode );// showOneMimePart, keepEncryptions, includeSignatures );
+    otp.parseObjectTree( newNode );
     mResultString += otp.resultString();
     kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
   }
 
 
-  void ObjectTreeParser::parseObjectTree( partNode* node,
-					  bool showOneMimePart,
-					  bool keepEncryptions,
-					  bool includeSignatures )
-  {
+  void ObjectTreeParser::parseObjectTree( partNode* node ) {
     kdDebug(5006) << "\n**\n** ObjectTreeParser::parseObjectTree( "
 		  << (node ? "node OK, " : "no node, ")
-		  << "showOneMimePart: " << (showOneMimePart ? "TRUE" : "FALSE")
+		  << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
 		  << " ) **\n**" << endl;
 
     // make widgets visible that might have been hidden by
@@ -276,7 +280,7 @@ public:
                                                       : dummyData );
     */
 
-    if( showOneMimePart && mReader ) {
+    if( showOnlyOneMimePart() && mReader ) {
       // clear the viewer
       mReader->mViewer->view()->setUpdatesEnabled( false );
       mReader->mViewer->view()->viewport()->setUpdatesEnabled( false );
@@ -299,8 +303,8 @@ public:
 	mReader->mViewer->write(" background=\"file://" + mReader->mBackingPixmapStr + "\"");
       mReader->mViewer->write(">");
     }
-    if(node && (showOneMimePart || (mReader && mReader->mShowCompleteMessage && !node->mRoot ))) {
-      if( showOneMimePart ) {
+    if(node && (showOnlyOneMimePart() || (mReader && mReader->mShowCompleteMessage && !node->mRoot ))) {
+      if( showOnlyOneMimePart() ) {
 	// set this node and all it's children and their children to 'not yet processed'
 	node->mWasProcessed = false;
 	if( node->mChild )
@@ -396,52 +400,44 @@ public:
 	switch( curNode_replacedType ){
 	case DwMime::kTypeText:
 	  bDone = processTextType( curNode_replacedSubType, curNode,
-				   showOneMimePart, keepEncryptions,
-				   includeSignatures, processResult );
+				   processResult );
 	  break;
 	case DwMime::kTypeMultipart:
 	  bDone = processMultiPartType( curNode_replacedSubType, curNode,
-					showOneMimePart, keepEncryptions,
-					includeSignatures, processResult );
+					processResult );
 	  break;
 	case DwMime::kTypeMessage:
 	  bDone = processMessageType( curNode_replacedSubType, curNode,
-				      showOneMimePart, keepEncryptions,
-				      includeSignatures, processResult );
+				      processResult );
 	  break;
 	case DwMime::kTypeApplication:
 	  bDone = processApplicationType( curNode_replacedSubType, curNode,
-					  showOneMimePart, keepEncryptions,
-					  includeSignatures, processResult );
+					  processResult );
 	  break;
 	case DwMime::kTypeImage:
 	  bDone = processImageType( curNode_replacedSubType, curNode,
-				    showOneMimePart, keepEncryptions,
-				    includeSignatures, processResult );
+				    processResult );
 	  break;
 	case DwMime::kTypeAudio:
 	  bDone = processAudioType( curNode_replacedSubType, curNode,
-				    showOneMimePart, keepEncryptions,
-				    includeSignatures, processResult );
+				    processResult );
 	  break;
 	case DwMime::kTypeVideo:
 	  bDone = processVideoType( curNode_replacedSubType, curNode,
-				    showOneMimePart, keepEncryptions,
-				    includeSignatures, processResult );
+				    processResult );
 	  break;
 	case DwMime::kTypeModel:
 	  bDone = processModelType( curNode_replacedSubType, curNode,
-				    showOneMimePart, keepEncryptions,
-				    includeSignatures, processResult );
+				    processResult );
 	  break;
 	}
 
 	if( !bDone && mReader &&
 	    ( mReader->mAttachmentStyle != KMReaderWin::HideAttmnt ||
 	      ( curNode && !curNode->isAttachment() ) ||
-	      showOneMimePart ) ) {
+	      showOnlyOneMimePart() ) ) {
 	  bool asIcon = true;
-	  if (showOneMimePart) {
+	  if (showOnlyOneMimePart()) {
 	    asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
 	  }
 	  else if ( processResult.neverDisplayInline() ) {
@@ -479,11 +475,9 @@ public:
 	curNode->mWasProcessed = true;
       }
       // parse the siblings (children are parsed in the 'multipart' case terms)
-      if( !showOneMimePart && curNode && curNode->mNext )
-	parseObjectTree( curNode->mNext,
-			 showOneMimePart,
-			 keepEncryptions,
-			 includeSignatures );
+      if( !showOnlyOneMimePart() && curNode && curNode->mNext )
+	parseObjectTree( curNode->mNext );
+
       // adjust signed/encrypted flags if inline PGP was found
       if( processResult.isInlineSigned() || processResult.isInlineEncrypted() ){
 	if(    partNode::CryptoTypeUnknown == curNode->cryptoType()
@@ -499,7 +493,7 @@ public:
 	curNode->setCryptoType( partNode::CryptoTypeNone );
     }
 
-    if( mReader && showOneMimePart ) {
+    if( mReader && showOnlyOneMimePart() ) {
       mReader->mViewer->write("</body></html>");
       mReader->sendNextHtmlChunk();
       /*mReader->mViewer->view()->viewport()->setUpdatesEnabled( true );
@@ -991,7 +985,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 }
 
   bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
-					  bool showOneMimePart, bool, bool,
 					  ProcessResult & result ) {
     bool bDone = false;
     kdDebug(5006) << "* text *" << endl;
@@ -1011,7 +1004,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  !curNode->isAttachment()) ||
 		 (mReader->mAttachmentStyle == KMReaderWin::IconicAttmnt &&
 		  mReader->mIsFirstTextPart) ||
-		 showOneMimePart )
+		 showOnlyOneMimePart() )
       {
 	mReader->mIsFirstTextPart = false;
 	if( mReader->htmlMail() ) {
@@ -1070,7 +1063,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 						  "groupware",
 						  "vCal_request.raw",
 						  theBody ) );
-	      if( !fname.isEmpty() && !showOneMimePart ){
+	      if( !fname.isEmpty() && !showOnlyOneMimePart() ){
 		QString prefix;
 		QString postfix;
 		// We let KMGroupware do most of our 'print formatting':
@@ -1125,10 +1118,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	   !curNode->isAttachment()) ||
 	  (mReader->mAttachmentStyle == KMReaderWin::IconicAttmnt &&
 	   mReader->mIsFirstTextPart) ||
-	  showOneMimePart )
+	  showOnlyOneMimePart() )
 	{
 	  if (mReader) mReader->mIsFirstTextPart = false;
-	  if ( mReader && curNode->isAttachment() && !showOneMimePart )
+	  if ( mReader && curNode->isAttachment() && !showOnlyOneMimePart() )
 	    mReader->queueHtml("<br><hr><br>");
 	  if ( mReader ) {
 	    // process old style not-multipart Mailman messages to
@@ -1256,9 +1249,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   }
 
   bool ObjectTreeParser::processMultiPartType( int subtype, partNode * curNode,
-					       bool /*showOneMimePart*/,
-					       bool keepEncryptions,
-					       bool includeSignatures,
 					       ProcessResult & result ) {
     bool bDone = false;
     kdDebug(5006) << "* multipart *" << endl;
@@ -1279,10 +1269,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    // we ignore the plain text but process the calendar part.
 	    dataPlain->mWasProcessed = true;
 	    ObjectTreeParser otp( *this );
-	    otp.parseObjectTree( dataCal,
-				 false,
-				 keepEncryptions,
-				 includeSignatures );
+	    otp.setShowOnlyOneMimePart( false );
+	    otp.parseObjectTree( dataCal );
 	    mResultString += otp.resultString();
 	    bDone = true;
 	  }else {
@@ -1293,10 +1281,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      // we ignore the plain text but process the MS-TNEF part.
 	      dataPlain->mWasProcessed = true;
 	      ObjectTreeParser otp( *this );
-	      otp.parseObjectTree( dataTNEF,
-				   false,
-				   keepEncryptions,
-				   includeSignatures );
+	      otp.setShowOnlyOneMimePart( false );
+	      otp.parseObjectTree( dataTNEF );
 	      mResultString += otp.resultString();
 	      bDone = true;
 	    }
@@ -1304,10 +1290,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	}
 	if( !bDone ) {
 	  ObjectTreeParser otp( *this );
-	  otp.parseObjectTree( curNode->mChild,
-			       false,
-			       keepEncryptions,
-			       includeSignatures );
+	  otp.setShowOnlyOneMimePart( false );
+	  otp.parseObjectTree( curNode->mChild );
 	  mResultString += otp.resultString();
 	  bDone = true;
 	}
@@ -1326,28 +1310,22 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  if( dataPlain )
 	    dataPlain->mWasProcessed = true;
 	  ObjectTreeParser otp( *this );
-	  otp.parseObjectTree( dataHtml,
-			       false,
-			       keepEncryptions,
-			       includeSignatures );
+	  otp.setShowOnlyOneMimePart( false );
+	  otp.parseObjectTree( dataHtml );
 	  mResultString += otp.resultString();
 	}
 	else if( !mReader || (!mReader->htmlMail() && dataPlain) ) {
 	  if( dataHtml )
 	    dataHtml->mWasProcessed = true;
 	  ObjectTreeParser otp( *this );
-	  otp.parseObjectTree( dataPlain,
-			       false,
-			       keepEncryptions,
-			       includeSignatures );
+	  otp.setShowOnlyOneMimePart( false );
+	  otp.parseObjectTree( dataPlain );
 	  mResultString += otp.resultString();
 	}
 	else {
 	  ObjectTreeParser otp( *this );
-	  otp.parseObjectTree( curNode->mChild,
-			       true,
-			       keepEncryptions,
-			       includeSignatures );
+	  otp.setShowOnlyOneMimePart( true );
+	  otp.parseObjectTree( curNode->mChild );
 	  mResultString += otp.resultString();
 	}
 	bDone = true;
@@ -1413,7 +1391,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  curNode->setSigned( true );
 	}
 
-	if( !includeSignatures ) {
+	if( !includeSignatures() ) {
 	  if( !data )
 	    data = curNode->mChild;
 	  QCString cstr( data->msgPart().bodyDecoded() );
@@ -1437,7 +1415,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     case DwMime::kSubtypeEncrypted: {
       kdDebug(5006) << "encrypted" << endl;
       CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
-      if( keepEncryptions ) {
+      if( keepEncryptions() ) {
 	curNode->setEncrypted( true );
 	QCString cstr( curNode->msgPart().bodyDecoded() );
 	if( mReader )
@@ -1474,10 +1452,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  if( data->mChild ) {
 	    kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
 	    ObjectTreeParser otp( *this );
-	    otp.parseObjectTree( data->mChild,
-				 false,
-				 keepEncryptions,
-				 includeSignatures );
+	    otp.setShowOnlyOneMimePart( false );
+	    otp.parseObjectTree( data->mChild );
 	    mResultString += otp.resultString();
 	    bDone = true;
 	    kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
@@ -1575,10 +1551,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if( !bDone ){
       if( curNode && curNode->mChild ) {
 	ObjectTreeParser otp( *this );
-	otp.parseObjectTree( curNode->mChild,
-			     false,
-			     keepEncryptions,
-			     includeSignatures );
+	otp.setShowOnlyOneMimePart( false );
+	otp.parseObjectTree( curNode->mChild );
 	mResultString += otp.resultString();
 	bDone = true;
       }
@@ -1588,9 +1562,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   }
 
   bool ObjectTreeParser::processMessageType( int subtype, partNode * curNode,
-					     bool showOneMimePart,
-					     bool /*keepEncryptions*/,
-					     bool /*includeSignatures*/,
 					     ProcessResult & /*result*/ ) {
     bool bDone = false;
     kdDebug(5006) << "* message *" << endl;
@@ -1599,7 +1570,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       kdDebug(5006) << "RfC 822" << endl;
       if( mReader && mReader->mAttachmentStyle != KMReaderWin::InlineAttmnt &&
 	  (mReader->mAttachmentStyle != KMReaderWin::SmartAttmnt ||
-	   curNode->isAttachment()) && !showOneMimePart)
+	   curNode->isAttachment()) && !showOnlyOneMimePart())
 	break;
 
       if( curNode->mChild ) {
@@ -1647,9 +1618,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   }
 
   bool ObjectTreeParser::processApplicationType( int subtype, partNode * curNode,
-						 bool showOneMimePart,
-						 bool keepEncryptions,
-						 bool /*includeSignatures*/,
 						 ProcessResult & result ) {
     bool bDone = false;
     kdDebug(5006) << "* application *" << endl;
@@ -1676,7 +1644,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	       && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
 	  curNode->setEncrypted( true );
 	  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-	  if( keepEncryptions ) {
+	  if( keepEncryptions() ) {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
 	    if( mReader )
 	      writeBodyString( cstr, curNode->trueFromAddress(), result );
@@ -1901,7 +1869,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  = KMGroupware::msTNEFToHTML( mReader, vPart, fname,
 				       mReader && mReader->mUseGroupware,
 				       prefix, postfix );
-	if( bVPartCreated && mReader && !showOneMimePart ){
+	if( bVPartCreated && mReader && !showOnlyOneMimePart() ){
 	  mReader->queueHtml( prefix );
 	  vPart.replace( '&',  "&amp;"  );
 	  vPart.replace( '<',  "&lt;"   );
@@ -1920,37 +1888,25 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   }
 
   bool ObjectTreeParser::processImageType( int /*subtype*/, partNode * /*curNode*/,
-					   bool /*showOneMimePart*/,
-					   bool /*keepEncryptions*/,
-					   bool /*includeSignatures*/,
 					   ProcessResult & result ) {
     result.setIsImage( true );
     return false;
   }
 
   bool ObjectTreeParser::processAudioType( int /*subtype*/, partNode * curNode,
-					   bool showOneMimePart,
-					   bool /*keepEncryptions*/,
-					   bool /*includeSignatures*/,
 					   ProcessResult & /*result*/ ) {
     // We always show audio as icon.
-    if( mReader && ( mReader->mAttachmentStyle != KMReaderWin::HideAttmnt || showOneMimePart ) )
+    if( mReader && ( mReader->mAttachmentStyle != KMReaderWin::HideAttmnt || showOnlyOneMimePart() ) )
       mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
     return true;
   }
 
   bool ObjectTreeParser::processVideoType( int /*subtype*/, partNode * /*curNode*/,
-					   bool /*showOneMimePart*/,
-					   bool /*keepEncryptions*/,
-					   bool /*includeSignatures*/,
 					   ProcessResult & /*result*/ ) {
     return false;
   }
 
   bool ObjectTreeParser::processModelType( int /*subtype*/, partNode * /*curNode*/,
-					   bool /*showOneMimePart*/,
-					   bool /*keepEncryptions*/,
-					   bool /*includeSignatures*/,
 					   ProcessResult & /*result*/ ) {
     return false;
   }
