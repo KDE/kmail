@@ -335,7 +335,7 @@ protected:
 
 
 /** Abstract base class for KMail's filter actions that need a
-    mail folder as parameter, e.g. 'move to folder'. Can
+    mail folder as parameter, e.g. 'file into folder'. Can
     create a @ref QComboBox as parameter widget. A subclass of this
     must provide at least implementations for the following methods:
 
@@ -604,8 +604,8 @@ struct KMFilterActionDesc
     looking up either it's (english) name or it's (i18n) label:
     <pre>
     KMFilterActionDict dict;
-    // get name of the action with label "move to folder":
-    dict[i18n("move to folder")]->name; // == "transfer"
+    // get name of the action with label "file into folder":
+    dict[i18n("file into folder")]->name; // == "transfer"
     // create one such action:
     KMFilterAction *action = dict["transfer"]->create();
     </pre>

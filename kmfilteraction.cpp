@@ -1230,8 +1230,8 @@ void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
 
 
 //=============================================================================
-// KMFilterActionMove - move to folder
-// Move message to another mail folder
+// KMFilterActionMove - file into folder
+// File message into another mail folder
 //=============================================================================
 class KMFilterActionMove: public KMFilterActionWithFolder
 {
@@ -1247,7 +1247,7 @@ KMFilterAction* KMFilterActionMove::newAction(void)
 }
 
 KMFilterActionMove::KMFilterActionMove()
-  : KMFilterActionWithFolder( "transfer", i18n("move to folder") )
+  : KMFilterActionWithFolder( "transfer", i18n("file into folder") )
 {
 }
 
