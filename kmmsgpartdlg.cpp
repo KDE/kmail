@@ -21,6 +21,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption):
   QGridLayout* grid = new QGridLayout(this, 6, 4, 8, 8);
   QPushButton *btnOk, *btnCancel;
   QLabel *label;
+  int h;
 
   mMsgPart = NULL;
 
@@ -32,43 +33,75 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption):
   mLblIcon->resize(32, 32);
   grid->addMultiCellWidget(mLblIcon, 0, 1, 0, 0);
 
+  //-----
   mEdtMimetype = new QLineEdit(this);
-  grid->addWidget(mEdtMimetype, 0, 1);
+  mEdtMimetype->adjustSize();
+  h = mEdtMimetype->sizeHint().height();
+  mEdtMimetype->setMinimumSize(100, h);
+  mEdtMimetype->setMaximumSize(1024, h);
+  grid->addMultiCellWidget(mEdtMimetype, 0, 0, 1, 3);
 
+  //-----
   mLblSize = new QLabel(this);
-  grid->addWidget(mLblSize, 1, 1);
+  mLblSize->adjustSize();
+  mLblSize->setMinimumSize(100, h);
+  grid->addMultiCellWidget(mLblSize, 1, 1, 1, 3);
 
+  //-----
   label = new QLabel(nls->translate("Name:"), this);
+  label->adjustSize();
+  label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 2, 0);
 
   mEdtName = new QLineEdit(this);
+  mEdtName->setMinimumSize(100, h);
+  mEdtName->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mEdtName, 2, 2, 1, 3);
 
+  //-----
   label = new QLabel(nls->translate("Description:"), this);
+  label->adjustSize();
+  label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 3, 0);
 
   mEdtComment = new QLineEdit(this);
+  mEdtComment->setMinimumSize(100, h);
+  mEdtComment->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mEdtComment, 3, 3, 1, 3);
 
   label = new QLabel(nls->translate("Encoding:"), this);
+  label->adjustSize();
+  label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 4, 0);
 
   mCbxEncoding = new QComboBox(this);
   mCbxEncoding->insertItem(nls->translate("none (8bit)"));
   mCbxEncoding->insertItem(nls->translate("base 64"));
   mCbxEncoding->insertItem(nls->translate("quoted printable"));
+  mCbxEncoding->setMinimumSize(100, h);
+  mCbxEncoding->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mCbxEncoding, 4, 4, 1, 2);
 
-
+  //-----
   btnOk = new QPushButton(nls->translate("Ok"), this);
+  btnOk->adjustSize();
+  btnOk->setMinimumSize(btnOk->sizeHint());
   connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
   grid->addMultiCellWidget(btnOk, 5, 5, 0, 1);
 
   btnCancel = new QPushButton(nls->translate("Cancel"), this);
+  btnCancel->adjustSize();
+  btnCancel->setMinimumSize(btnCancel->sizeHint());
   connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
   grid->addMultiCellWidget(btnCancel, 5, 5, 2, 3);
 
+  //-----
+  grid->setColStretch(0, 0);
+  grid->setColStretch(1, 10);
+  grid->setColStretch(3, 10);
   grid->activate();
+
+  adjustSize();
 }
 
 

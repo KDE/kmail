@@ -478,10 +478,10 @@ void KMReaderWin::slotUrlOpen(const char* aUrl, int aButton)
   int id;
 
   id = msgPartFromUrl(aUrl);
-  if (id >= 0)
+  if (id > 0)
   {
     // clicked onto an attachment
-    mAtmCurrent = id;
+    mAtmCurrent = id-1;
     slotAtmSave();
   }
   else emit urlClicked(aUrl, aButton);
@@ -496,10 +496,10 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
   QPopupMenu *menu;
 
   id = msgPartFromUrl(aUrl);
-  if (id < 0) emit popupMenu(aPos);
+  if (id <= 0) emit popupMenu(aPos);
   else
   {
-    mAtmCurrent = id;
+    mAtmCurrent = id-1;
     menu = new QPopupMenu();
     menu->insertItem(nls->translate("Open..."), this, SLOT(slotAtmOpen()));
     menu->insertItem(nls->translate("Save as..."), this, SLOT(slotAtmSave()));

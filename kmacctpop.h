@@ -43,9 +43,16 @@ public:
   short protocol(void) { return mProtocol; }
   virtual void setProtocol(short);
 
-  void setLeaveOnServer(bool);
-  bool leaveOnServer();
+  /** Shall messages be left on the server upon retreival (TRUE) 
+    or deleted (FALSE). */
+  bool leaveOnServer(void) const { return mLeaveOnServer; }
+  virtual void setLeaveOnServer(bool);
 
+  /** Retrieve all messages from server (TRUE) or unread messages only. */
+  bool retrieveAll(void) const { return mRetrieveAll; }
+  virtual void setRetrieveAll(bool);
+
+  /** Inherited methods. */
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
@@ -75,6 +82,7 @@ protected:
   short   mProtocol;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
+  bool    mRetrieveAll;
 };
 
 

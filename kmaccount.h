@@ -34,7 +34,7 @@ public:
 
   /** There can be exactly one folder that is fed by messages from an
     account. */
-  KMFolder* folder(void) { return ((KMFolder*)mFolder); }
+  KMFolder* folder(void) const { return ((KMFolder*)mFolder); }
   virtual void setFolder(KMFolder*);
 
   /** Process new mail for this account if one arrived. Returns TRUE if new

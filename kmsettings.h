@@ -35,9 +35,8 @@ protected:
 					const char* label, 
 					int row, int col);
 
-  // Adds given account to given listbox after given index or at the end
-  // if none is specified.
-  void tabNetworkAddAcct(KTabListBox*, KMAccount*, int idx=-1);
+  // Returns a string suitable for account listbox
+  const QString tabNetworkAcctStr(const KMAccount* acct) const;
 
 protected slots:
   void doApply();

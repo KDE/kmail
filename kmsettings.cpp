@@ -39,7 +39,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   initMetaObject();
 
   setCaption(nls->translate("Settings"));
-  resize(500,600);
+  resize(600,700);
   setOKButton(nls->translate("Ok"));
   setCancelButton(nls->translate("Cancel"));
 
@@ -55,6 +55,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 //-----------------------------------------------------------------------------
 KMSettings::~KMSettings()
 {
+  accountList->clear();
 }
 
 
@@ -243,7 +244,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
 
   accountList->clear();
   for (act=acctMgr->first(); act; act=acctMgr->next())
-    tabNetworkAddAcct(accountList, act);
+    accountList->insertItem(tabNetworkAcctStr(act), -1);
 
   addTab(tab, nls->translate("Network"));
   box->addStretch(100);
@@ -316,8 +317,7 @@ void KMSettings::createTabComposer(QWidget *parent)
 
 
 //-----------------------------------------------------------------------------
-void KMSettings::tabNetworkAddAcct(KTabListBox* actList, KMAccount* act, 
-				   int idx)
+const QString KMSettings::tabNetworkAcctStr(const KMAccount* act) const
 {
   QString str;
   
@@ -328,7 +328,7 @@ void KMSettings::tabNetworkAddAcct(KTabListBox* actList, KMAccount* act,
   str += "\n";
   if (act->folder()) str += act->folder()->name();
 
-  actList->insertItem(str, idx);
+  return str;
 }
 
 
@@ -369,7 +369,7 @@ void KMSettings::addAccount()
   acctSettings = new KMAccountSettings(this, NULL, acct);
 
   if (acctSettings->exec())
-    tabNetworkAddAcct(accountList, acct);
+    accountList->insertItem(tabNetworkAcctStr(acct), -1);
   else
     acctMgr->remove(acct);
 
@@ -409,9 +409,8 @@ void KMSettings::modifyAccount(int index,int)
   d->exec();
   delete d;
 
-  accountList->removeItem(index);
-  tabNetworkAddAcct(accountList, acct, index);
-  accountList->setCurrentItem(-1);
+  accountList->changeItem(tabNetworkAcctStr(acct), index);
+  accountList->setCurrentItem(index);
 }
 
 //-----------------------------------------------------------------------------
@@ -439,7 +438,9 @@ void KMSettings::removeAccount()
     removeButton->setEnabled(FALSE);
   }
   if (idx >= (int)accountList->count()) idx--;
-  accountList->setCurrentItem(idx);
+  if (idx >= 0) accountList->setCurrentItem(idx);
+
+  accountList->update();
 }
 
 //-----------------------------------------------------------------------------
@@ -527,7 +528,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   acctType = mAcct->type();
 
   setCaption("Configure Account");
-  grid = new QGridLayout(this, 11, 3, 8, 4);
+  grid = new QGridLayout(this, 12, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(nls->translate("Type:"), this);
@@ -559,8 +560,8 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
     mEdtPasswd = createLabeledEntry(this, grid, nls->translate("Password:"),
 				    ((KMAcctPop*)mAcct)->passwd(), 3, 0);
-    // markus: added this for security reasons.
     mEdtPasswd->setEchoMode(QLineEdit::Password);
+
     mEdtHost = createLabeledEntry(this, grid, nls->translate("Host:"),
 				  ((KMAcctPop*)mAcct)->host(), 4, 0);
 
@@ -569,17 +570,24 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     mEdtPort = createLabeledEntry(this, grid, nls->translate("Port:"),
 				  tmpStr, 5, 0);
 
+    chk = new QCheckBox(nls->translate("Delete mail from server"), this);
+    chk->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
+    grid->addMultiCellWidget(chk, 6, 6, 1, 2);
+
   }
   else fatal("KMAccountSettings: unsupported account type");
 
+  // label with "Local Account" or "Pop Account" created previously
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
 
 
   lbl = new QLabel(nls->translate("Store new mail in account:"), this);
-  grid->addMultiCellWidget(lbl, 6, 6, 0, 2);
+  lbl->adjustSize();
+  lbl->setMinimumSize(lbl->sizeHint());
+  grid->addMultiCellWidget(lbl, 7, 7, 0, 2);
 
-  // combo box of all folders with current account folder selected
+  // combobox of all folders with current account folder selected
   acctFolder = mAcct->folder();
   mFolders = new QComboBox(this);
   mFolders->insertItem(nls->translate("<none>"));
@@ -590,16 +598,10 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     if (folder == acctFolder) mFolders->setCurrentItem(i);
     i++;
   }
-  grid->addWidget(mFolders, 7, 1);
-
-  chk = new QCheckBox(nls->translate("Delete Mail from Server"), 
-				 this);
-  if(!((KMAcctPop*)mAcct)->leaveOnServer())
-    chk->setChecked(TRUE);
-  else 
-    chk->setChecked(FALSE); // just to make sure
-  grid->addMultiCellWidget(chk, 8, 8, 1, 2);
-  
+  mFolders->adjustSize();
+  mFolders->setMinimumSize(100, mEdtName->minimumSize().height());
+  mFolders->setMaximumSize(500, mEdtName->minimumSize().height());
+  grid->addWidget(mFolders, 8, 1);
 
   // buttons at bottom
   btnBox = new QWidget(this);
@@ -667,10 +669,7 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setPort(atoi(mEdtPort->text()));
     ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
-    if(chk->isChecked() == TRUE)
-      ((KMAcctPop*)mAcct)->setLeaveOnServer(FALSE);
-    else
-      ((KMAcctPop*)mAcct)->setLeaveOnServer(TRUE);
+    ((KMAcctPop*)mAcct)->setLeaveOnServer(!chk->isChecked());
   }
 
   acctMgr->writeConfig(TRUE);

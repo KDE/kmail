@@ -31,7 +31,8 @@ KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
   initMetaObject();
 
   mStorePasswd = FALSE;
-  mLeaveOnServer = TRUE;
+  mLeaveOnServer = FALSE;
+  mRetrieveAll = TRUE;
   mProtocol = 3;
   mPort = 110;
 }
@@ -59,18 +60,10 @@ void KMAcctPop::init(void)
   mPasswd = "";
   mProtocol = 3;
   mStorePasswd = FALSE;
-  mLeaveOnServer = TRUE;
+  mLeaveOnServer = FALSE;
+  mRetrieveAll = TRUE;
 }
 
-void KMAcctPop::setLeaveOnServer(bool b)
-{
-  mLeaveOnServer = b;
-}
-
-bool KMAcctPop::leaveOnServer()
-{
-  return mLeaveOnServer;
-}
 
 //-----------------------------------------------------------------------------
 bool KMAcctPop::processNewMail(void)
@@ -127,60 +120,67 @@ bool KMAcctPop::doProcessNewMail(void)
   passwd = decryptStr(mPasswd);
 
   if(passwd.isEmpty() || mLogin.isEmpty())
-    {KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
-					    "Please set Password and Username!",
-					    mLogin, decryptStr(passwd));
+  {
+    KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
+					   "Please set Password and Username",
+					   mLogin, decryptStr(passwd));
     if(!d->exec())
       return FALSE;
     else
-      {mPasswd = encryptStr(mPasswd);
+    {
+      mPasswd = encryptStr(mPasswd);
       passwd = decryptStr(mPasswd);
       passwd = decryptStr(passwd);
-      }
     }
+  }
  
   // Now, we got to do something here. If you can resolve to the address
   // but cannot connect to the server like on some of our uni-machines
   // we end up with a lock up! Certainly not desirable!
-
   if (client.Open(mHost,mPort) != '+')
     return popError("OPEN", client);
-
 
   // It might not necessarly be a network error if User & Pass
   // reply != +. It's more likely that the username or the passwd is wrong
   while((replyCode = client.User(mLogin)) != '+')
-    {if(replyCode == '-') 
-      {KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,"Incorrect Username!",
-					      mLogin, decryptStr(passwd));
+  {
+    if(replyCode == '-') 
+    {
+      KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
+					     "Incorrect Username",
+					     mLogin, decryptStr(passwd));
       if(!d->exec())
 	return FALSE;
       else
-	{mPasswd = encryptStr(mPasswd);
+      {
+	mPasswd = encryptStr(mPasswd);
 	passwd = decryptStr(mPasswd);
 	passwd = decryptStr(passwd);
-	}
       }
+    }
     else
       return popError("USER", client);
-    }
+  }
 
   while((replyCode =client.Pass(decryptStr(passwd))) != '+')
-    {if(replyCode == '-') 
-      {KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,"Incorrect Password!",
-					      mLogin, decryptStr(passwd));
+  {
+    if(replyCode == '-') 
+    {
+      KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
+					     "Incorrect Password",
+					     mLogin, decryptStr(passwd));
       if(!d->exec())
 	return FALSE;
       else
-	{mPasswd = encryptStr(mPasswd);
+      {
+	mPasswd = encryptStr(mPasswd);
 	passwd = decryptStr(mPasswd);
 	passwd = decryptStr(passwd);
-	}
+      }
       }
     else
       return popError("PASS", client);
-    }
-
+  }
 
   if (client.Stat() != '+') return popError("STAT", client);
   response = client.SingleLineResponse().c_str();
@@ -210,15 +210,18 @@ bool KMAcctPop::doProcessNewMail(void)
 
     msg = new KMMessage;
     msg->fromString(response);
-    mFolder->addMsg(msg);
+    if (mRetrieveAll || msg->status()!=KMMsgStatusOld)
+      mFolder->addMsg(msg);
+    else delete msg;
 
     if(!mLeaveOnServer)
-      {debug("Deleting mail: %i",id);
+    {
+      debug("Deleting mail: %i",id);
       if(client.Dele(id) != '+')
 	return popError("DELE",client);
       else 
 	cout << client.SingleLineResponse().c_str();
-      }
+    }
     else
       debug("Leaving mail on server\n");
 
@@ -233,39 +236,39 @@ bool KMAcctPop::doProcessNewMail(void)
 //-----------------------------------------------------------------------------
 bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 {
-  QString str;
+  QString msg, caption;
   kbp->idle();
+
+  caption = nls->translate("Pop Mail Error");
+
   // First we assume the worst: A network error
-  if(aClient.LastFailure() != DwProtocolClient::kFailNoFailure) {
-    KMsgBox::message(0, "Pop-Mail Network Error:","Account: " + name() + 
-		     "\n" + nls->translate("In ")+
-		      aStage+":\n"+ aClient.LastFailureStr());
-    kbp->busy();
-    return FALSE;}
+  if (aClient.LastFailure() != DwProtocolClient::kFailNoFailure)
+  {
+    caption = nls->translate("Pop Mail Network Error");
+    msg = aClient.LastFailureStr();
+  }
 
   // Maybe it is an app specific error
-  if(aClient.LastError() != DwProtocolClient::kErrNoError) {
-    KMsgBox::message(0, "Pop-Mail Error","Account: " + name() +  
-		     "\n" + nls->translate("In ")+aStage+":\n"+
-		      aClient.LastErrorStr());
-    kbp->busy();
-    return  FALSE;}
+  else if (aClient.LastError() != DwProtocolClient::kErrNoError)
+  {
+    msg = aClient.LastErrorStr();
+  }
   
   // Not all commands return multiLineResponses. If they do not
   // they return singleLineResponses and the multiLR command return NULL
-  str = aClient.MultiLineResponse().c_str();
-  if(str.isEmpty())
-    str = aClient.SingleLineResponse().c_str();
-  if(str.isEmpty())
-    str = "Unknown error!";
-  // Negative response by the server e.g STAT responses '- ....'
-  KMsgBox::message(0, "Pop-Mail Error","Account: " + name() + 
-		   "\n" + nls->translate("In ")+aStage+":\n"+ str);
+  else
+  {
+    msg = aClient.MultiLineResponse().c_str();
+    if (msg.isEmpty()) msg = aClient.SingleLineResponse().c_str();
+    if (msg.isEmpty()) msg = nls->translate("Unknown error");
+    // Negative response by the server e.g STAT responses '- ....'
+  }
+
+  KMsgBox::message(0, caption, nls->translate("Account: ") + name() + "\n" + 
+		   nls->translate("In ")+aStage+":\n"+ msg);
   kbp->busy();
   aClient.Quit();
   return FALSE;
-  
-
 }
 
 
@@ -283,7 +286,8 @@ void KMAcctPop::readConfig(KConfig& config)
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
   mProtocol = config.readNumEntry("protocol");
-  mLeaveOnServer = config.readNumEntry("leave-on-server",TRUE);
+  mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
+  mRetrieveAll = config.readNumEntry("retrieve-all", TRUE);
 }
 
 
@@ -305,6 +309,7 @@ void KMAcctPop::writeConfig(KConfig& config)
   config.writeEntry("port", mPort);
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server",mLeaveOnServer);
+  config.writeEntry("retrieve-all",mRetrieveAll);
 }
 
 
@@ -331,6 +336,20 @@ const QString KMAcctPop::encryptStr(const QString aStr)
 const QString KMAcctPop::decryptStr(const QString aStr)
 {
   return encryptStr(aStr);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctPop::setLeaveOnServer(bool b)
+{
+  mLeaveOnServer = b;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctPop::setRetrieveAll(bool b)
+{
+  mRetrieveAll = b;
 }
 
 
