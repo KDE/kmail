@@ -1332,21 +1332,16 @@ void KMCopyCommand::execute()
 
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-			      const QPtrList<KMMsgBase> &msgList,
-			      KMHeaders *headers )
-  :mDestFolder( destFolder ), mMsgList( msgList ),
-   mHeaders( headers )
+			      const QPtrList<KMMsgBase> &msgList)
+  :mDestFolder( destFolder ), mMsgList( msgList )
 {
-// TODO: mHeaders is optional ...
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
-			      KMMessage *msg,
-			      KMHeaders *headers )
-  :mDestFolder( destFolder ), mHeaders( headers )
+			      KMMessage *msg )
+  :mDestFolder( destFolder )
 {
   mMsgList.append( &msg->toMsgBase() );
-// TODO: mHeaders is optional ...
 }
 
 void KMMoveCommand::execute()
@@ -1357,11 +1352,6 @@ void KMMoveCommand::execute()
   if (mDestFolder && mDestFolder->open() != 0)
     return;
   KCursorSaver busy(KBusyPtr::busy());
-  // used for remembering the message to select afterwards
-  int nextId = -1;
-  int contentX, contentY;
-  if (mHeaders)
-    mHeaders->prepareMove( &nextId, &contentX, &contentY );
 
   KMMessage *msg;
   KMMsgBase *msgBase;
@@ -1416,7 +1406,7 @@ void KMMoveCommand::execute()
       }
     }
     // adjust the remembered number, numbering is changed during delete.
-    if ( nextId > idx ) nextId--;
+    //if ( nextId > idx ) nextId--;
   }
   if (!list.isEmpty() && mDestFolder)
     mDestFolder->moveMsg(list, &index);
@@ -1427,9 +1417,6 @@ void KMMoveCommand::execute()
     delete it.data();
   }
 
-  if (mHeaders)
-    mHeaders->finalizeMove( nextId, contentX, contentY );
-
   if (mDestFolder) {
      mDestFolder->sync();
   }
@@ -1438,23 +1425,22 @@ void KMMoveCommand::execute()
 
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
-  const QPtrList<KMMsgBase> &msgList, KMHeaders *headers )
+  const QPtrList<KMMsgBase> &msgList )
 {
   KMFolder* folder = findTrashFolder( srcFolder );
 
   if (folder) {
-    KMCommand *command = new KMMoveCommand( folder, msgList, headers );
+    KMCommand *command = new KMMoveCommand( folder, msgList);
     command->start();
   }
 }
 
-KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
-  KMMessage * msg, KMHeaders *headers )
+KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 {
   KMFolder* folder = findTrashFolder( srcFolder );
 
   if (folder) {
-    KMCommand *command = new KMMoveCommand( folder, msg, headers );
+    KMCommand *command = new KMMoveCommand( folder, msg );
     command->start();
   }
 }

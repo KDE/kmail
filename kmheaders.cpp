@@ -1578,9 +1578,14 @@ void KMHeaders::deleteMsg ()
   if (!mFolder)
     return;
 
+  int contentX, contentY;
+  KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
+
   KMMessageList msgList = *selectedMsgs(true);
-  KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList, this );
+  KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList );
   command->start();
+  
+  finalizeMove( nextItem, contentX, contentY );
 
   KMBroadcastStatus::instance()->setStatusMsg("");
   //  triggerUpdate();
@@ -1615,8 +1620,9 @@ void KMHeaders::moveSelectedToFolder( int menuId )
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::prepareMove( int *id, int *contentX, int *contentY )
+KMHeaderItem* KMHeaders::prepareMove( int *contentX, int *contentY )
 {
+  KMHeaderItem *ret;
   emit maybeDeleting();
 
   disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
@@ -1630,8 +1636,7 @@ void KMHeaders::prepareMove( int *id, int *contentX, int *contentY )
   while (curItem && curItem->isSelected() && curItem->itemAbove())
     curItem = curItem->itemAbove();
   item = static_cast<KMHeaderItem*>(curItem);
-  if (item  && !item->isSelected())
-    *id = item->msgId();
+  
   *contentX = contentsX();
   *contentY = contentsY();
 
@@ -1646,16 +1651,21 @@ void KMHeaders::prepareMove( int *id, int *contentX, int *contentY )
   // So we block all signals for awhile to avoid this.
 
   blockSignals( true ); // don't emit signals when the current message is
+
+  if (item  && !item->isSelected())
+    ret = item;
+
+  return ret;
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::finalizeMove( int id, int contentX, int contentY )
+void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 {
   blockSignals( false );
   emit selected( 0 );
 
-  if ( id > -1) {
-    setCurrentMsg( id );
+  if ( item ) {
+    setCurrentMsg( item->msgId() );
     highlightMessage( currentItem(), false);
   }
 
@@ -1679,8 +1689,14 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
          i18n("Delete Messages"), i18n("De&lete"), "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 
-  KMCommand *command = new KMMoveCommand( destFolder, msgList, this );
+  // remember the message to select afterwards
+  int contentX, contentY;
+  KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
+
+  KMCommand *command = new KMMoveCommand( destFolder, msgList );
   command->start();
+
+  finalizeMove( nextItem, contentX, contentY );
 }
 
 bool KMHeaders::canUndo() const

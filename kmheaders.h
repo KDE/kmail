@@ -71,8 +71,8 @@ public:
   virtual void undo();
   virtual bool canUndo() const;
   virtual void resendMsg();
-  virtual void prepareMove( int *id, int *contentX, int *contentY );
-  virtual void finalizeMove( int id, int contentX, int contentY );
+  virtual KMHeaderItem * prepareMove( int *contentX, int *contentY );
+  virtual void finalizeMove( KMHeaderItem *item, int contentX, int contentY );
 
   /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. */

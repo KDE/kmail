@@ -540,10 +540,8 @@ class KMMoveCommand : public KMMenuCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList,
-		 KMHeaders* headers = 0 );
-  KMMoveCommand( KMFolder* destFolder, KMMessage * msg,
-		 KMHeaders* headers = 0 );
+  KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList );
+  KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
 
 
 private:
@@ -551,7 +549,6 @@ private:
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
-  KMHeaders *mHeaders;
 };
 
 class KMDeleteMsgCommand : public KMCommand
@@ -559,10 +556,8 @@ class KMDeleteMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList,
-		      KMHeaders* headers = 0 );
-  KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg,
-		      KMHeaders* headers = 0 );
+  KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList );
+  KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
 
   virtual void execute();
 private:
