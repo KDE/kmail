@@ -776,9 +776,11 @@ void KMKernel::init()
   the_msgIndex = 0;
 #endif
 
+#if 0
   the_weaver =  new KPIM::ThreadWeaver::Weaver( this );
   the_weaverLogger = new KPIM::ThreadWeaver::WeaverThreadLogger(this);
   the_weaverLogger->attach (the_weaver);
+#endif
 
 }
 
@@ -952,9 +954,11 @@ void KMKernel::cleanup(void)
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
 
+#if 0
   delete the_weaver;
   the_weaver = 0;
-
+#endif
+  
   // Since the application has already quit we can't use
   // kapp->processEvents() because it will return immediately:
   // We first have to fire up a new event loop.
