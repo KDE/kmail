@@ -71,23 +71,24 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
     }
     // siblings are tested allways
     if( mNext )
-        otherState = mNext->overallEncryptionState();
-    switch( otherState ) {
-    case KMMsgEncryptionStateUnknown:
-        break;
-    case KMMsgNotEncrypted:
-        if( myState == KMMsgFullyEncrypted )
+        otherState = mNext->overallEncryptionState(); {
+        switch( otherState ) {
+        case KMMsgEncryptionStateUnknown:
+            break;
+        case KMMsgNotEncrypted:
+            if( myState == KMMsgFullyEncrypted )
+                myState = KMMsgPartiallyEncrypted;
+            else if( myState != KMMsgPartiallyEncrypted )
+                myState = KMMsgNotEncrypted;
+            break;
+        case KMMsgPartiallyEncrypted:
             myState = KMMsgPartiallyEncrypted;
-        else if( myState != KMMsgPartiallyEncrypted )
-            myState = KMMsgNotEncrypted;
-        break;
-    case KMMsgPartiallyEncrypted:
-        myState = KMMsgPartiallyEncrypted;
-        break;
-    case KMMsgFullyEncrypted:
-        if( myState != KMMsgFullyEncrypted )
-            myState = KMMsgPartiallyEncrypted;
-        break;
+            break;
+        case KMMsgFullyEncrypted:
+            if( myState != KMMsgFullyEncrypted )
+                myState = KMMsgPartiallyEncrypted;
+            break;
+        }
     }
 
 kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
