@@ -1,4 +1,6 @@
+#ifndef KDE_USE_FINAL
 #define QT_NO_CAST_ASCII
+#endif
 // configuredialog_p.cpp: classes internal to ConfigureDialog
 // see configuredialog.cpp for details.
 
@@ -335,7 +337,7 @@ QSize ListView::sizeHint() const
   if( h % 2 > 0 ) { h++; }
 
   s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());
-  return( s );
+  return s;
 }
 
 
@@ -415,13 +417,14 @@ QString LanguageComboBox::language() const
 {
   QString s = currentText();
   int i = s.findRev( '(' );
-  return( s.mid( i + 1, s.length() - i - 2 ) );
+  return s.mid( i + 1, s.length() - i - 2 );
 }
 
 void LanguageComboBox::setLanguage( const QString & language )
 {
   QString parenthizedLanguage = QString::fromLatin1("(%1)").arg( language );
   for (int i = 0; i < count(); i++)
+    // ### FIXME: use .endWith():
     if ( text(i).find( parenthizedLanguage ) >= 0 ) {
       setCurrentItem(i);
       return;
