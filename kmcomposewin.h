@@ -70,7 +70,8 @@ class SpellingFilter;
 class  CryptPlugWrapperList;
 
 namespace KMail {
-class AttachmentListView;
+  class AttachmentListView;
+  class DictionaryComboBox;
 }
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
@@ -82,6 +83,7 @@ class KMEdit: public KEdit
   Q_OBJECT
 public:
   KMEdit(QWidget *parent=0,KMComposeWin* composer=0,
+         KSpellConfig* spellConfig = 0,
 	 const char *name=0);
   virtual ~KMEdit();
 
@@ -143,7 +145,7 @@ private slots:
 
 private:
   void killExternalEditor();
-  void initializeAutoSpellChecking();
+  void initializeAutoSpellChecking( KSpellConfig* autoSpellConfig );
 
 private:
   KSpell *mKSpell;
@@ -736,12 +738,14 @@ private:
 protected:
   QWidget   *mMainWidget;
   QComboBox *mTransport;
+  KMail::DictionaryComboBox *mDictionaryCombo;
   IdentityCombo    *mIdentity;
   KMFolderComboBox *mFcc;
   KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc;
   KMLineEditSpell *mEdtSubject;
   QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
   QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
+  QLabel    *mDictionaryLabel;
   QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
   QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;
   bool mSpellCheckInProgress;
@@ -796,6 +800,7 @@ protected:
   KToggleAction *mSubjectAction;
   KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
   KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
+  KToggleAction *mDictionaryAction;
 
   KSelectAction *mEncodingAction;
   KSelectAction *mCryptoModuleAction;

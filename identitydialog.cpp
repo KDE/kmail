@@ -1,4 +1,4 @@
-/*  -*- c-basic-offset: 2 -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     identitydialog.cpp
 
     This file is part of KMail, the KDE mail client.
@@ -37,6 +37,7 @@
 #include "kmfoldermgr.h"
 #include "transportmanager.h"
 #include "kmkernel.h"
+#include "dictionarycombobox.h"
 
 
 // other kdenetwork headers:
@@ -194,6 +195,13 @@ namespace KMail {
     glay->addWidget( label, row, 0 );
     glay->addWidget( mPgpKeyRequester, row, 1 );
 
+    // "Dictionary" combo box and label:
+    ++row;
+    mDictionaryCombo = new DictionaryComboBox( tab );
+    glay->addWidget( mDictionaryCombo, row, 1 );
+    glay->addWidget( new QLabel( mDictionaryCombo, i18n("D&ictionary:"), tab ),
+                     row, 0 );
+
     // "Sent-mail Folder" combo box and label:
     ++row;
     mFccCombo = new KMFolderComboBox( tab );
@@ -269,6 +277,7 @@ namespace KMail {
     mTransportCheck->setChecked( !ident.transport().isEmpty() );
     mTransportCombo->setEditText( ident.transport() );
     mTransportCombo->setEnabled( !ident.transport().isEmpty() );
+    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
     if ( ident.fcc().isEmpty() ||
          !checkFolderExists( ident.fcc(),
@@ -324,6 +333,7 @@ namespace KMail {
     ident.setBcc( mBccEdit->text() );
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                         mTransportCombo->currentText() : QString::null );
+    ident.setDictionary( mDictionaryCombo->currentDictionary() );
     ident.setFcc( mFccCombo->getFolder() ?
                   mFccCombo->getFolder()->idString() : QString::null );
     ident.setDrafts( mDraftsCombo->getFolder() ?

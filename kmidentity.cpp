@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmidentity.cpp
 
 #include "kmidentity.h"
@@ -225,7 +226,8 @@ bool KMIdentity::isNull() const {
     mOrganization.isNull() && mReplyToAddr.isNull() && mBcc.isNull() &&
     mVCardFile.isNull() &&
     mPgpIdentity.isNull() && mFcc.isNull() && mDrafts.isNull() &&
-    mTransport.isNull() && mSignature.type() == Signature::Disabled;
+    mTransport.isNull() && mDictionary.isNull() &&
+    mSignature.type() == Signature::Disabled;
 }
 
 bool KMIdentity::operator==( const KMIdentity & other ) const {
@@ -236,7 +238,7 @@ bool KMIdentity::operator==( const KMIdentity & other ) const {
       mVCardFile == other.mVCardFile &&
       mPgpIdentity == other.mPgpIdentity && mFcc == other.mFcc &&
       mDrafts == other.mDrafts && mTransport == other.mTransport &&
-      mSignature == other.mSignature;
+      mDictionary == other.mDictionary && mSignature == other.mSignature;
 }
 
 KMIdentity::KMIdentity( const QString & id, const QString & fullName,
@@ -273,6 +275,7 @@ void KMIdentity::readConfig( const KConfigBase * config )
   if( mDrafts.isEmpty() )
     mDrafts = "drafts";
   mTransport = config->readEntry("Transport");
+  mDictionary = config->readEntry( "Dictionary" );
 
   mSignature.readConfig( config );
   kdDebug(5006) << "KMIdentity::readConfig(): UOID = " << mUoid
@@ -295,6 +298,7 @@ void KMIdentity::writeConfig( KConfigBase * config ) const
   config->writeEntry("Transport", mTransport);
   config->writeEntry("Fcc", mFcc);
   config->writeEntry("Drafts", mDrafts);
+  config->writeEntry( "Dictionary", mDictionary );
 
   mSignature.writeConfig( config );
 }
@@ -312,7 +316,8 @@ QDataStream & operator<<( QDataStream & stream, const KMIdentity & i ) {
 		<< i.transport()
 		<< i.fcc()
 		<< i.drafts()
-		<< i.mSignature;
+		<< i.mSignature
+                << i.dictionary();
 }
 
 QDataStream & operator>>( QDataStream & stream, KMIdentity & i ) {
@@ -335,7 +340,8 @@ QDataStream & operator>>( QDataStream & stream, KMIdentity & i ) {
 		>> i.mTransport
 		>> i.mFcc
 		>> i.mDrafts
-		>> i.mSignature;
+		>> i.mSignature
+                >> i.mDictionary;
 }
 
 //-----------------------------------------------------------------------------
@@ -455,6 +461,13 @@ void KMIdentity::setFcc(const QString &str)
 void KMIdentity::setDrafts(const QString &str)
 {
   mDrafts = str;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setDictionary( const QString &str )
+{
+  mDictionary = str;
 }
 
 

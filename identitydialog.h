@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     identitydialog.h
 
     This file is part of KMail, the KDE mail client.
@@ -46,6 +46,7 @@ namespace Kpgp {
 }
 namespace KMail {
   class SignatureConfigurator;
+  class DictionaryComboBox;
 }
 
 namespace KMail {
@@ -75,6 +76,7 @@ namespace KMail {
     QLineEdit                    *mReplyToEdit;
     QLineEdit                    *mBccEdit;
     Kpgp::SecretKeyRequester     *mPgpKeyRequester;
+    KMail::DictionaryComboBox    *mDictionaryCombo;
     KMFolderComboBox             *mFccCombo;
     KMFolderComboBox             *mDraftsCombo;
     QCheckBox                    *mTransportCheck;

@@ -35,6 +35,8 @@
 #include "kmkernel.h"
 #include "attachmentlistview.h"
 using KMail::AttachmentListView;
+#include "dictionarycombobox.h"
+using KMail::DictionaryComboBox;
 #include "addressesdialog.h"
 using KPIM::AddressesDialog;
 #include <maillistdrag.h>
@@ -96,6 +98,7 @@ using KRecentAddress::RecentAddresses;
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   : MailComposerIface(), KMTopLevelWidget("kmail-composer#"),
+    mMsg( 0 ),
     mAutoRequestMDN( false ),
     mId( id ), mNeverSign( false ), mNeverEncrypt( false )
 {
@@ -108,6 +111,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mSelectedCryptPlug = kmkernel->cryptPlugList() ? kmkernel->cryptPlugList()->active() : 0;
 
   mIdentity = new IdentityCombo(mMainWidget);
+  mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
@@ -118,6 +122,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEdtBcc = new KMLineEdit(this,true,mMainWidget);
   mEdtSubject = new KMLineEditSpell(this,false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
+  mDictionaryLabel = new QLabel( mMainWidget );
   mLblFcc = new QLabel(mMainWidget);
   mLblTransport = new QLabel(mMainWidget);
   mLblFrom = new QLabel(mMainWidget);
@@ -147,9 +152,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFolder = 0;
   mAutoCharset = TRUE;
   mFixedFontAction = 0;
-  mEditor = new KMEdit(mMainWidget, this);
+  mEditor = new KMEdit( mMainWidget, this, mDictionaryCombo->spellConfig() );
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
+
   mDisableBreaking = false;
   QString tip = i18n("Select email address(es)");
   QToolTip::add( mBtnTo, tip );
@@ -505,6 +511,12 @@ void KMComposeWin::readConfig(void)
 
   mIdentity->setCurrentIdentity( mId );
 
+  kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
+  const KMIdentity & ident =
+    kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
+
+  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+
   mTransport->clear();
   mTransport->insertStringList( KMTransportInfo::availableTransports() );
   while (mTransportHistory.count() > (uint)maxTransportItems)
@@ -520,9 +532,6 @@ void KMComposeWin::readConfig(void)
 
   if ( !mBtnFcc->isChecked() )
   {
-      kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
-      const KMIdentity & ident =
-        kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
       kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='"
                     << ident.fcc() << "'" << endl;
       if ( ident.fcc().isEmpty() )
@@ -644,6 +653,8 @@ void KMComposeWin::slotView(void)
     id = HDR_SUBJECT;
   else if (act == mFccAction)
     id = HDR_FCC;
+  else if ( act == mDictionaryAction )
+    id = HDR_DICTIONARY;
   else
    {
      id = 0;
@@ -701,8 +712,11 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    mLblIdentity, mIdentity, mBtnIdentity);
+  if (!fromSlot) mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
+  rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row, i18n("&Dictionary:"),
+		    mDictionaryLabel, mDictionaryCombo, 0 );
   if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sent-Mail fol&der:"),
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Se&nt-Mail folder:"),
 		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l transport:"),
@@ -741,6 +755,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   slotUpdateAttachActions();
   mIdentityAction->setEnabled(!mAllFieldsAction->isChecked());
+  mDictionaryAction->setEnabled( !mAllFieldsAction->isChecked() );
   mTransportAction->setEnabled(!mAllFieldsAction->isChecked());
   mFromAction->setEnabled(!mAllFieldsAction->isChecked());
   mReplyToAction->setEnabled(!mAllFieldsAction->isChecked());
@@ -809,16 +824,19 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aCbx->setMinimumSize(100, aLbl->height()+2);
 
     mGrid->addWidget(aCbx, aRow, 1);
-    mGrid->addWidget(aChk, aRow, 2);
-    aChk->setFixedSize(aChk->sizeHint().width(), aLbl->height());
-    aChk->show();
+    if ( aChk ) {
+      mGrid->addWidget(aChk, aRow, 2);
+      aChk->setFixedSize(aChk->sizeHint().width(), aLbl->height());
+      aChk->show();
+    }
     aRow++;
   }
   else
   {
     aLbl->hide();
     aCbx->hide();
-    aChk->hide();
+    if ( aChk )
+      aChk->hide();
   }
 }
 
@@ -937,6 +955,9 @@ void KMComposeWin::setupActions(void)
   mIdentityAction = new KToggleAction (i18n("&Identity"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_identity");
+  mDictionaryAction = new KToggleAction (i18n("&Dictionary"), 0, this,
+                                         SLOT(slotView()),
+                                         actionCollection(), "show_dictionary");
   mFccAction = new KToggleAction (i18n("Sent-Mail F&older"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_fcc");
@@ -1313,6 +1334,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     else
       setFcc(ident.fcc());
   }
+
+  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
   num = mMsg->numBodyParts();
 
@@ -5034,6 +5057,7 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
   statusBar()->changeItem("", 0);
 }
 
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 {
@@ -5102,6 +5126,8 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
       mTransport->setCurrentItem(i);
     }
   }
+
+  mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
   if ( !mBtnFcc->isChecked() )
   {
@@ -5644,6 +5670,7 @@ void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &
 //
 //=============================================================================
 KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
+               KSpellConfig* autoSpellConfig,
 	       const char *name)
   : KEdit( parent, name ),
     mComposer( composer ),
@@ -5660,11 +5687,11 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
 
-  initializeAutoSpellChecking();
+  initializeAutoSpellChecking( autoSpellConfig );
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::initializeAutoSpellChecking()
+void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
 {
   KConfigGroup readerConfig( KMKernel::config(), "Reader" );
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
@@ -5682,7 +5709,8 @@ void KMEdit::initializeAutoSpellChecking()
                                                 /*autoEnabled*/ false,
                                                 /*spellColor*/ misspelled,
                                                 /*colorQuoting*/ true,
-                                                col1, col2, col3, col4 );
+                                                col1, col2, col3, col4,
+                                                autoSpellConfig );
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
 	   mComposer, SLOT(slotStatusMessage(const QString &)));
   connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
@@ -5876,6 +5904,7 @@ void KMEdit::slotAutoSpellCheckingToggled( bool on )
 {
   mSpellChecker->setActive( on );
 }
+
 
 //-----------------------------------------------------------------------------
 void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {

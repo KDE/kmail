@@ -1,4 +1,5 @@
-/* User identity information -*- c++ -*-
+/* -*- mode: C++; c-file-style: "gnu" -*-
+ * User identity information
  *
  * Author: Stefan Taferner <taferner@kde.org>
  * This code is under GPL
@@ -239,6 +240,10 @@ public:
   QString drafts() const { return mDrafts; }
   void setDrafts(const QString&);
 
+  /** dictionary which should be used for spell checking */
+  QString dictionary() const { return mDictionary; }
+  void setDictionary( const QString& );
+
   static KMIdentity null;
   bool isNull() const;
 protected:
@@ -253,6 +258,7 @@ protected:
   QString mVCardFile;
   QCString mPgpIdentity;
   QString mFcc, mDrafts, mTransport;
+  QString mDictionary;
   Signature mSignature;
   bool      mIsDefault;
 };
