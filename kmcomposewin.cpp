@@ -1187,13 +1187,12 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
   text.truncate(text.length()); // to ensure text.size()==text.length()+1
   QTextCodec *codec = KMMsgBase::codecForName(mCharset);
 
-  if (codec == NULL) {
+  if (mCharset == "us-ascii")
+    cText = KMMsgBase::toUsAscii(text);
+  else if (codec == NULL) {
     kdDebug() << "Something is wrong and I can not get a codec." << endl;
     cText = text.local8Bit();
   } else
-    if (mCharset == "us-ascii")
-      cText = KMMsgBase::toUsAscii(text);
-    else
       cText = codec->fromUnicode(text);
 
   if (codec && mCharset != "utf-8" && codec->toUnicode(cText) != text)
