@@ -1276,14 +1276,12 @@ void KMMainWidget::slotResendMsg()
 void KMMainWidget::slotTrashMsg()
 {
   mHeaders->deleteMsg();
-  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotDeleteMsg( bool confirmDelete )
 {
   mHeaders->moveMsgToFolder( 0, confirmDelete );
-  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
@@ -1291,7 +1289,6 @@ void KMMainWidget::slotTrashThread()
 {
   mHeaders->highlightCurrentThread();
   mHeaders->deleteMsg();
-  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
@@ -1299,7 +1296,6 @@ void KMMainWidget::slotDeleteThread( bool confirmDelete )
 {
   mHeaders->highlightCurrentThread();
   mHeaders->moveMsgToFolder( 0, confirmDelete );
-  updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------

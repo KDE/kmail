@@ -1462,6 +1462,7 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
       BroadcastStatus::instance()->setStatusMsg(
            deleted ? i18n("Deleting messages canceled.") : i18n("Moving messages canceled.") );
  }
+ mOwner->updateMessageActions();
 }
 
 bool KMHeaders::canUndo() const
