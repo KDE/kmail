@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include "kpgpbase.h"
 #include "kpgp.h"
 
