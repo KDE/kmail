@@ -1294,7 +1294,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     }
     // Remove the message from the list of potential parents for threading by
     // subject.
-    if (mSubjThreading && mSubjectLists[strippedSubjMD5])
+    if (!strippedSubjMD5.isEmpty() && 
+        mSubjThreading && mSubjectLists[strippedSubjMD5])
         mSubjectLists[strippedSubjMD5]->remove(removedItem->sortCacheItem());
 
     // Reparent children of item.
