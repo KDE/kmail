@@ -402,6 +402,7 @@ protected:
   int mUnreadMsgs; // number of unread messages, -1 if not yet set
   bool mWriteConfigEnabled;
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
+  bool mConsistent; // false if index file is out of sync with mbox file
   KMFolderDir* mChild;
   LockType mLockType;
   QString mProcmailLockFileName;

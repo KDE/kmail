@@ -97,6 +97,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mIndexId        = -1;
   mIndexStreamPtr = NULL;
   mIndexStreamPtrLength = 0;
+  mConsistent     = TRUE;
 }
 
 
@@ -302,6 +303,12 @@ void KMFolder::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
+
+  if (isIndexOutdated()) {
+      kdDebug(5006) << "Critical error: " << location() << 
+	  " has been modified by an external application while KMail was running." << endl;
+      exit(1);      
+  }
 
   if (mAutoCreateIndex)
   {
@@ -1185,10 +1192,20 @@ KMMessage* KMFolder::getMsg(int idx)
   return readMsg(idx);
 #else
   KMMessage *msg = 0;
-  if (mb->isMessage())
+  if (mb->isMessage()) {
       msg = ((KMMessage*)mb);
-  else
+  } else {
+      QString mbSubject = mb->subject();
+      time_t mbDate = mb->date();
       msg = readMsg(idx);
+      // sanity check
+      if (mConsistent && (!msg || (msg->date() != mbDate) || (msg->subject() != mbSubject))) {
+	  kdDebug(5006) << "Error: " << location() << 
+	  " Index file is inconsistent with folder file. This should never happen." << endl;
+	  mConsistent = FALSE; // Don't compact
+	  writeConfig();
+      }
+  }
   return msg;
 #endif
 
@@ -1352,6 +1369,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   bool editing = false;
   int growth = 0, oldlength = 0;
 
+  if (isIndexOutdated()) {
+      kdDebug(5006) << "Critical error: " << location() << 
+	  " has been modified by an external application while KMail was running." << endl;
+      exit(1);      
+  }
+  
   if (!mStream)
   {
     opened = TRUE;
@@ -1696,9 +1719,20 @@ int KMFolder::compact()
   int openCount = mOpenCount;
 
   if (!needsCompact)
+      return 0;
+  
+  if (!mConsistent) {
+    kdDebug(5006) << location() << " compaction skipped." << endl;
     return 0;
+  }
   kdDebug(5006) << "Compacting " << endl;
 
+  if (isIndexOutdated()) {
+      kdDebug(5006) << "Critical error: " << location() << 
+	  " has been modified by an external application while KMail was running." << endl;
+      exit(1);      
+  }
+  
   tempName = path() + "/." + name() + ".compacted";
   mode_t old_umask = umask(077);
   FILE *tmpfile = fopen(tempName.local8Bit(), "w");
@@ -1797,6 +1831,7 @@ int KMFolder::compact()
   {
     close();
     kdDebug(5006) << "Error occurred while compacting" << endl;
+    kdDebug(5006) << location() << endl;
     kdDebug(5006) << "Compaction aborted." << endl;
   }
 
@@ -1938,6 +1973,7 @@ void KMFolder::readConfig()
   mIdentity = config->readEntry("Identity");
   if ( mIdentity.isEmpty() ) // backward compatiblity
       mIdentity = config->readEntry("MailingListIdentity");
+  mConsistent = config->readBoolEntry("Consistent", TRUE);
 }
 
 //-----------------------------------------------------------------------------
@@ -1950,6 +1986,7 @@ void KMFolder::writeConfig()
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
   config->writeEntry("Identity", mIdentity);
+  config->writeEntry("Consistent", mConsistent);
 }
 
 //-----------------------------------------------------------------------------
