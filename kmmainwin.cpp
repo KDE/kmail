@@ -2658,7 +2658,8 @@ void KMMainWin::setupMenuBar()
                          "N;Right", this, SLOT(slotNextMessage()),
                          actionCollection(), "go_next_message" );
 
-  new KAction( KGuiItem( i18n("Next &Unread Message"), "next",
+  new KAction( KGuiItem( i18n("Next &Unread Message"),
+			 QApplication::reverseLayout() ? "previous" : "next",
                          i18n("Go to the next unread message") ),
                          Key_Plus, this, SLOT(slotNextUnreadMessage()),
                          actionCollection(), "go_next_unread_message" );
@@ -2675,7 +2676,8 @@ void KMMainWin::setupMenuBar()
                          "P;Left", this, SLOT(slotPrevMessage()),
                          actionCollection(), "go_prev_message" );
 
-  new KAction( KGuiItem( i18n("Previous Unread &Message"), "previous",
+  new KAction( KGuiItem( i18n("Previous Unread &Message"),
+			 QApplication::reverseLayout() ? "next" : "previous",
                          i18n("Go to the previous unread message") ),
                          Key_Minus, this, SLOT(slotPrevUnreadMessage()),
                          actionCollection(), "go_prev_unread_message" );
