@@ -390,9 +390,11 @@ private:
   QString sigStatusToString(CryptPlugWrapper* cryptPlug,
                             int status_code,
                             CryptPlugWrapper::SigStatusFlags statusFlags,
-                            QColor& frameColor,
+                            int& frameColor,
                             bool& showKeyInfos);
-  QString writeSigstatHeader(PartMetaData& part,CryptPlugWrapper* cryptPlug);
+  QString writeSigstatHeader(PartMetaData& part,
+                             CryptPlugWrapper* cryptPlug,
+                             const QString& fromAddress);
   QString writeSigstatFooter(PartMetaData& part);
 
 protected:

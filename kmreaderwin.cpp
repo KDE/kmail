@@ -101,6 +101,7 @@ public:
     CryptPlugWrapper::SigStatusFlags sigStatusFlags;
     QString signClass;
     QString signer;
+    QStringList signerMailAddresses;
     QCString keyId;
     Kpgp::Validity keyTrust;
     QString status;  // to be used for unknown plug-ins
@@ -712,7 +713,9 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                         messagePart.isDecryptable = true;
                         messagePart.isEncrypted = true;
                         messagePart.isSigned = false;
-                        reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                        reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                       useThisCryptPlug,
+                                                                       reader->msg()->from() ) );
                       }
                       insertAndParseNewChildNode( reader,
                                                   &resultString,
@@ -731,7 +734,9 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                           messagePart.isDecryptable = false;
                           messagePart.isEncrypted = true;
                           messagePart.isSigned = false;
-                          reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                          reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                         useThisCryptPlug,
+                                                                         reader->msg()->from() ) );
                         }
                         reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                         if( passphraseError )
@@ -790,7 +795,9 @@ kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 messag
                   messagePart.isEncrypted = false;
                   messagePart.isSigned = false;
                   messagePart.isEncapsulatedRfc822Message = true;
-                  reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                  reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                 useThisCryptPlug,
+                                                                 reader->msg()->from() ) );
                 }
                 QCString rfc822messageStr( curNode->msgPart().bodyDecoded() );
                 // display the headers of the encapsulated message
@@ -881,7 +888,9 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                           messagePart.isDecryptable = true;
                           messagePart.isEncrypted = true;
                           messagePart.isSigned = false;
-                          reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                          reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                         useThisCryptPlug,
+                                                                         reader->msg()->from() ) );
                         }
                         // fixing the missing attachments bug #1090-b
                         insertAndParseNewChildNode( reader,
@@ -901,7 +910,9 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                             messagePart.isDecryptable = false;
                             messagePart.isEncrypted = true;
                             messagePart.isSigned = false;
-                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                            reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                           useThisCryptPlug,
+                                                                           reader->msg()->from() ) );
                           }
                           reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                           if( passphraseError )
@@ -966,10 +977,8 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
                       QCString decryptedData;
                       PartMetaData messagePart;
-                      if( reader ) {
-                        messagePart.isEncrypted = true;
-                        messagePart.isSigned = false;
-                      }
+                      messagePart.isEncrypted = true;
+                      messagePart.isSigned = false;
                       bool passphraseError;
                       if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
                                          *curNode,
@@ -984,7 +993,9 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         // paint the frame
                         messagePart.isDecryptable = true;
                         if( reader )
-                          reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                          reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                         useThisCryptPlug,
+                                                                         reader->msg()->from() ) );
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
                                                     cryptPlugList,
@@ -1006,7 +1017,9 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                           // paint the frame
                           messagePart.isDecryptable = false;
                           if( reader ) {
-                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                            reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                                           useThisCryptPlug,
+                                                                           reader->msg()->from() ) );
                             reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
                             reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                           }
@@ -2450,7 +2463,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
       
       if( sigMeta.status && *sigMeta.status )
-        messagePart.status = QString::fromLatin1( sigMeta.status );
+        messagePart.status = QString::fromUtf8( sigMeta.status );
       messagePart.status_code = sigMeta.status_code;
 
       // only one signature supported
@@ -2466,7 +2479,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         if( messagePart.status.isEmpty()
             && ext.status_text
             && *ext.status_text )
-          messagePart.status = ext.status_text;
+          messagePart.status = QString::fromUtf8( ext.status_text );
         if( ext.keyid && *ext.keyid )
             messagePart.keyId = ext.keyid;
         if( messagePart.keyId.isEmpty() )
@@ -2475,6 +2488,11 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         messagePart.keyTrust = (Kpgp::Validity)ext.validity;
         if( ext.userid && *ext.userid )
             messagePart.signer = QString::fromUtf8( ext.userid );
+        for( int iMail = 0; iMail < ext.emailCount; ++iMail )
+            // The following if /should/ allways result in TRUE but we
+            // won't trust implicitely the plugin that gave us these data.
+            if( ext.emailList[ iMail ] && *ext.emailList[ iMail ] )
+                messagePart.signerMailAddresses.append( QString::fromUtf8( ext.emailList[ iMail ] ) );
         if( ext.creation_time )
             messagePart.creationTime = *ext.creation_time;
         if(     70 > messagePart.creationTime.tm_year
@@ -2490,11 +2508,11 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         if( messagePart.signer.isEmpty() ) {
             if( ext.name && *ext.name )
                 messagePart.signer = QString::fromUtf8( ext.name );
-            if( ext.email && *ext.email ) {
+            if( messagePart.signerMailAddresses.count() ) {
                 if( !messagePart.signer.isEmpty() )
                     messagePart.signer += " ";
                 messagePart.signer += "<";
-                messagePart.signer += ext.email;
+                messagePart.signer += messagePart.signerMailAddresses.first();
                 messagePart.signer += ">";
             }
         }
@@ -2518,8 +2536,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     if( !data ){
       if( new_cleartext ) {
         if( reader )
-          reader->queueHtml( reader->writeSigstatHeader( messagePart, cryptPlug ) );
-
+            reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                           useThisCryptPlug,
+                                                           reader->msg()->from() ) );
         bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
         deb += new_cleartext;
@@ -2560,7 +2579,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     else
     {
       if( reader )
-        reader->queueHtml( reader->writeSigstatHeader( messagePart, cryptPlug ) );
+        reader->queueHtml( reader->writeSigstatHeader( messagePart,
+                                                       useThisCryptPlug,
+                                                       reader->msg()->from() ) );
       parseObjectTree( reader,
                        resultString,
                        cryptPlugList,
@@ -3398,10 +3419,15 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 }
 
 
+
+#define SIG_FRAME_COL_UNDEF  99
+#define SIG_FRAME_COL_RED    -1
+#define SIG_FRAME_COL_YELLOW  0
+#define SIG_FRAME_COL_GREEN   1
 QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                                         int status_code,
                                         CryptPlugWrapper::SigStatusFlags statusFlags,
-                                        QColor& frameColor,
+                                        int& frameColor,
                                         bool& showKeyInfos )
 {
     // note: At the moment frameColor and showKeyInfos are
@@ -3454,7 +3480,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             
             if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
                 result = i18n("Sorry, no status information available.");
-                frameColor = Qt::yellow;
+                frameColor = SIG_FRAME_COL_YELLOW;
                 showKeyInfos = false;
                 return result;
             }
@@ -3469,7 +3495,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 // by definition does *not* show any key
                 // information but just states that things are OK.
                 //           (khz, according to LinuxTag 2002 meeting)
-                frameColor = Qt::green;
+                frameColor = SIG_FRAME_COL_GREEN;
                 showKeyInfos = false;
                 return result;
             }
@@ -3477,60 +3503,60 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             // we are still there?  OK, let's test the different cases:
             
             // we assume green, test for yellow or red (in this order!)
-            frameColor = Qt::green;
+            frameColor = SIG_FRAME_COL_GREEN;
             QString result2;
             if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags ){
                 // still is green!
-                result2 = i18n("One key has expired.");
+                result2 += i18n("One key has expired.");
             }
             if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags ){
                 // and still is green!
-                result2 = i18n("The signature has expired.");
+                result2 += i18n("The signature has expired.");
             }
 
             // test for yellow:
             if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
-                result2 = i18n("Can't verify: key missing.");
+                result2 += i18n("Can't verify: key missing.");
                 // if the signature certificate is missing
                 // we cannot show infos on it
                 showKeyInfos = false;
-                frameColor = Qt::yellow;
+                frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags ){
-                result2 = i18n("CRL not available.");
-                frameColor = Qt::yellow;
+                result2 += i18n("CRL not available.");
+                frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags ){
-                result2 = i18n("Available CRL is too old.");
-                frameColor = Qt::yellow;
+                result2 += i18n("Available CRL is too old.");
+                frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags ){
-                result2 = i18n("A policy was not met.");
-                frameColor = Qt::yellow;
+                result2 += i18n("A policy was not met.");
+                frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
-                result2 = i18n("A system error occured.");
+                result2 += i18n("A system error occured.");
                 // if a system error occured
                 // we cannot trust any information
                 // that was given back by the plug-in
                 showKeyInfos = false;
-                frameColor = Qt::yellow;
+                frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
-                result2 = i18n("Internal system error #%1 occured.")
+                result2 += i18n("Internal system error #%1 occured.")
                         .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
                 // if an unsupported internal error occured
                 // we cannot trust any information
                 // that was given back by the plug-in
                 showKeyInfos = false;
-                frameColor = Qt::yellow;
+                frameColor = SIG_FRAME_COL_YELLOW;
             }
 
             // test for red:
             if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags ){
                 // this is red!
-                result2 = i18n("One key has been revoked.");
-                frameColor = Qt::red;
+                result2 += i18n("One key has been revoked.");
+                frameColor = SIG_FRAME_COL_RED;
             }
             if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
                 if( result2.isEmpty() )
@@ -3547,26 +3573,30 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                     // any key/signature information at all!
                     //         (khz, according to LinuxTag 2002 meeting)
                     showKeyInfos = false;
-                frameColor = Qt::red;
+                frameColor = SIG_FRAME_COL_RED;
             }
             else
                 result = "";
 
-            if( Qt::green == frameColor ) {
+            if( SIG_FRAME_COL_GREEN == frameColor ) {
                 if( result2.isEmpty() )
                     result = i18n("GOOD signature!");
                 else
                     result = i18n("Good signature.");
-            } else if( Qt::red == frameColor ) {
+            } else if( SIG_FRAME_COL_RED == frameColor ) {
                 if( result2.isEmpty() )
                     result = i18n("BAD signature!");
                 else
                     result = i18n("Bad signature.");
             } else
                 result = "";
+                
 
-            if( !result2.isEmpty() )
-                result += "<br />" + result2;
+            if( !result2.isEmpty() ) {
+                if( !result.isEmpty() )
+                    result.append("<br />");
+                result.append( result2 );
+            }
         }
         /*
         // add i18n support for 3rd party plug-ins here:
@@ -3580,8 +3610,11 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
 
 //---------------------------------------------------
 
-QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* cryptPlug )
+QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
+                                         CryptPlugWrapper* cryptPlug,
+                                         const QString& fromAddress )
 {
+    bool isSMIME = cryptPlug && (0 <= cryptPlug->libName().find( "smime",   0, false ));
     QString signer = block.signer;
 
     QString htmlStr;
@@ -3612,72 +3645,171 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
     }
 
     if (block.isSigned) {
+        QStringList& blockAddrs( block.signerMailAddresses );
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures
         // pending(khz): Implement usage of these for PGP sigs as well.
-        QColor frameColor( Qt::black );
+        int frameColor = SIG_FRAME_COL_UNDEF;
         bool showKeyInfos;
+        bool cannotCheckSignature;
         QString statusStr = sigStatusToString( cryptPlug,
                                                block.status_code,
                                                block.sigStatusFlags,
                                                frameColor,
                                                showKeyInfos );
-        
-        // temporary hack: allways show key infos!
-        showKeyInfos = true;
-        
+        // if needed fallback to english status text
+        // that was reported by the plugin
         if( statusStr.isEmpty() )
             statusStr = block.status;
             
-
+        switch( frameColor ){
+            case SIG_FRAME_COL_RED:
+                cannotCheckSignature = false;
+                break;
+            case SIG_FRAME_COL_YELLOW:
+                cannotCheckSignature = true;
+                break;
+            case SIG_FRAME_COL_GREEN:
+                cannotCheckSignature = false;
+                break;
+        }
+        
+        // compose the string for displaying the key ID
+        // either as URL or not linked (for PGP)
+        // note: Once we can start PGP key manager programs
+        //       from within KMail we could change this and
+        //       allways show the URL.    (khz, 2002/06/27)
+        QString startKeyHREF
+            = QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
+                .arg( cryptPlug->displayName() )
+                .arg( cryptPlug->libName() )
+                .arg( block.keyId );
+        QString keyWithWithoutURL
+            = isSMIME
+            ? QString("%1%2</a>")
+                .arg( startKeyHREF )
+                .arg( cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
+            : "0x" + QString::fromUtf8( block.keyId );
+        
+                                            
+        // temporary hack: allways show key infos!
+        showKeyInfos = true;
+        
+            
         // Sorry for using 'black' as NULL color but .isValid()            
         // checking with QColor default c'tor did not work for
         // some reason.
-        if( Qt::black != frameColor ) {
-            bool notEnoughInfoToCheckSignature = false;
+        if( isSMIME && (SIG_FRAME_COL_UNDEF != frameColor) ) {
         
             // new frame settings for CMS:
             
-            // special color handling: S/MIME uses only green/yellow/red.
-kdDebug(5006) << "2. setting CMS color" << endl;
-            if( Qt::green == frameColor )
-                block.signClass = "signOkKeyOk";//"signCMSGreen";    
-            else if( Qt::yellow == frameColor ) {
-                notEnoughInfoToCheckSignature = true;
-                block.signClass = "signOkKeyBad";//"signCMSYellow";
+            // beautify the status string
+            if( !statusStr.isEmpty() ) {
+                statusStr.prepend("<i>");
+                statusStr.append( "</i>");
             }
-            else // by definition frame must be red then
-                block.signClass = "signErr";//"signCMSRed";
+            
+            // special color handling: S/MIME uses only green/yellow/red.
+            switch( frameColor ){
+                case SIG_FRAME_COL_RED:
+                    block.signClass = "signErr";//"signCMSRed";
+                    break;
+                case SIG_FRAME_COL_YELLOW:
+                    block.signClass = "signOkKeyBad";//"signCMSYellow";
+                    break;
+                case SIG_FRAME_COL_GREEN: {
+                        block.signClass = "signOkKeyOk";//"signCMSGreen";
+                        // extra hint for green case
+                        // that email addresses in DN do not match fromAddress
+                        QString greenCaseWarning;
+                        QString msgFrom( KMMessage::getEmailAddr(fromAddress) );
+                        QString certificate;
+                        if( block.keyId.isEmpty() )
+                            certificate = "certificate";
+                        else
+                            certificate = QString("%1%2</a>")
+                                          .arg( startKeyHREF )
+                                          .arg( "certificate" );
+                        if( blockAddrs.count() ){
+                            if( blockAddrs.grep( 
+                                    msgFrom,
+                                    false ).isEmpty() ) {
+                                greenCaseWarning =
+                                    "<u>" +
+                                    i18n("Warning:") +
+                                    "</u> " +
+                                    i18n("Sender's mail address is not stored "
+                                         "in the %1 used for signing.").arg(certificate) +
+                                    "<br />" +
+                                    i18n("sender: ") +
+                                    "&lt;" +
+                                    msgFrom +
+                                    "&gt;<br />" +
+                                    i18n("stored: ") +
+                                    "&lt;";
+                                // We cannot use Qt's join() function here but
+                                // have to join the addresses manually to
+                                // extract the mail addresses (without '<''>')
+                                // before including it into our string:
+                                bool bStart = true;
+                                for(QStringList::ConstIterator it = blockAddrs.begin();
+                                    it != blockAddrs.end(); ++it ){
+                                    if( !bStart )
+                                        greenCaseWarning.append("&gt;, <br />&nbsp; &nbsp;&lt;");
+                                    bStart = false;
+                                    greenCaseWarning.append( KMMessage::getEmailAddr(*it) );
+                                }
+                                greenCaseWarning.append( "&gt;" );
+                            }
+                        } else {
+                            greenCaseWarning =
+                                "<u>" +
+                                i18n("Warning:") +
+                                "</u> " +
+                                i18n("No mail address is stored in the %1 used for signing, "
+                                     "so we cannot compare it to sender's address &lt;%2&gt;.")
+                                .arg(certificate)
+                                .arg(msgFrom);
+                        }
+                        if( !greenCaseWarning.isEmpty() ) {
+                            if( !statusStr.isEmpty() )
+                                statusStr.append("<br />&nbsp;<br />");
+                            statusStr.append( greenCaseWarning );
+                        }
+                    }
+                    break;
+            }
 
             htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
             if( showKeyInfos ) {
-                
-                QString keyWithURL
-                    = cryptPlug
-                    ? QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">%4</a>")
-                        .arg( cryptPlug->displayName() )
-                        .arg( cryptPlug->libName() )
-                        .arg( block.keyId )
-                        .arg( notEnoughInfoToCheckSignature ? i18n("[Details]") : block.keyId )
-                    : QString::fromUtf8( block.keyId );
-                    
-                if( notEnoughInfoToCheckSignature ) {
+                        
+                if( cannotCheckSignature ) {
                     htmlStr += i18n( "Not enough information to check "
                                      "signature. %1" )
-                                .arg( keyWithURL );
+                                .arg( keyWithWithoutURL );
                 }
                 else {
+                
                     if (block.signer.isEmpty())
                         signer = "";
                     else {
-                        // HTMLize the signer's user id but do *not* create mailto: link
+                        // HTMLize the signer's user id and try to create mailto: link
                         signer.replace( QRegExp("&"), "&amp;" );
                         signer.replace( QRegExp("<"), "&lt;" );
                         signer.replace( QRegExp(">"), "&gt;" );
                         signer.replace( QRegExp("\""), "&quot;" );
+                        if( blockAddrs.count() ){
+                            QString address( blockAddrs.first() );
+                            address.replace( QRegExp("&"), "&amp;" );
+                            address.replace( QRegExp("<"), "&lt;" );
+                            address.replace( QRegExp(">"), "&gt;" );
+                            address.replace( QRegExp("\""), "&quot;" );
+                            signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
+                        }
                     }
+                    
                     if( block.keyId.isEmpty() ) {
                         if( signer.isEmpty() )
                             htmlStr += i18n( "Message was signed with unknown key." );
@@ -3691,32 +3823,30 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                                     block.creationTime.tm_mday );
                         if( dateOK && created.isValid() ) {
                             if( signer.isEmpty() )
-                                htmlStr += i18n( "Message was signed with key 0x%1, created %2." )
-                                        .arg( keyWithURL ).arg( created.toString( Qt::LocalDate ) );
+                                htmlStr += i18n( "Message was signed with key %1, created %2." )
+                                        .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
                             else
-                                htmlStr += i18n( "Message was signed by %1 with key 0x%2, created %3." )
+                                htmlStr += i18n( "Message was signed by %1 with key %2, created %3." )
                                         .arg( signer )
-                                        .arg( keyWithURL )
+                                        .arg( keyWithWithoutURL )
                                         .arg( created.toString( Qt::LocalDate ) );
                         }
                         else {
                             if( signer.isEmpty() )
-                                htmlStr += i18n( "Message was signed with key 0x%1." )
-                                        .arg( keyWithURL );
+                                htmlStr += i18n( "Message was signed with key %1." )
+                                        .arg( keyWithWithoutURL );
                             else
-                                htmlStr += i18n( "Message was signed by %1 with key 0x%1." )
+                                htmlStr += i18n( "Message was signed by %1 with key %2." )
                                         .arg( signer )
-                                        .arg( keyWithURL );
+                                        .arg( keyWithWithoutURL );
                         }
                     }
                 }
                 htmlStr += "<br />";
                 if( !statusStr.isEmpty() ) {
-                    htmlStr += "<br />";
+                    htmlStr += "&nbsp;<br />";
                     htmlStr += i18n( "Status: " );
-                    htmlStr += "<i>";
                     htmlStr += statusStr;
-                    htmlStr += "</i>";
                 }
             } else {
                 htmlStr += statusStr;
@@ -3738,11 +3868,11 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                                   block.creationTime.tm_mon,
                                   block.creationTime.tm_mday );
                     if( dateOK && created.isValid() )
-                        htmlStr += i18n( "Message was signed with unknown key 0x%1, created %2." )
-                                .arg( block.keyId ).arg( created.toString( Qt::LocalDate ) );
+                        htmlStr += i18n( "Message was signed with unknown key %1, created %2." )
+                                .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
                     else
-                        htmlStr += i18n( "Message was signed with unknown key 0x%1." )
-                                .arg( block.keyId );
+                        htmlStr += i18n( "Message was signed with unknown key %1." )
+                                .arg( keyWithWithoutURL );
                 }
                 else
                     htmlStr += i18n( "Message was signed with unknown key." );
@@ -3766,6 +3896,7 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                 signer.replace( QRegExp(">"), "&gt;" );
                 signer.replace( QRegExp("\""), "&quot;" );
                 signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
+                
 
                 if (block.isGoodSignature) {
                     if( block.keyTrust < Kpgp::KPGP_VALIDITY_MARGINAL )
@@ -3776,9 +3907,9 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
+                        htmlStr += i18n( "Message was signed by %1 (Key ID: %2)." )
                         .arg( signer )
-                        .arg( block.keyId );
+                        .arg( keyWithWithoutURL );
                     else
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
@@ -3815,9 +3946,9 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
+                        htmlStr += i18n( "Message was signed by %1 (Key ID: %2)." )
                         .arg( signer )
-                        .arg( block.keyId );
+                        .arg( keyWithWithoutURL );
                     else
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
@@ -3958,7 +4089,8 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
 	      messagePart.keyId = keyId;
 	      messagePart.keyTrust = keyTrust;
 
-	      htmlStr += writeSigstatHeader( messagePart, 0 );
+	      htmlStr += writeSigstatHeader( messagePart, 0, msg()->from() );
+          
 	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 	      htmlStr += writeSigstatFooter( messagePart );
 	  }
