@@ -453,6 +453,11 @@ public slots:
   void slotInsertPublicKey();
 
   /**
+   * Enable/disable some actions in the Attach menu
+   */
+  void slotUpdateAttachActions();
+
+  /**
    * Open a popup-menu in the attachments-listbox.
    */
   void slotAttachPopupMenu(QListViewItem *, const QPoint &, int);
@@ -534,11 +539,6 @@ protected:
   void rethinkFields(bool fromslot=false);
 
   /**
-   * Enable/disable some actions in the Attach menu
-   */
-  void enableAttachActions();
-
-  /**
    * Show or hide header lines
    */
   void rethinkHeaderLine(int value, int mask, int& row,
@@ -583,6 +583,11 @@ protected:
    * prevent kmail from exiting when last window is deleted (kernel rules)
   */
   virtual bool queryExit ();
+
+  /**
+   * View the attachment with the given index.
+   */
+  void viewAttach( int index );
 
   /**
    * Remove an attachment from the list.
@@ -734,6 +739,7 @@ protected:
   QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
   QPopupMenu *mAttachMenu;
+  int mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
@@ -780,7 +786,7 @@ protected:
   QStringList mCharsets;
   bool bAutoCharset;
 
-    bool bAlwaysSend;
+  bool bAlwaysSend;
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;

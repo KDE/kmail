@@ -168,6 +168,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   mAtmListView = new AttachmentListView( this, mMainWidget,
                                          "attachment list view" );
+  mAtmListView->setSelectionMode( QListView::Extended );
   mAtmListView->setFocusPolicy( QWidget::NoFocus );
   mAtmListView->addColumn( i18n("Name"), 200 );
   mAtmListView->addColumn( i18n("Size"), 80 );
@@ -197,6 +198,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect( mAtmListView,
            SIGNAL( rightButtonPressed( QListViewItem*, const QPoint&, int ) ),
            SLOT( slotAttachPopupMenu( QListViewItem*, const QPoint&, int ) ) );
+  connect( mAtmListView,
+	   SIGNAL( selectionChanged() ),
+	   SLOT( slotUpdateAttachActions() ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -732,7 +736,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   mGrid->activate();
 
-  enableAttachActions();
+  slotUpdateAttachActions();
   identityAction->setEnabled(!allFieldsAction->isChecked());
   transportAction->setEnabled(!allFieldsAction->isChecked());
   fromAction->setEnabled(!allFieldsAction->isChecked());
@@ -3814,23 +3818,30 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
     mAtmListView->setMaximumHeight( 100 );
     mAtmListView->show();
     resize(size());
-    enableAttachActions();
   }
 
   // add a line in the attachment listbox
   KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListView );
   msgPartToItem(msgPart, lvi);
   mAtmItemList.append(lvi);
+
+  slotUpdateAttachActions();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::enableAttachActions()
+void KMComposeWin::slotUpdateAttachActions()
 {
-  bool enable = !mAtmList.isEmpty();
-  attachRemoveAction->setEnabled(enable);
-  attachSaveAction->setEnabled(enable);
-  attachPropertiesAction->setEnabled(enable);
+  int selectedCount = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it ) {
+    if ( (*it)->isSelected() ) {
+      ++selectedCount;
+    }
+  }
+
+  attachRemoveAction->setEnabled( selectedCount >= 1 );
+  attachSaveAction->setEnabled( selectedCount == 1 );
+  attachPropertiesAction->setEnabled( selectedCount == 1 );
 }
 
 
@@ -3893,7 +3904,6 @@ void KMComposeWin::removeAttach(int idx)
     mGrid->setRowStretch(mNumHeaders+1, 0);
     mAtmListView->setMinimumSize(0, 0);
     resize(size());
-    enableAttachActions();
   }
 }
 
@@ -4381,19 +4391,27 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
-     // FIXME-AFTER-KDE-3.1
-     // replace
-     mAttachMenu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
-     // by
-     // mAttachMenu->insertItem(i18n("to view", "View"), this, SLOT(slotAttachView()));
-     // end of FIXME-AFTER-KDE-3.1
+     mAttachMenu->insertItem(i18n("to view", "View"), this,
+                             SLOT(slotAttachView()));
      mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
-     mAttachMenu->insertItem(i18n("Save As..."), this, SLOT(slotAttachSave()));
-     mAttachMenu->insertItem(i18n("Properties"),
-		   this, SLOT(slotAttachProperties()));
+     mSaveAsId = mAttachMenu->insertItem( i18n("Save As..."), this,
+                                          SLOT( slotAttachSave() ) );
+     mPropertiesId = mAttachMenu->insertItem( i18n("Properties"), this,
+                                              SLOT( slotAttachProperties() ) );
      mAttachMenu->insertSeparator();
      mAttachMenu->insertItem(i18n("Add Attachment..."), this, SLOT(slotAttachFile()));
   }
+
+  int selectedCount = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it ) {
+    if ( (*it)->isSelected() ) {
+      ++selectedCount;
+    }
+  }
+  bool multiSelection = ( selectedCount > 1 );
+  mAttachMenu->setItemEnabled( mSaveAsId, !multiSelection );
+  mAttachMenu->setItemEnabled( mPropertiesId, !multiSelection );
+
   mAttachMenu->popup(QCursor::pos());
 }
 
@@ -4401,12 +4419,13 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 int KMComposeWin::currentAttachmentNum()
 {
   int idx = -1;
-  QPtrListIterator<QListViewItem> it(mAtmItemList);
-  for ( int i = 0; it.current(); ++it, ++i )
-    if (*it == mAtmListView->currentItem()) {
+  int i = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+    if ( *it == mAtmListView->currentItem() ) {
       idx = i;
       break;
     }
+  }
 
   return idx;
 }
@@ -4452,13 +4471,21 @@ void KMComposeWin::slotAttachProperties()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachView()
 {
+  int i = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+    if ( (*it)->isSelected() ) {
+      viewAttach( i );
+    }
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::viewAttach( int index )
+{
   QString str, pname;
   KMMessagePart* msgPart;
-  int idx = currentAttachmentNum();
-
-  if (idx < 0) return;
-
-  msgPart = mAtmList.at(idx);
+  msgPart = mAtmList.at(index);
   pname = msgPart->name().stripWhiteSpace();
   if (pname.isEmpty()) pname=msgPart->contentDescription();
   if (pname.isEmpty()) pname="unnamed";
@@ -4499,12 +4526,22 @@ void KMComposeWin::slotAttachSave()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachRemove()
 {
-  int idx = currentAttachmentNum();
+  bool attachmentRemoved = false;
+  int i = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ) {
+    if ( (*it)->isSelected() ) {
+      removeAttach( i );
+      attachmentRemoved = true;
+    }
+    else {
+      ++it;
+      ++i;
+    }
+  }
 
-  if (idx >= 0)
-  {
-    removeAttach(idx);
-    mEditor->setModified(TRUE);
+  if ( attachmentRemoved ) {
+    mEditor->setModified( true );
+    slotUpdateAttachActions();
   }
 }
 
