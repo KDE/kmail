@@ -161,7 +161,8 @@ private:
 
   unsigned int mFolderLanguage;
 
-  KMFolderDir* mFolderParent;
+  KMFolderDir* mFolderParentDir;
+  KMFolder*    mFolderParent;
   KMFolderType mFolderType;
 
   // groupware folder icons:
