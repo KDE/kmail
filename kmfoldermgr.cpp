@@ -20,6 +20,8 @@
 #include <sys/stat.h>
 #endif
 
+#include <stdlib.h>
+
 #include <qdir.h>
 #include <assert.h>
 #include "kmfiltermgr.h"
@@ -27,6 +29,7 @@
 #include "kmundostack.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
+#include "kmmessage.h"
 #include <kapp.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -173,11 +176,41 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
   if (!folder)
   {
     // Are these const char* casts really necessary? -sanders
-    warning(i18n("Creating missing folder\n`%s'"), (const char*)aFolderName);
+    warning(i18n("Creating missing folder `%s'.\n"), (const char*)aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
-    if (!folder) fatal(i18n("Cannot create folder `%s'\nin %s"),
+    if (!folder) fatal(i18n("Cannot create folder `%s' in %s."),
 		       (const char*)aFolderName, (const char*)mBasePath);
+
+    if (aFolderName == "inbox") {
+      KMMessage *welcomeMessage;
+
+      welcomeMessage = new KMMessage;
+      welcomeMessage->setAutomaticFields();
+      welcomeMessage->setDate(time(NULL));
+      welcomeMessage->setTo(getenv("USER"));
+      welcomeMessage->setReplyTo(i18n("DO NOT REPLY TO THIS"));
+      welcomeMessage->setFrom(i18n("KMail"));
+      welcomeMessage->setSubject(i18n("Welcome to KMail!"));
+      // FIXME - we need a real body put in here!
+      welcomeMessage->setBody(i18n("Welcome to KMail.  This should be"
+                                   " fixed before final release.\n"));
+      welcomeMessage->setStatus(KMMsgStatusNew);
+
+      switch(kernel->filterMgr()->process(welcomeMessage)) {
+      case 2:
+        KMessageBox::information(0,(i18n("Error: Unable to create welcome mail.")));
+        break;
+      case 1:
+        if (folder->addMsg(welcomeMessage)) {
+          KMessageBox::information(0,(i18n("Error: Unable to create welcome mail.")));
+        }
+        break;
+      case 0:
+      default:
+        break;
+      }
+    }
   }
   return folder;
 }
