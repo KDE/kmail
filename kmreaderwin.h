@@ -439,6 +439,7 @@ private:
   bool mAtmUpdate;
   int mChoice;
   KService::Ptr mOffer;
+  enum { ContentType, Filename, Content } mMimeTypeGuessedFrom;
   unsigned long mWaitingForSerNum;
 };
 

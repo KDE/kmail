@@ -1753,43 +1753,95 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
     return;
   }
 
-  if (qstricmp(msgPart.typeStr(), "text") == 0)
-  {
-    if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
-     showVCard( &msgPart );
-     return;
-    }
+  const QString contentTypeStr =
+    ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).lower();
+
+  if ( contentTypeStr == "text/x-vcard"  ) {
+    showVCard( &msgPart );
+    return;
   }
 
-  // What to do when user clicks on an attachment --dnaber, 2000-06-01
-  // TODO: show full path for Service, not only name
-  QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(name)))->name();
-  KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
-  // remember for slotDoAtmOpen
+  KMimeType::Ptr mimetype;
+  if ( msgPart.isComplete() ) {
+    mimetype = KMimeType::findByFileContent( name );
+    mMimeTypeGuessedFrom = Content; // for slotDoAtmOpen; FIXME, this is ugly
+    kdDebug(5006) << "KMimeType::findByFileContent( " << name << " ) returned "
+                  << mimetype->name() << endl;
+  }
+  else {
+    mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );
+    mMimeTypeGuessedFrom = Filename;
+    // if the name of the file doesn't give us a clue about the MIME type
+    // then use the content-type of the attachment.
+    if ( mimetype->name() == "application/octet-stream" ) {
+      mimetype = KMimeType::mimeType( contentTypeStr );
+      mMimeTypeGuessedFrom = ContentType;
+    }
+    kdDebug(5006) << "KMimeType::findByPath( " << name << " ) returned "
+                  << mimetype->name() << endl;
+  }
+  KService::Ptr offer =
+    KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+
+  // remember for slotDoAtmOpen; FIXME, this is ugly
   mOffer = offer;
-  QString question;
   QString open_text;
   QString filenameText = msgPart.fileName();
-  if (filenameText.isEmpty()) filenameText = msgPart.name();
+  if ( filenameText.isEmpty() )
+    filenameText = msgPart.name();
   if ( offer ) {
-    open_text = i18n("&Open with '%1'").arg(offer->name());
+    open_text = i18n("&Open With '%1'").arg( offer->name() );
   } else {
     open_text = i18n("&Open With...");
   }
-  question = i18n("Open attachment '%1'?\n"
-                  "Note that opening an attachment may compromise your "
-                  "system's security.").arg(filenameText);
-  int choice = KMessageBox::questionYesNoCancel(this, question,
+  int choice;
+  if ( contentTypeStr == mimetype->name() ||
+       contentTypeStr == "application/octet-stream" ) {
+    const QString text = i18n("Open attachment '%1'?\n"
+                              "Note that opening an attachment may compromise "
+                              "your system's security.")
+                         .arg( filenameText );
+    choice = KMessageBox::questionYesNoCancel( this, text,
       i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
-      QString::fromLatin1("askSave")+ mimetype ); // dontAskAgainName
+      QString::fromLatin1("askSave") + mimetype->name() ); // dontAskAgainName
+  }
+  else {
+    QString text;
+    if ( mMimeTypeGuessedFrom == Content )
+      text = i18n("%1 and %3 are descriptions of the MIME type, "
+                  "%2 and %4 is the MIME type, %5 is the file name.",
+                  "<qt><p>Open attachment '%5'?</p>"
+                  "<p><b>Warning:</b> The message suggests that this "
+                  "attachment is of type '%1' (%2), but according to the "
+                  "file's contents it seems to be of type '%3' (%4).</p>"
+                  "<p>Note that opening an attachment may compromise your "
+                  "system's security.</p></qt>")
+             .arg( KMimeType::mimeType( contentTypeStr )->comment(),
+                   contentTypeStr, mimetype->comment(), mimetype->name() )
+             .arg( filenameText );
+    else
+      text = i18n("%1 and %3 are descriptions of the MIME type, "
+                  "%2 and %4 is the MIME type, %5 is the file name.",
+                  "<qt><p>Open attachment '%5'?</p>"
+                  "<p><b>Warning:</b> The message suggests that this "
+                  "attachment is of type '%1' (%2), but according to the "
+                  "filename it seems to be of type '%3' (%4).</p>"
+                  "<p>Note that opening an attachment may compromise your "
+                  "system's security.</p></qt>")
+             .arg( KMimeType::mimeType( contentTypeStr )->comment(),
+                   contentTypeStr, mimetype->comment(), mimetype->name() )
+             .arg( filenameText );
+    choice = KMessageBox::warningYesNoCancel( this, text,
+      i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text );
+  }
+
   if( choice == KMessageBox::Yes ) {		// Save
     slotAtmLoadPart( 4 );
-  } else if( choice == KMessageBox::No ) {	// Open
-
+  }
+  else if( choice == KMessageBox::No ) {	// Open
     // this load-part is duplicated from slotAtmLoadPart but is needed here
     // to first display the choice before the attachment is actually downloaded
-    if ( node && !node->msgPart().isComplete() )
-    {
+    if ( !msgPart.isComplete() ) {
       // load the part
       mAtmUpdate = true;
       KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
@@ -1799,26 +1851,81 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
     } else {
       slotDoAtmOpen();
     }
-
   } else {					// Cancel
     kdDebug(5006) << "Canceled opening attachment" << endl;
   }
-
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDoAtmOpen()
 {
-  if ( mOffer ) {
-    // There's a default service for this kind of file - use it
-    KURL::List lst;
-    KURL url;
-    url.setPath(mAtmCurrentName);
-    lst.append(url);
-    KRun::run(*mOffer, lst);
-  } else {
+  if ( !mOffer ) {
     slotAtmOpenWith();
+    return;
   }
+
+  KURL url;
+  url.setPath( mAtmCurrentName );
+  if ( mMimeTypeGuessedFrom != Content ) {
+    // determine the real mime type of the file by its contents
+    KMimeType::Ptr mimetype = KMimeType::findByFileContent( mAtmCurrentName );
+    kdDebug(5006) << "KMimeType::findByFileContent( " << mAtmCurrentName
+                  << " ) returned " << mimetype->name() << endl;
+    KService::Ptr offer =
+      KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+    if ( !offer ) {
+      QString text;
+      if ( mMimeTypeGuessedFrom == ContentType )
+        text = i18n( "<qt><p><b>Warning:</b> The message suggested a wrong "
+                     "file type for this attachment.</p>"
+                     "<p>After looking at the file's contents the file seems "
+                     "to be of type '%1' (%2). No application which can "
+                     "handle files of this type is known.</p></qt>")
+               .arg( mimetype->comment(), mimetype->name() );
+      else
+        text = i18n( "<qt><p><b>Warning:</b> The attachment's name suggested "
+                     "a wrong file type.</p>"
+                     "<p>After looking at the file's contents the file seems "
+                     "to be of type '%1' (%2). No application which can "
+                     "handle files of this type is known.</p></qt>")
+               .arg( mimetype->comment(), mimetype->name() );
+      const int choice =
+        KMessageBox::warningContinueCancel( this, text, QString::null,
+                                            i18n("&Open With...") );
+      if( choice == KMessageBox::Continue ) {
+        slotAtmOpenWith();
+      }
+      return;
+    }
+    if ( offer->name() != mOffer->name() ) {
+      QString text;
+      if ( mMimeTypeGuessedFrom == ContentType )
+        text = i18n( "<qt><p><b>Warning:</b> The message suggested a wrong "
+                     "file type for this attachment.</p>"
+                     "<p>After looking at the file's contents the file seems "
+                     "to be of type '%1' (%2) and should be opened with '%3'."
+                     "</p></qt>" )
+               .arg( mimetype->comment(), mimetype->name(), offer->name() );
+      else
+        text = i18n( "<qt><p><b>Warning:</b> The attachment's name suggested "
+                     "a wrong file type.</p>"
+                     "<p>After looking at the file's contents the file seems "
+                     "to be of type '%1' (%2) and should be opened with '%3'."
+                     "</p></qt>" )
+               .arg( mimetype->comment(), mimetype->name(), offer->name() );
+      const int choice =
+        KMessageBox::warningContinueCancel( this, text, QString::null,
+                                            i18n("&Open With '%1'")
+                                            .arg( offer->name() ) );
+      if( choice == KMessageBox::Cancel )
+        return;
+    }
+    mOffer = offer;
+  }
+
+  KURL::List lst;
+  lst.append( url );
+  KRun::run( *mOffer, lst );
 }
 
 //-----------------------------------------------------------------------------
