@@ -75,6 +75,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
 KMAcctImap::~KMAcctImap()
 {
   killAllJobs();
+  if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
 }
 
 
