@@ -22,6 +22,7 @@
 #include <config.h>
 #include "kmacctimap.moc"
 
+#include "kmmainwin.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
