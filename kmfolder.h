@@ -219,16 +219,17 @@ public:
   bool hasAccounts() const { return (mAcctList != NULL); }
 
   /** Returns TRUE if this folder is associated with a mailing-list. */
-  void setMailingList(bool enabled) { mMailingListEnabled = enabled; }
+  void setMailingList(bool enabled)
+  { mMailingListEnabled = enabled; writeConfig(); }
   bool isMailingList() const { return mMailingListEnabled; }
 
   void setMailingListPostAddress(const QString &address)
-  { mMailingListPostingAddress = address; }
+  { mMailingListPostingAddress = address; writeConfig(); }
   const QString& mailingListPostAddress() const
   { return mMailingListPostingAddress; }
 
   void setMailingListAdminAddress(const QString &address)
-  { mMailingListAdminAddress = address; }
+  { mMailingListAdminAddress = address; writeConfig(); }
   const QString& mailingListAdminAddress() const
   { return mMailingListAdminAddress; }
   
