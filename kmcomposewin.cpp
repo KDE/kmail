@@ -224,7 +224,7 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
          "* EITHER activate a Plug-In using the "
          "'Settings/Configure KMail / Plug-In' dialog.\n"
          "* OR specify traditional OpenPGP settings on the same dialog's "
-         "'Identity / Advanced' tabpage.");
+         "'Identity / Advanced' tab page.");
   mDone = true;
 }
 
