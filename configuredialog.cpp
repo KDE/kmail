@@ -1936,6 +1936,7 @@ void ConfigureDialog::updateFontSelector( void )
   if( mAppearance.activeFontIndex < 0 ) mAppearance.activeFontIndex = 0;
 
   int i=mAppearance.activeFontIndex;
+  slotFontSelectorChanged( i );
   mAppearance.fontChooser->setFont( mAppearance.font[i] );
 }
 
@@ -2912,6 +2913,8 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
   bool enable = index != 4 && index != 5 && index != 6;
   mAppearance.fontChooser->enableColumn(
     KFontChooser::FamilyList|KFontChooser::SizeList, enable );
+  enable = enable && index != 0;
+  mAppearance.fontChooser->enableColumn( KFontChooser::CharsetList, enable );
 }
 
 void ConfigureDialog::slotAddressbookSelectorChanged( int index )
