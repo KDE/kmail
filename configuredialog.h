@@ -42,6 +42,8 @@ class KMAccount;
 #include <qguardedptr.h>
 #include <qvaluelist.h>
 
+#define DEFAULT_EDITOR_STR "kedit %f"
+
 class NewIdentityDialog : public KDialogBase
 {
   Q_OBJECT

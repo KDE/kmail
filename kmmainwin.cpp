@@ -43,7 +43,6 @@
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
-#include "kmsettings.h"
 #include "kmfolderdia.h"
 #include "kmaccount.h"
 #include "kmacctmgr.h"

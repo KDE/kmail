@@ -37,7 +37,7 @@
 
 #ifndef KRN
 #include "kmmainwin.h"
-#include "kmsettings.h"
+#include "configuredialog.h"
 #include "kfileio.h"
 #endif
 #include "kmreaderwin.h"
