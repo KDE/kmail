@@ -119,7 +119,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
     kdError() << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
-  return false;
+  return rc;
 }
 
 // The resource orders a deletion
@@ -150,7 +150,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
     kdError() << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
-  return true;
+  return rc;
 }
 
 // The resource asks for a full list of incidences
