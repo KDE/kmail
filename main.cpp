@@ -339,6 +339,7 @@ int main(int argc, char *argv[])
   setSignalHandler(signalHandler);
 
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
+  kernel->setStartingUp( false ); // Starting up is finished
   // Go!
   int ret = kapp->exec();
 

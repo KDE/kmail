@@ -139,6 +139,8 @@ public:
 
   bool firstStart() { return the_firstStart; }
   QString previousVersion() { return the_previousVersion; }
+  bool startingUp() { return the_startingUp; }
+  void setStartingUp (bool flag) { the_startingUp = flag; }
   bool shuttingDown() { return the_shuttingDown; }
   bool checkingMail() { return the_checkingMail; }
   void setCheckingMail(bool flag) { the_checkingMail = flag; }
@@ -220,6 +222,8 @@ private:
   QString the_previousVersion;
   /** is this the first start?  read from config */
   bool the_firstStart;
+  /** are we starting up? set in main.cpp directly before kapp->exec() */
+  bool the_startingUp;
   /** are we going down? set from here */
   bool the_shuttingDown;
   /** are we checking mail? set from... where the mail is checked */

@@ -58,6 +58,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
+  the_startingUp = true;
   closed_by_user = true;
   the_firstInstance = true;
   the_msgDict = 0;
