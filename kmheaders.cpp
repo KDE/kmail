@@ -201,8 +201,10 @@ public:
           QCString cstr;
           headers->folder()->getMsgString(mMsgId, cstr);
           int a = cstr.find("\nX-Length: ");
-          int b = cstr.find("\n", a+1);
-          tmp = KIO::convertSize(strtoul(cstr.mid(a+11, b-a-11).data(), 0, 10));
+	  if(a != -1) {
+	      int b = cstr.find("\n", a+11);
+	      tmp = KIO::convertSize(cstr.mid(a+11, b-a-11).toULong());
+	  }
         } else tmp = KIO::convertSize(mMsgBase->msgSize());
     }
     return tmp;
