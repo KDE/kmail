@@ -715,5 +715,8 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   if (interactive)
     KMessageBox::error(0, KIO::buildErrorString(error, errorMsg));
   stage = Quit;
-  slotCancel();
+  /* We need a timer, otherwise slotSlaveError of the next account is also
+     executed, if it reuses the slave, because the slave member variable
+     is changed too early */
+  QTimer::singleShot(0, this, SLOT(slotCancel()));
 }
