@@ -646,12 +646,22 @@ kdDebug(5006) << "pgp signed" << endl;
             break;
           case DwMime::kSubtypePkcs7Mime: {
 kdDebug(5006) << "pkcs7 mime" << endl;
-              if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
-                CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
+              if( curNode->mChild ) {
+kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+                parseObjectTree( curNode->mChild );
+                bDone = true;
+kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+              } else {
+kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
 
-              /*
-                ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-              */
+
+
+                if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
+                  CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
+
+                /*
+                  ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
+                */
 
 
 // INTERIM SOLUTION
@@ -669,65 +679,58 @@ while( ( current = it.current() ) ) {
     }
 }
 
-                DwHeaders& headers( curNode->dwPart()->Headers() );
-                QCString ctypStr( headers.ContentType().AsString().c_str() );
+                  DwHeaders& headers( curNode->dwPart()->Headers() );
+                  QCString ctypStr( headers.ContentType().AsString().c_str() );
 
-                bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
-                bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
+                  bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
+                  bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
 
-                // we call signature verification
-                // if we either *know* that it is signed mail or
-                // if there is *neither* signed *nor* encrypted parameter
-                if( !isEncrypted ) {
-                  if( isSigned )
-                    kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
-                  else
-                    kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
+                  // we call signature verification
+                  // if we either *know* that it is signed mail or
+                  // if there is *neither* signed *nor* encrypted parameter
+                  if( !isEncrypted ) {
+                    if( isSigned )
+                      kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
+                    else
+                      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
-                  if(    writeOpaqueOrMultipartSignedData( 0, *curNode )
-                      && !isSigned ) {
-                    kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
-                    isSigned = true;
+                    if(    writeOpaqueOrMultipartSignedData( 0, *curNode )
+                        && !isSigned ) {
+                      kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
+                      isSigned = true;
+                    }
+
+
+                    if( isSigned )
+                      curNode->setSigned( true );
                   }
 
-
-                  if( isSigned )
-                    curNode->setSigned( true );
-                }
-
-                // we call decryption function
-                // if it turned out that this is not signed mail
-                if( !isSigned ) {
-                  if( isEncrypted )
-                    kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
-                  else
-                    kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
-                  if( curNode->mChild ) {
-kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-                    parseObjectTree( curNode->mChild );
-kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
-                  } else {
-kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
-                      QCString decryptedData;
-                      if( okDecryptMIME( *curNode, decryptedData ) ) {
-                        isEncrypted = true;
-                        insertAndParseNewChildNode( *curNode,
-                                                    &*decryptedData,
-                                                    "encrypted data" );
-                      }
-                      else
-                      {
-                        writeHTMLStr(mCodec->toUnicode( decryptedData ));
-                      }
-kdDebug(5006) << "\n<-----  Returning from initially processing encrypted data\n" << endl;
+                  // we call decryption function
+                  // if it turned out that this is not signed mail
+                  if( !isSigned ) {
+                    if( isEncrypted )
+                      kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
+                    else
+                      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
+                    QCString decryptedData;
+                    if( okDecryptMIME( *curNode, decryptedData ) ) {
+                      isEncrypted = true;
+                      insertAndParseNewChildNode( *curNode,
+                                                  &*decryptedData,
+                                                  "encrypted data" );
+                    }
+                    else
+                    {
+                      writeHTMLStr(mCodec->toUnicode( decryptedData ));
+                    }
                   }
                   if( isEncrypted )
                     curNode->setEncrypted( true );
-                }
-                if( isSigned || isEncrypted )
-                  bDone = true;
+                  if( isSigned || isEncrypted )
+                    bDone = true;
 
-                useThisCryptPlug = oldUseThisCryptPlug;
+                  useThisCryptPlug = oldUseThisCryptPlug;
+                }
               }
             }
             break;
@@ -2050,11 +2053,6 @@ kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" <<
                                  mainCntTypeStr,
                                  cntEnc,
                                  cntSize );
-    /*new KMMimePartTreeItem( *mMimePartTree, mRootNode,
-                                            cntDesc,
-                                            mainCntTypeStr,
-                                             cntEnc,
-                                            cntSize );*/
 kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tree" << endl;
   } else {
 kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root Node!" << endl;
