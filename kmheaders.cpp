@@ -338,8 +338,7 @@ public:
       }
     } else if (column == paintInfo->senderCol) {
       QString tmp;
-      KMFolder *folder = msg->parent();
-      if (kernel->folderIsDraftOrOutbox(folder))
+      if (qstricmp(headers->folder()->whoField(), "To")==0)
         tmp = msg->toStrip();
       else
         tmp = msg->fromStrip();
