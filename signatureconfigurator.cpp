@@ -62,11 +62,11 @@ namespace KMail {
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
 		   << i18n("continuation of \"obtain signature text from\"",
-			   "file")
+			   "File")
                    << i18n("continuation of \"obtain signature text from\"",
-			   "output of command")
+			   "Output of Command")
 		   << i18n("continuation of \"obtain signature text from\"",
-			   "input field below") );
+			   "Input Field Below") );
     label = new QLabel( mSourceCombo,
 			i18n("Obtain signature &text from:"), this );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
