@@ -856,7 +856,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     const char* certificate = 0;
 
     if( mReader && ! cryptPlug->hasFeature( Feature_DecryptMessages ) ) {
-      mReader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+      showMessageAndSetData( errorContentCouldNotBeDecrypted,
         i18n("Crypto plug-in %1 can not decrypt any messages.").arg(cryptPlug->libName()),
         i18n("Please split translation across this and the next message",
 	     "Please specify a matching plug-in from the"),
@@ -890,7 +890,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
       if( bDecryptionOk )
         decryptedData = cleartext;
       else if( mReader && showWarning ){
-        mReader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+        showMessageAndSetData( errorContentCouldNotBeDecrypted,
           i18n("Crypto Plug-In %1 could not decrypt the data.")
             .arg(cryptPlug->libName()),
           i18n("Error: %1")
@@ -909,7 +909,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   } else {
       if( mReader )
-        mReader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+        showMessageAndSetData( errorContentCouldNotBeDecrypted,
           i18n("No Crypto plug-in settings found."),
           i18n("Please split translation across this and the next message",
 	       "Please specify a plug-in from the"),
@@ -1921,5 +1921,32 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     }
   }
 #endif // !NDEBUG
+
+void ObjectTreeParser::showMessageAndSetData( const QString& txt0,
+                                         const QString& txt1,
+                                         const QString& txt2a,
+                                         const QString& txt2b,
+                                         QCString& data,
+					 bool showMessageBox )
+{
+  data  = "<hr><b><h2>";
+  data += txt0.utf8();
+  data += "</h2></b><br><b>";
+  data += i18n("reason:").utf8();
+  data += "</b><br><i>&nbsp; &nbsp; ";
+  data += txt1.utf8();
+  data += "</i><br><b>";
+  data += i18n("proposal:").utf8();
+  data += "</b><br><i>&nbsp; &nbsp; ";
+  data += txt2a.utf8();
+  data += "<br>&nbsp; &nbsp; ";
+  data += txt2b.utf8();
+  data += "</i>";
+  if ( showMessageBox && mReader )
+    KMessageBox::sorry(mReader, txt0+"\n\n"+txt1+"\n\n"+txt2a+"\n"+txt2b);
+}
+
+
+
 
 }; // namespace KMail

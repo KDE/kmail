@@ -1434,31 +1434,6 @@ void KMReaderWin::parseMsg(void)
 }
 
 
-void KMReaderWin::showMessageAndSetData( const QString& txt0,
-                                         const QString& txt1,
-                                         const QString& txt2a,
-                                         const QString& txt2b,
-                                         QCString& data,
-					 bool showMessageBox )
-{
-  data  = "<hr><b><h2>";
-  data += txt0.utf8();
-  data += "</h2></b><br><b>";
-  data += i18n("reason:").utf8();
-  data += "</b><br><i>&nbsp; &nbsp; ";
-  data += txt1.utf8();
-  data += "</i><br><b>";
-  data += i18n("proposal:").utf8();
-  data += "</b><br><i>&nbsp; &nbsp; ";
-  data += txt2a.utf8();
-  data += "<br>&nbsp; &nbsp; ";
-  data += txt2b.utf8();
-  data += "</i>";
-  if ( showMessageBox )
-    KMessageBox::sorry(this, txt0+"\n\n"+txt1+"\n\n"+txt2a+"\n"+txt2b);
-}
-
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
 {

@@ -367,19 +367,6 @@ protected:
     header style. */
   virtual QString writeMsgHeader(KMMessage* aMsg, bool hasVCard);
 
-  /** Processed the txt strings and composed an appropriate
-    HTML string that is stored into data for displaying it
-    instead of the mail part's decrypted content.
-    Also used these texts for displaying a Sorry message box.
-    This method was implemented for being called
-    by writeSignedMIME and by okDecryptMIME. */
-  virtual void showMessageAndSetData( const QString& txt0,
-                                      const QString& txt1,
-                                      const QString& txt2a,
-                                      const QString& txt2b,
-                                      QCString& data,
-				      bool showMessageBox=true );
-
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
   virtual void writeBodyStr( const QCString bodyString,
