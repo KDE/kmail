@@ -474,7 +474,8 @@ namespace KMail {
         return;
 
 
-    if ( mSignatureConfigurator->isSignatureEnabled() ) {
+    if ( mSignatureConfigurator->isSignatureEnabled() &&
+         mSignatureConfigurator->signatureType()==Signature::FromFile ) {
       KURL url( mSignatureConfigurator->fileURL() );
       KFileItem signatureFile( KFileItem::Unknown, KFileItem::Unknown, url );
       if ( !signatureFile.isFile() || !signatureFile.isReadable() || !signatureFile.isLocalFile() ) {
