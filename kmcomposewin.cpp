@@ -1082,6 +1082,7 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setCharset(mCharset);
     QCString body = pgpProcessedMsg();
     if (body.isNull()) return FALSE;
+    if (body.isEmpty()) body = "\n";     // don't crash
 
     if (isQP)
       mMsg->setBodyEncoded(body);
