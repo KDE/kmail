@@ -129,7 +129,7 @@ Id=3.3-misc
 # against being run multiple times.
 ######################################################################
 File=kmailrc
-Script=kmail-3.3-misc.sh,bash
+Script=kmail-3.3-misc.pl,perl
 #
 # Updates which were added after the release of KDE 3.3 Beta 1
 Id=3.3b1-misc
