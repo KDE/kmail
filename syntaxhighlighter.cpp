@@ -94,13 +94,11 @@ int SpellChecker::highlightParagraph( const QString& text,
     QRegExp norwegian( "[\xc4-\xc6\xd6\xd8\xdc\xdf\xe4-\xe6\xf6\xf8\xfc]" );
 
     // leave #includes, diffs, and quoted replies alone
-    QString diffAndCo( "#+-<>" );
+    QString diffAndCo( ">" );
 
-    bool isCode = ( text.stripWhiteSpace().endsWith(";") ||
-		    diffAndCo.find(text[0]) != -1 );
+    bool isCode = diffAndCo.find(text[0]) != -1;
     bool isNorwegian = ( text.find(norwegian) != -1 );
     isNorwegian = false; //DS: disable this, hopefully KSpell can handle these languages.
-    isCode = false; //DS: disable this, can put it back if there is demand.
 
     if ( !text.endsWith(" ") )
 	alwaysEndsWithSpace = FALSE;
