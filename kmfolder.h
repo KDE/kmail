@@ -259,7 +259,14 @@ public:
   bool needsCompacting() const { return needsCompact; }
   virtual void setNeedsCompacting(bool f) { needsCompact = f; }
 
-  /** If set to quiet the folder will not emit msgAdded(idx) signal */
+  /** If set to quiet the folder will not emit msgAdded(idx) signal.
+    This is necessary because adding the messages to the listview
+    one by one as they come in ( as happens on msgAdded(idx) ) is
+    very slow for large ( >10000 ) folders. For pop, where whole
+    bodies are downloaded this is not an issue, but for imap, where
+    we only download headers it becomes a bottleneck. We therefore
+    set the folder quiet() and rebuild the listview completely once
+    the complete folder has been checked. */
   virtual void quiet(bool beQuiet);
 
   /** Is the folder read-only? */
