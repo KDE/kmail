@@ -66,6 +66,8 @@ void KMServerTest::slotData(KIO::Job *, const QString &data)
 //-----------------------------------------------------------------------------
 void KMServerTest::slotResult(KIO::Job *job)
 {
+  if (job->error() != KIO::ERR_SLAVE_DIED && mSlave)
+    KIO::Scheduler::disconnectSlave(mSlave);
   slotSlaveResult(mSlave, job->error());
 }
 
@@ -75,8 +77,6 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   const QString &)
 {
   if (aSlave != mSlave) return;
-  if (error != KIO::ERR_SLAVE_DIED && mSlave)
-    KIO::Scheduler::disconnectSlave(mSlave);
   if (mFirstTry)
   {
     mFirstTry = FALSE;
