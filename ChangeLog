@@ -1,3 +1,9 @@
+1998-03-15  Stefan Taferner  <taferner@kde.org>
+
+	* Startup: added option -check which does mail checking
+	upon startup. Also options that start with a '-' but which
+	are unknown are now skipped.
+
 1998-03-09  Stefan Taferner  <taferner@kde.org>
 
 	* Reader: '_' was not considered part of a smart-detected email

@@ -72,7 +72,7 @@ static void init(int& argc, char *argv[]);
 static void cleanup(void);
 static void setSignalHandler(void (*handler)(int));
 static void recoverDeadLetters(void);
-static void mailto(int argc, char *argv[]);
+static void processArgs(int argc, char *argv[]);
 
 
 //-----------------------------------------------------------------------------
@@ -345,11 +345,13 @@ static void cleanup(void)
 
 
 //-----------------------------------------------------------------------------
-static void mailto(int argc, char *argv[])
+static void processArgs(int argc, char *argv[])
 {
   KMComposeWin* win;
   KMMessage* msg = new KMMessage;
   QString to, cc, bcc, subj;
+  bool checkNewMail = FALSE;
+  bool mailto = FALSE;
   int i;
 
   for (i=0; i<argc; i++)
@@ -357,31 +359,47 @@ static void mailto(int argc, char *argv[])
     if (strcmp(argv[i],"-s")==0)
     {
       if (i<argc-1) subj = argv[++i];
+      mailto = TRUE;
     }
     else if (strcmp(argv[i],"-c")==0)
     {
       if (i<argc-1) cc = argv[++i];
+      mailto = TRUE;
     }
     else if (strcmp(argv[i],"-b")==0)
     {
       if (i<argc-1) bcc = argv[++i];
+      mailto = TRUE;
+    }
+    else if (strcmp(argv[i],"-check")==0)
+      checkNewMail = TRUE;
+    else if (argv[i][0]=='-')
+    {
+      warning(i18n("Unknown command line option: %s"), argv[i]);
+      // unknown parameter
     }
     else
     {
       if (!to.isEmpty()) to += ", ";
       if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
       else to += argv[i];
+      mailto = TRUE;
     }
   }
 
-  msg->initHeader();
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
-  if (!subj.isEmpty()) msg->setSubject(subj);
-  if (!to.isEmpty()) msg->setTo(to);
+  if (checkNewMail) acctMgr->checkMail();
 
-  win = new KMComposeWin(msg);
-  win->show();
+  if (mailto)
+  {
+    msg->initHeader();
+    if (!cc.isEmpty()) msg->setCc(cc);
+    if (!bcc.isEmpty()) msg->setBcc(bcc);
+    if (!subj.isEmpty()) msg->setSubject(subj);
+    if (!to.isEmpty()) msg->setTo(to);
+
+    win = new KMComposeWin(msg);
+    win->show();
+  }
 }
 
 
@@ -397,7 +415,7 @@ main(int argc, char *argv[])
   mainWin->show();
 
   if (argc > 1)
-    mailto(argc-1, argv+1);
+    processArgs(argc-1, argv+1);
 
   recoverDeadLetters();
   app->exec();

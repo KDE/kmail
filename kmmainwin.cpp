@@ -169,8 +169,8 @@ void KMMainWin::writeConfig(bool aWithSync)
   s.sprintf("%i,%i", r.width(), r.height());
   config->writeEntry("MainWin", s);
 
-  s.sprintf("%i,%i", mVertPanner->seperatorPos(), 
-	    mHorizPanner->seperatorPos());
+  s.sprintf("%i,%i", mVertPanner->separatorPos(), 
+	    mHorizPanner->separatorPos());
   config->writeEntry("Panners", s);
 
   if (aWithSync) config->sync();

@@ -524,23 +524,25 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       htmlStr += "</A>";
     }
     else if (ch=='@')
+    {
+      for (i=0; *pos && (isalnum(*pos) || *pos=='@' || *pos=='.' ||
+			 *pos=='_'||*pos=='-') && i<255; i++, pos--)
       {
-	for (i=0; *pos && (isalnum(*pos) || *pos=='@' || *pos=='.' ||
-			   *pos=='_'||*pos=='-') && i<255; i++, pos--)
-	{
-	}
-	i1 = i;
-	pos++; 
-	for (i=0; *pos && (isalnum(*pos)||*pos=='@'||*pos=='.'||
-			   *pos=='_'||*pos=='-') && i<255; i++, pos++)
-	{
-	  iStr += *pos;
-	}
-	pos--; 
-	htmlStr.truncate(htmlStr.length() - i1 + 1);
+      }
+      i1 = i;
+      pos++; 
+      for (i=0; *pos && (isalnum(*pos)||*pos=='@'||*pos=='.'||
+			 *pos=='_'||*pos=='-') && i<255; i++, pos++)
+      {
+	iStr += *pos;
+      }
+      pos--; 
+      htmlStr.truncate(htmlStr.length() - i1 + 1);
+      if (iStr.length()>3) 
 	htmlStr += "<A HREF=\"mailto:" + iStr + "\">" + iStr + "</A>";
-	iStr = "";
-      }	
+      else htmlStr += iStr;
+      iStr = "";
+    }
 
     else htmlStr += ch;
   }
