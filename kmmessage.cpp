@@ -1185,7 +1185,7 @@ QString KMMessage::dateStr(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::dateShortStr(void) const
+QCString KMMessage::dateShortStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
@@ -1366,7 +1366,7 @@ QString KMMessage::fromStrip(void) const
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::fromEmail(void) const
+QCString KMMessage::fromEmail(void) const
 {
   return getEmailAddr(headerField("From"));
 }
@@ -2112,14 +2112,13 @@ QString KMMessage::stripEmailAddr(const QString& aStr)
 }
 
 //-----------------------------------------------------------------------------
-QString KMMessage::getEmailAddr(const QString& aStr)
+QCString KMMessage::getEmailAddr(const QString& aStr)
 {
   int a, i, j, len, found = 0;
   QChar c;
-  QString result;
   // Find the '@' in the email address:
   a = aStr.find('@');
-  if (a<0) return aStr;
+  if (a<0) return aStr.latin1();
   // Loop backwards until we find '<', '(', ' ', or beginning of string.
   for (i = a - 1; i >= 0; i--) {
     c = aStr[i];
@@ -2136,8 +2135,7 @@ QString KMMessage::getEmailAddr(const QString& aStr)
   }
   // Calculate the length and return the result.
   len = j - (i + 1);
-  result = aStr.mid(i+1,len);
-  return result;
+  return aStr.mid(i+1,len).latin1();
 }
 
 

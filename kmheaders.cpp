@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmheaders.cpp
 
 #include <stdlib.h>
@@ -1124,7 +1123,7 @@ void KMHeaders::deleteMsg (int msgId)
 void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
-  QString str;
+  QCString str;
   KURL url = KFileDialog::getSaveURL(QString::null, QString::null);
 
   if( url.isEmpty() )
@@ -1137,7 +1136,7 @@ void KMHeaders::saveMsg (int msgId)
     str += "\n";
   }
 
-  QByteArray ba = QCString(str);
+  QByteArray ba = str;
   ba.resize(ba.size() - 1);
   kernel->byteArrayToRemoteFile(ba, url);
 }
@@ -2468,8 +2467,8 @@ void KMHeaders::setNestedOverride( bool override )
   mSortInfo.dirty = TRUE;
   mNestedOverride = override;
   setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
-  QString sortFile = mFolder->indexLocation() + ".sorted";
-  unlink(sortFile.local8Bit());
+  QCString sortFile = mFolder->indexLocation() + ".sorted";
+  unlink(sortFile);
   reset();
 }
 
@@ -2543,7 +2542,7 @@ bool KMHeaders::writeSortOrder()
 {
   if (mSortInfo.removed)
     return TRUE; // Need serial ids to optimize this out
-  QString sortFile = KMAIL_SORT_FILE(mFolder);
+  QCString sortFile = KMAIL_SORT_FILE(mFolder);
 
   if (!mSortInfo.dirty) {
     struct stat stat_tmp;
@@ -2552,9 +2551,9 @@ bool KMHeaders::writeSortOrder()
     }
   }
   if (mSortInfo.dirty) {
-    QString tempName = sortFile + ".temp";
-    unlink(tempName.local8Bit());
-    FILE *sortStream = fopen(tempName.local8Bit(), "w");
+    QCString tempName = sortFile + ".temp";
+    unlink(tempName);
+    FILE *sortStream = fopen(tempName, "w");
     if (!sortStream)
       return FALSE;
     mSortInfo.dirty = FALSE;
@@ -2627,14 +2626,14 @@ bool KMHeaders::writeSortOrder()
     fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile.local8Bit());
-	kdDebug() << "Error: Failure modifying " << sortFile.latin1() << " (No space left on device?)" << endl;
+	unlink(sortFile);
+	kdDebug() << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
 	kdDebug() << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);
     }
     fclose(sortStream);
-    rename(tempName.local8Bit(), sortFile.local8Bit());
+    rename(tempName, sortFile);
   }
 
   return TRUE;
@@ -2643,8 +2642,8 @@ bool KMHeaders::writeSortOrder()
 
 void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 {
-  QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {
+  QCString sortFile = KMAIL_SORT_FILE(mFolder);
+  if(FILE *sortStream = fopen(sortFile, "r+")) {
     KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
     int parent_id = -2; //no parent, top level
     if(khi->parent())
@@ -2661,8 +2660,8 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile.local8Bit());
-	kdDebug() << "Error: Failure modifying " << sortFile.latin1() << " (No space left on device?)" << endl;
+	unlink(sortFile);
+	kdDebug() << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
 	kdDebug() << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);
@@ -2760,7 +2759,7 @@ static int compare_KMSortCacheItem(const void *s1, const void *s2)
 	return 0;
     KMSortCacheItem **b1 = (KMSortCacheItem **)s1;
     KMSortCacheItem **b2 = (KMSortCacheItem **)s2;
-    int ret = qstrcmp((*b1)->key(), (*b2)->key());
+    int ret = (*b1)->key().compare((*b2)->key());
     if(compare_ascending)
 	ret = -ret;
     return ret;
@@ -2789,8 +2788,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	mItems[i] = 0;
     }
 
-    QString sortFile = KMAIL_SORT_FILE(mFolder);
-    FILE *sortStream = fopen(sortFile.local8Bit(), "r+");
+    QCString sortFile = KMAIL_SORT_FILE(mFolder);
+    FILE *sortStream = fopen(sortFile, "r+");
     mSortInfo.fakeSort = 0;
 
     if(sortStream) {
@@ -3044,8 +3043,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
     SHOW_TIMER(selection);
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile.local8Bit());
-	kdDebug() << "Error: Failure modifying " << sortFile.latin1() << " (No space left on device?)" << endl;
+	unlink(sortFile);
+	kdDebug() << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
 	kdDebug() << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);

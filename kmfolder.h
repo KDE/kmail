@@ -59,13 +59,13 @@ public:
   virtual ~KMFolder();
 
   /** Returns full path to folder file */
-  QString location() const;
+  QCString location() const;
 
   /** Returns full path to index file */
-  QString indexLocation() const;
+  QCString indexLocation() const;
 
   /** Returns full path to sub directory file */
-  QString subdirLocation() const;
+  QCString subdirLocation() const;
 
   /** Returns the folder directory associated with this node or
       0 if no such directory exists */

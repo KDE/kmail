@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmfolder.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
@@ -115,9 +114,9 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
-QString KMFolder::location() const
+QCString KMFolder::location() const
 {
-  QString sLocation(path().local8Bit());
+  QCString sLocation(path().local8Bit());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += name().local8Bit();
@@ -127,9 +126,9 @@ QString KMFolder::location() const
 
 
 //-----------------------------------------------------------------------------
-QString KMFolder::indexLocation() const
+QCString KMFolder::indexLocation() const
 {
-  QString sLocation(path().local8Bit());
+  QCString sLocation(path().local8Bit());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
@@ -140,9 +139,9 @@ QString KMFolder::indexLocation() const
 }
 
 //-----------------------------------------------------------------------------
-QString KMFolder::subdirLocation() const
+QCString KMFolder::subdirLocation() const
 {
-  QString sLocation(path().local8Bit());
+  QCString sLocation(path().local8Bit());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
@@ -365,7 +364,7 @@ int KMFolder::lock()
 
     case procmail_lockfile:
       cmd_str = "lockfile ";
-      if (mProcmailLockFileName && !mProcmailLockFileName.isEmpty())
+      if (!mProcmailLockFileName.isEmpty())
 	cmd_str += mProcmailLockFileName;
       else
         cmd_str += location() + ".lock";
@@ -469,7 +468,7 @@ int KMFolder::unlock()
 
     case procmail_lockfile:
       cmd_str = "rm -f ";
-      if (mProcmailLockFileName && !mProcmailLockFileName.isEmpty())
+      if (!mProcmailLockFileName.isEmpty())
         cmd_str += mProcmailLockFileName;
       else
         cmd_str += location() + ".lock";
@@ -596,7 +595,7 @@ int KMFolder::createIndexFromContents()
 	  mi = new KMMsgInfo(this);
 	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, offs, size);
 	  mi->setStatus("RO","O");
-	  mi->setDate(dateStr);
+	  mi->setDate(dateStr.latin1());
 	  mi->setDirty(FALSE);
 	  mMsgList.append(mi);
 
@@ -722,7 +721,7 @@ int KMFolder::createIndexFromContents()
 //-----------------------------------------------------------------------------
 int KMFolder::writeIndex()
 {
-  QString tempName;
+  QCString tempName;
   KMMsgBase* msgBase;
   int old_umask;
   int i=0, len;
@@ -1314,7 +1313,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 {
   long offs, size, len, revert;
   bool opened = FALSE;
-  QString msgText;
+  QCString msgText;
   char endStr[3];
   int idx = -1, rc;
   KMFolder* msgParent;
@@ -1391,7 +1390,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   clearerr(mStream);
   if (len <= 0)
   {
-    kdDebug() << "Message added to folder `" << (const char*)name() << "' contains no data. Ignoring it." << endl;
+    kdDebug() << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
     if (opened) close();
     return 0;
   }
@@ -1426,7 +1425,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
           (const char *)aMsg->dateShortStr());
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
-  if (msgText[(int)len-1]!=QChar('\n')) fwrite("\n\n", 1, 2, mStream);
+  if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
   size = ftell(mStream) - offs;
 
@@ -1534,8 +1533,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 //-----------------------------------------------------------------------------
 int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 {
-  QString oldLoc, oldIndexLoc, newLoc, newIndexLoc, oldName;
-  QString oldSubDirLoc, newSubDirLoc;
+  QCString oldLoc, oldIndexLoc, newLoc, newIndexLoc;
+  QCString oldSubDirLoc, newSubDirLoc;
+  QString oldName;
   int rc=0, openCount=mOpenCount;
   KMFolderDir *oldParent;
 
@@ -1663,7 +1663,7 @@ int KMFolder::compact()
     return 0;
   kdDebug() << "Compacting " << endl;
 
-  tempName = path() + "/." + name() + ".compacted";
+  tempName = path().local8Bit() + "/." + name().local8Bit() + ".compacted";
   mode_t old_umask = umask(077);
   FILE *tmpfile = fopen(tempName, "w");
   umask(old_umask);
@@ -1777,7 +1777,7 @@ const char* KMFolder::type() const
 QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-  if (mIsSystemFolder) return i18n(name());
+  if (mIsSystemFolder) return i18n(name().latin1());
   return name();
 }
 
@@ -1851,7 +1851,7 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
 //-----------------------------------------------------------------------------
 const char* KMFolder::whoField() const
 {
-  return (mWhoField.isEmpty() ? "From" : (const char*)mWhoField);
+  return (mWhoField.isEmpty() ? "From" : mWhoField.latin1());
 }
 
 
