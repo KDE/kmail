@@ -62,11 +62,14 @@ void KMKernel::checkMail () //might create a new reader but won´t show!!
   kdDebug() << "KMKernel::checkMail called" << endl;
   KMMainWin *mWin = 0;
 
-  if (kapp->mainWidget() && kapp->mainWidget()->isA("KMMainWin"))
+  if (kapp->mainWidget() && kapp->mainWidget()->isA("KMMainWin")) {
     mWin = (KMMainWin *) kapp->mainWidget();
-  else
+    mWin->slotCheckMail();
+  } else {
     mWin = new KMMainWin;
-  mWin->slotCheckMail();
+    mWin->slotCheckMail();
+    delete mWin;
+  }
 }
 
 void KMKernel::openReader()
