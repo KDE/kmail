@@ -29,6 +29,7 @@
 class QWidget;
 class QString;
 
+class KMPopFilterCnfrmDlg;
 /**
   * @author Heiko Hund
   */
@@ -37,22 +38,23 @@ class KMPopHeadersView : public KListView
   Q_OBJECT
 
 public:
-  KMPopHeadersView(QWidget *aParent = 0);
+  KMPopHeadersView(QWidget *aParent=0, KMPopFilterCnfrmDlg *aDialog=0);
   ~KMPopHeadersView();
-  int mapToColumn(KMPopFilterAction aAction);
-  KMPopFilterAction mapToAction(int aColumn);
+  static const KMPopFilterAction mapToAction(int aColumn) { return (KMPopFilterAction)aColumn;};
+  static const int mapToColumn(KMPopFilterAction aAction) { return (int)aAction;};
   static const char *mUnchecked[26];
   static const char *mChecked[26];
 protected:
   static const char *mLater[25];
   static const char *mDown[20];
   static const char *mDel[19];
-  QMap<KMPopFilterAction, int> mColumnOf;
-  QMap<int, KMPopFilterAction> mActionAt;
+  void keyPressEvent( QKeyEvent *k);
 
 protected slots: // Protected slots
   void slotPressed(QListViewItem* aItem, const QPoint& aPoint, int aColumn);
-  void slotIndexChanged(int aSection, int aFromIndex, int aToIndex);
+
+private:
+  KMPopFilterCnfrmDlg *mDialog;
 };
 
 
@@ -62,31 +64,37 @@ class KMPopHeadersViewItem : public KListViewItem
 public:
   KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilterAction aAction);
   ~KMPopHeadersViewItem();
-  void check(KMPopFilterAction aAction);
+  void setAction(KMPopFilterAction aAction);
+  KMPopFilterAction action() { return mAction; };
   virtual void paintFocus(QPainter *, const QColorGroup & cg, const QRect &r);
   virtual QString key(int col, bool ascending) const;
 protected:
   KMPopHeadersView *mParent;
-  QMap<KMPopFilterAction, bool> mChecked;
+  KMPopFilterAction mAction;
 };
 
 
 class KMPopFilterCnfrmDlg : public KDialogBase
 {
+	friend class KMPopHeadersView;
   Q_OBJECT
 protected:
   KMPopFilterCnfrmDlg() { };
-  QPtrList<KMPopHeaders> *mHeaders;
   QMap<QListViewItem*, KMPopHeaders*> mItemMap;
   QPtrList<KMPopHeadersViewItem> mDelList;
   QPtrList<KMPopHeaders> mDDLList;
   KMPopHeadersView *mFilteredHeaders;
   bool mLowerBoxVisible;
   bool mShowLaterMsgs;
+  void setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg);
+	
 
 public:
   KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs = false, QWidget *aParent=0, const char *aName=0);
   ~KMPopFilterCnfrmDlg();
+
+public:
+  void setAction(QListViewItem *aItem, KMPopFilterAction aAction);
 
 protected slots: // Protected slots
   /**

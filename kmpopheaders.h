@@ -14,7 +14,9 @@
 #include <qstring.h>
 #include "kmmessage.h"
 
-enum KMPopFilterAction {NoAction, Down, Later, Delete} ;
+
+enum KMPopFilterAction {Down=0, Later=1, Delete=2, NoAction=3}; //Keep these corresponding to the column numbers in the dialog for easier coding 
+								//or change mapToAction and mapToColumn in KMPopHeadersView
 
 class KMPopHeaders {
 public:

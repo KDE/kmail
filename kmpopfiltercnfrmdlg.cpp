@@ -26,75 +26,77 @@
 
 ////////////////////////////////////////
 ///  view
-KMPopHeadersView::KMPopHeadersView(QWidget *aParent)
+KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialog)
       : KListView(aParent)
 {
-  mColumnOf[Down] = addColumn(QIconSet(QPixmap(mDown)), QString::null, 24);
-  mColumnOf[Later] = addColumn(QIconSet(QPixmap(mLater)), QString::null, 24);
-  mColumnOf[Delete] = addColumn(QIconSet(QPixmap(mDel)), QString::null, 24);
+  mDialog=aDialog;
+  int mDownIndex=addColumn(QIconSet(QPixmap(mDown)), QString::null, 24);
+  assert( mDownIndex == Down ); //This code relies on the fact that radiobuttons are the first three columns for easier Column-Action mapping
+			        //it does not necessarily be true - you could redefine mapToColumn and mapToAction to eg. shift those numbers by 1
+  addColumn(QIconSet(QPixmap(mLater)), QString::null, 24);
+  addColumn(QIconSet(QPixmap(mDel)), QString::null, 24);
+  
   /*int subjCol =*/ addColumn(i18n("Subject"), 180);
   /*int sendCol =*/ addColumn(i18n("Sender"), 150);
   int dateCol = addColumn(i18n("Date"), 120);
   int sizeCol = addColumn(i18n("Size"), 80);
 
-  setSelectionMode(QListView::NoSelection);
-  setColumnAlignment(mColumnOf[Down], Qt::AlignHCenter);
-  setColumnAlignment(mColumnOf[Later], Qt::AlignHCenter);
-  setColumnAlignment(mColumnOf[Delete], Qt::AlignHCenter);
+  setAllColumnsShowFocus(true);
+  
+  setColumnAlignment(Down, Qt::AlignHCenter);
+  setColumnAlignment(Later, Qt::AlignHCenter);
+  setColumnAlignment(Delete, Qt::AlignHCenter);
   setColumnAlignment(sizeCol, Qt::AlignRight);
+  
   setSorting(dateCol, false);
   setShowSortIndicator(true);
-  header()->setResizeEnabled(false, mColumnOf[Down]);
-  header()->setResizeEnabled(false, mColumnOf[Later]);
-  header()->setResizeEnabled(false, mColumnOf[Delete]);
-  header()->setClickEnabled(false, mColumnOf[Down]);
-  header()->setClickEnabled(false, mColumnOf[Later]);
-  header()->setClickEnabled(false, mColumnOf[Delete]);
-  header()->setMovingEnabled(false);
+  header()->setResizeEnabled(false, Down);
+  header()->setResizeEnabled(false, Later);
+  header()->setResizeEnabled(false, Delete);
+  header()->setClickEnabled(false, Down);
+  header()->setClickEnabled(false, Later);
+  header()->setClickEnabled(false, Delete);
 
-  mActionAt[mColumnOf[Down]] = Down;
-  mActionAt[mColumnOf[Later]] = Later;
-  mActionAt[mColumnOf[Delete]] = Delete;
+  //we rely on fixed column order, so we forbid this
+  header()->setMovingEnabled(false);
 
   connect(this, SIGNAL(pressed(QListViewItem*, const QPoint&, int)),
         SLOT(slotPressed(QListViewItem*, const QPoint&, int)));
-  connect(this->header(), SIGNAL(indexChange(int , int , int)),
-        SLOT(slotIndexChanged(int , int , int)));
 }
 
 KMPopHeadersView::~KMPopHeadersView()
 {
 }
 
-int KMPopHeadersView::mapToColumn(KMPopFilterAction aAction)
+//Handle keystrokes - Left and Right key select previous/next action correspondingly
+void KMPopHeadersView::keyPressEvent( QKeyEvent *e ) 
 {
-  return (mColumnOf.contains(aAction))? mColumnOf[aAction]: NoAction;
+    if (e->key() == Key_Left) {
+	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
+	    if (item&&mDialog) {
+		    if (item->action()) { //here we rely on the fact that the leftmost action is equal to 0!
+			    item->setAction((KMPopFilterAction)((int)item->action()-1));
+			    mDialog->setAction( selectedItem(), item->action());
+		    }
+	    }
+    } else if (e->key() == Key_Right) {
+	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
+	    if (item&&mDialog) {
+		    if (item->action()<NoAction-1) { //here we rely on the fact that right most action is one less than NoAction!
+			    item->setAction((KMPopFilterAction)((int)item->action()+1));
+			    mDialog->setAction( selectedItem(), item->action());
+		    }
+	    }
+    } else {
+	    QListView::keyPressEvent( e );
+    }
 }
 
-KMPopFilterAction KMPopHeadersView::mapToAction(int aColumn)
-{
-  return (mActionAt.contains(aColumn))? mActionAt[aColumn]: NoAction;
-}
-
-/** No descriptions */
-void KMPopHeadersView::slotPressed(QListViewItem* aItem, const QPoint&,
-        int aColumn) {
-  if ( !aItem ) return;
+void KMPopHeadersView::slotPressed(QListViewItem* aItem, const QPoint&, int aColumn) {
+  if ( !( aItem && aColumn>=0 && aColumn<NoAction ) ) return;
   KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>(aItem);
   assert( item );
-  item->check(mapToAction(aColumn));
-}
-
-void KMPopHeadersView::slotIndexChanged(int, int aFromIndex, int aToIndex)
-{
-  if(aFromIndex < aToIndex)
-      --aToIndex;
-
-  mActionAt[aToIndex] = mActionAt[aFromIndex];
-  mActionAt.erase(aFromIndex);
-
-  mColumnOf[mActionAt[aToIndex]] = aToIndex;
-  mColumnOf.erase(mActionAt[aFromIndex]);
+  item->setAction(mapToAction(aColumn));
 }
 
 const char *KMPopHeadersView::mUnchecked[26] = {
@@ -233,38 +235,26 @@ KMPopHeadersViewItem::KMPopHeadersViewItem(KMPopHeadersView *aParent, KMPopFilte
       : KListViewItem(aParent)
 {
   mParent = aParent;
+  mAction = NoAction;
 
-  switch(aAction)
-  {
-  case Delete:
-    check(Delete);
-    break;
-  case Down:
-    check(Down);
-    break;
-  case Later:
-  default:
-    check(Later);
-    break;
-  }
+  setPixmap(mParent->mapToColumn(Delete), QPixmap(KMPopHeadersView::mUnchecked));
+  setPixmap(mParent->mapToColumn(Down), QPixmap(KMPopHeadersView::mUnchecked));
+  setPixmap(mParent->mapToColumn(Later), QPixmap(KMPopHeadersView::mUnchecked));
+
+  setAction( aAction );
 }
 
 KMPopHeadersViewItem::~KMPopHeadersViewItem()
 {
 }
 
-void KMPopHeadersViewItem::check(KMPopFilterAction aAction)
+void KMPopHeadersViewItem::setAction(KMPopFilterAction aAction)
 {
-  if(aAction != NoAction && !mChecked[aAction])
+  if(aAction != NoAction && aAction!=mAction)
   {
-    setPixmap(mParent->mapToColumn(Down), QPixmap(KMPopHeadersView::mUnchecked));
-    setPixmap(mParent->mapToColumn(Later), QPixmap(KMPopHeadersView::mUnchecked));
-    setPixmap(mParent->mapToColumn(Delete), QPixmap(KMPopHeadersView::mUnchecked));
+    if ( mAction!=NoAction ) setPixmap(mParent->mapToColumn(mAction), QPixmap(KMPopHeadersView::mUnchecked));
     setPixmap(mParent->mapToColumn(aAction), QPixmap(KMPopHeadersView::mChecked));
-    mChecked[Down] = false;
-    mChecked[Later] = false;
-    mChecked[Delete] = false;
-    mChecked[aAction] = true;
+    mAction=aAction;
   }
 }
 
@@ -294,7 +284,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
       : KDialogBase(aParent, aName, TRUE, i18n("KMail POP Filter"), Ok | Help, Ok, FALSE)
 {
   unsigned int rulesetCount = 0;
-  mHeaders = aHeaders;
+  //mHeaders = aHeaders;
   mShowLaterMsgs = aShowLaterMsgs;
   mLowerBoxVisible = false;
 
@@ -310,7 +300,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
 
   QVGroupBox *upperBox = new QVGroupBox(i18n("Messages Exceeding Size"), w);
   upperBox->hide();
-  KMPopHeadersView *lv = new KMPopHeadersView(upperBox);
+  KMPopHeadersView *lv = new KMPopHeadersView(upperBox, this);
   vbl->addWidget(upperBox);
 
   QVGroupBox *lowerBox = new QVGroupBox(i18n("Ruleset Filtered Messages: none"), w);
@@ -319,7 +309,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
       i18n("Show messages matched by a filter ruleset"));
   QCheckBox* cb = new QCheckBox(checkBoxText, lowerBox);
   cb->setEnabled(false);
-  mFilteredHeaders = new KMPopHeadersView(lowerBox);
+  mFilteredHeaders = new KMPopHeadersView(lowerBox, this);
   mFilteredHeaders->hide();
   vbl->addWidget(lowerBox);
 
@@ -367,25 +357,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
 
     if(lvi)
     {
-      // todo: extrect the whole listitem thing into a method
       mItemMap[lvi] = headers;
-      KMMessage *msg = headers->header();
-      // set the subject
-      QString tmp = msg->subject();
-      if(tmp.isEmpty())
-        tmp = i18n("no subject");
-      lvi->setText(3, tmp);
-      // set the sender
-      tmp = msg->fromStrip();
-      if(tmp.isEmpty())
-        tmp = i18n("unknown");
-      lvi->setText(4, msg->fromStrip());
-      // set the date
-      lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
-      // set the size
-      lvi->setText(6, KIO::convertSize(headers->header()->msgLength()));
-      // Date for sorting
-      lvi->setText(7, msg->dateIsoStr());
+      setupLVI(lvi,headers->header());
     }
   }
 
@@ -408,6 +381,30 @@ KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
 {
 }
 
+void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg) 
+{
+      // set the subject
+      QString tmp = msg->subject();
+      if(tmp.isEmpty())
+        tmp = i18n("no subject");
+      lvi->setText(3, tmp);
+      // set the sender
+      tmp = msg->fromStrip();
+      if(tmp.isEmpty())
+        tmp = i18n("unknown");
+      lvi->setText(4, msg->fromStrip());
+      // set the date
+      lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
+      // set the size
+      lvi->setText(6, KIO::convertSize(msg->msgLength()));
+      // Date for sorting
+      lvi->setText(7, msg->dateIsoStr());
+}
+
+void KMPopFilterCnfrmDlg::setAction(QListViewItem *aItem, KMPopFilterAction aAction) 
+{
+    mItemMap[aItem]->setAction(aAction);
+}
 /**
   This Slot is called whenever a ListView item was pressed.
   It checks for the column the button was pressed in and changes the action if the
@@ -416,17 +413,7 @@ KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
 */
 void KMPopFilterCnfrmDlg::slotPressed(QListViewItem *aItem, const QPoint &, int aColumn)
 {
-  switch(aColumn)
-  {
-  case 0:
-    mItemMap[aItem]->setAction(Down);
-    break;
-  case 1:
-    mItemMap[aItem]->setAction(Later);
-    break;
-  case 2:
-    mItemMap[aItem]->setAction(Delete);
-  }
+  if ( aColumn>=0 && aColumn<NoAction ) setAction(aItem,KMPopHeadersView::mapToAction(aColumn));
 }
 
 void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
@@ -438,27 +425,10 @@ void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
       // show download and delete msgs in the list view too
       for(KMPopHeaders* headers = mDDLList.first(); headers; headers = mDDLList.next())
       {
-      // todo: extract the whole listitem thing into a method
         KMPopHeadersViewItem *lvi = new KMPopHeadersViewItem(mFilteredHeaders, headers->action());
         mItemMap[lvi] = headers;
         mDelList.append(lvi);
-        KMMessage *msg = headers->header();
-        // set the subject
-        QString tmp = msg->subject();
-        if(tmp.isEmpty())
-          tmp = i18n("no subject");
-        lvi->setText(3, tmp);
-        // set the sender
-        tmp = msg->fromStrip();
-        if(tmp.isEmpty())
-          tmp = i18n("unknown");
-        lvi->setText(4, msg->fromStrip());
-        // set the date
-        lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
-        // set the size
-        lvi->setText(6, QString("%1").arg(headers->header()->msgLength()));
-        // Date for sorting
-        lvi->setText(7, msg->dateIsoStr());
+        setupLVI(lvi,headers->header());
       }
     }
 
