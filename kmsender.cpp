@@ -129,7 +129,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   QString msgId = aMsg->msgId();
   if( msgId.isEmpty() )
   {
-    msgId = KMMessage::generateMessageId( aMsg->fromEmail() );
+    msgId = KMMessage::generateMessageId( aMsg->sender() );
     //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
     aMsg->setMsgId( msgId );
   }
@@ -1016,15 +1016,13 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   KMTransportInfo *ti = mSender->transportInfo();
   assert(aMsg != 0);
 
-  AddrSpecList sender = aMsg->extractAddrSpecs( "Sender" );
-  if ( sender.empty() )
-    sender = aMsg->extractAddrSpecs( "From" );
-  if ( sender.empty() )
+  const QString sender = aMsg->sender();
+  if ( sender.isEmpty() )
     return false;
 
   // email this is from
   mQuery = "headers=0&from=";
-  mQuery += KURL::encode_string( sender.front().asString() );
+  mQuery += KURL::encode_string( sender );
 
   // recipients
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {

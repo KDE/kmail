@@ -330,6 +330,10 @@ public:
   QString fromStrip() const;
   QCString fromEmail() const;
 
+  /** @return The addr-spec of either the Sender: (if one is given) or
+   * the first addr-spec in From: */
+  QString sender() const;
+
   /** Get or set the 'Who' header field. The actual field that is
       returned depends on the contents of the owning folders whoField().
       Usually this is 'From', but it can also contain 'To'. */

@@ -1980,6 +1980,15 @@ QCString KMMessage::fromEmail() const
   return getEmailAddr(headerField("From"));
 }
 
+//-----------------------------------------------------------------------------
+QString KMMessage::sender() const {
+  AddrSpecList asl = extractAddrSpecs( "Sender" );
+  if ( asl.empty() )
+    asl = extractAddrSpecs( "From" );
+  if ( asl.empty() )
+    return QString::null;
+  return asl.front().asString();
+}
 
 //-----------------------------------------------------------------------------
 QString KMMessage::subject() const
