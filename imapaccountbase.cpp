@@ -779,7 +779,7 @@ namespace KMail {
   void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
   {
     mFoldersQueuedForChecking.append(folder);
-    if (checkingMail())
+    if ( checkingMail() )
     {
       disconnect( this, SIGNAL( finishedCheck( bool, CheckStatus ) ),
                   this, SLOT( slotCheckQueuedFolders() ) );
