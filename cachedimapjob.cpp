@@ -20,32 +20,32 @@ namespace KMail {
 CachedImapJob::CachedImapJob( const QValueList<ulong>& uids, JobType type,
 				  KMFolderCachedImap* folder, const QValueList<int>& flags )
   : FolderJob( type ), mFolder( folder ), mUidList( uids ), mFlags( flags ),
-    mMsg(0)
+    mMsg( 0 ), mJob( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( QPtrList<KMMessage>& msgs, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( msgs, QString::null, type, folder ), mFolder( folder ),  mMsg(0)
+  : FolderJob( msgs, QString::null, type, folder ), mFolder( folder ), mMsg( 0 ), mJob( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QValueList<KMFolderCachedImap*>& fList,
 				  JobType type, KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder( folder ), mFolderList( fList ), mMsg(0)
+  : FolderJob( type ), mFolder( folder ), mFolderList( fList ), mMsg( 0 ), mJob( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QString& uids, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder(folder), mMsg(0), mString(uids)
+  : FolderJob( type ), mFolder(folder), mMsg( 0 ), mString(uids), mJob( 0 )
 {
   assert( folder );
 }
 
 CachedImapJob::CachedImapJob( const QStringList& folderpaths, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder( folder ), mFolderPathList( folderpaths ), mMsg(0)
+  : FolderJob( type ), mFolder( folder ), mFolderPathList( folderpaths ), mMsg( 0 ), mJob( 0 )
 {
   assert( folder );
 }
