@@ -927,7 +927,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
     if (fti->folder() || (fti->text(0) != i18n("Searches")))
-        folderMenu->insertItem(SmallIcon("folder_new"),
+        folderMenu->insertItem(SmallIconSet("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
 
@@ -937,18 +937,18 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
       folderMenu->insertItem(i18n("&Expire All Folders"),
                              kmkernel->folderMgr(), SLOT(expireAll()));
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
-      folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check &Mail"),
+      folderMenu->insertItem(SmallIconSet("mail_get"), i18n("Check &Mail"),
         this,
         SLOT(slotCheckMail()));
     }
   } else {
     if ((fti->folder() == kmkernel->outboxFolder()) && (fti->folder()->count()) )
-        folderMenu->insertItem(SmallIcon("mail_send"),
+        folderMenu->insertItem(SmallIconSet("mail_send"),
                                i18n("&Send Queued Messages"), mMainWidget,
                                SLOT(slotSendQueued()));
     if (!fti->folder()->noChildren())
     {
-      folderMenu->insertItem(SmallIcon("folder_new"),
+      folderMenu->insertItem(SmallIconSet("folder_new"),
                              i18n("&New Subfolder..."), this,
                              SLOT(addChildFolder()));
     }
@@ -958,7 +958,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     // -- smp.
     if (!fti->folder()->noContent())
     {
-      int itemId = folderMenu->insertItem( SmallIcon("goto"),
+      int itemId = folderMenu->insertItem( SmallIconSet("goto"),
                                            i18n("Mark All Messages as &Read"),
                                            mMainWidget,
                                            SLOT( slotMarkAllAsRead() ) );
@@ -974,14 +974,14 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
       folderMenu->insertSeparator();
 
-      itemId = folderMenu->insertItem(SmallIcon("edittrash"),
+      itemId = folderMenu->insertItem(SmallIconSet("edittrash"),
         (kmkernel->folderIsTrash(fti->folder())) ? i18n("&Empty") :
                              i18n("&Move All Messages to Trash"), mMainWidget,
                              SLOT(slotEmptyFolder()));
       folderMenu->setItemEnabled( itemId, fti->folder()->count() > 0 && !fti->folder()->isReadOnly() );
     }
     if ( !fti->folder()->isSystemFolder() )
-      folderMenu->insertItem(SmallIcon("editdelete"),
+      folderMenu->insertItem(SmallIconSet("editdelete"),
                              i18n("&Delete Folder"), mMainWidget,
                              SLOT(slotRemoveFolder()));
 
@@ -991,16 +991,16 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
     folderMenu->insertSeparator();
-    folderMenu->insertItem(SmallIcon("bookmark_folder"),
+    folderMenu->insertItem(SmallIconSet("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
     if (!fti->folder()->noContent())
     {
-      int id = folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check Mail in This Folder"), mMainWidget,
+      int id = folderMenu->insertItem(SmallIconSet("mail_get"), i18n("Check Mail in This Folder"), mMainWidget,
                                       SLOT(slotRefreshFolder()));
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
-        folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
+        folderMenu->insertItem(SmallIconSet("reload"), i18n("Refresh Folder List"), this,
             SLOT(slotResetFolderList()));
       } else {
         bool knownImapPath = !static_cast<KMFolderCachedImap*>( fti->folder()->storage() )->imapPath().isEmpty();
@@ -1010,7 +1010,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
-      folderMenu->insertItem( SmallIcon("wizard"),
+      folderMenu->insertItem( SmallIconSet("wizard"),
                               i18n("&Troubleshoot IMAP Cache..."),
                               folder, SLOT(slotTroubleshoot()) );
     }
@@ -1026,11 +1026,11 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   if (fti->folder() && fti->parent())
   {
     folderMenu->insertSeparator();
-    folderMenu->insertItem(SmallIcon("configure"),
+    folderMenu->insertItem(SmallIconSet("configure_shortcuts"),
         i18n("&Assign Shortcut"),
         fti,
         SLOT(assignShortcut()));
-    folderMenu->insertItem(SmallIcon("configure"),
+    folderMenu->insertItem(SmallIconSet("configure"),
         i18n("&Properties"),
         fti,
         SLOT(properties()));
