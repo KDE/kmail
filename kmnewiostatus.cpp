@@ -76,7 +76,7 @@ bool KMIOStatus::abortRequested() {
 
 void KMIOStatus::abortPressed() {
 
-  cout << "Abort requested...\n";
+  //cout << "Abort requested...\n";
   abortPressedBool = true;
   emit abort();
 

@@ -1,3 +1,7 @@
+// Send/Retrival widget
+// (c) Markus Wuebben markus@kde.org
+// This code is published under the GPL
+
 #include <iostream.h>
 #include <kapp.h>
 #include "kmnewiostatuswdg.h"
@@ -87,7 +91,7 @@ void KMIOStatusWdg::updateProgressBar(int index ,int of) {
 
 void KMIOStatusWdg::abortPressed() {
 
-  cout << "Abort requested...\n";
+  //cout << "Abort requested...\n";
   msgLbl->setText(i18n("Aborting transmission...\n"));
   abortPressedBool = true;
   emit abort();

@@ -218,7 +218,9 @@ void KMReaderWin::setMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
-  assert(mMsg!=NULL);
+  //assert(mMsg!=NULL);
+  if(mMsg == NULL)
+    return;
 
   mViewer->begin(mPicsDir);
   mViewer->write("<HTML><BODY>");
