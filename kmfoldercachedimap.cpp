@@ -214,9 +214,12 @@ int KMFolderCachedImap::readUidCache()
 
 int KMFolderCachedImap::writeUidCache()
 {
-  if( uidValidity().isEmpty() || uidValidity() == "INVALID" )
-    // No info from the server yet
+  if( uidValidity().isEmpty() || uidValidity() == "INVALID" ) {
+    // No info from the server yet, remove the file.
+    if( QFile::exists( uidCacheLocation() ) )
+      unlink( QFile::encodeName( uidCacheLocation() ) );
     return 0;
+  }
 
   QFile uidcache( uidCacheLocation() );
   if( uidcache.open( IO_WriteOnly ) ) {
@@ -956,11 +959,14 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     if( uid != 0 ) 
        uidsOnServer.append( uid );
     if ( /*flags & 8 ||*/ uid <= lastUid()) {
+      /* 
+       * If this message UID is not present locally, then it must
+       * have been deleted by the user, so we delete it on the
+       * server also.
+       *
+       * This relies heavily on lastUid() being correct at all times.
+       */
       // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<name()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
-      /* If this message UID is not present locally, then it must
-          have been deleted by the user, so we delete it on the
-          server also.
-      */
       KMMsgBase *existingMessage = findByUID(uid);
       if( !existingMessage ) {
          // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
@@ -968,7 +974,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       } else {
          /* The message is OK, update flags */
          KMFolderImap::flagsToStatus( existingMessage, flags );
-         //kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
+         // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
       delete msg;
     } else {
