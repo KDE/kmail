@@ -1478,14 +1478,11 @@ bool KMComposeWin::userForgotAttachment()
   if ( attachWordsList.isEmpty() ) {
     // default value (FIXME: this is duplicated in configuredialog.cpp)
     attachWordsList << QString::fromLatin1("attachment")
-                    << QString::fromLatin1("attached")
-                    << QString::fromLatin1("patch");
+                    << QString::fromLatin1("attached");
     if ( QString::fromLatin1("attachment") != i18n("attachment") )
       attachWordsList << i18n("attachment");
     if ( QString::fromLatin1("attached") != i18n("attached") )
       attachWordsList << i18n("attached");
-    if ( QString::fromLatin1("patch") != i18n("patch") )
-      attachWordsList << i18n("patch");
   }
 
   QRegExp rx ( QString::fromLatin1("\\b") +
