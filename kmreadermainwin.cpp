@@ -30,7 +30,7 @@
 
 #include "kmreadermainwin.h"
 
-KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride, 
+KMReaderMainWin::KMReaderMainWin( bool htmlOverride, bool htmlLoadExtOverride,
                                   char *name )
   : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
     mMsg( 0 )
@@ -87,6 +87,12 @@ KMReaderMainWin::~KMReaderMainWin()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderMainWin::setUseFixedFont( bool useFixedFont )
+{
+  mReaderWin->setUseFixedFont( useFixedFont );
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 {
   mReaderWin->setOverrideCodec( codec );
@@ -100,7 +106,7 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 void KMReaderMainWin::slotPrintMsg()
 {
   KMCommand *command = new KMPrintCommand( this, mReaderWin->message(),
-      mReaderWin->htmlOverride(),  mReaderWin->htmlLoadExtOverride(), 
+      mReaderWin->htmlOverride(),  mReaderWin->htmlLoadExtOverride(),
       mReaderWin->overrideCodec() );
   command->start();
 }
@@ -291,7 +297,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   KPopupMenu * menu = new KPopupMenu;
   mUrl = aUrl;
   mMsg = &aMsg;
-  
+
   if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
     mReaderWin->copyAction()->plug( menu );
     mReaderWin->selectAllAction()->plug( menu );
@@ -331,7 +337,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     QPopupMenu* copyMenu = new QPopupMenu(menu);
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();
     if ( mainwin )
-      mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this, 
+      mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
           &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();

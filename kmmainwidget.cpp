@@ -2034,6 +2034,10 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 
   assert( msg != 0 );
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref, mFolderHtmlLoadExtPref );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
+                               : reader.readBoolEntry( "useFixedFont", false );
+  win->setUseFixedFont( useFixedFont );
   KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );

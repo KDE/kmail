@@ -27,6 +27,9 @@ public:
     bool aHTML, const QString& aFileName, const QString& pname,
     const QTextCodec *codec, char *name = 0 );
   virtual ~KMReaderMainWin();
+
+  void setUseFixedFont( bool useFixedFont );
+
   // take ownership of and show @param msg
   void showMsg( const QTextCodec *codec, KMMessage *msg );
 
