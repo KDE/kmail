@@ -376,8 +376,9 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
       p = stop;
       while (p > start && _str.at(p) != ' ') p--;
       if (p > start) stop = p;
-      if (!result.isEmpty() && !(result.right(2) == "\n ") &&
-        result.length() - result.findRev("\n ") + encLength + 2 > maxLen)
+      int lastNewLine = result.findRev("\n ");
+      if (!result.mid(lastNewLine).stripWhiteSpace().isEmpty()
+        && result.length() - lastNewLine + encLength + 2 > maxLen)
           result += "\n ";
       result += "=?";
       result += cset;
