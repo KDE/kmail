@@ -47,8 +47,12 @@
 #include "kmmainwidget.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
+#include "kmfoldertree.h"
 #include "kmstartup.h"
 #include "kmbroadcaststatus.h"
+#if KDE_IS_VERSION( 3, 1, 90 )
+#  include "sidebarextension.h"
+#endif
 
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
 K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory );
@@ -118,6 +122,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
+  new KParts::SideBarExtension( kernel->mainWin()-mainKMWidget()->folderTree(), this );
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
@@ -132,6 +137,9 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
+  new KParts::SideBarExtension( kernel->mainWin()->mainKMWidget()->folderTree(),
+                                this,
+                                "KMailSidebar" );
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
@@ -203,7 +211,9 @@ KMainWindow * KMailStatusBarExtension::mainWindow() const
 {
   return static_cast<KMainWindow*>( mParent->parentWidget() );
 }
+
 #endif
+
 
 #include "kmail_part.moc"
 

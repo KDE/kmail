@@ -594,7 +594,7 @@ void KMMainWidget::createWidgets(void)
 		     this, SLOT(slotCopyMsg()) );
 
   // create list of folders
-  mFolderTree  = new KMFolderTree(this, folderParent, "folderTree");
+  mFolderTree = new KMFolderTree(this, folderParent, "folderTree");
 
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));

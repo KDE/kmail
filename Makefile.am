@@ -3,21 +3,21 @@ KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS =  . about pics profiles
 
-INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib -I$(top_srcdir)/ktnef -I$(top_srcdir) $(all_includes)
+INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/libkdepim -I$(top_srcdir)/mimelib -I$(top_srcdir)/ktnef -I$(top_srcdir) $(all_includes)
 
 noinst_LTLIBRARIES = libkmailcommon.la
 
 kde_module_LTLIBRARIES = libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
 libkmailpart_la_LIBADD	= $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
-			../libkdenetwork/libkdenetwork.la \
+			../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
 			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la libkmailcommon.la
 
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_LDADD   = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
-		../libkdenetwork/libkdenetwork.la \
-		../mimelib/libmimelib.la ../ktnef/lib/libktnef.la libkmailcommon.la
+		../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la  \
+		../mimelib/libmimelib.la ../ktnef/lib/libktnef.la libkmailcommon.la 
 
 libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
