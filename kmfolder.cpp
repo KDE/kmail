@@ -978,7 +978,8 @@ int KMFolder::appendtoMsgDict(int idx)
 void KMFolder::setStatus(int idx, KMMsgStatus status)
 {
   KMMsgBase *msg = getMsgBase(idx);
-  msg->setStatus(status, idx);
+  if ( msg )
+    msg->setStatus(status, idx);
 }
 
 void KMFolder::setRDict(KMMsgDictREntry *rentry) {
