@@ -94,10 +94,14 @@ static const char *description = I18N_NOOP("A KDE E-Mail client.");
 
 static KCmdLineOptions options[] =
 {
-  { "s <subject>",		I18N_NOOP("Set subject of msg."), 0 },
-  { "c <address>",		I18N_NOOP("Send CC: to 'address'."), 0 },
-  { "b <address>",		I18N_NOOP("Send BCC: to 'addres'."), 0 },
-  { "h <header>",		I18N_NOOP("Add 'header' to msg."), 0 },
+  { "s", 0 , 0 },
+  { "subject <subject>",	I18N_NOOP("Set subject of msg."), 0 },
+  { "c", 0 , 0 },
+  { "cc <address>",		I18N_NOOP("Send CC: to 'address'."), 0 },
+  { "b", 0 , 0 },
+  { "bcc <address>",		I18N_NOOP("Send BCC: to 'addres'."), 0 },
+  { "h", 0 , 0 },
+  { "header <header>",		I18N_NOOP("Add 'header' to msg."), 0 },
   { "msg <file>",		I18N_NOOP("Read msg-body from 'file."), 0 },
   { "check",			I18N_NOOP("Check for new mail only."), 0 },
   { "+[address]",		I18N_NOOP("Send msg to 'address'."), 0 },
@@ -594,22 +598,22 @@ static void processArgs(KCmdLineArgs *args)
 
   // process args:
 
-  if (args->getOption("s"))
+  if (args->getOption("subject"))
   {
      mailto = true;
-     subj = args->getOption("s");
+     subj = args->getOption("subject");
   }
 
-  if (args->getOption("c"))
+  if (args->getOption("cc"))
   {
      mailto = true;
-     cc = args->getOption("c");
+     cc = args->getOption("cc");
   }
 
-  if (args->getOption("b"))
+  if (args->getOption("bcc"))
   {
      mailto = true;
-     bcc = args->getOption("b");
+     bcc = args->getOption("bcc");
   }
 
   for(int i= 0; i < args->count(); i++)
@@ -620,7 +624,7 @@ static void processArgs(KCmdLineArgs *args)
      mailto = true;
   }
 
-  delete args;
+  args->clear();
 
   if (mailto)
   {
