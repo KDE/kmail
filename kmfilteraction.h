@@ -340,7 +340,6 @@ public:
 
 protected:
   QGuardedPtr<KMFolder> mFolder;
-  QValueList<QGuardedPtr<KMFolder> > mFolderList;
   QStringList mFolderNames;
 };
 
