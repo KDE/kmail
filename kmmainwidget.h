@@ -100,6 +100,7 @@ public:
   KAction *replyAuthorAction() { return mReplyAuthorAction; }
   KAction *replyAllAction() { return mReplyAllAction; }
   KAction *replyListAction() { return mReplyListAction; }
+  KActionMenu * replyMenu() { return mReplyActionMenu; }
   KActionMenu *forwardMenu() { return mForwardActionMenu; }
   KAction *forwardAction() { return mForwardAction; }
   KAction *forwardAttachedAction() { return mForwardAttachedAction; }

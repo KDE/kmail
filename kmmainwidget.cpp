@@ -2951,7 +2951,7 @@ void KMMainWidget::updateMessageActions()
     bool single_actions = count == 1;
     mEditAction->setEnabled( single_actions &&
     kmkernel->folderIsDraftOrOutbox(mFolder));
-
+    replyMenu()->setEnabled( single_actions );
     filterMenu()->setEnabled( single_actions );
     bounceAction()->setEnabled( single_actions );
     replyAction()->setEnabled( single_actions );
