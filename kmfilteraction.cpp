@@ -311,7 +311,7 @@ const QString KMFilterActionExec::argsAsString(void) const
 class KMFilterActionExtFilter: public KMFilterActionExec
 {
 public:
-  KMFilterActionExtFilter(const char* name = "external filter");
+  KMFilterActionExtFilter(const char* name = "filter app");
   virtual const QString label(void) const;
   static KMFilterAction* newAction(void);
   virtual int process(KMMessage* msg, bool& stopIt);
@@ -324,7 +324,7 @@ KMFilterAction* KMFilterActionExtFilter::newAction(void)
  
 const QString KMFilterActionExtFilter::label(void) const
 {
-  return i18n("external filter");
+  return i18n("filter app");
 }
  
 KMFilterActionExtFilter::KMFilterActionExtFilter(const char* aName)
@@ -344,9 +344,6 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
 
   if (mCmd.isEmpty()) return 1;
 
-  inFile.setAutoDelete(true);
-  outFile.setAutoDelete(true);
-
   // write message to file
   fh = inFile.fstream();
   if (fh)
@@ -357,6 +354,7 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
   }
   else ok = FALSE;
 
+  outFile.close();
   if (ok)
   {
     // execute filter
@@ -366,7 +364,7 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
     mCmd = origCmd;
 
     // read altered message
-    fh = outFile.fstream();
+    fh = fopen(outFile.name(), "r");
     if (fh)
     {
       msgText = "";
@@ -382,6 +380,9 @@ int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
     }
     else ok = FALSE;
   }
+
+  inFile.unlink();
+  outFile.unlink();
 
   return rc;
 }
