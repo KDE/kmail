@@ -58,6 +58,12 @@ signals:
   /* Messages have been dropped onto a folder with Ctrl */
   void folderDropCopy(KMFolder*);
 
+public slots:
+  /* Select the next folder with unread messages */
+  void nextUnreadFolder();
+  /* Select the previous folder with unread messages */
+  void prevUnreadFolder();
+
 protected slots:
   void doFolderSelected(QListViewItem*);
 
@@ -112,7 +118,7 @@ protected:
   virtual void keyPressEvent( QKeyEvent * e );
   virtual void contentsMousePressEvent( QMouseEvent * e );
   virtual void contentsMouseReleaseEvent( QMouseEvent * e );
-  virtual void contentsMouseMoveEvent( QMouseEvent* e );                                                                                 
+  virtual void contentsMouseMoveEvent( QMouseEvent* e );
   //Drag and drop variables
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;

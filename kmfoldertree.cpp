@@ -481,6 +481,44 @@ void KMFolderTree::setSelected( QListViewItem *i, bool select )
     QListView::setSelected( i, select );
 }
 
+void KMFolderTree::nextUnreadFolder()
+{
+  QListViewItemIterator it( currentItem() );
+  
+  while (it.current()) {
+    ++it;
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
+	QListViewItem *parent = fti->parent();
+	while (parent) {
+	    parent->setOpen( TRUE );
+	    parent = parent->parent();
+	}
+	doFolderSelected( fti );
+	return;
+    }
+  }
+}
+
+void KMFolderTree::prevUnreadFolder()
+{
+  QListViewItemIterator it( currentItem() );
+
+  while (it.current()) {
+    --it;
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
+	QListViewItem *parent = fti->parent();
+	while (parent) {
+	    parent->setOpen( TRUE );
+	    parent = parent->parent();
+	}
+	doFolderSelected( fti );
+	return;
+    }
+  }
+}
+
 //-----------------------------------------------------------------------------
 // When not dragging and dropping a change in the selected item
 // indicates the user has changed the active folder emit a signal

@@ -385,6 +385,10 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
+  accel->connectItem(accel->insertItem(CTRL+Key_Plus),
+		     mFolderTree, SLOT(nextUnreadFolder()));
+  accel->connectItem(accel->insertItem(CTRL+Key_Minus),
+		     mFolderTree, SLOT(prevUnreadFolder()));
 }
 
 
