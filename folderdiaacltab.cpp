@@ -407,7 +407,14 @@ void KMail::FolderDiaACLTab::load()
       mLabel->setText( i18n( "Information not retrieved from server yet, please use \"Check Mail\"." ) );
       // TODO: save mUserRights and mACLList into a config file so that this almost never happens
     } else {
-      loadFinished( folderImap->aclList() );
+      /* We either synced, or we read user rights from the config, so we can 
+         assume the server supports acls and an empty list means we haven't
+         synced yet. */
+      if ( folderImap->aclList().isEmpty() ) {
+        mLabel->setText( i18n( "Information not retrieved from server yet, please use \"Check Mail\"." ) );
+      } else {
+        loadFinished( folderImap->aclList() );
+      }
     }
     return;
   }
