@@ -73,13 +73,12 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
                                             QStringList mSubfolderMimeTypes,
                                             const ImapAccountBase::jobData & jobData )
 {
-  if (mSubfolderPaths.size() <= 0) return;
   bool onlySubscribed = jobData.onlySubscribed;
   GroupItem *parent = 0;
   mLoading = true;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
 
-  if (!onlySubscribed)
+  if (!onlySubscribed && mSubfolderPaths.size() > 0)
   {
     /* we need to find our root-item
        remove the name (and the separator) from the path */
@@ -160,14 +159,13 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
     {
       // descend
       bool secondStep = (mSubfolderPaths[i] == ai->prefix()) ? true : false;
-      static_cast<ImapAccountBase*>(mAcct)->listDirectory( mSubfolderPaths[i],
-          onlySubscribed, secondStep );
+      ai->listDirectory( mSubfolderPaths[i], onlySubscribed, secondStep );
     }
   }
   if ( jobData.inboxOnly )
     ai->listDirectory( ai->prefix(), onlySubscribed, true );
   
-  // active buttons and stuff
+  // activate buttons and stuff
   slotLoadingComplete();
 }
 
