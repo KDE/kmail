@@ -1,3 +1,4 @@
+// -*- c-basic-offset: 2 -*-
 // kmfoldermbox.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
@@ -229,7 +230,7 @@ void KMFolderMbox::close(bool aForced)
       mOpenCount = 1;
       return;
   }
-  
+
   if (mAutoCreateIndex)
   {
       if (KMFolderIndex::IndexOk != indexStatus()) {
@@ -732,29 +733,47 @@ int KMFolderMbox::createIndexFromContents()
 //-----------------------------------------------------------------------------
 KMMessage* KMFolderMbox::readMsg(int idx)
 {
-  KMMessage* msg;
-  unsigned long msgSize;
-  QCString msgText;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
   assert(mi!=0 && !mi->isMessage());
   assert(mStream != 0);
 
-  msgSize = mi->msgSize();
-  msgText.resize(msgSize+2);
-
-  fseek(mStream, mi->folderOffset(), SEEK_SET);
-  fread(msgText.data(), msgSize, 1, mStream);
-  msgText[msgSize] = '\0';
-
-  msg = new KMMessage(*mi);
-  msg->fromString(msgText);
-
+  KMMessage* msg = new KMMessage(*mi);
+  msg->fromDwString( getDwString( idx ) );
   mMsgList.set(idx,&msg->toMsgBase());
 
   return msg;
 }
 
+
+//-----------------------------------------------------------------------------
+size_t KMFolderMbox::unescapeFrom( char* str, const size_t strLen )
+{
+  const char* source = str;
+  const char* sourceEnd = source + strLen;
+
+  // search the first occurrence of "\n>From"
+  for ( ; source < sourceEnd - 5; ++source ) {
+    if ( *source == '\n' && qstrncmp( source + 1, ">From", 5 ) == 0 )
+      break;
+  }
+
+  if ( source == sourceEnd - 5 ) {
+    // no "\n>From" found
+    return strLen;
+  }
+
+  // replace all occurrences of "\n>From" with "\nFrom" (in place)
+  ++source;
+  char* target = const_cast<char*>( source ); // target points to '>'
+  ++source; // source points to 'F'
+  for ( ; source < sourceEnd; ++source ) {
+    if ( *source != '>' || qstrncmp( source - 1, "\n>From", 6 ) != 0 )
+      *target++ = *source;
+  }
+  *target = '\0'; // terminate result
+  return target - str;
+}
 
 //-----------------------------------------------------------------------------
 QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
@@ -772,6 +791,9 @@ QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
   fread(mDest.data(), msgSize, 1, mStream);
   mDest[msgSize] = '\0';
 
+  size_t newMsgSize = unescapeFrom( mDest.data(), msgSize );
+  newMsgSize = crlf2lf( mDest.data(), newMsgSize );
+
   return mDest;
 }
 
@@ -784,8 +806,20 @@ DwString KMFolderMbox::getDwString(int idx)
   assert(mi!=0);
   assert(mStream != 0);
 
+  size_t msgSize = mi->msgSize();
+  char* msgText = new char[ msgSize + 1 ];
+
   fseek(mStream, mi->folderOffset(), SEEK_SET);
-  return DwString(mStream, mi->msgSize());
+  fread(msgText, msgSize, 1, mStream);
+  msgText[msgSize] = '\0';
+
+  size_t newMsgSize = unescapeFrom( msgText, msgSize );
+  newMsgSize = crlf2lf( msgText, newMsgSize );
+
+  DwString msgStr;
+  // the DwString takes possession of msgText, so we must not delete msgText
+  msgStr.TakeBuffer( msgText, msgSize + 1, 0, newMsgSize );
+  return msgStr;
 }
 
 
