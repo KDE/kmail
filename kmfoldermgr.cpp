@@ -48,7 +48,8 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
 
     warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
 	    "KMail will create it now.");
-    dir.mkdir(mBasePath, TRUE);
+    // dir.mkdir(mBasePath, TRUE);
+    mkdir(mBasePath.data(), 0700);
 
     fld.setName("inbox");
     fld.create();

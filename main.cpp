@@ -63,7 +63,7 @@ static void init(int argc, char *argv[])
   KMAcctFolder* fld;
 
   app = new KApplication(argc, argv, "kmail");
-  nls = new KLocale;
+  nls = app->getLocale();
 
   kbp = new KBusyPtr;
   cfg = app->getConfig();

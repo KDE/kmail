@@ -11,6 +11,9 @@
 #include <qmsgbox.h>
 #include <Kconfig.h>
 #include <klocale.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>  
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
@@ -75,7 +78,10 @@ bool KMAcctMgr::reload(void)
   {
     warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
 	    "KMail will create it now.");
-    dir.mkdir(mBasePath, TRUE);
+    // dir.mkdir(mBasePath, TRUE);
+    // Stephan: mkdir without right permissions is dangerous
+    // and is for sure a port from Windows ;)
+    mkdir(mBasePath.data(), 0700);
   }
 
   if (!dir.cd(mBasePath, TRUE))

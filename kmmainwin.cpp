@@ -158,6 +158,7 @@ void KMMainWin::setupMenuBar()
   menuBar->insertItem(nls->translate("&Edit"), editMenu);
   menuBar->insertItem(nls->translate("&Message"), messageMenu);
   menuBar->insertItem(nls->translate("F&older"), folderMenu);
+  menuBar->insertSeparator();
   menuBar->insertItem(nls->translate("&Help"), helpMenu);
 
   setMenu(menuBar);

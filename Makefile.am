@@ -1,5 +1,5 @@
 
-SUBDIRS = pics
+SUBDIRS = pics doc
 INCLUDES=	-I.. @all_includes@
 LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lmimelib
 MOC	=	@MOC@
@@ -64,10 +64,6 @@ KEdit.moc: KEdit.h
 kmreaderwin.cpp:kmreaderwin.moc
 kmreaderwin.moc: kmreaderwin.h
 	$(MOC) kmreaderwin.h -o kmreaderwin.moc
-
-kmmessage.cpp:kmmessage.moc
-kmmessage.moc: kmmessage.h
-	$(MOC) kmmessage.h -o kmmessage.moc
 
 kmmainwin.cpp:kmmainwin.moc
 kmmainwin.moc: kmmainwin.h
