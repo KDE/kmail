@@ -67,6 +67,7 @@ class KURL;
 class KRecentFilesAction;
 class SpellingFilter;
 class MessageComposer;
+class RecipientsEditor;
 
 namespace KPIM {
   class IdentityCombo;
@@ -916,6 +917,10 @@ private:
 
   // Temp ptr for saving image from clipboard
   KTempDir *mTempDir;
+
+  bool mClassicalRecipients;
+
+  RecipientsEditor *mRecipientsEditor;
 };
 
 #endif

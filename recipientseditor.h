@@ -25,12 +25,146 @@
 #define RECIPIENTSEDITOR_H
 
 #include <qwidget.h>
+#include <qscrollview.h>
+
+class RecipientsPicker;
+
+class QComboBox;
+class QLineEdit;
+class QLabel;
+
+class Recipient
+{
+  public:
+    typedef QValueList<Recipient> List;
+
+    enum Type { To, Cc, Bcc, ReplyTo };
+
+    Recipient( const QString &email = QString::null, Type type = To );
+
+    void setType( Type );
+    Type type() const;
+
+    void setEmail( const QString & );
+    QString email() const;
+
+    bool isEmpty() const;
+
+    static int typeToId( Type );
+    static Type idToType( int );
+    
+    QString typeLabel() const;
+    static QString typeLabel( Type );
+    static QStringList allTypeLabels();
+    
+  private:
+    QString mEmail;
+    Type mType;
+};
+
+class RecipientLine : public QWidget
+{
+    Q_OBJECT
+  public:
+    RecipientLine( QWidget *parent );
+
+    void setRecipient( const Recipient & );
+    Recipient recipient() const;
+
+    void setRecipient( const QString & );
+
+    void activate();
+
+  signals:
+    void returnPressed( RecipientLine * );
+    void downPressed( RecipientLine * );
+    void upPressed( RecipientLine * );
+
+  protected:
+    void keyPressEvent( QKeyEvent * );
+
+  protected slots:
+    void slotReturnPressed();
+
+  private:
+    QComboBox *mCombo;
+    QLineEdit *mEdit;
+};
+
+class RecipientsView : public QScrollView
+{
+    Q_OBJECT
+  public:
+    RecipientsView( QWidget *parent );
+
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
+
+    RecipientLine *activeLine();
+
+    Recipient::List recipients() const;
+
+  public slots:
+    RecipientLine *addLine();
+
+  signals:
+    void totalChanged( int );
+
+  protected:
+    void viewportResizeEvent( QResizeEvent * );
+
+  protected slots:
+    void slotReturnPressed( RecipientLine * );
+    void slotDownPressed( RecipientLine * );
+    void slotUpPressed( RecipientLine * );
+
+  private:
+    QPtrList<RecipientLine> mLines;
+    int mLineHeight;
+};
+
+class SideWidget : public QWidget
+{
+    Q_OBJECT
+  public:
+    SideWidget( RecipientsView *view, QWidget *parent );
+
+  public slots:
+    void setTotal( int );
+
+  signals:
+    void pickedRecipient( const QString & );
+
+  protected:
+    void initRecipientPicker();
+    
+  protected slots:
+    void pickRecipient();
+
+  private:
+    RecipientsView *mView;
+    QLabel *mTotalLabel;
+    RecipientsPicker *mRecipientPicker;
+};
 
 class RecipientsEditor : public QWidget
 {
+    Q_OBJECT
   public:
     RecipientsEditor( QWidget *parent );
-  
+
+    void clear();
+
+    Recipient::List recipients() const;
+
+    void setRecipientString( const QString &, Recipient::Type );
+    QString recipientString( Recipient::Type );
+
+  protected slots:
+    void slotPickedRecipient( const QString & );
+
+  private:
+    RecipientsView *mRecipientsView;
 };
 
 #endif

@@ -320,7 +320,17 @@
           <choice name="Old"/>
         </choices>
         <default>Old</default>
-      </entry>      
+      </entry>
+      <entry name="RecipientsEditorType" type="Enum">
+        <label>Type of recipients editor</label>
+        <whatsthis>Sets the type of the recipients editor for editing To,
+        CC and BCC.</whatsthis>
+        <choices>
+          <choice name="Classic"/>
+          <choice name="MultiLine"/>
+        </choices>
+        <default>Classic</default>
+      </entry>
     </group>
 <!-- Composer -->
 

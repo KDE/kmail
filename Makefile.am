@@ -111,9 +111,11 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
 		accountcombobox.cpp redirectdialog.cpp foldershortcutdialog.cpp \
-        folderrequester.cpp \
+                folderrequester.cpp \
 		spamheaderanalyzer.cpp antispamconfig.cpp \
-                replyphrases.kcfgc custommimeheader.kcfgc
+                replyphrases.kcfgc custommimeheader.kcfgc \
+                recipientseditor.cpp \
+                recipientspicker.cpp kwindowpositioner.cpp
 
 kmail_SOURCES = main.cpp
 
@@ -127,8 +129,8 @@ dcoptest_SOURCES = dcoptest.cpp kmailIface.skel kmailIface.stub mailcomposerIfac
 dcoptest_LDADD = $(LIB_KIO)
 dcoptest_LDFLAGS = $(all_libraries)
 
-recipienteditortest_SOURCES = recipientseditortest.cpp recipientseditor.cpp
-recipienteditortest_LDADD = $(LIB_KIO)
+recipienteditortest_SOURCES = recipientseditortest.cpp
+recipienteditortest_LDADD = libkmailprivate.la ../libkdepim/libkdepim.la $(LIB_KIO) $(LIB_KABC)
 recipienteditortest_LDFLAGS = $(all_libraries)
 
 kmailIface_DCOPIDLNG = true
