@@ -92,6 +92,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 		     mMsgView, SLOT(slotScrollPrior()));
   accel->connectItem(accel->insertItem(Key_Next), 
 		     mMsgView, SLOT(slotScrollNext()));
+  accel->connectItem(accel->insertItem(Key_Delete),
+		     this, SLOT(slotDeleteMsg()));
 
   readConfig();
 
