@@ -37,6 +37,7 @@
 #include "kmsettings.h"
 #include "kfileio.h"
 #endif
+#include "kmreaderwin.h"
 
 #include <assert.h>
 #include <kapp.h>
@@ -148,6 +149,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mGrid = NULL;
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
+  mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
   mPathAttach = QString::null;
   mEditor = NULL;
@@ -1246,11 +1248,12 @@ void KMComposeWin::addAttach(const QString aUrl)
     return;
   }
 
-  // create message part
   i = aUrl.findRev('/');
   name = (i>=0 ? aUrl.mid(i+1, 256) : aUrl);
   QString encName = KMMsgBase::encodeRFC2231String(name);
   bool RFC2231encoded = name != encName;
+
+  // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
@@ -1578,7 +1581,6 @@ void KMComposeWin::slotAttachView()
 {
   QString str, pname;
   KMMessagePart* msgPart;
-  QMultiLineEdit* edt = new QMultiLineEdit;
   int idx = currentAttachmentNum();
 
   if (idx < 0) return;
@@ -1588,17 +1590,12 @@ void KMComposeWin::slotAttachView()
   if (pname.isEmpty()) pname=msgPart->contentDescription();
   if (pname.isEmpty()) pname="unnamed";
 
-  kernel->kbp()->busy();
-  str = QCString(msgPart->bodyDecoded());
-
-  edt->setCaption(i18n("View Attachment: ") + pname);
-  edt->insertLine(str);
-  edt->setCursorPosition(0,0);
-  edt->setReadOnly(TRUE);
-  edt->resize(500,400);
-  edt->show();
-
-  kernel->kbp()->idle();
+  KTempFile* atmTempFile = new KTempFile();
+  mAtmTempList.append( atmTempFile );
+  atmTempFile->setAutoDelete( true );
+  kByteArrayToFile(msgPart->bodyDecoded(), atmTempFile->name(), false, false,
+    false);
+  KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname, 0);
 }
 
 

@@ -98,11 +98,18 @@ public:
   KMReaderWin that is created. */
   static QString attachDir(void) { return mAttachDir; }
 
-  /* Override default html mail setting */
+  /** Override default html mail setting */
   void setHtmlOverride( bool override );
 
-  /* Is html mail to be supported? Takes into account override */
+  /** Is html mail to be supported? Takes into account override */
   bool htmlMail();
+
+  /** View message part of type message/RFC822 in extra viewer window. */
+  void atmViewMsg(KMMessagePart* msgPart);
+
+  /** Display an attachment */
+  static void atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
+    bool aHTML, const QString& aFileName, const QString& pname, QTextCodec *codec);
 
 signals:
   /** Emitted to show a text on the status line. */
@@ -121,7 +128,7 @@ public slots:
 
   /* Force update even if message is the same */
   void clearCache();
-  
+
   /* Refresh the reader window */
   void updateReaderWin();
 
@@ -201,9 +208,6 @@ protected:
   /** Returns id of message part from given URL or -1 if invalid. */
   virtual int msgPartFromUrl(const KURL &url);
 
-  /** View message part of type message/RFC822 in extra viewer window. */
-  virtual void atmViewMsg(KMMessagePart* msgPart);
-
  /** Create directory for attachments */
   virtual void makeAttachDir(void);
 
@@ -231,7 +235,7 @@ protected:
   QTimer mResizeTimer;
   QTextCodec *mCodec;
     bool mAutoDetectEncoding;
-    
+
   int fntSize;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;

@@ -20,6 +20,7 @@
 #include <qfont.h>
 #include <keditcl.h>
 #include <qlineedit.h>
+#include <ktempfile.h>
 
 
 #include "kmmsgpart.h"
@@ -372,6 +373,7 @@ protected:
   QFont mBodyFont;
   //  QList<QLineEdit> mEdtList;
   QList<QWidget> mEdtList;
+  QList<KTempFile> mAtmTempList;
   static QString mPathAttach;
   QPalette mPalette;
   QString mId, mOldSigText;

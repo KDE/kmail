@@ -1300,57 +1300,64 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmView()
+void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
+    bool aHTML, const QString& aFileName, const QString& pname, QTextCodec *codec)
 {
-  QString str, pname;
-  KMMessagePart msgPart;
+  QString str;
 
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
-  pname = msgPart.fileName();
-  if (pname.isEmpty()) pname=msgPart.name();
-  if (pname.isEmpty()) pname=msgPart.contentDescription();
-  if (pname.isEmpty()) pname="unnamed";
-
-  if (stricmp(msgPart.typeStr(), "message")==0)
+  if (aReaderWin && stricmp(aMsgPart->typeStr(), "message")==0)
   {
-    atmViewMsg(&msgPart);
+    aReaderWin->atmViewMsg(aMsgPart);
     return;
   }
 
   kernel->kbp()->busy();
   {
     KMReaderWin* win = new KMReaderWin; //new reader
-    if (stricmp(msgPart.typeStr(), "text")==0)
+    if (stricmp(aMsgPart->typeStr(), "message")==0)
+    {               // if called from compose win
+      KMMessage* msg = new KMMessage;
+      assert(aMsgPart!=NULL);
+      msg->fromString(aMsgPart->bodyDecoded());
+      win->setCaption(msg->subject());
+      win->setMsg(msg, true);
+      win->show();
+    }
+    else if (stricmp(aMsgPart->typeStr(), "text")==0)
     {
-      if (stricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
+      if (stricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
         KMDisplayVCard *vcdlg;
-        int vcerr;
-        VCard *vc = VCard::parseVCard(msgPart.body(), &vcerr);
+	int vcerr;
+	VCard *vc = VCard::parseVCard(aMsgPart->body(), &vcerr);
 
-        if (!vc) {
+	if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
-          errstring += VCard::getError(vcerr);
-          KMessageBox::error(this, i18n(errstring), i18n("vCard error"));
-          return;
-        }
+	  errstring += VCard::getError(vcerr);
+	  KMessageBox::error(NULL, i18n(errstring), i18n("vCard error"));
+	  return;
+	}
 
-        vcdlg = new KMDisplayVCard(vc);
-        vcdlg->show();
-        return;
+	vcdlg = new KMDisplayVCard(vc);
+	vcdlg->show();
+	return;
       }
       win->readConfig();
-      win->setCodec( mCodec );
+      if ( codec )
+	win->setCodec( codec );
+      else
+	win->setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("a { color: #%1;").arg(colorToString(c2)) +
+		 QString("a { color: #%1;").arg(win->colorToString(win->c2)) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
-                 QString(" text=\"#%1\"").arg(colorToString(c1)) +
-  		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) + ">" );
-      
-      QString str = msgPart.bodyDecoded();
-      if (htmlMail() && (stricmp(msgPart.subtypeStr(), "html")==0))  // HTML
-        win->mViewer->write(str);
+                 QString(" text=\"#%1\"").arg(win->colorToString(win->c1)) +
+  		 QString(" bgcolor=\"#%1\"").arg(win->colorToString(win->c4)) +
+		 ">" );
+
+      QString str = aMsgPart->bodyDecoded();
+      if (aHTML && (stricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
+	win->mViewer->write(str);
       else  // plain text
 	win->writeBodyStr(str);
       win->mViewer->write("</body></html>");
@@ -1358,14 +1365,12 @@ void KMReaderWin::slotAtmView()
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }
-    else if (stricmp(msgPart.typeStr(), "image")==0)
+    else if (stricmp(aMsgPart->typeStr(), "image")==0)
     {
-      // image
-      // Attachment is saved already; this is the file:
-      QString fileName = QString("%1part%2/%3").arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
+      if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
       QImageIO *iio = new QImageIO();
-      iio->setFileName(fileName);
+      iio->setFileName(aFileName);
       if( iio->read() ) {
         QImage img = iio->image();
 	if( img.width() > 50 && img.width() > 50	// avoid super small windows
@@ -1377,7 +1382,7 @@ void KMReaderWin::slotAtmView()
       // Just write the img tag to HTML:
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><body>");
-      QString linkName = QString("<img src=\"file:%1\" border=0>").arg(fileName);
+      QString linkName = QString("<img src=\"file:%1\" border=0>").arg(aFileName);
       win->mViewer->write(linkName.data());
       win->mViewer->write("</body></html>");
       win->mViewer->end();
@@ -1385,10 +1390,10 @@ void KMReaderWin::slotAtmView()
       win->show();
     } else {
       QMultiLineEdit *medit = new QMultiLineEdit();
-      QString str = msgPart.bodyDecoded();
+      QString str = aMsgPart->bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
-      if( str.length() < (unsigned) msgPart.size() ) {
+      if( str.length() < (unsigned) aMsgPart->size() ) {
         str += i18n("\n[KMail: Attachment contains binary data. Trying to show first %1 characters.]").arg(str.length());
       }
       medit->setText(str);
@@ -1399,6 +1404,21 @@ void KMReaderWin::slotAtmView()
   }
   // ---Sven's view text, html and image attachments in html widget end ---
   kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmView()
+{
+  KMMessagePart msgPart;
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  QString pname = msgPart.fileName();
+  if (pname.isEmpty()) pname=msgPart.name();
+  if (pname.isEmpty()) pname=msgPart.contentDescription();
+  if (pname.isEmpty()) pname="unnamed";
+  // image Attachment is saved already
+  atmView(this, &msgPart, htmlMail(), QString("%1part%2/%3").arg(mAttachDir).
+    arg(mAtmCurrent+1).arg(pname), pname, mCodec);
 }
 
 
