@@ -29,8 +29,9 @@ header</em> filter action? Just use
 <html>
 <p>...that you can associate mailing lists with folders in the
 <em>Folder-&gt;Properties...</em> dialog? You can then use
-<em>Message-&gt;Post&nbsp;to&nbsp;Mailing&nbsp;List...</em> to open the
-composer with the mailing list address preset.</p>
+<em>Message-&gt;New&nbsp;Message&nbsp;to&nbsp;Mailing&nbsp;List...</em>
+to open the composer with the mailing list address preset.
+Alternatively, you can click with the middle mouse button on the folder.</p>
 </html>
 </tip>
 
