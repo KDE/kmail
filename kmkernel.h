@@ -132,6 +132,7 @@ public:
   void selectFolder( QString folder );
   int timeOfLastMessageCountChange() const;
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
+  virtual QString getFrom( Q_UINT32 serialNumber );
   int viewMessage( const KURL & messageFile );
 
   /** normal control stuff */

@@ -121,6 +121,11 @@ k_dcop_hidden:
    * not handled (due to noArgsOpensReader==false).
    */
   virtual bool handleCommandLine( bool /*noArgsOpensReader*/ ) = 0;
+  /**
+   *
+   * DCOP-enabled for use in kaddressbook drop
+   */
+  virtual QString getFrom( Q_UINT32 serialNumber ) = 0;
 };
 
 #endif

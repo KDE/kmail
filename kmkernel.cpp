@@ -698,6 +698,26 @@ bool KMKernel::showMail( Q_UINT32 serialNumber, QString /* messageId */ )
   return false;
 }
 
+QString KMKernel::getFrom( Q_UINT32 serialNumber )
+{
+  int idx = -1;
+  KMFolder *folder = 0;
+  msgDict()->getLocation(serialNumber, &folder, &idx);
+  if (!folder || (idx == -1))
+    return QString::null;
+  folder->open();
+  KMMsgBase *msgBase = folder->getMsgBase(idx);
+  if (!msgBase)
+    return QString::null;
+  bool unGet = !msgBase->isMessage();
+  KMMessage *msg = folder->getMsg(idx);
+  QString result = msg->from();
+  if (unGet)
+    folder->unGetMsg(idx);
+  folder->close();
+  return result;
+}
+
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/
