@@ -241,6 +241,10 @@ const KMIdentity & IdentityManager::identityForAddress( const QString & addressL
   return KMIdentity::null;
 }
 
+bool IdentityManager::thatIsMe( const QString & addressList ) const {
+  return !identityForAddress( addressList ).isNull();
+}
+
 KMIdentity & IdentityManager::identityForName( const QString & name )
 {
   for ( Iterator it = begin() ; it != end() ; ++it )

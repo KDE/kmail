@@ -74,6 +74,12 @@ public:
   **/
   const KMIdentity & identityForAddress( const QString & addressList ) const;
 
+  /** @return true if @p addressList contains any of our addresses,
+      false otherwise.
+      @see #identityForAddress
+  **/
+  bool thatIsMe( const QString & addressList ) const;
+
   /** @deprecated
       @return the identity named @p identityName or @ref
       KMIdentity::null if not found.
