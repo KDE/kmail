@@ -92,10 +92,14 @@ protected:
   void connectJob();
 
   /**
-   * Process any queued messages and save the list of seen uids
-   * for this user/server
+   * Process any queued messages
    */
-  void processRemainingQueuedMessagesAndSaveUidList();
+  void processRemainingQueuedMessages();
+
+  /**
+   * Save the list of seen uids for this user/server
+   */
+  void saveUidList();
 
   bool    mUsePipelining;
   bool    mLeaveOnServer;
@@ -119,9 +123,8 @@ protected:
   QStringList idsOfMsgs; //used for ids and for count
   QValueList<int> lensOfMsgs;
   QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
-  QStringList mUidsOfSeenMsgs; // list of UIDs of previously seen messages (read from config)
   QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
-  QStringList uidsOfNextSeenMsgs; // list of UIDs of new seen messages, for writing in the config file
+  QDict<int> mUidsOfNextSeenMsgsDict; // set of UIDs of seen messages (for the next check)
   QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 
