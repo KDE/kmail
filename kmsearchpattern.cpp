@@ -116,7 +116,7 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
     if ( endOfHeader == DwString::npos )
       endOfHeader = lfcrlf.FindIn( aStr, 0 );
     const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
-    size_t start = headerField->FindIn( headers, 0 );
+    size_t start = headerField->FindIn( headers, 0, false );
     if ( start == DwString::npos )
       return false;
     start += headerLen;
