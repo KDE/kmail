@@ -856,6 +856,9 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
   updateGeometry();
 
+  // redirect focus to the filter action combo box
+  setFocusProxy( mComboBox );
+
   // now connect the combo box and the widget stack
   connect( mComboBox, SIGNAL(activated(int)),
 	   mWidgetStack, SLOT(raiseWidget(int)) );
