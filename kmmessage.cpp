@@ -643,8 +643,12 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
+  QString id;
 
-  msg->initHeader(headerField("X-KMail-Identity"));
+  id = headerField("X-KMail-Identity");
+  if (id.isEmpty() && parent()->isMailingList())
+    id = parent()->mailingListIdentity();
+  msg->initHeader(id);
   if (!headerField("X-KMail-Transport").isEmpty())
     msg->setHeaderField("X-KMail-Transport", headerField("X-KMail-Transport"));
 
@@ -863,9 +867,13 @@ KMMessage* KMMessage::createForward(void)
   KMMessagePart msgPart;
   QCString str;
   QString s;
+  QString id;
   int i;
 
-  msg->initHeader(headerField("X-KMail-Identity"));
+  id = headerField("X-KMail-Identity");
+  if (id.isEmpty() && parent()->isMailingList())
+    id = parent()->mailingListIdentity();
+  msg->initHeader(id);
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n";

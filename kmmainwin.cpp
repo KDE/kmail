@@ -677,16 +677,18 @@ void KMMainWin::slotCompose()
 {
   KMComposeWin *win;
   KMMessage* msg = new KMMessage;
-  msg->initHeader();
 
   if (mFolder && mFolder->isMailingList()) {
       kdDebug()<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
+    msg->initHeader(mFolder->mailingListIdentity());
     msg->setTo(mFolder->mailingListPostAddress());
 
     win = new KMComposeWin(msg,mFolder->mailingListIdentity());
   }
-  else
+  else {
+    msg->initHeader();
     win = new KMComposeWin(msg);
+  }
 
   win->show();
 
@@ -1336,8 +1338,12 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 
   if (aUrl.protocol() == "mailto")
   {
+    QString id = "";
+    if (mFolder && mFolder->isMailingList())
+      id = mFolder->mailingListIdentity();
+
     msg = new KMMessage;
-    msg->initHeader();
+    msg->initHeader(id);
     msg->setTo(aUrl.path());
     QString query=aUrl.query();
     while (!query.isEmpty()) {
@@ -1359,7 +1365,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
-    win = new KMComposeWin(msg);
+    win = new KMComposeWin(msg,id);
     win->show();
   }
   else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
@@ -1388,11 +1394,14 @@ void KMMainWin::slotMailtoCompose()
 {
   KMComposeWin *win;
   KMMessage *msg = new KMMessage;
+  QString id = "";
 
-  msg->initHeader();
+  if (mFolder && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
+  msg->initHeader(id);
   msg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(msg);
+  win = new KMComposeWin(msg,id);
   win->show();
 }
 

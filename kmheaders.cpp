@@ -1320,15 +1320,13 @@ void KMHeaders::forwardAttachedMsg ()
 {
   KMComposeWin *win;
   KMMessageList* msgList = selectedMsgs();
-  QString id;
+  QString id = "";
 
   if (msgList->count() >= 2) {
     // don't respect X-KMail-Identity headers because they might differ for
     // the selected mails
     if (mFolder->isMailingList())
       id = mFolder->mailingListIdentity();
-    else
-      id = "";
   }
   else if (msgList->count() == 1) {
     KMMessage *msg = currentMsg();
