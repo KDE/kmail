@@ -1,28 +1,46 @@
-/**
- * kmservertest.cpp
- *
- * Copyright (c) 2001-2002 Michael Haeckel <haeckel@kde.org>
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License version 2
- *  as published by the Free Software Foundation
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
+/*  -*- c++ -*-
+    kmservertest.cpp
+
+    This file is part of KMail, the KDE mail client.
+    Copyright (c) 2001-2002 Michael Haeckel <haeckel@kde.org>
+    Copyright (c) 2003 Marc Mutz <mutz@kde.org>
+
+    KMail is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License, version 2, as
+    published by the Free Software Foundation.
+
+    KMail is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+    In addition, as a special exception, the copyright holders give
+    permission to link the code of this program with any edition of
+    the Qt library by Trolltech AS, Norway (or with modified versions
+    of Qt that use the same license as Qt), and distribute linked
+    combinations including the two.  You must obey the GNU General
+    Public License in all respects for all of the code used other than
+    Qt.  If you modify this file, you may extend this exception to
+    your version of the file, but you are not obligated to do so.  If
+    you do not wish to do so, delete this exception statement from
+    your version.
+*/
 
 #include <config.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kio/scheduler.h>
 
 #include "kmservertest.h"
+
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kdebug.h>
+#include <kio/scheduler.h>
+#include <kio/slave.h>
+#include <kio/job.h>
+#include <kio/global.h>
 
 //-----------------------------------------------------------------------------
 KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
@@ -32,17 +50,18 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveResult(KIO::Slave *, int, const QString &)));
-  mSlaveConfig.insert("nologin", "on");
   mUrl.setProtocol(aProtocol);
   mUrl.setHost(aHost);
   if (aPort != "993" && aPort != "995" && aPort != "465")
     mUrl.setPort(aPort.toInt());
-  mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
+  mSlave = KIO::Scheduler::getConnectedSlave(mUrl, slaveConfig());
   if (!mSlave)
   {
     slotSlaveResult(0, 1);
     return;
   }
+  connect( mSlave, SIGNAL(metaData(const KIO::MetaData&)),
+	   SLOT(slotMetaData(const KIO::MetaData&)) );
   
   QByteArray packedArgs;
   QDataStream stream( packedArgs, IO_WriteOnly);
@@ -64,7 +83,12 @@ KMServerTest::~KMServerTest()
 }
 
 
-#include <kdebug.h>
+KIO::MetaData KMServerTest::slaveConfig() const {
+  KIO::MetaData md;
+  md.insert( "nologin", "on" );
+  return md;
+}
+
 //-----------------------------------------------------------------------------
 void KMServerTest::slotData(KIO::Job *, const QString &data)
 {
@@ -74,12 +98,23 @@ kdDebug(5006) << "count = " << mList.count() << endl;
 }
 
 
+void KMServerTest::slotMetaData( const KIO::MetaData & md ) {
+  KIO::MetaData::const_iterator it = md.find( "PLAIN AUTH METHODS" );
+  if ( it != md.end() )
+    mAuthNone = it.data();
+  it = md.find( "TLS AUTH METHODS" );
+  if ( it != md.end() )
+    mAuthTLS = it.data();
+  it = md.find( "SSL AUTH METHODS" );
+  if ( it != md.end() )
+    mAuthSSL = it.data();
+}
+
 //-----------------------------------------------------------------------------
 void KMServerTest::slotResult(KIO::Job *job)
 {
   slotSlaveResult(mSlave, job->error());
 }
-
 
 //-----------------------------------------------------------------------------
 void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
@@ -95,14 +130,16 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   {
     mFirstTry = FALSE;
     if (!error) mList.append("NORMAL-CONNECTION");
-    mUrl.setProtocol(mUrl.protocol() + "s");
+    mUrl.setProtocol(mUrl.protocol() + 's');
     mUrl.setPort(0);
-    mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
+    mSlave = KIO::Scheduler::getConnectedSlave(mUrl, slaveConfig());
     if (!mSlave)
     {
       slotSlaveResult(0, 1);
       return;
     }
+    connect( mSlave, SIGNAL(metaData(const KIO::MetaData&)),
+	     SLOT(slotMetaData(const KIO::MetaData&)) );
 
     QByteArray packedArgs;
     QDataStream stream( packedArgs, IO_WriteOnly);
@@ -124,6 +161,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
       KMessageBox::error(0, i18n("<qt>Could not connect to server <b>%1</b>.</qt>")
       .arg(mUrl.host()));
     emit capabilities(mList);
+    emit capabilities(mList, mAuthNone, mAuthSSL, mAuthTLS);
   }
 }
 
