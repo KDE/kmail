@@ -1022,11 +1022,58 @@ int KMReaderWin::msgPartFromUrl(const char* aUrl)
 }
 
 
+static bool doDelayedResize=false;
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent(QResizeEvent *)
 {
+  #warning Espen 2000-05-07. Using a delayed resize. Use direct resize
+  #warning from time to time to see how the html widget behaves.
+
+  static QTimer *timer = 0;
+  if( timer == 0 )
+  {
+    timer = new QTimer( this );
+    connect( timer, SIGNAL(timeout()), SLOT(slotDelayedResize()) );
+  }
+  if( timer->isActive() )
+  {
+    //
+    // Combine all resize operations that are requested as long a 
+    // the timer runs.
+    //
+    //puts("delayed");
+    doDelayedResize = true;
+    return;
+  }
+  
+  //
+  // Resize now, and start the timer which will cause any new resize
+  // operations to be igored as long as the timer is active
+  //
   mViewer->widget()->setGeometry(0, 0, width(), height());
+  doDelayedResize = false;
+  timer->start( 150, true );
+
+  //
+  // Orig
+  //
+  //mViewer->widget()->setGeometry(0, 0, width(), height());
 }
+
+
+void KMReaderWin::slotDelayedResize()
+{
+  if( doDelayedResize )
+  {
+    mViewer->widget()->setGeometry(0, 0, width(), height());
+    doDelayedResize = false;
+  }
+  //puts("DONE");
+}
+
+
+
 
 
 //-----------------------------------------------------------------------------

@@ -139,6 +139,7 @@ protected slots:
   void slotAtmPrint();
   void slotAtmSave();
   void slotAtmProperties();
+  void slotDelayedResize();
 
 protected:
   /** Feeds the HTML viewer with the contents of the given message.

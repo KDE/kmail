@@ -351,7 +351,16 @@ void KMMainWin::activatePanners(void)
   }
   mHorizPanner->setSizes( *mHorizPannerSep );
   mVertPanner->setSizes( *mVertPannerSep );
+
   mVertPanner->setResizeMode( mFolderTree, QSplitter::KeepSize);
+  if( mLongFolderList )
+  {
+    mHorizPanner->setResizeMode( mHeaders, QSplitter::KeepSize);    
+  }
+  else
+  {
+    mHorizPanner->setResizeMode( mVertPanner, QSplitter::KeepSize);
+  }
 }
 
 
