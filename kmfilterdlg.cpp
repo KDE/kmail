@@ -161,6 +161,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
   			      0, 3 /*from to col*/ );
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
       gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 3 );
+      mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
+      gl->addMultiCellWidget( mConfigureToolbar, 3, 3, 1, 3 );
 
       QHBox *hbox = new QHBox( adv_w );
       mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
@@ -174,7 +176,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       mFilterActionIconButton->setIcon( "gear" );
       mFilterActionIconButton->setEnabled( false );
 
-      gl->addMultiCellWidget( hbox, 3, 3, 0, 3 );
+      gl->addMultiCellWidget( hbox, 4, 4, 1, 3 );
     }
     vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
   }
@@ -210,6 +212,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
+
+    connect( mConfigureToolbar, SIGNAL(toggled(bool)),
+	     this, SLOT(slotConfigureToolbarButtonToggled(bool)) );
 
     connect( mFilterActionIconButton, SIGNAL( iconChanged( QString ) ),
              this, SLOT( slotFilterActionIconChanged( QString ) ) );
@@ -302,6 +307,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     const bool applyOnExplicit = aFilter->applyOnExplicit();
     const bool stopHere = aFilter->stopProcessingHere();
     const bool configureShortcut = aFilter->configureShortcut();
+    const bool configureToolbar = aFilter->configureToolbar();
     const QString icon = aFilter->icon();
 
     mApplyOnIn->setChecked( applyOnIn );
@@ -309,6 +315,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
+    mConfigureToolbar->setChecked( configureToolbar );
     mFilterActionIconButton->setIcon( icon );
   }
 }
@@ -364,8 +371,17 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
     return;
 
   mFilter->setConfigureShortcut( aChecked );
+  mConfigureToolbar->setEnabled( aChecked );
   mFilterActionIconButton->setEnabled( aChecked );
   mFilterActionLabel->setEnabled( aChecked );
+}
+
+void KMFilterDlg::slotConfigureToolbarButtonToggled( bool aChecked )
+{
+  if ( !mFilter )
+    return;
+
+  mFilter->setConfigureToolbar( aChecked );
 }
 
 void KMFilterDlg::slotFilterActionIconChanged( QString icon )

@@ -339,6 +339,7 @@ protected slots:
   void slotApplicabilityChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotConfigureShortcutButtonToggled( bool aChecked );
+  void slotConfigureToolbarButtonToggled( bool aChecked );
   void slotFilterActionIconChanged( QString icon );
   void slotReset();
   void slotUpdateFilter();
@@ -362,6 +363,7 @@ protected:
   QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyOnCtrlJ;
   QCheckBox *mStopProcessingHere;
   QCheckBox *mConfigureShortcut;
+  QCheckBox *mConfigureToolbar;
   QLabel *mFilterActionLabel;
   KIconButton *mFilterActionIconButton;
   QGroupBox *mAdvOptsGroup;

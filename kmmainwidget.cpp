@@ -3323,11 +3323,7 @@ void KMMainWidget::initializeFilterActions()
                                  normalizedName.local8Bit());
       filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
       mFilterMenuActions.append(filterAction);
-      // FIXME
-      // uncomment the next if statement after the filter dialog supports
-      // separate activation of filters for the toolbar - currently 
-      // we better use the coupled way
-      // if ( (*it)->configureToolbar() )
+      if ( (*it)->configureToolbar() )
         mFilterTBarActions.append(filterAction);
     }
   }

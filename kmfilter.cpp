@@ -36,6 +36,7 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
     bApplyOnExplicit = true;
     bStopProcessingHere = true;
     bConfigureShortcut = false;
+    bConfigureToolbar = false;
   }
 }
 
@@ -57,6 +58,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bApplyOnExplicit = aFilter.applyOnExplicit();
     bStopProcessingHere = aFilter.stopProcessingHere();
     bConfigureShortcut = aFilter.configureShortcut();
+    bConfigureToolbar = aFilter.configureToolbar();
     mIcon = aFilter.icon();
 
     QPtrListIterator<KMFilterAction> it( aFilter.mActions );
