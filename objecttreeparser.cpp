@@ -2010,11 +2010,9 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                      "in the %1 used for signing.").arg(certificate) +
                                 "<br />" +
                                 i18n("sender: ") +
-                                "&lt;" +
                                 msgFrom +
-                                "&gt;<br />" +
-                                i18n("stored: ") +
-                                "&lt;";
+                                "<br />" +
+			        i18n("stored: ");
                             // We cannot use Qt's join() function here but
                             // have to join the addresses manually to
                             // extract the mail addresses (without '<''>')
@@ -2023,11 +2021,10 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                             for(QStringList::ConstIterator it = blockAddrs.begin();
                                 it != blockAddrs.end(); ++it ){
                                 if( !bStart )
-                                    greenCaseWarning.append("&gt;, <br />&nbsp; &nbsp;&lt;");
+                                    greenCaseWarning.append(", <br />&nbsp; &nbsp;");
                                 bStart = false;
                                 greenCaseWarning.append( KMMessage::getEmailAddr(*it) );
                             }
-                            greenCaseWarning.append( "&gt;" );
                         }
                     } else {
                         greenCaseWarning =
@@ -2035,7 +2032,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                             i18n("Warning:") +
                             "</u> " +
                             i18n("No mail address is stored in the %1 used for signing, "
-                                 "so we cannot compare it to the sender's address &lt;%2&gt;.")
+                                 "so we cannot compare it to the sender's address %2.")
                             .arg(certificate)
                             .arg(msgFrom);
                     }
