@@ -96,37 +96,37 @@ public:
   static void cleanup();
 
   KAction *action( const char *name ) { return mActionCollection->action( name ); }
-  KAction *replyAction() { return mReplyAction; }
-  KAction *replyAuthorAction() { return mReplyAuthorAction; }
-  KAction *replyAllAction() { return mReplyAllAction; }
-  KAction *replyListAction() { return mReplyListAction; }
-  KActionMenu * replyMenu() { return mReplyActionMenu; }
-  KActionMenu *forwardMenu() { return mForwardActionMenu; }
-  KAction *forwardAction() { return mForwardAction; }
-  KAction *forwardAttachedAction() { return mForwardAttachedAction; }
-  KAction *redirectAction() { return mRedirectAction; }
-  KAction *bounceAction() { return mBounceAction; }
-  KAction *noQuoteReplyAction() { return mNoQuoteReplyAction; }
-  KActionMenu *filterMenu() { return mFilterMenu; }
-  KAction *printAction() { return mPrintAction; }
-  KAction *trashAction() { return mTrashAction; }
-  KAction *deleteAction() { return mDeleteAction; }
-  KAction *saveAsAction() { return mSaveAsAction; }
-  KAction *editAction() { return mEditAction; }
-  KAction *sendAgainAction() { return mSendAgainAction; }
-  KAction *applyFiltersAction() { return mSendAgainAction; }
-  KAction *findInMessageAction() { return mFindInMessageAction; }
-  KAction *saveAttachmentsAction() { return mSaveAttachmentsAction; }
-  KAction *openAction() { return mOpenAction; }
+  KAction *replyAction() const { return mReplyAction; }
+  KAction *replyAuthorAction() const { return mReplyAuthorAction; }
+  KAction *replyAllAction() const { return mReplyAllAction; }
+  KAction *replyListAction() const { return mReplyListAction; }
+  KActionMenu * replyMenu() const { return mReplyActionMenu; }
+  KActionMenu *forwardMenu() const { return mForwardActionMenu; }
+  KAction *forwardAction() const { return mForwardAction; }
+  KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
+  KAction *redirectAction() const { return mRedirectAction; }
+  KAction *bounceAction() const { return mBounceAction; }
+  KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
+  KActionMenu *filterMenu() const { return mFilterMenu; }
+  KAction *printAction() const { return mPrintAction; }
+  KAction *trashAction() const { return mTrashAction; }
+  KAction *deleteAction() const { return mDeleteAction; }
+  KAction *saveAsAction() const { return mSaveAsAction; }
+  KAction *editAction() const { return mEditAction; }
+  KAction *sendAgainAction() const { return mSendAgainAction; }
+  KAction *applyFiltersAction() const { return mSendAgainAction; }
+  KAction *findInMessageAction() const { return mFindInMessageAction; }
+  KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
+  KAction *openAction() const { return mOpenAction; }
 
-  KActionMenu *statusMenu() { return mStatusMenu; }
-  KActionMenu *threadStatusMenu() { return mThreadStatusMenu; }
-  KActionMenu *moveActionMenu() { return mMoveActionMenu; }
-  KActionMenu *mopyActionMenu() { return mCopyActionMenu; }
-  KActionMenu *applyFilterActionsMenu() { return mApplyFilterActionsMenu; }
+  KActionMenu *statusMenu()  const{ return mStatusMenu; }
+  KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
+  KActionMenu *moveActionMenu() const{ return mMoveActionMenu; }
+  KActionMenu *mopyActionMenu() const { return mCopyActionMenu; }
+  KActionMenu *applyFilterActionsMenu() const { return mApplyFilterActionsMenu; }
 
-  KToggleAction *watchThreadAction() { return mWatchThreadAction; }
-  KToggleAction *ignoreThreadAction() { return mIgnoreThreadAction; }
+  KToggleAction *watchThreadAction() const { return mWatchThreadAction; }
+  KToggleAction *ignoreThreadAction() const { return mIgnoreThreadAction; }
 
   // Forwarded to the reader window.
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
