@@ -67,6 +67,7 @@
   #define VCARD_TEL_PCS      "pcs"
 #define VCARD_EMAIL          "email"
   // types
+  #define VCARD_EMAIL_PREF    "pref"
   #define VCARD_EMAIL_INTERNET "internet"
   #define VCARD_EMAIL_X400   "x400"
 #define VCARD_TZ             "tz"

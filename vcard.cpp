@@ -190,6 +190,7 @@ QValueList<QString> lines;
       if (nametokens.count() > 0) {
         _vcl.qualified = false;
         _vcl.name = nametokens[0];
+        _vcl.name = _vcl.name.lower();
         for (QValueListIterator<QString> z = nametokens.begin();
                                          z != nametokens.end();
                                          ++z) {
@@ -198,6 +199,7 @@ QValueList<QString> lines;
 	  } else if (!first_pass && !_vcl.qualified) {
             _vcl.qualified = true;
             _vcl.qualifier = *z;
+            _vcl.qualifier = _vcl.qualifier.lower();
           }
           first_pass = false;
 	}
@@ -348,6 +350,7 @@ int VCard::addQualifiedLine(const QString& name, const QString& qualifier, const
       }
       _vcdata->remove(i);
       return VC_ERR_INVALID_LINE;
+
     }
   }
 
@@ -562,6 +565,7 @@ bool VCardLine::isValid() const {
   case 'e':
     if (name == VCARD_EMAIL && qualified &&
                               (qualifier == VCARD_EMAIL_INTERNET ||
+                               qualifier == VCARD_EMAIL_PREF     ||
                                qualifier == VCARD_EMAIL_X400
                               ))
       return true;
