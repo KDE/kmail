@@ -190,7 +190,11 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced) return;
+  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced) 
+  {
+     mOpenCount = 1;
+     return;
+  }
 
   if (mAutoCreateIndex)
   {
