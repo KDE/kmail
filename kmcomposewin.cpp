@@ -1227,8 +1227,13 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     mTransport->setEditText( transport );
   }
 
-  if (!mBtnFcc->isChecked() && !mMsg->fcc().isEmpty())
-    setFcc(mMsg->fcc());
+  if (!mBtnFcc->isChecked())
+  {
+    if (!mMsg->fcc().isEmpty())
+      setFcc(mMsg->fcc());
+    else
+      setFcc(ident.fcc());
+  }
 
   num = mMsg->numBodyParts();
 
