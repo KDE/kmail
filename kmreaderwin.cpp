@@ -3227,11 +3227,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 		    message() ? message()->from() : QString("") );
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
-      // ##### FIXME-AFTER-MSG-FREEZE: Use this
-      // win->setCaption(i18n("View Attachment: %1").arg(pname));
-      // instead of the following line:
-      mMainWindow->setCaption(i18n("View Attachment: ") + pname);
-      // ##### end of FIXME-AFTER-MSG-FREEZE
+      mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
   } else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
              (qstricmp(aMsgPart->typeStr(), "application")==0 &&
               qstricmp(aMsgPart->subtypeStr(), "postscript")))
