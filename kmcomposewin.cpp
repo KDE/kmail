@@ -135,7 +135,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAutoDeleteMsg = FALSE;
   mEditor = NULL;
   disableBreaking = false;
-      
+
   mSpellCheckInProgress=FALSE;
 
   setCaption( i18n("Composer") );
@@ -1013,7 +1013,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
   }
   mEditor->setModified(FALSE);
-    
+
 
   //put font charset as default charset: jstolarz@kde.org
 //  QString defCharset = mMsg->charset();
@@ -1193,7 +1193,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   int index, lastindex;
   QStrList persons;
   QString text;
-  
+
   if (disableBreaking)
       text = mEditor->text();
   else
@@ -1904,7 +1904,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       (!hf.isEmpty() && (hf != kernel->msgSender()->transportString())))
     mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
 
-  disableBreaking = saveInDrafts || !aSendNow;
+  disableBreaking = saveInDrafts;
   if (saveInDrafts)
       sentOk = (applyChanges() && !(kernel->draftsFolder()->addMsg(mMsg)));
   else
@@ -1915,13 +1915,13 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
- 
+
   if (sentOk)
   {
     mAutoDeleteMsg = FALSE;
     close();
   }
-  
+
 }
 
 
