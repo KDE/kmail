@@ -1851,7 +1851,7 @@ void KMComposeWin::slotAppendSignature()
   QString sigText;
   bool mod = mEditor->isModified();
 
-  if (sigFileName.isEmpty())
+  if (sigFileName.isEmpty() && ident.useSignatureFile())
   {
     // open a file dialog and let the user choose manually
 #warning KFileDialog misses localfiles only flag.
