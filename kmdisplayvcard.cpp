@@ -301,7 +301,7 @@ int row = 0;
   values = _vc->getValues(VCARD_GEO);
   if (!values.isEmpty()) {
     tmpstr.sprintf("(%s, %s)", values[0].ascii(), values[1].ascii());
-    name = new QLabel(i18n("Location:"), page);
+    name = new QLabel(i18n("geographical latitude and longitude", "Location:"), page);
     value = new QLabel(tmpstr, page);
     grid->addWidget(name, row, 0);
     grid->addWidget(value, row++, 1);

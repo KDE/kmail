@@ -959,7 +959,7 @@ void ConfigureDialog::makeAppearancePage( void )
   KSeparator *hline = new KSeparator( KSeparator::HLine, page1);
   vlay->addWidget( hline );
   QHBoxLayout *hlay = new QHBoxLayout( vlay );
-  mAppearance.fontLocationLabel = new QLabel( i18n("Location:"), page1 );
+  mAppearance.fontLocationLabel = new QLabel( i18n("Apply to:"), page1 );
   hlay->addWidget( mAppearance.fontLocationLabel );
   mAppearance.fontLocationCombo = new QComboBox( page1 );
   //
