@@ -1037,8 +1037,6 @@ void KMMainWin::setupMenuBar()
 {
   //----- File Menu
   fileMenu = new QPopupMenu();
-  fileMenu->insertItem(i18n("New Composer"), this, 
-		       SLOT(slotCompose()), KStdAccel::openNew());
   fileMenu->insertItem(i18n("New Mailreader"), this, 
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
@@ -1115,6 +1113,9 @@ void KMMainWin::setupMenuBar()
   QObject::connect( messageMenu, SIGNAL( aboutToShow() ), 
 		    this, SLOT( updateMessageMenu() ));
 
+  messageMenu->insertItem(i18n("New &Message"), this, 
+		       SLOT(slotCompose()), KStdAccel::openNew());
+  messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Next"), mHeaders, 
 			  SLOT(nextMessage()), Key_N);
   messageMenu->insertItem(i18n("Next unread"), mHeaders, 
