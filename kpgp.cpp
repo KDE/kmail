@@ -754,7 +754,7 @@ KpgpPass::getPhrase()
 
 // ------------------------------------------------------------------------
 
-KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys = NULL)
+KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
   : QDialog(parent, 0, TRUE)
 {
   KIconLoader* loader = kapp->getIconLoader();
@@ -776,6 +776,7 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys = NULL)
   icon->resize(48,48);
 
   combobox = new QComboBox(FALSE, this, "combo");
+  if (keys==NULL) debug("keys = NULL");
   combobox->insertStrList(keys);
   combobox->setFocus();
 
@@ -793,7 +794,7 @@ KpgpKey::~KpgpKey()
 QString 
 KpgpKey::getKeyName(QWidget *parent, QStrList *keys = NULL)
 {
-  KpgpKey pgpkey(parent, i18n("Select key"));
+  KpgpKey pgpkey(parent, i18n("Select key"), keys);
   pgpkey.exec();
   return pgpkey.getKey().copy();
 }
