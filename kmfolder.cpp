@@ -617,6 +617,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   {
     debug("Message added to folder `%s' contains no data. Ignoring it.",
 	  (const char*)name());
+    if (opened) close();
     return 0;
   }
 

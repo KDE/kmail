@@ -82,6 +82,12 @@ protected:
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
 			       int* type);
 
+  /** Returns message index of first selected message of the messages
+    where the message with the given id is in. This for finding the correct
+    message that shall be the current message after move/delete of multiple
+    messages. */
+  virtual int firstSelectedMsg(int id);
+
 private:
   virtual void updateMessageList(void);
   KMFolder* mFolder;

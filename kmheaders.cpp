@@ -294,7 +294,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
   KMMessageList* msgList;
   KMMessage* msg;
-  int top, rc, cur = currentItem();
+  int top, rc, cur = firstSelectedMsg(currentItem());
   bool doUpd;
 
   kbp->busy();
@@ -346,6 +346,16 @@ KMMessageList* KMHeaders::selectedMsgs(int idx)
     mSelMsgList.append(msg);
 
   return &mSelMsgList;
+}
+
+
+//-----------------------------------------------------------------------------
+int KMHeaders::firstSelectedMsg (int msgId)
+{
+  if (msgId<0 || msgId>=numRows()) return 0;
+  while (msgId>0 && itemList[msgId]->isMarked())
+    msgId--;
+  return (msgId+1);
 }
 
 
