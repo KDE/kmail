@@ -48,12 +48,12 @@ foreach my $accountGroup (@accountGroups) {
   my $trash = $configFile{$accountGroup}{'trash'};
   if (&replaceID($trash)) {
     print "# DELETE ".$accountGroup."trash\n";
-    print "trash=".&replaceID($trash)."\n";
+    print "${accountGroup}\ntrash=".&replaceID($trash)."\n";
   }
 }
 
 # we need the directory where the imap cache is stored
-my $basedir = "../kmail";
+my $basedir = "`kde-config --localprefix`share/apps/kmail/imap";
 
 # Now, go through all [Folder-*] groups that belong to (d)imap folders
 # and replace the account name with the id
@@ -84,15 +84,17 @@ foreach my $folderGroup ( @folderGroups )
     # print all original keys
     my %groupData = %{$configFile{$folderGroup}};
     foreach my $key ( keys %groupData ) {
-      if ($isRootFolder) {
-        $groupData{$key} = $account;
-      }
       print "$key=" . $groupData{$key} . "\n";
+    }
+    if ($isRootFolder) {
+      print "Label=$account\n";
     }
 
     # move the directory
-    #my $systemcall = "mv $basedir/\.$account\.directory $basedir/\.".$nameToID{$account}."\.directory";
-    #system($systemcall);
+    my $systemcall = "mv ${basedir}/\.${account}\.directory ${basedir}/\.".$nameToID{$account}."\.directory";
+    system($systemcall);
+    $systemcall = "mv ${basedir}/${account} ${basedir}/".$nameToID{$account};
+    system($systemcall);
   }
 }
 
@@ -101,19 +103,18 @@ my @identities = grep { /^\[Identity #\d\]/ } keys %configFile;
 
 foreach my $identity (@identities)
 {
-  print "$identity\n";
   my $drafts = $configFile{$identity}{'Drafts'};
   my $sent = $configFile{$identity}{'Fcc'};
   # extract the account name
   if (&replaceID($drafts))
   {
     print "# DELETE ".$identity."Drafts\n";
-    print "Drafts=".&replaceID($drafts)."\n";
+    print "${identity}\nDrafts=".&replaceID($drafts)."\n";
   }
   if (&replaceID($sent))
   {
     print "# DELETE ".$identity."Fcc\n";
-    print "Fcc=".&replaceID($sent)."\n";
+    print "${identity}\nFcc=".&replaceID($sent)."\n";
   }
 }
 
