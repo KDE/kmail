@@ -155,6 +155,10 @@ int KMFolderMbox::open()
 
   mChanged = false;
 
+  fcntl(fileno(mStream), F_SETFD, FD_CLOEXEC);
+  if (mIndexStream)
+     fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+
   return rc;
 }
 
@@ -195,14 +199,17 @@ int KMFolderMbox::create(bool imap)
 
   if (!mStream) return errno;
 
+  fcntl(fileno(mStream), F_SETFD, FD_CLOEXEC);
+
   if (!folder()->path().isEmpty())
   {
     old_umask = umask(077);
     mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-        updateIndexStreamPtr(true);
+    updateIndexStreamPtr(true);
     umask(old_umask);
 
     if (!mIndexStream) return errno;
+    fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
   }
   else
   {

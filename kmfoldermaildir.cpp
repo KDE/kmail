@@ -32,6 +32,8 @@ using KMail::MaildirJob;
 #include <unistd.h>
 #include <assert.h>
 #include <limits.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #ifndef MAX_LINE
 #define MAX_LINE 4096
@@ -105,6 +107,8 @@ int KMFolderMaildir::open()
       emit statusMsg(str);
     } else {
       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+      if ( mIndexStream )
+        fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
       updateIndexStreamPtr();
     }
 
@@ -135,7 +139,7 @@ int KMFolderMaildir::create(bool imap)
 
   assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
-  
+
   // Make sure that neither a new, cur or tmp subfolder exists already.
   QFileInfo dirinfo;
   dirinfo.setFile(location() + "/new");
@@ -144,7 +148,7 @@ int KMFolderMaildir::create(bool imap)
   if (dirinfo.exists()) return 1;
   dirinfo.setFile(location() + "/tmp");
   if (dirinfo.exists()) return 1;
-  
+
   // create the maildir directory structure
   if (::mkdir(QFile::encodeName(location()), S_IRWXU) > 0)
   {
@@ -171,10 +175,11 @@ int KMFolderMaildir::create(bool imap)
   {
     old_umask = umask(077);
     mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-	updateIndexStreamPtr(TRUE);
+    updateIndexStreamPtr(TRUE);
     umask(old_umask);
 
     if (!mIndexStream) return errno;
+    fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
   }
   else
   {
@@ -199,7 +204,7 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ( (folder() != kmkernel->inboxFolder()) 
+  if ( (folder() != kmkernel->inboxFolder())
        && folder()->isSystemFolder() && !aForced)
   {
      mOpenCount = 1;
@@ -916,7 +921,7 @@ int KMFolderMaildir::removeContents()
         return 1;
 
     /* The subdirs are removed now. Check if there is anything else in the dir
-     * and only if not delete the dir itself. The user could have data stored 
+     * and only if not delete the dir itself. The user could have data stored
      * that would otherwise be deleted. */
     QDir dir(location());
     if ( dir.count() == 2 ) { // only . and ..
