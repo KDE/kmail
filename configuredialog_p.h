@@ -445,9 +445,6 @@ public:
   void installProfile( KConfig * profile );
 
 protected: // data
-  QCheckBox    *mShowColorbarCheck;
-  QCheckBox    *mShowSpamStatusCheck;
-  QCheckBox    *mShowEmoticonsCheck;
   QButtonGroup *mFolderListGroup;
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
@@ -495,6 +492,9 @@ protected:
   void readCurrentOverrideCodec();
 
 private: // data
+  QCheckBox *mShowColorbarCheck;
+  QCheckBox *mShowSpamStatusCheck;
+  QCheckBox *mShowEmoticonsCheck;
   QComboBox *mCharsetCombo;
   QComboBox *mOverrideCharsetCombo;
 };

@@ -1832,18 +1832,6 @@ static const EnumConfigEntry readerWindowMode = {
   readerWindowModes, DIM(readerWindowModes), 1
 };
 
-static const BoolConfigEntry showColorbarMode = {
-  "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
-};
-
-static const BoolConfigEntry showSpamStatusMode = {
-  "Reader", "showSpamStatus", I18N_NOOP("Show s&pam status in fancy headers"), true
-};
-
-static const BoolConfigEntry showEmoticons = {
-  "Reader", "ShowEmoticons", I18N_NOOP("Replace smileys by emoticons"), true
-};
-
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
   : ConfigModuleTab( parent, name )
 {
@@ -1851,24 +1839,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   QVBoxLayout * vlay;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-
-  // "show colorbar" check box:
-  populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
-  vlay->addWidget( mShowColorbarCheck );
-  connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  // "show spam status" check box;
-  populateCheckBox( mShowSpamStatusCheck = new QCheckBox( this ), showSpamStatusMode );
-  vlay->addWidget( mShowSpamStatusCheck );
-  connect( mShowSpamStatusCheck, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
-
-  // "replace smileys by emoticons" check box;
-  populateCheckBox( mShowEmoticonsCheck = new QCheckBox( this ), showEmoticons );
-  vlay->addWidget( mShowEmoticonsCheck );
-  connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged() ) );
 
   // "folder list" radio buttons:
   populateButtonGroup( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
@@ -1901,9 +1871,6 @@ void AppearancePage::LayoutTab::load() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  loadWidget( mShowColorbarCheck, reader, showColorbarMode );
-  loadWidget( mShowSpamStatusCheck, reader, showSpamStatusMode );
-  loadWidget( mShowEmoticonsCheck, reader, showEmoticons );
   loadWidget( mFolderListGroup, geometry, folderListMode );
   loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1914,9 +1881,6 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   const KConfigGroup reader( profile, "Reader" );
   const KConfigGroup geometry( profile, "Geometry" );
 
-  loadProfile( mShowColorbarCheck, reader, showColorbarMode );
-  loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
-  loadProfile( mShowEmoticonsCheck, reader, showEmoticons );
   loadProfile( mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1927,9 +1891,6 @@ void AppearancePage::LayoutTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
-  saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
-  saveCheckBox( mShowEmoticonsCheck, reader, showEmoticons );
   saveButtonGroup( mFolderListGroup, geometry, folderListMode );
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -2180,6 +2141,18 @@ void AppearancePage::HeadersTab::save() {
 //
 
 
+static const BoolConfigEntry showColorbarMode = {
+  "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
+};
+
+static const BoolConfigEntry showSpamStatusMode = {
+  "Reader", "showSpamStatus", I18N_NOOP("Show s&pam status in fancy headers"), true
+};
+
+static const BoolConfigEntry showEmoticons = {
+  "Reader", "ShowEmoticons", I18N_NOOP("Replace smileys by emoticons"), true
+};
+
 QString AppearancePage::ReaderTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-reader");
 }
@@ -2189,6 +2162,24 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
   : ConfigModuleTab( parent, name )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // "show colorbar" check box:
+  populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
+  vlay->addWidget( mShowColorbarCheck );
+  connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  // "show spam status" check box;
+  populateCheckBox( mShowSpamStatusCheck = new QCheckBox( this ), showSpamStatusMode );
+  vlay->addWidget( mShowSpamStatusCheck );
+  connect( mShowSpamStatusCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  // "replace smileys by emoticons" check box;
+  populateCheckBox( mShowEmoticonsCheck = new QCheckBox( this ), showEmoticons );
+  vlay->addWidget( mShowEmoticonsCheck );
+  connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // Fallback Character Encoding
   QHBoxLayout *hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -2268,11 +2259,19 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
 
 void AppearancePage::ReaderTab::load()
 {
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
+  loadWidget( mShowColorbarCheck, reader, showColorbarMode );
+  loadWidget( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  mShowEmoticonsCheck->setChecked( GlobalSettings::showEmoticons() );
   readCurrentOverrideCodec();
 }
 
 
 void AppearancePage::ReaderTab::save() {
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
+  saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  GlobalSettings::setShowEmoticons( mShowEmoticonsCheck->isChecked() );
   GlobalSettings::setFallbackCharacterEncoding(
       KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
   GlobalSettings::setOverrideCharacterEncoding(
@@ -2280,8 +2279,11 @@ void AppearancePage::ReaderTab::save() {
 }
 
 
-void AppearancePage::ReaderTab::installProfile( KConfig * profile ) {
-  KConfigGroup general( profile, "General" );
+void AppearancePage::ReaderTab::installProfile( KConfig * /* profile */ ) {
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
+  loadProfile( mShowColorbarCheck, reader, showColorbarMode );
+  loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  loadProfile( mShowEmoticonsCheck, reader, showEmoticons );
 }
 
 
