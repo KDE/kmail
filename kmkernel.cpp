@@ -1077,6 +1077,14 @@ void KMKernel::notClosedByUser()
   the_shuttingDown = true;
   closeAllKMailWindows();
 
+  KConfigGroup configGroup(KMKernel::config(), "General");
+  if (configGroup.readBoolEntry("empty-trash-on-exit", true)) {
+    KMFolder* trashFolder = kmkernel->trashFolder();
+    trashFolder->close(TRUE);
+    if ( trashFolder->count( true ) > 0 )
+      trashFolder->expunge();
+  }
+
   delete the_acctMgr;
   the_acctMgr = 0;
   delete the_filterMgr;
