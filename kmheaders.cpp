@@ -626,6 +626,20 @@ void KMHeaders::updateMessageList(void)
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::mouseReleaseEvent(QMouseEvent* e)
+{
+  if (e->button() == RightButton)
+  {
+    if (mMouseCol >= 0) 
+    {
+      
+    }
+  }
+  KMHeadersInherited::mouseReleaseEvent(e);
+}
+
+
+//-----------------------------------------------------------------------------
 bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data, 
 				  int* size, int* type)
 {

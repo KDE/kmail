@@ -442,7 +442,7 @@ const QString KMMsgBase::decodeBase64(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::encodeBase64(const QString aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.length());
+  DwString dwsrc(aStr.data(), aStr.size()-1);
   DwString dwdest;
   QString result;
 

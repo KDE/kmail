@@ -35,37 +35,42 @@ KMMessagePart::~KMMessagePart()
 void KMMessagePart::setBodyEncoded(const QString aStr)
 {
   DwString dwResult, dwSrc;
-  QString result;
   int encoding = contentTransferEncoding();
-  int len = aStr.size();
+  int len;
+
+  debug("setBodyEncoded (%s): len=%d, size=%d", cteStr().data(), 
+	aStr.length(), aStr.size());
 
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
-    dwSrc.resize(len);
-    memcpy((void*)dwSrc.data(), (void*)aStr.data(), len);
+    dwSrc = DwString(aStr.data(), aStr.size()-1);
     DwEncodeQuotedPrintable(dwSrc, dwResult);
-    result = dwResult.c_str();
-    result.detach();
+    len = dwResult.size();
+    mBody.truncate(len);
+    memcpy(mBody.data(), dwResult.c_str(), len+1);
     break;
   case DwMime::kCteBase64:
-    dwSrc.resize(len);
-    memcpy((void*)dwSrc.data(), (void*)aStr.data(), len);
+    dwSrc = DwString(aStr.data(), aStr.size()-1);
     DwEncodeBase64(dwSrc, dwResult);
-    result = dwResult.c_str();
-    result.detach();
+    len = dwResult.size();
+    mBody.truncate(len);
+    memcpy(mBody.data(), dwResult.c_str(), len+1);
     break;
-  case DwMime::kCte7bit:
-  case DwMime::kCte8bit:
-  case DwMime::kCteBinary:
-    result = aStr;
+    len = aStr.size()-1;
+    dwSrc = DwString(aStr.data(), len);
+    DwEncodeBase64(dwSrc, dwResult);
+    mBody = QString(dwResult.c_str(),dwResult.size());
     break;
   default:
     debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
 	  (const char*)cteStr());
-    result = aStr;
+  case DwMime::kCte7bit:
+  case DwMime::kCte8bit:
+  case DwMime::kCteBinary:
+    mBody = aStr;
+    break;
   }
-  mBody = result;
 }
 
 
@@ -80,28 +85,35 @@ const QString KMMessagePart::bodyDecoded(void) const
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
-    dwSrc = mBody;
+    dwSrc = DwString(mBody.data(), mBody.size());
     DwDecodeQuotedPrintable(dwSrc, dwResult);
+    len = dwResult.size() + 1;
+    result.resize(len);
+    memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
+    break;
     result = dwResult.c_str();
     result.detach();
     break;
   case DwMime::kCteBase64:
-    dwSrc = mBody;
+    dwSrc = DwString(mBody.data(), mBody.size());
     DwDecodeBase64(dwSrc, dwResult);
-    len = dwResult.size();
+    len = dwResult.size() + 1;
     result.resize(len);
     memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
     break;
+  default:
+    debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
+	  (const char*)cteStr());
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
     result = mBody;
     break;
-  default:
-    debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
-	  (const char*)cteStr());
-    result = mBody;
   }
+
+  debug("bodyDecoded (%s): len=%d, size=%d", cteStr().data(), 
+	result.length(), result.size());
+
   return result;
 }
 

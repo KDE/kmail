@@ -99,6 +99,8 @@ protected:
   /** Write per-folder config options. */
   virtual void writeFolderConfig(void);
 
+  virtual void mouseReleaseEvent (QMouseEvent*);
+
 private:
   virtual void updateMessageList(void);
   KMFolder* mFolder;

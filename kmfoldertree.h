@@ -2,7 +2,7 @@
 #define __KMFOLDERTREE
 
 #include <qwidget.h>
-#include "ktablistbox.h"
+#include <ktablistbox.h>
 #include "kmfolder.h"
 
 #define KMFolderTreeInherited KTabListBox

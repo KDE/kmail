@@ -393,13 +393,16 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
   int i, j;
   bool rc;
 
+  debug("recipients: %d", aRecipientList.count());
+  
   for (receiver=recpList->first(); !receiver.isNull(); receiver=recpList->next())
   {
+    debug("receiver: %s", receiver.data());
     i = receiver.find('<');
     if (i >= 0)
     {
       j = receiver.find('>', i+1);
-      receiver = receiver.mid(i+1, j-i-1);
+      if (j > i) receiver = receiver.mid(i+1, j-i-1);
     }
 
     if (!receiver.isEmpty()) 
@@ -631,10 +634,10 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 
   if (!addRecipients(aMsg->headerAddrField("To"))) return FALSE;
 
-  if(!aMsg->cc().isEmpty())
+  if (!aMsg->cc().isEmpty())
     if (!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
 
-  if(!aMsg->bcc().isEmpty())
+  if (!aMsg->bcc().isEmpty())
     if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
 
   app->processEvents(500);

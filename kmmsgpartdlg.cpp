@@ -155,7 +155,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 
   enc = mMsgPart->cteStr();
   if (enc=="base64") idx = 1;
-  else if (enc=="quoted printable") idx = 2;
+  else if (enc=="quoted-printable") idx = 2;
   else idx = 0;
   mCbxEncoding->setCurrentItem(idx);
 }
@@ -180,7 +180,7 @@ void KMMsgPartDlg::applyChanges(void)
 
   idx = mCbxEncoding->currentItem();
   if (idx==1) str = "base64";
-  else if (idx==2) str = "quoted printable";
+  else if (idx==2) str = "quoted-printable";
   else str = "8bit";
 
   type = mEdtMimetype->text();

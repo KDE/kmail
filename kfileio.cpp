@@ -78,7 +78,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     return 0;
   }
 
-  result.resize(len + (int)aEnsureNL);
+  result.resize(len + (int)aEnsureNL + 1);
   readLen = file.readBlock(result.data(), len);
   if (aEnsureNL && result[len-1]!='\n')
   {
@@ -96,6 +96,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     return 0;
   }
 
+  debug("kFileToString: %d bytes read", readLen);
   return result;
 }
 
@@ -163,8 +164,8 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
     return FALSE;
   }
 
-  len = aBuffer.size();
-  debug("writing %d bytes", len);
+  len = aBuffer.size() - 1;
+  debug("kStringToFile: writing %d bytes", len);
   writeLen = file.writeBlock(aBuffer.data(), len);
 
   if (writeLen < 0) 
