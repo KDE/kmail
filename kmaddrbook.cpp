@@ -4,6 +4,7 @@
 // This code is under GPL
 
 #include <config.h>
+#include <unistd.h>
 
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
