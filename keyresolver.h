@@ -280,6 +280,7 @@ namespace Kleo {
     };
 
     ContactPreferences& lookupContactPreferences( const QString& address ) const;
+    void saveContactPreference( const QString& email, const ContactPreferences& pref ) const;
 
   private:
     class EncryptionPreferenceCounter;

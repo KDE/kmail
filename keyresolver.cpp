@@ -112,14 +112,33 @@ static inline bool WithRespectToKeyID( const GpgME::Key & left, const GpgME::Key
 }
 
 static bool ValidTrustedOpenPGPEncryptionKey( const GpgME::Key & key ) {
-  if ( key.protocol() != GpgME::Context::OpenPGP )
+  if ( key.protocol() != GpgME::Context::OpenPGP ) {
     return false;
+  }
+#if 0
+  if ( key.isRevoked() )
+    kdWarning() << " is revoked" << endl;
+  if ( key.isExpired() )
+    kdWarning() << " is expired" << endl;
+  if ( key.isDisabled() )
+    kdWarning() << " is disabled" << endl;
+  if ( !key.canEncrypt() )
+    kdWarning() << " can't encrypt" << endl;
+#endif
   if ( key.isRevoked() || key.isExpired() || key.isDisabled() || !key.canEncrypt() )
     return false;
   const std::vector<GpgME::UserID> uids = key.userIDs();
-  for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it )
+  for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it ) {
     if ( !it->isRevoked() && it->validity() >= GpgME::UserID::Marginal )
       return true;
+#if 0
+    else
+      if ( it->isRevoked() )
+        kdWarning() << "a userid is revoked" << endl;
+      else
+        kdWarning() << "bad validity " << it->validity() << endl;
+#endif
+  }
   return false;
 }
 
@@ -1118,7 +1137,7 @@ void Kleo::KeyResolver::addToAllSplitInfos( const std::vector<GpgME::Key> & keys
 void Kleo::KeyResolver::dump() const {
 #ifndef NDEBUG
   if ( d->mFormatInfoMap.empty() )
-    std::cerr << "empty" << std::endl;
+    std::cerr << "Keyresolver: Format info empty" << std::endl;
   for ( std::map<CryptoMessageFormat,FormatInfo>::const_iterator it = d->mFormatInfoMap.begin() ; it != d->mFormatInfoMap.end() ; ++it ) {
     std::cerr << "Format info for " << Kleo::cryptoMessageFormatToString( it->first )
 	      << ":" << std::endl
@@ -1174,6 +1193,14 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
 
   items = dlg.items();
   senderKeys = dlg.senderKeys();
+
+  if ( dlg.preferencesChanged() ) {
+    for ( uint i = 0; i < items.size(); ++i ) {
+      ContactPreferences& pref = lookupContactPreferences( items[i].address );
+      pref.encryptionPreference = items[i].pref;
+      saveContactPreference( items[i].address, pref );
+    }
+  }
 
   // show a warning if the user didn't select an encryption key for
   // herself:
@@ -1450,6 +1477,22 @@ Kleo::KeyResolver::ContactPreferences& Kleo::KeyResolver::lookupContactPreferenc
   return (*pos).second;
 }
 
+void Kleo::KeyResolver::saveContactPreference( const QString& email, const ContactPreferences& pref ) const
+{
+  KABC::AddressBook *ab = KABC::StdAddressBook::self();
+  KABC::Addressee::List res = ab->findByEmail( email );
+  if ( !res.isEmpty() ) {
+    KABC::Addressee addr = res.first();
+    addr.insertCustom( "KADDRESSBOOK", "CRYPTOENCRYPTPREF", Kleo::encryptionPreferenceToString( pref.encryptionPreference ) );
+    addr.insertCustom( "KADDRESSBOOK", "CRYPTOSIGNPREF", Kleo::signingPreferenceToString( pref.signingPreference ) );
+    addr.insertCustom( "KADDRESSBOOK", "CRYPTOPROTOPREF", cryptoMessageFormatToString( pref.cryptoMessageFormat ) );
+    addr.insertCustom( "KADDRESSBOOK", "OPENPGPFP", pref.pgpKeyFingerprints.join( "," ) );
+    addr.insertCustom( "KADDRESSBOOK", "SMIMEFP", pref.smimeCertFingerprints.join( "," ) );
+    ab->insertAddressee( addr );
+    // Assumption: 'pref' comes from d->mContactPreferencesMap already, no need to update that
+  }
+}
+
 Kleo::KeyResolver::ContactPreferences::ContactPreferences()
   : encryptionPreference( UnknownPreference ),
     signingPreference( UnknownSigningPreference ),
@@ -1474,4 +1517,5 @@ void Kleo::KeyResolver::setKeysForAddress( const QString& address, const QString
   ContactPreferences& pref = lookupContactPreferences( addr );
   pref.pgpKeyFingerprints = pgpKeyFingerprints;
   pref.smimeCertFingerprints = smimeCertFingerprints;
+  saveContactPreference( addr, pref );
 }
