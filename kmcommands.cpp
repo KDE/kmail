@@ -1762,7 +1762,15 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
       }
       file.close();
     } else
-      KMessageBox::error( mParent, i18n( "Could not write the file." ),
+      // FIXME: After string freeze is over:
+      // KMessageBox::error( mParent,
+      //                     i18n( "%1 is detailed error description",
+      //                           "Could not write the file:\n%1" )
+      //                      .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
+      //                     i18n( "KMail Error" ) );
+      KMessageBox::error( mParent,
+                          i18n( "Could not write the file." ) + "\n"
+                          + QString::fromLocal8Bit( strerror( errno ) ),
                           i18n( "KMail Error" ) );
   }
 }
