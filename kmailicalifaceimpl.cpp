@@ -951,8 +951,6 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       // Read the XML from the attachment with the given mimetype
       ok = kolabXMLFoundAndDecoded( *msg, folderKolabMimeType( folder->storage()->contentsType() ), s );
       break;
-    case StorageUnknown: // can't happen
-      break;
     }
     if ( ok ) {
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
@@ -1009,8 +1007,6 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
             }
         }
         break;
-    case StorageUnknown: // can't happen
-      break;
     }
     if ( ok ) {
         kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
@@ -1271,12 +1267,11 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* f
   FolderInfoMap::ConstIterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() )
     return (*it).mStorageFormat;
-  return StorageUnknown;
+  return GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
 }
 
 void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
 {
-  assert( format != StorageUnknown );
   FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
   if ( it != mFolderInfoMap.end() )
     (*it).mStorageFormat = format;

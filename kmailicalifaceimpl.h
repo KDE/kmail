@@ -159,9 +159,8 @@ public:
   /// The imap resource uses this folder if ical/vcard storage,
   /// the kolab resource uses this folder if xml storage.
   /// For actual mail folders this simply to know which resource handles it
-  /// This enum matches the one defined in kmail.kcfg,
-  /// except that unknown was added for internal purposes
-  enum StorageFormat { StorageIcalVcard, StorageXML, StorageUnknown };
+  /// This enum matches the one defined in kmail.kcfg
+  enum StorageFormat { StorageIcalVcard, StorageXML };
 
   /// @return the storage format of a given folder
   StorageFormat storageFormat( KMFolder* folder ) const;
