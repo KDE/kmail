@@ -225,6 +225,15 @@ protected:
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
+  /** 1. Create a new partNode using 'content' data and Content-Description
+         found in 'cntDesc'.
+      2. Make this node the child of 'node'.
+      3. Insert the respective entries in the Mime Tree Viewer.
+      3. Parse the 'node' to display the content. */
+  //  Function will be replaced once KMime is alive.
+  void insertAndParseNewChildNode( partNode& node,
+                                   const char* content,
+                                   const char* cntDesc );
   /** Parse beginning at a given node and recursively parsing
       the children of that node and it's next sibling. */
   //  Function is called internally by "parseMsg(KMMessage* msg)"

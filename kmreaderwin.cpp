@@ -102,6 +102,42 @@ static CryptPlugWrapper* useThisCryptPlug = 0;
 
 
 
+// this function will be replaced once KMime is alive (khz, 04.05.2001)
+void KMReaderWin::insertAndParseNewChildNode( partNode& node,
+                                              const char* content,
+                                              const char* cntDesc )
+{
+  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
+  myBody->Parse();
+
+  if( myBody->hasHeaders() ) {
+    DwText& desc = myBody->Headers().ContentDescription();
+    desc.FromString( cntDesc );
+    desc.SetModified();
+    //desc.Assemble();
+    myBody->Headers().Parse();
+  }
+
+  node.setFirstChild(new partNode(false, myBody))->buildObjectTree( false );
+
+  if( node.mimePartTreeItem() ) {
+kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
+    node.mChild->fillMimePartTree( node.mimePartTreeItem(),
+                                    0,
+                                    "",   // cntDesc,
+                                    "",   // mainCntTypeStr,
+                                    "",   // cntEnc,
+                                    "" ); // cntSize );
+kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
+  } else {
+kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
+              << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
+  }
+  parseObjectTree( node.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
+}
+                                                                                          
+
+
 // this function will be replaced once KMime is alive (khz, 29.11.2001)
 void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
                                                    bool keepEncryptions,
@@ -659,35 +695,9 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                       QCString decryptedData;
                       if( okDecryptMIME( *curNode, decryptedData ) ) {
                         isEncrypted = true;
-                        DwBodyPart* myBody = new DwBodyPart( DwString( decryptedData ),
-                                                            curNode->dwPart() );
-                        myBody->Parse();
-
-                        if( myBody->hasHeaders() ) {
-                          DwText& desc = myBody->Headers().ContentDescription();
-                          desc.FromString( "encrypted data" );
-                          desc.SetModified();
-                          //desc.Assemble();
-                          myBody->Headers().Parse();
-                        }
-
-                        curNode->setFirstChild(
-                          new partNode( false, myBody ) )->buildObjectTree( false );
-
-                        if( curNode->mimePartTreeItem() ) {
-kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
-                          curNode->mChild->fillMimePartTree( curNode->mimePartTreeItem(),
-                                                            0,
-                                                            "",   // cntDesc,
-                                                            "",   // mainCntTypeStr,
-                                                            "",   // cntEnc,
-                                                            "" ); // cntSize );
-kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
-                        } else {
-kdDebug(5006) << "\n     ------  Sorry, curNode->mimePartTreeItem() returns ZERO so"
-              << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
-                        }
-                        parseObjectTree( curNode->mChild );
+                        insertAndParseNewChildNode( *curNode,
+                                                    &*decryptedData,
+                                                    "encrypted data" );
                       }
                       else
                       {
@@ -1740,6 +1750,10 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
         kdDebug(5006) << deb << endl;
 
+        insertAndParseNewChildNode( sign,
+                                    new_cleartext,
+                                    "opaqued signed data" );
+        /*
         DwBodyPart* myBody = new DwBodyPart(DwString( new_cleartext ), sign.dwPart());
         myBody->Parse();
         if( myBody->hasHeaders() ) {
@@ -1765,6 +1779,7 @@ kdDebug(5006) << "\n     ------  Sorry, curNode->mimePartTreeItem() returns ZERO
               << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
         }
         parseObjectTree( sign.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
+        */
         delete new_cleartext;
       } else {
         txt = "<hr><b><h2>";
