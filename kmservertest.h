@@ -82,6 +82,7 @@ protected:
   QString        mAuthTLS;
   KIO::SimpleJob *mJob;
   KIO::Slave     *mSlave;
+  int            mConnectionErrorCount;
 };
 
 #endif

@@ -38,6 +38,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kurl.h>
+#include <kapplication.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kio/job.h>
@@ -47,7 +48,7 @@
 KMServerTest::KMServerTest( const QString & protocol, const QString & host, int port )
   : QObject(),
     mProtocol( protocol ), mHost( host ),
-    mSSL( false ), mJob( 0 ), mSlave( 0 )
+    mSSL( false ), mJob( 0 ), mSlave( 0 ), mConnectionErrorCount( 0 )
 {
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
@@ -107,7 +108,6 @@ void KMServerTest::slotData(KIO::Job *, const QString &data)
     mListSSL = QStringList::split(' ', data);
   else
     mListNormal = QStringList::split(' ', data);
-kdDebug(5006) << data << endl;
 }
 
 
@@ -137,27 +137,41 @@ void KMServerTest::slotResult(KIO::Job *job)
 
 //-----------------------------------------------------------------------------
 void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
-  const QString &)
+  const QString &errorText)
 {
   if (aSlave != mSlave) return;
   if (error != KIO::ERR_SLAVE_DIED && mSlave)
   {
+    // disconnect slave after every connect
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
+  if ( error == KIO::ERR_COULD_NOT_CONNECT )
+  {
+    // if one of the two connection tests fails we ignore the error
+    // if both fail the host is probably not correct so we display the error
+    if ( mConnectionErrorCount == 0 )
+    {
+      error = 0;
+    }
+    ++mConnectionErrorCount;
+  }
+  if ( error )
+  {
+    mJob = 0;
+    KMessageBox::error( kapp->activeWindow(), 
+        KIO::buildErrorString( error, errorText ),
+        i18n("Error") );
+    emit capabilities( mListNormal, mListSSL );
+    emit capabilities( mListNormal, mListSSL, mAuthNone, mAuthSSL, mAuthTLS );
+    return;
+  }
   if (!mSSL) {
     mSSL = true;
-    if ( error )
-      mListNormal.clear();
-    else
-      mListNormal.append("NORMAL-CONNECTION");
+    mListNormal.append("NORMAL-CONNECTION");
     startOffSlave();
   } else {
-    if ( error )
-      mListSSL.clear();
-    else
-      mListSSL.append("SSL");
-
+    mListSSL.append("SSL");
     mJob = 0;
 
     emit capabilities( mListNormal, mListSSL );
