@@ -614,7 +614,7 @@ If this option is turned on, the certificate path belonging to the receiver's ce
 If this option is checked, the check of the certificate chain can end with a locally saved certificate.
 &lt;p&gt;
 Locally saved certificates are your own certificates as well as the certificates of communication partners and certification authorities (CAs).
-&lt;/h1&gt;</string>
+&lt;/qt&gt;</string>
                     </property>
                 </widget>
             </vbox>

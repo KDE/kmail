@@ -631,7 +631,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <string>Select how often the PIN must be entered</string>
                                     </property>
                                     <property name="whatsThis" stdset="0">
-                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
                                 <widget class="QRadioButton">
@@ -648,7 +648,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <string>Select how often the PIN must be entered</string>
                                     </property>
                                     <property name="whatsThis" stdset="0">
-                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
                                 <widget class="QRadioButton">
@@ -662,7 +662,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <string>Select how often the PIN must be entered</string>
                                     </property>
                                     <property name="whatsThis" stdset="0">
-                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
                                 <widget class="QRadioButton">
@@ -676,7 +676,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <string>Select how often the PIN must be entered</string>
                                     </property>
                                     <property name="whatsThis" stdset="0">
-                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
                                 <widget class="QLayoutWidget">
@@ -704,7 +704,7 @@ When this option is selected, both the signature and the signed data will be enc
                                                 <string>Select how often the PIN must be entered</string>
                                             </property>
                                             <property name="whatsThis" stdset="0">
-                                                <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                                <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;</string>
                                             </property>
                                         </widget>
                                         <widget class="QSpinBox">
