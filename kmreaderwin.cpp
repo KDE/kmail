@@ -448,6 +448,7 @@ void KMReaderWin::displayAboutPage()
     "<ul>\n"
     "<li>IMAP support</li>\n"
     "<li>Non-blocking sending</li>\n"
+    "<li>Performance improvements for huge folders</li>\n"
     "<li>Only the selected part of a mail will be quoted on reply</li>\n"
     "<li>Delete old messages from the trash folder on exit</li>\n"
     "<li>Collapsable threads</li>\n"
@@ -455,6 +456,8 @@ void KMReaderWin::displayAboutPage()
     "<li>Bind an SMTP server to an identity</li>\n"
     "<li>Better procmail support via the local account</li>\n"
     "<li>Messages can be flagged</li>\n"
+    "<li>Automatic filter creation</li>\n"
+    "<li>Read the new messages by only hitting the space key</li>\n"
     "</ul>\n") +
     i18n("<p>Please take a moment to fill in the KMail configuration panel at "
     "Settings-&gt;Configuration.\n"
