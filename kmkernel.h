@@ -286,13 +286,13 @@ public slots:
   void slotEmptyTrash();
 
   void slotShowConfigurationDialog();
+  void slotRunBackgroundTasks();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
   void slotConfigChanged();
   void slotFolderRemoved(KMFolder*);
-  void slotRunBackgroundTasks();
 
 signals:
   void configChanged();
