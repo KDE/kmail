@@ -656,7 +656,7 @@ void AccountDialog::makeImapAccountPage(bool cached)
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 14, 2, marginHint(), spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 15, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
@@ -723,24 +723,28 @@ void AccountDialog::makeImapAccountPage(bool cached)
     new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
   grid->addMultiCellWidget( mImap.excludeCheck, 10, 10, 0, 1 );
 
+  mImap.progressDialogCheck = 
+    new QCheckBox( i18n("Show progressdialog"), page1);
+  grid->addMultiCellWidget( mImap.progressDialogCheck, 11, 11, 0, 2 );
+
   mImap.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page1 );
-  grid->addMultiCellWidget( mImap.intervalCheck, 11, 11, 0, 2 );
+  grid->addMultiCellWidget( mImap.intervalCheck, 12, 12, 0, 2 );
   connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableImapInterval(bool)) );
   mImap.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
-  grid->addWidget( mImap.intervalLabel, 12, 0 );
+  grid->addWidget( mImap.intervalLabel, 13, 0 );
   mImap.intervalSpin = new KIntNumInput( page1 );
   mImap.intervalSpin->setRange( 1, 60, 1, FALSE );
   mImap.intervalSpin->setValue( 1 );
   mImap.intervalSpin->setSuffix( i18n( " min" ) );
   mImap.intervalLabel->setBuddy( mImap.intervalSpin );
-  grid->addWidget( mImap.intervalSpin, 12, 1 );
+  grid->addWidget( mImap.intervalSpin, 13, 1 );
 
   mImap.trashCombo = new KMFolderComboBox( page1 );
   mImap.trashCombo->showOutboxFolder( FALSE );
-  grid->addWidget( mImap.trashCombo, 13, 1 );
-  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash folder:"), page1 ), 13, 0 );
+  grid->addWidget( mImap.trashCombo, 14, 1 );
+  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash folder:"), page1 ), 14, 0 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -912,6 +916,8 @@ void AccountDialog::setupSettings()
   }
   else if( accountType == "cachedimap" )
   {
+    kdDebug() << "account type is " << mAccount->className() << endl;
+    assert( mAccount->isA("KMAcctCachedImap") );
     KMAcctCachedImap &ai = *(KMAcctCachedImap*)mAccount;
     mImap.nameEdit->setText( mAccount->name() );
     mImap.nameEdit->setFocus();

@@ -75,7 +75,7 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   int rc;
 
   assert(!aFolderName.isEmpty());
-  if (mImap)
+  if (mImap && aFolderType != KMFolderTypeCachedImap )
     fld = new KMFolderImap(this, aFolderName);
   else if (aFolderType == KMFolderTypeCachedImap )
     fld = new KMFolderCachedImap(this, aFolderName);

@@ -721,6 +721,7 @@ void KMKernel::cleanupImapFolders()
     if (acct->type() == "imap") {
       fld = static_cast<KMFolderImap*>(the_imapFolderMgr
 				       ->findOrCreate(acct->name(), FALSE));
+      assert( fld->isA("KMFolderImap") );
       fld->setNoContent(TRUE);
       imapAcct = static_cast<KMAcctImap*>(acct);
       fld->setAccount(imapAcct);
@@ -738,6 +739,8 @@ void KMKernel::cleanupImapFolders()
       }
 
       //cfld->setNoContent(TRUE);
+      assert( acct->isA("KMAcctCachedImap") );
+      assert( cfld->isA("KMFolderCachedImap") );
       cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
       cfld->setAccount(cachedImapAcct);
       cachedImapAcct->setImapFolder(cfld);

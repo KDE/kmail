@@ -875,7 +875,7 @@ QCString KMFolderCachedImap::statusToFlags(KMMsgStatus status)
 void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {
   // kdDebug() << "KMFolderCachedImap::setAccount( " << aAccount->name() << " )" << endl;
-  assert( aAccount->isA("KMAcctCachedImap") );
+  assert( aAccount && aAccount->isA("KMAcctCachedImap") );
   mAccount = aAccount;
   if( imapPath()=="/" ) aAccount->setFolder(this);
   if (!mChild) return;
