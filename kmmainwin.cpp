@@ -175,7 +175,7 @@ void KMMainWin::readConfig(void)
   {
     if (oldLongFolderList != mLongFolderList)
       activatePanners();
-    kernel->kbp()->busy();
+    //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
     if (qlvi!=0) {
@@ -184,7 +184,7 @@ void KMMainWin::readConfig(void)
     }
     mMsgView->setMsg( mMsgView->msg(), TRUE );
     mHeaders->setFolder(mFolder);
-    kernel->kbp()->idle();
+    //    kernel->kbp()->idle(); //For symmetry
     show();
   }
 }
@@ -302,6 +302,7 @@ void KMMainWin::activatePanners(void)
   }
   mHorizPanner->setSizes( *mHorizPannerSep );
   mVertPanner->setSizes( *mVertPannerSep );
+  mVertPanner->setResizeMode( mFolderTree, QSplitter::KeepSize);
 }
 
 
