@@ -990,11 +990,12 @@ void KMFolderSearch::examineCompletedFolder(KMFolderImap *aFolder, bool success)
         assert(folder && (idx != -1));
         // Could it be another folder?
         assert(folder == aFolder);
-        assert(folder->isOpened());
         // FIXME separate headers and body matching
+        folder->open();
         KMMessage *msg = folder->getMsg(idx);
         if (search()->searchPattern()->matches(msg))
             addSerNum(serNum);
+        folder->close();
     }
 }
 
