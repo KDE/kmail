@@ -1,5 +1,6 @@
 // kmfoldertree.cpp
 #include <qpainter.h>
+#include <qcursor.h>
 
 #include <unistd.h>
 #include <assert.h>
