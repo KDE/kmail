@@ -160,7 +160,7 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) {
     return 2;
 
   KMFolder *folder = MessageProperty::filterFolder( msg );
-  
+
   endFiltering( msg );
   if (folder) {
     tempOpenFolder( folder );
