@@ -1239,34 +1239,22 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   e->accept( acceptDrag(e) );
 }
 
-static const int autoscroll_margin = 16;
-
 //-----------------------------------------------------------------------------
 void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
 {
     QPoint vp = contentsToViewport(e->pos());
-    QRect inside_margin((contentsX() > 0) ? autoscroll_margin : 0,
-                        (contentsY() > 0) ? autoscroll_margin : 0,
-      visibleWidth() - ((contentsX() + visibleWidth() < contentsWidth())
-        ? autoscroll_margin*2 : 0),
-      visibleHeight() - ((contentsY() + visibleHeight() < contentsHeight())
-        ? autoscroll_margin*2 : 0));
     QListViewItem *i = itemAt( vp );
     if ( i ) {
         bool dragAccepted = acceptDrag( e );
         if ( dragAccepted ) {
             setCurrentItem( i );
         }
-        if ( !inside_margin.contains(vp) ) {
-            autoopen_timer.stop();
-        } else {
             e->accept( dragAccepted );
             if ( i != dropItem ) {
                 autoopen_timer.stop();
                 dropItem = i;
                 autoopen_timer.start( autoopenTime );
             }
-        }
         if ( dragAccepted ) {
             switch ( e->action() ) {
                 case QDropEvent::Copy:
