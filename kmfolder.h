@@ -136,7 +136,7 @@ public:
   virtual DwString getDwString(int idx) = 0;
 
   /**
-   * The following two functions have to be reimplemented in dereived folders.
+   * The following two functions have to be reimplemented in derived folders.
    * They're supposed to create respective KMFolderJob (You should derive KMFolderJob
    * for each derived KMFolder).
    */
@@ -479,7 +479,7 @@ signals:
   /** Emitted when the icon paths are set. */
   void iconsChanged();
 
-  /** Emitted before a message is removed from the folder. */  
+  /** Emitted before a message is removed from the folder. */
   void msgRemoved(KMFolder*, Q_UINT32 sernum);
 
   /** Emitted after a message is removed from the folder. */

@@ -627,8 +627,8 @@ public:
   void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
 
   /** Get/set size of message in the folder including the whole header in
-      bytes. Can be 0, if the message is not is a folder
-      the setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
+      bytes. Can be 0, if the message is not in a folder.
+      The setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
   virtual size_t msgSize(void) const { return mMsgSize; }
   void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
 
