@@ -944,7 +944,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   mEdtReplyTo.setText(mMsg->replyTo());
   mEdtBcc.setText(mMsg->bcc());
 
-  if (!mBtnIdentity.isChecked())
+  if (!mBtnIdentity.isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
     mId = newMsg->headerField("X-KMail-Identity");
 
   for (int i=0; i < mIdentity.count(); ++i)
