@@ -646,6 +646,7 @@ void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint 
     return;
   
   KMMessage *msg = new KMMessage;
+  msg->initHeader();
   msg->setTo(fti->folder->mailingListPostAddress());
   KMComposeWin *win = new KMComposeWin(msg);
   win->show();

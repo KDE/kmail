@@ -821,6 +821,7 @@ void KMMainWin::slotPostToList()
   if (!mFolder || !mFolder->isMailingList()) return;
 
   KMMessage *msg = new KMMessage;
+  msg->initHeader();
   msg->setTo(mFolder->mailingListPostAddress());
   KMComposeWin *win = new KMComposeWin(msg);
   win->show();
