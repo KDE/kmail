@@ -100,7 +100,7 @@ kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
 
 KMMsgSignatureState  partNode::overallSignatureState() const
 {
-    KMMsgSignatureState myState = KMMsgSignatureState;
+    KMMsgSignatureState myState = KMMsgSignatureStateUnknown;
     if( mIsSigned )
         myState = KMMsgFullySigned;
     else {
