@@ -4868,8 +4868,8 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
                                       i18n("You did not specify a subject. "
                                            "Send message anyway?"),
                                       i18n("No Subject Specified"),
-                                      i18n("&Yes, Send as Is"),
-                                      i18n("&No, Let Me Specify the Subject"),
+                                      i18n("S&end as Is"),
+                                      i18n("&Specify the Subject"),
                                       "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
