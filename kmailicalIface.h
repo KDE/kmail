@@ -69,8 +69,9 @@ k_dcop:
   virtual Q_UINT32 update( const QString& resource,
                            Q_UINT32 sernum,
                            const QString& subject,
-                           const QStringList& attachments,
-                           const QStringList& mimetypes,
+                           const QStringList& attachmentURLs,
+                           const QStringList& attachmentMimetypes,
+                           const QStringList& attachmentNames,
                            const QStringList& deletedAttachments ) = 0;
 
   virtual bool deleteIncidenceKolab( const QString& resource,

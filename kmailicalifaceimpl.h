@@ -80,8 +80,9 @@ public:
   Q_UINT32 update( const QString& resource,
                    Q_UINT32 sernum,
                    const QString& subject,
-                   const QStringList& attachments, // paths
-                   const QStringList& mimetypes,
+                   const QStringList& attachmentURLs,
+                   const QStringList& attachmentMimetypes,
+                   const QStringList& attachmentNames,
                    const QStringList& deletedAttachments );
 
   bool deleteIncidenceKolab( const QString& resource,
@@ -187,12 +188,17 @@ private:
 
   KMFolder* findResourceFolder( const QString& resource );
 
-  bool updateAttachment( KMMessage& msg, const QString& attachmentURL, const QString& mimetype );
-  bool deleteAttachment( KMMessage& msg, const QString& attachmentURL );
+  bool updateAttachment( KMMessage& msg,
+                         const QString& attachmentURL,
+                         const QString& attachmentName,
+                         const QString& attachmentMimetype );
+  bool deleteAttachment( KMMessage& msg,
+                         const QString& attachmentURL );
   Q_UINT32 addIncidenceKolab( KMFolder& folder,
                               const QString& subject,
-                              const QStringList& attachments,
-                              const QStringList& mimetypes );
+                              const QStringList& attachmentURLs,
+                              const QStringList& attachmentNames,
+                              const QStringList& attachmentMimetypes );
   static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
   void loadPixmaps() const;
 

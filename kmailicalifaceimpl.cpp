@@ -203,7 +203,8 @@ static DwBodyPart* findBodyPart( const KMMessage& msg, const char* sType, const 
 // return value: wrong if attachment could not be added/updated
 bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
                                            const QString& attachmentURL,
-                                           const QString& mimetype )
+                                           const QString& attachmentName,
+                                           const QString& attachmentMimetype )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::updateAttachment( " << attachmentURL << " )" << endl;
 
@@ -219,14 +220,17 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
 
       // create the new message part with data read from temp file
       KMMessagePart msgPart;
-      msgPart.setName( "kolab.xml" );
+      msgPart.setName( attachmentName );
 
-      const int iSlash = mimetype.find('/');
-      const QCString sType    = mimetype.left( iSlash   ).latin1();
-      const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
+      const int iSlash = attachmentMimetype.find('/');
+      const QCString sType    = attachmentMimetype.left( iSlash   ).latin1();
+      const QCString sSubtype = attachmentMimetype.mid(  iSlash+1 ).latin1();
       msgPart.setTypeStr( sType );
       msgPart.setSubtypeStr( sSubtype );
-      msgPart.setContentDisposition( "attachment;\n  filename=\"kolab.xml\"" );
+      QCString ctd("attachment;\n  filename=\"");
+      ctd.append( attachmentName.latin1() );
+      ctd.append("\"");
+      msgPart.setContentDisposition( ctd );
       QValueList<int> dummy;
       msgPart.setBodyAndGuessCte( rawData, dummy );
       msgPart.setPartSpecifier( fileName );
@@ -281,9 +285,9 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
 // the attachment by an empty dummy attachment since Mimelib
 // does not provide an option for deleting attachments yet.
 bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
-                                           const QString& attachmentURL )
+                                           const QString& attachmentName )
 {
-  kdDebug(5006) << "KMailICalIfaceImpl::deleteAttachment( " << attachmentURL << " )" << endl;
+  kdDebug(5006) << "KMailICalIfaceImpl::deleteAttachment( " << attachmentName << " )" << endl;
 
   bool bOK = false;
 
@@ -291,7 +295,7 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   // top-level parts we do *not* have to travel into embedded multiparts
   DwBodyPart* part = msg.getFirstDwBodyPart();
   while( part ){
-    if( attachmentURL == part->partId() ){
+    if( attachmentName == part->partId() ){
       DwBodyPart emptyPart;
       // Make sure the empty replacement body part is pointing
       // to the same next part as the to be deleted body part.
@@ -307,7 +311,7 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   }
 
   if( !bOK ){
-    kdDebug(5006) << "Attachment " << attachmentURL << " not found." << endl;
+    kdDebug(5006) << "Attachment " << attachmentName << " not found." << endl;
   }
 
   return bOK;
@@ -317,10 +321,11 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 // Store a new entry that was received from the resource
 Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
-                                                const QStringList& attachments,
-                                                const QStringList& mimetypes )
+                                                const QStringList& attachmentURLs,
+                                                const QStringList& attachmentNames,
+                                                const QStringList& attachmentMimetypes )
 {
-  kdDebug(5006) << "KMailICalIfaceImpl::addIncidenceKolab( " << attachments << " )" << endl;
+  kdDebug(5006) << "KMailICalIfaceImpl::addIncidenceKolab( " << attachmentNames << " )" << endl;
 
   Q_UINT32 sernum = 0;
   bool bAttachOK = true;
@@ -334,13 +339,33 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubtype( DwMime::kSubtypeMixed );
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
+  // add a first body part to be displayed by all mailer
+  // than cn NOT display Kolab data: no matter if these
+  // mailers are MIME compliant or not
+  KMMessagePart firstPart;
+  firstPart.setType(    DwMime::kTypeText     );
+  firstPart.setSubtype( DwMime::kSubtypePlain );
+  const char * firstPartTextUntranslated = I18N_NOOP(
+    "This is a Kolab Groupware object.\nTo view this object you"
+    " will need an email client that can understand the Kolab"
+    " Groupware format.\nFor a list of such email clients please"
+    " visit\nhttp:://www.kolab.org/kolab-clients.html");
+  QString firstPartText = i18n( firstPartTextUntranslated );
+  firstPartText.append("\n\n-----------------------------------------------------\n\n");
+  firstPartText.append( firstPartTextUntranslated );
+  firstPart.setBodyFromUnicode( firstPartText );
+  msg->addBodyPart( &firstPart );
+
 
   // Add all attachments by reading them from their temp. files
-  QStringList::ConstIterator itmime = mimetypes.begin();
-  for( QStringList::ConstIterator it = attachments.begin();
-       it != attachments.end() && itmime != mimetypes.end();
-       ++it, ++itmime ){
-    if( !updateAttachment( *msg, *it, *itmime ) ){
+  QStringList::ConstIterator itmime = attachmentMimetypes.begin();
+  QStringList::ConstIterator iturl = attachmentURLs.begin();
+  for( QStringList::ConstIterator itname = attachmentNames.begin();
+       itname != attachmentNames.end()
+       && itmime != attachmentMimetypes.end()
+       && iturl != attachmentURLs.end();
+       ++itname, ++iturl, ++itmime ){
+    if( !updateAttachment( *msg, *iturl, *itname, *itmime ) ){
       kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
@@ -659,8 +684,9 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
-                                     const QStringList& attachments,
-                                     const QStringList& mimetypes,
+                                     const QStringList& attachmentURLs,
+                                     const QStringList& attachmentMimetypes,
+                                     const QStringList& attachmentNames,
                                      const QStringList& deletedAttachments )
 {
   Q_UINT32 rc = 0;
@@ -712,11 +738,14 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     // Add all attachments by reading them from their temp. files
-    QStringList::ConstIterator itmime = mimetypes.begin();
-    for( QStringList::ConstIterator it2 = attachments.begin();
-         it2 != attachments.end() && itmime != attachments.end();
-         ++it2, ++itmime ){
-      if( !updateAttachment( *msg, *it2, *itmime ) ){
+    QStringList::ConstIterator itmime = attachmentMimetypes.begin();
+    QStringList::ConstIterator itname = attachmentNames.begin();
+    for( QStringList::ConstIterator iturl = attachmentURLs.begin();
+         iturl != attachmentURLs.end()
+         && itmime != attachmentMimetypes.end()
+         && iturl != attachmentURLs.end();
+         ++iturl, ++itname, ++itmime ){
+      if( !updateAttachment( *msg, *iturl, *itname, *itmime ) ){
         kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
         break;
       }
@@ -733,7 +762,10 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 
   }else{
     // Message not found - store it newly
-    rc = addIncidenceKolab( *f, subject, attachments, mimetypes );
+    rc = addIncidenceKolab( *f, subject,
+                            attachmentURLs,
+                            attachmentNames,
+                            attachmentMimetypes );
   }
 
   mResourceQuiet = quiet;
