@@ -283,7 +283,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   // type than "text".
   if (numBodyParts() == 0)
   {
-    resultStr = QString(body()).stripWhiteSpace().replace(reNL,nlIndentStr) +
+    resultStr = QString(bodyDecoded()).stripWhiteSpace().replace(reNL,nlIndentStr) +
                 aIndentStr;
   }
   else
@@ -295,7 +295,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
       if (msgPart.typeStr()=="text")
       {
 	resultStr += aIndentStr;
-	resultStr += QString(msgPart.body()).replace(reNL,(const char*)nlIndentStr);
+	resultStr += QString(msgPart.bodyDecoded()).replace(reNL,(const char*)nlIndentStr);
 	resultStr += aIndentStr;
       }
       else

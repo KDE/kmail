@@ -26,10 +26,10 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   initMetaObject();
   assert(aOwner != NULL);
 
-  mOwner   = aOwner;
-  mName    = aName;
-  mFolder  = NULL;
-
+  mOwner  = aOwner;
+  mName   = aName;
+  mFolder = NULL;
+  mTimer  = NULL;
 }
 
 
