@@ -20,6 +20,8 @@ KMMainWin::KMMainWin(QWidget *)
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
   setupStatusBar();
+  if (kmkernel->xmlGuiInstance())
+    setInstance( kmkernel->xmlGuiInstance() );
 
 #if KDE_IS_VERSION( 3, 1, 90 )
   createStandardStatusBarAction();
