@@ -2349,11 +2349,15 @@ void KMComposeWin::slotAppendSignature()
   KMIdentity ident( identStr );
   ident.readConfig();
   QString sigText = ident.signature();
-  if( sigText.isEmpty() && ident.useSignatureFile() )
+  if( sigText.isNull() && ident.useSignatureFile() )
   {
     // open a file dialog and let the user choose manually
     KFileDialog dlg( QDir::homeDirPath(), QString::null, this, 0, TRUE );
-    dlg.setCaption(i18n("Choose Signature File"));
+    if (ident.signatureIsPlainFile())
+      dlg.setCaption(i18n("Choose Signature File"));
+    else
+      // make this "Choose Signature Command" on msg thaw.
+      dlg.setCaption(i18n("Choose Signature File"));
     if( !dlg.exec() )
     {
       return;
@@ -2369,9 +2373,16 @@ void KMComposeWin::slotAppendSignature()
       return;
     }
     QString sigFileName = url.path();
-    sigText = QString::fromLocal8Bit(kFileToString(sigFileName, TRUE));
+    QFileInfo qfi( sigFileName );
+    if ( ident.signatureIsCommand() && !qfi.isExecutable() )
+    {
+      // ### Commented out due to msg freeze (remove comment and underscores):
+      //KMessageBox::sorry( 0L, _i_1_8_n_( "%1 is not executable." ).arg( url.path() ) );
+      return;
+    }
     ident.setSignatureFile(sigFileName);
     ident.writeConfig(true);
+    sigText = ident.signature(false); // try again, but don't prompt
   }
 
   mOldSigText = sigText;

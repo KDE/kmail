@@ -69,6 +69,13 @@ public:
   QString replyToAddr(void) const { return mReplyToAddr; }
   virtual void setReplyToAddr(const QString&);
 
+  /** @return true if the signature is read from the output of a command */
+  bool signatureIsCommand() const { return mUseSignatureFile && mSignatureFile.endsWith(QString::fromLatin1("|")); }
+  /** @return true if the signature is read from a text file */
+  bool signatureIsPlainFile() const { return mUseSignatureFile && !mSignatureFile.endsWith(QString::fromLatin1("|")); }
+  /** @return true if the signature was specified directly */
+  bool signatureIsInline() const { return !mUseSignatureFile; }
+
   /** name of the signature file (with path) */
   QString signatureFile(void) const { return mSignatureFile; }
   virtual void setSignatureFile(const QString&);
@@ -81,11 +88,12 @@ public:
   bool useSignatureFile(void) { return mUseSignatureFile; }
   void setUseSignatureFile(bool);
 
-  /** Returns the signature. This method also takes care of
-    special signature files that are shell scripts and handles
-    them correct. So use this method to rectreive the contents of
-    the signature file. */
-  virtual QString signature(void) const;
+  /** Returns the signature. This method also takes care of special
+    signature files that are shell scripts and handles them
+    correct. So use this method to rectreive the contents of the
+    signature file. If @p prompt is false, no errors will be displayed
+    (useful for retries). */
+  virtual QString signature(bool prompt=true) const;
 
   /** The transport that is set for this identity. Used to link a
       transport with an identity. */

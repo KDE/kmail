@@ -246,6 +246,9 @@ void KMIdentity::setReplyToAddr(const QString& str)
 //-----------------------------------------------------------------------------
 void KMIdentity::setSignatureFile(const QString &str)
 {
+  if ( signatureIsCommand() )
+    mSignatureFile = str + '|';
+  else
     mSignatureFile = str;
 }
 
@@ -284,15 +287,15 @@ void KMIdentity::setDrafts(const QString &str)
 
 
 //-----------------------------------------------------------------------------
-QString KMIdentity::signature(void) const
+QString KMIdentity::signature(bool prompt) const
 {
   QString result, sigcmd;
 
-  if( mUseSignatureFile == false ) { return mSignatureInlineText; }
+  if (!mUseSignatureFile ) return mSignatureInlineText;
 
   if (mSignatureFile.isEmpty()) return QString::null;
 
-  if (mSignatureFile.right(1)=="|")
+  if (mSignatureFile.endsWith("|"))
   {
     KTempFile tmpf;
     int rc;
@@ -300,8 +303,10 @@ QString KMIdentity::signature(void) const
     tmpf.setAutoDelete(true);
     // signature file is a shell script that returns the signature
     if (tmpf.status() != 0) {
-      QString wmsg = i18n("Failed to create temporary file\n%1:\n%2").arg(tmpf.name()).arg(strerror(errno));
-      KMessageBox::information(0, wmsg);
+      if ( prompt ) {
+	QString wmsg = i18n("Failed to create temporary file\n%1:\n%2").arg(tmpf.name()).arg(strerror(errno));
+	KMessageBox::information(0, wmsg);
+      }
       return QString::null;
     }
     tmpf.close();
@@ -316,8 +321,10 @@ QString KMIdentity::signature(void) const
 
     if (rc != 0)
     {
-      QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd).arg(strerror(rc));
-      KMessageBox::information(0, wmsg);
+      if ( prompt ) {
+	QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd).arg(strerror(rc));
+	KMessageBox::information(0, wmsg);
+      }
       return QString::null;
     }
     result = QString::fromLocal8Bit(kFileToString(tmpf.name(), TRUE, FALSE));
