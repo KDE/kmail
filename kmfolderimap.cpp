@@ -669,8 +669,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   while (pos >= 0)
   {
     KMMessage *msg = new KMMessage;
-    msg->fromString((*it).cdata.mid(16, pos - 16).
-      replace(QRegExp("\r\n\r\n"),"\r\n"));
+    msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
     if (flags & 8) delete msg;
     else {
