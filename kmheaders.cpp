@@ -69,7 +69,7 @@ public:
   KMFolder *mFolder;
   int mMsgId;
   QColor *mColor;
-  QString mSortDate, mSortSubject, mSortSender, mSortArrival;
+  QString mSortDate, mSortArrival;
   KMPaintInfo *mPaintInfo;
   
   // Constuction a new list view item with the given colors and pixmap
@@ -184,8 +184,6 @@ public:
     char cDate[dateLength + 1];
     strftime( cDate, dateLength, "%Y:%j:%T", gmtime( &mDate ));
     mSortDate = cDate + mSortArrival;
-    mSortSender = text(mPaintInfo->senderCol).lower() + " " + mSortArrival;
-    mSortSubject = KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) + " " + mSortArrival;
   }
 
   // Retrun the msgId of the message associated with this item
@@ -240,19 +238,18 @@ public:
 	return mSortDate;
     }
     else if (column == mPaintInfo->senderCol)
-      return mSortSender;
+      return text(mPaintInfo->senderCol).lower() + " " + mSortArrival;
     else if (column == mPaintInfo->subCol) {
       if (mPaintInfo->status)
 	return QString( QChar( (char)mFolder->getMsgBase( mMsgId )->status() ));
       else
-	return mSortSubject;
+	return KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) 
+	  + " " + mSortArrival;
     }
     else
       return text(column);
   }
 };
-
-#include "qcstring.h"
 
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
@@ -780,6 +777,10 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     setCurrentItem( next );
     setSelected( next, TRUE );
     highlightMessage( next );
+  }
+  else if (currentItem()) {
+    setSelected( currentItem(), TRUE );
+    highlightMessage( currentItem() );
   }
   else
     emit selected( 0 );
