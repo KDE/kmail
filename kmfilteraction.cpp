@@ -313,7 +313,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
 {
   QString result = mParameter;
   QValueList<int> argList;
-  QRegExp r( "%[0-9]+" );
+  QRegExp r( "%[\\-0-9]+" );
   int start=-1, len=0;
   bool OK = FALSE;
   
@@ -329,7 +329,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   qHeapSort( argList );
 
   // and use QString::arg to substitute filenames for the %n's.
-  int lastSeen = -1;
+  int lastSeen = -2;
   QString tempFileName;
   KMMessagePart msgPart;
   QValueList<int>::Iterator it;
@@ -345,15 +345,24 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       tf->setAutoDelete(TRUE);
       aTempFileList.append( tf );
       tempFileName = tf->name();
-      aMsg->bodyPart( (*it), &msgPart );
-      kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
-			false, false, false );
+      if ((*it) == -1)
+        kCStringToFile( aMsg->asString().data(), tempFileName,
+                          false, false, false );
+      else if (aMsg->numBodyParts() == 0)
+        kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
+                          false, false, false );
+      else {
+        aMsg->bodyPart( (*it), &msgPart );
+        kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
+                          false, false, false );
+      }
       tf->close();
     }
     // QString( "%0 and %1 and %1" ).arg( 0 ).arg( 1 )
     // returns "0 and 1 and %1", so we must call .arg as
     // many times as there are %n's, regardless of their multiplicity.
-    result = result.arg( tempFileName );
+    if ((*it) == -1) result.replace( QRegExp("%-1"), tempFileName );
+    else result = result.arg( tempFileName );
   }
 
   return result;
