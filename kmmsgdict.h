@@ -31,6 +31,10 @@ public:
    * serial number. */
   unsigned long insert(const KMMsgBase *msg, int index = -1);
 
+  /** Set the serial number of @p msg to @p msgSerNum */
+  void replace(unsigned long msgSerNum,
+	       const KMMsgBase *msg, int index = -1);
+
   /** Removes a message. */
   void remove(unsigned long msgSerNum);
 

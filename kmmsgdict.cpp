@@ -211,6 +211,28 @@ unsigned long KMMsgDict::insert(const KMMsgBase *msg, int index)
 
 //-----------------------------------------------------------------------------
 
+void KMMsgDict::replace(unsigned long msgSerNum,
+		       const KMMsgBase *msg, int index)
+{
+  KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
+  if ( folder && index == -1 )
+    index = folder->find( msg );
+
+  remove( msgSerNum );
+  KMMsgDictEntry *entry = new KMMsgDictEntry( folder->folder(), index );
+  dict->insert( (long)msgSerNum, entry );
+
+  KMMsgDictREntry *rentry = folder->rDict();
+  if (!rentry) {
+    rentry = new KMMsgDictREntry();
+    folder->setRDict(rentry);
+  }
+  rentry->set(index, entry);
+
+}
+
+//-----------------------------------------------------------------------------
+
 void KMMsgDict::remove(unsigned long msgSerNum)
 {
   long key = (long)msgSerNum;
