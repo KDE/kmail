@@ -46,7 +46,7 @@ using KMail::FolderJob;
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
 #define GRAB_TIMER(x) x ## _tmp2.msecsTo(QTime::currentTime())
 #define END_TIMER(x) x += GRAB_TIMER(x); x ## _tmp++
-#define SHOW_TIMER(x) kdDebug(5006) << "#x == " << x << "(" << x ## _tmp << ")\n"
+#define SHOW_TIMER(x) kdDebug(5006) << #x " == " << x << "(" << x ## _tmp << ")\n"
 #else
 #define CREATE_TIMER(x)
 #define START_TIMER(x)
