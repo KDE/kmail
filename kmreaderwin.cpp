@@ -253,8 +253,10 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 			     + type + "/"+ subType + ".kdelnk"); // Search for mimetype.
      cout << type  << "/" << subType << ".kdelnk" << endl;
      if(file->open(IO_ReadOnly)) // if mimetype exists                        
-        {QTextStream pstream(file);         
-	KConfig config(&pstream);
+	   {// kalleQTextStream pstream(file);         
+		 file->close(); // kalle
+	KConfig config(KApplication::kdedir()+"/share/mimelnk/" 
+				   + type + "/"+ subType + ".kdelnk"); // kalle
 	config.setGroup("KDE Desktop Entry");
 	icon = config.readEntry("Icon");
 	if(icon.isEmpty()) // If no icon specified.
@@ -302,8 +304,10 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	    printf("Not a  registered mimetype\n");
 	    }
 	  
-	  QTextStream pstream(file);
-	  KConfig config(&pstream);
+	  file->close(); // kalle
+	  // kalle	  QTextStream pstream(file);
+	  KConfig config(KApplication::kdedir()+"/share/mimelnk" 
+					 + "/text/plain.kdelnk"); // kalle
 	  config.setGroup("KDE Desktop Entry");
 	  QString icon = config.readEntry("Icon");
 	  if(icon.isEmpty())
@@ -334,8 +338,10 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 			     + type + "/" + subType + ".kdelnk"); // Search for mimetype.
 	cout << type << subType + ".kdelnk" << endl;
      if(file->open(IO_ReadOnly)) // if mimetype exists                        
-        {QTextStream pstream(file);         
-	KConfig config(&pstream);
+	   {// kalle QTextStream pstream(file);         
+		 file->close(); // kalle
+	KConfig config(KApplication::kdedir()+"/share/mimelnk/" 
+			     + type + "/" + subType + ".kdelnk");
 	config.setGroup("KDE Desktop Entry");
 	icon = config.readEntry("Icon");
 	if(icon.isEmpty()) // If no icon specified.

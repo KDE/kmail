@@ -11,7 +11,7 @@
 #include <qlined.h>
 #include <qwidget.h>
 #include <qobject.h>
-#include <Kconfig.h>
+#include <kconfig.h>
 #include <kmsgbox.h>
 
 class QFile;

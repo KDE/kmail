@@ -62,9 +62,9 @@ void KMAccount::openConfig(void)
 
   acctPath = mOwner->basePath() + "/" + mName;
   mCFile   = new QFile(acctPath);
-  mCFile->open(IO_ReadWrite);
-  mCStream = new QTextStream(mCFile);
-  mConfig  = new KConfig(mCStream);
+  // kalle  mCFile->open(IO_ReadWrite);
+  // kalle  mCStream = new QTextStream(mCFile);
+  mConfig  = new KConfig(acctPath);
 }
 
 

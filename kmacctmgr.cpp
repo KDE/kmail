@@ -9,7 +9,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qmsgbox.h>
-#include <Kconfig.h>
+#include <kconfig.h>
 #include <klocale.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -103,9 +103,9 @@ bool KMAcctMgr::reload(void)
   {
     acctPath = mBasePath+"/"+acctName;
     cFile   = new QFile(acctPath);
-    cFile->open(IO_ReadWrite);
-    cStream = new QTextStream(cFile);
-    config  = new KConfig(cStream);
+	// kalle    cFile->open(IO_ReadWrite);
+	// kalle    cStream = new QTextStream(cFile);
+    config  = new KConfig(acctPath); // kalle
 
     config->setGroup("Account");
     act = create(config->readEntry("type"), acctName);

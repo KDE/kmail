@@ -6,7 +6,7 @@
 #include <qfile.h>
 #include <qtstream.h>
 #include <kmsgbox.h>
-#include <Kconfig.h>
+#include <kconfig.h>
 #include <kapp.h>
 #include <klocale.h>
 #include <kiconloader.h>
