@@ -25,7 +25,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
   KMHeadersInherited(parent, name, 4)
 {
-  QString kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
   static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep, pixSent, pixQueued,
                  pixFwd;

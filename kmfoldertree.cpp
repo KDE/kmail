@@ -19,7 +19,6 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   KMFolderTreeInherited(parent, name, 1), mList()
 {
   KConfig* conf = app->getConfig();
-  QString  kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
   static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr,
 		 pixSent;

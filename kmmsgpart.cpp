@@ -155,7 +155,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   if (!sMagic)
   {
     // initialize mime magic
-    sMagic = new KMimeMagic(kapp->kdedir() + "/share/mimelnk/magic");
+    sMagic = new KMimeMagic(kapp->kde_mimedir() + "/magic");
     sMagic->setFollowLinks(TRUE);
   }
 
@@ -175,7 +175,7 @@ const QString KMMessagePart::iconName(void) const
   QString fileName, icon;
   QDir dir;
 
-  fileName = KApplication::kdedir() + "/share/mimelnk/" + mType + "/" + 
+  fileName = KApplication::kde_mimedir() + "/" + mType + "/" + 
              mSubtype + ".kdelnk";
 
   if (dir.exists(fileName))
@@ -192,7 +192,7 @@ const QString KMMessagePart::iconName(void) const
     icon = "unknown.xpm";
   }
 
-  return KApplication::kdedir() + "/share/icons/" + icon;
+  return KApplication::kde_icondir() + "/" + icon;
 }
 
 
