@@ -3699,7 +3699,7 @@ void KMComposeWin::slotSendNow() {
   if ( GlobalSettings::confirmBeforeSend() ) {
     switch(KMessageBox::warningYesNoCancel(mMainWidget,
                                     i18n("About to send email..."),
-                                    i18n("Send &Confirmation"),
+                                    i18n("Send Confirmation"),
                                     i18n("&Send Now"),
                                     i18n("Send &Later"))) {
     case KMessageBox::Yes:        // send now
