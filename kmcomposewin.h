@@ -23,8 +23,6 @@
 #include <kdeversion.h>
 #include <keditcl.h>
 
-#include <kpgp.h>
-
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
 #include "mailcomposerIface.h"
@@ -68,6 +66,7 @@ class KURL;
 class IdentityCombo;
 class SpellingFilter;
 class  CryptPlugWrapperList;
+class MessageComposer;
 
 namespace KMail {
   class AttachmentListView;
@@ -216,6 +215,7 @@ class KMAtmListViewItem : public QObject, public QListViewItem
 {
   Q_OBJECT
   friend class KMComposeWin;
+  friend class MessageComposer;
 
 public:
   KMAtmListViewItem(QListView * parent);
@@ -245,6 +245,7 @@ class KMComposeWin : public KMail::SecondaryWindow, virtual public MailComposerI
 {
   Q_OBJECT
   friend class KMHeaders;         // needed for the digest forward
+  friend class MessageComposer;
 
 public:
   KMComposeWin( KMMessage* msg=0, uint identity=0 );
@@ -300,29 +301,6 @@ public:
    KMMessage* msg(void) const { return mMsg; }
 
   /**
-   * Applies the user changes to the message object of the composer
-   * and signs/encrypts the message if activated. Returns FALSE in
-   * case of an error (e.g. if PGP encryption fails).
-   * If backgroundMode is true then no functions which might require
-   * user interaction (like signing/encrypting) are performed
-   */
-   bool applyChanges( bool backgroundMode = false );
-
-  /**
-   * Internal helper function called from applyChanges(void) to allow
-   * processing several messages (encrypted or unencrypted) based on
-   * the same composer content.
-   * That's useful for storing decrypted versions of messages which
-   * were sent in encrypted form.                  (khz, 2002/06/24)
-   */
-   Kpgp::Result composeMessage( QCString pgpUserId,
-                                KMMessage& theMessage,
-                                bool doSign,
-                                bool doEncrypt,
-                                bool ignoreBcc,
-                                QCString& signCertFingerprint );
-
-  /**
    * If this flag is set the message of the composer is deleted when
    * the composer is closed and the message was not sent. Default: FALSE
    */
@@ -373,7 +351,7 @@ public slots:
   /**
    * Returns true when saving was successful.
    */
-  bool slotSaveDraft();
+  void slotSaveDraft();
   void slotNewComposer();
   void slotNewMailReader();
   void slotClose();
@@ -548,7 +526,26 @@ public slots:
    */
    void addAttach(const KMMessagePart* msgPart);
 
+  QCString pgpIdentity() const;
+
+signals:
+  /**
+   * A message has been queued or saved in the drafts folder
+   */
+  void messageQueuedOrDrafted();
+
+  void applyChangesDone( bool );
+
 protected:
+  /**
+   * Applies the user changes to the message object of the composer
+   * and signs/encrypts the message if activated. Returns FALSE in
+   * case of an error (e.g. if PGP encryption fails).
+   * If backgroundMode is true then no functions which might require
+   * user interaction (like signing/encrypting) are performed
+   */
+   void applyChanges( bool dontSign, bool dontEncrypt );
+
   /**
    * Install grid management and header fields. If fields exist that
    * should not be there they are removed. Those that are needed are
@@ -644,67 +641,6 @@ private:
   bool userForgotAttachment();
 
   /**
-   * Get message ready for sending or saving.
-   * This must be done _before_ signing and/or encrypting it.
-   *
-   */
-  QCString breakLinesAndApplyCodec();
-
-  /**
-   * Get signature for a message.
-   * To build nice S/MIME objects signing and encoding must be separeted.
-   *
-   */
-  QByteArray pgpSignedMsg( QCString cText,
-                           StructuringInfoWrapper& structuring,
-                           QCString& signCertFingerprint );
-
-  /**
-   * Get encrypted message.
-   * To build nice S/MIME objects signing and encrypting must be separat.
-   *
-   */
-  Kpgp::Result pgpEncryptedMsg( QByteArray & rEncryptedBody,
-				QCString cText,
-				StructuringInfoWrapper& structuring,
-				QCString& encryptCertFingerprints );
-
-  /**
-   * Get encryption certificate for a recipient (the Aegypten way).
-   */
-  QCString getEncryptionCertificate( const QString& recipient );
-
-  /**
-   * Check for expiry of various certificates.
-   */
-  bool checkForEncryptCertificateExpiry( const QString& recipient,
-                                         const QCString& certFingerprint );
-
-  /**
-   * Build a MIME object (or a flat text resp.) based upon
-   * structuring information returned by a crypto plugin that was
-   * called via pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
-   *
-   * NOTE: The c string representation of the MIME object (or the
-   *       flat text, resp.) is returned in resultingData, so just
-   *       use this string as body text of the surrounding MIME object.
-   *       This string *is* encoded according to contentTEncClear
-   *       and thus should be ready for neing sended via SMTP.
-   */
-  bool processStructuringInfo( const QString   bugURL,
-                               uint            boundaryLevel,
-                               const QString   contentDescriptionClear,
-                               const QCString  contentTypeClear,
-                               const QCString  contentSubtypeClear,
-                               const QCString  contentDispClear,
-                               const QCString  contentTEncClear,
-                               const QCString& bodytext,
-                               const QString   contentDescriptionCiph,
-                               const QByteArray& ciphertext,
-                               const StructuringInfoWrapper& structuring,
-                               KMMessagePart&  resultingPart );
-
-  /**
    * Retrieve encrypt flag of an attachment
    * ( == state of it's check box in the attachments list view )
    */
@@ -717,17 +653,6 @@ private:
   bool signFlagOfAttachment(int idx);
 
 
-  Kpgp::Result getEncryptionCertificates( const QStringList& recipients,
-                                          QCString& encryptionCertificates );
-
-  Kpgp::Result encryptMessage( KMMessage* msg,
-                       const QStringList& recipients, bool doSign, bool doEncrypt,
-                       const QCString& encodedBody,int previousBoundaryLevel,
-                       const KMMessagePart& oldBodyPart,
-                       bool earlyAddAttachments, bool allAttachmentsAreInBody,
-                       KMMessagePart newBodyPart,
-                       QCString& signCertFingerprint );
-
   /**
    * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
    * block with a clear text signature. This is only done if the given
@@ -738,14 +663,9 @@ private:
    static void decryptOrStripOffCleartextSignature( QCString& );
 
   /**
-   * Get message including signing and encrypting it
-   */
-  QCString pgpProcessedMsg(void);
-
-  /**
    * Send the message. Returns true if the message was sent successfully.
    */
-  bool doSend(int sendNow=-1, bool saveInDrafts = false);
+  void doSend(int sendNow=-1, bool saveInDrafts = false);
 
 protected:
   QWidget   *mMainWidget;
@@ -788,13 +708,11 @@ protected:
   bool mUseExtEditor;
   QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;
-  bool mDisableBreaking;
+  bool mDisableBreaking; // Move
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;
   bool mUseFixedFont;
-  short mBtnIdSign, mBtnIdEncrypt;
-  short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
   QFont mBodyFont, mFixedFont;
   //  QList<QLineEdit> mEdtList;
   QPtrList<QWidget> mEdtList;
@@ -803,7 +721,6 @@ protected:
   uint mId;
   QString mOldSigText;
   QStringList mTransportHistory;
-  QString mBcc;
 
   KAction *mAttachPK, *mAttachMPK,
           *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction;
@@ -833,6 +750,12 @@ private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );
   void slotConfigChanged();
 
+  void slotComposerDone( bool );
+
+  void slotContinueDoSend( bool );
+  void slotContinuePrint( bool );
+  void slotContinueDeadLetter( bool );
+
 private:
   QColor mForeColor,mBackColor;
   struct atmLoadData
@@ -845,9 +768,6 @@ private:
   QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
   bool mForceReplyCharset;
 
-  QString mErrorProcessingStructuringInfo;
-  QString mErrorNoCryptPlugAndNoBuildIn;
-
   /**
    * Store the cryptplug that was selected for signing and/or encrypting.
    *
@@ -856,6 +776,17 @@ private:
    * override the global setting using KDComposeWin's options_select_crypto action.
    */
   CryptPlugWrapper* mSelectedCryptPlug;
+
+  // These are for passing on methods over the applyChanges calls
+  int mSendNow;
+  bool mSaveInDrafts;
+
+  // This is the temporary object that constructs the message out of the
+  // window
+  MessageComposer* mComposer;
+
+  // Temp var for slotPrint:
+  bool mMessageWasModified;
 
 public:
   bool mDebugComposerCrypto;
