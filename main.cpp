@@ -150,12 +150,12 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
   switch (aType)
   {
   case QtDebugMsg:
-    kdebug(KDEBUG_INFO, 0, msg);
+    kDebugInfo( 0, msg);
     break;
 
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)app->name(), msg.data());
-    kdebug(KDEBUG_INFO, 0, msg);
+    kDebugInfo( 0, msg);
     break;
 
   case QtFatalMsg:
