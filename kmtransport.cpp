@@ -89,6 +89,7 @@ void KMTransportInfo::readConfig(int id)
     // migration to kwallet
     config->deleteEntry( "pass" );
     mPasswdDirty = true;
+    writeConfig( id );
   } else {
     // read password if wallet is open, defer otherwise
     if ( Wallet::isOpen( Wallet::NetworkWallet() ) )
@@ -125,7 +126,8 @@ void KMTransportInfo::writeConfig(int id)
           "KWallet for managing your password"),
           i18n("KWallet is Not Running."), "KWalletWarning" );
       config->writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
-    }
+    } else
+      mPasswdDirty = false;
   }
 
   // delete already stored password from the wallet if password storage is disabled
