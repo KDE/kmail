@@ -206,6 +206,18 @@ QString getMyHostName(void)
 }
 }
 
+static void checkConfigUpdates() {
+#if KDE_VERSION >= 306
+  KConfig * config = kapp->config();
+  const QString updateFile = QString::fromLatin1("kmail.upd");
+  QStringList updates() << "9"
+			<< "3.1-update-identities"
+			<< "3.1-use-identity-uoids";
+  for ( QStringList::const_iterator it = updates.begin() ; it != updates.end() ; ++it )
+    config->checkUpdate( *it, updateFile );
+#endif
+}
+
 int main(int argc, char *argv[])
 {
   // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
@@ -274,6 +286,9 @@ int main(int argc, char *argv[])
 
   KMailApplication app;
   KGlobal::locale()->insertCatalogue("libkdenetwork");
+
+  // Check that all updates have been run on the config file:
+  checkConfigUpdates();
 
   // Check and create a lock file to prevent concurrent access to kmail files
   const QString lockLocation = locateLocal("appdata", "lock");
