@@ -121,8 +121,221 @@ class VCardLine {
   void qpDecode(QString& x);
 };
 
+//=========================================================
+//
+// class VCard
+//
+//=========================================================
 
+/** This class implements support for parsing vCards. It does not
+    make use of the versit VCard/VCalender classes, which are used
+    elsewhere (by KOrganizer, for example)
 
+    Every @p VCard object represents a visiting card with a lot of
+    attributes to a person.
+
+    @sect Creating vCard objects
+
+    The usual way to construct a VCard object is by parsing
+    it from the contents of a file (or from a message part):
+    <pre>
+      #include "vcard.h"
+      ...
+      VCard *vc = VCard::parseVCard(string);
+    </pre>
+    where @p string contains the complete vcard.
+    On success, @p vc is different from @p NULL and refers to a valid VCard object.
+
+    It should be possible to construct a VCard from scratch
+    (using the primitives @p addLine() and
+    @p addQualifiedLine(). However, vCards are not
+    created this way in KMail.
+
+    @sect Querying Data from a VCard
+
+    Generally spoken, VCard data is organized by keywords and,
+    optionally, qualifiers. For example, a telephone number can
+    be just `the' telephone number of the person, or it can
+    be a special telephone number, let's say, that of
+    the cellular.
+
+    The methods getValue(...) and getValues(...) can be used
+    to query data from a VCard object, either by querying by
+    keyword, e.g.
+    <pre>
+      QString s = vc->getValue(VCARD_TEL);
+    </pre>
+    or by keyword and qualifier, e.g.
+    <pre>
+      QString s = vc->getValue(VCARD_TEL, VCARD_TEL_CELL);
+    </pre>
+    There are also entrys (like name, address of the person)
+    which do not consist of one single text string, but rather
+    consist of a number of strings. These entries are then
+    queried by the corresponding @p getValues() methods.
+
+    Again, querying by keyword
+    <pre>
+      QStringList l = vc->getValues(VCARD_ADR);
+    </pre>
+    or querying by keyword and qualifier, e.g.
+    <pre>
+      QStringList l = vc->getValues(VCARD_ADR, VCARD_ADR_HOME);
+    </pre>
+    is possible.
+
+    Of course, one has to know which entry has to be queried
+    by @p getValue() and which one by @p getValues(). Have a look at
+    the reference section below or at @ref kmdisplayvcard.cpp for
+    concrete examples.
+
+    @sect Reference: Codes for querying @p VCard attributes
+
+    The calls to @p getValue and @p getValues, resp., look like
+    <pre>
+      getValue([key]);
+      getValue([key], [qualifier]);
+    </pre>
+    A list of keys and their qualifiers follows below.
+
+    @p VCARD_VERSION
+      vCard Version.
+      Use @p getValue().
+
+    @p VCARD_NAME
+      Name of the person.
+      Use @p getValues().
+      Values come in the following order:
+      last name, first name, middle name, prefix, jr..
+
+    @p VCARD_NICKNAME        -
+      Nickname of the person.
+      Use @p getValue().
+
+    @p VCARD_PHOTO           -
+      Photo of the person.
+      Use @p getValue().
+
+    @p VCARD_BDAY            -
+      Birthday of the person.
+      Use @p getValue().
+
+    @p VCARD_ADR             -
+      Address of the person.
+      Use @p getValues().
+      Values come in the following order:
+      P.O. box, extended address, street, city, province, zip code, country
+      Types:
+      @li @p VCARD_ADR_DOM       -
+        type qualifier to @p VCARD_ADR: Domestic address
+      @li @p VCARD_ADR_INTL      -
+        type qualifier to @p VCARD_ADR: International address
+      @li @p VCARD_ADR_POSTAL    -
+        type qualifier to @p VCARD_ADR: Postal address
+      @li @p VCARD_ADR_HOME      -
+        type qualifier to @p VCARD_ADR: Home/private address
+      @li @p VCARD_ADR_WORK      -
+        type qualifier to @p VCARD_ADR: Address at work
+      @li @p VCARD_ADR_PREF      -
+        type qualifier to @p VCARD_ADR: Preferred address
+
+      Single values can be queried by @p getValue(VCARD_ADR,[qualifier]),
+      using the following value names. However, in that case,
+      the default address is used (type cannot be specified)
+      @li @p VCARD_ADR_POBOX     - P.O. Box field of the address entry
+      @li @p VCARD_ADR_EXTADR    - extended address
+      @li @p VCARD_ADR_STREET    - street of the address entry
+      @li @p VCARD_ADR_LOCALITY  - refers to the city or village
+      @li @p VCARD_ADR_REGION    - refers to the region or province, resp.
+      @li @p VCARD_ADR_POSTCODE  - field for the zip or post code, resp.
+      @li @p VCARD_ADR_COUNTRY   - refers to the country
+
+    @p VCARD_LABEL           -  Label
+
+    @p VCARD_PROFILE         -  Profile
+
+    @p VCARD_SOURCE          -  Source
+
+    @p VCARD_TEL             -
+      Telephone number of the person.
+      Use @p getValue().
+
+      The following type qualifiers may be used for @p VCARD_TEL
+      @li @p VCARD_TEL_HOME      - telephone at home
+      @li @p VCARD_TEL_WORK      - dto. at work
+      @li @p VCARD_TEL_PREF      - preferred telephone number
+      @li @p VCARD_TEL_VOICE     -
+      @li @p VCARD_TEL_FAX       - fax number
+      @li @p VCARD_TEL_MSG       -
+      @li @p VCARD_TEL_CELL      - number of cellular phone
+      @li @p VCARD_TEL_PAGER     -
+      @li @p VCARD_TEL_BBS       -
+      @li @p VCARD_TEL_MODEM     -
+      @li @p VCARD_TEL_CAR       -
+      @li @p VCARD_TEL_ISDN      -
+      @li @p VCARD_TEL_VIDEO     -
+      @li @p VCARD_TEL_PCS       -
+
+    @p VCARD_EMAIL           -
+      email address of the person.
+      Use @p getValue().
+      The following type qualifiers may be used
+      @li @p VCARD_EMAIL_PREF     -
+        preferred email address
+      @li @p VCARD_EMAIL_INTERNET  -
+        internet email address
+      @li @p VCARD_EMAIL_X400    -
+        x400 email address
+
+    @p VCARD_TZ              - Time zone
+
+    @p VCARD_GEO             -
+
+    @p VCARD_MAILER          -
+
+    @p VCARD_TITLE           - Title of the person
+
+    @p VCARD_ROLE            - Role of the person in the organization
+
+    @p VCARD_LOGO            -
+
+    @p VCARD_AGENT           -
+
+    @p VCARD_ORG             - Organization the person belongs to. Use @p getValues().
+    Values come in the following order: organization, department
+
+    @p VCARD_CATEGORIES      -
+
+    @p VCARD_NOTE            -
+
+    @p VCARD_PRODID          -
+
+    @p VCARD_REV             -
+
+    @p VCARD_SOUND           -
+
+    @p VCARD_UID             -
+
+    @p VCARD_URL             -
+      Homepage URL of the person.
+      Use @p getValue().
+
+    @p VCARD_CLASS           -
+      @li @p VCARD_CLASS_PUBLIC  -
+      @li @p VCARD_CLASS_PRIVATE  -
+      @li @p VCARD_CLASS_CONFIDENTIAL  -
+
+    @p VCARD_KEY             -
+      Signature key of the person.
+      Use @p getValue().
+      The following type qualifiers may be used
+      @li @p VCARD_KEY_X509      -
+      @li @p VCARD_KEY_PGP       -
+
+    @short This class implements support for parsing vCards
+    @author George Staikos <staikos@kde.org>.
+    @see KMDisplayVCard
+*/
 class VCard {
  friend class VCardLine;
 
