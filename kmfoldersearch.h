@@ -172,6 +172,7 @@ private:
   FILE *mIdsStream;
   KMSearch *mSearch;
   bool mInvalid, mUnlinked;
+  bool mTempOpened;
 };
 #endif /*kmfoldersearch_h*/
 

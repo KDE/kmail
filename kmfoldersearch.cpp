@@ -343,6 +343,7 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
     mSearch = 0;
     mInvalid = false;
     mUnlinked = true;
+    mTempOpened = false;
 
     //Hook up some slots for live updating of search folders
     //TODO: Optimize folderInvalidated, folderAdded, folderRemoved
@@ -902,7 +903,10 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
 	return;
     if (!search()->inScope(aFolder))
 	return;
-    open(); //TODO: tempopen
+    if (!mTempOpened) {
+	open();
+	mTempOpened = true;
+    }
 
     if (!search()->searchPattern())
 	return;
@@ -929,7 +933,10 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
 	return;
     if (!search()->inScope(folder))
 	return;
-    open(); //TODO: tempopen
+    if (!mTempOpened) {
+	open();
+	mTempOpened = true;
+    }
 
     if (mSearch->running()) {
 	mSearch->stop();
@@ -945,7 +952,10 @@ void KMFolderSearch::examineChangedMessage(KMFolder *folder, Q_UINT32 serNum, in
 	return;
     if (!search()->inScope(folder))
 	return;
-    open(); //TODO: tempopen
+    if (!mTempOpened) {
+	open();
+	mTempOpened = true;
+    }
     QValueVector<Q_UINT32>::const_iterator it;
     it = qFind( mSerNums.begin(), mSerNums.end(), serNum );
     if (it != mSerNums.end()) {
@@ -961,11 +971,23 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
 	return;
     if (!search()->inScope(folder))
 	return;
-    open(); //TODO: tempopen
+    if (mTempOpened) {
+	close();
+	mTempOpened = false;
+    }
 
     mInvalid = true;
     if (mSearch)
 	mSearch->stop();
+    
+    removeContents();
+    if (!isOpened()) //give up, until the user manually opens the folder
+	return;
+    
+    if (!mTempOpened) {
+	open();
+	mTempOpened = true;
+    }
     QTimer::singleShot(0, this, SLOT(executeSearch()));
 }
 
@@ -976,7 +998,10 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *folder, int idx)
 	return;
     if (!search()->inScope(folder))
 	return;
-    open(); //TODO: tempopen
+    if (!mTempOpened) {
+	open();
+	mTempOpened = true;
+    }
 
     Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(folder, idx);
     QValueVector<Q_UINT32>::const_iterator it;
