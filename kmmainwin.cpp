@@ -1286,7 +1286,7 @@ void KMMainWin::slotMailtoReply()
   KMMessage *msg, *rmsg;
 
   if (!(msg = mHeaders->getMsg(-1))) return;
-  rmsg = msg->createReply(FALSE);
+  rmsg = msg->createReply(FALSE, FALSE, mMsgView->copyText());
   rmsg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(rmsg);
