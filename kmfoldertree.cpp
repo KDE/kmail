@@ -1455,16 +1455,13 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 
   if (isTotalActive())
   {
-    count = 0;
     // get the total-count
-    if (fti->folder()->isOpened())
-      count = fti->folder()->count();
-    else
-      count = fti->folder()->count(true); // count with caching
-
     if (fti->folder()->noContent())
       count = -1;
-
+    else {
+      // get the cached count if the folder is not open
+      count = fti->folder()->count( !fti->folder()->isOpened() );
+    }
     // set it
     if ( count != fti->totalCount() ) {
       fti->setTotalCount(count);
