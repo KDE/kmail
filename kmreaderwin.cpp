@@ -15,6 +15,7 @@
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kmailicalifaceimpl.h"
+#include <kpgpblock.h>
 #include <libkdepim/kfileio.h>
 #include "kmfolderindex.h"
 #include "kmcommands.h"
@@ -413,9 +414,42 @@ kdDebug(5006) << "--boundary--" << endl;
         resultingData += "--\n\n";
 kdDebug(5006) << "Multipart processing children - DONE" << endl;
       } else if( part ){
-        // store simple part
-kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
-        resultingData += part->Body().AsString().c_str();
+        // decrypt and store simple part
+kdDebug(5006) << "is Simple part or invalid Multipart, processing single body (if inline encrypted):" << endl;
+        // Problem: body text may be inline PGP encrypted, so we can not just dump it.
+        // resultingData += part->Body().AsString().c_str();
+        
+        // Note: parseObjectTree() does no inline PGP decrypting anymore.
+        ObjectTreeParser otp( 0, 0, false, false, true );
+        dataNode->setProcessed( false, true );
+        otp.setKeepEncryptions( false );
+        otp.parseObjectTree( curNode );
+        //resultingData += otp.rawReplyString();  // re-enable this, once ObjectTreeParser is updated.
+        
+
+        // Temporary solution, to be replaced by a Kleo::CryptoBackend job inside ObjectTreeParser:
+        bool bDecryptedInlinePGP = false;
+        QPtrList<Kpgp::Block> pgpBlocks;
+        QStrList nonPgpBlocks;
+        if ( Kpgp::Module::prepareMessageForDecryption( otp.rawReplyString(),
+                                                        pgpBlocks,
+                                                        nonPgpBlocks ) ) {
+          if ( pgpBlocks.count() == 1 ) {
+            Kpgp::Block * block = pgpBlocks.first();
+            if ( block->type() == Kpgp::PgpMessageBlock ) {
+              // try to decrypt this OpenPGP block
+              block->decrypt();
+              resultingData += nonPgpBlocks.first() + block->text() + nonPgpBlocks.last();
+              bDecryptedInlinePGP = true;
+            }
+          }
+        }
+        if( !bDecryptedInlinePGP )
+          resultingData += otp.rawReplyString();
+        // end of temporary solution.
+        
+        
+kdDebug(5006) << "decrypting of single body - DONE" << endl;
       }
     } else {
 kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
@@ -1192,70 +1226,69 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   bool emitReplaceMsgByUnencryptedVersion = false;
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   if ( reader.readBoolEntry( "store-displayed-messages-unencrypted", false ) ) {
-
-  // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
-  // of german government:
-  // --> All received encrypted messages *must* be stored in unencrypted form
-  //     after they have been decrypted once the user has read them.
-  //     ( "Aufhebung der Verschluesselung nach dem Lesen" )
-  //
-  // note: Since there is no configuration option for this, we do that for
-  //       all kinds of encryption now - *not* just for S/MIME.
-  //       This could be changed in the objectTreeToDecryptedMsg() function
-  //       by deciding when (or when not, resp.) to set the 'dataNode' to
-  //       something different than 'curNode'.
-
-
+  
+    // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
+    // of german government:
+    // --> All received encrypted messages *must* be stored in unencrypted form
+    //     after they have been decrypted once the user has read them.
+    //     ( "Aufhebung der Verschluesselung nach dem Lesen" )
+    //
+    // note: Since there is no configuration option for this, we do that for
+    //       all kinds of encryption now - *not* just for S/MIME.
+    //       This could be changed in the objectTreeToDecryptedMsg() function
+    //       by deciding when (or when not, resp.) to set the 'dataNode' to
+    //       something different than 'curNode'.
+  
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
+/*
 kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
-kdDebug(5006) << "   (KMMsgStatusUnknown == mLastStatus) = "           << (KMMsgStatusUnknown == mLastStatus) << endl;
-kdDebug(5006) << "|| (KMMsgStatusNew     == mLastStatus) = "           << (KMMsgStatusNew     == mLastStatus) << endl;
-kdDebug(5006) << "|| (KMMsgStatusUnread  == mLastStatus) = "           << (KMMsgStatusUnread  == mLastStatus) << endl;
+kdDebug(5006) << "   (KMMsgStatusUnknown & mLastStatus) = "           << (KMMsgStatusUnknown & mLastStatus) << endl;
+kdDebug(5006) << "|| (KMMsgStatusNew     & mLastStatus) = "           << (KMMsgStatusNew     & mLastStatus) << endl;
+kdDebug(5006) << "|| (KMMsgStatusUnread  & mLastStatus) = "           << (KMMsgStatusUnread  & mLastStatus) << endl;
 kdDebug(5006) << "(mIdOfLastViewedMessage != aMsg->msgId()) = "    << (mIdOfLastViewedMessage != aMsg->msgId()) << endl;
 kdDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState) << endl;
 kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgPartiallyEncrypted == encryptionState) << endl;
-         // only proceed if we were called the normal way - not by
-         // double click on the message (==not running in a separate window)
-  if(    (aMsg == message())
-         // only proceed if this message was not saved encryptedly before
-         // to make sure only *new* messages are saved in decrypted form
-      && (    (KMMsgStatusUnknown == mLastStatus)
-           || (KMMsgStatusNew     == mLastStatus)
-           || (KMMsgStatusUnread  == mLastStatus) )
-         // avoid endless recursions
-      && (mIdOfLastViewedMessage != aMsg->msgId())
-         // only proceed if this message is (at least partially) encrypted
-      && (    (KMMsgFullyEncrypted == encryptionState)
-           || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
+*/
+    // only proceed if we were called the normal way - not by
+    // double click on the message (==not running in a separate window)
+    if(    (aMsg == message())
+          // only proceed if this message was not saved encryptedly before
+          // to make sure only *new* messages are saved in decrypted form
+        && ((KMMsgStatusUnknown | KMMsgStatusNew | KMMsgStatusUnread) & mLastStatus)
+          // avoid endless recursions
+        && (mIdOfLastViewedMessage != aMsg->msgId())
+          // only proceed if this message is (at least partially) encrypted
+        && (    (KMMsgFullyEncrypted == encryptionState)
+             || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
 
 kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
 
-    NewByteArray decryptedData;
-    // note: The following call may change the message's headers.
-    objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
-    // add a \0 to the data
-    decryptedData.appendNULL();
-    QCString resultString( decryptedData.data() );
+      NewByteArray decryptedData;
+      // note: The following call may change the message's headers.
+      objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
+      // add a \0 to the data
+      decryptedData.appendNULL();
+      QCString resultString( decryptedData.data() );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
-
-    if( !resultString.isEmpty() ) {
+  
+      if( !resultString.isEmpty() ) {
 kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
-      // try this:
-      aMsg->setBody( resultString );
-      KMMessage* unencryptedMessage = new KMMessage( *aMsg );
-      // because this did not work:
-      /*
-      DwMessage dwMsg( DwString( aMsg->asString() ) );
-      dwMsg.Body() = DwBody( DwString( resultString.data() ) );
-      dwMsg.Body().Parse();
-      KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
-      */
+        // try this:
+        aMsg->setBody( resultString );
+        KMMessage* unencryptedMessage = new KMMessage( *aMsg );
+        // because this did not work:
+        /*
+        DwMessage dwMsg( DwString( aMsg->asString() ) );
+        dwMsg.Body() = DwBody( DwString( resultString.data() ) );
+        dwMsg.Body().Parse();
+        KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
+        */
 kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
 kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
-      aMsg->setUnencryptedMsg( unencryptedMessage );
-      emitReplaceMsgByUnencryptedVersion = true;
+        aMsg->setUnencryptedMsg( unencryptedMessage );
+        emitReplaceMsgByUnencryptedVersion = true;
+      }
     }
-  }
   }
 
   // save current main Content-Type before deleting mRootNode
