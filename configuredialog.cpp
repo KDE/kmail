@@ -2170,7 +2170,34 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
 					  mDateDisplay );
       mDateDisplay->insert(b);
       QLineEdit *le = new QLineEdit( mDateDisplay );
-      QWhatsThis::add(le, i18n( "<B>These expressions may be used for the date:</B> <br><UL><LI>d - the day as a number without a leading zero (1-31) <LI>dd - the day as a number with a leading zero (01-31) <LI>ddd - the abbreviated day name (Mon - Sun). <LI>dddd - the long day name (Monday - Sunday). <LI>M - the month as a number without a leading zero (1-12) <LI>MM - the month as a number with a leading zero (01-12) <LI>MMM - the abbreviated month name (Jan - Dec). <LI>MMMM - the long month name (January - December). <LI>yy - the year as a two digit number (00-99) <LI>yyyy - the year as a four digit number (0000-9999) </UL> <B>These expressions may be used for the time:</B> <UL><LI>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display) <LI>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display) <LI>m - the minute without a leading zero (0-59) <LI>mm - the minute with a leading zero (00-59) <LI>s - the second without a leading zero (0-59) <LI>ss - the second with a leading zero (00-59) <LI>z - the milliseconds without leading zeroes (0-999) <LI>zzz - the milliseconds with leading zeroes (000-999) <LI>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".<LI>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\". <LI>Z - zone in numeric form ( -0500 )</UL><B>All other input characters will be ignored.</B>") );
+      QWhatsThis::add(le, i18n( "<B>These expressions may be used for the date:</B> <BR>"
+			        "<UL>"
+				"<LI>d - the day as a number without a leading zero (1-31) "
+				"<LI>dd - the day as a number with a leading zero (01-31) "
+				"<LI>ddd - the abbreviated day name (Mon - Sun) "
+				"<LI>dddd - the long day name (Monday - Sunday) "
+				"<LI>M - the month as a number without a leading zero (1-12) "
+				"<LI>MM - the month as a number with a leading zero (01-12) "
+				"<LI>MMM - the abbreviated month name (Jan - Dec) "
+				"<LI>MMMM - the long month name (January - December) "
+				"<LI>yy - the year as a two digit number (00-99) "
+				"<LI>yyyy - the year as a four digit number (0000-9999) "
+				"</UL>"
+				"<B>These expressions may be used for the time:</B> "
+				"<UL>"
+				"<LI>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display) "
+				"<LI>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display) "
+				"<LI>m - the minutes without a leading zero (0-59) "
+				"<LI>mm - the minutes with a leading zero (00-59) "
+				"<LI>s - the seconds without a leading zero (0-59) "
+				"<LI>ss - the seconds with a leading zero (00-59) "
+				"<LI>z - the milliseconds without leading zeroes (0-999) "
+	      			"<LI>zzz - the milliseconds with leading zeroes (000-999) "
+				"<LI>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\". "
+				"<LI>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\". "
+				"<LI>Z - time zone in numeric form (-0500) "
+				"</UL>"
+				"<B>All other input characters will be ignored.</B>") );
       le->setEnabled( false );
       QObject::connect( b, SIGNAL(toggled(bool)), le, SLOT(setEnabled(bool)) );
     } else {
