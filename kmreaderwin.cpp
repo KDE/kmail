@@ -1487,7 +1487,8 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
     menu->insertItem(i18n("Properties..."), this,
 		     SLOT(slotAtmProperties()));
-    menu->popup(aPos,0);
+    menu->exec(aPos,0);
+    delete menu;
   }
 }
 

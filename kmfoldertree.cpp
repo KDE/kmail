@@ -769,11 +769,13 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
   if (!topLevelWidget()) return; // safe bet
 
-  QPopupMenu *folderMenu = new QPopupMenu;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
 
   if (!fti )
     return;
+
+  QPopupMenu *folderMenu = new QPopupMenu;
+
   if ((!fti->folder || fti->folder->noContent()))
   {
     folderMenu->insertItem(i18n("&Create Child Folder..."), this,

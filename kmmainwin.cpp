@@ -1606,7 +1606,7 @@ void KMMainWin::slotUrlOpen()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 {
-  KPopupMenu* menu = new KPopupMenu;
+  KPopupMenu * menu = new KPopupMenu;
   updateMessageActions();
 
   mUrlCurrent = aUrl;
@@ -1627,7 +1627,6 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 		       SLOT(slotMailtoAddAddrBook()));
       menu->insertItem(i18n("Copy to clipboard"), this,
 		       SLOT(slotUrlCopy()));
-      menu->popup(aPoint,0);
     }
     else
     {
@@ -1636,7 +1635,6 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 		       SLOT(slotUrlOpen()));
       menu->insertItem(i18n("Copy to clipboard"), this,
 		       SLOT(slotUrlCopy()));
-      menu->popup(aPoint,0);
     }
   }
   else
@@ -1645,43 +1643,43 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 
      if (!mFolder) // no messages
      {
+         delete menu;
          return;
      }
-     else  {
 
-         bool out_folder = (mFolder == kernel->outboxFolder()) ||
-                (mFolder == kernel->draftsFolder());
-           if ( out_folder )
-                  editAction->plug(menu);
-           else {
-                replyAction->plug(menu);
-                replyAllAction->plug(menu);
-                forwardAction->plug(menu);
-                forwardAttachedAction->plug(menu);
-                redirectAction->plug(menu);
-                bounceAction->plug(menu);
-           }
-           menu->insertSeparator();
-           if ( !out_folder ) {
-               filterMenu->plug( menu );
-               statusMenu->plug( menu );
-           }
+     bool out_folder = (mFolder == kernel->outboxFolder()) ||
+                       (mFolder == kernel->draftsFolder());
+     if ( out_folder )
+         editAction->plug(menu);
+     else {
+         replyAction->plug(menu);
+         replyAllAction->plug(menu);
+         forwardAction->plug(menu);
+         forwardAttachedAction->plug(menu);
+         redirectAction->plug(menu);
+         bounceAction->plug(menu);
+     }
+     menu->insertSeparator();
+     if ( !out_folder ) {
+         filterMenu->plug( menu );
+         statusMenu->plug( menu );
+     }
 
-           moveActionMenu->plug( menu );
-           copyActionMenu->plug( menu );
+     moveActionMenu->plug( menu );
+     copyActionMenu->plug( menu );
 
-           menu->insertSeparator();
-           toggleFixFontAction->plug(menu);
-           viewSourceAction->plug(menu);
+     menu->insertSeparator();
+     toggleFixFontAction->plug(menu);
+     viewSourceAction->plug(menu);
 
-           menu->insertSeparator();
-           printAction->plug(menu);
-           saveAsAction->plug(menu);
-           menu->insertSeparator();
-           deleteAction->plug(menu);
-           menu->popup(aPoint, 0);
-      }
+     menu->insertSeparator();
+     printAction->plug(menu);
+     saveAsAction->plug(menu);
+     menu->insertSeparator();
+     deleteAction->plug(menu);
   }
+  menu->exec(aPoint, 0);
+  delete menu;
 }
 
 //-----------------------------------------------------------------------------
