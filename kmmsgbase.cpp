@@ -127,6 +127,10 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusWatched;
       setStatus(KMMsgStatusRead, idx);
     }
+    if (aStatus == KMMsgStatusSpam)
+      mStatus &= ~KMMsgStatusHam;
+    if (aStatus == KMMsgStatusHam)
+      mStatus &= ~KMMsgStatusSpam;
   }
   if (mParent) {
      if (idx < 0)
