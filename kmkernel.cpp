@@ -808,8 +808,8 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     // send MAX_CHUNK_SIZE bytes to the receiver (deep copy)
     data.duplicate( (*it).data.data() + (*it).offset, MAX_CHUNK_SIZE );
     (*it).offset += MAX_CHUNK_SIZE;
-    kdDebug( 5006 ) << "Sending " << MAX_CHUNK_SIZE << " bytes ("
-                    << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
+    //kdDebug( 5006 ) << "Sending " << MAX_CHUNK_SIZE << " bytes ("
+    //                << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
   }
   else
   {
@@ -817,7 +817,7 @@ void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
     data.duplicate( (*it).data.data() + (*it).offset, remainingBytes );
     (*it).data = QByteArray();
     (*it).offset = 0;
-    kdDebug( 5006 ) << "Sending " << remainingBytes << " bytes\n";
+    //kdDebug( 5006 ) << "Sending " << remainingBytes << " bytes\n";
   }
 }
 
