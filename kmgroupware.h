@@ -162,13 +162,6 @@ public slots:
   /** additional groupware slots */
   void slotGroupwareShow(bool);
 
-    /** KO informs about a new or updated event */
-  void slotNewOrUpdatedIncident( const QString& type,
-				 const QString& vCalNew,
-				 const QString& uid,
-				 const QStringList& recipients,
-                                 const QString& subject );
-
   /** KO informs about a new or updated note */
   void slotNewOrUpdatedNote( const QString& id, const QString& geometry, const QColor& color,
 			     const QString& text );
