@@ -1038,7 +1038,6 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
        mAccount && mAccount->loadOnDemand() &&
-       as != AttachmentStrategy::inlined() &&
        ( msg->signatureState() == KMMsgNotSigned || 
          msg->signatureState() == KMMsgSignatureStateUnknown ) )
   {
