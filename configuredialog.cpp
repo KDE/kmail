@@ -46,11 +46,14 @@
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>
 #include "accountcombobox.h"
+#include "imapaccountbase.h"
+#include "folderstorage.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "identitydialog.h"
 using KMail::IdentityDialog;
+using KMail::ImapAccountBase;
 
 // other kdenetwork headers:
 #include <libkpimidentities/identity.h>
@@ -4264,12 +4267,17 @@ void MiscPage::GroupwareTab::save() {
   else {
     // Inbox folder of the selected account
     KMAccount* acct = mAccountCombo->currentAccount();
-    if ( acct && acct->folder() ) {
-      // Look inside that folder for an INBOX
-      KMFolderNode *node;
-      for (node = acct->folder()->child()->first(); node; node = acct->folder()->child()->next())
-        if (!node->isDir() && node->name() == "INBOX")
-          folder = static_cast<KMFolder*>(node);
+    if ( acct && acct->hasInbox() ) {
+      // it's an (d)imap account
+      ImapAccountBase * imapAcct = dynamic_cast<ImapAccountBase*>( acct );
+      if ( imapAcct ) {
+        KMFolderNode *node = imapAcct->rootFolder()->folder()->child()->first();
+        while ( node && !folder ) {
+          if (!node->isDir() && (node->name().upper() == "INBOX" ) )
+            folder = static_cast<KMFolder*>(node);
+          node = imapAcct->rootFolder()->folder()->child()->next();
+        }
+      }
     }
     if ( acct )
       GlobalSettings::setTheIMAPResourceAccount( acct->id() );

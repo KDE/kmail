@@ -98,31 +98,17 @@ QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
   for( KMAccount *a = kmkernel->acctMgr()->first(); a;
        a = kmkernel->acctMgr()->next() ) {
     if ( a && a->type() != "local" ) { //// ## proko2 hack. Need a list of allowed account types as ctor param
-      disconnect( a, SIGNAL( finishedCheck( bool, CheckStatus ) ),
-                  this, SLOT( slotRefreshAccounts() ) );
-      bool ok = false;
-      if ( mNeedsInbox ) {
-        if ( a->folder() ) {
-          KMFolderDir* child = a->folder()->child();
-          Q_ASSERT( child );
-          if ( child ) {
-            for (KMFolderNode* node = child->first(); node; node = child->next()) {
-              if (!node->isDir() && node->name() == "INBOX") {
-                ok = true;
-                break;
-              }
-            }
-          }
-        }
-        if ( !ok ) { // no inbox? maybe there'll be one on the next sync
-          kdDebug() << k_funcinfo << "No INBOX in " << a->name() << " yet, waiting for sync" << endl;
-          connect( a, SIGNAL( finishedCheck( bool, CheckStatus ) ),
-                   this, SLOT( slotRefreshAccounts() ) );
-        }
-      } else
-        ok = true;
-      if ( ok )
+      disconnect( a, SIGNAL(  finishedCheck(  bool, CheckStatus ) ),
+                  this, SLOT(  slotRefreshAccounts() ) );
+      bool ok = true;
+      if ( mNeedsInbox && !a->hasInbox() ) {
+        // no inbox? maybe there'll be one on the next sync
+        kdDebug() << k_funcinfo << "No INBOX in " << a->name() << " yet, waiting for sync" << endl;
+        connect(  a, SIGNAL(  finishedCheck(  bool, CheckStatus ) ),
+                  this, SLOT(  slotRefreshAccounts() ) );
+      } else {
         lst.append( a );
+      }
     }
   }
   return lst;
