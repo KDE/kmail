@@ -174,7 +174,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   // can trigger the next queued mail check already.
   QValueList<KMFolderCachedImap*> folderList;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-  for (it = mapJobData.begin(); it != mapJobData.end(); ++it) {
+  for (; it != mapJobData.end(); ++it) {
     if ((*it).parent)
       folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
   }
