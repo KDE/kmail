@@ -799,6 +799,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     kdError(5006) << "update(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
     return rc;
   }
+
+  f->open();
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
@@ -858,6 +860,8 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                             attachmentNames,
                             attachmentMimetypes );
   }
+
+  f->close();
 
   mResourceQuiet = quiet;
   return rc;
