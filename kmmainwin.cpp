@@ -1045,7 +1045,7 @@ void KMMainWin::slotEditMsg()
   if(!(msg = mHeaders->getMsg(aIdx)))
     return;
 
-	slotEditMsg(msg);
+  slotEditMsg(msg);
 }
 
 
@@ -1055,17 +1055,17 @@ void KMMainWin::slotEditMsg(KMMessage* msg)
   if (!kernel->folderIsDraftOrOutbox(mFolder))
     return;
 
-	if ( !msg->isComplete()	&& mFolder->protocol() == "imap" )
-	{
-		// transfer the message first
-		kdDebug(5006) << "slotEditMsg: transfer message" << endl;
-		if (msg->transferInProgress()) return;
-		msg->setTransferInProgress(TRUE);		
+  if ( !msg->isComplete() && mFolder->protocol() == "imap" )
+  {
+    // transfer the message first
+    kdDebug(5006) << "slotEditMsg: transfer message" << endl;
+    if (msg->transferInProgress()) return;
+    msg->setTransferInProgress(TRUE);		
     KMImapJob *job = new KMImapJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotEditMsg(KMMessage*)));
-		return;				
-	}
+    return;				
+  }
 		
   mFolder->removeMsg(msg);
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
@@ -1431,6 +1431,14 @@ void KMMainWin::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
 //called from headers. Message must not be deleted on close
 void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
+  if (!msg->isComplete() && mFolder->protocol() == "imap")
+  {
+    KMImapJob *job = new KMImapJob(msg);
+    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(slotMsgActivated(KMMessage*)));
+    return;				
+  }
+
   if (kernel->folderIsDraftOrOutbox(mFolder))
   {
     slotEditMsg(); 
