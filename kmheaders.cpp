@@ -1877,7 +1877,7 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
 {
   mSelMsgBaseList.clear();
   for (QListViewItemIterator it(this); it.current(); it++) {
-    if (it.current()->isSelected()) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
       if (toBeDeleted) {
         // make sure the item is not uselessly rethreaded and not selectable
