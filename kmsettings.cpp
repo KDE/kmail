@@ -267,6 +267,7 @@ void KMSettings::createTabIdentity(QWidget* parent)
   QWidget* tab = new QWidget(parent);
   QGridLayout* grid = new QGridLayout(tab, 6, 3, 20, 6);
   QPushButton* button;
+  QLabel *label;
 
   nameEdit = createLabeledEntry(tab, grid, i18n("Name:"), 
 				identity->fullName(), 0, 0);
@@ -280,9 +281,14 @@ void KMSettings::createTabIdentity(QWidget* parent)
   sigEdit = createLabeledEntry(tab, grid, i18n("Signature File:"),
 			       identity->signatureFile(), 4, 0, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
-  sigModify = createPushButton(tab, grid, i18n("&Edit Signature File..."),
+  sigModify = createPushButton(tab, grid, i18n("&Edit Sig File..."),
                                5, 0);
   connect(sigModify, SIGNAL(clicked()), this, SLOT(slotSigModify()));
+
+  label = new QLabel(tab);
+  label->setText(i18n("Prepend sigfile with a | to specify a program."));
+  label->setMinimumSize(label->size());
+  grid->addMultiCellWidget(label, 5, 5, 1, 1);
 
   grid->setColStretch(0,0);
   grid->setColStretch(1,1);

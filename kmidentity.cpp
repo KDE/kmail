@@ -144,14 +144,21 @@ void KMIdentity::setSignatureFile(const QString str)
 const QString KMIdentity::signature(void) const
 {
   QString result, sigcmd;
-  char tmpf[256];
+  char tmpf[30] = "/tmp/kmailXXXXXX";
+  int fd;
 
   if (mSignatureFile.isEmpty()) return QString::null;
 
   if (mSignatureFile.right(1)=="|")
   {
     // signature file is a shell script that returns the signature
-    tmpnam(tmpf);
+    fd = mkstemp(tmpf);
+    if (fd == -1) {
+      warning(i18n("Failed to create temporary file\n%s\n%s"),
+	      tmpf, strerror(errno));
+      return QString::null;
+    }
+    close(fd);
     sigcmd = mSignatureFile.left(mSignatureFile.length()-1);
     sigcmd += " >";
     sigcmd += tmpf;
