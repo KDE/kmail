@@ -1870,6 +1870,11 @@ void KMMoveCommand::completeMove( Result result )
 {
   if ( mDestFolder )
     mDestFolder->close();
+  while ( !mOpenedFolders.empty() ) {
+    KMFolder *folder = mOpenedFolders.back();
+    mOpenedFolders.pop_back();
+    folder->close();
+  }
   if ( mProgressItem )
     mProgressItem->setComplete();
   setResult( result );
@@ -1887,11 +1892,15 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList )
 :KMMoveCommand( findTrashFolder( srcFolder ), msgList)
 {
+  srcFolder->open();
+  mOpenedFolders.push_back( srcFolder );
 }
 
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 :KMMoveCommand( findTrashFolder( srcFolder ), msg)
 {
+  srcFolder->open();
+  mOpenedFolders.push_back( srcFolder );
 }
 
 KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
@@ -1901,6 +1910,8 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( Q_UINT32 sernum )
   int idx;
   kmkernel->msgDict()->getLocation( sernum, &srcFolder, &idx );
   KMMsgBase *msg = srcFolder->getMsgBase( idx );
+  srcFolder->open();
+  mOpenedFolders.push_back( srcFolder );
   addMsg( msg );
   setDestFolder( findTrashFolder( srcFolder ) );
 }
