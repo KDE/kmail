@@ -105,18 +105,24 @@ void KMSystemTray::buildPopupMenu()
   mPopupMenu = 0;
 
   mPopupMenu = new KPopupMenu();
-  if (!getKMMainWidget())
+  KMMainWidget * mainWidget = getKMMainWidget();
+  if ( !mainWidget )
     return;
 
   mPopupMenu->insertTitle(*(this->pixmap()), "KMail");
-  getKMMainWidget()->action("check_mail")->plug(mPopupMenu);
-  getKMMainWidget()->action("check_mail_in")->plug(mPopupMenu);
+  KAction * action;
+  if ( ( action = mainWidget->action("check_mail") ) )
+    action->plug( mPopupMenu );
+  if ( ( action = mainWidget->action("check_mail_in") ) )
+    action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
-  getKMMainWidget()->action("new_message")->plug(mPopupMenu);
-  getKMMainWidget()->action("kmail_configure_kmail")->plug(mPopupMenu);
+  if ( ( action = mainWidget->action("new_message") ) )
+    action->plug( mPopupMenu );
+  if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
+    action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
-  if (getKMMainWidget()->action("file_quit"))
-    getKMMainWidget()->action("file_quit")->plug(mPopupMenu);
+  if ( ( action = mainWidget->action("file_quit") ) )
+    action->plug( mPopupMenu );
 }
 
 KMSystemTray::~KMSystemTray()
