@@ -54,6 +54,7 @@
 #include <kcolorbtn.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kemailsettings.h>
 #include <kfiledialog.h>
 #include <kfontdialog.h>
 #include <kiconloader.h>
@@ -3790,7 +3791,7 @@ void IdentityList::add( const QString &identity, const QString &copyFrom )
 }
 
 
-void IdentityList::add( const QString &identity, QWidget *parent,
+void IdentityList::add( const QString &identity, QWidget *,
 			bool useControlCenter )
 {
   if( get( identity ) != 0 )
@@ -3803,30 +3804,15 @@ void IdentityList::add( const QString &identity, QWidget *parent,
   newEntry.setIdentity( identity );
   if( useControlCenter == true )
   {
-    //
-    // The returned filename is empty if the file exists but
-    // is not readable so we only have to test if the file exists.
-    //
-    QString configFileName = locate( "config", "emaildefaults" );
-    QFileInfo fileInfo(configFileName);
-    if( fileInfo.exists() == false )
-    {
-      QString msg = i18n(""
-        "The email configuration file could not be located.\n"
-	"You can create one in Control Center.\n\n"
-	"(Search for \"email\" in Control Center)");
-      KMessageBox::error( parent, msg );
-    }
-    else
-    {
-      KSimpleConfig config( configFileName, false );
-      config.setGroup("UserInfo");
-
-      newEntry.setFullName( config.readEntry( "FullName", "" ) );
-      newEntry.setEmailAddress( config.readEntry( "EmailAddress", "" ) );
-      newEntry.setOrganization( config.readEntry( "Organization", "" ) );
-      newEntry.setReplyToAddress( config.readEntry( "ReplyAddr", "" ) );
-    }
+    KEMailSettings emailSetting;
+    emailSetting.setProfile(emailSetting.defaultProfileName());
+    newEntry.setFullName(emailSetting.getSetting(KEMailSettings::RealName));
+    newEntry.setEmailAddress(emailSetting.getSetting(
+      KEMailSettings::EmailAddress));
+    newEntry.setOrganization(emailSetting.getSetting(
+      KEMailSettings::Organization));
+    newEntry.setReplyToAddress(emailSetting.getSetting(
+      KEMailSettings::ReplyToAddress));
   }
   add( newEntry );
 }
