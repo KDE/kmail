@@ -125,6 +125,12 @@ public:
   **/
   KMIdentity & identityForName( const QString & identityName );
 
+  /** @return the identity with Unique Object Identifier (UOID) @p uoid.
+      This method returns a reference to the identity that can
+      be modified. To let others see this change, use @ref commit.
+  **/
+  KMIdentity & identityForUoid( uint uoid );
+
   /** Removes the identity with name @p identityName */
   bool removeIdentity( const QString & identityName );
 

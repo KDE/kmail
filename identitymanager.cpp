@@ -209,9 +209,9 @@ const KMIdentity & IdentityManager::identityForName( const QString & name ) cons
   return KMIdentity::null;
 }
 
-const KMIdentity & IdentityManager::identityForUoid( uint ouid ) const {
+const KMIdentity & IdentityManager::identityForUoid( uint uoid ) const {
   for ( ConstIterator it = begin() ; it != end() ; ++it )
-    if ( (*it).uoid() == ouid ) return (*it);
+    if ( (*it).uoid() == uoid ) return (*it);
   return KMIdentity::null;
 }
 
@@ -224,9 +224,9 @@ const KMIdentity & IdentityManager::identityForNameOrDefault( const QString & na
     return ident;
 }
 
-const KMIdentity & IdentityManager::identityForUoidOrDefault( uint ouid ) const
+const KMIdentity & IdentityManager::identityForUoidOrDefault( uint uoid ) const
 {
-  const KMIdentity & ident = identityForUoid( ouid );
+  const KMIdentity & ident = identityForUoid( uoid );
   if ( ident.isNull() )
     return defaultIdentity();
   else
@@ -248,6 +248,15 @@ KMIdentity & IdentityManager::identityForName( const QString & name )
   kdWarning( 5006 ) << "IdentityManager::identityForName() used as newFromScratch() replacement!"
 		    << "\n  name == \"" << name << "\"" << endl;
   return newFromScratch( name );
+}
+
+KMIdentity & IdentityManager::identityForUoid( uint uoid )
+{
+  for ( Iterator it = begin() ; it != end() ; ++it )
+    if ( (*it).uoid() == uoid ) return (*it);
+  kdWarning( 5006 ) << "IdentityManager::identityForUoid() used as newFromScratch() replacement!"
+		    << "\n  uoid == \"" << uoid << "\"" << endl;
+  return newFromScratch( i18n("Unnamed") );
 }
 
 const KMIdentity & IdentityManager::defaultIdentity() const {
