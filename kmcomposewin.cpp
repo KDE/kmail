@@ -6,6 +6,7 @@
 #include <qprinter.h>
 #include <qcombobox.h>
 #include <qdragobject.h>
+#include <qlistview.h>
 
 #include "kmcomposewin.h"
 #include "kmmessage.h"
@@ -36,7 +37,6 @@
 #include <kiconloader.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
-#include <ktablistbox.h>
 #include <ktoolbar.h>
 #include <kstdaccel.h>
 #include <mimelib/mimepp.h>
@@ -149,15 +149,15 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mBtnFrom.setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo.setFocusPolicy(QWidget::NoFocus);
 
-  mAtmListBox = new KTabListBox(&mMainWidget, NULL, 5);
+  mAtmListBox = new QListView(&mMainWidget, "mAtmListBox");
   mAtmListBox->setFocusPolicy(QWidget::NoFocus);
-  mAtmListBox->setColumn(0, i18n("F"),16, KTabListBox::PixmapColumn);
-  mAtmListBox->setColumn(1, i18n("Name"), 200);
-  mAtmListBox->setColumn(2, i18n("Size"), 80);
-  mAtmListBox->setColumn(3, i18n("Encoding"), 120);
-  mAtmListBox->setColumn(4, i18n("Type"), 150);
-  connect(mAtmListBox,SIGNAL(popupMenu(int,int)),
-	  SLOT(slotAttachPopupMenu(int,int)));
+  mAtmListBox->addColumn(i18n("Name"), 200);
+  mAtmListBox->addColumn(i18n("Size"), 80);
+  mAtmListBox->addColumn(i18n("Encoding"), 120);
+  mAtmListBox->addColumn(i18n("Type"), 150);
+  connect(mAtmListBox,
+	  SIGNAL(rightButtonPressed(QListViewItem *, const QPoint &, int)),
+	  SLOT(slotAttachPopupMenu(QListViewItem *, const QPoint &, int)));
 
   readConfig();
   setupStatusBar();
@@ -422,6 +422,9 @@ void KMComposeWin::slotView(void)
      return;
    }
 
+  // sanders There's a bug here this logic doesn't work if no
+  // fields are shown and then show all fields is selected.
+  // Instead of all fields being shown none are.
   if (!act->isChecked())
   {
     // hide header
@@ -1138,19 +1141,24 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
   // show the attachment listbox if it does not up to now
   if (mAtmList.count()==1)
   {
-    mGrid->setRowStretch(mNumHeaders+1, 1);
+    mGrid->setRowStretch(mNumHeaders+1, 50);
     mAtmListBox->setMinimumSize(100, 80);
+    mAtmListBox->setMaximumHeight( 100 );
     mAtmListBox->show();
     resize(size());
   }
 
   // add a line in the attachment listbox
-  mAtmListBox->insertItem(msgPartLbxString(msgPart));
+  QListViewItem *lvi = new QListViewItem(mAtmListBox);
+  msgPartToItem(msgPart, lvi);
+  mAtmItemList.append(lvi);
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) const {
+void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart, 
+				 QListViewItem *lvi)
+{
   unsigned int len;
   QString lenStr;
 
@@ -1160,9 +1168,10 @@ const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) const
   if (len > 9999) lenStr.sprintf("%uK", (len>>10));
   else lenStr.sprintf("%u", len);
 
-  return (" \n" + msgPart->name() + "\n" + lenStr + "\n" +
-	  msgPart->contentTransferEncodingStr() + "\n" +
-	  msgPart->typeStr() + "/" + msgPart->subtypeStr());
+  lvi->setText(0, msgPart->name());
+  lvi->setText(1, lenStr);
+  lvi->setText(2, msgPart->contentTransferEncodingStr());
+  lvi->setText(3, msgPart->typeStr() + "/" + msgPart->subtypeStr());
 }
 
 
@@ -1171,7 +1180,6 @@ void KMComposeWin::removeAttach(const QString aUrl)
 {
   int idx;
   KMMessagePart* msgPart;
-
   for(idx=0,msgPart=mAtmList.first(); msgPart;
       msgPart=mAtmList.next(),idx++) {
     if (msgPart->name() == aUrl) {
@@ -1186,7 +1194,7 @@ void KMComposeWin::removeAttach(const QString aUrl)
 void KMComposeWin::removeAttach(int idx)
 {
   mAtmList.remove(idx);
-  mAtmListBox->removeItem(idx);
+  delete mAtmItemList.take(idx);
 
   if (mAtmList.count()<=0)
   {
@@ -1378,11 +1386,9 @@ void KMComposeWin::slotInsertPublicKey()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachPopupMenu(int index, int)
+void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 {
   QPopupMenu *menu = new QPopupMenu;
-
-  mAtmListBox->setCurrentItem(index);
 
   menu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
   menu->insertItem(i18n("Save..."), this, SLOT(slotAttachSave()));
@@ -1394,14 +1400,27 @@ void KMComposeWin::slotAttachPopupMenu(int index, int)
   menu->popup(QCursor::pos());
 }
 
+//-----------------------------------------------------------------------------
+int KMComposeWin::currentAttachmentNum()
+{
+  int idx = -1;
+  QListIterator<QListViewItem> it(mAtmItemList);
+  for ( int i = 0; it.current(); ++it, ++i )
+    if (*it == mAtmListBox->currentItem()) {
+      idx = i;
+      break;
+    }
+
+  return idx;
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachProperties()
 {
   KMMsgPartDlg dlg;
   KMMessagePart* msgPart;
-  int idx = mAtmListBox->currentItem();
-
+  int idx = currentAttachmentNum();
+  
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
@@ -1409,7 +1428,7 @@ void KMComposeWin::slotAttachProperties()
   if (dlg.exec())
   {
     // values may have changed, so recreate the listbox line
-    mAtmListBox->changeItem(msgPartLbxString(msgPart), idx);
+    msgPartToItem(msgPart, mAtmItemList.at(idx));
   }
 }
 
@@ -1420,8 +1439,8 @@ void KMComposeWin::slotAttachView()
   QString str, pname;
   KMMessagePart* msgPart;
   QMultiLineEdit* edt = new QMultiLineEdit;
+  int idx = currentAttachmentNum();
 
-  int idx = mAtmListBox->currentItem();
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
@@ -1446,8 +1465,8 @@ void KMComposeWin::slotAttachSave()
 {
   KMMessagePart* msgPart;
   QString fileName, pname;
+  int idx = currentAttachmentNum();
 
-  int idx = mAtmListBox->currentItem();
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
@@ -1476,7 +1495,8 @@ void KMComposeWin::slotAttachSave()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachRemove()
 {
-  int idx = mAtmListBox->currentItem();
+  int idx = currentAttachmentNum();
+
   if (idx >= 0)
   {
     removeAttach(idx);
