@@ -1394,10 +1394,10 @@ void KMComposeWin::slotAddrBookBcc()
     // We will not care about any permissions, existence or whatsoever in
     // this function.
 
-    QStringList files = KFileDialog::getOpenFileNames(QString::null, "*", this, i18n("Attach File"));
-    QString name;
-    for ( QStringList::Iterator it = files.begin(); it != files.end(); ++it ) {
-      name = *it;
+    KURL::List files = KFileDialog::getOpenURLs(QString::null, "*", this, i18n("Attach File"));
+    QStringList list = files.toStringList();
+    for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+      QString name = *it;
       if(!name.isEmpty()) {
         addAttach(name);
       }
