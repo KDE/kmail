@@ -10,7 +10,8 @@
 #include <qheader.h>
 #include <qdragobject.h>
 #include <qmessagebox.h>
-#include <qimageio.h>
+//#include <qimageio.h>
+#include <kimgio.h>
 
 #include <kapp.h>
 #include <kglobal.h>
@@ -253,7 +254,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 {
   KIconLoader* loader = KGlobal::iconLoader();
   static bool pixmapsLoaded = FALSE;
-  qInitImageIO();
+  //qInitImageIO();
+  kimgioRegister();
 
   mOwner  = aOwner;
   mFolder = NULL;
