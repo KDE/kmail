@@ -24,7 +24,7 @@ static void msgDialog(const char* msg, const char* arg=NULL)
   else str = msg;
 
   KMsgBox::message(NULL, i18n("File I/O Error"), str,
-		   KMsgBox::STOP, i18n("Ok"));
+		   KMsgBox::STOP, i18n("OK"));
 }
 
 
@@ -124,7 +124,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 		  "File %s exists.\nDo you want to replace it ?"),
 		  aFileName);
       rc = QMessageBox::information(NULL, i18n("Information"),
-	   str, i18n("&Ok"), i18n("&Cancel"),
+	   str, i18n("&OK"), i18n("&Cancel"),
 	   0, 1);
       if (rc != 0) return FALSE;
     }
@@ -142,7 +142,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 	rc = QMessageBox::warning(NULL, i18n("Warning"),
 	     i18n(
              "Failed to make a backup copy of %s.\nContinue anyway ?"),
-	     i18n("&Ok"), i18n("&Cancel"), 0, 1);
+	     i18n("&OK"), i18n("&Cancel"), 0, 1);
 	if (rc != 0) return FALSE;
       }
     }

@@ -60,7 +60,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   mFilter = NULL;
 
   setCaption(i18n("Filter Rules"));
-  //setOKButton(i18n("Ok"));
+  //setOKButton(i18n("OK"));
   //setCancelButton(i18n("Cancel"));
 
   mFilterList = new QListBox(this);
@@ -151,7 +151,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   connect(mBtnDelete,SIGNAL(clicked()),SLOT(slotBtnDelete()));
 
   buttonBox->addStretch();
-  mBtnOk = buttonBox->addButton(i18n("Ok"));
+  mBtnOk = buttonBox->addButton(i18n("OK"));
   connect(mBtnOk,SIGNAL(clicked()),SLOT(slotBtnOk()));
 
   mBtnCancel = buttonBox->addButton(i18n("Cancel"));

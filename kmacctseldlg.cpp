@@ -27,7 +27,7 @@ KMAcctSelDlg::KMAcctSelDlg(QWidget* parent, const char* name):
   grp->resize(230, 110);
   connect(grp, SIGNAL(clicked(int)), SLOT(buttonClicked(int)));
 
-  ok = new QPushButton(i18n("Ok"), this);
+  ok = new QPushButton(i18n("OK"), this);
   ok->adjustSize();
   ok->setMinimumSize(ok->sizeHint());
   ok->resize(100, ok->size().height());

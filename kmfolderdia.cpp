@@ -77,7 +77,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
 
   QPushButton *button = new QPushButton(this);
   button->setGeometry(190,260,100,30);
-  button->setText(i18n("Ok"));
+  button->setText(i18n("OK"));
   connect(button,SIGNAL(clicked()),this,SLOT(doAccept()));
 
   button = new QPushButton(this);

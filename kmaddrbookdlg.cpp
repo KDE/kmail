@@ -11,7 +11,7 @@
 KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   KMAddrBookSelDlgInherited(NULL, aCap, TRUE), mGrid(this, 2, 2),
   mListBox(this),
-  mBtnOk(i18n("Ok"),this), 
+  mBtnOk(i18n("OK"),this), 
   mBtnCancel(i18n("Cancel"),this)
 {
   const char* addr;
@@ -84,7 +84,7 @@ void KMAddrBookSelDlg::slotCancel()
 KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   KMAddrBookEditDlgInherited(NULL, NULL, TRUE), mGrid(this, 3, 4),
   mListBox(this), mEdtAddress(this),
-  mBtnOk(i18n("Ok"),this), 
+  mBtnOk(i18n("OK"),this), 
   mBtnCancel(i18n("Cancel"),this),
   mBtnAdd(i18n("Add"),this), 
   mBtnRemove(i18n("Remove"),this)

@@ -38,7 +38,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   box->addLayout(bbox, 1);
 
   KButtonBox *butbox = new KButtonBox(this);
-  btnOk = butbox->addButton(i18n("Ok"));
+  btnOk = butbox->addButton(i18n("OK"));
   btnOk->setDefault(TRUE);
   connect(btnOk, SIGNAL(clicked()), this, SLOT(accept()));
 

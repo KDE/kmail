@@ -157,7 +157,7 @@ int KMAddrBook::fileError(int status) const
 
   str.sprintf(msg, mDefaultFileName.data());
   KMsgBox::message(NULL, i18n("File I/O Error"), str,
-		   KMsgBox::STOP, i18n("Ok"));
+		   KMsgBox::STOP, i18n("OK"));
 
   return status;
 }

@@ -47,7 +47,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 
   setCaption(i18n("Settings"));
   resize(500,500);
-  setOKButton(i18n("Ok"));
+  setOKButton(i18n("OK"));
   setCancelButton(i18n("Cancel"));
 
   connect(this, SIGNAL(applyButtonPressed()), this, SLOT(doApply()));
@@ -934,7 +934,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   // buttons at bottom
   btnBox = new QWidget(this);
-  ok = new QPushButton(i18n("Ok"), btnBox);
+  ok = new QPushButton(i18n("OK"), btnBox);
   ok->adjustSize();
   ok->setMinimumSize(ok->sizeHint());
   ok->resize(100, ok->size().height());

@@ -102,7 +102,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
 	
 
   //-----
-  btnOk = new QPushButton(i18n("Ok"), this);
+  btnOk = new QPushButton(i18n("OK"), this);
   btnOk->adjustSize();
   btnOk->setMinimumSize(btnOk->sizeHint());
   connect(btnOk, SIGNAL(clicked()), SLOT(accept()));

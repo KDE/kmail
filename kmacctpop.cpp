@@ -471,7 +471,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   passwdLEdit->setGeometry(100,76,150,25);
   connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
 
-  ok = new QPushButton("Ok" ,this,"NULL");
+  ok = new QPushButton("OK" ,this,"NULL");
   ok->setGeometry(55,130,70,25);
   connect(ok,SIGNAL(pressed()),this,SLOT(slotOkPressed()));
 
