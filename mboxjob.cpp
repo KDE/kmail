@@ -93,7 +93,7 @@ MboxJob::expireMessages()
 void
 MboxJob::setParent( const KMFolderMbox *parent )
 {
-  mParent = parent;
+  mParent = const_cast<KMFolderMbox*>( parent );
 }
 
 //-----------------------------------------------------------------------------

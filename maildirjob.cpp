@@ -34,7 +34,7 @@ MaildirJob::~MaildirJob()
 //-----------------------------------------------------------------------------
 void MaildirJob::setParentFolder( const KMFolderMaildir* parent )
 {
-  mParentFolder = parent;
+  mParentFolder = const_cast<KMFolderMaildir*>( parent );
 }
 
 
