@@ -9,7 +9,7 @@ bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
-		kmaccount.cpp kmheaders.cpp \
+		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \

@@ -16,6 +16,7 @@
 #include "kmidentity.h"
 #include "kfileio.h"
 #include "kmfawidgets.h"
+#include "kmfoldercombobox.h"
 
 #include <kregexp3.h>
 #include <ktempfile.h>
@@ -198,37 +199,28 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  kernel->folderMgr()->createI18nFolderList( &names, &folders );
-
-  QComboBox *cb = new QComboBox( FALSE, parent );
-  cb->insertStringList( names );
+  KMFolderComboBox *cb = new KMFolderComboBox( FALSE, parent );
   setParamWidgetValue( cb );
+  QObject::connect( kernel->folderMgr(), SIGNAL(changed()), cb, SLOT(refreshFolders()) );
   return cb;
 }
 
 void KMFilterActionWithFolder::applyParamWidgetValue( QWidget* paramWidget )
 {
-  QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  kernel->folderMgr()->createFolderList( &names, &folders );
-  // let's hope that QValueListIterator::operator*(QValueList::end()) == NULL.
-  mFolder = *folders.at( ((QComboBox*)paramWidget)->currentItem() );
+  mFolder = ((KMFolderComboBox *)paramWidget)->getFolder();
 }
 
 void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  QStringList names;
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  kernel->folderMgr()->createFolderList( &names, &folders );
-  int idx = folders.findIndex( mFolder );
-  ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
+  if ( mFolder )
+    ((KMFolderComboBox *)paramWidget)->setFolder( mFolder );
+  else
+    clearParamWidget( paramWidget );
 }
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 {
-  ((QComboBox*)paramWidget)->setCurrentItem( 0 );
+  ((KMFolderComboBox *)paramWidget)->setFolder( kernel->draftsFolder() );
 }
 
 void KMFilterActionWithFolder::argsFromString( const QString argsStr )
