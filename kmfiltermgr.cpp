@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfiltermgr.cpp
 
 // my header
@@ -145,9 +146,18 @@ int KMFilterMgr::moveMessage(KMMessage *msg) const
 
 void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
 {
-  if (msgBase->parent() && 
-      (msgBase->parent() == MessageProperty::filterFolder( msgBase )))
-    msgBase->parent()->take( msgBase->parent()->find( msgBase ) );
+  KMFolder *parent = msgBase->parent();
+  if ( parent ) {
+    if ( parent == MessageProperty::filterFolder( msgBase ) ) {
+      parent->take( parent->find( msgBase ) );
+    }
+    else if ( ! MessageProperty::filterFolder( msgBase ) ) {
+      int index = parent->find( msgBase );
+      KMMessage *msg = parent->getMsg( index );
+      parent->take( index );
+      parent->addMsg( msg );
+    }
+  }
   MessageProperty::setFiltering( msgBase, false );
 }
 
