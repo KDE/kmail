@@ -1329,6 +1329,11 @@ void KMHeaders::setMsgRead (int msgId)
 void KMHeaders::deleteMsg (int msgId)
 {
   KMFolder* folder = NULL;
+  
+  //make sure we have an associated folder (root of folder tree does not).  
+  if (!mFolder)
+    return;
+  
   if (mFolder->protocol() == "imap")
   {
     KMFolderImap* fi = static_cast<KMFolderImap*> (mFolder);
