@@ -599,7 +599,7 @@ void KMKernel::cleanup(void)
   // left behind.
   if (!KMReaderWin::attachDir().isEmpty())
   {
-    cmd.sprintf("rm -rf '%s'", KMReaderWin::attachDir().local8Bit());
+    cmd.sprintf("rm -rf '%s'", (const char*)KMReaderWin::attachDir().local8Bit() );
     system (cmd.data()); // delete your owns only
   }
   //--- Sven's save attachments to /tmp end ---
