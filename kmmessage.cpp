@@ -4009,9 +4009,6 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 //-----------------------------------------------------------------------------
 void KMMessage::updateAttachmentState( DwBodyPart* part )
 {
-  static const char cSMIMEData[] = "smime.p7s";
-  static const char cSignatureData[] = "signature.asc";
-
   if ( !part )
     part = getFirstDwBodyPart();
 
@@ -4024,15 +4021,18 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
 
   if ( part->hasHeaders() &&
        ( ( part->Headers().HasContentDisposition() &&
-           !part->Headers().ContentDisposition().Filename().empty() &&
-           0 != kasciistricmp(part->Headers().ContentDisposition().Filename().c_str(), 
-             cSMIMEData) ) ||
+           !part->Headers().ContentDisposition().Filename().empty() ) ||
          ( part->Headers().HasContentType() && 
-           !part->Headers().ContentType().Name().empty() &&
-           0 != kasciistricmp(part->Headers().ContentType().Name().c_str(), 
-             cSignatureData) ) ) )
+           !part->Headers().ContentType().Name().empty() ) ) )
   {
-    setStatus( KMMsgStatusHasAttach );
+    // now blacklist certain ContentTypes
+    if ( !part->Headers().HasContentType() ||
+         ( part->Headers().HasContentType() && 
+           part->Headers().ContentType().Subtype() != DwMime::kSubtypePgpSignature &&
+           part->Headers().ContentType().Subtype() != DwMime::kSubtypePkcs7Signature ) )
+    {
+      setStatus( KMMsgStatusHasAttach );
+    }
     return;
   }
 
