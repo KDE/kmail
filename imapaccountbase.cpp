@@ -277,8 +277,7 @@ namespace KMail {
       return Error;
     }
     if ( mSlave->isConnected() ) {
-      mSlaveConnected = true;
-      mNoopTimer.start( 60000 ); // make sure we start sending noops again
+      slotSchedulerSlaveConnected( mSlave );
       return Connected;
     }
 
@@ -506,7 +505,7 @@ namespace KMail {
   {
       if (aSlave != mSlave) return;
       mSlaveConnected = true;
-      mNoopTimer.start( 60000 ); // make sure we start sending noops again
+      mNoopTimer.start( 60000 ); // make sure we start sending noops
       emit connectionResult( 0, QString::null ); // success
   }
 
