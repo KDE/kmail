@@ -129,11 +129,11 @@ QString KMFolderDir::path() const
 //-----------------------------------------------------------------------------
 bool KMFolderDir::reload(void)
 {
-  QDir      dir;
-  KMFolder* folder;
-  QFileInfo* fileInfo;
-  QFileInfoList* fiList;
-  QStringList diList;
+  QDir               dir;
+  KMFolder*          folder;
+  QFileInfo*         fileInfo;
+  QFileInfoList*     fiList;
+  QStringList        diList;
   QPtrList<KMFolder> folderList;
   QString fname;
   QString fldPath;
@@ -161,9 +161,8 @@ bool KMFolderDir::reload(void)
   for (fileInfo=fiList->first(); fileInfo; fileInfo=fiList->next())
   {
     fname = fileInfo->fileName();
-
     if ((fname[0]=='.') &&
-	!(fname.right(10)==".directory"))
+        !(fname.right(10)==".directory"))
       continue;
     else if (fname == ".directory")
       continue;
@@ -171,7 +170,7 @@ bool KMFolderDir::reload(void)
     {
       QString maildir(fname + "/new");
       // see if this is a maildir before assuming a subdir
-      if (dir.exists(maildir))
+      if (!mImap && dir.exists(maildir))
       {
         folder = new KMFolderMaildir(this, fname);
         append(folder);
@@ -183,7 +182,7 @@ bool KMFolderDir::reload(void)
     else if (mImap)
     {
       if (KMFolderImap::encodeFileName(KMFolderImap::decodeFileName(fname))
-        == fname)
+          == fname)
       {
         folder = new KMFolderImap(this, KMFolderImap::decodeFileName(fname));
         append(folder);
@@ -201,15 +200,15 @@ bool KMFolderDir::reload(void)
   for (folder=folderList.first(); folder; folder=folderList.next())
   {
     for(QStringList::Iterator it = diList.begin();
-	it != diList.end();
-	++it)
+        it != diList.end();
+        ++it)
       if (*it == "." + folder->fileName() + ".directory")
       {
-	KMFolderDir* folderDir = new KMFolderDir(this, *it, mImap);
-	folderDir->reload();
-	append(folderDir);
-	folder->setChild(folderDir);
-	break;
+        KMFolderDir* folderDir = new KMFolderDir(this, *it, mImap);
+        folderDir->reload();
+        append(folderDir);
+        folder->setChild(folderDir);
+        break;
       }
   }
 
