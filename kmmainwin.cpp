@@ -917,7 +917,8 @@ void KMMainWin::slotUrlClicked(const char* aUrl, int)
   {
     statusMsg(i18n("Opening URL..."));
     // -- David : replacement for KFM::openURL
-    (void) new KRun(aUrl);
+    KURL kURL( aUrl );
+    (void) new KRun( kURL );
   }
 }
 
@@ -1388,4 +1389,5 @@ void KMMainWin::updateMessageMenu()
   copyId = messageMenu->insertItem(i18n("&Copy to"), msgCopyMenu, -1, 
 				   copyIndex );
 }
+
 
