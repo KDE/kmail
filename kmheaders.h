@@ -4,15 +4,19 @@
 #include <qwidget.h>
 #include <qstrlist.h>
 #include <ktablistbox.h>
+#include "kmmessage.h"
 
 class KMFolder;
 class KMMessage;
 class KMMainWin;
 
-#define KMHeadersInherited KTabListBox
+typedef QList<KMMessage> KMMessageList;
 
-class KMHeaders : public KTabListBox {
+#define KMHeadersInherited KTabListBox
+class KMHeaders : public KTabListBox
+{
   Q_OBJECT
+
 public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
   virtual ~KMHeaders();
@@ -32,6 +36,9 @@ public:
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
+
+  /** Returns list of selected messages. Do not delete this object. */
+  virtual KMMessageList* selectedMsgs(void);
 
   /** Returns message with given id or current message if no
     id is given. First call with msgId==-1 returns first
@@ -71,6 +78,7 @@ private:
   KMMainWin* mOwner;
   int getMsgIndex;
   bool getMsgMulti;
+  KMMessageList mSelMsgList;
 };
 
 #endif

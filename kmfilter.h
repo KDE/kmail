@@ -17,7 +17,7 @@ class KMFilter;
 class KConfig;
 
 // maximum number of filter actions per filter
-#define FILTER_MAX_ACTIONS 5
+#define FILTER_MAX_ACTIONS 8
 
 
 //-----------------------------------------------------------------------------
@@ -27,7 +27,8 @@ public:
   /** Operators for comparison of field and contents. */
   // If you change the order or contents of the enum: do not forget
   // to change the string list in kmfilter.cpp
-  enum Function { FuncEquals, FuncContains, FuncRegExp };
+  enum Function { FuncEquals=0, FuncNotEqual, FuncContains, FuncContainsNot, 
+		  FuncRegExp, FuncNotRegExp };
 
   /** Initializing constructor. */
   KMFilterRule();
@@ -63,7 +64,7 @@ public:
    */
   // If you change the order or contents of the enum: do not forget
   // to change the string list in kmfilter.cpp
-  enum Operator { OpIgnore=0, OpAnd, OpAndNot, OpOr, OpOrNot };
+  enum Operator { OpIgnore=0, OpAnd, OpAndNot, OpOr };
 
   /** Constructor that initializes from given config file. The config
     * group is preset. */

@@ -7,11 +7,14 @@
 #include "kmmainwin.h"
 #include "kmacctmgr.h"
 #include "kmfoldermgr.h"
+#include "kmfilteraction.h"
 #include "kmfolder.h"
 #include "kmsender.h"
 #include "kbusyptr.h"
 #include "kmfiltermgr.h"
 #include "kmversion.h"
+#include "kmmessage.h"
+
 #include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,6 +39,7 @@ KMFolder* sentFolder = NULL;
 KMFolder* trashFolder = NULL;
 KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
+KMFilterActionDict* filterActionDict = NULL;
 bool shuttingDown = FALSE;
 const char* aboutText = 
     "KMail [" KMAIL_VERSION "] by\n\n"
@@ -123,6 +127,7 @@ static void init(int argc, char *argv[])
   folderMgr = new KMFolderMgr(foldersPath);
   acctMgr   = new KMAcctMgr(acctPath);
   filterMgr = new KMFilterMgr;
+  filterActionDict = new KMFilterActionDict;
 
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(
 				         cfg->readEntry("inboxFolder", "inbox"));
@@ -142,6 +147,7 @@ static void init(int argc, char *argv[])
 
   acctMgr->readConfig();
   filterMgr->readConfig();
+  KMMessage::readConfig();
 
   msgSender = new KMSender;
 }

@@ -47,8 +47,8 @@ void KMMsgInfo::init(const QString aSubject, const QString aFrom, time_t aDate,
 		     KMMsgStatus aStatus, unsigned long aFolderOffset, 
 		     unsigned long aMsgSize)
 {
-  mSubject = aSubject.copy();
-  mFrom    = aFrom.copy();
+  mSubject = decodeQuotedPrintableString(aSubject).copy();
+  mFrom    = decodeQuotedPrintableString(aFrom).copy();
   mDate    = aDate;
   mStatus  = aStatus;
   mMsgSize = aMsgSize;

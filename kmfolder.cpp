@@ -437,6 +437,23 @@ void KMFolder::quiet(bool beQuiet)
 
 
 //-----------------------------------------------------------------------------
+void KMFolder::removeMsg(KMMsgBasePtr aMsg)
+{
+  removeMsg(find(aMsg));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::removeMsg(int idx)
+{
+  assert(idx>=0);
+  mMsgList.take(idx);
+  mDirty = TRUE;
+  if (!mQuiet) emit msgRemoved(idx);
+}
+
+
+//-----------------------------------------------------------------------------
 KMMessage* KMFolder::take(int idx)
 {
   KMMsgBase* mb;

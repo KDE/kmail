@@ -6,7 +6,8 @@
 
 // we need this for sorting.
 static KMMsgList::SortField sortCriteria;
-
+static int* sortIndex;
+static KMMsgList* sortList;
 
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)
@@ -187,17 +188,35 @@ void KMMsgList::rethinkHigh(void)
 //-----------------------------------------------------------------------------
 void KMMsgList::sort(SortField aField)
 {
-  debug("sort by %d", (int)aField);
+  int i;
+  KMMsgBasePtr ptrList[mHigh];
+
+  if (mHigh < 2) return;
+
+  sortIndex = new int[mHigh];
   sortCriteria = aField;
-  qsort(data(), mHigh, sizeof(KMMsgBasePtr), msgSortCompFunc);
+  sortList = this;
+
+  for (i=0; i<mHigh; i++)
+    sortIndex[i] = i;
+
+  qsort(sortIndex, mHigh, sizeof(int), msgSortCompFunc);
+
+  for (i=0; i<mHigh; i++)
+    ptrList[i] = KMMsgListInherited::at(sortIndex[i]);
+
+  for (i=0; i<mHigh; i++)
+    KMMsgListInherited::at(i) = ptrList[i];
+
+  delete sortIndex;
 }
 
 
 //-----------------------------------------------------------------------------
 int KMMsgList::msgSortCompFunc(const void* a, const void* b)
 {
-  KMMsgBasePtr mbA = *(KMMsgBasePtr*)a;
-  KMMsgBasePtr mbB = *(KMMsgBasePtr*)b;
+  KMMsgBasePtr mbA = sortList->at(*(int*)a);
+  KMMsgBasePtr mbB = sortList->at(*(int*)b);
   int          res = 0;
 
   if (sortCriteria==sfStatus)

@@ -6,11 +6,16 @@
 #define kmfilterdlg_h
 
 #include "kmfilteraction.h"
+#include "kmfilter.h"
+#include <qcombo.h>
 
 class QBoxLayout;
 class QListBox;
 class QWidget;
 class QPushButton;
+class KMFaComboBox;
+class QLineEdit;
+class QGridLayout;
 
 #define KMFilterDlgInherited KMGFilterDlg
 class KMFilterDlg: public KMGFilterDlg
@@ -21,32 +26,70 @@ public:
   KMFilterDlg(QWidget* parent=NULL, const char* name=NULL);
   virtual ~KMFilterDlg();
 
-  /** Methods for filter options: */
-  virtual void addLabel(const QString label);
-  virtual void addEntry(const QString label, QString value);
-  virtual void addFileNameEntry(const QString label, QString value,
-				const QString pattern, const QString startdir);
-  virtual void addToggle(const QString label, bool* value);
-  virtual void addFolderList(const QString label, KMFolder** folderPtr);
-  virtual void addWidget(const QString label, QWidget* widget);
+  /** Remove all widgets from the filter-grid. */
+  virtual void clear(void);
+
+  /** Show details of given filter. */
+  virtual void showFilter(KMFilter* filter);
+
+  /** Apply changes in the edit fields to the current filter. */
+  virtual void applyFilterChanges(void);
+
+  /** Methods for filter options, @see KMGFilterDlg */
+  virtual QPushButton* createDetailsButton(void);
+  virtual QComboBox* createFolderCombo(const QString curFolder=NULL);
 
 protected slots:
-  void doBtnUp();
-  void doBtnDown();
-  void doBtnNew();
-  void doBtnDelete();
-  void doBtnOk();
-  void doBtnCancel();
-  void doBtnHelp();
+  void slotBtnUp();
+  void slotBtnDown();
+  void slotBtnNew();
+  void slotBtnDelete();
+  void slotBtnOk();
+  void slotBtnCancel();
+  void slotBtnHelp();
+  void slotFilterSelected(int);
+
+  void slotActionTypeSelected(KMFaComboBox*, int);
 
 protected:
-  // fill listbox with filter list
+  // Fill listbox with filter list
   virtual void reloadFilterList(void);
 
-  QBoxLayout* mBox;
-  QListBox* mFilterList;
-  QWidget* mFilterArea;
+  // Returns FALSE if grid was not created with setGrid() or given ptr is NULL
+  virtual bool testOpts(const QWidget* ptr) const;
+
+  // Initialize static lists. Automatically called.
+  static void initLists(void);
+
+  KMFilter* mFilter;
+  QGridLayout *mGrid;
+  int mGridRow;
+  int mActLineHeight;
+  QListBox *mFilterList;
+  QWidget *mFilterArea;
   QPushButton *mBtnUp, *mBtnDown, *mBtnNew, *mBtnDelete, *mBtnOk, *mBtnCancel;
+  QPushButton *mFaBtnDetails[FILTER_MAX_ACTIONS];
+  QWidget     *mFaField[FILTER_MAX_ACTIONS];
+  KMFaComboBox*mFaType[FILTER_MAX_ACTIONS];
+  QComboBox   *mRuleFieldA, *mRuleFieldB;
+  QLineEdit   *mRuleValueA, *mRuleValueB;
+  QComboBox   *mRuleFuncA, *mRuleFuncB, *mRuleOp;
+};
+
+
+//-----------------------------------------------------------------------------
+#define KMFaComboBoxInherited QComboBox
+class KMFaComboBox: public QComboBox
+{
+  Q_OBJECT
+public:
+  KMFaComboBox(QWidget* parent, const char* name=0);
+
+signals:
+  void selectType(KMFaComboBox* self, int index);
+
+protected slots:
+  void slotSelected(int);
 };
 
 #endif /*kmfilterdlg_h*/

@@ -398,7 +398,10 @@ void KMMainWin::slotMoveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSendQueued()
 {
-  msgSender->sendQueued();
+  if (msgSender->sendQueued())
+    statusMsg(nls->translate("Queued messages successfully sent."));
+  else
+    statusMsg(nls->translate("Failed to send (some) queued messages."));
 }
 
 
@@ -520,6 +523,11 @@ void KMMainWin::setupMenuBar()
 		       SLOT(slotCompose()), keys->openNew());
   fileMenu->insertItem(nls->translate("New Mailreader"), this, 
 		       SLOT(slotNewMailReader()));
+  fileMenu->insertSeparator();
+  fileMenu->insertItem(nls->translate("Save As..."), this,
+		       SLOT(slotUnimplemented()), keys->save());
+  fileMenu->insertItem(nls->translate("Print..."), this,
+		       SLOT(slotPrintMsg()), keys->print());
   fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("Send Queued"), this,
 		       SLOT(slotSendQueued()));

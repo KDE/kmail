@@ -108,6 +108,21 @@ public:
   /** Assignment operator that simply calls assign(). */
   KMMsgBase& operator=(const KMMsgBase& other);
 
+  /** En-/decode given string to/from quoted-printable. */
+  static const QString decodeQuotedPrintable(const QString str);
+  static const QString encodeQuotedPrintable(const QString str);
+
+  /** Decode given string from possibly quoted-printable encoded
+    string. These strings contain parts of the type "=?iso8859-1?Q?...?=".
+    These parts are not correct decoded by decodeQuotedPrintable(). 
+    Use this method if you want to ensure that a given header field
+    is readable. */
+  static const QString decodeQuotedPrintableString(const QString str);
+
+  /** En/-decode given string to/from Base64. */
+  static const QString decodeBase64(const QString str);
+  static const QString encodeBase64(const QString str);
+
 protected:
   KMFolder* mParent;
   unsigned long mFolderOffset, mMsgSize;

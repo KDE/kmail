@@ -201,6 +201,7 @@ void KMHeaders::setMsgRead (int msgId)
 void KMHeaders::deleteMsg (int msgId)
 {
   KMMessage* msg;
+  KMMessageList* msgList;
 
   if (mFolder != trashFolder)
   {
@@ -212,8 +213,12 @@ void KMHeaders::deleteMsg (int msgId)
     // We are in the trash folder -> really delete messages
     kbp->busy();
     setAutoUpdate(FALSE);
-    for (msg=getMsg(msgId); msg; msg=getMsg())
+    msgList = selectedMsgs();
+    for (msg=msgList->first(); msg; msg=msgList->next())
+    {
+      mFolder->removeMsg(msg);
       delete msg;
+    }
     setAutoUpdate(TRUE);
     kbp->idle();
   }
@@ -307,6 +312,19 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   }
   destFolder->close();
   kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+KMMessageList* KMHeaders::selectedMsgs(void)
+{
+  KMMessage* msg;
+
+  mSelMsgList.clear();
+  for (msg=getMsg(-1); msg; msg=getMsg())
+    mSelMsgList.append(msg);
+
+  return &mSelMsgList;
 }
 
 

@@ -27,7 +27,7 @@ public:
 protected:
   virtual void createTabIdentity(QWidget*);
   virtual void createTabNetwork(QWidget*);
-  virtual void createTabGeneral(QWidget*);
+  virtual void createTabComposer(QWidget*);
 
   // Create a button in given grid. The name is internationalized.
   virtual QPushButton* createPushButton(QWidget* parent, QGridLayout* grid,
@@ -56,6 +56,8 @@ private:
   QWidget *identityTab,*networkTab;
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
+  QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
+  QLineEdit *indentPrefixEdit;
   QRadioButton *smtpRadio,*sendmailRadio;
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;

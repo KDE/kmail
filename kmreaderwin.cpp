@@ -337,13 +337,16 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
 
 //-----------------------------------------------------------------------------
-const QString KMReaderWin::strToHtml(const QString aStr) const
+const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
 {
-  QString htmlStr;
+  QString htmlStr, qpstr;
   char ch, *pos, str[256];
   int i;
 
-  for (pos=aStr.data(); *pos; pos++)
+  if (aDecodeQP) qpstr = KMMsgBase::decodeQuotedPrintableString(aStr);
+  else qpstr = aStr;
+
+  for (pos=qpstr.data(); *pos; pos++)
   {
     ch = *pos;
     if (ch=='<') htmlStr += "&lt;";
@@ -383,14 +386,6 @@ int KMReaderWin::msgPartFromUrl(const char* aUrl)
   if (!aUrl || !mMsg || strncmp(aUrl,"part:",5)) return -1;
   return (aUrl ? atoi(aUrl+5) : 0);
 }
-
-
-
-
-
-
-
-
 
 
 //-----------------------------------------------------------------------------
@@ -553,14 +548,14 @@ void KMReaderWin::slotScrollDown()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
 {
-  mSbVert->setValue(mSbVert->value() - (height()*0.9));	
+  mSbVert->setValue(mSbVert->value() - (int)(height()*0.8));	
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollNext()
 {
-  mSbVert->setValue(mSbVert->value() + (height()*0.9));	
+  mSbVert->setValue(mSbVert->value() + (int)(height()*0.8));	
 }
 
 

@@ -13,7 +13,7 @@ class QCursor;
 
 class KBusyPtr: public KAlarmTimer
 {
-  Q_OBJECT;
+  Q_OBJECT
 
 public:
   KBusyPtr();

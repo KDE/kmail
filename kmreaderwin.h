@@ -113,7 +113,8 @@ protected:
   virtual void writePartIcon(KMMessagePart* msgPart, int partNumber);
 
   /** Convert given string to HTML. */
-  virtual const QString strToHtml(const QString str) const;
+  virtual const QString strToHtml(const QString str, 
+				  bool decodeQuotedPrintable=TRUE) const;
 
   /** HTML initialization. */
   virtual void initHtmlWidget(void);

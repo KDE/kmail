@@ -49,6 +49,10 @@ extern KStdAccel* keys;
 class KMFilterMgr;
 extern KMFilterMgr* filterMgr;
 
+/** Dictionary of available mail filter actions. */
+class KMFilterActionDict;
+extern KMFilterActionDict* filterActionDict;
+
 /** A bunch of standard mail folders. */
 class KMFolder;
 extern KMFolder* inboxFolder;

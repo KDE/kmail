@@ -13,7 +13,8 @@ class QPushButton;
 
 class KMAcctSelDlg: public QDialog
 {
-  Q_OBJECT;
+  Q_OBJECT
+
 public:
   KMAcctSelDlg(QWidget* parent=0, const char* name=0);
 

@@ -89,6 +89,10 @@ public:
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = NULL);
 
+  /** Remove (first occurance of) given message from the folder. */
+  virtual void removeMsg(int i);
+  virtual void removeMsg(KMMsgBasePtr msg);
+
   /** Detaches the given message from it's current folder and
     adds it to this folder. Returns zero on success and an errno error
     code on failure. The index of the new message is stored in index_return

@@ -7,13 +7,16 @@
 #ifndef kmfilteraction_h
 #define kmfilteraction_h
 
-#include <qdict.h>
+#include <qlist.h>
 #include <qobject.h>
 #include <qdialog.h>
 
 class KMFilterActionDict;
 class KMGFilterDlg;
 class QWidget;
+class QPushButton;
+class QComboBox;
+class QLineEdit;
 class KConfig;
 class KMFolder;
 class KMMessage;
@@ -23,13 +26,13 @@ class KMMessage;
 class KMFilterAction: public QObject
 {
 public:
-  /** Initialize filter action with nationalized label and international
+  /** Initialize filter action with international
    * name. */
-  KMFilterAction(const QString name, const QString label);
+  KMFilterAction(const char* name);
   virtual ~KMFilterAction();
 
   /** Returns nationalized label */
-  const QString label(void) const { return mLabel; }
+  virtual const QString label(void) const = 0;
 
   /** Execute action on given message. Returns TRUE if the message
    * shall be processed by further filters and FALSE otherwise. 
@@ -37,12 +40,14 @@ public:
    * do not change it otherwise. */
   virtual bool process(KMMessage* msg, bool& stopIt) = 0;
 
-  /** Install a setup GUI for other configuration options.
-   * There will be no "undo" button, so the GUI elements installed shall
-   * directly represent the fields of the filter action. E.g. to modify
-   * the label the following call would be issued:
-   * caller->addEntry(locale->translate("Label:"), mLabel); */
-  virtual void installGUI(KMGFilterDlg* caller) = 0;
+  /** Creates a widget for setting the filter action parameter. Also
+   * sets the value of the widget. */
+  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
+
+  /** The filter-action shall set it's parameter from the widget's
+   * contents. It is allowed that the value is read by the action
+   * before this function is called. */
+  virtual void applyParamWidgetValue(QWidget* paramWidget);
 
   /** Read extra arguments from given string. */
   virtual void argsFromString(const QString argsStr) = 0;
@@ -50,9 +55,11 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString(void) const = 0;
 
-protected:
-  QString mLabel;
+  /** Static function that creates a filter action of this type. */
+  static KMFilterAction* newAction(void);
 };
+
+typedef KMFilterAction* (*KMFilterActionNewFunc)(void);
 
 
 //-----------------------------------------------------------------------------
@@ -70,38 +77,57 @@ public:
 	       bool modal=FALSE, WFlags f=0);
   virtual ~KMGFilterDlg();
 
-  /** Add a constant text that cannot be modified. */
-  virtual void addLabel(const QString label) = 0;
+  /** Creates a details button "..." for the current filter action. */
+  virtual QPushButton* createDetailsButton(void) = 0;
 
-  /** Add a labeled entry field that allows string input. The given string
-      will always contain the current value. */
-  virtual void addEntry(const QString label, QString value) = 0;
+  /** Sets the label for the current fiter action parameter. */
+  //virtual void setLabel(const QString label) = 0;
 
-  /** Add a labeled entry field for filename input with a "..." button that
-      opens a file selector with the given pattern/start-dir when clicked. */
-  virtual void addFileNameEntry(const QString label, QString value,
-			const QString pattern, const QString startdir) = 0;
-
-  /** Add a labeled toggle button. */
-  virtual void addToggle(const QString label, bool* value) = 0;
-
-  /** Add a labeled list of folders. */
-  virtual void addFolderList(const QString label, KMFolder** folderPtr) = 0;
-
-  /** Add the given custom widget with a label to it's left if specified.
-      If the label is NULL then the custom widget will have the full width. */
-  virtual void addWidget(const QString label, QWidget* widget) = 0;
+  /** Creates a combobox with a list of folders for the current filter 
+    action, with curFolder as the current entry (if given). */
+  virtual QComboBox* createFolderCombo(const QString curFolder=NULL) = 0;
 };
 
 
 //-----------------------------------------------------------------------------
-// Dictionary that contains a list of all registered filter actions
-#define KMFilterActionDictInherited QDict<KMFilterAction>
-class KMFilterActionDict: public QDict<KMFilterAction>
+// Dictionary that contains a list of all registered filter actions with
+// their creation functions.
+class KMFilterActionDesc
+{
+public:
+  QString label, name;
+  KMFilterActionNewFunc func;
+};
+typedef QList<KMFilterActionDesc> KMFilterActionDescList;
+
+class KMFilterActionDict
 {
 public:
   KMFilterActionDict();
-  ~KMFilterActionDict();
+  virtual ~KMFilterActionDict();
+
+  virtual void insert(const QString name, const QString label,
+		      KMFilterActionNewFunc func);
+
+  // returns name of element or an empty QString if end of list.
+  virtual const QString first(void);
+  virtual const QString next(void);
+
+  // these methods work with the current element of first/next
+  virtual const QString currentName(void);
+  virtual const QString currentLabel(void);
+  virtual KMFilterAction* currentCreate(void);
+
+  // Note: the following methods use first/next internally
+  virtual KMFilterAction* create(const QString name);
+  virtual const QString labelOf(const QString name);
+  virtual const QString nameOf(const QString label);
+
+protected:
+  virtual void init(void);
+  virtual KMFilterActionDesc* find(const QString name);
+
+  KMFilterActionDescList mList;
 };
 
 #endif /*kmfilteraction_h*/

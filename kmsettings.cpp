@@ -12,6 +12,7 @@
 #include "kmidentity.h"
 #include "kmmainwin.h"
 #include "kmsender.h"
+#include "kmmessage.h"
 
 #include <kapp.h>
 #include <klocale.h>
@@ -46,7 +47,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 
   createTabIdentity(this);
   createTabNetwork(this);
-  createTabGeneral(this);
+  createTabComposer(this);
 }
 
 
@@ -251,12 +252,65 @@ void KMSettings::createTabNetwork(QWidget* parent)
 
 
 //-----------------------------------------------------------------------------
-void KMSettings::createTabGeneral(QWidget * /*parent*/ )
+void KMSettings::createTabComposer(QWidget *parent)
 {
-#ifdef MISSING
   QWidget *tab = new QWidget(parent);
-  addTab(tab,"General");
-#endif
+  QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
+  QGridLayout* grid;
+  QGroupBox* grp;
+  QLabel* lbl;
+  KConfig* config = app->getConfig();
+  QString str;
+
+  //---------- group: phrases
+  grp = new QGroupBox(nls->translate("Phrases"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 6, 3, 20, 4);
+
+  lbl = new QLabel(nls->translate("The following placeholders are supported in the\n"
+				  "reply phrases: %D=date, %S=subject, %F=sender,"
+				  "\n%%=percent sign"), grp);
+  lbl->adjustSize();
+  //lbl->setMinimumSize(lbl->size());
+  grid->addMultiCellWidget(lbl, 0, 0, 0, 2);
+
+  phraseReplyEdit = createLabeledEntry(grp, grid, 
+				       nls->translate("Reply to sender:"),
+				       NULL, 1, 0);
+  phraseReplyAllEdit = createLabeledEntry(grp, grid, 
+					  nls->translate("Reply to all:"),
+					  NULL, 2, 0);
+  phraseForwardEdit = createLabeledEntry(grp, grid, 
+					 nls->translate("Forward:"),
+					 NULL, 3, 0);
+  indentPrefixEdit = createLabeledEntry(grp, grid, 
+					nls->translate("Indentation:"),
+					NULL, 5, 0);
+  grid->activate();
+  grp->adjustSize();
+
+
+  //---------- set the values
+  config->setGroup("KMMessage");
+  str = config->readEntry("phrase-reply");
+  if (str.isEmpty()) str = nls->translate("On %D, you wrote:");
+  phraseReplyEdit->setText(str);
+
+  str = config->readEntry("phrase-reply-all");
+  if (str.isEmpty()) str = nls->translate("On %D, %F wrote:");
+  phraseReplyAllEdit->setText(str);
+
+  str = config->readEntry("phrase-forward");
+  if (str.isEmpty()) str = nls->translate("Forwarded Message");
+  phraseForwardEdit->setText(str);
+
+  indentPrefixEdit->setText(config->readEntry("indent-prefix", "> "));
+
+  //---------- ére we gø
+  box->addStretch(1000);
+  box->activate();
+ 
+  addTab(tab, nls->translate("Composer"));
 }
 
 
@@ -408,6 +462,8 @@ void KMSettings::doCancel()
 //-----------------------------------------------------------------------------
 void KMSettings::doApply()
 {
+  KConfig* config = app->getConfig();
+
   //----- identity
   identity->setFullName(nameEdit->text());
   identity->setOrganization(orgEdit->text());
@@ -430,9 +486,18 @@ void KMSettings::doApply()
   //----- incoming mail
   acctMgr->writeConfig(FALSE);
 
+  //----- phrases
+  config->setGroup("KMMessage");
+  config->writeEntry("phrase-reply", phraseReplyEdit->text());
+  config->writeEntry("phrase-reply-all", phraseReplyAllEdit->text());
+  config->writeEntry("phrase-forward", phraseForwardEdit->text());
+  config->writeEntry("indent-prefix", indentPrefixEdit->text());
+
   //-----
   app->getConfig()->sync();
+
   folderMgr->contentsChanged();
+  KMMessage::readConfig();
 }
 
 

@@ -143,11 +143,18 @@ public:
   void setCteStr(const QString aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
-  /** Get or set the message body */
+  /** Get the message body. Does not decode the body. */
   virtual const QString body(void) const;
+
+  /** Set the message body. Does not encode the body. */
   virtual void setBody(const QString aStr);
 
-  /** Returns a decode version of the body. */
+  /** Set the message body, encoding it according to the current content
+    transfer encoding. */
+  virtual void setBodyEncoded(const QString aStr);
+
+  /** Returns a decoded version of the body from the current content transfer
+    encoding. */
   virtual const QString bodyDecoded(void) const;
 
   /** Number of body parts the message has. This is one for plain messages
@@ -185,6 +192,10 @@ public:
    * only the name part and not the given emailAddr. */
   static const QString emailAddrAsAnchor(const QString emailAddr, 
 					 bool stripped=TRUE);
+
+  /** Reads config settings from group "KMMessage" and sets all internal
+   * variables (e.g. indent-prefix, etc.) */
+  static void readConfig(void);
 
 protected:
   DwMessage* mMsg;

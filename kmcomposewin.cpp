@@ -886,7 +886,6 @@ void KMComposeWin::slotSendLater()
 void KMComposeWin::slotAppendSignature()
 {
   QString sigFileName = identity->signatureFile();
-  char buf[1024];
   QString sigText;
 
   if (sigFileName.isEmpty())

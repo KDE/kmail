@@ -11,6 +11,9 @@
 #include "kmidentity.h"
 #include "kmversion.h"
 
+#include <kapp.h>
+#include <kconfig.h>
+
 // we need access to the protected member DwBody::DeleteBodyParts()...
 #define protected public
 #include <mimelib/body.h>
@@ -35,6 +38,8 @@ extern KMIdentity* identity;
 static DwString emptyString("");
 static QString resultStr;
 
+// Values that are set from the config file with KMMessage::readConfig()
+static QString sReplyStr, sForwardStr, sReplyAllStr, sIndentPrefixStr;
 
 
 //-----------------------------------------------------------------------------
@@ -179,22 +184,34 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 KMMessage* KMMessage::createReply(bool replyToAll) const
 {
   KMMessage* msg = new KMMessage;
-  QString str;
+  QString str, replyStr, loopToStr, replyToStr, toStr;
 
   msg->initHeader();
-  if (!replyTo().isEmpty()) 
+
+  loopToStr = headerField("X-Loop");
+  replyToStr = replyTo();
+
+  if (replyToAll)
   {
-    str = replyTo().copy();
-    if (replyToAll)
-    {
-      str += ", ";
-      str += from();
-    }
-    msg->setTo(str);
+    if (!replyToStr.isEmpty()) toStr += replyToStr + ", ";
+    else if (!loopToStr.isEmpty()) toStr = loopToStr + ", ";
+    if (!from().isEmpty()) toStr += from() + ", ";
+    toStr.truncate(toStr.length()-2);
   }
-  else msg->setTo(from());
+  else
+  {
+    if (!replyToStr.isEmpty()) toStr = replyToStr;
+    else if (!loopToStr.isEmpty()) toStr = loopToStr;
+    else if (!from().isEmpty()) toStr = from();
+  }
+
+  if (!toStr.isEmpty()) msg->setTo(toStr);
+
+  if (replyToAll || !loopToStr.isEmpty()) replyStr = sReplyAllStr;
+  else replyStr = sReplyStr;
+
   msg->setCc(cc());
-  msg->setBody(asQuotedString("On %D, %F wrote:", "> "));
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr));
 
   if (strnicmp(subject(), "Re:", 3)!=0)
     msg->setSubject("Re: " + subject());
@@ -212,7 +229,7 @@ KMMessage* KMMessage::createForward(void) const
 
   msg->initHeader();
 
-  str = "\n\n----------  Forwarded message  ----------\n";
+  str = "\n\n----------  " + sForwardStr + "  ----------\n";
   str += "Subject: " + subject() + "\n";
   str += "Date: " + dateStr() + "\n";
   str += "From: " + from() + "\n";
@@ -443,9 +460,14 @@ void KMMessage::setSubject(const QString aStr)
 const QString KMMessage::headerField(const QString aName) const
 {
   DwHeaders& header = mMsg->Headers();
+  QString str;
+  int i;
 
   if (!aName || !header.HasField(aName)) return "";
-  return header.FindField(aName)->AsString().c_str();
+  str = header.FindField(aName)->AsString().c_str();
+  i = str.find(':');
+  if (i>0) str.remove(0,i+2);
+  return str;
 }
 
 
@@ -608,6 +630,30 @@ const QString KMMessage::bodyDecoded(void) const
   }
 
   return resultStr;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setBodyEncoded(const QString aStr)
+{
+  DwString dwsrc(aStr.data(), aStr.size(), 0, aStr.length());
+  DwString dwstr;
+
+  switch (cte())
+  {
+  case DwMime::kCteBase64:
+    DwEncodeBase64(dwsrc, dwstr);
+    break;
+  case DwMime::kCteQuotedPrintable:
+    DwEncodeQuotedPrintable(dwsrc, dwstr);
+    break;
+  default:
+    dwstr = dwsrc;
+    break;
+  }
+
+  mMsg->Body().FromString(dwstr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -852,18 +898,52 @@ const QString KMMessage::stripEmailAddr(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::emailAddrAsAnchor(const QString email, bool stripped)
+const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
 {
-  QString result;
+  QString result, addr;
+  const char *pos;
+  char ch;
+  QString email = decodeQuotedPrintableString(aEmail);
 
-  result = email.copy();
-  result.replace(QRegExp("\""), "`");
-  result.replace(QRegExp("<"), "&lt:");
-  result.replace(QRegExp(">"), "&gt:");
-  result.prepend("<A HREF=\"mailto:");
-  result.append("\">");
-  if (stripped) result += KMMessage::stripEmailAddr(email);
-  else result += email;
-  result += "</A>";
+  if (email.isEmpty()) return email;
+
+  result = "<A HREF=\"mailto:";
+  for (pos=email.data(); *pos; pos++)
+  {
+    ch = *pos;
+    if (ch == '"') addr += "'";
+    else if (ch == '<') addr += "&lt;";
+    else if (ch == '>') addr += "&gt;";
+    else if (ch == '&') addr += "&amp;";
+    else if (ch != ',') addr += ch;
+
+    if (ch == ',' || !pos[1])
+    {
+      result += addr;
+      result += "\">";
+      if (stripped) result += KMMessage::stripEmailAddr(addr);
+      else result += addr;
+      result += "</A>";
+      if (ch == ',')
+      {
+	result += ", <A HREF=\"mailto:";
+	while (pos[1]==' ') pos++;
+      }
+      addr[0] = '\0';
+    }
+  }
   return result;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::readConfig(void)
+{
+  KConfig* config = kapp->getConfig();
+
+  config->setGroup("KMMessage");
+  sReplyStr = config->readEntry("phrase-reply");
+  sReplyAllStr = config->readEntry("phrase-reply-all");
+  sForwardStr = config->readEntry("phrase-forward");
+  sIndentPrefixStr = config->readEntry("indent-prefix");
 }

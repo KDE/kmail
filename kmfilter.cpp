@@ -12,10 +12,11 @@
 #include <klocale.h>
 
 static const char* opConfigNames[] = 
-  { "ignore", "and", "nand", "or", "nor", NULL };
+  { "ignore", "and", "unless", "or", NULL };
 
 static const char* funcConfigNames[] =
-  { "equals", "contains", "regexp", NULL };
+  { "equals", "not-equal", "contains", "contains-not", "regexp", 
+    "not-regexp", NULL };
 
 
 KMFilterActionDict* KMFilter::sActionDict = NULL;
@@ -58,7 +59,7 @@ bool KMFilter::matches(const KMMessage* msg)
 
   matchesA = mRuleA.matches(msg);
   if (mOperator==OpIgnore) return matchesA;
-  if (matchesA && (mOperator==OpOr || mOperator==OpOrNot)) return TRUE;
+  if (matchesA && mOperator==OpOr) return TRUE;
   if (!matchesA && (mOperator==OpAnd || mOperator==OpAndNot)) return FALSE;
 
   matchesB = mRuleB.matches(msg);
@@ -70,8 +71,6 @@ bool KMFilter::matches(const KMMessage* msg)
     return (matchesA && !matchesB);
   case OpOr:
     return (matchesA || matchesB);
-  case OpOrNot:
-    return (matchesA || !matchesB);
   default:
     return FALSE;
   }
@@ -163,7 +162,7 @@ void KMFilter::readConfig(KConfig* config)
     actName.sprintf("action-name-%d", i);
     argsName.sprintf("action-args-%d", i);
     actName = config->readEntry(actName);
-    mAction[i] = sActionDict->find(actName);
+    mAction[i] = NULL; //sActionDict->find(actName);
     if (!mAction[i])
     {
       warning(nls->translate("Unknown filter action `%s'\n"
@@ -247,11 +246,20 @@ bool KMFilterRule::matches(const KMMessage* msg)
   case KMFilterRule::FuncEquals:
     return (stricmp(mContents, msgContents) == 0);
 
+  case KMFilterRule::FuncNotEqual:
+    return (stricmp(mContents, msgContents) != 0);
+
   case KMFilterRule::FuncContains:
     return (msgContents.find(mContents, 0, FALSE) >= 0);
 
+  case KMFilterRule::FuncContainsNot:
+    return (msgContents.find(mContents, 0, FALSE) < 0);
+
   case KMFilterRule::FuncRegExp:
     return (msgContents.find(QRegExp(mContents, FALSE)) >= 0);
+
+  case KMFilterRule::FuncNotRegExp:
+    return (msgContents.find(QRegExp(mContents, FALSE)) < 0);
   }
 
   return FALSE;
