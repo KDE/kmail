@@ -57,13 +57,13 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
                                 KActionCollection * collection )
   : KWizard( parent )
 {
-  // read the configuration for the anti spam tools
+  // read the configuration for the anti-spam tools
   ConfigReader reader( mToolList );
   reader.readAndMergeConfig();
   mToolList = reader.getToolList();
 
 #ifndef NDEBUG
-    kdDebug(5006) << endl << "Considered anti spam tools: " << endl;
+    kdDebug(5006) << endl << "Considered anti-spam tools: " << endl;
 #endif
   QStringList descriptionList;
   QStringList whatsThisList;
@@ -92,9 +92,9 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
 
   mActionCollection = collection;
 
-  setCaption( i18n( "Anti Spam Wizard" ));
+  setCaption( i18n( "Anti-Spam Wizard" ));
   mInfoPage = new ASWizInfoPage( 0, "" );
-  addPage( mInfoPage, i18n( "Welcome to the KMail Anti Spam Wizard." ));
+  addPage( mInfoPage, i18n( "Welcome to the KMail Anti-Spam Wizard." ));
   mProgramsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
   addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail." ));
   mRulesPage = new ASWizRulesPage( 0, "", mainFolderTree );
@@ -129,7 +129,7 @@ void AntiSpamWizard::accept()
     if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
         && mRulesPage->pipeRulesSelected() )
     {
-      // pipe messages through the anti spam tools,
+      // pipe messages through the anti-spam tools,
       // one single filter for each tool
       // (could get combined but so it's easier to understand for the user)
       KMFilter* pipeFilter = new KMFilter();
@@ -393,7 +393,7 @@ void AntiSpamWizard::checkToolAvailability()
     mProgramsPage->setProgramAsFound( (*it).getVisibleName(), !rc );
     it++;
   }
-  mInfoPage->setScanProgressText( i18n("Scanning for anti spam tools finished.") );
+  mInfoPage->setScanProgressText( i18n("Scanning for anti-spam tools finished.") );
   setNextEnabled( mInfoPage, true );
 }
 
@@ -546,8 +546,8 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
   mIntroText = new QLabel( this );
   mIntroText->setText( i18n(
     "<p>Here you get some assistance in setting up KMail's filter "
-    "rules to use some commonly known anti spam tools.</p>"
-    "The wizard can detect the anti spam tools on your computer as "
+    "rules to use some commonly-known anti-spam tools.</p>"
+    "The wizard can detect the anti-spam tools on your computer as "
     "well as create filter rules to classify messages using these "
     "tools and to separate messages classified as spam. "
     "The wizard will not take any existing filter rules into "
@@ -652,21 +652,21 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
 
   mClassifyRules = new QCheckBox( i18n("Classify messages manually as spam"), this );
   QWhatsThis::add( mClassifyRules, 
-      i18n( "Sometimes messages are classified wrong or even not at all. "
-            "The latter might be by intention, because you perhaps filter "
-            "out messages from mailing lists before you let the anti spam "
-            "tools classify the rest of the messages. You can correct this "
-            "wrong or missing classification manually by using the "
+      i18n( "Sometimes messages are classified wrongly or even not at all; "
+            "the latter might be by intention, because you perhaps filter "
+            "out messages from mailing lists before you let the anti-spam "
+            "tools classify the rest of the messages. You can correct these "
+            "wrong or missing classifications manually by using the "
             "appropriate toolbar buttons which trigger special filters "
             "created by this wizard." ) );
   grid->addWidget( mClassifyRules, 0, 0 );
 
-  mPipeRules = new QCheckBox( i18n("Classify messages using the anti spam tools"), this );
+  mPipeRules = new QCheckBox( i18n("Classify messages using the anti-spam tools"), this );
   QWhatsThis::add( mPipeRules, 
-      i18n( "Let the anti spam tools classify your messages. The wizard "
+      i18n( "Let the anti-spam tools classify your messages. The wizard "
             "will create appropriate filters. The messages are usually "
             "marked by the tools so that following filters can react "
-            "on this and e.g. move spam messages to a special folder.") );
+            "on this and, for example, move spam messages to a special folder.") );
   grid->addWidget( mPipeRules, 1, 0 );
 
   mMoveRules = new QCheckBox( i18n("Move detected spam messages to the selected folder"), this );

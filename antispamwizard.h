@@ -49,11 +49,11 @@ namespace KMail {
 
   //---------------------------------------------------------------------------
   /**
-    @short KMail anti spam wizard.
+    @short KMail anti-spam wizard.
     @author Andreas Gungl <a.gungl@gmx.de>
 
     The wizard helps to create filter rules to let KMail operate
-    with external anti spam tools. The wizard tries to detect the
+    with external anti-spam tools. The wizard tries to detect the
     tools, but the user can overide the preselections.
     Then the user can decide what funtionality shall be supported
     by the created filter rules.
@@ -169,7 +169,7 @@ namespace KMail {
       };
       /**
         Instances of this class control reading the configuration of the 
-        anti spam tools from global and user config files as well as the 
+        anti-spam tools from global and user config files as well as the 
         merging of different config versions.
       */
       class ConfigReader
