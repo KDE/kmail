@@ -747,7 +747,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 
   msg->initFromMessage(this);
 
-  detect_list(this, headerName, mailingListStr);
+  KMMLInfo::name(this, headerName, mailingListStr);
   replyToStr = replyTo();
 
   msg->setCharset("utf-8");

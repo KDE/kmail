@@ -1425,7 +1425,7 @@ void KMMainWin::slotMailingListFilter()
     if (msg) {
         QCString name;
         QString value;
-        if ( !detect_list( msg, name, value ).isNull() )
+        if ( !KMMLInfo::name( msg, name, value ).isNull() )
             kernel->filterMgr()->createFilter( name, value );
     }
 }
@@ -2576,7 +2576,7 @@ void KMMainWin::updateMessageActions()
 
         QCString name;
         QString value;
-        QString lname = detect_list( msg, name, value );
+        QString lname = KMMLInfo::name( msg, name, value );
         if ( lname.isNull() )
             mlistFilterAction->setEnabled( false );
         else {

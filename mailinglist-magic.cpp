@@ -1,4 +1,5 @@
 #include <kmmessage.h>
+#include <mailinglist-magic.h>
 
 typedef QString (*MagicDetectorFunc) (const KMMessage *, QCString &, QString &);
 
@@ -193,23 +194,91 @@ MagicDetectorFunc magic_detector[] =
 
 static const int num_detectors = sizeof (magic_detector) / sizeof (magic_detector[0]);
 
-QString detect_list(const KMMessage  *message,
-                    QCString &header_name,
-                    QString &header_value )
+QString
+KMMLInfo::headerToAddress( const QString& header )
 {
-    header_name = QCString();
-    header_value = QString::null;
-
-    if ( !message )
-        return QString::null;
-
-    QString list;
-
-    for (int i = 0; i < num_detectors; i++) {
-        list = magic_detector[i] (message, header_name, header_value);
-        if ( !list.isNull() )
-            return list;
-    }
-
+  if ( header.isEmpty() )
     return QString::null;
+  
+  int start = header.find( "<mailto:" );
+
+  if ( start < 0 ) {
+    start = header.find( "<http" );
+    if ( start < 0 )
+      return QString::null;
+  }
+  
+  int end = header.find( ">", ++start );
+  
+  return  header.mid( start , end-start );
 }
+
+QString 
+KMMLInfo::name( const KMMessage  *message, QCString &header_name,
+		      QString &header_value )
+{
+  QString mlist;
+  header_name = QCString();
+  header_value = QString::null;
+  
+  if ( !message )
+    return QString::null;
+
+  for (int i = 0; i < num_detectors; i++) {
+    mlist = magic_detector[i] (message, header_name, header_value);
+    if ( !mlist.isNull() ) 
+      return mlist;
+  }
+
+  
+  return QString::null;
+}
+
+KURL
+KMMLInfo::postAddress( const KMMessage *message )
+{
+  QString header = message->headerField( "List-Post" );
+  
+  return KURL( KMMLInfo::headerToAddress( header ) );
+}
+
+KURL
+KMMLInfo::helpAddress( const KMMessage *message )
+{
+  QString header = message->headerField( "List-Help" );
+  
+  return KURL( KMMLInfo::headerToAddress( header ) );
+}
+
+KURL
+KMMLInfo::subscribeAddress( const KMMessage *message )
+{
+  QString header = message->headerField( "List-Subscribe" );
+
+  return KURL( KMMLInfo::headerToAddress( header ) );
+}
+
+KURL
+KMMLInfo::usubscribeAddres( const KMMessage *message )
+{
+  QString header = message->headerField( "List-Unsubscribe" );
+
+  return KURL( KMMLInfo::headerToAddress( header ) );
+}
+
+QString
+KMMLInfo::listID( const KMMessage *message )
+{
+  QString header = message->headerField( "List-Id" );
+
+  return header;
+}
+
+KURL
+KMMLInfo::archiveAddress( const KMMessage *message )
+{
+  QString header = message->headerField( "List-Archive" );
+  
+  return KURL( KMMLInfo::headerToAddress( header ) );
+}
+
