@@ -150,24 +150,19 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   }
 
 
-  QString msgId = KMMessage::generateMessageId( aMsg->sender() );
-  //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
-  aMsg->setMsgId( msgId );
+  // Handle redirections
+  QString from  = aMsg->headerField("X-KMail-Redirect-From");
+  QString msgId = aMsg->msgId();
+  if( from.isEmpty() || msgId.isEmpty() ) {
+    msgId = KMMessage::generateMessageId( aMsg->sender() );
+    //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
+    aMsg->setMsgId( msgId );
+  }
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
   kmkernel->outboxFolder()->open();
   aMsg->setStatus(KMMsgStatusQueued);
-
-  // Handle redirections
-  QString f = aMsg->headerField("X-KMail-Redirect-From");
-  if(!f.isEmpty()) {
-    uint id = aMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
-    const KPIM::Identity & ident =
-      kmkernel->identityManager()->identityForUoidOrDefault( id );
-    aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
-      .arg(ident.fullName()).arg(ident.emailAddr()));
-  }
 
   rc = kmkernel->outboxFolder()->addMsg(aMsg);
   if (rc)

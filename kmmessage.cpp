@@ -1084,6 +1084,57 @@ KMMessage* KMMessage::createRedirect()
   return msg;
 }
 
+KMMessage* KMMessage::createRedirect2( const QString &toStr )
+{
+  KMMessage* msg = new KMMessage;
+  KMMessagePart msgPart;
+
+  // copy the message 1:1
+  msg->fromDwString(this->asDwString());
+
+  uint id = 0;
+  QString strId = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace();
+  if ( !strId.isEmpty())
+    id = strId.toUInt();
+  const KPIM::Identity & ident =
+    kmkernel->identityManager()->identityForUoidOrDefault( id );
+  
+  // X-KMail-Redirect-From: content
+  QString strByWayOf = QString("%1 (by way of %2 <%3>)")
+    .arg( from() )
+    .arg( ident.fullName() )
+    .arg( ident.emailAddr() );
+    
+  // Resent-From: content
+  QString strFrom = QString("%1 <%2>")
+    .arg( ident.fullName() )
+    .arg( ident.emailAddr() );
+    
+  // format the current date to be used in Resent-Date:
+  QString origDate = msg->headerField( "Date" );
+  msg->setDateToday();
+  QString newDate = msg->headerField( "Date" );
+  // make sure the Date: header is valid
+  if ( origDate.isEmpty() )
+    msg->removeHeaderField( "Date" );
+  else
+    msg->setHeaderField( "Date", origDate );
+
+  // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
+  msg->setHeaderField( "Resent-Message-ID", generateMessageId( msg->sender() ), 
+                       Structured, true);
+  msg->setHeaderField( "Resent-Date", newDate, Structured, true );
+  msg->setHeaderField( "Resent-To",   toStr,   Address, true );
+  msg->setHeaderField( "Resent-From", strFrom, Address, true );
+
+  msg->setHeaderField( "X-KMail-Redirect-From", strByWayOf );
+  msg->setHeaderField( "X-KMail-Recipients", toStr );
+
+  msg->link(this, KMMsgStatusForwarded);
+
+  return msg;
+}
+
 #if ALLOW_GUI
 KMMessage* KMMessage::createBounce( bool withUI )
 #else
@@ -2209,7 +2260,7 @@ void KMMessage::removeHeaderField(const QCString& aName)
 
 //-----------------------------------------------------------------------------
 void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
-                                HeaderFieldType type )
+                                HeaderFieldType type, bool prepend )
 {
 #if 0
   if ( type != Unstructured )
@@ -2251,7 +2302,10 @@ void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
   field = new DwField(str, mMsg);
   field->Parse();
 
-  header.AddOrReplaceField(field);
+  if ( prepend )
+    header.AddFieldAt( 1, field );
+  else
+    header.AddOrReplaceField( field );
   mNeedsAssembly = TRUE;
 }
 

@@ -175,6 +175,8 @@ public:
     the email address of the original sender
    */
   KMMessage* createRedirect();
+  // new implementation, ATM only used for redirect filter action
+  KMMessage* createRedirect2( const QString &toStr ); 
 
   /** Create a new message that is a "failed delivery" reply to this
     message, filling all required header fields with the proper
@@ -421,9 +423,13 @@ public:
 
   enum HeaderFieldType { Unstructured, Structured, Address };
 
-  /** Set the header field with the given name to the given value. */
+  /** Set the header field with the given name to the given value.
+      If prepend is set to true, the header is inserted at the beginning
+      and does not overwrite an existing header field with the same name.
+  */
   void setHeaderField( const QCString& name, const QString& value,
-                       HeaderFieldType type = Unstructured );
+                       HeaderFieldType type = Unstructured, 
+                       bool prepend = false );
 
   /** Returns a list of the values of all header fields with the given name. */
   QStringList headerFields( const QCString& name ) const;
