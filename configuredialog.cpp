@@ -1543,7 +1543,7 @@ void ConfigureDialog::makeMiscPage( void )
   mMisc.smallTrashSizeSpin->setRange(1, 500, 1, false);
   //mFolder.smallTrashSizeSpin->setMinValue(1);
   stlay->addWidget( mMisc.smallTrashSizeSpin );
-  stlay->addWidget( new QLabel( "MB", tgroup ) );
+  stlay->addWidget( new QLabel( i18n("MB"), tgroup ) );
   stlay->addStretch( 100 );
 
   QHBoxLayout *rmvlay = new QHBoxLayout( spacingHint(),"hly2" );
