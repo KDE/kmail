@@ -591,7 +591,7 @@ namespace KMail {
 						 fromAddress ) );
       }
 
-      ObjectTreeParser otp( mReader, cryptPlug );
+      ObjectTreeParser otp( mReader, cryptPlug, true );
       otp.parseObjectTree( data );
       mRawReplyString += otp.rawReplyString();
 
