@@ -149,7 +149,7 @@ private:
 
 
 /** Abstract base class for KMail's filter actions that need no
-    parameter, e.g. 'bounce'. Creates an (empty) @see QWidget as
+    parameter, e.g. "Confirm Delivery". Creates an (empty) @see QWidget as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:
 

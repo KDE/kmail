@@ -165,12 +165,6 @@ public:
    */
   KMMessage* createRedirect( const QString &toStr );
 
-  /** Create a new message that is a "failed delivery" reply to this
-    message, filling all required header fields with the proper
-    values. The returned message is not stored in any folder. If @p
-    withUI is true, asks the user if he really wants that. */
-  KMMessage* createBounce( bool withUI );
-
   /** Create the forwarded body for the message. */
   QCString createForwardBody();
 

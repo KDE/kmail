@@ -499,17 +499,6 @@ private:
   virtual Result execute();
 };
 
-class KMBounceCommand : public KMCommand
-{
-  Q_OBJECT
-
-public:
-  KMBounceCommand( QWidget *parent, KMMessage *msg );
-
-private:
-  virtual Result execute();
-};
-
 class KMPrintCommand : public KMCommand
 {
   Q_OBJECT

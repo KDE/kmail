@@ -1295,23 +1295,6 @@ KMCommand::Result KMRedirectCommand::execute()
 }
 
 
-KMBounceCommand::KMBounceCommand( QWidget *parent,
-  KMMessage *msg )
-  : KMCommand( parent, msg )
-{
-}
-
-KMCommand::Result KMBounceCommand::execute()
-{
-  KMMessage *msg = retrievedMessage();
-  KMMessage *newMsg = msg->createBounce( TRUE /* with UI */);
-  if (newMsg)
-    kmkernel->msgSender()->send(newMsg, kmkernel->msgSender()->sendImmediate());
-
-  return OK;
-}
-
-
 KMPrintCommand::KMPrintCommand( QWidget *parent,
   KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride, 
   const QTextCodec *codec )
