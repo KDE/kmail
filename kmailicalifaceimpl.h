@@ -79,7 +79,7 @@ public:
   /// or 0 if something went wrong,
   Q_UINT32 update( const QString& resource,
                    Q_UINT32 sernum,
-                   const QCString& subject,
+                   const QString& subject,
                    const QStringList& attachments,
                    const QStringList& deletedAttachments );
 
@@ -193,7 +193,7 @@ private:
   bool updateAttachment( KMMessage& msg, const QString& attachmentURL );
   bool deleteAttachment( KMMessage& msg, const QString& attachmentURL );
   Q_UINT32 addIncidence( KMFolder& folder,
-                         const QCString& subject,
+                         const QString& subject,
                          const QStringList& attachments );
 
   void loadPixmaps() const;

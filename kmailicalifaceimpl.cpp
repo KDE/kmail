@@ -285,7 +285,7 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 
 // Store a new entry that was received from the resource
 Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
-                                           const QCString& subject,
+                                           const QString& subject,
                                            const QStringList& attachments )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << attachments << " )" << endl;
@@ -646,7 +646,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 
 Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
-                                     const QCString& subject,
+                                     const QString& subject,
                                      const QStringList& attachments,
                                      const QStringList& deletedAttachments )
 {
