@@ -825,8 +825,9 @@ int KMFolder::countUnread()
     return mUnreadMsgs;
 
   open(); // will update unreadMsgs
+  int unread = mUnreadMsgs;
   close();
-  return (mUnreadMsgs > 0) ? mUnreadMsgs : 0;
+  return (unread > 0) ? unread : 0;
 }
 
 //-----------------------------------------------------------------------------
