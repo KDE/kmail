@@ -24,6 +24,7 @@
 
 #include <errno.h>
 
+#include "kmkernel.h"
 #include "kmfoldercachedimap.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
@@ -51,7 +52,7 @@ KMFolderCachedImap::KMFolderCachedImap(KMFolderDir* aParent, const QString& aNam
    mSubfolderState(imapNoInformation), mIsSelected(FALSE), mCheckFlags(TRUE), mAccount(NULL),
    mLastUid(0), mIsConnected(false), mFolderRemoved(false)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
   if (aName == "INBOX" && mImapPath == "/INBOX/")
@@ -75,7 +76,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
 {
   if( !mFolderRemoved ) {
     // Only write configuration when the folder haven't been deleted
-    KConfig* config = kapp->config();
+    KConfig* config = KMKernel::config();
     KConfigGroupSaver saver(config, "Folder-" + idString());
     config->writeEntry("UidValidity", mUidValidity); /* unused */
     config->writeEntry("lastUid", mLastUid); /* unused */
