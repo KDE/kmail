@@ -1442,7 +1442,7 @@ public:
     if ( !cryptPlug )
       cryptPlug = kernel->cryptPlugList()->active();
     if( cryptPlug ) {
-      /// ### add ifdef NDEBUG
+#ifndef NDEBUG
       if( !doCheck )
 	kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: showing OpenPGP (Encrypted+Signed) data" << endl;
       else
@@ -1450,7 +1450,7 @@ public:
 	  kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: processing SMIME Signed data" << endl;
 	else
 	  kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: processing Opaque Signed data" << endl;
-
+#endif
       if( doCheck ){
         kdDebug(5006) << "ObjectTreeParser::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG "
 		      << cryptPlug->libName() << endl;
@@ -1777,7 +1777,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         fileC.close();
       }
     }
-    // ### add ifdef NDEBUG
+#ifndef NDEBUG
     QCString deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
     if( cipherIsBinary )
@@ -1789,7 +1789,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     }
     deb += "\n\n";
     kdDebug(5006) << deb << endl;
-
+#endif
 
 
 
