@@ -50,7 +50,7 @@
 #include "accountdialog.moc"
 #undef None
 
-class ProcmailRCParser 
+class ProcmailRCParser
 {
 public:
   ProcmailRCParser(QString fileName = QString::null);
@@ -85,7 +85,7 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
 
   static QRegExp lockFileGlobal("LOCKFILE=", true),
     lockFileLocal("^:0", true);
-    
+
   if(  mProcmailrc.open(IO_ReadOnly) ) {
 
     QString s;
@@ -97,13 +97,13 @@ ProcmailRCParser::ProcmailRCParser(QString fname)
       if(  s[0] == '#' ) continue; // skip comments
 
       int commentPos = -1;
-      
+
       if( (commentPos = s.find('#')) > -1 ) {
         // get rid of trailing comment
         s.truncate(commentPos);
         s = s.stripWhiteSpace();
       }
-            
+
       if(  lockFileGlobal.match(s) != -1 ) {
         processGlobalLock(s);
       } else if( lockFileLocal.match(s) != -1 ) {
@@ -135,12 +135,12 @@ ProcmailRCParser::processLocalLock(const QString &s)
   QString val;
   int colonPos = s.findRev(':');
 
-  if (colonPos > 0) { // we don't care about the leading one  
+  if (colonPos > 0) { // we don't care about the leading one
     val = s.mid(colonPos + 1).stripWhiteSpace();
 
     if ( val.length() ) {
       // user specified a lockfile, so process it
-      // 
+      //
       val = expandVars(val);
       if( val[0] != '/' && mVars.find("MAILDIR") )
         val.insert(0, *(mVars["MAILDIR"]) + '/');
@@ -155,7 +155,7 @@ ProcmailRCParser::processLocalLock(const QString &s)
     line = mStream->readLine().stripWhiteSpace();
   } while ( !mStream->eof() && (line[0] == '*' ||
                                 prevLine[prevLine.length() - 1] == '\\' ));
-            
+
   if( line[0] != '!' && line[0] != '|' &&  line[0] != '{' ) {
     // this is a filename, expand it
     //
@@ -192,7 +192,7 @@ void
 ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
 {
   if( eqPos == -1) return;
-    
+
   QString varName = s.left(eqPos),
     varValue = expandVars(s.mid(eqPos + 1).stripWhiteSpace());
 
@@ -213,7 +213,7 @@ ProcmailRCParser::expandVars(const QString &s)
 
     expS.replace(QRegExp(var), *it.current());
 
-    ++it;        
+    ++it;
   }
 
   return expS;
@@ -299,7 +299,7 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.lockMutt = new QRadioButton(
     i18n("Mutt dotlock (recommended)"), group);
   groupLayout->addWidget(mLocal.lockMutt, 0, 0);
-  
+
   mLocal.lockMuttPriv = new QRadioButton(
     i18n("Mutt dotlock privileged"), group);
   groupLayout->addWidget(mLocal.lockMuttPriv, 1, 0);
@@ -481,7 +481,7 @@ void AccountDialog::makeImapAccountPage()
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColStretch( 1, 10 );
-  
+
   mImap.titleLabel = new QLabel( page );
   mImap.titleLabel->setText( i18n("Account type: Imap Account") );
   QFont titleFont( mImap.titleLabel->font() );
@@ -506,18 +506,18 @@ void AccountDialog::makeImapAccountPage()
   topLayout->addWidget( label, 4, 0 );
   mImap.passwordEdit = new QLineEdit( page );
   mImap.passwordEdit->setEchoMode( QLineEdit::Password );
-  topLayout->addWidget( mImap.passwordEdit, 4, 1 );  
+  topLayout->addWidget( mImap.passwordEdit, 4, 1 );
 
   label = new QLabel( i18n("Host:"), page );
   topLayout->addWidget( label, 5, 0 );
   mImap.hostEdit = new QLineEdit( page );
-  topLayout->addWidget( mImap.hostEdit, 5, 1 );  
+  topLayout->addWidget( mImap.hostEdit, 5, 1 );
 
   label = new QLabel( i18n("Port:"), page );
   topLayout->addWidget( label, 6, 0 );
   mImap.portEdit = new QLineEdit( page );
   mImap.portEdit->setValidator( new QIntValidator(this) );
-  topLayout->addWidget( mImap.portEdit, 6, 1 ); 
+  topLayout->addWidget( mImap.portEdit, 6, 1 );
 
   label = new QLabel( i18n("Prefix to folders:"), page );
   topLayout->addWidget( label, 7, 0 );
@@ -527,10 +527,10 @@ void AccountDialog::makeImapAccountPage()
   mImap.hiddenFoldersCheck = new QCheckBox( i18n("Show hidden folders"), page);
   topLayout->addMultiCellWidget( mImap.hiddenFoldersCheck, 8, 8, 0, 1 );
 
-  mImap.storePasswordCheck = 
+  mImap.storePasswordCheck =
     new QCheckBox( i18n("Store IMAP password in configuration file"), page );
   topLayout->addMultiCellWidget( mImap.storePasswordCheck, 9, 9, 0, 1 );
-  
+
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentification method"), page );
   mImap.authAuto = new QRadioButton(
@@ -558,6 +558,7 @@ void AccountDialog::setupSettings()
     KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
 
     mLocal.nameEdit->setText( mAccount->name() );
+    mLocal.nameEdit->setFocus();
     mLocal.locationEdit->setEditText( acctLocal->location() );
     if (acctLocal->mLock == mutt_dotlock)
       mLocal.lockMutt->setChecked(true);
@@ -584,6 +585,7 @@ void AccountDialog::setupSettings()
   {
     KMAcctExpPop &ap = *(KMAcctExpPop*)mAccount;
     mPop.nameEdit->setText( mAccount->name() );
+    mPop.nameEdit->setFocus();
     mPop.loginEdit->setText( ap.login() );
     mPop.passwordEdit->setText( ap.passwd());
     mPop.hostEdit->setText( ap.host() );
@@ -604,10 +606,11 @@ void AccountDialog::setupSettings()
   {
     KMAcctImap &ai = *(KMAcctImap*)mAccount;
     mImap.nameEdit->setText( mAccount->name() );
+    mImap.nameEdit->setFocus();
     mImap.loginEdit->setText( ai.login() );
     mImap.passwordEdit->setText( ai.passwd());
     mImap.hostEdit->setText( ai.host() );
-    mImap.portEdit->setText( QString("%1").arg( ai.port() ) ); 
+    mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
     mImap.prefixEdit->setText( ai.prefix() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
@@ -715,7 +718,7 @@ void AccountDialog::saveSettings()
         acctLocal->setLockType(None);
       else acctLocal->setLockType(FCNTL);
     }
-    
+
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ?
 			     mLocal.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
@@ -759,9 +762,9 @@ void AccountDialog::saveSettings()
   else if( accountType == "imap" )
   {
     mAccount->setName( mImap.nameEdit->text() );
-    mAccount->setCheckInterval( 0 ); 
+    mAccount->setCheckInterval( 0 );
     mAccount->setCheckExclude( TRUE );
-    
+
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
     epa.setHost( mImap.hostEdit->text() );
     epa.setPort( mImap.portEdit->text().toInt() );

@@ -210,14 +210,14 @@ void KMComposeWin::makeDescriptiveNames(QStringList &encodings)
   {
     QTextCodec *codec = KMMsgBase::codecForName(*it);
     QMap<QTextCodec*, QString>::Iterator it2 = encodingMap.find(codec);
-    if (it2 == encodingMap.end()) 
+    if (it2 == encodingMap.end())
       (*it) = KGlobal::charsets()->languageForEncoding(*it)
       + " ( " + *it + " )";
     else
       (*it) = KGlobal::charsets()->languageForEncoding(*it2)
       + " ( " + *it + " )";
   }
-}  
+}
 
 
 //-----------------------------------------------------------------------------
@@ -2535,6 +2535,13 @@ void KMComposeWin::slotEditKeys()
   KKeyDialog::configureKeys(actionCollection(), xmlFile(), true, this);
 }
 
+void KMComposeWin::setReplyFocus( bool hasMessage )
+{
+  mEditor->setFocus();
+  if ( hasMessage )
+    mEditor->setCursorPosition( 1, 0 );
+}
+
 
 //=============================================================================
 //
@@ -2730,10 +2737,3 @@ void KMEdit::slotSpellDone()
      emit spellcheck_done();
   }
 }
-
-
-
-
-
-
-

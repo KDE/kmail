@@ -183,6 +183,11 @@ public:
   /** Recode to the specified charset */
    void setCharset(const QString& aCharset, bool forceDefault = FALSE);
 
+  /** Sets the focus to the edit-widget and the cursor below the 
+    "On ... you wrote" line when hasMessage is true.
+    Make sure you call this _after_ setMsg(). */
+   void setReplyFocus( bool hasMessage = true );
+
 public slots:
  //Actions:
   void slotPrint();

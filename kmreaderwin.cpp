@@ -311,6 +311,7 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
 void KMReaderWin::initHtmlWidget(void)
 {
   mViewer = new KHTMLPart(this, "khtml");
+  mViewer->widget()->setFocusPolicy(WheelFocus);
   // Let's better be paranoid and disable plugins (it defaults to enabled):
   mViewer->enablePlugins(false);
   mViewer->enableJScript(false); // just make this explicit

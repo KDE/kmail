@@ -53,6 +53,7 @@
 #include <kfiledialog.h>
 #include <kfontdialog.h>
 #include <kiconloader.h>
+#include <klineedit.h>
 #include <klineeditdlg.h>
 #include <klistview.h>
 #include <klocale.h>
@@ -61,12 +62,14 @@
 #include <kpgp.h>
 #include <ksimpleconfig.h>
 #include <kstddirs.h>
+#include <kurlrequester.h>
 #include <kglobalsettings.h>
 
 
 #include "accountdialog.h"
 #include "colorlistbox.h"
 #include "configuredialog.h"
+#include "kbusyptr.h"
 #include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
@@ -202,6 +205,7 @@ NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
   glay->addWidget( label, 0, 0 );
 
   mLineEdit = new QLineEdit( page );
+  mLineEdit->setFocus();
   glay->addWidget( mLineEdit, 0, 1 );
 
   QButtonGroup *buttonGroup = new QButtonGroup( page );
@@ -459,7 +463,7 @@ LanguageItem::LanguageItem( const QString& language, const QString& reply,
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 				  bool modal )
 
-  /* deactivated Default Button as it is not used 
+  /* deactivated Default Button as it is not used
   :KDialogBase( IconList, i18n("Configure"), Help|Default|Apply|Ok|Cancel,
 		Ok, parent, name, modal, true )
   */
@@ -617,16 +621,14 @@ void ConfigureDialog::makeIdentityPage( void )
 
   mIdentity.signatureFileLabel = new QLabel( i18n("Signature File:"), page );
   glay->addWidget( mIdentity.signatureFileLabel, 8, 0 );
-  mIdentity.signatureFileEdit = new QLineEdit( page );
+  mIdentity.signatureFileEdit = new KURLRequester( page );
+  QPushButton *button = mIdentity.signatureFileEdit->button();
+  button->setText( i18n("Choose...") );
+  button->setAutoDefault( false );
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
-  glay->addWidget( mIdentity.signatureFileEdit, 8, 1 );
-  mIdentity.signatureBrowseButton = new QPushButton( i18n("Choose..."), page );
-  connect( mIdentity.signatureBrowseButton, SIGNAL(clicked()),
-	   this, SLOT(slotSignatureChooser()) );
-  mIdentity.signatureBrowseButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureBrowseButton, 8, 2 );
-
+  glay->addMultiCellWidget( mIdentity.signatureFileEdit, 8, 8, 1, 2 );
+  
   mIdentity.signatureExecCheck =
     new QCheckBox( i18n("The file is a program"), page );
   glay->addWidget( mIdentity.signatureExecCheck, 9, 1 );
@@ -635,6 +637,7 @@ void ConfigureDialog::makeIdentityPage( void )
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
   glay->addWidget( mIdentity.signatureEditButton, 9, 2 );
+  button->setMinimumSize( mIdentity.signatureEditButton->sizeHint() );
 
   mIdentity.signatureTextRadio =
     new QRadioButton( i18n("Specify signature below"), page );
@@ -1327,8 +1330,8 @@ void ConfigureDialog::makeSecurityPage( void )
 
 #include <kinstance.h>
 #include <kglobal.h>
- 
- 
+
+
 void ConfigureDialog::makeMiscPage( void )
 {
   //KIconLoader *loader = instace->iconLoader();
@@ -1348,7 +1351,7 @@ void ConfigureDialog::makeMiscPage( void )
   tvlay->addSpacing( fontMetrics().lineSpacing() );
   mMisc.emptyTrashCheck =
     new QCheckBox(i18n("Empty trash on exit"), tgroup );
-  connect( mMisc.emptyTrashCheck, SIGNAL(stateChanged(int)), 
+  connect( mMisc.emptyTrashCheck, SIGNAL(stateChanged(int)),
 		  this, SLOT(slotEmptyTrashState(int)) );
   tvlay->addWidget( mMisc.emptyTrashCheck );
   QHBoxLayout *stlay = new QHBoxLayout( spacingHint() ,"hly1");
@@ -2212,11 +2215,11 @@ void ConfigureDialog::slotDoApply( bool everything )
 		       mMisc.emptyTrashCheck->isChecked() );
     config.writeEntry( "keep-small-trash",
                        mMisc.keepSmallTrashCheck->isChecked() );
-    config.writeEntry( "small-trash-size", 
+    config.writeEntry( "small-trash-size",
                        mMisc.smallTrashSizeSpin->value() );
     config.writeEntry( "remove-old-mail-from-trash",
                        mMisc.removeOldMailCheck->isChecked() );
-    config.writeEntry( "old-mail-age", 
+    config.writeEntry( "old-mail-age",
                        mMisc.oldMailAgeSpin->value() );
     config.writeEntry( "old-mail-age-unit",
                        mMisc.timeUnitCombo->currentItem() );
@@ -2250,7 +2253,7 @@ void ConfigureDialog::slotDoApply( bool everything )
   // Make other components read the new settings
   //
   KMMessage::readConfig();
-
+  kernel->kbp()->busy(); // this can take some time when a large folder is open
   QListIterator<KMainWindow> it(*KMainWindow::memberList);
   for( it.toFirst(); it.current(); ++it )
   {
@@ -2259,7 +2262,7 @@ void ConfigureDialog::slotDoApply( bool everything )
       ((KMTopLevelWidget*)it.current())->readConfig();
     }
   }
-
+  kernel->kbp()->idle();
 }
 
 
@@ -2277,7 +2280,7 @@ void ConfigureDialog::saveActiveIdentity( void )
     entry->setPgpIdentity( mIdentity.pgpIdentityEdit->text() );
     entry->setEmailAddress( mIdentity.emailEdit->text() );
     entry->setReplyToAddress( mIdentity.replytoEdit->text() );
-    entry->setSignatureFileName( mIdentity.signatureFileEdit->text() );
+    entry->setSignatureFileName( mIdentity.signatureFileEdit->url() );
     entry->setSignatureInlineText( mIdentity.signatureTextEdit->text() );
     entry->setSignatureFileIsAProgram(
       mIdentity.signatureExecCheck->isChecked() );
@@ -2307,14 +2310,14 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   IdentityEntry *entry = mIdentityList.get( mIdentity.mActiveIdentity );
   if( entry == 0 )
   {
-    mIdentity.nameEdit->setText("");
-    mIdentity.organizationEdit->setText("");
-    mIdentity.pgpIdentityEdit->setText("");
-    mIdentity.emailEdit->setText("");
-    mIdentity.replytoEdit->setText("");
-    mIdentity.signatureFileEdit->setText("");
+    mIdentity.nameEdit->clear();
+    mIdentity.organizationEdit->clear();
+    mIdentity.pgpIdentityEdit->clear();
+    mIdentity.emailEdit->clear();
+    mIdentity.replytoEdit->clear();
+    mIdentity.signatureFileEdit->clear();
     mIdentity.signatureExecCheck->setChecked( false );
-    mIdentity.signatureTextEdit->setText( "" );
+    mIdentity.signatureTextEdit->clear();
     useSignatureFile = true;
   }
   else
@@ -2324,7 +2327,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.pgpIdentityEdit->setText( entry->pgpIdentity() );
     mIdentity.emailEdit->setText( entry->emailAddress() );
     mIdentity.replytoEdit->setText( entry->replyToAddress() );
-    mIdentity.signatureFileEdit->setText( entry->signatureFileName() );
+    mIdentity.signatureFileEdit->setURL( entry->signatureFileName() );
     mIdentity.signatureExecCheck->setChecked(entry->signatureFileIsAProgram());
     mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
     useSignatureFile = entry->useSignatureFile();
@@ -2502,7 +2505,6 @@ void ConfigureDialog::slotSignatureType( int id )
   mIdentity.signatureFileLabel->setEnabled( flag );
   mIdentity.signatureFileEdit->setEnabled( flag );
   mIdentity.signatureExecCheck->setEnabled( flag );
-  mIdentity.signatureBrowseButton->setEnabled( flag );
   if( flag==true )
   {
     mIdentity.signatureEditButton->setEnabled(
@@ -2516,30 +2518,12 @@ void ConfigureDialog::slotSignatureType( int id )
 }
 
 
-void ConfigureDialog::slotSignatureChooser( void )
+void ConfigureDialog::slotSignatureChooser( KURLRequester *req )
 {
-  KFileDialog *d = new KFileDialog( QDir::homeDirPath(), "*", this, 0, true );
-  d->setCaption(i18n("Choose Signature File"));
-
-  if( d->exec() == QDialog::Accepted )
-  {
-    KURL url = d->selectedURL();
-    if( url.isEmpty() == true )
-    {
-      delete d;
-      return;
-    }
-
-    if( url.isLocalFile() == false )
-    {
-      KMessageBox::sorry( this, i18n( "Only local files supported yet." ) );
-      delete d;
-      return;
-    }
-
-    mIdentity.signatureFileEdit->setText(url.path());
-  }
-  delete d;
+  if ( req->url().isEmpty() )
+    req->fileDialog()->setURL( QDir::homeDirPath() );
+    
+  req->fileDialog()->setCaption(i18n("Choose Signature File"));
 }
 
 
@@ -2557,7 +2541,7 @@ void ConfigureDialog::slotSignatureFile( const QString &filename )
 
 void ConfigureDialog::slotSignatureEdit( void )
 {
-  QString fileName = mIdentity.signatureFileEdit->text().stripWhiteSpace();
+  QString fileName = mIdentity.signatureFileEdit->url().stripWhiteSpace();
   if( fileName.isEmpty() == true )
   {
     KMessageBox::error( this, i18n("You must specify a filename") );

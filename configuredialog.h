@@ -33,6 +33,7 @@ class QRadioButton;
 class KIntNumInput;
 class KColorButton;
 class KFontChooser;
+class KURLRequester;
 class KpgpConfig;
 class ColorListBox;
 class KMAccount;
@@ -177,7 +178,7 @@ Q_OBJECT
  public:
   ConfigureTransportDialog(QWidget *parent=0, const char *name=0,
                            bool modal=true, const QString &transport=0);
- QString getTransport(void); 
+ QString getTransport(void);
 
  protected slots:
   virtual void slotOk( void );
@@ -187,7 +188,7 @@ Q_OBJECT
   void slotSendmailType( int id );
   void slotSendmailChooser( void );
 
-  
+
  private:
   QRadioButton *sendmailRadio;
   QRadioButton *smtpRadio;
@@ -281,10 +282,9 @@ class ConfigureDialog : public KDialogBase
       QLineEdit      *pgpIdentityEdit;
       QLineEdit      *emailEdit;
       QLineEdit      *replytoEdit;
-      QLineEdit      *signatureFileEdit;
+      KURLRequester  *signatureFileEdit;
       QLabel         *signatureFileLabel;
       QCheckBox      *signatureExecCheck;
-      QPushButton    *signatureBrowseButton;
       QPushButton    *signatureEditButton;
       QPushButton    *transportButton;
       QRadioButton   *signatureFileRadio;
@@ -480,7 +480,7 @@ class ConfigureDialog : public KDialogBase
     void slotRemoveIdentity( void );
     void slotIdentitySelectorChanged( void );
     void slotSignatureType( int id );
-    void slotSignatureChooser( void );
+    void slotSignatureChooser( KURLRequester * );
     void slotSignatureEdit( void );
     void slotSignatureFile( const QString &filename );
     void slotSignatureExecMode( bool state );

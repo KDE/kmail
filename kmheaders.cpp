@@ -323,6 +323,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
   setShowSortIndicator(true);
+  setFocusPolicy( WheelFocus );
 
   addColumn( i18n("Subject"), 310 );
   addColumn( i18n("Sender"), 170 );
@@ -1254,6 +1255,7 @@ void KMHeaders::noQuoteReplyToMsg()
   win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE),
 			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
+  win->setReplyFocus(false);
   win->show();
   kernel->kbp()->idle();
 }
@@ -1271,6 +1273,7 @@ void KMHeaders::replyToMsg (QString selection)
   win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection),
 			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
+  win->setReplyFocus();
   win->show();
   kernel->kbp()->idle();
 }
@@ -1288,6 +1291,7 @@ void KMHeaders::replyAllToMsg (QString selection)
   win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection),
 			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
+  win->setReplyFocus();
   win->show();
   kernel->kbp()->idle();
 }
@@ -1304,6 +1308,7 @@ void KMHeaders::replyListToMsg (QString selection)
   win = new KMComposeWin(msg->createReply(true, true, selection),
 			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
+  win->setReplyFocus();
   win->show();
   kernel->kbp()->idle();
 }
