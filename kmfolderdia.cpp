@@ -14,6 +14,7 @@
 #include <qtextstream.h>
 #include <qvbox.h>
 #include <qcombobox.h>
+#include <qgroupbox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -33,43 +34,44 @@
 //-----------------------------------------------------------------------------
 KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 			       QWidget *aParent, const QString& aCap):
-  KMFolderDialogInherited( KDialogBase::Tabbed,
-                           aCap, KDialogBase::Ok|KDialogBase::Cancel,
-                           KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
+  KDialogBase( KDialogBase::Plain,
+               aCap, KDialogBase::Ok|KDialogBase::Cancel,
+               KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
   folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
 {
   mFolder = aFolder;
   kdDebug()<<"KMFolderDialog::KMFolderDialog()\n";
 
-  // Main tab
-  //
-  QFrame *page = addPage( i18n("Folder Position"), i18n("Where the folder is located in the tree") );
-  setMainWidget( page );
+  QFrame *page = plainPage();
 
-  QVBoxLayout *topLayout =  new QVBoxLayout( page, 0, spacingHint() );
+  QVBoxLayout *topLayout =  new QVBoxLayout( page, 0, spacingHint(),
+                                             "topLayout" );
 
-  QHBoxLayout *hl = new QHBoxLayout();
-  topLayout->addSpacing( spacingHint()*2 );
-  topLayout->addLayout( hl );
-  topLayout->addSpacing( spacingHint()*2 );
+  QGroupBox *fpGroup = new QGroupBox( i18n("Folder Position"), page, "fpGroup" );
+  fpGroup->setColumnLayout( 0,  Qt::Vertical );
 
-  QLabel *label = new QLabel( i18n("Name:"), page );
+  topLayout->addWidget( fpGroup );
+
+  QHBoxLayout *hl = new QHBoxLayout( fpGroup->layout() );
+  hl->setSpacing( 6 );
+
+  QLabel *label = new QLabel( i18n("&Name:"), fpGroup );
   hl->addWidget( label );
 
-  nameEdit = new QLineEdit( page );
+  nameEdit = new QLineEdit( fpGroup );
   nameEdit->setFocus();
   nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
   nameEdit->setMinimumSize(nameEdit->sizeHint());
   nameEdit->selectAll();
+  label->setBuddy( nameEdit );
   hl->addWidget( nameEdit );
 
-  hl->addSpacing( spacingHint() );
-
-  QLabel *label2 = new QLabel( i18n("File under:" ), page );
+  QLabel *label2 = new QLabel( i18n("&Belongs to:" ), fpGroup );
   hl->addWidget( label2 );
 
-  fileInFolder = new QComboBox(page);
+  fileInFolder = new QComboBox(fpGroup);
   hl->addWidget( fileInFolder );
+  label2->setBuddy( fileInFolder );
 
   QStringList str;
   kernel->folderMgr()->createFolderList( &str, &mFolders  );
@@ -101,39 +103,46 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   // Mailing-list data tab
   //
-  page = addPage( i18n("Associated Mailing List"), i18n("Email addresses of the mailing-list related to this folder") );
-
-  topLayout =  new QVBoxLayout( page, 0, spacingHint() );
-
-  //hl = new QHBoxLayout();
-  topLayout->addSpacing( spacingHint()*2 );
-
-  holdsMailingList = new QCheckBox( i18n("folder holds a mailing-list"), page);
+  QGroupBox *mlGroup = new QGroupBox(  i18n("Associated Mailing List" ), page );
+  mlGroup->setColumnLayout( 0,  Qt::Vertical );
+  QGridLayout *mlLayout = new QGridLayout(mlGroup->layout());
+  mlLayout->setSpacing( 6 );
+  holdsMailingList = new QCheckBox( i18n("&Folder holds a mailing list"), mlGroup);
   QObject::connect( holdsMailingList, SIGNAL(toggled(bool)),
-                    this, SLOT(slotHoldsML(bool)) );
+                    SLOT(slotHoldsML(bool)) );
+  topLayout->addWidget( mlGroup );
+  mlLayout->addMultiCellWidget(holdsMailingList, 0, 0, 0, 1);
 
-  topLayout->addWidget(holdsMailingList);
+  mlLayout->setColStretch(0, 1);
+  mlLayout->setColStretch(1, 100);
 
-  QGridLayout *grid = new QGridLayout(page, 2, 2, 0, 8);
-  grid->setColStretch(0, 1);
-  grid->setColStretch(1, 100);
+  label = new QLabel( i18n("&Post Address:"), mlGroup );
+  mlLayout->addWidget( label, 1, 0 );
+  mailingListPostAddress = new QLineEdit( mlGroup );
+  label->setBuddy( mailingListPostAddress );
+  mlLayout->addWidget( mailingListPostAddress, 1, 1 );
 
-  topLayout->addSpacing( spacingHint()*2 );
-  topLayout->addLayout( grid );
-  topLayout->addSpacing( spacingHint()*2 );
+  QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), page );
+  idGroup->setColumnLayout( 0, Qt::Vertical );
+  QHBoxLayout *idLayout = new QHBoxLayout(idGroup->layout());
+  idLayout->setSpacing( 6 );
+  topLayout->addWidget( idGroup );
 
-  label = new QLabel( i18n("Identity:"), page );
-  grid->addWidget( label, 0, 0 );
-  mailingListIdentity = new QComboBox( page );
+  label = new QLabel( i18n("&Sender:"), idGroup );
+  idLayout->addWidget( label );
+  mailingListIdentity = new QComboBox( idGroup );
   mailingListIdentity->insertStringList( KMIdentity::identities() );
-  mailingListIdentity->setMinimumSize(mailingListIdentity->sizeHint());
-  grid->addWidget( mailingListIdentity, 0, 1 );
+  label->setBuddy( mailingListIdentity );
+  idLayout->addWidget( mailingListIdentity, 3 );
 
-  label = new QLabel( i18n("Post Address:"), page );
-  grid->addWidget( label, 1, 0 );
-  mailingListPostAddress = new QLineEdit( page );
-  mailingListPostAddress->setMinimumSize(mailingListPostAddress->sizeHint());
-  grid->addWidget( mailingListPostAddress, 1, 1 );
+  QGroupBox *mcGroup = new QGroupBox(  i18n("Misc" ), page );
+  mcGroup->setColumnLayout( 0, Qt::Vertical );
+  QHBoxLayout *mcLayout = new QHBoxLayout(mcGroup->layout());
+  topLayout->addWidget( mcGroup );
+
+  markAnyMessage = new QCheckBox( i18n( "&Mark any message in this folder" ), mcGroup );
+  mcLayout->addWidget( markAnyMessage );
+  mcGroup->hide();
 
 //   hl = new QHBoxLayout();
 //   topLayout->addLayout( hl );
@@ -150,8 +159,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //     mailingListAdminAddress->setText(folder->mailingListAdminAddress());
     mailingListPostAddress->setEnabled(folder->isMailingList());
 //     mailingListAdminAddress->setEnabled(folder->isMailingList());
-    mailingListIdentity->setEnabled(folder->isMailingList());
+    // mailingListIdentity->setEnabled(folder->isMailingList());
     holdsMailingList->setChecked(folder->isMailingList());
+    // markAnyMessage->setChecked( folder->isAnyMessageMarked() );
 
     for (int i=0; i < mailingListIdentity->count(); ++i)
       if (mailingListIdentity->text(i) == folder->mailingListIdentity()) {
@@ -159,6 +169,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
         break;
       }
   }
+
   kdDebug()<<"Exiting KMFolderDialog::KMFolderDialog()\n";
 }
 
@@ -238,9 +249,10 @@ void KMFolderDialog::slotOk()
 //   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
     folder->setMailingListAdminAddress( QString::null );
     folder->setMailingListIdentity( mailingListIdentity->currentText() );
+// folder->setMarkAnyMessage( markAnyMessage->isChecked() );
   }
 
-  KMFolderDialogInherited::slotOk();
+  KDialogBase::slotOk();
 }
 
 //-----------------------------------------------------------------------------
@@ -257,6 +269,6 @@ void KMFolderDialog::slotHoldsML( bool holdsML )
 //     mailingListAdminAddress->setEnabled(false);
   }
 
-  mailingListIdentity->setEnabled(holdsML);
+//  mailingListIdentity->setEnabled(holdsML);
 }
 

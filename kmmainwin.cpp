@@ -707,7 +707,7 @@ void KMMainWin::slotModifyFolder()
 
   if (!mFolder) return;
   d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(),
-			 this, i18n("Modify Folder") );
+			 this, i18n("Properties of folder %1").arg( mFolder->label() ) );
   if (d->exec()) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
@@ -1650,7 +1650,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Create..."), 0, this,
 		      SLOT(slotAddFolder()), actionCollection(), "create" );
 
-  modifyFolderAction = new KAction( i18n("&Modify..."), 0, this,
+  modifyFolderAction = new KAction( i18n("&Properties..."), 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   (void) new KAction( i18n("C&ompact"), 0, this,

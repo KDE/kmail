@@ -11,10 +11,8 @@ class QCheckBox;
 class QPushButton;
 class QLineEdit;
 class QListBox;
-class QComboBox;
+class QComboBox ;
 class KMFolder;
-
-#define KMFolderDialogInherited KDialogBase
 
 class KMFolderDialog : public KDialogBase
 {
@@ -36,7 +34,7 @@ protected:
   KMFolderDir* mFolderDir;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
-  QCheckBox *holdsMailingList;
+  QCheckBox *holdsMailingList, *markAnyMessage;
   QLineEdit *mailingListPostAddress;
   QComboBox *mailingListIdentity;
 //   QLineEdit *mailingListAdminAddress;

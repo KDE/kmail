@@ -832,7 +832,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
      if (!fti->folder->account())  // protect from imap folders
          folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                                        SLOT(addChildFolder()));
-         folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
+         folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
                                       SLOT(slotModifyFolder()));
      }
   folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
@@ -893,7 +893,7 @@ void KMFolderTree::addChildFolder()
   if (fti->folder)
     if (!fti->folder->createChildFolder())
       return;
-  
+
   KMFolderDir *dir = &(kernel->folderMgr()->dir());
   if (fti->folder)
     dir = fti->folder->child();

@@ -40,7 +40,7 @@ KMFilter::KMFilter( KMFilter * aFilter )
 
   if ( aFilter ) {
     mPattern = *aFilter->pattern();
-    
+
     QListIterator<KMFilterAction> it( *aFilter->actions() );
     for ( it.toFirst() ; it.current() ; ++it ) {
       KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
@@ -82,6 +82,9 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
       if ( status == NoResult )
 	// Message saved in a folder
 	status = MsgExpropriated;
+      break;
+    default:
+        break;
     }
   }
 
@@ -179,7 +182,7 @@ void KMFilter::writeConfig(KConfig* config) const
 void KMFilter::purify()
 {
   mPattern.purify();
-  
+
   QListIterator<KMFilterAction> it( mActions );
   it.toLast();
   while ( it.current() )

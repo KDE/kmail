@@ -105,7 +105,11 @@ int KMFilterMgr::process(KMMessage* msg)
     case KMFilter::MsgExpropriated:
       if (status < 0)  // Message saved in a folder
 	status = 0;
+      break;
+    default:
+        break;
     }
+
   }
 
   if (status < 0) // No filters matched, keep copy of message
