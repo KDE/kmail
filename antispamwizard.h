@@ -45,7 +45,7 @@ namespace KMail {
 
   class ASWizInfoPage;
   class ASWizProgramsPage;
-  class ASWizRulesPage;
+  class ASWizSpamRulesPage;
   class ASWizVirusRulesPage;
 
   //---------------------------------------------------------------------------
@@ -207,7 +207,8 @@ namespace KMail {
       /** Modify the status of the wizard to reflect the selection of spam tools. */
       void checkProgramsSelections();
       /** Modify the status of the wizard to reflect the selected functionality. */
-      void checkRulesSelections();
+      void checkSpamRulesSelections();
+      /** Modify the status of the wizard to reflect the selected functionality. */
       void checkVirusRulesSelections();
       /** Check if the spam tools are available via the PATH */
       void checkToolAvailability();
@@ -215,10 +216,14 @@ namespace KMail {
       void slotHelpClicked();
 
     private:
+      /* generic checks if any option in a page is checked */
+      bool anySpamOptionChecked();
+      bool anyVirusOptionChecked();
+    
       /* The pages in the wizard */
       ASWizInfoPage * mInfoPage;
       ASWizProgramsPage * mProgramsPage;
-      ASWizRulesPage * mRulesPage;
+      ASWizSpamRulesPage * mSpamRulesPage;
       ASWizVirusRulesPage * mVirusRulesPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
@@ -273,12 +278,12 @@ namespace KMail {
   };
 
   //---------------------------------------------------------------------------
-  class ASWizRulesPage : public QWidget
+  class ASWizSpamRulesPage : public QWidget
   {
     Q_OBJECT
 
     public:
-      ASWizRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
+      ASWizSpamRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
 
       bool pipeRulesSelected() const;
       bool classifyRulesSelected() const;

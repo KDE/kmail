@@ -98,13 +98,13 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   addPage( mInfoPage, i18n( "Welcome to the KMail Anti-Spam/Virus Wizard." ));
   mProgramsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
   addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail." ));
-  mRulesPage = new ASWizRulesPage( 0, "", mainFolderTree );
+  mSpamRulesPage = new ASWizSpamRulesPage( 0, "", mainFolderTree );
   mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
 
   connect( mProgramsPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkProgramsSelections( void ) ) );
-  connect( mRulesPage, SIGNAL( selectionChanged( void ) ),
-            this, SLOT( checkRulesSelections( void ) ) );
+  connect( mSpamRulesPage, SIGNAL( selectionChanged( void ) ),
+            this, SLOT( checkSpamRulesSelections( void ) ) );
   connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkVirusRulesSelections( void ) ) );
 
@@ -121,7 +121,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
 void AntiSpamWizard::accept()
 {
   kdDebug( 5006 ) << "Folder name for spam is "
-                  << mRulesPage->selectedFolderName() << endl;
+                  << mSpamRulesPage->selectedFolderName() << endl;
   kdDebug( 5006 ) << "Folder name for viruses is "
                   << mVirusRulesPage->selectedFolderName() << endl;
 
@@ -184,11 +184,11 @@ void AntiSpamWizard::accept()
             const QCString header = (*it).getDetectionHeader().ascii();
             const QString & pattern = (*it).getDetectionPattern();
             if ( (*it).isUseRegExp() )
-            virusFilterPattern->append(
+              virusFilterPattern->append(
                 KMSearchRule::createInstance( header,
                 KMSearchRule::FuncRegExp, pattern ) );
             else
-            virusFilterPattern->append(
+              virusFilterPattern->append(
                 KMSearchRule::createInstance( header,
                 KMSearchRule::FuncContains, pattern ) );
         }
@@ -208,7 +208,7 @@ void AntiSpamWizard::accept()
   while ( it != mToolList.end() )
   {
     if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
-       ( mRulesPage->pipeRulesSelected() && (*it).isSpamTool() ) )
+       ( mSpamRulesPage->pipeRulesSelected() && (*it).isSpamTool() ) )
     {
       // pipe messages through the anti-spam tools,
       // one single filter for each tool
@@ -233,18 +233,18 @@ void AntiSpamWizard::accept()
     it++;
   }
 
-  if ( mRulesPage->moveRulesSelected() )
+  if ( mSpamRulesPage->moveRulesSelected() )
   {
     // Sort out spam depending on header fields set by the tools
     KMFilter* spamFilter = new KMFilter();
     QPtrList<KMFilterAction>* spamFilterActions = spamFilter->actions();
     KMFilterAction* spamFilterAction1 = dict["transfer"]->create();
-    spamFilterAction1->argsFromString( mRulesPage->selectedFolderName() );
+    spamFilterAction1->argsFromString( mSpamRulesPage->selectedFolderName() );
     spamFilterActions->append( spamFilterAction1 );
     KMFilterAction* spamFilterAction2 = dict["set status"]->create();
     spamFilterAction2->argsFromString( "P" ); // Spam
     spamFilterActions->append( spamFilterAction2 );
-    if ( mRulesPage->markReadRulesSelected() ) {
+    if ( mSpamRulesPage->markReadRulesSelected() ) {
       KMFilterAction* spamFilterAction3 = dict["set status"]->create();
       spamFilterAction3->argsFromString( "R" ); // Read
       spamFilterActions->append( spamFilterAction3 );
@@ -262,11 +262,11 @@ void AntiSpamWizard::accept()
             const QCString header = (*it).getDetectionHeader().ascii();
             const QString & pattern = (*it).getDetectionPattern();
             if ( (*it).isUseRegExp() )
-            spamFilterPattern->append(
+              spamFilterPattern->append(
                 KMSearchRule::createInstance( header,
                 KMSearchRule::FuncRegExp, pattern ) );
             else
-            spamFilterPattern->append(
+              spamFilterPattern->append(
                 KMSearchRule::createInstance( header,
                 KMSearchRule::FuncContains, pattern ) );
           }
@@ -282,7 +282,7 @@ void AntiSpamWizard::accept()
     KMKernel::self()->filterMgr()->appendFilter( spamFilter );
   }
 
-  if ( mRulesPage->classifyRulesSelected() )
+  if ( mSpamRulesPage->classifyRulesSelected() )
   {
     // Classify messages manually as Spam
     KMFilter* classSpamFilter = new KMFilter();
@@ -304,7 +304,7 @@ void AntiSpamWizard::accept()
       it++;
     }
     KMFilterAction* classSpamFilterActionLast = dict["transfer"]->create();
-    classSpamFilterActionLast->argsFromString( mRulesPage->selectedFolderName() );
+    classSpamFilterActionLast->argsFromString( mSpamRulesPage->selectedFolderName() );
     classSpamFilterActions->append( classSpamFilterActionLast );
 
     KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
@@ -459,53 +459,50 @@ void AntiSpamWizard::checkProgramsSelections()
     it++;
   }
 
-  mRulesPage->allowClassification( canClassify );
+  mSpamRulesPage->allowClassification( canClassify );
   
-  removePage( mRulesPage );
+  removePage( mSpamRulesPage );
   removePage( mVirusRulesPage );
-  if ( mSpamToolsUsed == true )
+  if ( mSpamToolsUsed )
   {
-    addPage( mRulesPage, i18n( "Please select the filters to be created inside KMail." ));
-    setNextEnabled( mRulesPage, false );
-    setFinishEnabled( mRulesPage, false );
+    addPage( mSpamRulesPage, i18n( "Please select the spam filters to be created inside KMail." ));
+    checkSpamRulesSelections();
   }
-  if ( mVirusToolsUsed == true )
+  if ( mVirusToolsUsed )
   {
-    addPage( mVirusRulesPage, i18n( "Please select the filters to be created inside KMail." ));
-    setFinishEnabled( mVirusRulesPage, false );
+    addPage( mVirusRulesPage, i18n( "Please select the virus filters to be created inside KMail." ));
+    checkVirusRulesSelections();
   }
 
   setNextEnabled( mProgramsPage, status );
 }
 
 
-void AntiSpamWizard::checkRulesSelections()
+void AntiSpamWizard::checkSpamRulesSelections()
 {
-  if ( mRulesPage->moveRulesSelected() || mRulesPage->pipeRulesSelected()
-      || mRulesPage->classifyRulesSelected() )
+  if ( anySpamOptionChecked() )
   {
     if ( mVirusToolsUsed )
-      setNextEnabled( mRulesPage, true );
+      setNextEnabled( mSpamRulesPage, true );
     else
-      setFinishEnabled( mRulesPage, true );
+      setFinishEnabled( mSpamRulesPage, true );
   }
   else
   {
-    if ( mVirusToolsUsed )
-      setNextEnabled( mRulesPage, false );
-    else
-      setFinishEnabled( mRulesPage, false );
+    setNextEnabled( mSpamRulesPage, mVirusToolsUsed );
+    setFinishEnabled( mSpamRulesPage, false );
   }
+  if ( mVirusToolsUsed )
+    checkVirusRulesSelections();
 }
 
 void AntiSpamWizard::checkVirusRulesSelections()
 {
-  if ( mVirusRulesPage->moveRulesSelected() || mVirusRulesPage->pipeRulesSelected() )
-  {
+  if ( anyVirusOptionChecked() )
     setFinishEnabled( mVirusRulesPage, true );
-  } else {
-    setFinishEnabled( mVirusRulesPage, false );
-  }
+  else
+    setFinishEnabled( mVirusRulesPage, 
+                      anySpamOptionChecked() && mSpamToolsUsed );
 }
 
 
@@ -543,6 +540,19 @@ int AntiSpamWizard::checkForProgram( QString executable )
 void AntiSpamWizard::slotHelpClicked()
 {
   KApplication::kApplication()->invokeHelp( "the-anti-spam-wizard", "kmail" );
+}
+
+
+bool AntiSpamWizard::anySpamOptionChecked()
+{
+  return ( mSpamRulesPage->moveRulesSelected()
+        || mSpamRulesPage->pipeRulesSelected()
+        || mSpamRulesPage->classifyRulesSelected() );
+}
+
+bool AntiSpamWizard::anyVirusOptionChecked()
+{
+  return ( mVirusRulesPage->moveRulesSelected() || mVirusRulesPage->pipeRulesSelected() );
 }
 
 
@@ -679,12 +689,18 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
   mIntroText->setText( i18n(
     "<p>Here you get some assistance in setting up KMail's filter "
     "rules to use some commonly-known anti-spam/virus tools.</p>"
-    "The wizard can detect the anti-spam tools on your computer as "
+    "<p>The wizard can detect those tools on your computer as "
     "well as create filter rules to classify messages using these "
     "tools and to separate messages classified as spam, or which "
     "contain viruses. The wizard will not take any existing filter "
     "rules into consideration but will append new rules in any"
     "case.</p>"
+    "<p><b>WARNING:</b> As KMail is blocked during the scan of the "
+    "messages for spam or viruses, you may encounter problems with "
+    "the responsivness of KMail because anti-spam/virus tool "
+    "operations are usually time consuming. Please consider "
+    "deleting the filter rules created by the wizard to get "
+    "back to the former behaviour."
     ) );
   grid->addWidget( mIntroText, 0, 0 );
 
@@ -776,8 +792,8 @@ void ASWizProgramsPage::processSelectionChange()
 }
 
 //---------------------------------------------------------------------------
-ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
-                                  KMFolderTree * mainFolderTree )
+ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
+                                        KMFolderTree * mainFolderTree )
   : QWidget( parent, name )
 {
   QGridLayout *grid = new QGridLayout( this, 5, 1, KDialog::marginHint(),
@@ -834,30 +850,30 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
            mMarkRules, SLOT( setEnabled( bool ) ) );
 }
 
-bool ASWizRulesPage::pipeRulesSelected() const
+bool ASWizSpamRulesPage::pipeRulesSelected() const
 {
   return mPipeRules->isChecked();
 }
 
 
-bool ASWizRulesPage::classifyRulesSelected() const
+bool ASWizSpamRulesPage::classifyRulesSelected() const
 {
   return mClassifyRules->isChecked();
 }
 
 
-bool ASWizRulesPage::moveRulesSelected() const
+bool ASWizSpamRulesPage::moveRulesSelected() const
 {
   return mMoveRules->isChecked();
 }
 
-bool ASWizRulesPage::markReadRulesSelected() const
+bool ASWizSpamRulesPage::markReadRulesSelected() const
 {
   return mMarkRules->isChecked();
 }
 
 
-QString ASWizRulesPage::selectedFolderName() const
+QString ASWizSpamRulesPage::selectedFolderName() const
 {
   QString name = "trash";
   if ( mFolderTree->folder() )
@@ -865,13 +881,13 @@ QString ASWizRulesPage::selectedFolderName() const
   return name;
 }
 
-void ASWizRulesPage::processSelectionChange()
+void ASWizSpamRulesPage::processSelectionChange()
 {
   emit selectionChanged();
 }
 
 
-void ASWizRulesPage::allowClassification( bool enabled )
+void ASWizSpamRulesPage::allowClassification( bool enabled )
 {
   if ( enabled )
     mClassifyRules->setEnabled( true );
