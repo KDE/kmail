@@ -1345,6 +1345,11 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 {
+  if (!aUrl.hasHost() && aUrl.path() == "/" && aUrl.hasRef())
+  {
+    mViewer->gotoAnchor(aUrl.ref());
+    return;
+  }
   int id = msgPartFromUrl(aUrl);
   if (id > 0)
   {
