@@ -426,6 +426,7 @@ void KMFolderTree::reload(void)
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
   if (fti && fti->folder && fti->folder->account())
     doFolderSelected(0);
+  mLastItem = NULL;
   QListViewItemIterator it( this );
   while (it.current()) {
     fti = static_cast<KMFolderTreeItem*>(it.current());
