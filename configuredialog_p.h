@@ -733,6 +733,7 @@ public:
 
   void setup();
   void apply();
+
   void installProfile( KConfig * profile );
 
 protected:
@@ -772,6 +773,7 @@ class SecurityPageCryptPlugTab : public ConfigurationPage
   Q_OBJECT
 public:
   SecurityPageCryptPlugTab( QWidget * parent = 0, const char* name = 0 );
+  ~SecurityPageCryptPlugTab();
 
   // no icons:
   static QString iconLabel() { return QString::null; }
@@ -782,6 +784,7 @@ public:
 
   void setup();
   void apply();
+  void dismiss();
   //void savePluginsConfig( bool silent );
 
 public slots:
@@ -807,6 +810,7 @@ private:
   QLineEdit     *mNameEdit;
   KURLRequester *mLocationRequester;
   QLineEdit     *mUpdateURLEdit;
+  CryptPlugWrapperList *mlistCryptoAdd;
 };
 
 class SecurityPage : public TabbedConfigurationPage {
@@ -822,7 +826,7 @@ public:
   // OpenPGP tab is special:
   void setup();
   void apply();
-  void dismiss() {}
+  void dismiss();
   void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;

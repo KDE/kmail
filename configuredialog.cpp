@@ -3193,6 +3193,10 @@ void SecurityPage::apply() {
   mCryptPlugTab->apply();
 }
 
+void SecurityPage::dismiss() {
+  mCryptPlugTab->dismiss();
+}
+
 QString SecurityPage::GeneralTab::title() {
   return i18n("&General");
 }
@@ -3746,6 +3750,9 @@ QString SecurityPage::CryptPlugTab::helpAnchor() const {
 SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
   : ConfigurationPage( parent, name )
 {
+  mlistCryptoAdd = new CryptPlugWrapperList();
+  mlistCryptoAdd->setAutoDelete( false );
+
   QHBoxLayout * hlay = new QHBoxLayout( this, KDialog::marginHint(),
 					KDialog::spacingHint() );
 
@@ -3844,6 +3851,11 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   vlay->addStretch( 1 );
 }
 
+SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
+{
+  delete mlistCryptoAdd;
+}
+
 void SecurityPage::CryptPlugTab::setup()
 {
   kdDebug(5006) << "CryptPlugTab::setup(): found "
@@ -3905,6 +3917,23 @@ void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
   }
 }
 
+void SecurityPage::CryptPlugTab::dismiss() {
+  CryptPlugWrapperList * cpl = kernel->cryptPlugList();
+  for ( CryptPlugWrapperListIterator it( *(mlistCryptoAdd) );
+        it.current(); ++it ) {
+    CryptPlugWrapper* wrapper = cpl->take( cpl->find( *it ) );
+    if ( wrapper ) {
+      QString dummy;
+      if ( wrapper->initStatus( &dummy ) == CryptPlugWrapper::InitStatus_Ok ) {
+        wrapper->deinitialize();
+      }
+    }
+    delete wrapper;
+    wrapper = 0;
+  }
+  mlistCryptoAdd->clear();
+}
+
 void SecurityPage::CryptPlugTab::apply() {
   KConfigGroup general( KMKernel::config(), "General" );
 
@@ -3954,6 +3983,8 @@ void SecurityPage::CryptPlugTab::apply() {
     wrapper = 0;
   }
 
+  mlistCryptoAdd->clear();
+
   general.writeEntry("crypt-plug-count", cryptPlugCount );
 }
 
@@ -3985,6 +4016,7 @@ void SecurityPage::CryptPlugTab::slotNewPlugIn()
 {
   CryptPlugWrapper * newWrapper = new CryptPlugWrapper( this, "", "", "" );
   kernel->cryptPlugList()->append( newWrapper );
+  mlistCryptoAdd->append( newWrapper );
 
   QListViewItem * item = new QListViewItem( mPlugList, mPlugList->lastItem() );
   mPlugList->setCurrentItem( item );
