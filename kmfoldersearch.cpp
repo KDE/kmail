@@ -149,7 +149,7 @@ void KMSearch::start()
     QValueList<QGuardedPtr<KMFolder> > folders;
     folders.append(mRoot);
     if (recursive()) { //Append all descendants to folders
-	KMFolderNode* node;
+  	KMFolderNode* node;
 	KMFolder* folder;
 	QValueListConstIterator<QGuardedPtr<KMFolder> > it;
 	for (it = folders.begin(); it != folders.end(); ++it) {
@@ -166,14 +166,15 @@ void KMSearch::start()
 		++it;
 		if (!node->isDir())
 		{
-		    KMFolder* kmf = dynamic_cast<KMFolder*>(node)
-			if (kmf)
-		    	folders.append(kmf);
+		    KMFolder* kmf = dynamic_cast<KMFolder*>(node);
+		    if (kmf) 
+			folders.append(kmf);
+		}
 	    }
 	}
     }
 
-    mLastFolder = "";
+    mLastFolder = QString::null;
     mRemainingFolders = folders.count();
     mRemainingMessages = 0;
     QValueListConstIterator<QGuardedPtr<KMFolder> > it;

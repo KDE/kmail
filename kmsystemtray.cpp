@@ -37,6 +37,7 @@
 #include <qobjectlist.h>
 
 #include <math.h>
+#include <assert.h>
 
 /**
  * Construct a KSystemTray icon to be displayed when new mail
@@ -344,7 +345,11 @@ KMMainWidget * KMSystemTray::getKMMainWidget()
     ++it;
     QObjectList *l2 = wid->topLevelWidget()->queryList("KMMainWidget");
     if (l2->first())
-      return dynamic_cast<KMMainWidget *>(l2->first());
+	{
+	  KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>(l2->first());
+	  assert (kmmw);
+	  return kmmw;
+	}
   }
   return 0;
 }
