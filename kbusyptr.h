@@ -51,7 +51,6 @@ protected:
   int currentCursor;
   bool animated;
   QCursor* cursorList;
-  QBitmap* bitmapList;
 };
 
 #endif /*kbusyptr_h_*/

@@ -19,7 +19,6 @@ KBusyPtr :: KBusyPtr ()
   numCursors = 0;
   frameDelay = 500;
   cursorList = NULL;
-  bitmapList = NULL;
   //animated   = TRUE;
   animated   = FALSE;
 
@@ -33,9 +32,7 @@ KBusyPtr :: KBusyPtr ()
 KBusyPtr :: ~KBusyPtr()
 {
   if (cursorList) delete[] cursorList;
-  if (bitmapList) delete[] bitmapList;
   cursorList = NULL;
-  bitmapList = NULL;
 }
 
 
@@ -140,9 +137,6 @@ void KBusyPtr :: loadCursor (const char* cursorName,const char* maskName)
   numY = map.height() >> 4;
   numCursors = numX * numY;
 
-  if (bitmapList) delete[] bitmapList;
-  QSize size(16,16);
-  bitmapList = new QBitmap[numCursors](size);
   if (cursorList) delete[] cursorList;
   cursorList = new QCursor[numCursors];
 
