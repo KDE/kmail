@@ -119,7 +119,7 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     msgContents = msg->headerField("To") + msg->headerField("Cc");
   } else if( mField == "<size>" ) {
     numerical = TRUE;
-    numericalMsgContents = int(msg->msgSize());
+    numericalMsgContents = int(msg->msgLength());
     numericalValue = mContents.toInt(); // isEmpty() checks this
     msgContents.setNum( numericalMsgContents );
   } else if( mField == "<age in days>" ) {

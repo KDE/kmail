@@ -115,6 +115,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
   mMsgSize = 0;
+  mMsgLength = 0;
   mFolderOffset = 0;
   mStatus  = KMMsgStatusNew;
   mDate    = 0;
@@ -133,6 +134,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
   mMsgSize = msgInfo.msgSize();
+  mMsgLength = 0;
   mFolderOffset = msgInfo.folderOffset();
   mStatus = msgInfo.status();
   mDate = msgInfo.date();
@@ -221,7 +223,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 
   // copy string and throw out obsolete control characters
   len = aStr.length();
-  setMsgSize(len);
+  mMsgLength = len;
   result.resize(len+1);
   strPos = aStr.data();
   resultPos = (char*)result.data();

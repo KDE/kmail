@@ -383,9 +383,15 @@ public:
     virtual QString fileName(void) const { return mFileName; }
     void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
 
-    /** Get/set size of message including the whole header in bytes. */
+    /** Get/set size of message in the folder including the whole header in
+        bytes. Can be 0, if the message is not is a folder */
     virtual unsigned long msgSize(void) const { return mMsgSize; }
     void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
+
+    /** Unlike the above funtion this works also, if the message is not in a
+        folder */
+    virtual unsigned long msgLength(void) const
+    { return (mMsgLength) ? mMsgLength : mMsgSize; }
 
     /** Status of the message. */
     virtual KMMsgStatus status(void) const { return mStatus; }
@@ -410,7 +416,7 @@ protected:
     QTextCodec* mCodec;
 
     QString mFileName;
-    unsigned long mFolderOffset, mMsgSize;
+    unsigned long mFolderOffset, mMsgSize, mMsgLength;
     time_t mDate;
     KMMsgStatus mStatus;
     unsigned long mMsgSerNum;
