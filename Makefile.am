@@ -129,6 +129,9 @@ dcoptest_LDFLAGS = $(all_libraries)
 
 kmailIface_DCOPIDLNG = true
 kmailicalIface_DCOPIDLNG = true
+# we need to use our own copy, since kmailicalIface needs post 3.3 fixes in it
+# TODO: remove once we rely on kdelibs 3.4
+DCOPIDLNG=$(top_srcdir)/dcopidlng/dcopidlng
 
 korganizeriface_DIR = $(top_srcdir)/korganizer
 
