@@ -808,11 +808,19 @@ void KMHeaders::msgHeaderChanged(int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 {
   QListViewItem *qitem;
+  bool unget;
   for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
     if (qitem->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       msgBase->setStatus(status);
+      if (mFolder->account())
+      {
+        unget = !mFolder->isMessage(item->msgId());
+        KMMessage *msg = mFolder->getMsg(item->msgId());
+        mFolder->account()->setStatus(msg, status);
+        if (unget) mFolder->unGetMsg(item->msgId());
+      }
     }
 }
 
@@ -902,6 +910,8 @@ void KMHeaders::setMsgRead (int msgId)
 	  st==KMMsgStatusRead || st==KMMsgStatusOld)
 	{
 	  msg->setStatus(KMMsgStatusOld);
+          if (mFolder->account())
+            mFolder->account()->setStatus(msg, KMMsgStatusOld);
 	}
     }
 }

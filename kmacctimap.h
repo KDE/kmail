@@ -31,6 +31,7 @@
 #include <qstringlist.h>
 #include <qcstring.h>
 #include <qqueue.h>
+#include "kmmsgbase.h"
 
 class QLineEdit;
 class QPushButton;
@@ -135,6 +136,9 @@ public:
 
   /** Delete a message */
   void deleteMessage(KMMessage * msg);
+
+  /** Change the status of a message */
+  void setStatus(KMMessage * msg, KMMsgStatus status);
 
   /** Expunge deleted messages from the folder */
   void expungeFolder(KMFolder * aFolder);
@@ -265,8 +269,8 @@ protected slots:
   void nextStatusAction();
   void slotStatusResult(KIO::Job * job);
 
-  /** Expunge has finished */
-  void slotExpungeResult(KIO::Job * job);
+  /** Only delete information about the job */
+  void slotSimpleResult(KIO::Job * job);
 
   /** Display an error message, that connecting failed */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);

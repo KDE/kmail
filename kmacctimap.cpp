@@ -652,6 +652,46 @@ void KMAcctImap::deleteMessage(KMMessage * msg)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
+{
+  QCString flags;
+  switch (status)
+  {
+    case KMMsgStatusNew:
+    case KMMsgStatusUnread:
+      break;
+    case KMMsgStatusDeleted:
+      flags = "\\DELETED";
+      break;
+    case KMMsgStatusReplied:
+      flags = "\\SEEN \\ANSWERED";
+      break;
+    default:
+      flags = "\\SEEN";
+  }
+  KURL url = getUrl();
+  if (!msg || !msg->parent()) return;
+  url.setPath(msg->parent()->imapPath() + ";UID=" + msg->headerField("X-UID"));
+  QCString urlStr(url.url());
+  QByteArray data;
+  QBuffer buff(data);
+  buff.open(IO_WriteOnly | IO_Append);
+  buff.writeBlock(urlStr.data(), urlStr.size());
+  buff.writeBlock(flags.data(), flags.size());
+  buff.close();
+  makeConnection();
+  KIO::SimpleJob *job = KIO::special(url, data, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
+  jobData jd;
+  jd.total = 1; jd.done = 0; jd.parent = NULL;
+  mapJobData.insert(job, jd);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          this, SLOT(slotSimpleResult(KIO::Job *)));
+  displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::nextStatusAction()
 {
   displayProgress();
@@ -666,7 +706,7 @@ void KMAcctImap::nextStatusAction()
     jd.total = 0; jd.done = 0; jd.parent = NULL;
     mapJobData.insert(job, jd);
     connect(job, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotStatusResult(KIO::Job *)));
+            this, SLOT(slotSimpleResult(KIO::Job *)));
   }
 }
 
@@ -701,13 +741,13 @@ void KMAcctImap::expungeFolder(KMFolder * aFolder)
   jd.total = 1; jd.done = 0;
   mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotExpungeResult(KIO::Job *)));
+          this, SLOT(slotSimpleResult(KIO::Job *)));
   displayProgress();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::slotExpungeResult(KIO::Job * job)
+void KMAcctImap::slotSimpleResult(KIO::Job * job)
 {
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   if (it == mapJobData.end()) return;
