@@ -195,7 +195,7 @@ void KMMainWin::readConfig(void)
   KConfig *config = kapp->config();
 
 
-  bool oldWindowLayout = 0;
+  int oldWindowLayout = 0;
   bool oldShowMIME = true;
 
   QString str;
@@ -254,8 +254,8 @@ void KMMainWin::readConfig(void)
         (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneWidth", 0 );
         (*mPanner1Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
         (*mPanner2Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
-        (*mPanner2Sep)[1] = config->readNumEntry( "MessagePaneHeight", 100 );
-        (*mPanner2Sep)[2] = config->readNumEntry( "MimePaneHeight", 300 );
+        (*mPanner2Sep)[1] = config->readNumEntry( "MessagePaneHeight", 300 );
+        (*mPanner2Sep)[2] = config->readNumEntry( "MimePaneHeight", 100 );
         break;
     case 2:
         (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneWidth", 0 );
@@ -316,7 +316,7 @@ void KMMainWin::readConfig(void)
 
   // Re-activate panners
   if (mStartupDone)
-  {
+  { 
 
     if (oldWindowLayout != mWindowLayout || oldShowMIME != mShowMIME )
       activatePanners();
@@ -619,21 +619,14 @@ void KMMainWin::activatePanners(void)
   // glue everything together
     switch( mWindowLayout ) {
     case 0:
-        mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-        mPanner1->moveToLast( mPanner2 );
-        mPanner1->setSizes( *mPanner1Sep );
-        mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
-        mPanner2->setSizes( *mPanner2Sep );
-        mPanner2->setResizeMode( mHeaders, QSplitter::KeepSize );
-        mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
-        break;
     case 1:
         mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
         mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        if( mWindowLayout )
+          mPanner2->moveToLast( mMimePartTree );
+        else
+          mPanner2->moveToLast( mMsgView );
         mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
         mPanner1->moveToLast( mPanner2 );
         mPanner1->setSizes( *mPanner1Sep );

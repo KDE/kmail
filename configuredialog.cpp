@@ -2206,27 +2206,32 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
 
   QHBox* layoutHB = new QHBox( visibleVBG );
   layoutHB->layout()->setSpacing( KDialog::spacingHint() );
+
   mLayout1PB = new QPushButton( layoutHB );
   mWindowLayoutVBG->insert( mLayout1PB, 0 );
   mLayout1PB->setPixmap( UserIcon( "kmailwindowlayout1" ) );
   mLayout1PB->setFixedSize( mLayout1PB->sizeHint() );
   mLayout1PB->setToggleButton( true );
-  QPushButton* mLayout2PB = new QPushButton( layoutHB );
+
+  mLayout2PB = new QPushButton( layoutHB );
   mWindowLayoutVBG->insert( mLayout2PB, 1 );
   mLayout2PB->setPixmap( UserIcon( "kmailwindowlayout2" ) );
   mLayout2PB->setFixedSize( mLayout2PB->sizeHint() );
   mLayout2PB->setToggleButton( true );
-  QPushButton* mLayout3PB = new QPushButton( layoutHB );
+
+  mLayout3PB = new QPushButton( layoutHB );
   mWindowLayoutVBG->insert( mLayout3PB, 2 );
   mLayout3PB->setPixmap( UserIcon( "kmailwindowlayout3" ) );
   mLayout3PB->setFixedSize( mLayout3PB->sizeHint() );
   mLayout3PB->setToggleButton( true );
-  QPushButton* mLayout4PB = new QPushButton( layoutHB );
+
+  mLayout4PB = new QPushButton( layoutHB );
   mWindowLayoutVBG->insert( mLayout4PB, 3 );
   mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4" ) );
   mLayout4PB->setFixedSize( mLayout4PB->sizeHint() );
   mLayout4PB->setToggleButton( true );
-  QPushButton* mLayout5PB = new QPushButton( layoutHB );
+
+  mLayout5PB = new QPushButton( layoutHB );
   mWindowLayoutVBG->insert( mLayout5PB, 4 );
   mLayout5PB->setPixmap( UserIcon( "kmailwindowlayout5" ) );
   mLayout5PB->setFixedSize( mLayout5PB->sizeHint() );
