@@ -1407,7 +1407,10 @@ void ConfigureDialog::setupNetworkPage( void )
       new QListViewItem( mNetwork.accountList, top, a->name(), a->type() );
     if( a->folder() )
     {
-      listItem->setText( 2, a->folder()->name() );
+      if (a->folder()->isSystemFolder())
+        listItem->setText( 2, i18n(a->folder()->name()) );
+      else
+        listItem->setText( 2, a->folder()->name() );
     }
     top = listItem;
   }
@@ -2557,7 +2560,12 @@ void ConfigureDialog::slotAddAccount( void )
       new QListViewItem(mNetwork.accountList, after,
 			account->name(), account->type());
     if( account->folder() )
-      listItem->setText( 2, account->folder()->name() );
+    {
+      if (account->folder()->isSystemFolder())
+        listItem->setText( 2, i18n(account->folder()->name()) );
+      else
+        listItem->setText( 2, account->folder()->name() );
+    }
 
     mNewAccounts.append( account );
   }
@@ -2631,7 +2639,10 @@ void ConfigureDialog::slotModifySelectedAccount( void )
     listItem->setText( 1, account->type() );
     if( account->folder() )
     {
-      listItem->setText( 2, account->folder()->name() );
+      if (account->folder()->isSystemFolder())
+        listItem->setText( 2, i18n(account->folder()->name()) );
+      else
+        listItem->setText( 2, account->folder()->name() );
     }
   }
   delete dialog;
