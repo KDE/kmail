@@ -130,6 +130,9 @@ signals:
   /** Emitted, when the status of a message is changed */
   void msgChanged(KMFolder*, Q_UINT32, int delta);
 
+  /** Emitted when a field of the header of a specific message changed. */
+  void msgHeaderChanged(KMFolder*, int idx);
+
   /** Emitted once for each folder during compactAll() and expireAll() */
   void progress();
 

@@ -823,8 +823,8 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
       mFolder->markNewAsUnread();
       writeFolderConfig();
-      disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
-		 this, SLOT(msgHeaderChanged(int)));
+      disconnect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
+		 this, SLOT(msgHeaderChanged(KMFolder*,int)));
       disconnect(mFolder, SIGNAL(msgAdded(int)),
 		 this, SLOT(msgAdded(int)));
       disconnect(mFolder, SIGNAL(msgRemoved(int,QString)),
@@ -849,8 +849,8 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
     if (mFolder)
     {
-      connect(mFolder, SIGNAL(msgHeaderChanged(int)),
-	      this, SLOT(msgHeaderChanged(int)));
+      connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
+	      this, SLOT(msgHeaderChanged(KMFolder*,int)));
       connect(mFolder, SIGNAL(msgAdded(int)),
 	      this, SLOT(msgAdded(int)));
       connect(mFolder, SIGNAL(msgRemoved(int,QString)),
@@ -1047,7 +1047,7 @@ void KMHeaders::msgAdded(int id)
       mSortInfo.fakeSort = 0;
   }
 
-  msgHeaderChanged(id);
+  msgHeaderChanged(mFolder,id);
 
   if ((childCount() == 1) && hi) {
     setSelected( hi, true );
@@ -1110,7 +1110,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::msgHeaderChanged(int msgId)
+void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 {
   if (msgId<0 || msgId >= (int)mItems.size() || !isUpdatesEnabled()) return;
   KMHeaderItem *item = mItems[msgId];

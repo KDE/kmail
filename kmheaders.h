@@ -165,7 +165,7 @@ public slots:
   /** For when righ mouse button is pressed */
   void slotRMB();
   /** Refresh list view item corresponding to the messae with the given id */
-  void msgHeaderChanged(int msgId);
+  void msgHeaderChanged(KMFolder *folder, int msgId);
   /** For when the list of messages in a folder has changed */
   void msgChanged();
   /** For when the message with the given message id has been added to a folder */

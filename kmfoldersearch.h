@@ -111,6 +111,8 @@ protected slots:
   void examineChangedMessage(KMFolder *folder, Q_UINT32 serNum, int delta);
   // The serial numbers for a folder have been invalidated, deal with it
   void examineInvalidatedFolder(KMFolder *folder);
+  // Proxy the msgHeaderChanged signal
+  void proxyHeaderChanged(KMFolder *folder, int idx);
 
 public slots:
   // Appends the serial number to the cached list of messages that match

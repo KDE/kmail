@@ -64,6 +64,8 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
               parent()->manager(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)));
       connect(this, SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
               parent()->manager(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)));
+      connect(this, SIGNAL(msgHeaderChanged(KMFolder*,  int)),
+              parent()->manager(), SIGNAL(msgHeaderChanged(KMFolder*, int)));
   }
   //FIXME: Centralize all the readConfig calls somehow - Zack
   readConfig();
@@ -854,7 +856,7 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
   if (idx < 0)
     idx = aMsg->parent()->find( aMsg );
   if (idx >= 0)
-    emit msgHeaderChanged(idx);
+    emit msgHeaderChanged(this, idx);
    else
      mChanged = TRUE;
 }

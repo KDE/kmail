@@ -356,6 +356,8 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+    connect(kernel->folderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
+	    this, SLOT(proxyHeaderChanged(KMFolder*,int)));
 
     connect(kernel->imapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
 	    this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
@@ -369,6 +371,8 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
 	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+    connect(kernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
+	    this, SLOT(proxyHeaderChanged(KMFolder*,int)));
 }
 
 KMFolderSearch::~KMFolderSearch()
@@ -936,6 +940,7 @@ void KMFolderSearch::examineChangedMessage(KMFolder *folder, Q_UINT32 serNum, in
     if (it != mSerNums.end()) {
 	mUnreadMsgs += delta;
 	emit numUnreadMsgsChanged( this );
+	emit msgChanged( this, serNum, delta );
     }
 }
 
@@ -951,6 +956,26 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
     if (mSearch)
 	mSearch->stop();
     QTimer::singleShot(0, this, SLOT(executeSearch()));
+}
+
+void KMFolderSearch::proxyHeaderChanged(KMFolder *folder, int idx)
+{
+    int pos = 0;
+    if (!search() && !readSearch())
+	return;
+    if (!search()->inScope(folder))
+	return;
+    open(); //TODO: tempopen
+
+    Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(folder, idx);
+    QValueVector<Q_UINT32>::const_iterator it;
+    for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
+	if ((*it) == serNum) {
+	    emit msgHeaderChanged(this, pos);
+	    return;
+	}
+	++pos;
+    }
 }
 
 #include "kmfoldersearch.moc"

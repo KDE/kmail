@@ -459,7 +459,7 @@ signals:
   void msgChanged(KMFolder*, Q_UINT32 sernum, int delta);
 
   /** Emitted when a field of the header of a specific message changed. */
-  void msgHeaderChanged(int);
+  void msgHeaderChanged(KMFolder*, int);
 
   /** Emmited to display a message somewhere in a status line. */
   void statusMsg(const QString&);
