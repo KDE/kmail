@@ -2030,6 +2030,9 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     if (!(lvi->isSelected())) {
       clearSelection();
       KMHeadersInherited::contentsMousePressEvent(e);
+    } else {
+      KMHeadersInherited::contentsMousePressEvent(e);
+      lvi->setSelected( TRUE );
     }
   }
   else if ((e->button() == LeftButton) && (e->state() & ShiftButton)) {
