@@ -85,6 +85,16 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
   return kernel->filterMgr()->tempOpenFolder(aFolder);
 }
 
+void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
+			      const QValueList<KMime::MDN::DispositionModifier> & m ) {
+  if ( !msg ) return;
+  KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
+  if ( mdn && !kernel->msgSender()->send( mdn ) ) {
+    kdDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
+    //delete mdn;
+  }
+}
+					
 
 //=============================================================================
 //
@@ -765,6 +775,94 @@ const QString KMFilterActionSetStatus::argsAsString() const
 
 
 //=============================================================================
+// KMFilterActionFakeDisposition - send fake MDN
+// Sends a fake MDN or forces an ignore.
+//=============================================================================
+class KMFilterActionFakeDisposition: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionFakeDisposition();
+  virtual ReturnCode process(KMMessage* msg) const;
+  static KMFilterAction* newAction() {
+    return (new KMFilterActionFakeDisposition);
+  }
+
+  virtual bool isEmpty() const { return false; }
+
+  virtual void argsFromString( const QString argsStr );
+  virtual const QString argsAsString() const;
+};
+
+
+// if you change this list, also update
+// the count in argsFromString
+static const KMime::MDN::DispositionType mdns[] =
+{
+  KMime::MDN::Displayed,
+  KMime::MDN::Deleted,
+  KMime::MDN::Dispatched,
+  KMime::MDN::Processed,
+  KMime::MDN::Denied,
+  KMime::MDN::Failed,
+};
+static const int numMDNs = sizeof mdns / sizeof *mdns;
+
+
+KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
+  : KMFilterActionWithStringList( "fake mdn", i18n("send fake MDN") )
+{
+  // if you change this list, also update
+  // mdns above
+  mParameterList.append( "" );
+  mParameterList.append( i18n("MDN type","Ignore") );
+  mParameterList.append( i18n("MDN type","Displayed") );
+  mParameterList.append( i18n("MDN type","Deleted") );
+  mParameterList.append( i18n("MDN type","Dispatched") );
+  mParameterList.append( i18n("MDN type","Processed") );
+  mParameterList.append( i18n("MDN type","Denied") );
+  mParameterList.append( i18n("MDN type","Failed") );
+
+  mParameter = *mParameterList.at(0);
+}
+
+KMFilterAction::ReturnCode KMFilterActionFakeDisposition::process(KMMessage* msg) const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  if ( idx < 1 ) return ErrorButGoOn;
+
+  if ( idx == 1 ) // ignore
+    msg->setMDNSentState( KMMsgMDNIgnore );
+  else // send
+    sendMDN( msg, mdns[idx-2] ); // skip first two entries: "" and "ignore"
+  return GoOn;
+}
+
+void KMFilterActionFakeDisposition::argsFromString( const QString argsStr )
+{
+  if ( argsStr.length() == 1 ) {
+    if ( argsStr[0] == 'I' ) { // ignore
+      mParameter = *mParameterList.at(1);
+      return;
+    }
+    for ( int i = 0 ; i < numMDNs ; i++ )
+      if ( char(mdns[i]) == argsStr[0] ) { // send
+	mParameter = *mParameterList.at(i+2);
+	return;
+      }
+  }
+  mParameter = *mParameterList.at(0);
+}
+
+const QString KMFilterActionFakeDisposition::argsAsString() const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  if ( idx < 1 ) return QString::null;
+
+  return QString( QChar( idx < 2 ? 'I' : char(mdns[idx-2]) ) );
+}
+
+
+//=============================================================================
 // KMFilterActionRemoveHeader - remove header
 // Remove all instances of the given header field.
 //=============================================================================
@@ -1156,9 +1254,11 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
 
   if ( msg->parent() )
     return Moved; // the message already has a parent??? so what?
-  if ( mFolder->moveMsg(msg) == 0 )
+  if ( mFolder->moveMsg(msg) == 0 ) {
+    if ( kernel->folderIsTrash( mFolder ) )
+      sendMDN( msg, KMime::MDN::Deleted );
     return Moved; // ok, added
-  else {
+  } else {
     kdDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
     return CriticalError; // critical error: couldn't add
   }
@@ -1258,6 +1358,8 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   msg->cleanupHeader();
   msg->link( aMsg, KMMsgStatusForwarded );
 
+  sendMDN( aMsg, KMime::MDN::Dispatched );
+
   if ( !kernel->msgSender()->send(msg) ) {
     kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
@@ -1296,6 +1398,8 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
 
   msg = aMsg->createRedirect();
   msg->setTo( mParameter );
+
+  sendMDN( aMsg, KMime::MDN::Dispatched );
 
   if ( !kernel->msgSender()->send(msg) ) {
     kdDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
@@ -1371,6 +1475,7 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionMove::newAction );
   insert( KMFilterActionIdentity::newAction );
   insert( KMFilterActionSetStatus::newAction );
+  insert( KMFilterActionFakeDisposition::newAction );
   insert( KMFilterActionTransport::newAction );
   insert( KMFilterActionReplyTo::newAction );
   insert( KMFilterActionForward::newAction );

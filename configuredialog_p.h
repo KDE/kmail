@@ -733,9 +733,11 @@ public:
   void installProfile( KConfig * profile );
 
 protected:
-  QCheckBox *mExternalReferences;
-  QCheckBox *mHtmlMailCheck;
-  QCheckBox *mSendReceiptCheck;
+  QCheckBox    *mExternalReferences;
+  QCheckBox    *mHtmlMailCheck;
+  QCheckBox    *mSendReceivedReceiptCheck;
+  QButtonGroup *mMDNGroup;
+  QButtonGroup *mOrigQuoteGroup;
 };
 
 

@@ -707,8 +707,8 @@ protected:
   KAction *attachPK, *attachMPK,
           *attachRemoveAction, *attachSaveAction, *attachPropertiesAction;
 
-  KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
-  KToggleAction *requestMDNAction, *urgentAction, *allFieldsAction, *fromAction;
+  KToggleAction *signAction, *encryptAction, *requestMDNAction;
+  KToggleAction *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction, *fccAction;
   KToggleAction *toolbarAction, *statusbarAction;

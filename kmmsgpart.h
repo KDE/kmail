@@ -22,6 +22,11 @@ public:
   QCString body(void) const;
   void setBody(const QCString &aStr);
 
+  /** Sets this body part's content to @p str. @p str is subject to
+      automatic charset and CTE detection.
+   **/
+  void setBodyFromUnicode( const QString & str );
+
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. This routine is meant for binary data.
     No trailing 0 is appended. */

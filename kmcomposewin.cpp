@@ -868,11 +868,9 @@ void KMComposeWin::setupActions(void)
   urgentAction = new KToggleAction (i18n("&Urgent"), 0,
                                     actionCollection(),
                                     "urgent");
-  confirmDeliveryAction =  new KToggleAction (i18n("&Confirm Delivery"), 0,
-                                              actionCollection(),
-                                              "confirm_delivery");
-  requestMDNAction = new KToggleAction (i18n("Confirm &Read"), 0,
-                                         actionCollection(), "confirm_read");
+  requestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
+					 actionCollection(),
+					 "options_request_mdn");
   //----- Message-Encoding Submenu
   encodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
 				      0, this, SLOT(slotSetCharset() ),
@@ -1417,11 +1415,6 @@ bool KMComposeWin::applyChanges(void)
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
-
-  if (confirmDeliveryAction->isChecked())
-    mMsg->setHeaderField("Return-Receipt-To", replyAddr);
-  else
-    mMsg->removeHeaderField("Return-Receipt-To");
 
   if (requestMDNAction->isChecked())
     mMsg->setHeaderField("Disposition-Notification-To", replyAddr);

@@ -715,7 +715,8 @@ int KMFolderMbox::createIndexFromContents()
 	  }
 	  mi = new KMMsgInfo(this);
 	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr,
-		   KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown, offs, size);
+		   KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown, 
+		   KMMsgMDNStateUnknown, offs, size);
 	  mi->setStatus("RO","O");
 	  mi->setDate(dateStr);
 	  mi->setDirty(FALSE);
