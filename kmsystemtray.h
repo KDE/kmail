@@ -24,6 +24,7 @@
 #include <qguardedptr.h>
 #include <qptrvector.h>
 #include <qpixmap.h>
+#include <qimage.h>
 
 class KMFolder;
 class KMMainWidget;
@@ -79,7 +80,7 @@ private:
 
   KPopupMenu * mPopupMenu;
   QPixmap mDefaultIcon;
-  QPixmap mTransparentIcon;
+  QImage mLightIconImage;
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
