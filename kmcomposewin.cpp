@@ -1442,8 +1442,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   const KPIM::Identity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 
-  mOldSigText = ident.signatureText();
-
   // check for the presence of a DNT header, indicating that MDN's were
   // requested
   QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
