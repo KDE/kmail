@@ -99,6 +99,7 @@ void KMAcctImap::init(void)
   mUseSSL = FALSE;
   mUseTLS = FALSE;
   mIdle = TRUE;
+  mSieveConfig = KMail::SieveConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -132,6 +133,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setPasswd(acct->passwd(), acct->storePasswd());
   setUseSSL(acct->useSSL());
   setUseTLS(acct->useTLS());
+  setSieveConfig(acct->sieveConfig());
 }
 
 //-----------------------------------------------------------------------------
@@ -162,6 +164,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mOnlySubscribedFolders = config.readBoolEntry("subscribed-folders", FALSE);
   mUseSSL = config.readBoolEntry("use-ssl", FALSE);
   mUseTLS = config.readBoolEntry("use-tls", FALSE);
+  mSieveConfig.readConfig( config );
 }
 
 
@@ -185,6 +188,8 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("subscribed-folders", mOnlySubscribedFolders);
   config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("use-tls", mUseTLS);
+
+  mSieveConfig.writeConfig( config );
 }
 
 

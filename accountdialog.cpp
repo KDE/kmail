@@ -33,6 +33,7 @@
 
 #include <kfiledialog.h>
 #include <klocale.h>
+#include <kdebug.h>
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kseparator.h>
@@ -42,6 +43,9 @@
 #include <netinet/in.h>
 
 #include "accountdialog.h"
+#include "sieveconfig.h"
+using KMail::SieveConfig;
+using KMail::SieveConfigEditor;
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
@@ -49,6 +53,8 @@
 #include "kmacctimap.h"
 #include "kmfoldermgr.h"
 #include "kmservertest.h"
+
+#include <cassert>
 
 #include "accountdialog.moc"
 #undef None
@@ -227,7 +233,7 @@ ProcmailRCParser::expandVars(const QString &s)
 AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 			      QWidget *parent, const char *name, bool modal )
   : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
-    mAccount(account)
+    mAccount(account), mSieveConfigEditor( 0 )
 {
   mServerTest = 0;
   setHelp("receiving-mail");
@@ -771,6 +777,10 @@ void AccountDialog::makeImapAccountPage()
   buttonLay->addStretch();
   buttonLay->addWidget( mImap.checkCapabilities );
 
+  mSieveConfigEditor = new SieveConfigEditor( tabWidget );
+  mSieveConfigEditor->layout()->setMargin( KDialog::marginHint() );
+  tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
+
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
@@ -890,6 +900,8 @@ void AccountDialog::setupSettings()
     else if (ai.auth() == "LOGIN")
       mImap.authLogin->setChecked( TRUE );
     else mImap.authUser->setChecked( TRUE );
+    assert( mSieveConfigEditor );
+    mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
   else if( accountType == "maildir" )
   {
@@ -1170,6 +1182,8 @@ void AccountDialog::saveSettings()
     else if (mImap.authLogin->isChecked())
       epa.setAuth("LOGIN");
     else epa.setAuth("*");
+    assert( mSieveConfigEditor );
+    epa.setSieveConfig( mSieveConfigEditor->config() );
   }
   else if( accountType == "maildir" )
   {

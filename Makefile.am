@@ -52,6 +52,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 kmkernel.cpp kmailpartIface.skel kmailIface.skel main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
+		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		directoryservicesconfigurationdialogimpl.cpp \
 		adddirectoryservicedialog.ui  \

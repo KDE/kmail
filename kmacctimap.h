@@ -23,6 +23,7 @@
 #define KMAcctImap_h
 
 #include "kmaccount.h"
+#include "sieveconfig.h"
 #include <qdialog.h>
 #include <kio/global.h>
 #include <kio/job.h>
@@ -122,6 +123,11 @@ public:
    */
   bool useTLS() { return mUseTLS; }
   virtual void setUseTLS(bool);
+
+  KMail::SieveConfig sieveConfig() const { return mSieveConfig; }
+  void setSieveConfig( const KMail::SieveConfig & sieve ) {
+    mSieveConfig = sieve;
+  }
 
   /**
    * Inherited methods.
@@ -236,6 +242,7 @@ protected:
   int mCountUnread, mCountLastUnread;
   int mCountRemainChecks;
   QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
+  KMail::SieveConfig mSieveConfig;
 
 protected slots:
   /**

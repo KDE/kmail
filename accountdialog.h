@@ -34,6 +34,9 @@ class KMAccount;
 class KMFolder;
 class KMServerTest;
 class QButtonGroup;
+namespace KMail {
+  class SieveConfigEditor;
+};
 
 class AccountDialog : public KDialogBase
 {
@@ -180,6 +183,7 @@ class AccountDialog : public KDialogBase
     QValueList<QGuardedPtr<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     KMServerTest *mServerTest;
+    KMail::SieveConfigEditor *mSieveConfigEditor;
 };
 
 
