@@ -7,6 +7,7 @@
 #include <mimelib/string.h>
 #include "kmmsgbase.h"
 #include <qstrlist.h>
+#include <qtextcodec.h>
 
 class KMFolder;
 class DwMessage;
@@ -261,7 +262,7 @@ public:
   virtual void deleteBodyParts(void);
 
   /** Open a window containing the complete, unparsed, message. */
-  virtual void viewSource(const QString& windowCaption) const;
+  virtual void viewSource(const QString& windowCaption, QTextCodec *codec) const;
 
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
@@ -282,13 +283,13 @@ public:
    * only the name part and not the given emailAddr. */
   static const QString emailAddrAsAnchor(const QString& emailAddr, 
 					 bool stripped=TRUE);
-#if defined CHARSETS   
+
   /** Get the message charset.*/
   virtual const QString charset(void) const;
   
   /** Set the message charset. */
   virtual void setCharset(const QString& aStr);
-#endif
+
    				       
 #ifdef KRN
   /** Convert a normal References: header into a list of anchors

@@ -8,6 +8,7 @@
 #include <qdialog.h>
 #include <qtimer.h>
 #include <qcolor.h>
+#include <qtextcodec.h>
 
 class KHTMLPart;
 class KMFolder;
@@ -61,6 +62,10 @@ public:
   /** Get/set the message attachment style. */
   AttachmentStyle attachmentStyle(void) const { return mAttachmentStyle;}
   virtual void setAttachmentStyle(int style);
+
+  /** Get/set codec for reader win. */
+  QTextCodec *codec(void) const { return mCodec; }
+  virtual void setCodec(QTextCodec *codec);
 
   /** Set the message that shall be shown. If NULL, an empty page is
     displayed. */
@@ -224,7 +229,9 @@ protected:
   QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
-
+  QTextCodec *mCodec;
+    bool mAutoDetectEncoding;
+    
   int fntSize;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;

@@ -38,6 +38,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
+#include <kcharsets.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -86,7 +87,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setMinimumSize(400, 300);
 
   mConfigureDialog = 0;
-
+  
   readPreConfig();
   createWidgets();
   readConfig();
@@ -327,6 +328,10 @@ void KMMainWin::createWidgets(void)
   accel->connectItem(accel->insertItem(Key_Right),
 		     mHeaders, SLOT(nextMessage()));
 
+  QString charset("iso8859-1");
+  KCharsets *mCharsets;
+  mCodec = mCharsets->codecForName(charset);
+  
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
@@ -396,6 +401,14 @@ void KMMainWin::activatePanners(void)
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSetEncoding()
+{
+     QString enc = mEncoding->currentText();
+     mCodec = KGlobal::charsets()->codecForName( enc );
+     mMsgView->setCodec(mCodec);
+     return;
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::statusMsg(const QString& aText)
@@ -826,7 +839,7 @@ void KMMainWin::slotUndo()
 void KMMainWin::slotShowMsgSrc()
 {
   KMMessage* msg = mHeaders->getMsg(-1);
-  if (msg) msg->viewSource(i18n("Message as Plain Text"));
+  if (msg) msg->viewSource(i18n("Message as Plain Text"),mCodec);
 }
 
 
@@ -920,7 +933,6 @@ void KMMainWin::slotSetHeaderStyle(int id)
   readConfig(); // added this so _all_ the other widgets get this information
 }
 
-
 //-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder)
 {
@@ -939,7 +951,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
-{
+{ 
   mMsgView->setMsg(msg);
 }
 
@@ -996,8 +1008,6 @@ void KMMainWin::slotAtmMsg(KMMessage *msg)
 void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
 {
   KWin::setIcons(win->winId(), kapp->icon(), kapp->miniIcon());
-  win->setCaption(msg->subject());
-
   win->setMsg(msg, true); // hack to work around strange QTimer bug
   win->resize(550,600);
 
@@ -1351,6 +1361,13 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("Send again..."), 0, this, 
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
+
+  //----- Message-Encoding Submenu
+  mEncoding = new KSelectAction( i18n( "Set &Encoding.." ), 0, this, SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
+  QStringList encodings = KGlobal::charsets()->availableEncodingNames();
+  encodings.prepend( i18n( "Auto" ) );
+  mEncoding->setItems( encodings );
+  mEncoding->setCurrentItem(0);
 
   (void) new KAction( i18n("Edi&t..."), Key_T, this, 
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );

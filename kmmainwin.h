@@ -7,6 +7,7 @@
 
 #include "kmtopwidget.h"
 #include <qvaluelist.h>
+#include <qtextcodec.h>
 #include <qmap.h>
 #include <kurl.h>
 
@@ -27,6 +28,7 @@ class KMLittleProgressDlg;
 class KMFldSearch;
 class KToggleAction;
 class KActionMenu;
+class KSelectAction;
 
 #define KMMainWinInherited KMTopLevelWidget
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -135,6 +137,7 @@ protected slots:
   void slotSetMsgStatus(int);
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);
+  void slotSetEncoding();
   void slotSendQueued();
   void slotMsgPopup(const KURL &url, const QPoint&);
   void slotUrlClicked(const KURL &url, int button);
@@ -178,8 +181,10 @@ protected:
   QSplitter    *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
+  QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
-  bool		mIntegrated;
+    KSelectAction *mEncoding;
+    bool		mIntegrated;
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
   QString       mNewMailCmd;

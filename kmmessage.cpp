@@ -71,7 +71,7 @@ const QString KMMessage::followup(void) const
     return decodeRFC1522String(header.FollowupTo().AsString().c_str());
   else
   {
-    if (header.HasNewsgroups()) 
+    if (header.HasNewsgroups())
       return decodeRFC1522String(header.Newsgroups().AsString().c_str());
     else return "";
   }
@@ -197,7 +197,7 @@ bool KMMessage::isMessage(void) const
 {
   return TRUE;
 }
-   
+
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::asString(void)
@@ -351,7 +351,7 @@ static QString splitLine( QString &line)
     {
        QChar c = line[i];
        if ((c == '>') || (c == ':') || (c == '|'))
-          j = i+1;  
+          j = i+1;
        else if ((c != ' ') && (c != '\t'))
           break;
        i++;
@@ -376,7 +376,7 @@ static QString splitLine( QString &line)
 static QString flowText(QString &text, const QString& indent, int maxLength)
 {
 // printf("flowText: \"%s\"\n", text.ascii());
-   maxLength--; 
+   maxLength--;
    if (text.isEmpty())
    {
       return indent+"<NULL>\n";
@@ -406,17 +406,17 @@ static QString flowText(QString &text, const QString& indent, int maxLength)
       QString line = text.left(i);
       if (i < (int) text.length())
          text = text.mid(i);
-      else 
+      else
          text = QString::null;
 
       result += indent + line + '\n';
-      
-      if (text.isEmpty()) 
+
+      if (text.isEmpty())
          return result;
    }
 }
 
-static bool flushPart(QString &msg, QStringList &part, 
+static bool flushPart(QString &msg, QStringList &part,
                       const QString &indent, int maxLength)
 {
    maxLength -= indent.length();
@@ -427,9 +427,9 @@ static bool flushPart(QString &msg, QStringList &part,
    {
       part.remove(part.fromLast());
    }
- 
+
 //printf("Start of part.\n");
-      
+
    QString text;
    for(QStringList::Iterator it2 = part.begin();
        it2 != part.end();
@@ -467,7 +467,7 @@ static bool flushPart(QString &msg, QStringList &part,
 }
 
 
-static void smartQuote( QString &msg, const QString &ownIndent, 
+static void smartQuote( QString &msg, const QString &ownIndent,
                         int maxLength, bool aStripSignature )
 {
   QStringList part;
@@ -480,7 +480,7 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 
 //printf("Smart Quoting.\n");
 
-  while( startOfSig2.left(1) == "\n") 
+  while( startOfSig2.left(1) == "\n")
      startOfSig2 = startOfSig2.mid(1);
   startOfSig1 = startOfSig2 + ' ';
 
@@ -504,20 +504,20 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 
      if (aStripSignature)
      {
-        if (line == startOfSig1) break; // Start of signature 
-        if (line == startOfSig2) break; // Start of malformed signature 
+        if (line == startOfSig1) break; // Start of signature
+        if (line == startOfSig2) break; // Start of malformed signature
      }
 
      QString indent = splitLine( line );
 
 //     printf("Quoted Line = \"%s\" \"%s\"\n", line.ascii(), indent.ascii());
-     if ( line.isEmpty()) 
+     if ( line.isEmpty())
      {
         if (!firstPart)
            part.append(QString::null);
         continue;
      };
- 
+
      if (firstPart)
      {
         oldIndent = indent;
@@ -545,7 +545,7 @@ static void smartQuote( QString &msg, const QString &ownIndent,
            if (oldIndent.length() > indent.length())
               msg += indent + "\n";
            else
-              msg += oldIndent + "\n";  
+              msg += oldIndent + "\n";
         }
         if (!fromLine.isEmpty())
         {
@@ -609,7 +609,7 @@ const QString KMMessage::asQuotedString(const QString& aHeaderStr,
 
       if (isInline)
       {
-	if (stricmp(msgPart.typeStr(),"text")==0 || 
+	if (stricmp(msgPart.typeStr(),"text")==0 ||
 	    stricmp(msgPart.typeStr(),"message")==0)
 	{
 	  result += nlIndentStr;
@@ -642,8 +642,8 @@ const QString KMMessage::asQuotedString(const QString& aHeaderStr,
 	if (!msgPart.name().isEmpty())
 	  result += "; name=\"" + msgPart.name() + '"';
 
-	result += QString("\nContent-Transfer-Encoding: ")+ 
-	  msgPart.cteStr() + "\nContent-Description: " + 
+	result += QString("\nContent-Transfer-Encoding: ")+
+	  msgPart.cteStr() + "\nContent-Description: " +
 	  msgPart.contentDescription() +
 	  "\n----------------------------------------\n";
       }
@@ -679,7 +679,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
 
     if (!from().isEmpty()) toStr += from() + ", ";
 
-    // -sanders only include the to address if it's != replyTo address 
+    // -sanders only include the to address if it's != replyTo address
     if(!to().isEmpty() && (rep.isEmpty() || to().find(rep) == -1))
       toStr += to() + ", ";
 
@@ -695,7 +695,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       pos1 = toStr.findRev(", ", i);
       if( pos1 == -1 ) pos1 = 0;
       pos2 = toStr.find(", ", i);
-      toStr = toStr.left(pos1) + toStr.right(toStr.length() - pos2); 
+      toStr = toStr.left(pos1) + toStr.right(toStr.length() - pos2);
     }
     toStr.truncate(toStr.length()-2);
     // same for the cc field
@@ -738,7 +738,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
 	toStr.truncate(toStr.length()-1);
       msg->setTo(toStr);
     }
-  
+
   refStr = getRefStr();
   if (!refStr.isEmpty())
     msg->setReferences(refStr);
@@ -839,7 +839,7 @@ KMMessage* KMMessage::createRedirect(void)
 	msg->addBodyPart(&msgPart);
       }
     }
-  }    
+  }
 
 //TODO: insert sender here
   msg->setHeaderField("X-KMail-Redirect-From", from());
@@ -918,7 +918,7 @@ void KMMessage::initHeader( QString id )
   QString identStr = i18n( "Default" );
   if (!id.isEmpty() && KMIdentity::identities().contains(id))
     identStr = id;
-    
+
   KMIdentity ident( identStr );
   ident.readConfig();
   if(ident.fullEmailAddr().isEmpty())
@@ -926,7 +926,7 @@ void KMMessage::initHeader( QString id )
   else
     setFrom(ident.fullEmailAddr());
 
-  if(ident.replyToAddr().isEmpty()) 
+  if(ident.replyToAddr().isEmpty())
     setReplyTo("");
   else
     setReplyTo(ident.replyToAddr());
@@ -1009,9 +1009,9 @@ const QString KMMessage::dateShortStr(void) const
 
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
-  
+
   QCString result = ctime(&unixTime);
-  
+
   if (result[result.length()-1]=='\n')
     result.truncate(result.length()-1);
 
@@ -1027,9 +1027,9 @@ const QString KMMessage::dateIsoStr(void) const
 
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
-  
+
   char cstr[64];
-  strftime(cstr, 63, "%Y-%m-%d %H:%M:%S", localtime(&unixTime)); 
+  strftime(cstr, 63, "%Y-%m-%d %H:%M:%S", localtime(&unixTime));
   return QString(cstr);
 }
 
@@ -1235,7 +1235,7 @@ const QString KMMessage::replyToId(void) const
   if (rightAngle != -1)
     references.truncate( rightAngle + 1 );
 
-  if ((replyTo.isEmpty() || replyTo[0] != '<') && 
+  if ((replyTo.isEmpty() || replyTo[0] != '<') &&
       !references.isEmpty() && references[0] == '<')
     replyTo = references;
 
@@ -1327,9 +1327,9 @@ const QString KMMessage::headerField(const QString& aName) const
 
   if (aName.isEmpty() || !(field = header.FindField((const char*)aName)))
     result = "";
-  else 
+  else
     result = decodeRFC1522String(header.FieldBody((const char*)aName).
-                    AsString().c_str());  
+                    AsString().c_str());
   return result;
 }
 
@@ -1591,9 +1591,9 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
       DwParameter *param=headers->ContentType().FirstParameter();
       while(param)
           if (param->Attribute()=="charset") break;
-          else param=param->Next(); 
+          else param=param->Next();
       if (param) aPart->setCharset(param->Value().c_str());
-#endif       
+#endif
     }
     else
     {
@@ -1609,19 +1609,19 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     // Content-transfer-encoding
     if (headers->HasContentTransferEncoding())
       aPart->setCteStr(headers->ContentTransferEncoding().AsString().c_str());
-    else 
+    else
       aPart->setCteStr("7bit");
 
     // Content-description
     if (headers->HasContentDescription())
       aPart->setContentDescription(headers->ContentDescription().AsString().c_str());
-    else 
+    else
       aPart->setContentDescription("");
 
     // Content-disposition
     if (headers->HasContentDisposition())
       aPart->setContentDisposition(headers->ContentDisposition().AsString().c_str());
-    else 
+    else
       aPart->setContentDisposition("");
 
     // Body
@@ -1700,7 +1700,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
 	param=new DwParameter;
 	param->SetAttribute("charset");
 	headers.ContentType().AddParameter(param);
-      }   
+      }
       param->SetValue(charset);
     }
 #endif
@@ -1714,7 +1714,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
   if (contDisp != "")
     headers.ContentDisposition().FromString(contDisp);
 
-  part->Body().FromString(bodyStr); 
+  part->Body().FromString(bodyStr);
   mNeedsAssembly = TRUE;
 }
 
@@ -1788,9 +1788,10 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::viewSource(const QString& aCaption) const
+void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec) const
 {
   QString str = ((KMMessage*)this)->asString();
+  str=codec->toUnicode(str);
 
 #if ALLOW_GUI
   QMultiLineEdit* edt;
@@ -1801,7 +1802,7 @@ void KMMessage::viewSource(const QString& aCaption) const
 
   edt->insertLine(str);
   edt->setReadOnly(TRUE);
-  edt->resize(KApplication::desktop()->width()/2, 
+  edt->resize(KApplication::desktop()->width()/2,
 	      2*KApplication::desktop()->height()/3);
   edt->setCursorPosition(0, 0);  edt->show();
 
@@ -1927,7 +1928,7 @@ void KMMessage::readConfig(void)
   /* They are taken from kmail's dialog */
 
   KConfig *config=kapp->config();
-    
+
   config->setGroup("KMMessage");
   sReplyStr = config->readEntry("phrase-reply",i18n("On %D, you wrote:"));
   sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
@@ -1950,7 +1951,7 @@ void KMMessage::readConfig(void)
      sWrapCol = 60;
 }
 
-#if defined CHARSETS
+
 //-----------------------------------------------------------------------------
 const QString KMMessage::charset(void) const
 {
@@ -1962,8 +1963,8 @@ const QString KMMessage::charset(void) const
       printf("%s=%s\n",param->Attribute().c_str(),param->Value().c_str());
       if (param->Attribute()=="charset")
         return QString(param->Value().c_str());
-      else param=param->Next(); 
-   }   
+      else param=param->Next();
+   }
    return ""; // us-ascii, but we don't have to specify it
 }
 
@@ -1977,7 +1978,7 @@ void KMMessage::setCharset(const QString& aStr)
    DwParameter *param=mType.FirstParameter();
    while(param)
       if (param->Attribute()=="charset") break;
-      else param=param->Next(); 
+      else param=param->Next();
    if (!param){
       param=new DwParameter;
       param->SetAttribute("charset");
@@ -1987,4 +1988,3 @@ void KMMessage::setCharset(const QString& aStr)
    mType.Assemble();
    printf("mType: %s\n",mType.AsString().c_str());
 }		
-#endif

@@ -57,6 +57,7 @@
    <Action name="redirect" />
    <Action name="bounce" />
    <Action name="send_again" />
+   <Action name="encoding" />
    <Separator/>
    <Action name="edit" />
    <Action name="set_status" />

@@ -24,6 +24,7 @@
 #include <khtmlview.h> // So that we can get rid of the frames
 #include <kapp.h>
 #include <kconfig.h>
+#include <kcharsets.h>
 #include <kcursor.h>
 #include <krun.h>
 #include <kpopupmenu.h>
@@ -112,6 +113,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()), 
   	   this, SLOT(slotDelayedResize()) );
+
+  mCodec = 0;
+  mAutoDetectEncoding = true;
 }
 
 
@@ -365,6 +369,19 @@ void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::setCodec(QTextCodec *codec)
+{
+     mCodec = codec;
+     if( !codec ) {
+	 mAutoDetectEncoding = true;
+	 return;
+     }
+     mAutoDetectEncoding = false;
+     if(mViewer) mViewer->setCharset(codec->name(), true);
+     update(true);
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::setInlineAttach(int aAtmInline)
 {
   mAtmInline = aAtmInline;
@@ -470,11 +487,20 @@ void KMReaderWin::parseMsg(void)
   		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) + 
                  bkgrdStr + ">" );
 
-#if defined CHARSETS
-  printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
-  mViewer->setCharset(mMsg->charset());
-#endif
+  if( mAutoDetectEncoding ) {
+      printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
+      QString encoding = mMsg->charset();
+      if( encoding.isEmpty() )
+	  encoding = "iso8859-1";
+      mCodec = KGlobal::charsets()->codecForName( encoding );
+      if( !mCodec )
+	  mCodec = KGlobal::charsets()->codecForName( "iso8859-1" );
+      if(mViewer) mViewer->setCharset( mCodec->name(), true );
+  }
 
+  if( !parent() )
+      setCaption( mCodec->toUnicode( mMsg->subject() ) );
+  
   parseMsg(mMsg);
 
   mViewer->write("</body></html>");
@@ -658,7 +684,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
   switch (mHeaderStyle)
   {
     case HdrBrief:
-    mViewer->write("<font size=\"+1\"><b>" + strToHtml(mMsg->subject()) +
+    mViewer->write("<font size=\"+1\"><b>" + mCodec->toUnicode(strToHtml(mMsg->subject())) +
                    "</b></font>&nbsp; (" +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
     if (!mMsg->cc().isEmpty())
@@ -673,7 +699,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
   case HdrStandard:
     mViewer->write("<font size=\"+1\"><b>" +
-                   strToHtml(mMsg->subject()) + "</b></font><br>\n");
+                   mCodec->toUnicode(strToHtml(mMsg->subject())) + "</b></font><br>\n");
     mViewer->write(i18n("From: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (vcpartnum >= 0) {
@@ -697,7 +723,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     mViewer->write(QString("<table><tr><td><img src=") +
 		   locate("data", "kmail/pics/kdelogo.xpm") +
                    "></td><td hspace=\"50\"><b><font size=\"+2\">");
-    mViewer->write(strToHtml(mMsg->subject()) + "</font></b><br>");
+    mViewer->write(mCodec->toUnicode(strToHtml(mMsg->subject())) + "</font></b><br>");
     mViewer->write(i18n("From: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (vcpartnum >= 0) {
@@ -721,7 +747,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
   case HdrLong:
     mViewer->write("<font size=\"+1\"><b>" +
-                   strToHtml(mMsg->subject()) + "</B></font><br>");
+                   mCodec->toUnicode(strToHtml(mMsg->subject())) + "</B></font><br>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<br>");
     mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
@@ -825,7 +851,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     str = pgp->backmatter();
     if(!str.isEmpty()) htmlStr += quotedHTML(str);
   }
-  else htmlStr += quotedHTML(aStr);
+  else htmlStr += mCodec->toUnicode(quotedHTML(aStr));
   mViewer->write(htmlStr);
 }
 
