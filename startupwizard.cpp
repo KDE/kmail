@@ -312,11 +312,11 @@ QWidget* StartupWizard::createIntroPage()
   QTextBrowser* text = new QTextBrowser( page );
   text->setText( i18n("<b>You dont seem to have any groupware folders "
 		    "configured in KMail.</b><br>"
-		    "This is probably because you run KMail for the first time, or "
-		    "because you enabled the groupware functions for the first time.<br>"
-		    "You now have the choice between disabling the groupware functions, "
-		    "or leaving them enabled and go through this wizard.<br>"
-		    "If you disable it for now, you can always enable it again from "
+		    "This is probably because you are running KMail for the first time, or "
+		    "because you have enabled the groupware functionality for the first time.<br>"
+		    "You now have the choice between disabling the groupware functionality, "
+		    "or leaving it enabled and going through this wizard.<br>"
+		    "If you disable the groupware functionality for now, you can always enable it again from "
 		    "the KMail config dialog."));
   top->addWidget( text );
 
@@ -394,8 +394,8 @@ QWidget* StartupWizard::createLanguagePage()
   QTextBrowser* text = new QTextBrowser(  page );
   text->setText( i18n("If you want to make your groupware folders work with other "
 		    "applications, you might want to select a different language "
-		    "than english.<br>"
-		    "If this is not an issue, leave the language as it is."));
+		    "than English.<br>"
+		    "If this is not an issue, leave the language as is."));
   top->addWidget( text );
 
   QVBox* rightSide = new QVBox( page );
@@ -419,7 +419,7 @@ QWidget* StartupWizard::createFolderSelectionPage()
   QWidget* page = new QWidget(this, "foldersel_page");
   QBoxLayout* top = new QHBoxLayout( page );
   QTextBrowser* text = new QTextBrowser( page );
-  text->setText(i18n("The groupware functions need some special folders to store "
+  text->setText(i18n("The groupware functionality needs some special folders to store "
 		   "the contents of the calendar, contacts, tasks etc.<br>"
 		   "Please select the folder that the groupware folders should "
 		   "be subfolders of."));
