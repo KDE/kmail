@@ -252,7 +252,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       break;
   }
 
-  if (storage()) {
+  if ( oldStatus != mStatus && storage() ) {
     if (idx < 0)
       idx = storage()->find( this );
     storage()->msgStatusChanged( oldStatus, status(), idx );
