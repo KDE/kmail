@@ -110,16 +110,31 @@ QStringList Recipient::allTypeLabels()
   return types;
 }
 
+
+RecipientComboBox::RecipientComboBox( QWidget *parent )
+  : QComboBox( parent )
+{
+}
+
+void RecipientComboBox::keyPressEvent( QKeyEvent *ev )
+{
+  if ( ev->key() == Key_Right ) emit rightPressed();
+  else QComboBox::keyPressEvent( ev );
+}
+
+
 void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Backspace  &&  text().isEmpty() )
-  {
+  if ( ev->key() == Key_Backspace  &&  text().isEmpty() ) {
     ev->accept();
     emit deleteMe(); 
-  }
-  else
+  } else if ( ev->key() == Key_Left && cursorPosition() == 0 ) {
+    emit leftPressed();
+  } else if ( ev->key() == Key_Right && cursorPosition() == (int)text().length() ) {
+    emit rightPressed();
+  } else {
     KMLineEdit::keyPressEvent( ev );
-
+  }
 }
 
 RecipientLine::RecipientLine( QWidget *parent )
@@ -130,7 +145,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   
   QStringList recipientTypes = Recipient::allTypeLabels();
 
-  mCombo = new QComboBox( this );
+  mCombo = new RecipientComboBox( this );
   mCombo->insertStringList( recipientTypes );
   topLayout->addWidget( mCombo );
 
@@ -142,6 +157,10 @@ RecipientLine::RecipientLine( QWidget *parent )
     SLOT( checkEmptyState( const QString & ) ) );
   connect( mEdit, SIGNAL( focusUp() ), SLOT( slotFocusUp() ) );
   connect( mEdit, SIGNAL( focusDown() ), SLOT( slotFocusDown() ) );
+  connect( mEdit, SIGNAL( rightPressed() ), SIGNAL( rightPressed() ) );
+
+  connect( mEdit, SIGNAL( leftPressed() ), mCombo, SLOT( setFocus() ) );
+  connect( mCombo, SIGNAL( rightPressed() ), mEdit, SLOT( setFocus() ) );
 
   kdDebug() << "HEIGHT: " << mEdit->minimumSizeHint().height() << endl;
 
@@ -281,6 +300,7 @@ RecipientLine *RecipientsView::addLine()
     SLOT( slotUpPressed( RecipientLine * ) ) );
   connect( line, SIGNAL( downPressed( RecipientLine * ) ),
     SLOT( slotDownPressed( RecipientLine * ) ) );
+  connect( line, SIGNAL( rightPressed() ), SIGNAL( focusRight() ) );
   connect( line, SIGNAL( deleteLine( RecipientLine * ) ),
     SLOT( slotDecideLineDeletion( RecipientLine * ) ) );
   connect( line, SIGNAL( emptyChanged() ), SLOT( calculateTotal() ) );
@@ -490,6 +510,11 @@ SideWidget::~SideWidget()
 {
 }
 
+void SideWidget::setFocus()
+{
+  mSelectButton->setFocus();
+}
+
 void SideWidget::initRecipientPicker()
 {
   if ( mRecipientPicker ) return;
@@ -546,6 +571,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
 
   connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
     side, SLOT( setTotal( int, int ) ) );
+  connect( mRecipientsView, SIGNAL( focusRight() ),
+    side, SLOT( setFocus() ) );
 }
 
 RecipientsEditor::~RecipientsEditor()

@@ -66,20 +66,33 @@ class Recipient
     Type mType;
 };
 
-/* Helper Class */
+class RecipientComboBox : public QComboBox
+{
+    Q_OBJECT
+  public:
+    RecipientComboBox( QWidget *parent );
+    
+  signals:
+    void rightPressed();
+
+  protected:
+    void keyPressEvent( QKeyEvent *ev );
+};
 
 class RecipientLineEdit : public KMLineEdit
 {
-  Q_OBJECT
+    Q_OBJECT
   public:
-    RecipientLineEdit(  QWidget * parent ) :
-      KMLineEdit( true, parent ) { }
+    RecipientLineEdit( QWidget * parent ) :
+      KMLineEdit( true, parent ) {}
 
   signals:
     void deleteMe();
+    void leftPressed();
+    void rightPressed();
 
   protected:
-    void keyPressEvent(  QKeyEvent *ev );
+    void keyPressEvent( QKeyEvent *ev );
 };
 
 class RecipientLine : public QWidget
@@ -110,6 +123,7 @@ class RecipientLine : public QWidget
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
     void upPressed( RecipientLine * );
+    void rightPressed();
     void deleteLine(  RecipientLine * );
     void emptyChanged();
 
@@ -160,6 +174,7 @@ class RecipientsView : public QScrollView
     void totalChanged( int recipients, int lines );
     void focusUp();
     void focusDown();
+    void focusRight();
 
   protected:
     void viewportResizeEvent( QResizeEvent * );
@@ -189,6 +204,7 @@ class SideWidget : public QWidget
 
   public slots:
     void setTotal( int recipients, int lines );
+    void setFocus();
 
   signals:
     void pickedRecipient( const QString & );
