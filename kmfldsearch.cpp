@@ -70,9 +70,9 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mLbxMatches = new QListView(this, "Search in Folders");
   /* Default is to sort by date. TODO: Unfortunately this sorts *while*
      inserting, which looks rather strange - the user cannot read
-     the results so far as they are constantly sorted --dnaber
+     the results so far as they are constantly re-sorted --dnaber
   */
-  mLbxMatches->setSorting(2);
+  mLbxMatches->setSorting(2, false);
   mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->setAllColumnsShowFocus(true);
   mLbxMatches->addColumn(i18n("Subject"), 150);
