@@ -118,6 +118,8 @@ void KMSystemTray::buildPopupMenu()
     action->plug( mPopupMenu );
   if ( ( action = mainWidget->action("check_mail_in") ) )
     action->plug( mPopupMenu );
+  if ( ( action = mainWidget->action("send_queued") ) )
+    action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
   if ( ( action = mainWidget->action("new_message") ) )
     action->plug( mPopupMenu );
