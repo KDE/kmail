@@ -927,8 +927,8 @@ namespace KMail {
     if ( !mReader ) {
       mRawReplyString = cstr;
       if ( curNode->isFirstTextPart() ) {
-	mTextualContent += curNode->msgPart().bodyToUnicode();
-	mTextualContentCharset = curNode->msgPart().charset();
+        mTextualContent += curNode->msgPart().bodyToUnicode();
+        mTextualContentCharset = curNode->msgPart().charset();
       }
       return true;
     }

@@ -699,7 +699,7 @@ namespace KMail {
     // first delete old parts as we construct our own
     msg->deleteBodyParts();
     // make the parts and fill the mBodyPartList
-    constructParts( stream, 1, 0, 0, msg->getTopLevelPart() );
+    constructParts( stream, 1, 0, 0, msg->asDwMessage() );
     if ( mBodyPartList.count() == 1 ) // we directly set the body later
       msg->deleteBodyParts();
 
@@ -752,20 +752,22 @@ namespace KMail {
       kdDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier()
         << " of type " << part->originalContentTypeStr() << endl;
       DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
-      dwpart->Parse(); // also creates an encapsulated DwMessage if necessary
-
-//      kdDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
-//       << ",dwparts msg " << dwpart->Body().Message() << endl;
 
       if ( parent )
       {
         // add to parent body
         parent->Body().AddBodyPart( dwpart );
+        dwpart->Parse();
+//        kdDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
+//          << ",dwparts msg " << dwpart->Body().Message() <<",id "<<dwpart->ObjectId() << endl;
       } else if ( part->partSpecifier() != "0" &&
                   !part->partSpecifier().endsWith(".HEADER") )
       {
         // add to message
         dwmsg->Body().AddBodyPart( dwpart );
+        dwpart->Parse();
+//        kdDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
+//          << ",dwparts msg " << dwpart->Body().Message() <<",id "<<dwpart->ObjectId() << endl;
       } else
         dwpart = 0;
 

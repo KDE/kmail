@@ -384,6 +384,11 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
           msg->setMsgSizeServer(size);
 
       } else {
+        // Convert CR/LF to LF.
+        size_t dataSize = (*it).data.size();
+        dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+        (*it).data.resize( dataSize );
+
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
         msg->setReadyToShow( true );

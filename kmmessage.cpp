@@ -4268,7 +4268,8 @@ DwBodyPart* KMMessage::findDwBodyPart( DwBodyPart* part, const QString & partSpe
   // encapsulated message
   if ( part->Body().Message() &&
        part->Body().Message()->Body().FirstBodyPart() &&
-       (current = findDwBodyPart( part->Body().Message()->Body().FirstBodyPart(), partSpecifier )) )
+       (current = findDwBodyPart( part->Body().Message()->Body().FirstBodyPart(), 
+                                  partSpecifier )) )
   {
     return current;
   }
@@ -4294,7 +4295,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 
     // search for the bodypart
     mLastUpdated = findDwBodyPart( getFirstDwBodyPart(), specifier );
-    kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << "(" << mLastUpdated<<")" << endl;
+    kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
     if (!mLastUpdated)
     {
       kdWarning(5006) << "KMMessage::updateBodyPart - can not find part "
@@ -4311,10 +4312,30 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       mLastUpdated->Headers().DeleteAllFields();
       mLastUpdated->Headers().FromString( content );
       mLastUpdated->Headers().Parse();
+    } else if ( partSpecifier.endsWith(".HEADER") )
+    {
+      // update header of embedded message
+      mLastUpdated->Body().Message()->Headers().FromString( content );
+      mLastUpdated->Body().Message()->Headers().Parse();
     } else {
       // update body
       mLastUpdated->Body().FromString( content );
-      mLastUpdated->Body().Parse();
+      QString parentSpec = partSpecifier.section( '.', 0, -2 );
+      if ( !parentSpec.isEmpty() )
+      {
+        DwBodyPart* parent = findDwBodyPart( getFirstDwBodyPart(), parentSpec );
+        if ( parent && parent->hasHeaders() && parent->Headers().HasContentType() )
+        {
+          const DwMediaType& contentType = parent->Headers().ContentType();
+          if ( contentType.Type() == DwMime::kTypeMessage &&
+               contentType.Subtype() == DwMime::kSubtypeRfc822 )
+          {
+            // an embedded message that is not multipart
+            // update this directly
+            parent->Body().Message()->Body().FromString( content );
+          }
+        }
+      }
     }
 
   } else
