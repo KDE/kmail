@@ -909,7 +909,7 @@ void KMMainWidget::slotEmptyFolder()
       i18n("<qt>Are you sure you want to move all messages from "
            "folder <b>%1</b> to the trash?</qt>").arg(mFolder->label());
 
-    if (KMessageBox::warningContinueCancel(this, text, title, title)
+    if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem( title, "edittrash"))
       != KMessageBox::Continue) return;
   }
   KCursorSaver busy(KBusyPtr::busy());
@@ -972,7 +972,7 @@ void KMMainWidget::slotRemoveFolder()
   }
 
   if (KMessageBox::warningContinueCancel(this, str, i18n("Delete Folder"),
-                                         i18n("&Delete"))
+                                         KGuiItem( i18n("&Delete"), "editdelete"))
       == KMessageBox::Continue)
   {
     if (mFolder->hasAccounts())
