@@ -449,6 +449,11 @@ public:
 
   void removeJobs();
 
+  /** Convert "\r\n" line endings in "\n" line endings. The conversion
+      happens in place. Returns the length of the resulting string.
+  */
+  static size_t crlf2lf( char* str, const size_t strLen );
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -556,11 +561,6 @@ protected:
   virtual void clearIndex(bool autoDelete=true, bool syncDict = false) = 0;
   virtual void fillDictFromIndex(KMMsgDict *dict) = 0;
   virtual void truncateIndex() = 0;
-
-  /** Convert "\r\n" line endings in "\n" line endings. The conversion
-      happens in place. Returns the length of the resulting string.
-  */
-  static size_t crlf2lf( char* str, const size_t strLen );
 
   int mOpenCount;
   int mQuiet;
