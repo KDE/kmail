@@ -1355,14 +1355,20 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       setCurrentItem( curItem );
       setSelectionAnchor( currentItem() );
     } else {
+      // We've removed the current item, which means it was removed from
+      // something other than a user move or copy, which would have selected
+      // the next logical mail. This can happen when the mail is deleted by
+      // a filter, or some other behind the scenes action. Select something
+      // sensible, then, and make sure the reader window is cleared.
       emit maybeDeleting();
+      int contentX, contentY;
+      KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
+      finalizeMove( nextItem, contentX, contentY );
     }
   }
-
   /* restore signal */
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
-
 }
 
 
