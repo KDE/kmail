@@ -58,6 +58,19 @@ void partNode::buildObjectTree( bool processSiblings )
 }
 
 
+partNode::CryptoType partNode::firstCryptoType() const
+{
+    CryptoType ret = cryptoType();
+    if(    (CryptoTypeUnknown == ret || CryptoTypeNone == ret)
+        && mChild )
+        ret = mChild->firstCryptoType();
+    if(    (CryptoTypeUnknown == ret || CryptoTypeNone == ret)
+        && mNext )
+        ret = mNext->firstCryptoType();
+    return ret;
+}
+
+
 KMMsgEncryptionState partNode::overallEncryptionState() const
 {
     KMMsgEncryptionState myState = KMMsgEncryptionStateUnknown;

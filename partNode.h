@@ -39,6 +39,14 @@ class KMMimePartTree;
 */
 class partNode
 {
+public:
+    enum CryptoType { CryptoTypeUnknown,
+                      CryptoTypeNone,
+                      CryptoTypeInlinePGP,
+                      CryptoTypeOpenPgpMIME,
+                      CryptoTypeSMIME,
+                      CryptoType3rdParty };
+
 private:
     partNode() :
         mRoot(      0 ),
@@ -49,6 +57,7 @@ private:
         mDwPart(       0 ),
         mType(         DwMime::kTypeUnknown  ),
         mSubType(      DwMime::kSubtypeUnknown ),
+        mCryptoType(   CryptoTypeUnknown ),
         mIsEncrypted(  false ),
         mIsSigned(     false ),
         mMsgPartOk(    false ),
@@ -61,8 +70,7 @@ private:
     int calcNodeIdOrFindNode( int& curId, const partNode* calcNode,
                               int findId, partNode** findNode );
 
-
-public:
+public:                      
     partNode( DwBodyPart* dwPart,
               int explicitType    = DwMime::kTypeUnknown,
               int explicitSubType = DwMime::kSubtypeUnknown ) :
@@ -72,6 +80,7 @@ public:
         mChild(     0 ),
         mWasProcessed( false ),
         mDwPart(       dwPart ),
+        mCryptoType(   CryptoTypeUnknown ),
         mIsEncrypted(  false ),
         mIsSigned(     false ),
         mMsgPartOk(    false ),
@@ -109,6 +118,7 @@ public:
         mChild(     0 ),
         mWasProcessed( false ),
         mDwPart(       dwPart ),
+        mCryptoType(   CryptoTypeUnknown ),
         mIsEncrypted(  false ),
         mIsSigned(     false ),
         mMsgPartOk(    false ),
@@ -166,14 +176,26 @@ public:
         mSubType = subType;
     }
 
-    int type() {
+    int type() const {
         return mType;
     }
 
-    int subType() {
+    int subType() const {
         return mSubType;
     }
 
+    void setCryptoType( CryptoType cryptoType ) {
+        mCryptoType = cryptoType;
+    }
+    
+    CryptoType cryptoType() const {
+        return mCryptoType;
+    }
+    
+    // return first not-unknown and not-none crypto type
+    // or return none (or unknown, resp.) if no other crypto type set
+    CryptoType firstCryptoType() const ;
+    
     void setEncrypted( bool isEncrypted ) {
         mIsEncrypted = isEncrypted;
     }
@@ -181,10 +203,10 @@ public:
         return mIsEncrypted;
     }
 
-    // look at the encryption states uf all children and return result
+    // look at the encryption states of all children and return result
     KMMsgEncryptionState overallEncryptionState() const ;
 
-    // look at the signature states uf all children and return result
+    // look at the signature states of all children and return result
     KMMsgSignatureState  overallSignatureState() const ;
 
     void setSigned( bool isSigned ) {
@@ -268,6 +290,7 @@ private:
     QString       mFromAddress;
     int           mType;
     int           mSubType;
+    CryptoType    mCryptoType;
     bool          mIsEncrypted;
     bool          mIsSigned;
     bool          mMsgPartOk;

@@ -605,16 +605,20 @@ kdDebug(5006) << "       signed has children" << endl;
                 if( sign ) {
 kdDebug(5006) << "       OpenPGP signature found" << endl;
                   data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
-                  if( data )
+                  if( data ){
+                    curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
                     plugFound = foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+                  }
                 }
                 else {
                   sign = curNode->mChild->findType(      DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
                   if( sign ) {
 kdDebug(5006) << "       S/MIME signature found" << endl;
                     data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
-                    if( data )
+                    if( data ){
+                      curNode->setCryptoType( partNode::CryptoTypeSMIME );
                       plugFound = foundMatchingCryptPlug( cryptPlugList, "smime", &useThisCryptPlug, reader, "S/MIME" );
+                    }
                   }
                   else
                   {
@@ -681,12 +685,16 @@ kdDebug(5006) << "encrypted" << endl;
                   */
                   partNode* data =
                     curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
-                  if( data )
+                  if( data ){
+                    curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
                     plugFound = foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+                  }
                   if( !data ) {
                     data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
-                  if( data )
+                  if( data ){
+                    curNode->setCryptoType( partNode::CryptoTypeSMIME );
                     plugFound = foundMatchingCryptPlug( cryptPlugList, "smime", &useThisCryptPlug, reader, "S/MIME" );
+                  }
                 }
                 /*
                   ---------------------------------------------------------------------------------------------------------------
@@ -885,8 +893,9 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     && DwMime::kTypeMultipart    == curNode->mRoot->type()
                     && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
                     curNode->setEncrypted( true );
+                    curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
                     if( keepEncryptions ) {
-                    QCString cstr( curNode->msgPart().bodyDecoded() );
+                        QCString cstr( curNode->msgPart().bodyDecoded() );
                     if( reader )
                         reader->writeBodyStr(cstr,
                                              reader->mCodec,
@@ -975,6 +984,7 @@ kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << end
 kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
               } else {
 kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
+                curNode->setCryptoType( partNode::CryptoTypeSMIME );
                 if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
                   CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
 
@@ -1194,10 +1204,18 @@ kdDebug(5006) << "* model *" << endl;
                        keepEncryptions,
                        includeSignatures );
     // adjust signed/encrypted flags if inline PGP was found
-    if( isInlineSigned )
-      curNode->setSigned( true );
-    if( isInlineEncrypted )
-      curNode->setEncrypted( true );
+    if( isInlineSigned || isInlineEncrypted ){
+      if(    partNode::CryptoTypeUnknown == curNode->cryptoType()
+          || partNode::CryptoTypeNone    == curNode->cryptoType() ){
+        curNode->setCryptoType( partNode::CryptoTypeInlinePGP );
+      }
+      if( isInlineSigned )
+        curNode->setSigned( true );
+      if( isInlineEncrypted )
+        curNode->setEncrypted( true );
+    }
+    if( partNode::CryptoTypeUnknown == curNode->cryptoType() )
+      curNode->setCryptoType( partNode::CryptoTypeNone );
   }
 
   if( reader && showOneMimePart ) {
@@ -3158,9 +3176,31 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
           || (KMMsgFullySigned        == signatureState)
           || (KMMsgPartiallySigned    == signatureState) ){
         mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : cCBpgp );
-        mColorBar->setText(i18n("\nS\nE\nC\nU\nR\nE\n \nM\nI\nM\nE\n \nM\nE\nS\nS\nA\nG\nE"));
+        partNode::CryptoType crypt = mRootNode->firstCryptoType();
+        switch( crypt ){
+            case partNode::CryptoTypeUnknown:
+                kdDebug(5006) << "KMReaderWin  -  BUG: crypto flag is set but CryptoTypeUnknown." << endl;
+                break;
+            case partNode::CryptoTypeNone:
+                kdDebug(5006) << "KMReaderWin  -  BUG: crypto flag is set but CryptoTypeNone." << endl;
+                break;
+            case partNode::CryptoTypeInlinePGP:
+            case partNode::CryptoTypeOpenPgpMIME:
+                mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
+                break;
+            case partNode::CryptoTypeSMIME:
+                mColorBar->setText(i18n("\nS\n-\nM\nI\nM\nE\n \nM\ne\ns\ns\na\ng\ne"));
+                break;
+            case partNode::CryptoType3rdParty:
+                mColorBar->setText(i18n("\nS\ne\nc\nu\n\rn\ne\n \nM\ne\ns\ns\na\ng\ne"));
+                break;
+        }
       }
     }
+  }
+  if( mColorBar->text().isEmpty() ) {
+    mColorBar->setEraseColor( cCBplain );
+    mColorBar->setText(i18n("\nI\nn\ns\ne\nc\nu\nr\ne\n \nM\ne\ns\ns\na\ng\ne"));
   }
 }
 
@@ -4059,16 +4099,6 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
   else
       htmlStr = quotedHTML( aCodec->toUnicode( aStr ) );
 
-  if( isPgpMessage )
-  {
-      mColorBar->setEraseColor( cCBpgp );
-      mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
-  }
-  else
-  {
-      mColorBar->setEraseColor( cCBplain );
-      mColorBar->setText(i18n("\nN\no\n \nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
-  }
   queueHtml(htmlStr);
 }
 
