@@ -77,8 +77,8 @@ protected:
   KMPopFilterCnfrmDlg() { };
   QPtrList<KMPopHeaders> *mHeaders;
   QMap<QListViewItem*, KMPopHeaders*> mItemMap;
-  QList<KMPopHeadersViewItem> mDelList;
-  QList<KMPopHeaders> mDDLList;
+  QPtrList<KMPopHeadersViewItem> mDelList;
+  QPtrList<KMPopHeaders> mDDLList;
   KMPopHeadersView *mFilteredHeaders;
   bool mLowerBoxVisible;
   bool mShowLaterMsgs;
