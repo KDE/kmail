@@ -60,8 +60,8 @@ namespace KMail {
 namespace ACLJobs {
 
   /// Bitfield modelling the possible permissions.
-  /// This is modelled after the imap4 permissions except that Read is "rs"
-  /// and "p" (post) isn't there. The semantics of the bits is protocol-dependent.
+  /// This is modelled after the imap4 permissions except that Read is "rs".
+  /// The semantics of the bits is protocol-dependent.
   enum ACLPermissions {
     List = 1,
     Read = 2,
