@@ -1034,9 +1034,9 @@ void ConfigureDialog::makeAppearancePage( void )
   tabWidget->addTab( page6, i18n("&Messages Scoring") );
   vlay = new QVBoxLayout( page6, spacingHint() );
 
-  KScoringRulesConfig* ksc =
-      new KScoringRulesConfig(KMScoringManager::globalScoringManager(),
-                              false, page6);
+  KScoringEditorWidget* ksc =
+      new KScoringEditorWidget(KMScoringManager::globalScoringManager(),
+                              page6);
   KMScoringManager::globalScoringManager()->setMainWin(parent());
   vlay->addWidget( ksc );
 
