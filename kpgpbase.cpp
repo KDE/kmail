@@ -1079,7 +1079,7 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
   int index;
   // used to work around a bug in pgp5. pgp5 treats files
   // with non ascii chars (umlauts, etc...) as binary files, but
-  // we wan't a clear signature
+  // we want a clear signature
   bool signonly = false;
 
   output = "";
@@ -1162,7 +1162,7 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
     {
       aStr.truncate(aStr.length()-2);
       if(info.find("No valid keys found") != -1)
-	errMsg = i18n("The key(s) you wan't to encrypt your message\n"
+	errMsg = i18n("The key(s) you want to encrypt your message\n"
 		      "to are not trusted. No encryption done.");
       else
 	errMsg = i18n("The following key(s) are not trusted:\n%1\n"

@@ -350,7 +350,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
     ret = KMessageBox::warningYesNoCancel(0,
 				   i18n("You just entered an invalid passphrase.\n"
-					"Do you wan't to try again, continue and\n"
+					"Do you want to try again, continue and\n"
 					"leave the message unsigned, "
 					"or cancel sending the message?"),
                                    i18n("PGP Warning"),
@@ -366,7 +366,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   {
     aStr = pgp->lastErrorMessage();
     aStr += "\n";
-    aStr += i18n("Do you wan't to encrypt anyway, leave the\n"
+    aStr += i18n("Do you want to encrypt anyway, leave the\n"
 		 "message as is, or cancel the message?");
     int n = 0;
     while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
