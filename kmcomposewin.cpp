@@ -954,10 +954,17 @@ void KMComposeWin::setupActions(void)
     (    (!mSelectedCryptPlug && mAutoPgpSign)
       || ( mSelectedCryptPlug && SignEmail_SignAll == mSelectedCryptPlug->signEmail()) );
 
+  // "Attach public key" is only possible if the built-in OpenPGP support is
+  // used
+  attachPK->setEnabled(Kpgp::Module::getKpgp()->usePGP());
+
+  // "Attach my public key" is only possible if the built-in OpenPGP support is
+  // used and the user specified his key for the current identity
+  attachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
+                         !pgpUserId.isEmpty() );
+
   if(!mSelectedCryptPlug && !Kpgp::Module::getKpgp()->usePGP())
   {
-    attachPK->setEnabled(false);
-    attachMPK->setEnabled(false);
     encryptAction->setEnabled(false);
     encryptAction->setChecked(false);
     signAction->setEnabled(false);
@@ -965,7 +972,6 @@ void KMComposeWin::setupActions(void)
   }
   else if (!mSelectedCryptPlug && pgpUserId.isEmpty())
   {
-    attachMPK->setEnabled(false);
     encryptAction->setChecked(false);
     signAction->setChecked(false);
   }
@@ -1191,17 +1197,20 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   {
     if( !mSelectedCryptPlug && pgpUserId.isEmpty() )
     {
-      attachMPK->setEnabled(false);
       encryptAction->setChecked(false);
       signAction->setChecked(false);
     }
     else
     {
-      attachMPK->setEnabled(true);
       encryptAction->setChecked(mLastEncryptActionState);
       signAction->setChecked(mLastSignActionState);
     }
   }
+
+  // "Attach my public key" is only possible if the user uses the built-in
+  // OpenPGP support and he specified his key
+  attachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
+                         !pgpUserId.isEmpty() );
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
