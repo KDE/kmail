@@ -3062,7 +3062,7 @@ void KMMainWidget::statusMsg(const QString& message)
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   if (mainWin && mainWin->statusBar())
-    mainWin->statusBar()->message( message );
+    mainWin->statusBar()->changeItem( message, 1 );
 }
 
 
