@@ -495,6 +495,11 @@ protected:
   void rethinkFields(bool fromslot=false);
 
   /**
+   * Enable/disable some actions in the Attach menu
+   */
+  void enableAttachActions();
+
+  /**
    * Show or hide header lines
    */
   void rethinkHeaderLine(int value, int mask, int& row,
@@ -696,7 +701,8 @@ protected:
   QString mOldSigText;
   QStringList mTransportHistory;
 
-  KAction *selectCryptoAction, *attachPK, *attachMPK;
+  KAction *selectCryptoAction, *attachPK, *attachMPK,
+          *attachRemoveAction, *attachSaveAction, *attachPropertiesAction;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;

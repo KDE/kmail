@@ -694,6 +694,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   mGrid->activate();
 
+  enableAttachActions();
   identityAction->setEnabled(!allFieldsAction->isChecked());
   transportAction->setEnabled(!allFieldsAction->isChecked());
   fromAction->setEnabled(!allFieldsAction->isChecked());
@@ -905,13 +906,13 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Attach File..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
-  (void) new KAction (i18n("&Remove"), 0, this,
+  attachRemoveAction = new KAction (i18n("&Remove"), 0, this,
                       SLOT(slotAttachRemove()),
                       actionCollection(), "remove");
-  (void) new KAction (i18n("&Save..."), "filesave",0,
+  attachSaveAction = new KAction (i18n("&Save..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
-  (void) new KAction (i18n("Pr&operties..."), 0, this,
+  attachPropertiesAction = new KAction (i18n("Pr&operties..."), 0, this,
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
@@ -3296,12 +3297,23 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
     mAtmListBox->setMaximumHeight( 100 );
     mAtmListBox->show();
     resize(size());
+    enableAttachActions();
   }
 
   // add a line in the attachment listbox
   KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListBox );
   msgPartToItem(msgPart, lvi);
   mAtmItemList.append(lvi);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::enableAttachActions()
+{
+  bool enable = mAtmList.count() > 0;
+  attachRemoveAction->setEnabled(enable);
+  attachSaveAction->setEnabled(enable);
+  attachPropertiesAction->setEnabled(enable);
 }
 
 
@@ -3368,6 +3380,7 @@ void KMComposeWin::removeAttach(int idx)
     mGrid->setRowStretch(mNumHeaders+1, 0);
     mAtmListBox->setMinimumSize(0, 0);
     resize(size());
+    enableAttachActions();
   }
 }
 
