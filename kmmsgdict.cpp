@@ -151,8 +151,11 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   dict->replace((long)msn, entry);
   
   KMMsgDictREntry *rentry = rdict->find(folder);
-  if (rentry)
-    rentry->set(index, msn);
+  if (!rentry) {
+    rentry = new KMMsgDictREntry();
+    rdict->insert((void *)folder, rentry);
+  }
+  rentry->set(index, msn);
   
   return msn;
 }
@@ -282,8 +285,8 @@ int KMMsgDict::readFolderIds(const KMFolder *folder)
       return -1;
     }
     
-    //if (!msn)
-      //kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
+    if (!msn)
+      kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
     
     KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
     dict->insert((long)msn, entry);

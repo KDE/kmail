@@ -373,7 +373,8 @@ void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
   }
   
   KMFolderNode* cur;
-  for (cur=dir->first(); cur; cur=dir->next()) {
+  for (QPtrListIterator<KMFolderNode> it(*dir); it; ++it) {
+    cur = it.current();
     if (cur->isDir())
       continue;
     KMFolder *folder = static_cast<KMFolder*>(cur);
