@@ -86,14 +86,14 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   tab = new FolderDiaGeneralTab( this, aParent, aName, box );
   addTab( tab );
 
-  if ( !mFolder->noContent() )
+  if ( !mFolder || !mFolder->noContent() )
   {
     box = addVBoxPage( i18n("Mailing List") );
     tab = new FolderDiaMailingListTab( this, box );
     addTab( tab );
   }
 
-  if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap )
+  if ( mFolder && ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) )
   {
     //KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
     // TODO check if the capabilities of the IMAP server include "acl"
