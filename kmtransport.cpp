@@ -40,6 +40,7 @@
 #include <kdebug.h>
 #include <kwallet.h>
 using KWallet::Wallet;
+#include <kprotocolinfo.h>
 
 #include "kmservertest.h"
 #include "kmaccount.h"
@@ -487,6 +488,10 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mSmtp.authGroup );
   mSmtp.authNTLM = new QRadioButton( i18n("&NTLM"), mSmtp.authGroup );
   mSmtp.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mSmtp.authGroup );
+  if ( KProtocolInfo::capabilities("smtp").contains("SASL") == 0 ) {
+    mSmtp.authNTLM->hide();
+    mSmtp.authGSSAPI->hide();
+  }
   vlay->addWidget( mSmtp.authGroup );
 
   vlay->addStretch();

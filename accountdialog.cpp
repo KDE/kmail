@@ -41,6 +41,7 @@
 #include <kseparator.h>
 #include <kapplication.h>
 #include <kmessagebox.h>
+#include <kprotocolinfo.h>
 
 #include <netdb.h>
 #include <netinet/in.h>
@@ -732,6 +733,11 @@ void AccountDialog::makePopAccountPage()
   mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup, "auth digest-md5" );
   mPop.authNTLM = new QRadioButton( i18n("&NTLM"), mPop.authGroup, "auth ntlm" );
   mPop.authGSSAPI = new QRadioButton( i18n("&GSSAPI"), mPop.authGroup, "auth gssapi" );
+  if ( KProtocolInfo::capabilities("pop3").contains("SASL") == 0 )
+  {
+    mPop.authNTLM->hide();
+    mPop.authGSSAPI->hide();
+  }
   mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup, "auth apop" );
 
   vlay->addWidget( mPop.authGroup );
