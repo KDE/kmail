@@ -171,7 +171,7 @@ void WizardKolabPage::init( const QString &email )
   int at = email.find('@');
   if( at > 1 && email.length() > (uint)at ) {
     // Set reasonable login and host defaults
-    loginEdit->setText( email.left( at ) );
+    loginEdit->setText( email );
     hostEdit->setText( email.mid( at + 1 ) );
   }
 }
