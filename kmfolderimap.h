@@ -273,10 +273,10 @@ protected:
   QString     mImapPath;
   QString     mUidNext;
   imapState   mImapState;
-  KMAcctImap  *mAccount;
   QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
   bool        mHasInbox;
   bool        mIsSelected;
+  QGuardedPtr<KMAcctImap> mAccount;
 };
 
 #endif // kmfolderimap_h

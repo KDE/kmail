@@ -701,8 +701,11 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder);
     imapFolder->setSelected(FALSE);
     KMAcctImap *act = imapFolder->account();
-    act->killAllJobs();
-    act->setIdle(TRUE);
+    if (act)
+    {
+      act->killAllJobs();
+      act->setIdle(TRUE);
+    }
   }
   mLastItem = fti;
 
