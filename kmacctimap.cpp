@@ -206,10 +206,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
     if ( job->msgList().findRef( msg ) != -1 ) 
     {
       if ( job->mJob )
-      {
-        job->mJob->disconnect();
         removeJob( job->mJob );
-      }
       mJobList.remove( job );
       delete job;
     }
@@ -296,6 +293,7 @@ void KMAcctImap::processNewMail(bool interactive)
       mCountLastUnread += folder->countUnread();
     }
   }
+  bool gotError = false;
   // then check for new mails
   for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
   {
@@ -320,13 +318,14 @@ void KMAcctImap::processNewMail(bool interactive)
           {
             // there was an error so cancel
             mCountRemainChecks--;
-            // just in case the folder is gone
-            slotUpdateFolderList();
+            gotError = true;
           }
         }
       }
     }
-  }
+  } // end for
+  if ( gotError )
+    slotUpdateFolderList();
 }
 
 //-----------------------------------------------------------------------------
