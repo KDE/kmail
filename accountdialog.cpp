@@ -807,7 +807,11 @@ void AccountDialog::setupSettings()
     mImap.passwordEdit->setText( ai.passwd());
     mImap.hostEdit->setText( ai.host() );
     mImap.portEdit->setText( QString("%1").arg( ai.port() ) );
-    mImap.prefixEdit->setText( ai.prefix() );
+    QString prefix = ai.prefix();
+    if (!prefix.isEmpty() && prefix[0] == '/') prefix = prefix.mid(1);
+    if (!prefix.isEmpty() && prefix[prefix.length() - 1] == '/')
+      prefix = prefix.left(prefix.length() - 1);
+    mImap.prefixEdit->setText( prefix );
     mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
@@ -1071,7 +1075,9 @@ void AccountDialog::saveSettings()
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
     epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
     epa.setPort( mImap.portEdit->text().toInt() );
-    epa.setPrefix( mImap.prefixEdit->text() );
+    QString prefix = "/" + mImap.prefixEdit->text();
+    if (prefix[prefix.length() - 1] != '/') prefix += "/";
+    epa.setPrefix( prefix );
     epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
