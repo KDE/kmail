@@ -483,11 +483,7 @@ void KMHeaders::refreshNestedState(void)
   nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
   if ((nestingPolicy!=oldNestPolicy)||(oldState != mNested))
   {
-    if( (nestingPolicy == 0)||(!mNested) )
-      setRootIsDecorated( false );
-    else
-      setRootIsDecorated( !mNestedOverride );
-
+    setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
     reset();
   }
 
@@ -523,11 +519,7 @@ void KMHeaders::readFolderConfig (void)
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
   nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
 
-  if( (nestingPolicy == 0)||(!mNested) )
-     setRootIsDecorated( false );
-  else
-     setRootIsDecorated( !mNestedOverride );
-
+  setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
 }
 
 
@@ -2331,12 +2323,7 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
 void KMHeaders::setNestedOverride( bool override )
 {
   mNestedOverride = override;
-
-  if( (nestingPolicy == 0)||(!mNested) )
-    setRootIsDecorated( false );
-  else
-    setRootIsDecorated( !mNestedOverride );
-
+  setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
   reset();
 }
 
