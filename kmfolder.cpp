@@ -371,6 +371,7 @@ void KMFolder::reallyAddMsg(KMMessage* aMsg)
 void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
 {
   aMsg->setParent( 0 );
+  aMsg->setTransferInProgress( false );
   addMsg( aMsg );
   unGetMsg( count() - 1 );
 }
