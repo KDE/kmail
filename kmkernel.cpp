@@ -194,8 +194,18 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if (args->getOption("subject"))
   {
-     mailto = true;
      subj = QString::fromLocal8Bit(args->getOption("subject"));
+     // if kmail is called with 'kmail -session abc' then this doesn't mean
+     // that the user wants to send a message with subject "ession" but
+     // (most likely) that the user clicked on KMail's system tray applet
+     // which results in KMKernel::raise() calling "kmail kmail newInstance"
+     // via dcop which apparently executes the application with the original
+     // command line arguments and those include "-session ..." if
+     // kmail/kontact was restored by session management
+     if ( subj == "ession" )
+       subj = QString::null;
+     else
+       mailto = true;
   }
 
   if (args->getOption("cc"))
