@@ -294,10 +294,11 @@ void KMSender::doSendMsg()
     }
 
     // Run the precommand if there is one
-    setStatusMsg(i18n(QString("Executing precommand ") + mPrecommand));
+    setStatusMsg(i18n("Executing precommand %1").arg(mPrecommand));
     if (!KMAccount::runPrecommand(mPrecommand))
       {	
-	KMessageBox::error(0, QString("Couldn't execute precommand:\n") + mPrecommand);
+	KMessageBox::error(0, i18n("Couldn't execute precommand:\n%1")
+          .arg(mPrecommand));
       }
 
     setStatusMsg(i18n("Initiating sender process..."));
