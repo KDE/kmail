@@ -473,6 +473,15 @@ protected:
 
 private:
   /**
+   * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
+   * block with a clear text signature. This is only done if the given
+   * string contains exactly one OpenPGP block.
+   * This function is for example used to restore the unencrypted/unsigned
+   * message text for editting.
+   */
+   static void decryptOrStripOffCleartextSignature( QCString& );
+
+  /**
    * Get message including signing and encrypting it
    */
   QCString pgpProcessedMsg(void);

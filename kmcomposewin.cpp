@@ -1016,6 +1016,40 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
+{
+  Kpgp::Module* pgp = Kpgp::Module::getKpgp();
+  assert(pgp != NULL);
+
+  QPtrList<Kpgp::Block> pgpBlocks;
+  QStrList nonPgpBlocks;
+  if( Kpgp::Module::prepareMessageForDecryption( body,
+                                                 pgpBlocks, nonPgpBlocks ) )
+  {
+    // Only decrypt/strip off the signature if there is only one OpenPGP
+    // block in the message
+    if( pgpBlocks.count() == 1 )
+    {
+      Kpgp::Block* block = pgpBlocks.first();
+      if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+          ( block->type() == Kpgp::ClearsignedBlock ) )
+      {
+        if( block->type() == Kpgp::PgpMessageBlock )
+          // try to decrypt this OpenPGP block
+          block->decrypt();
+        else
+          // strip off the signature
+          block->verify();
+
+        body = nonPgpBlocks.first()
+             + block->text()
+             + nonPgpBlocks.last();
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecryption)
 {
   KMMessagePart bodyPart, *msgPart;
@@ -1103,7 +1137,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
       bodyDecoded = bodyPart.bodyDecoded();
 
-      verifyWordWrapLengthIsAdequate(bodyDecoded);
+      if( allowDecryption )
+        decryptOrStripOffCleartextSignature( bodyDecoded );
+
+      // As nobody seems to know the purpose of the following line and
+      // as it breaks word wrapping of long lines if drafts with attachments
+      // are opened for editting in the composer (cf. Bug#41102) I comment it
+      // out. Ingo, 2002-04-21
+      //verifyWordWrapLengthIsAdequate(bodyDecoded);
 
       QTextCodec *codec = KMMsgBase::codecForName(mCharset);
       if (codec)
@@ -1125,36 +1166,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
     QCString bodyDecoded = mMsg->bodyDecoded();
 
-    Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-    assert(pgp != NULL);
-
-    QPtrList<Kpgp::Block> pgpBlocks;
-    QStrList nonPgpBlocks;
-    if( allowDecryption &&
-        Kpgp::Module::prepareMessageForDecryption( bodyDecoded,
-                                                   pgpBlocks, nonPgpBlocks ) )
-    {
-      // Only decrypt/strip off the signature if there is only one OpenPGP
-      // block in the message
-      if( pgpBlocks.count() == 1 )
-      {
-        Kpgp::Block* block = pgpBlocks.first();
-        if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-            ( block->type() == Kpgp::ClearsignedBlock ) )
-        {
-          if( block->type() == Kpgp::PgpMessageBlock )
-            // try to decrypt this OpenPGP block
-            block->decrypt();
-          else
-            // strip off the signature
-            block->verify();
-
-          bodyDecoded = nonPgpBlocks.first()
-                      + block->text()
-                      + nonPgpBlocks.last();
-        }
-      }
-    }
+    if( allowDecryption )
+      decryptOrStripOffCleartextSignature( bodyDecoded );
 
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     if (codec) {
