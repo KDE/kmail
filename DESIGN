@@ -67,7 +67,7 @@ scope or next return to the event loop. That's b/c the config dialog
 is not modal and the user may hit apply/ok anytime between calls to
 function that want to use the identity reference. Store the UOID
 instead if you need to keep track of the identity. You may also want
-to connect to one of the IdentityManager::changed() or :;deleted()
+to connect to one of the IdentityManager::changed() or ::deleted()
 signals, if you want to do special processing in case the identity
 changes.
 
