@@ -100,6 +100,7 @@ int SpellChecker::highlightParagraph( const QString& text,
 		    diffAndCo.find(text[0]) != -1 );
     bool isNorwegian = ( text.find(norwegian) != -1 );
     isNorwegian = false; //DS: disable this, hopefully KSpell can handle these languages.
+    isCode = false; //DS: disable this, can put it back if there is demand.
 
     if ( !text.endsWith(" ") )
 	alwaysEndsWithSpace = FALSE;
