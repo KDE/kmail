@@ -39,6 +39,9 @@ using KPIM::AddressesDialog;
 using KPIM::MailListDrag;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
+#include "kleo_util.h"
+#include "stl_util.h"
+
 #include "attachmentcollector.h"
 #include "objecttreeparser.h"
 
@@ -113,26 +116,6 @@ using KRecentAddress::RecentAddresses;
 #include <assert.h>
 
 #include "kmcomposewin.moc"
-
-static const Kleo::CryptoMessageFormat cryptoMessageFormats[] = {
-  Kleo::AutoFormat,
-  Kleo::InlineOpenPGPFormat,
-  Kleo::OpenPGPMIMEFormat,
-  Kleo::SMIMEFormat,
-  Kleo::SMIMEOpaqueFormat,
-};
-static const int numCryptoMessageFormats = sizeof cryptoMessageFormats / sizeof *cryptoMessageFormats ;
-
-static inline Kleo::CryptoMessageFormat cb2format( int idx ) {
-  return cryptoMessageFormats[ idx >= 0 && idx < numCryptoMessageFormats ? idx : 0 ];
-}
-
-static inline int format2cb( Kleo::CryptoMessageFormat f ) {
-  for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
-    if ( f == cryptoMessageFormats[i] )
-      return i;
-  return 0;
-}
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
@@ -330,11 +313,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = true;
 }
 
-template <typename T>
-inline void Delete( const T * t ) {
-  delete t; t = 0;
-}
-
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
@@ -358,7 +336,7 @@ KMComposeWin::~KMComposeWin()
     job->kill();
     it = mMapAtmLoadData.begin();
   }
-  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  deleteAll( mComposedMessages );
 }
 
 void KMComposeWin::setAutoDeleteWindow( bool f )
@@ -1839,7 +1817,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 
 void KMComposeWin::slotComposerDone( bool rc )
 {
-  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  deleteAll( mComposedMessages );
   mComposedMessages = mComposer->composedMessageList();
   emit applyChangesDone( rc );
   delete mComposer;
