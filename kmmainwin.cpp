@@ -1450,51 +1450,51 @@ void KMMainWin::setupToolBar()
 			i18n("Malloc info"));
 #endif
 
-  mToolBar->insertButton(BarIcon("filenew"), 0,
+  mToolBar->insertButton("filenew", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotCompose()), TRUE,
 			i18n("Compose new message"));
 
-  mToolBar->insertButton(BarIcon("filesave"), 0,
+  mToolBar->insertButton("filesave", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotSaveMsg()), TRUE,
 			i18n("Save message to file"));
 
-  mToolBar->insertButton(BarIcon("fileprint"), 0,
+  mToolBar->insertButton("fileprint", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotPrintMsg()), TRUE,
 			i18n("Print message"));
 
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(BarIcon("message_get"), 0,
+  mToolBar->insertButton("message_get", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
 			i18n("Get new messages"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(BarIcon("message_reply"), 0,
+  mToolBar->insertButton("message_reply", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyToMsg()), TRUE,
 			i18n("Reply to author"));
 
-  mToolBar->insertButton(BarIcon("message_replyall"), 0,
+  mToolBar->insertButton("message_replyall", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyAllToMsg()), TRUE,
 			i18n("Reply to all recipients"));
 
-  mToolBar->insertButton(BarIcon("message_forward"), 0,
+  mToolBar->insertButton("message_forward", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotForwardMsg()), TRUE,
 			i18n("Forward message"));
 
-  mToolBar->insertButton(BarIcon("message_delete"), 0,
+  mToolBar->insertButton("message_delete", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			i18n("Delete message"));
 
   mToolBar->insertSeparator();
-  mToolBar->insertButton(BarIcon("contents"), 0,
+  mToolBar->insertButton("contents", 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotAddrBook()), TRUE,
 			i18n("Open addressbook..."));
