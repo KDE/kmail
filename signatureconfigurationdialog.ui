@@ -370,6 +370,9 @@ It is recommended to keep this option turned on to avoid using certificates that
                                     <property name="suffix">
                                         <string> days</string>
                                     </property>
+                                    <property name="maxValue">
+                                        <number>999</number>
+                                    </property>
                                     <property name="value">
                                         <number>14</number>
                                     </property>
@@ -436,6 +439,9 @@ It is recommended to keep this option turned on to avoid using certificates that
                                     <property name="suffix">
                                         <string> days</string>
                                     </property>
+                                    <property name="maxValue">
+                                        <number>999</number>
+                                    </property>
                                     <property name="value">
                                         <number>14</number>
                                     </property>
@@ -457,6 +463,9 @@ The recommended SPHINX setting is 14 days.
                                     </property>
                                     <property name="suffix">
                                         <string> days</string>
+                                    </property>
+                                    <property name="maxValue">
+                                        <number>999</number>
                                     </property>
                                     <property name="value">
                                         <number>14</number>

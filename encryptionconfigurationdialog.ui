@@ -210,6 +210,9 @@ If this box is checked, you will be warned if one of the CRLs you are using is a
                         <property name="suffix">
                             <string> days</string>
                         </property>
+                        <property name="maxValue">
+                            <number>999</number>
+                        </property>
                         <property name="value">
                             <number>7</number>
                         </property>
@@ -288,6 +291,9 @@ The recommended setting for the SPHINX environment is 7 days.
                             <property name="suffix">
                                 <string> days</string>
                             </property>
+                            <property name="maxValue">
+                                <number>999</number>
+                            </property>
                             <property name="value">
                                 <number>14</number>
                             </property>
@@ -342,6 +348,9 @@ It is recommended to keep this option turned on to avoid using certificates that
                             </property>
                             <property name="suffix">
                                 <string> days</string>
+                            </property>
+                            <property name="maxValue">
+                                <number>999</number>
                             </property>
                             <property name="value">
                                 <number>14</number>
