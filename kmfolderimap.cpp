@@ -1729,8 +1729,8 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
         }
       }
     }
-    emit numUnreadMsgsChanged( folder() );
   }
+  emit numUnreadMsgsChanged( folder() );
 }
 
 //-----------------------------------------------------------------------------
