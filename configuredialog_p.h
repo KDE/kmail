@@ -882,6 +882,7 @@ private:
 
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;
+  QCheckBox* mAutomaticSending;
 };
 
 class MiscPage : public ConfigModuleWithTabs {

@@ -438,7 +438,9 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 			   QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
 			   arg( attachParamValue ) );
-      iCalHack = true;
+
+      // Don't show the composer window, if the automatic sending is checked
+      iCalHack = options.readBoolEntry( "AutomaticSending", true );
     } else {
       // Just do what we're told to do
       msgPart = new KMMessagePart;

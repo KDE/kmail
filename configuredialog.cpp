@@ -4177,6 +4177,15 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+  mAutomaticSending = new QCheckBox( i18n( "Automatic invitation sending" ), gBox );
+  QToolTip::add( mAutomaticSending, i18n( "When this is on, the user will not see the mail composer window. Invitation mails are sent automatically" ) );
+  QWhatsThis::add( mAutomaticSending, i18n( GlobalSettings::self()->
+           automaticSendingItem()->whatsThis().utf8() ) );
+  connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
+           mAutomaticSending, SLOT( setEnabled( bool ) ) );
+
   // Open space padding at the end
   new QLabel( this );
 }
@@ -4210,6 +4219,8 @@ void MiscPage::GroupwareTab::load() {
   mLegacyBodyInvites->blockSignals( true );
   mLegacyBodyInvites->setChecked( GlobalSettings::legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
+  mAutomaticSending->setChecked( GlobalSettings::automaticSending() );
+  mAutomaticSending->setEnabled( mLegacyBodyInvites->isChecked() );
 
   // Read the IMAP resource config
   mEnableImapResCB->setChecked( GlobalSettings::theIMAPResourceEnabled() );
@@ -4263,6 +4274,7 @@ void MiscPage::GroupwareTab::save() {
     GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
   GlobalSettings::setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
   GlobalSettings::setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
+  GlobalSettings::setAutomaticSending( mAutomaticSending->isChecked() );
 
   int format = mStorageFormatCombo->currentItem();
   GlobalSettings::setTheIMAPResourceStorageFormat( format );
