@@ -1712,7 +1712,7 @@ void KMailICalIfaceImpl::loadPixmaps() const
     pixCalendar = new QPixmap( UserIcon("kmgroupware_folder_calendar"));
     pixNotes    = new QPixmap( UserIcon("kmgroupware_folder_notes"));
     pixTasks    = new QPixmap( UserIcon("kmgroupware_folder_tasks"));
-    // TODO: Find a pixmap for journals
+    pixJournals = new QPixmap( UserIcon("kmgroupware_folder_journals"));
   }
 }
 
@@ -1739,6 +1739,7 @@ QPixmap* KMailICalIfaceImpl::pixContacts;
 QPixmap* KMailICalIfaceImpl::pixCalendar;
 QPixmap* KMailICalIfaceImpl::pixNotes;
 QPixmap* KMailICalIfaceImpl::pixTasks;
+QPixmap* KMailICalIfaceImpl::pixJournals;
 
 static void reloadFolderTree()
 {
