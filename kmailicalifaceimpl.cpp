@@ -74,7 +74,7 @@ static void reloadFolderTree();
 class KMailICalIfaceImpl::ExtraFolder {
 public:
   ExtraFolder( KMFolder* f ) : folder( f ) {}
-  KMFolder* folder;
+  QGuardedPtr<KMFolder> folder;
 };
 
 // The index in this array is the KMail::FolderContentsType enum
@@ -613,7 +613,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ) {
     f = it.current()->folder;
-    if ( f->storage()->contentsType() == t
+    if ( f && f->storage()->contentsType() == t
          && storageFormat( f ) == StorageIcalVcard )
       lst << f->location();
   }
@@ -663,7 +663,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
-    if ( f->storage()->contentsType() == t
+    if ( f && f->storage()->contentsType() == t
          && storageFormat( f ) == StorageXML ) {
       subResources.append( SubResource( f->location(), subResourceLabel( f ), !f->isReadOnly() ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
@@ -1213,27 +1213,30 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     return;
 
   // Check if already know that 'extra folder'
-  ExtraFolder* ef = mExtraFolders.find( folder->location() );
-  if ( ef ) {
+  const QString location = folder->location();
+  ExtraFolder* ef = mExtraFolders.find( location );
+  if ( ef && ef->folder ) {
     // Notify that the old folder resource is no longer available
-    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), folder->location() );
+    subresourceDeleted(folderContentsType( folder->storage()->contentsType() ), location );
 
     if ( contentsType == 0 ) {
       // Delete the old entry, stop listening and stop here
-      mExtraFolders.remove( folder->location() );
+      mExtraFolders.remove( location );
       folder->disconnect( this );
       return;
     }
 
     // So the type changed to another groupware type, ok.
   } else {
+    if ( ef && !ef->folder ) // deleted folder, clean up
+      mExtraFolders.remove( location );
     if ( contentsType == 0 )
         return;
 
-    kdDebug(5006) << "registering " << folder->location() << " as extra folder" << endl;
+    kdDebug(5006) << "registering " << location << " as extra folder" << endl;
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
-    mExtraFolders.insert( folder->location(), ef );
+    mExtraFolders.insert( location, ef );
 
     // And listen to changes from it
     connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
@@ -1243,7 +1246,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   }
 
   // Tell about the new resource
-  subresourceAdded( folderContentsType( contentsType ), folder->location() );
+  subresourceAdded( folderContentsType( contentsType ), location );
 }
 
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
@@ -1256,7 +1259,7 @@ KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
     return 0;
 
   ExtraFolder* ef = mExtraFolders.find( folder );
-  if ( ef && ef->folder->storage()->contentsType() == t )
+  if ( ef && ef->folder && ef->folder->storage()->contentsType() == t )
     return ef->folder;
 
   return 0;
@@ -1344,7 +1347,6 @@ void KMailICalIfaceImpl::readConfig()
     kdDebug(5006) << "Groupware folder " << parentName << " not found. Groupware functionality disabled" << endl;
     // Or maybe the inbox simply wasn't created on the first startup
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
-    Q_ASSERT( account );
     if ( account ) {
       // just in case we were connected already
       disconnect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
@@ -1353,6 +1355,12 @@ void KMailICalIfaceImpl::readConfig()
                this, SLOT( slotCheckDone() ) );
     }
     mUseResourceIMAP = false;
+    // We can't really call cleanup(), if those folders were completely deleted.
+    mCalendar = 0;
+    mTasks    = 0;
+    mJournals = 0;
+    mContacts = 0;
+    mNotes    = 0;
     return;
   } else {
     folderParentDir = folderParent->createChildFolder();
