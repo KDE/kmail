@@ -301,12 +301,14 @@ int KMFolderMaildir::compact( unsigned int startIndex, int nbMessages, const QSt
       setDirty( true );
     }
 
+#if 0
     // we can't have any New messages at this point
     if (mi->isNew())
     {
       mi->setStatus(KMMsgStatusUnread);
       setDirty( true );
     }
+#endif
   }
   done = ( stopIndex == mMsgList.count() );
   return 0;
