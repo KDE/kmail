@@ -109,32 +109,32 @@ public:
 			     bool overwrite = FALSE);
   bool folderIsDraftOrOutbox(const KMFolder *);
 
-  inline KMFolder *inboxFolder() { return the_inboxFolder; }
-  inline KMFolder *outboxFolder() { return the_outboxFolder; }
-  inline KMFolder *sentFolder() { return the_sentFolder; }
-  inline KMFolder *trashFolder() { return the_trashFolder; }
-  inline KMFolder *draftsFolder() { return the_draftsFolder; }
+  KMFolder *inboxFolder() { return the_inboxFolder; }
+  KMFolder *outboxFolder() { return the_outboxFolder; }
+  KMFolder *sentFolder() { return the_sentFolder; }
+  KMFolder *trashFolder() { return the_trashFolder; }
+  KMFolder *draftsFolder() { return the_draftsFolder; }
 
-  inline KBusyPtr *kbp() { return the_kbp; }
-  inline KMFolderMgr *folderMgr() { return the_folderMgr; }
-  inline KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
-  inline KMUndoStack *undoStack() { return the_undoStack; }
-  inline KMAcctMgr *acctMgr() { return the_acctMgr; }
-  inline KMFilterMgr *filterMgr() { return the_filterMgr; }
-  inline KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
-  inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
-  inline KMSender *msgSender() { return the_msgSender; }
-  inline KMMsgDict *msgDict() { return the_msgDict; }
+  KBusyPtr *kbp() { return the_kbp; }
+  KMFolderMgr *folderMgr() { return the_folderMgr; }
+  KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
+  KMUndoStack *undoStack() { return the_undoStack; }
+  KMAcctMgr *acctMgr() { return the_acctMgr; }
+  KMFilterMgr *filterMgr() { return the_filterMgr; }
+  KMFilterMgr *popFilterMgr() { return the_popFilterMgr; }
+  KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
+  KMSender *msgSender() { return the_msgSender; }
+  KMMsgDict *msgDict() { return the_msgDict; }
 
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
 
-  inline bool firstStart() { return the_firstStart; }
-  inline QString previousVersion() { return the_previousVersion; }
-  inline bool shuttingDown() { return the_shuttingDown; }
-  inline bool checkingMail() { return the_checkingMail; }
-  inline void setCheckingMail(bool flag) { the_checkingMail = flag; }
-  inline void serverReady (bool flag) { the_server_is_ready = flag; }
+  bool firstStart() { return the_firstStart; }
+  QString previousVersion() { return the_previousVersion; }
+  bool shuttingDown() { return the_shuttingDown; }
+  bool checkingMail() { return the_checkingMail; }
+  void setCheckingMail(bool flag) { the_checkingMail = flag; }
+  void serverReady (bool flag) { the_server_is_ready = flag; }
   void notClosedByUser();
 
   void emergencyExit( const QString& reason );
