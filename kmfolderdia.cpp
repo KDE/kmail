@@ -65,6 +65,7 @@
 #include <qregexp.h>
 #include <qlabel.h>
 #include <qvbox.h>
+#include <qtooltip.h>
 #include <qwhatsthis.h>
 
 #include <assert.h>
@@ -218,154 +219,159 @@ void KMFolderDialog::setFolder( KMFolder* folder )
   mFolder = folder;
 }
 
+static void addLine( QWidget *parent, QVBoxLayout* layout )
+{
+   QFrame *line = new QFrame( parent, "line" );
+   line->setGeometry( QRect( 80, 150, 250, 20 ) );
+   line->setFrameShape( QFrame::HLine );
+   line->setFrameShadow( QFrame::Sunken );
+   line->setFrameShape( QFrame::HLine );
+   layout->addWidget( line );
+}
+
 //----------------------------------------------------------------------------
 KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
   : FolderDiaTab( parent, name ), mDlg( dlg )
 {
+
+
+  mIsLocalSystemFolder = mDlg->folder()->isSystemFolder() &&
+       mDlg->folder()->folderType() != KMFolderTypeImap &&
+       mDlg->folder()->folderType() != KMFolderTypeCachedImap;
+
   QLabel *label;
 
   QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
 
-  QGroupBox *fpGroup = new QGroupBox( i18n("Folder Position"), this, "fpGroup" );
-  fpGroup->setColumnLayout( 0, Qt::Vertical );
+  // Musn't be able to edit details for a system folder.
+  if ( !mIsLocalSystemFolder ) {
 
-  topLayout->addWidget( fpGroup );
+    QHBoxLayout *hl = new QHBoxLayout( topLayout );
+    hl->setSpacing( 6 );
 
-  QHBoxLayout *hl = new QHBoxLayout( fpGroup->layout() );
-  hl->setSpacing( 6 );
+    label = new QLabel( i18n("&Name:"), this );
+    hl->addWidget( label );
 
-  label = new QLabel( i18n("&Name:"), fpGroup );
-  hl->addWidget( label );
+    mNameEdit = new KLineEdit( this );
+    if( !mDlg->folder() )
+            mNameEdit->setFocus();
+    mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
+    if (!aName.isEmpty())
+            mNameEdit->setText(aName);
+    mNameEdit->setMinimumSize(mNameEdit->sizeHint());
+    label->setBuddy( mNameEdit );
+    hl->addWidget( mNameEdit );
+    connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
+                    this, SLOT( slotFolderNameChanged( const QString & ) ) );
 
-  mNameEdit = new KLineEdit( fpGroup );
-  if( !mDlg->folder() )
-    mNameEdit->setFocus();
-  mNameEdit->setText( mDlg->folder() ? mDlg->folder()->label() : i18n("unnamed") );
-  if (!aName.isEmpty())
-    mNameEdit->setText(aName);
-  mNameEdit->setMinimumSize(mNameEdit->sizeHint());
-  label->setBuddy( mNameEdit );
-  hl->addWidget( mNameEdit );
-  connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
-           this, SLOT( slotFolderNameChanged( const QString & ) ) );
+  
+    //start icons group
+    QVBoxLayout *ivl = new QVBoxLayout( topLayout );
+    ivl->setSpacing( 6 );
 
-  //start icons group
-  QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), this, "iconGroup" );
-  iconGroup->setColumnLayout( 0,  Qt::Vertical );
+    QHBoxLayout *ihl = new QHBoxLayout( ivl );
+    mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), this );
+    mIconsCheckBox->setChecked( false );
+    ihl->addWidget( mIconsCheckBox );
+    ihl->addStretch( 2 );
 
-  topLayout->addWidget( iconGroup );
+    mNormalIconLabel = new QLabel( i18n("&Normal:"), this );
+    mNormalIconLabel->setEnabled( false );
+    ihl->addWidget( mNormalIconLabel );
 
-  QVBoxLayout *ivl = new QVBoxLayout( iconGroup->layout() );
-  ivl->setSpacing( 6 );
+    mNormalIconButton = new KIconButton( this );
+    mNormalIconLabel->setBuddy( mNormalIconButton );
+    mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any, true );
+    mNormalIconButton->setIconSize( 16 );
+    mNormalIconButton->setStrictIconSize( true );
+    mNormalIconButton->setFixedSize( 28, 28 );
+    mNormalIconButton->setIconSet( SmallIconSet("folder") );
+    mNormalIconButton->setEnabled( false );
+    ihl->addWidget( mNormalIconButton );
 
-  QHBoxLayout *ihl = new QHBoxLayout( ivl );
-  mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), iconGroup );
-  mIconsCheckBox->setChecked( false );
-  ihl->addWidget( mIconsCheckBox );
-  ihl->addStretch( 2 );
+    mUnreadIconLabel = new QLabel( i18n("&Unread:"), this );
+    mUnreadIconLabel->setEnabled( false );
+    ihl->addWidget( mUnreadIconLabel );
 
-  mNormalIconLabel = new QLabel( i18n("&Normal:"), iconGroup );
-  mNormalIconLabel->setEnabled( false );
-  ihl->addWidget( mNormalIconLabel );
+    mUnreadIconButton = new KIconButton( this );
+    mUnreadIconLabel->setBuddy( mUnreadIconButton );
+    mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
+    mUnreadIconButton->setIconSize( 16 );
+    mUnreadIconButton->setStrictIconSize( true );
+    mUnreadIconButton->setFixedSize( 28, 28 );
+    mUnreadIconButton->setIconSet( SmallIconSet("folder_open") );
+    mUnreadIconButton->setEnabled( false );
+    ihl->addWidget( mUnreadIconButton );
+    ihl->addStretch( 1 );
 
-  mNormalIconButton = new KIconButton( iconGroup );
-  mNormalIconLabel->setBuddy( mNormalIconButton );
-  mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any, true );
-  mNormalIconButton->setIconSize( 16 );
-  mNormalIconButton->setStrictIconSize( true );
-  mNormalIconButton->setFixedSize( 28, 28 );
-  mNormalIconButton->setIconSet( SmallIconSet("folder") );
-  mNormalIconButton->setEnabled( false );
-  ihl->addWidget( mNormalIconButton );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+                    mNormalIconButton, SLOT(setEnabled(bool)) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+                    mUnreadIconButton, SLOT(setEnabled(bool)) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+                    mNormalIconLabel, SLOT(setEnabled(bool)) );
+    connect( mIconsCheckBox, SIGNAL(toggled(bool)),
+                    mUnreadIconLabel, SLOT(setEnabled(bool)) );
 
-  mUnreadIconLabel = new QLabel( i18n("&Unread:"), iconGroup );
-  mUnreadIconLabel->setEnabled( false );
-  ihl->addWidget( mUnreadIconLabel );
+    connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
+                    this, SLOT(slotChangeIcon(QString)) );
 
-  mUnreadIconButton = new KIconButton( iconGroup );
-  mUnreadIconLabel->setBuddy( mUnreadIconButton );
-  mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
-  mUnreadIconButton->setIconSize( 16 );
-  mUnreadIconButton->setStrictIconSize( true );
-  mUnreadIconButton->setFixedSize( 28, 28 );
-  mUnreadIconButton->setIconSet( SmallIconSet("folder_open") );
-  mUnreadIconButton->setEnabled( false );
-  ihl->addWidget( mUnreadIconButton );
-  ihl->addStretch( 1 );
-
-  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
-	   mNormalIconButton, SLOT(setEnabled(bool)) );
-  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
-	   mUnreadIconButton, SLOT(setEnabled(bool)) );
-  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
-	   mNormalIconLabel, SLOT(setEnabled(bool)) );
-  connect( mIconsCheckBox, SIGNAL(toggled(bool)),
-	   mUnreadIconLabel, SLOT(setEnabled(bool)) );
-
-  connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
-	   this, SLOT(slotChangeIcon(QString)) );
-
-  //end icons group
-
-  mMailboxTypeGroupBox = new QGroupBox( i18n("Folder Type"), this, "mMailboxTypeGroupBox" );
-  mMailboxTypeGroupBox->setColumnLayout( 0,  Qt::Vertical );
-
-  topLayout->addWidget( mMailboxTypeGroupBox );
-
-  QHBoxLayout *ml = new QHBoxLayout( mMailboxTypeGroupBox->layout() );
-  ml->setSpacing( 6 );
-
-  QLabel *label_type = new QLabel( i18n("&Mailbox format:" ), mMailboxTypeGroupBox );
-  ml->addWidget( label_type );
-  mMailboxTypeComboBox = new QComboBox(mMailboxTypeGroupBox);
-  label_type->setBuddy( mMailboxTypeComboBox );
-  mMailboxTypeComboBox->insertItem("mbox", 0);
-  mMailboxTypeComboBox->insertItem("maildir", 1);
-  mMailboxTypeComboBox->insertItem("search", 2);
-  {
-    KConfig *config = KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
-    int type = config->readNumEntry("default-mailbox-format", 1);
-    if ( type < 0 || type > 1 ) type = 1;
-    mMailboxTypeComboBox->setCurrentItem( type );
+    //end icons group
+    addLine( this, topLayout);
   }
-  mMailboxTypeComboBox->setEnabled( !mDlg->folder() );
-  ml->addWidget( mMailboxTypeComboBox );
-  ml->addStretch( 1 );
+ 
+  
+  // should new mail in this folder be ignored?
+  QHBoxLayout *hbl = new QHBoxLayout( topLayout );
+  hbl->setSpacing( KDialog::spacingHint() );
+  mNotifyOnNewMailCheckBox =
+    new QCheckBox( i18n("Notify on new mail in this folder" ), this );
+  QWhatsThis::add( mNotifyOnNewMailCheckBox,
+      i18n( "Check this option if you want to be notified "
+        "about new mail that is moved to this folder; unchecking this "
+        "is useful, for example, for ignoring spam folders." ) );
+  hbl->addWidget( mNotifyOnNewMailCheckBox );
 
-  QGroupBox *idGroup = new QGroupBox(  i18n("Sender Identity" ), this );
-  idGroup->setColumnLayout( 0, Qt::Vertical );
-  QHBoxLayout *idLayout = new QHBoxLayout(idGroup->layout());
-  idLayout->setSpacing( 6 );
-  topLayout->addWidget( idGroup );
+  if ( mDlg->folder()->folderType() == KMFolderTypeImap ) {
+    // should this folder be included in new-mail-checks?
 
-  label = new QLabel( i18n("&Sender:"), idGroup );
-  idLayout->addWidget( label );
-  mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), idGroup );
-  label->setBuddy( mIdentityComboBox );
-  idLayout->addWidget( mIdentityComboBox, 3 );
-  QWhatsThis::add( mIdentityComboBox,
-                   i18n( "Select the sender identity to be used when writing new mail "
-                     "or replying to mail in this folder. This means that if you are in "
-                     "one of your work folders, you can make KMail use the corresponding "
-                     "sender email address, signature and signing or encryption keys "
-                     "automatically. Identities can be set up in the main configuration "
-                     "dialog. (Settings -> Configure KMail)") );
+    QHBoxLayout *nml = new QHBoxLayout( topLayout );
+    nml->setSpacing( 6 );
+    mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks"), this );
+    // default is on
+    mNewMailCheckBox->setChecked(true);
+    nml->addWidget( mNewMailCheckBox );
+    nml->addStretch( 1 );
+  }
 
-  QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver Column in List of Messages"), this, "senderGroup" );
-  senderGroup->setColumnLayout( 0,  Qt::Vertical );
+  // should replies to mails in this folder be kept in this same folder?
+  hbl = new QHBoxLayout( topLayout );
+  hbl->setSpacing( KDialog::spacingHint() );
+  mKeepRepliesInSameFolderCheckBox =
+    new QCheckBox( i18n("Keep replies in this folder" ), this );
+  QWhatsThis::add( mKeepRepliesInSameFolderCheckBox,
+                   i18n( "Check this option if you want replies you write "
+                         "to mails in this folder to be put in this same folder "
+                         "after sending, instead of in the configured sent-mail folder." ) );
+  hbl->addWidget( mKeepRepliesInSameFolderCheckBox );
+  hbl->addStretch( 1 );
 
-  topLayout->addWidget( senderGroup );
+  addLine( this, topLayout );
 
-  QHBoxLayout *sl = new QHBoxLayout( senderGroup->layout() );
-  sl->setSpacing( 6 );
+  // sender or receiver column?
+  QString tip = i18n("Show Sender/Receiver Column in List of Messages");
 
-  QLabel *sender_label = new QLabel( i18n("Sho&w column:" ), senderGroup );
+  QHBoxLayout *sl = new QHBoxLayout( topLayout );
+  sl->setSpacing( 17 );
+
+  QLabel *sender_label = new QLabel( i18n("Sho&w column:" ), this );
   sl->addWidget( sender_label );
-  mShowSenderReceiverComboBox = new QComboBox(senderGroup);
+  mShowSenderReceiverComboBox = new QComboBox( this );
+  QToolTip::add( mShowSenderReceiverComboBox, tip );
   sender_label->setBuddy(mShowSenderReceiverComboBox);
+  sl->addWidget( mShowSenderReceiverComboBox, 3 );
   mShowSenderReceiverComboBox->insertItem(i18n("Default"), 0);
   mShowSenderReceiverComboBox->insertItem(i18n("Sender"), 1);
   mShowSenderReceiverComboBox->insertItem(i18n("Receiver"), 2);
@@ -376,21 +382,33 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   if (whoField == "From") mShowSenderReceiverComboBox->setCurrentItem(1);
   if (whoField == "To") mShowSenderReceiverComboBox->setCurrentItem(2);
 
-  sl->addWidget( mShowSenderReceiverComboBox );
-  sl->addStretch( 1 );
 
-  if ( kmkernel->iCalIface().isEnabled() &&
+  // identity
+  QHBoxLayout *idLayout = new QHBoxLayout( topLayout );
+  label = new QLabel( i18n("&Sender Identity:"), this );
+  idLayout->addWidget( label );
+  mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), this );
+  label->setBuddy( mIdentityComboBox );
+  idLayout->addWidget( mIdentityComboBox, 3 );
+  QWhatsThis::add( mIdentityComboBox,
+      i18n( "Select the sender identity to be used when writing new mail "
+        "or replying to mail in this folder. This means that if you are in "
+        "one of your work folders, you can make KMail use the corresponding "
+        "sender email address, signature and signing or encryption keys "
+        "automatically. Identities can be set up in the main configuration "
+        "dialog. (Settings -> Configure KMail)") );
+
+
+  if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() &&
        !kmkernel->iCalIface().isResourceFolder( mDlg->folder() ) ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
-    QGroupBox *typeGroup = new QGroupBox( i18n("Contents" ), this );
-    typeGroup->setColumnLayout( 0, Qt::Vertical );
-    QHBoxLayout *typeLayout = new QHBoxLayout( typeGroup->layout() );
+  
+    QHBoxLayout *typeLayout = new QHBoxLayout( topLayout );
     typeLayout->setSpacing( 6 );
-    topLayout->addWidget( typeGroup );
-    label = new QLabel( i18n("&Folder contents:"), typeGroup );
+    label = new QLabel( i18n("&Folder contents:"), this );
     typeLayout->addWidget( label );
-    mContentsComboBox = new QComboBox( typeGroup );
+    mContentsComboBox = new QComboBox( this );
     label->setBuddy( mContentsComboBox );
     typeLayout->addWidget( mContentsComboBox, 3 );
 
@@ -416,15 +434,12 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
        ( mContentsComboBox ||
          ( mDlg->folder() && ( mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeCalendar
                                || mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeTask ) ) ) ) {
-    mIncidencesForGroup = new QGroupBox( i18n("Relevance of Events && Tasks" ), this );
-    mIncidencesForGroup->setColumnLayout( 0, Qt::Vertical );
-    QHBoxLayout *relevanceLayout = new QHBoxLayout( mIncidencesForGroup->layout() );
+    QHBoxLayout *relevanceLayout = new QHBoxLayout( topLayout );
     relevanceLayout->setSpacing( 6 );
-    topLayout->addWidget( mIncidencesForGroup );
 
-    QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), mIncidencesForGroup );
+    QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), this );
     relevanceLayout->addWidget( label );
-    mIncidencesForComboBox = new QComboBox( mIncidencesForGroup );
+    mIncidencesForComboBox = new QComboBox( this );
     label->setBuddy( mIncidencesForComboBox );
     relevanceLayout->addWidget( mIncidencesForComboBox, 3 );
 
@@ -449,143 +464,13 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
     //connect ( mIncidencesForComboBox, SIGNAL ( activated( int ) ),
     //          this, SLOT( slotIncidencesForChanged( int ) ) );
-    if ( mContentsComboBox && mDlg->folder()&& mIncidencesForGroup ) {
-      KMail::FolderContentsType type = mDlg->folder()->storage()->contentsType();
-      mIncidencesForGroup->setEnabled( type == KMail::ContentsTypeCalendar ||
-                                       type == KMail::ContentsTypeTask );
-    }
-
   } else {
     mIncidencesForComboBox = 0;
-    mIncidencesForGroup = 0;
   }
-
-  // should this folder be included in new-mail-checks?
-  QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), this, "newmailGroup" );
-  newmailGroup->setColumnLayout( 0,  Qt::Vertical );
-  topLayout->addWidget( newmailGroup );
-
-  QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
-  nml->setSpacing( 6 );
-  mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks" ), newmailGroup );
-  // default is on
-  mNewMailCheckBox->setChecked(true);
-  nml->addWidget( mNewMailCheckBox );
-  nml->addStretch( 1 );
-
-  // should new mail in this folder be ignored?
-  QGroupBox* notifyGroup = new QGroupBox( i18n("New Mail Notification"), this,
-                                          "notifyGroup" );
-  notifyGroup->setColumnLayout( 0, Qt::Vertical );
-  topLayout->addWidget( notifyGroup );
-
-  QHBoxLayout *hbl = new QHBoxLayout( notifyGroup->layout() );
-  hbl->setSpacing( KDialog::spacingHint() );
-  mNotifyOnNewMailCheckBox =
-    new QCheckBox( i18n("Notify on new mail in this folder" ), notifyGroup );
-  QWhatsThis::add( mNotifyOnNewMailCheckBox,
-                   i18n( "Check this option if you want to be notified "
-                         "about new mail that is moved to this folder; unchecking this "
-                         "is useful, for example, for ignoring spam folders." ) );
-  hbl->addWidget( mNotifyOnNewMailCheckBox );
-  hbl->addStretch( 1 );
-
-  // should replies to mails in this folder be kept in this same folder?
-  QGroupBox* replyGroup = new QGroupBox( i18n("Reply Handling"), this,
-                                             "replyGroup" );
-  replyGroup->setColumnLayout( 0, Qt::Vertical );
-  topLayout->addWidget( replyGroup );
-
-  hbl = new QHBoxLayout( replyGroup->layout() );
-  hbl->setSpacing( KDialog::spacingHint() );
-  mKeepRepliesInSameFolderCheckBox =
-    new QCheckBox( i18n("Keep replies in this folder" ), replyGroup );
-  QWhatsThis::add( mKeepRepliesInSameFolderCheckBox,
-                   i18n( "Check this option if you want replies you write "
-                         "to mails in this folder to be put in this same folder "
-                         "after sending, instead of in the configured sent-mail folder." ) );
-  hbl->addWidget( mKeepRepliesInSameFolderCheckBox );
-  hbl->addStretch( 1 );
 
   topLayout->addStretch( 100 ); // eat all superfluous space
 
-  KMFolder* parentFolder = mDlg->parentFolder();
-
-  if ( parentFolder ) {
-    slotUpdateItems( parentFolder );
-  }
-
-  if ( mDlg->folder() ) {
-    // existing folder
-    initializeWithValuesFromFolder( mDlg->folder() );
-
-    // mailbox folder type
-    switch ( mDlg->folder()->folderType() ) {
-      case KMFolderTypeSearch:
-        mMailboxTypeComboBox->setCurrentItem( 2 );
-        newmailGroup->hide();
-        break;
-      case KMFolderTypeMaildir:
-        mMailboxTypeComboBox->setCurrentItem( 1 );
-        newmailGroup->hide();
-        break;
-      case KMFolderTypeMbox:
-        mMailboxTypeComboBox->setCurrentItem( 0 );
-        newmailGroup->hide();
-        break;
-      case KMFolderTypeImap:
-        mMailboxTypeGroupBox->hide();
-        break;
-      case KMFolderTypeCachedImap:
-        mMailboxTypeGroupBox->hide();
-        newmailGroup->hide();
-        break;
-      default: ;
-    }
-  }
-
-  else if ( parentFolder ) {
-    // new folder
-    initializeWithValuesFromFolder( parentFolder );
-
-    // mailbox folder type
-    switch ( parentFolder->folderType() ) {
-      case KMFolderTypeSearch:
-        mMailboxTypeComboBox->setCurrentItem( 2 );
-        newmailGroup->hide();
-        break;
-      case KMFolderTypeMaildir:
-        newmailGroup->hide();
-        break;
-      case KMFolderTypeMbox:
-        newmailGroup->hide();
-        break;
-      case KMFolderTypeImap:
-        mMailboxTypeGroupBox->hide();
-        break;
-      case KMFolderTypeCachedImap:
-        mMailboxTypeGroupBox->hide();
-        newmailGroup->hide();
-        break;
-      default: ;
-    }
-  } else {
-    // creating new top level local folder
-    newmailGroup->hide();
-  }
-
-  // Musn't be able to edit details for a system folder.
-  // Make sure we don't bomb out if there isn't a folder
-  // object yet (i.e. just about to create new folder).
-
-  if ( mDlg->folder() && mDlg->folder()->isSystemFolder() &&
-       mDlg->folder()->folderType() != KMFolderTypeImap &&
-       mDlg->folder()->folderType() != KMFolderTypeCachedImap ) {
-    fpGroup->hide();
-    iconGroup->hide();
-    mMailboxTypeGroupBox->hide();
-    idGroup->hide();
-  }
+  initializeWithValuesFromFolder( mDlg->folder() );
 }
 
 void FolderDiaGeneralTab::load()
@@ -597,22 +482,23 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   if ( !folder )
     return;
 
-  // folder icons
-  mIconsCheckBox->setChecked( folder->useCustomIcons() );
-  mNormalIconLabel->setEnabled( folder->useCustomIcons() );
-  mNormalIconButton->setEnabled( folder->useCustomIcons() );
-  mUnreadIconLabel->setEnabled( folder->useCustomIcons() );
-  mUnreadIconButton->setEnabled( folder->useCustomIcons() );
-  QString iconPath = folder->normalIconPath();
-  if ( !iconPath.isEmpty() )
-    mNormalIconButton->setIcon( iconPath );
-  iconPath = folder->unreadIconPath();
-  if ( !iconPath.isEmpty() )
-    mUnreadIconButton->setIcon( iconPath );
+  if ( !mIsLocalSystemFolder ) {
+    // folder icons
+    mIconsCheckBox->setChecked( folder->useCustomIcons() );
+    mNormalIconLabel->setEnabled( folder->useCustomIcons() );
+    mNormalIconButton->setEnabled( folder->useCustomIcons() );
+    mUnreadIconLabel->setEnabled( folder->useCustomIcons() );
+    mUnreadIconButton->setEnabled( folder->useCustomIcons() );
+    QString iconPath = folder->normalIconPath();
+    if ( !iconPath.isEmpty() )
+      mNormalIconButton->setIcon( iconPath );
+    iconPath = folder->unreadIconPath();
+    if ( !iconPath.isEmpty() )
+      mUnreadIconButton->setIcon( iconPath );
+  }
 
   // folder identity
   mIdentityComboBox->setCurrentIdentity( folder->identity() );
-
   // ignore new mail
   mNotifyOnNewMailCheckBox->setChecked( !folder->ignoreNewMail() );
 
@@ -625,14 +511,9 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
     mNewMailCheckBox->setChecked(checked);
   }
 
-  bool isImap = /*folder->folderType() == KMFolderTypeImap ||*/ folder->folderType() == KMFolderTypeCachedImap;
-  if ( mIncidencesForGroup ) {
-    if ( !isImap )
-      mIncidencesForGroup->hide();
-    else {
-      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
-      mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
-    }
+  if ( mIncidencesForComboBox ) {
+    KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( folder->storage() );
+    mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
   }
 }
 
@@ -640,20 +521,6 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 void FolderDiaGeneralTab::slotFolderNameChanged( const QString& str )
 {
   mDlg->enableButtonOK( !str.isEmpty() );
-}
-
-//-----------------------------------------------------------------------------
-void FolderDiaGeneralTab::slotUpdateItems ( KMFolder* selectedFolder )
-{
-  if (selectedFolder && (selectedFolder->folderType() == KMFolderTypeImap ||
-			 selectedFolder->folderType() == KMFolderTypeCachedImap))
-  {
-    // deactivate stuff that is not available for imap
-    mMailboxTypeGroupBox->setEnabled( false );
-  } else {
-    // activate it
-    mMailboxTypeGroupBox->setEnabled( true );
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -678,16 +545,24 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 //-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
+  KMFolder* folder = mDlg->folder();
+  folder->setIdentity( mIdentityComboBox->currentIdentity() );
+  // set whoField
+  if (mShowSenderReceiverComboBox->currentItem() == 1)
+    folder->setUserWhoField("From");
+  else if (mShowSenderReceiverComboBox->currentItem() == 2)
+    folder->setUserWhoField("To");
+  else
+    folder->setUserWhoField(QString::null);
+
+  folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
+  folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
+
   QString fldName, oldFldName;
-  KMFolderDir *selectedFolderDir = 0;
-  if ( mDlg->isNewFolder() || !mDlg->folder()->isSystemFolder() )
+  if ( !mIsLocalSystemFolder )
   {
     QString acctName;
-    selectedFolderDir = &(kmkernel->folderMgr()->dir());
-    KMFolder *selectedFolder = mDlg->folder();
-
-    if ( !mDlg->isNewFolder() )
-      oldFldName = mDlg->folder()->name();
+    oldFldName = mDlg->folder()->name();
 
     if (!mNameEdit->text().isEmpty())
       fldName = mNameEdit->text();
@@ -701,89 +576,6 @@ bool FolderDiaGeneralTab::save()
     fldName.remove(QRegExp("^\\.*"));
     if (fldName.isEmpty()) fldName = i18n("unnamed");
 
-    if (mMailboxTypeComboBox->currentItem() == 2) {
-      selectedFolderDir = &(kmkernel->searchFolderMgr()->dir());
-    }
-    else if (selectedFolder)
-    {
-      selectedFolderDir = selectedFolder->parent();
-    }
-
-    QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
-    if( selectedFolderDir->hasNamedFolder( fldName )
-        && ( !( mDlg->folder()
-                && ( selectedFolderDir == mDlg->folder()->parent() )
-                && ( mDlg->folder()->name() == fldName ) ) ) )
-    {
-      KMessageBox::error( this, message );
-      return false;
-    }
-
-    if( mDlg->isNewFolder() ) {
-
-      if ( fldName.find( '/' ) != -1 ) {
-	KMessageBox::error( this, i18n( "Folder names cannot contain the / (slash) character; please choose another folder name." ) );
-        return false;
-      }
-      message = i18n( "<qt>Failed to create folder <b>%1</b>."
-            "</qt> " ).arg(fldName);
-
-      if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
-      {
-        KMFolder *newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
-        if ( newFolder ) {
-          mDlg->setFolder( newFolder );
-          KMFolderImap* selectedStorage = static_cast<KMFolderImap*>(selectedFolder->storage());
-          selectedStorage->createFolder(fldName); // create it on the server
-          static_cast<KMFolderImap*>(mDlg->folder()->storage())->setAccount( selectedStorage->account() );
-        } else {
-          KMessageBox::error( this, message );
-          return false;
-        }
-      } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
-        KMFolder *newFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
-        if ( newFolder ) {
-          mDlg->setFolder( newFolder );
-          KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>(selectedFolder->storage());
-          KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mDlg->folder()->storage());
-          newStorage->initializeFrom( selectedStorage );
-        } else {
-          KMessageBox::error( this, message );
-          return false;
-        }
-      } else if (mMailboxTypeComboBox->currentItem() == 2) {
-        KMFolder *folder = kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() );
-        if ( folder ) {
-          mDlg->setFolder( folder );
-        } else {
-          KMessageBox::error( this, message );
-          return false;
-        }
-      } else if (mMailboxTypeComboBox->currentItem() == 1) {
-        KMFolder *folder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
-        if ( folder ) {
-          mDlg->setFolder( folder );
-        } else {
-          KMessageBox::error( this, message );
-          return false;
-        }
-
-      } else {
-        KMFolder *folder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
-        if ( folder ) {
-          mDlg->setFolder( folder );
-        } else {
-          KMessageBox::error( this, message );
-          return false;
-        }
-
-      }
-    }
-  }
-
-  KMFolder* folder = mDlg->folder();
-  if( folder ) {
-    folder->setIdentity( mIdentityComboBox->currentIdentity() );
 
     // Update the tree iff new icon paths are different and not empty or if
     // useCustomIcons changed.
@@ -795,20 +587,13 @@ bool FolderDiaGeneralTab::save()
       }
     }
     if ( folder->useCustomIcons() &&
-      (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
-      ( !mNormalIconButton->icon().isEmpty())) ||
-      (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
-      ( !mUnreadIconButton->icon().isEmpty())) ) {
+        (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
+         ( !mNormalIconButton->icon().isEmpty())) ||
+        (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
+         ( !mUnreadIconButton->icon().isEmpty())) ) {
       folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
     }
-        // set whoField
-    if (mShowSenderReceiverComboBox->currentItem() == 1)
-      folder->setUserWhoField("From");
-    else if (mShowSenderReceiverComboBox->currentItem() == 2)
-      folder->setUserWhoField("To");
-    else
-      folder->setUserWhoField(QString::null);
-
+  
     // Set type field
     if ( mContentsComboBox ) {
       KMail::FolderContentsType type =
@@ -826,9 +611,6 @@ bool FolderDiaGeneralTab::save()
       }
     }
 
-    folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
-    folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
-
     if( folder->folderType() == KMFolderTypeImap )
     {
       KMFolderImap* imapFolder = static_cast<KMFolderImap*>( folder->storage() );
@@ -839,17 +621,12 @@ bool FolderDiaGeneralTab::save()
     // when creating a new folder.
     folder->storage()->writeConfig();
 
-    if ( !mDlg->isNewFolder() && !oldFldName.isEmpty() &&
-         ( oldFldName != fldName ) )
+    if ( !oldFldName.isEmpty() && ( oldFldName != fldName ) )
     {
       kmkernel->folderMgr()->renameFolder( folder, fldName );
     } else {
       kmkernel->folderMgr()->contentsChanged();
     }
-
-    if( mDlg->isNewFolder() )
-      folder->close();
-
   }
   return true;
 }

@@ -125,7 +125,6 @@ private slots:
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities
    */
-  void slotUpdateItems( KMFolder* );
   void slotFolderNameChanged( const QString& );
   void slotFolderContentsSelectionChanged( int );
 
@@ -133,7 +132,6 @@ private:
   void initializeWithValuesFromFolder( KMFolder* folder );
 
 private:
-  QComboBox *mMailboxTypeComboBox;
   QComboBox *mShowSenderReceiverComboBox;
   QComboBox *mContentsComboBox;
   QGroupBox *mIncidencesForGroup;
@@ -149,9 +147,9 @@ private:
   KLineEdit   *mNameEdit;
 
   KPIM::IdentityCombo *mIdentityComboBox;
-  QGroupBox *mMailboxTypeGroupBox;
 
   KMFolderDialog* mDlg;
+  bool mIsLocalSystemFolder;
 };
 
 } // end of namespace KMail
