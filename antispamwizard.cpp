@@ -355,14 +355,13 @@ void AntiSpamWizard::accept()
       classHamFilter->setConfigureShortcut( TRUE );
       classHamFilter->setConfigureToolbar( TRUE );
       filterList.append( classHamFilter );
-
-      /* Now that all the filters have been added to the list, tell
-       * the filter manager about it. That will emit filterListUpdate
-       * which will result in the filter list in kmmainwidget being 
-       * initialized. This should happend only once. */
-      KMKernel::self()->filterMgr()->appendFilters( filterList );
-      
     }
+
+    /* Now that all the filters have been added to the list, tell
+     * the filter manager about it. That will emit filterListUpdate
+     * which will result in the filter list in kmmainwidget being 
+     * initialized. This should happend only once. */
+    KMKernel::self()->filterMgr()->appendFilters( filterList );
   }
 
   QDialog::accept();
@@ -380,13 +379,14 @@ void AntiSpamWizard::checkProgramsSelections()
     if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) )
     {
       status = true;
-      if ( (*it).isSpamTool() )
+      if ( (*it).isSpamTool() ) {
         mSpamToolsUsed = true;
+        if ( (*it).useBayesFilter() )
+          canClassify = true;
+      }
       if ( (*it).isVirusTool() )
         mVirusToolsUsed = true;
     }
-    if ( (*it).useBayesFilter() )
-      canClassify = true;
   }
 
   if ( mSpamRulesPage )
