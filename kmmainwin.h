@@ -203,6 +203,7 @@ protected:
   KMFldSearch *searchWin;
   ConfigureDialog *mConfigureDialog;
 
+  KAction *modifyFolderAction, *removeFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   QPopupMenu *copyMenu, *moveMenu;
 };

@@ -1310,7 +1310,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Create..."), 0, this, 
 		      SLOT(slotAddFolder()), actionCollection(), "create" );
 
-  (void) new KAction( i18n("&Modify..."), 0, this, 
+  modifyFolderAction = new KAction( i18n("&Modify..."), 0, this, 
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   (void) new KAction( i18n("C&ompact"), 0, this, 
@@ -1319,7 +1319,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Empty"), 0, this, 
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  (void) new KAction( i18n("&Remove..."), 0, this, 
+  removeFolderAction = new KAction( i18n("&Remove..."), 0, this, 
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
   preferHtmlAction = new KToggleAction( i18n("Prefer HTML to plain text"), 0, this, 
@@ -1550,6 +1550,8 @@ void KMMainWin::updateMessageMenu()
 //-----------------------------------------------------------------------------
 void KMMainWin::updateFolderMenu()
 {
+  modifyFolderAction->setEnabled( !mFolder->isSystemFolder() );
+  removeFolderAction->setEnabled( !mFolder->isSystemFolder() );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );
   threadMessagesAction->setEnabled( mFolder ? true : false );
