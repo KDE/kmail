@@ -1193,7 +1193,7 @@ void KMReaderWin::displayAboutPage()
 	 "%8: prior KMail version; "
          "%9: generated list of important changes; "
 	 "--- end of comment ---",
-	 "<h2>Welcome to KMail %1</h2><p>KMail is the email client for the K "
+	 "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
 	 "Desktop Environment. It is designed to be fully compatible with "
 	 "Internet mailing standards including MIME, SMTP, POP3 and IMAP."
 	 "</p>\n"
@@ -1210,7 +1210,7 @@ void KMReaderWin::displayAboutPage()
 	 "%7\n"
 	 "<p>We hope that you will enjoy KMail.</p>\n"
 	 "<p>Thank you,</p>\n"
-	 "<p>&nbsp; &nbsp; The KMail Team</p>")
+	     "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The KMail Team</p>")
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
     .arg("http://kmail.kde.org/") // KMail homepage URL
@@ -1239,7 +1239,11 @@ void KMReaderWin::displayAboutPage()
 
   info = info.arg("1.6").arg( changesItems );
 
-  mViewer->write(content.arg(pointsToPixel( mCSSHelper->bodyFont().pointSize() )).arg(info));
+  QString fontSize = QString::number( pointsToPixel( mCSSHelper->bodyFont().pointSize() ) );
+  QString appTitle = i18n("KMail");
+  QString catchPhrase = ""; //not enough space for a catch phrase at default window size i18n("Part of the Kontact Suite");
+  QString quickDescription = i18n("The email client for the K Desktop Environment.");
+  mViewer->write(content.arg(fontSize).arg(appTitle).arg(catchPhrase).arg(quickDescription).arg(info));
   mViewer->end();
 }
 
