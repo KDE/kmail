@@ -1531,6 +1531,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
+  if (!mMsg) return;
   KURL url( aUrl );
 
   int id = msgPartFromUrl(url);
