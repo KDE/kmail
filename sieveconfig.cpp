@@ -131,7 +131,7 @@ namespace KMail {
   }
 
   KURL SieveConfigEditor::alternateURL() const {
-    KURL url = mAlternateURLEdit->text();
+    KURL url ( mAlternateURLEdit->text() );
     if ( !url.isValid() )
       return KURL();
 

@@ -237,7 +237,7 @@ namespace KMail {
     // slotEnableEditButton should prevent this assert from being hit:
     assert( !url.isEmpty() );
 
-    (void)KRun::runURL( url, QString::fromLatin1("text/plain") );
+    (void)KRun::runURL( KURL( url ), QString::fromLatin1("text/plain") );
   }
 
 } // namespace KMail

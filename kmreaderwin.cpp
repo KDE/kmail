@@ -904,7 +904,7 @@ void KMReaderWin::displayAboutPage()
 
   QString location = locate("data", "kmail/about/main.html");
   QString content = kFileToString(location);
-  mViewer->begin(location);
+  mViewer->begin(KURL( location ));
   QString info =
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
 	 "%4: prior KMail version; %5: prior KDE version; "

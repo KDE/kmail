@@ -1105,7 +1105,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     KIO::MetaData slaveConfig;
     slaveConfig.insert("tls", (ti->encryption == "TLS") ? "on" : "off");
     if (ti->auth) slaveConfig.insert("sasl", ti->authType);
-    mSlave = KIO::Scheduler::getConnectedSlave(destination.url(), slaveConfig);
+    mSlave = KIO::Scheduler::getConnectedSlave(destination, slaveConfig);
   }
 
   if (!mSlave)

@@ -168,7 +168,7 @@ int KMFolderCachedImap::remove()
     QString uidCacheFile = part1 + ".uidcache";
     if( QFile::exists(uidCacheFile) )
       unlink( QFile::encodeName( uidCacheFile ) );
-    KIO::del( part1 + ".directory" );
+    KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
   } else {
     // Don't remove the uidcache file here, since presence of that is how
     // we figure out if a directory present on the server have been deleted
@@ -1214,7 +1214,7 @@ void KMFolderCachedImap::listDirectory2() {
         unlink( QFile::encodeName( uidCacheFile ) );
         foldersForDeletionOnServer << mSubfolderPaths[i];
         // Make sure all trace of the dir is gone
-        KIO::del( part1 + ".directory" );
+        KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
       } else {
         // This is a new folder, create the local cache
         f = static_cast<KMFolderCachedImap*>
