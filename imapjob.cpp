@@ -318,7 +318,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         msg->setComplete( TRUE );
       }
     } else {
-      kdWarning(5006) << "got no data from server!" << endl;
+      kdWarning(5006) << "ImapJob::slotGetMessageResult - got no data for " << mPartSpecifier << endl;
       gotData = false;
     }
   }

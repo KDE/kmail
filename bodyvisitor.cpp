@@ -73,6 +73,18 @@ namespace KMail {
            selected.contains( part->parent() ) &&
            part->loadPart() )
         continue;
+
+      if ( part->originalContentTypeStr().contains("SIGNED") )
+      {
+        // signed messages have to be loaded completely
+        // so construct a new dummy part that loads the body
+        KMMessagePart *fake = new KMMessagePart();
+        fake->setPartSpecifier( "TEXT" );
+        fake->setOriginalContentTypeStr("");
+        fake->setLoadPart( true );
+        selected.append( fake );
+        break;
+      }
         
       if ( headerCheck && !part->partSpecifier().endsWith(".HEADER") )
       {
@@ -107,6 +119,7 @@ namespace KMail {
         }
       }
       if ( !part->partSpecifier().endsWith(".HEADER") &&
+           part->typeStr() != "MULTIPART" &&
            !part->loadPart() )
         part->setLoadHeaders( true ); // load MIME header
       

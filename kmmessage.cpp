@@ -4104,34 +4104,11 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
       mLastUpdated->Body().Parse();
     }
 
-    if ( mSignatureState != KMMsgNotSigned )
-    {
-      // we need to get a valid DwBodyPart->AsString() to check the signature
-      // so we better make sure that all signed parts are assembled
-      mLastUpdated->Assemble( mLastUpdated->Headers(), mLastUpdated->Body() );
-      DwMessageComponent *part = mLastUpdated;
-      while ( part )
-      {
-        if ( part->ClassId() == DwMessageComponent::kCidBodyPart ||
-             part->ClassId() == DwMessageComponent::kCidMessage )
-        {
-          DwEntity* entity = static_cast<DwEntity*>(part);
-          int type = entity->Headers().ContentType().Type();
-          int subtype = entity->Headers().ContentType().Subtype();
-          if ( type == DwMime::kTypeMultipart && subtype == DwMime::kSubtypeSigned )
-          {
-            part->SetModified();
-            part->Assemble();
-            break;
-          }
-        }
-        part = part->Parent();
-      }
-    }
-
   } else
   {
     // update text-only messages
+    if ( partSpecifier == "TEXT" )
+      deleteBodyParts(); // delete empty parts first
     mMsg->Body().FromString( content );
     mMsg->Body().Parse();
   }
