@@ -87,7 +87,7 @@
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
-  : KMTopLevelWidget("kmail-composer"), MailComposerIface(),
+  : KMTopLevelWidget("kmail-composer#"), MailComposerIface(),
     mId( id )
 
 {
