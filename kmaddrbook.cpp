@@ -9,6 +9,7 @@
 #include <qfile.h>
 #include <assert.h>
 #include <klocale.h>
+#include <kstddirs.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBook::KMAddrBook(): KMAddrBookInherited()
@@ -78,7 +79,7 @@ void KMAddrBook::readConfig(void)
 
   mDefaultFileName = config->readEntry("default");
   if (mDefaultFileName.isEmpty())
-    mDefaultFileName = kapp->localkdedir()+"/share/apps/kmail/addressbook";
+    mDefaultFileName = locateLocal("appdata", "addressbook");
 }
 
 
