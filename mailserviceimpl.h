@@ -44,22 +44,30 @@ namespace KMail {
   {
   public:
     MailServiceImpl();
-     bool sendMessage( const QString& from, const QString& to, const QString& cc, 
-                      const QString& bcc,  const QString& subject, const QString& body,
-                      const KURL::List& attachments );
-
-    bool sendMessage( const QString& to, const QString& cc, const QString& bcc,
+    bool sendMessage( const QString& from, const QString& to,
+                      const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
                       const KURL::List& attachments );
 
-    bool sendMessage( const QString& from, const QString& to, const QString& cc, const QString& bcc,
+    // FIXME KDE 4.0: Remove this.
+    // (cf. libkdepim/interfaces/MailTransportServiceIface.h)
+    bool sendMessage( const QString& to,
+                      const QString& cc, const QString& bcc,
+                      const QString& subject, const QString& body,
+                      const KURL::List& attachments );
+
+    bool sendMessage( const QString& from, const QString& to,
+                      const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
                       const QByteArray& attachment );
 
-    bool sendMessage( const QString& to, const QString& cc, const QString& bcc,
+    // FIXME KDE 4.0: Remove this.
+    // (cf. libkdepim/interfaces/MailTransportServiceIface.h)
+    bool sendMessage( const QString& to,
+                      const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
                       const QByteArray& attachment );
-  
+
   };
 }
 
