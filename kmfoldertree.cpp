@@ -202,13 +202,13 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 
     pixDir   = new QPixmap( UserIcon("closed"));
     pixNode  = new QPixmap( UserIcon("green-bullet"));
-    pixPlain = new QPixmap( UserIcon("kmfolder"));
-    pixFld   = new QPixmap( UserIcon("kmfolder"));
-    pixFull  = new QPixmap( UserIcon("kmfolderfull"));
+    pixPlain = new QPixmap( SmallIcon("folder"));
+    pixFld   = new QPixmap( SmallIcon("folder"));
+    pixFull  = new QPixmap( SmallIcon("folder_open"));
     pixIn    = new QPixmap( UserIcon("kmfldin"));
     pixOut   = new QPixmap( UserIcon("kmfldout"));
     pixSent  = new QPixmap( UserIcon("kmfldsent"));
-    pixTr    = new QPixmap( UserIcon("kmtrash"));
+    pixTr    = new QPixmap( SmallIcon("trashcan_empty"));
   }
   setUpdatesEnabled(TRUE);
   reload();
