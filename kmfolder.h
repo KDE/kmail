@@ -153,8 +153,8 @@ public:
 
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
-  virtual void msgStatusChanged( KMMsgStatus oldStatus,
-                                 KMMsgStatus newStatus);
+  virtual void msgStatusChanged( const KMMsgStatus oldStatus,
+                                 const KMMsgStatus newStatus);
 
   /** Open folder for access. Does not work if the parent is not set.
     Does nothing if the folder is already opened. To reopen a folder
