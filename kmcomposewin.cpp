@@ -912,9 +912,21 @@ void KMComposeWin::setupActions(void)
 
   selectCryptoAction->setEnabled(true);
 
-  mLastEncryptActionState = mAutoPgpEncrypt;
-  mLastSignActionState = mAutoPgpSign;
-  if (!Kpgp::Module::getKpgp()->usePGP())
+  // make sure we have a valid CryptPlugList
+  bool tmpPlugList = !mCryptPlugList;
+  if( tmpPlugList ) {
+    mCryptPlugList = new CryptPlugWrapperList();
+    KConfig *config = KGlobal::config();
+    mCryptPlugList->loadFromConfig( config );
+  }
+  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+
+  mLastEncryptActionState = mAutoPgpEncrypt ||
+    (cryptPlug && EncryptEmail_EncryptAll == cryptPlug->encryptEmail());
+  mLastSignActionState = mAutoPgpSign ||
+    (cryptPlug && SignEmail_SignAll == cryptPlug->signEmail());
+
+  if(!cryptPlug && !Kpgp::Module::getKpgp()->usePGP())
   {
     attachPK->setEnabled(false);
     attachMPK->setEnabled(false);
@@ -923,7 +935,7 @@ void KMComposeWin::setupActions(void)
     signAction->setEnabled(false);
     signAction->setChecked(false);
   }
-  else if (pgpUserId.isEmpty())
+  else if (!cryptPlug && pgpUserId.isEmpty())
   {
     attachMPK->setEnabled(false);
     encryptAction->setEnabled(false);
@@ -934,12 +946,19 @@ void KMComposeWin::setupActions(void)
   else
   {
     encryptAction->setChecked(mLastEncryptActionState);
+    // Note: slot connection must be be called manually
+    //       to get the respective tool bar button icon exchanged
+    slotEncryptToggled( mLastEncryptActionState );
     signAction->setChecked(mLastSignActionState);
   }
 
-  createGUI("kmcomposerui.rc");
+  // remove temp. CryptPlugList
+  if( tmpPlugList )
+    delete mCryptPlugList;
 
   connect(encryptAction, SIGNAL(toggled(bool)), SLOT(slotEncryptToggled(bool)));
+
+  createGUI("kmcomposerui.rc");
 }
 
 //-----------------------------------------------------------------------------
@@ -1108,9 +1127,18 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // get PGP user id for the currently selected identity
   QString pgpUserId = ident.pgpIdentity();
 
-  if (Kpgp::Module::getKpgp()->usePGP())
+  // make sure we have a valid CryptPlugList
+  bool tmpPlugList = !mCryptPlugList;
+  if( tmpPlugList ) {
+    mCryptPlugList = new CryptPlugWrapperList();
+    KConfig *config = KGlobal::config();
+    mCryptPlugList->loadFromConfig( config );
+  }
+  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+
+  if( cryptPlug || Kpgp::Module::getKpgp()->usePGP() )
   {
-    if (pgpUserId.isEmpty())
+    if( !cryptPlug && pgpUserId.isEmpty() )
     {
       attachMPK->setEnabled(false);
       encryptAction->setEnabled(false);
@@ -1127,6 +1155,11 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
       signAction->setChecked(mLastSignActionState);
     }
   }
+
+  // remove temp. CryptPlugList
+  if( tmpPlugList )
+    delete mCryptPlugList;
+
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
@@ -1339,29 +1372,59 @@ bool KMComposeWin::applyChanges(void)
 
   QStringList recipients = KMMessage::splitEmailAddrList(_to);
 
-  if( mAutoPgpEncrypt && !doEncrypt )
-  { // check if the message should be encrypted
-    int status = pgp->encryptionPossible( recipients );
-    if( status == 1 )
-      doEncrypt = true;
-    else if( status == 2 )
-    { // the user wants to be asked or has to be asked
-      kernel->kbp()->idle();
-      int ret = KMessageBox::questionYesNo( this,
-                                    "Should this message be encrypted?" );
-      kernel->kbp()->busy();
-      doEncrypt = ( KMessageBox::Yes == ret );
-    }
-    else if( status == -1 )
-    { // warn the user that there are conflicting encryption preferences
-      int ret =
-        KMessageBox::warningYesNoCancel( this,
-                                    "There are conflicting encryption "
-                                    "preferences!\n\n"
-                                    "Should this message be encrypted?" );
-      if( ret == KMessageBox::Cancel )
-        bOk = false;
-      doEncrypt = ( ret == KMessageBox::Yes );
+  if( !doEncrypt ) {
+    if( cryptPlug ) {
+      // check if the message should be encrypted via Crypto Plugin
+      EncryptEmail encMode = cryptPlug->encryptEmail();
+      switch ( encMode ) {
+      case EncryptEmail_undef:
+        break;
+      case EncryptEmail_EncryptAll: {
+          int ret =
+            KMessageBox::warningYesNoCancel( this,
+              "There are conflicting encryption preferences!\n\n"
+              "Should this message be encrypted?" );
+          if( ret == KMessageBox::Cancel )
+            bOk = false;
+          doEncrypt = ( ret == KMessageBox::Yes );
+        }
+        break;
+      case EncryptEmail_Ask: {
+          kernel->kbp()->idle();
+          int ret =
+            KMessageBox::questionYesNo( this,
+              "Should this message be encrypted?" );
+          kernel->kbp()->busy();
+          doEncrypt = ( KMessageBox::Yes == ret );
+        }
+        break;
+      case EncryptEmail_DontEncrypt:
+        break;
+      }
+    } else if( mAutoPgpEncrypt ) {
+      // check if the message should be encrypted via old build-in pgp code
+      int status = pgp->encryptionPossible( recipients );
+      if( status == 1 )
+        doEncrypt = true;
+      else if( status == 2 )
+      { // the user wants to be asked or has to be asked
+        kernel->kbp()->idle();
+        int ret = KMessageBox::questionYesNo( this,
+                                      "Should this message be encrypted?" );
+        kernel->kbp()->busy();
+        doEncrypt = ( KMessageBox::Yes == ret );
+      }
+      else if( status == -1 )
+      { // warn the user that there are conflicting encryption preferences
+        int ret =
+          KMessageBox::warningYesNoCancel( this,
+                                      "There are conflicting encryption "
+                                      "preferences!\n\n"
+                                      "Should this message be encrypted?" );
+        if( ret == KMessageBox::Cancel )
+          bOk = false;
+        doEncrypt = ( ret == KMessageBox::Yes );
+      }
     }
   }
 
@@ -3816,9 +3879,18 @@ void KMComposeWin::slotIdentityChanged(const QString & identStr)
     mEditor->setText( edtText );
   }
 
+  // make sure we have a valid CryptPlugList
+  bool tmpPlugList = !mCryptPlugList;
+  if( tmpPlugList ) {
+    mCryptPlugList = new CryptPlugWrapperList();
+    KConfig *config = KGlobal::config();
+    mCryptPlugList->loadFromConfig( config );
+  }
+  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+
   // disable certain actions if there is no PGP user identity set
   // for this profile
-  if (ident.pgpIdentity().isEmpty())
+  if( !cryptPlug && ident.pgpIdentity().isEmpty() )
   {
     attachMPK->setEnabled(false);
     if (signAction->isEnabled())
@@ -3834,7 +3906,7 @@ void KMComposeWin::slotIdentityChanged(const QString & identStr)
   else
   {
     attachMPK->setEnabled(true);
-    if (!signAction->isEnabled())
+    if( !signAction->isEnabled() )
     { // restore the last state of the sign and encrypt button
       encryptAction->setEnabled(true);
       encryptAction->setChecked(mLastEncryptActionState);
@@ -3842,6 +3914,10 @@ void KMComposeWin::slotIdentityChanged(const QString & identStr)
       signAction->setChecked(mLastSignActionState);
     }
   }
+
+  // remove temp. CryptPlugList
+  if( tmpPlugList )
+    delete mCryptPlugList;
 
   mEditor->setModified(TRUE);
   mId = identStr;

@@ -224,8 +224,7 @@ kdDebug(5006) << "html" << endl;
                 // ---Sven's strip </BODY> and </HTML> from end of attachment end-
               } else {
                 writeHTMLStr(     "<table border=1 cellpadding=10><tr><td align=center>");
-                writeHTMLStr(i18n("Data shown as <b>HTML source</b> because "
-                                  "mail contains <i>no plain text version</i>."));
+                writeHTMLStr(i18n("<b>HTML source</b> shown because mail contains <i>no plain text</i> data."));
                 writeHTMLStr(     "<br>");
                 writeHTMLStr(i18n("This is the default - and safe - behavior of KMail."));
                 writeHTMLStr(     "<br><font size=-1>");
