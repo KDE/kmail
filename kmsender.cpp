@@ -213,7 +213,7 @@ void KMSender::doSendMsg()
   if (someSent) mSentMessages++;
   int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
   if (percent > 100) percent = 100;
-  KMBroadcastStatus::instance()->setStatusProgressPercent(percent);
+  KMBroadcastStatus::instance()->setStatusProgressPercent("SMTP", percent);
 
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kernel->filterMgr())
@@ -300,7 +300,7 @@ void KMSender::doSendMsg()
   if (!mSendInProgress)
   {
     KMBroadcastStatus::instance()->reset();
-    KMBroadcastStatus::instance()->setStatusProgressEnable( true );
+    KMBroadcastStatus::instance()->setStatusProgressEnable( "SMTP", true );
     connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
       SLOT(slotAbortSend()));
     kapp->ref();
@@ -418,7 +418,7 @@ void KMSender::cleanup(void)
   mSentMessages = 0;
   disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
     this, SLOT(slotAbortSend()));
-  KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+  KMBroadcastStatus::instance()->setStatusProgressEnable( "SMTP", false );
   KMBroadcastStatus::instance()->reset();
   kernel->filterMgr()->cleanup();
 }

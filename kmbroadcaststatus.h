@@ -37,9 +37,9 @@ public:
   /** Emit an update status bar signal */
   void setStatusMsg( const QString& );
   /** Emit an enable progress widget(s) in status bar(s) signal */
-  void setStatusProgressEnable( bool );
+  void setStatusProgressEnable( const QString&, bool );
   /** Emit an update progress widget(s) percent completed signal */
-  void setStatusProgressPercent( unsigned long );
+  void setStatusProgressPercent( const QString&, unsigned long );
 
   /** Returns true IFF the user has requested the current operation 
       (the one whose progress is being shown) should be aborted.
@@ -72,6 +72,7 @@ protected:
   KMBroadcastStatus();
   static KMBroadcastStatus* instance_;
   bool abortRequested_;
+  QMap<QString,unsigned long> ids;
 };
 
 

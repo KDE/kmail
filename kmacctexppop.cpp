@@ -443,7 +443,7 @@ void KMAcctExpPop::startJob() {
   headers = false;
   indexOfCurrentMsg = -1;
   KMBroadcastStatus::instance()->reset();
-  KMBroadcastStatus::instance()->setStatusProgressEnable( true );
+  KMBroadcastStatus::instance()->setStatusProgressEnable( "P" + mName, true );
   KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
@@ -730,7 +730,7 @@ void KMAcctExpPop::slotJobFinished() {
     if (slave) KIO::Scheduler::disconnectSlave(slave);
     slave = NULL;
     stage = Idle;
-    KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
+    KMBroadcastStatus::instance()->setStatusProgressPercent( "P" + mName, 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
       indexOfCurrentMsg : idsOfMsgs.count();
     QString statusMsg;
@@ -750,7 +750,8 @@ void KMAcctExpPop::slotJobFinished() {
     else
       statusMsg = i18n("Transmission completed, no new messages." );
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
-    KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+    KMBroadcastStatus::instance()->setStatusProgressEnable( "P" + mName,
+      false );
     KMBroadcastStatus::instance()->reset();
 
     emit finishedCheck(numMessages > 0);
@@ -847,7 +848,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 	  .arg(numBytesToRead/1024).arg(mHost);
       }
       KMBroadcastStatus::instance()->setStatusMsg( msg );
-      KMBroadcastStatus::instance()->setStatusProgressPercent(
+      KMBroadcastStatus::instance()->setStatusProgressPercent("P" + mName,
         (numBytesToRead == 0) ? 50  // We never know what the server tells us
         : (numBytesRead * 100 / numBytesToRead) );
     }

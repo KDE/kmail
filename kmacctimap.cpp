@@ -375,7 +375,8 @@ void KMAcctImap::displayProgress()
   if (mProgressEnabled == mapJobData.isEmpty())
   {
     mProgressEnabled = !mapJobData.isEmpty();
-    KMBroadcastStatus::instance()->setStatusProgressEnable( mProgressEnabled );
+    KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
+      mProgressEnabled );
     if (!mProgressEnabled) kernel->filterMgr()->cleanup();
   }
   mIdle = FALSE;
@@ -397,7 +398,8 @@ void KMAcctImap::displayProgress()
   }
   if (total > mTotal) mTotal = total;
   done += mTotal - total;
-  KMBroadcastStatus::instance()->setStatusProgressPercent( 100*done / mTotal );
+  KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
+    100*done / mTotal );
 }
 
 

@@ -39,20 +39,37 @@ void KMBroadcastStatus::setStatusMsg( const QString& message )
   emit statusMsg( message );
 }
 
-void KMBroadcastStatus::setStatusProgressEnable( bool enable )
+void KMBroadcastStatus::setStatusProgressEnable( const QString &id,
+  bool enable )
 {
-  emit statusProgressEnable( enable );
+  bool wasEmpty = ids.isEmpty();
+  if (enable) ids.insert(id, 0);
+  else ids.remove(id);
+  if (!wasEmpty && !ids.isEmpty())
+    setStatusProgressPercent("", 0);
+  else
+    emit statusProgressEnable( !ids.isEmpty() );
 }
 
-void KMBroadcastStatus::setStatusProgressPercent( unsigned long percent )
+void KMBroadcastStatus::setStatusProgressPercent( const QString &id,
+  unsigned long percent )
 {
-  emit statusProgressPercent( percent );
+  if (!id.isEmpty()) ids.insert(id, percent);
+  unsigned long sum = 0, count = 0;
+  for (QMap<QString,unsigned long>::iterator it = ids.begin();
+    it != ids.end(); it++)
+  {
+    sum += *it;
+    count++;
+  }
+  emit statusProgressPercent( sum / count );
 }
 
 void KMBroadcastStatus::reset()
 {
   abortRequested_ = false;
-  emit resetRequested();
+  if (ids.isEmpty())
+    emit resetRequested();
 }
 
 bool KMBroadcastStatus::abortRequested()

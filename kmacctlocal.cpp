@@ -169,7 +169,7 @@ void KMAcctLocal::processNewMail(bool)
   QString statusMsgStub = i18n("Moving message %3 of %2 from %1.")
     .arg(mailFolder.location()).arg(num);
 
-  KMBroadcastStatus::instance()->setStatusProgressEnable( true );
+  KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
   for (i=0; i<num; i++)
   {
 
@@ -180,7 +180,8 @@ void KMAcctLocal::processNewMail(bool)
 
     QString statusMsg = statusMsgStub.arg(i);
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
-    KMBroadcastStatus::instance()->setStatusProgressPercent( (i*100) / num );
+    KMBroadcastStatus::instance()->setStatusProgressPercent( "L" + mName,
+      (i*100) / num );
 
     msg = mailFolder.take(0);
     if (msg)
@@ -202,7 +203,7 @@ void KMAcctLocal::processNewMail(bool)
     }
 
   }
-  KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+  KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, false );
   KMBroadcastStatus::instance()->reset();
 
   if (addedOk)
