@@ -470,13 +470,15 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                            "(for tasks, this setting is only used for alarms).\n\n"
                            "Example use cases: if the boss shares a folder with his secretary, "
                            "only the boss should be marked as busy for his meetings, so he should "
-                           "select \"Owner\".\n"
+                           "select \"Admins\", since the secretary has no admin rights on the folder.\n"
                            "On the other hand if a working group shares a Calendar for "
                            "group meetings, all readers of the folders should be marked "
-                           "as busy for meetings." ) );
+                           "as busy for meetings.\n"
+                           "A company-wide folder with optional events in it would use \"Nobody\" "
+                           "since it is not known who will go to those events." ) );
 
     mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
-    mIncidencesForComboBox->insertItem( i18n( "Owner of this folder" ) );
+    mIncidencesForComboBox->insertItem( i18n( "Admins of this folder" ) );
     mIncidencesForComboBox->insertItem( i18n( "All readers of this folder" ) );
 
     //connect ( mIncidencesForComboBox, SIGNAL ( activated( int ) ),
