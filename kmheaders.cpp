@@ -282,7 +282,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   kbp->busy();
   top = topItem();
 
-  destFolder->open();
+  if (destFolder) destFolder->open();
   msgList = selectedMsgs(msgId);
   doUpd = (msgList->count() > 1);
   if (doUpd) setAutoUpdate(FALSE);
@@ -305,7 +305,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   setCurrentMsg(cur);
   setTopItem(top);
 
-  destFolder->close();
+  if (destFolder) destFolder->close();
   kbp->idle();
 }
 
