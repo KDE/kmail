@@ -15,6 +15,7 @@ class ConfigureDialog;
 class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
+class KMFolderTreeItem;
 class KMHeaders;
 class KMReaderWin;
 class QSplitter;
@@ -68,7 +69,7 @@ public:
   // be moved into the given folder, otherwise messages will be
   // copied.
   // Am empty KMMenuToFolder must be passed in.
-  virtual QPopupMenu* folderToPopupMenu(KMFolderDir* aFolderDir,
+  virtual QPopupMenu* folderToPopupMenu(KMFolderTreeItem* fti,
 					bool move,
 					QObject *receiver,
 					KMMenuToFolder *aMenuToFolder,

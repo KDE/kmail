@@ -1761,15 +1761,15 @@ void KMMainWin::copySelectedToFolder(int menuId )
 
 
 //-----------------------------------------------------------------------------
-QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
+QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 					 bool move,
 					 QObject *receiver,
 					 KMMenuToFolder *aMenuToFolder,
 					 QPopupMenu *menu )
 {
-  KMFolderNode *folderNode;
-  KMFolder* folder;
-
+  int menuId;
+  QString label;
+  if (!fti) fti = static_cast<KMFolderTreeItem*>(mFolderTree->firstChild());
   if (move)
   {
     disconnect(menu, SIGNAL(activated(int)), receiver,
@@ -1782,26 +1782,35 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
     connect(menu, SIGNAL(activated(int)), receiver,
              SLOT(copySelectedToFolder(int)));
   }
-  for (folderNode = aFolderDir->first();
-       folderNode != NULL;
-       folderNode = aFolderDir->next())
-    if (!folderNode->isDir()) {
-      folder = static_cast<KMFolder*>(folderNode);
 
-      QString label(folder->label());
+  if (fti->folder && !fti->folder->isDir())
+  {
+    if (move) menuId = menu->insertItem(i18n("Move to this folder"));
+    else menuId = menu->insertItem(i18n("Copy to this folder"));
+    aMenuToFolder->insert( menuId, fti->folder );
+    menu->insertSeparator();
+  }
+  fti = static_cast<KMFolderTreeItem*>(fti->firstChild());
+  while (fti)
+  {
+    if (fti->folder)
+    {
+      label = fti->text(0);
       label.replace(QRegExp("&"),QString("&&"));
-      int menuId = menu->insertItem(label);
-      aMenuToFolder->insert( menuId, folder );
-
-      KMFolderDir *child = folder->child();
-      if (child && child->first()) {
-	QPopupMenu *subMenu = folderToPopupMenu( child, move, receiver,
-						 aMenuToFolder,
-						 new QPopupMenu() );
-	// add an item to the top of the submenu somehow subMenu
-	menu->insertItem(i18n("%1 child").arg(folder->label()), subMenu);
+      if (fti->firstChild())
+      {
+        QPopupMenu *subMenu = folderToPopupMenu(fti, move, receiver,
+          aMenuToFolder, new QPopupMenu());
+        menu->insertItem(label, subMenu);
+      } else
+      if (!fti->folder->isDir())
+      {
+        menuId = menu->insertItem(label);
+        aMenuToFolder->insert( menuId, fti->folder );
       }
     }
+    fti = static_cast<KMFolderTreeItem*>(fti->nextSibling());
+  }
   return menu;
 }
 
@@ -1809,12 +1818,11 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
 //-----------------------------------------------------------------------------
 void KMMainWin::updateMessageMenu()
 {
-  KMFolderDir *dir = &kernel->folderMgr()->dir();
   mMenuToFolder.clear();
   moveMenu->clear();
-  folderToPopupMenu( dir, TRUE, this, &mMenuToFolder, moveMenu );
+  folderToPopupMenu( NULL, TRUE, this, &mMenuToFolder, moveMenu );
   copyMenu->clear();
-  folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, copyMenu );
+  folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, copyMenu );
 }
 
 

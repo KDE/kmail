@@ -588,8 +588,10 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
     mFolder = aFolder;
 
-    mOwner->editAction->setEnabled(mFolder ?  ( (mFolder == kernel->draftsFolder()) || (mFolder == kernel->outboxFolder()) ): false );
-
+    mOwner->editAction->setEnabled(mFolder ?  ( (mFolder ==
+      kernel->draftsFolder()) || (mFolder == kernel->outboxFolder()) ): false );
+    mOwner->replyListAction->setEnabled(mFolder ? mFolder->isMailingList() :
+      false);
 
     if (mFolder)
     {
@@ -2197,28 +2199,12 @@ void KMHeaders::slotRMB()
 
   QPopupMenu *menu = new QPopupMenu;
 
-  /* Very obscure feature, strange implementation
-     TODO: Reimplement this.
-  if (colId == 0) // popup status menu
-  {
-    connect(menu, SIGNAL(activated(int)), topLevelWidget(),
-          SLOT(slotSetMsgStatus(int)));
-    menu->insertItem(i18n("New"), (int)KMMsgStatusNew);
-    menu->insertItem(i18n("Unread"), (int)KMMsgStatusUnread);
-    menu->insertItem(i18n("Read"), (int)KMMsgStatusOld);
-    menu->insertItem(i18n("Replied"), (int)KMMsgStatusReplied);
-    menu->insertItem(i18n("Queued"), (int)KMMsgStatusQueued);
-    menu->insertItem(i18n("Sent"), (int)KMMsgStatusSent);
-  }
-  */
-
-  KMFolderDir *dir = &kernel->folderMgr()->dir();
   mMenuToFolder.clear();
 
   QPopupMenu *msgMoveMenu = new QPopupMenu();
-  mOwner->folderToPopupMenu( dir, TRUE, this, &mMenuToFolder, msgMoveMenu );
+  mOwner->folderToPopupMenu( NULL, TRUE, this, &mMenuToFolder, msgMoveMenu );
   QPopupMenu *msgCopyMenu = new QPopupMenu();
-  mOwner->folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, msgCopyMenu );
+  mOwner->folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, msgCopyMenu );
   QPopupMenu *setStatusMenu = new QPopupMenu();
 
   if ((mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder()))
