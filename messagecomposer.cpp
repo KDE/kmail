@@ -42,14 +42,25 @@
 #include "kmsender.h"
 #include "kmfolder.h"
 #include "kmfoldercombobox.h"
+#include "keyresolver.h"
+
 #include <libkdepim/identity.h>
 #include <libkdepim/identitymanager.h>
-#include <libkdepim/identitycombo.h>
 #include <libkdepim/email.h>
 
+#include <ui/keyselectiondialog.h>
+#include <ui/keyapprovaldialog.h>
+#include <kleo/cryptobackendfactory.h>
+#include <kleo/keylistjob.h>
+#include <kleo/encryptjob.h>
+#include <kleo/signencryptjob.h>
+#include <kleo/signjob.h>
+
+#include <kmime_util.h>
+#include <kmime_codecs.h>
 #include <kpgpblock.h>
+
 #include <mimelib/mimepp.h>
-#include <cryptplugwrapper.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -59,6 +70,84 @@
 #include <qfile.h>
 #include <qtextcodec.h>
 #include <qtimer.h>
+
+#include <gpgmepp/key.h>
+#include <gpgmepp/keylistresult.h>
+#include <gpgmepp/encryptionresult.h>
+#include <gpgmepp/signingresult.h>
+#include <gpgmepp/context.h>
+
+#include <algorithm>
+#include <memory>
+
+// ## keep default values in sync with configuredialog.cpp, Security::CryptoTab::setup()
+// This should be ported to a .kcfg one day I suppose (dfaure).
+
+static inline bool warnSendUnsigned() {
+    KConfigGroup group( KMKernel::config(), "Composer" );
+    return group.readBoolEntry( "crypto-warning-unsigned", true );
+}
+static inline bool warnSendUnencrypted() {
+    KConfigGroup group( KMKernel::config(), "Composer" );
+    return group.readBoolEntry( "crypto-warning-unencrypted", true );
+}
+static inline bool saveMessagesEncrypted() {
+    KConfigGroup group( KMKernel::config(), "Composer" );
+    return group.readBoolEntry( "crypto-store-encrypted", true );
+}
+static inline bool encryptToSelf() {
+    // return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
+    KConfigGroup group( KMKernel::config(), "Composer" );
+    return group.readBoolEntry( "crypto-encrypt-to-self", true );
+}
+static inline bool showKeyApprovalDialog() {
+    KConfigGroup group( KMKernel::config(), "Composer" );
+    return group.readBoolEntry( "crypto-show-keys-for-approval", true );
+}
+
+static inline int encryptKeyNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const int num = composer.readNumEntry( "crypto-warn-encr-key-near-expire-int", 14 );
+  return kMax( 1, num );
+}
+
+static inline int signingKeyNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const int num = composer.readNumEntry( "crypto-warn-sign-key-near-expire-int", 14 );
+  return kMax( 1, num );
+}
+
+static inline int encryptRootCertNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const int num = composer.readNumEntry( "crypto-warn-encr-root-near-expire-int", 14 );
+  return kMax( 1, num );
+}
+
+static inline int signingRootCertNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const int num = composer.readNumEntry( "crypto-warn-sign-root-near-expire-int", 14 );
+  return kMax( 1, num );
+}
+
+static inline int encryptChainCertNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const int num = composer.readNumEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 );
+  return kMax( 1, num );
+}
+
+static inline int signingChainCertNearExpiryWarningThresholdInDays() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+  const int num = composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 );
+  return kMax( 1, num );
+}
+
+static const Kleo::CryptoMessageFormat formats[] = {
+  Kleo::OpenPGPMIMEFormat,
+  Kleo::SMIMEFormat,
+  Kleo::SMIMEOpaqueFormat,
+  Kleo::InlineOpenPGPFormat,
+};
+static const unsigned int numFormats = sizeof formats / sizeof *formats ;
 
 
 /*
@@ -77,9 +166,9 @@
 
   There are two types of jobs: synchronous and asynchronous:
 
-  A synchronous job simply implements the execute() method and performs
-  it's operation there. When execute returns, this returns to the event
-  queue and returns to executes the next job.
+  A synchronous job simply implments the execute() method and performs
+  it's operation there and sets mComposer->mRc to false if the compose
+  queue should be canceled.
 
   An asynchronous job only sets up and starts it's operation. Before
   returning, it connects to the result signals of the operation
@@ -87,12 +176,6 @@
   to true. This makes the scheduler return to the event loop. The job
   is now responsible for giving control back to the scheduler by
   calling mComposer->doNextJob().
-
-  If a problem occurs, set mComposer->mRc to false, and the job
-  queue be stopped.
-
-  If mRc is set to false in an asynchronous job, you must still call
-  doNextJob(). This will do the deletion of the command queue.
 */
 
 static QString mErrorProcessingStructuringInfo =
@@ -121,12 +204,10 @@ protected:
   // Workaround for friend not being inherited
   void adjustCryptFlags() { mComposer->adjustCryptFlags(); }
   void composeMessage() { mComposer->composeMessage(); }
-  void composeMessage2() { mComposer->composeMessage2(); }
-  void composeMessage3() { mComposer->composeMessage3(); }
   void continueComposeMessage( KMMessage& msg, bool doSign, bool doEncrypt,
-                               bool ignoreBcc )
+                               Kleo::CryptoMessageFormat format )
   {
-    mComposer->continueComposeMessage( msg, doSign, doEncrypt, ignoreBcc );
+    mComposer->continueComposeMessage( msg, doSign, doEncrypt, format );
   }
 
   MessageComposer* mComposer;
@@ -152,57 +233,20 @@ public:
   }
 };
 
-class ComposeMessage2Job : public MessageComposerJob {
-public:
-  ComposeMessage2Job( MessageComposer* composer )
-    : MessageComposerJob( composer ) {}
-
-  void execute() {
-    composeMessage2();
-  }
-};
-
-class ComposeMessage3Job : public MessageComposerJob {
-public:
-  ComposeMessage3Job( MessageComposer* composer )
-    : MessageComposerJob( composer ) {}
-
-  void execute() {
-    composeMessage3();
-  }
-};
-
-class ContinueComposeMessageJob : public MessageComposerJob {
-public:
-  ContinueComposeMessageJob( MessageComposer* composer, KMMessage& msg,
-                             bool doSign, bool doEncrypt, bool ignoreBcc )
-    : MessageComposerJob( composer ), mMsg( msg ), mDoSign( doSign ),
-      mDoEncrypt( doEncrypt ), mIgnoreBcc( ignoreBcc ) {}
-
-  void execute() {
-    continueComposeMessage( mMsg, mDoSign, mDoEncrypt, mIgnoreBcc );
-  }
-
-private:
-  KMMessage& mMsg;
-  bool mDoSign, mDoEncrypt, mIgnoreBcc;
-};
-
-
 MessageComposer::MessageComposer( KMComposeWin* win, const char* name )
-  : QObject( win, name ), mComposeWin( win ), mCurrentJob( 0 )
+  : QObject( win, name ), mComposeWin( win ), mCurrentJob( 0 ),
+    mKeyResolver( 0 )
 {
 }
 
 MessageComposer::~MessageComposer()
 {
+  delete mKeyResolver; mKeyResolver = 0;
 }
 
-void MessageComposer::applyChanges( bool dontSign, bool dontEncrypt )
+void MessageComposer::applyChanges( bool disableCrypto )
 {
   // Do the initial setup
-  mDisableBreaking = false;
-
   if( getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != 0 ) {
     QCString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
     mDebugComposerCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
@@ -212,13 +256,10 @@ void MessageComposer::applyChanges( bool dontSign, bool dontEncrypt )
     kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = FALSE" << endl;
   }
 
-  mDontSign = !mComposeWin->mSignAction->isChecked() ||
-    mComposeWin->mNeverSign || dontSign;
-  mDontEncrypt = !mComposeWin->mEncryptAction->isChecked() ||
-    mComposeWin->mNeverEncrypt || dontEncrypt;
-
   mHoldJobs = false;
   mRc = true;
+
+  mDisableCrypto = disableCrypto;
 
   // 1: Read everything from KMComposeWin and set all
   //    trivial parts of the message
@@ -227,7 +268,7 @@ void MessageComposer::applyChanges( bool dontSign, bool dontEncrypt )
   // From now on, we're not supposed to read from the composer win
   // TODO: Make it so ;-)
 
-  // 2: Set encryption/signing options
+  // 2: Set encryption/signing options and resolve keys
   mJobs.push_back( new AdjustCryptFlagsJob( this ) );
 
   // 3: Build the message (makes the crypto jobs also)
@@ -296,14 +337,16 @@ void MessageComposer::slotDoNextJob()
 void MessageComposer::readFromComposeWin()
 {
   // Copy necessary attributes over
-  mSelectedCryptPlug = mComposeWin->mSelectedCryptPlug;
+  mDisableBreaking = false;
+
+  mSigningRequested = mComposeWin->mSignAction->isChecked();
+  mEncryptionRequested = mComposeWin->mEncryptAction->isChecked();
+
   mAutoCharset = mComposeWin->mAutoCharset;
   mCharset = mComposeWin->mCharset;
-  mMsg = mComposeWin->mMsg;
-  mAutoPgpEncrypt = mComposeWin->mAutoPgpEncrypt;
-  mPgpIdentity = mComposeWin->pgpIdentity();
-
-  mComposeWin->mBccMsgList.clear();
+  mReferenceMessage = mComposeWin->mMsg;
+  mUseOpportunisticEncryption = mComposeWin->mAutoPgpEncrypt;
+  mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
   if( mAutoCharset ) {
     QCString charset = KMMsgBase::autoDetectCharset( mCharset, KMMessage::preferredCharsets(), mComposeWin->mEditor->text() );
@@ -320,479 +363,619 @@ void MessageComposer::readFromComposeWin()
     // Also apply this to the composer window
     mComposeWin->mCharset = charset;
   }
-  mMsg->setCharset(mCharset);
+  mReferenceMessage->setCharset(mCharset);
 
-  mMsg->setTo(mComposeWin->to());
-  mMsg->setFrom(mComposeWin->from());
-  mMsg->setCc(mComposeWin->cc());
-  mMsg->setSubject(mComposeWin->subject());
-  mMsg->setReplyTo(mComposeWin->replyTo());
-  mMsg->setBcc(mComposeWin->bcc());
+  mReferenceMessage->setTo(mComposeWin->to());
+  mReferenceMessage->setFrom(mComposeWin->from());
+  mReferenceMessage->setCc(mComposeWin->cc());
+  mReferenceMessage->setSubject(mComposeWin->subject());
+  mReferenceMessage->setReplyTo(mComposeWin->replyTo());
+  mReferenceMessage->setBcc(mComposeWin->bcc());
 
-  const KPIM::Identity & id
-    = kmkernel->identityManager()->identityForUoid( mComposeWin->mIdentity->currentIdentity() );
+  const KPIM::Identity & id = mComposeWin->identity();
 
   KMFolder *f = mComposeWin->mFcc->getFolder();
   assert( f != 0 );
   if ( f->idString() == id.fcc() )
-    mMsg->removeHeaderField("X-KMail-Fcc");
+    mReferenceMessage->removeHeaderField("X-KMail-Fcc");
   else
-    mMsg->setFcc( f->idString() );
+    mReferenceMessage->setFcc( f->idString() );
 
   // set the correct drafts folder
-  mMsg->setDrafts( id.drafts() );
+  mReferenceMessage->setDrafts( id.drafts() );
 
   if (id.isDefault())
-    mMsg->removeHeaderField("X-KMail-Identity");
-  else mMsg->setHeaderField("X-KMail-Identity", QString::number( id.uoid() ));
+    mReferenceMessage->removeHeaderField("X-KMail-Identity");
+  else mReferenceMessage->setHeaderField("X-KMail-Identity", QString::number( id.uoid() ));
 
   QString replyAddr;
   if (!mComposeWin->replyTo().isEmpty()) replyAddr = mComposeWin->replyTo();
   else replyAddr = mComposeWin->from();
 
   if (mComposeWin->mRequestMDNAction->isChecked())
-    mMsg->setHeaderField("Disposition-Notification-To", replyAddr);
+    mReferenceMessage->setHeaderField("Disposition-Notification-To", replyAddr);
   else
-    mMsg->removeHeaderField("Disposition-Notification-To");
+    mReferenceMessage->removeHeaderField("Disposition-Notification-To");
 
   if (mComposeWin->mUrgentAction->isChecked()) {
-    mMsg->setHeaderField("X-PRIORITY", "2 (High)");
-    mMsg->setHeaderField("Priority", "urgent");
+    mReferenceMessage->setHeaderField("X-PRIORITY", "2 (High)");
+    mReferenceMessage->setHeaderField("Priority", "urgent");
   } else {
-    mMsg->removeHeaderField("X-PRIORITY");
-    mMsg->removeHeaderField("Priority");
+    mReferenceMessage->removeHeaderField("X-PRIORITY");
+    mReferenceMessage->removeHeaderField("Priority");
   }
 
   _StringPair *pCH;
   for (pCH  = mComposeWin->mCustHeaders.first();
        pCH != 0;
        pCH  = mComposeWin->mCustHeaders.next()) {
-    mMsg->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
+    mReferenceMessage->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
   }
 
   // we have to remember the Bcc because it might have been overwritten
   // by a custom header (therefore we can't use bcc() later) and because
   // mimelib removes addresses without domain part (therefore we can't use
-  // mMsg->bcc() later)
-  mBcc = mMsg->bcc();
+  // mReferenceMessage->bcc() later)
+  mBcc = mReferenceMessage->bcc();
+  mTo = KPIM::splitEmailAddrList( mComposeWin->to().stripWhiteSpace() );
+  mCc = KPIM::splitEmailAddrList( mComposeWin->cc().stripWhiteSpace() );
+  mBccList = KPIM::splitEmailAddrList( mBcc.stripWhiteSpace() );
+
+  for ( unsigned int i = 0 ; i < mComposeWin->mAtmList.count() ; ++i )
+    mAttachments.push_back( Attachment( mComposeWin->mAtmList.at(i),
+					mComposeWin->signFlagOfAttachment( i ),
+					mComposeWin->encryptFlagOfAttachment( i ) ) );
 }
 
 void MessageComposer::adjustCryptFlags()
 {
-  // Apply the overriding settings
-  // And apply the users choice
-  bool doSign = !mDontSign;
-  bool doEncrypt = !mDontEncrypt;
+  if ( !mDisableCrypto &&
+       mAllowedCryptoMessageFormats & Kleo::InlineOpenPGPFormat &&
+       !mAttachments.empty() &&
+       ( mSigningRequested || mEncryptionRequested ) )
+    if ( KMessageBox::warningContinueCancel( mComposeWin,
+					     i18n("The inline OpenPGP crypto message format "
+						  "does not support encryption or signing "
+						  "of attachments.\n"
+						  "Use OpenPGP/MIME instead?"),
+					     i18n("Insecure Message Format"),
+					     i18n("&Use OpenPGP/MIME") )
+	 == KMessageBox::Cancel ) {
+      mRc = false;
+      return;
+    } else {
+      mAllowedCryptoMessageFormats &= ~Kleo::InlineOpenPGPFormat;
+      mAllowedCryptoMessageFormats |= Kleo::OpenPGPMIMEFormat;
+    }
+
+  mKeyResolver =
+    new Kleo::KeyResolver( encryptToSelf(), showKeyApprovalDialog(),
+			   mUseOpportunisticEncryption, mAllowedCryptoMessageFormats,
+			   encryptKeyNearExpiryWarningThresholdInDays(),
+			   signingKeyNearExpiryWarningThresholdInDays(),
+			   encryptRootCertNearExpiryWarningThresholdInDays(),
+			   signingRootCertNearExpiryWarningThresholdInDays(),
+			   encryptChainCertNearExpiryWarningThresholdInDays(),
+			   signingChainCertNearExpiryWarningThresholdInDays() );
+
+  if ( !mDisableCrypto ) {
+    const KPIM::Identity & id = mComposeWin->identity();
+
+    QStringList encryptToSelfKeys;
+    if ( !id.pgpEncryptionKey().isEmpty() )
+      encryptToSelfKeys.push_back( id.pgpEncryptionKey() );
+    if ( !id.smimeEncryptionKey().isEmpty() )
+      encryptToSelfKeys.push_back( id.smimeEncryptionKey() );
+    if ( mKeyResolver->setEncryptToSelfKeys( encryptToSelfKeys ) != Kpgp::Ok ) {
+      mRc = false;
+      return;
+    }
+
+    QStringList signKeys;
+    if ( !id.pgpSigningKey().isEmpty() )
+      signKeys.push_back( mPGPSigningKey = id.pgpSigningKey() );
+    if ( !id.smimeSigningKey().isEmpty() )
+      signKeys.push_back( mSMIMESigningKey = id.smimeSigningKey() );
+    if ( mKeyResolver->setSigningKeys( signKeys ) != Kpgp::Ok ) {
+      mRc = false;
+      return;
+    }
+  }
+
+  mKeyResolver->setPrimaryRecipients( mTo + mCc );
+  mKeyResolver->setSecondaryRecipients( mBccList );
 
   // check settings of composer buttons *and* attachment check boxes
-  bool doSignCompletely    = doSign;
-  bool doEncryptCompletely = doEncrypt;
-  bool doEncryptPartially  = doEncrypt;
-  if( mSelectedCryptPlug && ( !mComposeWin->mAtmList.isEmpty() ) ) {
-    int idx=0;
-    KMMessagePart *attachPart;
-    for( attachPart = mComposeWin->mAtmList.first();
-         attachPart;
-         attachPart=mComposeWin->mAtmList.next(), ++idx ) {
-      if( mComposeWin->encryptFlagOfAttachment( idx ) ) {
-        doEncryptPartially = true;
-      }
-      else {
-        doEncryptCompletely = false;
-      }
-      if( !mComposeWin->signFlagOfAttachment( idx ) )
-        doSignCompletely = false;
-    }
+  bool doSignCompletely    = mSigningRequested;
+  bool doEncryptCompletely = mEncryptionRequested;
+  for ( unsigned int idx = 0 ; idx < mAttachments.size() ; ++idx ) {
+    if ( mAttachments[idx].encrypt )
+      mEncryptionRequested = true;
+    else
+      doEncryptCompletely = false;
+    if ( mAttachments[idx].sign )
+      mSigningRequested = true;
+    else
+      doSignCompletely = false;
   }
 
-  if( !doSignCompletely ) {
-    if( mSelectedCryptPlug ) {
-      // note: only ask for signing if "Warn me" flag is set! (khz)
-      if( mSelectedCryptPlug->warnSendUnsigned() && !mDontSign ) {
-        int ret =
-        KMessageBox::warningYesNoCancel( mComposeWin,
-          QString( "<qt><b>"
-            + i18n("Warning:")
-            + "</b><br>"
-            + ((doSign && !doSignCompletely)
-              ? i18n("You specified to not sign some parts of this message, but"
-                     " you wanted to be warned not to send unsigned messages.")
-              : i18n("You specified to not sign this message, but"
-                     " you wanted to be warned not to send unsigned messages.") )
-            + "<br>&nbsp;<br><b>"
-            + i18n("Sign all parts of this message?")
-            + "</b></qt>" ),
-          i18n("Signature Warning"),
-          KGuiItem( i18n("&Sign All Parts") ),
-          KGuiItem( i18n("Send &as is") ) );
-        if( ret == KMessageBox::Cancel ) {
-          mRc = false;
-          return;
-        } else if( ret == KMessageBox::Yes ) {
-          doSign = true;
-          doSignCompletely = true;
-        }
-      }
-    } else {
-      // ask if the message should be encrypted via old build-in pgp code
-      // pending (who ever wants to implement it)
-    }
-  }
+  mDoSign = !mDisableCrypto && determineWhetherToSign( doSignCompletely );
 
-  if( !mDontEncrypt ) {
-    // check whether all encrypted messages should be encrypted to self
-    bool bEncryptToSelf = mSelectedCryptPlug
-      ? mSelectedCryptPlug->alwaysEncryptToSelf()
-      : Kpgp::Module::getKpgp()->encryptToSelf();
-    // check whether we have the user's key if necessary
-    bool bEncryptionPossible = !bEncryptToSelf || !mPgpIdentity.isEmpty();
-    // check whether we are using OpenPGP (built-in or plug-in)
-    bool bUsingOpenPgp = !mSelectedCryptPlug ||
-      ( mSelectedCryptPlug &&
-        ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) );
-    // only try automatic encryption if all of the following conditions hold
-    // a) the user enabled automatic encryption
-    // b) we have the user's key if he wants to encrypt to himself
-    // c) we are using OpenPGP
-    // d) no message part is marked for encryption
-    if( mAutoPgpEncrypt && bEncryptionPossible && bUsingOpenPgp &&
-        !doEncryptPartially ) {
-      // check if encryption is possible and if yes suggest encryption
-      // first determine the complete list of recipients
-      QString _to = mComposeWin->to().simplifyWhiteSpace();
-      if( !mComposeWin->cc().isEmpty() ) {
-        if( !_to.isEmpty() && !_to.endsWith(",") )
-          _to += ",";
-        _to += mComposeWin->cc().simplifyWhiteSpace();
-      }
-      if( !mBcc.isEmpty() ) {
-        if( !_to.isEmpty() && !_to.endsWith(",") )
-          _to += ",";
-        _to += mBcc.simplifyWhiteSpace();
-      }
-      QStringList allRecipients = KPIM::splitEmailAddrList(_to);
-      // now check if encrypting to these recipients is possible and desired
-      Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-      int status = pgp->encryptionPossible( allRecipients );
-      if( 1 == status ) {
-        // encrypt all message parts
-        doEncrypt = true;
-        doEncryptCompletely = true;
-      } else if( 2 == status ) {
-        // the user wants to be asked or has to be asked
-        KCursorSaver idle(KBusyPtr::idle());
-        int ret;
-        if( doSign )
-          ret = KMessageBox::questionYesNoCancel( mComposeWin,
-                                                  i18n("<qt><p>You have a trusted OpenPGP key for every "
-                                                       "recipient of this message and the message will "
-                                                       "be signed.</p>"
-                                                       "<p>Should this message also be "
-                                                       "encrypted?</p></qt>"),
-                                                  i18n("Encrypt Message?"),
-                                                  KGuiItem( i18n("Sign && &Encrypt") ),
-                                                  KGuiItem( i18n("&Sign Only") ) );
-        else
-          ret = KMessageBox::questionYesNoCancel( mComposeWin,
-                                                  i18n("<qt><p>You have a trusted OpenPGP key for every "
-                                                       "recipient of this message;</p>"
-                                                       "<p>should this message be encrypted?</p></qt>"),
-                                                  i18n("Encrypt Message?"),
-                                                  KGuiItem( i18n("&Encrypt") ),
-                                                  KGuiItem( i18n("&Do not Encrypt") ) );
-        if( KMessageBox::Cancel == ret ) {
-          mRc = false;
-          return;
-        } else if( KMessageBox::Yes == ret ) {
-          // encrypt all message parts
-          doEncrypt = true;
-          doEncryptCompletely = true;
-        }
-      } else if( status == -1 ) {
-        // warn the user that there are conflicting encryption preferences
-        KCursorSaver idle(KBusyPtr::idle());
-        int ret =
-          KMessageBox::warningYesNoCancel( mComposeWin,
-                                           i18n("<qt><p>There are conflicting encryption "
-                                                "preferences;</p>"
-                                                "<p>should this message be encrypted?</p></qt>"),
-                                           i18n("Encrypt Message?"),
-                                           KGuiItem( i18n("&Encrypt") ),
-                                           KGuiItem( i18n("&Do not Encrypt") ) );
-        if( KMessageBox::Cancel == ret ) {
-          mRc = false;
-          return;
-        } else if( KMessageBox::Yes == ret ) {
-          // encrypt all message parts
-          doEncrypt = true;
-          doEncryptCompletely = true;
-        }
-      }
-    } else if( !doEncryptCompletely && mSelectedCryptPlug ) {
-      // note: only ask for encrypting if "Warn me" flag is set! (khz)
-      if( mSelectedCryptPlug->warnSendUnencrypted() ) {
-        int ret =
-          KMessageBox::warningYesNoCancel( mComposeWin,
-                                           QString( "<qt><b>"
-                                                    + i18n("Warning:")
-                                                    + "</b><br>"
-                                                    + ((doEncrypt && !doEncryptCompletely)
-                                                       ? i18n("You specified to not encrypt some parts of this message, but"
-                                                              " you wanted to be warned not to send unencrypted messages.")
-                                                       : i18n("You specified to not encrypt this message, but"
-                                                              " you wanted to be warned not to send unencrypted messages.") )
-                                                    + "<br>&nbsp;<br><b>"
-                                                    + i18n("Encrypt all parts of this message?")
-                                                    + "</b></qt>" ),
-                                           i18n("Encryption Warning"),
-                                           KGuiItem( i18n("&Encrypt All Parts") ),
-                                           KGuiItem( i18n("Send &as is") ) );
-        if( ret == KMessageBox::Cancel ) {
-          mRc = false;
-          return;
-        } else if( ret == KMessageBox::Yes ) {
-          doEncrypt = true;
-          doEncryptCompletely = true;
-        }
-      }
+  if ( !mRc )
+    return;
 
-      /*
-        note: Processing the mSelectedCryptPlug->encryptEmail() flag here would
-        be absolutely wrong: this is used for specifying
-        if messages should be encrypted 'in general'.
-        --> This sets the initial state of a freshly started Composer.
-        --> This does *not* mean overriding user setting made while
-        editing in that composer window!         (khz, 2002/06/26)
-      */
-    }
-  }
+  mDoEncrypt = !mDisableCrypto && determineWhetherToEncrypt( doEncryptCompletely );
 
-  // if necessary mark all attachments for signing/encryption
-  if( mSelectedCryptPlug && ( !mComposeWin->mAtmList.isEmpty() ) &&
-      ( doSignCompletely || doEncryptCompletely ) ) {
-    for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mComposeWin->mAtmItemList.first();
-         lvi; lvi = (KMAtmListViewItem*)mComposeWin->mAtmItemList.next() ) {
-      if( doSignCompletely )
-        lvi->setSign( true );
-      if( doEncryptCompletely )
-        lvi->setEncrypt( true );
-    }
-  }
+  if ( !mRc )
+    return;
+
+  // resolveAllKeys needs to run even if mDisableCrypto == true, since
+  // we depend on it collecting all recipients into one dummy
+  // SplitInfo to avoid special-casing all over the place:
+  if ( mKeyResolver->resolveAllKeys( mDoSign, mDoEncrypt ) != Kpgp::Ok )
+    mRc = false;
 }
+
+bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
+  bool sign = false;
+  switch ( mKeyResolver->checkSigningPreferences( mSigningRequested ) ) {
+  case Kleo::DoIt:
+    if ( !mSigningRequested ) {
+      markAllAttachmentsForSigning( true );
+      return true;
+    }
+    sign = true;
+    break;
+  case Kleo::DontDoIt:
+    sign = false;
+    break;
+  case Kleo::AskOpportunistic:
+    assert( 0 );
+  case Kleo::Ask:
+    {
+      // the user wants to be asked or has to be asked
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = i18n("Examination of the recipient's signing preferences "
+			       "yielded that you be asked whether or not to sign "
+			       "this message.\n"
+			       "Sign this message?");
+      switch ( KMessageBox::questionYesNoCancel( mComposeWin, msg,
+						 i18n("Sign Message?"),
+						 i18n("to sign","&Sign"),
+						 i18n("Do &Not Sign") ) ) {
+      case KMessageBox::Cancel:
+	mRc = false;
+	return false;
+      case KMessageBox::Yes:
+	markAllAttachmentsForSigning( true );
+	return true;
+      case KMessageBox::No:
+	markAllAttachmentsForSigning( false );
+	return false;
+      }
+    }
+    break;
+  case Kleo::Conflict:
+    {
+      // warn the user that there are conflicting signing preferences
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = i18n("There are conflicting signing preferences "
+			       "for these recipients.\n"
+			       "Sign this message?");
+      switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
+						i18n("Sign Message?"),
+						i18n("to sign","&Sign"),
+						i18n("Do &Not Sign") ) ) {
+      case KMessageBox::Cancel:
+	mRc = false;
+	return false;
+      case KMessageBox::Yes:
+	markAllAttachmentsForSigning( true );
+	return true;
+      case KMessageBox::No:
+	markAllAttachmentsForSigning( false );
+	return false;
+      }
+    }
+    break;
+  case Kleo::Impossible:
+    {
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = i18n("You have requested to sign this message, "
+			       "but no valid signing keys have been configured "
+			       "for this identity.\n"
+			       "If you choose to continue, "
+			       "no signing will be performed.");
+      if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
+					       i18n("Send &Unsigned") )
+	   == KMessageBox::Cancel ) {
+	mRc = false;
+	return false;
+      } else {
+	markAllAttachmentsForSigning( false );
+	return false;
+      }
+    }
+  }
+
+  if ( !sign || !doSignCompletely ) {
+    if ( warnSendUnsigned() ) {
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = sign && !doSignCompletely
+	? i18n("Some parts of this message will not be signed.\n"
+	       "Sending only partially signed messages might violate site policy.\n"
+	       "Sign all parts instead?") // oh, I hate this...
+	: i18n("This message will not be signed.\n"
+	       "Sending unsigned message might violate site policy.\n"
+	       "Sign message instead?") ; // oh, I hate this...
+      const QString buttonText = sign && !doSignCompletely
+	? i18n("&Sign All Parts") : i18n("&Sign") ;
+      switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
+						i18n("Unsigned Message Warning"),
+						buttonText,
+						i18n("Send &As Is") ) ) {
+      case KMessageBox::Cancel:
+	mRc = false;
+	return false;
+      case KMessageBox::Yes:
+	markAllAttachmentsForSigning( true );
+	return true;
+      case KMessageBox::No:
+	return sign || doSignCompletely;
+      }
+    }
+  }
+
+  return sign || doSignCompletely ;
+}
+
+bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
+  bool encrypt = false;
+  bool opportunistic = false;
+  switch ( mKeyResolver->checkEncryptionPreferences( mEncryptionRequested ) ) {
+  case Kleo::DoIt:
+    if ( !mEncryptionRequested ) {
+      markAllAttachmentsForEncryption( true );
+      return true;
+    }
+    encrypt = true;
+    break;
+  case Kleo::DontDoIt:
+    encrypt = false;
+    break;
+  case Kleo::AskOpportunistic:
+    opportunistic = true;
+    // fall through...
+  case Kleo::Ask:
+    {
+      // the user wants to be asked or has to be asked
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = opportunistic
+	? i18n("Valid trusted encryption keys were found for all recipients.\n"
+	       "Encrypt this message?")
+	: i18n("Examination of the recipient's encryption preferences "
+	       "yielded that you be asked whether or not to encrypt "
+	       "this message.\n"
+	       "Encrypt this message?");
+      switch ( KMessageBox::questionYesNoCancel( mComposeWin, msg,
+						 i18n("Encrypt Message?"),
+						 mDoSign
+						 ? i18n("Sign && &Encrypt")
+						 : i18n("&Encrypt"),
+						 mDoSign
+						 ? i18n("&Sign Only")
+						 : i18n("&Send As Is") ) ) {
+      case KMessageBox::Cancel:
+	mRc = false;
+	return false;
+      case KMessageBox::Yes:
+	markAllAttachmentsForEncryption( true );
+	return true;
+      case KMessageBox::No:
+	markAllAttachmentsForEncryption( false );
+	return false;
+      }
+    }
+    break;
+  case Kleo::Conflict:
+    {
+      // warn the user that there are conflicting encryption preferences
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = i18n("There are conflicting encryption references "
+			       "for these recipients.\n"
+			       "Encrypt this message?");
+      switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
+						i18n("Encrypt Message?"),
+						i18n("&Encrypt"),
+						i18n("Do &Not Encrypt") ) ) {
+      case KMessageBox::Cancel:
+	mRc = false;
+	return false;
+      case KMessageBox::Yes:
+	markAllAttachmentsForEncryption( true );
+	return true;
+      case KMessageBox::No:
+	markAllAttachmentsForEncryption( false );
+	return false;
+      }
+    }
+    break;
+  case Kleo::Impossible:
+    {
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = i18n("You have requested to encrypt this message, "
+			       "and to encrypt a copy to yourself, "
+			       "but no valid trusted encryption keys have been "
+			       "configured for this identity.");
+      if ( KMessageBox::warningContinueCancel( mComposeWin, msg,
+					       i18n("Send &Unencrypted") )
+	   == KMessageBox::Cancel ) {
+	mRc = false;
+	return false;
+      } else {
+	markAllAttachmentsForEncryption( false );
+	return false;
+      }
+    }
+  }
+
+  if ( !encrypt || !doEncryptCompletely ) {
+    if ( warnSendUnencrypted() ) {
+      const KCursorSaver idle( KBusyPtr::idle() );
+      const QString msg = !doEncryptCompletely
+	? i18n("Some parts of this message will not be encrypted.\n"
+	       "Sending only partially encrypted messages might violate site policy "
+	       "and/or leak sensitive information.\n"
+	       "Encrypt all parts instead?") // oh, I hate this...
+	: i18n("This message will not be encrypted.\n"
+	       "Sending unencrypted messages might violate site policy and/or "
+	       "leak senditive information.\n"
+	       "Encrypt messages instead?") ; // oh, I hate this...
+      const QString buttonText = !doEncryptCompletely
+	? i18n("&Encrypt All Parts") : i18n("&Encrypt") ;
+      switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
+						i18n("Unencrypted Message Warning"),
+						buttonText,
+						mDoSign
+						? i18n("&Sign Only")
+						: i18n("&Send As Is") ) ) {
+      case KMessageBox::Cancel:
+	mRc = false;
+	return false;
+      case KMessageBox::Yes:
+	markAllAttachmentsForEncryption( true );
+	return true;
+      case KMessageBox::No:
+	return encrypt || doEncryptCompletely;
+      }
+    }
+  }
+
+  return encrypt || doEncryptCompletely ;
+}
+
+void MessageComposer::markAllAttachmentsForSigning( bool sign ) {
+  for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+    it->sign = sign;
+}
+
+void MessageComposer::markAllAttachmentsForEncryption( bool enc ) {
+  for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+    it->encrypt = enc;
+}
+
 
 void MessageComposer::composeMessage()
 {
-  mExtraMessage = new KMMessage( *mMsg );
-  mJobs.push_front( new ComposeMessage2Job( this ) );
-  composeMessage( *mMsg, !mDontSign, !mDontEncrypt, false );
+  for ( unsigned int i = 0 ; i < numFormats ; ++i ) {
+    if ( mKeyResolver->encryptionItems( formats[i] ).empty() )
+      continue;
+    KMMessage * msg = new KMMessage( *mReferenceMessage );
+    composeMessage( *msg, mDoSign, mDoEncrypt, formats[i] );
+    if ( !mRc )
+      return;
+  }
 }
 
-void MessageComposer::composeMessage2()
-{
-  bool saveMessagesEncrypted = mSelectedCryptPlug ?
-    mSelectedCryptPlug->saveMessagesEncrypted() : true;
+//
+// These are replacements for StructuringInfo(Wrapper):
+//
 
-  // note: The following define is specified on top of this file. To compile
-  //       a less strict version of KMail just comment it out there above.
-#ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01
-  // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
-  // of german government:
-  // --> Encrypted messages *must* be stored in unencrypted form after sending.
-  //     ( "Abspeichern ausgegangener Nachrichten in entschluesselter Form" )
-  // --> Signed messages *must* be stored including the signature after sending.
-  //     ( "Aufpraegen der Signatur" )
-  // So we provide the user with a non-deactivateble warning and let her/him
-  // choose to obey the rules or to ignore them explicitly.
-  if( mSelectedCryptPlug
-      && ( 0 <= mSelectedCryptPlug->libName().find( "smime", 0, false ) )
-      && ( doEncrypt && saveMessagesEncrypted ) ) {
-    QString headTxt = i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
-    QString encrTxt = i18n("Encrypted messages should be stored in unencrypted form; saving locally in encrypted form is not allowed.");
-    QString footTxt = i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
-    QString question = i18n("Store message in the recommended way?");
-    if( KMessageBox::Yes == KMessageBox::warningYesNo( mComposeWin,
-                                                       "<qt><p><b>" + headTxt + "</b><br>" + encrTxt + "</p><p>"
-                                                       + footTxt + "</p><p><b>" + question + "</b></p></qt>",
-                                                       i18n("Unsafe S/MIME Configuration"),
-                                                       KGuiItem( i18n("Save &Unencrypted") ),
-                                                       KGuiItem( i18n("Save &Encrypted") ) ) )
-      saveMessagesEncrypted = false;
+// check whether to use multipart/{signed,encrypted}
+static inline bool makeMultiMime( Kleo::CryptoMessageFormat f, bool sign ) {
+  switch ( f ) {
+  default:
+  case Kleo::InlineOpenPGPFormat:
+  case Kleo::SMIMEOpaqueFormat:   return false;
+  case Kleo::OpenPGPMIMEFormat:   return true;
+  case Kleo::SMIMEFormat:         return sign; // only on sign - there's no mp/encrypted for S/MIME
   }
-  kdDebug(5006) << "MessageComposer::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
-#endif
-  if( !mDontEncrypt && !saveMessagesEncrypted ) {
-    if( mSelectedCryptPlug ) {
-      for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mComposeWin->mAtmItemList.first();
-           entry;
-           entry = (KMAtmListViewItem*)mComposeWin->mAtmItemList.next() )
-        entry->setEncrypt( false );
-    }
-    mJobs.push_front( new ComposeMessage3Job( this ) );
-    composeMessage( *mExtraMessage, !mDontSign, false, true );
-  } else
-    delete mExtraMessage;
+}
+static inline bool makeMultiPartSigned( Kleo::CryptoMessageFormat f ) {
+  return makeMultiMime( f, true );
+}
+static inline bool makeMultiPartEncrypted( Kleo::CryptoMessageFormat f ) {
+  return makeMultiMime( f, false );
 }
 
-void MessageComposer::composeMessage3()
-{
-  mExtraMessage->cleanupHeader();
-  mMsg->setUnencryptedMsg( mExtraMessage );
-  mExtraMessage = 0;
+static inline bool makeMimeObject( Kleo::CryptoMessageFormat f, bool /*signing*/ ) {
+  return f != Kleo::InlineOpenPGPFormat;
 }
 
-
-class SignSMimeJob : public MessageComposerJob {
-public:
-  SignSMimeJob( CryptPlugWrapper* selectedCryptPlug, QCString& encodedBody,
-                uint boundaryLevel, KMMessagePart& oldBodyPart,
-                const QCString& charset, KMMessagePart *newBodyPart,
-                MessageComposer* composer )
-    : MessageComposerJob( composer ), mSelectedCryptPlug( selectedCryptPlug ),
-      mEncodedBody( encodedBody ), mBoundaryLevel( boundaryLevel ),
-      mOldBodyPart( oldBodyPart ), mCharset( charset ),
-      mNewBodyPart( newBodyPart ), mStructuring( selectedCryptPlug )
-  {
-    mBugUrl = QString::fromUtf8( mSelectedCryptPlug->bugURL() );
+static inline const char * toplevelContentType( Kleo::CryptoMessageFormat f, bool signing ) {
+  switch ( f ) {
+  default:
+  case Kleo::InlineOpenPGPFormat: return 0;
+  case Kleo::OpenPGPMIMEFormat:
+    return signing ?
+      "multipart/signed;\n\t"
+      "boundary=\"%boundary\";\n\t"
+      "protocol=\"application/pgp-signature\";\n\t"
+      "micalg=pgp-sha1" // FIXME: obtain this parameter from gpgme!
+      :
+      "multipart/encrypted;\n\t"
+      "boundary=\"%boundary\";\n\t"
+      "protocol=\"application/pgp-encrypted\""
+      ;
+  case Kleo::SMIMEFormat:
+    if ( signing )
+      return
+	"multipart/signed;\n\t"
+	"boundary=\"%boundary\";\n\t"
+	"protocol=\"application/pkcs7-signature\";\n\t"
+	"micalg=sha1"; // FIXME: obtain this parameter from gpgme!
+    // fall through (for encryption, there's no difference between
+    // SMIME and SMIMEOpaque, since there is no mp/encrypted for
+    // S/MIME):
+  case Kleo::SMIMEOpaqueFormat:
+    return signing ?
+      "application/pkcs7-mime;\n\t"
+      "smime-type=signed-data;\n\t"
+      "name=\"smime.p7m\";\n\t"
+      :
+      "application/pkcs7-mime;\n\t"
+      "smime-type=enveloped-data;\n\t"
+      "name=\"smime.p7m\";\n\t"
+      ;
   }
+}
 
-  void execute() {
-    kdDebug(5006) << "************** mEncodedBody:\n" << mEncodedBody << endl;
-
-    if( !mComposer->mSignature.isEmpty() ) {
-      mComposer->mRc = mComposer->
-        processStructuringInfo( mBugUrl, mBoundaryLevel,
-                                mOldBodyPart.contentDescription(),
-                                mOldBodyPart.typeStr(),
-                                mOldBodyPart.subtypeStr(),
-                                mOldBodyPart.contentDisposition(),
-                                mOldBodyPart.contentTransferEncodingStr(),
-                                mEncodedBody, "signature",
-                                mComposer->mSignature, mStructuring,
-                                *mNewBodyPart );
-      if( mComposer->mRc ) {
-        if( !mStructuring.data.makeMultiMime ) {
-          mNewBodyPart->setCharset( mCharset );
-        }
-      } else
-        KMessageBox::sorry( mComposer->mComposeWin,
-                            mErrorProcessingStructuringInfo );
-    } else
-      mComposer->mRc = false;
+static inline const char * toplevelContentDisposition( Kleo::CryptoMessageFormat f, bool signing ) {
+  switch ( f ) {
+  default:
+  case Kleo::InlineOpenPGPFormat:
+  case Kleo::OpenPGPMIMEFormat:
+    return 0;
+  case Kleo::SMIMEFormat:
+    if ( signing )
+      return 0;
+  case Kleo::SMIMEOpaqueFormat:
+    return "attachment; filename=\"smime.p7m\"";
   }
+}
 
-  StructuringInfoWrapper& structuringInfo() { return mStructuring; }
+static inline bool includeCleartextWhenSigning( Kleo::CryptoMessageFormat f ) {
+  return makeMultiPartSigned( f );
+}
 
-private:
-  CryptPlugWrapper* mSelectedCryptPlug;
-  QString mBugUrl;
-  QCString &mEncodedBody;
-  uint mBoundaryLevel;
-  KMMessagePart& mOldBodyPart;
-  QCString mCharset;
-  KMMessagePart* mNewBodyPart;
-  StructuringInfoWrapper mStructuring;
-};
-
-#if 0
-// This class is not yet implemented. Should get the last part of the
-// gpg signing done
-class SignOldGPGJob : public MessageComposerJob {
-public:
-  SignJob( CryptPlugWrapper* selectedCryptPlug, const QCString& encodedBody,
-           uint boundaryLevel, const KMMessagePart& oldBodyPart,
-           const QCString& charset, const QCString& pgpIdentity,
-           KMMessagePart *newBodyPart, MessageComposer* composer )
-    : MessageComposerJob( composer ), mSelectedCryptPlug( selectedCryptPlug ),
-      mEncodedBody( encodedBody ), mBoundaryLevel( boundaryLevel ),
-      mOldBodyPart( oldBodyPart ), mCharset( charset ),
-      mPgpIdentity( pgpIdentity ), mNewBodyPart( newBodyPart ) {}
-
-  void execute() {
-    adjustCryptFlags();
+static inline const char * nestedContentType( Kleo::CryptoMessageFormat f, bool signing ) {
+  switch ( f ) {
+  case Kleo::OpenPGPMIMEFormat:
+    return signing ? "application/pgp-signature" : "application/octet-stream" ;
+  case Kleo::SMIMEFormat:
+    if ( signing )
+      return "application/pkcs7-signature; name=\"smime.p7s\"";
+    // fall through:
+  default:
+  case Kleo::InlineOpenPGPFormat:
+  case Kleo::SMIMEOpaqueFormat:
+    return 0;
   }
+}
 
-private:
-  CryptPlugWrapper* mSelectedCryptPlug;
-  QCString mEncodedBody;
-  uint mBoundaryLevel;
-  KMMessagePart mOldBodyPart;
-  QCString mCharset;
-  QCString mPgpIdentity;
-  KMMessagePart *mNewBodyPart;
-};
-#endif
+static inline const char * nestedContentDisposition( Kleo::CryptoMessageFormat f, bool signing ) {
+  if ( !signing && f == Kleo::OpenPGPMIMEFormat )
+    return "inline; filename=\"msg.asc\"";
+  if ( signing && f == Kleo::SMIMEFormat )
+    return "attachment; filename=\"smime.p7s\"";
+  return 0;
+}
+
+static inline bool binaryHint( Kleo::CryptoMessageFormat f ) {
+  switch ( f ) {
+  case Kleo::SMIMEFormat:
+  case Kleo::SMIMEOpaqueFormat:
+    return true;
+  default:
+  case Kleo::OpenPGPMIMEFormat:
+  case Kleo::InlineOpenPGPFormat:
+    return false;
+  }
+}
+
+static inline bool isSMIME( Kleo::CryptoMessageFormat f ) {
+  return f == Kleo::SMIMEFormat || f == Kleo::SMIMEOpaqueFormat ;
+}
+
+static inline bool armor( Kleo::CryptoMessageFormat f ) {
+  return !binaryHint( f );
+}
+
+static inline bool textMode( Kleo::CryptoMessageFormat f ) {
+  return f == Kleo::InlineOpenPGPFormat;
+}
+
+static inline GpgME::Context::SignatureMode signingMode( Kleo::CryptoMessageFormat f ) {
+  switch ( f ) {
+  case Kleo::SMIMEOpaqueFormat:
+    return GpgME::Context::Normal;
+  case Kleo::InlineOpenPGPFormat:
+    return GpgME::Context::Clearsigned;
+  default:
+  case Kleo::SMIMEFormat:
+  case Kleo::OpenPGPMIMEFormat:
+    return GpgME::Context::Detached;
+  }
+}
+
+//
+// END replacements for StructuringInfo(Wrapper)
+//
 
 class EncryptMessageJob : public MessageComposerJob {
 public:
-  EncryptMessageJob( const KMMessage& msg, const QStringList& recipients,
+  EncryptMessageJob( KMMessage* msg, const Kleo::KeyResolver::SplitInfo & si,
                      bool doSign, bool doEncrypt, const QCString& encodedBody,
                      int boundaryLevel, const KMMessagePart& oldBodyPart,
-                     KMMessagePart* newBodyPart, MessageComposer* composer )
-    : MessageComposerJob( composer ), mRecipients( recipients ),
+                     KMMessagePart* newBodyPart, Kleo::CryptoMessageFormat format,
+		     MessageComposer* composer )
+    : MessageComposerJob( composer ), mMsg( msg ), mSplitInfo( si ),
       mDoSign( doSign ), mDoEncrypt( doEncrypt ), mEncodedBody( encodedBody ),
       mBoundaryLevel( boundaryLevel ), mOldBodyPart( oldBodyPart ),
-      mBCCMessage( true ), mNewBodyPart( newBodyPart )
-  {
-    mMsg = new KMMessage( msg );
-  }
-
-  EncryptMessageJob( KMMessage* msg, const QStringList& recipients,
-                     bool doSign, bool doEncrypt, const QCString& encodedBody,
-                     int boundaryLevel, const KMMessagePart& oldBodyPart,
-                     KMMessagePart* newBodyPart, MessageComposer* composer )
-    : MessageComposerJob( composer ), mMsg( msg ), mRecipients( recipients ),
-      mDoSign( doSign ), mDoEncrypt( doEncrypt ), mEncodedBody( encodedBody ),
-      mBoundaryLevel( boundaryLevel ), mOldBodyPart( oldBodyPart ),
-      mBCCMessage( false ), mNewBodyPart( newBodyPart ) {}
+      mNewBodyPart( newBodyPart ), mFormat( format ) {}
 
   void execute() {
     KMMessagePart tmpNewBodyPart = *mNewBodyPart;
 
     // TODO: Async call
 
-    mComposer->encryptMessage( mMsg, mRecipients, mDoSign, mDoEncrypt,
-                               mBoundaryLevel, tmpNewBodyPart );
-    if( mComposer->mRc && mBCCMessage ) {
-      mMsg->setHeaderField( "X-KMail-Recipients", mRecipients.last() );
-      mComposer->handleBCCMessage( mMsg );
+    mComposer->encryptMessage( mMsg, mSplitInfo, mDoSign, mDoEncrypt,
+                               tmpNewBodyPart, mFormat );
+    if ( !mComposer->mRc ) {
+      delete mMsg; mMsg = 0;
+      return;
     }
+    mComposer->mMessageList.push_back( mMsg );
   }
 
 private:
   KMMessage* mMsg;
-  QStringList mRecipients;
+  Kleo::KeyResolver::SplitInfo mSplitInfo;
   bool mDoSign, mDoEncrypt;
   QCString mEncodedBody;
   int mBoundaryLevel;
   KMMessagePart mOldBodyPart;
-  bool mBCCMessage;
   KMMessagePart* mNewBodyPart;
+  Kleo::CryptoMessageFormat mFormat;
 };
 
-void MessageComposer::handleBCCMessage( KMMessage* msg )
+class SetLastMessageAsUnencryptedVersionOfLastButOne : public MessageComposerJob {
+public:
+  SetLastMessageAsUnencryptedVersionOfLastButOne( MessageComposer * composer )
+    : MessageComposerJob( composer ) {}
+
+  void execute() {
+    KMMessage * last = mComposer->mMessageList.back();
+    mComposer->mMessageList.pop_back();
+    mComposer->mMessageList.back()->setUnencryptedMsg( last );
+  }
+};
+
+QCString MessageComposer::bodyText()
 {
-  mComposeWin->mBccMsgList.append( msg );
-}
-
-void MessageComposer::composeMessage( KMMessage& theMessage,
-                                      bool doSign, bool doEncrypt,
-                                      bool ignoreBcc )
-{
-#ifdef DEBUG
-  kdDebug(5006) << "entering KMComposeWin::composeMessage" << endl;
-#endif
-
-  // create informative header for those that have no mime-capable
-  // email client
-  theMessage.setBody( "This message is in MIME format." );
-
-  // preprocess the body text
   QCString body = breakLinesAndApplyCodec();
 
-  if (body.isNull()) {
-    mRc = false;
-    return;
-  }
+  if (body.isNull()) return body;
 
   if (body.isEmpty()) body = "\n"; // don't crash
 
@@ -811,6 +994,99 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     kdDebug(5006) << "Added an <LF> on the last line" << endl;
     body += "\n";
   }
+  return body;
+}
+
+void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
+                                                   bool doSign, bool doEncrypt )
+{
+  // preprocess the body text
+  QCString body = bodyText();
+  if (body.isNull()) {
+    mRc = false;
+    return;
+  }
+
+  mNewBodyPart = 0; // unused
+  mEarlyAddAttachments = false;
+  mAllAttachmentsAreInBody = false;
+
+  // set the main headers
+  theMessage.deleteBodyParts();
+  theMessage.removeHeaderField("Content-Type");
+  theMessage.removeHeaderField("Content-Transfer-Encoding");
+
+  const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos
+    = mKeyResolver->encryptionItems( Kleo::InlineOpenPGPFormat );
+  kdWarning( splitInfos.empty() )
+    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for InlineOpenPGPFormat"
+    << endl;
+  std::vector<Kleo::KeyResolver::SplitInfo>::const_iterator it;
+  for ( it = splitInfos.begin() ; it != splitInfos.end() ; ++it ) {
+    const Kleo::KeyResolver::SplitInfo& splitInfo = *it;
+    KMMessage* msg = new KMMessage( theMessage );
+    if ( doEncrypt ) {
+      Kpgp::Result result;
+      QByteArray encryptedBody;
+      if ( doSign ) {  // Sign and encrypt
+        const std::vector<GpgME::Key> signingKeys = mKeyResolver->signingKeys( Kleo::InlineOpenPGPFormat );
+        result = pgpSignedAndEncryptedMsg( encryptedBody, body, signingKeys,
+                                           splitInfo.keys, Kleo::InlineOpenPGPFormat );
+      } else { // Encrypt but don't sign
+        result = pgpEncryptedMsg( encryptedBody, body,
+                                  splitInfo.keys, Kleo::InlineOpenPGPFormat );
+      }
+      if ( result != Kpgp::Ok ) {
+        mRc = false;
+        return;
+      }
+      assert( !encryptedBody.isNull() ); // if you hit this, check gpg-agent is running, then blame gpgme.
+      mOldBodyPart.setBodyEncodedBinary( encryptedBody );
+    } else {
+      if ( doSign ) { // Sign but don't encrypt
+        pgpSignedMsg( body, Kleo::InlineOpenPGPFormat );
+        assert( !mSignature.isNull() ); // if you hit this, check gpg-agent is running, then blame gpgme.
+        mOldBodyPart.setBodyEncodedBinary( mSignature );
+      } else { // don't sign nor encrypt -> nothing to do
+        assert( !body.isNull() );
+        mOldBodyPart.setBodyEncoded( body );
+      }
+    }
+    addBodyAndAttachments( msg, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
+    mMessageList.push_back( msg );
+    if ( it == splitInfos.begin() ) {
+      if ( doEncrypt && !saveMessagesEncrypted() ) {
+        mOldBodyPart.setBodyEncoded( body );
+        KMMessage* msgUnenc = new KMMessage( theMessage );
+        addBodyAndAttachments( msgUnenc, splitInfo, false, false, mOldBodyPart, Kleo::InlineOpenPGPFormat );
+        msg->setUnencryptedMsg( msgUnenc );
+      }
+    }
+  } // end for
+}
+
+void MessageComposer::composeMessage( KMMessage& theMessage,
+                                      bool doSign, bool doEncrypt,
+                                      Kleo::CryptoMessageFormat format )
+{
+#ifdef DEBUG
+  kdDebug(5006) << "entering KMComposeWin::composeMessage" << endl;
+#endif
+  if ( format == Kleo::InlineOpenPGPFormat ) {
+    composeInlineOpenPGPMessage( theMessage, doSign, doEncrypt );
+    return;
+  }
+
+  // create informative header for those that have no mime-capable
+  // email client
+  theMessage.setBody( "This message is in MIME format." );
+
+  // preprocess the body text
+  QCString body = bodyText();
+  if (body.isNull()) {
+    mRc = false;
+    return;
+  }
 
   // set the main headers
   theMessage.deleteBodyParts();
@@ -825,21 +1101,16 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   mPreviousBoundaryLevel = 0;
 
   // create temporary bodyPart for editor text
-  // (and for all attachments, if mail is to be singed and/or encrypted)
-  mEarlyAddAttachments = mSelectedCryptPlug &&
-    ( !mComposeWin->mAtmList.isEmpty() ) && ( doSign || doEncrypt );
+  // (and for all attachments, if mail is to be signed and/or encrypted)
+  mEarlyAddAttachments = !mAttachments.empty() && ( doSign || doEncrypt );
 
   mAllAttachmentsAreInBody = mEarlyAddAttachments;
 
   // test whether there ARE attachments that can be included into the body
   if( mEarlyAddAttachments ) {
     bool someOk = false;
-    int idx;
-    KMMessagePart *attachPart;
-    for( idx=0, attachPart = mComposeWin->mAtmList.first();
-         attachPart; attachPart=mComposeWin->mAtmList.next(), ++idx )
-      if( doEncrypt == mComposeWin->encryptFlagOfAttachment( idx )
-          && doSign == mComposeWin->signFlagOfAttachment( idx ) )
+    for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+      if ( it->encrypt == doEncrypt && it->sign == doSign )
         someOk = true;
       else
         mAllAttachmentsAreInBody = false;
@@ -876,7 +1147,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     QCString textbody = breakLinesAndApplyCodec();
     mComposeWin->mEditor->setTextFormat(Qt::RichText);
     textBodyPart.setBodyAndGuessCte(textbody, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
-                                     doSign);
+				    doSign);
     DwBodyPart* textDwPart = theMessage.createDWBodyPart( &textBodyPart );
     textDwPart->Assemble();
     newbody += "--";
@@ -892,7 +1163,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // the signed body must not be 8bit encoded
     QCString htmlbody = breakLinesAndApplyCodec();
     htmlBodyPart.setBodyAndGuessCte(htmlbody, allowedCTEs, !!kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
-                                     doSign);
+				    doSign);
     DwBodyPart* htmlDwPart = theMessage.createDWBodyPart( &htmlBodyPart );
     htmlDwPart->Assemble();
     newbody += "\n--";
@@ -910,7 +1181,6 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
 
     mSaveBoundary = tmpCT.Boundary();
   }
-
 
   if( mEarlyAddAttachments ) {
     // calculate a boundary string
@@ -956,29 +1226,28 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     innerDwPart = 0;
     // add all matching Attachments
     // NOTE: This code will be changed when KMime is complete.
-    int idx = 0;
-    KMMessagePart* attachPart = mComposeWin->mAtmList.first();
-    for( ; attachPart; attachPart=mComposeWin->mAtmList.next(), ++idx ) {
-      bool bEncrypt = mComposeWin->encryptFlagOfAttachment( idx );
-      bool bSign = mComposeWin->signFlagOfAttachment( idx );
-      if( !mSelectedCryptPlug || ( ( doEncrypt == bEncrypt )
-                                   && ( doSign == bSign ) ) ) {
+    for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+      if ( it->encrypt == doEncrypt && it->sign == doSign ) {
         // signed/encrypted body parts must be either QP or base64 encoded
         // Why not 7 bit? Because the LF->CRLF canonicalization would render
         // e.g. 7 bit encoded shell scripts unusable because of the CRs.
-        if( bSign || bEncrypt ) {
-          QCString cte = attachPart->cteStr().lower();
+	//
+	// (marc) this is a workaround for the KMail bug that doesn't
+	// respect the CRLF->LF de-canonicalisation. We should
+	// eventually get rid of this:
+        if( it->sign || it->encrypt ) {
+          QCString cte = it->part->cteStr().lower();
           if( ( "8bit" == cte )
-              || ( ( attachPart->type() == DwMime::kTypeText )
+              || ( ( it->part->type() == DwMime::kTypeText )
                    && ( "7bit" == cte ) ) ) {
-            QByteArray body = attachPart->bodyDecodedBinary();
+            const QByteArray body = it->part->bodyDecodedBinary();
             QValueList<int> dummy;
-            attachPart->setBodyAndGuessCte(body, dummy, false, bSign);
+            it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
             kdDebug(5006) << "Changed encoding of message part from "
-                          << cte << " to " << attachPart->cteStr() << endl;
+                          << cte << " to " << it->part->cteStr() << endl;
           }
         }
-        innerDwPart = theMessage.createDWBodyPart( attachPart );
+        innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
         body += "\n--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
         delete innerDwPart;
@@ -997,259 +1266,123 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   mOldBodyPart.setBodyEncoded( body );
 
   if( doSign || doEncrypt ) {
-    if( mSelectedCryptPlug ) {
-      // get string representation of body part (including the attachments)
+    // get string representation of body part (including the attachments)
 
-      DwBodyPart* dwPart;
-      if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !mEarlyAddAttachments ) {
-        // if we are using richtext and not already have a mp/a body
-        // make the body a mp/a body
-        dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
-        DwHeaders& headers = dwPart->Headers();
-        DwMediaType& ct = headers.ContentType();
-        ct.SetBoundary(mSaveBoundary);
-        dwPart->Assemble();
-        mEncodedBody = dwPart->AsString().c_str();
-      }
-      else {
-        dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
-        dwPart->Assemble();
-        mEncodedBody = dwPart->AsString().c_str();
-      }
-      delete dwPart;
-      dwPart = 0;
-
-      // manually add a boundary definition to the Content-Type header
-      if( !boundaryCStr.isEmpty() ) {
-        int boundPos = mEncodedBody.find( '\n' );
-        if( -1 < boundPos ) {
-          // insert new "boundary" parameter
-          QCString bStr( ";\n  boundary=\"" );
-          bStr += boundaryCStr;
-          bStr += "\"";
-          mEncodedBody.insert( boundPos, bStr );
-        }
-      }
-
-      // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
-      // according to RfC 2633, 3.1.1 Canonicalization
-      kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-      mEncodedBody = KMMessage::lf2crlf( mEncodedBody );
-    } else {
-      mEncodedBody = body;
+    DwBodyPart* dwPart;
+    if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !mEarlyAddAttachments ) {
+      // if we are using richtext and not already have a mp/a body
+      // make the body a mp/a body
+      dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
+      DwHeaders& headers = dwPart->Headers();
+      DwMediaType& ct = headers.ContentType();
+      ct.SetBoundary(mSaveBoundary);
+      dwPart->Assemble();
+      mEncodedBody = dwPart->AsString().c_str();
     }
-  }
+    else {
+      dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
+      dwPart->Assemble();
+      mEncodedBody = dwPart->AsString().c_str();
+    }
+    delete dwPart;
+    dwPart = 0;
 
-  MessageComposerJob* signJob = 0;
-  if( doSign ) {
-    if( mSelectedCryptPlug ) {
-      // TODO: Async call
-      SignSMimeJob* job = new SignSMimeJob( mSelectedCryptPlug, mEncodedBody,
-                                            mPreviousBoundaryLevel + doEncrypt ? 3 : 2,
-                                            mOldBodyPart, mCharset,
-                                            mNewBodyPart, this );
-      signJob = job;
-      pgpSignedMsg( mEncodedBody, job->structuringInfo() );
-    } else if( !doEncrypt ) {
-      // we try calling the *old* build-in code for OpenPGP clearsigning
-      Kpgp::Block block;
-      block.setText( mEncodedBody );
-
-      // clearsign the message
-
-      // TODO: Async call
-
-      Kpgp::Result result = block.clearsign( mPgpIdentity, mCharset );
-
-      if( result == Kpgp::Ok ) {
-        mNewBodyPart->setType( mOldBodyPart.type() );
-        mNewBodyPart->setSubtype( mOldBodyPart.subtype() );
-        mNewBodyPart->setCharset( mOldBodyPart.charset() );
-        mNewBodyPart->setContentTransferEncodingStr( mOldBodyPart.contentTransferEncodingStr() );
-        mNewBodyPart->setContentDescription( mOldBodyPart.contentDescription() );
-        mNewBodyPart->setContentDisposition( mOldBodyPart.contentDisposition() );
-        mNewBodyPart->setBodyEncoded( block.text() );
-      } else {
-        mRc = false;
-        KMessageBox::sorry( mComposeWin,
-                            i18n( "<qt><p>This message could not be signed.</p>%1</qt>")
-                            .arg( mErrorNoCryptPlugAndNoBuildIn ) );
+    // manually add a boundary definition to the Content-Type header
+    if( !boundaryCStr.isEmpty() ) {
+      int boundPos = mEncodedBody.find( '\n' );
+      if( -1 < boundPos ) {
+        // insert new "boundary" parameter
+        QCString bStr( ";\n  boundary=\"" );
+        bStr += boundaryCStr;
+        bStr += "\"";
+        mEncodedBody.insert( boundPos, bStr );
       }
     }
+
+    // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
+    // according to RfC 2633, 3.1.1 Canonicalization
+    kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+    mEncodedBody = KMMessage::lf2crlf( mEncodedBody );
   }
 
-  if( signJob ) {
-    mJobs.push_front( new ContinueComposeMessageJob( this, theMessage, doSign,
-                                                     doEncrypt, ignoreBcc ) );
-    mJobs.push_front( signJob );
-  } else
-    // No signing going on, so just continue
-    continueComposeMessage( theMessage, doSign, doEncrypt, ignoreBcc );
+  if ( doSign ) {
+    pgpSignedMsg( mEncodedBody, format );
+
+    if ( mSignature.isEmpty() ) {
+      kdDebug() << "signature was empty" << endl;
+      mRc = false;
+      return;
+    }
+    mRc = processStructuringInfo( QString::null,
+				  mOldBodyPart.contentDescription(),
+				  mOldBodyPart.typeStr(),
+				  mOldBodyPart.subtypeStr(),
+				  mOldBodyPart.contentDisposition(),
+				  mOldBodyPart.contentTransferEncodingStr(),
+				  mEncodedBody, "signature",
+				  mSignature,
+				  *mNewBodyPart, true, format );
+    if ( mRc ) {
+      if ( !makeMultiPartSigned( format ) ) {
+	mNewBodyPart->setCharset( mCharset );
+      }
+    } else
+      KMessageBox::sorry( mComposeWin,
+			  mErrorProcessingStructuringInfo );
+  }
+
+  if ( !mRc )
+    return;
+
+  continueComposeMessage( theMessage, doSign, doEncrypt, format );
 }
 
 // Do the encryption stuff
 void MessageComposer::continueComposeMessage( KMMessage& theMessage,
                                               bool doSign, bool doEncrypt,
-                                              bool ignoreBcc )
+                                              Kleo::CryptoMessageFormat format )
 {
-  // determine the list of public recipients
-  QString _to = mComposeWin->to().simplifyWhiteSpace();
-  if( !mComposeWin->cc().isEmpty() ) {
-    if( !_to.isEmpty() && !_to.endsWith(",") )
-      _to += ",";
-    _to += mComposeWin->cc().simplifyWhiteSpace();
-  }
-  QStringList recipientsWithoutBcc = KPIM::splitEmailAddrList(_to);
 
-  // run encrypting(s) for Bcc recipient(s)
-  if( doEncrypt && !ignoreBcc && !theMessage.bcc().isEmpty() ) {
-    QStringList bccRecips = KPIM::splitEmailAddrList( theMessage.bcc() );
-    for( QStringList::ConstIterator it = bccRecips.begin();
-         it != bccRecips.end(); ++it ) {
-      QStringList tmpRecips( recipientsWithoutBcc );
-      tmpRecips << *it;
-      // Note: This will do the encryptions in reverse order, compared
-      // to the old synchronous code. Hopefully, this doesn't matter
-      mJobs.push_front( new EncryptMessageJob( theMessage, tmpRecips, doSign,
-                                               doEncrypt, mEncodedBody,
-                                               mPreviousBoundaryLevel,
-                                               mOldBodyPart, mNewBodyPart,
-                                               this ) );
-    }
-    theMessage.setHeaderField( "X-KMail-Recipients",
-                               recipientsWithoutBcc.join(",") );
+  const std::vector<Kleo::KeyResolver::SplitInfo> splitInfos
+    = mKeyResolver->encryptionItems( format );
+  kdWarning( splitInfos.empty() )
+    << "MessageComposer::continueComposeMessage(): splitInfos.empty() for "
+    << Kleo::cryptoMessageFormatToString( format ) << endl;
+
+  if ( !splitInfos.empty() && doEncrypt && !saveMessagesEncrypted() ) {
+    mJobs.push_front( new SetLastMessageAsUnencryptedVersionOfLastButOne( this ) );
+    mJobs.push_front( new EncryptMessageJob( new KMMessage( theMessage ),
+					     Kleo::KeyResolver::SplitInfo( splitInfos.front().recipients ), doSign,
+					     false, mEncodedBody,
+					     mPreviousBoundaryLevel,
+					     mOldBodyPart, mNewBodyPart,
+					     format, this ) );
   }
 
-  // Run encrypting for public recipient(s)
-  mJobs.push_front( new EncryptMessageJob( mMsg, recipientsWithoutBcc, doSign,
-                                           doEncrypt, mEncodedBody,
-                                           mPreviousBoundaryLevel,
-                                           mOldBodyPart, mNewBodyPart,
-                                           this ) );
-}
-
-Kpgp::Result MessageComposer::getEncryptionCertificates( const QStringList& recipients,
-                                                         QCString& encryptionCertificates )
-{
-  Kpgp::Result result = Kpgp::Ok;
-
-  // find out whether we are dealing with the OpenPGP or the S/MIME plugin
-  if ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) {
-    // We are dealing with the OpenPGP plugin. Use Kpgp to determine
-    // the encryption keys.
-    // get the OpenPGP key ID for the chosen identity
-    Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-    Kpgp::KeyIDList encryptionKeyIds;
-
-    // temporarily set encrypt_to_self to the value specified in the
-    // plugin configuration. this value is used implicitely by the
-    // function which determines the encryption keys.
-    const bool bEncryptToSelf_Old = pgp->encryptToSelf();
-    pgp->setEncryptToSelf( mSelectedCryptPlug->alwaysEncryptToSelf() );
-    result = pgp->getEncryptionKeys( encryptionKeyIds, recipients, mPgpIdentity );
-    // reset encrypt_to_self to the old value
-    pgp->setEncryptToSelf( bEncryptToSelf_Old );
-
-    if ( result == Kpgp::Ok && !encryptionKeyIds.isEmpty() ) {
-      // loop over all key IDs
-      for ( Kpgp::KeyIDList::ConstIterator it = encryptionKeyIds.begin();
-           it != encryptionKeyIds.end(); ++it ) {
-        const Kpgp::Key* key = pgp->publicKey( *it );
-        if ( key ) {
-          QCString certFingerprint = key->primaryFingerprint();
-          kdDebug(5006) << "Fingerprint of encryption key: "
-                        << certFingerprint << endl;
-          // add this key to the list of encryption keys
-          if( !encryptionCertificates.isEmpty() )
-            encryptionCertificates += '\1';
-          encryptionCertificates += certFingerprint;
-        }
-      }
-    }
-  } else {
-    // S/MIME
-    QStringList allRecipients = recipients;
-    if ( mSelectedCryptPlug->alwaysEncryptToSelf() )
-      allRecipients << mComposeWin->from();
-    for ( QStringList::ConstIterator it = allRecipients.begin();
-          it != allRecipients.end();
-          ++it ) {
-      QCString certFingerprint = getEncryptionCertificate( *it );
-
-      if ( certFingerprint.isEmpty() ) {
-        // most likely the user canceled the certificate selection
-        encryptionCertificates.truncate( 0 );
-        return Kpgp::Canceled;
-      }
-
-      certFingerprint.remove( 0, certFingerprint.findRev( '(' ) + 1 );
-      certFingerprint.truncate( certFingerprint.length() - 1 );
-      kdDebug(5006) << "\n\n                    Recipient: " << *it
-                    <<   "\nFingerprint of encryption key: "
-                    << certFingerprint << "\n\n" << endl;
-
-      const bool certOkay =
-        checkForEncryptCertificateExpiry( *it, certFingerprint );
-      if( certOkay ) {
-        if( !encryptionCertificates.isEmpty() )
-          encryptionCertificates += '\1';
-        encryptionCertificates += certFingerprint;
-      }
-      else {
-        // ###### This needs to be improved: Tell the user that the certificate
-        // ###### expired and let him choose a different one.
-        encryptionCertificates.truncate( 0 );
-        return Kpgp::Failure;
-      }
-    }
-  }
-  return result;
+  for ( std::vector<Kleo::KeyResolver::SplitInfo>::const_iterator it = splitInfos.begin() ; it != splitInfos.end() ; ++it )
+    mJobs.push_front( new EncryptMessageJob( new KMMessage( theMessage ), *it, doSign,
+					     doEncrypt, mEncodedBody,
+					     mPreviousBoundaryLevel,
+					     mOldBodyPart, mNewBodyPart,
+					     format, this ) );
 }
 
 void MessageComposer::encryptMessage( KMMessage* msg,
-                                      const QStringList& recipients,
+				      const Kleo::KeyResolver::SplitInfo & splitInfo,
                                       bool doSign, bool doEncrypt,
-                                      int previousBoundaryLevel,
-                                      KMMessagePart newBodyPart )
+                                      KMMessagePart newBodyPart,
+				      Kleo::CryptoMessageFormat format )
 {
-  // This c-string (init empty here) is set by *first* testing of expiring
-  // encryption certificate: stops us from repeatedly asking same questions.
-  QCString encryptCertFingerprints;
-
-  // determine the encryption certificates in case we need them
-  if ( mSelectedCryptPlug ) {
-    bool encrypt = doEncrypt;
-    if( !encrypt ) {
-      // check whether at least one attachment is marked for encryption
-      for ( KMAtmListViewItem* atmlvi =
-              static_cast<KMAtmListViewItem*>( mComposeWin->mAtmItemList.first() );
-            atmlvi;
-            atmlvi = static_cast<KMAtmListViewItem*>( mComposeWin->mAtmItemList.next() ) ) {
-        if ( atmlvi->isEncrypt() ) {
-          encrypt = true;
-          break;
-        }
-      }
-    }
-    if ( encrypt ) {
-      Kpgp::Result result =
-        getEncryptionCertificates( recipients, encryptCertFingerprints );
-      if ( result != Kpgp::Ok ) {
-        mRc = false;
-        return;
-      }
-      if ( encryptCertFingerprints.isEmpty() ) {
-        // the user wants to send the message unencrypted
-        mComposeWin->setEncryption( false, false );
-        doEncrypt = false;
-      }
-    }
+  if ( doEncrypt && splitInfo.keys.empty() ) {
+    // the user wants to send the message unencrypted
+    mComposeWin->setEncryption( false, false );
+    doEncrypt = false;
   }
 
   // encrypt message
-  if( doEncrypt ) {
+  if ( doEncrypt ) {
     QCString innerContent;
-    if( doSign && mSelectedCryptPlug ) {
+    if ( doSign ) {
       DwBodyPart* dwPart = msg->createDWBodyPart( &newBodyPart );
       dwPart->Assemble();
       innerContent = dwPart->AsString().c_str();
@@ -1259,266 +1392,212 @@ void MessageComposer::encryptMessage( KMMessage* msg,
       innerContent = mEncodedBody;
 
     // now do the encrypting:
-    {
-      if( mSelectedCryptPlug ) {
-	// replace simple LFs by CRLFs for all MIME supporting CryptPlugs
-	// according to RfC 2633, 3.1.1 Canonicalization
-	kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-	innerContent = KMMessage::lf2crlf( innerContent );
-	kdDebug(5006) << "                                                       done." << endl;
+    // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
+    // according to RfC 2633, 3.1.1 Canonicalization
+    kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+    innerContent = KMMessage::lf2crlf( innerContent );
+    kdDebug(5006) << "                                                       done." << endl;
 
-        StructuringInfoWrapper structuring( mSelectedCryptPlug );
-
-        QByteArray encryptedBody;
-        Kpgp::Result result = pgpEncryptedMsg( encryptedBody, innerContent,
-                                               structuring,
-                                               encryptCertFingerprints );
-
-        if( Kpgp::Ok == result ) {
-          mRc = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
-                                        previousBoundaryLevel + doEncrypt ? 2 : 1,
-                                        newBodyPart.contentDescription(),
-                                        newBodyPart.typeStr(),
-                                        newBodyPart.subtypeStr(),
-                                        newBodyPart.contentDisposition(),
-                                        newBodyPart.contentTransferEncodingStr(),
-                                        innerContent,
-                                        "encrypted data",
-                                        encryptedBody,
-                                        structuring,
-                                        newBodyPart );
-          if ( !mRc )
-            KMessageBox::sorry(mComposeWin, mErrorProcessingStructuringInfo);
-        } else {
-          mRc = false;
-          KMessageBox::sorry( mComposeWin,
-                              i18n( "<qt><p><b>This message could not be encrypted:</b></p>"
-                                    "<p>The Crypto Plug-in '%1' did not return an encoded text "
-                                    "block;</p>"
-                                    "<p>probably, a recipient's public key was not found or is "
-                                    "untrusted.</p></qt>" )
-                              .arg( mSelectedCryptPlug->libName() ) );
-        }
-      } else {
-        // we try calling the *old* build-in code for OpenPGP encrypting
-        Kpgp::Block block;
-        block.setText( innerContent );
-
-        // encrypt the message
-        Kpgp::Result result =
-          block.encrypt( recipients, mPgpIdentity, doSign, mCharset );
-
-        if( Kpgp::Ok == result ) {
-          newBodyPart.setBodyEncodedBinary( block.text() );
-          newBodyPart.setCharset( mOldBodyPart.charset() );
-        } else {
-          mRc = false;
-          KMessageBox::sorry(mComposeWin,
-            i18n("<qt><p>This message could not be encrypted.</p>%1</qt>")
-           .arg( mErrorNoCryptPlugAndNoBuildIn ));
-        }
-      }
+    QByteArray encryptedBody;
+    Kpgp::Result result = pgpEncryptedMsg( encryptedBody, innerContent,
+					   splitInfo.keys, format );
+    if ( result != Kpgp::Ok ) {
+      mRc = false;
+      return;
     }
+    mRc = processStructuringInfo( "http://www.gnupg.org/aegypten/",
+				  newBodyPart.contentDescription(),
+				  newBodyPart.typeStr(),
+				  newBodyPart.subtypeStr(),
+				  newBodyPart.contentDisposition(),
+				  newBodyPart.contentTransferEncodingStr(),
+				  innerContent,
+				  "encrypted data",
+				  encryptedBody,
+				  newBodyPart, false, format );
+    if ( !mRc )
+      KMessageBox::sorry(mComposeWin, mErrorProcessingStructuringInfo);
   }
 
   // process the attachments that are not included into the body
   if( mRc ) {
-    const KMMessagePart& ourFineBodyPart( (doSign || doEncrypt)
-                                          ? newBodyPart : mOldBodyPart );
-    if( !mComposeWin->mAtmList.isEmpty()
-        && ( !mEarlyAddAttachments || !mAllAttachmentsAreInBody ) ) {
-      // set the content type header
-      msg->headers().ContentType().FromString( "Multipart/Mixed" );
-      kdDebug(5006) << "MessageComposer::encryptMessage() : set top level Content-Type to Multipart/Mixed" << endl;
-      //      msg->setBody( "This message is in MIME format.\n"
-      //                    "Since your mail reader does not understand this format,\n"
-      //                    "some or all parts of this message may not be legible." );
-      // add our Body Part
-      DwBodyPart* tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
-      DwHeaders& headers = tmpDwPart->Headers();
-      DwMediaType& ct = headers.ContentType();
-      ct.SetBoundary(mSaveBoundary);
-      tmpDwPart->Assemble();
+    addBodyAndAttachments( msg, splitInfo, doSign, doEncrypt,
+      (doSign || doEncrypt) ? newBodyPart : mOldBodyPart, format );
+  }
+}
 
-      KMMessagePart newPart;
-      newPart.setBody(tmpDwPart->AsString().c_str());
-      msg->addDwBodyPart(tmpDwPart); // only this method doesn't add it as text/plain
+void MessageComposer::addBodyAndAttachments( KMMessage* msg,
+                                             const Kleo::KeyResolver::SplitInfo & splitInfo,
+                                             bool doSign, bool doEncrypt,
+                                             const KMMessagePart& ourFineBodyPart,
+                                             Kleo::CryptoMessageFormat format )
+{
+  if( !mAttachments.empty()
+      && ( !mEarlyAddAttachments || !mAllAttachmentsAreInBody ) ) {
+    // set the content type header
+    msg->headers().ContentType().FromString( "Multipart/Mixed" );
+    kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to Multipart/Mixed" << endl;
+    //      msg->setBody( "This message is in MIME format.\n"
+    //                    "Since your mail reader does not understand this format,\n"
+    //                    "some or all parts of this message may not be legible." );
+    // add our Body Part
+    DwBodyPart* tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
+    DwHeaders& headers = tmpDwPart->Headers();
+    DwMediaType& ct = headers.ContentType();
+    ct.SetBoundary(mSaveBoundary);
+    tmpDwPart->Assemble();
 
-      // add Attachments
-      // create additional bodyparts for the attachments (if any)
-      int idx;
-      KMMessagePart newAttachPart;
-      KMMessagePart *attachPart;
-      for( idx=0, attachPart = mComposeWin->mAtmList.first();
-           attachPart;
-           attachPart = mComposeWin->mAtmList.next(), ++idx ) {
-        kdDebug(5006) << "                                 processing " << idx << ". attachment" << endl;
+    KMMessagePart newPart;
+    newPart.setBody(tmpDwPart->AsString().c_str());
+    msg->addDwBodyPart(tmpDwPart); // only this method doesn't add it as text/plain
 
-        const bool cryptFlagsDifferent = mSelectedCryptPlug
-          ? ((mComposeWin->encryptFlagOfAttachment( idx ) != doEncrypt)
-             || (mComposeWin->signFlagOfAttachment( idx ) != doSign) )
-          : false;
-        // CONTROVERSIAL
-        const bool encryptThisNow = doEncrypt && ( cryptFlagsDifferent ? mComposeWin->encryptFlagOfAttachment( idx ) : false );
-        const bool signThisNow  = doSign && ( cryptFlagsDifferent ? mComposeWin->signFlagOfAttachment( idx ) : false );
+    // add Attachments
+    // create additional bodyparts for the attachments (if any)
+    KMMessagePart newAttachPart;
+    for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
 
-        if( cryptFlagsDifferent || !mEarlyAddAttachments ) {
+      const bool cryptFlagsDifferent = format != Kleo::InlineOpenPGPFormat
+                                       && ( it->encrypt != doEncrypt || it->sign != doSign ) ;
 
-          if( encryptThisNow || signThisNow ) {
+      // CONTROVERSIAL
+      const bool encryptThisNow = doEncrypt && cryptFlagsDifferent && it->encrypt ;
+      const bool signThisNow = doSign && cryptFlagsDifferent && it->sign ;
 
-            KMMessagePart& rEncryptMessagePart( *attachPart );
+      if ( !cryptFlagsDifferent && mEarlyAddAttachments )
+        continue;
 
-            // prepare the attachment's content
-            // signed/encrypted body parts must be either QP or base64 encoded
-            QCString cte = attachPart->cteStr().lower();
-            if( ( "8bit" == cte )
-                || ( ( attachPart->type() == DwMime::kTypeText )
-                     && ( "7bit" == cte ) ) ) {
-              QByteArray body = attachPart->bodyDecodedBinary();
-              QValueList<int> dummy;
-              attachPart->setBodyAndGuessCte(body, dummy, false, true);
-              kdDebug(5006) << "Changed encoding of message part from "
-                            << cte << " to " << attachPart->cteStr() << endl;
-            }
-            DwBodyPart* innerDwPart = msg->createDWBodyPart( attachPart );
-            innerDwPart->Assemble();
-            QCString encodedAttachment = innerDwPart->AsString().c_str();
-            delete innerDwPart;
-            innerDwPart = 0;
+      if ( !encryptThisNow && !signThisNow ) {
+        msg->addBodyPart( it->part );
+        // I DON'T KNOW WHY, BUT THIS FIXES THE VANISHING BOUNDARY PARAMTER
+        (void)msg->asString();
+        continue;
+      }
 
-	    // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
-	    // according to RfC 2633, 3.1.1 Canonicalization
-	    kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-	    encodedAttachment = KMMessage::lf2crlf( encodedAttachment );
-	    kdDebug(5006) << "                                                       done." << endl;
+      KMMessagePart& rEncryptMessagePart( *it->part );
 
-            // sign this attachment
-            if( signThisNow ) {
-              kdDebug(5006) << "                                 sign " << idx << ". attachment separately" << endl;
-              StructuringInfoWrapper structuring( mSelectedCryptPlug );
+      // prepare the attachment's content
+      // signed/encrypted body parts must be either QP or base64 encoded
+      QCString cte = it->part->cteStr().lower();
+      if( ( "8bit" == cte )
+          || ( ( it->part->type() == DwMime::kTypeText )
+               && ( "7bit" == cte ) ) ) {
+        QByteArray body = it->part->bodyDecodedBinary();
+        QValueList<int> dummy;
+        it->part->setBodyAndGuessCte(body, dummy, false, true);
+        kdDebug(5006) << "Changed encoding of message part from "
+                      << cte << " to " << it->part->cteStr() << endl;
+      }
+      DwBodyPart* innerDwPart = msg->createDWBodyPart( it->part );
+      innerDwPart->Assemble();
+      QCString encodedAttachment = innerDwPart->AsString().c_str();
+      delete innerDwPart;
+      innerDwPart = 0;
 
-              pgpSignedMsg( encodedAttachment, structuring );
-              QByteArray signature = mSignature;
-              mRc = !signature.isEmpty();
-              if( mRc ) {
-                mRc = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
-                                                 previousBoundaryLevel + 10 + idx,
-                                                 attachPart->contentDescription(),
-                                                 attachPart->typeStr(),
-                                                 attachPart->subtypeStr(),
-                                                 attachPart->contentDisposition(),
-                                                 attachPart->contentTransferEncodingStr(),
-                                                 encodedAttachment,
-                                                 "signature",
-                                                 signature,
-                                                 structuring,
-                                                 newAttachPart );
-                if( mRc ) {
-                  if( encryptThisNow ) {
-                    rEncryptMessagePart = newAttachPart;
-                    DwBodyPart* dwPart = msg->createDWBodyPart( &newAttachPart );
-                    dwPart->Assemble();
-                    encodedAttachment = dwPart->AsString().c_str();
-                    delete dwPart;
-                    dwPart = 0;
-                  }
-                } else
-                  KMessageBox::sorry( mComposeWin, mErrorProcessingStructuringInfo );
-              } else {
-                // quit the attachments' loop
-                break;
-              }
-            }
+      // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
+      // according to RfC 2633, 3.1.1 Canonicalization
+      kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+      encodedAttachment = KMMessage::lf2crlf( encodedAttachment );
+
+      // sign this attachment
+      if( signThisNow ) {
+
+        pgpSignedMsg( encodedAttachment, format );
+        QByteArray signature = mSignature;
+        mRc = !signature.isEmpty();
+        if( mRc ) {
+          mRc = processStructuringInfo( "http://www.gnupg.org/aegypten/",
+                                        it->part->contentDescription(),
+                                        it->part->typeStr(),
+                                        it->part->subtypeStr(),
+                                        it->part->contentDisposition(),
+                                        it->part->contentTransferEncodingStr(),
+                                        encodedAttachment,
+                                        "signature",
+                                        signature,
+                                        newAttachPart, true, format );
+          if( mRc ) {
             if( encryptThisNow ) {
-              kdDebug(5006) << " encrypt " << idx << ". attachment separately" << endl;
-              StructuringInfoWrapper structuring( mSelectedCryptPlug );
-              QByteArray encryptedBody;
-              Kpgp::Result result = pgpEncryptedMsg( encryptedBody,
-                                                     encodedAttachment,
-                                                     structuring,
-                                                     encryptCertFingerprints );
-
-              if( Kpgp::Ok == result ) {
-                mRc = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
-                                              previousBoundaryLevel + 11 + idx,
-                                              rEncryptMessagePart.contentDescription(),
-                                              rEncryptMessagePart.typeStr(),
-                                              rEncryptMessagePart.subtypeStr(),
-                                              rEncryptMessagePart.contentDisposition(),
-                                              rEncryptMessagePart.contentTransferEncodingStr(),
-                                              encodedAttachment,
-                                              "encrypted data",
-                                              encryptedBody,
-                                              structuring,
-                                              newAttachPart );
-                if ( !mRc )
-                  KMessageBox::sorry( mComposeWin, mErrorProcessingStructuringInfo );
-              } else
-                mRc = false;
+              rEncryptMessagePart = newAttachPart;
+              DwBodyPart* dwPart = msg->createDWBodyPart( &newAttachPart );
+              dwPart->Assemble();
+              encodedAttachment = dwPart->AsString().c_str();
+              delete dwPart;
+              dwPart = 0;
             }
-            msg->addBodyPart( &newAttachPart );
           } else
-            msg->addBodyPart( attachPart );
-
-          kdDebug(5006) << "                                 added " << idx << ". attachment to this Multipart/Mixed" << endl;
+            KMessageBox::sorry( mComposeWin, mErrorProcessingStructuringInfo );
         } else {
-          kdDebug(5006) << "                                 " << idx << ". attachment was part of the BODY already" << endl;
+          // quit the attachments' loop
+          break;
         }
       }
+      if( encryptThisNow ) {
+        QByteArray encryptedBody;
+        Kpgp::Result result = pgpEncryptedMsg( encryptedBody,
+                                               encodedAttachment,
+                                               splitInfo.keys,
+                                               format );
+
+        if( Kpgp::Ok == result ) {
+          mRc = processStructuringInfo( "http://www.gnupg.org/aegypten/",
+                                        rEncryptMessagePart.contentDescription(),
+                                        rEncryptMessagePart.typeStr(),
+                                        rEncryptMessagePart.subtypeStr(),
+                                        rEncryptMessagePart.contentDisposition(),
+                                        rEncryptMessagePart.contentTransferEncodingStr(),
+                                        encodedAttachment,
+                                        "encrypted data",
+                                        encryptedBody,
+                                        newAttachPart, false, format );
+          if ( !mRc )
+            KMessageBox::sorry( mComposeWin, mErrorProcessingStructuringInfo );
+        } else
+          mRc = false;
+      }
+      msg->addBodyPart( &newAttachPart );
+    }
+  } else { // no attachments in the final message
+    if( ourFineBodyPart.originalContentTypeStr() ) {
+      msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
+      msg->headers().ContentType().Parse();
+      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type from originalContentTypeStr()=" << ourFineBodyPart.originalContentTypeStr() << endl;
     } else {
-      if( ourFineBodyPart.originalContentTypeStr() ) {
-        //msg->headers().Assemble();
-        //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      A.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-        msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
-        //msg->headers().Assemble();
-        //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      B.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-        msg->headers().ContentType().Parse();
-        //msg->headers().Assemble();
-        //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      C.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-        kdDebug(5006) << "MessageComposer::encryptMessage() : set top level Content-Type from originalContentTypeStr()" << endl;
-      } else {
-        msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
-        kdDebug(5006) << "MessageComposer::encryptMessage() : set top level Content-Type from typeStr()/subtypeStr()" << endl;
-      }
-      //msg->headers().Assemble();
-      //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      D.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-      if ( !ourFineBodyPart.charset().isEmpty() )
-        msg->setCharset( ourFineBodyPart.charset() );
-      //msg->headers().Assemble();
-      //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      E.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-      msg->setHeaderField( "Content-Transfer-Encoding",
-                           ourFineBodyPart.contentTransferEncodingStr() );
-      //msg->headers().Assemble();
-      //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      F.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-      msg->setHeaderField( "Content-Description",
-                           ourFineBodyPart.contentDescription() );
-      msg->setHeaderField( "Content-Disposition",
-                           ourFineBodyPart.contentDisposition() );
+      msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
+      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to " << ourFineBodyPart.typeStr() << "/" << ourFineBodyPart.subtypeStr() << endl;
+    }
+    if ( !ourFineBodyPart.charset().isEmpty() )
+      msg->setCharset( ourFineBodyPart.charset() );
+    msg->setHeaderField( "Content-Transfer-Encoding",
+                         ourFineBodyPart.contentTransferEncodingStr() );
+    msg->setHeaderField( "Content-Description",
+                         ourFineBodyPart.contentDescription() );
+    msg->setHeaderField( "Content-Disposition",
+                         ourFineBodyPart.contentDisposition() );
 
-      kdDebug(5006) << "MessageComposer::encryptMessage() : top level headers and body adjusted" << endl;
+    if ( mDebugComposerCrypto )
+      kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : top level headers and body adjusted" << endl;
 
-      // set body content
-      // msg->setBody( ourFineBodyPart.body() );
-      // msg->setMultiPartBody( ourFineBodyPart.body() );
-      //kdDebug(5006) << "MessageComposer::encryptMessage():\n      98.:\n|||" << msg->asString() << "|||\n\n" << endl;
-      //kdDebug(5006) << "MessageComposer::encryptMessage():\n      98a.:\n|||" << ourFineBodyPart.body() << "|||\n\n" << endl;
-      if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !(doSign || doEncrypt) ) { // add the boundary to the header
-        DwMediaType & contentType = msg->dwContentType();
-        contentType.SetBoundary(mSaveBoundary);
-      }
-      msg->setBody(ourFineBodyPart.body() );
+    // set body content
+    if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !(doSign || doEncrypt) ) { // add the boundary to the header
+      DwMediaType & contentType = msg->dwContentType();
+      contentType.SetBoundary(mSaveBoundary);
+    }
+    msg->setBody(ourFineBodyPart.body() );
 
-      //kdDebug(5006) << "MessageComposer::encryptMessage():\n      99.:\n|||" << msg->asString() << "|||\n\n" << endl;
-      //msg->headers().Assemble();
-      //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      Z.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
+    if ( mDebugComposerCrypto ) {
+      kdDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
+      msg->headers().Assemble();
+      kdDebug(5006) << "\n\n\nMessageComposer::addBodyAndAttachments():\n      Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
     }
   }
+
+  msg->setHeaderField( "X-KMail-Recipients",
+                       splitInfo.recipients.join(", ") );
 }
 
 //-----------------------------------------------------------------------------
 // This method does not call any crypto ops, so it does not need to be async
 bool MessageComposer::processStructuringInfo( const QString bugURL,
-                                              uint boundaryLevel,
                                               const QString contentDescClear,
                                               const QCString contentTypeClear,
                                               const QCString contentSubtypeClear,
@@ -1527,64 +1606,36 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
                                               const QCString& clearCStr,
                                               const QString /*contentDescCiph*/,
                                               const QByteArray& ciphertext,
-                                              const StructuringInfoWrapper& structuring,
-                                              KMMessagePart& resultingPart )
+                                              KMMessagePart& resultingPart,
+					      bool signing, Kleo::CryptoMessageFormat format )
 {
   bool bOk = true;
 
-  if( structuring.data.makeMimeObject ) {
+  if ( makeMimeObject( format, signing ) ) {
     QCString mainHeader = "Content-Type: ";
-    if( structuring.data.contentTypeMain
-        && 0 < strlen( structuring.data.contentTypeMain ) )
-      mainHeader += structuring.data.contentTypeMain;
+    const char * toplevelCT = toplevelContentType( format, signing );
+    if ( toplevelCT )
+      mainHeader += toplevelCT;
     else {
-      if( structuring.data.makeMultiMime )
+      if( makeMultiMime( format, signing ) )
         mainHeader += "text/plain";
       else
         mainHeader += contentTypeClear + '/' + contentSubtypeClear;
     }
 
-    QCString boundaryCStr;  // storing boundary string data
+    const QCString boundaryCStr = KMime::multiPartBoundary();
     // add "boundary" parameter
-    if( structuring.data.makeMultiMime ) {
-      // calculate boundary value
-      DwMediaType tmpCT;
-      tmpCT.CreateBoundary( boundaryLevel );
-      boundaryCStr = tmpCT.Boundary().c_str();
-      // remove old "boundary" parameter
-      int boundA = mainHeader.find( "boundary=", 0, false );
-      int boundZ;
-      if( -1 < boundA ) {
-        // take into account a leading ";  " string
-        while( 0 < boundA && ' ' == mainHeader[ boundA-1 ] )
-          --boundA;
-        if( 0 < boundA && ';' == mainHeader[ boundA-1 ] )
-          --boundA;
-        boundZ = mainHeader.find( ';', boundA+1 );
-        if( -1 == boundZ )
-          mainHeader.truncate( boundA );
-        else
-          mainHeader.remove( boundA, (1 + boundZ - boundA) );
-      }
-      // insert new "boundary" parameter
-      QCString bStr( "; boundary=\"" );
-      bStr += boundaryCStr;
-      bStr += "\"";
-      mainHeader += bStr;
-    }
+    if ( makeMultiMime( format, signing ) )
+      mainHeader.replace( "%boundary", boundaryCStr );
 
-    if( structuring.data.contentTypeMain
-        && 0 < strlen( structuring.data.contentTypeMain ) ) {
-      if( structuring.data.contentDispMain
-          && 0 < strlen( structuring.data.contentDispMain ) ) {
+    if ( toplevelCT ) {
+      if ( const char * str = toplevelContentDisposition( format, signing ) ) {
         mainHeader += "\nContent-Disposition: ";
-        mainHeader += structuring.data.contentDispMain;
+        mainHeader += str;
       }
-      if( structuring.data.contentTEncMain
-          && 0 < strlen( structuring.data.contentTEncMain ) ) {
-        mainHeader += "\nContent-Transfer-Encoding: ";
-        mainHeader += structuring.data.contentTEncMain;
-      }
+      if ( !makeMultiMime( format, signing ) &&
+	   binaryHint( format ) )
+        mainHeader += "\nContent-Transfer-Encoding: base64";
     } else {
       if( 0 < contentDispClear.length() ) {
         mainHeader += "\nContent-Disposition: ";
@@ -1601,110 +1652,59 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
     DwBodyPart mainDwPa( mainDwStr, 0 );
     mainDwPa.Parse();
     KMMessage::bodyPart( &mainDwPa, &resultingPart );
-    if( ! structuring.data.makeMultiMime ) {
-      if( structuring.data.includeCleartext ) {
+    if( !makeMultiMime( format, signing ) ) {
+      if ( signing && includeCleartextWhenSigning( format ) ) {
         QCString bodyText( clearCStr );
         bodyText += '\n';
-        bodyText += ciphertext;
+        bodyText += QCString( ciphertext.data(), ciphertext.size() + 1 );
         resultingPart.setBodyEncoded( bodyText );
       } else
         resultingPart.setBodyEncodedBinary( ciphertext );
-    } else { //  OF  if( ! structuring.data.makeMultiMime )
+    } else { //  OF  if( !makeMultiMime )
       // Build the encapsulated MIME parts.
       // Build a MIME part holding the version information
       // taking the body contents returned in
       // structuring.data.bodyTextVersion.
       QCString versCStr, codeCStr;
-      if( structuring.data.contentTypeVersion
-          && 0 < strlen( structuring.data.contentTypeVersion ) ) {
-        DwString versStr( "Content-Type: " );
-        versStr += structuring.data.contentTypeVersion;
-        versStr += "\nContent-Description: version code";
-
-        if( structuring.data.contentDispVersion
-            && 0 < strlen( structuring.data.contentDispVersion ) ) {
-          versStr += "\nContent-Disposition: ";
-          versStr += structuring.data.contentDispVersion;
-        }
-        if( structuring.data.contentTEncVersion
-            && 0 < strlen( structuring.data.contentTEncVersion ) ) {
-          versStr += "\nContent-Transfer-Encoding: ";
-          versStr += structuring.data.contentTEncVersion;
-        }
-
-        DwBodyPart versDwPa( versStr + "\n\n", 0 );
-        versDwPa.Parse();
-        KMMessagePart versKmPa;
-        KMMessage::bodyPart(&versDwPa, &versKmPa);
-        versKmPa.setBodyEncoded( structuring.data.bodyTextVersion );
-        // store string representation of the cleartext headers
-        versCStr = versDwPa.Headers().AsString().c_str();
-        // store string representation of encoded cleartext
-        versCStr += "\n";
-        versCStr += versKmPa.body();
-      }
+      if ( !signing && format == Kleo::OpenPGPMIMEFormat )
+        versCStr =
+	  "Content-Type: application/pgp-encrypted\n"
+	  "Content-Disposition: attachment\n"
+	  "\n"
+	  "Version: 1";
 
       // Build a MIME part holding the code information
       // taking the body contents returned in ciphertext.
-      if( structuring.data.contentTypeCode
-          && 0 < strlen( structuring.data.contentTypeCode ) ) {
-        DwString codeStr( "Content-Type: " );
-        codeStr += structuring.data.contentTypeCode;
-        if( structuring.data.contentTEncCode
-            && 0 < strlen( structuring.data.contentTEncCode ) ) {
-	  codeStr += "\nContent-Transfer-Encoding: ";
-          codeStr += structuring.data.contentTEncCode;
-	//} else {
-        //  codeStr += "\nContent-Transfer-Encoding: ";
-	//  codeStr += "base64";
-	}
-        if( structuring.data.contentDispCode
-            && 0 < strlen( structuring.data.contentDispCode ) ) {
-          codeStr += "\nContent-Disposition: ";
-          codeStr += structuring.data.contentDispCode;
-        }
-
-        DwBodyPart codeDwPa( codeStr + "\n\n", 0 );
-        codeDwPa.Parse();
-        KMMessagePart codeKmPa;
-        KMMessage::bodyPart(&codeDwPa, &codeKmPa);
-        //if(    structuring.data.contentTEncCode
-        //    && 0 < strlen( structuring.data.contentTEncCode ) ) {
-        //  codeKmPa.setCteStr( structuring.data.contentTEncCode );
-        //} else {
-        //  codeKmPa.setCteStr("base64");
-        //}
-        codeKmPa.setBodyEncodedBinary( ciphertext );
-        // store string representation of the cleartext headers
-        codeCStr = codeDwPa.Headers().AsString().c_str();
-        // store string representation of encoded cleartext
-        codeCStr += "\n";
-        codeCStr += codeKmPa.body();
-      } else {
-        // Plugin error!
-        KMessageBox::sorry( mComposeWin,
-                            i18n("<qt><p>Error: The Crypto Plug-in '%1' returned<br>"
-                                 "       \" structuring.makeMultiMime \"<br>"
-                                 "but did <b>not</b> specify a Content-Type header "
-                                 "for the ciphertext that was generated.</p>"
-                                 "<p>Please report this bug:<br>%2</p></qt>")
-                            .arg(mSelectedCryptPlug->libName())
-                            .arg(bugURL) );
-        bOk = false;
+      const char * nestedCT = nestedContentType( format, signing );
+      assert( nestedCT );
+      codeCStr = "Content-Type: ";
+      codeCStr += nestedCT;
+      codeCStr += '\n';
+      if ( const char * str = nestedContentDisposition( format, signing ) ) {
+	codeCStr += "Content-Disposition: ";
+	codeCStr += str;
+	codeCStr += '\n';
       }
+      if ( binaryHint( format ) ) {
+	codeCStr += "Content-Transfer-Encoding: base64\n\n";
+	codeCStr += KMime::Codec::codecForName( "base64" )->encodeToQCString( ciphertext );
+      } else
+	codeCStr += '\n' + QCString( ciphertext.data(), ciphertext.size() + 1 );
+
 
       QCString mainStr = "--" + boundaryCStr;
-      if( structuring.data.includeCleartext && (0 < clearCStr.length()) )
+      if ( signing && includeCleartextWhenSigning( format ) &&
+	   !clearCStr.isEmpty() )
         mainStr += "\n" + clearCStr + "\n--" + boundaryCStr;
-      if( 0 < versCStr.length() )
-        mainStr += "\n" + versCStr + "\n\n--" + boundaryCStr;
-      if( 0 < codeCStr.length() )
+      if ( !versCStr.isEmpty() )
+        mainStr += "\n" + versCStr + "\n--" + boundaryCStr;
+      if( !codeCStr.isEmpty() )
         mainStr += "\n" + codeCStr + "\n--" + boundaryCStr;
       mainStr += "--\n";
 
       resultingPart.setBodyEncoded( mainStr );
-    } //  OF  if( ! structuring.data.makeMultiMime ) .. else
-  } else { //  OF  if( structuring.data.makeMimeObject )
+    } //  OF  if( !makeMultiMime ) .. else
+  } else { //  OF  makeMimeObject
     // Build a plain message body
     // based on the values returned in structInf.
     // Note: We do _not_ insert line breaks between the parts since
@@ -1717,32 +1717,36 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
     resultingPart.setContentTransferEncodingStr( contentTEncClear );
     QCString resultingBody;
 
+#ifdef NULL_ANYWAY // these are never set currently (although they'll be used for InlineOpenPGP)
     if( structuring.data.flatTextPrefix
         && strlen( structuring.data.flatTextPrefix ) )
       resultingBody += structuring.data.flatTextPrefix;
-    if( structuring.data.includeCleartext ) {
+#endif
+    if ( signing && includeCleartextWhenSigning( format ) ) {
       if( !clearCStr.isEmpty() )
         resultingBody += clearCStr;
+#ifdef NULL_ANYWAY
       if( structuring.data.flatTextSeparator
           && strlen( structuring.data.flatTextSeparator ) )
         resultingBody += structuring.data.flatTextSeparator;
+#endif
     }
-    if( ciphertext && strlen( ciphertext ) )
-      resultingBody += *ciphertext;
+    if ( !ciphertext.isEmpty() )
+      resultingBody += QCString( ciphertext.data(), ciphertext.size() + 1 ); // what's that supposed to do ????
     else {
       // Plugin error!
       KMessageBox::sorry( mComposeWin,
-                          i18n( "<qt><p>Error: The Crypto Plug-in '%1' did not return "
+                          i18n( "<qt><p>Error: The backend did not return "
                                 "any encoded data.</p>"
                                 "<p>Please report this bug:<br>%2</p></qt>" )
-                          .arg( mSelectedCryptPlug->libName() )
                           .arg( bugURL ) );
       bOk = false;
     }
+#ifdef NULL_ANYWAY
     if( structuring.data.flatTextPostfix
         && strlen( structuring.data.flatTextPostfix ) )
       resultingBody += structuring.data.flatTextPostfix;
-
+#endif
     resultingPart.setBodyEncoded( resultingBody );
   } //  OF  if( structuring.data.makeMimeObject ) .. else
 
@@ -1805,634 +1809,134 @@ QCString MessageComposer::breakLinesAndApplyCodec()
 
 
 //-----------------------------------------------------------------------------
-void MessageComposer::pgpSignedMsg( QCString cText,
-                                    StructuringInfoWrapper& structuring )
-{
-  if( !mSelectedCryptPlug ) {
+void MessageComposer::pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageFormat format ) {
+
+  mSignature = QByteArray();
+
+  const std::vector<GpgME::Key> signingKeys = mKeyResolver->signingKeys( format );
+
+  assert( !signingKeys.empty() );
+
+  // TODO: ASync call? Likely, yes :-)
+  const Kleo::CryptoBackendFactory * cpf = Kleo::CryptoBackendFactory::instance();
+  assert( cpf );
+  const Kleo::CryptoBackend::Protocol * proto
+    = isSMIME( format ) ? cpf->smime() : cpf->openpgp() ;
+  assert( proto ); /// hmmm.....?
+
+  std::auto_ptr<Kleo::SignJob> job( proto->signJob( armor( format ),
+						    textMode( format ) ) );
+
+  if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
-                        i18n( "<qt>No active Crypto Plug-In could be found.<br><br>"
-                              "Please activate a Plug-In in the configuration dialog.</qt>" ) );
-    mRc = false;
+			i18n("This message could not be signed, "
+			     "since the chosen backend doesn't seem to support "
+			     "signing. This should actually never happen, "
+			     "please report this bug.") );
     return;
   }
 
+  QByteArray plainText;
+  plainText.duplicate( cText.data(), cText.length() ); // hrmpf...
   QByteArray signature;
-
-  kdDebug(5006) << "\nMessageComposer::pgpSignedMsg calling CRYPTPLUG "
-                << mSelectedCryptPlug->libName() << endl;
-
-  bool bSign = true;
-
-  if( mSignCertFingerprint.isEmpty() ) {
-    // find out whether we are dealing with the OpenPGP or the S/MIME plugin
-    if( mSelectedCryptPlug->protocol() == "openpgp" ) {
-      // We are dealing with the OpenPGP plugin. Use Kpgp to determine
-      // the signing key.
-      if( !mPgpIdentity.isEmpty() ) {
-        Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-
-        // TODO: ASync call?
-
-        Kpgp::Key* key = pgp->publicKey( mPgpIdentity );
-        if( key ) {
-
-          // TODO: ASync call?
-
-          mSignCertFingerprint = key->primaryFingerprint();
-          // kdDebug(5006) << "Signer: " << mComposeWin->from()
-          //               << "\nFingerprint of signature key: "
-          //               << QString( mSignCertFingerprint ) << endl;
-        } else {
-          KMessageBox::sorry( mComposeWin,
-                              i18n("<qt>This message could not be signed "
-                                   "because the OpenPGP key which should be "
-                                   "used for signing messages with this "
-                                   "identity could not be found in your "
-                                   "keyring.<br><br>"
-                                   "You can change which OpenPGP key "
-                                   "should be used with the current "
-                                   "identity in the identity configuration.</qt>"),
-                              i18n("Missing Signing Key") );
-          bSign = false;
-        }
-      } else {
-        KMessageBox::sorry( mComposeWin,
-                            i18n("<qt>This message could not be signed "
-                                 "because you did not define the OpenPGP "
-                                 "key which should be used for signing "
-                                 "messages with this identity.<br><br>"
-                                 "You can define which OpenPGP key "
-                                 "should be used with the current "
-                                 "identity in the identity configuration.</qt>"),
-                            i18n("Undefined Signing Key") );
-        bSign = false;
-      }
-    } else { // S/MIME
-
-      // TODO (Bo): Why doesn't this use the getEncryptionCertificate
-      // method below?
-
-      int certSize = 0;
-      QByteArray certificate;
-      QString selectedCert;
-      KListBoxDialog dialog( selectedCert, "",
-                             i18n( "&Select certificate:") );
-      dialog.resize( 700, 200 );
-
-      QCString signer = mComposeWin->from().utf8();
-      signer.replace('\x001', ' ');
-
-      kdDebug(5006) << "\n\nRetrieving keys for: " << mComposeWin->from()
-                    << endl;
-      char* certificatePtr = 0;
-
-      // TODO: ASync call?
-
-      bool findCertsOk =
-        mSelectedCryptPlug->findCertificates( &(*signer), &certificatePtr,
-                                              &certSize, true )
-        && (0 < certSize);
-      kdDebug(5006) << "keys retrieved ok: " << findCertsOk << endl;
-
-      bool useDialog = false;
-      if( findCertsOk ) {
-        kdDebug(5006) << "findCertificates() returned " << certificatePtr
-                      << endl;
-        certificate.assign( certificatePtr, certSize );
-
-        // fill selection dialog listbox
-        dialog.entriesLB->clear();
-        int iA = 0, iZ = 0;
-        while( iZ < certSize ) {
-          if( (certificate[iZ] == '\1') || (certificate[iZ] == '\0') ) {
-            char c = certificate[iZ];
-            if( (c == '\1') && !useDialog ) {
-              // set up selection dialog
-              useDialog = true;
-              dialog.setCaption( i18n("Select Certificate [%1]")
-                                 .arg( mComposeWin->from() ) );
-            }
-            certificate[iZ] = '\0';
-            QString s = QString::fromUtf8( &certificate[iA] );
-            certificate[iZ] = c;
-            if( useDialog )
-              dialog.entriesLB->insertItem( s );
-            else
-              selectedCert = s;
-            ++iZ;
-            iA = iZ;
-          }
-          ++iZ;
-        }
-
-        // run selection dialog and retrieve user choice
-        // OR take the single entry (if only one was found)
-        if( useDialog ) {
-          dialog.entriesLB->setFocus();
-          dialog.entriesLB->setSelected( 0, true );
-          bSign = (dialog.exec() == QDialog::Accepted);
-        }
-
-        if (bSign) {
-          mSignCertFingerprint = selectedCert.utf8();
-          mSignCertFingerprint.remove( 0, mSignCertFingerprint.findRev( '(' )+1 );
-          mSignCertFingerprint.truncate( mSignCertFingerprint.length()-1 );
-          kdDebug(5006) << "Signer: " << mComposeWin->from()
-                        << "\nFingerprint of signature key: "
-                        << QString( mSignCertFingerprint ) << "\n\n\n";
-          if( mSignCertFingerprint.isEmpty() )
-            bSign = false;
-        }
-      }
-    }
-
-    // Check for expiry of the signer, CA, and Root certificate.
-    // Only do the expiry check if the plugin has this feature
-    // and if there in *no* fingerprint in mSignCertFingerprint already.
-    if( mSelectedCryptPlug->hasFeature( Feature_WarnSignCertificateExpiry ) ){
-
-      // TODO: ASync call?
-
-      int sigDaysLeft = mSelectedCryptPlug->signatureCertificateDaysLeftToExpiry( mSignCertFingerprint );
-
-      // TODO: ASync calls?
-
-      if( mSelectedCryptPlug->signatureCertificateExpiryNearWarning() &&
-          sigDaysLeft <
-          mSelectedCryptPlug->signatureCertificateExpiryNearInterval() ) {
-        QString txt1;
-        if( 0 < sigDaysLeft )
-          txt1 = i18n( "The certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( sigDaysLeft );
-        else if( 0 > sigDaysLeft )
-          txt1 = i18n( "The certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( -sigDaysLeft );
-        else
-          txt1 = i18n( "The certificate you want to use for signing expires today.<br>This means that, starting from tomorrow, the recipients will not be able to check your signature any longer." );
-        int ret = KMessageBox::warningYesNo( mComposeWin,
-                                             i18n( "<qt><p>%1</p>"
-                                                   "<p>Do you still want to use this "
-                                                   "certificate?</p></qt>" )
-                                             .arg( txt1 ),
-                                             i18n( "Certificate Warning" ),
-                                             KGuiItem( i18n("&Use Certificate") ),
-                                             KGuiItem( i18n("&Do Not Use Certificate") ) );
-        if( ret == KMessageBox::No )
-          bSign = false;
-      }
-
-      if( bSign && ( 0 <= mSelectedCryptPlug->libName().find( "smime", 0, false ) ) ) {
-
-        // TODO: ASync call?
-
-        int rootDaysLeft = mSelectedCryptPlug->rootCertificateDaysLeftToExpiry( mSignCertFingerprint );
-
-        // TODO: ASync calls?
-
-        if( mSelectedCryptPlug->rootCertificateExpiryNearWarning() &&
-            rootDaysLeft <
-            mSelectedCryptPlug->rootCertificateExpiryNearInterval() ) {
-          QString txt1;
-          if( 0 < rootDaysLeft )
-            txt1 = i18n( "The root certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( rootDaysLeft );
-          else if( 0 > rootDaysLeft )
-            txt1 = i18n( "The root certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( -rootDaysLeft );
-          else
-            txt1 = i18n( "The root certificate of the certificate you want to use for signing expires today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
-          int ret = KMessageBox::warningYesNo( mComposeWin,
-                                               i18n( "<qt><p>%1</p>"
-                                                     "<p>Do you still want to use this "
-                                                     "certificate?</p></qt>" )
-                                               .arg( txt1 ),
-                                               i18n( "Certificate Warning" ),
-                                               KGuiItem( i18n("&Use Certificate") ),
-                                               KGuiItem( i18n("&Do Not Use Certificate") ) );
-          if( ret == KMessageBox::No )
-            bSign = false;
-        }
-      }
-
-      if( bSign && ( 0 <= mSelectedCryptPlug->libName().find( "smime", 0, false ) ) ) {
-
-        // TODO: ASync call?
-
-        int caDaysLeft = mSelectedCryptPlug->caCertificateDaysLeftToExpiry( mSignCertFingerprint );
-
-        // TODO: ASync calls?
-
-        if( mSelectedCryptPlug->caCertificateExpiryNearWarning() &&
-            caDaysLeft <
-            mSelectedCryptPlug->caCertificateExpiryNearInterval() ) {
-          QString txt1;
-          if( 0 < caDaysLeft )
-            txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( caDaysLeft );
-          else if( 0 > caDaysLeft )
-            txt1 = i18n( "The CA certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( -caDaysLeft );
-          else
-            txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
-          int ret = KMessageBox::warningYesNo( mComposeWin,
-                                               i18n( "<qt><p>%1</p>"
-                                                     "<p>Do you still want to use this "
-                                                     "certificate?</p></qt>" )
-                                               .arg( txt1 ),
-                                               i18n( "Certificate Warning" ),
-                                               KGuiItem( i18n("&Use Certificate") ),
-                                               KGuiItem( i18n("&Do Not Use Certificate") ) );
-          if( ret == KMessageBox::No )
-            bSign = false;
-        }
-      }
-    }
-    // Check whether the sender address of the signer is contained in
-    // the certificate, but only do this if the plugin has this feature.
-    if( mSelectedCryptPlug->hasFeature( Feature_WarnSignEmailNotInCertificate ) ) {
-
-      // TODO: ASync calls?
-
-      if( bSign && mSelectedCryptPlug->warnNoCertificate() &&
-          !mSelectedCryptPlug->isEmailInCertificate( QString( KPIM::getEmailAddr( mComposeWin->from() ) ).utf8(), mSignCertFingerprint ) )  {
-        QString txt1 = i18n( "The certificate you want to use for signing does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you." );
-        int ret = KMessageBox::warningYesNo( mComposeWin,
-                                             i18n( "<qt><p>%1</p>"
-                                                   "<p>Do you still want to use this "
-                                                   "certificate?</p></qt>" )
-                                             .arg( txt1 ),
-                                             i18n( "Certificate Warning" ),
-                                             KGuiItem( i18n("&Use Certificate") ),
-                                             KGuiItem( i18n("&Do Not Use Certificate") ) );
-        if( ret == KMessageBox::No )
-          bSign = false;
-      }
-    }
-  } // if( mSignCertFingerprint.isEmpty() )
-
-  // Finally sign the message, but only if the plugin has this feature.
-  // TODO (Bo): If this isn't the case, why go through this method at all?
-  //   Why not just exit at the beginning?
-  if( mSelectedCryptPlug->hasFeature( Feature_SignMessages ) ) {
-    size_t cipherLen;
-
-    const char* cleartext = cText;
-    char* ciphertext  = 0;
-
-    if( mDebugComposerCrypto ) {
-      QFile fileS( "dat_11_sign.input" );
-      if( fileS.open( IO_WriteOnly ) ) {
-        QDataStream ds( &fileS );
-        ds.writeRawBytes( cleartext, strlen( cleartext ) );
-        fileS.close();
-      }
-    }
-
-    if( bSign ) {
-      int errId = 0;
-      char* errTxt = 0;
-
-      // TODO: ASync call? Likely, yes :-)
-
-      if( mSelectedCryptPlug->signMessage( cleartext,
-                                           &ciphertext, &cipherLen,
-                                           mSignCertFingerprint,
-                                           structuring, &errId, &errTxt ) ) {
-        if( mDebugComposerCrypto ) {
-          QFile fileD( "dat_12_sign.output" );
-          if( fileD.open( IO_WriteOnly ) ) {
-            QDataStream ds( &fileD );
-            ds.writeRawBytes( ciphertext, cipherLen );
-            fileD.close();
-          }
-        }
-        signature.assign( ciphertext, cipherLen );
-        kdDebug(5006) << "Assigned signature\n";
-      } else if ( errId == /*GPGME_Canceled*/20 ) {
-        mRc = false;
-        return;
-      } else {
-        QString error = "#" + QString::number( errId ) + "  :  ";
-        if( errTxt )
-          error += errTxt;
-        else
-          error += i18n("[unknown error]");
-        KMessageBox::sorry( mComposeWin,
-                            i18n( "<qt><p><b>This message could not be signed;</b></p>"
-                                  "<p>The Crypto Plug-In '%1' reported the following "
-                                  "details:</p>"
-                                  "<p><i>%2</i></p>"
-                                  "<p>Your configuration might be invalid or the Plug-In "
-                                  "damaged;</p>"
-                                  "<p><b>Please contact your system "
-                                  "administrator.</b></p></qt>" )
-                            .arg( mSelectedCryptPlug->libName() )
-                            .arg( error ) );
-      }
-      // we do NOT call a "delete ciphertext" !
-      // since "signature" will take care for it (is a QByteArray)
-      delete errTxt;
-      errTxt = 0;
-    }
+  const GpgME::SigningResult res =
+    job->exec( signingKeys, plainText, signingMode( format ), signature );
+  if ( res.error().isCanceled() ) {
+    kdDebug() << "signing was canceled by user" << endl;
+    return;
   }
-
-  // PENDING(khz,kalle) Warn if there was no signature? (because of
-  // a problem or because the plugin does not allow signing?
-
-  /* ----------------------------- */
-  kdDebug(5006) << "\nMessageComposer::pgpSignedMsg returning from CRYPTPLUG.\n" << endl;
+  if ( res.error() ) {
+    kdDebug() << "signing failed: " << res.error().asString() << endl;
+    job->showErrorDialog( mComposeWin );
+    return;
+  }
 
   mSignature = signature;
 }
 
 //-----------------------------------------------------------------------------
 Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
-                                               QCString cText,
-                                               StructuringInfoWrapper& structuring,
-                                               QCString& encryptCertFingerprints )
+                                               const QCString & cText,
+                                               const std::vector<GpgME::Key> & encryptionKeys,
+					       Kleo::CryptoMessageFormat format )
 {
-  if( !mSelectedCryptPlug ) {
+  // TODO: ASync call? Likely, yes :-)
+  const Kleo::CryptoBackendFactory * cpf = Kleo::CryptoBackendFactory::instance();
+  assert( cpf );
+  const Kleo::CryptoBackend::Protocol * proto
+    = isSMIME( format ) ? cpf->smime() : cpf->openpgp() ;
+  assert( proto ); // hmmmm....?
+
+  std::auto_ptr<Kleo::EncryptJob> job( proto->encryptJob( armor( format ),
+							  textMode( format ) ) );
+  if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
-                        i18n( "<qt>No active Crypto Plug-In could be found.<br><br>"
-                              "Please activate a Plug-In in the configuration dialog.</qt>" ) );
-
-    // TODO (Bo): Sure about this? (Will stop all further jobs)
-    mRc = false;
-
-    // TODO (Bo): The method always returns Ok, so better do it here also.
-    // TODO (Bo): Figure out if this should really be the case
-    return Kpgp::Ok;
+			i18n("This message could not be encrypted, "
+			     "since the chosen backend doesn't seem to support "
+			     "encryption. This should actually never happen, "
+			     "please report this bug.") );
+    return Kpgp::Failure;
   }
 
-  Kpgp::Result result = Kpgp::Ok;
+  QByteArray plainText;
+  plainText.duplicate( cText.data(), cText.length() ); // hrmpf...
 
-  // we call the cryptplug
-  kdDebug(5006) << "\nMessageComposer::pgpEncryptedMsg: going to call CRYPTPLUG "
-                << mSelectedCryptPlug->libName() << endl;
+  const GpgME::EncryptionResult res =
+    job->exec( encryptionKeys, plainText, false, encryptedBody );
+  if ( res.error().isCanceled() ) {
+    kdDebug() << "encryption was canceled by user" << endl;
+    return Kpgp::Canceled;
+  }
+  if ( res.error() ) {
+    kdDebug() << "encryption failed: " << res.error().asString() << endl;
+    job->showErrorDialog( mComposeWin );
+    return Kpgp::Failure;
+  }
+  return Kpgp::Ok;
+}
 
-  // PENDING(khz,kalle) Warn if no encryption?
+Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBody,
+							const QCString & cText,
+							const std::vector<GpgME::Key> & signingKeys,
+							const std::vector<GpgME::Key> & encryptionKeys,
+							Kleo::CryptoMessageFormat format )
+{
+  // TODO: ASync call? Likely, yes :-)
+  const Kleo::CryptoBackendFactory * cpf = Kleo::CryptoBackendFactory::instance();
+  assert( cpf );
+  const Kleo::CryptoBackend::Protocol * proto
+    = isSMIME( format ) ? cpf->smime() : cpf->openpgp() ;
+  assert( proto ); // hmmmm....?
 
-  const char* cleartext  = cText;
-  const char* ciphertext = 0;
+  std::auto_ptr<Kleo::SignEncryptJob> job( proto->signEncryptJob( armor( format ),
+								  textMode( format ) ) );
+  if ( !job.get() ) {
+    KMessageBox::sorry( mComposeWin,
+			i18n("This message could not be signed and encrypted, "
+			     "since the chosen backend doesn't seem to support "
+			     "combined signing and encryption. This should actually never happen,"
+			     "please report this bug.") );
+    return Kpgp::Failure;
+  }
 
-  // Actually do the encryption, if the plugin supports this
-  size_t cipherLen;
+  QByteArray plainText;
+  plainText.duplicate( cText.data(), cText.length() ); // hrmpf...
 
-  int errId = 0;
-  char* errTxt = 0;
-  if( mSelectedCryptPlug->hasFeature( Feature_EncryptMessages ) &&
-
-      // TODO: ASync call? Likely, yes :-)
-
-      mSelectedCryptPlug->encryptMessage( cleartext,
-                                          &ciphertext, &cipherLen,
-                                          encryptCertFingerprints,
-                                          structuring, &errId, &errTxt )
-      && ciphertext )
-    encryptedBody.assign( ciphertext, cipherLen );
-  else {
-    QString error = "#" + QString::number( errId ) + "  :  ";
-    if( errTxt )
-      error += errTxt;
+  const std::pair<GpgME::SigningResult,GpgME::EncryptionResult> res =
+    job->exec( signingKeys, encryptionKeys, plainText, false, encryptedBody );
+  if ( res.first.error().isCanceled() || res.second.error().isCanceled() ) {
+    kdDebug() << "encrypt/sign was canceled by user" << endl;
+    return Kpgp::Canceled;
+  }
+  if ( res.first.error() || res.second.error() ) {
+    if ( res.first.error() )
+      kdDebug() << "signing failed: " << res.first.error().asString() << endl;
     else
-      error += i18n("[unknown error]");
-    KMessageBox::sorry(mComposeWin,
-                       i18n("<qt><p><b>This message could not be encrypted;</b></p>"
-                            "<p>The Crypto Plug-In '%1' reported the following "
-                            "details:</p>"
-                            "<p><i>%2</i></p>"
-                            "<p>Your configuration might be invalid or the Plug-In "
-                            "damaged;</p>"
-                            "<p><b>Please contact your system "
-                            "administrator.</b></p></qt>")
-                       .arg(mSelectedCryptPlug->libName())
-                       .arg( error ) );
+      kdDebug() << "encryption failed: " << res.second.error().asString() << endl;
+    job->showErrorDialog( mComposeWin );
+    return Kpgp::Failure;
   }
-  delete errTxt;
-  errTxt = 0;
-
-  // we do NOT delete the "ciphertext" !
-  // bacause "encoding" will take care for it (is a QByteArray)
-  kdDebug(5006) << "\nMessageComposer::pgpEncryptedMsg: returning from CRYPTPLUG.\n" << endl;
-
-  // TODO (Bo): Why does this always return success?
-  return result;
-}
-
-//-----------------------------------------------------------------------------
-QCString MessageComposer::getEncryptionCertificate( const QString& recipient )
-{
-  bool bEncrypt = true;
-
-  QCString addressee = recipient.utf8();
-  addressee.replace('\x001', ' ');
-  kdDebug(5006) << "\n\n1st try:  Retrieving keys for: " << recipient << endl;
-
-  QString selectedCert;
-  KListBoxDialog dialog( selectedCert, "", i18n( "&Select certificate:" ) );
-  dialog.resize( 700, 200 );
-  bool useDialog;
-  int certSize = 0;
-  QByteArray certificateList;
-
-  bool askForDifferentSearchString = false;
-  do {
-    certSize = 0;
-    char* certificatePtr = 0;
-    bool findCertsOk;
-    if( askForDifferentSearchString )
-      findCertsOk = false;
-    else {
-
-      // TODO: ASync call?
-
-      findCertsOk = mSelectedCryptPlug->findCertificates( &(*addressee),
-                                                          &certificatePtr,
-                                                          &certSize,
-                                                          false )
-        && (0 < certSize);
-      kdDebug(5006) << "keys retrieved successfully: " << findCertsOk << "\n" << endl;
-      kdDebug(5006) << "findCertificates() 1st try returned " << certificatePtr << endl;
-      if( findCertsOk )
-        certificateList.assign( certificatePtr, certSize );
-    }
-    while( !findCertsOk ) {
-      bool bOk = false;
-      addressee = KInputDialog::getText( askForDifferentSearchString
-                                         ? i18n("Look for Other Certificates")
-                                         : i18n("No Certificate Found"),
-                                         i18n("Enter different address for recipient %1 "
-                                              "or enter \" * \" to see all certificates:")
-                                         .arg(recipient),
-                                         addressee, &bOk, mComposeWin )
-        .stripWhiteSpace().utf8();
-      askForDifferentSearchString = false;
-      if( bOk ) {
-        addressee = addressee.simplifyWhiteSpace();
-        if( ("\"*\"" == addressee) ||
-            ("\" *\"" == addressee) ||
-            ("\"* \"" == addressee) ||
-            ("\" * \"" == addressee))  // You never know what users type.  :-)
-          addressee = "*";
-        kdDebug(5006) << "\n\nnext try: Retrieving keys for: " << addressee << endl;
-        certSize = 0;
-        char* certificatePtr = 0;
-
-        // TODO: ASync call?
-
-        findCertsOk = mSelectedCryptPlug->findCertificates( &(*addressee),
-                                                            &certificatePtr,
-                                                            &certSize,
-                                                            false )
-          && (0 < certSize);
-        kdDebug(5006) << "keys retrieved successfully: " << findCertsOk << "\n" << endl;
-        kdDebug(5006) << "findCertificates() 2nd try returned " << certificatePtr << endl;
-        if( findCertsOk )
-          certificateList.assign( certificatePtr, certSize );
-      } else {
-        bEncrypt = false;
-        break;
-      }
-    }
-    if( bEncrypt && findCertsOk ) {
-      // fill selection dialog listbox
-      dialog.entriesLB->clear();
-      // show dialog even if only one entry to allow specifying of
-      // another search string _instead_of_ the recipients address
-      bool bAlwaysShowDialog = true;
-
-      useDialog = false;
-      int iA = 0, iZ = 0;
-      while( iZ < certSize ) {
-        if( (certificateList.at(iZ) == '\1') || (certificateList.at(iZ) == '\0') ) {
-          kdDebug(5006) << "iA=" << iA << " iZ=" << iZ << endl;
-          char c = certificateList.at(iZ);
-          if( (bAlwaysShowDialog || (c == '\1')) && !useDialog ) {
-            // set up selection dialog
-            useDialog = true;
-            dialog.setCaption( i18n( "Select Certificate for Encryption [%1]" )
-                              .arg( recipient ) );
-            dialog.setLabelAbove(
-              i18n( "&Select certificate for recipient %1:" )
-              .arg( recipient ) );
-          }
-          certificateList.at(iZ) = '\0';
-          QString s = QString::fromUtf8( &certificateList.at(iA) );
-          certificateList.at(iZ) = c;
-          if( useDialog )
-            dialog.entriesLB->insertItem( s );
-          else
-            selectedCert = s;
-          ++iZ;
-          iA = iZ;
-        }
-        ++iZ;
-      }
-      // run selection dialog and retrieve user choice
-      // OR take the single entry (if only one was found)
-      if( useDialog ) {
-        dialog.setCommentBelow(
-          i18n("(Certificates matching address \"%1\", "
-               "press [Cancel] to use different address for recipient %2.)")
-          .arg( addressee )
-          .arg( recipient ) );
-        dialog.entriesLB->setFocus();
-        dialog.entriesLB->setSelected( 0, true );
-        askForDifferentSearchString = (dialog.exec() != QDialog::Accepted);
-      }
-    }
-  } while ( askForDifferentSearchString );
-
-  if( bEncrypt )
-    return selectedCert.utf8();
-  else
-    return QCString();
-}
-
-// TODO: Does this have any crypto stuff that needs to be async?
-bool MessageComposer::checkForEncryptCertificateExpiry( const QString& recipient,
-                                                        const QCString& certFingerprint )
-{
-  bool bEncrypt = true;
-
-  // Check for expiry of various certificates, but only if the
-  // plugin supports this.
-  if( mSelectedCryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) ) {
-    QString captionWarn = i18n( "Certificate Warning [%1]" ).arg( recipient );
-
-
-    // TODO: ASync call?
-
-    int encRecvDaysLeft =
-      mSelectedCryptPlug->receiverCertificateDaysLeftToExpiry( certFingerprint );
-    if( mSelectedCryptPlug->receiverCertificateExpiryNearWarning() &&
-        encRecvDaysLeft <
-        mSelectedCryptPlug->receiverCertificateExpiryNearWarningInterval() ) {
-      QString txt1;
-      if( 0 < encRecvDaysLeft )
-        txt1 = i18n( "The certificate of the recipient you want to send this "
-                     "message to expires in %1 days.<br>This means that after "
-                     "this period, the recipient will not be able to read "
-                     "your message any longer." )
-               .arg( encRecvDaysLeft );
-      else if( 0 > encRecvDaysLeft )
-        txt1 = i18n( "The certificate of the recipient you want to send this "
-                     "message to expired %1 days ago.<br>This means that the "
-                     "recipient will not be able to read your message." )
-               .arg( -encRecvDaysLeft );
-      else
-        txt1 = i18n( "The certificate of the recipient you want to send this "
-                     "message to expires today.<br>This means that beginning "
-                     "from tomorrow, the recipient will not be able to read "
-                     "your message any longer." );
-      int ret = KMessageBox::warningYesNo( mComposeWin,
-                                           i18n( "<qt><p>%1</p>"
-                                                 "<p>Do you still want to use "
-                                                 "this certificate?</p></qt>" )
-                                           .arg( txt1 ),
-                                           captionWarn,
-                                           KGuiItem( i18n("&Use Certificate") ),
-                                           KGuiItem( i18n("&Do Not Use Certificate") ) );
-      if( ret == KMessageBox::No )
-        bEncrypt = false;
-    }
-
-    if( bEncrypt ) {
-      int certInChainDaysLeft =
-        mSelectedCryptPlug->certificateInChainDaysLeftToExpiry( certFingerprint );
-      if( mSelectedCryptPlug->certificateInChainExpiryNearWarning() &&
-          certInChainDaysLeft <
-          mSelectedCryptPlug->certificateInChainExpiryNearWarningInterval() ) {
-        QString txt1;
-        if( 0 < certInChainDaysLeft )
-          txt1 = i18n( "One of the certificates in the chain of the "
-                       "certificate of the recipient you want to send this "
-                       "message to expires in %1 days.<br>"
-                       "This means that after this period, the recipient "
-                       "might not be able to read your message any longer." )
-                 .arg( certInChainDaysLeft );
-        else if( 0 > certInChainDaysLeft )
-          txt1 = i18n( "One of the certificates in the chain of the "
-                       "certificate of the recipient you want to send this "
-                       "message to expired %1 days ago.<br>"
-                       "This means that the recipient might not be able to "
-                       "read your message." )
-                 .arg( -certInChainDaysLeft );
-        else
-          txt1 = i18n( "One of the certificates in the chain of the "
-                       "certificate of the recipient you want to send this "
-                       "message to expires today.<br>This means that "
-                       "beginning from tomorrow, the recipient might not be "
-                       "able to read your message any longer." );
-        int ret = KMessageBox::warningYesNo( mComposeWin,
-                                             i18n( "<qt><p>%1</p>"
-                                                   "<p>Do you still want to use this "
-                                                   "certificate?</p></qt>" )
-                                             .arg( txt1 ),
-                                             captionWarn,
-                                             KGuiItem( i18n("&Use Certificate") ),
-                                             KGuiItem( i18n("&Do Not Use Certificate") ) );
-        if( ret == KMessageBox::No )
-          bEncrypt = false;
-      }
-    }
-  }
-
-  return bEncrypt;
+  return Kpgp::Ok;
 }
 
 

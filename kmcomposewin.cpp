@@ -47,9 +47,13 @@ using KRecentAddress::RecentAddresses;
 #include <libkdepim/identity.h>
 #include <libkdepim/kfileio.h>
 #include <libkdepim/email.h>
+#include <kleo/cryptobackendfactory.h>
+#include <kleo/exportjob.h>
+#include <ui/progressdialog.h>
+#include <ui/keyselectiondialog.h>
 
-#include <cryptplugwrapperlist.h>
-#include <cryptplugfactory.h>
+#include <gpgmepp/context.h>
+#include <gpgmepp/key.h>
 
 #include "klistboxdialog.h"
 
@@ -98,6 +102,9 @@ using KRecentAddress::RecentAddresses;
 #include <qfontdatabase.h>
 
 #include <mimelib/mimepp.h>
+
+#include <algorithm>
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -108,22 +115,55 @@ using KRecentAddress::RecentAddresses;
 
 #include "kmcomposewin.moc"
 
+static const Kleo::CryptoMessageFormat cryptoMessageFormats[] = {
+  Kleo::AutoFormat,
+  Kleo::InlineOpenPGPFormat,
+  Kleo::OpenPGPMIMEFormat,
+  Kleo::SMIMEFormat,
+  Kleo::SMIMEOpaqueFormat,
+};
+static const int numCryptoMessageFormats = sizeof cryptoMessageFormats / sizeof *cryptoMessageFormats ;
+
+static inline Kleo::CryptoMessageFormat cb2format( int idx ) {
+  return cryptoMessageFormats[ idx >= 0 && idx < numCryptoMessageFormats ? idx : 0 ];
+}
+
+static inline int format2cb( Kleo::CryptoMessageFormat f ) {
+  for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
+    if ( f == cryptoMessageFormats[i] )
+      return i;
+  return 0;
+}
+
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   : MailComposerIface(), KMail::SecondaryWindow( "kmail-composer#" ),
+    mSpellCheckInProgress( false ),
+    mDone( false ),
+    mAtmModified( false ),
     mMsg( 0 ),
+    mAttachMenu( 0 ),
     mAutoRequestMDN( false ),
+    mFolder( 0 ),
     mUseHTMLEditor( false ),
-    mId( id ), mComposer( 0 ), mNeverSign( false ), mNeverEncrypt( false )
+    mId( id ),
+    mAttachPK( 0 ), mAttachMPK( 0 ),
+    mAttachRemoveAction( 0 ), mAttachSaveAction( 0 ), mAttachPropertiesAction( 0 ),
+    mSignAction( 0 ), mEncryptAction( 0 ), mRequestMDNAction( 0 ),
+    mUrgentAction( 0 ), mAllFieldsAction( 0 ), mFromAction( 0 ),
+    mReplyToAction( 0 ), mToAction( 0 ), mCcAction( 0 ), mBccAction( 0 ),
+    mSubjectAction( 0 ),
+    mIdentityAction( 0 ), mTransportAction( 0 ), mFccAction( 0 ),
+    mWordWrapAction( 0 ), mFixedFontAction( 0 ), mAutoSpellCheckingAction( 0 ),
+    mDictionaryAction( 0 ),
+    mEncodingAction( 0 ),
+    mCryptoModuleAction( 0 ),
+    mComposer( 0 )
 {
   mSubjectTextWasSpellChecked = false;
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
-
-  // Initialize the plugin selection according to 'active' flag that
-  // was set via the global configuration dialog.
-  mSelectedCryptPlug = KMail::CryptPlugFactory::instance()->active();
 
   mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mMainWidget);
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
@@ -213,14 +253,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
                                             mAtmEncryptColWidth );
   mAtmColSign    = mAtmListView->addColumn( i18n("Sign"),
                                             mAtmSignColWidth );
-  if( mSelectedCryptPlug ) {
-    mAtmListView->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
-    mAtmListView->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
-  }
-  else {
-    mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
-    mAtmListView->setColumnWidth( mAtmColSign,    0 );
-  }
+  mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
+  mAtmListView->setColumnWidth( mAtmColSign,    0 );
   mAtmListView->setAllColumnsShowFocus( true );
 
   connect( mAtmListView,
@@ -287,7 +321,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   }
 
   mMsg = 0;
-  mBccMsgList.setAutoDelete( false );
   if (aMsg)
     setMsg(aMsg);
 
@@ -296,6 +329,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = true;
 }
 
+template <typename T>
+inline void Delete( const T * t ) {
+  delete t; t = 0;
+}
 
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
@@ -320,7 +357,7 @@ KMComposeWin::~KMComposeWin()
     job->kill();
     it = mMapAtmLoadData.begin();
   }
-  mBccMsgList.clear();
+  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
 }
 
 //-----------------------------------------------------------------------------
@@ -459,7 +496,6 @@ void KMComposeWin::readConfig(void)
   mOutlookCompatible = config->readBoolEntry( "outlook-compatible-attachments", false );
   mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
   mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
-  mNeverSignWhenSavingInDrafts = config->readBoolEntry("never-sign-drafts", true);
   mNeverEncryptWhenSavingInDrafts = config->readBoolEntry("never-encrypt-drafts", true);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
   mAutoRequestMDN = config->readBoolEntry("request-mdn", false);
@@ -606,7 +642,7 @@ void KMComposeWin::deadLetter()
   // This method is called when KMail crashed, so don't try signing/encryption
   // and don't disable controls because it is also called from a timer and
   // then the disabling is distracting.
-  applyChanges( true, true, true );
+  applyChanges( true, true );
 
   // Don't continue before the applyChanges is done!
   qApp->enter_loop();
@@ -1070,37 +1106,36 @@ void KMComposeWin::setupActions(void)
   // get PGP user id for the chosen identity
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  QCString pgpUserId = ident.pgpIdentity();
-  mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
+  // PENDING(marc): check the uses of this member and split it into
+  // smime/openpgp and or enc/sign, if necessary:
+  mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+  mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
-  mLastEncryptActionState =
-    ( mSelectedCryptPlug && EncryptEmail_EncryptAll == mSelectedCryptPlug->encryptEmail() );
-  mLastSignActionState =
-    (    (!mSelectedCryptPlug && mAutoPgpSign)
-      || ( mSelectedCryptPlug && SignEmail_SignAll == mSelectedCryptPlug->signEmail()) );
+  mLastEncryptActionState = false;
+  mLastSignActionState = mAutoPgpSign;
 
-  // "Attach public key" is only possible if the built-in OpenPGP support is
-  // used
-  mAttachPK->setEnabled(Kpgp::Module::getKpgp()->usePGP());
+  // "Attach public key" is only possible if OpenPGP support is available:
+  mAttachPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() );
 
-  // "Attach my public key" is only possible if the built-in OpenPGP support is
-  // used and the user specified his key for the current identity
-  mAttachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
-                         !pgpUserId.isEmpty() );
+  // "Attach my public key" is only possible if OpenPGP support is
+  // available and the user specified his key for the current identity:
+  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
+			  !ident.pgpEncryptionKey().isEmpty() );
 
-  if ( !mSelectedCryptPlug && !Kpgp::Module::getKpgp()->usePGP() ) {
+  if ( !Kleo::CryptoBackendFactory::instance()->openpgp() && !Kleo::CryptoBackendFactory::instance()->smime() ) {
+    // no crypto whatsoever
     mEncryptAction->setEnabled( false );
     setEncryption( false );
     mSignAction->setEnabled( false );
     setSigning( false );
-  }
-  else if ( !mSelectedCryptPlug && pgpUserId.isEmpty() ) {
+  } else {
+    const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp()
+      && !ident.pgpSigningKey().isEmpty();
+    const bool canSMIMESign = Kleo::CryptoBackendFactory::instance()->smime()
+      && !ident.smimeSigningKey().isEmpty();
+
     setEncryption( false );
-    setSigning( false );
-  }
-  else {
-    setEncryption( mLastEncryptActionState );
-    setSigning( mLastSignActionState );
+    setSigning( ( canOpenPGPSign || canSMIMESign ) && mAutoPgpSign );
   }
 
   connect(mEncryptAction, SIGNAL(toggled(bool)),
@@ -1108,41 +1143,15 @@ void KMComposeWin::setupActions(void)
   connect(mSignAction,    SIGNAL(toggled(bool)),
                          SLOT(slotSignToggled(    bool )));
 
-  if ( KMail::CryptPlugFactory::instance()->list().count() > 0 ) {
-    QStringList lst;
-    lst << i18n( "inline OpenPGP (built-in)" );
-    CryptPlugWrapper* current;
-    QPtrListIterator<CryptPlugWrapper> it( KMail::CryptPlugFactory::instance()->list() );
-    int idx=0;
-    int i=1;
-    while( ( current = it.current() ) ) {
-        lst << i18n("%1 (plugin)").arg(current->displayName());
-        if( mSelectedCryptPlug == current )
-          idx = i;
-        ++it;
-        ++i;
-    }
+  QStringList l;
+  for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
+    l.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
 
-    mCryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
-                             0, // no accel
-                             this, SLOT( slotSelectCryptoModule() ),
-                             actionCollection(),
-                             "options_select_crypto" );
-    mCryptoModuleAction->setItems( lst );
-    mCryptoModuleAction->setCurrentItem( idx );
-
-    // Set last chosen one if possible
-    QString last = composerConfig.readEntry( "CryptPlug" );
-    if ( !last.isEmpty() )
-      for ( unsigned int i=0; i<lst.count(); ++i )
-        if ( last == lst[i] ) {
-          mCryptoModuleAction->setCurrentItem( i );
-          slotSelectCryptoModule();
-          break;
-        }
-  }
-  else
-    mCryptoModuleAction = 0;
+  mCryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ), 0,
+					   this, SLOT(slotSelectCryptoModule()),
+					   actionCollection(), "options_select_crypto" );
+  mCryptoModuleAction->setItems( l );
+  mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
 
   QStringList styleItems;
   styleItems << i18n( "Standard" );
@@ -1407,25 +1416,23 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
       break;
   }
 
-  // get PGP user id for the currently selected identity
-  QCString pgpUserId = ident.pgpIdentity();
-  mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
+  mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+  mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
-  if ( mSelectedCryptPlug || Kpgp::Module::getKpgp()->usePGP() ) {
-    if ( !mSelectedCryptPlug && pgpUserId.isEmpty() ) {
-      setEncryption( false );
-      setSigning( false );
-    }
-    else {
-      setEncryption( mLastEncryptActionState );
-      setSigning( mLastSignActionState );
-    }
+  if ( Kleo::CryptoBackendFactory::instance()->openpgp() || Kleo::CryptoBackendFactory::instance()->smime() ) {
+    const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp()
+      && !ident.pgpSigningKey().isEmpty();
+    const bool canSMIMESign = Kleo::CryptoBackendFactory::instance()->smime()
+      && !ident.smimeSigningKey().isEmpty();
+
+    setEncryption( mLastEncryptActionState );
+    setSigning( ( canOpenPGPSign || canSMIMESign ) && mLastSignActionState );
   }
 
-  // "Attach my public key" is only possible if the user uses the built-in
-  // OpenPGP support and he specified his key
-  mAttachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
-                         !pgpUserId.isEmpty() );
+  // "Attach my public key" is only possible if the user uses OpenPGP
+  // support and he specified his key:
+  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
+			  !ident.pgpEncryptionKey().isEmpty() );
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
@@ -1465,21 +1472,21 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
            node->parentNode()->hasType( DwMime::kTypeMultipart ) &&
            node->parentNode()->hasSubType( DwMime::kSubtypeAlternative ) ) {
         // we have a mp/al body part with a text and an html body
-        kdDebug(5006) << "KMComposeWin::setMsg() : text/html found" << endl;
-        firstAttachment = 2;
+      kdDebug(5006) << "KMComposeWin::setMsg() : text/html found" << endl;
+      firstAttachment = 2;
         if ( mMsg->headerField( "X-KMail-Markup" ) == "true" )
           toggleMarkup( true );
       }
       delete root; root = 0;
     }
     if ( firstAttachment == 0 ) {
-      mMsg->bodyPart(0, &bodyPart);
-      if ( bodyPart.typeStr().lower() == "text" ) {
-        // we have a mp/mx body with a text body
+        mMsg->bodyPart(0, &bodyPart);
+        if ( bodyPart.typeStr().lower() == "text" ) {
+          // we have a mp/mx body with a text body
         kdDebug(5006) << "KMComposeWin::setMsg() : text/* found" << endl;
-        firstAttachment = 1;
+          firstAttachment = 1;
+        }
       }
-    }
 
     if ( firstAttachment != 0 ) // there's text to show
     {
@@ -1663,9 +1670,7 @@ bool KMComposeWin::userForgotAttachment()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::applyChanges( bool dontSign,
-                                 bool dontEncrypt,
-                                 bool dontDisable )
+void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 {
 #ifdef DEBUG
   kdDebug(5006) << "entering KMComposeWin::applyChanges" << endl;
@@ -1693,29 +1698,30 @@ void KMComposeWin::applyChanges( bool dontSign,
     setEnabled( false );
 
   mComposer->setDisableBreaking( mDisableBreaking );
-  mComposer->applyChanges( dontSign, dontEncrypt );
+  mComposer->applyChanges( dontSignNorEncrypt );
 }
 
 void KMComposeWin::slotComposerDone( bool rc )
 {
+  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  mComposedMessages = mComposer->composedMessageList();
   emit applyChangesDone( rc );
   delete mComposer;
   mComposer = 0;
-
-  if ( mCryptoModuleAction ) {
-    // Write the chosen crypt module
-    KConfigGroup composerConfig( KMKernel::config(), "Composer" );
-    composerConfig.writeEntry( "CryptPlug",
-                               mCryptoModuleAction->currentText() );
-  }
 }
 
-QCString KMComposeWin::pgpIdentity() const
-{
-  // get PGP user id for the chosen identity
-  const KPIM::Identity & ident =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  return ident.pgpIdentity();
+const KPIM::Identity & KMComposeWin::identity() const {
+  return kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+}
+
+Kleo::CryptoMessageFormat KMComposeWin::cryptoMessageFormat() const {
+  if ( !mCryptoModuleAction )
+    return Kleo::AutoFormat;
+  return cb2format( mCryptoModuleAction->currentItem() );
+}
+
+bool KMComposeWin::encryptToSelf() const {
+  return !Kpgp::Module::getKpgp() || Kpgp::Module::getKpgp()->encryptToSelf();
 }
 
 bool KMComposeWin::queryExit ()
@@ -1807,7 +1813,7 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   lvi->setText(1, KIO::convertSize( msgPart->decodedSize()));
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
-  if( mSelectedCryptPlug ) {
+  if( canSignEncryptAttachments() ) {
     lvi->enableCryptoCBs( true );
     lvi->setEncrypt( mEncryptAction->isChecked() );
     lvi->setSign(    mSignAction->isChecked() );
@@ -2180,17 +2186,7 @@ void KMComposeWin::slotSetCharset()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSelectCryptoModule()
 {
-  mSelectedCryptPlug = 0;
-  int sel = mCryptoModuleAction->currentItem();
-  int i = 1;  // start at 1 since 0'th entry is "inline OpenPGP (builtin)"
-  for ( CryptPlugWrapperListIterator it( KMail::CryptPlugFactory::instance()->list() ) ;
-        it.current() ;
-        ++it, ++i )
-    if( i == sel ){
-      mSelectedCryptPlug = it.current();
-      break;
-    }
-  if( mSelectedCryptPlug ) {
+  if( canSignEncryptAttachments() ) {
     // if the encrypt/sign columns are hidden then show them
     if( 0 == mAtmListView->columnWidth( mAtmColEncrypt ) ) {
       // set/unset signing/encryption for all attachments according to the
@@ -2265,42 +2261,57 @@ void KMComposeWin::slotSelectCryptoModule()
     }
   }
 }
-//-----------------------------------------------------------------------------
-bool KMComposeWin::inlineSigningEncryptionSelected()
-{
-  if ( !mSelectedCryptPlug &&  (mSignAction->isChecked() ||  mEncryptAction->isChecked()) )
-    return true;
-  else
-    return false;
+
+static void showExportError( QWidget * w, const GpgME::Error & err ) {
+  assert( err );
+  const QString msg = i18n("<qt><p>An error occurred while trying to export "
+			   "the key from the backend:</p>"
+			   "<p><b>%1</b></p></qt>")
+    .arg( QString::fromLocal8Bit( err.asString() ) );
+  KMessageBox::error( w, msg, i18n("Key Export Failed") );
 }
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertMyPublicKey()
 {
-  KMMessagePart* msgPart;
-
-  KCursorSaver busy(KBusyPtr::busy());
-
   // get PGP user id for the chosen identity
-  QCString pgpUserId =
-    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() ).pgpIdentity();
+  mFingerprint =
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() ).pgpEncryptionKey();
+  if ( !mFingerprint.isEmpty() )
+    startPublicKeyExport();
+}
 
-  QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
-  if (armoredKey.isEmpty())
-  {
-    KCursorSaver idle(KBusyPtr::idle());
-    KMessageBox::sorry( this, i18n("Unable to obtain your public key.") );
+void KMComposeWin::startPublicKeyExport() {
+  if ( mFingerprint.isEmpty() )
+    return;
+  Kleo::ExportJob * job = Kleo::CryptoBackendFactory::instance()->openpgp()->publicKeyExportJob( true );
+  assert( job );
+
+  connect( job, SIGNAL(result(const GpgME::Error&,const QByteArray&)),
+	   this, SLOT(slotPublicKeyExportResult(const GpgME::Error&,const QByteArray&)) );
+
+  const GpgME::Error err = job->start( mFingerprint );
+  if ( err )
+    showExportError( this, err );
+  else
+    (void)new Kleo::ProgressDialog( job, i18n("Exporting key..."), this );
+}
+
+void KMComposeWin::slotPublicKeyExportResult( const GpgME::Error & err, const QByteArray & keydata ) {
+  if ( err ) {
+    showExportError( this, err );
     return;
   }
 
   // create message part
-  msgPart = new KMMessagePart;
-  msgPart->setName(i18n("My OpenPGP key"));
+  KMMessagePart * msgPart = new KMMessagePart();
+  msgPart->setName( i18n("OpenPGP key 0x%1").arg( mFingerprint ) );
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
   QValueList<int> dummy;
-  msgPart->setBodyAndGuessCte(armoredKey, dummy, false);
-  msgPart->setContentDisposition("attachment;\n\tfilename=public_key.asc");
+  msgPart->setBodyAndGuessCte(keydata, dummy, false);
+  msgPart->setContentDisposition( "attachment;\n\tfilename=0x" + QCString( mFingerprint.latin1() ) + ".asc" );
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -2310,38 +2321,19 @@ void KMComposeWin::slotInsertMyPublicKey()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertPublicKey()
 {
-  QCString keyID;
-  KMMessagePart* msgPart;
-  Kpgp::Module *pgp;
-
-  if ( !(pgp = Kpgp::Module::getKpgp()) )
-    return;
-
-  keyID = pgp->selectPublicKey( i18n("Attach Public OpenPGP Key"),
+  Kleo::KeySelectionDialog dlg( i18n("Attach Public OpenPGP Key"),
                                 i18n("Select the public key which should "
-                                     "be attached.") );
-
-  if (keyID.isEmpty())
+                                     "be attached."),
+				std::vector<GpgME::Key>(),
+				Kleo::KeySelectionDialog::PublicKeys|Kleo::KeySelectionDialog::OpenPGPKeys,
+				false /* no multi selection */,
+				false /* no remember choice box */,
+				this, "attach public key selection dialog" );
+  if ( dlg.exec() != QDialog::Accepted )
     return;
 
-  QCString armoredKey = pgp->getAsciiPublicKey(keyID);
-  if (!armoredKey.isEmpty()) {
-    // create message part
-    msgPart = new KMMessagePart;
-    msgPart->setName(i18n("OpenPGP key 0x%1").arg(keyID));
-    msgPart->setTypeStr("application");
-    msgPart->setSubtypeStr("pgp-keys");
-    QValueList<int> dummy;
-    msgPart->setBodyAndGuessCte(armoredKey, dummy, false);
-    msgPart->setContentDisposition("attachment;\n\tfilename=0x" + keyID + ".asc");
-
-    // add the new attachment to the list
-    addAttach(msgPart);
-    rethinkFields(); //work around initial-size bug in Qt-1.32
-  } else {
-    KMessageBox::sorry( this,
-                        i18n( "Unable to obtain the selected public key." ) );
-  }
+  mFingerprint = dlg.fingerprint();
+  startPublicKeyExport();
 }
 
 
@@ -2401,7 +2393,7 @@ void KMComposeWin::slotAttachProperties()
   KMMsgPartDialogCompat dlg;
   dlg.setMsgPart(msgPart);
   KMAtmListViewItem* listItem = (KMAtmListViewItem*)(mAtmItemList.at(idx));
-  if( mSelectedCryptPlug && listItem ) {
+  if( canSignEncryptAttachments() && listItem ) {
     dlg.setCanSign(    true );
     dlg.setCanEncrypt( true );
     dlg.setSigned(    listItem->isSign()    );
@@ -2416,7 +2408,7 @@ void KMComposeWin::slotAttachProperties()
     // values may have changed, so recreate the listbox line
     if( listItem ) {
       msgPartToItem(msgPart, listItem);
-      if( mSelectedCryptPlug ) {
+      if( canSignEncryptAttachments() ) {
         listItem->setSign(    dlg.isSigned()    );
         listItem->setEncrypt( dlg.isEncrypted() );
       }
@@ -2437,6 +2429,11 @@ void KMComposeWin::slotAttachView()
   }
 }
 
+bool KMComposeWin::inlineSigningEncryptionSelected() {
+  if ( !mSignAction->isChecked() && !mEncryptAction->isChecked() )
+    return false;
+  return cryptoMessageFormat() == Kleo::InlineOpenPGPFormat;
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::viewAttach( int index )
@@ -2742,26 +2739,19 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 {
   if ( !mEncryptAction->isEnabled() )
     encrypt = false;
-
   // check if the user wants to encrypt messages to himself and if he defined
   // an encryption key for the current identity
-  if ( encrypt && Kpgp::Module::getKpgp()->encryptToSelf()
-               && !mLastIdentityHasOpenPgpKey
-               // ### hack needed as long as we don't specify S/MIME keys in identities.
-               && ( !mSelectedCryptPlug || mSelectedCryptPlug->protocol() == "openpgp" ) ) {
-    if ( setByUser ) {
+  else if ( encrypt && encryptToSelf() && !mLastIdentityHasEncryptionKey ) {
+    if ( setByUser )
       KMessageBox::sorry( this,
-                          i18n("<qt><p>In order to be able to encrypt "
-                               "this message you first have to "
-                               "define the OpenPGP key, which should be "
-                               "used to encrypt the message to "
-                               "yourself.</p>"
-                               "<p>You can define the OpenPGP key, "
-                               "which should be used with the current "
-                               "identity, in the identity configuration.</p>"
+                          i18n("<qt><p>You have requested that messages be "
+			       "encrypted to yourself, but the currently selected "
+			       "identity does not define an (OpenPGP or S/MIME) "
+			       "encryption key to use for this.</p>"
+                               "<p>Please select the key(s) to use "
+                               "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Encryption Key") );
-    }
     encrypt = false;
   }
 
@@ -2775,7 +2765,7 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
     mEncryptAction->setIcon("decrypted");
 
   // mark the attachments for (no) encryption
-  if ( mSelectedCryptPlug ) {
+  if ( canSignEncryptAttachments() ) {
     for ( KMAtmListViewItem* entry =
             static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
           entry;
@@ -2799,21 +2789,17 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
     sign = false;
 
   // check if the user defined a signing key for the current identity
-  if ( sign && !mLastIdentityHasOpenPgpKey
-            // ### hack needed as long as we don't specify S/MIME keys in identities.
-            && ( !mSelectedCryptPlug || mSelectedCryptPlug->protocol() == "openpgp" ) ) {
-    if ( setByUser ) {
+  if ( sign && !mLastIdentityHasSigningKey ) {
+    if ( setByUser )
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to sign "
                                "this message you first have to "
-                               "define the OpenPGP key which should be "
-                               "used for this.</p>"
-                               "<p>You can define the OpenPGP key "
-                               "which should be used with the current "
-                               "identity in the identity configuration.</p>"
+                               "define the (OpenPGP or S/MIME) signing key "
+			       "to use.</p>"
+                               "<p>Please select the key to use "
+                               "in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Signing Key") );
-    }
     sign = false;
   }
 
@@ -2821,7 +2807,7 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
   mSignAction->setChecked( sign );
 
   // mark the attachments for (no) signing
-  if ( mSelectedCryptPlug ) {
+  if ( canSignEncryptAttachments() ) {
     for ( KMAtmListViewItem* entry =
             static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
           entry;
@@ -2857,7 +2843,7 @@ void KMComposeWin::slotPrint()
                             mTransport->lineEdit()->edited() ) );
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinuePrint( bool ) ) );
-  applyChanges( true, true );
+  applyChanges( true );
 }
 
 void KMComposeWin::slotContinuePrint( bool rc )
@@ -2871,6 +2857,7 @@ void KMComposeWin::slotContinuePrint( bool rc )
     mEditor->setModified( mMessageWasModified );
   }
 }
+
 
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
@@ -2938,8 +2925,6 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   mDisableBreaking = saveInDrafts;
 
-  mBccMsgList.clear();
-  const bool neverSign = saveInDrafts && mNeverSignWhenSavingInDrafts;
   const bool neverEncrypt = saveInDrafts && mNeverEncryptWhenSavingInDrafts;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
@@ -2976,7 +2961,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   kdDebug(5006) << "KMComposeWin::doSend() - calling applyChanges()"
                 << endl;
-  applyChanges( neverSign, neverEncrypt );
+  applyChanges( neverEncrypt );
 }
 
 void KMComposeWin::slotContinueDoSend( bool sentOk )
@@ -2986,97 +2971,93 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
               this, SLOT( slotContinueDoSend( bool ) ) );
 
-  if( sentOk ) {
-    if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
-    mEdtFrom->setEdited(FALSE);
-    mEdtReplyTo->setEdited(FALSE);
-    mEdtTo->setEdited(FALSE);
-    mEdtCc->setEdited(FALSE);
-    mEdtBcc->setEdited(FALSE);
-    mEdtSubject->setEdited(FALSE);
-    if (mTransport->lineEdit())
-      mTransport->lineEdit()->setEdited(FALSE);
-    mAtmModified = FALSE;
+  if ( !sentOk ) {
+    mDisableBreaking = false;
+    return;
+  }
+  if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
+  mEdtFrom->setEdited(FALSE);
+  mEdtReplyTo->setEdited(FALSE);
+  mEdtTo->setEdited(FALSE);
+  mEdtCc->setEdited(FALSE);
+  mEdtBcc->setEdited(FALSE);
+  mEdtSubject->setEdited(FALSE);
+  if (mTransport->lineEdit())
+    mTransport->lineEdit()->setEdited(FALSE);
+  mAtmModified = FALSE;
+
+  for ( QValueVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
 
     // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
-    mMsg->cleanupHeader();
-  }
+    (*it)->cleanupHeader();
 
-  mDisableBreaking = false;
+    // needed for imap
+    (*it)->setComplete( true );
 
-  if (!sentOk)
+    if (mSaveInDrafts) {
+      KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
+      // get the draftsFolder
+      if ( !(*it)->drafts().isEmpty() ) {
+	draftsFolder = kmkernel->folderMgr()->findIdString( (*it)->drafts() );
+	if ( draftsFolder == 0 )
+	  // This is *NOT* supposed to be "imapDraftsFolder", because a
+	  // dIMAP folder works like a normal folder
+	  draftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
+	if ( draftsFolder == 0 )
+	  imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
+	if ( !draftsFolder && !imapDraftsFolder ) {
+	  const KPIM::Identity & id = kmkernel->identityManager()
+	    ->identityForUoidOrDefault( (*it)->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+	  KMessageBox::information(0, i18n("The custom drafts folder for identity "
+					   "\"%1\" doesn't exist (anymore). "
+					   "Therefore the default drafts folder "
+					   "will be used.")
+				   .arg( id.identityName() ) );
+	}
+      }
+      if (imapDraftsFolder && imapDraftsFolder->noContent())
+	imapDraftsFolder = 0;
+
+      if ( draftsFolder == 0 ) {
+	draftsFolder = kmkernel->draftsFolder();
+      } else {
+	draftsFolder->open();
+      }
+      kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
+      if (imapDraftsFolder)
+	kdDebug(5006) << "saveindrafts: imapdrafts="
+		      << imapDraftsFolder->name() << endl;
+
+      sentOk = !(draftsFolder->addMsg((*it)));
+
+      //Ensure the drafts message is correctly and fully parsed
+      draftsFolder->unGetMsg(draftsFolder->count() - 1);
+      (*it) = draftsFolder->getMsg(draftsFolder->count() - 1);
+
+      if (imapDraftsFolder) {
+	// move the message to the imap-folder and highlight it
+	imapDraftsFolder->moveMsg((*it));
+	(static_cast<KMFolderImap*>(imapDraftsFolder->storage()))->getFolder();
+      }
+
+    } else {
+      (*it)->setTo( KMMessage::expandAliases( to() ));
+      (*it)->setCc( KMMessage::expandAliases( cc() ));
+      if( !mComposer->originalBCC().isEmpty() )
+	(*it)->setBcc( KMMessage::expandAliases( mComposer->originalBCC() ));
+      QString recips = (*it)->headerField( "X-KMail-Recipients" );
+      if( !recips.isEmpty() ) {
+	(*it)->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
+      }
+      (*it)->cleanupHeader();
+      sentOk = kmkernel->msgSender()->send((*it), mSendNow);
+    }
+
+    if (!sentOk)
       return;
 
-  // needed for imap
-  mMsg->setComplete( true );
-
-  if (mSaveInDrafts)
-  {
-    KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
-    // get the draftsFolder
-    if ( !mMsg->drafts().isEmpty() )
-    {
-      draftsFolder = kmkernel->folderMgr()->findIdString( mMsg->drafts() );
-      if ( draftsFolder == 0 )
-        // This is *NOT* supposed to be "imapDraftsFolder", because a
-        // dIMAP folder works like a normal folder
-        draftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
-      if ( draftsFolder == 0 )
-        imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
-    }
-    if (imapDraftsFolder && imapDraftsFolder->noContent())
-      imapDraftsFolder = 0;
-
-    if ( draftsFolder == 0 ) {
-      draftsFolder = kmkernel->draftsFolder();
-    } else {
-      draftsFolder->open();
-    }
-    kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
-    if (imapDraftsFolder)
-      kdDebug(5006) << "saveindrafts: imapdrafts="
-        << imapDraftsFolder->name() << endl;
-
-    sentOk = !(draftsFolder->addMsg(mMsg));
-
-    //Ensure the drafts message is correctly and fully parsed
-    draftsFolder->unGetMsg(draftsFolder->count() - 1);
-    mMsg = draftsFolder->getMsg(draftsFolder->count() - 1);
-
-    if (imapDraftsFolder)
-    {
-      // move the message to the imap-folder and highlight it
-      imapDraftsFolder->moveMsg(mMsg);
-      (static_cast<KMFolderImap*>(imapDraftsFolder->storage()))->getFolder();
-    }
-
-  } else {
-    mMsg->setTo( KMMessage::expandAliases( to() ));
-    mMsg->setCc( KMMessage::expandAliases( cc() ));
-    if( !mComposer->originalBCC().isEmpty() )
-      mMsg->setBcc( KMMessage::expandAliases( mComposer->originalBCC() ));
-    QString recips = mMsg->headerField( "X-KMail-Recipients" );
-    if( !recips.isEmpty() ) {
-      mMsg->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
-    }
-    mMsg->cleanupHeader();
-    sentOk = kmkernel->msgSender()->send(mMsg, mSendNow);
-    KMMessage* msg;
-    for( msg = mBccMsgList.first(); msg; msg = mBccMsgList.next() ) {
-      msg->setTo( KMMessage::expandAliases( to() ));
-      msg->setCc( KMMessage::expandAliases( cc() ));
-      msg->setBcc( KMMessage::expandAliases( bcc() ));
-      QString recips = msg->headerField( "X-KMail-Recipients" );
-      if( !recips.isEmpty() ) {
-        msg->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
-      }
-      msg->cleanupHeader();
-      sentOk &= kmkernel->msgSender()->send(msg, mSendNow);
-    }
+    *it = 0; // don't kill it later...
   }
-
-  if (!sentOk)
-     return;
 
   RecentAddresses::self( KMKernel::config() )->add( bcc() );
   RecentAddresses::self( KMKernel::config() )->add( cc() );
@@ -3169,7 +3150,7 @@ void KMComposeWin::slotCleanSpace()
 void KMComposeWin::slotToggleMarkup()
 {
  if ( markupAction->isChecked() ) {
-   toolBar("htmlToolBar")->show();
+    toolBar("htmlToolBar")->show();
    // markup will be toggled as soon as markup is actually used
    fontChanged( mEditor->currentFont().family() ); // set buttons in correct position
    fontAction->setFont( mEditor->currentFont().family() );
@@ -3377,28 +3358,27 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
-  bool bNewIdentityHasOpenPgpKey = !ident.pgpIdentity().isEmpty();
-  if( !mSelectedCryptPlug && !bNewIdentityHasOpenPgpKey )
-  {
-    mAttachMPK->setEnabled(false);
-    if( mLastIdentityHasOpenPgpKey )
-    { // save the state of the sign and encrypt button
-      mLastEncryptActionState = mEncryptAction->isChecked();
-      setEncryption( false );
-      mLastSignActionState = mSignAction->isChecked();
-      setSigning( false );
-    }
+  bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+  bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+  mAttachMPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() &&
+			  !ident.pgpEncryptionKey().isEmpty() );
+  // save the state of the sign and encrypt button
+  if ( !bNewIdentityHasEncryptionKey && mLastIdentityHasEncryptionKey ) {
+    mLastEncryptActionState = mEncryptAction->isChecked();
+    setEncryption( false );
   }
-  else
-  {
-    mAttachMPK->setEnabled(true);
-    if( !mLastIdentityHasOpenPgpKey )
-    { // restore the last state of the sign and encrypt button
+  if ( !bNewIdentityHasSigningKey && mLastIdentityHasSigningKey ) {
+    mLastSignActionState = mSignAction->isChecked();
+    setSigning( false );
+  }
+  // restore the last state of the sign and encrypt button
+  if ( bNewIdentityHasEncryptionKey && !mLastIdentityHasEncryptionKey )
       setEncryption( mLastEncryptActionState );
-      setSigning( mLastSignActionState );
-    }
-  }
-  mLastIdentityHasOpenPgpKey = bNewIdentityHasOpenPgpKey;
+  if ( bNewIdentityHasSigningKey && !mLastIdentityHasSigningKey )
+    setSigning( mLastSignActionState );
+
+  mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
+  mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
 
   mEditor->setModified(TRUE);
   mId = uoid;
@@ -3847,6 +3827,7 @@ bool KMAtmListViewItem::isSign()
   else
     return false;
 }
+
 
 
 //=============================================================================
@@ -4529,7 +4510,7 @@ void KMEdit::slotSpellResult(const QString &s)
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellDone()
 {
-    kdDebug(5006)<<" void KMEdit::slotSpellDone()\n";
+  kdDebug(5006)<<" void KMEdit::slotSpellDone()\n";
   KSpell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;

@@ -32,27 +32,39 @@
 #define MESSAGECOMPOSER_H
 
 #include "kmmsgpart.h"
+#include "keyresolver.h"
 
 #include <qobject.h>
+#include <qvaluevector.h>
 
 #include <mimelib/mediatyp.h>
 #include <kpgp.h>
 
+#include <vector>
+
 class KMMessage;
 class KMComposeWin;
 class CryptPlugWrapper;
-class StructuringInfoWrapper;
 
 class MessageComposerJob;
 
+namespace Kleo {
+  class KeyResolver;
+}
+
+namespace GpgME {
+  class Key;
+}
 
 class MessageComposer : public QObject {
   Q_OBJECT
   friend class MessageComposerJob;
   friend class EncryptMessageJob;
-  friend class SignSMimeJob;
+  friend class SetLastMessageAsUnencryptedVersionOfLastButOne;
 
 public:
+  class KeyResolver;
+
   MessageComposer( KMComposeWin* win, const char* name=0 );
   ~MessageComposer();
 
@@ -63,11 +75,15 @@ public:
    * If backgroundMode is true then no functions which might require
    * user interaction (like signing/encrypting) are performed
    */
-  void applyChanges( bool dontSign, bool dontEncrypt );
+  void applyChanges( bool disableCrypto );
 
   QString originalBCC() const { return mBcc; }
 
   void setDisableBreaking( bool b ) { mDisableBreaking = b; }
+
+  const QValueVector<KMMessage*> & composedMessageList() const {
+    return mMessageList;
+  }
 
 signals:
   void done( bool );
@@ -80,8 +96,7 @@ private:
   // This is the composeMessage method
   void composeMessage();
   // And these two are the parts that should be run after job completions
-  void composeMessage2();
-  void composeMessage3();
+  void createUnencryptedMessageVersion();
 
   /**
    * Internal helper function called from applyChanges(void) to allow
@@ -91,34 +106,49 @@ private:
    * were sent in encrypted form.                  (khz, 2002/06/24)
    */
   void composeMessage( KMMessage& theMessage,
-                       bool doSign, bool doEncrypt, bool ignoreBcc );
+                       bool doSign, bool doEncrypt,
+		       Kleo::CryptoMessageFormat format );
   void continueComposeMessage( KMMessage& theMessage, bool doSign,
-                               bool doEncrypt, bool ignoreBcc );
+                               bool doEncrypt,
+			       Kleo::CryptoMessageFormat format );
+
+  /**
+   * Called by composeMessage for inline-openpgp messages
+   */
+  void composeInlineOpenPGPMessage( KMMessage& theMessage,
+                                    bool doSign, bool doEncrypt );
 
   /**
    * Get message ready for sending or saving.
    * This must be done _before_ signing and/or encrypting it.
    */
   QCString breakLinesAndApplyCodec();
+  /// Same as above but ensure \n termination
+  QCString bodyText();
 
   /**
-   * Get signature for a message.
-   * To build nice S/MIME objects signing and encoding must be separeted.
+   * Get signature for a message (into mMessage).
+   * To build nice S/MIME objects signing and encoding must be separated.
    */
-  void pgpSignedMsg( QCString cText, StructuringInfoWrapper& structuring );
+  void pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageFormat f );
   /**
    * Get encrypted message.
-   * To build nice S/MIME objects signing and encrypting must be separat.
+   * To build nice S/MIME objects signing and encrypting must be separate.
    */
   Kpgp::Result pgpEncryptedMsg( QByteArray& rEncryptedBody,
-                                QCString cText,
-                                StructuringInfoWrapper& structuring,
-                                QCString& encryptCertFingerprints );
+                                const QCString & cText,
+                                const std::vector<GpgME::Key> & encryptionKeys,
+				Kleo::CryptoMessageFormat f );
 
   /**
-   * Get encryption certificate for a recipient (the Aegypten way).
+   * Get signed & encrypted message.
+   * To build nice S/MIME objects signing and encrypting must be separate.
    */
-  QCString getEncryptionCertificate( const QString& recipient );
+  Kpgp::Result pgpSignedAndEncryptedMsg( QByteArray& rEncryptedBody,
+					 const QCString & cText,
+					 const std::vector<GpgME::Key> & signingKeys,
+					 const std::vector<GpgME::Key> & encryptionKeys,
+					 Kleo::CryptoMessageFormat f );
 
   /**
    * Check for expiry of various certificates.
@@ -132,12 +162,12 @@ private:
    * called via pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
    *
    * NOTE: The c string representation of the MIME object (or the
-   *       flat text, resp.) is returned in resultingData, so just
+   *       flat text, resp.) is returned in resultingPart, so just
    *       use this string as body text of the surrounding MIME object.
    *       This string *is* encoded according to contentTEncClear
-   *       and thus should be ready for being sended via SMTP.
+   *       and thus should be ready for being sent via SMTP.
    */
-  bool processStructuringInfo( const QString bugURL, uint boundaryLevel,
+  bool processStructuringInfo( const QString bugURL,
                                const QString contentDescriptionClear,
                                const QCString contentTypeClear,
                                const QCString contentSubtypeClear,
@@ -146,15 +176,18 @@ private:
                                const QCString& bodytext,
                                const QString contentDescriptionCiph,
                                const QByteArray& ciphertext,
-                               const StructuringInfoWrapper& structuring,
-                               KMMessagePart& resultingPart );
+                               KMMessagePart& resultingPart,
+			       bool signing, Kleo::CryptoMessageFormat format );
 
-  Kpgp::Result getEncryptionCertificates( const QStringList& recipients,
-                                          QCString& encryptionCertificates );
-
-  void encryptMessage( KMMessage* msg, const QStringList& recipients,
+  void encryptMessage( KMMessage* msg, const Kleo::KeyResolver::SplitInfo & si,
                        bool doSign, bool doEncrypt,
-                       int previousBoundaryLevel, KMMessagePart newBodyPart );
+                       KMMessagePart newBodyPart,
+		       Kleo::CryptoMessageFormat format );
+
+  void addBodyAndAttachments( KMMessage* msg, const Kleo::KeyResolver::SplitInfo & si,
+                              bool doSign, bool doEncrypt,
+                              const KMMessagePart& ourFineBodyPart,
+                              Kleo::CryptoMessageFormat format );
 
 private slots:
   void slotDoNextJob();
@@ -162,20 +195,39 @@ private slots:
 private:
   void doNextJob();
 
-  void handleBCCMessage( KMMessage* );
+  int encryptionPossible( const QStringList & recipients, bool openPGP );
+  bool determineWhetherToSign( bool doSignCompletely );
+  bool determineWhetherToEncrypt( bool doEncryptCompletely );
+  void markAllAttachmentsForSigning( bool sign );
+  void markAllAttachmentsForEncryption( bool enc );
 
   KMComposeWin* mComposeWin;
   MessageComposerJob * mCurrentJob;
-  KMMessage* mMsg;
-  KMMessage* mExtraMessage;
-  CryptPlugWrapper* mSelectedCryptPlug;
+  KMMessage* mReferenceMessage;
+  QValueVector<KMMessage*> mMessageList;
+
+  Kleo::KeyResolver * mKeyResolver;
 
   QCString mSignCertFingerprint;
 
-  QCString mPgpIdentity;
-  bool mDontSign, mDontEncrypt, mAutoPgpEncrypt;
+  struct Attachment {
+    Attachment( KMMessagePart * p=0, bool s=false, bool e=false )
+      : part( p ), sign( s ), encrypt( e ) {}
+    KMMessagePart * part;
+    bool sign;
+    bool encrypt;
+  };
+  QValueVector<Attachment> mAttachments;
+
+  QString mPGPSigningKey, mSMIMESigningKey;
+  bool mUseOpportunisticEncryption;
+  bool mSigningRequested, mEncryptionRequested;
+  bool mDoSign, mDoEncrypt;
+  unsigned int mAllowedCryptoMessageFormats;
+  bool mDisableCrypto;
   bool mDisableBreaking;
   QString mBcc;
+  QStringList mTo, mCc, mBccList;
   bool mDebugComposerCrypto;
   bool mAutoCharset;
   QCString mCharset;
@@ -196,6 +248,5 @@ private:
 
   QValueList<MessageComposerJob*> mJobs;
 };
-
 
 #endif /* MESSAGECOMPOSER_H */

@@ -16,6 +16,7 @@
 #include <qpalette.h>
 #include <qfont.h>
 #include <qptrlist.h>
+#include <qvaluevector.h>
 
 #include <klineedit.h>
 #include <kio/job.h>
@@ -27,9 +28,10 @@
 #include "kmmsgbase.h"
 #include "mailcomposerIface.h"
 
-#include "cryptplugwrapper.h"
 #include <libkdepim/addresseelineedit.h>
 #include <mimelib/mediatyp.h>
+
+#include <kleo/enum.h>
 
 class _StringPair {
  public:
@@ -68,17 +70,22 @@ class KToolBar;
 class KToggleAction;
 class KSelectColorAction;
 class KURL;
-namespace KPIM { class IdentityCombo; }
 class SpellingFilter;
-class  CryptPlugWrapperList;
 class MessageComposer;
+
+namespace KPIM {
+  class IdentityCombo;
+  class Identity;
+}
 
 namespace KMail {
   class AttachmentListView;
   class DictionaryComboBox;
 }
 
-typedef QPtrList<KMMessagePart> KMMsgPartList;
+namespace GpgME {
+  class Error;
+}
 
 
 //-----------------------------------------------------------------------------
@@ -470,7 +477,7 @@ public slots:
   void slotAppendSignature();
 
   /**
-   * Insert sender's public key block in the editor.
+   * Attach sender's public key.
    */
   void slotInsertMyPublicKey();
 
@@ -567,7 +574,10 @@ public slots:
    */
    void addAttach(const KMMessagePart* msgPart);
 
-  QCString pgpIdentity() const;
+public:
+  const KPIM::Identity & identity() const;
+  Kleo::CryptoMessageFormat cryptoMessageFormat() const;
+  bool encryptToSelf() const;
 
 signals:
   /**
@@ -585,8 +595,7 @@ protected:
    * Disables the controls of the composer window unless @dontDisable
    * is true.
    */
-   void applyChanges( bool dontSign, bool dontEncrypt,
-                      bool dontDisable = false );
+  void applyChanges( bool dontSignNorEncrypt, bool dontDisable=false );
 
   /**
    * Install grid management and header fields. If fields exist that
@@ -729,21 +738,21 @@ protected:
   KMEdit* mEditor;
   QGridLayout* mGrid;
   KMMessage *mMsg;
-  QPtrList<KMMessage> mBccMsgList;
+  QValueVector<KMMessage*> mComposedMessages;
   KMail::AttachmentListView* mAtmListView;
   int mAtmColEncrypt;
   int mAtmColSign;
   int mAtmEncryptColWidth;
   int mAtmSignColWidth;
   QPtrList<QListViewItem> mAtmItemList;
-  KMMsgPartList mAtmList;
+  QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
   int mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
   bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
-  bool mLastIdentityHasOpenPgpKey;
+  bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
@@ -799,6 +808,19 @@ protected:
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
 
+  /**
+   *  toggle automatic spellchecking
+   */
+  void slotAutoSpellCheckingToggled(bool);
+
+
+private:
+  // helper method for slotInsert(My)PublicKey()
+  void startPublicKeyExport();
+  bool canSignEncryptAttachments() const {
+    return cryptoMessageFormat() != Kleo::InlineOpenPGPFormat;
+  }
+
   bool mSubjectTextWasSpellChecked;
 
 private slots:
@@ -812,9 +834,10 @@ private slots:
   void slotContinueDeadLetter( bool );
 
   /**
-   *  toggle automatic spellchecking
+   * Helper method (you could call is a bottom-half :) for
+   * startPublicKeyExport()
    */
-  void slotAutoSpellCheckingToggled(bool);
+  void slotPublicKeyExportResult( const GpgME::Error & err, const QByteArray & keydata );
 
 
 private:
@@ -830,15 +853,6 @@ private:
   QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
   bool mForceReplyCharset;
 
-  /**
-   * Store the cryptplug that was selected for signing and/or encrypting.
-   *
-   * This is either the 'active' cryptplug of the global wrapper list
-   * or another plugin (or 0 if none selected) if the user decided to
-   * override the global setting using KDComposeWin's options_select_crypto action.
-   */
-  CryptPlugWrapper* mSelectedCryptPlug;
-
   // These are for passing on methods over the applyChanges calls
   int mSendNow;
   bool mSaveInDrafts;
@@ -850,10 +864,9 @@ private:
   // Temp var for slotPrint:
   bool mMessageWasModified;
 
-public:
-  bool mDebugComposerCrypto;
-  bool mNeverSign;     // use this to completely disable signing and warnings
-  bool mNeverEncrypt;  // use this to completely disable encrypting and warnings
+  // Temp var for slotInsert(My)PublicKey():
+  QString mFingerprint;
 };
+
 #endif
 
