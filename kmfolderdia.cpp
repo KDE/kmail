@@ -63,13 +63,17 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   str.prepend( i18n( "Top Level" ));
   QGuardedPtr<KMFolder> curFolder;
   int i = 1;
-  fileInFolder->insertStringList( str );
   while (mFolders.at(i - 1) != mFolders.end()) {
     curFolder = *mFolders.at(i - 1);
-    if (curFolder->child() == aFolderDir)
+    if (curFolder->isSystemFolder()) {
+      mFolders.remove(mFolders.at(i-1));
+      str.remove(str.at(i));
+    }      
+    else if (curFolder->child() == aFolderDir)
       fileInFolder->setCurrentItem( i );
     ++i;
   }
+  fileInFolder->insertStringList( str );
 }
 
 
