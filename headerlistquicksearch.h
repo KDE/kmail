@@ -1,4 +1,4 @@
-/*
+/*  -*- mode: C++ -*-
     This file is part of KMail, the KDE mail client.
     Copyright (c) 2004 Till Adam <adam@kde.org>
 
@@ -64,7 +64,7 @@ private slots:
    * cache the status in mStatus so as to avoid having to do the comparatively
    * expensive string comparison for each item in itemMatches
    */
-  void slotStatusChanged( const QString & statusString );
+  void slotStatusChanged( int index );
 
 private:
     QComboBox *mStatusCombo;

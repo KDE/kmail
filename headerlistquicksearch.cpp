@@ -44,12 +44,11 @@
 namespace KMail {
 
 HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
-                                                                             KListView *listView,
-                                                                             KActionCollection *actionCollection,
-                                                                             const char *name )
-:KListViewSearchLine(parent, listView, name), mStatusCombo(0), mStatus(0)
+                                              KListView *listView,
+                                              KActionCollection *actionCollection,
+                                              const char *name )
+  : KListViewSearchLine(parent, listView, name), mStatusCombo(0), mStatus(0)
 {
-
   KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
                                            QApplication::reverseLayout()
                                            ? "clear_left"
@@ -68,12 +67,12 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   mStatusCombo = new QComboBox( parent, "quick search status combo box" );
   mStatusCombo->insertItem( i18n("Any Status") );
   for ( int i = 0; i < KMail::StatusValueCount; i++ )
-     mStatusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
-  connect( mStatusCombo, SIGNAL ( activated( const QString& ) ),
-                  this, SLOT( slotStatusChanged( const QString& ) ) );
+    mStatusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
+  mStatusCombo->setCurrentItem( KMail::StatusValueCount );
+  connect( mStatusCombo, SIGNAL ( activated( int ) ),
+           this, SLOT( slotStatusChanged( int ) ) );
 
   label->setBuddy( mStatusCombo );
-
 }
 
 HeaderListQuickSearch::~HeaderListQuickSearch()
@@ -83,13 +82,13 @@ HeaderListQuickSearch::~HeaderListQuickSearch()
 
 bool HeaderListQuickSearch::itemMatches(const QListViewItem *item, const QString &s) const
 {
-   if ( mStatus != 0 ) {
-     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
-     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
-     if ( ! ( msg->status() & mStatus ) )
-       return false;
-   }
-   return KListViewSearchLine::itemMatches(item, s);
+  if ( mStatus != 0 ) {
+    KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
+    const KMMsgBase *msg = headers->getMsgBaseForItem( item );
+    if ( ! ( msg->status() & mStatus ) )
+      return false;
+  }
+  return KListViewSearchLine::itemMatches(item, s);
 }
 
 //-----------------------------------------------------------------------------
@@ -97,17 +96,19 @@ void HeaderListQuickSearch::reset()
 {
   clear();
   mStatusCombo->setCurrentItem( 0 );
-  slotStatusChanged( mStatusCombo->currentText());
+  slotStatusChanged( 0 );
 }
 
-void HeaderListQuickSearch::slotStatusChanged( const QString & statusString)
+void HeaderListQuickSearch::slotStatusChanged( int index )
 {
-    if ( mStatusCombo->currentItem() == 0 )
-      mStatus = 0;
-    else
-      mStatus = KMSearchRuleStatus::statusFromEnglishName( statusString );
-    updateSearch();
+  if ( index == 0 )
+    mStatus = 0;
+  else
+    mStatus =
+      KMSearchRuleStatus::statusFromEnglishName( KMail::StatusValues[index-1] );
+  updateSearch();
 }
 
-};
+} // namespace KMail
+
 #include "headerlistquicksearch.moc"
