@@ -50,6 +50,7 @@
 #include <kcharsets.h>
 #include <kcolorbtn.h>
 #include <kconfig.h>
+#include <kdebug.h>
 #include <kfiledialog.h>
 #include <kfontdialog.h>
 #include <kiconloader.h>
@@ -64,6 +65,8 @@
 #include <kstddirs.h>
 #include <kurlrequester.h>
 #include <kglobalsettings.h>
+#include <kscoring.h>
+#include <kscoringeditor.h>
 
 
 #include "accountdialog.h"
@@ -79,6 +82,7 @@
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmtopwidget.h"
+#include "kmscoring.h"
 
 #include "configuredialog.moc"
 
@@ -996,6 +1000,17 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.addressbookLabel->setText(*mAppearance.addressbookStrings.at(0));
   vlay->addWidget( mAppearance.addressbookLabel );
   vlay->addStretch(10);
+
+  // Score
+  QWidget *page6 = new QWidget( tabWidget );
+  tabWidget->addTab( page6, i18n("Messages Scoring") );
+  vlay = new QVBoxLayout( page6, spacingHint() );
+
+  KScoringRulesConfig* ksc =
+      new KScoringRulesConfig(KMScoringManager::globalScoringManager(),
+                              false, page6);
+  vlay->addWidget( ksc );
+
 }
 
 
@@ -1434,8 +1449,6 @@ void ConfigureDialog::makeMiscPage( void )
 
   topLevel->addStretch( 10 );
 }
-
-
 
 void ConfigureDialog::setup( void )
 {
@@ -2248,6 +2261,9 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry( "exec-on-mail-cmd",
 		       mMisc.mailCommandEdit->text() );
   }
+
+  kdDebug() << "KMScoringManager::globalScoringManager()->save();" << endl;
+  KMScoringManager::globalScoringManager()->save();
 
   //
   // Always

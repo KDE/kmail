@@ -57,12 +57,12 @@ int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
+  : mMsg(aMsg),
+    mNeedsAssembly(true),
+    mIsComplete(false),
+    mTransferInProgress(false),
+    mCodec(0)
 {
-  mNeedsAssembly = TRUE;
-  mMsg = aMsg;
-  mCodec = NULL;
-  mIsComplete = FALSE;
-  mTransferInProgress = FALSE;
 }
 
 

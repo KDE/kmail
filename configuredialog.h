@@ -236,6 +236,8 @@ class LanguageComboBox : public QComboBox
     QString *i18nPath;
 };
 
+class KScoringRulesConfig;
+
 class ConfigureDialog : public KDialogBase
 {
   Q_OBJECT

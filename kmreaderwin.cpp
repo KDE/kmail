@@ -449,6 +449,7 @@ void KMReaderWin::displayAboutPage()
     "<li>IMAP support</li>\n"
     "<li>Non-blocking sending</li>\n"
     "<li>Performance improvements for huge folders</li>\n"
+    "<li>Message scoring</li>\n"
     "<li>Only the selected part of a mail will be quoted on reply</li>\n"
     "<li>Delete old messages from the trash folder on exit</li>\n"
     "<li>Collapsable threads</li>\n"

@@ -37,6 +37,7 @@
 #include "kmundostack.h"
 #include "kmreaderwin.h"
 #include "kmacctimap.h"
+#include "kmscoring.h"
 #include "mailinglist-magic.h"
 
 #include <mimelib/enum.h>
@@ -104,6 +105,9 @@ public:
     mMsgId = aMsgId;
   }
 
+  // Profiling note: About 30% of the time taken to initialize the
+  // listview is spent in this function. About 60% is spent in operator
+  // new and QListViewItem::QListViewItem.
   void irefresh()
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
@@ -146,7 +150,7 @@ public:
             lvchild = lvchild->nextSibling();
 		}
 		QListViewItem::setOpen( true );
-	}else
+	} else
 		QListViewItem::setOpen( false );
   }
 
@@ -156,33 +160,42 @@ public:
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
     QString tmp;
-	    if(col == headers->paintInfo()->flagCol) {
-		if (headers->paintInfo()->flagCol >= 0)
+
+    if(col == headers->paintInfo()->flagCol) {
+      if (headers->paintInfo()->flagCol >= 0)
 	tmp = QString( QChar( (char)mMsgBase->status() ));
-	    } else if(col == headers->paintInfo()->senderCol) {
-	KMFolder *folder = headers->folder();
-	if (folder == kernel->outboxFolder() || folder == kernel->sentFolder()
-	    || folder == kernel->draftsFolder())
-	  tmp = mMsgBase->toStrip();
-	else
-	  tmp = mMsgBase->fromStrip();
-	if (tmp.isEmpty())
-	  tmp = i18n("Unknown");
-	else
-	  tmp = tmp.simplifyWhiteSpace();
-	    } else if(col == headers->paintInfo()->subCol) {
+
+    } else if(col == headers->paintInfo()->senderCol) {
+      KMFolder *folder = headers->folder();
+      if (folder == kernel->outboxFolder() || folder == kernel->sentFolder()
+          || folder == kernel->draftsFolder())
+        tmp = mMsgBase->toStrip();
+      else
+        tmp = mMsgBase->fromStrip();
+      if (tmp.isEmpty())
+        tmp = i18n("Unknown");
+      else
+        tmp = tmp.simplifyWhiteSpace();
+
+    } else if(col == headers->paintInfo()->subCol) {
       tmp = mMsgBase->subject();
       if (tmp.isEmpty())
 	tmp = i18n("No Subject");
       else
 	tmp = tmp.simplifyWhiteSpace();
-	    } else if(col == headers->paintInfo()->dateCol) {
+
+    } else if(col == headers->paintInfo()->dateCol) {
       time_t mDate = mMsgBase->date();
       tmp = QString( ctime( &mDate )).stripWhiteSpace();
-	    } else if(col == headers->paintInfo()->sizeCol) {
-		if (headers->paintInfo()->showSize)
-      tmp.sprintf("%ld", mMsgBase->msgSize());
+
+    } else if(col == headers->paintInfo()->sizeCol
+      && headers->paintInfo()->showSize) {
+        tmp.setNum(mMsgBase->msgSize());
+
+    } else if(col == headers->paintInfo()->scoreCol) {
+      tmp.setNum(headers->messageScore(mMsgId));
     }
+
     return tmp;
   }
 
@@ -314,7 +327,8 @@ public:
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
-  KMHeadersInherited(parent, name)
+  KMHeadersInherited(parent, name),
+  mScoringManager(KMScoringManager::globalScoringManager())
 {
   static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
@@ -334,13 +348,21 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
+  if (!mScoringManager) {
+    kdDebug() << "KMHeaders::KMHeaders() : no globalScoringManager"
+              << endl;
+  }
+
   readConfig();
 
   mPaintInfo.flagCol = -1;
-  mPaintInfo.subCol = mPaintInfo.flagCol + 1;
-  mPaintInfo.senderCol = mPaintInfo.subCol + 1;
-  mPaintInfo.dateCol = mPaintInfo.senderCol + 1;
-  mPaintInfo.sizeCol = mPaintInfo.dateCol + 1;
+  mPaintInfo.subCol    = mPaintInfo.flagCol   + 1;
+  mPaintInfo.senderCol = mPaintInfo.subCol    + 1;
+  mPaintInfo.dateCol   = mPaintInfo.senderCol + 1;
+  mPaintInfo.sizeCol   = mPaintInfo.dateCol   + 1;
+  mPaintInfo.scoreCol  = mPaintInfo.sizeCol   + 0;
+  mPaintInfo.showScore = false;
+  showingScore = false;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
   setShowSortIndicator(true);
@@ -349,6 +371,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   addColumn( i18n("Subject"), 310 );
   addColumn( i18n("Sender"), 170 );
   addColumn( i18n("Date"), 170 );
+
   if (mPaintInfo.showSize) {
     addColumn( i18n("Size"), 80 );
     setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
@@ -650,6 +673,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       }
     }
 
+    if (mScoringManager)
+      mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
+    
     updateMessageList();
 
     if (mFolder && !jumpToFirst)
@@ -712,6 +738,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         int x = config->readNumEntry("SizeWidth", 80);
         addColumn(colText, x>0?x:10);
 	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
+        mPaintInfo.scoreCol++;
       }
       showingSize = true;
     } else {
@@ -719,11 +746,28 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         // remove the size field
         config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
         removeColumn(mPaintInfo.sizeCol);
+        mPaintInfo.scoreCol--;
       }
       showingSize = false;
     }
+
+    mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
+    if (mPaintInfo.showScore) { 
+      colText = i18n( "Score" );
+      if (showingScore) {
+        setColumnText( mPaintInfo.scoreCol, colText);
+      } else {
+        mPaintInfo.scoreCol = addColumn(colText, 80);
+        setColumnAlignment( mPaintInfo.scoreCol, AlignRight );
+      }
+      showingScore = true;
+    } else {
+      if (showingScore) {
+        removeColumn(mPaintInfo.scoreCol);
+        showingScore = false;
+      }
+    }
   }
-  qDebug("end %d %s:%d", (QTime::currentTime().second()*1000)+QTime::currentTime().msec(), __FILE__,__LINE__);
 }
 
 // QListView::setContentsPos doesn't seem to work
@@ -1746,6 +1790,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
   if (item)
     return item->msgId();
 
+
   // A kludge to try to keep the number of unread messages in sync
   int unread = mFolder->countUnread();
   if (((unread == 0) && foundUnreadMessage) ||
@@ -2053,6 +2098,35 @@ void KMHeaders::updateMessageList(void)
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
 }
+
+int
+KMHeaders::messageScore(int msgId)
+{
+  if (!mScoringManager) return 0;
+
+  if ( !mPaintInfo.showScore ) {
+    kdDebug() << "KMFolder::scoreMessages() : Skipping this group - no rules for it"
+              << endl;
+    return 0;
+  }
+  
+  QCString cStr;
+
+  folder()->getMsgString(msgId, cStr);
+      
+  if (!cStr) {
+    kdDebug() << "KMFolder::scoreMessages() : Skipping msg" << endl;
+    return 0;
+  }
+
+  KMScorableArticle smsg(cStr);
+
+  mScoringManager->applyRules(smsg);
+
+  return smsg.score();
+  
+}
+
 
 //-----------------------------------------------------------------------------
 // KMail Header list selection/navigation description

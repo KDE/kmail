@@ -19,6 +19,7 @@ class QPalette;
 class KMHeaderItem;
 class QPixmap;
 class QIconSet;
+class KMScoringManager;
 
 typedef QList<KMMsgBase> KMMessageList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -42,12 +43,14 @@ struct KMPaintInfo {
   QColor colUnread;
   QColor colFlag;
   bool showSize;      // Do we display the message size?
+  bool showScore;
   bool orderOfArrival;
   bool status;
   int flagCol;
   int senderCol;
   int subCol;
   int dateCol;
+  int scoreCol;
   int sizeCol;
 };
 
@@ -259,6 +262,7 @@ private:
   // Is equivalent to clearing the list and inserting an item for
   // each message in the current folder
   virtual void updateMessageList(void);
+  virtual int  messageScore(int msgId);
 
   KMFolder* mFolder;            // Currently associated folder
   KMMainWin* mOwner;            // The KMMainWin for status bar updates
@@ -277,6 +281,7 @@ private:
   static bool mTrue, mFalse;    // These must replaced by something better!
 
   bool showingSize;             // are we currently showing the size field?
+  bool showingScore;
   int getMsgIndex;              // Updated as side effect of KMHeaders::getMsg
   bool getMsgMulti;             // ditto
   KMHeaderItem* getMsgItem;     // ditto
@@ -286,6 +291,8 @@ private:
   QListViewItem *beginSelection, *endSelection; // For shift selection
 
   KMPaintInfo mPaintInfo;       // Current colours and backing pixmap
+
+  KMScoringManager *mScoringManager;
 
   int mSortCol;
   bool mSortDescending;
