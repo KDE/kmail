@@ -486,7 +486,10 @@ void KMMainWin::slotSearch()
   if(!searchWin) {
     QString curFolder = "";
     if( mFolder )
-      curFolder = mFolder->name();
+    {
+      if ( mFolder->isSystemFolder() ) curFolder = i18n(mFolder->name());
+      else curFolder = mFolder->name();
+    }
     searchWin = new KMFldSearch(this, "Search", curFolder, false);
     connect(searchWin, SIGNAL(destroyed()),
 	    this, SLOT(slotSearchClosed()));
