@@ -37,6 +37,7 @@
 #include "kmfoldermgr.h"
 #include "identitycombo.h"
 #include "kmfolderimap.h"
+#include "kmfoldercachedimap.h"
 #include "kmfolder.h"
 #include "kmkernel.h"
 #include "kmcommands.h"
@@ -719,9 +720,15 @@ bool FolderDiaGeneralTab::save()
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         mDlg->setFolder( kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir ) );
-        static_cast<KMFolderImap*>(selectedFolder->storage())->createFolder(fldName);
+        KMFolderImap* selectedStorage = static_cast<KMFolderImap*>(selectedFolder->storage());
+        selectedStorage->createFolder(fldName);
+        static_cast<KMFolderImap*>(mDlg->folder()->storage())->setAccount( selectedStorage->account() );
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
         mDlg->setFolder( kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir ) );
+        KMFolderCachedImap* selectedStorage = static_cast<KMFolderCachedImap*>(selectedFolder->storage());
+        KMFolderCachedImap* newStorage = static_cast<KMFolderCachedImap*>(mDlg->folder()->storage());
+        newStorage->setAccount( selectedStorage->account() );
+        newStorage->setUserRights( selectedStorage->userRights() );
       } else if (mMailboxTypeComboBox->currentItem() == 2) {
         mDlg->setFolder( kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() ) );
       } else if (mMailboxTypeComboBox->currentItem() == 1) {
