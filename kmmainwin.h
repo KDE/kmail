@@ -50,6 +50,7 @@ private:
   QString      mLastStatusMsg;
   StatusbarProgressWidget *littleProgress;
   int mMessageStatusId;
+  bool mReallyClose;
 };
 
 #endif

@@ -34,6 +34,7 @@ using KRecentAddress::RecentAddresses;
 #include <libkdepim/identitymanager.h>
 #include "configuredialog.h"
 #include "kmcommands.h"
+#include "kmsystemtray.h"
 // #### disabled for now #include "startupwizard.h"
 
 
@@ -1807,4 +1808,20 @@ void KMKernel::abortMailCheck()
   mMailCheckAborted = true;
 }
 
+bool KMKernel::canQueryClose()
+{
+   if (KMMainWidget::mainWidgetList() && KMMainWidget::mainWidgetList()->count() > 1 )
+     return true;
+   KMMainWidget *widget = getKMMainWidget();
+   KMSystemTray* systray = widget->systray();
+   if (systray && systray->getMode() == KMSystemTray::AlwaysOn) {
+     systray->hideKMail();
+     return false;
+   } else if (systray && systray->getMode() == KMSystemTray::OnNewMail) {
+     systray->show();
+     systray->hideKMail();
+     return false;
+   }
+   return true;
+}
 #include "kmkernel.moc"

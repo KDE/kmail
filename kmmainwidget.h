@@ -146,6 +146,7 @@ public:
   /// @return a list of all KMMainWidgets. Warning, the list itself can be 0.
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
 
+  KMSystemTray *systray();
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash

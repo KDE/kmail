@@ -243,6 +243,8 @@ public:
    * This is used to cancel mail checks when closing the last mainwindow
    */
   void abortMailCheck();
+  
+  bool canQueryClose();
 
 public slots:
 

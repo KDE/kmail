@@ -48,6 +48,8 @@ public:
   ~KMSystemTray();
 
   void setMode(int mode);
+  void hideKMail();
+  int getMode();
 
   enum SystrayMode {
     AlwaysOn,
@@ -64,7 +66,6 @@ protected:
   void mousePressEvent(QMouseEvent *);
   bool mainWindowIsOnCurrentDesktop();
   void showKMail();
-  void hideKMail();
   void buildPopupMenu();
   void updateCount();
 

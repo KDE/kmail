@@ -3415,3 +3415,8 @@ void KMMainWidget::slotToggleProgressDialog()
     setProgressDialogVisible( !mProgressDialog->isShown() );
   }
 }
+
+KMSystemTray *KMMainWidget::systray()
+{
+  return mSystemTray;
+}

@@ -391,6 +391,9 @@ void KMSystemTray::showKMail()
     KWin::activateWindow( mainWin->winId() );
     mParentVisible = true;
   }
+  
+  //Fake that the folders have changed so that the icon status is correct
+  foldersChanged();
 }
 
 void KMSystemTray::hideKMail()
@@ -579,5 +582,9 @@ void KMSystemTray::selectedAccount(int id)
   ft->selectCurrentFolder();
 }
 
+int KMSystemTray::getMode()
+{
+  return mMode;
+}
 
 #include "kmsystemtray.moc"
