@@ -3,7 +3,7 @@
 // This code is under GPL!
 
 #include <config.h>
-#include <mimelib/boyermor.h>
+
 #include "kmsearchpattern.h"
 #include "kmmessage.h"
 
@@ -14,34 +14,16 @@
 
 #include <qregexp.h>
 
+#include <mimelib/string.h>
+#include <mimelib/boyermor.h>
+
 #include <assert.h>
 
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",
-    "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal", 0 };
+    "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal" };
+static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfigNames;
 
-
-//-----------------------------------------------------------------------------
-// Case-insensitive. Searches for string in string list and returns index
-// or -1 if not found.
-static int findInStrList(const char* strList[], const char* str)
-{
-  int i;
-
-  //assert(strList != 0);
-  if(!strList)
-    {
-      kdDebug(5006) << "KMFilter::findInStrList() : strList == 0\n" << endl;
-      return -1; // we return -1 here. Fake unsuccessfull search
-    }
-
-  if (!str) return -1;
-
-  for (i=0; strList[i]; i++)
-    if (qstricmp(strList[i], str)==0) return i;
-
-  return -1;
-}
 
 //==================================================
 //
@@ -49,27 +31,26 @@ static int findInStrList(const char* strList[], const char* str)
 //
 //==================================================
 
-KMSearchRule::KMSearchRule()
-{
+KMSearchRule::KMSearchRule() {
   init();
 }
 
-KMSearchRule::~KMSearchRule()
-{
+
+KMSearchRule::~KMSearchRule() {
   delete mBmHeaderField;
   delete mBmEndHeader;
   delete mBmEndHeaders2;
   delete mBmEndHeaders1;
 }
 
-//-----------------------------------------------------------------------------
-void KMSearchRule::init(const QCString aField, Function aFunction,
-			const QString aContents)
+
+void KMSearchRule::init( const QCString & aField, Function aFunction,
+			 const QString & aContents )
 {
   mField    = aField;
   mFunction = aFunction;
   mContents = aContents;
-  if (mField.isEmpty())
+  if ( mField.isEmpty() )
       mBmHeaderField = 0;
   else //TODO handle the unrealistic case of the message starting with mField
       mBmHeaderField = new DwBoyerMoore(("\n" + mField + ": ").data()); 	
@@ -78,94 +59,91 @@ void KMSearchRule::init(const QCString aField, Function aFunction,
   mBmEndHeader = new DwBoyerMoore("\n");
 }
 
-//-----------------------------------------------------------------------------
-void KMSearchRule::init(const KMSearchRule* aRule)
-{
-  if (aRule)
+
+void KMSearchRule::init( const KMSearchRule * aRule ) {
+  if ( aRule )
     init( aRule->field(), aRule->function(), aRule->contents() );
   else
-    init ( "", FuncContains, "" );
+    init ( 0, FuncContains, 0 );
 }
 
-//-----------------------------------------------------------------------------
-void KMSearchRule::init(const QCString aField, const char* aStrFunction,
-			const QString aContents)
+
+void KMSearchRule::init( const QCString & aField, const char * aStrFunction,
+			 const QString & aContents )
 {
-  int intFunc = findInStrList( funcConfigNames, aStrFunction );
-  Function func = Function( ( intFunc >= 0 ) ? (Function)intFunc : FuncContains );
-  init ( aField, func, aContents );
+  init ( aField, configValueToFunc( aStrFunction ), aContents );
 }
 
-//-----------------------------------------------------------------------------
-bool KMSearchRule::matches(const DwString &aStr, KMMessage &msg,
-			   DwBoyerMoore *aHeaderField, int aHeaderLen) const
+
+KMSearchRule::Function KMSearchRule::configValueToFunc( const char * str ) {
+  if ( !str ) return FuncContains;
+
+  for ( int i = 0 ; i < numFuncConfigNames ; ++i )
+    if ( qstricmp( funcConfigNames[i], str ) == 0 ) return (Function)i;
+
+  return FuncContains;
+}
+
+
+bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
+			    DwBoyerMoore * aHeaderField, int aHeaderLen ) const
 {
-    DwBoyerMoore *headerField = mBmHeaderField;
-    int headerLen = mField.length() + 2; // +1 for ': '
-    if (aHeaderLen > -1)
-	headerLen = aHeaderLen + 2;
-    if (aHeaderField)
-	headerField = aHeaderField;
-    if (!headerField)
-	return false;
-    if (aHeaderField || (mField.length() && mField[0] != '<')) {
-	QString msgContents;
-	int start, stop, len;
-	char ch = '\0';
-	int endOfHeader = mBmEndHeaders1->FindIn(aStr, 0);
-	if (endOfHeader == -1)
-	    endOfHeader = mBmEndHeaders2->FindIn(aStr, 0);
-	DwString headers = (endOfHeader < 0) ? aStr : aStr.substr(0, endOfHeader);
-	start = headerField->FindIn(headers, 0);
-	if (start == -1)
-	    return false;
-	start += headerLen;
-	stop = mBmEndHeader->FindIn(aStr, start);
-	while (stop != -1 && (ch = aStr.at(stop + 1)) == ' ' || ch == '\t')
-	    stop = mBmEndHeader->FindIn(aStr, stop + 1);
-	if (stop == -1)
-	    len = aStr.length() - start;
-	else
-	    len = stop - start;
-	QCString codedValue(aStr.data() + start, len + 1);
-	msgContents = KMMsgBase::decodeRFC2047String(codedValue).stripWhiteSpace();
-	return matches( false, 0, 0, msgContents );
-    } else if (mField == "<recipients>") {
-	bool res;
-	DwBoyerMoore to("\nTo: ");
-	DwBoyerMoore cc("\nCc: ");
-	res = matches(aStr, msg, &to, 2);
-	if (!res)
-	    res = matches(aStr, msg, &cc, 2);
-	return res;
-    } else {
-	if (!msg.isComplete()) {
-	    msg.fromDwString(aStr);
-	    msg.setComplete(true);
-	}
-	return matches(&msg);
+  DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
+  if ( !headerField )
+    return false;
+
+  const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : mField.length() ) + 2 ; // +1 for ': '
+
+  if ( aHeaderField || ( mField.length() && mField[0] != '<' ) ) {
+    size_t endOfHeader = mBmEndHeaders1->FindIn( aStr, 0 );
+    if ( endOfHeader == DwString::npos )
+      endOfHeader = mBmEndHeaders2->FindIn( aStr, 0 );
+    const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
+    size_t start = headerField->FindIn( headers, 0 );
+    if ( start == DwString::npos )
+      return false;
+    start += headerLen;
+    size_t stop = mBmEndHeader->FindIn( aStr, start );
+    char ch = '\0';
+    while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
+      stop = mBmEndHeader->FindIn( aStr, stop + 1 );
+    const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
+    const QCString codedValue( aStr.data() + start, len + 1 );
+    const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace();
+    return matches( false, 0, 0, msgContents );
+  } else if ( mField == "<recipients>" ) {
+    DwBoyerMoore to("\nTo: ");
+    bool res = matches( aStr, msg, &to, 2 );
+    if ( !res ) {
+      DwBoyerMoore cc("\nCc: ");
+      res = matches( aStr, msg, &cc, 2 );
     }
+    return res;
+  } else {
+    if ( !msg.isComplete() ) {
+      msg.fromDwString( aStr );
+      msg.setComplete( true );
+    }
+    return matches( &msg );
+  }
 }
 
-//-----------------------------------------------------------------------------
-bool KMSearchRule::matches(const KMMessage* msg) const
-{
+
+bool KMSearchRule::matches( const KMMessage * msg ) const {
+  assert( msg );
+
   QString msgContents;
   int numericalMsgContents = 0;
   int numericalValue = 0;
-  bool numerical = FALSE;
-
-  assert(msg != 0); // This assert seems to be important
+  bool numerical = false;
 
   if( mField == "<message>" ) {
-    // there's msg->asString(), but this way we can keep msg const (dnaber, 1999-05-27)
-    msgContents = msg->headerAsString();
-    msgContents += msg->bodyDecoded();
-  } else if( mField == "<body>" ) {
+    msgContents = msg->asString();
+  } else if ( mField == "<body>" ) {
     msgContents = msg->bodyDecoded();
-  } else if( mField == "<any header>" ) {
+  } else if ( mField == "<any header>" ) {
     msgContents = msg->headerAsString();
-  } else if( mField == "<recipients>" ) {
+  } else if ( mField == "<recipients>" ) {
     // (mmutz 2001-11-05) hack to fix "<recipients> !contains foo" to
     // meet user's expectations. See FAQ entry in KDE 2.2.2's KMail
     // handbook
@@ -177,95 +155,96 @@ bool KMSearchRule::matches(const KMMessage* msg) const
         || matches( false, 0, 0, msg->headerField("Cc") );
     //
     msgContents = msg->headerField("To") + msg->headerField("Cc");
-  } else if( mField == "<size>" ) {
-    numerical = TRUE;
-    numericalMsgContents = int(msg->msgLength());
+  } else if ( mField == "<size>" ) {
+    numerical = true;
+    numericalMsgContents = int( msg->msgLength() );
     numericalValue = mContents.toInt(); // isEmpty() checks this
     msgContents.setNum( numericalMsgContents );
-  } else if( mField == "<age in days>" ) {
-    numerical = TRUE;
+  } else if ( mField == "<age in days>" ) {
+    numerical = true;
     QDateTime msgDateTime;
     msgDateTime.setTime_t( msg->date() );
     numericalMsgContents = msgDateTime.daysTo( QDateTime::currentDateTime() );
     numericalValue = mContents.toInt(); // isEmpty() checks this
     msgContents.setNum( numericalMsgContents );
   } else {
-    msgContents = msg->headerField(mField);
+    msgContents = msg->headerField( mField );
   }
   return matches( numerical, numericalValue, numericalMsgContents, msgContents );
 }
 
-bool KMSearchRule::matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, QString msgContents ) const
+
+bool KMSearchRule::matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, const QString & msgContents ) const
 {
   // also see KMFldSearchRule::matches() for a similar function:
-  switch (mFunction)
-  {
+  switch ( mFunction ) {
   case KMSearchRule::FuncEquals:
-    if (numerical)
+    if ( numerical )
       return ( numericalValue == numericalMsgContents );
     else
-      return (QString::compare(msgContents.lower(), mContents.lower()) == 0);
+      return ( QString::compare( msgContents.lower(), mContents.lower() ) == 0 );
 
   case KMSearchRule::FuncNotEqual:
-    if (numerical)
+    if ( numerical )
       return ( numericalValue != numericalMsgContents );
     else
-      return (QString::compare(msgContents.lower(), mContents.lower()) != 0);
+      return ( QString::compare( msgContents.lower(), mContents.lower() ) != 0 );
 
   case KMSearchRule::FuncContains:
-    return ( msgContents.find(mContents, 0, FALSE) >= 0 );
+    return ( msgContents.find( mContents, 0, false ) >= 0 );
 
   case KMSearchRule::FuncContainsNot:
-    return ( msgContents.find(mContents, 0, FALSE) < 0 );
+    return ( msgContents.find( mContents, 0, false ) < 0 );
 
   case KMSearchRule::FuncRegExp:
     {
-      QRegExp regexp(mContents, FALSE);
-      return (regexp.search( msgContents ) >= 0);
+      QRegExp regexp( mContents, false );
+      return ( regexp.search( msgContents ) >= 0 );
     }
 
   case KMSearchRule::FuncNotRegExp:
     {
-      QRegExp regexp(mContents, FALSE);
-      return (regexp.search( msgContents ) < 0);
+      QRegExp regexp( mContents, false );
+      return ( regexp.search( msgContents ) < 0 );
     }
 
   case FuncIsGreater:
-    if (numerical)
-      return (numericalMsgContents > numericalValue);
+    if ( numerical )
+      return ( numericalMsgContents > numericalValue );
     else
-      return (QString::compare(msgContents.lower(), mContents.lower()) > 0);
+      return ( QString::compare( msgContents.lower(), mContents.lower() ) > 0 );
 
   case FuncIsLessOrEqual:
-    if (numerical)
-      return (numericalMsgContents <= numericalValue);
+    if ( numerical )
+      return ( numericalMsgContents <= numericalValue );
     else
-      return (QString::compare(msgContents.lower(), mContents.lower()) <= 0);
+      return ( QString::compare( msgContents.lower(), mContents.lower() ) <= 0 );
 
   case FuncIsLess:
-    if (numerical)
-      return (numericalMsgContents < numericalValue);
+    if ( numerical )
+      return ( numericalMsgContents < numericalValue );
     else
-      return (QString::compare(msgContents.lower(), mContents.lower()) < 0);
+      return ( QString::compare( msgContents.lower(), mContents.lower() ) < 0 );
 
   case FuncIsGreaterOrEqual:
-    if (numerical)
-      return (numericalMsgContents >= numericalValue);
+    if ( numerical )
+      return ( numericalMsgContents >= numericalValue );
     else
-      return (QString::compare(msgContents.lower(), mContents.lower()) >= 0);
+      return ( QString::compare( msgContents.lower(), mContents.lower() ) >= 0 );
   }
 
-  return FALSE;
+  return false;
 }
 
-void KMSearchRule::readConfig( KConfig *config, int aIdx )
-{
-  char cIdx = char( int('A') + aIdx );
-  static const QString& field = KGlobal::staticQString( "field" );
-  static const QString& func = KGlobal::staticQString( "func" );
-  static const QString& contents = KGlobal::staticQString( "contents" );
 
-  QString requestedField = config->readEntry( field + cIdx );
+void KMSearchRule::readConfig( const KConfig * config, int aIdx ) {
+  const char cIdx = char( int('A') + aIdx );
+
+  static const QString & field = KGlobal::staticQString( "field" );
+  static const QString & func = KGlobal::staticQString( "func" );
+  static const QString & contents = KGlobal::staticQString( "contents" );
+
+  const QString requestedField = config->readEntry( field + cIdx );
   if ( requestedField == "<To or Cc>" ) // backwards compat
     init( "<recipients>",
 	  config->readEntry( func + cIdx ).latin1(),
@@ -277,45 +256,41 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
 }
 
 
-//-----------------------------------------------------------------------------
-void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
-{
-  char cIdx = char('A' + aIdx);
-  static const QString& field = KGlobal::staticQString( "field" );
-  static const QString& func = KGlobal::staticQString( "func" );
-  static const QString& contents = KGlobal::staticQString( "contents" );
+void KMSearchRule::writeConfig( KConfig * config, int aIdx ) const {
+  const char cIdx = char('A' + aIdx);
+  static const QString & field = KGlobal::staticQString( "field" );
+  static const QString & func = KGlobal::staticQString( "func" );
+  static const QString & contents = KGlobal::staticQString( "contents" );
 
   config->writeEntry( field + cIdx, QString(mField) );
   config->writeEntry( func + cIdx, funcConfigNames[(int)mFunction] );
   config->writeEntry( contents + cIdx, mContents );
 }
 
-//-----------------------------------------------------------------------------
-bool KMSearchRule::isEmpty() const
-{
-  bool ok;
 
-  if ( mField == "<size>" || mField == "<age in days>" ) {
-    ok = FALSE;
-    mContents.toInt(&ok);
-  } else
-    ok = TRUE;
+bool KMSearchRule::isEmpty() const {
+  bool ok = false;
+
+  if ( mField == "<size>" || mField == "<age in days>" )
+    mContents.toInt( &ok );
+  else
+    ok = true;
 
   return mField.stripWhiteSpace().isEmpty()
     || mContents.isEmpty() || !ok;
 }
 
-//-----------------------------------------------------------------------------
+
+#ifndef NDEBUG
 const QString KMSearchRule::asString() const
 {
-  QString result;
-
-  result  = "\"" + mField + "\" ";
+  QString result  = "\"" + mField + "\" <";
   result += funcConfigNames[(int)mFunction];
-  result += " \"" + mContents + "\"";
+  result += "> \"" + mContents + "\"";
 
   return result;
 }
+#endif
 
 
 //==================================================
@@ -324,88 +299,86 @@ const QString KMSearchRule::asString() const
 //
 //==================================================
 
-KMSearchPattern::KMSearchPattern( KConfig *config )
+KMSearchPattern::KMSearchPattern( const KConfig * config )
   : QPtrList<KMSearchRule>()
 {
-  setAutoDelete(TRUE);
-  if (config)
-    readConfig(config);
+  setAutoDelete( true );
+  if ( config )
+    readConfig( config );
   else
     init();
 }
 
 
-bool KMSearchPattern::matches( const KMMessage *msg ) const
-{
-  QPtrListIterator<KMSearchRule> it(*this);
-  switch (mOperator ) {
-    case OpAnd: // all rules must match
-      for ( it.toFirst() ; it.current() ; ++it )
-	if ( !(*it)->matches(msg) )
-	  return FALSE;
-      return TRUE;
-    case OpOr:  // at least one rule must match
-      for ( it.toFirst() ; it.current() ; ++it )
-	if ( (*it)->matches(msg) )
-	  return TRUE;
-      // fall through
-    default:
-      return FALSE;
+bool KMSearchPattern::matches( const KMMessage * msg ) const {
+  QPtrListIterator<KMSearchRule> it( *this );
+  switch ( mOperator ) {
+  case OpAnd: // all rules must match
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( !(*it)->matches( msg ) )
+	return false;
+    return true;
+  case OpOr:  // at least one rule must match
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( (*it)->matches( msg ) )
+	return true;
+    // fall through
+  default:
+    return false;
   }
 }
 
-bool KMSearchPattern::matches( const DwString &aStr ) const
+bool KMSearchPattern::matches( const DwString & aStr ) const
 {
   KMMessage msg;
-  QPtrListIterator<KMSearchRule> it(*this);
-  switch (mOperator ) {
-    case OpAnd: // all rules must match
-      for ( it.toFirst() ; it.current() ; ++it )
-	if ( !(*it)->matches(aStr, msg) )
-	  return FALSE;
-      return TRUE;
-    case OpOr:  // at least one rule must match
-      for ( it.toFirst() ; it.current() ; ++it )
-	if ( (*it)->matches(aStr, msg) )
-	  return TRUE;
-      // fall through
-    default:
-      return FALSE;
+  QPtrListIterator<KMSearchRule> it( *this );
+  switch ( mOperator ) {
+  case OpAnd: // all rules must match
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( !(*it)->matches( aStr, msg ) )
+	return false;
+    return true;
+  case OpOr:  // at least one rule must match
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( (*it)->matches( aStr, msg ) )
+	return true;
+    // fall through
+  default:
+    return false;
   }
 }
 
-void KMSearchPattern::purify()
-{
-  QPtrListIterator<KMSearchRule> it(*this);
+void KMSearchPattern::purify() {
+  QPtrListIterator<KMSearchRule> it( *this );
   it.toLast();
   while ( it.current() )
     if ( (*it)->isEmpty() ) {
+#ifndef NDEBUG
       kdDebug(5006) << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
+#endif
       remove( *it );
     } else {
       --it;
     }
 }
 
-void KMSearchPattern::readConfig( KConfig *config )
-{
+void KMSearchPattern::readConfig( const KConfig * config ) {
   init();
 
   mName = config->readEntry("name");
   if ( !config->hasKey("rules") ) {
     kdDebug(5006) << "KMSearchPattern::readConfig: found legacy config! Converting." << endl;
-    importLegacyConfig(config);
+    importLegacyConfig( config );
     return;
   }
 
   mOperator = config->readEntry("operator") == "or" ? OpOr : OpAnd;
 
-  KMSearchRule *r;
-  int nRules = config->readNumEntry("rules",0);
+  const int nRules = config->readNumEntry( "rules", 0 );
 
   for ( int i = 0 ; i < nRules ; i++ ) {
-    r = new KMSearchRule();
-    r->readConfig(config,i);
+    KMSearchRule * r = new KMSearchRule();
+    r->readConfig( config, i );
     if ( r->isEmpty() )
       delete r;
     else
@@ -413,9 +386,8 @@ void KMSearchPattern::readConfig( KConfig *config )
   }
 }
 
-void KMSearchPattern::importLegacyConfig( KConfig *config )
-{
-  KMSearchRule *rule = new KMSearchRule();
+void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
+  KMSearchRule * rule = new KMSearchRule();
   rule->init( config->readEntry("fieldA").latin1(),
 	      config->readEntry("funcA").latin1(),
 	      config->readEntry("contentsA") );
@@ -427,12 +399,12 @@ void KMSearchPattern::importLegacyConfig( KConfig *config )
   }
   append( rule );
 
-  QString sOperator = config->readEntry("operator");
+  const QString sOperator = config->readEntry("operator");
   if ( sOperator == "ignore" ) return;
 
   rule = new KMSearchRule();
   rule->init( config->readEntry("fieldB").latin1(),
-	      config->readEntry("funcB").latin1(), // or is local8Bit better?
+	      config->readEntry("funcB").latin1(),
 	      config->readEntry("contentsB") );
   if ( rule->isEmpty() ) {
     delete rule;
@@ -459,54 +431,47 @@ void KMSearchPattern::importLegacyConfig( KConfig *config )
   // treat any other case as "and" (our default).
 }
 
-void KMSearchPattern::writeConfig( KConfig *config ) const
-{
-  int i;
-
+void KMSearchPattern::writeConfig( KConfig * config ) const {
   config->writeEntry("name", mName );
   config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
-  QPtrListIterator<KMSearchRule> it(*this);
-  for ( i=0, it.toFirst() ; it.current() && i < FILTER_MAX_RULES ; ++i , ++it ) {
+  int i = 0;
+  for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() && i < FILTER_MAX_RULES ; ++i , ++it )
     // we could do this ourselves, but we want the rules to be extensible,
     // so we give the rule it's number and let it do the rest.
-    (*it)->writeConfig(config,i);
-  }
+    (*it)->writeConfig( config, i );
+
   // save the total number of rules.
-  config->writeEntry("rules", i);
+  config->writeEntry( "rules", i );
 }
 
-void KMSearchPattern::init()
-{
-  mOperator = KMSearchPattern::OpAnd;
-  mName = "<" + i18n("name used for a virgin filter","unknown") + ">";
+void KMSearchPattern::init() {
   clear();
+  mOperator = OpAnd;
+  mName = '<' + i18n("name used for a virgin filter","unknown") + '>';
 }
 
-const QString KMSearchPattern::asString() const
-{
-  QString result;
-
-  result += "Match ";
+#ifndef NDEBUG
+QString KMSearchPattern::asString() const {
+  QString result = "Match ";
   result += ( mOperator == OpOr ) ? "any" : "all";
   result += " of the following:\n";
 
-  QPtrListIterator<KMSearchRule> it( *this );
-  for ( it.toFirst() ; it.current() ; ++it )
-    result += (*it)->asString() + "\n";
+  for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
+    result += (*it)->asString() + '\n';
 
   return result;
 }
+#endif
 
-KMSearchPattern& KMSearchPattern::operator=( const KMSearchPattern & aPattern )
+const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & aPattern )
 {
   setOp( aPattern.op() );
   setName( aPattern.name() );
 
-  QPtrListIterator<KMSearchRule> it( aPattern );
-  for ( it.toFirst() ; it.current() ; ++it ) {
-    KMSearchRule *r = new KMSearchRule;
-    r->init( (*it) ); // deep copy
+  for ( QPtrListIterator<KMSearchRule> it( aPattern ) ; it.current() ; ++it ) {
+    KMSearchRule * r = new KMSearchRule;
+    r->init( *it ); // deep copy
     append( r );
   }
   return *this;

@@ -78,7 +78,9 @@ public:
   void endUpdate();
 
   /** Output all rules to stdout */
+#ifndef NDEBUG
   void dump();
+#endif
 
   /** Called from the folder manager when a folder is removed.
     Tests if the folder aFolder is used in any action. Changes

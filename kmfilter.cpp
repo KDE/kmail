@@ -251,6 +251,7 @@ bool KMFilter::isEmpty() const
     return mPattern.isEmpty() || mActions.isEmpty();
 }
 
+#ifndef NDEBUG
 const QString KMFilter::asString() const
 {
   QString result;
@@ -284,4 +285,4 @@ const QString KMFilter::asString() const
   }
   return result;
 }
-
+#endif

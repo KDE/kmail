@@ -64,8 +64,10 @@ void KMFilterMgr::readConfig(void)
     KMFilter * filter = new KMFilter(config, bPopFilter);
     filter->purify();
     if ( filter->isEmpty() ) {
+#ifndef NDEBUG
       kdDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
 		<< "is empty!" << endl;
+#endif
       delete filter;
     } else
       append(filter);
@@ -273,6 +275,7 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 
 
 //-----------------------------------------------------------------------------
+#ifndef NDEBUG
 void KMFilterMgr::dump(void)
 {
   QPtrListIterator<KMFilter> it(*this);
@@ -281,7 +284,7 @@ void KMFilterMgr::dump(void)
     kdDebug(5006) << (*it)->asString() << endl;
   }
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 void KMFilterMgr::endUpdate(void)

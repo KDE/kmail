@@ -163,7 +163,9 @@ public:
   /** Returns the filter in a human-readable form. useful for
       debugging but not much else. Don't use, as it may well go away
       in the future... */
+#ifndef NDEBUG
   const QString asString() const;
+#endif
   /** No descriptions */
   bool isPopFilter() const {
     return bPopFilter;

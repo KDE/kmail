@@ -7,15 +7,16 @@
 
 #include <qptrlist.h>
 #include <qstring.h>
-#include <mimelib/string.h>
+#include <qcstring.h>
 
 class KMMessage;
 class KConfig;
 class DwBoyerMoore;
+class DwString;
 
 
 // maximum number of filter rules per filter
-#define FILTER_MAX_RULES 8
+const int FILTER_MAX_RULES=8;
 
 /** Incoming mail is sent through the list of mail filter
     rules before it is placed in the associated mail folder (usually "inbox").
@@ -53,40 +54,40 @@ public:
       @param contents
       The value to use, see @ref value.
   */
-  void init(const QCString aField, Function aFunction, const QString aContents);
+  void init( const QCString & aField, Function aFunction, const QString & aContents );
 
   /** This is an overloaded member funcion, provided for convenience.
       It differs from the above only in what arguments it takes. */
-  void init(const KMSearchRule* aRule=0);
+  void init( const KMSearchRule * aRule=0 );
 
   /** This is an overloaded member funcion, provided for convenience.
       It differs from the above only in what arguments it takes,
       namely the stringified version of the function, as used in the
       config file. */
-  void init(const QCString aField, const char* aStrFunction, const QString aContents);
+  void init( const QCString & aField, const char * aStrFunction, const QString & aContents );
 
   /** Tries to match the rule against the given @ref KMMessage.
       @return TRUE if the rule matched, FALSE otherwise.
   */
-  bool matches(const KMMessage* msg) const;
+  bool matches( const KMMessage * msg ) const;
 
   /** Optimized version tries to match the rule against the given @ref DwString.
       @return TRUE if the rule matched, FALSE otherwise.
   */
-  bool matches(const DwString& str, KMMessage& msg, DwBoyerMoore *headerField = 0, int headerLen = -1) const;
+  bool matches( const DwString & str, KMMessage & msg, DwBoyerMoore * headerField=0, int headerLen=-1 ) const;
 
   /** Initialize the object from a given config file. The group must
       be preset. @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
       validation of the data obtained from the config file. You should
       call @ref isEmpty yourself if you need valid rules. */
-  void readConfig( KConfig *config, int aIdx );
+  void readConfig( const KConfig * config, int aIdx );
   /** Save the object into a given config file. The group must be
       preset. @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function will happily
       write itself even when it's not valid, assuming higher layers to
       Do The Right Thing(TM). */
-  void writeConfig( KConfig *config, int aIdx ) const;
+  void writeConfig( KConfig * config, int aIdx ) const;
 
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.
@@ -110,10 +111,10 @@ public:
       @li <size>: Try to match against size of message (numerical).
       @li <age in days>: Try to match against age of message (numerical).
   */
-  const QCString field() const { return mField; }
+  QCString field() const { return mField; }
   /** Set message header field name (make sure there's no trailing
       colon ':') */
-  void setField( const QCString aField ) { mField = aField; }
+  void setField( const QCString & aField ) { mField = aField; }
 
   /** Returns true if the rule only depends on fields stored in
       a KMFolder index, otherwise returns false. */
@@ -121,16 +122,19 @@ public:
 
   /** Return the value. This can be either a substring to search for in
       or a regexp pattern to match against the header. */
-  const QString contents() const { return mContents; }
+  QString contents() const { return mContents; }
   /** Set the value. */
-  void setContents( const QString aContents ) { mContents = aContents; }
+  void setContents( const QString & aContents ) { mContents = aContents; }
 
   /** Returns the rule as string. For debugging.*/
+#ifndef NDEBUG
   const QString asString() const;
+#endif
 
-protected:
+private:
   /** Helper for the main matches() method */
-  bool matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, QString msgContents ) const;
+  bool matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, const QString & msgContents ) const;
+  static Function configValueToFunc( const char * str );
   QCString  mField;
   Function mFunction;
   QString  mContents;
@@ -174,10 +178,10 @@ public:
       to match any @ref KMMessage. You can query for such an empty
       rule by using @ref isEmpty, which is inherited from @ref
       QPtrList. */
-  KMSearchPattern( KConfig* config=0 );
+  KMSearchPattern( const KConfig * config=0 );
 
   /** Destructor. Deletes all stored rules! */
-  virtual ~KMSearchPattern() {}
+  ~KMSearchPattern() {}
 
   /** The central function of this class. Tries to match the set of
       rules against a @ref KMMessage. It's virtual to allow derived
@@ -188,15 +192,15 @@ public:
 
       @return TRUE if the match was successful, FALSE otherwise.
   */
-  virtual bool matches( const KMMessage* msg ) const;
-  virtual bool matches( const DwString &str ) const;
+  bool matches( const KMMessage * msg ) const;
+  bool matches( const DwString & str ) const;
 
   /** Removes all empty rules from the list. You should call this
       method whenever the user had had control of the rules outside of
       this class. (e.g. after editing it with @ref
       KMSearchPatternEdit).
   */
-  virtual void purify();
+  void purify();
 
   /** Reads a search pattern from a @ref KConfig.  The group has to be
       preset. If it does not find a valid saerch pattern in the preset
@@ -216,20 +220,20 @@ public:
       the on-disk file. I haven't found another possible way to delete
       old keys.
   */
-  virtual void readConfig( KConfig *config );
+  void readConfig( const KConfig * config );
   /** Writes itself into @p config. The group has to be preset. Tries
       to delete old-style keys by overwriting them with QString::null.
 
       Derived classes reimplementing writeConfig() should also call this
       method, or else the rules will not be stored.
   */
-  virtual void writeConfig( KConfig *config ) const;
+  void writeConfig( KConfig * config ) const;
 
   /** Get the name of the search pattern. */
-  const QString name() const { return mName; }
+  QString name() const { return mName; }
   /** Set the name of the search pattern. @ref KMFilter uses this to
       store it's own name, too. */
-  void setName( const QString newName ) { mName = newName ; }
+  void setName( const QString & newName ) { mName = newName ; }
 
   /** Get the filter operator */
   KMSearchPattern::Operator op() const { return mOperator; }
@@ -237,10 +241,12 @@ public:
   void setOp( KMSearchPattern::Operator aOp ) { mOperator = aOp; }
 
   /** Returns the pattern as string. For debugging.*/
-  const QString asString() const;
+#ifndef NDEBUG
+  QString asString() const;
+#endif
 
   /** Overloaded assignment operator. Makes a deep copy. */
-  KMSearchPattern& operator=( const KMSearchPattern & aPattern );
+  const KMSearchPattern & operator=( const KMSearchPattern & aPattern );
 
 private:
   /** Tries to import a legacy search pattern, ie. one that still has
@@ -249,7 +255,7 @@ private:
       is called from @ref readConfig, which detects legacy
       configurations and also makes sure that this method is called
       from an @ref init'ialized object. */
-  void importLegacyConfig( KConfig *config );
+  void importLegacyConfig( const KConfig * config );
   /** Initializes the object. Clears the list of rules, sets the name
       to "<i18n("unnamed")>", and the boolean operator to @p OpAnd. */
   void init();
