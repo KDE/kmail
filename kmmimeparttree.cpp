@@ -166,7 +166,7 @@ void KMMimePartTree::slotSaveAsEncoded()
                     return;
             }
 
-            // Note:   SaveAsEncoded *allways* stores the ENCRYPTED content with SIGNATURES.
+            // Note:   SaveAsEncoded *always* stores the ENCRYPTED content with SIGNATURES.
             // reason: SaveAsEncoded does not decode the Message Content-Transfer-Encoding
             //         but saves the _original_ content of the message (or the message part, resp.)
 

@@ -52,7 +52,7 @@ public:
       invalid address in the 'forward' action), but the processing
       should continue.
 
-      @li @p CriticalError: A critical error has occured during
+      @li @p CriticalError: A critical error has occurred during
       processing (e.g. "disk full").
 
   */
@@ -158,7 +158,7 @@ public:
   KMFilterActionWithNone(const char* aName, const QString aLabel);
 
   /** Read extra arguments from given string. This type of filter
-      action has no paramters, so this is a no-op. */
+      action has no parameters, so this is a no-op. */
   virtual void argsFromString(const QString) {};
 
   /** Return extra arguments as string. Must not contain newlines. We

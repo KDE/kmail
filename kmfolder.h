@@ -156,7 +156,7 @@ public:
    * first. In this case this function does this and cares for the rest */
   virtual bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
 
-  /** Remove (first occurance of) given message from the folder. */
+  /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
   virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE);
 

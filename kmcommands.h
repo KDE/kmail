@@ -76,7 +76,7 @@ signals:
   void messagesTransfered(bool);
 
 private:
-  // ProgressDialog for transfering messages
+  // ProgressDialog for transferring messages
   KProgressDialog* mProgressDialog;
   //Currently only one async command allowed at a time
   static int mCountJobs;

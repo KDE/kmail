@@ -47,7 +47,7 @@ public:
   QString rawText( bool * ok=0 ) const;
 
   /** @return the signature text with a "-- " separator added, if
-      neccessary. */
+      necessary. */
   QString withSeparator( bool * ok=0 ) const;
 
   /** Set the signature text and mark this signature as being of

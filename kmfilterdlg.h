@@ -269,7 +269,7 @@ private:
     select to which folders the filter may be applied and whether it
     should be applied on outbound or inbound message transfers or both
     or none (meaning the filter is only applied when the user
-    explicitely hits CTRL-J). I'm not sure whether there should be a
+    explicitly hits CTRL-J). I'm not sure whether there should be a
     per-folder filter list or a single list where you can select the
     names of folders this rule will be applied to.
 

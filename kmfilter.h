@@ -36,7 +36,7 @@ public:
       message and you should continue applying filter actions to this
       message.
 
-      @param CriticalError A critical error occured (e.g. "disk full").
+      @param CriticalError A critical error occurred (e.g. "disk full").
 
       @param NoResult For internal use only!
 
@@ -155,7 +155,7 @@ public:
    * Called from the filter manager when a folder is moved.
    * Tests if the folder aFolder is used in any action. Changes it
    * to aNewFolder folder in this case.
-   * @return TRUE if a change in some action occured,
+   * @return TRUE if a change in some action occurred,
    * FALSE if no action was affected.
    */
   bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );

@@ -75,7 +75,7 @@ public:
     //           bool preserveArrivalTime=false  );
     //  note: By setting preserveArrivalTime true you get
     //        a message containing the arrival time of the
-    //        old one - this is usefull if this new message
+    //        old one - this is useful if this new message
     //        is to replace the old one in the same folder
     // note2: temporarily uncommented this again (khz)
 
@@ -85,7 +85,7 @@ public:
     //                          bool preserveArrivalTime=false ) {
     //  note: By setting preserveArrivalTime true you get
     //        a message containing the arrival time of the
-    //        old one - this is usefull if this new message
+    //        old one - this is useful if this new message
     //        is to replace the old one in the same folder
     // note2: temporarily uncommented this again (khz)
     if( &other == this )
@@ -730,7 +730,7 @@ public:
   size_t msgSize(void) const { return mMsgSize; }
   void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
 
-  /** Unlike the above funtion this works also, if the message is not in a
+  /** Unlike the above function this works also, if the message is not in a
       folder */
   size_t msgLength(void) const
     { return (mMsgLength) ? mMsgLength : mMsgSize; }

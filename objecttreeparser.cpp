@@ -509,7 +509,7 @@ namespace KMail {
       if ( ext.userid && *ext.userid )
         messagePart.signer = QString::fromUtf8( ext.userid );
       for( int iMail = 0; iMail < ext.emailCount; ++iMail )
-        // The following if /should/ allways result in TRUE but we
+        // The following if /should/ always result in TRUE but we
         // won't trust implicitely the plugin that gave us these data.
         if ( ext.emailList[ iMail ] && *ext.emailList[ iMail ] )
           messagePart.signerMailAddresses.append( QString::fromUtf8( ext.emailList[ iMail ] ) );
@@ -913,7 +913,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      QString prefix;
 	      QString postfix;
 	      // We let KMGroupware do most of our 'print formatting':
-	      // generates text preceeding to and following to the vCal
+	      // generates text preceding to and following to the vCal
 	      if ( KMGroupware::vPartToHTML( KMGroupware::NoUpdateCounter,
 					    vCal,
 					    fname,
@@ -1655,7 +1655,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
 
     // Analyze "signTestNode" node to find/verify a signature.
-    // If zero this verification was sucessfully done after
+    // If zero this verification was successfully done after
     // decrypting via recursion by insertAndParseNewChildNode().
     partNode* signTestNode = isEncrypted ? 0 : curNode;
 
@@ -1771,7 +1771,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       // We let KMGroupware do most of our 'print formatting':
       // 1. decodes the TNEF data and produces a vPart
       //    or preserves the old data (if no vPart can be created)
-      // 2. generates text preceeding to / following to the vPart
+      // 2. generates text preceding to / following to the vPart
       bool bVPartCreated
 	= KMGroupware::msTNEFToHTML( mReader, vPart, fname,
 				     mReader && mReader->mUseGroupware,
@@ -1996,7 +1996,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
             }
             if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
                 result2 += i18n("A system error occurred.");
-                // if a system error occured
+                // if a system error occurred
                 // we cannot trust any information
                 // that was given back by the plug-in
                 showKeyInfos = false;
@@ -2005,7 +2005,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
             if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
                 result2 += i18n("Internal system error #%1 occurred.")
                         .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
-                // if an unsupported internal error occured
+                // if an unsupported internal error occurred
                 // we cannot trust any information
                 // that was given back by the plug-in
                 showKeyInfos = false;
@@ -2652,7 +2652,7 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
   {
     QString line;
 
-    /* search next occurance of '\n' */
+    /* search next occurrence of '\n' */
     pos = s.find('\n', beg, FALSE);
     if (pos == (unsigned int)(-1))
 	pos = length;

@@ -1731,7 +1731,7 @@ bool KMComposeWin::applyChanges(void)
     // --> Signed messages *must* be stored including the signature after sending.
     //     ( "Aufpraegen der Signatur" )
     // So we provide the user with a non-deactivateble warning and let her/him
-    // choose to obey the rules or to ignore them explicitely.
+    // choose to obey the rules or to ignore them explicitly.
     if(    mSelectedCryptPlug
         && ( 0 <= mSelectedCryptPlug->libName().find( "smime",   0, false ) )
         && ( doEncrypt && saveMessagesEncrypted ) ){
@@ -2697,7 +2697,7 @@ kdDebug(5006) << "***************************************" << endl;
     // based on the values returned in structInf.
     // Note: We do _not_ insert line breaks between the parts since
     //       it is the plugin job to provide us with ready-to-use
-    //       texts containing all neccessary line breaks.
+    //       texts containing all necessary line breaks.
     resultingPart.setContentDescription(         contentDescClear    );
     resultingPart.setTypeStr(                    contentTypeClear    );
     resultingPart.setSubtypeStr(                 contentSubtypeClear );
@@ -3559,7 +3559,7 @@ bool KMComposeWin::checkForEncryptCertificateExpiry( const QString& recipient,
       }
     }
 
-      /*  The following test is not neccessary, since we _got_ the certificate
+      /*  The following test is not necessary, since we _got_ the certificate
           by looking for all certificates of our addressee - so it _must_ be valid
           for the respective address!
 

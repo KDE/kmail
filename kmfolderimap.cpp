@@ -925,7 +925,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       KMFolderImapInherited::addMsg(msg, 0);
       /* The above calls emitMsgAddedSignals, but since we are in quiet mode,
          that has no effect. To get search folders to update on arrival of new
-         messages explicitely emit the signal below on its own, so the folder
+         messages explicitly emit the signal below on its own, so the folder
          manager realizes there is a new message. */
       emit msgAdded(this, msg->getMsgSerNum());
       close();

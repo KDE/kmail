@@ -24,7 +24,7 @@
 
 #include <assert.h>
 
-#include "kmfolderdia.h" //has to be later becuase of KMFolder* fdcls
+#include "kmfolderdia.h" //has to be later because of KMFolder* fdcls
 #include "kmfolderdia.moc"
 
 

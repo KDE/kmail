@@ -446,7 +446,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
     return ErrorButGoOn;
 
   // The parentheses force the creation of a subshell
-  // in which the user-specifed command is executed.
+  // in which the user-specified command is executed.
   // This is to really catch all output of the command as well
   // as to avoid clashes of our redirection with the ones
   // the user may have specified. In the long run, we

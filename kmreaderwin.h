@@ -417,7 +417,7 @@ protected:
          cPgpWarnF, cPgpWarnH, cPgpWarnB,
          cPgpErrF, cPgpErrH, cPgpErrB,
          cPgpEncrF, cPgpEncrH, cPgpEncrB;
-  // color of frame of warning preceeding the source of HTML messages
+  // color of frame of warning preceding the source of HTML messages
   QColor cHtmlWarning;
   QString mQuoteFontTag[3];
   bool mShowColorbar;

@@ -1254,7 +1254,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
 			 alarm->setDisplayAlarm(i18n("Reminder"));
 
           // sorry: the different action types are not known (yet)
-          //        so we allways set 'DISPLAY' (no sounds, no images...)
+          //        so we always set 'DISPLAY' (no sounds, no images...)
 		  event->addAlarm(alarm);
         }
 		cal.addEvent(event);
@@ -1361,7 +1361,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
         if( !s.isEmpty() )
           addressee.setBirthday(QDateTime::fromString(s));
 
-      bOk = (!addressee.isEmpty());
+      bOk == (!addressee.isEmpty());
 
       }else if( "IPM.NOTE" == msgClass ){
 

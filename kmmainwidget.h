@@ -350,7 +350,7 @@ protected:
 
   QTimer *menutimer;
 
-  // ProgressDialog for transfering messages
+  // ProgressDialog for transferring messages
   KProgressDialog* mProgressDialog;
   int mCountJobs, mCountMsgs;
 

@@ -286,7 +286,7 @@ public:
    * Internal helper function called from applyChanges(void) to allow
    * processing several messages (encrypted or unencrypted) based on
    * the same composer content.
-   * That's usefull for storing decrypted versions of messages which
+   * That's useful for storing decrypted versions of messages which
    * were sent in encrypted form.                  (khz, 2002/06/24)
    */
    Kpgp::Result composeMessage( QCString pgpUserId,

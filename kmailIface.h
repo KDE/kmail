@@ -70,7 +70,7 @@ k_dcop:
                      message to be added.
   @return =1,  message added to folder, if folder doesn't exist, folder
              has been created.
-        =0,  an error occured.
+        =0,  an error occurred.
         =-1, couldn't create folder and it didn't exist
         =-2, couldn't read messageFile.
         =-3, Can't allocate memory.

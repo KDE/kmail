@@ -179,7 +179,7 @@ public:
   QString message(void) const { return mMsg; }
 
 signals:
-  /** Emitted when the current message is sent or an error occured. */
+  /** Emitted when the current message is sent or an error occurred. */
   void idle();
 
   /** Emitted when the initialization sequence has finished */

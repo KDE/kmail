@@ -140,7 +140,7 @@ QStringList IdentityManager::shadowIdentities() const
   return result;
 }
 
-// hmm, anyone can explain why I need to explicitely instantate qHeapSort?
+// hmm, anyone can explain why I need to explicitly instantate qHeapSort?
 //template void qHeapSort( QValueList<KMIdentity> & );
 
 void IdentityManager::sort() {

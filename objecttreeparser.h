@@ -125,7 +125,7 @@ namespace KMail {
     //  and it will be replaced once KMime is alive.
     void parseObjectTree( partNode * node );
 
-    /** Save a QByteArray into a new temp. file using the extention
+    /** Save a QByteArray into a new temp. file using the extension
         given in dirExt to compose the directory name and
         the name given in fileName as file name
         and return the path+filename.

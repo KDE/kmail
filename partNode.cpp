@@ -107,7 +107,7 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
     else { // part is partially or fully encrypted
         myState = mEncryptionState;
     }
-    // siblings are tested allways
+    // siblings are tested always
     if( mNext ) {
         KMMsgEncryptionState otherState = mNext->overallEncryptionState();
         switch( otherState ) {
@@ -150,7 +150,7 @@ KMMsgSignatureState  partNode::overallSignatureState() const
     else { // part is partially or fully signed
         myState = mSignatureState;
     }
-    // siblings are tested allways
+    // siblings are tested always
     if( mNext ) {
         KMMsgSignatureState otherState = mNext->overallSignatureState();
         switch( otherState ) {

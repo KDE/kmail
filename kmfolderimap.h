@@ -87,7 +87,7 @@ public:
   void setAccount(KMAcctImap *acct);
   KMAcctImap* account() { return mAccount; }
 
-  /** Remove (first occurance of) given message from the folder. */
+  /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
   virtual void removeMsg(QPtrList<KMMessage> msgList, bool quiet = FALSE);
 
