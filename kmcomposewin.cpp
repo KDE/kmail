@@ -28,6 +28,7 @@
 #include <kfontutils.h>
 
 #include <kaction.h>
+#include <kcursor.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
@@ -2381,6 +2382,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   initMetaObject();
   mComposer = composer;
   installEventFilter(this);
+  KCursor::setAutoHideCursor( this, true, true );
 
 #ifndef KRN
   extEditor = false;     // the default is to use ourself
@@ -2416,8 +2418,11 @@ QString KMEdit::brokenText() const
 }
 
 //-----------------------------------------------------------------------------
-bool KMEdit::eventFilter(QObject*, QEvent* e)
+bool KMEdit::eventFilter(QObject*o, QEvent* e)
 {
+  if (o == this)
+    KCursor::autoHideEventFilter(o, e);
+
   if (e->type() == QEvent::KeyPress)
   {
     QKeyEvent *k = (QKeyEvent*)e;
