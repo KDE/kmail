@@ -450,7 +450,7 @@ void KMEditMsgCommand::execute()
   if (msg->parent() == kernel->outboxFolder() && 
       kernel->msgSender()->sending())
   {
-    KMessageBox::sorry(this, i18n("You can't edit messages that are already in "
+    KMessageBox::sorry(0, i18n("You can't edit messages that are already in "
       "progress of being sent."));
     return;
   }
