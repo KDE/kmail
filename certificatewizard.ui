@@ -278,9 +278,6 @@ The certificates can either be generated in a centralized or a decentralized man
                         <property name="text">
                             <string>&amp;Centralized generation</string>
                         </property>
-                        <property name="accel">
-                            <string>Alt+C</string>
-                        </property>
                     </widget>
                     <widget class="QRadioButton">
                         <property name="name">
@@ -288,9 +285,6 @@ The certificates can either be generated in a centralized or a decentralized man
                         </property>
                         <property name="text">
                             <string>&amp;Decentralized generation</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+D</string>
                         </property>
                         <property name="checked">
                             <bool>true</bool>

@@ -62,9 +62,6 @@
                     <property name="text">
                         <string>Folder holds a &amp;mailing list</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+M</string>
-                    </property>
                 </widget>
                 <spacer row="4" column="0">
                     <property name="name">
@@ -245,9 +242,6 @@
                     <property name="text">
                         <string>Use custom &amp;icons</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+I</string>
-                    </property>
                 </widget>
                 <widget class="QLineEdit" row="4" column="4" rowspan="1" colspan="4">
                     <property name="name">
@@ -316,9 +310,6 @@
                     <property name="text">
                         <string>Expire &amp;read messages</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+R</string>
-                    </property>
                 </widget>
                 <spacer row="3" column="0">
                     <property name="name">
@@ -357,9 +348,6 @@
                     </property>
                     <property name="text">
                         <string>Expire &amp;unread messages</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+U</string>
                     </property>
                 </widget>
                 <widget class="KIntNumInput" row="1" column="2">
