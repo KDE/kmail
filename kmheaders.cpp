@@ -1709,6 +1709,8 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation )
 {
+  if ( destFolder == mFolder ) return; // Catch the noop case
+
   KMMessageList msgList = *selectedMsgs();
   if ( !destFolder && askForConfirmation &&    // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
