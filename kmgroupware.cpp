@@ -141,7 +141,8 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
     s = QString::fromUtf8( msg->bodyDecoded() );
     return true;
   } else if( DwMime::kTypeMultipart == msg->type() &&
-	    DwMime::kSubtypeMixed  == msg->subtype() )
+	    (DwMime::kSubtypeMixed  == msg->subtype() ) ||
+	    (DwMime::kSubtypeAlternative  == msg->subtype() ))
   {
     // kdDebug(5006) << "KMGroupware looking for TNEF data" << endl;
     DwBodyPart* dwPart = msg->findDwBodyPart( DwMime::kTypeApplication,
@@ -154,6 +155,16 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
       return KMGroupware::msTNEFToVPart( msgPart.bodyDecodedBinary(), s );
+    }
+    else {
+	    dwPart = msg->findDwBodyPart( DwMime::kTypeText,
+			    DwMime::kSubtypeVCal );
+	    if (dwPart) {
+      		KMMessagePart msgPart;
+		KMMessage::bodyPart(dwPart, &msgPart);
+		s = msgPart.body();    
+		return true;
+	    }
     }
   }else if( DwMime::kTypeMultipart == msg->type() &&
 	    DwMime::kSubtypeMixed  == msg->subtype() ){
