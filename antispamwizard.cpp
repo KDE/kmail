@@ -38,6 +38,7 @@
 #include "kmmainwin.h"
 
 #include <kaction.h>
+#include <kapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klocale.h>
@@ -102,6 +103,9 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
             this, SLOT( checkProgramsSelections( void ) ) );
   connect( rulesPage, SIGNAL( selectionChanged( void) ),
             this, SLOT( checkRulesSelections( void ) ) );
+
+  connect( this, SIGNAL( helpClicked( void) ),
+            this, SLOT( slotHelpClicked( void ) ) );
 
   setNextEnabled( programsPage, false );
   setNextEnabled( rulesPage, false );
@@ -395,6 +399,15 @@ int AntiSpamWizard::checkForProgram( QString executable )
   process.setUseShell( true );
   process.start( KProcess::Block );
   return process.exitStatus();
+}
+
+
+void AntiSpamWizard::slotHelpClicked()
+{
+  KApplication::kApplication()->invokeHelp();
+// FIXME Here we need to specify the anchor and perhaps explicitly kmail
+// as application if it is necessary when running in Kontact
+//  KApplication::kApplication()->invokeHelp( "using-kmail", "kmail" );
 }
 
 

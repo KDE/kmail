@@ -199,6 +199,8 @@ namespace KMail {
       void checkRulesSelections();
       /** Check if the spam tools are available via the PATH */
       void checkToolAvailability();
+      /** Show a help topic */
+      void slotHelpClicked();
 
     private:
       /* The pages in the wizard */
