@@ -735,11 +735,22 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("To:"),
                     mLblTo, mEdtTo, mBtnTo);
   if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
-  rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&CC:"),
-                    mLblCc, mEdtCc, mBtnCc);
+  rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Copy To (CC):"),
+                    mLblCc, mEdtCc, mBtnCc,
+                    i18n("<qt>The email addresses you put "
+                         "in this field receives a copy of the email. "
+                         "Technically it is the same thing as putting all the "
+                         "addresses in the <b>To:</b> field but differs in "
+                         "that it usually symbolises the receiver of the "
+                         "Carbon Copy (CC) is a listener, not the main "
+                         "recipient.</qt>"));
   if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
-  rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&BCC:"),
-                    mLblBcc, mEdtBcc, mBtnBcc);
+  rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Blind Copy To (BCC):"),
+                    mLblBcc, mEdtBcc, mBtnBcc,
+                    i18n("<qt>Essentially the same thing "
+                         "as the <b>Copy To:</b> field but differs in that "
+                         "all other recipients do not see who receives a "
+                         "blind copy.</qt>"));
   if (!fromSlot) mSubjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
                     mLblSubject, mEdtSubject);
@@ -774,11 +785,14 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
                                      const QString &aLabelStr, QLabel* aLbl,
-                                     QLineEdit* aEdt, QPushButton* aBtn)
+                                     QLineEdit* aEdt, QPushButton* aBtn,
+                                     const QString &toolTip )
 {
   if (aValue & aMask)
   {
     aLbl->setText(aLabelStr);
+    if ( !toolTip.isEmpty() )
+      QToolTip::add( aLbl, toolTip );
     aLbl->adjustSize();
     aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
     aLbl->setMinimumSize(aLbl->size());

@@ -559,12 +559,13 @@ protected:
   /**
    * Show or hide header lines
    */
-  void rethinkHeaderLine(int value, int mask, int& row,
-				 const QString& labelStr, QLabel* lbl,
-				 QLineEdit* edt, QPushButton* btn=0);
-  void rethinkHeaderLine(int value, int mask, int& row,
-				 const QString& labelStr, QLabel* lbl,
-				 QComboBox* cbx, QCheckBox *chk);
+  void rethinkHeaderLine( int value, int mask, int& row,
+                          const QString& labelStr, QLabel* lbl,
+                          QLineEdit* edt, QPushButton* btn = 0,
+                          const QString& toolTip = QString::null );
+  void rethinkHeaderLine( int value, int mask, int& row,
+                          const QString& labelStr, QLabel* lbl,
+                          QComboBox* cbx, QCheckBox *chk );
 
   /**
    * Initialization methods
