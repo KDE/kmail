@@ -796,7 +796,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
         << aMsg->fromStrip() << ", complete " << (aMsg->isComplete()) << endl;
   
   bool complete = true;
-  if ( aMsg && !aMsg->isComplete() )
+  if ( aMsg && !aMsg->isComplete() && (aMsg->getMsgSerNum() != mLastSerNum) )
     complete = false;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
