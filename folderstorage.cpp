@@ -997,11 +997,6 @@ void FolderStorage::setContentsType( KMail::FolderContentsType type )
 {
   if ( type != mContentsType ) {
     mContentsType = type;
-    // FIXME KConfigXT
-    // make sure everything is on disk, connected slots will call readConfig()
-    // when creating a new folder. Can't do it in the folder dialog, that doesn't
-    // have a folder yet at that point.
-    writeConfig();
     kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
   }
 }

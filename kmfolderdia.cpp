@@ -639,7 +639,7 @@ void FolderDiaGeneralTab::slotUpdateItems ( int current )
 //-----------------------------------------------------------------------------
 void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 {
-  KMail::FolderContentsType type = 
+  KMail::FolderContentsType type =
     static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
   if( type != KMail::ContentsTypeMail && GlobalSettings::hideGroupwareFolders() ) {
     QString message = i18n("You have configured this folder to contain groupware information "
@@ -787,9 +787,12 @@ bool FolderDiaGeneralTab::save()
 
     // Set type field
     if ( mContentsComboBox ) {
-      KMail::FolderContentsType type = 
+      KMail::FolderContentsType type =
         static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
       folder->storage()->setContentsType( type );
+      // make sure everything is on disk, connected slots will call readConfig()
+      // when creating a new folder.
+      folder->storage()->writeConfig();
     }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
