@@ -904,7 +904,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 
       /* HTMLize signedBy data ### FIXME: use .arg()*/
       QString sdata=pgp->signedBy();
-      sdata.replace(QRegExp("\""), "&quot;");
+      sdata.replace(QRegExp("&"), "&amp;");
       sdata.replace(QRegExp("<"), "&lt;");
       sdata.replace(QRegExp(">"), "&gt;");
 
@@ -1046,7 +1046,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   kdDebug(5006) << "writePartIcon: PartNum: " << aPartNum << endl;
 
   comment = aMsgPart->contentDescription();
-  comment.replace(QRegExp("\""), "&quot;");
+  comment.replace(QRegExp("&"), "&amp;");
   comment.replace(QRegExp("<"), "&lt;");
   comment.replace(QRegExp(">"), "&gt;");
 
@@ -1054,7 +1054,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   if (fileName.isEmpty()) fileName = aMsgPart->name();
   label = fileName;
       /* HTMLize label */
-  label.replace(QRegExp("\""), "&quot;");
+  label.replace(QRegExp("&"), "&amp;");
   label.replace(QRegExp("<"), "&lt;");
   label.replace(QRegExp(">"), "&gt;");
 
@@ -1161,7 +1161,8 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
         continue;
       }
     }
-    if (ch=='<') result += "&lt;";
+    if (ch=='&') result += "&amp;";
+    else if (ch=='<') result += "&lt;";
     else if (ch=='>') result += "&gt;";
     else if (ch=='\n') {
       result += "<br>";
