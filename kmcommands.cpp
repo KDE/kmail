@@ -503,7 +503,7 @@ void KMEditMsgCommand::execute()
       !kmkernel->folderIsDraftOrOutbox( msg->parent() ))
     return;
 
-  msg->parent()->removeMsg( msg->parent()->find( msg ) );
+  msg->parent()->take( msg->parent()->find( msg ) );
 #if 0
   // Useful?
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
