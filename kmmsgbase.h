@@ -131,6 +131,9 @@ public:
   static const QString decodeBase64(const QString& str);
   static const QString encodeBase64(const QString& str);
 
+  /** Helper function for encodeRFC2047String */
+  static const QString encodeRFC2047Quoted(const QString& aStr, bool base64);
+
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
   static const QString decodeRFC2047String(const QString& aStr);

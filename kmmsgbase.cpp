@@ -370,7 +370,7 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
       }
       QTextCodec *codec = codecForName(charset);
       if (!codec) codec = codecForName(KGlobal::locale()->charset());
-      if (codec) str = codec->toUnicode(cstr);
+      if (codec) str = codec->toUnicode(QString(cstr)); // Workaround
       else str = QString::fromLocal8Bit(cstr);
 
       // Workaround for bug in QT-2.2.2
@@ -398,79 +398,105 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-const char especials[18] = "()<>@,;:\"/[]?.= \033";
+const QString especials = "()<>@,;:\"/[]?.= \033";
+const QString dontQuote = "\"()<>";
+
+const QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
+{
+  if (base64) return encodeBase64(aStr).copy().replace(QRegExp("\n"),"");
+  QString result;
+  unsigned char ch, hex;
+  for (unsigned int i = 0; i < aStr.length(); i++)
+  {
+    ch = aStr.at(i);
+    if (ch >= 128 || especials.find(aStr.at(i)) != -1)
+    {
+      result += "=";
+      hex = ((ch & 0xF0) >> 4) + 48;
+      if (hex >= 58) hex += 7;
+      result += hex;
+      hex = (ch & 0x0F) + 48;
+      if (hex >= 58) hex += 7;
+      result += hex;
+    } else {
+      result += aStr.at(i);
+    }
+  }
+  return result;
+}
+
 
 const QString KMMsgBase::encodeRFC2047String(const QString& _str,
   const QString& charset)
 {
   if (_str.isEmpty()) return _str;
+  if (charset == "us-ascii") return toUsAscii(_str);
+
   QString cset;
   if (charset.isEmpty()) cset = KGlobal::locale()->charset();
     else cset = charset;
   QTextCodec *codec = codecForName(cset);
-  QCString latin;
-  if (charset == "us-ascii") latin = toUsAscii(_str);
-  else if (codec) latin = codec->fromUnicode(_str);
-    else latin = _str.local8Bit();
-  int cr, start, stop, pos = 0;
-  int latinLen = latin.length();
-  char hexcode;
-  int numQuotes, i;
+  if (!codec) codec = QTextCodec::codecForLocale();
+
+  unsigned int nonAscii = 0;
+  for (unsigned int i = 0; i < _str.length(); i++)
+    if (_str.at(i).unicode() >= 128) nonAscii++;
+  bool useBase64 = (nonAscii * 6 > _str.length());
+
+  unsigned int start, stop, p, pos = 0, encLength;
   QString result = QString();
-  while (pos < latinLen)
+  bool breakLine;
+  const unsigned int maxLen = 75 - 7 - cset.length();
+
+  while (pos < _str.length())
   {
-    cr = pos;
-    start = pos;
-    while (cr < latinLen)
+    start = pos; p = pos;
+    while (p < _str.length())
     {
-      if (latin[cr] == 32) start = cr + 1;
-      if (latin[cr] < 32) break;
-      cr++;
+      if (_str.at(p) == ' ') start = p + 1;
+      if (_str.at(p).unicode() >= 128 || _str.at(p) < ' ') break;
+      p++;
     }
-    if (cr < latinLen)
+    if (p < _str.length())
     {
-      if (latin[start] == 34) start++;
-      numQuotes = 1;
-      while (cr < latinLen)
+      while (dontQuote.find(_str.at(start)) != -1) start++;
+      stop = start;
+      while (stop < _str.length() && dontQuote.find(_str.at(stop)) == -1)
+        stop++;
+      result += _str.mid(pos, start - pos);
+      encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
+        mid(start, stop - start)), useBase64).length();
+      breakLine = (encLength > maxLen);
+      if (breakLine)
       {
-        /* The encoded word must be limited to 75 character */
-        for (i = 0; i < 17; i++) if (latin[cr] == especials[i]) numQuotes++;
-        if (latin[cr] < 0) numQuotes++;
-        /* Stop after 58 = 75 - 17 characters or at "<user@host..." */
-        if (cr - start + 2 * numQuotes >= 58 || latin[cr] == 60) break;
-        cr++;
-      }
-      if (cr < latinLen)
-      {
-        stop = cr - 1;
-        while (stop >= start && latin[stop] != 32) stop--;
-        if (latin[stop - 1] == 34) stop--;
-        if (stop <= start) stop = cr;
-      } else stop = cr;
-      while (pos < start) { result += latin[pos]; pos++; }
-      result += QString("=?%1?q?").arg(cset);
-      while (pos < stop)
-      {
-        numQuotes = 0;
-        for (i = 0; i < 17; i++) if (latin[pos] == especials[i]) numQuotes = 1;
-        if (latin[pos] < 0) numQuotes = 1;
-        if (numQuotes)
+        int dif = (stop - start) / 2;
+        int step = dif;
+        while (abs(step) > 1)
         {
-          result += "=";
-          hexcode = ((latin[pos] & 0xF0) >> 4) + 48;
-          if (hexcode >= 58) hexcode += 7;
-          result += hexcode;
-          hexcode = (latin[pos] & 0x0F) + 48;
-          if (hexcode >= 58) hexcode += 7;
-          result += hexcode;
-        } else {
-          result += latin[pos];
+          encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
+            mid(start, dif)), useBase64).length();
+          step = (encLength > maxLen) ? (-abs(step) / 2) : (abs(step) / 2);
+          dif += step;
         }
-        pos++;
+        stop = start + dif;
       }
+      p = stop;
+      while (p > start && _str.at(p) != ' ') p--;
+      if (p > start) stop = p;
+      if (!result.isEmpty() && !(result.right(2) == "\n ") &&
+        result.length() - result.findRev("\n ") + encLength + 2 > maxLen)
+          result += "\n ";
+      result += "=?";
+      result += cset;
+      result += (useBase64) ? "?b?" : "?q?";
+      result += encodeRFC2047Quoted(codec->fromUnicode(_str.mid(start,
+        stop - start)), useBase64);
       result += "?=";
+      if (breakLine) result += "\n ";
+      pos = stop;
     } else {
-      while (pos < latinLen) { result += latin[pos]; pos++; }
+      result += _str.mid(pos);
+      break;
     }
   }
   return result;
