@@ -38,6 +38,7 @@
 
 class KMFolderCachedImap;
 class KMFolderTreeItem;
+class KMFolder;
 namespace KMail {
   class FolderJob;
   class ImapJob;
@@ -113,7 +114,7 @@ public:
   /**
    * Remember that a folder got explicitely deleted
    */
-  void addDeletedFolder( const QString& subFolderPath );
+  void addDeletedFolder( KMFolder* folder );
 
   /**
    * Ask if a folder was explicitely deleted in this session
@@ -124,6 +125,11 @@ public:
    * Ask if a folder was explicitely deleted in a previous session
    */
   bool isPreviouslyDeletedFolder( const QString& subFolderPath ) const;
+
+  /**
+   * return the imap path to the deleted folder, as well as the paths for any child folders
+   */
+  QStringList deletedFolderPaths( const QString& subFolderPath ) const;
 
   /**
    * Remove folder from the "deleted folders" list
