@@ -356,13 +356,13 @@ void AntiSpamWizard::accept()
       classHamFilter->setConfigureToolbar( TRUE );
       filterList.append( classHamFilter );
     }
-
+  }
     /* Now that all the filters have been added to the list, tell
      * the filter manager about it. That will emit filterListUpdate
      * which will result in the filter list in kmmainwidget being 
      * initialized. This should happend only once. */
+  if ( !filterList.isEmpty() )
     KMKernel::self()->filterMgr()->appendFilters( filterList );
-  }
 
   QDialog::accept();
 }
