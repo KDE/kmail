@@ -1452,7 +1452,7 @@ namespace KMail {
     return false;
   }
 
-  bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & ) {
+  bool ObjectTreeParser::processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result ) {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
