@@ -944,13 +944,26 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   mEdtReplyTo.setText(mMsg->replyTo());
   mEdtBcc.setText(mMsg->bcc());
 
-  if ((mBtnIdentity.isChecked()) && (!mId.isEmpty())) {
+  QString identity;
+  if (mBtnIdentity.isChecked())
+    identity = mId;
+  else 
+    identity = newMsg->headerField("X-KMail-Identity");
+
+  if ( !identity.isEmpty() ) {
+    mId = identity;
     KMIdentity ident( mId );
     ident.readConfig();
 
     mEdtFrom.setText( ident.fullEmailAddr() );
     mEdtReplyTo.setText( ident.replyToAddr() );
   }
+
+  for (int i=0; i < mIdentity.count(); ++i)
+    if (mIdentity.text(i) == mId) {
+      mIdentity.setCurrentItem(i);
+      break;
+    }
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport.isChecked() && !transport.isEmpty())
