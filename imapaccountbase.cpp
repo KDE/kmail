@@ -224,8 +224,11 @@ namespace KMail {
 
     // count the unread messages
     mCountUnread += folder->countUnread();
-    if (mCountRemainChecks == 0) {
+    if (mCountRemainChecks == 0) 
+    {
       // all checks are done
+      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+          name(), mCountUnread );
       if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
         checkDone(true, mCountUnread);
         mCountLastUnread = mCountUnread;

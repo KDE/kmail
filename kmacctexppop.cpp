@@ -616,8 +616,7 @@ void KMAcctExpPop::slotJobFinished() {
                                                             false );
     KMBroadcastStatus::instance()->reset();
 
-    // use -1 as newmail count to use our statusMsg
-    checkDone((numMessages > 0), -1);
+    checkDone((numMessages > 0), numMessages);
   }
 }
 

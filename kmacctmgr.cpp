@@ -137,11 +137,15 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       disconnect( acct, SIGNAL(finishedCheck(bool)),
                   this, SLOT(processNextCheck(bool)) );
       kernel->filterMgr()->cleanup();
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-        acct->name(), mTotalNewMailsArrived );
       emit checkedMail(newMailArrived, interactive);
-      mTotalNewMailsArrived = 0;
     }
+  }
+  if (mAcctChecking.isEmpty())
+  {
+    // all checks finished, display summary
+    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 
+        mTotalNewMailsArrived );
+    mTotalNewMailsArrived = 0;
   }
   if (mAcctTodo.isEmpty()) return;
   curAccount = mAcctTodo.take(0);
@@ -313,6 +317,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
   KMAccount* cur;
   newMailArrived = false;
 
+  mTotalNewMailsArrived = 0;
   int x = 0;
   cur = mAcctList.first();
   while (cur)
@@ -330,7 +335,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive)
 void KMAcctMgr::addToTotalNewMailCount(int newmails)
 {
   if ( newmails == -1 ) mTotalNewMailsArrived = -1;
-  if ( mTotalNewMailsArrived == -1 ) mTotalNewMailsArrived = 0;
+  if ( mTotalNewMailsArrived == -1 ) return;
   mTotalNewMailsArrived += newmails;
 }
 

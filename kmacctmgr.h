@@ -67,9 +67,7 @@ public slots:
   virtual void processNextCheck(bool _newMail);
 
   /** this slot increases the count of new mails to show a total number
-  after checking in multiple accounts. You can disable the display of
-  the total (for example, to show an error in the status bar) by
-  calling it with numNewMails = -1  */
+  after checking in multiple accounts. */
   virtual void addToTotalNewMailCount(int numNewMails);
 
 signals:
