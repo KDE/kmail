@@ -1527,8 +1527,10 @@ void KMMainWin::slotCycleHeaderStyles() {
   KMReaderWin::HeaderStyle style = mMsgView->headerStyle();
   if ( style == KMReaderWin::HdrAll ) // last, go to top again:
     mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
-  else
-    mMsgView->setHeaderStyle( KMReaderWin::HeaderStyle(++int(style)) );
+  else {
+    style = KMReaderWin::HeaderStyle((int)style+1);
+    mMsgView->setHeaderStyle( KMReaderWin::HeaderStyle(style) );
+  }  
   KRadioAction * action = actionForHeaderStyle( mMsgView->headerStyle() );
   assert( action );
   action->setChecked( true );
@@ -1551,8 +1553,10 @@ void KMMainWin::slotCycleAttachmentStyles() {
   KMReaderWin::AttachmentStyle style = mMsgView->attachmentStyle();
   if ( style == KMReaderWin::InlineAttmnt ) // last, go to top again:
     mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
-  else
-    mMsgView->setAttachmentStyle( KMReaderWin::AttachmentStyle(++int(style)) );
+  else {
+    style = KMReaderWin::AttachmentStyle((int)style+1);
+    mMsgView->setAttachmentStyle( KMReaderWin::AttachmentStyle(style) );
+  }  
   KRadioAction * action = actionForAttachmentStyle( mMsgView->attachmentStyle() );
   assert( action );
   action->setChecked( true );

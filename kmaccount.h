@@ -60,7 +60,7 @@ public:
   /**
    * Returns account name
    */
-  const QString& name(void) const { return mName; }
+  QString& name(void) const { return mName; }
   virtual void setName(const QString&);
 
   /**

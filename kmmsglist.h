@@ -55,9 +55,9 @@ public:
 
   /** Returns message at given index. */
   virtual KMMsgBasePtr at(int idx) { return KMMsgListInherited::at(idx); }
-  const KMMsgBasePtr at(int idx) const { return KMMsgListInherited::at(idx); }
+  KMMsgBasePtr at(int idx) const { return KMMsgListInherited::at(idx); }
   KMMsgBasePtr operator[](int idx) { return KMMsgListInherited::at(idx); }
-  const KMMsgBasePtr operator[](int idx) const { return KMMsgListInherited::at(idx); }
+  KMMsgBasePtr operator[](int idx) const { return KMMsgListInherited::at(idx); }
 
   /** Set message at given index. The array is resized if necessary. If
    there is already a message at the given index this message is *not*
