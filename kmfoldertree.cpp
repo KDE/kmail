@@ -1258,7 +1258,6 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
             setCurrentItem( i );
         }
         if ( !inside_margin.contains(vp) ) {
-            e->accept(QRect(0,0,0,0)); // Keep sending move events
             autoopen_timer.stop();
         } else {
             e->accept( dragAccepted );
