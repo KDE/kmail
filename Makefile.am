@@ -33,7 +33,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
-		kmscoring.cpp kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
+		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \

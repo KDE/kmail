@@ -35,9 +35,6 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
-#ifdef SCORING
-#include "kmscoring.h"
-#endif
 #include "mailinglist-magic.h"
 
 #include <mimelib/enum.h>
@@ -206,11 +203,6 @@ public:
           int b = cstr.find("\n", a+1);
           tmp = KIO::convertSize(strtoul(cstr.mid(a+11, b-a-11).data(), 0, 10));
         } else tmp = KIO::convertSize(mMsgBase->msgSize());
-
-#ifdef SCORING
-    } else if(col == headers->paintInfo()->scoreCol) {
-      tmp.setNum(headers->messageScore(mMsgId));
-#endif
     }
     return tmp;
   }
@@ -512,15 +504,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.senderCol = mPaintInfo.subCol    + 1;
   mPaintInfo.dateCol   = mPaintInfo.senderCol + 1;
   mPaintInfo.sizeCol   = mPaintInfo.dateCol   + 1;
-#ifdef SCORING
-  mPaintInfo.scoreCol  = mPaintInfo.sizeCol   + 0;
-  mPaintInfo.showScore = false;
-#endif
   mPaintInfo.orderOfArrival = false;
   mPaintInfo.status = false;
-#ifdef SCORING
-  showingScore = false;
-#endif
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
   setShowSortIndicator(true);
@@ -952,40 +937,15 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         addColumn(colText);
 
 	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
-#ifdef SCORING
-        mPaintInfo.scoreCol++;
-#endif
       }
       showingSize = true;
     } else {
       if (showingSize) {
         // remove the size field
         removeColumn(mPaintInfo.sizeCol);
-#ifdef SCORING
-        mPaintInfo.scoreCol--;
-#endif
       }
       showingSize = false;
     }
-
-#ifdef SCORING
-    mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
-    if (mPaintInfo.showScore) {
-      colText = i18n( "Score" );
-      if (showingScore) {
-        setColumnText( mPaintInfo.scoreCol, colText);
-      } else {
-        mPaintInfo.scoreCol = addColumn(colText);
-        setColumnAlignment( mPaintInfo.scoreCol, AlignRight );
-      }
-      showingScore = true;
-    } else {
-      if (showingScore) {
-        removeColumn(mPaintInfo.scoreCol);
-        showingScore = false;
-      }
-    }
-#endif
   }
    kdDebug(5006) << "end " << (QTime::currentTime().second()*1000)+QTime::currentTime().msec() <<  k_funcinfo << endl;
 }
@@ -2423,36 +2383,6 @@ void KMHeaders::updateMessageList(bool set_selection)
   	  this,SLOT(highlightMessage(QListViewItem*)));
 #endif
 }
-
-#ifdef SCORING
-int
-KMHeaders::messageScore(int msgId)
-{
-  if (!mScoringManager) return 0;
-
-  if ( !mPaintInfo.showScore ) {
-    kdDebug(5006) << "KMFolder::scoreMessages() : Skipping this group - no rules for it"
-              << endl;
-    return 0;
-  }
-
-  QCString cStr;
-
-  folder()->getMsgString(msgId, cStr);
-
-  if (!cStr) {
-    kdDebug(5006) << "KMFolder::scoreMessages() : Skipping msg" << endl;
-    return 0;
-  }
-
-  KMScorableArticle smsg(cStr);
-
-  mScoringManager->applyRules(smsg);
-
-  return smsg.score();
-
-}
-#endif
 
 
 //-----------------------------------------------------------------------------
