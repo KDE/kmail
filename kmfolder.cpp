@@ -593,7 +593,7 @@ QString KMFolder::idString() const
   KMFolderNode* folderNode = parent();
   if (!folderNode)
     return "";
-  while (parent())
+  while ( folderNode->parent() )
     folderNode = folderNode->parent();
   int pathLen = path().length() - folderNode->path().length();
   QString relativePath = path().right( pathLen );
