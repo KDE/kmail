@@ -202,7 +202,7 @@ void KMFldSearch::updStatus(void)
     }
     else
     {
-      genMsg = i18n("Search cancelled"); 
+      genMsg = i18n("Search canceled"); 
       detailMsg = i18n("%n match so far (%1)",
                        "%n matches so far (%1)", mNumMatches)
                  .arg(i18n("%n message processed",
