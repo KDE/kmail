@@ -697,16 +697,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
   QCString refStr;
-  QString id;
 
-  id = headerField("X-KMail-Identity");
-  if ( id.isEmpty() )
-    id = KMIdentity::matchIdentity(to() + " " + cc());
-  if ( id.isEmpty() )
-    id = parent()->identity();
-  msg->initHeader(id);
-  if (!headerField("X-KMail-Transport").isEmpty())
-    msg->setHeaderField("X-KMail-Transport", headerField("X-KMail-Transport"));
+  msg->initFromMessage(this);
 
   mailingListStr = headerField("X-Mailing-List");
   replyToStr = replyTo();
@@ -870,6 +862,7 @@ KMMessage* KMMessage::createRedirect(void)
   QCString str = "";
   int i;
 
+  msg->initFromMessage(this);
   str = asQuotedString(str, "", QString::null, FALSE, false, false);
 
   /// ### FIXME: The message should be redirected with the same Content-Type
@@ -943,7 +936,7 @@ KMMessage* KMMessage::createBounce( bool )
   if (a != -1) a = receiver.find('<', a);
   if (a != -1) b = receiver.find('>', a);
   if (a != -1 && b != -1) receiver = receiver.mid(a+1, b-a-1);
-  else receiver = to();
+  else receiver = getEmailAddr(to());
 
 #if ALLOW_GUI
   if ( withUI )
@@ -961,6 +954,7 @@ KMMessage* KMMessage::createBounce( bool )
 #endif
 
   KMMessage *msg = new KMMessage;
+  msg->initFromMessage(this);
   msg->setTo( senderStr );
   msg->setDateToday();
   msg->setSubject( "mail failed, returning to sender" );
@@ -978,6 +972,7 @@ KMMessage* KMMessage::createBounce( bool )
   bodyStr += asSendableString();
 
   msg->setBody( bodyStr.latin1() );
+  msg->cleanupHeader();
 
   return msg;
 }
@@ -993,10 +988,7 @@ KMMessage* KMMessage::createForward(void)
   QString id;
   int i;
 
-  id = headerField("X-KMail-Identity");
-  if ( id.isEmpty() && parent() )
-    id = parent()->identity();
-  msg->initHeader(id);
+  msg->initFromMessage(this);
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1077,7 +1069,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   receiptTo.replace(QRegExp("\\n"),"");
 
   receipt = new KMMessage;
-  receipt->initHeader();
+  receipt->initFromMessage(this);
   receipt->setTo(receiptTo);
   receipt->setSubject(i18n("Receipt: ") + subject());
 
@@ -1167,6 +1159,20 @@ void KMMessage::initHeader( const QString & id )
   setHeaderField("X-Mailer", "KMail [version " KMAIL_VERSION "]");
 // This will allow to change Content-Type:
   setHeaderField("Content-Type","text/plain");
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::initFromMessage(const KMMessage *msg)
+{
+  QString id = msg->headerField("X-KMail-Identity");
+  if ( id.isEmpty() )
+    id = KMIdentity::matchIdentity(msg->to() + " " + msg->cc());
+  if ( id.isEmpty() && msg->parent() )
+    id = msg->parent()->identity();
+  initHeader(id);
+  if (!msg->headerField("X-KMail-Transport").isEmpty())
+    setHeaderField("X-KMail-Transport", msg->headerField("X-KMail-Transport"));
 }
 
 

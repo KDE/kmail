@@ -127,6 +127,10 @@ public:
     of setAutomaticFields(), see below, is still required. */
   virtual void initHeader(const QString& id=QString::fromLatin1("unknown"));
 
+  /** Initialize headers fields according to the identity and the transport
+    header of the given original message */
+  virtual void initFromMessage(const KMMessage *);
+
   /** Removes empty fields from the header, e.g. an empty Cc: or Bcc:
     field. */
   virtual void cleanupHeader(void);
