@@ -129,63 +129,73 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 
   QWidget *page;
   QVBoxLayout *vlay;
+  ConfigurationPage *configPage;
 
   // Identity Page:
   page = addPage( IdentityPage::iconLabel(), IdentityPage::title(),
 		  loadIcon( IdentityPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mIdentityPage = new IdentityPage( page );
-  vlay->addWidget( mIdentityPage );
-  mIdentityPage->setPageIndex( pageIndex( page ) );
+  configPage = new IdentityPage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 
   // Network Page:
   page = addPage( NetworkPage::iconLabel(), NetworkPage::title(),
 		  loadIcon( NetworkPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mNetworkPage = new NetworkPage( page );
-  vlay->addWidget( mNetworkPage );
-  mNetworkPage->setPageIndex( pageIndex( page ) );
+  configPage = new NetworkPage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 
   // ### FIXME: We need a KMTransportCombo...  It's also no good to
   // allow non-applied transports to be presented in the identity
   // settings...
-  connect( mNetworkPage, SIGNAL(transportListChanged(const QStringList &)),
-	   mIdentityPage, SLOT(slotUpdateTransportCombo(const QStringList &)) );
+  connect( configPage, SIGNAL(transportListChanged(const QStringList &)),
+	   mPages.getFirst(), SLOT(slotUpdateTransportCombo(const QStringList &)) );
 
   // Appearance Page:
   page = addPage( AppearancePage::iconLabel(), AppearancePage::title(),
 		  loadIcon( AppearancePage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mAppearancePage = new AppearancePage( page );
-  vlay->addWidget( mAppearancePage );
-  mAppearancePage->setPageIndex( pageIndex( page ) );
+  configPage = new AppearancePage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 
-  connect( mAppearancePage, SIGNAL(profileSelected(KConfig*)),
+  // ### FIXME: Extract profile managing out of the normal config
+  // pages system...
+  mPageWithProfiles = configPage;
+  connect( configPage, SIGNAL(profileSelected(KConfig*)),
 	   this, SLOT(slotInstallProfile(KConfig*)) );
 
   // Composer Page:
   page = addPage( ComposerPage::iconLabel(), ComposerPage::title(),
 		  loadIcon( ComposerPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mComposerPage = new ComposerPage( page );
-  vlay->addWidget( mComposerPage );
-  mComposerPage->setPageIndex( pageIndex( page ) );
+  configPage = new ComposerPage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 
   // Security Page:
   page = addPage( SecurityPage::iconLabel(), SecurityPage::title(),
 		  loadIcon( SecurityPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mSecurityPage = new SecurityPage( page );
-  vlay->addWidget( mSecurityPage );
-  mSecurityPage->setPageIndex( pageIndex( page ) );
+  configPage = new SecurityPage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 
   // Folder Page:
   page = addPage( FolderPage::iconLabel(), FolderPage::title(),
 		  loadIcon( FolderPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mFolderPage = new FolderPage( page );
-  vlay->addWidget( mFolderPage );
-  mFolderPage->setPageIndex( pageIndex( page ) );
+  configPage = new FolderPage( page );
+  vlay->addWidget( configPage );
+  configPage->setPageIndex( pageIndex( page ) );
+  mPages.append( configPage );
 }
 
 
@@ -204,12 +214,8 @@ void ConfigureDialog::show()
 
 void ConfigureDialog::slotCancelOrClose()
 {
-  mIdentityPage->dismiss();
-  mNetworkPage->dismiss();
-  mAppearancePage->dismiss();
-  mComposerPage->dismiss();
-  mSecurityPage->dismiss();
-  mFolderPage->dismiss();
+  for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
+    it.current()->dismiss();
 }
 
 void ConfigureDialog::slotOk()
@@ -224,20 +230,9 @@ void ConfigureDialog::slotApply() {
 }
 
 void ConfigureDialog::slotHelp() {
-  // ### FIXME: use a list for the pages...
   int activePage = activePageIndex();
-  if ( activePage == mIdentityPage->pageIndex() )
-    kapp->invokeHelp( mIdentityPage->helpAnchor() );
-  else if ( activePage == mNetworkPage->pageIndex() )
-    kapp->invokeHelp( mNetworkPage->helpAnchor() );
-  else if ( activePage == mAppearancePage->pageIndex() )
-    kapp->invokeHelp( mAppearancePage->helpAnchor() );
-  else if ( activePage == mComposerPage->pageIndex() )
-    kapp->invokeHelp( mComposerPage->helpAnchor() );
-  else if ( activePage == mSecurityPage->pageIndex() )
-    kapp->invokeHelp( mSecurityPage->helpAnchor() );
-  else if ( activePage == mFolderPage->pageIndex() )
-    kapp->invokeHelp( mFolderPage->helpAnchor() );
+  if ( activePage >= 0 && activePage < (int)mPages.count() )
+    kapp->invokeHelp( mPages.at( activePage )->helpAnchor() );
   else
     kdDebug(5006) << "ConfigureDialog::slotHelp(): no page selected???"
 		  << endl;
@@ -245,43 +240,28 @@ void ConfigureDialog::slotHelp() {
 
 void ConfigureDialog::setup()
 {
-  mIdentityPage->setup();
-  mNetworkPage->setup();
-  mAppearancePage->setup();
-  mComposerPage->setup();
-  mSecurityPage->setup();
-  mFolderPage->setup();
+  for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
+    it.current()->setup();
 }
 
 void ConfigureDialog::slotInstallProfile( KConfig * profile ) {
-  mIdentityPage->installProfile( profile );
-  mNetworkPage->installProfile( profile );
-  mAppearancePage->installProfile( profile );
-  mComposerPage->installProfile( profile );
-  mSecurityPage->installProfile( profile );
-  mFolderPage->installProfile( profile );
+  for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
+    it.current()->installProfile( profile );
 }
 
 void ConfigureDialog::apply( bool everything ) {
   int activePage = activePageIndex();
 
-  if ( everything || activePage == mAppearancePage->pageIndex() )
-    mAppearancePage->apply(); // must be first, since it may install profiles!
-
-  if ( everything || activePage == mIdentityPage->pageIndex() )
-    mIdentityPage->apply();
-
-  if ( everything || activePage == mNetworkPage->pageIndex() )
-    mNetworkPage->apply();
-
-  if ( everything || activePage == mComposerPage->pageIndex() )
-    mComposerPage->apply();
-
-  if ( everything || activePage == mSecurityPage->pageIndex() )
-    mSecurityPage->apply();
-
-  if ( everything || activePage == mFolderPage->pageIndex() )
-    mFolderPage->apply();
+  if ( !everything )
+    mPages.at( activePage )->apply();
+  else {
+    // must be fiirst since it may install profiles!
+    mPageWithProfiles->apply();
+    // loop through the rest:
+    for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
+      if ( it.current() != mPageWithProfiles )
+	it.current()->apply();
+  }
 
   //
   // Make other components read the new settings
@@ -316,7 +296,7 @@ const char * IdentityPage::iconName() {
   return "identity";
 }
 
-QString IdentityPage::helpAnchor() {
+QString IdentityPage::helpAnchor() const {
   return QString::fromLatin1("configure-identity");
 }
 
@@ -577,7 +557,7 @@ const char * NetworkPage::iconName() {
   return "network";
 }
 
-QString NetworkPage::helpAnchor() {
+QString NetworkPage::helpAnchor() const {
   return QString::fromLatin1("configure-network");
 }
 
@@ -602,30 +582,11 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
 	   this, SIGNAL(accountListChanged(const QStringList &)) );
 }
 
-void NetworkPage::setup() {
-  mSendingTab->setup();
-  mReceivingTab->setup();
-}
-
-void NetworkPage::installProfile( KConfig * profile ) {
-  mSendingTab->installProfile( profile );
-  mReceivingTab->installProfile( profile );
-}
-
-void NetworkPage::apply() {
-  mSendingTab->apply();
-  mReceivingTab->apply();
-}
-
-void NetworkPage::dismiss() {
-  mReceivingTab->dismiss();
-}
-
 QString NetworkPage::SendingTab::title() {
   return i18n("&Sending");
 }
 
-QString NetworkPage::SendingTab::helpAnchor() {
+QString NetworkPage::SendingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-sending");
 }
 
@@ -1079,7 +1040,7 @@ QString NetworkPage::ReceivingTab::title() {
   return i18n("&Receiving");
 }
 
-QString NetworkPage::ReceivingTab::helpAnchor() {
+QString NetworkPage::ReceivingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-receiving");
 }
 
@@ -1478,7 +1439,7 @@ const char * AppearancePage::iconName() {
   return "appearance";
 }
 
-QString AppearancePage::helpAnchor() {
+QString AppearancePage::helpAnchor() const {
   return QString::fromLatin1("configure-appearance");
 }
 
@@ -1519,22 +1480,6 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
 	   this, SIGNAL(profileSelected(KConfig*)) );
 }
 
-void AppearancePage::setup() {
-  mFontsTab->setup();
-  mColorsTab->setup();
-  mLayoutTab->setup();
-  mHeadersTab->setup();
-  mProfileTab->setup();
-}
-
-void AppearancePage::installProfile( KConfig * profile ) {
-  mFontsTab->installProfile( profile );
-  mColorsTab->installProfile( profile );
-  mLayoutTab->installProfile( profile );
-  mHeadersTab->installProfile( profile );
-  mProfileTab->installProfile( profile );
-}
-
 void AppearancePage::apply() {
   mProfileTab->apply(); // must be first, since it may install profiles!
   mFontsTab->apply();
@@ -1548,7 +1493,7 @@ QString AppearancePage::FontsTab::title() {
   return i18n("&Fonts");
 }
 
-QString AppearancePage::FontsTab::helpAnchor() {
+QString AppearancePage::FontsTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-fonts");
 }
 
@@ -1708,7 +1653,7 @@ QString AppearancePage::ColorsTab::title() {
   return i18n("Colo&rs");
 }
 
-QString AppearancePage::ColorsTab::helpAnchor() {
+QString AppearancePage::ColorsTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-colors");
 }
 
@@ -1836,7 +1781,7 @@ QString AppearancePage::LayoutTab::title() {
   return i18n("&Layout");
 }
 
-QString AppearancePage::LayoutTab::helpAnchor() {
+QString AppearancePage::LayoutTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-layout");
 }
 
@@ -1970,7 +1915,7 @@ QString AppearancePage::HeadersTab::title() {
   return i18n("H&eaders");
 }
 
-QString AppearancePage::HeadersTab::helpAnchor() {
+QString AppearancePage::HeadersTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-headers");
 }
 
@@ -2184,7 +2129,7 @@ QString AppearancePage::ProfileTab::title() {
   return i18n("&Profiles");
 }
 
-QString AppearancePage::ProfileTab::helpAnchor() {
+QString AppearancePage::ProfileTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-profiles");
 }
 
@@ -2287,7 +2232,7 @@ QString ComposerPage::title() {
   return i18n("Phrases & General Behavior");
 }
 
-QString ComposerPage::helpAnchor() {
+QString ComposerPage::helpAnchor() const {
   return QString::fromLatin1("configure-composer");
 }
 
@@ -2325,36 +2270,12 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   addTab( mHeadersTab, mHeadersTab->title() );
 }
 
-void ComposerPage::setup() {
-  mGeneralTab->setup();
-  mPhrasesTab->setup();
-  mSubjectTab->setup();
-  mCharsetTab->setup();
-  mHeadersTab->setup();
-}
-
-void ComposerPage::installProfile( KConfig * profile ) {
-  mGeneralTab->installProfile( profile );
-  mPhrasesTab->installProfile( profile );
-  mSubjectTab->installProfile( profile );
-  mCharsetTab->installProfile( profile );
-  mHeadersTab->installProfile( profile );
-}
-
-void ComposerPage::apply() {
-  mGeneralTab->apply();
-  mPhrasesTab->apply();
-  mSubjectTab->apply();
-  mCharsetTab->apply();
-  mHeadersTab->apply();
-}
-
 
 QString ComposerPage::GeneralTab::title() {
   return i18n("&General");
 }
 
-QString ComposerPage::GeneralTab::helpAnchor() {
+QString ComposerPage::GeneralTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-general");
 };
 
@@ -2502,7 +2423,7 @@ QString ComposerPage::PhrasesTab::title() {
   return i18n("&Phrases");
 }
 
-QString ComposerPage::PhrasesTab::helpAnchor() {
+QString ComposerPage::PhrasesTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-phrases");
 }
 
@@ -2714,7 +2635,7 @@ QString ComposerPage::SubjectTab::title() {
   return i18n("&Subject");
 }
 
-QString ComposerPage::SubjectTab::helpAnchor() {
+QString ComposerPage::SubjectTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-subject");
 }
 
@@ -2813,7 +2734,7 @@ QString ComposerPage::CharsetTab::title() {
   return i18n("Cha&rset");
 }
 
-QString ComposerPage::CharsetTab::helpAnchor() {
+QString ComposerPage::CharsetTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-charset");
 }
 
@@ -2899,7 +2820,7 @@ QString ComposerPage::HeadersTab::title() {
   return i18n("H&eaders");
 }
 
-QString ComposerPage::HeadersTab::helpAnchor() {
+QString ComposerPage::HeadersTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-headers");
 }
 
@@ -3120,7 +3041,7 @@ QString SecurityPage::title() {
   return i18n("Security & Privacy Settings");
 }
 
-QString SecurityPage::helpAnchor() {
+QString SecurityPage::helpAnchor() const {
   return QString::fromLatin1("configure-security");
 }
 
@@ -3170,7 +3091,7 @@ QString SecurityPage::GeneralTab::title() {
   return i18n("&General");
 }
 
-QString SecurityPage::GeneralTab::helpAnchor() {
+QString SecurityPage::GeneralTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-general");
 }
 
@@ -3333,7 +3254,7 @@ QString FolderPage::title() {
   return i18n("Settings for Folders");
 }
 
-QString FolderPage::helpAnchor() {
+QString FolderPage::helpAnchor() const {
   return QString::fromLatin1("configure-misc-folders");
 }
 
@@ -3483,7 +3404,7 @@ QString SecurityPage::CryptPlugTab::title() {
   return i18n("Crypto Plugins");
 }
 
-QString SecurityPage::CryptPlugTab::helpAnchor() {
+QString SecurityPage::CryptPlugTab::helpAnchor() const {
   return QString::null;
 }
 
@@ -3499,7 +3420,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   glay->setRowStretch( 2, 1 );
   glay->setRowStretch( 5, 1 );
   glay->setColStretch( 1, 1 );
-  plugList = new ListView( this, "plugList" );
+  plugList = new KListView( this, "plugList" );
   plugList->addColumn( i18n("Name") );
   plugList->addColumn( i18n("Location") );
   plugList->addColumn( i18n("Update URL") );
@@ -3509,6 +3430,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   plugList->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   plugList->setSorting( -1 );
   plugList->header()->setClickEnabled( false );
+  plugList->setFullWidth( true );
   connect( plugList, SIGNAL(selectionChanged()),
            SLOT(  slotPlugSelectionChanged()) );
   glay->addMultiCellWidget( plugList, 0, 5, 0, 1 );

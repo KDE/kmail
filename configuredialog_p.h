@@ -130,6 +130,9 @@ public:
     : QWidget( parent, name ) {}
   ~ConfigurationPage() {};
 
+  /** Should return the help anchor for this page or tab */
+  virtual QString helpAnchor() const = 0;
+
   /** Should set the page up (ie. read the setting from the @ref
       KConfig object into the widgets) after creating it in the
       constructor. Called from @ref ConfigureDialog. */
@@ -168,10 +171,17 @@ class TabbedConfigurationPage : public ConfigurationPage {
 public:
   TabbedConfigurationPage( QWidget * parent=0, const char * name=0 );
 
+  void setup();
+  void dismiss();
+  void installProfile( KConfig * profile );
+  void apply();
+
 protected:
   void addTab( QWidget * tab, const QString & title );
 
 private:
+  ConfigurationPage * configTab( int index, const char * debugMsg ) const;
+
   QTabWidget *mTabWidget;
 
 };
@@ -191,7 +201,7 @@ public:
   static QString iconLabel();
   static QString title();
   static const char * iconName();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -241,7 +251,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -284,7 +294,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -329,12 +339,7 @@ public:
   static QString iconLabel();
   static QString title();
   static const char * iconName();
-  static QString helpAnchor();
-
-  void setup();
-  void apply();
-  void dismiss(); // needed for account list cleanup.
-  void installProfile( KConfig * profile );
+  QString helpAnchor() const;
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef NetworkPageSendingTab SendingTab;
@@ -366,7 +371,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -397,7 +402,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -419,7 +424,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -451,7 +456,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -479,7 +484,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -500,11 +505,9 @@ public:
   static QString iconLabel();
   static QString title();
   static const char * iconName();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
-  void setup();
-  void apply();
-  void installProfile( KConfig * profile );
+  void apply(); // is special
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef AppearancePageFontsTab FontsTab;
@@ -542,7 +545,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -569,7 +572,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -606,7 +609,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -629,7 +632,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -652,7 +655,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -684,11 +687,7 @@ public:
   static QString iconLabel();
   static QString title();
   static const char * iconName();
-  static QString helpAnchor();
-
-  void setup();
-  void apply();
-  void installProfile( KConfig * profile );
+  QString helpAnchor() const;
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef ComposerPageGeneralTab GeneralTab;
@@ -721,7 +720,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -745,7 +744,7 @@ public:
   static const char * iconName() { return 0; }
 
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();
@@ -764,7 +763,7 @@ protected slots:
   void slotPlugSelectionChanged();
 
 private:
-  QListView* plugList;
+  KListView* plugList;
 
   QPushButton* addCryptPlugButton;
   QPushButton* removeCryptPlugButton;
@@ -786,10 +785,12 @@ public:
   static QString iconLabel();
   static const char * iconName();
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
+  // OpenPGP tab is special:
   void setup();
   void apply();
+  void dismiss() {}
   void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;
@@ -816,7 +817,7 @@ public:
   static QString iconLabel();
   static const char * iconName();
   static QString title();
-  static QString helpAnchor();
+  QString helpAnchor() const;
 
   void setup();
   void apply();

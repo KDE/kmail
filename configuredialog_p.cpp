@@ -22,6 +22,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 // Qt headers:
 #include <qheader.h>
@@ -33,11 +34,6 @@
 
 // Other headers:
 #include <assert.h>
-#include <signal.h>
-#include <stdlib.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 
 NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
@@ -298,6 +294,49 @@ TabbedConfigurationPage::TabbedConfigurationPage( QWidget * parent,
 
 void TabbedConfigurationPage::addTab( QWidget * tab, const QString & title ) {
   mTabWidget->addTab( tab, title );
+}
+
+ConfigurationPage * TabbedConfigurationPage::configTab( int i, const char * func ) const {
+  ConfigurationPage * tab =
+    dynamic_cast<ConfigurationPage*>( mTabWidget->page( i ) );
+  kdWarning( !tab ) << "Tab with index " << i << " and label \""
+		    << mTabWidget->label( i )
+		    << "\" is not a ConfigurationPage." << endl
+		    << "Better overload " << func << "() in this page!"
+		    << endl;
+  return tab;
+}
+
+void TabbedConfigurationPage::setup() {
+  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+    ConfigurationPage * tab = configTab( i, "setup" );
+    if ( tab )
+      tab->setup();
+  }
+}
+
+void TabbedConfigurationPage::dismiss() {
+  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+    ConfigurationPage * tab = configTab( i, "dismiss" );
+    if ( tab )
+      tab->dismiss();
+  }
+}
+
+void TabbedConfigurationPage::installProfile( KConfig * profile ) {
+  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+    ConfigurationPage * tab = configTab( i, "installProfile" );
+    if ( tab )
+      tab->installProfile( profile );
+  }
+}
+
+void TabbedConfigurationPage::apply() {
+  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+    ConfigurationPage * tab = configTab( i, "apply" );
+    if ( tab )
+      tab->apply();
+  }
 }
 
 

@@ -23,16 +23,12 @@
 #define _CONFIGURE_DIALOG_H_
 
 #include <kdialogbase.h>
+#include <qptrlist.h>
 
 class QWidget;
 class KConfig;
 
-class IdentityPage;
-class NetworkPage;
-class AppearancePage;
-class ComposerPage;
-class SecurityPage;
-class FolderPage;
+class ConfigurationPage;
 
 class ConfigureDialog : public KDialogBase
 {
@@ -65,12 +61,8 @@ class ConfigureDialog : public KDialogBase
     void apply(bool);
 
   protected:
-    IdentityPage   *mIdentityPage;
-    NetworkPage    *mNetworkPage;
-    AppearancePage *mAppearancePage;
-    ComposerPage   *mComposerPage;
-    SecurityPage   *mSecurityPage;
-    FolderPage     *mFolderPage;
+    QPtrList<ConfigurationPage> mPages;
+    ConfigurationPage * mPageWithProfiles;
 };
 
 #endif
