@@ -105,8 +105,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     QString flags = KMFolderImap::statusToFlags( msg->status() ); 
     url.setPath( folder->imapPath() + ";SECTION=" + flags );
     ImapAccountBase::jobData jd;
-    jd.parent = 0; jd.offset = 0;
-    jd.total = 1; jd.done = 0;
+    jd.parent = 0; jd.offset = 0; jd.done = 0;
+    jd.total = msg->msgSizeServer(); 
     jd.msgList.append(msg);
     QCString cstr( msg->asString() );
     int a = cstr.find("\nX-UID: ");
@@ -137,6 +137,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
              SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)) );
     connect( mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
              SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)) );
+    connect( mJob, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
+             SLOT(slotProcessedSize(KIO::Job *, KIO::filesize_t)));
   }
   else if ( jt == tCopyMessage || jt == tMoveMessage )
   {
