@@ -160,11 +160,11 @@ void KMMsgPartDlg::applyChanges(void)
 
   kbp->busy();
   str = mEdtName->text();
-  if (!str.isEmpty || !mMsgPart->name().isEmpty())
+  if (!str.isEmpty() || !mMsgPart->name().isEmpty())
     mMsgPart->setName(str);
 
   str = mEdtComment->text();
-  if (!str.isEmpty || !mMsgPart->contentDescription().isEmpty())
+  if (!str.isEmpty() || !mMsgPart->contentDescription().isEmpty())
     mMsgPart->setContentDescription(str);
 
   idx = mCbxEncoding->currentItem();

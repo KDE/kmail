@@ -162,16 +162,16 @@ protected:
   virtual void closeEvent(QCloseEvent*);
 
   /** Add an attachment to the list. */
-  virtual void addAttach(QString url);
-  virtual void addAttach(KMMessagePart* msgPart);
+  virtual void addAttach(const QString url);
+  virtual void addAttach(const KMMessagePart* msgPart);
 
   /** Remove an attachment from the list. */
-  virtual void removeAttach(QString url);
+  virtual void removeAttach(const QString url);
   virtual void removeAttach(int idx);
 
   /** Returns a string suitable for the attachment listbox that describes
     the given message part. */
-  virtual const QString msgPartLbxString(KMMessagePart* msgPart) const;
+  virtual const QString msgPartLbxString(const KMMessagePart* msgPart) const;
 
   /** Open addressbook and append selected addresses to the given
     edit field. */

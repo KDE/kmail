@@ -67,7 +67,7 @@
 ///
 class KIntLineEdit : public QLineEdit
 {
-  Q_OBJECT;
+  Q_OBJECT
 
 public:
   KIntLineEdit( QWidget *parent = 0, const char *name = 0 ) 
@@ -97,7 +97,7 @@ protected:
 ///
 class KEdGotoLine : public QDialog
 {
-	Q_OBJECT;
+	Q_OBJECT
 
 public:
 
@@ -120,7 +120,7 @@ public slots:
 ///
 class KEdSrch : public QDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
 
@@ -158,7 +158,7 @@ public slots:
 ///
 class KEdReplace : public QDialog
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
 
@@ -206,7 +206,7 @@ public slots:
 ///
 class KEdit : public QMultiLineEdit
 {
-    Q_OBJECT;
+    Q_OBJECT
     
 public:
 
