@@ -469,6 +469,10 @@ if( fileD0.open( IO_WriteOnly ) ) {
   }
   ++mTotalMsgs;
 
+  if ( aMsg->attachmentState() == KMMsgAttachmentUnknown && 
+       aMsg->readyToShow() )
+    aMsg->updateAttachmentState();
+  
   // store information about the position in the folder file in the message
   aMsg->setParent(folder());
   aMsg->setMsgSize(size);
@@ -545,6 +549,7 @@ KMMessage* KMFolderMaildir::readMsg(int idx)
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
   KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
   mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
+  msg->setComplete( true );
   msg->fromDwString(getDwString(idx));
   return msg;
 }
