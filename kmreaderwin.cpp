@@ -1399,22 +1399,25 @@ void KMReaderWin::slotDelayedResize()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTouchMessage()
 {
-  if (message())
-  {
-    SerNumList serNums;
-    if (message()->isNew() || message()->isUnread()) {
-      serNums.append( message()->getMsgSerNum() );
-      KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
-      command->start();
-      if ( ! ( mNoMDNsWhenEncrypted &&
-               KMMsgNotEncrypted != message()->encryptionState() ) )
-	if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
-							 MDN::Displayed,
-							 true /* allow GUI */ ) )
-	  if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-	    KMessageBox::error( this, i18n("Could not send MDN.") );
-    }
-  }
+  if ( !message() )
+    return;
+
+  if ( !message()->isNew() && !message()->isUnread() )
+    return;
+
+  SerNumList serNums;
+  serNums.append( message()->getMsgSerNum() );
+  KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
+  command->start();
+  if ( mNoMDNsWhenEncrypted &&
+       message()->encryptionState() != KMMsgNotEncrypted &&
+       message()->encryptionState() != KMMsgEncryptionStateUnknown )
+    return;
+  if ( KMMessage * receipt = message()->createMDN( MDN::ManualAction,
+						   MDN::Displayed,
+						   true /* allow GUI */ ) )
+    if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
+      KMessageBox::error( this, i18n("Could not send MDN.") );
 }
 
 
