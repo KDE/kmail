@@ -76,7 +76,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   kmailKernel->setXmlGuiInstance( KMailFactory::instance() );
 
   // Will this cause trouble? Comment it out just in case
-  kapp->dcopClient()->setDefaultObject( kmailKernel->objId() );
+  // Yes, it's wrong in kontact... (DF)
+  //kapp->dcopClient()->setDefaultObject( kmailKernel->objId() );
 
   // and session management
   kmailKernel->doSessionManagement();
