@@ -19,7 +19,7 @@ class QComboBox;
 class QGridLayout;
 class QLabel;
 class QLineEdit;
-class QListView;
+class KListView;
 class QListViewItem;
 class QPushButton;
 class QRadioButton;
@@ -107,7 +107,7 @@ protected:
   QPushButton *mBtnSearch;
   QPushButton *mBtnStop;
   QCheckBox *mChkSubFolders;
-  QListView* mLbxMatches;
+  KListView* mLbxMatches;
   QLabel *mSearchFolderLbl;
   QLineEdit *mSearchFolderEdt;
   QPushButton *mSearchFolderBtn;

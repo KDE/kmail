@@ -134,7 +134,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
 	   mChkSubFolders, SLOT(setEnabled(bool)) );
 
-  mLbxMatches = new QListView(searchWidget, "Search in Folders");
+  mLbxMatches = new KListView(searchWidget, "Search in Folders");
   /* Default is to sort by date. TODO: Unfortunately this sorts *while*
      inserting, which looks rather strange - the user cannot read
      the results so far as they are constantly re-sorted --dnaber
@@ -142,7 +142,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mLbxMatches->setSorting(2, false);
   mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->setAllColumnsShowFocus(true);
-  mLbxMatches->setMultiSelection( TRUE );
+  mLbxMatches->setSelectionModeExt(KListView::Extended);
   mLbxMatches->addColumn(i18n("Subject"),
                          config->readNumEntry("SubjectWidth", 150));
   mLbxMatches->addColumn(i18n("Sender/Receiver"),
@@ -426,7 +426,7 @@ void KMFldSearch::slotAddMsg(int idx)
     else
         fName = pFolder->name();
 
-    (void)new QListViewItem(mLbxMatches,
+    (void)new KListViewItem(mLbxMatches,
 			    msg->subject(), from, msg->dateIsoStr(),
 			    fName,
 			    QString::number(mFolder->serNum(idx)));
