@@ -590,6 +590,17 @@ private:
                               QCString& encryptCertFingerprints );
 
   /**
+   * Get encryption certificate for a recipient (the Aegypten way).
+   */
+  QCString getEncryptionCertificate( const QString& recipient );
+
+  /**
+   * Check for expiry of various certificates.
+   */
+  bool checkForEncryptCertificateExpiry( const QString& recipient,
+                                         const QCString& certFingerprint );
+
+  /**
    * Build a MIME object (or a flat text resp.) based upon
    * structuring information returned by a crypto plugin that was
    * called via pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
