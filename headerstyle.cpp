@@ -376,7 +376,12 @@ namespace KMail {
     QString userHTML;
     QString presence;
     
-    if ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) )
+    // IM presence and kabc photo
+    // Check first that KIMProxy has any IM presence data, to save hitting KABC 
+    // unless really necessary
+    ::KIMProxy *imProxy = KMKernel::self()->imProxy();
+    if ( ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) ) 
+          && ( imProxy->imAddresseeUids().count() > 0 ) )
     {
       KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
       KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
@@ -421,7 +426,6 @@ namespace KMail {
           }
         }
         // im status
-        ::KIMProxy *imProxy = KMKernel::self()->imProxy();
         presence = imProxy->presenceString( addresses[0].uid() );
         if ( !userHTML.isEmpty() )
         {
