@@ -63,6 +63,9 @@
 #include <ktempfile.h>
 #include <qfile.h>
 #include <qdom.h>
+#include "kmfoldercachedimap.h"
+#include "kmacctcachedimap.h"
+#include "kmacctimap.h"
 
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
@@ -618,14 +621,39 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   return lst;
 }
 
-QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
+static QString subResourceLabel( KMFolder* folder )
 {
-  QMap<QString, bool> map;
+  // Let's show account name + imap path of folder
+  // Showing the folder label isn't enough, one could have several folders
+  // called "Notes", e.g. some coming from other people sharing theirs.
+  QString accountName;
+  QString imapPath;
+  FolderStorage* storage = folder->storage();
+  if ( storage->folderType() == KMFolderTypeCachedImap ) {
+    KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap*>( storage );
+    accountName = dimap->account()->name();
+    imapPath = dimap->imapPath();
+  } else if ( storage->folderType() == KMFolderTypeImap ) {
+    KMFolderImap* imap = static_cast<KMFolderImap*>( storage );
+    accountName = imap->account()->name();
+    imapPath = imap->imapPath();
+  } else {
+    accountName = QString::null;
+    imapPath = folder->label();
+  }
+  if ( !accountName.isEmpty() )
+    accountName += ' ';
+  return accountName + imapPath;
+}
+
+QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
+{
+  QValueList<SubResource> subResources;
 
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
-    map.insert( f->location(), !f->isReadOnly() );
+    subResources.append( SubResource( f->location(), subResourceLabel( f ), !f->isReadOnly() ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
   }
@@ -637,15 +665,15 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
     f = it.current()->folder;
     if ( f->storage()->contentsType() == t
          && storageFormat( f ) == StorageXML ) {
-      map.insert( f->location(), !f->isReadOnly() );
+      subResources.append( SubResource( f->location(), subResourceLabel( f ), !f->isReadOnly() ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
     }
   }
 
-  if ( map.isEmpty() )
+  if ( subResources.isEmpty() )
     kdDebug(5006) << "subresourcesKolab: No folder found for " << contentsType << endl;
-  return map;
+  return subResources;
 }
 
 bool KMailICalIfaceImpl::isWritableFolder( const QString& type,

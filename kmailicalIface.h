@@ -36,11 +36,27 @@
 #include <qstringlist.h>
 #include <kurl.h>
 
+// yes, this is this very header - but it tells dcopidl to include it
+// in _stub.cpp and _skel.cpp files, to get the definition of the structs.
+// ### dcopidlng bug: "" is copied verbatim...
+#include <kmailicalIface.h>
 
 class KMailICalIface : virtual public DCOPObject
 {
   K_DCOP
+
+public:
 k_dcop:
+  struct SubResource {
+    //dcopidl barfs on those constructors, but dcopidlng works
+    SubResource() {} // for QValueList
+    SubResource( const QString& loc, const QString& lab, bool rw )
+      : location( loc ), label( lab ), writable( rw ) {}
+    QString location; // unique
+    QString label;    // shown to the user
+    bool writable;
+  };
+
   virtual bool addIncidence( const QString& type, const QString& folder,
                              const QString& uid, const QString& ical ) = 0;
   virtual bool deleteIncidence( const QString& type, const QString& folder,
@@ -86,7 +102,7 @@ k_dcop:
    * Return list of subresources. @p contentsType is
    * Mail, Calendar, Contact, Note, Task or Journal
    */
-  virtual QMap<QString, bool> subresourcesKolab( const QString& contentsType ) = 0;
+  virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,
@@ -99,5 +115,17 @@ k_dcop_signals:
   void subresourceAdded( const QString& type, const QString& resource );
   void subresourceDeleted( const QString& type, const QString& resource );
 };
+
+inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResource& subResource )
+{
+  str << subResource.location << subResource.label << subResource.writable;
+  return str;
+}
+
+inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& subResource )
+{
+  str >> subResource.location >> subResource.label >> subResource.writable;
+  return str;
+}
 
 #endif
