@@ -272,7 +272,7 @@ void ConfigureDialog::apply( bool everything ) {
     // loop through the rest:
     for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
       if ( it.current() != mPageWithProfiles )
-	it.current()->apply();
+        it.current()->apply();
   }
 
   //
@@ -4048,7 +4048,7 @@ GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
 
   mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), mBox );
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
-  
+
   QLabel* dummy = new QLabel( this );
   vlay->addWidget( dummy, 2 );
 }
@@ -4070,7 +4070,7 @@ void GroupwarePage::setup()
 
   mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
   mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
-  
+
   mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
 }
 
@@ -4089,7 +4089,7 @@ void GroupwarePage::apply()
   options.writeEntry( "AutoAccept", mAutoResCB->isChecked() );
   options.writeEntry( "AutoDeclConflict", mAutoDeclConflCB->isChecked() );
   options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
-  
+
 #if 0
   kernel->groupware().readConfig();
 #endif

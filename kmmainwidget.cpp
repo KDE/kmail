@@ -1999,7 +1999,7 @@ void KMMainWidget::setupActions()
 					"mail_forward", mActionCollection,
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotForwardAttachedMsg()) );
+	   SLOT(slotForwardMsg()) );
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
 					SLOT(slotForwardAttachedMsg()), mActionCollection,
@@ -2843,14 +2843,14 @@ void KMMainWidget::slotSubscriptionDialog()
 
   if (mFolder->protocol() == "imap")
   {
-    SubscriptionDialog * dialog = new SubscriptionDialog(this, 
-        i18n("Subscription"), 
+    SubscriptionDialog * dialog = new SubscriptionDialog(this,
+        i18n("Subscription"),
         static_cast<KMFolderImap*>(mFolder)->account());
     dialog->show();
   } else if (mFolder->protocol() == "cachedimap")
   {
-    SubscriptionDialog * dialog = new SubscriptionDialog(this, 
-        i18n("Subscription"), 
+    SubscriptionDialog * dialog = new SubscriptionDialog(this,
+        i18n("Subscription"),
         static_cast<KMFolderCachedImap*>(mFolder)->account());
     dialog->show();
   }
