@@ -1696,6 +1696,7 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   mAccount->removeJob(it);
+  slotCompleteMailCheckProgress();
   if (job->error())
   {
     mAccount->handleJobError( job, i18n("Error while getting folder information.") );
@@ -1717,7 +1718,6 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
     }
     emit numUnreadMsgsChanged( folder() );
   }
-  slotCompleteMailCheckProgress();
 }
 
 //-----------------------------------------------------------------------------
