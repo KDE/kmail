@@ -1016,9 +1016,15 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   KMTransportInfo *ti = mSender->transportInfo();
   assert(aMsg != 0);
 
+  AddrSpecList sender = aMsg->extractAddrSpecs( "Sender" );
+  if ( sender.empty() )
+    sender = aMsg->extractAddrSpecs( "From" );
+  if ( sender.empty() )
+    return false;
+
   // email this is from
-  mQuery = QString("headers=0&from=%1")
-                  .arg(KURL::encode_string(KMMessage::getEmailAddr(aMsg->from())));
+  mQuery = "headers=0&from=";
+  mQuery += KURL::encode_string( sender.front().asString() );
 
   // recipients
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
