@@ -10,7 +10,7 @@
 #include "kmfolderindex.h"
 #include "mboxjob.h"
 
-#include "malloc.h" // for size_t
+#include <sys/types.h> // for size_t
 
 namespace KMail {
   class FolderJob;
