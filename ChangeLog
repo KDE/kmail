@@ -1,4 +1,9 @@
-1998-03-18  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.4)
+1998-03-24  Stefan Taferner  <taferner@kde.org>  (KMail-0.6.4)
+
+	* Message: decoding of quoted-printable RFC1522 strings
+	was broken for strings that started with a decoded character.
+
+1998-03-18  Stefan Taferner  <taferner@kde.org>
 
 	* Reader: improved detection of urls and email addresses
 	to ignore special characters at the end, e.g. "." or ")".

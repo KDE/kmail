@@ -289,9 +289,9 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
 {
 #ifndef BROKEN
   static QString result;
-  char *pos, *dest, *beg, *end;
+  char *pos, *dest, *beg, *end, *mid;
   QString str;
-  char encoding;
+  char encoding, ch;
   bool valid;
   int i;
   
@@ -304,39 +304,41 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
       continue;
     }
     beg = pos+2;
-    // search for end of encoded part
-    for (i=2, end=beg, valid=FALSE; *end && i<76; end++, i++)
+    end = beg;
+    valid = TRUE;
+    // parse charset name
+    for (i=2,pos+=2; i<76 && (*pos!='?'&&(ispunct(*pos)||isalnum(*pos))); i++)
+      pos++;
+    if (*pos!='?' || i<4 || i>=76) valid = FALSE;
+    else
     {
-      if (end[0]=='?' && end[1]=='=')
-      {
-	valid = TRUE;
-	break;
-      }
+      // get encoding and check delimiting question marks
+      encoding = toupper(pos[1]);
+      if (pos[2]!='?' || (encoding!='Q' && encoding!='B')) 
+	valid = FALSE;
+      pos+=3;
+      i+=3;
     }
     if (valid)
     {
-      end += 2; // end now points to the first char after the encoded string
-      pos = beg;
-      // parse charset name
-      while (pos<end && (*pos!='?' && (ispunct(*pos) || isalnum(*pos))))
-	pos++;
-      if (*pos != '?' || (end-pos) < 4) valid = FALSE;
-      else
+      mid = pos;
+      // search for end of encoded part
+      while (i<76 && *pos && !(*pos=='?' && *(pos+1)=='='))
       {
-	// get encoding and check delimiting question marks
+	i++;
 	pos++;
-	encoding = toupper(*pos++);
-	if (*pos++ != '?' || (encoding!='Q' && encoding!='B'))
-	    valid = FALSE;
       }
+      end = pos+2;//end now points to the first char after the encoded string
+      if (i>=76 || !*pos) valid = FALSE;
     }
     if (valid)
     {
-      str = QString(pos, (int)(end - pos - 1));
+      ch = *pos;
+      *pos = '\0';
+      str = QString(mid, (int)(mid - pos - 1));
       if (encoding == 'Q')
       {
 	// decode quoted printable text
-	str.detach();
 	for (i=str.length()-1; i>=0; i--)
 	  if (str[i]=='_') str[i]=' ';
 	str = decodeQuotedPrintable(str);
@@ -346,15 +348,16 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
 	// decode base64 text
 	str = decodeBase64(str);
       }
+      *pos = ch;
       for (i=0; str[i]; i++)
 	*dest++ = str[i];
 
-      pos = end - 1;
+      pos = end -1;
     }
     else
     {
       result += "=?";
-      pos = beg - 1;
+      pos = beg -1; // because pos gets increased shortly afterwards
     }
   }
   *dest = '\0';
