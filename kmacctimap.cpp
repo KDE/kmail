@@ -431,6 +431,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   jobData jd;
   jd.parent = (*it).parent;
   jd.done = 0;
+  /* Workaround for a limitation in the freemail server at imap.web.de */
   if (job->error() == KIO::ERR_UNSUPPORTED_ACTION)
   {
     (*it).parent->folder->expunge();
@@ -497,6 +498,26 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
         uids += QString::number(first);
       else
         uids += QString::number(first) + ":" + QString::number(last);
+
+      /* Workaround for a bug in the Courier IMAP server */
+      if (uids.length() > 100 && uid != (*it).items.end())
+      {
+        KURL url = getUrl();
+        url.setPath((*it).parent->folder->imapPath() + ";UID=" + uids
+          + ";SECTION=ENVELOPE");
+        makeConnection();
+        KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
+        KIO::Scheduler::assignJobToSlave(mSlave, newJob);
+        jobData jd2 = jd;
+        jd2.total = 0;
+        mapJobData.insert(newJob, jd2);
+        connect(newJob, SIGNAL(result(KIO::Job *)),
+            this, SLOT(slotSimpleResult(KIO::Job *)));
+        connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
+            this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
+        uids = "";
+      }
+      /* end workaround */
     }
   }
   KURL url = getUrl();
