@@ -274,7 +274,7 @@ bool FolderStorage::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(reallyAddMsg(KMMessage*)));
     job->start();
-    aMsg->setTransferInProgress(TRUE);
+    aMsg->setTransferInProgress( true );
     return FALSE;
   }
   return TRUE;
@@ -286,7 +286,8 @@ void FolderStorage::reallyAddMsg(KMMessage* aMsg)
 {
   if (!aMsg) // the signal that is connected can call with aMsg=0
     return;
-  aMsg->setTransferInProgress(FALSE);
+  aMsg->setTransferInProgress( false );
+  aMsg->setComplete( true );
   KMFolder *aFolder = aMsg->parent();
   int index;
   ulong serNum = aMsg->getMsgSerNum();
