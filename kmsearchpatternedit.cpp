@@ -51,7 +51,7 @@ void KMSearchRuleWidget::initWidget()
   mRuleValue = new QLineEdit( this, "mRuleValue" );
 
   if( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
-    mRuleEditBut = new QPushButton( i18n("Edit"), this, "mRuleEditBut" );
+    mRuleEditBut = new QPushButton( i18n("Edit..."), this, "mRuleEditBut" );
     connect( mRuleEditBut, SIGNAL( clicked() ), this, SLOT( editRegExp()));
     connect( mRuleFunc, SIGNAL( activated(int) ), this, SLOT( functionChanged(int) ) );
     functionChanged( mRuleFunc->currentItem() );
