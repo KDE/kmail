@@ -55,6 +55,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   mCountLastUnread = 0;
   mCountRemainChecks = 0;  
   errorDialogIsActive = false;
+  mOpenFolders.setAutoDelete(true);
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
@@ -280,10 +281,21 @@ void KMAcctImap::initJobData(jobData &jd)
 
 
 //-----------------------------------------------------------------------------
+int KMAcctImap::tempOpenFolder(KMFolder *folder)
+{
+  int rc = folder->open();
+  if (rc) return rc;
+  mOpenFolders.append(new QGuardedPtr<KMFolder>(folder));
+  return 0;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::setAutoExpunge(bool aAutoExpunge)
 {
   mAutoExpunge = aAutoExpunge;
 }
+
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::setHiddenFolders(bool aHiddenFolders)
@@ -397,7 +409,13 @@ void KMAcctImap::displayProgress()
     mProgressEnabled = !mapJobData.isEmpty();
     KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
       mProgressEnabled );
-    if (!mProgressEnabled) kernel->filterMgr()->cleanup();
+    if (!mProgressEnabled)
+    {
+      QPtrListIterator<QGuardedPtr<KMFolder> > it(mOpenFolders);
+      for ( it.toFirst() ; it.current() ; ++it )
+        if (*it) (*(*it))->close();
+      mOpenFolders.clear();
+    }
   }
   mIdle = FALSE;
   if (mapJobData.isEmpty())

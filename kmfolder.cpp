@@ -13,7 +13,6 @@
 #include "kmkernel.h"
 #include "identitymanager.h"
 #include "kmidentity.h"
-#include "kmfiltermgr.h"
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -748,7 +747,7 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
     connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
       SLOT(reallyAddMsg(KMMessage*)));
     aMsg->setTransferInProgress(TRUE);
-    kernel->filterMgr()->tempOpenFolder(this);
+    static_cast<KMFolderImap*>(msgParent)->account()->tempOpenFolder(this);
     return FALSE;
   }
   return TRUE;

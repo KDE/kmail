@@ -192,6 +192,11 @@ public:
    */
   static void initJobData(jobData &jd);
 
+  /**
+   * Open a folder and close it again when the network transfer is finished
+   */
+  int tempOpenFolder(KMFolder *folder);
+
 public slots:
   void processNewMail() { processNewMail(TRUE); }
 
@@ -233,6 +238,7 @@ protected:
   KMFolderImap *mFolder;
   int mCountUnread, mCountLastUnread;
   int mCountRemainChecks;
+  QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
 
 protected slots:
   /**

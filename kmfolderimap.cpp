@@ -211,6 +211,7 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
 int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 {
+  mAccount->tempOpenFolder(this);
   KMMessage *aMsg = msgList.getFirst();
   KMFolder *msgParent = aMsg->parent();
 
@@ -221,6 +222,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
   KMImapJob *imapJob = 0;
   if (msgParent)
   {
+    mAccount->tempOpenFolder(msgParent);
     if (msgParent->protocol() == "imap")
     {
       if (static_cast<KMFolderImap*>(msgParent)->account() == account())
@@ -297,6 +299,13 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 //-----------------------------------------------------------------------------
 void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
 {
+  mAccount->tempOpenFolder(this);
+  KMMessage *aMsg = msgList.getFirst();
+  if (aMsg)
+  {
+    KMFolder* parent = aMsg->parent();
+    if (parent) mAccount->tempOpenFolder(parent);
+  }
   QValueList<int> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids, false);
