@@ -46,6 +46,7 @@ class ConfigureDialog;
 class KIntSpinBox;
 class SimpleStringListEditor;
 class KConfig;
+class QPoint;
 namespace Kpgp {
   class Config;
   class SecretKeyRequester;
@@ -214,6 +215,7 @@ protected slots:
   void slotModifyIdentity();
   void slotRemoveIdentity();
   void slotRenameIdentity( QListViewItem *, const QString &, int );
+  void slotContextMenu( KListView*, QListViewItem *, const QPoint & );
   void slotSetAsDefault();
   void slotIdentitySelectionChanged( QListViewItem * );
 

@@ -93,6 +93,7 @@ using KMail::SignatureConfigurator;
 #include <qheader.h>
 #include <qlineedit.h>
 #include <qobjectlist.h>
+#include <qpopupmenu.h>
 
 // added for CRYPTPLUG
 #include <qvariant.h>   // first for gcc 2.7.2
@@ -360,7 +361,11 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 	   SLOT(slotIdentitySelectionChanged(QListViewItem*)) );
   connect( mIdentityList, SIGNAL(itemRenamed(QListViewItem*,const QString&,int)),
 	   SLOT(slotRenameIdentity(QListViewItem*,const QString&,int)) );
-  // ### connect dragged(...), doubleClicked(...)
+  connect( mIdentityList, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)),
+	   SLOT(slotModifyIdentity()) );
+  connect( mIdentityList, SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint&)),
+	   SLOT(slotContextMenu(KListView*,QListViewItem*,const QPoint&)) );
+  // ### connect dragged(...), ...
 
   hlay->addWidget( mIdentityList, 1 );
 
@@ -527,6 +532,23 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
   item->redisplay();
 }
   
+void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
+				    const QPoint & pos ) {
+  IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
+
+  QPopupMenu * menu = new QPopupMenu( this );
+  menu->insertItem( i18n("New..."), this, SLOT(slotNewIdentity()) );
+  if ( item ) {
+    menu->insertItem( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
+    if ( mIdentityList->childCount() > 1 )
+      menu->insertItem( i18n("Remove..."), this, SLOT(slotRemoveIdentity()) );
+    if ( !item->identity().isDefault() )
+      menu->insertItem( i18n("Set as Default"), this, SLOT(slotSetAsDefault()) );
+  }
+  menu->exec( pos );
+  delete menu;
+}
+
 
 void IdentityPage::slotSetAsDefault() {
   assert( !mIdentityDialog );
