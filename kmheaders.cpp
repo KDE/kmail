@@ -1560,27 +1560,17 @@ void KMHeaders::applyFiltersOnMsg()
   for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
     scheduler->execFilters( msg );
 #else
-  emit maybeDeleting();
+  int contentX, contentY;
+  KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
 
-  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-             this,SLOT(highlightMessage(QListViewItem*)));
   KMMessageList* msgList = selectedMsgs();
-  int topX = contentsX();
-  int topY = contentsY();
-
   if (msgList->isEmpty())
     return;
-  QListViewItem *qlvi = currentItem();
-  QListViewItem *next = qlvi;
-  while (next && next->isSelected())
-    next = next->itemBelow();
-  if (!next || (next && next->isSelected())) {
-    next = qlvi;
-    while (next && next->isSelected())
-      next = next->itemAbove();
-  }
+  finalizeMove( nextItem, contentX, contentY );
 
-  clearSelection();
+  CREATE_TIMER(filter);
+  START_TIMER(filter);
+
   for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
     int idx = msgBase->parent()->find(msgBase);
     assert(idx != -1);
@@ -1597,26 +1587,8 @@ void KMHeaders::applyFiltersOnMsg()
       if (slotFilterMsg(msg) == 2) break;
     }
   }
-
-  setContentsPos( topX, topY );
-  emit selected( 0 );
-  if (next) {
-    setCurrentItem( next );
-    setSelected( next, true );
-    setSelectionAnchor( currentItem() );
-    highlightMessage( next );
-  }
-  else if (currentItem()) {
-    setSelected( currentItem(), true );
-    setSelectionAnchor( currentItem() );
-    highlightMessage( currentItem() );
-  }
-  else
-    emit selected( 0 );
-
-  makeHeaderVisible();
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(highlightMessage(QListViewItem*)));
+  END_TIMER(filter);
+  SHOW_TIMER(filter);
 #endif
 }
 
