@@ -614,7 +614,7 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
 
   mRow = aRow;
   mCbxField = new KComboBox(true, aParent);
-  insertFieldItems(TRUE);
+  insertFieldItems(false);
   mCbxField->setMinimumSize(mCbxField->sizeHint());
   mCbxField->setMaximumSize(1024, mCbxField->sizeHint().height());
 
@@ -662,29 +662,42 @@ KMFldSearchRule::~KMFldSearchRule()
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearchRule::insertFieldItems(bool all)
+void KMFldSearchRule::insertFieldItems(bool imap)
 {
-  int last = mCbxField->currentItem();
+  QString last = mCbxField->currentText();
   mCbxField->clear();
-  if (mRow > 2) mCbxField->insertItem(QString::null);
+  if (!imap)
+    if (mRow > 2) mCbxField->insertItem(QString::null);
   mCbxField->insertItem("Subject");
   mCbxField->insertItem("From");
   mCbxField->insertItem("To");
   mCbxField->insertItem("Cc");
-  if (all) {
+  if (!imap) {
     mCbxField->insertItem("Organization");
     mCbxField->insertItem(i18n("<complete message>"));
   }
 
-  if (last < mCbxField->count())
-    mCbxField->setCurrentItem(last);
+  if ( !last.isEmpty() ) {
+    bool found = false;
+    for ( int i = 0 ; i < mCbxField->count() ; ++ i )
+      if ( mCbxField->text(i) == last ) {
+	mCbxField->setCurrentItem(i);
+	found = true;
+      }
+    if ( !found && !imap )
+      mCbxField->setEditText( last );
+  } else {
+    mCbxField->setCurrentItem(0);
+  }
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFldSearchRule::updateFunctions(KMFolder* folder)
 {
-  insertFieldItems(folder && (folder->protocol() != "imap"));
+  bool imap = folder && folder->protocol() == "imap";
+  insertFieldItems( imap );
+  mCbxField->setEditable( !imap );
 }
 
 

@@ -137,12 +137,14 @@ public:
   /** The header field to search in (or whole message) */
   virtual bool isHeaderField() const;
 
-  /** Update the functions according to the searching capabilites in the
-   * selected folder */
+  /** Update the functions according to the searching capabilites in
+   * the selected folder. Disables editing if the folder doesn't
+   * support arbitrary headers */
   virtual void updateFunctions(KMFolder* folder);
 
-  /** Fill in the header fiels where to search */
-  virtual void insertFieldItems(bool all);
+  /** Fill in the header fields where to search. If @p imap == @p
+      true, shows only the IMAP-searchable fields */
+  virtual void insertFieldItems(bool imap);
 
   enum Func { Contains=0, NotContains, Equal, NotEqual,
               MatchesRegExp, NotMatchesRegExp };
