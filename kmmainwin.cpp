@@ -551,6 +551,8 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(nls->translate("Print..."), this,
 		       SLOT(slotPrintMsg()), keys->print());
   fileMenu->insertSeparator();
+  fileMenu->insertItem(nls->translate("Check Mail..."), this,
+		       SLOT(slotCheckMail()));
   fileMenu->insertItem(nls->translate("Send Queued"), this,
 		       SLOT(slotSendQueued()));
   fileMenu->insertSeparator();

@@ -59,8 +59,18 @@ void KMAcctPop::init(void)
   mPasswd = "";
   mProtocol = 3;
   mStorePasswd = FALSE;
+  mLeaveOnServer = TRUE;
 }
 
+void KMAcctPop::setLeaveOnServer(bool b)
+{
+  mLeaveOnServer = b;
+}
+
+bool KMAcctPop::leaveOnServer()
+{
+  return mLeaveOnServer;
+}
 
 //-----------------------------------------------------------------------------
 bool KMAcctPop::processNewMail(void)
@@ -202,13 +212,20 @@ bool KMAcctPop::doProcessNewMail(void)
     msg->fromString(response);
     mFolder->addMsg(msg);
 
-    if (!mLeaveOnServer && client.Dele(id) != '+')
-      return popError("DELE", client);
+    if(!mLeaveOnServer)
+      {debug("Deleting mail: %i",id);
+      if(client.Dele(id) != '+')
+	return popError("DELE",client);
+      else 
+	cout << client.SingleLineResponse().c_str();
+      }
+    else
+      debug("Leaving mail on server\n");
 
     gotMsgs = TRUE;
     id++;
   }
-
+  client.Quit();
   return gotMsgs;
 }
 
@@ -216,6 +233,7 @@ bool KMAcctPop::doProcessNewMail(void)
 //-----------------------------------------------------------------------------
 bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 {
+  QString str;
   kbp->idle();
   // First we assume the worst: A network error
   if(aClient.LastFailure() != DwProtocolClient::kFailNoFailure) {
@@ -233,11 +251,18 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
     kbp->busy();
     return  FALSE;}
   
+  // Not all commands return multiLineResponses. If they do not
+  // they return singleLineResponses and the multiLR command return NULL
+  str = aClient.MultiLineResponse().c_str();
+  if(str.isEmpty())
+    str = aClient.SingleLineResponse().c_str();
+  if(str.isEmpty())
+    str = "Unknown error!";
   // Negative response by the server e.g STAT responses '- ....'
   KMsgBox::message(0, "Pop-Mail Error","Account: " + name() + 
-		   "\n" + nls->translate("In ")+aStage+":\n"+
-		   aClient.MultiLineResponse().c_str());
+		   "\n" + nls->translate("In ")+aStage+":\n"+ str);
   kbp->busy();
+  aClient.Quit();
   return FALSE;
   
 
@@ -258,6 +283,7 @@ void KMAcctPop::readConfig(KConfig& config)
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
   mProtocol = config.readNumEntry("protocol");
+  mLeaveOnServer = config.readNumEntry("leave-on-server",TRUE);
 }
 
 
@@ -278,6 +304,7 @@ void KMAcctPop::writeConfig(KConfig& config)
   config.writeEntry("host", mHost);
   config.writeEntry("port", mPort);
   config.writeEntry("protocol", mProtocol);
+  config.writeEntry("leave-on-server",mLeaveOnServer);
 }
 
 

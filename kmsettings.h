@@ -3,6 +3,7 @@
 
 #include <qtabdlg.h>
 #include <qstring.h>
+#include <qchkbox.h>
 
 class KMAccount;
 class KMAccountSettings;
@@ -84,6 +85,7 @@ private:
   QLineEdit *mEdtPort;
   QComboBox *mFolders;
   KMAccount *mAcct;
+  QCheckBox *chk;
 };
 
 #endif

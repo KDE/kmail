@@ -44,7 +44,9 @@ public slots:
   void markAll();
 
 private:
-
+  /*int cursorPos;
+  int offset;
+  QString tbuf;*/
 protected:
   virtual void mousePressEvent(QMouseEvent *);
 };

@@ -140,45 +140,5 @@ protected:
 };
 
 
-
-
-
-/***********
-#ifdef BROKEN
-//-----------------------------------------------------------------------------
-class KMGeneral : public QDialog
-{
-  Q_OBJECT
-public:
-  KMGeneral(QWidget *p=0, const char *n=0, KMMessage *m=0);
-  KMMessage *tempMes;
-protected:
-  void paintEvent(QPaintEvent *);	
-};
-
-
-//-----------------------------------------------------------------------------
-class KMSource : public QDialog
-{
-  Q_OBJECT
-public:
-  KMSource(QWidget *p=0, const char *n=0, QString s=0);
-  QMultiLineEdit *edit;	
-};
-
-
-//-----------------------------------------------------------------------------
-class KMProperties: public QDialog
-{
-  Q_OBJECT
-public:
-  KMProperties(QWidget *p=0, const char *n=0, KMMessage *m=0);
-  QTabDialog *tabDialog;
-  KMGeneral *topLevel;
-  KMSource  *sourceWidget;
-};
-#endif//BROKEN
-******/
-
 #endif
 

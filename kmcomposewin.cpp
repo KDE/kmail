@@ -365,7 +365,6 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(nls->translate("Pr&operties..."), 
 		   this, SLOT(slotAttachProperties()));
   mMenuBar->insertItem(nls->translate("&Attach"), menu);
-
   //---------- Menu: Help
   menu = app->getHelpMenu(TRUE, aboutText);
   mMenuBar->insertSeparator();
@@ -944,15 +943,48 @@ void KMComposeWin::slotHelp()
 
 //Class KMLineEdit ------------------------------------------------------------
 
+static const int myBlinkTime = 500;
+// Oh man not as trivial as I thought....:-(
+static int myXPosToCursorPos(char *s, const QFontMetrics &fm,
+			   int xPos, int width)
+{
+  char *tmp;
+  int dist;
+
+  if( xPos > width)
+    xPos = width;
+  if( xPos <= width)
+    return 0;
+  dist =  xPos;
+  tmp = s;
+  while (*tmp && dist > 0) 
+    dist -= fm.width( tmp++,1);
+  if( dist < 0 &&  ( xPos - dist > width || fm.width( tmp -1,1)/2 < -dist))
+    tmp--;
+  return tmp -s ;
+}
+
+
 KMLineEdit::KMLineEdit(QWidget *parent = NULL, const char *name = NULL)
   :QLineEdit(parent,name)
 {
+  initMetaObject();
 }
+
 
 //-----------------------------------------------------------------------------
 
 void KMLineEdit::mousePressEvent(QMouseEvent *e)
 {
+  
+  killTimers();
+  int margin = frame() ? 4 : 2;
+  //  not as trivial as I thought but eventually I will solve this problem
+  /*cursorPos = offset + myXPosToCursorPos( &tbuf[(int)offset], fontMetrics(),
+					  e->pos().x() - margin,
+					  width() - 2*margin);*/
+  if(e->button() == LeftButton)
+    deselect();
   if(e->button() == MidButton) {
     QKeyEvent k( Event_KeyPress, Key_V, 0 , ControlButton);
     keyPressEvent(&k);
@@ -966,6 +998,8 @@ void KMLineEdit::mousePressEvent(QMouseEvent *e)
     p->insertItem("Mark all",this,SLOT(markAll()));
     p->popup(QCursor::pos());
     }
+  repaint(!hasFocus());
+  startTimer(myBlinkTime);
 }
 
 //-----------------------------------------------------------------------------

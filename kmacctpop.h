@@ -43,6 +43,9 @@ public:
   short protocol(void) { return mProtocol; }
   virtual void setProtocol(short);
 
+  void setLeaveOnServer(bool);
+  bool leaveOnServer();
+
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);

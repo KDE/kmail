@@ -26,6 +26,7 @@
 #include <qlayout.h>
 #include <qpushbt.h>
 #include <qradiobt.h>
+#include <qchkbox.h>
 
 //------
 #include "kmsettings.moc"
@@ -525,7 +526,8 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   acctType = mAcct->type();
 
-  grid = new QGridLayout(this, 10, 3, 8, 4);
+  setCaption("Configure Account");
+  grid = new QGridLayout(this, 11, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(nls->translate("Type:"), this);
@@ -573,6 +575,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
 
+
   lbl = new QLabel(nls->translate("Store new mail in account:"), this);
   grid->addMultiCellWidget(lbl, 6, 6, 0, 2);
 
@@ -588,6 +591,15 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     i++;
   }
   grid->addWidget(mFolders, 7, 1);
+
+  chk = new QCheckBox(nls->translate("Delete Mail from Server"), 
+				 this);
+  if(!((KMAcctPop*)mAcct)->leaveOnServer())
+    chk->setChecked(TRUE);
+  else 
+    chk->setChecked(FALSE); // just to make sure
+  grid->addMultiCellWidget(chk, 8, 8, 1, 2);
+  
 
   // buttons at bottom
   btnBox = new QWidget(this);
@@ -607,9 +619,9 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   btnBox->setMinimumSize(230, ok->size().height()+10);
   btnBox->setMaximumSize(2048, ok->size().height()+10);
-  grid->addMultiCellWidget(btnBox, 9, 9, 0, 2);
+  grid->addMultiCellWidget(btnBox, 10, 10, 0, 2);
 
-  resize(350,300);
+  resize(350,310);
   grid->activate();
   adjustSize();
   setMinimumSize(size());
@@ -655,6 +667,10 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setPort(atoi(mEdtPort->text()));
     ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
+    if(chk->isChecked() == TRUE)
+      ((KMAcctPop*)mAcct)->setLeaveOnServer(FALSE);
+    else
+      ((KMAcctPop*)mAcct)->setLeaveOnServer(TRUE);
   }
 
   acctMgr->writeConfig(TRUE);
