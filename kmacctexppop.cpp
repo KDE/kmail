@@ -95,7 +95,7 @@ void KMAcctExpPop::init(void)
   mProtocol = 3;
   mUseSSL = FALSE;
   mUseTLS = FALSE;
-  mUsePipelining = TRUE;
+  mUsePipelining = FALSE;
   mStorePasswd = FALSE;
   mAskAgain = FALSE;
   mLeaveOnServer = FALSE;
@@ -187,7 +187,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mUseSSL = config.readNumEntry("use-ssl", FALSE);
   mUseTLS = config.readNumEntry("use-tls", FALSE);
   mAuth = config.readEntry("auth", "USER");
-  mUsePipelining = config.readNumEntry("pipelining", TRUE);
+  mUsePipelining = config.readNumEntry("pipelining", FALSE);
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("pass");
   else mPasswd = "";
