@@ -3,17 +3,22 @@
 // based on work by Stefan Taferner <taferner@kde.org>
 // This code is under the GPL
 
+// own header:
 #include "kmfilterdlg.h"
+
+// other KMail headers:
 #include "kmsearchpatternedit.h"
 #include "kmfiltermgr.h"
-//Tudo
 
+// other KDE headers:
 #include <kdebug.h>
 #include <klocale.h>
 #include <klineeditdlg.h>
 #include <kiconloader.h>
 #include <kapplication.h>
+#include <kwin.h>
 
+// other Qt headers:
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qcombobox.h>
@@ -21,9 +26,11 @@
 #include <qtooltip.h>
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
-
-#include <assert.h>
 #include <qpushbutton.h>
+
+// other headers:
+#include <assert.h>
+
 
 // What's this help texts
 const char * _wt_filterlist =
@@ -94,6 +101,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 		 Ok /* default btn */, FALSE /* separator */),
   bPopFilter(popFilter)
 {
+  KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   setHelp( (bPopFilter)? KMPopFilterDlgHelpAnchor: KMFilterDlgHelpAnchor );
 
   QWidget *w = new QWidget(this);

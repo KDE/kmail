@@ -72,7 +72,7 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kstringvalidator.h>
-
+#include <kwin.h>
 
 // Qt headers:
 #include <qregexp.h>
@@ -128,6 +128,7 @@ ConfigureDialog::ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
                  Ok, parent, name, modal, true ),
     mCryptPlugList( cryptpluglist )
 {
+  KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   // setHelp() not needed, since we override slotHelp() anyway...
 
   setIconListAllVisible( true );
