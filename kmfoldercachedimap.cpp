@@ -462,10 +462,9 @@ void KMFolderCachedImap::serverSync( bool recurse )
     // All done for this folder.
     account()->mailCheckProgressItem()->setProgress( 100 );
     mProgress = 100; // all done
-    emit newState( label(), progress(), i18n("Synchronization skipped"));
+    newState( mProgress, i18n("Synchronization skipped"));
     mAccount->displayProgress();
     mSyncState = SYNC_STATE_INITIAL;
-    emit statusMsg( i18n("%1: Synchronization done").arg(label()) );
     emit folderComplete( this, true );
     return;
   }
@@ -543,7 +542,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_INITIAL:
   {
     mProgress = 0;
-    emit newState( label(), progress(), i18n("Synchronizing"));
+    newState( mProgress, i18n("Synchronizing"));
 
     open();
     if ( !noContent() )
@@ -555,13 +554,13 @@ void KMFolderCachedImap::serverSyncInternal()
       // Cancelled by user, or slave can't start
       // kdDebug(5006) << "makeConnection said Error, aborting." << endl;
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
-      emit newState( label(), progress(), i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
+      newState( mProgress, i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
       close();
       emit folderComplete(this, FALSE);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
       // kdDebug(5006) << "makeConnection said Connecting, waiting for signal." << endl;
-      emit newState( label(), progress(), i18n("Connecting to %1").arg( mAccount->host() ) );
+      newState( mProgress, i18n("Connecting to %1").arg( mAccount->host() ) );
       // We'll wait for the connectionResult signal from the account.
       connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
                this, SLOT( slotConnectionResult(int, const QString&) ) );
@@ -579,7 +578,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
-      emit newState( label(), progress(), i18n("Checking permissions"));
+      newState( mProgress, i18n("Checking permissions"));
       connect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
                this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
       mAccount->getUserRights( folder(), imapPath() ); // after connecting, due to the INBOX case
@@ -619,8 +618,7 @@ void KMFolderCachedImap::serverSyncInternal()
     // Else carry on
   case SYNC_STATE_LIST_SUBFOLDERS:
     mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
-    emit statusMsg( i18n("%1: Retrieving folderlist").arg(label()) );
-    emit newState( label(), progress(), i18n("Retrieving folderlist"));
+    newState( mProgress, i18n("Retrieving folderlist"));
     if( !listDirectory() ) {
       mSyncState = SYNC_STATE_INITIAL;
       KMessageBox::error(0, i18n("Error while retrieving the folderlist"));
@@ -630,16 +628,14 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_LIST_SUBFOLDERS2:
     mSyncState = SYNC_STATE_DELETE_SUBFOLDERS;
     mProgress += 10;
-    emit newState( label(), progress(), i18n("Retrieving subfolders"));
+    newState( mProgress, i18n("Retrieving subfolders"));
     listDirectory2();
     break;
 
   case SYNC_STATE_DELETE_SUBFOLDERS:
     mSyncState = SYNC_STATE_LIST_MESSAGES;
     if( !foldersForDeletionOnServer.isEmpty() ) {
-      emit statusMsg( i18n("%1: Deleting folders %2 from server").arg(label())
-                      .arg( foldersForDeletionOnServer.join(", ") ) );
-      emit newState( label(), progress(), i18n("Deleting folders from server"));
+      newState( mProgress, i18n("Deleting folders from server"));
       CachedImapJob* job = new CachedImapJob( foldersForDeletionOnServer,
                                                   CachedImapJob::tDeleteFolders, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
@@ -648,14 +644,13 @@ void KMFolderCachedImap::serverSyncInternal()
       break;
     }
     // Not needed, the next step emits newState very quick
-    //emit newState( label(), progress(), i18n("No folders to delete from server"));
+    //newState( mProgress, i18n("No folders to delete from server"));
       // Carry on
 
   case SYNC_STATE_LIST_MESSAGES:
     mSyncState = SYNC_STATE_DELETE_MESSAGES;
     if( !noContent() ) {
-      emit statusMsg( i18n("%1: Retrieving message list").arg(label()) );
-      emit newState( label(), progress(), i18n("Retrieving message list"));
+      newState( mProgress, i18n("Retrieving message list"));
       listMessages();
       break;
     }
@@ -668,7 +663,7 @@ void KMFolderCachedImap::serverSyncInternal()
         // Fine, we will continue with the next state
       } else {
         // No messages to delete, skip to GET_MESSAGES
-        emit newState( label(), progress(), i18n("No messages to delete..."));
+        newState( mProgress, i18n("No messages to delete..."));
         mSyncState = SYNC_STATE_GET_MESSAGES;
         serverSyncInternal();
       }
@@ -679,8 +674,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_EXPUNGE_MESSAGES:
     mSyncState = SYNC_STATE_GET_MESSAGES;
     if( !noContent() ) {
-      emit statusMsg( i18n("%1: Expunging deleted messages").arg(label()) );
-      emit newState( label(), progress(), i18n("Expunging deleted messages"));
+      newState( mProgress, i18n("Expunging deleted messages"));
       CachedImapJob *job = new CachedImapJob( QString::null,
                                               CachedImapJob::tExpungeFolder, this );
       connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
@@ -694,8 +688,7 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_HANDLE_INBOX;
     if( !noContent() ) {
       if( !mMsgsForDownload.isEmpty() ) {
-        emit statusMsg( i18n("%1: Retrieving new messages").arg(label()) );
-        emit newState( label(), progress(), i18n("Retrieving new messages"));
+        newState( mProgress, i18n("Retrieving new messages"));
         CachedImapJob *job = new CachedImapJob( mMsgsForDownload,
                                                 CachedImapJob::tGetMessage,
                                                 this );
@@ -706,7 +699,7 @@ void KMFolderCachedImap::serverSyncInternal()
         mMsgsForDownload.clear();
         break;
       } else {
-        emit newState( label(), progress(), i18n("No new messages from server"));
+        newState( mProgress, i18n("No new messages from server"));
         if( mLastUid == 0 && uidWriteTimer == -1 )
           // This is probably a new and empty folder. Write the UID cache
           writeUidCache();
@@ -738,8 +731,7 @@ void KMFolderCachedImap::serverSyncInternal()
         hasChangedACLs = (*it).changed;
       }
       if ( hasChangedACLs ) {
-        emit statusMsg( i18n("%1: Setting permissions").arg(label()) );
-        emit newState( label(), progress(), i18n("Setting permissions"));
+        newState( mProgress, i18n("Setting permissions"));
         KURL url = mAccount->getUrl();
         url.setPath( imapPath() );
         KIO::Job* job = KMail::ACLJobs::multiSetACL( mAccount->slave(), url, mACLList );
@@ -768,7 +760,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_FIND_SUBFOLDERS:
     {
       mProgress = 98;
-      emit newState( label(), progress(), i18n("Updating cache file"));
+      newState( mProgress, i18n("Updating cache file"));
 
       mSyncState = SYNC_STATE_SYNC_SUBFOLDERS;
       mSubfoldersForSync.clear();
@@ -788,7 +780,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     // All done for this folder.
     mProgress = 100; // all done
-    emit newState( label(), progress(), i18n("Synchronization done"));
+    newState( mProgress, i18n("Synchronization done"));
     emit syncRunning( folder(), false );
     mAccount->displayProgress();
 
@@ -806,7 +798,6 @@ void KMFolderCachedImap::serverSyncInternal()
 
       if( mSubfoldersForSync.isEmpty() ) {
         mSyncState = SYNC_STATE_INITIAL;
-        emit statusMsg( i18n("%1: Synchronization done").arg(label()) );
         mAccount->addUnreadMsgCount( countUnread() ); // before closing
         close();
         emit folderComplete( this, TRUE );
@@ -844,7 +835,7 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& err
     serverSyncInternal();
   } else {
     // Error (error message already shown by the account)
-    emit newState( label(), progress(), KIO::buildErrorString( errorCode, errorMsg ));
+    newState( mProgress, KIO::buildErrorString( errorCode, errorMsg ));
     emit folderComplete(this, FALSE);
   }
 }
@@ -867,16 +858,15 @@ void KMFolderCachedImap::uploadNewMessages()
 {
   QValueList<unsigned long> newMsgs = findNewMessages();
   if( !newMsgs.isEmpty() ) {
-    emit statusMsg( i18n("%1: Uploading messages to server").arg(label()) );
 
-    emit newState( label(), progress(), i18n("Uploading messages to server"));
+    newState( mProgress, i18n("Uploading messages to server"));
     CachedImapJob *job = new CachedImapJob( newMsgs, CachedImapJob::tPutMessage, this );
     connect( job, SIGNAL( progress( unsigned long, unsigned long) ),
              this, SLOT( slotPutProgress(unsigned long, unsigned long) ) );
     connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
     job->start();
   } else {
-    emit newState( label(), progress(), i18n("No messages to upload to server"));
+    newState( mProgress, i18n("No messages to upload to server"));
 
     serverSyncInternal();
   }
@@ -887,7 +877,7 @@ void KMFolderCachedImap::slotPutProgress( unsigned long done, unsigned long tota
 {
   // (going from mProgress to mProgress+10)
   int progressSpan = 10;
-  emit newState( label(), mProgress + (progressSpan * done) / total, QString::null );
+  newState( mProgress + (progressSpan * done) / total, QString::null );
   if ( done == total ) // we're done
     mProgress += progressSpan;
 }
@@ -897,8 +887,7 @@ void KMFolderCachedImap::uploadFlags()
 {
   if ( !uidMap.isEmpty() ) {
     mStatusFlagsJobs = 0;
-    emit statusMsg( i18n("%1: Uploading status of messages to server").arg(label()) );
-    emit newState( label(), progress(), i18n("Uploading status of messages to server"));
+    newState( mProgress, i18n("Uploading status of messages to server"));
 
     // FIXME DUPLICATED FROM KMFOLDERIMAP
     QMap< QString, QStringList > groups;
@@ -934,7 +923,7 @@ void KMFolderCachedImap::uploadFlags()
       return;
     }
   }
-  emit newState( label(), progress(), i18n("No messages to upload to server"));
+  newState( mProgress, i18n("No messages to upload to server"));
   serverSyncInternal();
 }
 
@@ -959,8 +948,7 @@ void KMFolderCachedImap::createNewFolders()
   QValueList<KMFolderCachedImap*> newFolders = findNewFolders();
   //kdDebug(5006) << label() << " createNewFolders:" << newFolders.count() << " new folders." << endl;
   if( !newFolders.isEmpty() ) {
-    emit statusMsg( i18n("%1: Creating subfolders on server").arg(label()) );
-    emit newState( label(), progress(), i18n("Creating subfolders on server"));
+    newState( mProgress, i18n("Creating subfolders on server"));
     CachedImapJob *job = new CachedImapJob( newFolders, CachedImapJob::tAddSubfolders, this );
     connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
     connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
@@ -1009,14 +997,12 @@ bool KMFolderCachedImap::deleteMessages()
   }
 
   if( !msgsForDeletion.isEmpty() ) {
-    emit statusMsg( i18n("%1: Deleting removed messages from cache").arg(label()) );
     removeMsg( msgsForDeletion );
   }
 
   /* Delete messages from the server that we dont have anymore */
   if( !uidsForDeletionOnServer.isEmpty() ) {
-    emit newState( label(), progress(), i18n("Deleting removed messages from server"));
-    emit statusMsg( i18n("%1: Deleting removed messages from server").arg(label()) );
+    newState( mProgress, i18n("Deleting removed messages from server"));
     QStringList sets = KMFolderImap::makeSets( uidsForDeletionOnServer, true );
     uidsForDeletionOnServer.clear();
     if( sets.count() > 1 ) {
@@ -1052,8 +1038,7 @@ void KMFolderCachedImap::checkUidValidity() {
     // Just proceed
     serverSyncInternal();
   else {
-    emit newState( label(), progress(), i18n("Checking folder validity"));
-    emit statusMsg( i18n("%1: Checking folder validity").arg(label()) );
+    newState( mProgress, i18n("Checking folder validity"));
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
     // Increase progress by 5 when done.
     // We use result() to ensure it happens before serverSyncInternal :)
@@ -1188,7 +1173,7 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
   //kdDebug(5006) << "KMFolderCachedImap::slotProgress done=" << done << " total=" << total << "=> mProgress=" << mProgress + ( progressSpan * done ) / total << endl;
   // Progress info while retrieving new emails
   // (going from mProgress to mProgress+progressSpan)
-  emit newState( label(), mProgress + (progressSpan * done) / total, QString::null );
+  newState( mProgress + (progressSpan * done) / total, QString::null );
 }
 
 
@@ -1537,8 +1522,7 @@ void KMFolderCachedImap::resetSyncState()
   mSubfoldersForSync.clear();
   mSyncState = SYNC_STATE_INITIAL;
   close();
-  emit newState( label(), progress(), i18n("Aborted"));
-  emit statusMsg( i18n("%1: Aborted").arg(label()) );
+  newState( mProgress, i18n("Aborted") );
 }
 
 void KMFolderCachedImap::slotIncreaseProgress()
@@ -1546,14 +1530,21 @@ void KMFolderCachedImap::slotIncreaseProgress()
   mProgress += 5;
 }
 
-void KMFolderCachedImap::newState( const QString& folderName, int progressLevel, const QString& syncStatus )
+void KMFolderCachedImap::newState( int progress, const QString& syncStatus )
 {
-  //kdDebug() << k_funcinfo << folderName << " " << progressLevel << " " << syncStatus << endl;
+  //kdDebug() << k_funcinfo << folder() << " " << mProgress << " " << syncStatus << endl;
   ProgressItem *progressItem = mAccount->mailCheckProgressItem();
-  progressItem->setLabel( folderName );
-  progressItem->setCompletedItems( progressLevel );
-  if ( !syncStatus.isEmpty() )
-    progressItem->setStatus( syncStatus );
+  progressItem->setCompletedItems( progress );
+  if ( !syncStatus.isEmpty() ) {
+    QString str;
+    // For a subfolder, show the label. But for the main folder, it's already shown.
+    if ( mAccount->imapFolder() == this )
+      str = syncStatus;
+    else
+      str = QString( "%1: %2" ).arg( label() ).arg( syncStatus );
+    progressItem->setStatus( str );
+    emit statusMsg( str );
+  }
   progressItem->updateProgress();
 }
 

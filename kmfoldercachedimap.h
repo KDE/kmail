@@ -269,7 +269,7 @@ protected:
   virtual void timerEvent( QTimerEvent* );
 
   /* update progress status */
-  void newState( const QString& folderName, int progressLevel, const QString& syncStatus );
+  void newState( int progress, const QString& syncStatus );
 
 public slots:
   /**
