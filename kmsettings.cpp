@@ -631,7 +631,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   box->addWidget(grp);
   grid = new QGridLayout(grp, 4, 3, 20, 4);
 
-  emptyTrashOnExit=new QCheckBox(i18n("empty trash on exit"),grp);
+  emptyTrashOnExit=new QCheckBox(i18n("Empty trash on exit"),grp);
   emptyTrashOnExit->setMinimumSize(emptyTrashOnExit->sizeHint());
   grid->addMultiCellWidget(emptyTrashOnExit, 0, 0, 0, 2);
 
@@ -1222,4 +1222,5 @@ void KMAccountSettings::accept()
 
   QDialog::accept();
 }
+
 
