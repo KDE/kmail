@@ -1128,12 +1128,21 @@ void KMFolderCachedImap::checkUidValidity() {
   else {
     newState( mProgress, i18n("Checking folder validity"));
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
-    // Increase progress by 5 when done.
-    // We use result() to ensure it happens before serverSyncInternal :)
-    connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
-    connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+    connect( job, SIGNAL( result( KMail::FolderJob* ) ),
+             this, SLOT( slotCheckUidValidityResult( KMail::FolderJob* ) ) );
     job->start();
   }
+}
+
+void KMFolderCachedImap::slotCheckUidValidityResult( KMail::FolderJob* job )
+{
+  if ( job->error() ) { // there was an error and the user chose "continue"
+    // We can't continue doing anything in the same folder though, it would delete all mails.
+    // But we can continue to subfolders if any. Well we can also try annotation/acl stuff...
+    mSyncState = SYNC_STATE_HANDLE_INBOX;
+  }
+  mProgress += 5;
+  serverSyncInternal();
 }
 
 /* This will only list the messages in a folder.

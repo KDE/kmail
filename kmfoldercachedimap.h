@@ -234,6 +234,7 @@ protected slots:
   // Connected to the imap account
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
+  void slotCheckUidValidityResult( KMail::FolderJob* job );
   void slotGetAnnotationResult( KIO::Job* );
   void slotSetAnnotationResult(KIO::Job *job);
   void slotReceivedUserRights( KMFolder* );
