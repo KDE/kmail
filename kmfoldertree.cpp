@@ -923,7 +923,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         folderMenu->insertItem(SmallIconSet("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
-
+    
     if (!fti->folder()) {
       folderMenu->insertItem(i18n("&Compact All Folders"),
                              kmkernel->folderMgr(), SLOT(compactAll()));
@@ -951,6 +951,11 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     // -- smp.
     if (!fti->folder()->noContent())
     {
+      folderMenu->insertItem( SmallIconSet("mail_find"),
+			      i18n("&Find Messages..."), 
+			      mMainWidget,
+			      SLOT(slotSearch()) );
+
       int itemId = folderMenu->insertItem( SmallIconSet("goto"),
                                            i18n("Mark All Messages as &Read"),
                                            mMainWidget,
