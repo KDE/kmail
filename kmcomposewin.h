@@ -548,12 +548,6 @@ public slots:
    */
    void addAttach(const KMMessagePart* msgPart);
 
-signals:
-  /**
-   * A message has been queued or saved in the drafts folder
-   */
-  void messageQueuedOrDrafted();
-
 protected:
   /**
    * Install grid management and header fields. If fields exist that

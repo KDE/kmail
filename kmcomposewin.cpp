@@ -302,7 +302,6 @@ KMComposeWin::~KMComposeWin()
   {
     mAutoDeleteMsg = FALSE;
     mFolder->addMsg(mMsg);
-    emit messageQueuedOrDrafted();
   }
   if (mAutoDeleteMsg) {
     delete mMsg;
@@ -4998,9 +4997,6 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!sentOk)
      return false;
-
-  if (saveInDrafts || !aSendNow)
-      emit messageQueuedOrDrafted();
 
   RecentAddresses::self( KMKernel::config() )->add( bcc() );
   RecentAddresses::self( KMKernel::config() )->add( cc() );

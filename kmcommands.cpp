@@ -532,11 +532,6 @@ void KMEditMsgCommand::execute()
 #endif
 
   KMComposeWin *win = new KMComposeWin();
-#if 0
-  // FIXME: Poor solution, won't work for multiple readerwins should use kmkernel as an observer
-  QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
-                    this, SLOT( slotMessageQueuedOrDrafted()) );
-#endif
   msg->setTransferInProgress(false); // From here on on, the composer owns the message.
   win->setMsg(msg, FALSE, TRUE);
   win->setFolder( parent );
