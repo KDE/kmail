@@ -39,25 +39,6 @@
     "This program is covered by the GPL.\n\n"
     "Please send bugreports to taferner@kde.org";
 */
-const char *aboutText =
-  "KMail [" KMAIL_VERSION "] by\n\n"
-  "Stefan Taferner <taferner@kde.org>,\n"
-  "Don Sanders <don@sanders.org>,\n"
-  "Waldo Bastian <bastian@kde.org>,\n"
-  "Andreas Gungl <a.gungl@gmx.de>,\n"
-  "Michael Haeckel <michael@haeckel.net>,\n"
-  "Lars Knoll <knoll@mpi-hd.mpg.de>,\n"
-  "J. Nick Koston <bdraco@darkorb.net>,\n"
-  "Daniel Naber <daniel.naber@t-online.de>,\n"
-  "Sven Radej <radej@kde.org>,\n"
-  "Espen Sand <espen@kde.org>,\n"
-  "George Staikos <staikos@kde.org>,\n"
-  "Mario Weilguni <mweilguni@sime.com>,\n"
-  "Robert D. Williams <rwilliams@kde.org>\n"
-  "Markus Wuebben <markus.wuebben@kde.org>\n";
-
-//static const char *description = I18N_NOOP("A KDE E-Mail client.");
-static const char *description = aboutText;
 
 static KCmdLineOptions kmoptions[] =
 {
@@ -194,14 +175,28 @@ int main(int argc, char *argv[])
   // a debugger. In gdb you can do this by typing "set args --nofork" before
   // typing "run".
 
-  KAboutData about("kmail", I18N_NOOP("KMail"),
+  KAboutData *about = new KAboutData("kmail", I18N_NOOP("KMail"),
                    KMAIL_VERSION,
-                   description,
+		   I18N_NOOP("A KDE E-Mail client."),
 		   KAboutData::License_GPL,
                    "(c) 1997-2000, The KMail developers",
 		   "http://kmail.kde.org");
+  about->addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "don@sanders.org" );
+  about->addAuthor( "Waldo Bastian", QString::null, "bastian@kde.org" );
+  about->addAuthor( "Andreas Gungl", QString::null, "a.gungl@gmx.de" );
+  about->addAuthor( "Michael Haeckel", QString::null, "michael@haeckel.net" );
+  about->addAuthor( "Lars Knoll", QString::null, "knoll@mpi-hd.mpg.de" );
+  about->addAuthor( "J. Nick Koston", QString::null, "bdraco@darkorb.net" );
+  about->addAuthor( "Daniel Naber", QString::null, "daniel.naber@t-online.de" );
+  about->addAuthor( "Sven Radej", QString::null, "radej@kde.org" );
+  about->addAuthor( "Espen Sand", QString::null, "espen@kde.org" );
+  about->addAuthor( "George Staikos", QString::null, "staikos@kde.org" );
+  about->addAuthor( "Stefan Taferner ", QString::null, "taferner@kde.org" );
+  about->addAuthor( "Mario Weilguni", QString::null, "mweilguni@sime.com" );
+  about->addAuthor( "Robert D. Williams", QString::null, "rwilliams@kde.org" );
+  about->addAuthor( "Markus Wuebben", QString::null, "markus.wuebben@kde.org" );
 
-  KCmdLineArgs::init(argc, argv, &about);
+  KCmdLineArgs::init(argc, argv, about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
 
   if (!KMailApplication::start())
