@@ -1,31 +1,31 @@
 /* XPM */
-/* Drawn  by Nico Schwiring and Mark Donohoe for the K Desktop Environment */
-/* See http://www.kde.org */
-static char*kmail[]={
+static char *magick[] = {
+/* columns rows colors chars-per-pixel */
 "16 16 9 1",
-"# c #000000",
-"g c #ff8000",
-"d c #c0c0c0",
-"e c #585858",
-"b c #ffffff",
-"f c #800000",
-"a c #ffa85a",
-"c c #ffdca8",
-". c None",
-".......#####....",
-"....##.#abcc#...",
-"...#db##aabcc#..",
-"...#dbbb##abcc#.",
-"..#bebbbd#aabbb#",
-"..#bebddb#facaa#",
-".#bbedbb#agfcaa#",
-".#bbebbb#aagff#.",
-"#deeebb#aaaaccc#",
-"#bbdbbb#aafacaa#",
-".#bdbb##aagfcaa#",
-".#bdbb#.#aagff#.",
-"..#db#...#aaccc#",
-"..#db#....#acaa#",
-"...##......#caa#",
-"............###."};
-
+"  c #000000",
+". c #595959",
+"X c #800000",
+"o c #ff8200",
+"O c #ffaa59",
+"+ c #ffdfaa",
+"@ c #c0c0c0",
+"# c #ffffff",
+"$ c None",
+/* pixels */
+"$$$$$$$     $$$$",
+"$$$$  $ O#++ $$$",
+"$$$ @#  OO#++ $$",
+"$$$ @###  O#++ $",
+"$$ #.###@ OO### ",
+"$$ #.#@@# XO+OO ",
+"$ ##.@## OoX+OO ",
+"$ ##.### OOoXX $",
+" @...## OOOO+++ ",
+" ##@### OOXO+OO ",
+"$ #@##  OOoX+OO ",
+"$ #@## $ OOoXX $",
+"$$ @# $$$ OO+++ ",
+"$$ @# $$$$ O+OO ",
+"$$$  $$$$$$ +OO ",
+"$$$$$$$$$$$$   $"
+};
