@@ -74,6 +74,7 @@ bool KMMsgBase::isMessage(void) const
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus)
 {
+  if (mStatus == aStatus) return;
   if (mParent) mParent->msgStatusChanged( mStatus, aStatus );
   mStatus = aStatus;
   mDirty = TRUE;
@@ -156,6 +157,7 @@ const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
 //-----------------------------------------------------------------------------
 void KMMsgBase::setDate(time_t aUnixTime)
 {
+  if (mDate == aUnixTime) return;
   mDate  = aUnixTime;
   mDirty = TRUE;
 }
