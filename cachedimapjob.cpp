@@ -560,6 +560,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
   }
 
   if( job->error() ) {
+    mErrorCode = job->error();
     mAccount->handleJobError( job, i18n( "Error while reading folder %1 on the server: " ).arg( (*it).parent->label() ) + '\n' );
     delete this;
     return;
