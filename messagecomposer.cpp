@@ -201,6 +201,14 @@ static inline int signingChainCertNearExpiryWarningThresholdInDays() {
  ...
 
  I recorded a KDExecutor script sending all of the above (David)
+
+ Further tests (which test opportunistic encryption):
+ 1. Send a message to a person with valid key but without encryption preference
+    and answer the question whether the message should be encrypted with Yes.
+ 2. Send a message to a person with valid key but without encryption preference
+    and answer the question whether the message should be encrypted with No.
+ 3. Send a message to a person with valid key and with encryption preference
+    "Encrypt whenever possible" (aka opportunistic encryption).
 */
 
 static QString mErrorProcessingStructuringInfo =
