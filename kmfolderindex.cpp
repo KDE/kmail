@@ -351,7 +351,7 @@ bool KMFolderIndex::readIndexHeader(int *gv)
             needs_update = false;
          }
       }
-      if (needs_update || mIndexSwapByteOrder)
+      if (needs_update || mIndexSwapByteOrder || (mIndexSizeOfLong != sizeof(long)))
 	setDirty( true );
       // Seek to end of header
       fseek(mIndexStream, endOfHeader, SEEK_SET );
