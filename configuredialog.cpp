@@ -2490,13 +2490,6 @@ void ConfigureDialog::slotDoApply( bool everything )
   KMScoringManager::globalScoringManager()->save();
 
   //
-  // Always
-  //
-  KConfigGroupSaver saver(config, "General");
-  config->writeEntry("first-start", false);
-  config->sync();
-
-  //
   // Make other components read the new settings
   //
   KMMessage::readConfig();
