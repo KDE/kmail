@@ -21,6 +21,7 @@
 #include <assert.h>
 #include <unistd.h>
 
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -48,7 +49,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1400
+#define INDEX_VERSION 1503
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -727,7 +728,7 @@ void KMFolder::removeMsg(int idx)
       debug("KMFolder::removeMsg() : idx < 0\n");
       return;
     }
-  QString msgId = mMsgList[idx]->msgId();
+  QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
   mb = mMsgList.take(idx);
   mDirty = TRUE;
 
@@ -738,7 +739,7 @@ void KMFolder::removeMsg(int idx)
   }
 
   if (!mQuiet) 
-    emit msgRemoved(idx, msgId);
+    emit msgRemoved(idx, msgIdMD5);
   else
     mChanged = TRUE;
 }
@@ -757,7 +758,7 @@ KMMessage* KMFolder::take(int idx)
   if (!mb) return NULL;
   if (!mb->isMessage()) readMsg(idx);
 
-  QString msgId = mMsgList[idx]->msgId();
+  QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
   msg = (KMMessage*)mMsgList.take(idx);
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew) {
@@ -768,7 +769,7 @@ KMMessage* KMFolder::take(int idx)
   mDirty = TRUE;
   needsCompact=true; // message is taken from here - needs to be compacted
   if (!mQuiet)
-    emit msgRemoved(idx,msgId);
+    emit msgRemoved(idx,msgIdMD5);
   else
     mChanged = TRUE;
 

@@ -117,9 +117,9 @@ public:
       setText( mPaintInfo->flagCol, " " + QString( QChar( (char)flag )));
 
     if (mFolder == kernel->outboxFolder() || mFolder == kernel->sentFolder())
-      fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
+      fromStr = mMsgBase->toStrip();
     else
-      fromStr = KMMessage::stripEmailAddr(mMsgBase->from());
+      fromStr = mMsgBase->fromStrip();
 
     if (fromStr.isEmpty()) fromStr = i18n("Unknown");
     setText( mPaintInfo->senderCol, fromStr.stripWhiteSpace() );
@@ -677,10 +677,10 @@ void KMHeaders::msgAdded(int id)
   assert(mb != NULL); // otherwise using count() above is wrong
 
   if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
-    QString msgId = mb->msgId();
+    QString msgId = mb->msgIdMD5();
     if (msgId.isNull())
       msgId = "";
-    QString replyToId = mb->replyToId();
+    QString replyToId = mb->replyToIdMD5();
 
     if (replyToId.isEmpty() || !mIdTree[replyToId])
       hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
@@ -1435,7 +1435,7 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
   KMMsgBase* mb;
   mb = mFolder->getMsgBase( i );
   assert( mb );
-  QString msgId = mb->msgId();
+  QString msgId = mb->msgIdMD5();
   if (msgId.isNull())
     msgId = "";
   mIdTree.replace( msgId, parent );
@@ -1535,7 +1535,7 @@ void KMHeaders::updateMessageList(void)
     for (i=0; i<mFolder->count(); i++) {
       mb = mFolder->getMsgBase(i);
       assert(mb);
-      QString msgId = mb->msgId();
+      QString msgId = mb->msgIdMD5();
       if (msgId.isEmpty()) {
 	// pathological case, message with no id
 	debug( "Message without id detected" );
@@ -1557,9 +1557,11 @@ void KMHeaders::updateMessageList(void)
     for (i=0; i<mFolder->count(); i++) {
       mb = mFolder->getMsgBase(i);
       assert(mb);
-      QString msgId = mb->msgId();
-      QString replyToId = mb->replyToId();
+      QString msgId = mb->msgIdMD5();
+      QString replyToId = mb->replyToIdMD5();
       if (replyToId.isEmpty())
+	continue;
+      if (replyToId == msgId) //xxx
 	continue;
       
       QValueList< int > *parentList = mTree[replyToId];
@@ -1582,7 +1584,7 @@ void KMHeaders::updateMessageList(void)
     for (i=0; i<mFolder->count(); i++) {
       mb = mFolder->getMsgBase(i);
       assert(mb != NULL); // otherwise using count() above is wrong
-      QString msgId = mb->msgId();
+      QString msgId = mb->msgIdMD5();
       if (msgId.isNull())
 	msgId = "";
       assert(mTreeToplevel[msgId]);
@@ -1594,7 +1596,13 @@ void KMHeaders::updateMessageList(void)
     }
 
     for (i=0; i<mFolder->count(); i++)
-      assert(mItems[i] != 0);
+      if (mItems[i] == 0) {
+	// It turns out this can happen when different messages have the same ids;
+	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+	mItems[i] = hi;	
+	debug( QString("%1 ").arg(i) + mFolder->getMsgBase(i)->subject() + " " +  mFolder->getMsgBase(i)->fromStrip() );
+	//	assert(mItems[i] != 0);
+      }
 
     mTree.clear();
     mTreeSeen.clear();

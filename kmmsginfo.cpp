@@ -2,6 +2,7 @@
 
 #include "kmmsginfo.h"
 #include "kmmessage.h"
+#include "kmmsgpart.h" // for encode
 
 #include <string.h>
 #include <stdio.h>
@@ -13,7 +14,7 @@
 
 //-----------------------------------------------------------------------------
 KMMsgInfo::KMMsgInfo(KMFolder* p): 
-  KMMsgInfoInherited(p), mSubject(), mFrom(), mTo()
+  KMMsgInfoInherited(p), mSubject(), mFromStrip(), mToStrip()
 {
 }
 
@@ -29,10 +30,10 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 {
   KMMsgInfoInherited::assign(&other);
   mSubject = other.mSubject.copy();
-  mFrom = other.mFrom.copy();
-  mTo = other.mTo.copy();
-  mReplyToId = other.replyToId().copy();
-  mMsgId = other.msgId().copy();
+  mFromStrip = other.mFromStrip.copy();
+  mToStrip = other.mToStrip.copy();
+  mReplyToIdMD5 = other.replyToIdMD5().copy();
+  mMsgIdMD5 = other.msgIdMD5().copy();
   return *this;
 }
 
@@ -42,32 +43,34 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 {
   KMMsgInfoInherited::assign(&msg);
   mSubject = msg.subject().copy();
-  mFrom = msg.from().copy();
-  mTo = msg.to().copy();
-  mReplyToId = msg.replyToId().copy();
-  mMsgId = msg.msgId().copy();
+  mFromStrip = msg.fromStrip().copy();
+  mToStrip = msg.toStrip().copy();
+  mReplyToIdMD5 = msg.replyToIdMD5().copy();
+  mMsgIdMD5 = msg.msgIdMD5().copy();
   return *this;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::init(const QString aSubject, const QString aFrom,
-                     const QString aTo, time_t aDate,
-		     KMMsgStatus aStatus, const QString aXMark, 
-		     const QString replyToId, const QString msgId,
+void KMMsgInfo::init(const QString& aSubject, const QString& aFrom,
+                     const QString& aTo, time_t aDate,
+		     KMMsgStatus aStatus, const QString& aXMark, 
+		     const QString& replyToId, const QString& msgId,
 		     unsigned long aFolderOffset, unsigned long aMsgSize)
 {
-  mSubject = decodeRFC1522String(aSubject).copy();
-  mFrom    = decodeRFC1522String(aFrom).copy();
-  mTo      = decodeRFC1522String(aTo).copy();
-  mDate    = aDate;
-  mXMark   = aXMark;
-  mReplyToId = replyToId;
-  mMsgId   = msgId;
-  mStatus  = aStatus;
-  mMsgSize = aMsgSize;
+  mSubject   = decodeRFC1522String(aSubject).copy();
+  mFromStrip = KMMessage::stripEmailAddr( decodeRFC1522String(aFrom) );
+  mToStrip   = KMMessage::stripEmailAddr( decodeRFC1522String(aTo) );
+  mDate      = aDate;
+  mXMark     = aXMark;
+  //  mReplyToIdMD5 =  KMMessagePart::encodeBase64( decodeRFC1522String(replyToId) );
+  mReplyToIdMD5 =  KMMessagePart::encodeBase64( replyToId );
+  //  mMsgIdMD5  = KMMessagePart::encodeBase64( decodeRFC1522String(msgId) );
+  mMsgIdMD5  = KMMessagePart::encodeBase64( msgId );
+  mStatus    = aStatus;
+  mMsgSize   = aMsgSize;
   mFolderOffset = aFolderOffset;
-  mDirty   = FALSE;
+  mDirty     = FALSE;
 }
 
 
@@ -79,16 +82,16 @@ const QString KMMsgInfo::subject(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::from(void) const
+const QString KMMsgInfo::fromStrip(void) const
 {
-  return mFrom;
+  return mFromStrip;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::to(void) const
+const QString KMMsgInfo::toStrip(void) const
 {
-  return mTo;
+  return mToStrip;
 }
 
 
@@ -100,21 +103,21 @@ const QString KMMsgInfo::xmark(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::replyToId(void) const
+const QString KMMsgInfo::replyToIdMD5(void) const
 {
-  return mReplyToId;
+  return mReplyToIdMD5;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::msgId(void) const
+const QString KMMsgInfo::msgIdMD5(void) const
 {
-  return mMsgId;
+  return mMsgIdMD5;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setSubject(const QString aSubject)
+void KMMsgInfo::setSubject(const QString& aSubject)
 {
   mSubject = aSubject.copy();
   mDirty = TRUE;  
@@ -122,15 +125,7 @@ void KMMsgInfo::setSubject(const QString aSubject)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setFrom(const QString aFrom)
-{
-  mFrom = aFrom.copy();
-  mDirty = TRUE;  
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMsgInfo::setXMark(const QString aXMark)
+void KMMsgInfo::setXMark(const QString& aXMark)
 {
   mXMark = aXMark.copy();
   mDirty = TRUE;  
@@ -138,23 +133,23 @@ void KMMsgInfo::setXMark(const QString aXMark)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setReplyToId(const QString aReplyToId)
+void KMMsgInfo::setReplyToIdMD5(const QString& aReplyToIdMD5)
 {
-  mReplyToId = aReplyToId.copy();
+  mReplyToIdMD5 = aReplyToIdMD5.copy();
   mDirty = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setMsgId(const QString aMsgId)
+void KMMsgInfo::setMsgIdMD5(const QString& aMsgIdMD5)
 {
-  mMsgId = aMsgId.copy();
+  mMsgIdMD5 = aMsgIdMD5.copy();
   mDirty = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::fromIndexString(const QString str)
+void KMMsgInfo::fromIndexString(const QString& str)
 {
   char statusCh;
   unsigned long ldate;
@@ -166,9 +161,9 @@ void KMMsgInfo::fromIndexString(const QString str)
   mStatus  = (KMMsgStatus)statusCh;
   mXMark   = str.mid(33, 3).stripWhiteSpace();
   mSubject = str.mid(37, 100).stripWhiteSpace();
-  mFrom    = str.mid(138, 100).stripWhiteSpace();
-  mTo      = str.mid(239, 100).stripWhiteSpace();
-  mReplyToId = str.mid(340, 100).stripWhiteSpace();
-  mMsgId = str.mid(441, 100).stripWhiteSpace();
-  mDirty   = FALSE;
+  mFromStrip = str.mid(138, 50).stripWhiteSpace();
+  mToStrip = str.mid(189, 50).stripWhiteSpace();
+  mReplyToIdMD5 = str.mid(240, 22).stripWhiteSpace();
+  mMsgIdMD5 = str.mid(263, 22).stripWhiteSpace();
+  mDirty = FALSE;
 }

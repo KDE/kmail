@@ -26,7 +26,8 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
-		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp
+		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
+		md5.c
 
 METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmheaders.moc \

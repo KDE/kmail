@@ -194,14 +194,14 @@ const QString KMMsgBase::asIndexString(void) const
 
   QString a((const char*)decodeQuotedPrintableString(subject()));
   a.truncate(100);
-  QString b((const char*)decodeQuotedPrintableString(from()));
-  b.truncate(100);
-  QString c((const char*)decodeQuotedPrintableString(to()));
-  c.truncate(100);
-  QString d((const char*)decodeQuotedPrintableString(replyToId()));
-  d.truncate(100);
-  QString e((const char*)decodeQuotedPrintableString(msgId()));
-  e.truncate(100);
+  QString b((const char*)decodeQuotedPrintableString(fromStrip()));
+  b.truncate(50);
+  QString c((const char*)decodeQuotedPrintableString(toStrip()));
+  c.truncate(50);
+  QString d((const char*)replyToIdMD5());
+  d.truncate(22);
+  QString e((const char*)msgIdMD5());
+  e.truncate(22);
 
   // don't forget to change indexStringLength() below !!
   str.sprintf("%c %-.9lu %-.9lu %-.10lu %-3.3s ",
@@ -211,20 +211,20 @@ const QString KMMsgBase::asIndexString(void) const
     debug( "Invalid length " + str );
   str += a.rightJustify( 100, ' ' );
   str += " ";
-  str += b.rightJustify( 100, ' ' );
+  str += b.rightJustify( 50, ' ' );
   str += " ";
-  str += c.rightJustify( 100, ' ' );
+  str += c.rightJustify( 50, ' ' );
   str += " ";
-  str += d.rightJustify( 100, ' ' );
+  str += d.rightJustify( 22, ' ' );
   str += " ";
-  str += e.rightJustify( 100, ' ' );
+  str += e.rightJustify( 22, ' ' );
 
   len = str.length();
   for (i=0; i<len; i++)
     if (str[i] < ' ' && str[i] >= 0)
       str[i] = ' ';
 
-  if (str.length() != 541) {
+  if (str.length() != 285) {
     debug( QString( "Error invalid index entry %1").arg(str.length()) );
     debug( str );
   }
@@ -238,78 +238,13 @@ int KMMsgBase::indexStringLength(void)
   //return 237;
   //  return 338; //sven (+ 100 chars to + one space, right?
   //  return 339; //sanders (use 10 digits for the date we need this in 2001!)
-  return 541; //sanders include Reply-To and Message-Id for threading
+  //  return 541; //sanders include Reply-To and Message-Id for threading
+  return 285; // sanders strip from and to and use MD5 on Ids
 }
 
 
 //-----------------------------------------------------------------------------
-int KMMsgBase::compareByIndex(const KMMsgBase* other) const
-{
-  return (mFolderOffset - other->mFolderOffset);
-}
-
-
-//-----------------------------------------------------------------------------
-int KMMsgBase::compareBySubject(const KMMsgBase* other) const
-{
-  //const char *subjStr, *otherSubjStr;
-  bool hasKeywd, otherHasKeywd;
-  int rc;
-
-  QString subjStr = skipKeyword(subject(), ':', &hasKeywd);
-  QString otherSubjStr = skipKeyword(other->subject(), ':', &otherHasKeywd);
-
-  rc = stricmp(subjStr, otherSubjStr);
-  if (rc) return rc;
-
-  // If both are equal return the one with a keyword (Re: / Fwd: /...)
-  // at the beginning as the larger one.
-  return (hasKeywd - otherHasKeywd);
-}
-
-
-//-----------------------------------------------------------------------------
-int KMMsgBase::compareByStatus(const KMMsgBase* other) const
-{
-  KMMsgStatus stat;
-  int i;
-
-  for (i=NUM_STATUSLIST-1; i>0; i--)
-  {
-    stat = sStatusList[i];
-    if (mStatus==stat || other->mStatus==stat) break;
-  }
-
-  return ((mStatus==stat) - (other->mStatus==stat));
-}
-
-
-//-----------------------------------------------------------------------------
-int KMMsgBase::compareByDate(const KMMsgBase* other) const
-{
-  return (mDate - other->mDate);
-}
-
-
-//-----------------------------------------------------------------------------
-int KMMsgBase::compareByFrom(const KMMsgBase* other) const
-{
-  const char *f, *fo;
-
-  f = from();
-  fo = other->from();
-
-  if (!f || !fo) return ((!fo) - (!f));
-
-  while (*f && *f<'A') f++;
-  while (*fo && *fo<'A') fo++;
-
-  return stricmp(f, fo);
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMMsgBase::skipKeyword(const QString aStr, char sepChar,
+QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
 				   bool* hasKeyword)
 {
   int i, maxChars=3;
@@ -338,7 +273,7 @@ QString KMMsgBase::skipKeyword(const QString aStr, char sepChar,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeRFC1522String(const QString _str)
+const QString KMMsgBase::decodeRFC1522String(const QString& _str)
 {
   QCString aStr = _str.ascii();
   QCString result;
@@ -425,7 +360,7 @@ const QString KMMsgBase::decodeRFC1522String(const QString _str)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
+const QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
 {
 #ifdef BROKEN
   static QString result;
@@ -475,7 +410,7 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeQuotedPrintable(const QString aStr)
+const QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
 {
   DwString dwsrc(aStr.data());
   DwString dwdest;
@@ -486,7 +421,7 @@ const QString KMMsgBase::decodeQuotedPrintable(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::encodeQuotedPrintable(const QString aStr)
+const QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
 {
   DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;
@@ -499,7 +434,7 @@ const QString KMMsgBase::encodeQuotedPrintable(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeBase64(const QString aStr)
+const QString KMMsgBase::decodeBase64(const QString& aStr)
 {
   DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;
@@ -512,7 +447,7 @@ const QString KMMsgBase::decodeBase64(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::encodeBase64(const QString aStr)
+const QString KMMsgBase::encodeBase64(const QString& aStr)
 {
   DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;

@@ -58,10 +58,10 @@ public:
 
   /** Important header fields of the message that are also kept in the index. */
   virtual const QString subject(void) const = 0;
-  virtual const QString from(void) const = 0;
-  virtual const QString to(void) const = 0;
-  virtual const QString replyToId(void) const = 0;
-  virtual const QString msgId(void) const = 0;
+  virtual const QString fromStrip(void) const = 0;
+  virtual const QString toStrip(void) const = 0;
+  virtual const QString replyToIdMD5(void) const = 0;
+  virtual const QString msgIdMD5(void) const = 0;
   virtual time_t date(void) const;
   virtual const QString dateStr(void) const;
   virtual const QString xmark(void) const = 0;
@@ -77,11 +77,8 @@ public:
   void setDirty(bool d) { mDirty=d; }
 
   /** Set subject/from/date and xmark. */
-  virtual void setSubject(const QString) = 0;
-  virtual void setFrom(const QString) = 0;
-  virtual void setXMark(const QString) = 0;
-  virtual void setReplyToId(const QString) = 0;
-  virtual void setMsgId(const QString) = 0;
+  virtual void setSubject(const QString&) = 0;
+  virtual void setXMark(const QString&) = 0;
 
   /** Return contents as index string. This string is of fixed size
     that can be read with indexStringLength(). */
@@ -98,26 +95,11 @@ public:
   unsigned long msgSize(void) const { return mMsgSize; }
   void setMsgSize(unsigned long sz) { mMsgSize = sz; }
 
-  /** Compare with other message by Status. Returns -1/0/1 like strcmp.*/
-  int compareByStatus(const KMMsgBase* other) const;
-
-  /** Compare with other message by Subject. Returns -1/0/1 like strcmp.*/
-  int compareBySubject(const KMMsgBase* other) const;
-
-  /** Compare with other message by Date. Returns -1/0/1 like strcmp.*/
-  int compareByDate(const KMMsgBase* other) const;
-
-  /** Compare with other message by From. Returns -1/0/1 like strcmp.*/
-  int compareByFrom(const KMMsgBase* other) const;
-
-  /** Compare with other message by position in folder. Returns -1/0/1 like strcmp.*/
-  int compareByIndex(const KMMsgBase* other) const;
-
   /** Skip leading keyword if keyword has given character at it's end
    * (e.g. ':' or ',') and skip the then following blanks (if any) too.
    * If keywordFound is specified it will be TRUE if a keyword was skipped
    * and FALSE otherwise. */
-  static QString skipKeyword(const QString str, char sepChar=':',
+  static QString skipKeyword(const QString& str, char sepChar=':',
 				 bool* keywordFound=NULL);
 
   /** Copy all values from other to this object. */
@@ -127,23 +109,23 @@ public:
   KMMsgBase& operator=(const KMMsgBase& other);
 
   /** En-/decode given string to/from quoted-printable. */
-  static const QString decodeQuotedPrintable(const QString str);
-  static const QString encodeQuotedPrintable(const QString str);
+  static const QString decodeQuotedPrintable(const QString& str);
+  static const QString encodeQuotedPrintable(const QString& str);
 
   /** Decode given string from possibly quoted-printable encoded
     string. These strings contain parts of the type "=?iso8859-1?Q?...?=".
     These parts are not correct decoded by decodeQuotedPrintable().
     Use this method if you want to ensure that a given header field
     is readable. */
-  static const QString decodeQuotedPrintableString(const QString str);
+  static const QString decodeQuotedPrintableString(const QString& str);
 
   /** En/-decode given string to/from Base64. */
-  static const QString decodeBase64(const QString str);
-  static const QString encodeBase64(const QString str);
+  static const QString decodeBase64(const QString& str);
+  static const QString encodeBase64(const QString& str);
 
   /** This function handles both encodings described in RFC1522:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static const QString decodeRFC1522String(const QString aStr);
+  static const QString decodeRFC1522String(const QString& aStr);
 
 protected:
   KMFolder* mParent;

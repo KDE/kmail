@@ -10,12 +10,14 @@
 #include <kglobal.h>
 #include <kstddirs.h>
 #include <kiconloader.h>
+extern "C" {
+#include "md5.h"
+};
 
 #include <mimelib/enum.h>
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/utility.h>
-
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart() : 
@@ -59,6 +61,33 @@ void KMMessagePart::setBody(const QString aStr)
   else mBodySize = -1;
 }
 
+//-----------------------------------------------------------------------------
+// Returns Base64 encoded MD5 digest of a QString
+QString KMMessagePart::encodeBase64(const QString& aStr)
+{
+  char *c = aStr.data();
+  unsigned char digest[16];
+  Bin_MD5Context ctx;
+  DwString dwResult, dwSrc;
+  QString result;
+  int len;
+
+  if (aStr.isEmpty())
+    return QString();
+
+  // Generate digest
+  Bin_MD5Init(&ctx);
+  Bin_MD5Update(&ctx,
+		(unsigned char *)c,
+		(unsigned)strlen(c));
+  Bin_MD5Final(digest, &ctx);
+  dwSrc = DwString((const char*)digest, 16);
+  DwEncodeBase64(dwSrc, dwResult);
+  len = dwResult.size();
+  result = QString( dwResult.c_str() );
+  result.truncate(22);
+  return result;
+}
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncoded(const QByteArray& aStr)

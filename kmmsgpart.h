@@ -11,6 +11,8 @@
 class KMMessagePart
 {
 public:
+  static QString encodeBase64(const QString& aStr);
+
   KMMessagePart();
   virtual ~KMMessagePart();
 
