@@ -1512,19 +1512,23 @@ void KMReaderWin::slotAtmOpen()
   } else if( choice == KMessageBox::No ) {	// Open
     if ( offer ) {
       // There's a default service for this kind of file - use it
-      KURL::List *lst;
-      lst = new KURL::List(fileName);
-      KRun::run(*offer, *lst);
+      KURL::List lst;
+      KURL url;
+      url.setPath(fileName);
+      lst.append(url);
+      KRun::run(*offer, lst);
     } else {
       // There's no know service that handles this type of file, so open
       // the "Open with..." dialog.
       KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
-      KURL::List *lst;
-      lst = new KURL::List(fileName);
-      openhandler->displayOpenWithDialog(*lst);
+      KURL::List lst;
+      KURL url;
+      url.setPath(fileName);
+      lst.append(url);
+      openhandler->displayOpenWithDialog(lst);
     }
   } else {					// Cancel
-    kdDebug() << "Cancelled opening attachment" << endl;
+    kdDebug() << "Canceled opening attachment" << endl;
   }
 
 }
@@ -1542,9 +1546,11 @@ void KMReaderWin::slotAtmOpenWith()
   QString fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
 
   KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
-  KURL::List *lst;
-  lst = new KURL::List(fileName);
-  openhandler->displayOpenWithDialog(*lst);
+  KURL::List lst;
+  KURL url;
+  url.setPath(fileName);
+  lst.append(url);
+  openhandler->displayOpenWithDialog(lst);
 }
 
 
