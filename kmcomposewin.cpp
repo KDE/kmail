@@ -1397,7 +1397,8 @@ bool KMComposeWin::applyChanges(void)
 
     // create temporary bodyPart for editor text
     // (and for all attachments, if mail is to be singed and/or encrypted)
-    bool earlyAddAttachments = ((0 < mAtmList.count()) && ( doSign || doEncrypt ));
+    bool earlyAddAttachments =
+      ((0 < mAtmList.count()) && ( doSign || doEncrypt ) && cryptPlug );
     KMMessagePart oldBodyPart;
     oldBodyPart.setTypeStr(   earlyAddAttachments ? "multipart" : "text" );
     oldBodyPart.setSubtypeStr(earlyAddAttachments ? "mixed"     : "plain");
@@ -1530,11 +1531,7 @@ bool KMComposeWin::applyChanges(void)
       else {
         // we try calling the *old* build-in code for OpenPGP clearsigning
         Kpgp::Block block;
-	// (mutz) don't use the constructed body part, but only the
-	//        text. It's an ugly hack, but makes Kpgp usable again
-	//        for me. This screams for a better solution, though. ###
-	// block.setText( encodedBody );
-        block.setText( breakLinesAndApplyCodec() );
+        block.setText( encodedBody );
 
         // get PGP user id for the chosen identity
         const KMIdentity & ident =
