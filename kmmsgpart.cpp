@@ -11,6 +11,7 @@
 #include "kmkernel.h"
 #include "globalsettings.h"
 
+#include <kasciistringtools.h>
 #include <kmime_charfreq.h>
 #include <kmime_codecs.h>
 #include <mimelib/enum.h>
@@ -39,8 +40,8 @@ KMMessagePart::KMMessagePart( QDataStream & stream )
   stream >> mOriginalContentTypeStr >> mName >> mContentDescription
     >> mContentDisposition >> mCte >> size >> mPartSpecifier;
 
-  mContentDisposition = mContentDisposition.lower();
-  mOriginalContentTypeStr = mOriginalContentTypeStr.upper();
+  KPIM::kAsciiToLower( mContentDisposition.data() );
+  KPIM::kAsciiToUpper( mOriginalContentTypeStr.data() );
 
   // set the type
   int sep = mOriginalContentTypeStr.find('/');
@@ -379,12 +380,14 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::iconName(const QString& mimeType) const
+QString KMMessagePart::iconName() const
 {
-  QString fileName = KMimeType::mimeType(mimeType.isEmpty() ?
-    (mType + "/" + mSubtype).lower() : mimeType.lower())->icon(QString::null,FALSE);
-  fileName = KGlobal::instance()->iconLoader()->iconPath( fileName,
-    KIcon::Desktop );
+  QCString mimeType( mType + "/" + mSubtype );
+  KPIM::kAsciiToLower( mimeType.data() );
+  QString fileName =
+    KMimeType::mimeType( mimeType )->icon( QString::null, false );
+  fileName =
+    KGlobal::instance()->iconLoader()->iconPath( fileName, KIcon::Desktop );
   return fileName;
 }
 
