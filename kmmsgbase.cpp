@@ -69,8 +69,8 @@ using KMail::MessageProperty;
 
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
-  : mParent( aParentFolder ), mDirty( false), mIndexOffset( 0 ),
-    mIndexLength( 0 ), mEnableUndo( false ), mStatus( KMMsgStatusUnknown )
+  : mParent( aParentFolder ), mIndexOffset( 0 ),
+    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), mStatus( KMMsgStatusUnknown )
 {
 }
 

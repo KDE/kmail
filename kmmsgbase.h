@@ -413,9 +413,9 @@ public:
 
 protected:
   KMFolder* mParent;
-  bool mDirty;
   off_t mIndexOffset;
   short mIndexLength;
+  bool mDirty;
   bool mEnableUndo;
   mutable KMMsgStatus mStatus;
   // This is kept to provide an upgrade path from the the old single status
