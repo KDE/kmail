@@ -623,6 +623,7 @@ void KMFolder::readIndex()
   mMsgList.clear();
   if (!readIndexHeader()) return;
 
+  unreadMsgs = 0;
   mDirty = FALSE;
   mHeaderOffset = ftell(mIndexStream);
 
@@ -648,6 +649,9 @@ void KMFolder::readIndex()
       mi->setDirty(FALSE);
     }
 #endif
+    if ((mi->status() == KMMsgStatusNew) ||
+	(mi->status() == KMMsgStatusUnread))
+      ++unreadMsgs;
     mMsgList.append(mi);
   }
 }
