@@ -161,9 +161,6 @@ void KMAcctImap::displayProgress()
   {
     mProgressEnabled = !mapJobData.isEmpty();
     KMBroadcastStatus::instance()->setStatusProgressEnable( mProgressEnabled );
-    if (!mProgressEnabled)
-      KMBroadcastStatus::instance()->setStatusMsg(
-        i18n("Transmission completed.") );
   }
   int total = 0, done = 0;
   for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
@@ -320,8 +317,6 @@ void KMAcctImap::reallyGetFolder(KMFolderTreeItem * fti)
           this, SLOT(slotListFolderEntries(KIO::Job *,
           const KIO::UDSEntryList &)));
   displayProgress();
-  KMBroadcastStatus::instance()->setStatusMsg(
-    i18n("Preparing transmission from %1...").arg(url.host()));
 }
 
 
@@ -687,6 +682,7 @@ void KMAcctImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 //-----------------------------------------------------------------------------
 void KMImapJob::ignoreJobsForMessage(KMMessage *msg)
 {
+  if (msg->transferInProgress()) return;
   KMAcctImap *account;
   if (!msg->parent() || !(account = msg->parent()->account())) return;
   for (KMImapJob *it = account->mJobList.first(); it;

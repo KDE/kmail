@@ -574,7 +574,10 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     {
       // WABA: Make sure that no KMReaderWin is still using a msg
       // from this folder, since it's msg's are about to be deleted.
-      emit selected(0);
+      if (mPrevCurrent)
+      {
+      }
+      highlightMessage(0);
       mFolder->markNewAsUnread();
       writeFolderConfig();
       disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
@@ -1756,16 +1759,6 @@ void KMHeaders::makeHeaderVisible()
 void KMHeaders::highlightMessage(QListViewItem* lvi)
 {
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
-  if (!item)
-  {
-    emit selected( NULL ); return;
-  }
-  int idx = item->msgId();
-
-  mOwner->statusMsg("");
-  if (idx >= 0) setMsgRead(idx);
-  mItems[idx]->irefresh();
-  mItems[idx]->repaint();
   if (lvi != mPrevCurrent) {
     if (mPrevCurrent)
     {
@@ -1776,6 +1769,16 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
     }
     mPrevCurrent = item;
   }
+  if (!item)
+  {
+    emit selected( NULL ); return;
+  }
+
+  int idx = item->msgId();
+  mOwner->statusMsg("");
+  if (idx >= 0) setMsgRead(idx);
+  mItems[idx]->irefresh();
+  mItems[idx]->repaint();
   emit selected(mFolder->getMsg(idx));
   setFolderInfoStatus();
 }
