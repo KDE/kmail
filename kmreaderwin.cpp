@@ -2848,6 +2848,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   s += "\n#######\n#######";
 kdDebug(5006) << s << endl;
 
+  mColorBar->setEraseColor( QColor( "white" ) );
+  mColorBar->setText("");
+  
   if( !onlyProcessHeaders )
     removeTempFiles();
   KMMessagePart msgPart;
@@ -2987,8 +2990,9 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   // store encrypted/signed status information in the KMMessage
   //  - this can only be done *after* calling parseObjectTree()
   KMMsgEncryptionState encryptionState = mRootNode->overallEncryptionState();
+  KMMsgSignatureState  signatureState  = mRootNode->overallSignatureState();
   aMsg->setEncryptionState( encryptionState );
-  aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
+  aMsg->setSignatureState(  signatureState  );
 
   bool emitReplaceMsgByUnencryptedVersion = false;
 
@@ -3091,6 +3095,16 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
                       (DwMime::kTypeApplication == rootNodeCntType) ||
                       (DwMime::kTypeMessage     == rootNodeCntType) ||
                       (DwMime::kTypeModel       == rootNodeCntType) );
+    
+    if( mColorBar->text().isEmpty() ) {
+      if(    (KMMsgFullyEncrypted     == encryptionState)
+          || (KMMsgPartiallyEncrypted == encryptionState)
+          || (KMMsgFullySigned        == signatureState)
+          || (KMMsgPartiallySigned    == signatureState) ){
+        mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : cCBpgp );
+        mColorBar->setText(i18n("\nS\nE\nC\nU\nR\nE\n \nM\nI\nM\nE\n \nM\nE\nS\nS\nA\nG\nE"));
+      }    
+    }
   }
 }
 
