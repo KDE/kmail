@@ -52,13 +52,21 @@ void KMDict::clear()
 
 //-----------------------------------------------------------------------------
 
-void KMDict::replace(long key, KMDictItem *item)
+void KMDict::replace( long key, KMDictItem *item )
+{
+  insert( key, item );
+  removeFollowing( item, key );           // remove other items with same key
+}
+
+//-----------------------------------------------------------------------------
+
+
+void KMDict::insert( long key, KMDictItem *item )
 {
   item->key = key;
   int idx = (unsigned long)key % mSize; // insert in
   item->next = mVecs[idx];              // appropriate
   mVecs[idx] = item;                    // column
-  removeFollowing(item, key);           // remove other items with same key
 }
 
 //-----------------------------------------------------------------------------

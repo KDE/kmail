@@ -183,14 +183,10 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
     folder->setDirty( true ); // rewrite id file
   }
 
-  // Should not happen, indicates id file corruption
-  while (dict->find((long)msn)) {
-    msn = getNextMsgSerNum();
-    folder->setDirty( true ); // rewrite id file
-  }
-
+  // Insert into the dict. Don't use dict->replace() as we _know_
+  // there is no entry with the same msn, we just made sure.
   KMMsgDictEntry *entry = new KMMsgDictEntry(folder->folder(), index);
-  dict->replace((long)msn, entry);
+  dict->insert((long)msn, entry);
 
   KMMsgDictREntry *rentry = folder->rDict();
   if (!rentry) {
@@ -365,8 +361,10 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
     //if (!msn)
       //kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
 
+    // Insert into the dict. Don't use dict->replace() as we _know_
+    // there is no entry with the same msn, we just made sure.
     KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
-    dict->replace((long)msn, entry);
+    dict->insert((long)msn, entry);
     if (msn >= nextMsgSerNum)
       nextMsgSerNum = msn + 1;
 

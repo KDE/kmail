@@ -33,7 +33,10 @@ public:
   
   /** Inserts an item, replacing old ones with the same key. */
   void replace(long key, KMDictItem *item);
-  
+ 
+  /** Inserts an item without replacing ones with the same key. */
+  void insert(long key, KMDictItem *item);
+ 
   /** Removes an item. */
   void remove(long key);
   
