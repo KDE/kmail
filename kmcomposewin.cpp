@@ -601,7 +601,12 @@ void KMComposeWin::setupToolBar(void)
   mToolBar->insertButton(loader->loadIcon("pub_key_red.xpm"), mBtnIdEncrypt,
 			 TRUE, i18n("encrypt message"));
   mToolBar->setToggle(mBtnIdEncrypt);
-
+  // these buttons should only be enabled, if pgp is actually installed
+  if(!Kpgp::getKpgp()->havePGP())
+  {
+    mToolBar->setItemEnabled(mBtnIdSign, false);
+    mToolBar->setItemEnabled(mBtnIdEncrypt, false);
+  }
   addToolBar(mToolBar);
 }
 
@@ -936,21 +941,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
       receiver = _to.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
       if (!receiver.isEmpty())
       {
-	// check if we have a public key for the receiver
-	if(!pgp->havePublicKey(receiver))
-	{
-	  kbp->idle();
-	  warning(i18n("public key for %s not found.\n"
-		       "This person will not be able to " 
-		       "decrypt the message."),
-		  (const char *)receiver);
-	  kbp->busy();
-	} 
-	else 
-	{
-	  debug("encrypting for %s",(const char *)receiver);
-	  persons.append(receiver);
-	}
+	persons.append(receiver);
       }
       lastindex = index;
     }
@@ -961,8 +952,8 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   }
 
   // in case of an error we end up here
-  warning(i18n("Error during PGP:") + QString("\n") + 
-	  pgp->lastErrorMsg());
+  //warning(i18n("Error during PGP:") + QString("\n") + 
+  //	  pgp->lastErrorMsg());
 
   return 0;
 }
@@ -1508,7 +1499,7 @@ void KMComposeWin::doSend(int aSendNow)
   bool sentOk;
 
   kbp->busy();
-  applyChanges();
+  //applyChanges();  // is called twice otherwise. Lars
   sentOk = (applyChanges() && msgSender->send(mMsg, aSendNow));
   kbp->idle();
 

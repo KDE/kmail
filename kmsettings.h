@@ -17,7 +17,7 @@ class QPushButton;
 class QComboBox;
 class QFileDialog;
 class QLabel;
-class Kpgp;
+class KpgpConfig;
 
 class KMSettings : public QTabDialog
 {
@@ -33,6 +33,7 @@ protected:
   virtual void createTabComposer(QWidget*);
   virtual void createTabMisc(QWidget*);
   virtual void createTabAppearance(QWidget*);
+  virtual void createTabPgp(QWidget *parent);
 
   // Create a button in given grid. The name is internationalized.
   virtual QPushButton* createPushButton(QWidget* parent, QGridLayout* grid,
@@ -66,7 +67,7 @@ private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
-  QLineEdit *indentPrefixEdit, *wrapColumnEdit, *pgpUserEdit;
+  QLineEdit *indentPrefixEdit, *wrapColumnEdit;
   QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign;
   QCheckBox *emptyTrashOnExit, *sendOnCheck;
   QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;
@@ -75,7 +76,7 @@ private:
   KTabListBox *accountList;
   QPushButton *addButton,*modifyButton,*removeButton;
   QLabel *bodyFontLabel, *listFontLabel;
-  Kpgp* pgp;
+  KpgpConfig *pgpConfig;
 };
 
 

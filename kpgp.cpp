@@ -1,4 +1,5 @@
-#include "kpgp.h"
+#include "kpgp.moc"
+#include "kpgpbase.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -13,89 +14,84 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-#include <qfile.h>
 #include <qregexp.h>
 #include <qcursor.h>
-#include <qstrlist.h>
 #include <qlabel.h>
 #include <qlined.h>
+#include <qchkbox.h>
+#include <qgrpbox.h>
+#include <qlayout.h>
 
 #include <kapp.h>
+#include <ksimpleconfig.h>
 #include <kiconloader.h>
-
-#include <config.h>
-
-/* 
-   TODO :
-  --  Use sending of passphrase via pipe, rather than via -z,
-      because it can be listed with 'ps' then. -- not very safe
-*/ 
-
-/* CHANGES by Juraj Bednar <bednar@isternet.sk>
-
-  -- Support for PGP 5.0 added. PGP 2.6.3 should work, but I have
-     no way to test it out
-  -- /tmp/.kmail-* files are no longer used. Instead we use pipes
-     (they are much safer and there will be no conflict with other
-     kmails running)
-
-*/
-
-static void
-pgpSigHandler(int)
-{
-  debug("alarm");
-}
-
+#include <kmsgbox.h>
 
 Kpgp *Kpgp::kpgpObject = 0L;
 
 Kpgp::Kpgp()
-  : input(0), signature(0), signatureID(0), keyNeeded(0), persons(),
-    publicKeys()
+  : publicKeys()
 {
-  initMetaObject();
-  flagNoPGP = TRUE;
-
   kpgpObject=this;
-  havePassPhrase = FALSE;
-  storePass = FALSE;
-  passPhrase = 0;
-  pgpRunning = FALSE;
 
-  // shouldn't we use our own config file for kpgp???
-  if(!checkForPGP()) return;
-  readConfig();
+  // open kpgp config file
+  QString aStr = kapp->localconfigdir();
+  aStr += "/kpgprc";
+  config = new KSimpleConfig(aStr);
 
-  // get public keys
-  runPGP(PUBKEYS);
+  init();
 }
 
 Kpgp::~Kpgp()
 {
   clear(TRUE);
+  delete config;
 }
 
 // ----------------- public methods -------------------------
 
 void 
+Kpgp::init()
+{
+  havePassPhrase = FALSE;
+  passphrase = 0;
+
+  // do we have a pgp executable
+  checkForPGP();
+
+  if(havePgp)
+  {
+    if(havePGP5)
+      pgp = new KpgpBase5();
+    else
+      pgp = new KpgpBase2();
+  }
+  else
+  {
+    // dummy handler
+    pgp = new KpgpBase();
+    return;
+  }
+
+  // read kpgp config file entries
+  readConfig();
+
+  // get public keys
+  publicKeys = pgp->pubKeys();
+}
+
+void 
 Kpgp::readConfig()
 {
-  KConfig *config = kapp->getConfig();
-  config->setGroup("Kpgp");
-  storePass = config->readNumEntry("storePass");
-  flagEncryptToSelf = config->readNumEntry("encryptToSelf");
-  pgpUser = config->readEntry("user");
+  storePass = config->readBoolEntry("storePass");
 }
 
 void
 Kpgp::writeConfig(bool sync)
 {
-  KConfig *config = kapp->getConfig();
-  config->setGroup("Kpgp");
   config->writeEntry("storePass",storePass);
-  config->writeEntry("encryptToSelf",flagEncryptToSelf);
-  config->writeEntry("user",pgpUser);
+
+  pgp->writeConfig();
 
   if(sync)
     config->sync();
@@ -104,43 +100,67 @@ Kpgp::writeConfig(bool sync)
 void
 Kpgp::setUser(const QString aUser)
 {
-  pgpUser = aUser.copy();
+  pgp->setUser(aUser);
 }
+
+const QString 
+Kpgp::user(void) const 
+{ 
+  return pgp->user(); 
+}
+
+void 
+Kpgp::setEncryptToSelf(bool flag)
+{
+  pgp->setEncryptToSelf(flag);
+}
+
+bool 
+Kpgp::encryptToSelf(void) const
+{
+  return pgp->encryptToSelf();
+}
+
+bool 
+Kpgp::storePassPhrase(void) const
+{
+  return storePass;
+}
+
+void 
+Kpgp::setStorePassPhrase(bool flag)
+{
+  storePass = flag;
+}
+
 
 bool 
 Kpgp::setMessage(const QString mess)
 {
   int index;
-  bool isSigned;
+  int retval = 0;
 
   clear();
-  input = mess;
 
-  flagEncrypted = FALSE;
-  flagSigned = FALSE;
-  flagSigIsGood = FALSE;
-
-  if((index = input.find("-----BEGIN PGP")) != -1)
+  if(havePgp)
+    retval = pgp->setMessage(mess);
+  if((index = mess.find("-----BEGIN PGP")) != -1)
   {
-    if(flagNoPGP)
+    if(!havePgp)
     {
       errMsg = i18n("Couldn't find PGP executable.\n"
 			 "Please check your PATH is set correctly.");
       return FALSE;
     }
-
-    // test if the message is encrypted or signed
-    isSigned = (strcmp(input.data() + index + 15, "SIGNED ")==0);
+    if(retval != 0)
+      errMsg = pgp->lastErrorMessage();
 
     // front and backmatter...
-    front = input.left(index);
-    index = input.find("-----END PGP",index);
-    index = input.find("\n",index+1);
-    back  = input.right(input.size() - index - 1);
+    front = mess.left(index);
+    index = mess.find("-----END PGP",index);
+    index = mess.find("\n",index+1);
+    back  = mess.right(mess.size() - index - 1);
 
-    if (!flagPgp50)
-    prepare(isSigned); else prepare(true);
-    runPGP(DECRYPT);
     return TRUE;
   }
   //  debug("Kpgp: message does not contain PGP parts");
@@ -162,23 +182,22 @@ Kpgp::backmatter(void) const
 const QString
 Kpgp::message(void) const
 {
-  // do we have a deciphered text?
-  if(!output.isEmpty()) return output;
-
-  // no, then return the original one
-  debug("Kpgp: No output!");
-  return input;
+  return pgp->message();
 }
 
 bool 
 Kpgp::prepare(bool needPassPhrase)
 {
-  if(flagNoPGP)
+  if(!havePgp)
   {
     errMsg = i18n("Could not find PGP executable.\n"
 		       "Please check your PATH is set correctly.");
     return FALSE;
   }
+
+  if((pgp->getStatus() & KpgpBase::NO_SEC_KEY))
+    return FALSE;
+
   if(needPassPhrase)
   {
     if(!havePassPhrase)
@@ -195,24 +214,158 @@ Kpgp::prepare(bool needPassPhrase)
 void
 Kpgp::cleanupPass(void)
 {
-  if(!storePassPhrase())
+  if(!storePass)
   {
-    passPhrase.replace(QRegExp(".")," ");
-    passPhrase = 0;
+    passphrase.replace(QRegExp(".")," ");
+    passphrase = 0;
+    havePassPhrase = false;
   }
 }
 
 bool 
 Kpgp::decrypt(void)
 {
-  bool retval;
+  int retval;
 
   // do we need to do anything?
-  if(!flagEncrypted) return TRUE;
-  // everything prepared?
+  if(!pgp->isEncrypted()) return TRUE;
+  // everything ready
   if(!prepare(TRUE)) return FALSE;
   // ok now try to decrypt the message.
-  retval = runPGP(DECRYPT);
+  retval = pgp->decrypt(passphrase);
+  // erase the passphrase if we do not want to keep it
+  cleanupPass();
+
+  if((retval & KpgpBase::BADPHRASE))
+  {
+    //debug("Kpgp: bad passphrase");
+    havePassPhrase = false;
+  }
+
+  if(retval & KpgpBase::ERROR) 
+  {
+    errMsg = pgp->lastErrorMessage();
+    return false;
+  }
+  return true;
+}
+
+bool 
+Kpgp::sign(void)
+{
+  return encryptFor(0, true);
+}
+
+bool 
+Kpgp::encryptFor(const QStrList& aPers, bool sign)
+{
+  QStrList persons;
+  char* pers;
+  int status = 0;
+  errMsg = "";
+  int ret;
+  QString aStr;
+
+  persons.clear();
+
+  if(!aPers.isEmpty()) 
+  {
+    QStrListIterator it(aPers);
+    while((pers = it.current()))
+    {
+      QString aStr = getPublicKey(pers);
+      if(!aStr.isEmpty()) 
+        persons.append(aStr);
+      ++it;
+    }
+    if(persons.isEmpty())
+    {
+      int ret = KMsgBox::yesNo(0,i18n("PGP Warning"),
+			       i18n("Could not find the public keys for the\n" 
+				    "recipients of this mail.\n"
+				    "Message will not be encrypted."),
+			       KMsgBox::EXCLAMATION, 
+			       i18n("Continue"), i18n("Cancel"));
+      if(ret == 2) return false;
+    }
+  }
+
+  status = doEncSign(persons, sign);
+
+  // check for bad passphrase
+  while(status & KpgpBase::BADPHRASE)
+  {
+    havePassPhrase = false;
+    ret = KMsgBox::yesNoCancel(0,i18n("PGP Warning"),
+			       i18n("You just entered an invalid passphrase.\n"
+				    "Do you wan't to try again, continue and\n" 
+				    "leave the message unsigned, "
+				    "or cancel sending the message?"),
+			       KMsgBox::EXCLAMATION, 
+			       i18n("Retry"), i18n("Continue"));
+    if(ret == 3) return false;
+    if(ret == 2) sign = false;
+    // ok let's try once again...
+    status = doEncSign(persons, sign);
+  }
+  // check for bad keys
+  if( status & KpgpBase::BADKEYS)
+  {
+    aStr = pgp->lastErrorMessage();
+    aStr += "\n";
+    aStr += i18n("Do you wan't to encrypt anyway, leave the\n" 
+		 "message as is, or cancel the message?");
+    ret = KMsgBox::yesNoCancel(0,i18n("PGP Warning"),
+			      aStr, KMsgBox::EXCLAMATION,
+			      i18n("Encrypt"), i18n("Continue"));
+    if(ret == 3) return false;
+    if(ret == 2) 
+    {
+      pgp->clearOutput();
+      return true;
+    }
+    if(ret == 1) status = doEncSign(persons, sign, true);
+  }
+  if( status & KpgpBase::MISSINGKEY)
+  {
+    aStr = pgp->lastErrorMessage();
+    aStr += "\n";
+    aStr += i18n("Do you wan't to leave the message as is,\n" 
+		 "or cancel the message?");
+    ret = KMsgBox::yesNo(0,i18n("PGP Warning"),
+			      aStr, KMsgBox::EXCLAMATION,
+			      i18n("Continue"), i18n("Cancel"));
+    if(ret == 2) return false;
+    pgp->clearOutput();
+    return true;
+  }
+  if( !(status & KpgpBase::ERROR) ) return true;
+
+  // in case of other errors we end up here.
+  errMsg = pgp->lastErrorMessage();
+  return false;
+  
+}
+
+int 
+Kpgp::doEncSign(QStrList persons, bool sign, bool ignoreUntrusted)
+{
+  int retval;
+
+  // to avoid error messages in case pgp is not installed
+  if(!havePgp)
+    return KpgpBase::OK;
+
+  if(sign)
+  {
+    if(!prepare(TRUE)) return KpgpBase::ERROR;
+    retval = pgp->encsign(&persons, passphrase, ignoreUntrusted);
+  }  
+  else
+  {
+    if(!prepare(FALSE)) return KpgpBase::ERROR;
+    retval = pgp->encrypt(&persons, ignoreUntrusted);
+  }
   // erase the passphrase if we do not want to keep it
   cleanupPass();
 
@@ -220,143 +373,125 @@ Kpgp::decrypt(void)
 }
 
 bool 
-Kpgp::testSign(void)
+Kpgp::signKey(QString _key)
 {
-  // everything prepared?
-  if(!prepare(FALSE)) return FALSE;
-  // ok now try to decrypt the message.
-  return runPGP(ENCSIGN);
-}
-
-bool 
-Kpgp::encryptFor(const QStrList& aPers, bool sign)
-{
-  int action = ENCRYPT;
-  QString persStr;
-  QStrList* pl;
-  char* pers;
-
-  if(!prepare(TRUE)) return FALSE;
-
-
-  persons.clear();
-  pl = (QStrList*)&aPers;
-  for(pers=pl->first(); pers; pers=pl->next())
+  if (!prepare(TRUE)) return FALSE;
+  if(pgp->signKey(_key, passphrase) & KpgpBase::ERROR)
   {
-      if (flagPgp50) 
-       persStr += "-r \""; else
-       persStr += "\"";
-      persStr += pers;
-      persStr += "\" ";
-      persons.append(pers);
+    errMsg = pgp->lastErrorMessage();
+    return false;
   }
-
-  if(sign) action += SIGN;
-  return runPGP(action, persStr);
+  return true;
 }
+
 
 const QStrList*
 Kpgp::keys(void)
 {
   if (!prepare()) return NULL;
 
-  runPGP(PUBKEYS);
+  if(publicKeys.isEmpty()) publicKeys = pgp->pubKeys();
   return &publicKeys;
 }
 
 bool 
 Kpgp::havePublicKey(QString _person)
 {
-  QString str;
+  if(!havePgp) return true;
 
-  return TRUE; // DEBUG ONLY !!
+  // do the checking case insensitive
+  QString str;
+  _person = _person.lower();
+  _person = canonicalAdress(_person);
 
   for(str=publicKeys.first(); str!=0; str=publicKeys.next())
+  {
+    str = str.lower();
     if(str.contains(_person)) return TRUE;
+  }
+
+  // reread the database, if key wasn't found...
+  publicKeys = pgp->pubKeys();
+  for(str=publicKeys.first(); str!=0; str=publicKeys.next())
+  {
+    str = str.lower();
+    if(str.contains(_person)) return TRUE;
+  }
 
   return FALSE;
 }
 
-bool 
-Kpgp::sign(void)
+QString 
+Kpgp::getPublicKey(QString _person)
 {
-  if (!prepare(TRUE)) return FALSE;
-  return runPGP(SIGN);
-}
+  // just to avoid some error messages
+  if(!havePgp) return true;
 
-bool 
-Kpgp::signKey(QString _key)
-{
-  if (!prepare(TRUE)) return FALSE;
-  return runPGP(SIGNKEY, _key);
-}
+  // do the search case insensitive, but return the correct key.
+  QString adress,str;
+  adress = _person.lower();
+  
+  // first try the canonical mail adress.
+  adress = canonicalAdress(adress);
+  for(str=publicKeys.first(); str!=0; str=publicKeys.next())
+    if(str.contains(adress)) return str;
 
+  // now try the pure input
+  adress = _person.lower();
+  for(str=publicKeys.first(); str!=0; str=publicKeys.next())
+    if(str.contains(adress)) return str;
+  
+  // FIXME: let user set the key/ get from keyserver
+  QString aStr;
+  aStr.sprintf(i18n("public key for %s not found.\n"
+		    "This person will not be able to " 
+		    "decrypt the message."),(const char *)_person);
+  KMsgBox::message(0,i18n("PGP Warning"),aStr);
+
+  return 0;
+}
 
 bool 
 Kpgp::isEncrypted(void) const
 {
-  return flagEncrypted;
+  return pgp->isEncrypted();
 }
 
 const QStrList*
 Kpgp::receivers(void) const
 {
-  if (persons.count()<=0) return NULL;
-  return &persons;
+  return pgp->receivers();
 }
 
 const QString 
 Kpgp::KeyToDecrypt(void) const
 {
-  return keyNeeded;
+  //FIXME
+  return 0;
 }
 
 bool
 Kpgp::isSigned(void) const
 {
-  return flagSigned;
+  return pgp->isSigned();
 }
 
 QString 
 Kpgp::signedBy(void) const
 {
-  return signature;
+  return pgp->signedBy();
 }
 
 QString 
 Kpgp::signedByKey(void) const
 {
-  return signatureID;
+  return pgp->signedByKey();
 }
 
 bool 
 Kpgp::goodSignature(void) const
 {
-  return flagSigIsGood;
-}
-
-void 
-Kpgp::setEncryptToSelf(bool flag)
-{
-  flagEncryptToSelf = flag;
-}
-
-bool 
-Kpgp::encryptToSelf(void) const
-{
-  return flagEncryptToSelf;
-}
-
-bool 
-Kpgp::storePassPhrase(void) const
-{
-  return storePass;
-}
-
-void 
-Kpgp::setStorePassPhrase(bool setTo)
-{
-  storePass = setTo;
+  return pgp->isSigGood();
 }
 
 void 
@@ -364,14 +499,14 @@ Kpgp::setPassPhrase(const QString aPass)
 {
   if (!aPass.isEmpty())
   {
-    passPhrase = aPass;
+    passphrase = aPass;
     havePassPhrase = TRUE;
   }
   else
   {
-    if (!passPhrase.isEmpty())
-      passPhrase.replace(QRegExp(".")," ");
-    passPhrase = 0;
+    if (!passphrase.isEmpty())
+      passphrase.replace(QRegExp(".")," ");
+    passphrase = 0;
     havePassPhrase = FALSE;
   }
 }
@@ -388,29 +523,13 @@ Kpgp::changePassPhrase(const QString /*oldPass*/,
 void 
 Kpgp::clear(bool erasePassPhrase)
 {
-  if(erasePassPhrase && havePassPhrase && !passPhrase.isEmpty())
+  if(erasePassPhrase && havePassPhrase && !passphrase.isEmpty())
   {
-    passPhrase.replace(QRegExp(".")," ");
-    passPhrase = 0;
+    passphrase.replace(QRegExp(".")," ");
+    passphrase = 0;
   }
-  // erase strings from memory
-#ifdef BROKEN
-  input.replace(QRegExp(".")," ");
-  signature.replace(QRegExp(".")," ");
-  signatureID.replace(QRegExp(".")," ");
-  keyNeeded.replace(QRegExp(".")," ");
-#endif
-  input = 0;
-  signature = 0;
-  signatureID = 0;
-  keyNeeded = 0;
-  output = 0;
-  info = 0;
-  persons.clear();
-  
-  flagEncrypted = FALSE;
-  flagSigned = FALSE;
-  flagSigIsGood = FALSE;
+  front = 0;
+  back = 0;
 }
 
 const QString 
@@ -422,7 +541,7 @@ Kpgp::lastErrorMsg(void) const
 bool 
 Kpgp::havePGP(void) const
 {
-  return !flagNoPGP;
+  return havePgp;
 }
 
 
@@ -439,133 +558,24 @@ Kpgp::getKpgp()
   return kpgpObject;
 }
 
+KSimpleConfig *
+Kpgp::getConfig()
+{
+  return getKpgp()->config;
+}
+
+
 const QString
 Kpgp::askForPass(QWidget *parent)
 {
   return KpgpPass::getPassphrase(parent);
 }
 
-const QString 
-Kpgp::decode(const QString text, bool returnHTML)
-{
-  QString deciphered;
-  bool isSigned, decryptOk;
-  int i = text.find("-----BEGIN PGP ");
-  if (i == -1) return text;
-
-  // test if the message is encrypted or signed
-  isSigned = (strcmp(((const char*)text)+i+15, "SIGNED ")==0);
-
-  Kpgp* pgp=Kpgp::getKpgp();
-  pgp->setMessage(text);
-
-  // first check if text is encrypted
-  if(!pgp->isEncrypted()) return text;
-
-  //need to decrypt it...
-  if(!isSigned && !pgp->havePassPhrase) pgp->askForPass();
-  decryptOk = pgp->decrypt();
-
-  // o.k. put it together...
-  deciphered = pgp->frontmatter();
-
-  if(returnHTML) deciphered += "<B>";
-  else deciphered += "----- ";
-
-  if(!pgp->isSigned()) {
-    if (decryptOk) deciphered += i18n("Encrypted message");
-    else {
-      deciphered +=  i18n("Cannot decrypt message:");
-      deciphered += " ";
-      deciphered += pgp->lastErrorMsg();
-    }
-  } else {
-    if(pgp->goodSignature()){
-      deciphered += i18n("Message signed by");
-    } else {
-      deciphered += i18n("Warning"); 
-      deciphered += ":";
-      deciphered += i18n("Message has a bad signature from");
-    }
-    deciphered += " " + pgp->signedBy();
-  }
-
-  if(returnHTML) deciphered += "</B><BR>";
-  else deciphered += " -----\n\n";
-  
-  deciphered += pgp->message();
-
-  if(returnHTML) deciphered += "<B><BR>";
-  else deciphered += "\n\n----- ";
-
-  if (pgp->isSigned()) deciphered += i18n("End PGP signed message");
-  else deciphered += i18n("Encrypted message");
-
-  if(returnHTML) deciphered += "</B><BR>";
-  else deciphered += " -----\n";
-
-  //add backmatter
-  deciphered += pgp->backmatter();
-
-  // convert to HTML
-  if(returnHTML)
-  {
-    deciphered.replace(QRegExp("\n"),"<BR>");
-    deciphered.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
-  }
-  //debug("Kpgp: message is: %s",(const char *)deciphered);
-
-  return deciphered;
-}
-
-
-
 // --------------------- private functions -------------------
 
-bool
-Kpgp::executePGP(QString cmd, int *in, int *out, int *err)
-{
-           int pin[2], pout[2], perr[2], child_pid;
-
-         pipe(pin);
-         pipe(pout);
-         pipe(perr);
-
-         if(!(child_pid = fork()))
-         {
-           /*We're the child.*/
-           close(pin[1]);    
-           dup2(pin[0], 0); /* pipe to stdin (0) */
-           close(pin[0]);
-
-           close(pout[0]);
-           dup2(pout[1], 1); /* pipe to stdout (1) */
-           close(pout[1]);
-
-           close(perr[0]);
-           dup2(perr[1], 2);  /* pipe to stderr (2) */
-           close(perr[1]);
-
-           execl("/bin/sh", "sh", "-c", cmd.data(), NULL);
-           _exit(127);
-         }
-
-         /*Only get here if we're the parent.*/
-
-         close(perr[1]);
-         *err = perr[0];
-         close(pout[1]);
-         *out = pout[0];
-         close(pin[0]);
-         *in = pin[1];
-
-         return TRUE;
-}
-
-// check if pgp installed
-// currently only supports 2.6.x
-// And now 5.x at alpha stage ;-). Please test ! I'll do too. - Juraj
-bool
+// check if pgp 2.6.x or 5.0 is installed
+// kpgp will prefer to user pgp 5.0
+bool 
 Kpgp::checkForPGP(void)
 {
   // get path
@@ -574,7 +584,7 @@ Kpgp::checkForPGP(void)
   int index = 0;
   int lastindex = -1;
 
-  flagNoPGP = TRUE;
+  havePgp=FALSE;
 
   path = getenv("PATH");
   while((index = path.find(":",lastindex+1)) != -1)
@@ -594,8 +604,8 @@ Kpgp::checkForPGP(void)
     path += "/pgpe";
     if ( !access( path, X_OK ) )
     {
-      flagPgp50 = TRUE;
-      flagNoPGP = FALSE;
+      havePgp=TRUE;
+      havePGP5=TRUE;
       debug("Kpgp: found pgp5.0");
       return TRUE;
     }
@@ -606,340 +616,64 @@ Kpgp::checkForPGP(void)
   it.toFirst();
   while ( it.current() )
   {
-    path = it.current();
-    path += "/pgp";
-    if ( !access( path, X_OK ) )
-    {
-      flagPgp50 = FALSE;
-      flagNoPGP = FALSE;
-      debug("Kpgp: found pgp2.6.x");
-      return TRUE;
-    }
-    ++it;
+       path = it.current();
+       path += "/pgp";
+       if ( !access( path, X_OK ) )
+       {
+	    havePgp=TRUE;
+	    havePGP5=FALSE;
+	    debug("Kpgp: found pgp2.6.x");
+	    return TRUE;
+       }
+       ++it;
   }
   
-  debug("Kpgp: didn't find pgp");
+  debug("Kpgp: no pgp found");
   return FALSE;
 }
 
-bool
-Kpgp::runPGP(int action, const char* args)
+QString 
+Kpgp::canonicalAdress(QString _adress)
 {
-  int len;
-  char str[1024];
-  bool addUserId = FALSE;
-  QString cmd;
-  int infd, outfd, errfd;
-  void (*oldsig)(int);
+  int index,index2;
 
-  if (!flagPgp50) {
-  cmd = "pgp +batchmode";
+  _adress = _adress.simplifyWhiteSpace();
+  _adress = _adress.stripWhiteSpace();
 
-
-  switch (action)
-  {
-  case ENCRYPT:
-    cmd += " -ea";
-    break;
-  case SIGN:
-    cmd += " -sat";
-    addUserId=TRUE;
-    break;
-  case ENCSIGN:
-    cmd += " -seat";
-    addUserId=TRUE;
-    break;
-  case SIGNKEY:
-    cmd += " -ks";
-    addUserId=TRUE;
-    break;
-  case DECRYPT:
-  case TEST:
-    break;
-  case PUBKEYS:
-    cmd += " -kv";
-    break;
-  default:
-    warning("kpgp: wrong action given to runPGP()");
-    return false;
+  // just leave pure e-mail adress.
+  if((index = _adress.find("<")) != -1)
+    if((index2 = _adress.find("@",index+1)) != -1)
+      if((index2 = _adress.find(">",index2+1)) != -1)
+	return _adress.mid(index,index2-index);
+  
+  if((index = _adress.find("@")) == -1)
+  { 
+    // local adress
+    char* hostname = (char *)malloc(1024*sizeof(char));
+    gethostname(hostname,1024);
+    QString adress = '<';
+    adress += _adress;
+    adress += '@';
+    adress += hostname;
+    adress += '>';
+    return adress;
   }
- } else {
-  switch (action)
+  else
   {
-  case ENCRYPT:
-    cmd = "pgpe -a";
-    break;
-  case SIGN:
-    cmd = "pgps -at";
-    addUserId=TRUE;
-    break;
-  case ENCSIGN:
-    cmd = "pgpe -sat";
-    addUserId=TRUE;
-    break;
-  case SIGNKEY:
-    cmd = "pgpk -s";
-    addUserId=TRUE;
-    break;
-  case DECRYPT:
-  case TEST:
-    cmd = "pgpv";
-    break;
-  case PUBKEYS:
-    cmd = "pgpk -l";
-    break;
-  default:
-    warning("kpgp: wrong action given to runPGP()");
-    return false;
+    int index1 = _adress.findRev(" ",index);
+    int index2 = _adress.find(" ",index);
+    if(index2 == -1) index2 = _adress.length();
+    QString adress = "<";
+    adress += _adress.mid(index1+1 ,index2-index1-1);
+    adress += ">";
+    return adress;
   }
-
- }
-
-  if(addUserId && !pgpUser.isEmpty())
-  {
-    cmd += " -u \"";
-    cmd += pgpUser;
-    cmd += '"';
-  }
-
-  // add additional arguments
-  if (args)
-  {
-    cmd += ' ';
-    cmd += args;
-  }
-
-  // add passphrase
-  if(havePassPhrase)
-  {
-    sprintf(str," '-z%s'",(const char *)passPhrase);
-    cmd += str;
-  }
-  cmd += " -f";
-  if (flagPgp50) 
-    cmd += " +batchmode=1 +OutputInformationFD=2";
-
-  executePGP(cmd,&infd,&outfd,&errfd);
-
-  if (!input.isEmpty()) {
-    write(infd, input.data(), input.length());
-    }
-  close(infd);
-
-  output = 0;
-
-  if (outfd >= 0) 
-  {
-    while ((len=read(outfd,str,1023))>0)
-    {
-      str[len] ='\0';
-      output += str;
-    }
-   close(outfd);
-  }
-
-
-  info = 0;
-
-  if (errfd >= 0) 
-  {
-    while ((len=read(errfd,str,1023))>0)
-    {
-      str[len] ='\0';
-      info += str;
-    }
-    close(errfd);
-  }
-
-
-  /* Clean up */
-  oldsig = signal(SIGALRM,pgpSigHandler);
-  alarm(5);
-  wait(NULL);
-  alarm(0);
-  signal(SIGALRM,oldsig);
-  unsetenv("PGPPASSFD");
-  debug("Okay !");
-
-  return parseInfo(action);
 }
 
-bool Kpgp::parseInfo(int action)
-{
-  bool returnFlag = TRUE;
-  int index, index2;
-  switch (action)
-  {
-  case DECRYPT:
-  case TEST:
-    if( info.find("File contains key") != -1)
-    {
-      output = "";
-      // FIXME: should do something with it...
-    }
 
-    if( (info.find("Bad pass phrase") != -1) || (info.find("Need a pass phrase") != -1))
-    {
-      //	       debug("Kpgp: isEncrypted");
-      if(action == DECRYPT) 
-      {
-	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
-	havePassPhrase = FALSE;
-	returnFlag = FALSE;
-      }
-      flagEncrypted = TRUE;
-      // check for persons
-      if (flagPgp50)
-        index = info.find("can only be decrypted by:"); else
-        index = info.find("can only be read by:");
-      if(index != -1) 
-      {
-	index = info.find("\n",index);
-	int end = info.find("\n\n",index);
-
-	persons.clear();
-	while( (index2 = info.find("\n",index+1)) <= end )
-	{
-	  QString item = info.mid(index+1,index2-index-1);
-	  item.stripWhiteSpace();
-	  persons.append(item);
-	  index = index2;
-	}
-      }
-    }
-    if(((index = info.find("File has signature")) != -1) || flagPgp50)
-    {
-      if (!flagPgp50) flagSigned = TRUE;
-      flagSigIsGood = FALSE;
-      if( info.find("Key matching expected") != -1)
-      {
-	index = info.find("Key ID ",index);
-	signatureID = info.mid(index+7,8);
-	signature = "unknown key ID " + signatureID + " ";
-	// FIXME: not a very good solution...
-	flagSigIsGood = TRUE;
-	flagSigned = TRUE;
-      }
-      else
-      {
-	if( info.find("Good signature") != -1 ) {
-	  flagSigned = TRUE;
-	  flagSigIsGood = TRUE;
-        }
-		    
-	if (flagPgp50) index= info.find("Good signature");
-	// get signer
-	index = info.find("\"",index);
-	index2 = info.find("\"", index+1);
-
-	if (index>=0 && index2>=0)
-	  signature = info.mid(index+1, index2-index-1);
-	else signature = i18n("Unknown");
-		    
-	// get key ID of signer
-        if (flagPgp50)
-	  index = info.find("Key ID ",info.find("Good signature")); else
-	  index = info.find("key ID ",index2);
-	
-	signatureID = info.mid(index+7,8);
-      }
-    }
-    if(info.find("Pass phrase is good") != -1)
-      flagEncrypted = FALSE;
-    if(info.find("Message is encrypted") != -1)
-      flagEncrypted = TRUE;
-    break;
-
-  case ENCRYPT:
-  case ENCSIGN:
-  {
-    index = 0;
-    bool bad = FALSE;
-    QString badkeys = "";
-    if (!flagPgp50)
-    {
-      while((index = info.find("Cannot find the public key",index)) 
-  	  != -1)
-      {
-        bad = TRUE;
-        index = info.find("'",index);
-        index2 = info.find("'",index+1);
-        badkeys += info.mid(index, index2-index+1) + ' ';
-      }
-      if(bad)
-      {
-        badkeys.stripWhiteSpace();
-        badkeys.replace(QRegExp(" "),", ");
-        errMsg.sprintf(i18n("Could not find public keys matching the\n" 
-      		     "userid(s) %s. These persons won't be able\n"
-  		     "to read the message."),
-  		     (const char *)badkeys);
-        returnFlag = FALSE;
-      }
-    }
-    else
-    {
-      if((info.find("No encryption keys") != -1))
-        {
-          errMsg.sprintf(
-            i18n("Could not find public keys for some persons.\n"));
-          returnFlag = FALSE;
-        }
-    }
-    break;
-  }
-  case SIGN:
-    if((info.find("Pass phrase is good") != -1) || flagPgp50)
-    {
-      flagEncrypted = TRUE;
-    }
-    if( (info.find("Bad pass phrase") != -1) || (info.find("Need a pass phrase") != -1))
-    {
-      errMsg = i18n("Bad pass Phrase; couldn't sign");
-      returnFlag = FALSE;
-      havePassPhrase = FALSE;
-      flagEncrypted=FALSE;
-    }
-    break;
-  case PUBKEYS:
-    publicKeys.clear();
-    index = output.find("\n",1)+1; // skip first to "\n"
-    while( (index = output.find("\n",index)) != -1)
-    {
-      //parse line
-      QString line;
-      if( (index2 = output.find("\n",index+1)) != -1)
-	// skip last line
-      {
-	int index3 = output.find("pub ",index);
-		    
-	if( (index3 >index2) || (index3 == -1) )
-	{
-	  // second adress for the same key
-	  line = output.mid(index+1,index2-index-1);
-	  line = line.stripWhiteSpace();	       
-	} else {
-	  // line with new key
-	  int index3 = output.find(
-	    QRegExp("/[0-9][0-9]/[0-9][0-9] "),
-	    index);
-	  line = output.mid(index3+7,index2-index3-7);
-	}
-	//debug("kpgp: found key for %s",(const char *)line);
-	publicKeys.append(line);
-      }
-      index = index2;
-    }
-    break;
-  default:
-    warning("Kpgp: bad action %d in parseInfo()", action);
-    returnFlag = FALSE;
-  }
-
-  return returnFlag;
-}
-
-// -----------------------------------------------------------------------
+//----------------------------------------------------------------------
+//  widgets needed by kpgp
+//----------------------------------------------------------------------
 
 KpgpPass::KpgpPass(QWidget *parent, const char *name)
   : QDialog(parent, 0, TRUE)
@@ -993,5 +727,94 @@ KpgpPass::getPhrase()
 
 
 // ------------------------------------------------------------------------
-#include "kpgp.moc"
+
+KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
+  : QWidget(parent, name)
+{
+  pgp = Kpgp::getKpgp();
+
+  QBoxLayout* box = new QBoxLayout(this, QBoxLayout::TopToBottom, 3);
+
+  QGroupBox *grp = new QGroupBox(i18n("Identity"), this);
+  box->addWidget(grp);
+
+  QGridLayout* grid = new QGridLayout(grp, 1, 2, 20, 6);
+
+  pgpUserEdit = createLabeledEntry(grid, 
+				   i18n("PGP User Identity:"),
+				   pgp->user(), 0, 0);
+
+  grid->setColStretch(0,1);
+  grid->setColStretch(1,10);
+  grid->activate();
+
+  QGroupBox *grp2 = new QGroupBox(i18n("Options"), this);
+  QGridLayout* grid2 = new QGridLayout(grp2, 2, 3, 20, 6);
+
+  storePass=new QCheckBox(
+	      i18n("Store passphrase"), grp2);
+  storePass->adjustSize();
+  storePass->setMinimumSize(storePass->sizeHint());
+  grid2->addMultiCellWidget(storePass, 0, 0, 0, 2);
+
+  encToSelf=new QCheckBox(
+	      i18n("Always encrypt to self"), grp2);
+  encToSelf->adjustSize();
+  encToSelf->setMinimumSize(encToSelf->sizeHint());
+  grid2->addMultiCellWidget(encToSelf, 1, 1, 0, 2);
+
+  grid2->setColStretch(0,0);
+  grid2->setColStretch(1,1);
+  grid2->setColStretch(2,0);
+  grid2->activate();
+
+  box->addWidget(grp2);
+
+  box->addStretch(10);
+  box->activate();
+
+  // set default values
+  pgpUserEdit->setText(pgp->user());
+  storePass->setChecked(pgp->storePassPhrase()); 
+  encToSelf->setChecked(pgp->encryptToSelf());
+
+}
+
+KpgpConfig::~KpgpConfig()
+{
+}
+
+void 
+KpgpConfig::applySettings()
+{
+  pgp->setUser(pgpUserEdit->text());
+  pgp->setStorePassPhrase(storePass->isChecked());
+  pgp->setEncryptToSelf(encToSelf->isChecked());
+
+  pgp->writeConfig(true);
+}
+
+QLineEdit* 
+KpgpConfig::createLabeledEntry(QGridLayout* grid,
+			       const char* aLabel,
+			       const char* aText, 
+			       int gridy, int gridx)
+{
+  QLabel* label = new QLabel(this);
+  QLineEdit* edit = new QLineEdit(this);
+
+  label->setText(aLabel);
+  label->adjustSize();
+  label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
+  label->setMinimumSize(label->size());
+  grid->addWidget(label, gridy, gridx++);
+
+  if (aText) edit->setText(aText);
+  edit->setMinimumSize(100, label->height()+2);
+  edit->setMaximumSize(1000, label->height()+2);
+  grid->addWidget(edit, gridy, gridx++);
+
+  return edit;
+}
+
 

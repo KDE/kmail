@@ -51,8 +51,6 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 {
   initMetaObject();
 
-  pgp = Kpgp::getKpgp();
-
   setCaption(i18n("Settings"));
   resize(500,500);
   setOKButton(i18n("OK"));
@@ -66,6 +64,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   createTabAppearance(this);
   createTabComposer(this);
   createTabMisc(this);
+  createTabPgp(this);
 }
 
 
@@ -170,7 +169,7 @@ QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
 void KMSettings::createTabIdentity(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 6, 3, 20, 6);
+  QGridLayout* grid = new QGridLayout(tab, 5, 3, 20, 6);
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, i18n("Name:"), 
@@ -184,9 +183,6 @@ void KMSettings::createTabIdentity(QWidget* parent)
 				   identity->replyToAddr(), 3, 0);
   sigEdit = createLabeledEntry(tab, grid, i18n("Signature File:"),
 			       identity->signatureFile(), 4, 0, &button);
-  pgpUserEdit = createLabeledEntry(tab, grid, 
-				   i18n("PGP User Identity:"),
-				   pgp->user(), 5, 0);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
 
   grid->setColStretch(0,0);
@@ -556,6 +552,12 @@ void KMSettings::createTabMisc(QWidget *parent)
   addTab(tab, i18n("Misc"));
 }
 
+// ----------------------------------------------------------------------------
+void KMSettings::createTabPgp(QWidget *parent)
+{
+  pgpConfig = new KpgpConfig(parent);
+  addTab(pgpConfig, i18n("PGP"));
+}
 
 //-----------------------------------------------------------------------------
 const QString KMSettings::tabNetworkAcctStr(const KMAccount* act) const
@@ -775,7 +777,6 @@ void KMSettings::doApply()
   identity->setReplyToAddr(replytoEdit->text());
   identity->setSignatureFile(sigEdit->text());
   identity->writeConfig(FALSE);
-  pgp->setUser(pgpUserEdit->text());
   
   //----- sending mail
   if (sendmailRadio->isChecked())
@@ -821,7 +822,7 @@ void KMSettings::doApply()
 
   //-----
   config->sync();
-  pgp->writeConfig(TRUE);
+  pgpConfig->applySettings();
 
   folderMgr->contentsChanged();
   KMMessage::readConfig();

@@ -17,7 +17,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmacctseldlg.cpp kmimemagic.cpp kmfiltermgr.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp \
+		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp\
 		kfileio.cpp kmaddrbook.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
