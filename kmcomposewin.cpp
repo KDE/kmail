@@ -1394,7 +1394,6 @@ void KMComposeWin::slotAddrBookBcc()
     // We will not care about any permissions, existence or whatsoever in
     // this function.
 
-      qDebug( "This sucks donkey balls" );
     QStringList files = KFileDialog::getOpenFileNames(QString::null, "*", this, i18n("Attach File"));
     QString name;
     for ( QStringList::Iterator it = files.begin(); it != files.end(); ++it ) {
