@@ -141,6 +141,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *autoExpungeCheck;     // only used by normal (online) IMAP
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
+      QCheckBox    *loadOnDemandCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *progressDialogCheck;  // only used by Disconnected IMAP
       QCheckBox    *excludeCheck;

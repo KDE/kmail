@@ -4812,6 +4812,9 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!sentOk)
       return false;
+  
+  // needed for imap    
+  mMsg->setComplete( true );
 
   if (saveInDrafts)
   {

@@ -952,12 +952,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 
       if (count() > 1) unGetMsg(count() - 1);
       mLastUid = uid;
-/*      if ((*it).total > 20 &&
-        ((*it).done + 1) * 5 / (*it).total > (*it).done * 5 / (*it).total)
-      {
-        quiet(FALSE);
-        quiet(TRUE);
-      } */
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
@@ -972,7 +966,8 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                            KMFolder *folder, QString partSpecifier ) const
 {
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
-  if (jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE")
+  if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
+       mAccount && mAccount->loadOnDemand() )
   {
     // retrieve the BODYSTRUCTURE and to speed things up also the headers
     ImapJob *job = new ImapJob( msg, jt, kmfi, "HEADER" );
@@ -981,6 +976,9 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
     job2->start();
     return job;
   } else {
+    // classic way - download complete message
+    if ( partSpecifier == "STRUCTURE" ) // hide from outside
+      partSpecifier = QString::null;
     ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
     return job;
   }

@@ -73,6 +73,7 @@ namespace KMail {
       mAutoExpunge( true ),
       mHiddenFolders( false ),
       mOnlySubscribedFolders( false ),
+      mLoadOnDemand( true ),
       mProgressEnabled( false ),
       mIdle( true ),
       mErrorDialogIsActive( false ),
@@ -96,6 +97,7 @@ namespace KMail {
     mAutoExpunge = true;
     mHiddenFolders = false;
     mOnlySubscribedFolders = false;
+    mLoadOnDemand = true;
     mProgressEnabled = false;
   }
 
@@ -109,6 +111,7 @@ namespace KMail {
     setAutoExpunge( i->autoExpunge() );
     setHiddenFolders( i->hiddenFolders() );
     setOnlySubscribedFolders( i->onlySubscribedFolders() );
+    setLoadOnDemand( i->loadOnDemand() );
   }
 
   unsigned short int ImapAccountBase::defaultPort() const {
@@ -151,6 +154,10 @@ namespace KMail {
     mOnlySubscribedFolders = show;
   }
 
+  void ImapAccountBase::setLoadOnDemand( bool load ) {
+    mLoadOnDemand = load;
+  }
+
   //
   //
   // read/write config
@@ -164,6 +171,7 @@ namespace KMail {
     setAutoExpunge( config.readBoolEntry( "auto-expunge", false ) );
     setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
     setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
+    setLoadOnDemand( config.readBoolEntry( "loadondemand", false ) );
   }
 
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
@@ -173,6 +181,7 @@ namespace KMail {
     config.writeEntry( "auto-expunge", autoExpunge() );
     config.writeEntry( "hidden-folders", hiddenFolders() );
     config.writeEntry( "subscribed-folders", onlySubscribedFolders() );
+    config.writeEntry( "loadondemand", loadOnDemand() );
   }
 
   //

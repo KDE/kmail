@@ -76,6 +76,10 @@ namespace KMail {
     bool onlySubscribedFolders() const { return mOnlySubscribedFolders; }
     virtual void setOnlySubscribedFolders( bool show );
 
+    /** @return whether to load attachments on demand */
+    bool loadOnDemand() const { return mLoadOnDemand; }
+    virtual void setLoadOnDemand( bool load );
+
     /** Configure the slave by adding to the meta data map */
     virtual KIO::MetaData slaveConfig() const;
 
@@ -249,6 +253,7 @@ namespace KMail {
     bool mAutoExpunge : 1;
     bool mHiddenFolders : 1;
     bool mOnlySubscribedFolders : 1;
+    bool mLoadOnDemand : 1;
     bool mProgressEnabled : 1;
 
     bool mIdle : 1;
