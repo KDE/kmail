@@ -2640,16 +2640,14 @@ void KMReaderWin::writeHTMLStr(const QString& aStr)
 
 QString KMReaderWin::quotedHTML(const QString& s)
 {
-  QString htmlStr, line;
+  QString htmlStr;
   QString normalStartTag;
   const QString normalEndTag = "</div>";
   const QString quoteEnd = "</div>";
 
   unsigned int pos, beg;
   unsigned int length = s.length();
-  enum { First, New, Mid } paragState = First;
-  bool rightToLeft = false;
-
+  
   QString style;
   if( mBodyFont.bold() )
     style += "font-weight:bold;";
@@ -2665,10 +2663,12 @@ QString KMReaderWin::quotedHTML(const QString& s)
   while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
 
-  int currQuoteLevel = -1;
+  int currQuoteLevel = -2; // -2 == no previous lines
 
   while (beg<length)
   {
+    QString line;
+
     /* search next occurance of '\n' */
     pos = s.find('\n', beg, FALSE);
     if (pos == (unsigned int)(-1))
@@ -2678,52 +2678,50 @@ QString KMReaderWin::quotedHTML(const QString& s)
     beg = pos+1;
 
     /* calculate line's current quoting depth */
-    unsigned int p;
     int actQuoteLevel = -1;
-    bool finish = FALSE;
-    for (p=0; p<line.length() && !finish; p++) {
-	switch (line[p].latin1()) {
-	    /* case ':': */
-	    case '>':
-	    case '|':	actQuoteLevel++;
-			break;
-
-	    case '\r':  break;
-	    default:	finish = TRUE;
-			break;
-	}
+    for (unsigned int p=0; p<line.length(); p++) {
+      switch (line[p].latin1()) {
+        case '>':
+        case '|':
+          actQuoteLevel++;
+          break;
+        case ' ':  // spaces and tabs are allowed between the quote markers
+        case '\t':
+        case '\r':
+          break;
+        default:  // stop quoting depth calculation
+          p = line.length();
+          break;
+      }
     } /* for() */
 
-    if ( (paragState != Mid && finish) || (actQuoteLevel != currQuoteLevel) ) {
+    if ( actQuoteLevel != currQuoteLevel ) {
+      /* finish last quotelevel */
+      if (currQuoteLevel == -1)
+        htmlStr.append( normalEndTag );
+      else if (currQuoteLevel >= 0)
+        htmlStr.append( quoteEnd );
 
-	/* finish last quotelevel */
-	if (currQuoteLevel == -1)
-	    htmlStr.append( normalEndTag );
-	else
-	    htmlStr.append( quoteEnd );
-
-	if ( paragState == New )
-	    htmlStr += "<br>";
-
-	/* start new quotelevel */
-	currQuoteLevel = actQuoteLevel;
-	if (actQuoteLevel == -1)
-	    htmlStr += normalStartTag;
-	else
-	    htmlStr += mQuoteFontTag[currQuoteLevel%3];
-
-	paragState = Mid;
+      /* start new quotelevel */
+      currQuoteLevel = actQuoteLevel;
+      if (actQuoteLevel == -1)
+        htmlStr += normalStartTag;
+      else
+        htmlStr += mQuoteFontTag[currQuoteLevel%3];
     }
 
-    if ( !finish && paragState == Mid )
-	paragState = New;
-
-    rightToLeft = line.isRightToLeft();
-    line = strToHtml(line, TRUE);
-
-    htmlStr+= QString("<div dir=\"%1\">" ).arg(rightToLeft ? "rtl" : "ltr");
-    htmlStr+= (line);
-    htmlStr+= QString("</div>");
+    // don't write empty <div ...></div> blocks (they have zero height)
+    if( !line.isEmpty() )
+    {
+      if( line.isRightToLeft() )
+        htmlStr += QString( "<div dir=\"rtl\">" );
+      else
+        htmlStr += QString( "<div dir=\"ltr\">" );
+      htmlStr += strToHtml( line, true );
+      htmlStr += QString( "</div>" );
+    }
+    else
+      htmlStr += "<br>";
   } /* while() */
 
   /* really finish the last quotelevel */
