@@ -450,6 +450,7 @@ void KMFldSearchRule::prepare(void)
   mField = mCbxField->currentText();
   mFunc = mCbxFunc->currentItem();
   mValue = mEdtValue->text();
+  mNonLatin = QCString(mValue.latin1()).length() != mValue.length();
 }
 
 
@@ -461,7 +462,15 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   if (mField.isEmpty() || !aMsg) return true;
   if( mField == i18n("<complete message>") ) {
     value = aMsg->headerAsString();
-    value += aMsg->bodyDecoded();
+    QString charset = aMsg->charset();
+    if (!mNonLatin || charset.isEmpty() || charset == "us-ascii"
+      || charset == "iso-8859-1")         // Speedup
+        value += aMsg->bodyDecoded();  
+    else {
+      QTextCodec *codec = QTextCodec::codecForName(aMsg->charset());
+      if (codec) value += codec->toUnicode(aMsg->bodyDecoded());
+        else value += aMsg->bodyDecoded();
+    }
   } else {
     value = aMsg->headerField(mField);
   }
