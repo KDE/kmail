@@ -728,6 +728,11 @@ void KMComposeWin::setupActions(void)
 
   //----- Message-Encoding Submenu
   encodingAction = new KSelectAction( i18n( "Set &Encoding" ), 0, this, SLOT(slotSetCharset() ), actionCollection(), "charsets" );
+  wordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
+		      actionCollection(), "wordwrap");
+  wordWrapAction->setChecked(mWordWrap);
+  connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
+
   // availableCharsetNames seems more reasonable than availableEncodingNames
   QStringList encodings = KGlobal::charsets()->availableCharsetNames();
   encodings.remove(QString("*-*"));  //this doesn't make sense
@@ -1839,6 +1844,21 @@ void KMComposeWin::slotEncryptToggled(bool on)
 {
   if (on) encryptAction->setIcon("lock");
     else encryptAction->setIcon("unlock");
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotWordWrapToggled(bool on)
+{
+  if (on)
+  {
+    mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
+    mEditor->setWrapColumnOrWidth(mLineBreak);
+  }
+  else
+  {
+    mEditor->setWordWrap( QMultiLineEdit::NoWrap );
+  }
 }
 
 
