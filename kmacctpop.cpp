@@ -196,15 +196,15 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   response = client.SingleLineResponse().c_str();
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
 
-#ifndef DWPOPCLIENT_HAS_NO_LAST
 #warning "*** If client.Last() cannot be found then install the latest kdesupport"
-  if (client.Last() != '+') return popError("LAST", client);
-  response = client.SingleLineResponse().c_str();
-  sscanf(response.data(), "%3s %d", dummyStr, &id);
-  id++;
-#else
-  id = 1;
-#endif
+  if (client.Last() == '+')
+  {
+    response = client.SingleLineResponse().c_str();
+    sscanf(response.data(), "%3s %d", dummyStr, &id);
+    id++;
+  }
+  else id = 1;
+
   // workaround but still is no good. If msgs are too big in size
   // we will get a timeout.
   client.SetReceiveTimeout(40);

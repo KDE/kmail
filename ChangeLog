@@ -1,3 +1,8 @@
+1998-11-24  Stefan Taferner  <stefan@idefix>
+
+	* Pop: does not stop pop retrieval now when pop server does
+	not understand LAST command.
+
 1998-11-15  Stefan Taferner  <taferner@kde.org> (KMail-1.0.7)
 
 	* Headers: now current message is not reset when reading mails

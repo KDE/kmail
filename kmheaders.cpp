@@ -861,7 +861,6 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
 //-----------------------------------------------------------------------------
 void KMHeaders::sort(void)
 {
-  debug("KMHeaders::sort()");
   mFolder->sort((KMMsgList::SortField)mSortCol, mSortDescending);
 }
 
