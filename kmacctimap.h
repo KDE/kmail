@@ -1,7 +1,7 @@
 /**
  * kmacctimap.h
  *
- * Copyright (c) 2000-2001 Michael Haeckel <Michael@Haeckel.Net>
+ * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>
  *
  * This file is based on kmacctexppop.h by Don Sanders
  *

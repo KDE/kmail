@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
                    I18N_NOOP("(c) 1997-2001, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
-  about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Current maintainer"), "michael@haeckel.net" );
+  about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Current maintainer"), "haeckel@kde.org" );
   about.addAuthor( "Don Sanders", I18N_NOOP("Core developer and former maintainer"), "sanders@kde.org" );
   about.addAuthor( "Stefan Taferner ", I18N_NOOP("Original author"), "taferner@kde.org" );
   about.addAuthor( "Ingo Kl\303\266cker", I18N_NOOP("Encryption"), "ingo.kloecker@epost.de" );

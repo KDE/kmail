@@ -1,7 +1,7 @@
 /**
  * kmtransport.cpp
  *
- * Copyright (c) 2001 Michael Haeckel <Michael@Haeckel.Net>
+ * Copyright (c) 2001-2002 Michael Haeckel <haeckel@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License version 2

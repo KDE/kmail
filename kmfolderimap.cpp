@@ -2,7 +2,7 @@
  * kmfolderimap.cpp
  *
  * Copyright (c) 2001 Kurt Granroth <granroth@kde.org>
- * Copyright (c) 2000 Michael Haeckel <Michael@Haeckel.Net>
+ * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>
  *
  * This file is based on kmacctimap.coo by Michael Haeckel which was
  * based on kmacctexppop.cpp by Don Sanders
