@@ -3311,9 +3311,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
             new_kci->setItem(mItems[new_kci->id()] = khi);
             if(new_kci->hasChildren())
                 s.enqueue(new_kci);
-            if(GlobalSettings::jumpToUnread() && mFolder->getMsgBase(new_kci->id())->isNew() ||
-                GlobalSettings::jumpToUnread() && mFolder->getMsgBase(new_kci->id())->isUnread() )
-                unread_exists = true;
+            if ( mFolder->getMsgBase(new_kci->id())->isNew() ||
+                 ( GlobalSettings::jumpToUnread() &&
+                   mFolder->getMsgBase(new_kci->id())->isUnread() ) ) {
+              unread_exists = true;
+            }
         }
         // If we are sorting by date and ascending the top level items are sorted
         // ascending and the threads themselves are sorted descending. One wants
@@ -3370,12 +3372,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
         if (unread_exists) {
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
-                bool isUnread = false;
-                if ( GlobalSettings::jumpToUnread() ) // search unread messages
-                    if (mFolder->getMsgBase(item->msgId())->isUnread())
-                        isUnread = true;
-
-                if (mFolder->getMsgBase(item->msgId())->isNew() || isUnread) {
+                if ( mFolder->getMsgBase( item->msgId() )->isNew() ||
+                     ( GlobalSettings::jumpToUnread() &&
+                       mFolder->getMsgBase( item->msgId() )->isUnread() ) ) {
                     first_unread = item->msgId();
                     break;
                 }
