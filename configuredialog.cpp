@@ -461,6 +461,7 @@ void IdentityPage::slotNewIdentity()
     mIdentityList->setSelected( new IdentityListViewItem( mIdentityList,
 							  /*after*/ item,
 							  newIdent ), true );
+    slotModifyIdentity();
   }
 }
 
