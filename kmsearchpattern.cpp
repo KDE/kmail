@@ -81,9 +81,9 @@ KMSearchRule::~KMSearchRule() {
 void KMSearchRule::init( const QCString & field ) {
   delete mBmHeaderField;
   if ( field.isEmpty() || field[0] == '<' )
-      mBmHeaderField = 0;
+    mBmHeaderField = 0;
   else //TODO handle the unrealistic case of the message starting with mField
-      mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data()); 	
+    mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data(), false /*cis*/); 	
 }
 
 
@@ -129,10 +129,10 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
     const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace();
     return matches( false, 0, 0, msgContents );
   } else if ( mField == "<recipients>" ) {
-    static const DwBoyerMoore to("\nTo: ");
+    static const DwBoyerMoore to("\nTo: ", false /*case-insens.*/);
     bool res = matches( aStr, msg, &to, 2 );
     if ( !res ) {
-      static const DwBoyerMoore cc("\nCc: ");
+      static const DwBoyerMoore cc("\nCc: ", false /*case-insens.*/);
       res = matches( aStr, msg, &cc, 2 );
     }
     return res;
