@@ -172,7 +172,7 @@ public slots:
   void slotSend();
   void slotSendNow();
   void slotSendLater();
-  void slotDropAction();
+  void slotDropAction(QDropEvent *e);
   void slotNewComposer();
   void slotNewMailReader();
   void slotClose();

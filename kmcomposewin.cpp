@@ -5,6 +5,7 @@
 #include <qdir.h>
 #include <qprinter.h>
 #include <qcombobox.h>
+#include <qdragobject.h>
 
 #include "kmcomposewin.h"
 #include "kmmessage.h"
@@ -770,8 +771,9 @@ void KMComposeWin::setupEditor(void)
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
   mEditor->installRBPopup(menu);
-    updateCursorPosition();
-connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
+  updateCursorPosition();
+  connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
+  connect(mEditor,SIGNAL(gotUrlDrop(QDropEvent *)),SLOT(slotDropAction(QDropEvent *)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1681,20 +1683,19 @@ void KMComposeWin::slotPrint()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotDropAction()
+void KMComposeWin::slotDropAction(QDropEvent *e)
 {
-#if 0
   QString  file;
-  QStrList *fileList;
-
-  fileList = &mDropZone->getURLList();
-
-  for (file=fileList->first(); !file.isEmpty() ; file=fileList->next())
-  {
-    file.replace(QRegExp("file:"),"");
-    addAttach(file);
+  QStringList fileList;
+  QStringList::Iterator it;
+  if(QUriDrag::canDecode(e) && QUriDrag::decodeLocalFiles( e, fileList )) {
+    for (it = fileList.begin(); it != fileList.end(); ++it) {
+      (*it).replace(QRegExp("file:"),"");
+      addAttach(*it);
+    }
   }
-#endif
+  else
+    KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
 }
 
 
