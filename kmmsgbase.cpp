@@ -670,6 +670,7 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
   } else {
     if (!mParent->mIndexStream)
       return ret;
+    assert(mIndexLength >= 0);
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
     int first_off=ftell(mParent->mIndexStream);
@@ -713,12 +714,13 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   length = 0;
 
 #define STORE_DATA_LEN(type, x, len) do { \
-	if(csize < (length + (len + sizeof(short) + sizeof(MsgPartType)))) \
-    	   ret = (uchar *)realloc(ret, csize += QMAX(256, (len+sizeof(short)+sizeof(MsgPartType)))); \
+	int len2 = (len > 256) ? 256 : len; \
+	if(csize < (length + (len2 + sizeof(short) + sizeof(MsgPartType)))) \
+    	   ret = (uchar *)realloc(ret, csize += len2+sizeof(short)+sizeof(MsgPartType)); \
         MsgPartType t = type; memcpy(ret+length, &t, sizeof(MsgPartType)); \
-        short l = len; memcpy(ret+length+sizeof(MsgPartType), &l, sizeof(short)); \
-        memcpy(ret+length+sizeof(short)+sizeof(MsgPartType), x, len); \
-        length += len + sizeof(short) + sizeof(MsgPartType); \
+        short l = len2; memcpy(ret+length+sizeof(MsgPartType), &l, sizeof(short)); \
+        memcpy(ret+length+sizeof(short)+sizeof(MsgPartType), x, len2); \
+        length += len2 + sizeof(short) + sizeof(MsgPartType); \
     } while(0)
 #define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x))
   unsigned long tmp;
