@@ -306,7 +306,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
   {
     changeItemColor(darkBlue, msgId);
   }
-  else changeItemColor(kapp->inactiveTextColor(), msgId);
+  else changeItemColor(black, msgId);
 }
 
 
@@ -842,7 +842,7 @@ void KMHeaders::updateMessageList(void)
     {
       changeItemColor(darkBlue);
     }
-    else changeItemColor(kapp->inactiveTextColor());
+    else changeItemColor(black);
   }
 
   setAutoUpdate(autoUpd);
