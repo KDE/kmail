@@ -3882,10 +3882,12 @@ void KMAtmListViewItem::enableCryptoCBs(bool on)
   if( mCBEncrypt ) {
     mCBEncryptEnabled = on;
     mCBEncrypt->setEnabled( on );
+    mCBEncrypt->setShown( on );
   }
   if( mCBSign ) {
     mCBSignEnabled = on;
     mCBSign->setEnabled( on );
+    mCBSign->setShown( on );
   }
 }
 
