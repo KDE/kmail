@@ -152,6 +152,8 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   {
     mListBox.insertItem(addr);
   }
+
+  mEdtAddress.setFocus();
   resize(350, 450);
 }
 
@@ -223,6 +225,7 @@ void KMAddrBookEditDlg::slotCancel()
 void KMAddrBookEditDlg::slotEnableAdd()
 {
   mBtnAdd.setEnabled(true);
+  mBtnAdd.setDefault(true);
 }
 
 
@@ -233,7 +236,14 @@ void KMAddrBookEditDlg::slotAdd()
 
   if (!addr || !*addr) return;
   mIndex = -1;
-  mListBox.insertItem(addr, mListBox.currentItem());
+  mListBox.insertItem(addr, 0);
+  mListBox.setContentsPos(0, 0);
+  mEdtAddress.setText("");
+  mEdtAddress.setFocus();
+  mBtnAdd.setDefault(false);
+  mBtnAdd.setEnabled(false);
+  mBtnOk.setDefault(true);
+  
 }
 
 

@@ -269,9 +269,9 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.dateCol = mPaintInfo.senderCol + 1;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
-  addColumn( i18n("Subject"), 270 );
-  addColumn( i18n("Sender"), 200 );
-  addColumn( i18n("Date"), 300 );
+  addColumn( i18n("Subject"), 310 );
+  addColumn( i18n("Sender"), 170 );
+  addColumn( i18n("Date"), 170 );
 
   if (!pixmapsLoaded)
   {
@@ -410,9 +410,9 @@ void KMHeaders::readFolderConfig (void)
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + mFolder->name());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
-  setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 200));
-  setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 270));
-  setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 300));
+  setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
+  setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
+  setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 170));
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
