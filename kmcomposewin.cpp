@@ -421,11 +421,6 @@ void KMComposeWin::readConfig(void)
     if (!config->readBoolEntry("defaultFonts",TRUE)) {
       mBodyFont = QFont("helvetica");
       mBodyFont = config->readFontEntry("body-font", &mBodyFont);
-      QString bodyFamily = mBodyFont.family();
-      int pos = bodyFamily.find("-");
-      // We ignore the foundary, otherwise we can't set the charset
-      if (pos != -1)
-	mBodyFont.setFamily(bodyFamily.right(bodyFamily.length()-pos-1));
     }
     else
       mBodyFont = KGlobalSettings::generalFont();

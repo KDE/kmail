@@ -209,19 +209,12 @@ void KMReaderWin::readConfig(void)
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = QFont("helvetica");
     mBodyFont = config->readFontEntry("body-font", &mBodyFont);
-    fntSize = mBodyFont.pixelSize();
+    fntSize = mBodyFont.pointSize();
     mBodyFamily = mBodyFont.family();
-    int pos = mBodyFamily.find("-");
-    // We ignore the foundary, otherwise we can't set the charset
-    if (pos != -1)
-    {
-      mBodyFamily.remove(0, pos + 1);
-      mBodyFont.setFamily(mBodyFamily);
-    }
   }
   else {
     setFont(KGlobalSettings::generalFont());
-    fntSize = KGlobalSettings::generalFont().pixelSize();
+    fntSize = KGlobalSettings::generalFont().pointSize();
     mBodyFamily = KGlobalSettings::generalFont().family();
   }
   mViewer->setStandardFont(mBodyFamily);
@@ -319,7 +312,6 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setMetaRefreshEnabled(false);
   mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
-  mViewer->resetFontSizes();
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
@@ -558,7 +550,7 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("body { font-family: \"%1\"; font-size: %2px }\n")
+		 QString("body { font-family: \"%1\"; font-size: %2pt }\n")
                  .arg( mBodyFamily ).arg( fntSize ) +
 		 QString("a { color: #%1; ").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
