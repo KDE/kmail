@@ -1048,24 +1048,6 @@ void KMFolderCachedImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
   }
 }
 
-//-----------------------------------------------------------------------------
-QCString KMFolderCachedImap::statusToFlags(KMMsgStatus status)
-{
-  QCString flags = "";
-  if (status & KMMsgStatusNew || status & KMMsgStatusUnread) 
-    return flags;
-  if (status & KMMsgStatusDeleted) 
-    flags = "\\DELETED";
-  else {
-    flags = "\\SEEN";
-    if (status & KMMsgStatusReplied) 
-      flags += " \\ANSWERED";
-    if (status & KMMsgStatusFlag) 
-      flags += " \\FLAGGED";
-  }
-  return flags;
-}
-
 
 void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {

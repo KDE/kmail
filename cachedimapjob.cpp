@@ -289,10 +289,10 @@ void CachedImapJob::slotPutNextMessage()
     return;
   }
 
-  QCString status = KMFolderCachedImap::statusToFlags( mMsg->status() );
   KURL url = mAccount->getUrl();
-  url.setPath( mFolder->imapPath() + ";SECTION=" +
-               QString::fromLatin1( status ) );
+  QString flags = KMFolderImap::statusToFlags( mMsg->status() ); 
+  url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
+
   ImapAccountBase::jobData jd( url.url(), mFolder );
 
   QCString cstr(mMsg->asString());
