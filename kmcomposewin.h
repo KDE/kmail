@@ -175,6 +175,10 @@ public:
     the composer is closed and the message was not sent. Default: FALSE */
    inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
+  /** If this folder is set, the original message is inserted back after
+    cancelling */
+   void setFolder(KMFolder* aFolder) { mFolder = aFolder; }
+
   /** Recode to the specified charset */
    void setCharset(const QString& aCharset, bool forceDefault = FALSE);
 
@@ -375,6 +379,7 @@ protected:
   QList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
   bool mAutoSign, mAutoPgpSign, mAutoDeleteMsg;
+  KMFolder *mFolder;
   long mShowHeaders;
   QString mDefEncoding;
 #ifndef KRN

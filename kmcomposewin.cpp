@@ -133,6 +133,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAtmList.setAutoDelete(TRUE);
   mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
+  mFolder = NULL;
   mEditor = NULL;
   disableBreaking = false;
 
@@ -203,6 +204,12 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
 KMComposeWin::~KMComposeWin()
 {
   writeConfig();
+  if (mFolder && mMsg)
+  {
+    mAutoDeleteMsg = FALSE;
+    mFolder->addMsg(mMsg);
+    emit messageQueuedOrDrafted();
+  }
   if (mAutoDeleteMsg && mMsg) delete mMsg;
   QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.begin();
   while ( it != mapAtmLoadData.end() )
@@ -1935,6 +1942,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (sentOk)
   {
     mAutoDeleteMsg = FALSE;
+    mFolder = NULL;
     close();
   }
 

@@ -894,6 +894,7 @@ void KMMainWin::slotEditMsg()
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
 		    this, SLOT( slotMessageQueuedOrDrafted()) );
   win->setMsg(msg,FALSE);
+  win->setFolder(mFolder);
   win->show();
 }
 

@@ -1026,7 +1026,8 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   {
     if (msgParent==this)
       {
-	if (name() == "outbox") //special case for Edit message.
+	if (name() == "outbox" || name() == "drafts")
+          //special case for Edit message.
 	  {
 	    // debug ("Editing message in outbox");
 	    editing = true;
