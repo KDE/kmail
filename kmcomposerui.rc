@@ -37,6 +37,9 @@
 &amp;View</text>
 <Action name="show_all_fields" />
 <Separator />
+<Action name="show_identity" />
+<Action name="show_transport" />
+<Separator />
 <Action name="show_from" />
 <Action name="show_reply_to" />
 <Action name="show_to" />
