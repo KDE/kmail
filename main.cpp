@@ -114,9 +114,11 @@ static void ungrabPtrKb(void)
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
-  QString appName( app->name());
-  QString msg( aMsg );
-  
+  QString appName = app->name();
+  QString msg = aMsg;
+  static int recurse=-1;
+
+  recurse++;
 
   switch (aType)
   {
@@ -130,7 +132,8 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 	strncmp(aMsg,"QGManager:",10) != 0 &&
 	strncmp(aMsg,"QPainter:",9) != 0 &&
 	strncmp(aMsg,"Could not load", 14) != 0 &&
-	strncmp(aMsg,"QPixmap:",8) != 0)
+	strncmp(aMsg,"QPixmap:",8) != 0 &&
+	!recurse)
     {
       ungrabPtrKb();
       KMsgBox::message(NULL, appName+" "+i18n("warning"), msg.data(),
@@ -146,6 +149,8 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 		     aMsg, KMsgBox::STOP);
     abort();
   }
+
+  recurse--;
 }
 //--- Sven's pseudo IPC&locking start ---
 void serverReady(bool flag)
