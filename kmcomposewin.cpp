@@ -4102,7 +4102,12 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
+     // FIXME-AFTER-KDE-3.1
+     // replace
      mAttachMenu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
+     // by
+     // mAttachMenu->insertItem(i18n("to view", "View"), this, SLOT(slotAttachView()));
+     // end of FIXME-AFTER-KDE-3.1
      mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mAttachMenu->insertItem(i18n("Save As..."), this, SLOT(slotAttachSave()));
      mAttachMenu->insertItem(i18n("Properties..."),
