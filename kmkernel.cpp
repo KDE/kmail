@@ -387,9 +387,30 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QCString &attachSubType,
                             const QCString &attachParamAttr,
                             const QString &attachParamValue,
-                            const QCString &attachContDisp)
+                            const QCString &attachContDisp )
 {
-  kdDebug(5006) << "KMKernel::openComposer called" << endl;
+  kdDebug(5006) << "KMKernel::openComposer called (deprecated version)" << endl;
+
+  return openComposer ( to, cc, bcc, subject, body, hidden,
+                        attachName, attachCte, attachData,
+                        attachType, attachSubType, attachParamAttr,
+                        attachParamValue, attachContDisp, QCString() );
+}
+
+int KMKernel::openComposer (const QString &to, const QString &cc,
+                            const QString &bcc, const QString &subject,
+                            const QString &body, int hidden,
+                            const QString &attachName,
+                            const QCString &attachCte,
+                            const QCString &attachData,
+                            const QCString &attachType,
+                            const QCString &attachSubType,
+                            const QCString &attachParamAttr,
+                            const QString &attachParamValue,
+                            const QCString &attachContDisp,
+                            const QCString &attachCharset )
+{
+  kdDebug(5006) << "KMKernel::openComposer()" << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
@@ -411,6 +432,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     msgPart->setSubtypeStr(attachSubType);
     msgPart->setParameter(attachParamAttr,attachParamValue);
     msgPart->setContentDisposition(attachContDisp);
+    if( !attachCharset.isEmpty() ) {
+      // kdDebug(5006) << "KMKernel::openComposer set attachCharset to " << attachCharset << endl;
+      msgPart->setCharset(attachCharset);
+    }
     cWin->addAttach(msgPart);
   }
 

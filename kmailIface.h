@@ -43,6 +43,18 @@ k_dcop:
                             const QCString &attachParamAttr,
                             const QString &attachParamValue,
                             const QCString &attachContDisp) = 0;
+  virtual int openComposer (const QString &to, const QString &cc,
+                            const QString &bcc, const QString &subject,
+                            const QString &body, int hidden,
+                            const QString &attachName,
+                            const QCString &attachCte,
+                            const QCString &attachData,
+                            const QCString &attachType,
+                            const QCString &attachSubType,
+                            const QCString &attachParamAttr,
+                            const QString &attachParamValue,
+                            const QCString &attachContDisp,
+                            const QCString &attachCharset) = 0;
   /** Open composer and return reference to DCOP interface of composer window.
     If hidden is true, the window will not be shown. If you use that option,
     it's your responsibility to call the send() function of the composer in

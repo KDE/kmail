@@ -90,6 +90,9 @@ public:
   {
     return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List());
   }
+  /** For backward compatibility 
+   * @deprecated
+   */
   int openComposer (const QString &to, const QString &cc,
                     const QString &bcc, const QString &subject,
                     const QString &body, int hidden,
@@ -101,6 +104,20 @@ public:
                     const QCString &attachParamAttr,
                     const QString &attachParamValue,
                     const QCString &attachContDisp);
+  
+  int openComposer (const QString &to, const QString &cc,
+                    const QString &bcc, const QString &subject,
+                    const QString &body, int hidden,
+                    const QString &attachName,
+                    const QCString &attachCte,
+                    const QCString &attachData,
+                    const QCString &attachType,
+                    const QCString &attachSubType,
+                    const QCString &attachParamAttr,
+                    const QString &attachParamValue,
+                    const QCString &attachContDisp,
+                    const QCString &attachCharset);
+  
   DCOPRef openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
