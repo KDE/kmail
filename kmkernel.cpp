@@ -1085,7 +1085,7 @@ void KMKernel::init()
 
   the_msgSender = new KMSender;
   the_server_is_ready = true;
-
+  imProxy()->initialize();
   { // area for config group "Composer"
     KConfigGroupSaver saver(cfg, "Composer");
     if (cfg->readListEntry("pref-charsets").isEmpty())
