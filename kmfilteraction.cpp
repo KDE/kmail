@@ -459,7 +459,6 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // we must use a temp file :-(
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(TRUE);
-  inFile->close();
 
   QPtrList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
@@ -482,6 +481,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   QString tempFileName = inFile->name();
   kCStringToFile( aMsg->asString(), tempFileName, //###
 		  false, false, false );
+  inFile->close();
 
   KProcess shProc;
   shProc.setUseShell(true);
@@ -1557,7 +1557,6 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   ActionScheduler *handler = MessageProperty::filterHandler( aMsg->getMsgSerNum() );
   KTempFile * inFile = new KTempFile;
   inFile->setAutoDelete(FALSE);
-  inFile->close();
 
   QPtrList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
@@ -1580,6 +1579,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
   QString tempFileName = inFile->name();
   kCStringToFile( aMsg->asString(), tempFileName, //###
       false, false, false );
+  inFile->close();
 
   PipeJob *job = new PipeJob(0, 0, aMsg, commandLine, tempFileName);
   QObject::connect ( job, SIGNAL( done() ), handler, SLOT( actionMessage() ) );
