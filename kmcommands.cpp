@@ -1098,6 +1098,7 @@ void KMSetStatusCommand::execute()
         parentStatus = false;
     }
   }
+  QMap< KMFolder*, QValueList<int> > folderMap;
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
     kmkernel->msgDict()->getLocation( *it, &folder, &idx );
     if (folder) {
@@ -1114,8 +1115,16 @@ void KMSetStatusCommand::execute()
             continue;
         }
       }
-      folder->setStatus( idx, mStatus, mToggle );
+      /* Collect the ids for each folder in a separate list and
+         send them off in one go at the end. */
+      folderMap[folder].append(idx);
     }
+  }
+  QMapIterator< KMFolder*, QValueList<int> > it2 = folderMap.begin();
+  while ( it2 != folderMap.end() ) {
+     KMFolder *f = it2.key();
+     f->setStatus( (*it2), mStatus, mToggle );
+     ++it2;
   }
 }
 

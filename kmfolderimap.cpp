@@ -925,21 +925,21 @@ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 
 
 //-----------------------------------------------------------------------------
-QCString KMFolderImap::statusToFlags(KMMsgStatus status)
+QString KMFolderImap::statusToFlags(KMMsgStatus status)
 {
-  QCString flags = "";
-  if (status & KMMsgStatusNew || status & KMMsgStatusUnread) 
-    return flags;
+  QString flags;
   if (status & KMMsgStatusDeleted) 
     flags = "\\DELETED";
   else {
-    flags = "\\SEEN";
+    if (status & KMMsgStatusOld || status & KMMsgStatusRead) 
+      flags = "\\SEEN ";
     if (status & KMMsgStatusReplied) 
-      flags += " \\ANSWERED";
+      flags += "\\ANSWERED ";
     if (status & KMMsgStatusFlag) 
-      flags += " \\FLAGGED";
+      flags += "\\FLAGGED";
   }
-  return flags;
+  
+  return flags.simplifyWhiteSpace();
 }
 
 //-------------------------------------------------------------
@@ -1244,18 +1244,37 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
 {
   KMFolder::setStatus(ids, status, toggle);
   if (mReadOnly) return;
-  
+
   /* The status has been already set in the local index. Update the flags on
-   * the server. Needs to be done for each message individually. */
-  for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
-  {
+   * the server. To avoid doing that for each message individually, group them
+   * by the status string they will be assigned and make sets for each of those
+   * groups of mails. This is necessary because the imap kio_slave status job
+   * does not append flags but overwrites them. Example:
+   * 
+   * 2 important mails and 3 unimportant mail, all unread. Mark all as read calls
+   * this method with a list of uids. The 2 important mails need to get the string
+   * \SEEN \FLAGGED while the others need to get just \SEEN. Build sets for each
+   * of those and sort them, so the server can handle them efficiently. */
+  QMap< QString, QStringList > groups;
+  for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it ) {
     KMMessage *msg = 0;
     bool unget = !isMessage(*it);
     msg = getMsg(*it);
     if (!msg) continue;
-    QCString flags = statusToFlags(msg->status());
-    setImapStatus(imapPath() + ";UID=" + msg->headerField("X-UID"), flags);
+    QString flags = statusToFlags(msg->status());
+    // Collect uids for each type of flags.
+    groups[flags].append(msg->headerField("X-UID"));
     if (unget) unGetMsg(*it);
+  }
+  QMapIterator< QString, QStringList > dit;
+  for ( dit = groups.begin(); dit != groups.end(); ++dit ) {
+     QCString flags = dit.key().latin1();
+     QStringList sets = makeSets( (*dit), true );
+     // Send off a status setting job for each set.
+     for (  QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
+       QString imappath = imapPath() + ";UID=" + ( *slit );
+       setImapStatus(imappath, flags);
+     }
   }
   mAccount->displayProgress();
 }

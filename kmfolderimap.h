@@ -216,7 +216,7 @@ public:
   /**
    * Convert message status to a list of IMAP flags
    */
-  static QCString statusToFlags(KMMsgStatus status);
+  static QString statusToFlags(KMMsgStatus status);
 
   /**
    * Return the filename of the folder (reimplemented from KFolder)

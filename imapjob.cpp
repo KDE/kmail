@@ -97,8 +97,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   {
     // transfers the complete message to the server
     KURL url = account->getUrl();
-    url.setPath( folder->imapPath() + ";SECTION="
-      + QString::fromLatin1( KMFolderImap::statusToFlags( msg->status() ) ) );
+    QString flags = KMFolderImap::statusToFlags( msg->status() ); 
+    url.setPath( folder->imapPath() + ";SECTION=" + flags );
     ImapAccountBase::jobData jd;
     jd.parent = 0; jd.offset = 0;
     jd.total = 1; jd.done = 0;
