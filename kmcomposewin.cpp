@@ -1250,13 +1250,15 @@ void KMComposeWin::addAttach(const QString aUrl)
   // create message part
   i = aUrl.findRev('/');
   name = (i>=0 ? aUrl.mid(i+1, 256) : aUrl);
+  QString encName = KMMsgBase::encodeRFC2231String(name);
+  bool RFC2231encoded = name != encName;
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
   msgPart->setBodyEncoded(str);
   msgPart->magicSetType();
-  msgPart->setContentDisposition("attachment; filename=\""
-    + KMMsgBase::encodeRFC2047String(name) + "\"");
+  msgPart->setContentDisposition(QString("attachment; filename")
+    + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
   // show properties dialog
   kernel->kbp()->idle();

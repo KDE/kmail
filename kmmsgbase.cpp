@@ -434,6 +434,72 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
+const QString KMMsgBase::encodeRFC2231String(const QString& _str)
+{
+  if (_str.isEmpty()) return _str;
+  char *latin = (char *)calloc(1, _str.length() + 1);
+  strcpy(latin, _str.latin1());
+  char *l = latin;
+  char hexcode;
+  int i;
+  bool quote;
+  while (*l)
+  {
+    if (*l < 0) break;
+    l++;
+  }
+  if (!*l) return _str;
+  QString result = QString("iso-8859-1''");
+  l = latin;
+  while (*l)
+  {
+    quote = *l < 0;
+    for (i = 0; i < 16; i++) if (*l == especials[i]) quote = true;
+    if (quote)
+    {
+      result += "%";
+      hexcode = ((*l & 0xF0) >> 4) + 48;
+      if (hexcode >= 58) hexcode += 7;
+      result += hexcode;
+      hexcode = (*l & 0x0F) + 48;
+      if (hexcode >= 58) hexcode += 7;
+      result += hexcode;
+    } else {
+      result += *l;
+    }
+    l++;
+  }
+  free(latin);
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMsgBase::decodeRFC2231String(const QString& _str)
+{
+  int p = _str.find("'");
+  if (p < 0) return _str;
+  QString st = _str.mid(_str.findRev("'") + 1);
+  char ch, ch2;
+  p = 0;
+  while (p < (int)st.length())
+  {
+    if (st.at(p) == 37)
+    {
+      ch = st.at(p+1).latin1() - 48;
+      if (ch > 16) ch -= 7;
+      ch2 = st.at(p+2).latin1() - 48;
+      if (ch2 > 16) ch2 -= 7;
+      st.at(p) = ch * 16 + ch2;
+      st.remove( p+1, 2 );
+    }
+    p++;
+  }
+  return st;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
 {
 #ifdef BROKEN

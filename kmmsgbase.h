@@ -131,6 +131,13 @@ public:
     using quoted-printable. */
   static const QString encodeRFC2047String(const QString& aStr);
 
+  /** Encode given string as described in RFC2231
+    (parameters in MIME headers) */
+  static const QString encodeRFC2231String(const QString& aStr);
+
+  /** Decode given string as described in RFC2231 */
+  static const QString decodeRFC2231String(const QString& aStr);
+
 protected:
   KMFolder* mParent;
   unsigned long mFolderOffset, mMsgSize;

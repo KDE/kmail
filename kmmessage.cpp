@@ -1737,7 +1737,8 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QString contDesc = KMMsgBase::encodeRFC2047String(aPart->
     contentDescription());
   QString contDisp = aPart->contentDisposition();
-  QString name     = KMMsgBase::encodeRFC2047String(aPart->name());
+  QString name     = KMMsgBase::encodeRFC2231String(aPart->name());
+  bool RFC2231encoded = aPart->name() != name;
 #if defined CHARSETS
    QString charset  = aPart->charset();
 #endif
@@ -1758,8 +1759,17 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 #endif
   }
 
-  if(!name.isEmpty())
-    headers.ContentType().SetName((const char*)name);
+  if (RFC2231encoded)
+  {
+    DwParameter *nameParam;
+    nameParam = new DwParameter;
+    nameParam->SetAttribute("name*");
+    nameParam->SetValue((const char*)name);
+    headers.ContentType().AddParameter(nameParam);
+  } else {
+    if(!name.isEmpty())
+      headers.ContentType().SetName((const char*)name);
+  }
 
   if (!cte.isEmpty())
     headers.Cte().FromString(cte);

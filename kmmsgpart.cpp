@@ -317,19 +317,28 @@ const QString KMMessagePart::fileName(void) const
 {
   int i, j, len;
   QString str;
+  int RFC2231encoded = 0;
 
-  i = mContentDisposition.find("filename=", 0, FALSE);
-  if (i < 0) return QString::null;
+  i = mContentDisposition.find("filename*=", 0, FALSE);
+  if (i >= 0) { RFC2231encoded = 1; }
+  else {
+    i = mContentDisposition.find("filename=", 0, FALSE);
+    if (i < 0) return QString::null;
+  }
   j = mContentDisposition.find(';', i+9);
 
   if (j < 0) j = 32767;
-  str = mContentDisposition.mid(i+9, j-i-9).stripWhiteSpace();
+  str = mContentDisposition.mid(i+9+RFC2231encoded, j-i-9-RFC2231encoded).
+    stripWhiteSpace();
 
   len = str.length();
   if (str[0]=='"' && str[len-1]=='"') 
       str = str.mid(1, len-2);
 
-  str = KMMsgBase::decodeQuotedPrintableString(str);
+  if (RFC2231encoded)
+    str = KMMsgBase::decodeRFC2231String(str);
+  else
+    str = KMMsgBase::decodeQuotedPrintableString(str);
 
   return str;
 }
