@@ -70,10 +70,11 @@ namespace ACLJobs {
     Create = 16,
     Delete = 32,
     Administer = 64,
+    Post = 128,
     // alias for "all read/write permissions except admin"
-    AllWrite = List | Read | WriteFlags | Insert | Create | Delete,
+    AllWrite = List | Read | WriteFlags | Insert | Post | Create | Delete,
     // alias for "all permissions"
-    All = List | Read | WriteFlags | Insert | Create | Delete | Administer
+    All = List | Read | WriteFlags | Insert | Post | Create | Delete | Administer
   };
   /// Set the permissions for a given user on a given url
   KIO::SimpleJob* setACL( KIO::Slave* slave, const KURL& url, const QString& user, unsigned int permissions );

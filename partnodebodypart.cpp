@@ -71,13 +71,13 @@ QString KMail::PartNodeBodyPart::contentDescription() const {
   return mPartNode.msgPart().contentDescription();
 }
 
-QString KMail::PartNodeBodyPart::contentDispositionParameter( const char * param ) const {
-  kdWarning( 5006 ) << "Sorry, not yet implmented: PartNodeBodyPart::contentDispositionParameter()" << endl;
+QString KMail::PartNodeBodyPart::contentDispositionParameter( const char * ) const {
+  kdWarning( 5006 ) << "Sorry, not yet implemented: PartNodeBodyPart::contentDispositionParameter()" << endl;
   return QString::null;
 }
 
 bool KMail::PartNodeBodyPart::hasCompleteBody() const {
-  kdWarning( 5006 ) << "Sorry, not yet implmented: PartNodeBodyPart::contentDispositionParameter()" << endl;
+  kdWarning( 5006 ) << "Sorry, not yet implemented: PartNodeBodyPart::contentDispositionParameter()" << endl;
   return true;
 }
 

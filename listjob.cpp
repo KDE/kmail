@@ -138,8 +138,11 @@ void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
   Q_UNUSED( errorMsg );
   if ( !errorCode )
     execute();
-  else
+  else {
+    if ( mParentProgressItem )
+      mParentProgressItem->setComplete();
     delete this;
+  }
 }
 
 void ListJob::slotListResult( KIO::Job* job )

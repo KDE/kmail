@@ -19,7 +19,7 @@ public:
   KMFolderComboBox( QWidget *parent = 0, char *name = 0 );
   KMFolderComboBox( bool rw, QWidget *parent = 0, char *name = 0 );
 
-  /** Select wheather the outbox folder is shown.  Default is yes. */
+  /** Select whether the outbox folder is shown.  Default is yes. */
   void showOutboxFolder(bool shown);
   void showImapFolders(bool shown);
 

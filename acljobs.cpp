@@ -46,6 +46,7 @@ static unsigned int IMAPRightsToPermission( const QString& str ) {
     case 's': foundSeenPerm = true; break;
     case 'w': perm |= ACLJobs::WriteFlags; break;
     case 'i': perm |= ACLJobs::Insert; break;
+    case 'p': perm |= ACLJobs::Post; break;
     case 'c': perm |= ACLJobs::Create; break;
     case 'd': perm |= ACLJobs::Delete; break;
     case 'a': perm |= ACLJobs::Administer; break;
@@ -77,6 +78,8 @@ static QCString permissionsToIMAPRights( unsigned int permissions ) {
     str += 'w';
   if ( permissions & ACLJobs::Insert )
     str += 'i';
+  if ( permissions & ACLJobs::Post )
+    str += 'p';
   if ( permissions & ACLJobs::Create )
     str += 'c';
   if ( permissions & ACLJobs::Delete )
@@ -98,6 +101,8 @@ QString ACLJobs::permissionsToString( unsigned int permissions )
     str += "Write ";
   if ( permissions & ACLJobs::Insert )
     str += "Insert ";
+  if ( permissions & ACLJobs::Post )
+    str += "Post ";
   if ( permissions & ACLJobs::Create )
     str += "Create ";
   if ( permissions & ACLJobs::Delete )

@@ -94,7 +94,7 @@
                                 <string>OCSP responder signature:</string>
                             </property>
                         </widget>
-                        <widget class="Kleo::SigningKeyRequester">
+                        <widget class="Kleo::KeyRequester">
                             <property name="name">
                                 <cstring>OCSPResponderSignature</cstring>
                             </property>
@@ -174,7 +174,7 @@
 </widget>
 <customwidgets>
     <customwidget>
-        <class>Kleo::SigningKeyRequester</class>
+        <class>Kleo::KeyRequester</class>
         <header location="local">../certmanager/lib/ui/keyrequester.h</header>
         <sizehint>
             <width>-1</width>
