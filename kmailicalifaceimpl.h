@@ -107,7 +107,7 @@ public:
   QString folderName( KFolderTreeItem::Type type, int language = -1 ) const;
 
   /** Get the folder that holds *type* entries */
-  KMFolder* folderFromType( const QString& type );
+  KMFolder* folderFromType( const QString& type, const QString& folder );
 
   /** Return the ical type of a folder */
   QString icalFolderType( KMFolder* folder ) const;

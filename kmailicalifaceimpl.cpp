@@ -128,7 +128,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
   mResourceQuiet = true;
 
   // Find the folder
-  KMFolder* f = folderFromType( type );
+  KMFolder* f = folderFromType( type, folder );
   if( f ) {
     // Make a new message for the incidence
     KMMessage* msg = new KMMessage();
@@ -174,7 +174,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   mResourceQuiet = true;
 
   // Find the folder and the incidence in it
-  KMFolder* f = folderFromType( type );
+  KMFolder* f = folderFromType( type, folder );
   if( f ) {
     KMMessage* msg = findMessageByUID( uid, f );
     if( msg ) {
@@ -201,29 +201,16 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
                 << folder << " )" << endl;
   QStringList ilist;
 
-  KMFolder* f;
-  if ( folder.isEmpty() || ( folderFromType( type ) &&
-                             folderFromType( type )->location() == folder ) )
-    f = folderFromType( type );
-  else
-    f = extraFolder( type, folder );
-  if( f ) {
+  KMFolder* f = folderFromType( type, folder );
+  if ( f ) {
     f->open();
     QString s;
     for( int i=0; i<f->count(); ++i ) {
       bool unget = !f->isMessage(i);
-      if( KMGroupware::vPartFoundAndDecoded( f->getMsg( i ), s ) ) {
-        if( f == mContacts ) {
-          kdDebug(5006) << "vCard for KAB: " << s << endl;
-        }
+      if( KMGroupware::vPartFoundAndDecoded( f->getMsg( i ), s ) )
         ilist << s;
-      }
       if( unget ) f->unGetMsg(i);
     }
-  } else {
-    // Check if it's an error or just something with another type
-    if ( mExtraFolders.find( folder ) == 0 )
-      kdError(5006) << "Not an IMAP resource folder" << endl;
   }
 
   return ilist;
@@ -234,7 +221,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   QStringList lst;
 
   // Add the default one
-  KMFolder* f = folderFromType( type );
+  KMFolder* f = folderFromType( type, QString::null );
   if ( f )
     lst << f->location();
 
@@ -271,7 +258,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
     entry = *it;
     ++it;
 
-    if( !update( type, uid, entry ) )
+    if( !update( type, folder, uid, entry ) )
       // Some error happened
       return false;
   }
@@ -285,12 +272,13 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   if( !mUseResourceIMAP )
     return false;
 
+  kdDebug(5006) << "Update( " << type << ", " << folder << ", " << uid << ")\n";
   bool rc = true;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
   // Find the folder and the incidence in it
-  KMFolder* f = folderFromType( type );
+  KMFolder* f = folderFromType( type, folder );
   if( f ) {
     KMMessage* msg = findMessageByUID( uid, f );
     if( msg ) {
@@ -385,16 +373,24 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
  * The folder and message stuff code
  */
 
-KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type )
+KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
+                                              const QString& folder )
 {
   if( mUseResourceIMAP ) {
-    if( type == "Calendar" ) return mCalendar;
-    else if( type == "Contact" ) return mContacts;
-    else if( type == "Note" ) return mNotes;
-    else if( type == "Task" || type == "Todo" ) return mTasks;
-    else if( type == "Journal" ) return mJournals;
+    KMFolder* f = extraFolder( type, folder );
+    if ( f )
+      return f;
 
-    kdError(5006) << "No folder type \"" << type << "\"" << endl;
+    if( type == "Calendar" ) f = mCalendar;
+    else if( type == "Contact" ) f = mContacts;
+    else if( type == "Note" ) f = mNotes;
+    else if( type == "Task" || type == "Todo" ) f = mTasks;
+    else if( type == "Journal" ) f = mJournals;
+
+    if ( f && ( folder.isEmpty() || folder == f->location() ) )
+      return f;
+
+    kdError(5006) << "No folder ( " << type << ", " << folder << " )\n";
   }
 
   return 0;
