@@ -153,7 +153,6 @@ private:
   virtual void execute();
 
   KURL mUrl;
-  QWidget *mParent;
 };
 
 class KMAddBookmarksCommand : public KMCommand
@@ -167,7 +166,6 @@ private:
   virtual void execute();
 
   KURL mUrl;
-  QWidget *mParent;
 };
 
 
@@ -182,7 +180,6 @@ private:
   virtual void execute();
 
   KURL mUrl;
-  QWidget *mParent;
 };
 
 class KMUrlCopyCommand : public KMCommand
@@ -227,7 +224,6 @@ private:
   virtual void execute();
 
   KURL mUrl;
-  QWidget *mParent;
 };
 
 class KMEditMsgCommand : public KMCommand
@@ -323,7 +319,6 @@ private:
   void saveAll( const QPtrList<partNode>& attachments );
   void saveItem( partNode *node, const QString& filename );
 private:
-  QWidget *mParent;
   QPtrList<partNode> mAttachments;
   bool mEncoded;
 };
@@ -413,7 +408,6 @@ private:
   virtual void execute();
 
 private:
-  QWidget *mParent;
   uint mIdentity;
 };
 

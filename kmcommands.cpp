@@ -407,7 +407,7 @@ void KMMailtoForwardCommand::execute()
 
 
 KMAddBookmarksCommand::KMAddBookmarksCommand( const KURL &url, QWidget *parent )
-  :mUrl( url ), mParent( parent )
+  : KMCommand( parent ), mUrl( url )
 {
 }
 
@@ -423,25 +423,27 @@ void KMAddBookmarksCommand::execute()
 
 KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
    QWidget *parent )
-  :mUrl( url ), mParent( parent )
+  : KMCommand( parent ), mUrl( url )
 {
 }
 
 void KMMailtoAddAddrBookCommand::execute()
 {
-  KMAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ), mParent );
+  KMAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+                                parentWidget() );
 }
 
 
 KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
    QWidget *parent )
-  :mUrl( url ), mParent( parent )
+  : KMCommand( parent ), mUrl( url )
 {
 }
 
 void KMMailtoOpenAddrBookCommand::execute()
 {
-  KMAddrBookExternal::openEmail( KMMessage::decodeMailtoUrl( mUrl.path() ), mParent );
+  KMAddrBookExternal::openEmail( KMMessage::decodeMailtoUrl( mUrl.path() ),
+                                 parentWidget() );
 }
 
 
@@ -488,7 +490,7 @@ void KMUrlOpenCommand::execute()
 
 
 KMUrlSaveCommand::KMUrlSaveCommand( const KURL &url, QWidget *parent )
-  :mUrl( url ), mParent( parent )
+  : KMCommand( parent ), mUrl( url )
 {
 }
 
@@ -496,9 +498,9 @@ void KMUrlSaveCommand::execute()
 {
   if (mUrl.isEmpty()) return;
   KURL saveUrl = KFileDialog::getSaveURL(mUrl.fileName(), QString::null,
-    mParent);
+                                         parentWidget() );
   if (saveUrl.isEmpty()) return;
-  if (KIO::NetAccess::exists(saveUrl, false, mParent))
+  if ( KIO::NetAccess::exists( saveUrl, false, parentWidget() ) )
   {
     if (KMessageBox::warningContinueCancel(0,
         i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>")
@@ -934,7 +936,6 @@ void KMReplyAuthorCommand::execute()
 KMForwardCommand::KMForwardCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList, uint identity )
   : KMCommand( parent, msgList ),
-    mParent( parent ),
     mIdentity( identity )
 {
 }
@@ -942,7 +943,6 @@ KMForwardCommand::KMForwardCommand( QWidget *parent,
 KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
                                     uint identity )
   : KMCommand( parent, msg ),
-    mParent( parent ),
     mIdentity( identity )
 {
 }
@@ -955,8 +955,9 @@ void KMForwardCommand::execute()
   if (msgList.count() >= 2) {
     // ask if they want a mime digest forward
 
-    if (KMessageBox::questionYesNo(mParent, i18n("Forward selected messages as"
-                                                 " a MIME digest?"))
+    if (KMessageBox::questionYesNo( parentWidget(),
+                                    i18n("Forward selected messages as "
+                                         "a MIME digest?") )
         == KMessageBox::Yes) {
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
@@ -1787,18 +1788,18 @@ void KMUrlClickedCommand::execute()
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg )
-  : KMCommand( parent, msg ), mParent( parent ), mEncoded( false )
+  : KMCommand( parent, msg ), mEncoded( false )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs )
-  : KMCommand( parent, msgs ), mParent( parent ), mEncoded( false )
+  : KMCommand( parent, msgs ), mEncoded( false )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode>& attachments,
                                                     KMMessage *msg, bool encoded )
-  : KMCommand( parent, msg ), mParent( parent ), mAttachments( attachments ), mEncoded( encoded )
+  : KMCommand( parent, msg ), mAttachments( attachments ), mEncoded( encoded )
 {
   // do not load the complete message but only parts
   msg->setComplete( true );
@@ -1853,7 +1854,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
   if ( mAttachments.count() > 1 )
   {
     // get the dir
-    KFileDialog fdlg( QString::null, QString::null, mParent, 0, true );
+    KFileDialog fdlg( QString::null, QString::null, parentWidget(), 0, true );
     fdlg.setMode( (unsigned int) KFile::Directory );
     if ( !fdlg.exec() ) return;
     dir = fdlg.selectedURL().path();
@@ -1867,7 +1868,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
       s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
     if ( s.isEmpty() )
       s = "unnamed"; // ### this should probably be i18n'ed
-    file = KFileDialog::getSaveFileName( s, QString::null, mParent,
+    file = KFileDialog::getSaveFileName( s, QString::null, parentWidget(),
                                          QString::null );
   }
 
@@ -1893,7 +1894,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 
     if( !filename.isEmpty() ) {
       if( QFile::exists( filename ) ) {
-        if( KMessageBox::warningYesNo( mParent,
+        if( KMessageBox::warningYesNo( parentWidget(),
                                        i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s.isEmpty() ? filename : s ),
                                        i18n( "KMail Warning" ) ) ==
             KMessageBox::No ) {
@@ -1913,7 +1914,7 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
     bool bSaveEncrypted = false;
     bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
     if( bEncryptedParts )
-      if( KMessageBox::questionYesNo( mParent,
+      if( KMessageBox::questionYesNo( parentWidget(),
                                       i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
                                       i18n( "KMail Question" ) ) ==
           KMessageBox::Yes )
@@ -1921,7 +1922,7 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
 
     bool bSaveWithSig = true;
     if( node->signatureState() != KMMsgNotSigned )
-      if( KMessageBox::questionYesNo( mParent,
+      if( KMessageBox::questionYesNo( parentWidget(),
                                       i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
                                       i18n( "KMail Question" ) ) !=
           KMessageBox::Yes )
@@ -1977,15 +1978,10 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
       }
       file.close();
     } else
-      // FIXME: After string freeze is over:
-      // KMessageBox::error( mParent,
-      //                     i18n( "%1 is detailed error description",
-      //                           "Could not write the file:\n%1" )
-      //                      .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
-      //                     i18n( "KMail Error" ) );
-      KMessageBox::error( mParent,
-                          i18n( "Could not write the file." ) + "\n"
-                          + QString::fromLocal8Bit( strerror( errno ) ),
+      KMessageBox::error( parentWidget(),
+                          i18n( "%1 is detailed error description",
+                                "Could not write the file:\n%1" )
+                           .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
                           i18n( "KMail Error" ) );
   }
 }
