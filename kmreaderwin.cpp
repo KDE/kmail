@@ -216,7 +216,7 @@ void KMReaderView::parseMessage(KMMessage *message)
   messageCanvas->parse();
 }
 
-const char* KMReaderView::decodeString(const char* data, QString type)
+QString KMReaderView::decodeString(const char* data, QString type)
 {
     DwString dwstr(data);
   
@@ -230,6 +230,8 @@ const char* KMReaderView::decodeString(const char* data, QString type)
 	DwDecodeQuotedPrintable(dwstr,dwstr);}
     else if(type=="8bit") 
 	printf("Raw 8 bit data read. Thins may look strange");
+    else if(type != "7bit")
+	dwstr="Encoding of this attachment is currently not supported!";
 
     printf("decoded data: %s",dwstr.c_str());
     return dwstr.c_str();
@@ -240,7 +242,7 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p)
 	QString text;
 	text = decodeString(p->body(),p->cteStr());
 	printf("Returned from decoding\n");
-	text +="<br><br>";
+	text +="<br><hr><br>";
 	return text;
 
 }

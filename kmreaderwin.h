@@ -77,7 +77,7 @@ private slots:
         void saveURL(int);
 	QString parseEAddress(QString);
 	QString parseBodyPart(KMMessagePart *);
-	const char * decodeString(const char *, QString); 
+	QString decodeString(const char *, QString); 
                                                 
 protected:
 	void resizeEvent(QResizeEvent *);
