@@ -103,6 +103,34 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
 #endif
 }
 
+partNode * partNode::fromMessage( const KMMessage * msg ) {
+  if ( !msg )
+    return 0;
+
+  int mainType    = msg->type();
+  int mainSubType = msg->subtype();
+  if(    (DwMime::kTypeNull    == mainType)
+      || (DwMime::kTypeUnknown == mainType) ){
+    mainType    = DwMime::kTypeText;
+    mainSubType = DwMime::kSubtypePlain;
+  }
+
+  // we don't want to treat the top-level part special. mimelib does
+  // (Message vs. BodyPart, with common base class Entity). But we
+  // used DwBodyPart, not DwEntiy everywhere. *shrug*. DwStrings are
+  // subscrib-shared, so we just force mimelib to parse the whole mail
+  // as just another DwBodyPart...
+  DwBodyPart * mainBody = new DwBodyPart( msg->asDwString(), 0 );
+  mainBody->Parse();
+
+  partNode * root = new partNode( mainBody, mainType, mainSubType, true );
+  root->buildObjectTree();
+
+  root->setFromAddress( msg->from() );
+  root->dump();
+  return root;
+}
+
 partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
   : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
     mWasProcessed( false ),

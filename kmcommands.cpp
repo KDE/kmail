@@ -1712,40 +1712,10 @@ void KMSaveAttachmentsCommand::execute()
   }
   KMMessage *msg = 0;
   QPtrList<KMMessage> lst = retrievedMsgs();
-  QPtrListIterator<KMMessage> itr( lst );
-
-  while ( itr.current() ) {
-    msg = itr.current();
-    ++itr;
-    QCString type = msg->typeStr();
-
-    int mainType    = msg->type();
-    int mainSubType = msg->subtype();
-    DwBodyPart* mainBody = 0;
-    DwBodyPart* firstBodyPart = msg->getFirstDwBodyPart();
-    if( !firstBodyPart ) {
-      // ATTENTION: This definitely /should/ be optimized.
-      //            Copying the message text into a new body part
-      //            surely is not the most efficient way to go.
-      //            I decided to do so for being able to get a
-      //            solution working for old style (== non MIME)
-      //            mails without spending much time on implementing.
-      //            During code revisal when switching to KMime
-      //            all this will probably disappear anyway (or it
-      //            will be optimized, resp.).       (khz, 6.12.2001)
-      kdDebug(5006) << "*no* first body part found, creating one from Message" << endl;
-      mainBody = new DwBodyPart( msg->asDwString(), 0 );
-      mainBody->Parse();
-    }
-    partNode *rootNode = new partNode( mainBody, mainType, mainSubType, true );
-    rootNode->setFromAddress( msg->from() );
-
-    if ( firstBodyPart ) {
-      partNode* curNode = new partNode(firstBodyPart);
-      rootNode->setFirstChild( curNode );
-      curNode->buildObjectTree();
-    }
+  for ( QPtrListIterator<KMMessage> itr( lst ) ; itr.current() ; ++itr ) {
+    partNode *rootNode = partNode::fromMessage( itr.current() );
     parse( rootNode );
+    // FIXME: delete rootNode; too early?
   }
 }
 

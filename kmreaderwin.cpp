@@ -1087,48 +1087,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   assert(aMsg!=0);
 
-  QCString type = aMsg->typeStr();
-
-  int mainType    = aMsg->type();
-  int mainSubType = aMsg->subtype();
-  QString mainCntTypeStr;
-  if(    (DwMime::kTypeNull    == mainType)
-      || (DwMime::kTypeUnknown == mainType) ){
-    mainType    = DwMime::kTypeText;
-    mainSubType = DwMime::kSubtypePlain;
-    mainCntTypeStr = "text/plain";
-  } else {
-    mainCntTypeStr = aMsg->typeStr();
-    int scpos = mainCntTypeStr.find(';');
-    if( -1 < scpos)
-      mainCntTypeStr.truncate( scpos );
-  }
-
-  // store message body in mRootNode if *no* body parts found
-  // (please read the comment below before crying about me)  :-)
-  DwBodyPart* mainBody = 0;
-  DwBodyPart* firstBodyPart = aMsg->getFirstDwBodyPart();
-  if( !firstBodyPart ) {
-    // ATTENTION: This definitely /should/ be optimized.
-    //            Copying the message text into a new body part
-    //            surely is not the most efficient way to go.
-    //            I decided to do so for being able to get a
-    //            solution working for old style (== non MIME)
-    //            mails without spending much time on implementing.
-    //            During code revisal when switching to KMime
-    //            all this will probably disappear anyway (or it
-    //            will be optimized, resp.).       (khz, 6.12.2001)
-    kdDebug(5006) << "*no* first body part found, creating one from Message" << endl;
-    mainBody = new DwBodyPart(aMsg->asDwString(), 0);
-    mainBody->Parse();
-  }
-
   delete mRootNode;
-  if ( firstBodyPart && mainType == DwMime::kTypeText )
-    mRootNode = new partNode( firstBodyPart );
-  else
-    mRootNode = new partNode( mainBody, mainType, mainSubType, true );
-  mRootNode->setFromAddress( aMsg->from() );
+  mRootNode = partNode::fromMessage( aMsg );
+  const QCString mainCntTypeStr = mRootNode->typeString() + '/' + mRootNode->subTypeString();
 
   QString cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )
@@ -1140,29 +1101,13 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   else
     cntEnc = aMsg->contentTransferEncodingStr();
 
-  if( firstBodyPart ) {
-kdDebug(5006) << "\n     ----->  First body part *was* found, filling the Mime Part Tree" << endl;
-    // store pointers to the MIME objects in our fast access tree
-    partNode* curNode = new partNode(firstBodyPart);
-    mRootNode->setFirstChild( curNode );
-    curNode->buildObjectTree();
-    // fill the MIME part tree viewer
-    mRootNode->fillMimePartTree( 0,
-				 mMimePartTree,
-				 cntDesc,
-				 mainCntTypeStr,
-				 cntEnc,
-				 cntSize );
-  } else {
-kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" << endl;
-    mRootNode->fillMimePartTree( 0,
-                                 mMimePartTree,
-                                 cntDesc,
-                                 mainCntTypeStr,
-                                 cntEnc,
-                                 cntSize );
-kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tree" << endl;
-  }
+  // fill the MIME part tree viewer
+  mRootNode->fillMimePartTree( 0,
+			       mMimePartTree,
+			       cntDesc,
+			       mainCntTypeStr,
+			       cntEnc,
+			       cntSize );
 
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
   bool hasVCard = false;

@@ -48,6 +48,8 @@ class DwBodyPart;
 class DwMediaType;
 class DwHeaders;
 
+class partNode;
+
 namespace KMail {
   enum ReplyStrategy { ReplySmart = 0,
                        ReplyAuthor,
@@ -261,8 +263,7 @@ public:
     by function asQuotedString().
     THIS FUNCTION WILL BE REPLACED ONCE KMime IS FULLY INTEGRATED
     (khz, June 05 2002)*/
-  void parseTextStringFromDwPart( DwBodyPart * mainBody,
-					  DwBodyPart * firstBodyPart,
+  void parseTextStringFromDwPart( partNode * root,
                                           QCString& parsedString,
                                           const QTextCodec*& codec,
                                           bool& isHTML ) const;

@@ -647,37 +647,18 @@ static QString smartQuote( const QString & msg, int maxLength )
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
-					   DwBodyPart * firstBodyPart,
+void KMMessage::parseTextStringFromDwPart( partNode * root,
                                            QCString& parsedString,
                                            const QTextCodec*& codec,
                                            bool& isHTML ) const
 {
-  // get a valid CryptPlugList
-  CryptPlugWrapperList cryptPlugList;
-  KConfig *config = KMKernel::config();
-  cryptPlugList.loadFromConfig( config );
-
   isHTML = false;
-  int mainType    = type();
-  int mainSubType = subtype();
-  if(    (DwMime::kTypeNull    == mainType)
-      || (DwMime::kTypeUnknown == mainType) ){
-      mainType    = DwMime::kTypeText;
-      mainSubType = DwMime::kSubtypePlain;
-  }
-  partNode rootNode( mainBody, mainType, mainSubType);
-  if ( firstBodyPart ) {
-    partNode * curNode = new partNode( firstBodyPart );
-    rootNode.setFirstChild( curNode );
-    curNode->buildObjectTree();
-  }
   // initialy parse the complete message to decrypt any encrypted parts
   {
     ObjectTreeParser otp( 0, 0, true, false, true );
-    otp.parseObjectTree( &rootNode );
+    otp.parseObjectTree( root );
   }
-  partNode * curNode = rootNode.findType( DwMime::kTypeText,
+  partNode * curNode = root->findType( DwMime::kTypeText,
                                DwMime::kSubtypeUnknown,
                                true,
                                false );
@@ -700,20 +681,9 @@ QString KMMessage::asPlainText( bool aStripSignature, bool allowDecryption ) con
   bool isHTML = false;
   const QTextCodec * codec = 0;
 
-  if ( numBodyParts() == 0 ) {
-    DwBodyPart * mainBody = 0;
-    DwBodyPart * firstBodyPart = getFirstDwBodyPart();
-    if ( !firstBodyPart ) {
-      mainBody = new DwBodyPart( asDwString(), 0 );
-      mainBody->Parse();
-    }
-    parseTextStringFromDwPart( mainBody, firstBodyPart, parsedString, codec,
-			       isHTML );
-  } else {
-    DwBodyPart * dwPart = getFirstDwBodyPart();
-    if ( dwPart )
-      parseTextStringFromDwPart( 0, dwPart, parsedString, codec, isHTML );
-  }
+  partNode * root = partNode::fromMessage( this );
+  parseTextStringFromDwPart( root, parsedString, codec, isHTML );
+  delete root;
 
   if ( mOverrideCodec || !codec )
     codec = this->codec();

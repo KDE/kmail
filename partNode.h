@@ -2,7 +2,7 @@
     partNode.h A node in a MIME tree.
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002 Klarälvdalens Datakonsult AB
+    Copyright (c) 2002,2004 Klarälvdalens Datakonsult AB
 
     KMail is free software; you can redistribute it and/or modify it
     under the terms of the GNU General Public License, version 2, as
@@ -75,6 +75,8 @@ private:
                               int findId, partNode** findNode );
 
 public:
+    static partNode * fromMessage( const KMMessage * msg );
+
     partNode( DwBodyPart* dwPart,
               int explicitType    = DwMime::kTypeUnknown,
               int explicitSubType = DwMime::kSubtypeUnknown,
