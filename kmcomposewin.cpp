@@ -1894,9 +1894,8 @@ bool KMComposeWin::queryClose ()
       slotSaveDraft();
       return false;
     }
-    else
-      cleanupAutoSave();
   }
+  cleanupAutoSave();
   return true;
 }
 
