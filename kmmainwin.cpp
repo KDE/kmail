@@ -1542,9 +1542,13 @@ void KMMainWin::slotInlineAttachments() {
   mMsgView->setAttachmentStyle( KMReaderWin::InlineAttmnt );
 }
 
+void KMMainWin::slotHideAttachments() {
+  mMsgView->setAttachmentStyle( KMReaderWin::HideAttmnt );
+}
+
 void KMMainWin::slotCycleAttachmentStyles() {
   KMReaderWin::AttachmentStyle style = mMsgView->attachmentStyle();
-  if ( style == KMReaderWin::InlineAttmnt ) // last, go to top again:
+  if ( style == KMReaderWin::HideAttmnt ) // last, go to top again:
     mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
   else {
     style = KMReaderWin::AttachmentStyle((int)style+1);
@@ -2249,6 +2253,8 @@ KRadioAction * KMMainWin::actionForAttachmentStyle( int style ) {
     actionName = "view_attachments_smart"; break;
   case KMReaderWin::InlineAttmnt:
     actionName = "view_attachments_inline"; break;
+  case KMReaderWin::HideAttmnt:
+    actionName = "view_attachments_hide"; break;
   }
   if ( actionName )
     return static_cast<KRadioAction*>(actionCollection()->action(actionName));
@@ -2641,6 +2647,14 @@ void KMMainWin::setupMenuBar()
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
+  raction = new KRadioAction( i18n("View->attachments->", "&Hide"), 0, this,
+                              SLOT(slotHideAttachments()),
+                              actionCollection(), "view_attachments_hide" );
+  msg = i18n("Don't show attachments in the message viewer");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
+
   // check the right one:
   raction = actionForAttachmentStyle( mMsgView->attachmentStyle() );
   if ( raction )
@@ -2794,7 +2808,6 @@ void KMMainWin::setupMenuBar()
 		      0, this, SLOT(slotShowTip()),
 		      actionCollection(), "help_show_tip" );
 #endif
-
 
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,

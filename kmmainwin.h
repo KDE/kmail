@@ -224,6 +224,7 @@ protected slots:
   void slotIconicAttachments();
   void slotSmartAttachments();
   void slotInlineAttachments();
+  void slotHideAttachments();
   void slotCycleHeaderStyles();
   void slotCycleAttachmentStyles();
   void slotSetEncoding();

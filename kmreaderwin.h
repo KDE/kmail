@@ -79,7 +79,7 @@ public:
   enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
   /** Style of attachments. */
-  enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3};
+  enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3, HideAttmnt = 4};
 
   /** Get/set the message header style. */
   HeaderStyle headerStyle(void) const { return mHeaderStyle; }

@@ -21,6 +21,7 @@
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <klocale.h>
 #include <kmessagebox.h>
 #include <kpgp.h>
 #include <kpgpblock.h>
@@ -296,7 +297,9 @@ kdDebug(5006) << "* text *" << endl;
           case DwMime::kSubtypeHtml: {
 	    kdDebug(5006) << "html, attachmentstyle = " << mAttachmentStyle << endl;
               QCString cstr( curNode->msgPart().bodyDecoded() );
-	      if( mAttachmentStyle != IconicAttmnt || !curNode->isAttachment() ) {
+	      if( mAttachmentStyle != IconicAttmnt || 
+                  mAttachmentStyle != HideAttmnt ||
+                  !curNode->isAttachment() ) {
               if( htmlMail() ) {
                 // ---Sven's strip </BODY> and </HTML> from end of attachment start-
                 // We must fo this, or else we will see only 1st inlined html
@@ -349,7 +352,9 @@ kdDebug(5006) << "enriched " << endl;
 kdDebug(5006) << "plain " << endl;
           default: {
 kdDebug(5006) << "default " << endl;
-	      if( mAttachmentStyle != IconicAttmnt || !curNode->isAttachment() ) {
+	      if( mAttachmentStyle != IconicAttmnt ||
+                  mAttachmentStyle != HideAttmnt ||
+                  !curNode->isAttachment() ) {
 		writeBodyStr(curNode->msgPart().bodyDecoded().data(), mCodec, &isInlineSigned, &isInlineEncrypted);
 		bDone = true;
 	      }
@@ -753,7 +758,7 @@ kdDebug(5006) << "* model *" << endl;
         }
         break;
       }
-      if( !bDone ) {
+      if( !bDone && mAttachmentStyle != HideAttmnt) {
         bool asIcon = true;
         switch (mAttachmentStyle)
         {
@@ -2387,10 +2392,22 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
     }
 
     // the date
+    QString dateString;
+    if (mPrinting)
+    {
+        QDateTime dateTime;
+        KLocale* locale = KGlobal::locale();
+        dateTime.setTime_t(mMsg->date());
+        dateString = locale->formatDateTime(dateTime);
+    }
+    else
+    {
+        dateString = mMsg->dateStr();
+    }
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
                             .arg(i18n("Date: "))
 			    .arg(mMsg->dateStr().isRightToLeft() ? "rtl" : "ltr")
-                            .arg(strToHtml(mMsg->dateStr())));
+                            .arg(strToHtml(dateString)));
     headerStr.append("</table></div>");
     break;
   }
