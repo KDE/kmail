@@ -332,9 +332,9 @@ kdDebug(5006) << "* text *" << endl;
             if( !reader ) {
               resultString = cstr;
               bDone = true;
-            } else if( reader->mAttachmentStyle != IconicAttmnt ||
-                     reader->mAttachmentStyle != HideAttmnt ||
-                     !curNode->isAttachment() ) {
+            } else if( ( reader->mAttachmentStyle != IconicAttmnt &&
+                         reader->mAttachmentStyle != HideAttmnt ) ||
+                        showOneMimePart || !curNode->isAttachment() ) {
               if( reader->htmlMail() ) {
                 // ---Sven's strip </BODY> and </HTML> from end of attachment start-
                 // We must fo this, or else we will see only 1st inlined html
@@ -388,9 +388,11 @@ kdDebug(5006) << "plain " << endl;
           default: {
 kdDebug(5006) << "default " << endl;
               if( !reader ||
-                  ( reader->mAttachmentStyle != IconicAttmnt ||
-                    reader->mAttachmentStyle != HideAttmnt ||
-                    !curNode->isAttachment() ) ) {
+                  ( ( reader->mAttachmentStyle != IconicAttmnt &&
+                      reader->mAttachmentStyle != HideAttmnt ) ||
+                    showOneMimePart || !curNode->isAttachment() ) ) {
+                if( reader && curNode->isAttachment() && !showOneMimePart )
+                  reader->queueHtml("<br><hr><br>");
                 if( reader )
                   reader->writeBodyStr( curNode->msgPart().bodyDecoded().data(),
                                         reader->mCodec,
@@ -883,7 +885,7 @@ kdDebug(5006) << "basic" << endl;
             break;
           }
           // We allways show audio as icon.
-          if( reader )
+          if( reader && ( reader->mAttachmentStyle != HideAttmnt || showOneMimePart ) )
             reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
           bDone = true;
         }
@@ -904,29 +906,38 @@ kdDebug(5006) << "* model *" << endl;
         }
         break;
       }
-      if( !bDone && reader && reader->mAttachmentStyle != HideAttmnt) {
+
+      if( !bDone && reader && 
+          ( reader->mAttachmentStyle != HideAttmnt || showOneMimePart) ) {
         bool asIcon = true;
-        switch (reader->mAttachmentStyle)
+        if (showOneMimePart)
         {
-          case IconicAttmnt:
-            asIcon = TRUE;
-            break;
-          case InlineAttmnt:
-            asIcon = FALSE;
-            break;
-          case SmartAttmnt:
-            asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+          asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+        }
+        else
+        {
+          switch (reader->mAttachmentStyle)
+          {
+            case IconicAttmnt:
+              asIcon = TRUE;
+              break;
+            case InlineAttmnt:
+              asIcon = FALSE;
+              break;
+            case SmartAttmnt:
+              asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+          }
         }
         if( asIcon ) {
-          if( isImage )
-            reader->mInlineImage = true;
           reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
-          if( isImage )
-            reader->mInlineImage = false;
+        } else if (isImage) {
+          reader->mInlineImage = true;
+          reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
+          reader->mInlineImage = false;
         } else {
           QCString cstr( curNode->msgPart().bodyDecoded() );
           reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
-        }
+        } 
       }
       curNode->mWasProcessed = true;
     }
