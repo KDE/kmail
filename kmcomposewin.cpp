@@ -3920,7 +3920,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KMAddrBookExternal::launch(this);
+  KMAddrBookExternal::openAddressBook(this);
 }
 
 

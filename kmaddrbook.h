@@ -6,10 +6,11 @@
 #define KMAddrBook_h
 
 #include <qstringlist.h>
-#include <qwidget.h>
 
 #include <kdeversion.h>
 #include <kabc/addressee.h>
+
+class QWidget;
 
 class KabcBridge {
 public:
@@ -24,11 +25,14 @@ public:
   static void addEmail( const QString &addr, QWidget *parent );
   static void addNewAddressee( QWidget* );
   static void openEmail( const QString &addr, QWidget *parent );
-  static void launch( QWidget *parent );
-  static bool useKab();
-  static bool useKAddressbook();
-  static bool checkForAddressBook();
+  static void openAddressBook( QWidget *parent );
+
   static bool addVCard( const KABC::Addressee& addressee, QWidget *parent );
+
+private:
+#if !KDE_IS_VERSION( 3, 1, 92 )
+  static bool checkForAddressBook();
+#endif
 };
 
 #endif /*KMAddrBook_h*/

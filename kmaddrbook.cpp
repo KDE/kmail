@@ -1,29 +1,30 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmaddrbook.cpp
 // Author: Stefan Taferner <taferner@kde.org>
 // This code is under GPL
 
 #include <config.h>
-#include <assert.h>
-
-#include <qregexp.h>
-
-#include <kapplication.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kstandarddirs.h>
-#include <kmessagebox.h>
-#include <kprocess.h>
-
-#include <dcopref.h>
-
-#include <kabc/stdaddressbook.h>
-#include <kabc/distributionlist.h>
-#include <kabc/vcardconverter.h>
 
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
 #include "kmmessage.h"
 #include "kmkernel.h" // for KabcBridge
+
+#include <kapplication.h>
+#include <kdebug.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kabc/stdaddressbook.h>
+#include <kabc/distributionlist.h>
+#include <kabc/vcardconverter.h>
+#include <dcopref.h>
+#if !KDE_IS_VERSION( 3, 1, 92 )
+#include <kstandarddirs.h>
+#include <kprocess.h>
+#include <krun.h>
+#endif
+
+#include <qregexp.h>
 
 void KabcBridge::addresses(QStringList& result) // includes lists
 {
@@ -50,7 +51,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
       if (!email.isEmpty()) {
 	if (n.isEmpty() || (email.find( '<' ) != -1))
 	  addr = QString::null;
-	else { // do we really need quotes around this name ? 
+	else { // do we really need quotes around this name ?
           if (n.find(needQuotes) != -1)
 	    addr = '"' + n + endQuote;
 	  else
@@ -130,30 +131,25 @@ QString KabcBridge::expandDistributionList( const QString& listName )
 
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
-  if (useKAddressbook()) {
-    if ( checkForAddressBook() ) {
-      QString email = KMMessage::getEmailAddr(addr);
-      KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-      KABC::Addressee::List addresseeList = addressBook->findByEmail(email);
-      if(addresseeList.isEmpty())
-      {
-        addEmail(addr, 0);
-        addresseeList = addressBook->findByEmail(email);
-      }
-      if(!addresseeList.isEmpty())
-      {
-        kapp->startServiceByDesktopName("kaddressbook");
-        sleep(2);
+#if KDE_IS_VERSION( 3, 1, 92 )
+  QString email = KMMessage::getEmailAddr(addr);
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::Addressee::List addresseeList = addressBook->findByEmail(email);
+  kapp->startServiceByDesktopName( "kaddressbook" );
+  sleep(2);
 
-        DCOPRef call("kaddressbook", "KAddressBookIface");
-        call.send("showContactEditor(QString)", addresseeList.first().uid() );
-      }
-    }
-    return;
+  DCOPRef call( "kaddressbook", "KAddressBookIface" );
+  if( !addresseeList.isEmpty() ) {
+    call.send( "showContactEditor(QString)", addresseeList.first().uid() );
   }
-
-  // TODO: Start a simple add-to-addressbook-dialog, or just add the address
-  // silently to kabc.
+  else {
+    call.send( "addEmail(QString)", addr );
+  }
+#else
+  if ( checkForAddressBook() ) {
+    KRun::runCommand( "kaddressbook -a " + KProcess::quote(addr) );
+  }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -193,32 +189,17 @@ void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
   }
 }
 
-void KMAddrBookExternal::launch(QWidget *) {
-// It might be better to remove the useK* functions and to check the config
-// file directly, as they aren't used anywhere else.
-// It might also be better to write a string for identifying the addressbook
-// instead of a number as it is done now.
+void KMAddrBookExternal::openAddressBook(QWidget *) {
+#if KDE_IS_VERSION( 3, 1, 92 )
+  kapp->startServiceByDesktopName( "kaddressbook" );
+#else
   if ( checkForAddressBook() ) {
-    kapp->startServiceByDesktopName("kaddressbook");
+    KRun::runCommand( "kaddressbook" );
   }
+#endif
 }
 
-bool KMAddrBookExternal::useKab()
-{
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 1);
-  return (ab == 0);
-}
-
-bool KMAddrBookExternal::useKAddressbook()
-{
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 1);
-  return (ab == 1);
-}
-
+#if !KDE_IS_VERSION( 3, 1, 92 )
 bool KMAddrBookExternal::checkForAddressBook()
 {
   if ( KStandardDirs::findExe( "kaddressbook" ).isEmpty() ) {
@@ -230,20 +211,20 @@ bool KMAddrBookExternal::checkForAddressBook()
     return true;
   }
 }
+#endif
 
 void KMAddrBookExternal::addNewAddressee( QWidget* )
 {
-  if (useKAddressbook()) {
-    if ( checkForAddressBook() ) {
-        kapp->startServiceByDesktopName("kaddressbook");
-        sleep(2);
-        DCOPRef call("kaddressbook", "KAddressBookIface");
-        call.send("newContact()");
-    }
-    return;
+#if KDE_IS_VERSION( 3, 1, 92 )
+  kapp->startServiceByDesktopName("kaddressbook");
+  sleep(2);
+  DCOPRef call("kaddressbook", "KAddressBookIface");
+  call.send("newContact()");
+#else
+  if ( checkForAddressBook() ) {
+    KRun::runCommand( "kaddressbook --editor-only --new-contact" );
   }
-  // TODO: Write a simple add-to-addressbook-dialog, or just add the address
-  // silently to kabc.
+#endif
 }
 
 bool KMAddrBookExternal::addVCard( const KABC::Addressee& addressee, QWidget *parent )

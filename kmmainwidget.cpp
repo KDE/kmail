@@ -694,7 +694,7 @@ void KMMainWidget::slotPopFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAddrBook()
 {
-  KMAddrBookExternal::launch(this);
+  KMAddrBookExternal::openAddressBook(this);
 }
 
 
