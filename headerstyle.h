@@ -50,7 +50,7 @@ namespace KMail {
     static const HeaderStyle * fancy();
 
     //
-    // Methods for handling the strategies:
+    // Methods for handling the styles:
     //
     virtual const char * name() const = 0;
     virtual const HeaderStyle * next() const = 0;

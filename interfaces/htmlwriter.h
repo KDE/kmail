@@ -25,7 +25,7 @@ namespace KMail {
     virtual void begin() = 0;
     /** Signal the end of stuff to write. */
     virtual void end() = 0;
-    /** Stop all possibly pending processing in ordeer to be able to
+    /** Stop all possibly pending processing in order to be able to
 	call @ref #begin() again. */
     virtual void reset() = 0;
     /** Write out a chunk of text. No HTML escaping is performed. */
