@@ -518,10 +518,8 @@ RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
 QString RecipientsToolTip::line( const Recipient &r )
 {
   QString txt = r.email();
-  txt.replace( "<", "&lt;" );
-  txt.replace( ">", "&gt;" );
 
-  return "&nbsp;&nbsp;" + txt + "<br/>";
+  return "&nbsp;&nbsp;" + QStyleSheet::escape( txt ) + "<br/>";
 }
 
 void RecipientsToolTip::maybeTip( const QPoint & p )
