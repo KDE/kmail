@@ -189,11 +189,13 @@ void IMAPProgressDialog::syncState( const QString& folderName,
   if( item ) {
     item->setProgress( progress );
     item->setText( 2, syncStatus );
+    mSyncEditorListView->ensureItemVisible( item );
   } else {
     mPreviousItem = new ProgressListViewItem( 1, progress,
                                               mSyncEditorListView,
                                               mPreviousItem, folderName,
                                               QString::null, syncStatus );
+    mSyncEditorListView->ensureItemVisible( mPreviousItem );
   }
 }
 
