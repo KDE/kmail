@@ -1715,8 +1715,14 @@ void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
       // new level
       QPopupMenu* popup = new QPopupMenu( menu, "subMenu" );
       folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
-      if ( ( fti->folder() && !fti->folder()->noContent() ) ||
-           ( !fti->folder() && action == MoveFolder ) )
+      bool subMenu = false;
+      if ( ( action == MoveMessage || action == CopyMessage ) && 
+           fti->folder() && !fti->folder()->noContent() )
+        subMenu = true;
+      if ( action == MoveFolder && ( !fti->folder() || 
+            ( fti->folder() && !fti->folder()->noChildren() ) ) )
+        subMenu = true;
+      if ( subMenu )
       {
         int menuId;
         if ( action == MoveMessage || action == MoveFolder )
