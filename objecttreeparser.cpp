@@ -1436,6 +1436,10 @@ namespace KMail {
       if ( !smimeCrypto )
         return false;
 
+      const KConfigGroup reader( KMKernel::config(), "Reader" );
+      if ( !reader.readBoolEntry( "AutoImportKeys", false ) )
+        return false;
+
       const QByteArray certData = node->msgPart().bodyDecodedBinary();
 
       const GpgME::ImportResult res
