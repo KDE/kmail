@@ -489,6 +489,7 @@ public:
 
 private: // data
   QComboBox *mCharsetCombo;
+  QComboBox *mOverrideCharsetCombo;
 };
 
 

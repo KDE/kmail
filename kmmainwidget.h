@@ -429,7 +429,6 @@ private:
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   KSelectAction *mEncoding;
   KAction       *mlistFilterAction;
-  QCString	mEncodingStr;
   bool		mIntegrated;
   bool          mBeepOnNew;
   bool          mConfirmEmpty;

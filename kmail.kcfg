@@ -369,7 +369,13 @@
        <default code="true"> QCString(QTextCodec::codecForLocale()->name()).lower() == "eucjp"? "jis7" : QCString(QTextCodec::codecForLocale()->name()).lower()</default>
        <label></label>
        <whatsthis>Some emails, especially those generated automatically, do not specify the character encoding which needs to be used to properly display them. In such cases a fallback character encoding will be used, which you can configure here. Set it to the character encoding most commonly used in your part of the world. As a default the encoding configured for the whole system is used.</whatsthis> 
-       </entry>
+     </entry>
+
+     <entry name="OverrideCharacterEncoding" type="String" key="encoding">
+       <default></default>
+       <label></label>
+       <whatsthis>Changing this from its default 'Auto' will force the use of the specified encoding for all emails, regardless of what they specify themselves.</whatsthis> 
+     </entry>
 
 
     </group>

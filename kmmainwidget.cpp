@@ -221,7 +221,6 @@ void KMMainWidget::readPreConfig(void)
   const KConfigGroup general( KMKernel::config(), "General" );
 
   mLongFolderList = geometry.readEntry( "FolderList", "long" ) != "short";
-  mEncodingStr = general.readEntry("encoding", "").latin1();
   mReaderWindowActive = geometry.readEntry( "readerWindowMode", "below" ) != "hide";
   mReaderWindowBelow = geometry.readEntry( "readerWindowMode", "below" ) == "below";
 }
@@ -443,8 +442,6 @@ void KMMainWidget::writeConfig(void)
   // save the state of the unread/total-columns
   geometry.writeEntry( "UnreadColumn", mFolderTree->unreadIndex() );
   geometry.writeEntry( "TotalColumn", mFolderTree->totalIndex() );
-
-  general.writeEntry("encoding", QString(mEncodingStr));
 }
 
 
@@ -522,8 +519,8 @@ void KMMainWidget::createWidgets(void)
   accel->connectItem(accel->insertItem(SHIFT+Key_Right),
                      mHeaders, SLOT(selectNextMessage()));
 
-  if (!mEncodingStr.isEmpty())
-    mCodec = KMMsgBase::codecForName(mEncodingStr);
+  if (!GlobalSettings::overrideCharacterEncoding().isEmpty())
+    mCodec = KMMsgBase::codecForName( GlobalSettings::overrideCharacterEncoding().latin1() );
   else mCodec = 0;
 
   if (mReaderWindowActive) {
@@ -677,14 +674,15 @@ void KMMainWidget::activatePanners(void)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetEncoding()
 {
-    mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText()).latin1();
+  GlobalSettings::setOverrideCharacterEncoding( 
+      KGlobal::charsets()->encodingForName( mEncoding->currentText()).latin1() );
     if (mEncoding->currentItem() == 0) // Auto
     {
       mCodec = 0;
-      mEncodingStr = "";
+      GlobalSettings::setOverrideCharacterEncoding( "" );
     }
     else
-      mCodec = KMMsgBase::codecForName( mEncodingStr );
+      mCodec = KMMsgBase::codecForName( GlobalSettings::overrideCharacterEncoding().latin1() );
     if (mMsgView)
       mMsgView->setOverrideCodec(mCodec);
     return;
@@ -2386,7 +2384,7 @@ void KMMainWidget::setupActions()
   int i = 0;
   for( it = encodings.begin(); it != encodings.end(); ++it)
   {
-    if ( KGlobal::charsets()->encodingForName(*it ) == QString(mEncodingStr) )
+    if ( KGlobal::charsets()->encodingForName(*it ) == GlobalSettings::overrideCharacterEncoding() )
     {
       mEncoding->setCurrentItem( i );
       break;

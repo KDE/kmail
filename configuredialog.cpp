@@ -2173,6 +2173,7 @@ void AppearancePage::ReaderTab::load() {
 
   QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
+  // Fallback Character Encoding
   QHBoxLayout *hlay = new QHBoxLayout( vlay ); // inherits spacing
   mCharsetCombo = new QComboBox( this );
   QStringList encodings = KMMsgBase::supportedEncodings( false );
@@ -2204,12 +2205,46 @@ void AppearancePage::ReaderTab::load() {
   hlay->addWidget( label );
   hlay->addWidget( mCharsetCombo );
 
+  // Override Character Encoding
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mOverrideCharsetCombo = new QComboBox( this );
+  encodings.prepend( i18n( "Auto" ) );
+  mOverrideCharsetCombo->insertStringList( encodings );
+  mOverrideCharsetCombo->setCurrentItem(0);
+
+  it = encodings.begin();
+  QString currentOverrideEncoding = GlobalSettings::overrideCharacterEncoding();
+  i = 1;
+  for( ; it != end; ++it)
+  {
+    if( KGlobal::charsets()->encodingForName(*it) == currentOverrideEncoding )
+    {
+      mOverrideCharsetCombo->setCurrentItem( i );
+      break;
+    }
+    i++;
+  }
+  connect( mOverrideCharsetCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  QString overrideCharsetWhatsThis = 
+    i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().utf8() );
+  QWhatsThis::add( mOverrideCharsetCombo, overrideCharsetWhatsThis );
+
+  label = new QLabel( i18n("&Override Character Encoding"), this );
+  label->setBuddy( mOverrideCharsetCombo );
+
+  hlay->addWidget( label );
+  hlay->addWidget( mOverrideCharsetCombo );
+
   vlay->addStretch( 100 ); // spacer
 }
 
 void AppearancePage::ReaderTab::save() {
   GlobalSettings::setFallbackCharacterEncoding(
       KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
+  GlobalSettings::setOverrideCharacterEncoding(
+      KGlobal::charsets()->encodingForName( mOverrideCharsetCombo->currentText() ) );
 }
 
 
