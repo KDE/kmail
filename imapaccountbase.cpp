@@ -396,7 +396,9 @@ namespace KMail {
         }
 
         // Some servers send _lots_ of duplicates
-        if (mSubfolderPaths.findIndex(url.path()) == -1)
+        // This check is too slow for huge lists
+        if (mSubfolderPaths.count() > 100 ||
+            mSubfolderPaths.findIndex(url.path()) == -1)
         {
           mSubfolderNames.append(name);
           mSubfolderPaths.append(url.path());

@@ -32,6 +32,7 @@
 #ifndef __SUBSCRIPTIONDIALOG
 #define __SUBSCRIPTIONDIALOG
 
+#include <qdict.h>
 #include <ksubscription.h>
 #include "imapaccountbase.h"
 
@@ -73,8 +74,18 @@ namespace KMail {
        */ 
       virtual void slotCancel();    
 
+      /**
+       * Create or update the listitems
+       */ 
+      void createItems();
+
     private:
       QString mDelimiter;
+      QStringList mFolderNames, mFolderPaths, mFolderMimeTypes;
+      ImapAccountBase::jobData mJobData;
+      uint mCount;
+      bool mCheckForExisting;
+      QDict<GroupItem> mItemDict;
 
   };
 
