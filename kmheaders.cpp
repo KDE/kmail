@@ -868,7 +868,10 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
   KMHeaderItem* current = currentHeaderItem();
-  config->writeEntry("CurrentSerialNum", current ? mFolder->getMsgBase( current->msgId() )->getMsgSerNum() : 0 );
+  ulong sernum = 0;
+  if ( current && mFolder->getMsgBase( current->msgId() ) )
+    sernum = mFolder->getMsgBase( current->msgId() )->getMsgSerNum();
+  config->writeEntry("CurrentSerialNum", sernum);
 
   config->writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival);
   config->writeEntry("Status", mPaintInfo.status);
