@@ -237,3 +237,4 @@ void AddToKabDialog::highlighted(int)
 }
 
   
+#include "addtoaddressbook.moc"
