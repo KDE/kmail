@@ -99,14 +99,15 @@ bool KMAcctPop::doProcessNewMail(void)
   int id;		// id of message to read
   int dummy;
   char dummyStr[32];
+  int replyCode; // ReplyCode need from User & Passwd call.
   KMMessage* msg;
   bool gotMsgs = FALSE;
 
 
   // is everything specified ?
-  if (mHost.isEmpty() || mPort<=0 || mLogin.isEmpty())
+  if (mHost.isEmpty() || mPort<=0)
   {
-    warning(nls->translate("Please specify Host, Port, Login, and\n"
+    warning(nls->translate("Please specify Host, Port  and\n"
 			   "destination folder in the settings\n"
 			   "and try again."));
     return FALSE;
@@ -115,16 +116,61 @@ bool KMAcctPop::doProcessNewMail(void)
   client.SetReceiveTimeout(20);
   passwd = decryptStr(mPasswd);
 
+  if(passwd.isEmpty() || mLogin.isEmpty())
+    {KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,
+					    "Please set Password and Username!",
+					    mLogin, decryptStr(passwd));
+    if(!d->exec())
+      return FALSE;
+    else
+      {mPasswd = encryptStr(mPasswd);
+      passwd = decryptStr(mPasswd);
+      passwd = decryptStr(passwd);
+      }
+    }
+ 
   // Now, we got to do something here. If you can resolve to the address
   // but cannot connect to the server like on some of our uni-machines
   // we end up with a lock up! Certainly not desirable!
 
   if (client.Open(mHost,mPort) != '+')
     return popError("OPEN", client);
-  if (client.User(mLogin) != '+')
-    return popError("USER", client);
-  if (client.Pass(decryptStr(passwd)) != '+')
-    return popError("PASS", client);
+
+
+  // It might not necessarly be a network error if User & Pass
+  // reply != +. It's more likely that the username or the passwd is wrong
+  while((replyCode = client.User(mLogin)) != '+')
+    {if(replyCode == '-') 
+      {KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,"Incorrect Username!",
+					      mLogin, decryptStr(passwd));
+      if(!d->exec())
+	return FALSE;
+      else
+	{mPasswd = encryptStr(mPasswd);
+	passwd = decryptStr(mPasswd);
+	passwd = decryptStr(passwd);
+	}
+      }
+    else
+      return popError("USER", client);
+    }
+
+  while((replyCode =client.Pass(decryptStr(passwd))) != '+')
+    {if(replyCode == '-') 
+      {KMPasswdDialog *d = new KMPasswdDialog(NULL,NULL,this,"Incorrect Password!",
+					      mLogin, decryptStr(passwd));
+      if(!d->exec())
+	return FALSE;
+      else
+	{mPasswd = encryptStr(mPasswd);
+	passwd = decryptStr(mPasswd);
+	passwd = decryptStr(passwd);
+	}
+      }
+    else
+      return popError("PASS", client);
+    }
+
 
   if (client.Stat() != '+') return popError("STAT", client);
   response = client.SingleLineResponse().c_str();
@@ -305,12 +351,12 @@ void KMAcctPop::setProtocol(short aProtocol)
 //=============================================================================
 
 KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name, 
-			       KMAcctPop *account , const char *caption, 
-			       const char *login,const char *passwd)
+			       KMAcctPop *account , const char *caption,
+			       const char *login, QString passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you 
-  // for a new username and password if one of them was wrong.
+  // for a new username and password if one of them was wrong or not set.
 
   kbp->idle();
 
@@ -354,7 +400,7 @@ void KMPasswdDialog::slotOkPressed()
 {
   kbp->busy();
   act->setLogin(usernameLEdit->text());
-  act->setPasswd(usernameLEdit->text());
+  act->setPasswd(passwdLEdit->text());
   done(1);
 }
 
