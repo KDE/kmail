@@ -77,7 +77,8 @@ using KMail::AddressesDialog;
 #include <ktempfile.h>
 #include <fcntl.h>
 
-#include "kmrecentaddr.h"
+#include "recentaddresses.h"
+using KMail::RecentAddresses;
 #include <klocale.h>
 #include <kapplication.h>
 #include <kstatusbar.h>
@@ -4717,9 +4718,9 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
 
-  KMRecentAddresses::self()->add( bcc() );
-  KMRecentAddresses::self()->add( cc() );
-  KMRecentAddresses::self()->add( to() );
+  RecentAddresses::self()->add( bcc() );
+  RecentAddresses::self()->add( cc() );
+  RecentAddresses::self()->add( to() );
 
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
@@ -5383,7 +5384,7 @@ void KMLineEdit::loadAddresses()
 {
     KMLineEditInherited::loadAddresses();
 
-    QStringList recent = KMRecentAddresses::self()->addresses();
+    QStringList recent = RecentAddresses::self()->addresses();
     QStringList::Iterator it = recent.begin();
     for ( ; it != recent.end(); ++it )
         addAddress( *it );

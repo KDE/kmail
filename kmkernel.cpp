@@ -44,7 +44,8 @@
 #include "kfileio.h"
 #include "kmpgpwrap.h"
 #include "kmversion.h"
-#include "kmrecentaddr.h"
+#include "recentaddresses.h"
+using KMail::RecentAddresses;
 #include "kmmsgdict.h"
 #include "kmmessage.h"
 #include "kmidentity.h"
@@ -953,7 +954,7 @@ void KMKernel::cleanupLoop()
   mWin = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
-  KMRecentAddresses::self()->save( KMKernel::config() );
+  RecentAddresses::self()->save( KMKernel::config() );
   KMKernel::config()->sync();
   if (mCleanupPopup)
   {

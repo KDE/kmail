@@ -12,7 +12,7 @@
 #include <qdict.h>
 
 #include "kmkernel.h"
-#include "kmrecentaddr.h"
+#include "recentaddresses.h"
 #include "kmaddrbook.h"
 #include "addressesdialog.h"
 #include "addresspicker.h"
@@ -231,8 +231,8 @@ AddressesDialog::initGUI()
     addAddresseeToAvailable( *it, d->personal );
   }
 
-  for( KABC::Addressee::List::ConstIterator it = KMRecentAddresses::self()->kabcAddresses().begin();
-       it != KMRecentAddresses::self()->kabcAddresses().end(); ++it ) {
+  for( KABC::Addressee::List::ConstIterator it = RecentAddresses::self()->kabcAddresses().begin();
+       it != RecentAddresses::self()->kabcAddresses().end(); ++it ) {
     addAddresseeToAvailable( *it, d->recent );
   }
 
