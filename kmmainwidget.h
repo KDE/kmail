@@ -236,6 +236,7 @@ protected slots:
   void slotCopyMsg();
   void slotResendMsg();
   void slotEditVacation();
+  void slotStartCertManager();
   void slotApplyFilters();
   void slotExpandThread();
   void slotExpandAllThreads();

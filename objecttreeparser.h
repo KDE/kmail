@@ -190,7 +190,7 @@ namespace KMail {
 					   const QString & fromAddress,
 					   bool doCheck=true,
 					   QCString * cleartextData=0,
-					   struct CryptPlugWrapper::SignatureMetaData * paramSigMeta=0,
+					   CryptPlug::SignatureMetaData * paramSigMeta=0,
 					   bool hideErrors=false );
 
     /** Returns the contents of the given multipart/encrypted
@@ -198,7 +198,7 @@ namespace KMail {
     bool okDecryptMIME( partNode& data,
 			QCString& decryptedData,
 			bool& signatureFound,
-			struct CryptPlugWrapper::SignatureMetaData& sigMeta,
+			CryptPlug::SignatureMetaData& sigMeta,
 			bool showWarning,
 			bool& passphraseError,
 			QString& aErrorText );

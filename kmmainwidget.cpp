@@ -71,6 +71,8 @@ using KMail::FolderJob;
 #include "mailinglist-magic.h"
 #include "antispamwizard.h"
 using KMail::AntiSpamWizard;
+#include <cryptplugwrapperlist.h>
+#include <cryptplugfactory.h>
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1366,7 +1368,32 @@ void KMMainWidget::slotEditVacation()
     delete mVacation; // QGuardedPtr sets itself to 0!
   }
 }
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotStartCertManager()
+{
+  const CryptPlugWrapper *wrapper = KMail::CryptPlugFactory::instance()->smime();
+  if ( !wrapper ) {
+    KMessageBox::error( this, i18n( "Could not start certificate manager. "
+                                    "You need to configure an S/MIME plugin first." ),
+                                    i18n( "KMail Error" ) );
+    return;
+  }
+  KProcess certManagerProc; // save to create on the heap, since
+  // there is no parent
+  certManagerProc << "kgpgcertmanager";
+  certManagerProc << wrapper->displayName();
+  certManagerProc << wrapper->libName();
 
+  if( !certManagerProc.start( KProcess::DontCare ) )
+    KMessageBox::error( this, i18n( "Could not start certificate manager. "
+                                    "Please check your installation!" ),
+                                    i18n( "KMail Error" ) );
+  else
+    kdDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
+  // process continues to run even after the KProcess object goes
+  // out of scope here, since it is started in DontCare run mode.
+
+}
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCopyMsg()
 {
@@ -2118,6 +2145,11 @@ void KMMainWidget::setupActions()
 			SLOT(slotAddrBook()), actionCollection(), "addressbook" );
     if (KStandardDirs::findExe("kaddressbook").isEmpty()) act->setEnabled(false);
   }
+
+  act = new KAction( i18n("Certificate Manager..."), "pgp-keys", 0, this,
+		     SLOT(slotStartCertManager()), actionCollection(), "tools_start_certman");
+  // disable action if no certman binary is around
+  if (KStandardDirs::findExe("kgpgcertmanager").isEmpty()) act->setEnabled(false);
 
   act = new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
 		     SLOT(slotImport()), actionCollection(), "import" );

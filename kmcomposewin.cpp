@@ -45,6 +45,7 @@ using KPIM::MailListDrag;
 using KRecentAddress::RecentAddresses;
 
 #include <cryptplugwrapperlist.h>
+#include <cryptplugfactory.h>
 
 #include "klistboxdialog.h"
 
@@ -110,7 +111,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   // Initialize the plugin selection according to 'active' flag that
   // was set via the global configuration dialog.
-  mSelectedCryptPlug = kmkernel->cryptPlugList() ? kmkernel->cryptPlugList()->active() : 0;
+  mSelectedCryptPlug = KMail::CryptPlugFactory::instance()->active();
 
   mIdentity = new IdentityCombo(mMainWidget);
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
@@ -1086,11 +1087,11 @@ void KMComposeWin::setupActions(void)
   connect(mSignAction,    SIGNAL(toggled(bool)),
                          SLOT(slotSignToggled(    bool )));
 
-  if( kmkernel->cryptPlugList() && kmkernel->cryptPlugList()->count() ){
+  if( KMail::CryptPlugFactory::instance()->list().count() ){
     QStringList lst;
     lst << i18n( "inline OpenPGP (built-in)" );
     CryptPlugWrapper* current;
-    QPtrListIterator<CryptPlugWrapper> it( *kmkernel->cryptPlugList() );
+    QPtrListIterator<CryptPlugWrapper> it( KMail::CryptPlugFactory::instance()->list() );
     int idx=0;
     int i=1;
     while( ( current = it.current() ) ) {
@@ -4183,7 +4184,7 @@ void KMComposeWin::slotSelectCryptoModule()
   mSelectedCryptPlug = 0;
   int sel = mCryptoModuleAction->currentItem();
   int i = 1;  // start at 1 since 0'th entry is "inline OpenPGP (builtin)"
-  for ( CryptPlugWrapperListIterator it( *(kmkernel->cryptPlugList()) ) ;
+  for ( CryptPlugWrapperListIterator it( KMail::CryptPlugFactory::instance()->list() ) ;
         it.current() ;
         ++it, ++i )
     if( i == sel ){

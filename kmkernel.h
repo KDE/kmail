@@ -39,7 +39,6 @@ class KMMsgDict;
 class IdentityManager;
 class KProcess;
 class KProgressDialog;
-class CryptPlugWrapperList;
 class ConfigureDialog;
 class KInstance;
 class QTimer;
@@ -168,7 +167,6 @@ public:
   KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
-  CryptPlugWrapperList * cryptPlugList() const { return mCryptPlugList; }
 
   KMGroupware& groupware();
   KMailICalIfaceImpl& iCalIface();
@@ -311,7 +309,6 @@ private:
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;
   QLabel *mCleanupLabel;
-  CryptPlugWrapperList *mCryptPlugList;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;

@@ -2,7 +2,7 @@
     objecttreeparser.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2003 Klarälvdalens Datakonsult AB
+    Copyright (c) 2002-2004 Klarälvdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
@@ -48,21 +48,25 @@
 #include "csshelper.h"
 #include "bodypartformatter.h"
 
+#include "cryptplugwrapperlist.h"
+#include "cryptplugfactory.h"
+
 // other module headers
 #include <mimelib/enum.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/string.h>
 #include <mimelib/text.h>
 
+#include <gpgmepp/importresult.h>
+
 #include <kpgpblock.h>
 #include <kpgp.h>
 #include <linklocator.h>
 
-#include <cryptplugwrapperlist.h>
-
 // other KDE headers
 #include <kdebug.h>
 #include <klocale.h>
+#include <kglobal.h>
 #include <khtml_part.h>
 #include <ktempfile.h>
 #include <kstandarddirs.h>
@@ -305,28 +309,28 @@ namespace KMail {
   //////////////////
 
   bool ObjectTreeParser::writeOpaqueOrMultipartSignedData( partNode* data,
-                                                      partNode& sign,
-                                                      const QString& fromAddress,
-                                                      bool doCheck,
-                                                      QCString* cleartextData,
-                                                      struct CryptPlugWrapper::SignatureMetaData* paramSigMeta,
-                                                      bool hideErrors )
+						      partNode& sign,
+						      const QString& fromAddress,
+						      bool doCheck,
+						      QCString* cleartextData,
+						      CryptPlug::SignatureMetaData* paramSigMeta,
+						      bool hideErrors )
   {
     bool bIsOpaqueSigned = false;
     enum { NO_PLUGIN, NOT_INITIALIZED, CANT_VERIFY_SIGNATURES }
       cryptPlugError = NO_PLUGIN;
 
     CryptPlugWrapper* cryptPlug = cryptPlugWrapper();
-    if ( !cryptPlug )
-      cryptPlug = kmkernel->cryptPlugList()->active();
+    if ( !cryptPlug ) 
+      cryptPlug = CryptPlugFactory::instance()->active();
 
     QString cryptPlugLibName;
     QString cryptPlugDisplayName;
     if ( cryptPlug ) {
       cryptPlugLibName = cryptPlug->libName();
-      if ( 0 <= cryptPlugLibName.find( "openpgp", 0, false ) )
+      if ( cryptPlug == CryptPlugFactory::instance()->openpgp() )
         cryptPlugDisplayName = "OpenPGP";
-      else if ( 0 <= cryptPlugLibName.find( "smime", 0, false ) )
+      else if ( cryptPlug == CryptPlugFactory::instance()->smime() )
         cryptPlugDisplayName = "S/MIME";
     }
 
@@ -362,22 +366,17 @@ namespace KMail {
     int signatureLen = 0;
 
     if ( doCheck && cryptPlug ) {
-      if ( data )
+      if ( data ) {
         cleartext = data->dwPart()->AsString().c_str();
 
-      dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
-                  cleartext.data(), cleartext.length() );
+	dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
+		    cleartext.data(), cleartext.length() );
 
-      if ( data && ( ( cryptPlugDisplayName == "OpenPGP" ) ||
-                    ( cryptPlugDisplayName == "S/MIME" ) ) ) {
         // replace simple LFs by CRLSs
         // according to RfC 2633, 3.1.1 Canonicalization
-//        int posLF = cleartext.find( '\n' );
-//        if ( ( 0 < posLF ) && ( '\r' != cleartext[posLF - 1] ) ) {
-          kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-          cleartext = KMMessage::lf2crlf( cleartext );
-          kdDebug(5006) << "                                                       done." << endl;
-//        }
+	kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+	cleartext = KMMessage::lf2crlf( cleartext );
+	kdDebug(5006) << "                                                       done." << endl;
       }
 
       dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
@@ -410,16 +409,13 @@ namespace KMail {
 #endif
     }
 
-    struct CryptPlugWrapper::SignatureMetaData localSigMeta;
+    CryptPlug::SignatureMetaData localSigMeta;
     if ( doCheck ){
       localSigMeta.status              = 0;
       localSigMeta.extended_info       = 0;
       localSigMeta.extended_info_count = 0;
-      localSigMeta.nota_xml            = 0;
     }
-    struct CryptPlugWrapper::SignatureMetaData* sigMeta = doCheck
-                                                          ? &localSigMeta
-                                                          : paramSigMeta;
+    CryptPlug::SignatureMetaData* sigMeta = doCheck ? &localSigMeta : paramSigMeta;
 
     const char* cleartextP = cleartext;
     PartMetaData messagePart;
@@ -454,7 +450,7 @@ namespace KMail {
     if ( sigMeta->extended_info_count != 0 ) {
       kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
 
-      CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta->extended_info[0];
+      CryptPlug::SignatureMetaDataExtendedInfo& ext = sigMeta->extended_info[0];
 
       // save extended signature status flags
       messagePart.sigStatusFlags = ext.sigStatusFlags;
@@ -615,7 +611,7 @@ namespace KMail {
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       QCString& decryptedData,
                                       bool& signatureFound,
-                                      struct CryptPlugWrapper::SignatureMetaData& sigMeta,
+                                      CryptPlug::SignatureMetaData& sigMeta,
                                       bool showWarning,
                                       bool& passphraseError,
                                       QString& aErrorText )
@@ -628,7 +624,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   CryptPlugWrapper* cryptPlug = cryptPlugWrapper();
   if ( !cryptPlug )
-    cryptPlug = kmkernel->cryptPlugList()->active();
+    cryptPlug = CryptPlugFactory::instance()->active();
 
   QString cryptPlugLibName;
   if ( cryptPlug )
@@ -1121,78 +1117,46 @@ namespace KMail {
     return processMultiPartMixedSubtype( node, result );
   }
 
-  bool ObjectTreeParser::processMultiPartSignedSubtype( partNode * node, ProcessResult & result ) {
-    partNode * child = node->firstChild();
-    if ( !child ) {
-      kdDebug(5006) << "       SORRY, signed has NO children" << endl;
-      return false;
+  bool ObjectTreeParser::processMultiPartSignedSubtype( partNode * node, ProcessResult & ) {
+    if ( node->childCount() != 2 ) {
+      kdDebug(5006) << "mulitpart/signed must have exactly two child parts!" << endl
+		    << "processing as multipart/mixed" << endl;
+      if ( node->firstChild() )
+	stdChildHandling( node->firstChild() );
+      return node->firstChild();
     }
 
-    CryptPlugWrapper * useThisCryptPlug = 0;
+    partNode * signedData = node->firstChild();
+    assert( signedData );
 
-    // ATTENTION: We currently do _not_ support "multipart/signed" with _multiple_ signatures.
-    //            Instead we expect to find two objects: one object containing the signed data
-    //            and another object containing exactly one signature, this is determined by
-    //            looking for an "application/pgp-signature" object.
-    kdDebug(5006) << "       signed has children" << endl;
-
-    // ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-    partNode * data = 0;
-    partNode * sign = child->findType( DwMime::kTypeApplication,
-                                       DwMime::kSubtypePgpSignature, false, true );
-    if ( sign ) {
-      kdDebug(5006) << "       OpenPGP signature found" << endl;
-      data = child->findTypeNot( DwMime::kTypeApplication,
-                                 DwMime::kSubtypePgpSignature, false, true );
-      if ( data ) {
-        useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
-      }
-    } else {
-      sign = child->findType( DwMime::kTypeApplication,
-                              DwMime::kSubtypePkcs7Signature, false, true );
-      if ( sign ) {
-        kdDebug(5006) << "       S/MIME signature found" << endl;
-        data = child->findTypeNot( DwMime::kTypeApplication,
-                                   DwMime::kSubtypePkcs7Signature, false, true );
-        if ( data ) {
-          useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
-        }
-      } else {
-        kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
-      }
-    }
-
-    /*
-      ---------------------------------------------------------------------------------------------------------------
-    */
-
-    CryptPlugWrapperSaver cpws( this, useThisCryptPlug );
-
-    if ( sign && data ) {
-      kdDebug(5006) << "       signed has data + signature" << endl;
-      node->setSignatureState( KMMsgFullySigned );
-    }
-
+    partNode * signature = signedData->nextSibling();
+    assert( signature );
+  
+    signature->setProcessed( true, true );
+  
     if ( !includeSignatures() ) {
-      if ( !data )
-        data = child;
-      const QCString cstr = data->msgPart().bodyDecoded();
-      if ( mReader )
-        writeBodyString( cstr, node->trueFromAddress(),
-                         codecFor( data ), result );
-      mRawReplyString += cstr;
-      return true;
-    } else if ( sign && data ) {
-      // Set the signature node to done to prevent it from being processed
-      // by parseObjectTree( data ) called from writeOpaqueOrMultipartSignedData().
-      sign->setProcessed( true, false );
-      writeOpaqueOrMultipartSignedData( data,
-                                        *sign,
-                                        node->trueFromAddress() );
+      stdChildHandling( signedData );
       return true;
     }
 
-    stdChildHandling( child );
+    // FIXME(marc) check here that the protocol parameter matches the
+    // mimetype of "signature" (not required by the RFC, but practised
+    // by all implementaions of security multiparts
+
+    CryptPlugWrapper * cpw = 
+      CryptPlugFactory::instance()->createForProtocol( node->contentTypeParameter( "protocol" ) );
+
+    if ( !cpw ) {
+      signature->setProcessed( true, true );
+      stdChildHandling( signedData );
+      return true;
+    }
+
+    CryptPlugWrapperSaver saver( this, cpw );
+
+    node->setSignatureState( KMMsgFullySigned );
+    writeOpaqueOrMultipartSignedData( signedData, *signature,
+				      node->trueFromAddress() );
     return true;
   }
 
@@ -1219,13 +1183,13 @@ namespace KMail {
     partNode * data = child->findType( DwMime::kTypeApplication,
                                        DwMime::kSubtypeOctetStream, false, true );
     if ( data ) {
-      useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
+      useThisCryptPlug = KMail::CryptPlugFactory::instance()->openpgp();
     }
     if ( !data ) {
       data = child->findType( DwMime::kTypeApplication,
                               DwMime::kSubtypePkcs7Mime, false, true );
       if ( data ) {
-        useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
+        useThisCryptPlug = KMail::CryptPlugFactory::instance()->smime();
       }
     }
     /*
@@ -1251,11 +1215,10 @@ namespace KMail {
     node->setEncryptionState( KMMsgFullyEncrypted );
     QCString decryptedData;
     bool signatureFound;
-    struct CryptPlugWrapper::SignatureMetaData sigMeta;
+    CryptPlug::SignatureMetaData sigMeta;
     sigMeta.status              = 0;
     sigMeta.extended_info       = 0;
     sigMeta.extended_info_count = 0;
-    sigMeta.nota_xml            = 0;
     bool passphraseError;
 
     bool bOkDecrypt = okDecryptMIME( *data,
@@ -1401,14 +1364,13 @@ namespace KMail {
           ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
         */
         PartMetaData messagePart;
-        setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "openpgp" ) );
+        setCryptPlugWrapper( KMail::CryptPlugFactory::instance()->openpgp() );
         QCString decryptedData;
         bool signatureFound;
-        struct CryptPlugWrapper::SignatureMetaData sigMeta;
+        CryptPlug::SignatureMetaData sigMeta;
         sigMeta.status              = 0;
         sigMeta.extended_info       = 0;
         sigMeta.extended_info_count = 0;
-        sigMeta.nota_xml            = 0;
         bool passphraseError;
 
         bool bOkDecrypt = okDecryptMIME( *node,
@@ -1462,19 +1424,78 @@ namespace KMail {
       return true;
     }
 
-    const QString smimeType = node->contentTypeParameter("smime-type").lower();
-
-    if ( smimeType == "certs-only" ) {
-      // will become an icon:
-      result.setNeverDisplayInline( true );
-      return false;
-    }
-
     kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
     if ( !node->dwPart() || !node->dwPart()->hasHeaders() )
       return false;
 
-    CryptPlugWrapper * smimeCrypto = kmkernel->cryptPlugList()->findForLibName( "smime" );
+    CryptPlugWrapper * smimeCrypto = CryptPlugFactory::instance()->smime();
+    
+    const QString smimeType = node->contentTypeParameter("smime-type").lower();
+
+    if ( smimeType == "certs-only" ) {
+      result.setNeverDisplayInline( true );
+      if ( !smimeCrypto )
+	return false;
+
+      const QByteArray certData = node->msgPart().bodyDecodedBinary();
+
+      const GpgME::ImportResult res
+	= smimeCrypto->importCertificate( certData.data(), certData.size() );
+      if ( res.error() ) {
+	htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br>"
+				   "Reason: %1").arg( QString::fromLocal8Bit( res.error().asString() ) ) );
+	return true;
+      }
+
+      const int nImp = res.numImported();
+      const int nUnc = res.numUnchanged();
+      const int nSKImp = res.numSecretKeysImported();
+      const int nSKUnc = res.numSecretKeysUnchanged();
+      if ( !nImp && !nSKImp && !nUnc && !nSKUnc ) {
+	htmlWriter()->queue( i18n( "Sorry, no certificates were found in this message." ) );
+	return true;
+      }
+      QString comment = "<b>" + i18n( "Certificate import status:" ) + "</b><br>&nbsp;<br>";
+      if ( nImp )
+	comment += i18n( "%n new certificate was imported.",
+			 "%n new certificates were imported.", nImp ) + "<br>";
+      if ( nUnc )
+	comment += i18n( "%n certificate was unchanged.",
+			 "%n certificates were unchanged", nUnc ) + "<br>";
+      if ( nSKImp )
+	comment += i18n( "%n new secret key was imported.",
+			 "%n new secret keys were imported.", nSKImp ) + "<br>";
+      if ( nSKUnc )
+ 	comment += i18n( "%n secret key was unchanged.",
+			 "%n secret keys were unchanged.", nSKUnc ) + "<br>";
+      comment += "&nbsp;<br>";
+      htmlWriter()->queue( comment );
+      if ( !nImp && !nSKImp ) {
+	htmlWriter()->queue( "<hr>" );
+	return true;
+      }
+      const std::vector<GpgME::Import> imports = res.imports();
+      if ( imports.empty() ) {
+	htmlWriter()->queue( i18n( "Sorry, no details on certificate import available." ) + "<hr>" );
+	return true;
+      }
+      htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
+      for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
+	if ( (*it).error() )
+	  htmlWriter()->queue( i18n( "Failed: %1 (%2)" ).arg( (*it).fingerprint() )
+			       .arg( QString::fromLocal8Bit( (*it).error().asString() ) ) );
+	else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
+	  if ( (*it).status() & GpgME::Import::ContainedSecretKey )
+	    htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)" ).arg( (*it).fingerprint() ) );
+	  else
+	    htmlWriter()->queue( i18n( "New or changed: %1" ).arg( (*it).fingerprint() ) );
+	htmlWriter()->queue( "<br>" );
+      }
+
+      htmlWriter()->queue( "<hr>" );
+      return true;
+    }
+
     if ( !smimeCrypto )
       return false;
     CryptPlugWrapperSaver cpws( this, smimeCrypto );
@@ -1501,11 +1522,10 @@ namespace KMail {
       messagePart.isEncrypted = true;
       messagePart.isSigned = false;
       bool signatureFound;
-      struct CryptPlugWrapper::SignatureMetaData sigMeta;
+      CryptPlug::SignatureMetaData sigMeta;
       sigMeta.status              = 0;
       sigMeta.extended_info       = 0;
       sigMeta.extended_info_count = 0;
-      sigMeta.nota_xml            = 0;
       bool passphraseError;
 
       if ( okDecryptMIME( *node,
@@ -1682,7 +1702,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
     showKeyInfos = true;
     QString result;
     if( cryptPlug ) {
-        if( 0 <= cryptPlug->libName().find( "gpgme-openpgp", 0, false ) ) {
+        if( cryptPlug->protocol() == "openpgp" ) {
             // process enum according to it's definition to be read in
             // GNU Privacy Guard CVS repository /gpgme/gpgme/gpgme.h
             switch( status_code ) {
@@ -1720,7 +1740,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 break;
             }
         }
-        else if( 0 <= cryptPlug->libName().find( "gpgme-smime", 0, false ) ) {
+        else if( cryptPlug->protocol() == "smime" ) {
             // process status bits according to SigStatus_...
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
 
@@ -1853,7 +1873,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                               const QString & fromAddress,
                                               const QString & filename )
 {
-    bool isSMIME = cryptPlug && (0 <= cryptPlug->libName().find( "smime",   0, false ));
+    bool isSMIME = cryptPlug && cryptPlug->protocol() == "smime";
     QString signer = block.signer;
 
     QString htmlStr;

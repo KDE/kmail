@@ -709,29 +709,18 @@ public:
   //void savePluginsConfig( bool silent );
 
 public slots:
-  void slotNewPlugIn();
-  void slotDeletePlugIn();
   void slotActivatePlugIn();
   void slotConfigurePlugIn();
   void slotPlugNameChanged( const QString& );
-  void slotPlugLocationChanged( const QString& );
-  void slotPlugUpdateURLChanged( const QString& );
 
 protected slots:
   void slotPlugSelectionChanged();
 
 private:
   KListView     *mPlugList;
-
-  QPushButton   *mNewButton;
-  QPushButton   *mRemoveButton;
   QPushButton   *mActivateButton;
   QPushButton   *mConfigureButton;
-
   QLineEdit     *mNameEdit;
-  KURLRequester *mLocationRequester;
-  QLineEdit     *mUpdateURLEdit;
-  CryptPlugWrapperList *mlistCryptoAdd;
 };
 
 class SecurityPage : public ConfigModuleWithTabs {
