@@ -1051,9 +1051,12 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
     }
 
     QPoint vp = contentsToViewport(e->pos());
-    QRect inside_margin(autoscroll_margin, autoscroll_margin,
-                        visibleWidth()-autoscroll_margin*2,
-                        visibleHeight()-autoscroll_margin*2);
+    QRect inside_margin((contentsX() > 0) ? autoscroll_margin : 0,
+                        (contentsY() > 0) ? autoscroll_margin : 0,
+      visibleWidth() - ((contentsX() + visibleWidth() < contentsWidth())
+        ? autoscroll_margin*2 : 0),
+      visibleHeight() - ((contentsY() + visibleHeight() < contentsHeight())
+        ? autoscroll_margin*2 : 0));
     QListViewItem *i = itemAt( vp );
     if ( i ) {
         setCurrentItem( i );
