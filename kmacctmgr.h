@@ -6,7 +6,6 @@
 #define kmacctmgr_h
 
 #include <qobject.h>
-#include <qqueue.h>
 #include <qlist.h>
 #include <qstring.h>
 #include <qdir.h>
@@ -82,7 +81,7 @@ private:
   QString      mBasePath;
   KMAcctList   mAcctList;
   QListIterator< KMAccount > *mAccountIt;
-  QQueue< KMAccount > *mAcctChecking;
+  QList< KMAccount > *mAcctChecking;
   KMAccount *lastAccountChecked;
   bool checking;
   bool newMailArrived;

@@ -29,7 +29,7 @@ KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
   mAcctList.setAutoDelete(TRUE);
   setBasePath(aBasePath);
   mAccountIt = new QListIterator<KMAccount>(mAcctList);
-  mAcctChecking = new QQueue<KMAccount>();
+  mAcctChecking = new QList<KMAccount>();
   checking = false;
   lastAccountChecked = 0;
 }
@@ -117,7 +117,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   newMailArrived = false;
   interactive = _interactive;
 
-  mAcctChecking->enqueue(account);
+  if (!mAcctChecking->contains(account)) mAcctChecking->append(account);
 
   if (checking) {
     return;
@@ -168,7 +168,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     return;
   }
   
-  KMAccount *curAccount = mAcctChecking->dequeue();
+  KMAccount *curAccount = mAcctChecking->take(0);
   connect( curAccount, SIGNAL(finishedCheck(bool)),
 	   this, SLOT(processNextCheck(bool)) );
 
