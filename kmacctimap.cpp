@@ -482,7 +482,11 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
-  if (!mFolder || !mFolder->child()) return;
+  if (!mFolder || !mFolder->child())
+  {
+    emit finishedCheck(false);
+    return;
+  }
   QStringList strList;
   QValueList<QGuardedPtr<KMFolder> > folderList;
   kernel->imapFolderMgr()->createFolderList(&strList, &folderList,
