@@ -1844,7 +1844,11 @@ KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
 
   bool cont = true;
   if ( job->error() ) {
-    cont = mAccount->handleJobError( job, i18n( "Error while setting annotation: " ) + '\n' );
+    // Don't show error if the server doesn't support ANNOTATEMORE and this folder only contains mail
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION && contentsType() == ContentsTypeMail )
+      if (mAccount->slave()) mAccount->removeJob(job);
+    else
+      cont = mAccount->handleJobError( job, i18n( "Error while setting annotation: " ) + '\n' );
   } else {
     mAnnotationFolderTypeChanged = false;
     if (mAccount->slave()) mAccount->removeJob(job);
