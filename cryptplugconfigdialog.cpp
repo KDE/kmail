@@ -14,7 +14,6 @@
 #include <kapplication.h>
 #include <kprocess.h>
 #include <kmessagebox.h>
-#include "kmkernel.h"
 
 #include <qradiobutton.h>
 #include <qcheckbox.h>
@@ -26,6 +25,7 @@
 #include <qpushbutton.h>
 
 #include <cassert>
+#include "kmkernel.h"
 
 CryptPlugConfigDialog::CryptPlugConfigDialog( CryptPlugWrapper * wrapper,
 				       int plugno, const QString & caption,
