@@ -116,7 +116,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 recipientseditor.cpp \
                 recipientspicker.cpp kwindowpositioner.cpp \
                 distributionlistdialog.cpp expirypropertiesdialog.cpp \
-                mailinglistpropertiesdialog.cpp newfolderdialog.cpp
+                mailinglistpropertiesdialog.cpp newfolderdialog.cpp \
+                accountwizard.cpp
 
 kmail_SOURCES = main.cpp
 

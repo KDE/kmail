@@ -10,9 +10,11 @@
 #include "kmsender.h"
 #include "progressdialog.h"
 #include "statusbarprogresswidget.h"
+#include "accountwizard.h"
 #include "broadcaststatus.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
+
 #include <kapplication.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
@@ -69,6 +71,8 @@ KMMainWin::KMMainWin(QWidget *)
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
+
+  AccountWizard::start( kmkernel, this );
 }
 
 KMMainWin::~KMMainWin()
