@@ -1,13 +1,11 @@
 
 SUBDIRS = pics doc
-INCLUDES=	-I.. @all_includes@
-LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib
-MOC	=	@MOC@
-CXXFLAGS = -g
-LDFLAGS  =
+INCLUDES = $(all_includes)
+LDADD	= $(all_libraries) -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib
 
 bin_PROGRAMS = kmail
 
+kmail_LDFLAGS = $(LDFLAGS) $(KDE_RPATH)
 kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp \
@@ -30,14 +28,14 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
-appsdir = $(prefix)/share/applnk/Utilities/
+appsdir = $(kde_appsdir)/Utilities/
 
 install-data-local:
 	$(mkinstalldirs) $(appsdir)
 	$(INSTALL_DATA) KMail.kdelnk $(appsdir)
 
 uninstall-local:
-	rm -f $(appsdir)/KMail.kdelnk
+	-rm -f $(appsdir)/KMail.kdelnk
 	
 kmfolderdia.cpp:kmfolderdia.moc
 kmfolderdia.moc: kmfolderdia.h
