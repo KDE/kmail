@@ -1912,6 +1912,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
+  newMessage->setReadyToShow( true );
   win->showMsg( mCodec, newMessage );
   win->resize( 550, 600 );
   win->show();

@@ -34,6 +34,7 @@ using namespace KMail;
 QMap<Q_UINT32, QGuardedPtr<KMFolder> > MessageProperty::sFolders;
 QMap<Q_UINT32, QGuardedPtr<ActionScheduler> > MessageProperty::sHandlers;
 QMap<Q_UINT32, bool > MessageProperty::sCompletes;
+QMap<Q_UINT32, bool > MessageProperty::sReadyToShows;
 QMap<Q_UINT32, int > MessageProperty::sTransfers;
 QMap<const KMMsgBase*, long > MessageProperty::sSerialCache;
 
@@ -133,6 +134,31 @@ void MessageProperty::setComplete( const KMMsgBase *msgBase, bool complete )
   setComplete( msgBase->getMsgSerNum(), complete );
 }
 
+bool MessageProperty::readyToShow( Q_UINT32 serNum )
+{
+  if (sReadyToShows.contains( serNum ))
+    return sReadyToShows[serNum];
+  return false;
+}
+
+void MessageProperty::setReadyToShow( Q_UINT32 serNum, bool show )
+{
+  if (show)
+    sReadyToShows.replace( serNum, show );
+  else
+    sReadyToShows.remove( serNum);
+}
+
+bool MessageProperty::readyToShow( const KMMsgBase *msgBase )
+{
+  return readyToShow( msgBase->getMsgSerNum() );
+}
+
+void MessageProperty::setReadyToShow( const KMMsgBase *msgBase, bool show )
+{
+  setReadyToShow( msgBase->getMsgSerNum(), show );
+}
+
 bool MessageProperty::transferInProgress( Q_UINT32 serNum )
 {
   if (sTransfers.contains(serNum))
@@ -189,6 +215,7 @@ void MessageProperty::forget( const KMMsgBase *msgBase )
     Q_ASSERT( !transferInProgress( serNum ) );
     sCompletes.remove( serNum );
     sTransfers.remove( serNum );
+    sReadyToShows.remove( serNum );
     sSerialCache.remove( msgBase );
   }
 }

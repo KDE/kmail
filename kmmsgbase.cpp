@@ -984,6 +984,21 @@ bool KMMsgBase::isComplete()
 void KMMsgBase::setComplete(bool value)
 {
   MessageProperty::setComplete( getMsgSerNum(), value );
+  if ( value )
+    setReadyToShow( true );
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::readyToShow()
+{
+  return MessageProperty::readyToShow( getMsgSerNum() );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgBase::setReadyToShow(bool value)
+{
+  MessageProperty::setReadyToShow( getMsgSerNum(), value );
 }
 
 

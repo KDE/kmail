@@ -796,10 +796,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
-        << aMsg->fromStrip() << ", complete " << (aMsg->isComplete()) << endl;
+        << aMsg->fromStrip() << ", readyToShow " << (aMsg->readyToShow()) << endl;
 
   bool complete = true;
-  if ( aMsg && !aMsg->isComplete() && (aMsg->getMsgSerNum() != mLastSerNum) )
+  if ( aMsg && 
+       !aMsg->readyToShow() && 
+       (aMsg->getMsgSerNum() != mLastSerNum) &&
+       !aMsg->isComplete() )
     complete = false;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
@@ -1632,7 +1635,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setParent( message()->parent() );
   if ( !message()->headerField("X-UID").isEmpty() )
     msg->setHeaderField("X-UID", message()->headerField("X-UID"));
-  msg->setComplete(true);
+  msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
   win->showMsg( overrideCodec(), msg );
   win->resize(550,600);

@@ -297,19 +297,20 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         msg->setHeaderField("X-UID",uid);
         msg->setMsgSize(size);
         if ( mPartSpecifier.isEmpty() ) 
-          msg->setComplete( TRUE );
+          msg->setComplete( true );
+        else
+          msg->setReadyToShow( false );
       } else {
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
-        msg->setComplete( TRUE );
+        msg->setReadyToShow( true );
       }
     } else {
-      kdWarning(5006) << "ImapJob::slotGetMessageResult - got no data for " << mPartSpecifier << endl;
+      kdDebug(5006) << "ImapJob::slotGetMessageResult - got no data for " << mPartSpecifier << endl;
       gotData = false;
-      msg->setComplete( TRUE );
-      // in case we got an empty message with attachment we have to update anyway
-      if ( mPartSpecifier == "1" )
-        msg->notify();
+      msg->setReadyToShow( true );
+      // nevertheless give visual feedback
+      msg->notify();
     }
   }
   if (account->slave()) {
