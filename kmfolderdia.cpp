@@ -768,8 +768,12 @@ bool FolderDiaGeneralTab::save()
       folder->setUserWhoField(QString::null);
 
     // Set type field
-    if ( mContentsComboBox )
+    if ( mContentsComboBox ) {
       folder->storage()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
+      // make sure everything is on disk, connected slots will call readConfig()
+      // when creating a new folder.
+      folder->storage()->writeConfig();
+    }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
     kmkernel->folderMgr()->contentsChanged();
