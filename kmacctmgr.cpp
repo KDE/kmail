@@ -219,7 +219,7 @@ bool KMAcctMgr::checkMail(bool interactive)
   serverReady(false);
   KMIOStatusWdg *wid = 0;
   if (interactive) {
-    new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
+    wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
     wid->show();
   }
   

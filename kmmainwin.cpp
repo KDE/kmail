@@ -425,7 +425,7 @@ void KMMainWin::slotCheckMail()
  checkingMail = TRUE;
  
  kbp->busy();
- rc = acctMgr->checkMail(FALSE);
+ rc = acctMgr->checkMail(true);
  kbp->idle();
  
  if (!rc) statusMsg(i18n("No new mail available"));
@@ -1045,8 +1045,9 @@ void KMMainWin::getAccountMenu()
   actMenu->clear();
   actList = acctMgr->getAccounts();
   QString tmp;
-  for(tmp = actList.first(); tmp ; tmp = actList.next())
-    actMenu->insertItem(tmp);
+  int id = 0;
+  for(tmp = actList.first(); tmp ; tmp = actList.next(), id++)
+    actMenu->insertItem(tmp, id);
 }
 
 
