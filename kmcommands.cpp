@@ -1610,19 +1610,11 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 
 KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
 {
-  if (folder->folderType()== KMFolderTypeImap)
-  {
-    KMFolderImap* fi = static_cast<KMFolderImap*>( folder->storage() );
-    QString trashStr = fi->account()->trash();
-    KMFolder* trash = kmkernel->imapFolderMgr()->findIdString( trashStr );
-    if (!trash) trash = kmkernel->trashFolder();
-    if (folder != trash)
-      return trash;
-  } else {
-    if (folder != kmkernel->trashFolder())
-      // move to trash folder
-      return kmkernel->trashFolder();
-  }
+  KMFolder* trash = folder->trashFolder();
+  if( !trash )
+    trash = kmkernel->trashFolder();
+  if( trash != folder )
+    return trash;
   return 0;
 }
 
