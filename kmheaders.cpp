@@ -1672,18 +1672,31 @@ void KMHeaders::setCurrentMsg(int cur)
   setFolderInfoStatus();
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::setSelected( QListViewItem *item, bool selected )
+{
+  KMHeadersInherited::setSelected( item, selected );
+  // If the item is the parent of a closed thread recursively select
+  // children .
+  if ( mNested != mNestedOverride && !item->isOpen() && item->firstChild() ) {
+      QListViewItem *nextRoot = item->itemBelow();
+      QListViewItemIterator it( item->firstChild() );
+      for( ; (*it) != nextRoot; ++it )
+         (*it)->setSelected( true );
+  }
+}
 
 //-----------------------------------------------------------------------------
 KMMessageList* KMHeaders::selectedMsgs()
 {
   mSelMsgBaseList.clear();
-  for (QListViewItemIterator it(this); it.current(); it++)
+  for (QListViewItemIterator it(this); it.current(); it++) {
     if (it.current()->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       mSelMsgBaseList.append(msgBase);
     }
-
+  }
   return &mSelMsgBaseList;
 }
 
@@ -2120,7 +2133,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
       KMHeadersInherited::contentsMousePressEvent(e);
     } else {
       KMHeadersInherited::contentsMousePressEvent(e);
-      lvi->setSelected( TRUE );
+      setSelected(lvi, TRUE);
     }
   }
   else if ((e->button() == LeftButton) && (e->state() & ShiftButton)) {
@@ -2205,10 +2218,8 @@ void KMHeaders::highlightMessage(QListViewItem* i)
 //-----------------------------------------------------------------------------
 void KMHeaders::clearSelectionExcept( QListViewItem *exception )
 {
-  QListViewItem *item;
-  for (item = firstChild(); item; item = item->itemBelow())
-    if (item->isSelected() && (item != exception))
-      setSelected( item, FALSE );
+    selectAll( false );
+    setSelected( exception, true );
 }
 
 //-----------------------------------------------------------------------------

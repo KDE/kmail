@@ -199,6 +199,10 @@ public slots:
 
   virtual void ensureCurrentItemVisible();
 
+  /** Select an item and if it is the parent of a closed thread, also
+    recursively select its children. */   
+  virtual void setSelected(QListViewItem *item, bool selected);
+
   /** switch size-column */
   void slotToggleSizeColumn();
 

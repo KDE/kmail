@@ -1768,8 +1768,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMarkAll()
 {
-  for (QListViewItemIterator it(mHeaders); it.current(); it++)
-    mHeaders->setSelected( it.current(), TRUE );
+  mHeaders->selectAll( TRUE );
 }
 
 //-----------------------------------------------------------------------------

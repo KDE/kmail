@@ -1095,7 +1095,8 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("You can select your startup folder."),
   I18N_NOOP("A system tray applet has been implemented."),
   I18N_NOOP("As-you-type spell checking is supported."),
-  I18N_NOOP("Improved threading; in particular, threading by subject.")
+  I18N_NOOP("Improved threading; in particular, threading by subject."),
+  I18N_NOOP("Operations on the parent of a closed thread are now performed on all messages of that thread. That means it is now possible for example to delete a whole thread or subthread by closing it and deleting the parent.")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
