@@ -327,7 +327,7 @@ public slots:
   /** start IM Chat with addressee */
   void slotIMChat();
   void contactStatusChanged( const QString &uid);
-  
+
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
@@ -340,7 +340,7 @@ protected slots:
   void slotTouchMessage();
   void slotAtmLoadPart( int );
   void slotAtmDistributeClick();
-  
+
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
@@ -444,7 +444,6 @@ private:
   bool mAtmUpdate;
   int mChoice;
   KService::Ptr mOffer;
-  enum { ContentType, Filename, Content } mMimeTypeGuessedFrom;
   unsigned long mWaitingForSerNum;
 };
 
