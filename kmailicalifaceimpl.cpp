@@ -387,7 +387,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     "This is a Kolab Groupware object.\nTo view this object you"
     " will need an email client that can understand the Kolab"
     " Groupware format.\nFor a list of such email clients please"
-    " visit\nhttp://www.kolab.org/kolab-clients.html");
+    " visit\nhttp://www.kolab.org/kolab2-clients.html");
   QString firstPartText = i18n( firstPartTextUntranslated );
   if ( firstPartText != firstPartTextUntranslated ) {
     firstPartText.append("\n\n-----------------------------------------------------\n\n");
