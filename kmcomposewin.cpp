@@ -1522,10 +1522,12 @@ void KMComposeWin::slotInsertMyPublicKey()
 
   // load the file
   kernel->kbp()->busy();
-  str=Kpgp::getKpgp()->getAsciiPublicKey(mMsg->from());
-  if (str.isNull())
+  str=Kpgp::getKpgp()->getAsciiPublicKey(from());
+  if (str.isEmpty())
   {
     kernel->kbp()->idle();
+    KMessageBox::sorry( 0L, i18n("Couldn't get your public key for\n%1.")
+      .arg(from()) );
     return;
   }
 
