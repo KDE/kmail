@@ -54,7 +54,7 @@ k_dcop:
   virtual KURL getAttachment( const QString& resource,
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
-  
+
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
   virtual bool update( const QString& type, const QString& folder,
@@ -74,10 +74,12 @@ k_dcop:
   virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
                                                   const QString& resource ) = 0;
   virtual QMap<QString, bool> subresourcesKolab( const QString& contentsType ) = 0;
-  
+
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,
                        const QString& entry );
+  void incidenceAdded( const QString& type, const QString& folder,
+                       Q_UINT32 sernum, const QString& entry );
   void incidenceDeleted( const QString& type, const QString& folder,
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );

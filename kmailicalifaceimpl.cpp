@@ -500,6 +500,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
         kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                       << ", " << folder->location() << ", " << s << " )" << endl;
         incidenceAdded( type, folder->location(), s );
+        incidenceAdded( type, folder->location(), sernum, s );
       }
     if( unget ) folder->unGetMsg(i);
   } else
