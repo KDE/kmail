@@ -2159,7 +2159,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
         mime->name() == "application/x-shellscript" )
     {
       if (KMessageBox::warningYesNo( 0, i18n( "Do you really want to execute"
-        " '%1' ? " ).arg( aUrl.prettyURL() ) ) != KMessageBox::Yes) return;
+        " '%1'? " ).arg( aUrl.prettyURL() ) ) != KMessageBox::Yes) return;
     }
     (void) new KRun( aUrl );
   }

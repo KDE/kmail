@@ -380,7 +380,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   button = new QPushButton( i18n("&New..."), this );
   mRenameButton = new QPushButton( i18n("&Rename..."), this );
   mRemoveButton = new QPushButton( i18n("Re&move..."), this );
-  mSetAsDefaultButton = new QPushButton( i18n("Set as &default"), this );
+  mSetAsDefaultButton = new QPushButton( i18n("Set as &Default"), this );
   button->setAutoDefault( false );
   mRenameButton->setAutoDefault( false );
   mRemoveButton->setAutoDefault( false );
