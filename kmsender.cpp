@@ -35,6 +35,7 @@ using namespace KMime::Types;
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
 #include "protocols.h"
+#include "kmcommands.h"
 #include <mimelib/mediatyp.h>
 
 #define SENDER_GROUP "sending mail"
@@ -349,7 +350,11 @@ void KMSender::doSendMsg()
         cleanup();
         return;
       }
-      if (imapSentFolder) imapSentFolder->moveMsg(mCurrentMsg);
+      if (imapSentFolder) {
+        // Does proper folder refcounting and message locking
+        KMCommand *command = new KMMoveCommand( imapSentFolder, mCurrentMsg );
+        command->start();
+      }
     default:
       break;
     }
