@@ -361,10 +361,7 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
   folder->setUidValidity("INVALID");
   folder->writeUidCache();
 
-  if ( !checkingMail() ) {
-    setCheckingMail( true );
-    processNewMail( false );
-  }
+  mailCheck();
 }
 
 //-----------------------------------------------------------------------------
