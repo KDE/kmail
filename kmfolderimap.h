@@ -259,6 +259,8 @@ protected:
    */
   KMMsgStatus flagsToStatus(int flags, bool newMsg = TRUE);
 
+  void getMessagesResult(KIO::Job * job, bool lastSet);
+
   bool    gotMsgs;
 
   QString mUidValidity;
@@ -296,6 +298,7 @@ protected slots:
    * For retrieving a message digest
    */
   void slotGetMessagesResult(KIO::Job * job);
+  void slotGetLastMessagesResult(KIO::Job * job);
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
 
   /**

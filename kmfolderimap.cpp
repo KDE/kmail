@@ -645,7 +645,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     mAccount->mapJobData.insert(newJob, jd);
     connect(newJob, SIGNAL(result(KIO::Job *)),
-            this, SLOT(slotGetMessagesResult(KIO::Job *)));
+            this, SLOT(slotGetLastMessagesResult(KIO::Job *)));
     connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
             this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
   }
@@ -729,6 +729,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
     if (!mAccount->makeConnection())
     {
+      quiet(FALSE);
       emit folderComplete(this, FALSE);
       return;
     }
@@ -736,7 +737,9 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     mAccount->mapJobData.insert(newJob, jd);
     connect(newJob, SIGNAL(result(KIO::Job *)),
-        this, SLOT(slotGetMessagesResult(KIO::Job *)));
+        this, (i == sets.at(sets.count() - 1))
+        ? SLOT(slotGetLastMessagesResult(KIO::Job *))
+        : SLOT(slotGetMessagesResult(KIO::Job *)));
     connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
         this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
   }	
@@ -854,7 +857,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
+void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
 {
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
@@ -866,11 +869,25 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
-  } else mContentState = imapFinished;
-  quiet(FALSE);
+  } else if (lastSet) mContentState = imapFinished;
+  if (lastSet) quiet(FALSE);
   if (mAccount->slave()) mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
-  if (!job->error()) emit folderComplete(this, TRUE);
+  if (!job->error() && lastSet) emit folderComplete(this, TRUE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotGetLastMessagesResult(KIO::Job * job)
+{
+  getMessagesResult(job, true);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
+{
+  getMessagesResult(job, false);
 }
 
 
