@@ -30,6 +30,10 @@
 
 #include "vcard.h"
 
+// I hope this is self explanatory.  You create an object of this type
+// and pass it the VCard to display.  Pretty simple? <grin>
+
+
 class KMDisplayVCard : public KTabCtl {
 Q_OBJECT
 
@@ -41,6 +45,10 @@ Q_OBJECT
 
  public slots:
   void slotChangeAddress();
+
+ private slots:
+  void urlClicked(const QString &url);
+  void mailUrlClicked(const QString &url);
 
  private:
   VCard *_vc;

@@ -27,6 +27,7 @@
 #include <klocale.h>
 #include <qmultilineedit.h>
 #include <qbutton.h>
+#include <kurllabel.h>
 
 KMDisplayVCard::KMDisplayVCard(VCard *vc, QWidget *parent, const char *name) : KTabCtl(parent, name) {
   _vc = vc;
@@ -63,6 +64,7 @@ QFrame *page = new QFrame(this);
 QGridLayout *grid = new QGridLayout(page, 7, 2);
 QLabel *name;
 QLabel *value;
+KURLLabel *urlvalue;
 QString tmpstr;
 QValueList<QString> values;
 
@@ -121,17 +123,19 @@ QValueList<QString> values;
   // Display the E-Mail: field
   tmpstr = _vc->getValue(VCARD_EMAIL, VCARD_EMAIL_INTERNET);
   name = new QLabel(i18n("E-Mail:"), page);
-  value = new QLabel(tmpstr, page);
+  urlvalue = new KURLLabel(tmpstr, tmpstr, page);
   grid->addWidget(name, 3, 0);
-  grid->addWidget(value, 3, 1);
+  grid->addWidget(urlvalue, 3, 1);
+  connect(urlvalue, SIGNAL(leftClickedURL(const QString &)), SLOT(mailUrlClicked(const QString &)));
 
   //
   // Display the URL: field
   tmpstr = _vc->getValue(VCARD_URL);
   name = new QLabel(i18n("URL:"), page);
-  value = new QLabel(tmpstr, page);
+  urlvalue = new KURLLabel(tmpstr, tmpstr, page);
   grid->addWidget(name, 4, 0);
-  grid->addWidget(value, 4, 1);
+  grid->addWidget(urlvalue, 4, 1);
+  connect(urlvalue, SIGNAL(leftClickedURL(const QString &)), SLOT(urlClicked(const QString &)));
 
   //
   // Display the Birthday: field
@@ -361,3 +365,13 @@ unsigned int c = mAddrList->currentItem();
   }
 }
 
+
+void KMDisplayVCard::urlClicked(const QString &url) {
+    kapp->invokeBrowser(url);
+}
+ 
+void KMDisplayVCard::mailUrlClicked(const QString &url) {
+  // FIXME: this is silly.  We should just start up a composer!
+  //        Anyways it's a dirty hack for now.
+    kapp->invokeMailer(url, QString::null);
+} 
