@@ -51,7 +51,6 @@
 
 #ifdef KRN
 extern KApplication *app;
-extern KLocale *nls;
 extern KBusyPtr *kbp;
 #endif
 

@@ -10,7 +10,6 @@
 #ifdef KRN
 #include <kapp.h>
 #include "kbusyptr.h"
-extern KLocale *nls;
 extern KBusyPtr *kbp;
 #endif
 

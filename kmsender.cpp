@@ -22,7 +22,6 @@
 #include <kapp.h>
 #include <kapp.h>
 extern KApplication *app;
-extern KLocale *nls;
 extern KMIdentity *identity;
 #endif
 

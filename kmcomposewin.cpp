@@ -61,7 +61,6 @@
 #ifdef KRN
 /* start added for KRN */
 #include "krnsender.h"
-extern KLocale *nls;
 extern KStdAccel* keys;
 extern KApplication *app;
 extern KBusyPtr *kbp;

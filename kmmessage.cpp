@@ -37,8 +37,6 @@
 
 // Originally in kmglobal.h, but we want to avoid to depend on it here
 extern KMIdentity* identity;
-// Added by KRN to allow internationalized config defaults
-extern KLocale* nls;
 
 
 static DwString emptyString("");
