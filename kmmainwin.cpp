@@ -2172,8 +2172,8 @@ void KMMainWin::updateFolderMenu()
 {
   modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
     : false );
-  removeFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
-    : false );
+  removeFolderAction->setEnabled( (mFolder && !mFolder->account()) 
+    ? !mFolder->isSystemFolder() : false );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );
   threadMessagesAction->setEnabled( mFolder ? true : false );
