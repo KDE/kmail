@@ -551,16 +551,8 @@ public:
 	if( data )
 	  cleartext = data->dwPart()->AsString().c_str();
 
-	if( mReader && mReader->mDebugReaderCrypto ){
-	  QFile fileD0( "dat_01_reader_signedtext_before_canonicalization" );
-	  if( fileD0.open( IO_WriteOnly ) ) {
-            if( data ) {
-	      QDataStream ds( &fileD0 );
-	      ds.writeRawBytes( cleartext, cleartext.length() );
-            }
-            fileD0.close();  // If data is 0 we just create a zero length file.
-	  }
-	}
+	dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
+		    cleartext.data(), cleartext.length() );
 
 	if( data &&
 	    ( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
@@ -575,16 +567,9 @@ public:
             kdDebug(5006) << "                                                       done." << endl;
 	  }
 	}
-	if( mReader && mReader->mDebugReaderCrypto ){
-	  QFile fileD( "dat_02_reader_signedtext_after_canonicalization" );
-	  if( fileD.open( IO_WriteOnly ) ) {
-            if( data ) {
-	      QDataStream ds( &fileD );
-	      ds.writeRawBytes( cleartext, cleartext.length() );
-            }
-            fileD.close();  // If data is 0 we just create a zero length file.
-	  }
-	}
+
+	dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
+		    cleartext.data(), cleartext.length() );
 
 	signaturetext = sign.msgPart().bodyDecodedBinary();
 	QCString signatureStr( signaturetext );
@@ -593,14 +578,7 @@ public:
                           (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
 	signatureLen = signaturetext.size();
 
-	if( mReader && mReader->mDebugReaderCrypto ){
-	  QFile fileS( "dat_03_reader.sig" );
-	  if( fileS.open( IO_WriteOnly ) ) {
-            QDataStream ds( &fileS );
-            ds.writeRawBytes( signaturetext, signaturetext.size() );
-            fileS.close();
-	  }
-	}
+	dumpToFile( "dat_03_reader.sig", signaturetext.data(), signaturetext.size() );
 
 #ifndef NDEBUG
 	QCString deb;
@@ -849,14 +827,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
     int cipherLen = ciphertext.size();
 
-    if( mReader && mReader->mDebugReaderCrypto ){
-      QFile fileC( "dat_04_reader.encrypted" );
-      if( fileC.open( IO_WriteOnly ) ) {
-        QDataStream dc( &fileC );
-        dc.writeRawBytes( ciphertext, ciphertext.size() );
-        fileC.close();
-      }
-    }
+    dumpToFile( "dat_04_reader.encrypted", ciphertext.data(), ciphertext.size() );
+
 #ifndef NDEBUG
     QCString deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
@@ -937,14 +909,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
           i18n("...continued", "'Settings->Configure KMail->Security' dialog."),
           decryptedData );
   }
-  if( mReader && mReader->mDebugReaderCrypto ){
-    QFile fileC2( "dat_05_reader.decrypted" );
-    if( fileC2.open( IO_WriteOnly ) ) {
-      QDataStream dc( &fileC2 );
-      dc.writeRawBytes( decryptedData, decryptedData.size() );
-      fileC2.close();
-    }
-  }
+
+  dumpToFile( "dat_05_reader.decrypted", decryptedData.data(), decryptedData.size() );
+
   return bDecryptionOk;
 }
 
@@ -1925,5 +1892,24 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     result.setIsInlineSigned( isInlineSigned );
     result.setIsInlineEncrypted( isInlineEncrypted );
   }
+
+#ifndef NDEBUG
+  void ObjectTreeParser::dumpToFile( const char * filename, const char * start,
+				     size_t len ) {
+    if( !mReader || !mReader->mDebugReaderCrypto )
+      return;
+
+    assert( filename );
+
+    QFile f( filename );
+    if( f.open( IO_WriteOnly ) ) {
+      if( start ) {
+	QDataStream ds( &f );
+	ds.writeRawBytes( start, len );
+      }
+      f.close();  // If data is 0 we just create a zero length file.
+    }
+  }
+#endif // !NDEBUG
 
 }; // namespace KMail

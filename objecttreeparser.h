@@ -179,6 +179,12 @@ namespace KMail {
 			  const QString & fromAddress,
 			  ProcessResult & result );
 
+#ifndef NDEBUG
+    void dumpToFile( const char * filename, const char * dataStart, size_t dataLen );
+#else
+    void dumpToFile( const char *, const char *, size_t ) {}
+#endif
+
   private:
     KMReaderWin * mReader;
     QCString mResultString;
