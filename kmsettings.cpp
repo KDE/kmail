@@ -33,6 +33,14 @@
 #include <qradiobt.h>
 #include <qchkbox.h>
 
+#ifdef HAVE_PATHS_H
+#include <paths.h>
+#endif
+
+#ifndef _PATH_SENDMAIL
+#define _PATH_SENDMAIL  "/usr/sbin/sendmail"
+#endif
+
 //------
 #include "kmsettings.moc"
 
@@ -742,7 +750,7 @@ void KMSettings::setDefaults()
 {
   sigEdit->setText(QString(QDir::home().path())+"/.signature");
   sendmailRadio->setChecked(TRUE);
-  sendmailLocationEdit->setText("/usr/sbin/sendmail");
+  sendmailLocationEdit->setText(_PATH_SENDMAIL);
   smtpRadio->setChecked(FALSE);
   smtpPortEdit->setText("25");
 }
