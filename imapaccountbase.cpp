@@ -85,6 +85,7 @@ namespace KMail {
       mIdle( true ),
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
+      mACLSupport( true ),
       mCreateInbox( false )
   {
     mPort = imapDefaultPort;
@@ -491,9 +492,12 @@ namespace KMail {
     if ( it == jobsEnd() ) return;
 
     KMFolder* folder = (*it).parent;
-    if ( job->error() )
-      kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
-    else {
+    if ( job->error() ) {
+      if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) // that's when the imap server doesn't support ACLs
+          mACLSupport = false;
+      else
+        kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
+    } else {
 #ifndef NDEBUG
       kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
 #endif

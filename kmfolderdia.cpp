@@ -133,13 +133,15 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     addTab( tab );
   }
 
-  KMFolderType folderType = mFolder ? mFolder->folderType() : mParentFolder ? mParentFolder->folderType() : KMFolderTypeUnknown;
+  KMFolder* refFolder = mFolder ? mFolder : mParentFolder;
+  KMFolderType folderType = refFolder ? refFolder->folderType() : KMFolderTypeUnknown;
   bool noContent = mFolder ? mFolder->storage()->noContent() : false;
-  if ( !noContent && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) )
-  {
-    box = addVBoxPage( i18n("Access Control") );
-    tab = new FolderDiaACLTab( this, box );
-    addTab( tab );
+  if ( !noContent && refFolder && ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap ) ) {
+    if ( FolderDiaACLTab::supports( refFolder ) ) {
+      box = addVBoxPage( i18n("Access Control") );
+      tab = new FolderDiaACLTab( this, box );
+      addTab( tab );
+    }
   }
 
   for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )

@@ -230,6 +230,12 @@ namespace KMail {
      */
     virtual void setFolder(KMFolder*, bool addAccount = false);
 
+    /**
+     * Returns false if the IMAP server for this account doesn't support ACLs.
+     * (and true if it does, or if we didn't try yet).
+     */
+    bool hasACLSupport() const { return mACLSupport; }
+
   public slots:
     /**
      * gets the results of listDirectory
@@ -312,6 +318,8 @@ namespace KMail {
     bool mIdle : 1;
     bool mErrorDialogIsActive : 1;
     bool mPasswordDialogIsActive : 1;
+    bool mACLSupport : 1;
+
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
         // folders that should be checked after the current check is done

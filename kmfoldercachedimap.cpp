@@ -550,8 +550,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_GET_USERRIGHTS:
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
 
-    // TODO do this only if the imap server returns "acl" in its capabilities
-    if( !noContent() ) {
+    if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
       emit newState( label(), mProgress, i18n("Checking permissions"));
       mAccount->getUserRights( folder(), imapPath() );
@@ -711,7 +710,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ACLS:
     mSyncState = SYNC_STATE_GET_ACLS;
 
-    if( !noContent() ) {
+    if( !noContent() && mAccount->hasACLSupport() ) {
       bool hasChangedACLs = false;
       ACLList::ConstIterator it = mACLList.begin();
       for ( ; it != mACLList.end() && !hasChangedACLs; ++it ) {
@@ -738,7 +737,7 @@ void KMFolderCachedImap::serverSyncInternal()
     // Continue with the subfolders
     mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 
-    if( !noContent() ) {
+    if( !noContent() && mAccount->hasACLSupport() ) {
       mAccount->getACL( folder(), mImapPath );
       connect( mAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );

@@ -410,9 +410,8 @@ void KMail::FolderDiaACLTab::load()
 
   // Loading, for online IMAP, consists of four steps:
   // 1) connect
-  // 2) check ACL support [TODO]
-  // 3) get user rights
-  // 4) load ACLs
+  // 2) get user rights
+  // 3) load ACLs
 
   // First ensure we are connected
   mStack->raiseWidget( mLabel );
@@ -442,8 +441,6 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode )
     return;
   }
 
-  // TODO check if the capabilities of the IMAP server include "acl"
-
   if ( mUserRights == 0 ) {
     mImapAccount->getUserRights( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
     connect( mImapAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
@@ -455,6 +452,11 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode )
 
 void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
 {
+  if ( !mImapAccount->hasACLSupport() ) {
+    mLabel->setText( i18n( "This IMAP server doesn't have support for access control lists (ACL)" ) );
+    return;
+  }
+
   if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
     KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
     mUserRights = folderImap->userRights();
@@ -706,6 +708,16 @@ void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissi
 void KMail::FolderDiaACLTab::slotChanged( bool b )
 {
   mChanged = b;
+}
+
+bool KMail::FolderDiaACLTab::supports( KMFolder* refFolder )
+{
+  ImapAccountBase* imapAccount = 0;
+  if ( refFolder->folderType() == KMFolderTypeImap )
+    imapAccount = static_cast<KMFolderImap*>( refFolder->storage() )->account();
+  else
+    imapAccount = static_cast<KMFolderCachedImap*>( refFolder->storage() )->account();
+  return imapAccount->hasACLSupport(); // support for ACLs (or not tried connecting yet)
 }
 
 #include "folderdiaacltab.moc"

@@ -92,6 +92,8 @@ public:
   virtual bool save();
   virtual AcceptStatus accept();
 
+  static bool supports( KMFolder* refFolder );
+
 private slots:
   // Network (KIO) slots
   void slotConnectionResult( int );

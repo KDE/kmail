@@ -297,6 +297,7 @@ signals:
   void syncState( int state, int number );
 
 private:
+  QString state2String( int state ) const;
 
   /** State variable for the synchronization mechanism */
   enum {
@@ -352,8 +353,6 @@ private:
 
   int mUserRights;
   ACLList mACLList;
-
-  QString state2String( int state ) const;
   bool mIsConnected;
 
   bool mSilentUpload;
