@@ -809,6 +809,25 @@ void KMMainWin::slotReplyAllToMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotReplyListToMsg()
+{
+  mHeaders->replyListToMsg();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotPostToList()
+{
+  if (!mFolder || !mFolder->isMailingList()) return;
+
+  KMMessage *msg = new KMMessage;
+  msg->setTo(mFolder->mailingListPostAddress());
+  KMComposeWin *win = new KMComposeWin(msg);
+  win->show();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotForwardMsg()
 {
   mHeaders->forwardMsg();
@@ -1439,6 +1458,9 @@ void KMMainWin::setupMenuBar()
 
   replyAllAction = new KAction( i18n("Reply &All..."), "mail_replyall",
      Key_A, this, SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
+
+  replyListAction = new KAction( i18n("Reply &List..."),
+     Key_L, this, SLOT(slotReplyListToMsg()), actionCollection(), "reply_list" );
 
   forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );

@@ -75,7 +75,8 @@ public:
 					QPopupMenu *menu);
 
   static void cleanup();
-  KAction *replyAction, *replyAllAction, *forwardAction, *redirectAction,
+  KAction *replyAction, *replyAllAction, *replyListAction,
+      *forwardAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction;
 
 public slots:
@@ -122,6 +123,8 @@ protected slots:
   void slotOverrideThread();
   void slotReplyToMsg();
   void slotReplyAllToMsg();
+  void slotReplyListToMsg();
+  void slotPostToList();
   void slotForwardMsg();
   void slotRedirectMsg();
   void slotBounceMsg();

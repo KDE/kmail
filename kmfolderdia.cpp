@@ -2,6 +2,7 @@
 
 #include <assert.h>
 
+#include <qcheckbox.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qlabel.h>
@@ -11,6 +12,7 @@
 #include <qpushbutton.h>
 #include <qstring.h>
 #include <qtextstream.h>
+#include <qvbox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -28,12 +30,18 @@
 //-----------------------------------------------------------------------------
 KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 			       QWidget *aParent, const QString& aCap):
-  KMFolderDialogInherited( aParent, "KMFolderDialog", TRUE,
-			   aCap,  KDialogBase::Ok|KDialogBase::Cancel ),
+  KMFolderDialogInherited( KDialogBase::Tabbed,
+                           aCap, KDialogBase::Ok|KDialogBase::Cancel,
+                           KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
   folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
 {
-  QWidget *page = new QWidget(this);
+    qDebug("KMFolderDialog::KMFolderDialog()");
+
+  // Main tab
+  //
+  QFrame *page = addPage( i18n("Folder Position"), i18n("Where the folder is located in the tree") );
   setMainWidget( page );
+
   QVBoxLayout *topLayout =  new QVBoxLayout( page, 0, spacingHint() );
 
   QHBoxLayout *hl = new QHBoxLayout();
@@ -79,6 +87,51 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     if (curFolder->child() == aFolderDir)
       fileInFolder->setCurrentItem( i );
   }
+
+  // Mailing-list data tab
+  //
+  page = addPage( i18n("Associated Mailing List"), i18n("Email addresses of the mailing-list related to this folder") );
+
+  topLayout =  new QVBoxLayout( page, 0, spacingHint() );
+
+  hl = new QHBoxLayout();
+  topLayout->addSpacing( spacingHint()*2 );
+
+  holdsMailingList = new QCheckBox( i18n("folder holds a mailing-list"), page);
+  QObject::connect( holdsMailingList, SIGNAL(toggled(bool)),
+                    this, SLOT(slotHoldsML(bool)) );
+
+  topLayout->addWidget(holdsMailingList);
+
+  topLayout->addSpacing( spacingHint()*2 );
+  topLayout->addLayout( hl );
+  topLayout->addSpacing( spacingHint()*2 );
+
+  
+  label = new QLabel( i18n("Post Address:"), page );
+  hl->addWidget( label );
+  mailingListPostAddress = new QLineEdit( page );
+  mailingListPostAddress->setMinimumSize(mailingListPostAddress->sizeHint());
+  hl->addWidget( mailingListPostAddress );
+
+//   hl = new QHBoxLayout();
+//   topLayout->addLayout( hl );
+
+//   label = new QLabel( i18n("Admin Address:"), page );
+//   hl->addWidget( label );
+//   mailingListAdminAddress = new QLineEdit( page );
+//   mailingListAdminAddress->setMinimumSize(mailingListAdminAddress->sizeHint());
+//   hl->addWidget( mailingListAdminAddress );
+
+  if (folder)
+  {
+    mailingListPostAddress->setText(folder->mailingListPostAddress());
+//     mailingListAdminAddress->setText(folder->mailingListAdminAddress());
+    mailingListPostAddress->setEnabled(folder->isMailingList());
+//     mailingListAdminAddress->setEnabled(folder->isMailingList());
+    holdsMailingList->setChecked(folder->isMailingList());
+  }
+  qDebug("Exiting KMFolderDialog::KMFolderDialog()");
 }
 
 
@@ -146,5 +199,26 @@ void KMFolderDialog::slotOk()
       kernel->folderMgr()->contentsChanged();
     }
 
+  folder->setMailingList( holdsMailingList->isChecked() );
+  folder->setMailingListPostAddress( mailingListPostAddress->text() );
+//   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
+  folder->setMailingListAdminAddress( QString::null );
+
   KMFolderDialogInherited::slotOk();
 }
+
+//-----------------------------------------------------------------------------
+void KMFolderDialog::slotHoldsML( bool holdsML )
+{
+  if ( holdsML )
+  {
+    mailingListPostAddress->setEnabled(true);
+//     mailingListAdminAddress->setEnabled(true);
+  }
+  else
+  {
+    mailingListPostAddress->setEnabled(false);
+//     mailingListAdminAddress->setEnabled(false);
+  }
+}
+

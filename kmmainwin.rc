@@ -52,6 +52,7 @@
    <Separator/>
    <Action name="reply" />
    <Action name="reply_all" />
+   <Action name="reply_list" />
    <Action name="forward" />
    <Action name="redirect" />
    <Action name="bounce" />

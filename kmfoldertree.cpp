@@ -22,6 +22,7 @@
 #include "kmfolder.h"
 #include "kmfoldertree.h"
 #include "kmfolderdia.h"
+#include "kmcomposewin.h"
 
 QPixmap* KMFolderTree::pixDir = 0;
 QPixmap* KMFolderTree::pixNode = 0;
@@ -200,6 +201,9 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 
   connect( this, SIGNAL( rightButtonPressed( QListViewItem*, const QPoint &, int)),
 	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int)));
+
+  connect( this, SIGNAL( mouseButtonPressed( int, QListViewItem*, const QPoint &, int)),
+	   this, SLOT( mouseButtonPressed( int, QListViewItem*, const QPoint &, int)));
 }
 
 bool KMFolderTree::event(QEvent *e)
@@ -593,7 +597,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if (!fti || !fti->folder)
     return;
 
-  int m1 =folderMenu->insertItem(i18n("&Create Child Folder..."), this,
+  int m1 = folderMenu->insertItem(i18n("&Create Child Folder..."), this,
 				   SLOT(addChildFolder()));
   int m2 = folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
 				  SLOT(slotModifyFolder()));
@@ -604,14 +608,48 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 			 SLOT(slotEmptyFolder()));
   int m3 = folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
 				  SLOT(slotRemoveFolder()));
+  folderMenu->insertSeparator();
+
+  int m4 = folderMenu->insertItem(i18n("&Post to mailing-list"),
+                                  topLevelWidget(),
+				  SLOT(slotPostToList()));
+
   if (fti->folder->isSystemFolder()) {
     folderMenu->setItemEnabled(m1,false);
     folderMenu->setItemEnabled(m2,false);
     folderMenu->setItemEnabled(m3,false);
   }
+
+  if (!fti->folder->isMailingList()) {
+    folderMenu->setItemEnabled(m4,false);
+  }
+
   folderMenu->exec (p, 0);
   triggerUpdate();
   delete folderMenu;
+}
+
+//-----------------------------------------------------------------------------
+// If middle button and folder holds mailing-list, create a message to that list
+
+void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint &p, int)
+{
+  // react on middle-button only
+  if (btn != Qt::MidButton) return;
+
+  // get underlying folder
+  KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(lvi);
+
+  if (!fti || !fti->folder)
+    return;
+  if (!fti->folder->isMailingList())
+    return;
+  
+  KMMessage *msg = new KMMessage;
+  msg->setTo(fti->folder->mailingListPostAddress());
+  KMComposeWin *win = new KMComposeWin(msg);
+  win->show();
+  
 }
 
 //-----------------------------------------------------------------------------

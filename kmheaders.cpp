@@ -1189,6 +1189,20 @@ void KMHeaders::replyAllToMsg ()
 }
 
 //-----------------------------------------------------------------------------
+void KMHeaders::replyListToMsg ()
+{
+  KMComposeWin *win;
+  KMMessage *msg = currentMsg();
+
+  if (!msg) return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createReply(true, true));
+  win->show();
+  kernel->kbp()->idle();
+}
+
+//-----------------------------------------------------------------------------
 void KMHeaders::moveSelectedToFolder( int menuId )
 {
   if (mMenuToFolder[menuId])

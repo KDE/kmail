@@ -218,6 +218,20 @@ public:
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != NULL); }
 
+  /** Returns TRUE if this folder is associated with a mailing-list. */
+  void setMailingList(bool enabled) { mMailingListEnabled = enabled; }
+  bool isMailingList() const { return mMailingListEnabled; }
+
+  void setMailingListPostAddress(const QString &address)
+  { mMailingListPostingAddress = address; }
+  const QString& mailingListPostAddress() const
+  { return mMailingListPostingAddress; }
+
+  void setMailingListAdminAddress(const QString &address)
+  { mMailingListAdminAddress = address; }
+  const QString& mailingListAdminAddress() const
+  { return mMailingListAdminAddress; }
+  
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
@@ -314,6 +328,11 @@ protected:
   QString mWhoField; // name of the field that is used for "From" in listbox
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
+
+  bool    mMailingListEnabled;
+  QString mMailingListPostingAddress;
+  QString mMailingListAdminAddress;
+
   int mUnreadMsgs; // number of unread messages, -1 if not yet set
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
   KMFolderDir* mChild;

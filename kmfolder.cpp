@@ -104,9 +104,8 @@ KMFolder :: ~KMFolder()
 //-----------------------------------------------------------------------------
 const QString KMFolder::location() const
 {
-  QString sLocation;
+  QString sLocation(path());
 
-  sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += name();
 
@@ -117,9 +116,8 @@ const QString KMFolder::location() const
 //-----------------------------------------------------------------------------
 const QString KMFolder::indexLocation() const
 {
-  QString sLocation;
+  QString sLocation(path());
 
-  sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
   sLocation += name();
@@ -131,9 +129,8 @@ const QString KMFolder::indexLocation() const
 //-----------------------------------------------------------------------------
 const QString KMFolder::subdirLocation() const
 {
-  QString sLocation;
+  QString sLocation(path());
 
-  sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
   sLocation += name();
@@ -1518,6 +1515,9 @@ void KMFolder::readConfig()
   config->setGroup("Folder-" + idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
+  mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
+  mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
+  mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
 }
 
 //-----------------------------------------------------------------------------
@@ -1526,6 +1526,9 @@ void KMFolder::writeConfig()
   KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);
+  config->writeEntry("MailingListEnabled", mMailingListEnabled);
+  config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
+  config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
 }
 
 //-----------------------------------------------------------------------------

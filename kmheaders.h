@@ -87,6 +87,7 @@ public:
   virtual void replyToMsg();
   virtual void redirectMsg();
   virtual void replyAllToMsg();
+  virtual void replyListToMsg();
   virtual void resendMsg();
 
   /** If destination==NULL the messages are deleted, otherwise

@@ -136,6 +136,7 @@ public slots:
 protected slots:
     void autoScroll();
     void rightButtonPressed( QListViewItem *, const QPoint &, int);
+    void mouseButtonPressed( int btn, QListViewItem *, const QPoint &, int);
 };
 
 #endif

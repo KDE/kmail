@@ -664,7 +664,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll)
+KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
@@ -678,7 +678,12 @@ KMMessage* KMMessage::createReply(bool replyToAll)
 
   msg->setCharset(charset());
 
-  if (replyToAll)
+  if (replyToList && parent()->isMailingList())
+  {
+      // Reply to mailing-list posting address
+      toStr = parent()->mailingListPostAddress();
+  }
+  else if (replyToAll)
   {
     int i;
     // sanders only include the replyTo address if it's != to the from address
@@ -745,7 +750,6 @@ KMMessage* KMMessage::createReply(bool replyToAll)
           ccStr.truncate(ccStr.length()-1);
         msg->setCc(ccStr);
       }
-
   }
   else
   {

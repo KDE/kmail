@@ -7,6 +7,7 @@
 #include <qlist.h>
 
 class KMAcctFolder;
+class QCheckBox;
 class QPushButton;
 class QLineEdit;
 class QListBox;
@@ -25,6 +26,7 @@ public:
 
 protected slots:
   virtual void slotOk( void );
+  virtual void slotHoldsML( bool );
 
 protected:
   QComboBox *fileInFolder;
@@ -32,6 +34,11 @@ protected:
   KMAcctFolder* folder;
   KMFolderDir* mFolderDir;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
+
+  QCheckBox *holdsMailingList;
+  QLineEdit *mailingListPostAddress;
+//   QLineEdit *mailingListAdminAddress;
+
 };
 
 #endif /*__KMFOLDERDIA*/
