@@ -3,7 +3,7 @@
 #ifndef kmflock_h
 #define kmflock_h
 
-#if defined(SYSV)
+#ifndef HAVE_FLOCK
 #ifndef _FLOCK_EMULATE_INCLUDED
 #define _FLOCK_EMULATE_INCLUDED
 
@@ -34,7 +34,7 @@ extern int kmflock(int fd, int operation);
 #endif
 
 #endif /* _FLOCK_EMULATE_INCLUDED */
-#else  /* SYSV */
+#else  /* HAVE_FLOCK */
 #define kmflock flock
-#endif /* SYSV */
+#endif /* HAVE_FLOCK */
 #endif /*kmflock_h*/

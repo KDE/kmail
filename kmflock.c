@@ -20,15 +20,19 @@
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#if defined(SYSV) || defined(ISC)
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifndef HAVE_FLOCK
 
 #include <unistd.h>
 #include <sys/types.h>
 #include <errno.h>
-#ifdef ISC
+#ifdef HAVE_NET_ERRNO_H
 # include <net/errno.h>
 #endif
-#include "flock.h"               /* defines normally in <sys/file.h> */
+#include "kmflock.h"               /* defines normally in <sys/file.h> */
 
 
 #if defined(F_SETLK) && defined(F_SETLKW)
@@ -75,4 +79,4 @@ kmflock(int fd, int operation)
 
 #endif /* F_SETLK && F_SETLKW */
 
-#endif /* SYSV || ISC */
+#endif 
