@@ -203,14 +203,14 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mAtmListView->setAllColumnsShowFocus( true );
 
   connect( mAtmListView,
-	   SIGNAL( doubleClicked( QListViewItem* ) ),
-	   SLOT( slotAttachProperties() ) );
+           SIGNAL( doubleClicked( QListViewItem* ) ),
+           SLOT( slotAttachProperties() ) );
   connect( mAtmListView,
            SIGNAL( rightButtonPressed( QListViewItem*, const QPoint&, int ) ),
            SLOT( slotAttachPopupMenu( QListViewItem*, const QPoint&, int ) ) );
   connect( mAtmListView,
-	   SIGNAL( selectionChanged() ),
-	   SLOT( slotUpdateAttachActions() ) );
+           SIGNAL( selectionChanged() ),
+           SLOT( slotUpdateAttachActions() ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -220,14 +220,14 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   applyMainWindowSettings(KMKernel::config(), "Composer");
 
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
-	  SLOT(slotUpdWinTitle(const QString&)));
+          SLOT(slotUpdWinTitle(const QString&)));
   connect(mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   //connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
   connect(mIdentity,SIGNAL(identityChanged(uint)),
-	  SLOT(slotIdentityChanged(uint)));
+          SLOT(slotIdentityChanged(uint)));
 
   connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
@@ -239,12 +239,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
   connect(mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-	connect(kmkernel->folderMgr(),SIGNAL(folderRemoved(KMFolder*)),
-					SLOT(slotFolderRemoved(KMFolder*)));
-	connect(kmkernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
-					SLOT(slotFolderRemoved(KMFolder*)));
-	connect(kmkernel->dimapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
-					SLOT(slotFolderRemoved(KMFolder*)));
+        connect(kmkernel->folderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+                                        SLOT(slotFolderRemoved(KMFolder*)));
+        connect(kmkernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+                                        SLOT(slotFolderRemoved(KMFolder*)));
+        connect(kmkernel->dimapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+                                        SLOT(slotFolderRemoved(KMFolder*)));
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 
@@ -353,7 +353,7 @@ void KMComposeWin::addAttachment(const QString &name,
     msgPart->setName(name);
     QValueList<int> dummy;
     msgPart->setBodyAndGuessCte(data, dummy,
-				kmkernel->msgSender()->sendQuotedPrintable());
+                                kmkernel->msgSender()->sendQuotedPrintable());
     msgPart->setTypeStr(type);
     msgPart->setSubtypeStr(subType);
     msgPart->setParameter(paramAttr,paramValue);
@@ -715,34 +715,34 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   if (!fromSlot) mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
-		    mLblIdentity, mIdentity, mBtnIdentity);
+                    mLblIdentity, mIdentity, mBtnIdentity);
   if (!fromSlot) mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
   rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row, i18n("&Dictionary:"),
-		    mDictionaryLabel, mDictionaryCombo, 0 );
+                    mDictionaryLabel, mDictionaryCombo, 0 );
   if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
   rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Se&nt-Mail folder:"),
-		    mLblFcc, mFcc, mBtnFcc);
+                    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l transport:"),
-		    mLblTransport, mTransport, mBtnTransport);
+                    mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
-		    mLblFrom, mEdtFrom /*, mBtnFrom */ );
+                    mLblFrom, mEdtFrom /*, mBtnFrom */ );
   if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
-		    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
+                    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("To:"),
-		    mLblTo, mEdtTo, mBtnTo);
+                    mLblTo, mEdtTo, mBtnTo);
   if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
   rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&CC:"),
-		    mLblCc, mEdtCc, mBtnCc);
+                    mLblCc, mEdtCc, mBtnCc);
   if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&BCC:"),
-		    mLblBcc, mEdtBcc, mBtnBcc);
+                    mLblBcc, mEdtBcc, mBtnBcc);
   if (!fromSlot) mSubjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
-		    mLblSubject, mEdtSubject);
+                    mLblSubject, mEdtSubject);
   assert(row<=mNumHeaders);
 
   mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
@@ -773,8 +773,8 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
-				     const QString &aLabelStr, QLabel* aLbl,
-				     QLineEdit* aEdt, QPushButton* aBtn)
+                                     const QString &aLabelStr, QLabel* aLbl,
+                                     QLineEdit* aEdt, QPushButton* aBtn)
 {
   if (aValue & aMask)
   {
@@ -810,8 +810,8 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
-				     const QString &aLabelStr, QLabel* aLbl,
-				     QComboBox* aCbx, QCheckBox* aChk)
+                                     const QString &aLabelStr, QLabel* aLbl,
+                                     QComboBox* aCbx, QCheckBox* aChk)
 {
   if (aValue & aMask)
   {
@@ -870,8 +870,8 @@ void KMComposeWin::setupActions(void)
   }
 
   (void) new KAction (i18n("Save in &Drafts Folder"), "filesave", 0,
-		      this, SLOT(slotSaveDraft()),
-		      actionCollection(), "save_in_drafts");
+                      this, SLOT(slotSaveDraft()),
+                      actionCollection(), "save_in_drafts");
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
@@ -923,15 +923,15 @@ void KMComposeWin::setupActions(void)
                                     actionCollection(),
                                     "urgent");
   mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
-					 actionCollection(),
-					 "options_request_mdn");
+                                         actionCollection(),
+                                         "options_request_mdn");
   mRequestMDNAction->setChecked(mAutoRequestMDN);
   //----- Message-Encoding Submenu
   mEncodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
-				      0, this, SLOT(slotSetCharset() ),
-				      actionCollection(), "charsets" );
+                                      0, this, SLOT(slotSetCharset() ),
+                                      actionCollection(), "charsets" );
   mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
-		      actionCollection(), "wordwrap");
+                      actionCollection(), "wordwrap");
   mWordWrapAction->setChecked(mWordWrap);
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
@@ -957,8 +957,8 @@ void KMComposeWin::setupActions(void)
                                        SLOT(slotView()),
                                        actionCollection(), "show_all_fields");
   mIdentityAction = new KToggleAction (i18n("&Identity"), 0, this,
-				      SLOT(slotView()),
-				      actionCollection(), "show_identity");
+                                      SLOT(slotView()),
+                                      actionCollection(), "show_identity");
   mDictionaryAction = new KToggleAction (i18n("&Dictionary"), 0, this,
                                          SLOT(slotView()),
                                          actionCollection(), "show_dictionary");
@@ -966,8 +966,8 @@ void KMComposeWin::setupActions(void)
                                  SLOT(slotView()),
                                  actionCollection(), "show_fcc");
   mTransportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
-				      SLOT(slotView()),
-				      actionCollection(), "show_transport");
+                                      SLOT(slotView()),
+                                      actionCollection(), "show_transport");
   mFromAction = new KToggleAction (i18n("&From"), 0, this,
                                   SLOT(slotView()),
                                   actionCollection(), "show_from");
@@ -1142,13 +1142,13 @@ void KMComposeWin::setupEditor(void)
   slotUpdateFont();
 
   /* installRBPopup() is broken in kdelibs, we should wait for
-	  the new klibtextedit (dnaber, 2002-01-01)
+          the new klibtextedit (dnaber, 2002-01-01)
   menu = new QPopupMenu(this);
   //#ifdef BROKEN
   menu->insertItem(i18n("Undo"),mEditor,
-		   SLOT(undo()), KStdAccel::shortcut(KStdAccel::Undo));
+                   SLOT(undo()), KStdAccel::shortcut(KStdAccel::Undo));
   menu->insertItem(i18n("Redo"),mEditor,
-		   SLOT(redo()), KStdAccel::shortcut(KStdAccel::Redo));
+                   SLOT(redo()), KStdAccel::shortcut(KStdAccel::Redo));
   menu->insertSeparator();
   //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
@@ -1175,11 +1175,11 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
   int oldPos = 0;
   if (mEditor->QMultiLineEdit::wordWrap() == QMultiLineEdit::FixedColumnWidth) {
     for (curPos = 0; curPos < (int)body.length(); ++curPos)
-	if (body[curPos] == '\n') {
-	  if ((curPos - oldPos) > maxLineLength)
-	    maxLineLength = curPos - oldPos;
-	  oldPos = curPos;
-	}
+        if (body[curPos] == '\n') {
+          if ((curPos - oldPos) > maxLineLength)
+            maxLineLength = curPos - oldPos;
+          oldPos = curPos;
+        }
     if ((curPos - oldPos) > maxLineLength)
       maxLineLength = curPos - oldPos;
     if (mEditor->wrapColumnOrWidth() < maxLineLength) // column
@@ -1220,7 +1220,7 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
-			  bool allowDecryption, bool isModified)
+                          bool allowDecryption, bool isModified)
 {
   KMMessagePart bodyPart, *msgPart;
   int i, num;
@@ -1271,7 +1271,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   // requested
   QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
   mRequestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
-				  im->thatIsMe( mdnAddr ) ) || mAutoRequestMDN );
+                                  im->thatIsMe( mdnAddr ) ) || mAutoRequestMDN );
 
   // check for presence of a priority header, indicating urgent mail:
   mUrgentAction->setChecked( newMsg->isUrgent() );
@@ -1452,7 +1452,7 @@ bool KMComposeWin::queryClose ()
            i18n("Do you want to discard the message or save it for later?"),
            i18n("Discard or Save Message"),
            i18n("&Save as Draft"),
-	   KStdGuiItem::discard() );
+           KStdGuiItem::discard() );
     if (rc == KMessageBox::Cancel)
       return false;
     else if (rc == KMessageBox::Yes)
@@ -1685,128 +1685,128 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
     else {
       // check whether all encrypted messages should be encrypted to self
       bool bEncryptToSelf = mSelectedCryptPlug
-	? mSelectedCryptPlug->alwaysEncryptToSelf()
-	: Kpgp::Module::getKpgp()->encryptToSelf();
+        ? mSelectedCryptPlug->alwaysEncryptToSelf()
+        : Kpgp::Module::getKpgp()->encryptToSelf();
       // check whether we have the user's key if necessary
       bool bEncryptionPossible = !bEncryptToSelf || !pgpUserId.isEmpty();
       // check whether we are using OpenPGP (built-in or plug-in)
       bool bUsingOpenPgp = !mSelectedCryptPlug || ( mSelectedCryptPlug &&
-						    ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) );
+                                                    ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) );
       // only try automatic encryption if all of the following conditions hold
       // a) the user enabled automatic encryption
       // b) we have the user's key if he wants to encrypt to himself
       // c) we are using OpenPGP
       // d) no message part is marked for encryption
       if( mAutoPgpEncrypt && bEncryptionPossible && bUsingOpenPgp &&
-	  !doEncryptPartially ) {
-	// check if encryption is possible and if yes suggest encryption
-	// first determine the complete list of recipients
-	QString _to = to().simplifyWhiteSpace();
-	if( !cc().isEmpty() ) {
-	  if( !_to.endsWith(",") )
-	    _to += ",";
-	  _to += cc().simplifyWhiteSpace();
-	}
-	if( !mBcc.isEmpty() ) {
-	  if( !_to.endsWith(",") )
-	    _to += ",";
-	  _to += mBcc.simplifyWhiteSpace();
-	}
-	QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
-	// now check if encrypting to these recipients is possible and desired
-	Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-	int status = pgp->encryptionPossible( allRecipients );
-	if( 1 == status ) {
-	  // encrypt all message parts
-	  doEncrypt = true;
-	  doEncryptCompletely = true;
-	}
-	else if( 2 == status ) {
-	  // the user wants to be asked or has to be asked
+          !doEncryptPartially ) {
+        // check if encryption is possible and if yes suggest encryption
+        // first determine the complete list of recipients
+        QString _to = to().simplifyWhiteSpace();
+        if( !cc().isEmpty() ) {
+          if( !_to.endsWith(",") )
+            _to += ",";
+          _to += cc().simplifyWhiteSpace();
+        }
+        if( !mBcc.isEmpty() ) {
+          if( !_to.endsWith(",") )
+            _to += ",";
+          _to += mBcc.simplifyWhiteSpace();
+        }
+        QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
+        // now check if encrypting to these recipients is possible and desired
+        Kpgp::Module *pgp = Kpgp::Module::getKpgp();
+        int status = pgp->encryptionPossible( allRecipients );
+        if( 1 == status ) {
+          // encrypt all message parts
+          doEncrypt = true;
+          doEncryptCompletely = true;
+        }
+        else if( 2 == status ) {
+          // the user wants to be asked or has to be asked
           KCursorSaver idle(KBusyPtr::idle());
-	  int ret;
-	  if( doSign )
-	    ret = KMessageBox::questionYesNoCancel( this,
-						    i18n("<qt><p>You have a trusted OpenPGP key for every "
-							 "recipient of this message and the message will "
-							 "be signed.</p>"
-							 "<p>Should this message also be "
-							 "encrypted?</p></qt>"),
-						    i18n("Encrypt Message?"),
-						    KGuiItem( i18n("Sign && &Encrypt") ),
-						    KGuiItem( i18n("&Sign Only") ) );
-	  else
-	    ret = KMessageBox::questionYesNoCancel( this,
-						    i18n("<qt><p>You have a trusted OpenPGP key for every "
-							 "recipient of this message.</p>"
-							 "<p>Should this message be encrypted?</p></qt>"),
-						    i18n("Encrypt Message?"),
-						    KGuiItem( i18n("&Encrypt") ),
-						    KGuiItem( i18n("&Don't Encrypt") ) );
-	  if( KMessageBox::Cancel == ret )
-	    return false;
-	  else if( KMessageBox::Yes == ret ) {
-	    // encrypt all message parts
-	    doEncrypt = true;
-	    doEncryptCompletely = true;
-	  }
-	}
-	else if( status == -1 )
-	{
+          int ret;
+          if( doSign )
+            ret = KMessageBox::questionYesNoCancel( this,
+                                                    i18n("<qt><p>You have a trusted OpenPGP key for every "
+                                                         "recipient of this message and the message will "
+                                                         "be signed.</p>"
+                                                         "<p>Should this message also be "
+                                                         "encrypted?</p></qt>"),
+                                                    i18n("Encrypt Message?"),
+                                                    KGuiItem( i18n("Sign && &Encrypt") ),
+                                                    KGuiItem( i18n("&Sign Only") ) );
+          else
+            ret = KMessageBox::questionYesNoCancel( this,
+                                                    i18n("<qt><p>You have a trusted OpenPGP key for every "
+                                                         "recipient of this message.</p>"
+                                                         "<p>Should this message be encrypted?</p></qt>"),
+                                                    i18n("Encrypt Message?"),
+                                                    KGuiItem( i18n("&Encrypt") ),
+                                                    KGuiItem( i18n("&Don't Encrypt") ) );
+          if( KMessageBox::Cancel == ret )
+            return false;
+          else if( KMessageBox::Yes == ret ) {
+            // encrypt all message parts
+            doEncrypt = true;
+            doEncryptCompletely = true;
+          }
+        }
+        else if( status == -1 )
+        {
           // warn the user that there are conflicting encryption preferences
           KCursorSaver idle(KBusyPtr::idle());
-	  int ret =
-	    KMessageBox::warningYesNoCancel( this,
-					     i18n("<qt><p>There are conflicting encryption "
-						  "preferences!</p>"
-						  "<p>Should this message be encrypted?</p></qt>"),
-					     i18n("Encrypt Message?"),
-					     KGuiItem( i18n("&Encrypt") ),
-					     KGuiItem( i18n("&Don't Encrypt") ) );
-	  if( KMessageBox::Cancel == ret )
-	    bOk = false;
-	  else if( KMessageBox::Yes == ret ) {
-	    // encrypt all message parts
-	    doEncrypt = true;
-	    doEncryptCompletely = true;
-	  }
-	}
+          int ret =
+            KMessageBox::warningYesNoCancel( this,
+                                             i18n("<qt><p>There are conflicting encryption "
+                                                  "preferences!</p>"
+                                                  "<p>Should this message be encrypted?</p></qt>"),
+                                             i18n("Encrypt Message?"),
+                                             KGuiItem( i18n("&Encrypt") ),
+                                             KGuiItem( i18n("&Don't Encrypt") ) );
+          if( KMessageBox::Cancel == ret )
+            bOk = false;
+          else if( KMessageBox::Yes == ret ) {
+            // encrypt all message parts
+            doEncrypt = true;
+            doEncryptCompletely = true;
+          }
+        }
       }
       else if( !doEncryptCompletely && mSelectedCryptPlug ) {
-	// note: only ask for encrypting if "Warn me" flag is set! (khz)
-	if( mSelectedCryptPlug->warnSendUnencrypted() ) {
-	  int ret =
-	    KMessageBox::warningYesNoCancel( this,
-					     QString( "<qt><b>"
-						      + i18n("Warning:")
-						      + "</b><br>"
-						      + ((doEncrypt && !doEncryptCompletely)
-							 ? i18n("You specified not to encrypt some parts of this message, but"
-								" you wanted to be warned not to send unencrypted messages!")
-							 : i18n("You specified not to encrypt this message, but"
-								" you wanted to be warned not to send unencrypted messages!") )
-						      + "<br>&nbsp;<br><b>"
-						      + i18n("Encrypt all parts of this message?")
-						      + "</b></qt>" ),
-					     i18n("Encryption Warning"),
-					     KGuiItem( i18n("&Encrypt All Parts") ),
-					     KGuiItem( i18n("Send &as Is") ) );
-	  if( ret == KMessageBox::Cancel )
-	    bOk = false;
-	  else if( ret == KMessageBox::Yes ) {
-	    doEncrypt = true;
-	    doEncryptCompletely = true;
-	  }
-	}
+        // note: only ask for encrypting if "Warn me" flag is set! (khz)
+        if( mSelectedCryptPlug->warnSendUnencrypted() ) {
+          int ret =
+            KMessageBox::warningYesNoCancel( this,
+                                             QString( "<qt><b>"
+                                                      + i18n("Warning:")
+                                                      + "</b><br>"
+                                                      + ((doEncrypt && !doEncryptCompletely)
+                                                         ? i18n("You specified not to encrypt some parts of this message, but"
+                                                                " you wanted to be warned not to send unencrypted messages!")
+                                                         : i18n("You specified not to encrypt this message, but"
+                                                                " you wanted to be warned not to send unencrypted messages!") )
+                                                      + "<br>&nbsp;<br><b>"
+                                                      + i18n("Encrypt all parts of this message?")
+                                                      + "</b></qt>" ),
+                                             i18n("Encryption Warning"),
+                                             KGuiItem( i18n("&Encrypt All Parts") ),
+                                             KGuiItem( i18n("Send &as Is") ) );
+          if( ret == KMessageBox::Cancel )
+            bOk = false;
+          else if( ret == KMessageBox::Yes ) {
+            doEncrypt = true;
+            doEncryptCompletely = true;
+          }
+        }
 
-	/*
-	  note: Processing the mSelectedCryptPlug->encryptEmail() flag here would
-	  be absolutely wrong: this is used for specifying
-	  if messages should be encrypted 'in general'.
-	  --> This sets the initial state of a freshly started Composer.
-	  --> This does *not* mean overriding user setting made while
-	  editing in that composer window!         (khz, 2002/06/26)
-	*/
+        /*
+          note: Processing the mSelectedCryptPlug->encryptEmail() flag here would
+          be absolutely wrong: this is used for specifying
+          if messages should be encrypted 'in general'.
+          --> This sets the initial state of a freshly started Composer.
+          --> This does *not* mean overriding user setting made while
+          editing in that composer window!         (khz, 2002/06/26)
+        */
 
       }
     }
@@ -2376,10 +2376,10 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
 
         StructuringInfoWrapper structuring( mSelectedCryptPlug );
 
-	QByteArray encryptedBody;
+        QByteArray encryptedBody;
         result = pgpEncryptedMsg( encryptedBody, innerContent,
-				  structuring,
-				  encryptCertFingerprints );
+                                  structuring,
+                                  encryptCertFingerprints );
 
         if( Kpgp::Ok == result ) {
           result = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
@@ -2542,10 +2542,10 @@ kdDebug(5006) << "                                 sign " << idx << ". attachmen
             if( encryptThisNow ) {
 kdDebug(5006) << "                                 encrypt " << idx << ". attachment separately" << endl;
               StructuringInfoWrapper structuring( mSelectedCryptPlug );
-	      QByteArray encryptedBody;
+              QByteArray encryptedBody;
               result = pgpEncryptedMsg( encryptedBody, encodedAttachment,
-					structuring,
-					encryptCertFingerprints );
+                                        structuring,
+                                        encryptCertFingerprints );
 
               if( Kpgp::Ok == result ) {
                 result = processStructuringInfo( QString::fromUtf8( mSelectedCryptPlug->bugURL() ),
@@ -2831,12 +2831,12 @@ kdDebug(5006) << "***************************************" << endl;
         codeStr += structuring.data.contentTypeCode;
         if(    structuring.data.contentTEncCode
             && 0 < strlen( structuring.data.contentTEncCode ) ) {
-	  codeStr += "\nContent-Transfer-Encoding: ";
+          codeStr += "\nContent-Transfer-Encoding: ";
           codeStr += structuring.data.contentTEncCode;
-	//} else {
+        //} else {
         //  codeStr += "\nContent-Transfer-Encoding: ";
-	//  codeStr += "base64";
-	}
+        //  codeStr += "base64";
+        }
         if( !contentDescCiph.isEmpty() ) {
           codeStr += "\nContent-Description: ";
           codeStr += contentDescCiph.utf8();
@@ -2855,7 +2855,7 @@ kdDebug(5006) << "***************************************" << endl;
         //    && 0 < strlen( structuring.data.contentTEncCode ) ) {
         //  codeKmPa.setCteStr( structuring.data.contentTEncCode );
         //} else {
-	//  codeKmPa.setCteStr("base64");
+        //  codeKmPa.setCteStr("base64");
         //}
         codeKmPa.setBodyEncodedBinary( ciphertext );
         // store string representation of the cleartext headers
@@ -3016,7 +3016,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
       QString oldText = mEditor->text();
       mEditor->setText(newText);
       KCursorSaver idle(KBusyPtr::idle());
-      bool anyway = (KMessageBox::warningYesNo(0,
+      bool anyway = (KMessageBox::warningYesNo(this,
                                                i18n("<qt>Not all characters fit into the chosen"
                                                     " encoding.<br><br>Send the message anyway?</qt>"),
                                                i18n("Some characters will be lost"),
@@ -3346,8 +3346,8 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 }
                 signature.assign( ciphertext, cipherLen );
             } else if ( errId == /*GPGME_Canceled*/20 ) {
-	        return false;
-	    } else {
+                return false;
+            } else {
                 QString error("#");
                 error += QString::number( errId );
                 error += "  :  ";
@@ -3391,9 +3391,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
 //-----------------------------------------------------------------------------
 Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
-					    QCString cText,
-					    StructuringInfoWrapper& structuring,
-					    QCString& encryptCertFingerprints )
+                                            QCString cText,
+                                            StructuringInfoWrapper& structuring,
+                                            QCString& encryptCertFingerprints )
 {
   Kpgp::Result result = Kpgp::Ok;
 
@@ -3431,7 +3431,7 @@ Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
                         KGuiItem( i18n( "&Encrypt" ) ),
                         KGuiItem( i18n( "&Don't Encrypt" ) ) );
             if( ret == KMessageBox::No )
-	      return Kpgp::Canceled;
+              return Kpgp::Canceled;
         }
     }
 #endif
@@ -3734,7 +3734,7 @@ bool KMComposeWin::checkForEncryptCertificateExpiry( const QString& recipient,
 void KMComposeWin::addAttach(const KURL aUrl)
 {
   if ( !aUrl.isValid() ) {
-    KMessageBox::sorry( 0, i18n( "<qt><p>KMail couldn't recognize the location of the attachment (%1).</p>"
+    KMessageBox::sorry( this, i18n( "<qt><p>KMail couldn't recognize the location of the attachment (%1).</p>"
                                  "<p>You have to specify the full path if you wish to attach a file.</p></qt>" )
                         .arg( aUrl.prettyURL() ) );
     return;
@@ -3987,7 +3987,7 @@ void KMComposeWin::slotAttachFile()
   // this function.
 
   KURL::List files = KFileDialog::getOpenURLs(QString::null, QString::null,
-	this, i18n("Attach File"));
+        this, i18n("Attach File"));
   for (KURL::List::Iterator it = files.begin(); it != files.end(); ++it)
     addAttach(*it);
 }
@@ -4074,7 +4074,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setName(name);
   QValueList<int> allowedCTEs;
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
-			      !kmkernel->msgSender()->sendQuotedPrintable());
+                              !kmkernel->msgSender()->sendQuotedPrintable());
   kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
   int slash = mimeType.find( '/' );
   if( slash == -1 )
@@ -4097,7 +4097,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
     for ( QValueListConstIterator<int> it = allowedCTEs.begin() ;
-	  it != allowedCTEs.end() ; ++it )
+          it != allowedCTEs.end() ; ++it )
       switch ( *it ) {
       case DwMime::kCteBase64: encodings |= KMMsgPartDialog::Base64; break;
       case DwMime::kCteQp: encodings |= KMMsgPartDialog::QuotedPrintable; break;
@@ -4274,7 +4274,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   if (armoredKey.isEmpty())
   {
     KCursorSaver idle(KBusyPtr::idle());
-    KMessageBox::sorry( 0, i18n("Unable to obtain your public key.") );
+    KMessageBox::sorry( this, i18n("Unable to obtain your public key.") );
     return;
   }
 
@@ -4324,7 +4324,8 @@ void KMComposeWin::slotInsertPublicKey()
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
   } else {
-    KMessageBox::sorry( 0, i18n( "Unable to obtain the selected public key." ) );
+    KMessageBox::sorry( this,
+                        i18n( "Unable to obtain the selected public key." ) );
   }
 }
 
@@ -4843,18 +4844,23 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      if (to().isEmpty())
      {
         mEdtTo->setFocus();
-        KMessageBox::information(0,i18n("You must specify at least one receiver in the To: field."));
+        KMessageBox::information( this,
+                                  i18n("You must specify at least one "
+                                       "receiver in the To: field.") );
         return false;
      }
 
      if (subject().isEmpty())
      {
         mEdtSubject->setFocus();
-        int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
-                                            i18n("No Subject Specified"),
-                                            i18n("&Yes, Send as Is"),
-                                            i18n("&No, Let Me Specify the Subject"),
-                                            "no_subject_specified" );
+        int rc =
+          KMessageBox::questionYesNo( this,
+                                      i18n("You did not specify a subject. "
+                                           "Send message anyway?"),
+                                      i18n("No Subject Specified"),
+                                      i18n("&Yes, Send as Is"),
+                                      i18n("&No, Let Me Specify the Subject"),
+                                      "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
            return false;
@@ -5261,7 +5267,7 @@ void KMComposeWin::slotEditToolbars()
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
-	   SLOT(slotUpdateToolbars()) );
+           SLOT(slotUpdateToolbars()) );
 
   dlg.exec();
 }
@@ -5275,8 +5281,8 @@ void KMComposeWin::slotUpdateToolbars()
 void KMComposeWin::slotEditKeys()
 {
   KKeyDialog::configure( actionCollection(),
-			 false /*don't allow one-letter shortcuts*/
-			 );
+                         false /*don't allow one-letter shortcuts*/
+                         );
 }
 
 void KMComposeWin::setReplyFocus( bool hasMessage )
@@ -5317,12 +5323,12 @@ void KMComposeWin::slotConfigChanged()
 */
 void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 {
-	if ( (mFolder) && (folder->idString() == mFolder->idString()) )
-	{
-		mFolder = kmkernel->draftsFolder();
-		kdDebug(5006) << "restoring drafts to " << mFolder->idString() << endl;
-	}
-	if (mMsg) mMsg->setParent(0);
+        if ( (mFolder) && (folder->idString() == mFolder->idString()) )
+        {
+                mFolder = kmkernel->draftsFolder();
+                kdDebug(5006) << "restoring drafts to " << mFolder->idString() << endl;
+        }
+        if (mMsg) mMsg->setParent(0);
 }
 
 
@@ -5335,17 +5341,17 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {
     if (e->provides(MailListDrag::format()))
-	e->accept(true);
+        e->accept(true);
     else
-	return KEdit::dragEnterEvent(e);
+        return KEdit::dragEnterEvent(e);
 }
 
 void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
 {
     if (e->provides(MailListDrag::format()))
-	e->accept();
+        e->accept();
     else
-	return KEdit::dragMoveEvent(e);
+        return KEdit::dragMoveEvent(e);
 }
 
 void KMEdit::keyPressEvent( QKeyEvent* e )
@@ -5410,31 +5416,31 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
 void KMEdit::contentsDropEvent(QDropEvent *e)
 {
     if (e->provides(MailListDrag::format())) {
-	// Decode the list of serial numbers stored as the drag data
-	QByteArray serNums;
-	MailListDrag::decode( e, serNums );
-	QBuffer serNumBuffer(serNums);
-	serNumBuffer.open(IO_ReadOnly);
-	QDataStream serNumStream(&serNumBuffer);
-	unsigned long serNum;
-	KMFolder *folder = 0;
-	int idx;
-	QPtrList<KMMsgBase> messageList;
-	while (!serNumStream.atEnd()) {
-	    KMMsgBase *msgBase = 0;
-	    serNumStream >> serNum;
-	    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
-	    if (folder)
-		msgBase = folder->getMsgBase(idx);
-	    if (msgBase)
-		messageList.append( msgBase );
-	}
-	serNumBuffer.close();
-	uint identity = folder ? folder->identity() : 0;
-	KMCommand *command =
-	    new KMForwardAttachedCommand(mComposer, messageList,
-					 identity, mComposer);
-	command->start();
+        // Decode the list of serial numbers stored as the drag data
+        QByteArray serNums;
+        MailListDrag::decode( e, serNums );
+        QBuffer serNumBuffer(serNums);
+        serNumBuffer.open(IO_ReadOnly);
+        QDataStream serNumStream(&serNumBuffer);
+        unsigned long serNum;
+        KMFolder *folder = 0;
+        int idx;
+        QPtrList<KMMsgBase> messageList;
+        while (!serNumStream.atEnd()) {
+            KMMsgBase *msgBase = 0;
+            serNumStream >> serNum;
+            kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
+            if (folder)
+                msgBase = folder->getMsgBase(idx);
+            if (msgBase)
+                messageList.append( msgBase );
+        }
+        serNumBuffer.close();
+        uint identity = folder ? folder->identity() : 0;
+        KMCommand *command =
+            new KMForwardAttachedCommand(mComposer, messageList,
+                                         identity, mComposer);
+        command->start();
     }
     else if( KURLDrag::canDecode( e ) ) {
         KURL::List urlList;
@@ -5446,7 +5452,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         }
     }
     else {
-	return KEdit::dropEvent(e);
+        return KEdit::dropEvent(e);
     }
 }
 
@@ -5708,7 +5714,7 @@ void KMLineEditSpell::highLightWord( unsigned int length, unsigned int pos )
 void KMLineEditSpell::spellCheckDone( const QString &s )
 {
     if( s != text() )
-	setText( s );
+        setText( s );
 }
 
 void KMLineEditSpell::spellCheckerMisspelling( const QString &_text, const QStringList&, unsigned int pos)
@@ -5734,7 +5740,7 @@ void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &
 //=============================================================================
 KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
                KSpellConfig* autoSpellConfig,
-	       const char *name)
+               const char *name)
   : KEdit( parent, name ),
     mComposer( composer ),
     mKSpell( 0 ),
@@ -5775,7 +5781,7 @@ void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
                                                 col1, col2, col3, col4,
                                                 autoSpellConfig );
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
-	   mComposer, SLOT(slotStatusMessage(const QString &)));
+           mComposer, SLOT(slotStatusMessage(const QString &)));
   connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
            this, SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
 }
@@ -5864,13 +5870,14 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
               SLOT(slotExternalEditorDone(KProcess*)));
       if (!mExtEditorProcess->start())
       {
-        KMessageBox::error(0, i18n("Unable to start external editor."));
-	killExternalEditor();
+        KMessageBox::error( topLevelWidget(),
+                            i18n("Unable to start external editor.") );
+        killExternalEditor();
       } else {
-	mExtEditorTempFileWatcher = new KDirWatch( this, "mExtEditorTempFileWatcher" );
-	connect( mExtEditorTempFileWatcher, SIGNAL(dirty(const QString&)),
-		 SLOT(slotExternalEditorTempFileChanged(const QString&)) );
-	mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );
+        mExtEditorTempFileWatcher = new KDirWatch( this, "mExtEditorTempFileWatcher" );
+        connect( mExtEditorTempFileWatcher, SIGNAL(dirty(const QString&)),
+                 SLOT(slotExternalEditorTempFileChanged(const QString&)) );
+        mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );
       }
       return TRUE;
     } else {
@@ -5999,11 +6006,11 @@ void KMEdit::killExternalEditor() {
 bool KMEdit::checkExternalEditorFinished() {
   if ( !mExtEditorProcess )
     return true;
-  switch ( KMessageBox::warningYesNoCancel( this,
+  switch ( KMessageBox::warningYesNoCancel( topLevelWidget(),
            i18n("The external editor is still running.\n"
-		"Abort the external editor or leave it open?"),
+                "Abort the external editor or leave it open?"),
            i18n("External Editor"),
-	   i18n("Abort Editor"), i18n("Leave Editor Open") ) ) {
+           i18n("Abort Editor"), i18n("Leave Editor Open") ) ) {
   case KMessageBox::Yes:
     killExternalEditor();
     return true;
@@ -6022,7 +6029,7 @@ void KMEdit::spellcheck()
   mWasModifiedBeforeSpellCheck = isModified();
   mSpellLineEdit = !mSpellLineEdit;
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
-		       SLOT(slotSpellcheck2(KSpell*)));
+                       SLOT(slotSpellcheck2(KSpell*)));
   QStringList l = KSpellingHighlighter::personalWords();
   for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it ) {
       mKSpell->addPersonal( *it );
@@ -6158,13 +6165,17 @@ void KMEdit::slotSpellDone()
   mComposer->sujectLineWidget()->deselect();
   if (status == KSpell::Error)
   {
-     KMessageBox::sorry(this, i18n("ISpell/Aspell could not be started. Please make sure you have ISpell or Aspell properly configured and in your PATH."));
+     KMessageBox::sorry( topLevelWidget(),
+                         i18n("ISpell/Aspell could not be started. Please "
+                              "make sure you have ISpell or Aspell properly "
+                              "configured and in your PATH.") );
      emit spellcheck_done( KS_CANCEL );
   }
   else if (status == KSpell::Crashed)
   {
      spellcheck_stop();
-     KMessageBox::sorry(this, i18n("ISpell/Aspell seems to have crashed."));
+     KMessageBox::sorry( topLevelWidget(),
+                         i18n("ISpell/Aspell seems to have crashed.") );
      emit spellcheck_done( KS_CANCEL );
   }
   else
@@ -6173,7 +6184,8 @@ void KMEdit::slotSpellDone()
           spellcheck();
 #if KDE_IS_VERSION( 3, 1, 90 )
       else if( status == KSpell::FinishedNoMisspellingsEncountered )
-          KMessageBox::information( this, i18n("No misspellings encountered."));
+          KMessageBox::information( topLevelWidget(),
+                                    i18n("No misspellings encountered.") );
 #endif
   }
 }
