@@ -932,6 +932,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   mEdtFollowupTo.setText(mMsg->followup());
 #endif
 
+  if ((mBtnIdentity.isChecked()) && (!mId.isEmpty())) {
+    KMIdentity ident( mId );
+    ident.readConfig();
+
+    mEdtFrom.setText( ident.fullEmailAddr() );
+    mEdtReplyTo.setText( ident.replyToAddr() );
+  }  
+
   num = mMsg->numBodyParts();
   if (num > 0)
   {
