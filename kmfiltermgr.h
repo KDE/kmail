@@ -14,9 +14,9 @@
 class KMFilterDlg;
 class KMFilter;
 
-#define KMFilterMgrInherited QPtrList<KMFilter>
 class KMFilterMgr: public QPtrList<KMFilter>
 {
+  typedef QPtrList<KMFilter> base;
 public:
   KMFilterMgr(bool popFilter = false);
   virtual ~KMFilterMgr();
@@ -25,17 +25,17 @@ public:
 		   All = Inbound|Outbound|Explicit };
 
   /** Reload filter rules from config file. */
-  virtual void readConfig(void);
+  void readConfig(void);
 
   /** Store filter rules in config file. */
-  virtual void writeConfig(bool withSync=TRUE);
+  void writeConfig(bool withSync=TRUE);
 
   /** Open an edit dialog. */
-  virtual void openDialog( QWidget *parent );
+  void openDialog( QWidget *parent );
 
   /** Open an edit dialog, create a new filter and preset the first
       rule with "field equals value" */
-  virtual void createFilter( const QCString field, const QString value );
+  void createFilter( const QCString & field, const QString & value );
 
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)
@@ -48,19 +48,19 @@ public:
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  virtual int process(KMMessage* msg, FilterSet aSet=Inbound);
+  int process(KMMessage* msg, FilterSet aSet=Inbound);
 
   /** Call this method after processing messages with process().
     Shall be called after all messages are processed. This method
     closes all folders that have been temporarily opened with
     tempOpenFolder(). */
-  virtual void cleanup();
+  void cleanup();
 
   /** Open given folder and mark it as temporarily open. The folder
     will be closed upon next call of cleanip(). This method is
     usually only called from within filter actions during process().
     Returns returncode from KMFolder::open() call. */
-  virtual int tempOpenFolder(KMFolder* aFolder);
+  int tempOpenFolder(KMFolder* aFolder);
 
   /** Called at the beginning of an filter list update. Currently a
       no-op */
@@ -70,23 +70,27 @@ public:
   void endUpdate() {}
 
   /** Output all rules to stdout */
-  virtual void dump();
+  void dump();
 
   /** Called from the folder manager when a folder is removed.
     Tests if the folder aFolder is used in any action. Changes
     to aNewFolder folder in this case. Returns TRUE if a change
     occured. */
-  virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
+  bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
   /** Called from the folder manager when a new folder has been
       created. Forwards this to the filter dialog if that is open. */
-  virtual void folderCreated(KMFolder*) {}
+  void folderCreated(KMFolder*) {}
 
   /** Set the global option 'Show Download Later Messages' */
-  virtual void setShowLaterMsgs(bool);
+  void setShowLaterMsgs( bool show ) {
+    mShowLater = show;
+  }
 
   /** Get the global option 'Show Download Later Messages' */
-  virtual bool showLaterMsgs();
+  bool showLaterMsgs() const {
+    return mShowLater;
+  }
 
 private:
   QGuardedPtr<KMFilterDlg> mEditDialog;

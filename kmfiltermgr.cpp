@@ -21,14 +21,15 @@
 
 
 //-----------------------------------------------------------------------------
-KMFilterMgr::KMFilterMgr(bool popFilter): KMFilterMgrInherited(),
-  bPopFilter(popFilter)
+KMFilterMgr::KMFilterMgr( bool popFilter )
+  : QPtrList<KMFilter>(),
+    mEditDialog( 0 ),
+    bPopFilter( popFilter ),
+    mShowLater( false )
 {
   if (bPopFilter)
     kdDebug(5006) << "pPopFilter set" << endl;
   setAutoDelete(TRUE);
-  mEditDialog = NULL;
-  mShowLater = false;
 }
 
 
@@ -44,9 +45,8 @@ KMFilterMgr::~KMFilterMgr()
 void KMFilterMgr::readConfig(void)
 {
   KConfig* config = kapp->config();
-  int i, numFilters;
+  int numFilters;
   QString grpName;
-  KMFilter* filter;
 
   clear();
 
@@ -59,10 +59,10 @@ void KMFilterMgr::readConfig(void)
     numFilters = config->readNumEntry("filters",0);
   }
 
-  for (i=0; i<numFilters; i++) {
+  for ( int i=0 ; i < numFilters ; ++i ) {
     grpName.sprintf("%s #%d", (bPopFilter ? "PopFilter" : "Filter") , i);
     KConfigGroupSaver saver(config, grpName);
-    filter = new KMFilter(config, bPopFilter);
+    KMFilter * filter = new KMFilter(config, bPopFilter);
     filter->purify();
     if ( filter->isEmpty() ) {
       kdDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
@@ -197,18 +197,18 @@ void KMFilterMgr::cleanup(void)
 //-----------------------------------------------------------------------------
 int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
 {
-  assert(aFolder!=NULL);
+  assert( aFolder );
 
   int rc = aFolder->open();
   if (rc) return rc;
 
-  mOpenFolders.append(aFolder);
-  return rc;
+  mOpenFolders.append( aFolder );
+  return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::openDialog( QWidget *parent )
+void KMFilterMgr::openDialog( QWidget * )
 {
   if( !mEditDialog )
   {
@@ -216,15 +216,14 @@ void KMFilterMgr::openDialog( QWidget *parent )
     // We can't use the parent as long as the dialog is modeless
     // and there is one shared dialog for all top level windows.
     //
-    (void)parent;
-      mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter );
+    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter );
   }
   mEditDialog->show();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::createFilter( const QCString field, const QString value )
+void KMFilterMgr::createFilter( const QCString & field, const QString & value )
 {
   openDialog( 0 );
   mEditDialog->createFilter( field, value );
@@ -241,20 +240,6 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
     if ( (*it)->folderRemoved(aFolder, aNewFolder) ) rem=TRUE;
 
   return rem;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFilterMgr::setShowLaterMsgs(bool aShow)
-{
-  mShowLater = aShow;
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMFilterMgr::showLaterMsgs()
-{
-  return mShowLater;
 }
 
 
