@@ -503,7 +503,8 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
   }
   if (job->error())
   {
-    if (!quiet) job->showErrorDialog();
+    if (!quiet) slotSlaveError(mSlave, job->error(), 
+        job->errorString() );
     if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
   }
   displayProgress();
