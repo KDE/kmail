@@ -737,8 +737,8 @@ protected:
   IdentityCombo    *mIdentity;
   KMFolderComboBox *mFcc;
   KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc;
-    KMLineEditSpell *mEdtSubject;
-    QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
+  KMLineEditSpell *mEdtSubject;
+  QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
   QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
   QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
   QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;
@@ -749,7 +749,7 @@ protected:
   KMEdit* mEditor;
   QGridLayout* mGrid;
   KMMessage *mMsg;
-  QPtrList<KMMessage> bccMsgList;
+  QPtrList<KMMessage> mBccMsgList;
   KMail::AttachmentListView* mAtmListView;
   int mAtmColEncrypt;
   int mAtmColSign;
@@ -766,10 +766,10 @@ protected:
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
-  bool useExtEditor;
+  bool mUseExtEditor;
   QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;
-  bool disableBreaking;
+  bool mDisableBreaking;
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;
@@ -785,24 +785,25 @@ protected:
   QStringList mTransportHistory;
   QString mBcc;
 
-  KAction *attachPK, *attachMPK,
-          *attachRemoveAction, *attachSaveAction, *attachPropertiesAction;
+  KAction *mAttachPK, *mAttachMPK,
+          *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction;
 
-  KToggleAction *signAction, *encryptAction, *requestMDNAction;
-  KToggleAction *urgentAction, *allFieldsAction, *fromAction;
-  KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
-  KToggleAction *identityAction, *transportAction, *fccAction;
-  KToggleAction *wordWrapAction, *fixedFontAction;
+  KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
+  KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;
+  KToggleAction *mReplyToAction, *mToAction, *mCcAction, *mBccAction;
+  KToggleAction *mSubjectAction;
+  KToggleAction *mIdentityAction, *mTransportAction, *mFccAction;
+  KToggleAction *mWordWrapAction, *mFixedFontAction;
 
-  KSelectAction *encodingAction;
-  KSelectAction *cryptoModuleAction;
+  KSelectAction *mEncodingAction;
+  KSelectAction *mCryptoModuleAction;
 
   QCString mCharset;
   QCString mDefCharset;
   QStringList mCharsets;
-  bool bAutoCharset;
+  bool mAutoCharset;
 
-  bool bAlwaysSend;
+  bool mAlwaysSend;
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
@@ -811,7 +812,7 @@ private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );
 
 private:
-  QColor foreColor,backColor;
+  QColor mForeColor,mBackColor;
   struct atmLoadData
   {
     KURL url;
@@ -819,7 +820,7 @@ private:
     bool insert;
     QCString encoding;
   };
-  QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
+  QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
   bool mForceReplyCharset;
 
   QString mErrorProcessingStructuringInfo;

@@ -144,12 +144,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mAtmModified = FALSE;
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
-  bAutoCharset = TRUE;
-  fixedFontAction = 0;
+  mAutoCharset = TRUE;
+  mFixedFontAction = 0;
   mEditor = new KMEdit(mMainWidget, this);
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
-  disableBreaking = false;
+  mDisableBreaking = false;
   QString tip = i18n("Select email address(es)");
   QToolTip::add( mBtnTo, tip );
   QToolTip::add( mBtnCc, tip );
@@ -244,13 +244,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setCentralWidget(mMainWidget);
   rethinkFields();
 
-  if (useExtEditor) {
+  if (mUseExtEditor) {
     mEditor->setUseExternalEditor(true);
     mEditor->setExternalEditorPath(mExtEditor);
   }
 
   mMsg = 0;
-  bccMsgList.setAutoDelete( false );
+  mBccMsgList.setAutoDelete( false );
   if (aMsg)
     setMsg(aMsg);
 
@@ -294,15 +294,15 @@ KMComposeWin::~KMComposeWin()
     delete mMsg;
     mMsg = 0;
   }
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.begin();
-  while ( it != mapAtmLoadData.end() )
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.begin();
+  while ( it != mMapAtmLoadData.end() )
   {
     KIO::Job *job = it.key();
-    mapAtmLoadData.remove( it );
+    mMapAtmLoadData.remove( it );
     job->kill();
-    it = mapAtmLoadData.begin();
+    it = mMapAtmLoadData.begin();
   }
-  bccMsgList.clear();
+  mBccMsgList.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -377,19 +377,19 @@ void KMComposeWin::readColorConfig(void)
   QColor c4=QColor(kapp->palette().active().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
-    foreColor = config->readColorEntry("ForegroundColor",&c1);
-    backColor = config->readColorEntry("BackgroundColor",&c4);
+    mForeColor = config->readColorEntry("ForegroundColor",&c1);
+    mBackColor = config->readColorEntry("BackgroundColor",&c4);
   }
   else {
-    foreColor = c1;
-    backColor = c4;
+    mForeColor = c1;
+    mBackColor = c4;
   }
 
   // Color setup
   mPalette = kapp->palette();
   QColorGroup cgrp  = mPalette.active();
-  cgrp.setColor( QColorGroup::Base, backColor);
-  cgrp.setColor( QColorGroup::Text, foreColor);
+  cgrp.setColor( QColorGroup::Base, mBackColor);
+  cgrp.setColor( QColorGroup::Text, mForeColor);
   mPalette.setDisabled(cgrp);
   mPalette.setActive(cgrp);
   mPalette.setInactive(cgrp);
@@ -455,7 +455,7 @@ void KMComposeWin::readConfig(void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mExtEditor = config->readPathEntry("external-editor", DEFAULT_EDITOR_STR);
-    useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
+    mUseExtEditor = config->readBoolEntry("use-external-editor", FALSE);
 
     int headerCount = config->readNumEntry("mime-header-count", 0);
     mCustHeaders.clear();
@@ -620,25 +620,25 @@ void KMComposeWin::slotView(void)
     return;
   KToggleAction *act = (KToggleAction *) sender();
 
-  if (act == allFieldsAction)
+  if (act == mAllFieldsAction)
     id = 0;
-  else if (act == identityAction)
+  else if (act == mIdentityAction)
     id = HDR_IDENTITY;
-  else if (act == transportAction)
+  else if (act == mTransportAction)
     id = HDR_TRANSPORT;
-  else if (act == fromAction)
+  else if (act == mFromAction)
     id = HDR_FROM;
-  else if (act == replyToAction)
+  else if (act == mReplyToAction)
     id = HDR_REPLY_TO;
-  else if (act == toAction)
+  else if (act == mToAction)
     id = HDR_TO;
-  else if (act == ccAction)
+  else if (act == mCcAction)
     id = HDR_CC;
-  else  if (act == bccAction)
+  else  if (act == mBccAction)
     id = HDR_BCC;
-  else if (act == subjectAction)
+  else if (act == mSubjectAction)
     id = HDR_SUBJECT;
-  else if (act == fccAction)
+  else if (act == mFccAction)
     id = HDR_FCC;
   else
    {
@@ -692,33 +692,33 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mEdtList.clear();
   row = 0;
   kdDebug(5006) << "KMComposeWin::rethinkFields" << endl;
-  if (!fromSlot) allFieldsAction->setChecked(showHeaders==HDR_ALL);
+  if (!fromSlot) mAllFieldsAction->setChecked(showHeaders==HDR_ALL);
 
-  if (!fromSlot) identityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
+  if (!fromSlot) mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    mLblIdentity, mIdentity, mBtnIdentity);
-  if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
+  if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
   rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sent-Mail fol&der:"),
 		    mLblFcc, mFcc, mBtnFcc);
-  if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
+  if (!fromSlot) mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l transport:"),
 		    mLblTransport, mTransport, mBtnTransport);
-  if (!fromSlot) fromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
+  if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
 		    mLblFrom, mEdtFrom, mBtnFrom);
-  if (!fromSlot) replyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
+  if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
 		    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
-  if (!fromSlot) toAction->setChecked(abs(mShowHeaders)&HDR_TO);
+  if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("To:"),
 		    mLblTo, mEdtTo, mBtnTo);
-  if (!fromSlot) ccAction->setChecked(abs(mShowHeaders)&HDR_CC);
+  if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
   rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&CC:"),
 		    mLblCc, mEdtCc, mBtnCc);
-  if (!fromSlot) bccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
+  if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&BCC:"),
 		    mLblBcc, mEdtBcc, mBtnBcc);
-  if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
+  if (!fromSlot) mSubjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
 		    mLblSubject, mEdtSubject);
   assert(row<=mNumHeaders);
@@ -736,15 +736,15 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mGrid->activate();
 
   slotUpdateAttachActions();
-  identityAction->setEnabled(!allFieldsAction->isChecked());
-  transportAction->setEnabled(!allFieldsAction->isChecked());
-  fromAction->setEnabled(!allFieldsAction->isChecked());
-  replyToAction->setEnabled(!allFieldsAction->isChecked());
-  toAction->setEnabled(!allFieldsAction->isChecked());
-  ccAction->setEnabled(!allFieldsAction->isChecked());
-  bccAction->setEnabled(!allFieldsAction->isChecked());
-  fccAction->setEnabled(!allFieldsAction->isChecked());
-  subjectAction->setEnabled(!allFieldsAction->isChecked());
+  mIdentityAction->setEnabled(!mAllFieldsAction->isChecked());
+  mTransportAction->setEnabled(!mAllFieldsAction->isChecked());
+  mFromAction->setEnabled(!mAllFieldsAction->isChecked());
+  mReplyToAction->setEnabled(!mAllFieldsAction->isChecked());
+  mToAction->setEnabled(!mAllFieldsAction->isChecked());
+  mCcAction->setEnabled(!mAllFieldsAction->isChecked());
+  mBccAction->setEnabled(!mAllFieldsAction->isChecked());
+  mFccAction->setEnabled(!mAllFieldsAction->isChecked());
+  mSubjectAction->setEnabled(!mAllFieldsAction->isChecked());
 }
 
 
@@ -763,7 +763,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->setBuddy(aEdt);
     mGrid->addWidget(aLbl, aRow, 0);
 
-    aEdt->setBackgroundColor( backColor );
+    aEdt->setBackgroundColor( mBackColor );
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
     mEdtList.append(aEdt);
@@ -800,7 +800,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->setBuddy(aCbx);
     mGrid->addWidget(aLbl, aRow, 0);
 
-    //    aCbx->setBackgroundColor( backColor );
+    //    aCbx->setBackgroundColor( mBackColor );
     aCbx->show();
     aCbx->setMinimumSize(100, aLbl->height()+2);
 
@@ -889,60 +889,60 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
-  fixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
+  mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
 
   //these are checkable!!!
-  urgentAction = new KToggleAction (i18n("&Urgent"), 0,
+  mUrgentAction = new KToggleAction (i18n("&Urgent"), 0,
                                     actionCollection(),
                                     "urgent");
-  requestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
+  mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
 					 actionCollection(),
 					 "options_request_mdn");
-  requestMDNAction->setChecked(mAutoRequestMDN);
+  mRequestMDNAction->setChecked(mAutoRequestMDN);
   //----- Message-Encoding Submenu
-  encodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
+  mEncodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
 				      0, this, SLOT(slotSetCharset() ),
 				      actionCollection(), "charsets" );
-  wordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
+  mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
 		      actionCollection(), "wordwrap");
-  wordWrapAction->setChecked(mWordWrap);
-  connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
+  mWordWrapAction->setChecked(mWordWrap);
+  connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
   encodings.prepend( i18n("Auto-Detect"));
-  encodingAction->setItems( encodings );
-  encodingAction->setCurrentItem( -1 );
+  mEncodingAction->setItems( encodings );
+  mEncodingAction->setCurrentItem( -1 );
 
   //these are checkable!!!
-  allFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
+  mAllFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
                                        actionCollection(), "show_all_fields");
-  identityAction = new KToggleAction (i18n("&Identity"), 0, this,
+  mIdentityAction = new KToggleAction (i18n("&Identity"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_identity");
-  fccAction = new KToggleAction (i18n("Sent-Mail F&older"), 0, this,
+  mFccAction = new KToggleAction (i18n("Sent-Mail F&older"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_fcc");
-  transportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
+  mTransportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
 				      SLOT(slotView()),
 				      actionCollection(), "show_transport");
-  fromAction = new KToggleAction (i18n("&From"), 0, this,
+  mFromAction = new KToggleAction (i18n("&From"), 0, this,
                                   SLOT(slotView()),
                                   actionCollection(), "show_from");
-  replyToAction = new KToggleAction (i18n("&Reply To"), 0, this,
+  mReplyToAction = new KToggleAction (i18n("&Reply To"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_reply_to");
-  toAction = new KToggleAction (i18n("&To"), 0, this,
+  mToAction = new KToggleAction (i18n("&To"), 0, this,
                                 SLOT(slotView()),
                                 actionCollection(), "show_to");
-  ccAction = new KToggleAction (i18n("&CC"), 0, this,
+  mCcAction = new KToggleAction (i18n("&CC"), 0, this,
                                 SLOT(slotView()),
                                 actionCollection(), "show_cc");
-  bccAction = new KToggleAction (i18n("&BCC"), 0, this,
+  mBccAction = new KToggleAction (i18n("&BCC"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_bcc");
-  subjectAction = new KToggleAction (i18n("&Subject"), 0, this,
+  mSubjectAction = new KToggleAction (i18n("&Subject"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_subject");
   //end of checkable
@@ -950,22 +950,22 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Append S&ignature"), 0, this,
                       SLOT(slotAppendSignature()),
                       actionCollection(), "append_signature");
-  attachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
+  mAttachPK  = new KAction (i18n("Attach &Public Key..."), 0, this,
                            SLOT(slotInsertPublicKey()),
                            actionCollection(), "attach_public_key");
-  attachMPK = new KAction (i18n("Attach &My Public Key"), 0, this,
+  mAttachMPK = new KAction (i18n("Attach &My Public Key"), 0, this,
                            SLOT(slotInsertMyPublicKey()),
                            actionCollection(), "attach_my_public_key");
   (void) new KAction (i18n("&Attach File..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
-  attachRemoveAction = new KAction (i18n("&Remove Attachment"), 0, this,
+  mAttachRemoveAction = new KAction (i18n("&Remove Attachment"), 0, this,
                       SLOT(slotAttachRemove()),
                       actionCollection(), "remove");
-  attachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
+  mAttachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
-  attachPropertiesAction = new KAction (i18n("Attachment Pr&operties..."), 0, this,
+  mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties..."), 0, this,
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
@@ -979,10 +979,10 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
 
-  encryptAction = new KToggleAction (i18n("&Encrypt Message"),
+  mEncryptAction = new KToggleAction (i18n("&Encrypt Message"),
                                      "decrypted", 0,
                                      actionCollection(), "encrypt_message");
-  signAction = new KToggleAction (i18n("&Sign Message"),
+  mSignAction = new KToggleAction (i18n("&Sign Message"),
                                   "signature", 0,
                                   actionCollection(), "sign_message");
   // get PGP user id for the chosen identity
@@ -999,17 +999,17 @@ void KMComposeWin::setupActions(void)
 
   // "Attach public key" is only possible if the built-in OpenPGP support is
   // used
-  attachPK->setEnabled(Kpgp::Module::getKpgp()->usePGP());
+  mAttachPK->setEnabled(Kpgp::Module::getKpgp()->usePGP());
 
   // "Attach my public key" is only possible if the built-in OpenPGP support is
   // used and the user specified his key for the current identity
-  attachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
+  mAttachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
                          !pgpUserId.isEmpty() );
 
   if ( !mSelectedCryptPlug && !Kpgp::Module::getKpgp()->usePGP() ) {
-    encryptAction->setEnabled( false );
+    mEncryptAction->setEnabled( false );
     setEncryption( false );
-    signAction->setEnabled( false );
+    mSignAction->setEnabled( false );
     setSigning( false );
   }
   else if ( !mSelectedCryptPlug && pgpUserId.isEmpty() ) {
@@ -1021,9 +1021,9 @@ void KMComposeWin::setupActions(void)
     setSigning( mLastSignActionState );
   }
 
-  connect(encryptAction, SIGNAL(toggled(bool)),
+  connect(mEncryptAction, SIGNAL(toggled(bool)),
                          SLOT(slotEncryptToggled( bool )));
-  connect(signAction,    SIGNAL(toggled(bool)),
+  connect(mSignAction,    SIGNAL(toggled(bool)),
                          SLOT(slotSignToggled(    bool )));
 
   if( kmkernel->cryptPlugList() && kmkernel->cryptPlugList()->count() ){
@@ -1041,13 +1041,13 @@ void KMComposeWin::setupActions(void)
         ++i;
     }
 
-    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
+    mCryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
                              0, // no accel
                              this, SLOT( slotSelectCryptoModule() ),
                              actionCollection(),
                              "options_select_crypto" );
-    cryptoModuleAction->setItems( lst );
-    cryptoModuleAction->setCurrentItem( idx );
+    mCryptoModuleAction->setItems( lst );
+    mCryptoModuleAction->setCurrentItem( idx );
   }
 
   createGUI("kmcomposerui.rc");
@@ -1229,11 +1229,11 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   // check for the presence of a DNT header, indicating that MDN's were
   // requested
   QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
-  requestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
+  mRequestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
 				  im->thatIsMe( mdnAddr ) ) || mAutoRequestMDN );
 
   // check for presence of a priority header, indicating urgent mail:
-  urgentAction->setChecked( newMsg->isUrgent() );
+  mUrgentAction->setChecked( newMsg->isUrgent() );
 
   // enable/disable encryption if the message was/wasn't encrypted
   switch ( mMsg->encryptionState() ) {
@@ -1278,7 +1278,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   // "Attach my public key" is only possible if the user uses the built-in
   // OpenPGP support and he specified his key
-  attachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
+  mAttachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
                          !pgpUserId.isEmpty() );
 
   QString transport = newMsg->headerField("X-KMail-Transport");
@@ -1502,9 +1502,9 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
     return FALSE;
   }
 
-  bccMsgList.clear();
+  mBccMsgList.clear();
 
-  if (bAutoCharset) {
+  if (mAutoCharset) {
     QCString charset = KMMsgBase::autoDetectCharset(mCharset, KMMessage::preferredCharsets(), mEditor->text());
     if (charset.isEmpty())
     {
@@ -1547,12 +1547,12 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
 
-  if (requestMDNAction->isChecked())
+  if (mRequestMDNAction->isChecked())
     mMsg->setHeaderField("Disposition-Notification-To", replyAddr);
   else
     mMsg->removeHeaderField("Disposition-Notification-To");
 
-  if (urgentAction->isChecked()) {
+  if (mUrgentAction->isChecked()) {
     mMsg->setHeaderField("X-PRIORITY", "2 (High)");
     mMsg->setHeaderField("Priority", "urgent");
   } else {
@@ -1573,8 +1573,8 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
   // mMsg->bcc() later)
   mBcc = mMsg->bcc();
 
-  bool doSign    = signAction->isChecked()    && !mNeverSign;
-  bool doEncrypt = encryptAction->isChecked() && !mNeverEncrypt;
+  bool doSign    = mSignAction->isChecked()    && !mNeverSign;
+  bool doEncrypt = mEncryptAction->isChecked() && !mNeverEncrypt;
 
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
@@ -2145,7 +2145,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
                                  signCertFingerprint );
         if( result == Kpgp::Ok ){
           yetAnotherMessageForBCC->setHeaderField( "X-KMail-Recipients", *it );
-          bccMsgList.append( yetAnotherMessageForBCC );
+          mBccMsgList.append( yetAnotherMessageForBCC );
           //kdDebug(5006) << "###BCC AFTER \"" << theMessage.asString() << "\""<<endl;
         }
       }
@@ -2831,7 +2831,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
   QString text;
   QCString cText;
 
-  if (disableBreaking)
+  if (mDisableBreaking)
       text = mEditor->text();
   else
       text = mEditor->brokenText();
@@ -3652,125 +3652,6 @@ bool KMComposeWin::checkForEncryptCertificateExpiry( const QString& recipient,
 }
 
 
-
-/*
-     // old HEAD code:
-
-//-----------------------------------------------------------------------------
-QCString KMComposeWin::pgpProcessedMsg(void)
-{
-  Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-  Kpgp::Block block;
-  bool doSign = signAction->isChecked();
-  bool doEncrypt = encryptAction->isChecked();
-  QString text;
-  QCString cText;
-
-  if (disableBreaking)
-      text = mEditor->text();
-  else
-      text = mEditor->brokenText();
-
-  text.truncate(text.length()); // to ensure text.size()==text.length()+1
-
-  {
-    // Provide a local scope for newText.
-    QString newText;
-    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-
-    if (mCharset == "us-ascii") {
-      cText = KMMsgBase::toUsAscii(text);
-      newText = QString::fromLatin1(cText);
-    } else if (codec == 0) {
-      kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
-      cText = text.local8Bit();
-      newText = QString::fromLocal8Bit(cText);
-    } else {
-      cText = codec->fromUnicode(text);
-      newText = codec->toUnicode(cText);
-    }
-    if (cText.isNull()) cText = "";
-
-    if (!text.isEmpty() && (newText != text))
-    {
-      QString oldText = mEditor->text();
-      mEditor->setText(newText);
-      kmkernel->kbp()->idle();
-      bool anyway = (KMessageBox::warningYesNo(0,
-      i18n("Not all characters fit into the chosen"
-      " encoding.\nSend the message anyway?"),
-      i18n("Some Characters Will Be Lost"),
-      i18n("Yes"), i18n("No, Let Me Change the Encoding") ) == KMessageBox::Yes);
-      if (!anyway)
-      {
-        mEditor->setText(oldText);
-        return QCString();
-      }
-    }
-  }
-
-  // determine the list of recipients
-  QString _to = to();
-  if(!cc().isEmpty()) _to += "," + cc();
-  if(!bcc().isEmpty()) _to += "," + bcc();
-
-  QStringList recipients = KMMessage::splitEmailAddrList(_to);
-
-  if( mAutoPgpEncrypt && !doEncrypt )
-  { // check if the message should be encrypted
-    int status = pgp->encryptionPossible( recipients );
-    if( status == 1 )
-      doEncrypt = true;
-    else if( status == 2 )
-    { // the user wants to be asked or has to be asked
-      kmkernel->kbp()->idle();
-      int ret =
-        KMessageBox::questionYesNo( this,
-                                    i18n("Should this message be encrypted?") );
-      kmkernel->kbp()->busy();
-      doEncrypt = ( ret == KMessageBox::Yes );
-    }
-    else if( status == -1 )
-    { // warn the user that there are conflicting encryption preferences
-      kmkernel->kbp()->idle();
-      int ret =
-        KMessageBox::warningYesNoCancel( this,
-                                         i18n("There are conflicting encryption "
-                                         "preferences!\n"
-                                         "Should this message be encrypted?") );
-      kmkernel->kbp()->busy();
-      if( ret == KMessageBox::Cancel )
-        return QCString();
-      doEncrypt = ( ret == KMessageBox::Yes );
-    }
-  }
-
-  if (!doSign && !doEncrypt) return cText;
-
-  block.setText( cText );
-
-  // get PGP user id for the chosen identity
-  QCString pgpUserId =
-    kmkernel->identityManager()->identityForUoidOrDefault( mId ).pgpIdentity();
-
-  if (!doEncrypt)
-  { // clearsign the message
-    if( block.clearsign( pgpUserId, mCharset ) )
-      return block.text();
-  }
-  else
-  { // encrypt the message
-    if( block.encrypt( recipients, pgpUserId, doSign, mCharset ) )
-      return block.text();
-  }
-
-  // in case of an error we end up here
-  //kdWarning() << i18n("Error during PGP: ") << end << pgp->lastErrorMsg() << endl;
-
-  return QCString();
-}
-*/
-
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const KURL aUrl)
 {
@@ -3786,7 +3667,7 @@ void KMComposeWin::addAttach(const KURL aUrl)
   ld.url = aUrl;
   ld.data = QByteArray();
   ld.insert = false;
-  mapAtmLoadData.insert(job, ld);
+  mMapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
@@ -3828,9 +3709,9 @@ void KMComposeWin::slotUpdateAttachActions()
     }
   }
 
-  attachRemoveAction->setEnabled( selectedCount >= 1 );
-  attachSaveAction->setEnabled( selectedCount == 1 );
-  attachPropertiesAction->setEnabled( selectedCount == 1 );
+  mAttachRemoveAction->setEnabled( selectedCount >= 1 );
+  mAttachSaveAction->setEnabled( selectedCount == 1 );
+  mAttachPropertiesAction->setEnabled( selectedCount == 1 );
 }
 
 
@@ -3857,8 +3738,8 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
   if( mSelectedCryptPlug ) {
     lvi->enableCryptoCBs( true );
-    lvi->setEncrypt( encryptAction->isChecked() );
-    lvi->setSign(    signAction->isChecked() );
+    lvi->setEncrypt( mEncryptAction->isChecked() );
+    lvi->setSign(    mSignAction->isChecked() );
   } else {
     lvi->enableCryptoCBs( false );
   }
@@ -3966,13 +3847,13 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   if ( mCharset.isEmpty() || mCharset == "default" )
      mCharset = mDefCharset;
 
-  if (bAutoCharset)
+  if (mAutoCharset)
   {
-    encodingAction->setCurrentItem( 0 );
+    mEncodingAction->setCurrentItem( 0 );
     return;
   }
 
-  QStringList encodings = encodingAction->items();
+  QStringList encodings = mEncodingAction->items();
   int i = 0;
   bool charsetFound = FALSE;
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
@@ -3983,7 +3864,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
       KGlobal::charsets()->encodingForName(*it))
       == KGlobal::charsets()->codecForName(mCharset))))
     {
-      encodingAction->setCurrentItem( i );
+      mEncodingAction->setCurrentItem( i );
       slotSetCharset();
       charsetFound = TRUE;
       break;
@@ -4037,8 +3918,8 @@ void KMComposeWin::slotAttachFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
 {
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.find(job);
-  assert(it != mapAtmLoadData.end());
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(job);
+  assert(it != mMapAtmLoadData.end());
   QBuffer buff((*it).data);
   buff.open(IO_WriteOnly | IO_Append);
   buff.writeBlock(data.data(), data.size());
@@ -4049,11 +3930,11 @@ void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 {
-  QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.find(job);
-  assert(it != mapAtmLoadData.end());
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mMapAtmLoadData.find(job);
+  assert(it != mMapAtmLoadData.end());
   if (job->error())
   {
-    mapAtmLoadData.remove(it);
+    mMapAtmLoadData.remove(it);
     job->showErrorDialog();
     return;
   }
@@ -4065,7 +3946,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
       mEditor->insert( codec->toUnicode( (*it).data ) );
     else
       mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
-    mapAtmLoadData.remove(it);
+    mMapAtmLoadData.remove(it);
     return;
   }
   QString name;
@@ -4125,7 +4006,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setContentDisposition(QCString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
-  mapAtmLoadData.remove(it);
+  mMapAtmLoadData.remove(it);
 
   msgPart->setCharset(mCharset);
 
@@ -4187,7 +4068,7 @@ void KMComposeWin::slotInsertFile()
   ld.insert = true;
   ld.encoding = KGlobal::charsets()->encodingForName(
     combo->currentText()).latin1();
-  mapAtmLoadData.insert(job, ld);
+  mMapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
@@ -4198,14 +4079,14 @@ void KMComposeWin::slotInsertFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSetCharset()
 {
-  if (encodingAction->currentItem() == 0)
+  if (mEncodingAction->currentItem() == 0)
   {
-    bAutoCharset = true;
+    mAutoCharset = true;
     return;
   }
-  bAutoCharset = false;
+  mAutoCharset = false;
 
-  mCharset = KGlobal::charsets()->encodingForName( encodingAction->
+  mCharset = KGlobal::charsets()->encodingForName( mEncodingAction->
     currentText() ).latin1();
 }
 
@@ -4214,7 +4095,7 @@ void KMComposeWin::slotSetCharset()
 void KMComposeWin::slotSelectCryptoModule()
 {
   mSelectedCryptPlug = 0;
-  int sel = cryptoModuleAction->currentItem();
+  int sel = mCryptoModuleAction->currentItem();
   int i = 1;  // start at 1 since 0'th entry is "inline OpenPGP (builtin)"
   for ( CryptPlugWrapperListIterator it( *(kmkernel->cryptPlugList()) ) ;
         it.current() ;
@@ -4232,8 +4113,8 @@ void KMComposeWin::slotSelectCryptoModule()
         for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
              lvi;
              lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
-          lvi->setSign( signAction->isChecked() );
-          lvi->setEncrypt( encryptAction->isChecked() );
+          lvi->setSign( mSignAction->isChecked() );
+          lvi->setEncrypt( mEncryptAction->isChecked() );
         }
       }
       int totalWidth = 0;
@@ -4542,7 +4423,7 @@ void KMComposeWin::slotReplace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
-  mEditor->setFont( fixedFontAction && (fixedFontAction->isChecked())
+  mEditor->setFont( mFixedFontAction && (mFixedFontAction->isChecked())
     ? mFixedFont : mBodyFont );
 }
 
@@ -4758,7 +4639,7 @@ void KMComposeWin::slotEncryptToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 {
-  if ( !encryptAction->isEnabled() )
+  if ( !mEncryptAction->isEnabled() )
     encrypt = false;
 
   // check if the user wants to encrypt messages to himself and if he defined
@@ -4781,14 +4662,14 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
     encrypt = false;
   }
 
-  // make sure the encryptAction is in the right state
-  encryptAction->setChecked( encrypt );
+  // make sure the mEncryptAction is in the right state
+  mEncryptAction->setChecked( encrypt );
 
   // show the appropriate icon
   if ( encrypt )
-    encryptAction->setIcon("encrypted");
+    mEncryptAction->setIcon("encrypted");
   else
-    encryptAction->setIcon("decrypted");
+    mEncryptAction->setIcon("decrypted");
 
   // mark the attachments for (no) encryption
   if ( mSelectedCryptPlug ) {
@@ -4811,7 +4692,7 @@ void KMComposeWin::slotSignToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setSigning( bool sign, bool setByUser )
 {
-  if ( !signAction->isEnabled() )
+  if ( !mSignAction->isEnabled() )
     sign = false;
 
   // check if the user defined a signing key for the current identity
@@ -4831,8 +4712,8 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
     sign = false;
   }
 
-  // make sure the signAction is in the right state
-  signAction->setChecked( sign );
+  // make sure the mSignAction is in the right state
+  mSignAction->setChecked( sign );
 
   // mark the attachments for (no) signing
   if ( mSelectedCryptPlug ) {
@@ -4919,9 +4800,9 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       (!hf.isEmpty() && (hf != mTransport->text(0))))
     mMsg->setHeaderField("X-KMail-Transport", mTransport->currentText());
 
-  disableBreaking = saveInDrafts;
+  mDisableBreaking = saveInDrafts;
 
-  bccMsgList.clear();
+  mBccMsgList.clear();
   bool sentOk = applyChanges();
   if( sentOk ) {
     if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
@@ -4939,7 +4820,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     mMsg->cleanupHeader();
   }
 
-  disableBreaking = false;
+  mDisableBreaking = false;
 
   if (!sentOk)
       return false;
@@ -4990,7 +4871,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     mMsg->cleanupHeader();
     sentOk = kmkernel->msgSender()->send(mMsg, aSendNow);
     KMMessage* msg;
-    for( msg = bccMsgList.first(); msg; msg = bccMsgList.next() ) {
+    for( msg = mBccMsgList.first(); msg; msg = mBccMsgList.next() ) {
       msg->setTo( KMMessage::expandAliases( to() ));
       msg->setCc( KMMessage::expandAliases( cc() ));
       msg->setBcc( KMMessage::expandAliases( bcc() ));
@@ -5238,18 +5119,18 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   bool bNewIdentityHasOpenPgpKey = !ident.pgpIdentity().isEmpty();
   if( !mSelectedCryptPlug && !bNewIdentityHasOpenPgpKey )
   {
-    attachMPK->setEnabled(false);
+    mAttachMPK->setEnabled(false);
     if( mLastIdentityHasOpenPgpKey )
     { // save the state of the sign and encrypt button
-      mLastEncryptActionState = encryptAction->isChecked();
+      mLastEncryptActionState = mEncryptAction->isChecked();
       setEncryption( false );
-      mLastSignActionState = signAction->isChecked();
+      mLastSignActionState = mSignAction->isChecked();
       setSigning( false );
     }
   }
   else
   {
-    attachMPK->setEnabled(true);
+    mAttachMPK->setEnabled(true);
     if( !mLastIdentityHasOpenPgpKey )
     { // restore the last state of the sign and encrypt button
       setEncryption( mLastEncryptActionState );
@@ -5353,7 +5234,7 @@ void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 
 void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 {
-    bAlwaysSend = bAlways;
+    mAlwaysSend = bAlways;
 }
 
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
