@@ -49,6 +49,9 @@ namespace KMail {
   class IdentityDialog;
   class IdentityListView;
 }
+namespace Kleo {
+  class BackendConfigWidget;
+}
 
 class NewIdentityDialog : public KDialogBase
 {
@@ -708,23 +711,9 @@ public:
   void load();
   void save();
   void defaults() {};
-  //void savePluginsConfig( bool silent );
-
-public slots:
-  void slotActivatePlugIn();
-  void slotConfigurePlugIn();
-  void slotPlugNameChanged( const QString& );
-
-protected slots:
-  void slotPlugSelectionChanged();
-  void slotRescan();
 
 private:
-  KListView     *mPlugList;
-  QPushButton   *mActivateButton;
-  QPushButton   *mConfigureButton;
-  QPushButton   *mRescanButton;
-  QLineEdit     *mNameEdit;
+  Kleo::BackendConfigWidget * mBackendConfig;
 };
 
 class SecurityPage : public ConfigModuleWithTabs {

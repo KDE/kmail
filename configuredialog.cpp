@@ -38,13 +38,10 @@
 #include "kmsender.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
-#include "cryptplugconfigdialog.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "identitylistview.h"
 #include "kcursorsaver.h"
-#include "cryptplugwrapperlist.h"
-#include "cryptplugfactory.h"
 #include "kmkernel.h"
 
 using KMail::IdentityListView;
@@ -56,7 +53,8 @@ using KMail::IdentityDialog;
 #include <kpgpui.h>
 #include <kmime_util.h>
 using KMime::DateFormatter;
-
+#include <cryptplugfactory.h>
+#include <ui/backendconfigwidget.h>
 
 // other KDE headers:
 #include <klocale.h>
@@ -3047,7 +3045,7 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
   // "CryptPlug" tab:
   //
   mCryptPlugTab = new CryptPlugTab();
-  addTab( mCryptPlugTab, i18n("Crypto Plugi&ns") );
+  addTab( mCryptPlugTab, i18n("Crypto Backe&nds") );
   load();
 }
 
@@ -3428,73 +3426,11 @@ QString SecurityPage::CryptPlugTab::helpAnchor() const {
 SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
   : ConfigModuleTab( parent, name )
 {
-  QHBoxLayout * hlay = new QHBoxLayout( this, KDialog::marginHint(),
-					KDialog::spacingHint() );
+  QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  //
-  // 1. column: listbox, edit fields:
-  //
-  int row = -1;
-  QGridLayout * glay = new QGridLayout( hlay, 4, 2 ); // inherits spacing
-  glay->setRowStretch( 0, 1 );
-  glay->setColStretch( 1, 1 );
+  mBackendConfig = Kleo::CryptPlugFactory::instance()->configWidget( this, "mBackendConfig" );
 
-  // listview:
-  ++row;
-  mPlugList = new KListView( this, "mPlugList" );
-  mPlugList->addColumn( i18n("Name") );
-  mPlugList->addColumn( i18n("Protocol") );
-  mPlugList->addColumn( i18n("Active") );
-  mPlugList->addColumn( i18n("Initialized" ) );
-  mPlugList->setAllColumnsShowFocus( true );
-  mPlugList->setSorting( -1 ); // disabled
-  mPlugList->header()->setClickEnabled( false );
-  mPlugList->setFullWidth( true );
-  glay->addMultiCellWidget( mPlugList, row, row, 0, 1 );
-
-  connect( mPlugList, SIGNAL(selectionChanged()),
-           SLOT(slotPlugSelectionChanged()) );
-
-  // "name" line edit and label:
-  ++row;
-  mNameEdit = new KLineEdit( this );
-  mNameEdit->setEnabled( false ); // since no item is selected in mPlugList
-  glay->addWidget( new QLabel( mNameEdit, i18n("Na&me:"), this ), row, 0 );
-  glay->addWidget( mNameEdit, row, 1 );
-
-  connect( mNameEdit, SIGNAL(textChanged(const QString&)),
-	   SLOT(slotPlugNameChanged(const QString&)) );
-
-  //
-  // 2. column: action buttons
-  //
-  QVBoxLayout * vlay = new QVBoxLayout( hlay ); // inherits spacing
-
-  // "Activete" / "Deactivate" button:
-  mActivateButton = new QPushButton( i18n("Ac&tivate"), this );
-  mActivateButton->setAutoDefault( false );
-  vlay->addWidget( mActivateButton );
-
-  connect( mActivateButton, SIGNAL(clicked()),
-	   SLOT(slotActivatePlugIn()) );
-
-  // "Configure..." button:
-  mConfigureButton = new QPushButton( i18n("Confi&gure..."), this );
-  mConfigureButton->setAutoDefault( false );
-  vlay->addWidget( mConfigureButton );
-
-  connect( mConfigureButton, SIGNAL(clicked()),
-	   SLOT(slotConfigurePlugIn()) );
-
-  // "Rescan..." button:
-  mRescanButton = new QPushButton( i18n("Rescan"), this );
-  mRescanButton->setAutoDefault( false );
-  vlay->addWidget( mRescanButton );
-
-  connect( mRescanButton, SIGNAL(clicked()),
-	   SLOT(slotRescan()) );
-
-  vlay->addStretch( 1 );
+  vlay->addWidget( mBackendConfig );
 }
 
 SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
@@ -3502,153 +3438,12 @@ SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
 
 }
 
-void SecurityPage::CryptPlugTab::load()
-{
-  kdDebug(5006) << "CryptPlugTab::setup(): found "
-	    << KMail::CryptPlugFactory::instance()->list().count()
-	    << " CryptPlugWrappers." << endl;
-  mPlugList->clear();
-
-  // populate the plugin list:
-  QListViewItem * top = 0;
-  for ( CryptPlugWrapperListIterator it( KMail::CryptPlugFactory::instance()->list() ) ;
-	it.current() ; ++it ) {
-    kdDebug(5006) << "processing { \"" << (*it)->displayName()
-	      << "\", \"" << (*it)->libName()
-	      << "\", " << (*it)->active() << " }" << endl;
-    top = new QListViewItem( mPlugList, top,
-			     (*it)->displayName(),
-			     (*it)->libName(),
-			     (*it)->active() ? "*" : "",
-			     ( (*it)->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) ? "*" : "" );
-  }
-
-  if( mPlugList->childCount() > 0 ) {
-    mPlugList->setCurrentItem( mPlugList->firstChild() );
-    mPlugList->setSelected( mPlugList->firstChild(), true );
-  }
-
-  slotPlugSelectionChanged();
-}
-
-void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
-  const QListViewItem * item = mPlugList->selectedItem();
-
-  // enable/disable action buttons...
-  mActivateButton->setEnabled( item );
-  mConfigureButton->setEnabled( item );
-  // ...and line edits:
-  mNameEdit->setEnabled( item );
-
-  // set text of activate button:
-  mActivateButton->setText( item && item->text( 2 ).isEmpty() ?
-				    i18n("Ac&tivate") : i18n("Deac&tivate") );
-
-  // fill/clear edit fields
-  if ( item ) // fill
-    mNameEdit->setText( item->text( 0 ) );
-  else // clear
-    mNameEdit->clear();
+void SecurityPage::CryptPlugTab::load() {
+  mBackendConfig->load();
 }
 
 void SecurityPage::CryptPlugTab::save() {
-  // we use kapp->config() here since the config entry is read by
-  // libkleopatra, where the KMKernel::config() hack is not available,
-  // obviously:
-  KConfigGroup general( kapp->config(), "General" );
-
-  CryptPlugWrapperList & cpl = KMail::CryptPlugFactory::instance()->list();
-
-  uint cryptPlugCount = 0;
-  for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it ) {
-    KConfigGroup config( kapp->config(),
-                         QString("CryptPlug #%1").arg( cryptPlugCount ) );
-    config.writeEntry( "name", it.current()->text( 0 ) );
-    config.writePathEntry( "location", it.current()->text( 1 ) );
-    config.writeEntry( "active", !it.current()->text( 2 ).isEmpty() );
-
-    CryptPlugWrapper * wrapper = cpl.at( cryptPlugCount );
-    if ( wrapper ) {
-      wrapper->setDisplayName( it.current()->text( 0 ) );
-      if ( wrapper->libName() != it.current()->text( 1 ) ) {
-	wrapper->deinitialize();
-	wrapper->setLibName( it.current()->text( 1 ) );
-	CryptPlugWrapper::InitStatus status;
-	QString errorMsg;
-	wrapper->initialize( &status, &errorMsg );
-	if ( CryptPlugWrapper::InitStatus_Ok != status )
-	  it.current()->setText( 3, QString::null );
-	else
-	  it.current()->setText( 3, "*" );
-      }
-      wrapper->setActive( !it.current()->text( 2 ).isEmpty() );
-    }
-    ++cryptPlugCount; // only counts _taken_ plugins!
-  }
-
-  general.writeEntry("crypt-plug-count", cryptPlugCount );
-}
-
-void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text )
-{
-  QListViewItem * item = mPlugList->selectedItem();
-  if ( !item ) return;
-
-  item->setText( 0, text );
-  emit changed( true );
-}
-
-void SecurityPage::CryptPlugTab::slotConfigurePlugIn() {
-  int i = 0;
-  for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it, ++i ) {
-    if ( it.current()->isSelected() ) {
-      CryptPlugWrapper * wrapper = KMail::CryptPlugFactory::instance()->list().at( i );
-      if ( wrapper ) {
-	CryptPlugConfigDialog dialog( wrapper, i, i18n("Configure %1 Plugin").arg( it.current()->text( 0 ) ) );
-	dialog.exec();
-      }
-      break;
-    }
-  }
-  emit changed( true );
-}
-
-void SecurityPage::CryptPlugTab::slotActivatePlugIn()
-{
-  QListViewItem * item = mPlugList->selectedItem();
-  if ( !item ) return;
-
-  // find out whether the plug-in is to be activated or de-activated
-  bool activate = ( item->text( 2 ).isEmpty() );
-  // (De)activate this plug-in
-  // and deactivate all other plugins if necessarry
-  int pos = 0;
-  for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it, ++pos ) {
-    CryptPlugWrapper * plug = KMail::CryptPlugFactory::instance()->list().at( pos );
-    if( plug ) {
-      if( it.current()->isSelected() ) {
-	// This is the one the user wants to (de)activate
-	plug->setActive( activate );
-	it.current()->setText( 2, activate ? "*" : "" );
-      } else {
-	// This is one of the other entries
-	plug->setActive( false );
-	it.current()->setText( 2, QString::null );
-      }
-    }
-  }
-  if( activate )
-    mActivateButton->setText( i18n("Deac&tivate")  );
-  else
-    mActivateButton->setText( i18n("Ac&tivate") );
-
-  emit changed( true );
-}
-
-void SecurityPage::CryptPlugTab::slotRescan() {
-  KMail::CryptPlugFactory::instance()->scanForBackends();
-  load();
-  emit changed( true ); // you never know...
+  mBackendConfig->save();
 }
 
 // *************************************************************
