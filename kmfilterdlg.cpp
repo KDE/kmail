@@ -426,6 +426,23 @@ QComboBox* KMFilterDlg::createFolderCombo( QStringList *str,
 }
 
 //-----------------------------------------------------------------------------
+QComboBox* KMFilterDlg::createCombo( QStringList *str,
+				     QString curItem )
+{
+  QComboBox* cbx = new QComboBox(false, this);
+  cbx->setFixedHeight(mCbxHeight);
+
+  QStringList::Iterator st;
+  for( st = str->begin(); st != str->end(); ++st) {
+    cbx->insertItem(*st);
+    if (*st == curItem)
+      cbx->setCurrentItem( cbx->count() - 1 );
+  }
+
+  return cbx;
+}
+
+//-----------------------------------------------------------------------------
 void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
 {
   KMFilterAction* action;

@@ -99,6 +99,10 @@ public:
 					QList<KMFolder> *folders,
 					KMFolder *curFolder ) = 0;
 
+  /* Creates a combo box of strings */
+  virtual QComboBox* createCombo( QStringList *str,
+				  QString curItem ) = 0;
+
   /** Creates a line-edit field with txt in it. */
   virtual QLineEdit* createEdit(const QString txt=0) = 0;
 };

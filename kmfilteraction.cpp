@@ -7,6 +7,7 @@
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include "kmsender.h"
+#include "kmidentity.h"
 #include <kapp.h>
 #include <kconfig.h>
 #include <qcombobox.h>
@@ -342,6 +343,70 @@ const QString KMFilterActionSkip::argsAsString(void) const
   return "";
 }
 
+//=============================================================================
+// Specify Identity to be used when replying to a message
+//=============================================================================
+class KMFilterActionIdentity: public KMFilterAction
+{
+public:
+  KMFilterActionIdentity();
+  virtual const QString label(void) const;
+  virtual int process(KMMessage* msg, bool& stopIt);
+  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
+  virtual void applyParamWidgetValue(QWidget* paramWidget);
+  virtual void argsFromString(const QString argsStr);
+  virtual const QString argsAsString(void) const;
+  static KMFilterAction* newAction(void);
+protected:
+  QStringList ids;
+  QString id;
+};
+
+KMFilterAction* KMFilterActionIdentity::newAction(void)
+{
+  return (new KMFilterActionIdentity);
+}
+
+const QString KMFilterActionIdentity::label(void) const
+{
+  return i18n("set identity");
+}
+
+KMFilterActionIdentity::KMFilterActionIdentity(): KMFilterAction("set identity")
+{
+  id = i18n( "unknown" );
+}
+
+int KMFilterActionIdentity::process(KMMessage* msg, bool& )
+{
+  msg->setHeaderField( "X-Kmail-Identity", id );
+  return 0;
+}
+
+QWidget* KMFilterActionIdentity::createParamWidget(KMGFilterDlg* aParent)
+{
+  QStringList ids = KMIdentity::identities();
+  QComboBox *cbx = aParent->createCombo( &ids, id );
+
+  return cbx;
+}
+
+void KMFilterActionIdentity::applyParamWidgetValue(QWidget* aParamWidget)
+{
+  QComboBox* cbx = (QComboBox*)aParamWidget;
+  id = cbx->currentText();
+}
+
+void KMFilterActionIdentity::argsFromString(const QString argsStr)
+{
+  id = argsStr;
+}
+
+const QString KMFilterActionIdentity::argsAsString(void) const
+{
+  return id;
+}
+
 
 //=============================================================================
 //
@@ -350,6 +415,8 @@ const QString KMFilterActionSkip::argsAsString(void) const
 //=============================================================================
 void KMFilterActionDict::init(void)
 {
+  insert("set identity", i18n("set identity"),
+	 KMFilterActionIdentity::newAction);
   insert("transfer", i18n("transfer"),
 	 KMFilterActionMove::newAction);
   insert("skip rest", i18n("skip rest"),

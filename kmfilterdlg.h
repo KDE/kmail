@@ -46,6 +46,10 @@ public:
 					QList<KMFolder> *folders,
 					KMFolder *curFolder );
 
+  /* Creates a combo box of strings */
+  virtual QComboBox* createCombo( QStringList *str,
+				  QString curItem );
+
   virtual QLineEdit* createEdit(const QString txt=0);
 
 protected slots:
