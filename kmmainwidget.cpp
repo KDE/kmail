@@ -3341,19 +3341,6 @@ void KMMainWidget::updateFileMenu()
 {
   QStringList actList = kmkernel->acctMgr()->getAccounts(false);
 
-  if( actList.size() == 0 )
-  {
-    actionCollection()->action("check_mail")->setEnabled(false);
-    actionCollection()->action("check_mail_in")->setEnabled(false);
-  }
-  else if( actList.size() == 1 )
-  {
-    actionCollection()->action("check_mail")->setEnabled(true);
-    actionCollection()->action("check_mail_in")->setEnabled(false);
-  }
-  else
-  {
-    actionCollection()->action("check_mail")->setEnabled(true);
-    actionCollection()->action("check_mail_in")->setEnabled(true);
-  }
+  actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
+  actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
 }
