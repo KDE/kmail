@@ -2474,7 +2474,7 @@ void KMMainWin::setupMenuBar()
 
   saveAsAction = new KAction( i18n("Save &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
-    this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
+    this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
 
   printAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
