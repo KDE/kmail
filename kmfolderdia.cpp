@@ -872,16 +872,16 @@ bool FolderDiaGeneralTab::save()
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
     folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
 
-    // make sure everything is on disk, connected slots will call readConfig()
-    // when creating a new folder.
-    folder->storage()->writeConfig();
-
     if( folder->folderType() == KMFolderTypeImap )
     {
       KMFolderImap* imapFolder = static_cast<KMFolderImap*>( folder->storage() );
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
     }
+    // make sure everything is on disk, connected slots will call readConfig()
+    // when creating a new folder.
+    folder->storage()->writeConfig();
+
     kmkernel->folderMgr()->contentsChanged();
 
     if( mDlg->isNewFolder() )
