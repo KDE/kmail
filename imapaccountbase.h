@@ -327,6 +327,10 @@ namespace KMail {
      */
     void slotAbortRequested();
 
+   /**
+    * Only delete information about the job
+    */
+    void slotSimpleResult(KIO::Job * job);
   protected:
 
     virtual QString protocol() const;

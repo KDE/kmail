@@ -288,27 +288,6 @@ void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
   }
 }
 
-
-//-----------------------------------------------------------------------------
-void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
-{
-  JobIterator it = findJob( job );
-  bool quiet = false;
-  if (it != mapJobData.end())
-  {
-    quiet = (*it).quiet;
-    removeJob(it);
-  }
-  if (job->error())
-  {
-    if (!quiet) slotSlaveError(mSlave, job->error(),
-        job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
-  }
-  displayProgress();
-}
-
-
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 				       bool interactive )

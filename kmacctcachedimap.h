@@ -141,12 +141,6 @@ protected:
   KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
 
 protected slots:
-
-  /**
-   * Only delete information about the job
-   */
-  void slotSimpleResult(KIO::Job * job);
-
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderCachedImap*, bool);
   void postProcessNewMail( KMFolder * f ) { ImapAccountBase::postProcessNewMail( f ); }

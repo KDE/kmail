@@ -115,11 +115,6 @@ protected:
   QGuardedPtr<KMFolderImap> mFolder;
 
 protected slots:
-  /**
-   * Only delete information about the job
-   */
-  void slotSimpleResult(KIO::Job * job);
-
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderImap*, bool);
   void postProcessNewMail( KMFolder * f ) { ImapAccountBase::postProcessNewMail( f ); }
