@@ -62,6 +62,7 @@ struct KMPaintInfo {
   int scoreCol;
 #endif
   int sizeCol;
+  bool showCryptoIcons;
 };
 
 /** The widget that shows the contents of folders */

@@ -2187,6 +2187,9 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), 
                                      generalOptionsVBG );
 
+  mCryptoIconsCheck = new QCheckBox( i18n( "Show cr&ypto icons" ),
+                                     generalOptionsVBG );
+  
   mNestedMessagesCheck =
     new QCheckBox( i18n("&Thread list of message headers"), 
                    generalOptionsVBG );
@@ -2304,7 +2307,8 @@ void AppearancePage::LayoutTab::setup() {
   mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize", false ) );
-
+  mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons", true ) );
+  
 
   int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
   if( windowLayout < 0 || windowLayout > 3 )
@@ -2344,6 +2348,9 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   if ( general.hasKey( "showMessageSize" ) )
     mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize" ) );
 
+  if( general.hasKey( "showCryptoIcons" ) )
+      mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons" ) );
+  
   if( geometry.hasKey( "windowLayout" ) ) {
       int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
       if( windowLayout < 0 || windowLayout > 3 )
@@ -2415,6 +2422,8 @@ void AppearancePage::LayoutTab::apply() {
   geometry.writeEntry( "nestingPolicy",
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
+  general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
+  
   int dateDisplayID = mDateDisplay->id( mDateDisplay->selected() );
   // check bounds:
   if ( dateDisplayID < 0 || dateDisplayID > numDateDisplayConfig - 1 )

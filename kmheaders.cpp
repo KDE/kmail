@@ -307,24 +307,27 @@ public:
             break;
       }
 
-      if( mMsgBase->encryptionState() == KMMsgFullyEncrypted )
-          pixmaps << *KMHeaders::pixFullyEncrypted;
-      else if( mMsgBase->encryptionState() == KMMsgPartiallyEncrypted )
-          pixmaps << *KMHeaders::pixPartiallyEncrypted;
-      else if( mMsgBase->encryptionState() == KMMsgEncryptionStateUnknown )
-          pixmaps << *KMHeaders::pixUndefined;
-      else
-          pixmaps << *KMHeaders::pixFiller;
+      // Only merge the crypto icons in if that is configured.
+      if( headers->paintInfo()->showCryptoIcons ) {
+          if( mMsgBase->encryptionState() == KMMsgFullyEncrypted )
+              pixmaps << *KMHeaders::pixFullyEncrypted;
+          else if( mMsgBase->encryptionState() == KMMsgPartiallyEncrypted )
+              pixmaps << *KMHeaders::pixPartiallyEncrypted;
+          else if( mMsgBase->encryptionState() == KMMsgEncryptionStateUnknown )
+              pixmaps << *KMHeaders::pixUndefined;
+          else
+              pixmaps << *KMHeaders::pixFiller;
 
-      if( mMsgBase->signatureState() == KMMsgFullySigned )
-          pixmaps << *KMHeaders::pixFullySigned;
-      else if( mMsgBase->signatureState() == KMMsgPartiallySigned )
-          pixmaps << *KMHeaders::pixPartiallySigned;
-      else if( mMsgBase->signatureState() == KMMsgSignatureStateUnknown )
-          pixmaps << *KMHeaders::pixUndefined;
-      else
-          pixmaps << *KMHeaders::pixFiller;
-
+          if( mMsgBase->signatureState() == KMMsgFullySigned )
+              pixmaps << *KMHeaders::pixFullySigned;
+          else if( mMsgBase->signatureState() == KMMsgPartiallySigned )
+              pixmaps << *KMHeaders::pixPartiallySigned;
+          else if( mMsgBase->signatureState() == KMMsgSignatureStateUnknown )
+              pixmaps << *KMHeaders::pixUndefined;
+          else
+              pixmaps << *KMHeaders::pixFiller;
+      }
+      
       static QPixmap mergedpix;
       mergedpix = pixmapMerge( pixmaps );
       return &mergedpix;
@@ -664,7 +667,8 @@ void KMHeaders::readConfig (void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
-
+    mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", true );
+    
     KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
     mDate.setCustomFormat( config->readEntry("customDateFormat", QString::null ) );
