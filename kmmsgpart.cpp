@@ -10,6 +10,7 @@
 #include <kiconloader.h>
 #include <kdebug.h>
 
+#include "kmmsgbase.h"
 #include "kmmsgpart.h"
 #include "kmmessage.h"
 
@@ -300,7 +301,7 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::contentDescription(void) const
 {
-  return mContentDescription;
+  return KMMsgBase::decodeRFC1522String(mContentDescription);
 }
 
 

@@ -13,6 +13,7 @@
 
 #include "kmcomposewin.h"
 #include "kmmessage.h"
+#include "kmmsgbase.h"
 #include "kmmsgpart.h"
 #include "kmsender.h"
 #include "kmidentity.h"
@@ -1254,7 +1255,8 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart->setCteStr(mDefEncoding);
   msgPart->setBodyEncoded(str);
   msgPart->magicSetType();
-  msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
+  msgPart->setContentDisposition("attachment; filename=\""
+    + KMMsgBase::encodeRFC2047String(name) + "\"");
 
   // show properties dialog
   kernel->kbp()->idle();

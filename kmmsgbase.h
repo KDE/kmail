@@ -127,6 +127,10 @@ public:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
   static const QString decodeRFC1522String(const QString& aStr);
 
+  /** Encode given string as described in RFC2047 (update for RFC1522)
+    using quoted-printable. */
+  static const QString encodeRFC2047String(const QString& aStr);
+
 protected:
   KMFolder* mParent;
   unsigned long mFolderOffset, mMsgSize;

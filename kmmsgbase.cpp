@@ -10,6 +10,7 @@
 #endif
 
 #include <ctype.h>
+#include <stdlib.h>
 
 #define NUM_STATUSLIST 9
 static KMMsgStatus sStatusList[NUM_STATUSLIST] =
@@ -357,6 +358,77 @@ const QString KMMsgBase::decodeRFC1522String(const QString& _str)
     }
   }
   *dest = '\0';
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
+const char especials[16] = "()<>@,;:""/[]?.= "; 
+
+const QString KMMsgBase::encodeRFC2047String(const QString& _str)
+{
+  if (_str.isEmpty()) return _str;
+  char *latin = (char *)calloc(1, _str.length() + 1);
+  strcpy(latin, _str.latin1());
+  char *latinStart = latin, *l, *start, *stop;
+  char hexcode;
+  int numQuotes, i;
+  QString result = QString();
+  while (*latin)
+  {
+    l = latin;
+    start = latin;
+    while (*l)
+    {
+      if (*l == 32) start = l + 1;
+      if (*l < 0) break;
+      l++;
+    }
+    if (*l)
+    {
+      numQuotes = 1;
+      while (*l)
+      {
+        /* The encoded word must be limited to 75 character */
+        for (i = 0; i < 16; i++) if (*l == especials[i]) numQuotes++;
+        if (*l < 0) numQuotes++;
+        /* Stop after 58 = 75 - 17 characters or at "<user@host..." */
+        if (l - start + 2 * numQuotes >= 58 || *l == 60) break;
+        l++;
+      }
+      if (*l)
+      {
+        stop = l - 1;
+        while (stop >= start && *stop != 32) stop--;
+        if (stop <= start) stop = l;
+      } else stop = l;
+      while (latin < start) { result += *latin; latin++; }
+      result += QString("=?iso-8859-1?q?");
+      while (latin < stop)
+      {
+        numQuotes = 0;
+        for (i = 0; i < 16; i++) if (*latin == especials[i]) numQuotes = 1;
+        if (*latin < 0) numQuotes = 1;
+        if (numQuotes)
+        {
+          result += "=";
+          hexcode = ((*latin & 0xF0) >> 4) + 48;
+          if (hexcode >= 58) hexcode += 7;
+          result += hexcode;
+          hexcode = (*latin & 0x0F) + 48;
+          if (hexcode >= 58) hexcode += 7;
+          result += hexcode;
+        } else {
+          result += *latin;
+        }
+        latin++;
+      }
+      result += "?=";
+    } else {
+      while (*latin) { result += *latin; latin++; }
+    }
+  }
+  free(latinStart);
   return result;
 }
 
