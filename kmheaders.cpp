@@ -674,8 +674,11 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
   setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 170));
   if (mPaintInfo.showSize) {
-    int x = config->readNumEntry("SizeWidth", 80);
-    setColumnWidth(mPaintInfo.sizeCol, x>0?x:10);
+    int x = config->readNumEntry("SizeWidth", -1);
+    if ( x > 10 ) // prevent ridiculously small column width
+      setColumnWidth(mPaintInfo.sizeCol, x);
+    else
+      setColumnWidthMode(mPaintInfo.sizeCol, QListView::Maximum );
   }
 
 #ifdef SCORING
@@ -870,8 +873,12 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         setColumnText( mPaintInfo.sizeCol, colText);
       } else {
         // add in the size field
-        int x = config->readNumEntry("SizeWidth", 80);
-        addColumn(colText, x>0?x:10);
+        int x = config->readNumEntry("SizeWidth", -1);
+	if ( x > 10 ) // prevent ridiculously small header width
+	  addColumn(colText, x);
+	else
+	  addColumn(colText);
+	  
 	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
 #ifdef SCORING
         mPaintInfo.scoreCol++;
