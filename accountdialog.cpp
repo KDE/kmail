@@ -975,16 +975,16 @@ void AccountDialog::setupSettings()
     mLocal.nameEdit->setText( mAccount->name() );
     mLocal.nameEdit->setFocus();
     mLocal.locationEdit->setEditText( acctLocal->location() );
-    if (acctLocal->mLock == mutt_dotlock)
+    if (acctLocal->lockType() == mutt_dotlock)
       mLocal.lockMutt->setChecked(true);
-    else if (acctLocal->mLock == mutt_dotlock_privileged)
+    else if (acctLocal->lockType() == mutt_dotlock_privileged)
       mLocal.lockMuttPriv->setChecked(true);
-    else if (acctLocal->mLock == procmail_lockfile) {
+    else if (acctLocal->lockType() == procmail_lockfile) {
       mLocal.lockProcmail->setChecked(true);
       mLocal.procmailLockFileName->setEditText(acctLocal->procmailLockFileName());
-    } else if (acctLocal->mLock == FCNTL)
+    } else if (acctLocal->lockType() == FCNTL)
       mLocal.lockFcntl->setChecked(true);
-    else if (acctLocal->mLock == lock_none)
+    else if (acctLocal->lockType() == lock_none)
       mLocal.lockNone->setChecked(true);
 
     mLocal.intervalSpin->setValue( QMAX(1, interval) );
@@ -1512,12 +1512,12 @@ void AccountDialog::saveSettings()
     if (acctMaildir) {
         mAccount->setName( mMaildir.nameEdit->text() );
         acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
-      
+
         KMFolder *targetFolder = *mFolderList.at(mMaildir.folderCombo->currentItem());
         if ( targetFolder->location()  == acctMaildir->location() ) {
-            /* 
+            /*
                Prevent data loss if the user sets the destination folder to be the same as the
-               source account maildir folder by setting the target folder to the inbox. 
+               source account maildir folder by setting the target folder to the inbox.
                ### FIXME post 3.2: show dialog and let the user chose another target folder
             */
             targetFolder = kmkernel->inboxFolder();

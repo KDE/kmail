@@ -37,12 +37,11 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 
-  LockType mLock;
-
 protected:
   QString mLocation;
   QString mProcmailLockFileName;
   bool hasNewMail;
+  LockType mLock;
 };
 
 #endif /*kmacctlocal_h*/
