@@ -192,6 +192,21 @@ void KMail::RuleWidgetHandlerManager::unregisterHandler( const RuleWidgetHandler
   mHandlers.erase( remove( mHandlers.begin(), mHandlers.end(), handler ), mHandlers.end() );
 }
 
+namespace {
+  /** Returns the number of immediate children of parent with the given object
+      name. Used by RuleWidgetHandlerManager::createWidgets().
+  */
+  int childCount( const QObject *parent, const char *objName )
+  {
+    QObjectList *list = parent->queryList( 0, objName, false, false );
+    if ( !list )
+      return 0;
+    const int count = list->count();
+    delete list; list = 0;
+    return count;
+  }
+}
+
 void KMail::RuleWidgetHandlerManager::createWidgets( QWidgetStack *functionStack,
                                                      QWidgetStack *valueStack,
                                                      const QObject *receiver ) const
@@ -201,14 +216,14 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QWidgetStack *functionStack
     for ( int i = 0;
           ( w = (*it)->createFunctionWidget( i, functionStack, receiver ) );
           ++i ) {
-      const int n =
-        functionStack->queryList( 0, w->name(), false, false )->count();
-      if ( n < 2 ) {
+      if ( childCount( functionStack, w->name() ) < 2 ) {
+        // there wasn't already a widget with this name, so add this widget
         functionStack->addWidget( w );
         kdDebug(5006) << "RuleWidgetHandlerManager::createWidgets: Adding "
                       << w->name() << " to functionStack" << endl;
       }
       else {
+        // there was already a widget with this name, so discard this widget
         kdDebug(5006) << "RuleWidgetHandlerManager::createWidgets: "
                       << w->name() << " already exists in functionStack"
                       << endl;
@@ -218,14 +233,14 @@ void KMail::RuleWidgetHandlerManager::createWidgets( QWidgetStack *functionStack
     for ( int i = 0;
           ( w = (*it)->createValueWidget( i, valueStack, receiver ) );
           ++i ) {
-      const int n =
-        valueStack->queryList( 0, w->name(), false, false )->count();
-      if ( n < 2 ) {
+      if ( childCount( valueStack, w->name() ) < 2 ) {
+        // there wasn't already a widget with this name, so add this widget
         valueStack->addWidget( w );
         kdDebug(5006) << "RuleWidgetHandlerManager::createWidgets: Adding "
                       << w->name() << " to valueStack" << endl;
       }
       else {
+        // there was already a widget with this name, so discard this widget
         kdDebug(5006) << "RuleWidgetHandlerManager::createWidgets: "
                       << w->name() << " already exists in valueStack"
                       << endl;
