@@ -62,7 +62,7 @@ void KMBroadcastStatus::setStatusProgressPercent( const QString &id,
     sum += *it;
     count++;
   }
-  emit statusProgressPercent( sum / count );
+  emit statusProgressPercent( count ? (sum / count) : sum );
 }
 
 void KMBroadcastStatus::reset()
