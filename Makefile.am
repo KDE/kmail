@@ -40,7 +40,8 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
 		charsetsDlg.moc kmtopwidget.moc \
 		kmbroadcaststatus.moc kmacctexppop.moc configuredialog.moc \
-                colorlistbox.moc kmkernel.moc accountdialog.moc
+                colorlistbox.moc kmkernel.moc accountdialog.moc \
+                addtoaddressbook.moc
 
 
 include_HEADERS = kmailIface.h
