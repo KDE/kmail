@@ -302,17 +302,21 @@ bool KMFilterRule::matches(const KMMessage* msg)
   QString msgContents;
 
   assert(msg != NULL); // This assert seems to be important
-  
-  if( mField == "<message>" ) {
-           // there's msg->asString(), but this way we can keep msg const (dnaber, 1999-05-27)
-           msgContents = msg->headerAsString();
-           msgContents += msg->bodyDecoded();
-         } else if( mField == "<body>" ) {
-           msgContents = msg->bodyDecoded();
-         } else if( mField == "<any header>" ) {
-   msgContents = msg->headerAsString();
+
+  if( mField == i18n("<message>") ) {
+    // there's msg->asString(), but this way we can keep msg const (dnaber, 1999-05-27)
+    msgContents = msg->headerAsString();
+    msgContents += msg->bodyDecoded();
+  } else if( mField == i18n("<body>") ) {
+    msgContents = msg->bodyDecoded();
+  } else if( mField == i18n("<any header>") ) {
+    msgContents = msg->headerAsString();
+  } else if( mField == i18n("<To or Cc>") ) {
+    msgContents = msg->headerField("To");
+    msgContents += "\n";
+    msgContents += msg->headerField("Cc");
   } else {
-  msgContents = msg->headerField(mField);
+    msgContents = msg->headerField(mField);
   }
 
   switch (mFunction)

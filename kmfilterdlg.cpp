@@ -682,9 +682,11 @@ void KMFilterDlg::initLists()
   if (sFilterFieldList.count() <= 0)
   {
     sFilterFieldList.append(" ");
+    // also see KMFilterRule::matches() if you change the following strings!
     sFilterFieldList.append(i18n("<message>"));
     sFilterFieldList.append(i18n("<body>"));
     sFilterFieldList.append(i18n("<any header>"));
+    sFilterFieldList.append(i18n("<To or Cc>"));
     sFilterFieldList.append("Subject");
     sFilterFieldList.append("From");
     sFilterFieldList.append("To");
