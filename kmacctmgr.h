@@ -64,7 +64,7 @@ public:
   /** Processes all accounts looking for new mail */
   virtual void checkMail(bool _interactive = true);
 
-  QStringList getAccounts();
+  QStringList getAccounts(bool noImap = false);
 
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);

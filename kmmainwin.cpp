@@ -1407,7 +1407,7 @@ void KMMainWin::getAccountMenu()
   QStringList actList;
 
   actMenu->clear();
-  actList = kernel->acctMgr()->getAccounts();
+  actList = kernel->acctMgr()->getAccounts(true);
   QStringList::Iterator it;
   int id = 0;
   for(it = actList.begin(); it != actList.end() ; ++it, id++)

@@ -329,12 +329,12 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 
 
 //-----------------------------------------------------------------------------
-QStringList  KMAcctMgr::getAccounts() {
+QStringList  KMAcctMgr::getAccounts(bool noImap) {
 
   KMAccount *cur;
   QStringList strList;
   for (cur=mAcctList.first(); cur; cur=mAcctList.next()) {
-    strList.append(cur->name());
+    if (!noImap || cur->type() != QString("imap")) strList.append(cur->name());
   }
 
   return strList;
