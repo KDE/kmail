@@ -1672,10 +1672,10 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
           KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
       } else
           KMessageBox::sorry(this,
-          i18n( "<b>This message could not be encrypted!</b><br>&nbsp;<br>"
+          i18n( "<qt><b>This message could not be encrypted!</b><br>&nbsp;<br>"
                 "The Crypto Plug-in %1<br>"
                 "did not return an encoded text block.<br>&nbsp;<br>"
-                "Recipient's public key was not found or is untrusted.").arg(cryptPlug->libName()));
+                "Recipient's public key was not found or is untrusted.</qt>").arg(cryptPlug->libName()));
     } else {
       // we try calling the *old* build-in code for OpenPGP encrypting
       Kpgp::Block block;
@@ -2206,7 +2206,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
             sigDaysLeft <
             cryptPlug->signatureCertificateExpiryNearInterval() ) {
             int ret = KMessageBox::warningYesNo( this,
-                                                 i18n( "The certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer.<br>Do you still want to use this signature?" ).arg( sigDaysLeft ),
+                                                 i18n( "<qt>The certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer.<br>Do you still want to use this signature?</qt>" ).arg( sigDaysLeft ),
                                                  i18n( "Certificate Warning" ) );
             if( ret == KMessageBox::No )
                 bSign = false;
@@ -2218,7 +2218,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 rootDaysLeft <
                 cryptPlug->rootCertificateExpiryNearInterval() ) {
                 int ret = KMessageBox::warningYesNo( this,
-                                                     i18n( "The root certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer.<br>Do you still want to use this signature?" ).arg( rootDaysLeft ),
+                                                     i18n( "<qt>The root certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer.<br>Do you still want to use this signature?</qt>" ).arg( rootDaysLeft ),
                                                      i18n( "Certificate Warning" ) );
                 if( ret == KMessageBox::No )
                     bSign = false;
@@ -2232,7 +2232,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 caDaysLeft <
                 cryptPlug->caCertificateExpiryNearInterval() ) {
                 int ret = KMessageBox::warningYesNo( this,
-                                                     i18n( "The CA certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer.<br>Do you still want to use this signature?" ).arg( caDaysLeft ),
+                                                     i18n( "<qt>The CA certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer.<br>Do you still want to use this signature?</qt>" ).arg( caDaysLeft ),
                                                      i18n( "Certificate Warning" ) );
                 if( ret == KMessageBox::No )
                     bSign = false;
@@ -2247,7 +2247,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         if( bSign && cryptPlug->warnNoCertificate() &&
             !cryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( from() ) ).utf8(), certificate ) )  {
             int ret = KMessageBox::warningYesNo( this,
-                                                 i18n( "The certificate does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you.<br>Do you still want to use this signature?" ),
+                                                 i18n( "<qt>The certificate does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you.<br>Do you still want to use this signature?</qt>" ),
                                                  i18n( "Certificate Warning" ) );
             if( ret == KMessageBox::No )
                 bSign = false;
@@ -2459,7 +2459,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                       encRecvDaysLeft <
                       cryptPlug->receiverCertificateExpiryNearWarningInterval() ) {
                       int ret = KMessageBox::warningYesNo( this,
-                                                           i18n( "The certificate of the recipient you want to use expires in %1 days.<br>This means that after this period, the recipient will not be able to read your message any longer.\n\nDo you still want to use this certificate?" ).arg( encRecvDaysLeft ),
+                                                           i18n( "<qt>The certificate of the recipient you want to use expires in %1 days.<br>This means that after this period, the recipient will not be able to read your message any longer.\n\nDo you still want to use this certificate?</qt>" ).arg( encRecvDaysLeft ),
                                                            captionWarn );
                       if( ret == KMessageBox::No )
                           bEncrypt = false;
