@@ -472,8 +472,8 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::slotAbortRequested()
 {
-  if (stage != List) return;
-  stage = Idle;
+  if (stage == Idle) return;
+  stage = Quit;
   job->kill();
   job = 0L;
   slotCancel();
@@ -486,7 +486,7 @@ void KMAcctExpPop::startJob() {
   // Run the precommand
   if (!runPrecommand(precommand()))
     {
-      KMessageBox::sorry(0, 
+      KMessageBox::sorry(0,
                          i18n("Couldn't execute precommand: %1").arg(precommand()),
                          i18n("Kmail Error Message"));
       emit finishedCheck(idsOfMsgs.count() > 0);
@@ -506,7 +506,7 @@ void KMAcctExpPop::startJob() {
   url.setPath(QString("/index"));
 
   if ( url.isMalformed() ) {
-    KMessageBox::error(0, i18n("Source URL is malformed"), 
+    KMessageBox::error(0, i18n("Source URL is malformed"),
                           i18n("Kioslave Error Message") );
     return;
   }
@@ -592,7 +592,7 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
     if( idsOfMsgs.count() > 0 ) {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(idsOfMsgs.count()).arg(numBytesRead/1024));
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(indexOfCurrentMsg).arg(numBytesRead/1024));
     } else {
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed..." ));
     }
@@ -632,11 +632,6 @@ void KMAcctExpPop::slotGetNextMsg()
   if (curMsgStrm)
     delete curMsgStrm;
   curMsgStrm = 0;
-
-  if (KMBroadcastStatus::instance()->abortRequested()) {
-    slotCancel();
-    return;
-  }
 
   if (next == idsOfMsgsPendingDownload.end()) {
     processRemainingQueuedMessagesAndSaveUidList();
@@ -738,6 +733,9 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 	  }
 	  else
 	    kdDebug() << "KMAcctExpPop::slotData synchronization failure." << endl;
+	  url.setPath(QString("/%1").arg(id));
+	  if (uidsOfSeenMsgs.contains( uid ))
+	    idsOfMsgsToDelete.append(url.url());
 	}
 	uidsOfNextSeenMsgs.append( uid );
       }
