@@ -720,11 +720,16 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   
   if (cur > (int)mItems.size()) cur = mItems.size()-1;
   clearSelection();
+  
   setContentsPos( topX, topY );
   if (next) {
     setCurrentItem( next );
     setSelected( next, TRUE );
+    highlightMessage( next );
   }
+  else
+    emit selected( 0 );
+
   makeHeaderVisible();
 }
 
@@ -1002,7 +1007,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
        highlightMessage( currentItem() );
      }
     else
-      emit selected( 0 );
+
     setContentsPos( contentX, contentY );
     makeHeaderVisible();
     setUpdatesEnabled(autoUpd);
