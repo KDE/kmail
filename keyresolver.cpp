@@ -722,6 +722,8 @@ std::vector<Kleo::KeyResolver::Item> Kleo::KeyResolver::getEncryptionItems( cons
 }
 
 static Kleo::Action action( bool doit, bool ask, bool dont, bool requested ) {
+  if ( requested && !dont )
+    return Kleo::DoIt;
   if ( doit && !ask && !dont )
     return Kleo::DoIt;
   if ( !doit && ask && !dont )
@@ -729,7 +731,7 @@ static Kleo::Action action( bool doit, bool ask, bool dont, bool requested ) {
   if ( !doit && !ask && dont )
     return requested ? Kleo::Conflict : Kleo::DontDoIt ;
   if ( !doit && !ask && !dont )
-    return requested ? Kleo::DoIt : Kleo::DontDoIt ;
+    return Kleo::DontDoIt ;
   return Kleo::Conflict;
 }
 
