@@ -101,7 +101,7 @@ bool KMFilter::matches(const KMMessage* msg)
 int KMFilter::execActions(KMMessage* msg, bool& stopIt)
 {
   int  i;
-  int status = 0;
+  int status = -1;
   int result;
   stopIt = FALSE;
 
@@ -113,7 +113,12 @@ int KMFilter::execActions(KMMessage* msg, bool& stopIt)
     }
     else if (result == 1) // Small problem, keep of a copy
       status = 1;
+    else if ((result == 0) && (status < 0))  // Message saved in a folder
+      status = 0;
   }
+
+  if (status < 0) // No filters matched, keep copy of message
+    status = 1;
 
   return status;
 }
