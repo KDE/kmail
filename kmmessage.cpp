@@ -1331,11 +1331,14 @@ void KMMessage::removeHeaderField(const QString& aName)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setHeaderField(const QString& aName, const QString& aValue)
+void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
 {
   DwHeaders& header = mMsg->Headers();
   DwString str;
   DwField* field;
+  QString aValue = "";
+  if (!bValue.isEmpty())
+    aValue = bValue;
 
   if (aName.isEmpty()) return;
 
