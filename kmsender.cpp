@@ -149,6 +149,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     aMsg->setTo("Undisclosed.Recipients: ;");
   }
 
+  aMsg->removeHeaderField( "X-KMail-CryptoFormat" );
 
   // Handle redirections
   QString from  = aMsg->headerField("X-KMail-Redirect-From");

@@ -267,7 +267,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   readConfig();
   setupStatusBar();
   setupEditor();
-  setupActions();
+  if( !aMsg || aMsg->headerField("X-KMail-CryptoFormat").isEmpty() )
+    setupActions();
+  else
+    setupActions( aMsg->headerField("X-KMail-CryptoFormat").stripWhiteSpace().toInt() );
 
   applyMainWindowSettings(KMKernel::config(), "Composer");
 
@@ -931,7 +934,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setupActions(void)
+void KMComposeWin::setupActions(int aCryptoMessageFormat)
 {
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
@@ -1155,9 +1158,9 @@ void KMComposeWin::setupActions(void)
   }
 
   connect(mEncryptAction, SIGNAL(toggled(bool)),
-                         SLOT(slotEncryptToggled( bool )));
-  connect(mSignAction,    SIGNAL(toggled(bool)),
-                         SLOT(slotSignToggled(    bool )));
+                          SLOT(slotEncryptToggled( bool )));
+  connect(mSignAction,   SIGNAL(toggled(bool)),
+                         SLOT(slotSignToggled(     bool )));
 
   QStringList l;
   for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
@@ -1167,7 +1170,11 @@ void KMComposeWin::setupActions(void)
 					   this, SLOT(slotSelectCryptoModule()),
 					   actionCollection(), "options_select_crypto" );
   mCryptoModuleAction->setItems( l );
-  mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+  mCryptoModuleAction->setCurrentItem(
+    format2cb(   (0 <= aCryptoMessageFormat)
+               ? (Kleo::CryptoMessageFormat)aCryptoMessageFormat
+               : ident.preferredCryptoMessageFormat() ) );
+  
   slotSelectCryptoModule();
 
   QStringList styleItems;
@@ -1487,6 +1494,15 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   mLastIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
+
+  if( !mMsg->headerField("X-KMail-CryptoFormat").isEmpty() ){
+    const int format = mMsg->headerField("X-KMail-CryptoFormat").stripWhiteSpace().toInt();
+    if( 0 <= format ){
+      mCryptoModuleAction->setCurrentItem( 
+        format2cb( (Kleo::CryptoMessageFormat)format ) );
+      slotSelectCryptoModule();
+    }
+  }
 
   if ( Kleo::CryptoBackendFactory::instance()->openpgp() || Kleo::CryptoBackendFactory::instance()->smime() ) {
     const bool canOpenPGPSign = Kleo::CryptoBackendFactory::instance()->openpgp()
@@ -3001,6 +3017,9 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       (!hf.isEmpty() && (hf != mTransport->text(0))))
     mMsg->setHeaderField("X-KMail-Transport", mTransport->currentText());
 
+  if( saveInDrafts )
+    mMsg->setHeaderField("X-KMail-CryptoFormat", QString::number(cryptoMessageFormat()));
+  
   mDisableBreaking = saveInDrafts;
 
   const bool neverEncrypt = saveInDrafts && mNeverEncryptWhenSavingInDrafts;
@@ -3994,6 +4013,7 @@ void KMLineEdit::loadContacts()
     QStringList::Iterator it = recent.begin();
     QString name, email;
     for ( ; it != recent.end(); ++it ) {
+      //kdDebug(5006) << "KMLineEdit::loadContacts() found: \"" << *it << "\"" << endl;
       KABC::Addressee addr;
       KPIM::getNameAndMail(*it, name, email);
       addr.setNameFromString( name );

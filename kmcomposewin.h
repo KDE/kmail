@@ -612,7 +612,7 @@ protected:
   /**
    * Initialization methods
    */
-  void setupActions();
+  void setupActions(int aCryptoMessageFormat=-1);
   void setupStatusBar();
   void setupEditor();
 
