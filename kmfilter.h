@@ -1,4 +1,5 @@
-/* Mail Filter Rule : incoming mail is sent trough the list of mail filter
+/* -*- mode: C++; c-file-style: "gnu" -*-
+ * Mail Filter Rule : incoming mail is sent trough the list of mail filter
  * rules before it is placed in the associated mail folder (usually "inbox").
  * This class represents one mail filter rule.
  *
@@ -151,6 +152,9 @@ public:
   void setConfigureShortcut( bool aShort ) { bConfigureShortcut = aShort; }
   bool configureShortcut() const { return bConfigureShortcut; }
 
+  void setIcon( QString icon ) { mIcon = icon; }
+  QString icon() const { return mIcon; }
+
   /**
    * Called from the filter manager when a folder is moved.
    * Tests if the folder aFolder is used in any action. Changes it
@@ -175,6 +179,7 @@ private:
   KMSearchPattern mPattern;
   QPtrList<KMFilterAction> mActions;
   KMPopFilterAction mAction;
+  QString mIcon;
   bool bPopFilter : 1;
   bool bApplyOnInbound : 1;
   bool bApplyOnOutbound : 1;

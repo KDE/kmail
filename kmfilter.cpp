@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfilter.cpp
 // Author: Stefan Taferner <taferner@kde.org>
 
@@ -21,18 +22,18 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
   : bPopFilter(popFilter)
 {
  if (!bPopFilter)
-    mActions.setAutoDelete( TRUE );
+    mActions.setAutoDelete( true );
 
   if ( aConfig )
     readConfig( aConfig );
   else if ( bPopFilter )
     mAction = Down;
   else {
-    bApplyOnInbound = TRUE;
-    bApplyOnOutbound = FALSE;
-    bApplyOnExplicit = TRUE;
-    bStopProcessingHere = TRUE;
-    bConfigureShortcut = FALSE;
+    bApplyOnInbound = true;
+    bApplyOnOutbound = false;
+    bApplyOnExplicit = true;
+    bStopProcessingHere = true;
+    bConfigureShortcut = false;
   }
 }
 
@@ -54,6 +55,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bApplyOnExplicit = aFilter.applyOnExplicit();
     bStopProcessingHere = aFilter.stopProcessingHere();
     bConfigureShortcut = aFilter.configureShortcut();
+    mIcon = aFilter.icon();
 
     QPtrListIterator<KMFilterAction> it( aFilter.mActions );
     for ( it.toFirst() ; it.current() ; ++it ) {
@@ -153,8 +155,9 @@ void KMFilter::readConfig(KConfig* config)
       bApplyOnExplicit = bool(sets.contains("manual-filtering"));
     }
 
-    bStopProcessingHere = config->readBoolEntry("StopProcessingHere", TRUE);
-    bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", FALSE);
+    bStopProcessingHere = config->readBoolEntry("StopProcessingHere", true);
+    bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", false);
+    mIcon = config->readEntry( "Icon", "gear" );
 
     int i, numActions;
     QString actName, argsName;
@@ -213,6 +216,7 @@ void KMFilter::writeConfig(KConfig* config) const
 
     config->writeEntry( "StopProcessingHere", bStopProcessingHere );
     config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
+    config->writeEntry( "Icon", mIcon );
 
     QString key;
     int i;

@@ -28,6 +28,7 @@ class QPushButton;
 class QComboBox;
 class QWidgetStack;
 class QCheckBox;
+class KIconButton;
 
 
 /** This is a complex widget that is used to manipulate KMail's filter
@@ -328,6 +329,7 @@ protected slots:
   void slotApplicabilityChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotConfigureShortcutButtonToggled( bool aChecked );
+  void slotFilterActionIconChanged( QString icon );
   void slotReset();
   void slotSaveSize();
   /// called when the dialog is closed (finished)
@@ -349,6 +351,8 @@ protected:
   QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyOnCtrlJ;
   QCheckBox *mStopProcessingHere;
   QCheckBox *mConfigureShortcut;
+  QLabel *mFilterActionLabel;
+  KIconButton *mFilterActionIconButton;
   QGroupBox *mAdvOptsGroup;
   QVGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;

@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfilterdlg.cpp
 // Author: Marc Mutz <Marc@Mutz.com>
 // based on work by Stefan Taferner <taferner@kde.org>
@@ -14,11 +15,12 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <klineeditdlg.h>
+#include <kinputdialog.h>
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kwin.h>
 #include <kconfig.h>
+#include <kicondialog.h>
 
 // other Qt headers:
 #include <qlayout.h>
@@ -29,6 +31,7 @@
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
+#include <qhbox.h>
 
 // other headers:
 #include <assert.h>
@@ -47,7 +50,7 @@ I18N_NOOP( "<qt><p>Click this button to create a new filter.</p>"
 	   "selected one, but you can always change that "
 	   "later on.</p>"
 	   "<p>If you have clicked this button accidentally, you can undo this "
-	   "by clicking on the <em>Delete</em> button (to the right).</p></qt>" );
+	   "by clicking on the <em>Delete</em> button.</p></qt>" );
 const char * _wt_filterlist_delete =
 I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently "
 	   "selected filter from the list above.</p>"
@@ -62,7 +65,7 @@ I18N_NOOP( "<qt><p>Click this button to move the currently "
 	   "determines the order in which they are tried on messages: "
 	   "The topmost filter gets tried first.</p>"
 	   "<p>If you have clicked this button accidentally, you can undo this "
-	   "by clicking on the <em>down</em> button (to the right).</p></qt>" );
+	   "by clicking on the <em>Down</em> button.</p></qt>" );
 const char * _wt_filterlist_down =
 I18N_NOOP( "<qt><p>Click this button to move the currently "
 	   "selected filter <em>down</em> one in the list above.</p>"
@@ -70,7 +73,7 @@ I18N_NOOP( "<qt><p>Click this button to move the currently "
 	   "determines the order in which they are tried on messages: "
 	   "The topmost filter gets tried first.</p>"
 	   "<p>If you have clicked this button accidentally, you can undo this "
-	   "by clicking on the <em>up</em> button (to the left)</p></qt>" );
+	   "by clicking on the <em>Up</em> button.</p></qt>" );
 const char * _wt_filterlist_rename =
 I18N_NOOP( "<qt><p>Click this button to rename the currently selected filter.</p>"
 	   "<p>Filters are named automatically, as long as they start with "
@@ -137,7 +140,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 				    i18n("Advanced Options"), w);
     {
       QWidget *adv_w = new QWidget( mAdvOptsGroup );
-      QGridLayout *gl = new QGridLayout( adv_w, 3 /*rows*/, 4 /*cols*/,
+      QGridLayout *gl = new QGridLayout( adv_w, 4 /*rows*/, 4 /*cols*/,
 				         0 /*border*/, spacingHint() );
       gl->setColStretch( 0, 1 );
       QLabel *l = new QLabel( i18n("Apply this filter"), adv_w );
@@ -152,8 +155,22 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
 			      1, 1, /*from to row*/
   			      0, 3 /*from to col*/ );
-      mConfigureShortcut = new QCheckBox( i18n("Show Message menu Apply Filter Actions menu item for this filter"), adv_w );
+      mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter Actions menu"), adv_w );
       gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 3 );
+
+      QHBox *hbox = new QHBox( adv_w );
+      mFilterActionLabel = new QLabel( i18n( "Icon for this filter action:" ),
+                                       hbox );
+      mFilterActionLabel->setEnabled( false );
+
+      mFilterActionIconButton = new KIconButton( hbox );
+      mFilterActionLabel->setBuddy( mFilterActionIconButton );
+      mFilterActionIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
+      mFilterActionIconButton->setIconSize( 16 );
+      mFilterActionIconButton->setIcon( "gear" );
+      mFilterActionIconButton->setEnabled( false );
+
+      gl->addMultiCellWidget( hbox, 3, 3, 0, 3 );
     }
     vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
   }
@@ -189,6 +206,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 
     connect( mConfigureShortcut, SIGNAL(toggled(bool)),
 	     this, SLOT(slotConfigureShortcutButtonToggled(bool)) );
+
+    connect( mFilterActionIconButton, SIGNAL( iconChanged( QString ) ),
+             this, SLOT( slotFilterActionIconChanged( QString ) ) );
   }
 
   // reset all widgets here
@@ -270,17 +290,19 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     // NOTE: setting these values activates the slot that sets them in
     // the filter! So make sure we have the correct values _before_ we
     // set the first one:
-    bool applyOnIn = aFilter->applyOnInbound();
-    bool applyOnOut = aFilter->applyOnOutbound();
-    bool applyOnExplicit = aFilter->applyOnExplicit();
-    bool stopHere = aFilter->stopProcessingHere();
-    bool configureShortcut = aFilter->configureShortcut();
+    const bool applyOnIn = aFilter->applyOnInbound();
+    const bool applyOnOut = aFilter->applyOnOutbound();
+    const bool applyOnExplicit = aFilter->applyOnExplicit();
+    const bool stopHere = aFilter->stopProcessingHere();
+    const bool configureShortcut = aFilter->configureShortcut();
+    const QString icon = aFilter->icon();
 
     mApplyOnIn->setChecked( applyOnIn );
     mApplyOnOut->setChecked( applyOnOut );
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
     mStopProcessingHere->setChecked( stopHere );
     mConfigureShortcut->setChecked( configureShortcut );
+    mFilterActionIconButton->setIcon( icon );
   }
 }
 
@@ -327,6 +349,16 @@ void KMFilterDlg::slotConfigureShortcutButtonToggled( bool aChecked )
     return;
 
   mFilter->setConfigureShortcut( aChecked );
+  mFilterActionIconButton->setEnabled( aChecked );
+  mFilterActionLabel->setEnabled( aChecked );
+}
+
+void KMFilterDlg::slotFilterActionIconChanged( QString icon )
+{
+  if ( !mFilter )
+    return;
+
+  mFilter->setIcon( icon );
 }
 
 //=============================================================================
@@ -611,8 +643,9 @@ void KMFilterListBox::slotRename()
   // never called when no filter is selected.
   assert( filter );
 
-  QString newName = KLineEditDlg::getText
+  QString newName = KInputDialog::getText
     (
+     i18n("Rename Filter"),
      i18n("Rename filter \"%1\" to:").arg( filter->pattern()->name() ) /*label*/,
      filter->pattern()->name() /* initial value */,
      &okPressed, 0 /* parent */

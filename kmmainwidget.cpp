@@ -2875,8 +2875,8 @@ void KMMainWidget::updateFolderMenu()
 {
   mModifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   mCompactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() 
-                                            && mFolder->folderType()==KMFolderTypeImap 
+  mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent()
+                                            && mFolder->folderType()==KMFolderTypeImap
                                             : false );
   mEmptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
                                              && ( mFolder->count() > 0 ) )
@@ -3076,7 +3076,10 @@ void KMMainWidget::initializeFilterActions()
       filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
       mFilterCommands.append(filterCommand);
       QString as = i18n("Filter Action %1").arg((*it)->name());
-      filterAction = new KAction(as, 0, filterCommand,
+      QString icon = (*it)->icon();
+      if ( icon.isEmpty() )
+        icon = "gear";
+      filterAction = new KAction(as, icon, 0, filterCommand,
                                  SLOT(start()), actionCollection(),
                                  normalizedName.local8Bit());
       mFilterActions.append(filterAction);
