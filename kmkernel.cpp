@@ -752,7 +752,7 @@ void KMKernel::cleanupLoop()
     mProgress->progressBar()->setTotalSteps(nrFolders*2+2);
     mProgress->show();
     mProgress->progressBar()->setProgress(1);
-    kapp->flushX();
+    QApplication::flushX();
     kapp->processEvents();
     connect(the_folderMgr, SIGNAL(progress()), this, SLOT(cleanupProgress()));
   }
@@ -786,7 +786,7 @@ void KMKernel::cleanupLoop()
       if (mProgress)
       {
         mProgress->setLabel(i18n("Emptying trash..."));
-        kapp->flushX();
+        QApplication::flushX();
         kapp->processEvents();
       }
       the_trashFolder->expunge();
@@ -800,7 +800,7 @@ void KMKernel::cleanupLoop()
     if (mProgress)
     {
        mProgress->setLabel(i18n("Expiring old messages..."));
-       kapp->flushX();
+       QApplication::flushX();
        kapp->processEvents();
     }
     the_folderMgr->expireAllFolders(0);
@@ -815,7 +815,7 @@ void KMKernel::cleanupLoop()
       if (mProgress)
       {
         mProgress->setLabel(i18n("Compacting folders..."));
-        kapp->flushX();
+        QApplication::flushX();
         kapp->processEvents();
       }
       the_folderMgr->compactAll(); // I can compact for ages in peace now!

@@ -8,7 +8,6 @@
 
 #include "kalarmtimer.h"
 
-class KApplication;
 class QCursor;
 
 class KBusyPtr: public KAlarmTimer
@@ -47,7 +46,6 @@ private:
   bool loadBitmap(QBitmap& bitmap, const QString& fileName);
 
 protected:
-  KApplication* app;
   int busyLevel;
   int numCursors;
   int frameDelay;

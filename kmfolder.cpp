@@ -330,14 +330,14 @@ bool KMFolder::readIndexHeader(int *gv)
       createIndexFromContents();
       return FALSE;
   } else if(indexVersion > INDEX_VERSION) {
-      kapp->setOverrideCursor(KCursor::arrowCursor());
+      QApplication::setOverrideCursor(KCursor::arrowCursor());
       int r = KMessageBox::questionYesNo(0,
 					 i18n(
 					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
 					    "This index can be regenerated from your mail folder, but some "
 					    "information, including status flags, may be lost. Do you wish "
 					    "to downgrade your index file?") .arg(name()) .arg(indexVersion) );
-      kapp->restoreOverrideCursor();
+      QApplication::restoreOverrideCursor();
       if (r == KMessageBox::Yes)
 	  createIndexFromContents();
       return FALSE;

@@ -6,13 +6,12 @@
 #include <assert.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kapplication.h>
+
+#include <qapplication.h>
 
 //-----------------------------------------------------------------------------
 KBusyPtr :: KBusyPtr ()
 {
-  app = KApplication::kApplication();
-
   busyLevel  = 0;
   numCursors = 0;
   frameDelay = 500;
@@ -43,12 +42,12 @@ void KBusyPtr :: busy (void)
     currentCursor = 0;
     if (!cursorList)
     {
-      if (animated) kapp->setOverrideCursor(waitCursor);
-      else kapp->setOverrideCursor(KCursor::waitCursor());
+      if (animated) QApplication::setOverrideCursor(waitCursor);
+      else QApplication::setOverrideCursor(KCursor::waitCursor());
     }
     else
     {
-      kapp->setOverrideCursor(cursorList[currentCursor]);
+      QApplication::setOverrideCursor(cursorList[currentCursor]);
       if (animated) start(frameDelay);
     }
     //    kapp->processEvents(200);
@@ -66,7 +65,7 @@ void KBusyPtr :: idle (void)
   if (busyLevel <= 0)
   {
     stop();
-    kapp->restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
     //    kapp->processEvents(200);
   }
 }
@@ -87,7 +86,7 @@ void KBusyPtr :: timerEvent (void)
   if (++currentCursor >= numCursors) currentCursor = 0;
 
   if (cursorList)
-    kapp->setOverrideCursor(cursorList[currentCursor], TRUE);
+    QApplication::setOverrideCursor(cursorList[currentCursor], TRUE);
 }
 
 

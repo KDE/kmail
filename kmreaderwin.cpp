@@ -1779,8 +1779,7 @@ bool KMReaderWin::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
-     if (message())
-	 message()->readConfig();
+     KMMessage::readConfig();
      update( true ); // Force update
      return true;
   }
@@ -1968,11 +1967,10 @@ void KMReaderWin::readConfig(void)
   }
 
   readColorConfig();
+  KMMessage::readConfig();
 
-  if (message()) {
+  if (message())
     update();
-    message()->readConfig();
-  }
 }
 
 

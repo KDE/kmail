@@ -120,7 +120,7 @@ void KMFolderMgr::compactAllAux(KMFolderDir* dir)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::setBasePath(const QString& aBasePath, bool aImap)
+void KMFolderMgr::setBasePath(const QString& aBasePath, bool /*aImap*/)
 {
   QDir dir;
 
