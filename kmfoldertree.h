@@ -15,6 +15,7 @@ class QDropEvent;
 class QPixmap;
 class QPainter;
 class KMFolderImap;
+class CryptPlugWrapperList;
 
 class KMFolderTreeItem : public QListViewItem
 {
@@ -69,7 +70,8 @@ protected:
 				   int cx, int cy, int cw, int ch );
 
 public:
-  KMFolderTree(QWidget *parent=0, const char *name=0);
+  KMFolderTree( CryptPlugWrapperList * cryptPlugList,
+                QWidget *parent=0, const char *name=0 );
   virtual ~KMFolderTree();
 
   /** Save config options */
@@ -218,6 +220,7 @@ private:
     QTimer autoscroll_timer;
     int autoscroll_time;
     int autoscroll_accel;
+    CryptPlugWrapperList * mCryptPlugList;
 public slots:
     void startAutoScroll();
     void stopAutoScroll();

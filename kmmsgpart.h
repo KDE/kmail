@@ -65,6 +65,11 @@ public:
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
+  QCString originalContentTypeStr(void) const { return mOriginalContentTypeStr; }
+  void setOriginalContentTypeStr( const QCString& txt )
+  {
+    mOriginalContentTypeStr = txt;
+  }
   QCString typeStr(void) const;
   int type(void) const;
   void setTypeStr(const QCString &aStr);
@@ -85,6 +90,15 @@ public:
   QCString parameterAttribute(void) const;
   QString parameterValue(void) const;
   void setParameter(const QCString &attribute, const QString &value);
+
+  QCString additionalCTypeParamStr(void) const
+  {
+    return mAdditionalCTypeParamStr;
+  }
+  void setAdditionalCTypeParamStr( const QCString &param )
+  {
+    mAdditionalCTypeParamStr = param;
+  }
 
   /** Tries to find a good icon for the 'Content-Type' by scanning
     the installed mimelnk files. Returns the found icon. If no matching
@@ -127,12 +141,14 @@ public:
   QString fileName(void) const;
 
 protected:
+  QCString mOriginalContentTypeStr;
   QCString mType;
   QCString mSubtype;
   QCString mCte;
   QCString mContentDescription;
   QCString mContentDisposition;
   QByteArray mBody;
+  QCString mAdditionalCTypeParamStr;
   QString mName;
   QCString mParameterAttribute;
   QString mParameterValue;

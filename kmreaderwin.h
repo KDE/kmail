@@ -8,6 +8,7 @@
 #include <qtimer.h>
 #include <qcolor.h>
 #include <qstringlist.h>
+#include "kmmimeparttree.h" // Needed for friend declaration.
 
 class KHTMLPart;
 class KMFolder;
@@ -22,6 +23,14 @@ class QTabDialog;
 class QLabel;
 class QHBox;
 class QTextCodec;
+class DwMediaType;
+class CryptPlugWrapperList;
+class KMMessagePart;
+class KURL;
+class QListViewItem;
+
+class partNode; // might be removed when KMime is used instead of mimelib
+                //                                      (khz, 29.11.2001)
 
 namespace KParts
 {
@@ -33,9 +42,20 @@ class KMReaderWin: public QWidget
 {
   Q_OBJECT
 
+  friend void KMMimePartTree::itemClicked( QListViewItem* item );
+  friend void KMMimePartTree::itemRightClicked( QListViewItem* item, const QPoint & );
+  friend void KMMimePartTree::slotSaveAs();
+
 public:
-  KMReaderWin(QWidget *parent=0, const char *name=0, int f=0);
+  KMReaderWin( CryptPlugWrapperList *cryptPlugList=0,
+               KMMimePartTree* mimePartTree=0,
+               QWidget *parent=0,
+               const char *name=0,
+               int f=0 );
   virtual ~KMReaderWin();
+
+  /** assign a KMMimePartTree to this KMReaderWin */
+  virtual void setMimePartTree( KMMimePartTree* mimePartTree );
 
   /** Read color settings and set palette */
   virtual void readColorConfig(void);
@@ -198,12 +218,40 @@ protected:
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
+  /** Parse beginning at a given node and recursively parsing
+      the children of that node and it's next sibling. */
+  //  Function is called internally by "parseMsg(KMMessage* msg)"
+  //  and it will be replaced once KMime is alive.
+  virtual void parseObjectTree( partNode* node, bool showOneMimePart=false,
+                                                bool keepEncryptions=false,
+                                                bool includeSignatures=true );
+
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg(KMMessage* msg);
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  virtual QString writeMsgHeader();
+  virtual QString writeMsgHeader(bool hasVCard);
+
+  /** Processed the txt strings and composed an appropriate
+    HTML string that is stored into data for displaying it
+    instead of the mail part's decrypted content.
+    Also used these texts for displaying a Sorry message box.
+    This method was implemented for being called
+    by writeSignedMIME and by okDecryptMIME. */
+  virtual void showMessageAndSetData( const QString& txt0,
+                                      const QString& txt1,
+                                      const QString& txt2a,
+                                      const QString& txt2b,
+                                      QCString& data );
+
+  /** Feeds the HTML widget with the contents of the given multipart/signed
+    object. Signature is tested.  May contain body parts. */
+  virtual void writeSignedMIME( partNode& data, partNode& sign );
+
+  /** Returns the contents of the given multipart/encrypted
+    object. Data is decypted.  May contain body parts. */
+  virtual bool okDecryptMIME( partNode& data, QCString& decryptedData );
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
@@ -274,7 +322,6 @@ protected:
   unsigned long mLastSerNum;
 
   int fntSize;
-  int mVcnum;
   bool mUseFixedFont;
   bool mPrinting;
   QString mBodyFamily;
@@ -292,6 +339,9 @@ protected:
   bool mShowColorbar;
   QStringList mTempFiles;
   QStringList mTempDirs;
+  KMMimePartTree* mMimePartTree;
+  CryptPlugWrapperList * mCryptPlugList;
+  partNode* mRootNode;
 };
 
 

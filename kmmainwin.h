@@ -6,13 +6,16 @@
 #define __KMMAINWIN
 
 #include "kmtopwidget.h"
+#include "cryptplugwrapperlist.h"
 #include <kurl.h>
+#include <kdockwidget.h>
 
 class ConfigureDialog;
 class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
 class KMFolderTreeItem;
+class KMMimePartTree;
 class KMHeaders;
 class KMReaderWin;
 class QSplitter;
@@ -88,6 +91,7 @@ public:
   KToggleAction *toggleFixFontAction;
   KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu;
+  CryptPlugWrapperList mCryptPlugList;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
 
@@ -217,6 +221,16 @@ protected slots:
   void slotSearchClosed();
   void slotFind();
   void slotUpdateImapMessage(KMMessage *msg);
+  
+
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  void slotToggleFolderBar();
+  void slotToggleHeaderBar();
+  void slotToggleMimeBar();
+  */
+  // (khz, 19.04.2002)
+
 
   /** Message navigation */
   void slotNextMessage();
@@ -251,6 +265,14 @@ protected slots:
   /** Update html and threaded messages preferences in Folder menu. */
   virtual void updateFolderMenu();
 
+
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  void updateSettingsMenu();
+  */
+  // (khz, 19.04.2002)
+
+  
   /** XML-GUI stuff */
   void slotToggleToolBar();
   void slotToggleStatusBar();
@@ -262,6 +284,7 @@ protected:
   KStatusBar   *mStatusBar;
   QString      mLastStatusMsg;
   KMFolderTree *mFolderTree;
+  KMMimePartTree* mMimePartTree;
   KMReaderWin  *mMsgView;
   QSplitter    *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
@@ -296,9 +319,14 @@ protected:
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
     *compactFolderAction, *emptyFolderAction, *markAllAsReadAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
-  KToggleAction *toolbarAction, *statusbarAction;
+  KToggleAction *toolbarAction, *statusbarAction, *folderAction, *headerAction, *mimeAction;
 
   QTimer *menutimer;
+
+  KDockWidget* mMsgDock;
+  KDockWidget* mHeaderDock;
+  KDockWidget* mFolderDock;
+  KDockWidget* mMimeDock;
 };
 
 #endif

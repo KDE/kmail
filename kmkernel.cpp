@@ -175,7 +175,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMComposeWin *cWin = new KMComposeWin(0, msg);
   cWin->setCharset("", TRUE);
   for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
@@ -207,7 +207,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMComposeWin *cWin = new KMComposeWin(0, msg);
   cWin->setCharset("", TRUE);
   if (!attachData.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
@@ -239,7 +239,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
+  KMComposeWin *cWin = new KMComposeWin(0, msg);
   cWin->setCharset("", TRUE);
   if (!hidden) cWin->show();
 
@@ -460,7 +460,7 @@ void KMKernel::recoverDeadLetters(void)
     msg = folder.take(0);
     if (msg)
     {
-      win = new KMComposeWin;
+      win = new KMComposeWin(0);
       win->setMsg(msg, FALSE);
       win->show();
     }

@@ -53,6 +53,7 @@
 #include "mailinglist-magic.h"
 #include "kmmsgdict.h"
 #include "kmacctfolder.h"
+#include "kmmimeparttree.h"
 
 
 #include <assert.h>
@@ -74,10 +75,15 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mFolder = NULL;
   mFolderThreadPref = false;
   mFolderHtmlPref = false;
+          
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   mHorizPannerSep = new QValueList<int>;
   mVertPannerSep = new QValueList<int>;
   *mHorizPannerSep << 1 << 1;
   *mVertPannerSep << 1 << 1;
+  // (khz)
+  
 
   setMinimumSize(400, 300);
 
@@ -94,7 +100,12 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   statusbarAction->setChecked(!statusBar()->isHidden());
 
   readConfig();
+  
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   activatePanners();
+  // (khz, 19.04.2002)
+  
 
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
     idx = mFolderTree->firstChild();
@@ -130,8 +141,13 @@ KMMainWin::~KMMainWin()
   delete mHeaders;
   delete mStatusBar;
   delete mFolderTree;
+  
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   delete mHorizPannerSep;
   delete mVertPannerSep;
+  // (khz, 19.04.2002)
+
 }
 
 
@@ -139,12 +155,15 @@ KMMainWin::~KMMainWin()
 void KMMainWin::readPreConfig(void)
 {
   KConfig *config = kapp->config();
-  QString str;
+  
 
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
     mLongFolderList = config->readBoolEntry("longFolderList", true);
   }
+  // (khz, 19.04.2002)
+
 
   KConfigGroupSaver saver(config, "General");
   mEncodingStr = config->readEntry("encoding", "").latin1();
@@ -181,16 +200,31 @@ void KMMainWin::writeFolderConfig(void)
 void KMMainWin::readConfig(void)
 {
   KConfig *config = kapp->config();
+  
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   bool oldLongFolderList=false;
+  // (khz, 19.04.2002)
+  
+
   QString str;
   QSize siz;
 
   if (mStartupDone)
   {
     writeConfig();
+  
+
+    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
     oldLongFolderList = mLongFolderList;
+    // (khz, 19.04.2002)
+    
+
     readPreConfig();
     mHeaders->refreshNestedState();
+    
+
+    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
     if (oldLongFolderList != mLongFolderList)
     {
       hide();
@@ -198,6 +232,8 @@ void KMMainWin::readConfig(void)
       else delete mVertPanner;
       createWidgets();
     }
+    // (khz, 19.04.2002)
+
   }
 
   { // area for config group "Reader"
@@ -212,14 +248,16 @@ void KMMainWin::readConfig(void)
     siz = config->readSizeEntry("MainWin", &defaultSize);
     if (!siz.isEmpty())
       resize(siz);
+    
 
+    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
+    //
     // the default value for the FolderPaneWidth should be about 160 but the
     // default is set to 0 to enable the workaround (see below)
     (*mVertPannerSep)[0] = config->readNumEntry("FolderPaneWidth", 0);
     (*mVertPannerSep)[1] = config->readNumEntry("HeaderPaneWidth", 600-160);
     (*mHorizPannerSep)[0] = config->readNumEntry("HeaderPaneHeight", 300);
     (*mHorizPannerSep)[1] = config->readNumEntry("MessagePaneHeight", 300);
-
     // workaround to support the old buggy way of saving the dimensions of the panes
     if ((*mVertPannerSep)[0] == 0) {
       defaultSize = QSize(300,130);
@@ -231,6 +269,14 @@ void KMMainWin::readConfig(void)
       (*mHorizPannerSep)[1] = height() - siz.width();
       (*mVertPannerSep)[1] = width() - siz.height();
     }
+    // (khz, 19.04.2002)
+      
+
+    // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+    /*
+    readDockConfig( config, "Geometry" );
+    */
+
   }
 
   mMsgView->readConfig();
@@ -248,11 +294,18 @@ void KMMainWin::readConfig(void)
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
   }
 
+  // Load crypto plugins
+  mCryptPlugList.loadFromConfig( config );
+
   // Re-activate panners
   if (mStartupDone)
   {
+
+    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
     if (oldLongFolderList != mLongFolderList)
       activatePanners();
+    // (khz, 19.04.2002)
+
     //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
@@ -260,6 +313,7 @@ void KMMainWin::readConfig(void)
       mFolderTree->setCurrentItem(qlvi);
       mFolderTree->setSelected(qlvi,TRUE);
     }
+
 
     // sanders - New code
     mHeaders->setFolder(mFolder, true);
@@ -287,11 +341,25 @@ void KMMainWin::writeConfig(void)
 {
   QString s;
   KConfig *config = kapp->config();
+
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   QRect r = geometry();
+  // (khz, 19.04.2002)
+
 
   mMsgView->writeConfig();
   mFolderTree->writeConfig();
 
+
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  writeDockConfig( config, "Geometry" );
+  */
+  // (khz, 19.04.2002)
+
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
 
@@ -303,6 +371,8 @@ void KMMainWin::writeConfig(void)
     config->writeEntry("HeaderPaneHeight", mHorizPanner->sizes()[0]);
     config->writeEntry("MessagePaneHeight", mHorizPanner->sizes()[1]);
   }
+  // (khz, 19.04.2002)
+    
 
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("encoding", QString(mEncodingStr));
@@ -312,10 +382,12 @@ void KMMainWin::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::createWidgets(void)
 {
-  QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
   QAccel *accel = new QAccel(this, "createWidgets()");
 
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   // create panners
+  QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
   if (mLongFolderList)
   {
     mVertPanner  = new QSplitter(Qt::Horizontal, this, "vertPanner" );
@@ -334,6 +406,8 @@ void KMMainWin::createWidgets(void)
   }
   mVertPanner->setOpaqueResize(true);
   mHorizPanner->setOpaqueResize(true);
+  // (khz, 19.04.2002)
+
 
   // BUG -sanders these accelerators stop working after switching
   // between long/short folder layout
@@ -360,8 +434,21 @@ void KMMainWin::createWidgets(void)
     mCodec = KMMsgBase::codecForName(mEncodingStr);
   else mCodec = 0;
 
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   // create HTML reader widget
-  mMsgView = new KMReaderWin(pnrMsgView);
+  mMsgView = new KMReaderWin(&mCryptPlugList, 0, pnrMsgView);
+  // (khz, 19.04.2002)
+
+
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  // create HTML reader widget
+  /*
+  mMsgView = new KMReaderWin(&mCryptPlugList, 0, this);
+  */
+  // (khz, 19.04.2002)
+
+
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
   connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
@@ -384,17 +471,32 @@ void KMMainWin::createWidgets(void)
 		     mMsgView, SLOT(slotScrollNext()));
 
   new KAction( i18n("Move Message to Folder"), Key_M, this,
-               SLOT(slotMoveMsg()), actionCollection(), 
+               SLOT(slotMoveMsg()), actionCollection(),
                "move_message_to_folder" );
   new KAction( i18n("Copy Message to Folder"), Key_C, this,
-               SLOT(slotCopyMsg()), actionCollection(), 
+               SLOT(slotCopyMsg()), actionCollection(),
                "copy_message_to_folder" );
   new KAction( i18n("Delete Message"), Key_Delete, this,
-               SLOT(slotDeleteMsg()), actionCollection(), 
+               SLOT(slotDeleteMsg()), actionCollection(),
                "delete_message" );
-  
+
   // create list of folders
-  mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
+
+
+  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
+  mFolderTree  = new KMFolderTree(&mCryptPlugList,
+                                  pnrFldList, "folderTree");
+  // (khz, 19.04.2002)
+
+
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  mFolderTree  = new KMFolderTree(&mCryptPlugList,
+                                  this, "folderTree");
+  */
+  // (khz, 19.04.2002)
+
+
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
@@ -403,6 +505,36 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
+
+  // create a mime part tree and store it's pointer in the reader win
+  mMimePartTree = new KMMimePartTree( mMsgView, this, "mMimePartTree" );
+  mMsgView->setMimePartTree( mMimePartTree );
+
+
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  // set up docking
+  mMsgDock    = createDockWidget( "Mail Messages", 0L );
+  mHeaderDock = createDockWidget( "Headers", 0L );
+  mFolderDock = createDockWidget( "Folders", 0L );
+  mMimeDock   = createDockWidget( "Mime Parts", 0L );
+
+  mMsgDock->setWidget(    mMsgView );
+  mHeaderDock->setWidget( mHeaders );
+  mFolderDock->setWidget( mFolderTree );
+  mMimeDock->setWidget(   mMimePartTree );
+
+  setView( mMsgDock );
+
+  setMainDockWidget( mMsgDock); // master dockwidget
+  mMsgDock->setEnableDocking ( KDockWidget::DockNone );
+  mMsgDock->setDockSite(KDockWidget::DockCorner);
+  mFolderDock->manualDock( mMsgDock, KDockWidget::DockLeft, 20 );
+  mHeaderDock->manualDock( mMsgDock, KDockWidget::DockTop, 20 );
+  mMimeDock->manualDock(   mMsgDock, KDockWidget::DockLeft, 20 );
+  */
+  // (khz, 19.04.2002)
+
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
@@ -442,8 +574,9 @@ void KMMainWin::createWidgets(void)
 		   actionCollection(), "collapse_all_threads" );
 
   new KAction( i18n( "Move to the Next Unread Text" ),
-                                       Key_Space, this,  SLOT( slotReadOn() ),
-                                       actionCollection(), "read_on" );
+               Key_Space, this,  SLOT( slotReadOn() ),
+               actionCollection(), "read_on" );
+
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kernel->outboxFolder(), SIGNAL( msgAdded(int) ),
@@ -451,6 +584,8 @@ void KMMainWin::createWidgets(void)
 }
 
 
+
+// FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
 //-----------------------------------------------------------------------------
 void KMMainWin::activatePanners(void)
 {
@@ -483,6 +618,8 @@ void KMMainWin::activatePanners(void)
     mHorizPanner->setResizeMode( mVertPanner, QSplitter::KeepSize);
   }
 }
+// (khz, 19.04.2002)
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetEncoding()
@@ -541,6 +678,7 @@ void KMMainWin::hide()
 }
 
 
+// FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
 //-----------------------------------------------------------------------------
 void KMMainWin::show()
 {
@@ -548,6 +686,8 @@ void KMMainWin::show()
   mVertPanner->setSizes( *mVertPannerSep );
   KMMainWinInherited::show();
 }
+// (khz, 19.04.2002)
+
 
 //-------------------------------------------------------------------------
 void KMMainWin::slotSearch()
@@ -606,7 +746,8 @@ void KMMainWin::slotSettings()
 {
   if( mConfigureDialog == 0 )
   {
-      mConfigureDialog = new ConfigureDialog( this, "configure", false );
+      mConfigureDialog = new ConfigureDialog( &mCryptPlugList,
+                                              this, "configure", false );
   }
   mConfigureDialog->show();
 }
@@ -741,10 +882,10 @@ void KMMainWin::slotCompose()
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
 
-      win = new KMComposeWin(msg, mFolder->identity());
+      win = new KMComposeWin(&mCryptPlugList, msg, mFolder->identity());
   } else {
       msg->initHeader();
-      win = new KMComposeWin(msg);
+      win = new KMComposeWin(&mCryptPlugList, msg);
   }
 
   win->show();
@@ -766,10 +907,10 @@ void KMMainWin::slotPostToML()
 
           msg->setTo(mFolder->mailingListPostAddress());
       }
-      win = new KMComposeWin(msg, mFolder->identity());
+      win = new KMComposeWin(&mCryptPlugList, msg, mFolder->identity());
   } else {
       msg->initHeader();
-      win = new KMComposeWin(msg);
+      win = new KMComposeWin(&mCryptPlugList, msg);
   }
 
   win->show();
@@ -1136,7 +1277,7 @@ void KMMainWin::slotEditMsg(KMMessage* msg)
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
   mHeaders->highlightMessage(mHeaders->currentItem(), true);
 
-  KMComposeWin *win = new KMComposeWin;
+  KMComposeWin *win = new KMComposeWin(&mCryptPlugList);
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
 		    this, SLOT( slotMessageQueuedOrDrafted()) );
   win->setMsg(msg,FALSE, TRUE);
@@ -1670,7 +1811,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
-    win = new KMComposeWin(msg, id);
+    win = new KMComposeWin(&mCryptPlugList, msg, id);
     win->setCharset("", TRUE);
     win->show();
   }
@@ -1708,7 +1849,7 @@ void KMMainWin::slotMailtoCompose()
   msg->setCharset("utf-8");
   msg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(msg, id);
+  win = new KMComposeWin(&mCryptPlugList, msg, id);
   win->setCharset("", TRUE);
   win->show();
 }
@@ -1726,7 +1867,7 @@ void KMMainWin::slotMailtoReply()
   rmsg = msg->createReply(FALSE, FALSE, mMsgView->copyText());
   rmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(rmsg, id);
+  win = new KMComposeWin(&mCryptPlugList, rmsg, id);
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1744,7 +1885,7 @@ void KMMainWin::slotMailtoForward()
   fmsg = msg->createForward();
   fmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(fmsg);
+  win = new KMComposeWin(&mCryptPlugList, fmsg);
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
 }
@@ -2259,6 +2400,20 @@ void KMMainWin::setupMenuBar()
     actionCollection());
   statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
     actionCollection());
+  
+  
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  folderAction = new KToggleAction(i18n("Show Folder Bar"), 0, this, SLOT( slotToggleFolderBar() ),
+                                   actionCollection(), "show_folder_bar");
+  headerAction = new KToggleAction(i18n("Show Header Bar"), 0, this, SLOT( slotToggleHeaderBar() ),
+                                   actionCollection(), "show_header_bar");
+  mimeAction = new KToggleAction(i18n("Show Mime Bar"), 0, this, SLOT( slotToggleMimeBar() ),
+                                   actionCollection(), "show_mime_bar");
+  */
+  // (khz, 19.04.2002)
+
+
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
@@ -2276,6 +2431,13 @@ void KMMainWin::setupMenuBar()
 
   QObject::connect( guiFactory()->container("message", this),
 		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
+  
+  
+  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+  /*
+  QObject::connect( guiFactory()->container("settings", this),
+                    SIGNAL( aboutToShow() ), this, SLOT( updateSettingsMenu() ) );
+  */
 
   conserveMemory();
 
@@ -2304,6 +2466,35 @@ void KMMainWin::slotToggleStatusBar()
   else
     statusBar()->show();
 }
+
+
+// FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+/*
+void KMMainWin::slotToggleFolderBar()
+{
+  if ( folderAction->isChecked() )
+    makeDockVisible(mFolderDock);
+  else {
+    makeDockInvisible(mFolderDock);
+  }
+}
+void KMMainWin::slotToggleHeaderBar()
+{
+  if ( headerAction->isChecked())
+    makeDockVisible(mHeaderDock);
+  else
+    makeDockInvisible(mHeaderDock);
+}
+void KMMainWin::slotToggleMimeBar()
+{
+  if ( mimeAction->isChecked())
+    makeDockVisible(mMimeDock);
+  else
+    makeDockInvisible(mMimeDock);
+}
+*/
+// (khz, 19.04.2002)
+
 
 void KMMainWin::slotEditToolbars()
 {
@@ -2612,6 +2803,19 @@ void KMMainWin::updateFolderMenu()
   preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   threadMessagesAction->setChecked( mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
 }
+
+
+// FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
+/*
+void KMMainWin::updateSettingsMenu()
+{
+  folderAction->setChecked( mFolderDock->isVisible() );
+  headerAction->setChecked( mHeaderDock->isVisible() );
+  mimeAction->setChecked( mMimeDock->isVisible() );
+}
+*/
+// (khz, 19.04.2002)
+
 
 #ifdef MALLOC_DEBUG
 QString fmt(long n) {

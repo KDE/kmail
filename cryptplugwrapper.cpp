@@ -82,18 +82,75 @@
 
 
 
+/* special helper class to be used by signing/encrypting functions *******/
+
+
+
+StructuringInfoWrapper::StructuringInfoWrapper( CryptPlugWrapper* wrapper )
+  : _initDone( false ), _wrapper( wrapper )
+{
+    initMe();
+}
+StructuringInfoWrapper::~StructuringInfoWrapper()
+{
+    freeMe();
+}
+void StructuringInfoWrapper::reset()
+{
+    freeMe();
+    initMe();
+}
+void StructuringInfoWrapper::initMe()
+{
+    if( _wrapper && _wrapper->libPtr() ) {
+        void (*p_func)(  struct StructuringInfo* )
+            = (void (*)( struct StructuringInfo* ))
+                  dlsym(_wrapper->libPtr(), "init_StructuringInfo");
+        if ( ! _wrapper->wasDLError( "init_StructuringInfo" ) ) {
+            (*p_func)( &data );
+            _initDone = true;
+        }
+   }
+}
+void StructuringInfoWrapper::freeMe()
+{
+    if( _wrapper && _wrapper->libPtr() && _initDone ) {
+        void (*p_func)(  struct StructuringInfo* )
+            = (void (*)( struct StructuringInfo* ))
+                  dlsym(_wrapper->libPtr(), "free_StructuringInfo");
+        if ( ! _wrapper->wasDLError( "free_StructuringInfo" ) ) {
+            (*p_func)( &data );
+            _initDone = false;
+        }
+    }
+}
+
+
+
+
+
+
 /* some multi purpose functions ******************************************/
+
+
+
+bool CryptPlugWrapper::wasDLError( const char* funcName )
+{
+    QString thisError = dlerror();
+    bool bError = ! thisError.isEmpty();
+    if ( bError ) {
+        _lastError = thisError;
+kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
+    }
+    return bError;
+}
 
 
 void CryptPlugWrapper::voidVoidFunc( const char* funcName )
 {
     if ( _active && _initialized ) {
         void (*p_func)() = (void (*)()) dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             (*p_func)();
     }
 }
@@ -105,13 +162,38 @@ bool CryptPlugWrapper::boolConstCharFunc( const char* txt, const char* funcName 
         bool (*p_func)( const char* )
             = (bool (*)(const char* ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             return (*p_func)( txt );
     }
+    return false;
+}
+
+
+bool CryptPlugWrapper::boolConstCharConstCharFunc( const char* txt1,
+                                                   const char* txt2,
+                                                   const char* funcName )
+{
+    if ( _active && _initialized ) {
+        bool (*p_func)( const char*, const char* )
+            = (bool (*)(const char*, const char* ))
+                dlsym(_libPtr, funcName);
+        if ( ! wasDLError( funcName ) )
+            return (*p_func)( txt1, txt2 );
+    }
+    return false;
+}
+
+
+int CryptPlugWrapper::intConstCharFunc( const char* txt, const char* funcName )
+{
+    if ( _active && _initialized ) {
+        int (*p_func)( const char* )
+            = (int (*)(const char* ))
+                dlsym(_libPtr, funcName);
+        if ( ! wasDLError( funcName ) )
+            return (*p_func)( txt );
+    }
+    return 0;
 }
 
 
@@ -121,11 +203,7 @@ void CryptPlugWrapper::voidConstCharFunc( const char* txt, const char* funcName 
         void (*p_func)( const char* )
             = (void (*)(const char* ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             (*p_func)( txt );
     }
 }
@@ -136,11 +214,7 @@ const char* CryptPlugWrapper::constCharVoidFunc( const char* funcName )
     if ( _active && _initialized ) {
         const char* (*p_func)(void) = (const char* (*)(void))
                                       dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             return (*p_func)();
     }
     return 0;
@@ -153,11 +227,7 @@ void CryptPlugWrapper::voidBoolFunc( bool flag, const char* funcName )
         void (*p_func)( bool )
             = (void (*)(bool ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             (*p_func)( flag );
     }
 }
@@ -169,13 +239,10 @@ bool CryptPlugWrapper::boolVoidFunc( const char* funcName )
         bool (*p_func)( void )
             = (bool (*)(void ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             return (*p_func)();
     }
+    return false;
 }
 
 
@@ -185,11 +252,7 @@ void CryptPlugWrapper::voidIntFunc( int value, const char* funcName )
         void (*p_func)( int )
             = (void (*)(int ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             (*p_func)( value );
     }
 }
@@ -202,11 +265,7 @@ int CryptPlugWrapper::intVoidFunc( const char* funcName )
         int (*p_func)( void )
             = (int (*)(void ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             res = (*p_func)();
     }
     return res;
@@ -224,11 +283,7 @@ void CryptPlugWrapper::stationeryFunc( void** pixmap,
         void  (*p_func)( void**, const char**, char*, const char**, const char** )
             = (void (*)( void**, const char**, char*, const char**, const char** ))
                 dlsym(_libPtr, funcName);
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << endl;
-        } else
+        if ( ! wasDLError( funcName ) )
             (*p_func)( pixmap, menutext, accel, tooltip, statusbartext );
     }
 }
@@ -241,10 +296,14 @@ kdDebug() << "Couldn't find function '%s': %s\n" << funcName << thisError << end
 
 
 CryptPlugWrapper::CryptPlugWrapper( QWidget*       parent,
+                                    const QString& name,
                                     const QString& libName,
-                                    bool           active = false ):
+                                    const QString& update,
+                                    bool           active ):
     _parent(  parent  ),
+    _name( name ),
     _libName( libName ),
+    _updateURL( update ),
     _libPtr(  0 ),
     _active(  active  ),
     _initialized( false ),
@@ -272,6 +331,7 @@ bool CryptPlugWrapper::active() const
 }
 
 
+
 bool CryptPlugWrapper::setLibName( const QString& libName )
 {
     bool bOk = ! _initialized;  // Changing the lib name is only allowed
@@ -286,10 +346,22 @@ QString CryptPlugWrapper::libName() const
 }
 
 
+QString CryptPlugWrapper::displayName() const
+{
+    return _name;
+}
+
+
+QString CryptPlugWrapper::updateURL() const
+{
+    return _updateURL;
+}
+
+
 bool CryptPlugWrapper::initialize( InitStatus* initStatus, QString* errorMsg )
 {
     bool bOk = false;
-    if ( _active && ! _initialized )
+    if ( ! _initialized )
     {
         _initStatus = InitStatus_undef;
         /* make sure we have a lib name */
@@ -343,14 +415,10 @@ kdDebug() << "Error while executing function 'initialize'.\n" << endl;
 
 void CryptPlugWrapper::deinitialize()
 {
-    if ( _active && _initialized ) {
+    if ( _initialized ) {
         bool (*p_deinitialize)(void) = (bool (*)(void))
                                        dlsym(_libPtr, "deinitialize");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'deinitialize': %s\n" << thisError << endl;
-        } else
+        if ( ! wasDLError( "deinitialize" ) )
             (*p_deinitialize)();
         _initialized = false;
     }
@@ -368,18 +436,25 @@ CryptPlugWrapper::InitStatus CryptPlugWrapper::initStatus( QString* errorMsg ) c
 bool CryptPlugWrapper::hasFeature( Feature flag )
 {
     bool bHasIt = false;
-    if ( _active && _initialized ) {
+    if ( _initialized ) {
         bool (*p_func)(Feature) = (bool (*)(Feature))
                                   dlsym(_libPtr, "hasFeature");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'hasFeature': %s\n" << thisError << endl;
-        } else
+        if ( ! wasDLError( "hasFeature" ) )
             bHasIt = (*p_func)( flag );
     }
     return bHasIt;
 }
+
+
+const char* CryptPlugWrapper::bugURL()
+{
+    return constCharVoidFunc( "bugURL" );
+}
+
+
+
+/* normal functions ******************************************************/
+
 
 
 void CryptPlugWrapper::unsafeStationery( void** pixmap,
@@ -474,6 +549,18 @@ SignatureAlgorithm CryptPlugWrapper::signatureAlgorithm()
 }
 
 
+void CryptPlugWrapper::setWarnSendUnsigned( bool flag )
+{
+    voidBoolFunc( flag, "setWarnSendUnsigned" );
+}
+
+
+bool CryptPlugWrapper::warnSendUnsigned()
+{
+    return boolVoidFunc( "warnSendUnsigned" );
+}
+
+
 void CryptPlugWrapper::setSendCertificates( SendCertificates sendCert )
 {
     voidIntFunc( (int)sendCert, "setSendCertificates" );
@@ -510,18 +597,6 @@ bool CryptPlugWrapper::saveSentSignatures()
 }
 
 
-void CryptPlugWrapper::setCertificateExpiryNearWarning( bool flag )
-{
-    voidBoolFunc( flag, "setCertificateExpiryNearWarning" );
-}
-
-
-bool CryptPlugWrapper::certificateExpiryNearWarning()
-{
-    return boolVoidFunc( "certificateExpiryNearWarning" );
-}
-
-
 void CryptPlugWrapper::setWarnNoCertificate( bool flag )
 {
     voidBoolFunc( flag, "setWarnNoCertificate" );
@@ -534,6 +609,14 @@ bool CryptPlugWrapper::warnNoCertificate()
 }
 
 
+bool CryptPlugWrapper::isEmailInCertificate( const char* email,
+                                             const char* certificate )
+{
+    return boolConstCharConstCharFunc( email, certificate, "isEmailInCertificate" );
+}
+
+
+
 void CryptPlugWrapper::setNumPINRequests( PinRequests reqMode )
 {
     voidIntFunc( (int)reqMode, "setNumPINRequests" );
@@ -543,6 +626,18 @@ void CryptPlugWrapper::setNumPINRequests( PinRequests reqMode )
 PinRequests CryptPlugWrapper::numPINRequests()
 {
     return (PinRequests) intVoidFunc( "numPINRequests" );
+}
+
+
+void CryptPlugWrapper::setNumPINRequestsInterval( int interval )
+{
+    voidIntFunc( interval, "setNumPINRequestsInterval" );
+}
+
+
+int CryptPlugWrapper::numPINRequestsInterval()
+{
+    return intVoidFunc( "numPINRequestsInterval" );
 }
 
 
@@ -571,27 +666,96 @@ bool CryptPlugWrapper::signatureUseCRLs()
 }
 
 
-void CryptPlugWrapper::setSignatureCRLExpiryNearWarning( bool flag )
+void CryptPlugWrapper::setSignatureCertificateExpiryNearWarning( bool flag )
 {
-    voidBoolFunc( flag, "setSignatureCRLExpiryNearWarning" );
+    voidBoolFunc( flag, "setSignatureCertificateExpiryNearWarning" );
 }
 
 
-bool CryptPlugWrapper::signatureCRLExpiryNearWarning()
+bool CryptPlugWrapper::signatureCertificateExpiryNearWarning()
 {
-    return boolVoidFunc( "signatureCRLExpiryNearWarning" );
+    return boolVoidFunc( "signatureCertificateExpiryNearWarning" );
 }
 
 
-void CryptPlugWrapper::setSignatureCRLNearExpiryInterval( int interval )
+int CryptPlugWrapper::signatureCertificateDaysLeftToExpiry( const char* certificate )
 {
-    voidIntFunc( interval, "setSignatureCRLNearExpiryInterval" );
+    return intConstCharFunc( certificate,
+                             "signatureCertificateDaysLeftToExpiry" );
 }
 
 
-int CryptPlugWrapper::signatureCRLNearExpiryInterval()
+void CryptPlugWrapper::setSignatureCertificateExpiryNearInterval( int interval )
 {
-    return intVoidFunc( "signatureCRLNearExpiryInterval" );
+    voidIntFunc( interval, "setSignatureCertificateExpiryNearInterval" );
+}
+
+
+int CryptPlugWrapper::signatureCertificateExpiryNearInterval()
+{
+    return intVoidFunc( "signatureCertificateExpiryNearInterval" );
+}
+
+
+void CryptPlugWrapper::setCACertificateExpiryNearWarning( bool flag )
+{
+    voidBoolFunc( flag, "setCACertificateExpiryNearWarning" );
+}
+
+
+bool CryptPlugWrapper::caCertificateExpiryNearWarning()
+{
+    return boolVoidFunc( "caCertificateExpiryNearWarning" );
+}
+
+
+int CryptPlugWrapper::caCertificateDaysLeftToExpiry( const char* certificate )
+{
+    return intConstCharFunc( certificate,
+                             "caCertificateDaysLeftToExpiry" );
+}
+
+
+void CryptPlugWrapper::setCACertificateExpiryNearInterval( int interval )
+{
+    voidIntFunc( interval, "setCACertificateExpiryNearInterval" );
+}
+
+
+int CryptPlugWrapper::caCertificateExpiryNearInterval()
+{
+    return intVoidFunc( "caCertificateExpiryNearInterval" );
+}
+
+
+void CryptPlugWrapper::setRootCertificateExpiryNearWarning( bool flag )
+{
+    voidBoolFunc( flag, "setRootCertificateExpiryNearWarning" );
+}
+
+
+bool CryptPlugWrapper::rootCertificateExpiryNearWarning()
+{
+    return boolVoidFunc( "rootCertificateExpiryNearWarning" );
+}
+
+
+int CryptPlugWrapper::rootCertificateDaysLeftToExpiry( const char* certificate )
+{
+    return intConstCharFunc( certificate,
+                             "rootCertificateDaysLeftToExpiry" );
+}
+
+
+void CryptPlugWrapper::setRootCertificateExpiryNearInterval( int interval )
+{
+    voidIntFunc( interval, "setRootCertificateExpiryNearInterval" );
+}
+
+
+int CryptPlugWrapper::rootCertificateExpiryNearInterval()
+{
+    return intVoidFunc( "rootCertificateExpiryNearInterval" );
 }
 
 
@@ -645,6 +809,18 @@ EncryptEmail CryptPlugWrapper::encryptEmail()
 }
 
 
+void CryptPlugWrapper::setWarnSendUnencrypted( bool flag )
+{
+    voidBoolFunc( flag, "setWarnSendUnencrypted" );
+}
+
+
+bool CryptPlugWrapper::warnSendUnencrypted()
+{
+    return boolVoidFunc( "warnSendUnencrypted" );
+}
+
+
 void CryptPlugWrapper::setSaveMessagesEncrypted( bool flag )
 {
     voidBoolFunc( flag, "setSaveMessagesEncrypted" );
@@ -654,6 +830,18 @@ void CryptPlugWrapper::setSaveMessagesEncrypted( bool flag )
 bool CryptPlugWrapper::saveMessagesEncrypted()
 {
     return boolVoidFunc( "saveMessagesEncrypted" );
+}
+
+
+void CryptPlugWrapper::setCheckCertificatePath( bool flag )
+{
+    voidBoolFunc( flag, "setCheckCertificatePath" );
+}
+
+
+bool CryptPlugWrapper::checkCertificatePath()
+{
+    return boolVoidFunc( "checkCertificatePath" );
 }
 
 
@@ -670,11 +858,80 @@ bool CryptPlugWrapper::checkEncryptionCertificatePathToRoot()
 }
 
 
+void CryptPlugWrapper::setReceiverCertificateExpiryNearWarning( bool flag )
+{
+    voidBoolFunc( flag, "setReceiverCertificateExpiryNearWarning" );
+}
+
+
+bool CryptPlugWrapper::receiverCertificateExpiryNearWarning()
+{
+    return boolVoidFunc( "receiverCertificateExpiryNearWarning" );
+}
+
+
+int CryptPlugWrapper::receiverCertificateDaysLeftToExpiry( const char* certificate )
+{
+    return intConstCharFunc( certificate, "receiverCertificateDaysLeftToExpiry" );
+}
+
+
+void CryptPlugWrapper::setReceiverCertificateExpiryNearWarningInterval( int interval )
+{
+    voidIntFunc( interval, "setReceiverCertificateExpiryNearWarningInterval" );
+}
+
+
+int CryptPlugWrapper::receiverCertificateExpiryNearWarningInterval()
+{
+    return intVoidFunc( "receiverCertificateExpiryNearWarningInterval" );
+}
+
+
+void CryptPlugWrapper::setCertificateInChainExpiryNearWarning( bool flag )
+{
+    voidBoolFunc( flag, "setCertificateInChainExpiryNearWarning" );
+}
+
+
+bool CryptPlugWrapper::certificateInChainExpiryNearWarning()
+{
+    return boolVoidFunc( "certificateInChainExpiryNearWarning" );
+}
+
+
+int CryptPlugWrapper::certificateInChainDaysLeftToExpiry( const char* certificate )
+{
+    return intConstCharFunc( certificate, "certificateInChainDaysLeftToExpiry" );
+}
+
+
+void CryptPlugWrapper::setCertificateInChainExpiryNearWarningInterval( int interval )
+{
+    voidIntFunc( interval, "setCertificateInChainExpiryNearWarningInterval" );
+}
+
+int CryptPlugWrapper::certificateInChainExpiryNearWarningInterval()
+{
+    return intVoidFunc( "certificateInChainExpiryNearWarningInterval" );
+}
+
+
+void CryptPlugWrapper::setReceiverEmailAddressNotInCertificateWarning( bool flag )
+{
+    voidBoolFunc( flag, "setReceiverEmailAddressNotInCertificateWarning" );
+}
+
+bool CryptPlugWrapper::receiverEmailAddressNotInCertificateWarning()
+{
+    return boolVoidFunc( "receiverEmailAddressNotInCertificateWarning" );
+}
+
+
 void CryptPlugWrapper::setEncryptionUseCRLs( bool flag )
 {
     voidBoolFunc( flag, "setEncryptionUseCRLs" );
 }
-
 
 
 bool CryptPlugWrapper::encryptionUseCRLs()
@@ -709,6 +966,12 @@ int CryptPlugWrapper::encryptionCRLNearExpiryInterval()
 }
 
 
+int CryptPlugWrapper::encryptionCRLsDaysLeftToExpiry()
+{
+    return intVoidFunc( "encryptionCRLsDaysLeftToExpiry" );
+}
+
+
 
 const char* CryptPlugWrapper::directoryServiceConfigurationDialog()
 {
@@ -716,53 +979,43 @@ const char* CryptPlugWrapper::directoryServiceConfigurationDialog()
 }
 
 
-void CryptPlugWrapper::appendDirectoryServer( const char* servername, int port )
+void CryptPlugWrapper::appendDirectoryServer( const char* servername, int port,
+                                              const char* description )
 {
     if ( _active && _initialized ) {
-        void (*p_func)( const char*, int )
-            = (void (*)(const char*, int ))
+        void (*p_func)( const char*, int, const char* )
+            = (void (*)(const char*, int, const char* ))
                 dlsym(_libPtr, "appendDirectoryServer");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'appendDirectoryServer': %s\n" << thisError << endl;
-        } else
-            (*p_func)( servername, port );
+        if ( ! wasDLError( "appendDirectoryServer" ) )
+            (*p_func)( servername, port, description );
     }
 }
 
 
 
-void CryptPlugWrapper::setDirectoryServers( struct DirectoryServer server )
+void CryptPlugWrapper::setDirectoryServers( struct DirectoryServer servers[],
+                                            unsigned int size )
 {
     if ( _active && _initialized ) {
-        void (*p_func)( struct DirectoryServer )
-            = (void (*)(struct DirectoryServer ))
+        void (*p_func)( struct DirectoryServer[], unsigned int )
+            = (void (*)(struct DirectoryServer[], unsigned int ))
                 dlsym(_libPtr, "setDirectoryServers");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'setDirectoryServers': %s\n" << thisError << endl;
-        } else
-            (*p_func)( server );
+        if ( ! wasDLError( "setDirectoryServers" ) )
+            (*p_func)( servers, size );
     }
 }
 
 
 
-CryptPlugWrapper::DirectoryServer * CryptPlugWrapper::directoryServers()
+CryptPlugWrapper::DirectoryServer * CryptPlugWrapper::directoryServers( int* numServers )
 {
     CryptPlugWrapper::DirectoryServer * res = 0;
     if ( _active && _initialized ) {
-        CryptPlugWrapper::DirectoryServer * (*p_func)( void )
-            = (CryptPlugWrapper::DirectoryServer * (*)(void ))
+        CryptPlugWrapper::DirectoryServer * (*p_func)( int* )
+            = (CryptPlugWrapper::DirectoryServer * (*)(int* ))
                 dlsym(_libPtr, "directoryServers");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'directoryServers': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)();
+        if ( ! wasDLError( "directoryServers" ) )
+            res = (*p_func)( numServers );
     }
     return res;
 }
@@ -801,51 +1054,61 @@ bool CryptPlugWrapper::certificateValidity( const char* certificate,
         bool (*p_func)( const char*, int* )
             = (bool (*)(const char*, int* ))
                 dlsym(_libPtr, "certificateValidity");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'certificateValidity': %s\n" << thisError << endl;
-        } else
+        if ( ! wasDLError( "certificateValidity" ) )
             res = (*p_func)( certificate, level );
     }
     return res;
 }
 
 
-
-bool CryptPlugWrapper::signMessage( const char* cleartext, const char**
-          ciphertext, const char* certificate )
+bool CryptPlugWrapper::signMessage( const char* cleartext,
+                                    char** ciphertext,
+                                    const size_t* cipherLen,
+                                    const char* certificate,
+                                    StructuringInfoWrapper& structuring,
+                                    int* errId,
+                                    char** errTxt )
 {
     bool res = false;
     if ( _active && _initialized ) {
-        bool (*p_func)( const char*, const char**, const char* )
-            = (bool (*)(const char*, const char**, const char* ))
+        // first (re-)initialize the StructuringInfo
+        structuring.reset();
+        // then call the signing function
+        bool (*p_func)( const char*, char**, const size_t*, const char*, struct StructuringInfo*, int*, char** )
+            = (bool (*)(const char*, char**, const size_t*, const char*, struct StructuringInfo*, int*, char** ))
                 dlsym(_libPtr, "signMessage");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'signMessage': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)( cleartext, ciphertext, certificate );
+        if ( ! wasDLError( "signMessage" ) )
+            res = (*p_func)( cleartext, ciphertext, cipherLen, certificate, &structuring.data, errId, errTxt );
     }
     return res;
 }
 
 
-bool CryptPlugWrapper::checkMessageSignature( const char* ciphertext, const char**
-        cleartext, struct SignatureMetaData* sigmeta )
+bool CryptPlugWrapper::checkMessageSignature( const char* ciphertext,
+                                              const char* signaturetext,
+                                              bool signatureIsBinary,
+                                              int signatureLen,
+                                              struct SignatureMetaData* sigmeta )
 {
     bool res = false;
-    if ( _active && _initialized ) {
-        bool (*p_func)( const char*, const char**, struct SignatureMetaData* )
-            = (bool (*)(const char*, const char**, struct SignatureMetaData* ))
+    if ( _initialized ) {
+        bool (*p_func)( const char*,
+                        const char*,
+                        bool,
+                        int,
+                        struct SignatureMetaData* )
+            = (bool (*)(const char*,
+                        const char*,
+                        bool,
+                        int,
+                        struct SignatureMetaData* ))
                 dlsym(_libPtr, "checkMessageSignature");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'checkMessageSignature': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)( ciphertext, cleartext, sigmeta );
+        if ( ! wasDLError( "checkMessageSignature" ) )
+            res = (*p_func)( ciphertext,
+                             signaturetext,
+                             signatureIsBinary,
+                             signatureLen,
+                             sigmeta );
     }
     return res;
 }
@@ -858,60 +1121,79 @@ bool CryptPlugWrapper::storeCertificatesFromMessage(
 }
 
 
-
-bool CryptPlugWrapper::encryptMessage( const char* cleartext,
-                     const char** ciphertext )
+bool CryptPlugWrapper::findCertificates( const char*  addressee,
+                                         char** certificates )
 {
     bool res = false;
     if ( _active && _initialized ) {
-        bool (*p_func)( const char*, const char** )
-            = (bool (*)(const char*, const char** ))
+        // then call the findCertificates function
+        bool (*p_func)( const char*, char** )
+            = (bool (*)(const char*, char** ))
+                dlsym(_libPtr, "findCertificates");
+        if ( ! wasDLError( "findCertificates" ) )
+            res = (*p_func)( addressee, certificates );
+    }
+    return res;
+}
+
+bool CryptPlugWrapper::encryptMessage( const char* cleartext,
+                                       const char** ciphertext,
+                                       const size_t* cipherLen,
+                                       const char* addressee,
+                                       StructuringInfoWrapper& structuring,
+                                       int* errId,
+                                       char** errTxt )
+{
+    bool res = false;
+    if ( _active && _initialized ) {
+        // first (re-)initialize the StructuringInfo
+        structuring.reset();
+        // then call the encrypting function
+        bool (*p_func)( const char*, const char**, const size_t*, const char*, struct StructuringInfo*, int*, char** )
+            = (bool (*)(const char*, const char**, const size_t*, const char*, struct StructuringInfo*, int*, char** ))
                 dlsym(_libPtr, "encryptMessage");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'encryptMessage': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)( cleartext, ciphertext );
+        if ( ! wasDLError( "encryptMessage" ) )
+            res = (*p_func)( cleartext, ciphertext, cipherLen, addressee, &structuring.data, errId, errTxt );
     }
     return res;
 }
 
 
 bool CryptPlugWrapper::encryptAndSignMessage( const char* cleartext,
-          const char** ciphertext, const char* certificate,
-          struct SignatureMetaData* sigmeta )
+                                              const char** ciphertext,
+                                              const char* certificate,
+                                              StructuringInfoWrapper& structuring )
 {
     bool res = false;
     if ( _active && _initialized ) {
-        bool (*p_func)( const char*, const char**, const char*, struct SignatureMetaData* )
-            = (bool (*)(const char*, const char**, const char*, struct SignatureMetaData* ))
+        // first (re-)initialize the StructuringInfo
+        structuring.reset();
+        // then call the signing/encrypting function
+        bool (*p_func)( const char*, const char**, const char*, struct StructuringInfo* )
+            = (bool (*)(const char*, const char**, const char*, struct StructuringInfo* ))
                 dlsym(_libPtr, "encryptAndSignMessage");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'encryptAndSignMessage': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)( cleartext, ciphertext, certificate, sigmeta );
+        if ( ! wasDLError( "encryptAndSignMessage" ) )
+            res = (*p_func)( cleartext, ciphertext, certificate, &structuring.data );
     }
     return res;
 }
 
 
-bool CryptPlugWrapper::decryptMessage( const char* ciphertext, const
-          char** cleartext, const char* certificate )
+bool CryptPlugWrapper::decryptMessage( const char* ciphertext,
+                                       bool        cipherIsBinary,
+                                       int         cipherLen,
+                                       char** cleartext,
+                                       const char* certificate )
 {
     bool res = false;
-    if ( _active && _initialized ) {
-        bool (*p_func)( const char*, const char**, const char* )
-            = (bool (*)(const char*, const char**, const char* ))
+    if ( _initialized ) {
+        bool (*p_func)( const char*, bool, int, const char**, const char* )
+            = (bool (*)(const char*, bool, int, const char**, const char* ))
                 dlsym(_libPtr, "decryptMessage");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'decryptMessage': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)( ciphertext, cleartext, certificate );
+        if ( ! wasDLError( "decryptMessage" ) )
+            res = (*p_func)( ciphertext, cipherIsBinary, cipherLen,
+                             (const char**)cleartext,
+                             certificate );
     }
     return res;
 }
@@ -922,15 +1204,11 @@ bool CryptPlugWrapper::decryptAndCheckMessage( const char* ciphertext,
           struct SignatureMetaData* sigmeta )
 {
     bool res = false;
-    if ( _active && _initialized ) {
+    if ( _initialized ) {
         bool (*p_func)( const char*, const char**, const char*, struct SignatureMetaData* )
             = (bool (*)(const char*, const char**, const char*, struct SignatureMetaData* ))
                 dlsym(_libPtr, "decryptAndCheckMessage");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'decryptAndCheckMessage': %s\n" << thisError << endl;
-        } else
+        if ( ! wasDLError( "decryptAndCheckMessage" ) )
             res = (*p_func)( ciphertext, cleartext, certificate, sigmeta );
     }
     return res;
@@ -944,21 +1222,17 @@ const char* CryptPlugWrapper::requestCertificateDialog()
 }
 
 
-bool CryptPlugWrapper::requestDecentralCertificate( const char* name, const char*
-          email, const char* organization, const char* department,
-          const char* ca_address )
+bool CryptPlugWrapper::requestDecentralCertificate( const char* certparms,
+                                                    char** generatedKey,
+                                                    int* keyLength )
 {
     bool res = false;
     if ( _active && _initialized ) {
-        bool (*p_func)( const char*, const char*, const char*, const char*, const char*  )
-            = (bool (*)(const char*, const char*, const char*, const char*, const char*  ))
+        bool (*p_func)( const char*, char**, int*  )
+            = (bool (*)(const char*, char**, int*  ))
                 dlsym(_libPtr, "requestDecentralCertificate");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'requestDecentralCertificate': %s\n" << thisError << endl;
-        } else
-            res = (*p_func)( name, email, organization, department, ca_address );
+        if ( ! wasDLError( "requestDecentralCertificate" ) )
+            res = (*p_func)( certparms, generatedKey, keyLength );
     }
     return res;
 }
@@ -973,11 +1247,7 @@ bool CryptPlugWrapper::requestCentralCertificateAndPSE( const char* name,
         bool (*p_func)( const char*, const char*, const char*, const char*, const char*  )
             = (bool (*)(const char*, const char*, const char*, const char*, const char*  ))
                 dlsym(_libPtr, "requestCentralCertificateAndPSE");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'requestCentralCertificateAndPSE': %s\n" << thisError << endl;
-        } else
+        if ( ! wasDLError( "requestCentralCertificateAndPSE" ) )
             res = (*p_func)( name, email, organization, department, ca_address );
     }
     return res;
@@ -992,7 +1262,7 @@ bool CryptPlugWrapper::createPSE()
 
 bool CryptPlugWrapper::registerCertificate( const char* certificate )
 {
-    boolConstCharFunc( certificate, "registerCertificate" );
+    return boolConstCharFunc( certificate, "registerCertificate" );
 }
 
 
@@ -1004,11 +1274,7 @@ bool CryptPlugWrapper::requestCertificateProlongation( const char* certificate,
         bool (*p_func)( const char*, const char*  )
             = (bool (*)(const char*, const char*  ))
                 dlsym(_libPtr, "requestCertificateProlongation");
-        QString thisError = dlerror();
-        if ( ! thisError.isEmpty() ) {
-            _lastError = thisError;
-kdDebug() << "Couldn't find function 'requestCertificateProlongation': %s\n" << thisError << endl;
-        } else
+        if ( ! wasDLError( "requestCertificateProlongation" ) )
             res = (*p_func)( certificate, ca_address );
     }
     return res;
@@ -1023,13 +1289,13 @@ const char* CryptPlugWrapper::certificateChain()
 
 bool CryptPlugWrapper::deleteCertificate( const char* certificate )
 {
-    boolConstCharFunc( certificate, "deleteCertificate" );
+    return boolConstCharFunc( certificate, "deleteCertificate" );
 }
 
 
 bool CryptPlugWrapper::archiveCertificate( const char* certificate )
 {
-    boolConstCharFunc( certificate, "archiveCertificate" );
+    return boolConstCharFunc( certificate, "archiveCertificate" );
 }
 
 
@@ -1043,4 +1309,16 @@ const char* CryptPlugWrapper::displayCRL()
 void CryptPlugWrapper::updateCRL()
 {
     voidVoidFunc( "updateCRL" );
+}
+
+
+void CryptPlugWrapper::freeSignatureMetaData( struct SignatureMetaData* sigmeta )
+{
+    free( sigmeta->status );
+    for( int i = 0; i < sigmeta->extended_info_count; i++ ) {
+        free( sigmeta->extended_info[i].creation_time );
+        free( (void*)sigmeta->extended_info[i].status_text );
+        free( (void*)sigmeta->extended_info[i].fingerprint );
+    }
+    free( sigmeta->nota_xml );
 }

@@ -4,6 +4,7 @@
 #ifndef kmmessage_h
 #define kmmessage_h
 
+#include <mimelib/string.h>
 #include "kmmsgbase.h"
 
 class QStringList;
@@ -17,6 +18,10 @@ class KMMessagePart;
 class KMMsgInfo;
 class KMHeaders;
 
+class DwBodyPart;
+class DwMediaType;
+class DwHeaders;
+
 #define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase
 {
@@ -27,13 +32,20 @@ public:
   /** Straight forward initialization. */
   KMMessage(KMFolder* parent=NULL);
 
-#if 0
   /** Constructor from a DwMessage. */
   KMMessage(DwMessage*);
-#endif
 
   /** Copy constructor. Does *not* automatically load the message. */
   KMMessage(KMMsgInfo& msgInfo);
+
+  /** Copy constructor */
+  KMMessage( const KMMessage& other );
+
+  /** assignment operator */
+  const KMMessage& operator=( const KMMessage& other ) {  if( &other == this )
+      return *this;
+  assign( other ); return *this;
+  }
 
   /** Destructor. */
   virtual ~KMMessage();
@@ -74,7 +86,7 @@ public:
 
   /** Create the forwarded body for the message. */
   virtual QCString createForwardBody(void);
-  
+
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
@@ -88,13 +100,20 @@ public:
   /** Parse the string and create this message from it. */
   virtual void fromString(const QCString& str, bool setStatus=FALSE);
 
+  /** Return the entire message contents in the DwString. This function
+      is *fast* even for large message since it does *not* involve a
+      string copy.
+  */
+  virtual const DwString& asDwString(void);
+
   /** Return the entire message contents as a string. This function is
       slow for large message since it involves a string copy. If you
       need the string representation only for a short time
       (i.e. without the chance of calling any function in the
       underlying mimelib, then you should use the @ref asByteArray,
-      which is more efficient.
+      which is more efficient or use the @ref asDwString function.
       @see asByteArray
+      @see asDwString
   */
   virtual QCString asString(void);
 
@@ -102,6 +121,9 @@ public:
    * Return the message contents besides the headers that should not be sent.
    */
   virtual QCString asSendableString();
+
+  /** Return reference to Content-Type header for direct manipulation. */
+  DwMediaType& dwContentType(void);
 
   /** Return header as string. */
   virtual QString headerAsString(void) const;
@@ -250,6 +272,15 @@ public:
   virtual int subtype(void) const;
   virtual void setSubtypeStr(const QCString& aStr);
   virtual void setSubtype(int aSubtype);
+  /** add or change a parameter of a DwMediaType field */
+  static void setDwMediaTypeParam( DwMediaType &mType,
+                                   const QCString& attr,
+                                   const QCString& val );
+  /** add or change a parameter of the Content-Type field */
+  virtual void setContentTypeParam(const QCString& attr, const QCString& val);
+
+  /** get the DwHeaders */
+  virtual DwHeaders& headers(void);
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
@@ -288,10 +319,31 @@ public:
       without any attachment. */
   virtual int numBodyParts(void) const;
 
+  /** Get the DwBodyPart at position in aIdx.  Indexing starts at 0.
+      If there is no body part at that index, return value will be zero. */
+  virtual DwBodyPart * dwBodyPart( int aIdx ) const;
+
+  /** Get the number of the given DwBodyPart.
+      If no body part is given, return value will be -1. */
+  int partNumber( DwBodyPart * aDwBodyPart ) const;
+
+  /** Get the 1st DwBodyPart.
+      If there is no body part, return value will be zero. */
+  DwBodyPart * getFirstDwBodyPart() const;
+
+  /** Fill the KMMessagePart structure for a given DwBodyPart. */
+  static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart);
+
   /** Get the body part at position in aIdx.  Indexing starts at 0.
     If there is no body part at that index, aPart will have its
     attributes set to empty values. */
   virtual void bodyPart(int aIdx, KMMessagePart* aPart) const;
+
+  /** Compose a DwBodyPart (needed for adding a part to the message). */
+  virtual DwBodyPart* createDWBodyPart(const KMMessagePart* aPart);
+
+  /** Append a DwBodyPart to the message. */
+  virtual void addDwBodyPart(DwBodyPart * aDwPart);
 
   /** Append a body part to the message. */
   virtual void addBodyPart(const KMMessagePart* aPart);
@@ -313,10 +365,14 @@ public:
    */
   static QString generateMessageId( const QString& addr );
 
+  /** Convert LF line-ends to CRLF
+   */
+  static QCString lf2crlf( const QCString & src );
+
   /** Strip email address from string. Examples:
    * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
-   * "joe@nowhere.com" returns "joe@nowhere.com". Note that this only 
-   * returns the first name, e.g. "Peter Test <p@t.de>, Harald Tester <ht@test.de>" 
+   * "joe@nowhere.com" returns "joe@nowhere.com". Note that this only
+   * returns the first name, e.g. "Peter Test <p@t.de>, Harald Tester <ht@test.de>"
    * returns "Peter Test" */
   static QString stripEmailAddr(const QString& emailAddr);
 
@@ -415,8 +471,10 @@ public:
     /** Returns the information for the Nth link into @p retMsg
      * and @p retStatus. */
     void getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
-    
+
 protected:
+    void assign( const KMMessage& other );
+
     /** Convert wildcards into normal string */
     QString formatString(const QString&) const;
 

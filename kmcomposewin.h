@@ -13,6 +13,7 @@
 #include <qclipboard.h>
 #include <qpalette.h>
 #include <qfont.h>
+#include <qptrlist.h>
 
 #include <keditcl.h>
 #include <klineedit.h>
@@ -22,6 +23,8 @@
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
 #include "mailcomposerIface.h"
+
+#include "cryptplugwrapper.h"
 
 class _StringPair {
  public:
@@ -39,6 +42,7 @@ class QListView;
 class QListViewItem;
 class QPopupMenu;
 class QPushButton;
+class QCString;
 class KCompletion;
 class KEdit;
 class KMComposeWin;
@@ -54,6 +58,8 @@ class KToolBar;
 class KToggleAction;
 class KURL;
 class IdentityCombo;
+class CryptPlugWrapperList;
+
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
@@ -162,7 +168,9 @@ class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
   friend class KMHeaders;         // needed for the digest forward
 
 public:
-  KMComposeWin(KMMessage* msg=0L, QString id=QString::fromLatin1("unknown"));
+  KMComposeWin( CryptPlugWrapperList * cryptPlugList,
+                KMMessage* msg=0L,
+                QString id=QString::fromLatin1("unknown") );
   ~KMComposeWin();
 
   /**
@@ -311,6 +319,11 @@ public slots:
    * Switch the icon to lock or unlock respectivly.
    */
   void slotEncryptToggled(bool);
+
+  /**
+   * Let the user select another crypto engine
+   */
+  void slotSelectCrypto();
 
   /**
    * Switch wordWrap on/off
@@ -473,6 +486,59 @@ protected:
 
 private:
   /**
+   * Get message ready for sending or saving.
+   * This must be done _before_ signing and/or encrypting it.
+   *
+   */
+  QCString breakLinesAndApplyCodec();
+
+  /**
+   * Get signature for a message.
+   * To build nice S/MIME objects signing and encoding must be separeted.
+   *
+   */
+  QByteArray pgpSignedMsg( QCString cText,
+                           StructuringInfoWrapper& structuring );
+
+  /**
+   * Get encrypted message.
+   * To build nice S/MIME objects signing and encrypting must be separat.
+   *
+   */
+  QByteArray pgpEncryptedMsg( QCString cText, const QStringList& recipients,
+                              StructuringInfoWrapper& structuring );
+
+  /**
+   * Build a MIME object (or a flat text resp.) based upon
+   * structuring information returned by a crypto plugin that was
+   * called via pgpSignedMsg() (or pgpEncryptedMsg(), resp.).
+   *
+   * NOTE: The c string representation of the MIME object (or the
+   *       flat text, resp.) is returned in resultingData, so just
+   *       use this string as body text of the surrounding MIME object.
+   *       This string *is* encoded according to contentTEncClear
+   *       and thus should be ready for neing sended via SMTP.
+   */
+  bool processStructuringInfo( const QString   bugURL,
+                               uint            boundaryLevel,
+                               const QString   contentDescriptionClear,
+                               const QCString  contentTypeClear,
+                               const QCString  contentSubtypeClear,
+                               const QCString  contentDispClear,
+                               const QCString  contentTEncClear,
+                               const QCString& bodytext,
+                               const QString   contentDescriptionCiph,
+                               const QByteArray& ciphertext,
+                               const StructuringInfoWrapper& structuring,
+                               KMMessagePart&  resultingPart );
+
+  bool encryptMessage( KMMessage* msg, const QStringList& recipients, bool doSign, bool doEncrypt,
+				     CryptPlugWrapper* cryptPlug,
+				     const QCString& encodedBody,int previousBoundaryLevel,
+				     const KMMessagePart& oldBodyPart,
+				     bool earlyAddAttachments, KMMessagePart newBodyPart );
+
+  /**
    * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
    * block with a clear text signature. This is only done if the given
    * string contains exactly one OpenPGP block.
@@ -508,6 +574,7 @@ protected:
   KMEdit* mEditor;
   QGridLayout* mGrid;
   KMMessage *mMsg;
+  QPtrList<KMMessage> bccMsgList;
   QListView *mAtmListBox;
   QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
@@ -534,7 +601,7 @@ protected:
   QString mId, mOldSigText;
   QStringList mTransportHistory;
 
-  KAction *attachPK, *attachMPK;
+  KAction *selectCryptoAction, *attachPK, *attachMPK;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
@@ -568,6 +635,9 @@ private:
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
   bool mForceReplyCharset;
+
+  CryptPlugWrapperList * mCryptPlugList;
+  QString mErrorProcessingStructuringInfo;
 };
 #endif
 

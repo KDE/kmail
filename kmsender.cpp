@@ -155,7 +155,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     const KMIdentity & ident =
       kernel->identityManager()->identityForNameOrDefault( idStr );
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
-		  .arg(ident.fullName()).arg(ident.emailAddr()));
+      .arg(ident.fullName()).arg(ident.emailAddr()));
   }
 
   rc = kernel->outboxFolder()->addMsg(aMsg);
@@ -784,9 +784,17 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
-  addRecipients(aMsg->headerAddrField("To"));
-  if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
-  if (!aMsg->bcc().isEmpty()) addRecipients(aMsg->headerAddrField("Bcc"));
+  
+  if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
+    // extended BCC handling to prevent TOs and CCs from seeing
+    // BBC information by looking at source of an OpenPGP encrypted mail
+    addRecipients(aMsg->headerAddrField("X-KMail-Recipients"));
+    aMsg->removeHeaderField( "X-KMail-Recipients" );
+  } else {
+    addRecipients(aMsg->headerAddrField("To"));
+    if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
+    if (!aMsg->bcc().isEmpty()) addRecipients(aMsg->headerAddrField("Bcc"));
+  }
 
   mMsgStr = aMsg->asSendableString();
 
@@ -888,25 +896,35 @@ bool KMSendSMTP::send(KMMessage *aMsg)
                   .arg(KURL::encode_string(KMMessage::getEmailAddr(aMsg->from())));
 
   // recipients
-  mQueryField = "&to=";
-  if(!addRecipients(aMsg->headerAddrField("To")))
-  {
-    return FALSE;
-  }
+  if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
+    // extended BCC handling to prevent TOs and CCs from seeing
+    // BBC information by looking at source of an OpenPGP encrypted mail
+    mQueryField = "&to=";
+    if( !addRecipients( aMsg->headerAddrField("X-KMail-Recipients")) ) {
+      return FALSE;
+    }
+    aMsg->removeHeaderField( "X-KMail-Recipients" );
+  } else {
+    mQueryField = "&to=";
+    if(!addRecipients(aMsg->headerAddrField("To")))
+    {
+      return FALSE;
+    }
 
-  if(!aMsg->cc().isEmpty())
-  {
-    mQueryField = "&cc=";
-    if(!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
-  }
+    if(!aMsg->cc().isEmpty())
+    {
+      mQueryField = "&cc=";
+      if(!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
+    }
 
-  QString bccStr = aMsg->bcc();
-  if(!bccStr.isEmpty())
-  {
-    mQueryField = "&bcc=";
-    if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
+    QString bccStr = aMsg->bcc();
+    if(!bccStr.isEmpty())
+    {
+      mQueryField = "&bcc=";
+      if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
+    }
   }
-
+  
   if(!aMsg->subject().isEmpty())
     mQuery += QString("&subject=") + KURL::encode_string(aMsg->subject());
 

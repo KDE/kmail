@@ -11,6 +11,7 @@
 #include <qpainter.h>
 #include <qtextcodec.h>
 #include <qregexp.h>
+#include <qbitmap.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -66,6 +67,11 @@ QPixmap* KMHeaders::pixQueued = 0;
 QPixmap* KMHeaders::pixSent = 0;
 QPixmap* KMHeaders::pixFwd = 0;
 QPixmap* KMHeaders::pixFlag = 0;
+QPixmap* KMHeaders::pixFullySigned = 0;
+QPixmap* KMHeaders::pixPartiallySigned = 0;
+QPixmap* KMHeaders::pixFullyEncrypted = 0;
+QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
+QPixmap* KMHeaders::pixFiller = 0;
 QIconSet* KMHeaders::up = 0;
 QIconSet* KMHeaders::down = 0;
 bool KMHeaders::mTrue = true;
@@ -235,43 +241,89 @@ public:
     setHeight( h );
   }
 
+  typedef QValueList<QPixmap> PixmapList;
+
+  QPixmap pixmapMerge( PixmapList pixmaps ) const {
+      int width = 0;
+      int height = 0;
+      for ( PixmapList::ConstIterator it = pixmaps.begin();
+          it != pixmaps.end(); ++it ) {
+          width += (*it).width();
+          height = QMAX( height, (*it).height() );
+      }
+
+      QPixmap res( width, height );
+      QBitmap mask( width, height );
+
+      int x = 0;
+      for ( PixmapList::ConstIterator it = pixmaps.begin();
+          it != pixmaps.end(); ++it ) {
+          bitBlt( &res, x, 0, &(*it) );
+          bitBlt( &mask, x, 0, (*it).mask() );
+          x += (*it).width();
+      }
+
+      res.setMask( mask );
+      return res;
+  }
+
+
   const QPixmap * pixmap( int col) const
   {
     if(!col) {
-      QPixmap *pix = NULL;
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
       KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+
+      PixmapList pixmaps;
+
       switch (mMsgBase->status())
       {
-	case KMMsgStatusNew:
-	  pix = KMHeaders::pixNew;
-	  break;
+        case KMMsgStatusNew:
+            pixmaps << *KMHeaders::pixNew;
+            break;
         case KMMsgStatusUnread:
-	  pix = KMHeaders::pixUns;
-	  break;
+            pixmaps << *KMHeaders::pixUns;
+            break;
         case KMMsgStatusDeleted:
-	  pix = KMHeaders::pixDel;
-	  break;
+            pixmaps << *KMHeaders::pixDel;
+            break;
         case KMMsgStatusReplied:
-	  pix = KMHeaders::pixRep;
-	  break;
-	case KMMsgStatusForwarded:
-	  pix = KMHeaders::pixFwd;
-	  break;
-	case KMMsgStatusQueued:
-	  pix = KMHeaders::pixQueued;
-	  break;
-	case KMMsgStatusSent:
-	  pix = KMHeaders::pixSent;
-	  break;
-	case KMMsgStatusFlag:
-	  pix = KMHeaders::pixFlag;
-	  break;
-	default:
-	  pix = KMHeaders::pixOld;
-	  break;
+            pixmaps << *KMHeaders::pixRep;
+            break;
+        case KMMsgStatusForwarded:
+            pixmaps << *KMHeaders::pixFwd;
+            break;
+        case KMMsgStatusQueued:
+            pixmaps << *KMHeaders::pixQueued;
+            break;
+        case KMMsgStatusSent:
+            pixmaps <<  *KMHeaders::pixSent;
+            break;
+        case KMMsgStatusFlag:
+            pixmaps << *KMHeaders::pixFlag;
+            break;
+        default:
+            pixmaps << *KMHeaders::pixOld;
+            break;
       }
-      return pix;
+
+      if( mMsgBase->encryptionState() == KMMsgFullyEncrypted )
+          pixmaps << *KMHeaders::pixFullyEncrypted;
+      else if( mMsgBase->encryptionState() == KMMsgPartiallyEncrypted )
+          pixmaps << *KMHeaders::pixPartiallyEncrypted;
+      else
+          pixmaps << *KMHeaders::pixFiller;
+
+      if( mMsgBase->signatureState() == KMMsgFullySigned )
+          pixmaps << *KMHeaders::pixFullySigned;
+      else if( mMsgBase->signatureState() == KMMsgPartiallySigned )
+          pixmaps << *KMHeaders::pixPartiallySigned;
+      else
+          pixmaps << *KMHeaders::pixFiller;
+
+      static QPixmap mergedpix;
+      mergedpix = pixmapMerge( pixmaps );
+      return &mergedpix;
     }
     return NULL;
   }
@@ -495,6 +547,11 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     pixSent  = new QPixmap( UserIcon("kmmsgsent") );
     pixFwd   = new QPixmap( UserIcon("kmmsgforwarded") );
     pixFlag  = new QPixmap( UserIcon("kmmsgflag") );
+    pixFullySigned = new QPixmap( UserIcon( "kmmsgfullysigned" ) );
+    pixPartiallySigned = new QPixmap( UserIcon( "kmmsgpartiallysigned" ) );
+    pixFullyEncrypted = new QPixmap( UserIcon( "kmmsgfullyencrypted" ) );
+    pixPartiallyEncrypted = new QPixmap( UserIcon( "kmmsgpartiallyencrypted" ) );
+    pixFiller = new QPixmap( UserIcon( "kmmsgfiller" ) );
     up = new QIconSet( UserIcon("abup" ), QIconSet::Small );
     down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
@@ -1338,7 +1395,7 @@ void KMHeaders::resendMsg ()
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
 
-  win = new KMComposeWin;
+  win = new KMComposeWin(&mOwner->mCryptPlugList);
   win->setMsg(newMsg, FALSE);
   win->show();
   kernel->kbp()->idle();
@@ -1429,7 +1486,7 @@ void KMHeaders::forwardMsg ()
       msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
       kdDebug(5006) << "Launching composer window\n" << endl;
       kernel->kbp()->busy();
-      win = new KMComposeWin(fwdMsg, id);
+      win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
       win->addAttach(msgPart);
       win->show();
       kernel->kbp()->idle();
@@ -1464,7 +1521,7 @@ void KMHeaders::forwardMsg ()
       }
       
       kernel->kbp()->busy();
-      win = new KMComposeWin(fwdMsg, id);
+      win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
       win->setCharset("");
       win->show();
       kernel->kbp()->idle();
@@ -1478,7 +1535,7 @@ void KMHeaders::forwardMsg ()
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createForward());
+  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createForward());
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
   kernel->kbp()->idle();
@@ -1508,7 +1565,7 @@ void KMHeaders::forwardAttachedMsg ()
 
   kdDebug(5006) << "Launching composer window\n" << endl;
   kernel->kbp()->busy();
-  win = new KMComposeWin(fwdMsg, id);
+  win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
 
   kdDebug(5006) << "Doing forward as attachment" << endl;
   // iterate through all the messages to be forwarded
@@ -1547,7 +1604,7 @@ void KMHeaders::redirectMsg()
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin();
+  win = new KMComposeWin(&mOwner->mCryptPlugList);
   win->setMsg(msg->createRedirect(), FALSE);
   win->setCharset(msg->codec()->mimeName());
   win->show();
@@ -1566,7 +1623,7 @@ void KMHeaders::noQuoteReplyToMsg()
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE));
+  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(FALSE, FALSE, "", TRUE));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
@@ -1584,7 +1641,7 @@ void KMHeaders::replyToMsg (QString selection)
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection));
+  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(FALSE, FALSE, selection));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1602,7 +1659,7 @@ void KMHeaders::replyAllToMsg (QString selection)
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection));
+  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(TRUE, FALSE, selection));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1619,7 +1676,7 @@ void KMHeaders::replyListToMsg (QString selection)
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(true, true, selection));
+  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(true, true, selection));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();

@@ -30,6 +30,27 @@ typedef enum
 } KMMsgStatus;
 
 
+
+/** Flags for the encryption state. */
+typedef enum
+{
+    KMMsgEncryptionStateUnknown=0,
+    KMMsgNotEncrypted=1,
+    KMMsgPartiallyEncrypted=2,
+    KMMsgFullyEncrypted=3
+} KMMsgEncryptionState;
+
+/** Flags for the signature state. */
+typedef enum
+{
+    KMMsgSignatureStateUnknown=0,
+    KMMsgNotSigned=1,
+    KMMsgPartiallySigned=2,
+    KMMsgFullySigned=3
+} KMMsgSignatureState;
+
+
+
 class KMMsgBase
 {
 public:
@@ -61,6 +82,20 @@ public:
    * specify the index of this message within the parent folder. */
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
+
+
+  /** Encryption status of the message. */
+  virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }
+
+  /** Signature status of the message. */
+  virtual KMMsgSignatureState signatureState() const { return mSignatureState; }
+
+  /** Set encryption status of the message. */
+  virtual void setEncryptionState(const KMMsgEncryptionState status) { mEncryptionState = status; }
+
+  /** Set signature status of the message. */
+  virtual void setSignatureState(const KMMsgSignatureState status) { mSignatureState = status; }
+
 
   /** Important header fields of the message that are also kept in the index. */
   virtual QString subject(void) const = 0;
@@ -134,6 +169,9 @@ public:
   /** Assignment operator that simply calls assign(). */
   KMMsgBase& operator=(const KMMsgBase& other);
 
+  /** Copy constructor that simply calls assign(). */
+  KMMsgBase( const KMMsgBase& other );
+
   /** En-/decode given string to/from quoted-printable. */
   static QCString decodeQuotedPrintable(const QCString& str);
   static QCString encodeQuotedPrintable(const QCString& str);
@@ -162,7 +200,7 @@ public:
   /** Decode given string as described in RFC2231 */
   static QString decodeRFC2231String(const QCString& aStr);
 
-  /** 
+  /**
    * Find out preferred charset for 'text'.
    * First @p encoding is tried and if that one is not suitable,
    * the encodings in @p encodingList are tried.
@@ -203,6 +241,9 @@ public:
   /** sync'ing just one KMMsgBase */
   bool syncIndexString() const;
 
+private:
+  KMMsgEncryptionState mEncryptionState;
+  KMMsgSignatureState mSignatureState;
 };
 
 typedef KMMsgBase* KMMsgBasePtr;

@@ -2,6 +2,8 @@
 #include <qpainter.h>
 #include <qcursor.h>
 
+#include <qheader.h>
+
 #include <unistd.h>
 #include <assert.h>
 
@@ -16,6 +18,7 @@
 #include "kmfoldertree.h"
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
+#include "cryptplugwrapperlist.h"
 #include <qpopupmenu.h>
 
 QPixmap* KMFolderTree::pixDir = 0;
@@ -123,8 +126,10 @@ void KMFolderTree::drawContentsOffset( QPainter * p, int ox, int oy,
 
 
 //-----------------------------------------------------------------------------
-KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
-  : QListView( parent, name ), mList()
+KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
+                            QWidget *parent,
+                            const char *name )
+  : QListView( parent, name ), mList(), mCryptPlugList( cryptPlugList )
 {
   static bool pixmapsLoaded = FALSE;
   oldSelected = 0;
@@ -153,7 +158,16 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   readConfig();
 
   addColumn( i18n("Folders"), 400 );
-  setShowSortIndicator(TRUE);
+  
+
+  // ORG:
+  // setShowSortIndicator(TRUE);
+  //
+  // KHZ:
+  setShowSortIndicator(false);
+  header()->hide();
+  setRootIsDecorated( false );
+
 
   if (!pixmapsLoaded)
   {
@@ -875,7 +889,7 @@ void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint 
   KMMessage *msg = new KMMessage;
   msg->initHeader(fti->folder->identity());
   msg->setTo(fti->folder->mailingListPostAddress());
-  KMComposeWin *win = new KMComposeWin(msg,fti->folder->identity());
+  KMComposeWin *win = new KMComposeWin(mCryptPlugList, msg, fti->folder->identity());
   win->show();
 
 }

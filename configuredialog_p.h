@@ -58,13 +58,13 @@ public:
 
   NewIdentityDialog( const QStringList & identities,
 		     QWidget *parent=0, const char *name=0, bool modal=true );
-  
+
   QString identityName() const { return mLineEdit->text(); }
   QString duplicateIdentity() const { return mComboBox->currentText(); }
   DuplicateMode duplicateMode() const;
-  
+
 protected slots:
-  virtual void slotEnableOK( const QString & ); 
+  virtual void slotEnableOK( const QString & );
 
 private:
   QLineEdit  *mLineEdit;
@@ -674,7 +674,7 @@ class ComposerPage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
   ComposerPage( QWidget * parent=0, const char * name=0 );
-  
+
   static QString iconLabel();
   static QString title();
   static const char * iconName();
@@ -828,10 +828,109 @@ protected:
 //
 //
 
-class PluginPage : public ConfigurationPage {
+class PluginPage;
+class EncryptionConfigurationDialogImpl;
+class SignatureConfigurationDialogImpl;
+class DirectoryServicesConfigurationDialogImpl;
+class CertificateHandlingDialogImpl;
+class CryptPlugWrapperList;
+
+class CertificatesPage : public ConfigurationPage
+{
+    Q_OBJECT
+public:
+    CertificatesPage( PluginPage* parent = 0, const char* name = 0 );
+    void setup();
+    void apply();
+    void installProfile( KConfig* profile );
+
+private:
+    PluginPage* _pluginPage;
+    QComboBox* plugListBoxCertConf;
+    CertificateHandlingDialogImpl* certDialog;
+};
+
+class EncryptionPage : public ConfigurationPage
+{
+    Q_OBJECT
+public:
+    EncryptionPage( PluginPage* parent = 0, const char* name = 0 );
+    void setup();
+    void apply();
+    void installProfile( KConfig* profile );
+
+private:
+    PluginPage* _pluginPage;
+    QComboBox* plugListBoxEncryptConf;
+    EncryptionConfigurationDialogImpl* encDialog;
+};
+
+class SignaturePage : public ConfigurationPage
+{
+    Q_OBJECT
+public:
+    SignaturePage( PluginPage* parent = 0, const char* name = 0 );
+    void setup();
+    void apply();
+    void installProfile( KConfig* profile );
+
+private:
+    PluginPage* _pluginPage;
+    QComboBox* plugListBoxSignConf;
+    SignatureConfigurationDialogImpl* sigDialog;
+};
+
+class DirServicesPage : public ConfigurationPage
+{
+    Q_OBJECT
+public:
+    DirServicesPage( PluginPage* parent = 0, const char* name = 0 );
+    void setup();
+    void apply();
+    void installProfile( KConfig* profile );
+
+private:
+    PluginPage* _pluginPage;
+    QComboBox* plugListBoxDirServConf;
+    DirectoryServicesConfigurationDialogImpl* dirservDialog;
+};
+
+
+class GeneralPage : public ConfigurationPage
+{
+   Q_OBJECT
+public:
+    GeneralPage( PluginPage* parent = 0, const char* name = 0 );
+    void setup();
+    void apply();
+    void installProfile( KConfig* profile );
+
+public slots:
+    void slotNewPlugIn();
+    void slotDeletePlugIn();
+    void slotActivatePlugIn();
+    void slotPlugNameChanged( const QString& );
+    void slotPlugLocationChanged( const QString& );
+    void slotPlugUpdateURLChanged( const QString& );
+
+private:
+    PluginPage* _pluginPage;
+    QListView* plugList;
+    QPushButton* addCryptPlugButton;
+    QPushButton* removeCryptPlugButton;
+    QPushButton* activateCryptPlugButton;
+    QLineEdit* plugNameEdit;
+    KURLRequester* plugLocationRequester;
+    QLineEdit* plugUpdateURLEdit;
+    QListViewItem* currentPlugItem;
+};
+
+
+class PluginPage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
-  PluginPage( QWidget * parent=0, const char * name=0 );
+  PluginPage( CryptPlugWrapperList* cryptPlugList,
+              QWidget * parent=0, const char * name=0 );
 
   static QString iconLabel();
   static const char * iconName();
@@ -842,7 +941,20 @@ public:
   void apply();
   void installProfile( KConfig * profile );
 
-protected:
+  void savePluginConfig( int pluginno );
+  bool isPluginConfigEqual( int pluginno ) const;
+
+public slots:
+  void slotPlugListBoxConfigurationChanged( int );
+  void slotPlugSelectionChanged();
+
+private:
+  GeneralPage* _generalPage;
+  CertificatesPage* _certificatesPage;
+  SignaturePage* _signaturePage;
+  EncryptionPage* _encryptionPage;
+  DirServicesPage* _dirservicesPage;
+  CryptPlugWrapperList* mCryptPlugList;
 };
 
 //
@@ -855,10 +967,10 @@ class ApplicationLaunch {
 public:
   ApplicationLaunch( const QString &cmd ) : mCmdLine( cmd ) {}
   void run();
-  
+
 private:
   void doIt();
-  
+
 private:
   QString mCmdLine;
 };
@@ -868,10 +980,10 @@ class ListView : public KListView {
 public:
   ListView( QWidget *parent=0, const char *name=0, int visibleItem=10 );
   void resizeColums();
-  
+
   void setVisibleItem( int visibleItem, bool updateSize=true );
   virtual QSize sizeHint() const;
-  
+
 protected:
   virtual void resizeEvent( QResizeEvent *e );
   virtual void showEvent( QShowEvent *e );

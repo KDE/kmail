@@ -1,0 +1,781 @@
+<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<class>SignatureConfigurationDialog</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>SignatureConfigurationDialog</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>690</width>
+            <height>396</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Signature Configuration</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>11</number>
+        </property>
+        <property name="spacing">
+            <number>6</number>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>Layout8</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>6</number>
+                </property>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>signMessagesBG</cstring>
+                    </property>
+                    <property name="title">
+                        <string>Sign &amp;Messages</string>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>11</number>
+                        </property>
+                        <property name="spacing">
+                            <number>6</number>
+                        </property>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>signAllPartsRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Sign A&amp;ll Message Parts</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Check to have all message parts signed by default</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Sign All Message Parts By Default&lt;/h1&gt;
+If this option is selected, all parts of a message (i.e., the main message body and all attachments) are signed by default.
+&lt;p&gt;
+This is a default setting, you can still override it for each individual message.
+&lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>askEachPartRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>As&amp;k Before Signing Each Part</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Check to be asked for each part whether to sign</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Ask Before Signing Each Part&lt;/h1&gt;
+When this option is selected, you will be asked for each part of the message (i.e., the main message body as well as all attachments) individually whether you want the part to be signed.
+&lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>dontSignRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Don't Sign Messages</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Check for not signing a message by default</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Don't Sign Messages&lt;/h1&gt;
+If this option is selected, messages are not signed by default.
+&lt;p&gt;
+This is a default setting, you can still override it for each individual setting.
+&lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>warnUnsignedCB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Warn When Trying To Send Unsigned Messages</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Check to be warned when sending unsigned messages.</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Warn When Trying To Send Unsigned Messages&lt;/h1&gt;
+If this box is checked, you will be warned when you try to send parts of or the whole message unsigned.
+&lt;p&gt;
+It is recommended to leave this option turned out for maximum integrity.
+&lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>sendCertificatesBG</cstring>
+                    </property>
+                    <property name="title">
+                        <string>S&amp;ending Certificates</string>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>11</number>
+                        </property>
+                        <property name="spacing">
+                            <number>6</number>
+                        </property>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>dontSendCertificatesRB</cstring>
+                            </property>
+                            <property name="focusPolicy">
+                                <enum>NoFocus</enum>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Don't Send Certificates</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Selects which certificates to send</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt; &lt;h1&gt;Sending Certificates&lt;/h1&gt; Without your certificate, the receiver will not be able to determine whether it was really you who sent the message or whether the message was altered by a third party. &lt;p&gt; The receiver can obtain your certificate from a central server, but you can also opt to enclose your certificate with your message. You can select whether you do not want to include a certificate at all, only your own certificate or the whole chain of certificates that certify your own certificate, including or excluding the root certificate. &lt;p&gt; It is recommended to always include at least your own certificate with the message. &lt;p&gt; This setting is a default, you can override it for each individual message. &lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>sendYourOwnCertificateRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Send Your &amp;Own Certificate</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Selects which certificates to send</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt; &lt;h1&gt;Sending Certificates&lt;/h1&gt; Without your certificate, the receiver will not be able to determine whether it was really you who sent the message or whether the message was altered by a third party. &lt;p&gt; The receiver can obtain your certificate from a central server, but you can also opt to enclose your certificate with your message. You can select whether you do not want to include a certificate at all, only your own certificate or the whole chain of certificates that certify your own certificate, including or excluding the root certificate. &lt;p&gt; It is recommended to always include at least your own certificate with the message. &lt;p&gt; This setting is a default, you can override it for each individual message. &lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>sendChainWithoutRootRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Send Certificate &amp;Chain Without Root</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Selects which certificates to send</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt; &lt;h1&gt;Sending Certificates&lt;/h1&gt; Without your certificate, the receiver will not be able to determine whether it was really you who sent the message or whether the message was altered by a third party. &lt;p&gt; The receiver can obtain your certificate from a central server, but you can also opt to enclose your certificate with your message. You can select whether you do not want to include a certificate at all, only your own certificate or the whole chain of certificates that certify your own certificate, including or excluding the root certificate. &lt;p&gt; It is recommended to always include at least your own certificate with the message. &lt;p&gt; This setting is a default, you can override it for each individual message. &lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>sendChainWithRootRB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Send Certificate Chain With &amp;Root</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Selects which certificates to send</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt; &lt;h1&gt;Sending Certificates&lt;/h1&gt; Without your certificate, the receiver will not be able to determine whether it was really you who sent the message or whether the message was altered by a third party. &lt;p&gt; The receiver can obtain your certificate from a central server, but you can also opt to enclose your certificate with your message. You can select whether you do not want to include a certificate at all, only your own certificate or the whole chain of certificates that certify your own certificate, including or excluding the root certificate. &lt;p&gt; It is recommended to always include at least your own certificate with the message. &lt;p&gt; This setting is a default, you can override it for each individual message. &lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>Layout7</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <property name="margin">
+                    <number>0</number>
+                </property>
+                <property name="spacing">
+                    <number>6</number>
+                </property>
+                <widget class="QGroupBox">
+                    <property name="name">
+                        <cstring>signatureSettingsBG</cstring>
+                    </property>
+                    <property name="title">
+                        <string>&amp;Signature Settings</string>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>11</number>
+                        </property>
+                        <property name="spacing">
+                            <number>6</number>
+                        </property>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>Layout4</cstring>
+                            </property>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="margin">
+                                    <number>0</number>
+                                </property>
+                                <property name="spacing">
+                                    <number>6</number>
+                                </property>
+                                <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+                                    <property name="name">
+                                        <cstring>TextLabel1</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>The signature certificate is configured on the &lt;em&gt;Certificates&lt;/em&gt; page!</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>AlignVCenter</set>
+                                    </property>
+                                </widget>
+                                <widget class="QComboBox" row="1" column="1">
+                                    <item>
+                                        <property name="text">
+                                            <string>SHA-1</string>
+                                        </property>
+                                    </item>
+                                    <property name="name">
+                                        <cstring>signatureAlgorithmCO</cstring>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Selects the signature algorithm</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Signature Algorithm&lt;/h1&gt;
+An algorithm is a description for the computer on how it should perform a certain task. The signature algorithm describes how the computer applies your signature key to your message so that the receiver can determine whether the message really is from you.
+&lt;p&gt;
+The selection of a certain signature algorithm determines how easy or how difficult it is to forge a message. However, all algorithms provided in the SPHINX environment are considered to be very safe. Generally, the default will work just fine here.
+&lt;p&gt;
+This setting is a default, you can override it for each individual message.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" row="1" column="0">
+                                    <property name="name">
+                                        <cstring>signatureAlgorithmLA</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Signature &amp;Algorithm:</string>
+                                    </property>
+                                    <property name="alignment">
+                                        <set>AlignVCenter|AlignRight</set>
+                                    </property>
+                                    <property name="buddy" stdset="0">
+                                        <cstring>signatureAlgorithmCO</cstring>
+                                    </property>
+                                </widget>
+                            </grid>
+                        </widget>
+                        <spacer>
+                            <property name="name" stdset="0">
+                                <cstring>Spacer3</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLayoutWidget">
+                            <property name="name">
+                                <cstring>Layout5</cstring>
+                            </property>
+                            <grid>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="margin">
+                                    <number>0</number>
+                                </property>
+                                <property name="spacing">
+                                    <number>6</number>
+                                </property>
+                                <widget class="QCheckBox" row="1" column="0">
+                                    <property name="name">
+                                        <cstring>warnCACertificateExpiresCB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Warn If &amp;CA Certificate Expires In Less Than</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Check to be warned if the certificate expires soon</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
+If this option is checked, then you will be warned when trying to use a certificate for signing that expires within the specified amount of days.
+&lt;p&gt;
+It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" row="2" column="2">
+                                    <property name="name">
+                                        <cstring>warnRootCertificateExpiresLA</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>days</string>
+                                    </property>
+                                </widget>
+                                <widget class="QSpinBox" row="0" column="1">
+                                    <property name="name">
+                                        <cstring>warnSignatureCertificateExpiresSB</cstring>
+                                    </property>
+                                    <property name="value">
+                                        <number>14</number>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select the number of days here</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Signature Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the signature certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QCheckBox" row="0" column="0">
+                                    <property name="name">
+                                        <cstring>warnSignatureCertificateExpiresCB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Warn If S&amp;ignature Certificate Expires In Less Than</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Check to be warned if the certificate expires soon</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
+If this option is checked, then you will be warned when trying to use a certificate for signing that expires within the specified amount of days.
+&lt;p&gt;
+It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" row="1" column="2">
+                                    <property name="name">
+                                        <cstring>warnCACertificateExpiresLA</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>days</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLabel" row="0" column="2">
+                                    <property name="name">
+                                        <cstring>warnSignatureCertificateExpiresLA</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>days</string>
+                                    </property>
+                                </widget>
+                                <widget class="QCheckBox" row="2" column="0">
+                                    <property name="name">
+                                        <cstring>warnRootCertificateExpiresCB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Warn If R&amp;oot Certificate Expires In Less Than</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Check to be warned if the certificate expires soon</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
+If this option is checked, then you will be warned when trying to use a certificate for signing that expires within the specified amount of days.
+&lt;p&gt;
+It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QSpinBox" row="1" column="1">
+                                    <property name="name">
+                                        <cstring>warnCACertificateExpiresSB</cstring>
+                                    </property>
+                                    <property name="value">
+                                        <number>14</number>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select the number of days here</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If CA Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the CA certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QSpinBox" row="2" column="1">
+                                    <property name="name">
+                                        <cstring>warnRootCertificateExpiresSB</cstring>
+                                    </property>
+                                    <property name="value">
+                                        <number>14</number>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select the number of days here</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Root Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the root certificate should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                            </grid>
+                        </widget>
+                        <spacer>
+                            <property name="name" stdset="0">
+                                <cstring>Spacer2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QCheckBox">
+                            <property name="name">
+                                <cstring>warnAddressNotInCertificateCB</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Warn If Si&amp;gner's Email Address Is Not In Certificate</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Check to be warned if the address is not in the certificate</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Signer's Email Address Is Not In Certificate&lt;/h1&gt;
+If this option is checked, a warning is issued if the email address of the signer is not contained in the certificate used for signing.
+&lt;p&gt;
+It is recommended to leave this option turned on for maximum integrity.
+&lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>Layout6</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="spacing">
+                            <number>6</number>
+                        </property>
+                        <widget class="QButtonGroup">
+                            <property name="name">
+                                <cstring>pinEntryBG</cstring>
+                            </property>
+                            <property name="title">
+                                <string>Entering The PIN Is Required</string>
+                            </property>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="margin">
+                                    <number>11</number>
+                                </property>
+                                <property name="spacing">
+                                    <number>6</number>
+                                </property>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>pinOncePerSessionRB</cstring>
+                                    </property>
+                                    <property name="focusPolicy">
+                                        <enum>NoFocus</enum>
+                                    </property>
+                                    <property name="text">
+                                        <string>On&amp;ce Per Session</string>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select how often the PIN must be entered</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>pinAlwaysRB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Alwa&amp;ys</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select how often the PIN must be entered</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>pinAddCertificatesRB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>When A&amp;dding Certificates</string>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select how often the PIN must be entered</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>pinAlwaysWhenSigningRB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>Always When Si&amp;gning</string>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Select how often the PIN must be entered</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLayoutWidget">
+                                    <property name="name">
+                                        <cstring>Layout7</cstring>
+                                    </property>
+                                    <hbox>
+                                        <property name="name">
+                                            <cstring>unnamed</cstring>
+                                        </property>
+                                        <property name="margin">
+                                            <number>0</number>
+                                        </property>
+                                        <property name="spacing">
+                                            <number>6</number>
+                                        </property>
+                                        <widget class="QRadioButton">
+                                            <property name="name">
+                                                <cstring>pinIntervalRB</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Aft&amp;er</string>
+                                            </property>
+                                            <property name="toolTip" stdset="0">
+                                                <string>Select how often the PIN must be entered</string>
+                                            </property>
+                                            <property name="whatsThis" stdset="0">
+                                                <string>&lt;qt&gt; &lt;h1&gt;PIN Entry&lt;/h1&gt; Here, you can select how often you need to enter the PIN in order to access your personal security environment (PSE) that contains your certificates. &lt;p&gt; The more often you need to enter your PIN, the more protected you are against email messages being forged in your name, but the more inconvenient operations will be. &lt;p&gt; If you are unsure what to select here, leave this option as it is. &lt;p&gt; Note that it is not possible to turn off PIN entry entirely for security reasons. &lt;/qt&gt;&lt;</string>
+                                            </property>
+                                        </widget>
+                                        <widget class="QSpinBox">
+                                            <property name="name">
+                                                <cstring>pinIntervalSB</cstring>
+                                            </property>
+                                            <property name="enabled">
+                                                <bool>false</bool>
+                                            </property>
+                                            <property name="value">
+                                                <number>10</number>
+                                            </property>
+                                        </widget>
+                                        <widget class="QLabel">
+                                            <property name="name">
+                                                <cstring>pinIntervalLA</cstring>
+                                            </property>
+                                            <property name="text">
+                                                <string>Minutes</string>
+                                            </property>
+                                        </widget>
+                                    </hbox>
+                                </widget>
+                            </vbox>
+                        </widget>
+                        <widget class="QButtonGroup">
+                            <property name="name">
+                                <cstring>saveMessagesBG</cstring>
+                            </property>
+                            <property name="title">
+                                <string>Sa&amp;ve Messages</string>
+                            </property>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="margin">
+                                    <number>11</number>
+                                </property>
+                                <property name="spacing">
+                                    <number>6</number>
+                                </property>
+                                <widget class="QCheckBox">
+                                    <property name="name">
+                                        <cstring>saveSentSigsCB</cstring>
+                                    </property>
+                                    <property name="text">
+                                        <string>S&amp;tore Messages With Signatures</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="toolTip" stdset="0">
+                                        <string>Check to store messages with their signatures</string>
+                                    </property>
+                                    <property name="whatsThis" stdset="0">
+                                        <string>&lt;qt&gt;
+&lt;h1&gt;Store Messages With Signatures&lt;/h1&gt;
+When this box is checked, sent messages are stored together with the signatures applied to them. This is recommended, because it enables you to check later whether you signed a message or a certain part of it.
+&lt;/qt&gt;</string>
+                                    </property>
+                                </widget>
+                            </vbox>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>warnSignatureCertificateExpiresCB</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>warnSignatureCertificateExpiresSB</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>warnCACertificateExpiresCB</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>warnCACertificateExpiresSB</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>warnRootCertificateExpiresCB</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>warnRootCertificateExpiresSB</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>pinIntervalRB</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>pinIntervalSB</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<tabstops>
+    <tabstop>signAllPartsRB</tabstop>
+    <tabstop>askEachPartRB</tabstop>
+    <tabstop>dontSignRB</tabstop>
+    <tabstop>warnUnsignedCB</tabstop>
+    <tabstop>dontSendCertificatesRB</tabstop>
+    <tabstop>sendYourOwnCertificateRB</tabstop>
+    <tabstop>sendChainWithoutRootRB</tabstop>
+    <tabstop>sendChainWithRootRB</tabstop>
+    <tabstop>signatureAlgorithmCO</tabstop>
+    <tabstop>warnSignatureCertificateExpiresCB</tabstop>
+    <tabstop>warnSignatureCertificateExpiresSB</tabstop>
+    <tabstop>warnCACertificateExpiresCB</tabstop>
+    <tabstop>warnCACertificateExpiresSB</tabstop>
+    <tabstop>warnRootCertificateExpiresCB</tabstop>
+    <tabstop>warnRootCertificateExpiresSB</tabstop>
+    <tabstop>warnAddressNotInCertificateCB</tabstop>
+    <tabstop>pinOncePerSessionRB</tabstop>
+    <tabstop>pinAlwaysRB</tabstop>
+    <tabstop>pinAddCertificatesRB</tabstop>
+    <tabstop>pinAlwaysWhenSigningRB</tabstop>
+    <tabstop>pinIntervalRB</tabstop>
+    <tabstop>pinIntervalSB</tabstop>
+    <tabstop>saveSentSigsCB</tabstop>
+</tabstops>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -248,7 +248,10 @@ public slots:
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
-    *pixQueued, *pixFwd, *pixFlag;
+    *pixQueued, *pixFwd, *pixFlag,
+    *pixFullySigned, *pixPartiallySigned,
+    *pixFullyEncrypted, *pixPartiallyEncrypted,
+    *pixFiller;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);

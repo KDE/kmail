@@ -77,6 +77,8 @@ KMMsgBase::KMMsgBase(KMFolder* aParent)
   mParent  = aParent;
   mDirty   = FALSE;
   mIndexOffset = mIndexLength = 0;
+  mEncryptionState = KMMsgEncryptionStateUnknown;
+  mSignatureState = KMMsgSignatureStateUnknown;
 }
 
 
@@ -101,6 +103,13 @@ KMMsgBase& KMMsgBase::operator=(const KMMsgBase& other)
 {
   assign(&other);
   return *this;
+}
+
+
+//----------------------------------------------------------------------------
+KMMsgBase::KMMsgBase( const KMMsgBase& other )
+{
+    assign( &other );
 }
 
 
@@ -608,7 +617,7 @@ QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringLi
     }
 
     QStringList::ConstIterator it = charsets.begin();
-    for (; it != charsets.end(); ++it) 
+    for (; it != charsets.end(); ++it)
     {
        QCString encoding = (*it).latin1();
        if (encoding == "locale")
@@ -794,7 +803,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
       g_chunk = NULL;
   }
   // Normally we need to swap the byte order because the QStrings are written
-  // in the style of Qt2 (MSB -> network ordered). 
+  // in the style of Qt2 (MSB -> network ordered).
   // QStrings in Qt3 expect host ordering.
   // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
 
@@ -803,7 +812,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   swapEndian(ret);
 #else
   // #warning Byte order is big endian (swap is false)
-#endif  
+#endif
 
   return ret;
 }

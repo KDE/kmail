@@ -41,7 +41,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kwin.h>
-
+#include <stdlib.h>
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
@@ -62,7 +62,6 @@ int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
 
 //-----------------------------------------------------------------------------
-#if 0
 KMMessage::KMMessage(DwMessage* aMsg)
   : mMsg(aMsg),
     mNeedsAssembly(true),
@@ -72,7 +71,32 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mCodec(0)
 {
 }
-#endif
+
+//-----------------------------------------------------------------------------
+KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg(0)
+{
+  assign( other );
+}
+
+void KMMessage::assign( const KMMessage& other )
+{
+  if( mMsg ) delete mMsg;
+
+  mNeedsAssembly = true;//other.mNeedsAssembly;
+  mMsg = new DwMessage( *(other.mMsg) );
+  mCodec = other.mCodec;
+  mDecodeHTML = other.mDecodeHTML;
+  mIsComplete = false;//other.mIsComplete;
+  mTransferInProgress = other.mTransferInProgress;
+  mMsgSize = other.mMsgSize;
+  mMsgLength = other.mMsgLength;
+  mFolderOffset = other.mFolderOffset;
+  mStatus  = other.mStatus;
+  mDate    = other.mDate;
+  //mFileName = ""; // we might not want to copy the other messages filename (?)
+  //mMsgSerNum = other.mMsgSerNum; // what about serial number ?
+  //KMMsgBase::assign( &other );
+}
 
 //-----------------------------------------------------------------------------
 void KMMessage::setReferences(const QCString& aStr)
@@ -148,7 +172,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mDate = msgInfo.date();
   mFileName = msgInfo.fileName();
   mMsgSerNum = msgInfo.getMsgSerNum();
-  assign(&msgInfo);
+  KMMsgBase::assign(&msgInfo);
 }
 
 
@@ -164,6 +188,18 @@ KMMessage::~KMMessage()
 bool KMMessage::isMessage(void) const
 {
   return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+const DwString& KMMessage::asDwString(void)
+{
+  if (mNeedsAssembly)
+  {
+    mNeedsAssembly = FALSE;
+    mMsg->Assemble();
+  }
+  return mMsg->AsString();
 }
 
 
@@ -220,6 +256,13 @@ QString KMMessage::headerAsString(void) const
 
 
 //-----------------------------------------------------------------------------
+DwMediaType& KMMessage::dwContentType(void)
+{
+    return mMsg->Headers().ContentType();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 {
   int len;
@@ -258,9 +301,13 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
     mDate = date();
 
   // Convert messages with a binary body into a message with attachment.
-  QCString ct = mMsg->Headers().ContentType().TypeStr().c_str();
+  QCString ct = dwContentType().TypeStr().c_str();
+  QCString st = dwContentType().SubtypeStr().c_str();
   ct = ct.lower();
-  if (ct.isEmpty() || ct == "text" || ct == "multipart")
+  if (   ct.isEmpty()
+      || ct == "text"
+      || ct == "multipart"
+      || (ct == "application" && (st == "pkcs7-mime" || st == "x-pkcs7-mime")) )
     return;
   KMMessagePart textPart;
   textPart.setTypeStr("text");
@@ -1256,9 +1303,9 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
   if (aIsMulti || numBodyParts() > 1)
   {
     // Set the type to 'Multipart' and the subtype to 'Mixed'
-    DwMediaType& contentType = mMsg->Headers().ContentType();
-    contentType.SetType(DwMime::kTypeMultipart);
-    contentType.SetSubtype(DwMime::kSubtypeMixed);
+    DwMediaType& contentType = dwContentType();
+    contentType.SetType(   DwMime::kTypeMultipart);
+    contentType.SetSubtype(DwMime::kSubtypeMixed );
 
     // Create a random printable string and set it as the boundary parameter
     contentType.CreateBoundary(0);
@@ -1719,8 +1766,8 @@ int KMMessage::type(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setTypeStr(const QCString& aStr)
 {
-  mMsg->Headers().ContentType().SetTypeStr(DwString(aStr));
-  mMsg->Headers().ContentType().Parse();
+  dwContentType().SetTypeStr(DwString(aStr));
+  dwContentType().Parse();
   mNeedsAssembly = TRUE;
 }
 
@@ -1728,7 +1775,8 @@ void KMMessage::setTypeStr(const QCString& aStr)
 //-----------------------------------------------------------------------------
 void KMMessage::setType(int aType)
 {
-  mMsg->Headers().ContentType().SetType(aType);
+  dwContentType().SetType(aType);
+  dwContentType().Assemble();
   mNeedsAssembly = TRUE;
 }
 
@@ -1755,8 +1803,8 @@ int KMMessage::subtype(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubtypeStr(const QCString& aStr)
 {
-  mMsg->Headers().ContentType().SetSubtypeStr(DwString(aStr));
-  mMsg->Headers().ContentType().Parse();
+  dwContentType().SetSubtypeStr(DwString(aStr));
+  dwContentType().Parse();
   mNeedsAssembly = TRUE;
 }
 
@@ -1764,7 +1812,43 @@ void KMMessage::setSubtypeStr(const QCString& aStr)
 //-----------------------------------------------------------------------------
 void KMMessage::setSubtype(int aSubtype)
 {
-  mMsg->Headers().ContentType().SetSubtype(aSubtype);
+  dwContentType().SetSubtype(aSubtype);
+  dwContentType().Assemble();
+  mNeedsAssembly = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
+                                     const QCString& attr,
+                                     const QCString& val )
+{
+  mType.Parse();
+  DwParameter *param = mType.FirstParameter();
+  while(param) {
+      if (!qstricmp(param->Attribute().c_str(), attr))
+        break;
+      else
+        param = param->Next();
+  }
+  if (!param){
+      param = new DwParameter;
+      param->SetAttribute(DwString( attr ));
+      mType.AddParameter( param );
+  }
+  else
+    mType.SetModified();
+  param->SetValue(DwString( val ));
+  mType.Assemble();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setContentTypeParam(const QCString& attr, const QCString& val)
+{
+  if (mNeedsAssembly) mMsg->Assemble();
+  mNeedsAssembly = FALSE;
+  setDwMediaTypeParam( dwContentType(), attr, val );
   mNeedsAssembly = TRUE;
 }
 
@@ -1803,6 +1887,13 @@ void KMMessage::setContentTransferEncoding(int aCte)
 {
   mMsg->Headers().ContentTransferEncoding().FromEnum(aCte);
   mNeedsAssembly = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+DwHeaders& KMMessage::headers(void)
+{
+  return mMsg->Headers();
 }
 
 
@@ -1938,7 +2029,7 @@ void KMMessage::setBody(const QCString& aStr)
 int KMMessage::numBodyParts(void) const
 {
   int count = 0;
-  DwBodyPart* part = mMsg->Body().FirstBodyPart();
+  DwBodyPart* part = getFirstDwBodyPart();
   QPtrList< DwBodyPart > parts;
   QString mp = "multipart";
 
@@ -1970,115 +2061,190 @@ int KMMessage::numBodyParts(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
+DwBodyPart * KMMessage::getFirstDwBodyPart() const
+{
+  return mMsg->Body().FirstBodyPart();
+}
+
+
+//-----------------------------------------------------------------------------
+int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
+{
+  DwBodyPart *curpart;
+  QPtrList< DwBodyPart > parts;
+  int curIdx = 0;
+  int idx = 0;
+  // Get the DwBodyPart for this index
+
+  curpart = getFirstDwBodyPart();
+
+  while (curpart && !idx) {
+     //dive into multipart messages
+    while(    curpart
+           && curpart->Headers().HasContentType()
+           && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
+    {
+        parts.append( curpart );
+        curpart = curpart->Body().FirstBodyPart();
+    }
+    // this is where currPart->msgPart contains a leaf message part
+    if (curpart == aDwBodyPart)
+      idx = curIdx;
+    curIdx++;
+    // go up in the tree until reaching a node with next
+    // (or the last top-level node)
+    while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
+    {
+        curpart = parts.getLast();
+        parts.removeLast();
+    } ;
+    if (curpart)
+        curpart = curpart->Next();
+  }
+  return idx;
+}
+
+
+//-----------------------------------------------------------------------------
+DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
 {
   DwBodyPart *part, *curpart;
   QPtrList< DwBodyPart > parts;
-  QString mp = "multipart";
-  DwHeaders* headers;
   int curIdx = 0;
   // Get the DwBodyPart for this index
 
-  curpart = mMsg->Body().FirstBodyPart();
+  curpart = getFirstDwBodyPart();
   part = 0;
 
   while (curpart && !part) {
      //dive into multipart messages
-     while ( curpart && curpart->Headers().HasContentType() &&
-             (mp == curpart->Headers().ContentType().TypeStr().c_str()) )
-     {
-	 parts.append( curpart );
-	 curpart = curpart->Body().FirstBodyPart();
-     }
-     // this is where currPart->msgPart contains a leaf message part
-     if (curIdx==aIdx)
-        part = curpart;
-     curIdx++;
-     // go up in the tree until reaching a node with next
-     // (or the last top-level node)
-     while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
-     {
-	curpart = parts.getLast();
-	parts.removeLast();
-     } ;
-     if (curpart)
-	 curpart = curpart->Next();
-  }
-
-  // If the DwBodyPart was found get the header fields and body
-  if (part)
-  {
-    aPart->setName("");
-    headers = &part->Headers();
-
-    // Content-type
-    if (headers->HasContentType())
+    while(    curpart
+           && curpart->Headers().HasContentType()
+           && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
-      aPart->setTypeStr(headers->ContentType().TypeStr().c_str());
-      aPart->setSubtypeStr(headers->ContentType().SubtypeStr().c_str());
-      DwParameter *param=headers->ContentType().FirstParameter();
-      while(param)
-      {
-        if (!qstricmp(param->Attribute().c_str(), "charset"))
-          aPart->setCharset(QCString(param->Value().c_str()).lower());
-        else if (param->Attribute().c_str()=="name*")
-          aPart->setName(KMMsgBase::decodeRFC2231String(
-            param->Value().c_str()));
-        param=param->Next();
-      }
+        parts.append( curpart );
+        curpart = curpart->Body().FirstBodyPart();
     }
+    // this is where currPart->msgPart contains a leaf message part
+    if (curIdx==aIdx)
+        part = curpart;
+    curIdx++;
+    // go up in the tree until reaching a node with next
+    // (or the last top-level node)
+    while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
+    {
+        curpart = parts.getLast();
+        parts.removeLast();
+    } ;
+    if (curpart)
+        curpart = curpart->Next();
+  }
+  return part;
+}
+
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
+{
+  if( aPart ) {
+    if( aDwBodyPart ) {
+        // This must not be an empty string, because we'll get a
+        // spurious empty Subject: line in some of the parts.
+        aPart->setName(" ");
+      DwHeaders& headers = aDwBodyPart->Headers();
+      // Content-type
+      QCString additionalCTypeParams;
+      if (headers.HasContentType())
+      {
+        DwMediaType& ct = headers.ContentType();
+        aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
+        aPart->setTypeStr(ct.TypeStr().c_str());
+        aPart->setSubtypeStr(ct.SubtypeStr().c_str());
+        DwParameter *param = ct.FirstParameter();
+        while(param)
+        {
+          if (!qstricmp(param->Attribute().c_str(), "charset"))
+            aPart->setCharset(QCString(param->Value().c_str()).lower());
+          else if (param->Attribute().c_str()=="name*")
+            aPart->setName(KMMsgBase::decodeRFC2231String(
+              param->Value().c_str()));
+          else {
+            additionalCTypeParams += ";";
+            additionalCTypeParams += param->AsString().c_str();
+          }
+          param=param->Next();
+        }
+      }
+      else
+      {
+        aPart->setTypeStr("text");      // Set to defaults
+        aPart->setSubtypeStr("plain");
+      }
+      aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
+      // Modification by Markus
+      if (aPart->name().isEmpty())
+      {
+          if (!headers.ContentType().Name().empty()) {
+              aPart->setName(KMMsgBase::decodeRFC2047String(headers.
+                                                            ContentType().Name().c_str()) );
+          } else if (!headers.Subject().AsString().empty()) {
+              aPart->setName( KMMsgBase::decodeRFC2047String(headers.
+                                                             Subject().AsString().c_str()) );
+          }
+      }
+
+      // Content-transfer-encoding
+      if (headers.HasContentTransferEncoding())
+        aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
+      else
+        aPart->setCteStr("7bit");
+
+      // Content-description
+      if (headers.HasContentDescription())
+        aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
+      else
+        aPart->setContentDescription("");
+
+      // Content-disposition
+      if (headers.HasContentDisposition())
+        aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
+      else
+        aPart->setContentDisposition("");
+
+      // Body
+      aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+    }
+    // If no valid body part was not given,
+    // set all MultipartBodyPart attributes to empty values.
     else
     {
-      aPart->setTypeStr("text");      // Set to defaults
-      aPart->setSubtypeStr("plain");
+      aPart->setTypeStr("");
+      aPart->setSubtypeStr("");
+      aPart->setCteStr("");
+      // This must not be an empty string, because we'll get a
+      // spurious empty Subject: line in some of the parts.
+      aPart->setName(" ");
+      aPart->setContentDescription("");
+      aPart->setContentDisposition("");
+      aPart->setBody("");
     }
-    // Modification by Markus
-    if (aPart->name().isEmpty())
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
+{
+  if( aPart ) {
+    // If the DwBodyPart was found get the header fields and body
+    DwBodyPart *part = dwBodyPart( aIdx );
+    if( part )
     {
-      if (!headers->ContentType().Name().empty())
-        aPart->setName(KMMsgBase::decodeRFC2047String(headers->
-          ContentType().Name().c_str()) );
-      else if (!headers->Subject().AsString().empty())
-        aPart->setName( KMMsgBase::decodeRFC2047String(headers->
-          Subject().AsString().c_str()) );
-      else
+      KMMessage::bodyPart(part, aPart);
+      if( aPart->name().isEmpty() )
         aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
     }
-
-    // Content-transfer-encoding
-    if (headers->HasContentTransferEncoding())
-      aPart->setCteStr(headers->ContentTransferEncoding().AsString().c_str());
-    else
-      aPart->setCteStr("7bit");
-
-    // Content-description
-    if (headers->HasContentDescription())
-      aPart->setContentDescription(headers->ContentDescription().AsString().c_str());
-    else
-      aPart->setContentDescription("");
-
-    // Content-disposition
-    if (headers->HasContentDisposition())
-      aPart->setContentDisposition(headers->ContentDisposition().AsString().c_str());
-    else
-      aPart->setContentDisposition("");
-
-    // Body
-    aPart->setBody(part->Body().AsString().c_str());
-  }
-
-  // If the body part was not found, set all MultipartBodyPart attributes
-  // to empty values.  This only happens if you don't pay attention to
-  // the value returned from NumberOfParts().
-  else
-  {
-    aPart->setTypeStr("");
-    aPart->setSubtypeStr("");
-    aPart->setCteStr("");
-    aPart->setName("");
-    aPart->setContentDescription("");
-    aPart->setContentDisposition("");
-    aPart->setBody("");
   }
 }
 
@@ -2091,87 +2257,143 @@ void KMMessage::deleteBodyParts(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::addBodyPart(const KMMessagePart* aPart)
+DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
 {
-  QCString charset  = aPart->charset();
-
   DwBodyPart* part = DwBodyPart::NewBodyPart(emptyString, 0);
 
-  QCString type     = aPart->typeStr();
-  QCString subtype  = aPart->subtypeStr();
-  QCString cte      = aPart->cteStr();
-  QCString contDesc = aPart->contentDescriptionEncoded();
-  QCString contDisp = aPart->contentDisposition();
-  QCString encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
-  if (encoding.isEmpty()) encoding = "utf-8";
-  QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
-  bool RFC2231encoded = aPart->name() != QString(name);
-  QCString paramAttr  = aPart->parameterAttribute();
+  if( aPart ) {
+    QCString charset  = aPart->charset();
+    QCString type     = aPart->typeStr();
+    QCString subtype  = aPart->subtypeStr();
+    QCString cte      = aPart->cteStr();
+    QCString contDesc = aPart->contentDescriptionEncoded();
+    QCString contDisp = aPart->contentDisposition();
+    QCString encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
+    if (encoding.isEmpty()) encoding = "utf-8";
+    QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
+    bool RFC2231encoded = aPart->name() != QString(name);
+    QCString paramAttr  = aPart->parameterAttribute();
 
-  DwHeaders& headers = part->Headers();
-  if (type != "" && subtype != "")
-  {
-    headers.ContentType().SetTypeStr(type.data());
-    headers.ContentType().SetSubtypeStr(subtype.data());
-    if (!charset.isEmpty()){
-         DwParameter *param;
-         param=new DwParameter;
-         param->SetAttribute("charset");
-         param->SetValue(charset.data());
-         headers.ContentType().AddParameter(param);
+    DwHeaders& headers = part->Headers();
+
+    DwMediaType& ct = headers.ContentType();
+    if (type != "" && subtype != "")
+    {
+      ct.SetTypeStr(type.data());
+      ct.SetSubtypeStr(subtype.data());
+      if (!charset.isEmpty()){
+          DwParameter *param;
+          param=new DwParameter;
+          param->SetAttribute("charset");
+          param->SetValue(charset.data());
+          ct.AddParameter(param);
+      }
     }
-  }
 
-  if (!name.isEmpty())
-  {
+    QCString additionalParam = aPart->additionalCTypeParamStr();
+    if( !additionalParam.isEmpty() )
+    {
+      QCString parAV;
+      DwString parA, parV;
+      int iL, i1, i2, iM;
+      iL = additionalParam.length();
+      i1 = 0;
+      i2 = additionalParam.find(';', i1, false);
+      while ( i1 < iL )
+      {
+        if( -1 == i2 )
+          i2 = iL;
+        if( i1+1 < i2 ) {
+          parAV = additionalParam.mid( i1, (i2-i1) );
+          iM = parAV.find('=');
+          if( -1 < iM )
+          {
+            parA = parAV.left( iM );
+            parV = parAV.right( parAV.length() - iM - 1 );
+            if( ('"' == parV.at(0)) && ('"' == parV.at(parV.length()-1)) )
+            {
+              parV.erase( 0,  1);
+              parV.erase( parV.length()-1 );
+            }
+          }
+          else
+          {
+            parA = parAV;
+            parV = "";
+          }
+          DwParameter *param;
+          param = new DwParameter;
+          param->SetAttribute( parA );
+          param->SetValue(     parV );
+          ct.AddParameter( param );
+        }
+        i1 = i2+1;
+        i2 = additionalParam.find(';', i1, false);
+      }
+    }
+
     if (RFC2231encoded)
     {
       DwParameter *nameParam;
       nameParam = new DwParameter;
       nameParam->SetAttribute("name*");
       nameParam->SetValue(name.data());
-      headers.ContentType().AddParameter(nameParam);
+      ct.AddParameter(nameParam);
     } else {
-      headers.ContentType().SetName(name.data());
+      if(!name.isEmpty())
+        ct.SetName(name.data());
     }
-  }
 
-  if (!paramAttr.isEmpty())
-  {
-    QCString encoding = autoDetectCharset(charset, sPrefCharsets,
-      aPart->parameterValue());
-    if (encoding.isEmpty()) encoding = "utf-8";
-    QCString paramValue;
-    paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
-                                                encoding);
-    DwParameter *param = new DwParameter;
-    if (aPart->parameterValue() != QString(paramValue))
+    if (!paramAttr.isEmpty())
     {
-      param->SetAttribute((paramAttr + '*').data());
-    } else {
-      param->SetAttribute(paramAttr.data());
+      QCString encoding = autoDetectCharset(charset, sPrefCharsets,
+        aPart->parameterValue());
+      if (encoding.isEmpty()) encoding = "utf-8";
+      QCString paramValue;
+      paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
+                                                  encoding);
+      DwParameter *param = new DwParameter;
+      if (aPart->parameterValue() != QString(paramValue))
+      {
+        param->SetAttribute((paramAttr + '*').data());
+      } else {
+        param->SetAttribute(paramAttr.data());
+      }
+      param->SetValue(paramValue.data());
+      ct.AddParameter(param);
     }
-    param->SetValue(paramValue.data());
-    headers.ContentType().AddParameter(param);
+
+    if (!cte.isEmpty())
+      headers.Cte().FromString(cte);
+
+    if (!contDesc.isEmpty())
+      headers.ContentDescription().FromString(contDesc);
+
+    if (!contDisp.isEmpty())
+      headers.ContentDisposition().FromString(contDisp);
+
+    if (!aPart->body().isNull())
+      part->Body().FromString(aPart->body());
+    else
+      part->Body().FromString("");
   }
+  return part;
+}
 
-  if (!cte.isEmpty())
-    headers.Cte().FromString(cte);
 
-  if (!contDesc.isEmpty())
-    headers.ContentDescription().FromString(contDesc);
-
-  if (!contDisp.isEmpty())
-    headers.ContentDisposition().FromString(contDisp);
-
-  if (!aPart->body().isNull())
-    part->Body().FromString(aPart->body());
-  else
-    part->Body().FromString("");
-
-  mMsg->Body().AddBodyPart(part);
-
+//-----------------------------------------------------------------------------
+void KMMessage::addDwBodyPart(DwBodyPart * aDwPart)
+{
+  mMsg->Body().AddBodyPart( aDwPart );
   mNeedsAssembly = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::addBodyPart(const KMMessagePart* aPart)
+{
+  DwBodyPart* part = createDWBodyPart( aPart );
+  addDwBodyPart( part );
 }
 
 
@@ -2229,6 +2451,23 @@ QString KMMessage::generateMessageId( const QString& addr )
   msgIdStr += ">";
 
   return msgIdStr;
+}
+
+
+//-----------------------------------------------------------------------------
+QCString KMMessage::lf2crlf( const QCString & src )
+{
+  QCString result( 1 + 2*src.length() );  // maximal possible length
+
+  QCString::ConstIterator s = src.begin();
+  QCString::Iterator d = result.begin();
+  while ( *s ) {
+    if ( '\n' == *s )
+      *d++ = '\r';
+    *d++ = *s++;
+  }
+  result.truncate( d - result.begin() );
+  return result;
 }
 
 
@@ -2510,7 +2749,7 @@ void KMMessage::setCharset(const QCString& bStr)
    QCString aStr = bStr.lower();
    if (aStr.isNull())
        aStr = "";
-   DwMediaType &mType=mMsg->Headers().ContentType();
+   DwMediaType &mType = dwContentType();
    mType.Parse();
    DwParameter *param=mType.FirstParameter();
    while(param)
@@ -2522,6 +2761,8 @@ void KMMessage::setCharset(const QCString& bStr)
       param->SetAttribute("charset");
       mType.AddParameter(param);
    }
+   else
+     mType.SetModified();
    param->SetValue(DwString(aStr));
    mType.Assemble();
 }
@@ -2535,6 +2776,37 @@ void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
     mStatus = aStatus;
     mDirty = TRUE;
 }
+/*
+//-----------------------------------------------------------------------------
+KMMsgEncryptionState KMMessage::encryptionState() const
+{
+    // PENDING(khz) Implement this
+    // This is a dummy
+    int randomval = random();
+    if( ( randomval % 3 ) == 2 )
+        return KMMsgFullyEncrypted;
+    else if( ( randomval % 3 ) == 1 )
+        return KMMsgPartiallyEncrypted;
+    else
+        return KMMsgNotEncrypted;
+}
+
+
+//-----------------------------------------------------------------------------
+KMMsgSignatureState KMMessage::signatureState() const
+{
+    // PENDING(khz) Implement this
+    // This is a dummy
+    int randomval = random();
+    if( ( randomval % 3 ) == 2 )
+        return KMMsgFullySigned;
+    else if( ( randomval % 3 ) == 1 )
+        return KMMsgPartiallySigned;
+    else
+        return KMMsgNotSigned;
+}
+*/
+
 
 //-----------------------------------------------------------------------------
 void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)

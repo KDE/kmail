@@ -31,6 +31,7 @@
    <Action name="sign_message" />
    <Action name="encrypt_message" />
    <Separator/>
+   <Action name="select_crypto" />
    <Action name="charsets" />
    <Action name="wordwrap" />
   </Menu>

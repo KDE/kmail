@@ -148,13 +148,23 @@
     The following methods are used to maintain and query certificates.
 */
 
+
+/*! \defgroup groupSignCryptAct Signing and Encrypting Actions
+
+    This section describes methods and structures
+    used for signing and/or encrypting your mails.
+*/
+
+
 /*! \defgroup groupSignAct Signature Actions
+    \ingroup groupSignCryptAct
 
     This section describes methods that are used for working
     with signatures.
 */
 
 /*! \defgroup groupCryptAct Encryption and Decryption
+    \ingroup groupSignCryptAct
 
     The following methods are used to encrypt and decrypt
     email messages.
@@ -169,6 +179,240 @@
 
     This section describes functions for managing CRLs.
 */
+
+/*! \defgroup groupAdUsoInterno Important functions to be used by plugin implementors ONLY.
+
+    This section describes functions that have to be used by
+    plugin implementors but should not be used by plugin users
+    directly.
+
+    If you are not planning to write your own cryptography
+    plugin <b>you should ignore this</b> section!
+*/
+
+
+
+class CryptPlugWrapper;
+/*! \ingroup groupSignCryptAct
+  \brief This class provides C++ access to the StructuringInfo helper
+         struct that is specified in cryptplug.h to hold information
+         returned by signing and by encrypting functions.
+
+  Use this information to compose a MIME object containing signed
+  and/or encrypted content (or to build a text frame around your
+  flat non-MIME message body, resp.)
+
+  \note This class is different from the respective cryptplug.h class
+  because this one takes care for freeing the char** members' memory
+  automatically. You must <b>not</b> call the \c free function for
+  any of it's members - just ignore the advise given in the
+  cryptplug.h documentation!
+
+  <b>If</b> value returned in \c makeMimeObject is <b>TRUE</b> the
+  text strings returned in \c contentTypeMain and \c contentDispMain
+  and \c contentTEncMain (and, if required, \c content[..]Version and
+  \c bodyTextVersion and \c content[..]Sig) should be used to compose
+  a respective MIME object.<br>
+  If <b>FALSE</b> the texts returned in \c flatTextPrefix and
+  \c flatTextSeparator and \c flatTextPostfix are to be used instead.<br>
+  Allways <b>either</b> the \c content[..] and \c bodyTextVersion
+  parameters <b>or</b> the \c flatText[..] parameters are holding
+  valid data - never both of them may be used simultaneously
+  as plugins will just ignore the parameters not matching their
+  \c makeMimeObject setting.
+
+  When creating your MIME object please observe these common rules:
+  \li Parameters named \c contentType[..] and \c contentDisp[..] and
+  \c contentTEnc[..] will return the values for the respective MIME
+  headers 'Content-Type' and 'Content-Disposition' and
+  'Content-Transfer-Encoding'. The following applies to these parameters:
+  \li The relevant MIME part may <b>only</b> be created if the respective
+  \c contentType[..] parameter is holding a non-zero-length string. If the
+  \c contentType[..] parameter value is invalid or holding an empty string
+  the respective \c contentDisp[..] and \c contentTEnc[..] parameters
+  should be ignored.
+  \li If the respective \c contentDisp[..] or \c contentTEnc[..] parameter
+  is NULL or holding a zero-length string it is up to you whether you want
+  to add the relevant MIME header yourself, but since it in in the
+  responsibility of the plugin implementors to provide you with all
+  neccessary 'Content-[..]' header information you should <b>not need</b>
+  to define them if they are not returned by the signing or encrypting
+  function - otherwise this may be considered as a bug in the plugin and
+  you could report the missing MIME header information to the address
+  returned by the \c bugURL() function.
+
+  If \c makeMultiMime returns FALSE the \c contentTypeMain returned must
+  not be altered but used to specify a single part mime object holding the
+  code bloc, e.g. this is used for 'enveloped-data' single part MIME
+  objects. In this case you should ignore both the \c content[..]Version
+  and \c content[..]Code parameters.
+
+  If \c makeMultiMime returns TRUE also the following rules apply:
+  \li If \c includeCleartext is TRUE you should include the cleartext
+  as first part of our multipart MIME object, typically this is TRUE
+  when signing mails but FALSE when encrypting.
+  \li The \c contentTypeMain returned typically starts with
+  "multipart/" while providing a "protocol" and a "micalg" parameter: just
+  add an appropriate \c "; boundary=[your \c boundary \c string]" to get
+  the complete Content-Type value to be used for the MIME object embedding
+  both the signed part and the signature part (or - in case of
+  encrypting - the version part and the code part, resp.).
+  \li If \c contentTypeVersion is holding a non-zero-length string an
+  additional MIME part must added immediately before the code part, this
+  version part's MIME headers must have the unaltered values of
+  \c contentTypeVersion and (if they are holding non-zero-length strings)
+  \c contentDispVersion and \c contentTEncVersion, the unaltered contents
+  of \c bodyTextVersion must be it's body.
+  \li The value returned in \c contentTypeCode is specifying the complete
+  Content-Type to be used for this multipart MIME object's signature part
+  (or - in case of encrypting - for the code part following after the
+  version part, resp.), you should not add/change/remove anything here
+  but just use it's unaltered value for specifying the Content-Type header
+  of the respective MIME part.
+  \li The same applies to the \c contentDispCode value: just use it's
+  unaltered value to specify the Content-Disposition header entry of
+  the respective MIME part.
+  \li The same applies to the \c contentTEncCode value: just use it's
+  unaltered value to specify the Content-Transfer-Encoding header of
+  the respective MIME part.
+
+  <b>If</b> value returned in \c makeMimeObject is <b>FALSE</b> the
+  text strings returned in \c flatTextPrefix and \c flatTextPostfix
+  should be used to build a frame around the cleartext and the code
+  bloc holding the signature (or - in case of encrypting - the encoded
+  data bloc, resp.).<br>
+  If \c includeCleartext is TRUE this frame should also include the
+  cleartext as first bloc, this bloc should be divided from the code bloc
+  by the contents of \c flatTextSeparator - typically this is used for
+  signing but not when encrypting.<br>
+  If \c includeCleartext is FALSE you should ignore both the cleartext
+  and the \c flatTextSeparator parameter.
+
+  <b>How to use StructuringInfoWrapper data in your program:</b>
+  \li To compose a signed message please act as described below.
+  \li For constructing an encrypted message just replace the
+  \c signMessage() call by the respective \c encryptMessage() call
+  and then proceed exactly the same way.
+  \li In any case make <b>sure</b> to free your \c ciphertext when
+  you are done with processing the data returned by the signing
+  (or encrypting, resp.) function.
+
+\verbatim
+
+    char* ciphertext;
+    StructuringInfoWrapper structInf;
+
+    if( ! signMessage( cleartext, &ciphertext, certificate,
+                      structInf ) ) {
+
+        myErrorDialog( "Error: could not sign the message!" );
+
+    } else {
+      if( structInf.data.makeMimeObject ) {
+
+        // Build the main MIME object.
+        // This is done by
+        // using the header values returned in
+        // structInf.data.contentTypeMain and in
+        // structInf.data.contentDispMain and in
+        // structInf.data.contentTEncMain.
+        ..
+
+        if( ! structInf.data.makeMultiMime ) {
+
+          // Build the main MIME object's body.
+          // This is done by
+          // using the code bloc returned in
+          // ciphertext.
+          ..
+
+        } else {
+
+          // Build the encapsulated MIME parts.
+          if( structInf.data.includeCleartext ) {
+
+            // Build a MIME part holding the cleartext.
+            // This is done by
+            // using the original cleartext's headers and by
+            // taking it's original body text.
+            ..
+
+          }
+          if(    structInf.data.contentTypeVersion
+              && 0 < strlen( structInf.data.contentTypeVersion ) ) {
+
+            // Build a MIME part holding the version information.
+            // This is done by
+            // using the header values returned in
+            // structInf.data.contentTypeVersion and
+            // structInf.data.contentDispVersion and
+            // structInf.data.contentTEncVersion and by
+            // taking the body contents returned in
+            // structInf.data.bodyTextVersion.
+            ..
+
+          }
+          if(    structInf.data.contentTypeCode
+              && 0 < strlen( structInf.data.contentTypeCode ) ) {
+
+            // Build a MIME part holding the code information.
+            // This is done by
+            // using the header values returned in
+            // structInf.data.contentTypeCode and
+            // structInf.data.contentDispCode and
+            // structInf.data.contentTEncCode and by
+            // taking the body contents returned in
+            // ciphertext.
+            ..
+
+          } else {
+
+            // Plugin error!
+            myErrorDialog( "Error: Cryptography plugin returned a main"
+                          "Content-Type=Multipart/.. but did not "
+                          "specify the code bloc's Content-Type header."
+                          "\nYou may report this bug:"
+                          "\n" + cryptplug.bugURL() );
+          }
+        }
+      } else  {
+
+        // Build a plain message body
+        // based on the values returned in structInf.
+        // Note: We do _not_ insert line breaks between the parts since
+        //       it is the plugin job to provide us with ready-to-use
+        //       texts containing all neccessary line breaks.
+        strcpy( myMessageBody, structInf.data.plainTextPrefix );
+        if( structInf.data.includeCleartext ) {
+          strcat( myMessageBody, cleartext );
+          strcat( myMessageBody, structInf.data.plainTextSeparator );
+        }
+        strcat( myMessageBody, *ciphertext );
+        strcat( myMessageBody, structInf.data.plainTextPostfix );
+      }
+
+      // free the memory that was allocated
+      // for the ciphertext
+      free( ciphertext );
+    }
+
+\endverbatim
+
+  \see signMessage, encryptMessage, encryptAndSignMessage
+*/
+class StructuringInfoWrapper {
+public:
+  StructuringInfoWrapper( CryptPlugWrapper* wrapper );
+  virtual ~StructuringInfoWrapper();
+  virtual void reset();
+  StructuringInfo data;
+private:
+  virtual void initMe();
+  virtual void freeMe();
+  bool _initDone;
+  CryptPlugWrapper* _wrapper;
+};
+
 
 
 
@@ -216,8 +460,11 @@ public:
         \param parent  The parent widget to be used for displaying dialogs.
                        If this parameter is NULL the desktop is used as
                        the dialogs' parent widget.
+        \param name    The external name that is visible in lists, messages,
+                       etc.
         \param libName Complete path+name of CRYPTPLUG library that is to
                        be used by this instance of CryptPlugWrapper.
+        \param update  the URL from where updates can be downloaded
         \param active  Specify whether the relative library is to be used
                        or not.
 
@@ -225,7 +472,9 @@ public:
         \sa initStatus
     */
     CryptPlugWrapper( QWidget*       parent,
+                      const QString& name,
                       const QString& libName,
+                      const QString& update,
                       bool           active = false );
 
     /*! \ingroup groupAdmin
@@ -313,6 +562,20 @@ public:
     QString libName() const;
 
 
+    /*! \ingroup groupAdmin
+      \brief Returns the external name.
+      \return the external name used for display purposes
+    */
+    QString displayName() const;
+
+
+    /*! \ingroup groupAdmin
+      \brief Returns the update URL.
+      \return the update URL
+    */
+    QString updateURL() const;
+
+
 
     /*! \ingroup groupGeneral
     \brief This function does two things: (a) load the lib and (b) set up all internal structures.
@@ -369,8 +632,8 @@ public:
 
         Not all plugins will support all features; a complete Sphinx
         implementation will support all features contained in the enum,
-        however.                                                   
-        
+        however.
+
         \note In case this function cannot be executed the system's error
         message may be retrieved by calling initStatus( QString* ).
 
@@ -378,6 +641,19 @@ public:
     */
     bool hasFeature( Feature );
 
+
+    /*! \ingroup groupGeneral
+        \brief This function returns a URL to be used for reporting a bug that
+              you found (or suspect, resp.) in this cryptography plug-in.
+
+      If the plugins for some reason cannot specify an appropriate URL you
+      should at least be provided with a text giving you some advise on
+      how to report a bug.
+
+      \note This function <b>must</b> be implemented by each plug-in using
+      this API specification.
+    */
+    const char* bugURL();
 
 
     /*! \ingroup groupDisplay
@@ -406,13 +682,14 @@ public:
             menutext, char* accel,
             const char** tooltip, const char** statusbartext );
 
+
     /*! \ingroup groupConfigSign
     \brief This function returns an XML representation of a
                 configuration dialog for configuring signature
                 handling.
 
     The syntax is that of <filename>.ui</filename>
-                files as specified in the <emphasis>Indien</emphasis>
+                files as specified in the <emphasis>Imhotep</emphasis>
                 documentation. This function does not execute or show the
                 dialog in any way; this is up to the MUA. Also, what the
                 MUA makes of the information provided highly depends on
@@ -483,6 +760,20 @@ public:
     SignatureAlgorithm signatureAlgorithm();
 
     /*! \ingroup groupConfigSign
+      \brief Specifies whether a warning should be emitted when the user
+      tries to send an email message unsigned.
+    */
+    void setWarnSendUnsigned( bool );
+
+
+    /*! \ingroup groupConfigSign
+      \brief Returns whether a warning should be emitted when the user
+      tries to send an email message unsigned.
+    */
+    bool warnSendUnsigned();
+
+
+    /*! \ingroup groupConfigSign
     \brief Sets which certificates should be sent with the
                 message.
     */
@@ -520,20 +811,6 @@ public:
     bool saveSentSignatures();
 
     /*! \ingroup groupConfigSign
-    \brief Specifies whether a warning should be emitted if any
-                of the certificates involved in the signing process
-                expires in the near future.
-    */
-    void setCertificateExpiryNearWarning( bool );
-
-    /*! \ingroup groupConfigSign
-    \brief Returns whether a warning should be emitted if any
-                of the certificates involved in the signing process
-                expires in the near future.
-    */
-    bool certificateExpiryNearWarning();
-
-    /*! \ingroup groupConfigSign
     \brief Specifies whether a warning should be emitted if the
                 email address of the sender is not contained in the
                 certificate.
@@ -547,6 +824,13 @@ public:
     */
     bool warnNoCertificate();
 
+    /*!
+      \ingroup groupConfigSign
+      \brief Returns true if the specified email address is contained
+      in the specified certificate.
+    */
+    bool isEmailInCertificate( const char* email, const char* certificate );
+
     /*! \ingroup groupConfigSign
     \brief Specifies how often the PIN is requested when
                 accessing the secret signature key.
@@ -558,6 +842,20 @@ public:
                 accessing the secret signature key.
     */
     PinRequests numPINRequests();
+
+    /*! \ingroup groupConfigSign
+      \brief Specifies the interval in minutes the PIN must be reentered if
+      numPINRequests() is PinRequest_AfterMinutes.
+    */
+    void setNumPINRequestsInterval( int );
+
+
+    /*! \ingroup groupConfigSign
+      \brief Returns the interval in minutes the PIN must be reentered if
+      numPINRequests() is PinRequest_AfterMinutes.
+    */
+    int numPINRequestsInterval();
+
 
     /*! \ingroup groupConfigSign
     \brief Specifies whether the certificate path should be
@@ -586,41 +884,113 @@ public:
     bool signatureUseCRLs();
 
     /*! \ingroup groupConfigSign
-    \brief Specifies whether a warning should be emitted if any
-                of the certificates involved in the signing process
-                expires in the near future.
+      \brief Specifies whether a warning should be emitted if the
+      signature certificate expires in the near future.
     */
-    void setSignatureCRLExpiryNearWarning( bool );
+    void setSignatureCertificateExpiryNearWarning( bool );
 
     /*! \ingroup groupConfigSign
-    \brief Returns whether a warning should be emitted if any
-                of the certificates involved in the signing process
-                expires in the near future.
+      \brief Returns whether a warning should be emitted if
+      the signature certificate expires in the near future.
     */
-    bool signatureCRLExpiryNearWarning();
+    bool signatureCertificateExpiryNearWarning( void );
 
     /*! \ingroup groupConfigSign
-    \brief Specifies the number of days which a certificate must
-                be valid before it is considered to expire in the near
-                future.
+      \brief Returns the number of days that are left until the
+      specified certificate expires.
+      \param certificate the certificate to check
     */
-    void setSignatureCRLNearExpiryInterval( int );
+    int signatureCertificateDaysLeftToExpiry( const char* certificate );
+
 
     /*! \ingroup groupConfigSign
-    \brief Returns the number of days which a certificate must
-                be valid before it is considered to expire in the near
-                future.
+      \brief Specifies the number of days which a signature certificate must
+      be valid before it is considered to expire in the near
+      future.
     */
-    int signatureCRLNearExpiryInterval();
+    void setSignatureCertificateExpiryNearInterval( int );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns the number of days which a signature certificate must
+      be valid before it is considered to expire in the near
+      future.
+    */
+    int signatureCertificateExpiryNearInterval( void );
+
+    /*! \ingroup groupConfigSign
+      \brief Specifies whether a warning should be emitted if the
+      CA certificate expires in the near future.
+    */
+    void setCACertificateExpiryNearWarning( bool );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns whether a warning should be emitted if
+      the CA certificate expires in the near future.
+    */
+    bool caCertificateExpiryNearWarning( void );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns the number of days that are left until the
+      CA certificate of the specified certificate expires.
+      \param certificate the certificate to check
+    */
+    int caCertificateDaysLeftToExpiry( const char* certificate );
+
+    /*! \ingroup groupConfigSign
+      \brief Specifies the number of days which a CA certificate must
+      be valid before it is considered to expire in the near
+      future.
+    */
+    void setCACertificateExpiryNearInterval( int );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns the number of days which a CA certificate must
+      be valid before it is considered to expire in the near
+      future.
+    */
+    int caCertificateExpiryNearInterval( void );
+
+    /*! \ingroup groupConfigSign
+      \brief Specifies whether a warning should be emitted if the
+      root certificate expires in the near future.
+    */
+    void setRootCertificateExpiryNearWarning( bool );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns whether a warning should be emitted if
+      the root certificate expires in the near future.
+    */
+    bool rootCertificateExpiryNearWarning( void );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns the number of days that are left until the
+      root certificate of the specified certificate expires.
+      \param certificate the certificate to check
+    */
+    int rootCertificateDaysLeftToExpiry( const char* certificate );
+
+    /*! \ingroup groupConfigSign
+      \brief Specifies the number of days which a root certificate must
+      be valid before it is considered to expire in the near
+      future.
+    */
+    void setRootCertificateExpiryNearInterval( int );
+
+    /*! \ingroup groupConfigSign
+      \brief Returns the number of days which a signature certificate must
+      be valid before it is considered to expire in the near
+      future.
+    */
+    int rootCertificateExpiryNearInterval( void );
 
 
     /*! \ingroup groupConfigCrypt
-    \brief This function returns an XML representation of a
-                configuration dialog for configuring encryption
-                handling.
+      \brief This function returns an XML representation of a
+      configuration dialog for configuring encryption
+      handling.
 
     The syntax is that of <filename>.ui</filename>
-                files as specified in the <emphasis>Indien</emphasis>
+                files as specified in the <emphasis>Imhotep</emphasis>
                 documentation. This function does not execute or show the
                 dialog in any way; this is up to the MUA. Also, what the
                 MUA makes of the information provided highly depends on
@@ -695,6 +1065,20 @@ public:
     */
     EncryptEmail encryptEmail();
 
+    /*! \ingroup groupConfigSign
+      \brief Specifies whether a warning should be emitted when the user
+      tries to send an email message unencrypted.
+    */
+    void setWarnSendUnencrypted( bool );
+
+
+    /*! \ingroup groupConfigSign
+      \brief Returns whether a warning should be emitted when the user
+      tries to send an email message unencrypted.
+    */
+    bool warnSendUnencrypted();
+
+
     /*! \ingroup groupConfigCrypt
     \brief Specifies whether encrypted email messages should be
                 stored encrypted or decrypted.
@@ -706,6 +1090,19 @@ public:
                 encrypted or decrypted.
     */
     bool saveMessagesEncrypted();
+
+    /*! \ingroup groupConfigCrypt
+      \brief Specifies whether the certificate path should be checked
+      during encryption.
+    */
+    void setCheckCertificatePath( bool );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns whether the certificate path should be checked
+      during encryption.
+    */
+    bool checkCertificatePath();
+
 
     /*! \ingroup groupConfigCrypt
     \brief Specifies whether the certificate path should be
@@ -720,6 +1117,82 @@ public:
                 certificates may be used.
     */
     bool checkEncryptionCertificatePathToRoot();
+
+    /*! \ingroup groupConfigCrypt
+      \brief Specifies whether a warning should be emitted if the
+      certificate of the receiver expires in the near future.
+    */
+    void setReceiverCertificateExpiryNearWarning( bool );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns whether a warning should be emitted if the
+      certificate of the receiver expires in the near future.
+    */
+    bool receiverCertificateExpiryNearWarning();
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns the number of days until the specified receiver
+      certificate expires.
+    */
+    int receiverCertificateDaysLeftToExpiry( const char* certificate );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Specifies the number of days which a receiver certificate
+      must be valid before it is considered to expire in the near future.
+    */
+    void setReceiverCertificateExpiryNearWarningInterval( int );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns the number of days which a receiver certificate
+      must be valid before it is considered to expire in the near future.
+    */
+    int receiverCertificateExpiryNearWarningInterval();
+
+
+    /*! \ingroup groupConfigCrypt
+      \brief Specifies whether a warning should be emitted if
+      a certificate in the chain expires in the near future.
+    */
+    void setCertificateInChainExpiryNearWarning( bool );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns whether a warning should be emitted if a
+      certificate in the chain expires in the near future.
+    */
+    bool certificateInChainExpiryNearWarning();
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns the number of days until the first certificate in
+      the chain of the receiver certificate expires.
+    */
+    int certificateInChainDaysLeftToExpiry( const char* certificate );
+
+
+    /*! \ingroup groupConfigCrypt
+      \brief Specifies the number of days which a certificate in the chain
+      must be valid before it is considered to expire in the near future.
+    */
+    void setCertificateInChainExpiryNearWarningInterval( int );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns the number of days which a certificate in the chain
+      must be valid before it is considered to expire in the near future.
+    */
+    int certificateInChainExpiryNearWarningInterval();
+
+
+    /*! \ingroup groupConfigCrypt
+      \brief Specifies whether a warning is emitted if the email address
+      of the receiver does not appear in the certificate.
+    */
+    void setReceiverEmailAddressNotInCertificateWarning( bool );
+
+    /*! \ingroup groupConfigCrypt
+      \brief Returns whether a warning is emitted if the email address
+      of the receiver does not appear in the certificate.
+    */
+    bool receiverEmailAddressNotInCertificateWarning();
+
 
     /*! \ingroup groupConfigCrypt
     \brief Specifies whether certificate revocation lists should
@@ -762,6 +1235,12 @@ public:
     int encryptionCRLNearExpiryInterval();
 
 
+    /*! \ingroup groupConfigCrypt
+      \brief Returns the number of days the currently active certification
+      list is still valid.
+    */
+    int encryptionCRLsDaysLeftToExpiry();
+
     /*! \ingroup groupConfigDir
     \brief This function returns an XML representation of a
                 configuration dialog for selecting a directory
@@ -778,7 +1257,8 @@ public:
                 via the configuration dialog returned by
                 \c directoryServiceConfigurationDialog().
     */
-    void appendDirectoryServer( const char* servername, int port );
+    void appendDirectoryServer( const char* servername, int port,
+                                const char* description );
 
 
 
@@ -787,9 +1267,9 @@ public:
         Dummy!!  To be replaced by real structure information...
     */
     struct DirectoryServer {
-        struct DirectoryServer *prev;
-        struct DirectoryServer *next;
-        int data;
+        char* servername; // utf8
+        int port;
+        char* description; // utf8
     };
 
     /*! \ingroup groupConfigDir
@@ -800,7 +1280,8 @@ public:
                 via the configuration dialog returned by
                 \c directoryServiceConfigurationDialog().
     */
-    void setDirectoryServers( struct DirectoryServer );
+    void setDirectoryServers( DirectoryServer[],
+                              unsigned int );
 
     /*! \ingroup groupConfigDir
     \brief Returns the list of directory servers.
@@ -810,7 +1291,7 @@ public:
                 returned by
                 \c directoryServiceConfigurationDialog().
     */
-    DirectoryServer * directoryServers();
+    DirectoryServer* directoryServers( int* numServers );
 
     /*! \ingroup groupConfigDir
     \brief Specifies whether certificates should be retrieved
@@ -825,8 +1306,9 @@ public:
     CertificateSource certificateSource();
 
     /*! \ingroup groupConfigDir
-    \brief Specifies whether certificates should be retrieved
-                from a directory server, only locally, or both.
+    \brief Specifies whether CRLs (certificate revocation lists)
+           should be retrieved from a directory server, only
+           locally, or both.
     */
     void setCRLSource( CertificateSource );
 
@@ -852,31 +1334,82 @@ public:
 
 
     /*! \ingroup groupSignAct
-    \brief Signs a message \c cleartext and returns
-            in \c ciphertext the message including
-            signature.
+      \brief Signs a message \c cleartext and returns
+              in \c *ciphertext the signature data bloc that
+              is to be added to the message. The length returned
+              in \c *cipherLen tells you the size (==amount of bytes)
+              of the ciphertext, if the structuring information
+              would return with contentTEncCode set to "base64"
+              the ciphertext might contain a char 0x00
+              and has to be converted into base64 before sending.
 
-    The signature role is specified by
-            \c certificate. If \c certificate is \c NULL,
-            the default certificate is used.
+      The signature role is specified by \c certificate.
+      If \c certificate is \c NULL, the default certificate is used.
+
+      If the message could be signed, the function returns
+              \c true, otherwise
+              \c false.
+
+      Use the StructuringInfoWrapper data returned in parameter
+      \c structuring to find out how to build the respective
+      MIME object (or the plain text message body, resp.).
+
+      \note The function allocates memory for the \c *ciphertext, so
+            make sure you set free that memory when no longer needing
+            it (as shown in example code provided with documentation
+            of the class \c StructuringInfoWrapper).
+
+      \note The function also does not use a pure StructuringInfo* struct
+        parameter (as defined in cryptplug.h) but a convenient
+        StructuringInfoWrapper& class parameter.
+        Therefore you <b>must not</b> call the \c free_StructuringInfo()
+        function: all memory that will be occupied for structuring info
+        by the signing function will be freed automatically by the
+        StructuringInfoWrapper's destructor.
+
+      \see StructuringInfoWrapper
     */
     bool signMessage( const char* cleartext,
-                    const char** ciphertext,
-                    const char* certificate );
+                      char** ciphertext,
+                      const size_t* cipherLen,
+                      const char* certificate,
+                      StructuringInfoWrapper& structuring,
+                      int* errId,
+                      char** errTxt );
 
 
     /*! \ingroup groupSignAct
-        Dummy!!  To be replaced by real structure information...
-    */
-    struct SignatureMetaData {
-    int data;
+     */
+    struct SignatureMetaDataExtendedInfo
+    {
+        struct tm* creation_time;
+        const char* status_text;
+        const char* fingerprint;
     };
+
+    /*! \ingroup groupSignAct
+     */
+    struct SignatureMetaData {
+        char* status;
+        struct SignatureMetaDataExtendedInfo* extended_info;
+        int extended_info_count;
+        char* nota_xml;
+        int status_code;
+    };
+
+    /* \ingroup groupSignAct
+     * Frees the members of a signature meta data struct, but not the
+     * signature meta data struct itself as this could be allocated on
+     * the stack.
+     */
+    void freeSignatureMetaData( struct SignatureMetaData* );
+
 
     /*! \ingroup groupSignAct
     \brief Checks whether the signature of a message is
             valid. \c ciphertext specifies the message
-            as it was received by the MUA, \c cleartext
-            is the message with the signature(s) removed.
+            as it was received by the MUA, \c signaturetext the
+            signature itself.
 
     Depending on the configuration, MUAs might not need to use this.
     If \c sigmeta is non-null, the
@@ -885,7 +1418,9 @@ public:
             function call.
     */
     bool checkMessageSignature( const char* ciphertext,
-                                const char** cleartext,
+                                const char* signaturetext,
+                                bool signatureIsBinary,
+                                int signatureLen,
                                 struct SignatureMetaData* sigmeta );
 
     /*! \ingroup groupSignAct
@@ -896,33 +1431,92 @@ public:
 
 
     /*! \ingroup groupCryptAct
-    \brief Encrypts an email message in
-            \c cleartext according to the current
-            settings (algorithm, etc.) and returns it in
-            \c ciphertext.
+      \brief Find all certificate for a given addressee.
 
-    If the message could be encrypted, the function returns
-            \c true, otherwise
-            \c false.
+      NOTE: The \c certificate parameter must point to an allready allocated
+      block of memory which is large enough to hold the complete list.
     */
-    bool encryptMessage( const char* cleartext, const char** ciphertext );
+    bool findCertificates( const char* addressee, char** certificates );
+
 
     /*! \ingroup groupCryptAct
-    \brief Combines the functionality of
-            \c encryptMessage() and
-            \c signMessage().
+      \brief Encrypts an email message in
+              \c cleartext according to the \c addressee and
+              the current settings (algorithm, etc.) and
+              returns the encoded data bloc in \c *ciphertext.
+              The length returned in \c *cipherLen tells you the
+              size (==amount of bytes) of the ciphertext, if the
+              structuring information would return with
+              contentTEncCode set to "base64" the ciphertext
+              might contain a char 0x00 and has to be converted
+              into base64 before sending.
 
-    If \c certificate is \c NULL,
-            the default certificate will be used.  If
-            \c sigmeta is non-null, the
-            \c SignatureMetaData object pointed to will
-            contain meta information about the signature after the
-            function call.
+      If the message could be encrypted, the function returns
+              \c true, otherwise
+              \c false.
+
+      Use the StructuringInfoWrapper data returned in parameter
+      \c structuring to find out how to build the respective
+      MIME object (or the plain text message body, resp.).
+
+      \note The function allocates memory for the \c *ciphertext, so
+            make sure you set free that memory when no longer needing
+            it (as shown in example code provided with documentation
+            of the class \c StructuringInfoWrapper).
+
+      \note The function also does not use a pure StructuringInfo* struct
+        parameter (as defined in cryptplug.h) but a convenient
+        StructuringInfoWrapper& class parameter.
+        Therefore you <b>must not</b> call the \c free_StructuringInfo()
+        function: all memory that will be occupied for structuring info
+        by the signing function will be freed automatically by the
+        StructuringInfoWrapper's destructor.
+
+      \see StructuringInfoWrapper
+    */
+    bool encryptMessage( const char*  cleartext,
+                         const char** ciphertext,
+                         const size_t* cipherLen,
+                         const char*  addressee,
+                         StructuringInfoWrapper& structuring,
+                         int* errId,
+                         char** errTxt );
+
+    /*! \ingroup groupCryptAct
+      \brief Combines the functionality of
+              \c encryptMessage() and
+              \c signMessage().
+
+      If \c certificate is \c NULL,
+      the default certificate will be used.
+
+      If the message could be signed and encrypted, the function returns
+              \c true, otherwise
+              \c false.
+
+      Use the StructuringInfoWrapper data returned in parameter \c structuring
+      to find out how to build the respective MIME object (or the plain
+      text message body, resp.).
+
+      \note The function allocates memory for the \c *ciphertext, so
+            make sure you set free that memory when no longer needing
+            it (as shown in example code provided with documentation
+            of the class \c StructuringInfoWrapper).
+
+      \note The function also does not use a pure StructuringInfo* struct
+        parameter (as defined in cryptplug.h) but a convenient
+        StructuringInfoWrapper& class parameter.
+        Therefore you <b>must not</b> call the \c free_StructuringInfo()
+        function: all memory that will be occupied for structuring info
+        by the signing function will be freed automatically by the
+        StructuringInfoWrapper's destructor.
+
+      \see StructuringInfoWrapper
     */
     bool encryptAndSignMessage( const char* cleartext,
                                 const char** ciphertext,
                                 const char* certificate,
-                                struct SignatureMetaData* sigmeta );
+                                StructuringInfoWrapper& structuring );
 
     /*! \ingroup groupCryptAct
     \brief Tries to decrypt an email message
@@ -934,8 +1528,11 @@ public:
             \c true, otherwise
             \c false.
     */
-    bool decryptMessage( const char* ciphertext, const
-            char** cleartext, const char* certificate );
+    bool decryptMessage( const char* ciphertext,
+                         bool        cipherIsBinary,
+                         int         cipherLen,
+                         char** cleartext,
+                         const char* certificate );
 
     /*! \ingroup groupCryptAct
     \brief Combines the functionality of
@@ -966,12 +1563,12 @@ public:
 
     /*! \ingroup groupCertAct
     \brief Generates a prototype certificate with the data provided
-            in the first four parameters and sends it via email to the CA
-            specified in \c ca_address.
+            in the first parameter. The memory returned in \a generatedKey
+        must be freed with free() by the caller.
     */
-    bool requestDecentralCertificate( const char* name, const char*
-            email, const char* organization, const char* department,
-            const char* ca_address );
+    bool requestDecentralCertificate( const char* certparms, 
+                                      char** generatedKey,
+                                      int* keyLength );
 
     /*! \ingroup groupCertAct
     \brief Requests a certificate in a PSE from the CA
@@ -1049,9 +1646,25 @@ public:
     */
     void updateCRL();
 
+    /*
+      this function is for internal use
+      by the StructuringInfoWrapper class
+    */
+    void* libPtr() const { return _libPtr; }
+
+    /*
+      this function is for internal use
+      by the CryptPlugWrapper class and
+      by the StructuringInfoWrapper class
+    */
+    bool wasDLError( const char* funcName );
+
+
 private:
     QWidget*   _parent;
+    QString    _name;
     QString    _libName;
+    QString    _updateURL;
     void*      _libPtr;
     bool       _active;
     bool       _initialized;
@@ -1060,6 +1673,9 @@ private:
 
     void voidVoidFunc(                       const char* funcName );
     bool boolConstCharFunc( const char* txt, const char* funcName );
+    bool boolConstCharConstCharFunc( const char* txt1, const char* txt2,
+                                     const char* funcName );
+    int intConstCharFunc( const char* txt, const char* funcName );
     void voidConstCharFunc( const char* txt, const char* funcName );
     const char* constCharVoidFunc(           const char* funcName );
     void voidBoolFunc(      bool flag,       const char* funcName );
