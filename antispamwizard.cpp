@@ -682,12 +682,12 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
             "in the folder view.") );
   grid->addWidget( mMoveRules, 2, 0 );
 
-  mMarkRules = new QCheckBox( i18n("Additionally mark detected spam messages as read"), this );
+  mMarkRules = new QCheckBox( i18n("Additionally, mark detected spam messages as read"), this );
   mMarkRules->setEnabled( false );
   QWhatsThis::add( mMarkRules,
-      i18n( "Additionally to moving messages which have been classified as "
-            "spam to the selected folder the messages will be marked as "
-            "read.") );
+      i18n( "Mark messages which have been classified as "
+            "spam as read, as well as moving them to the selected "
+            "folder.") );
   grid->addWidget( mMarkRules, 3, 0 );
 
   QString s = "trash";
