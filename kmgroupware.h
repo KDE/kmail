@@ -103,11 +103,11 @@ public:
 
   enum DefaultUpdateCounterValue { NoUpdateCounter=-1 };
   // functions to be called by KMReaderWin for 'print formatting'
-  static bool vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
-                           bool useGroupware, QString& prefix, QString& postfix );
+  bool vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
+		    QString& prefix, QString& postfix ) const;
   static bool msTNEFToVPart( const QByteArray& tnef, QString& aVPart );
-  static bool msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname, bool useGroupware,
-                            QString& prefix, QString& postfix );
+  bool msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname,
+		     QString& prefix, QString& postfix ) const;
 
   // function to be called by KMReaderWin for analyzing of clicked URL
   static bool foundGroupwareLink( const QString aUrl,
