@@ -102,7 +102,17 @@ public:
     bool isEncrypted;
     bool isDecryptable;
     QString decryptionError;
+    bool isEncapsulatedRfc822Message;
+    PartMetaData();
 };
+KMReaderWin::PartMetaData::PartMetaData()
+{
+    isSigned = false;
+    isGoodSignature = false;
+    isEncrypted = false;
+    isDecryptable = false;
+    isEncapsulatedRfc822Message = false;
+}
 
 
 
@@ -651,6 +661,27 @@ kdDebug(5006) << "* message *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypeRfc822: {
 kdDebug(5006) << "RfC 822" << endl;
+
+              QCString rfc822message( curNode->msgPart().bodyDecoded() );
+
+              // paint the frame
+              PartMetaData messagePart;
+              if( reader ) {
+                messagePart.isEncrypted = false;
+                messagePart.isSigned = false;
+                messagePart.isEncapsulatedRfc822Message = true;
+                reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+              }
+              insertAndParseNewChildNode( reader,
+                                          &resultString,
+                                          cryptPlugList,
+                                          useThisCryptPlug,
+                                          *curNode,
+                                          &*rfc822message,
+                                          "encapsulated message" );
+              if( reader )
+                reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+              bDone = true;
             }
             break;
           }
@@ -697,7 +728,7 @@ kdDebug(5006) << "octet stream" << endl;
                   if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
                     QCString decryptedData;
                     if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
-                      
+
                       // paint the frame
                       PartMetaData messagePart;
                       if( reader ) {
@@ -1696,6 +1727,38 @@ void KMReaderWin::parseMsg(void)
     mCodec = QTextCodec::codecForName("iso8859-1");
   mMsg->setCodec(mCodec);
 
+
+//      QString( "table.rfc822 { width: 100%; "
+//                 "border-style:solid; border-width: 8px; }\n" )
+
+/*
+
+#links {
+  border-left-width:1cm;
+  border-left-style:solid;
+  border-color:red;
+  padding-left:1cm;
+  text-align:justify; }
+#linksrechts {
+  border-left-width:1cm;
+  border-left-style:solid;
+  border-left-color:red;
+  padding-left:1cm;
+  border-right-width:1cm;
+  border-right-style:solid;
+  border-right-color:green;
+  padding-right:1cm;
+  text-align:justify; }
+#rundrum {
+  border-width:1px;
+  border-style:solid;
+  border-color:blue;
+  padding:1cm;
+  text-align:justify; }
+
+*/
+
+
   QColorGroup cg = kapp->palette().active();
   queueHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
 	    "Transitional//EN\">\n<html><head><title></title>"
@@ -1711,6 +1774,7 @@ void KMReaderWin::parseMsg(void)
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: %1; ").arg(c2.name()) +
         "text-decoration: none; }" + // just playing
+
         QString( "table.encr { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpEncrF.name() ) +
@@ -1719,6 +1783,23 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpEncrH.name() ) +
         QString( "tr.encrB { background-color: %1; }\n" )
         .arg( cPgpEncrB.name() ) +
+
+        QString( "table.rfc822 { width: 100%; "
+                 "border-top-style: solid; "
+                 "border-top-width: 1px; "
+                 "border-top-color: black; "
+                 "border-left-style: solid; "
+                 "border-left-width: 1px; "
+                 "border-left-color: black; "
+                 "border-bottom-style: solid; "
+                 "border-bottom-width: 1px; "
+                 "border-bottom-color: black; "
+                 "border-right-style: hidden; "
+                 "border-right-width: 0px; "
+                 "padding: 2px; } \n" ) +
+        QString( "tr.rfc822H { font-weight: bold; }\n" ) +
+        QString( "tr.rfc822B { font-weight: bold; }\n" ) +
+
         QString( "table.signOkKeyOk { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpOk1F.name() ) +
@@ -1727,6 +1808,7 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpOk1H.name() ) +
         QString( "tr.signOkKeyOkB { background-color: %1; }\n" )
         .arg( cPgpOk1B.name() ) +
+
         QString( "table.signOkKeyBad { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpOk0F.name() ) +
@@ -1735,6 +1817,7 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpOk0H.name() ) +
         QString( "tr.signOkKeyBadB { background-color: %1; }\n" )
         .arg( cPgpOk0B.name() ) +
+
         QString( "table.signWarn { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpWarnF.name() ) +
@@ -1743,6 +1826,7 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpWarnH.name() ) +
         QString( "tr.signWarnB { background-color: %1; }\n" )
         .arg( cPgpWarnB.name() ) +
+        
         QString( "table.signErr { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpErrF.name() ) +
@@ -1751,6 +1835,7 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpErrH.name() ) +
         QString( "tr.signErrB { background-color: %1; }\n" )
         .arg( cPgpErrB.name() )) +
+        
         QString( "div.fancyHeaderSubj { background-color: %1; "
                                        "color: %2; padding: 4px; "
                                        "border: solid %3 1px; }\n"
@@ -2735,6 +2820,14 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
     QString htmlStr;
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
 
+    if( block.isEncapsulatedRfc822Message )
+    {
+        htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"rfc822\">"
+            "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
+        htmlStr += i18n("Encapsulated message");
+        htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
+    }
+
     if( block.isEncrypted )
     {
 	htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
@@ -2875,6 +2968,13 @@ QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
 	htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
 		i18n( "End of encrypted message" ) +
 	    "</td></tr></table>";
+    }
+
+    if( block.isEncapsulatedRfc822Message )
+    {
+        htmlStr += "</td></tr><tr class=\"rfc822H\"><td dir=\"" + dir + "\">" +
+            i18n( "End of encapsulated message" ) +
+            "</td></tr></table>";
     }
 
     return htmlStr;
