@@ -914,6 +914,9 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   if(!aMsg->subject().isEmpty())
     mQuery += QString("&subject=") + KURL::encode_string(aMsg->subject());
 
+  if (ti->specifyHostname)
+    mQuery += "&hostname=" + KURL::encode_string(ti->localHostname);
+
   KURL destination;
 
   destination.setProtocol((ti->encryption == "SSL") ? "smtps" : "smtp");

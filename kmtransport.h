@@ -39,7 +39,8 @@ public:
   static int findTransport(const QString &name);
   static QStringList availableTransports();
   QString type, name, host, port, user, pass, precommand, encryption, authType;
-  bool auth, storePass;
+  QString localHostname;
+  bool auth, storePass, specifyHostname;
 };
 
 class KMTransportSelDlg : public KDialogBase
@@ -105,6 +106,8 @@ private:
     QRadioButton *authDigestMd5;
     QPushButton  *checkCapabilities;
     QCheckBox    *storePasswordCheck;
+    QCheckBox    *specifyHostnameCheck;
+    QLineEdit    *localHostnameEdit;
   };
 
   void makeSendmailPage();
