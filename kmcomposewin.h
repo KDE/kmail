@@ -20,14 +20,11 @@
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
 
-#ifndef KRN
 class _StringPair {
  public:
    QString name;
    QString value;
 };
-#endif
-
 
 
 class QCloseEvent;
@@ -74,11 +71,9 @@ public:
   // Text with lines breaks inserted after every row
   QString brokenText() const;
 
-#ifndef KRN
   // For the external editor
   inline void setExternalEditor(bool extEd) { extEditor=extEd; }
   inline void setExternalEditorPath(QString path) { mExtEditor=path; }
-#endif
 
 signals:
   void spellcheck_done();
@@ -317,14 +312,12 @@ protected:
   /** Header fields. */
    const QString subject(void) const { return mEdtSubject.text(); }
    const QString to(void) const { return mEdtTo.text(); }
-   const QString cc(void) const { return mEdtCc.text(); }
-   const QString bcc(void) const { return mEdtBcc.text(); }
+   const QString cc(void) const
+   { return (mEdtCc.isHidden()) ? QString() : mEdtCc.text(); }
+   const QString bcc(void) const
+   { return (mEdtBcc.isHidden()) ? QString() : mEdtBcc.text(); }
    const QString from(void) const { return mEdtFrom.text(); }
    const QString replyTo(void) const { return mEdtReplyTo.text(); }
-#ifdef KRN
-   const QString newsgroups(void) const { return mEdtNewsgroups.text(); }
-   const QString followupTo(void) const { return mEdtFollowupTo.text(); }
-#endif
 
   /** Ask for confirmation if the message was changed before close. */
   virtual bool queryClose ();
@@ -372,10 +365,6 @@ protected:
   QPushButton mBtnTo, mBtnCc, mBtnBcc, mBtnFrom, mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;
-#ifdef KRN
-  KMLineEdit mEdtNewsgroups, mEdtFollowupTo;
-  QLabel     mLblNewsgroups, mLblFollowupTo;
-#endif
 
   KMEdit* mEditor;
   QGridLayout* mGrid;
@@ -388,13 +377,11 @@ protected:
   KMFolder *mFolder;
   long mShowHeaders;
   QString mDefEncoding;
-#ifndef KRN
   QString mExtEditor;
   bool useExtEditor;
   QList<_StringPair> mCustHeaders;
   bool mConfirmSend;
   bool disableBreaking;
-#endif
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;

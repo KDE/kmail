@@ -35,11 +35,9 @@
 #include <kkeydialog.h>
 #include <kdebug.h>
 
-#ifndef KRN
 #include "kmmainwin.h"
 #include "configuredialog.h"
 #include "kfileio.h"
-#endif
 #include "kmreaderwin.h"
 
 #include <assert.h>
@@ -79,27 +77,7 @@
 #include <ktempfile.h>
 #include <fcntl.h>
 
-//#if defined CHARSETS
-//#include <kcharsets.h>
-//#include "charsetsDlg.h"
-//#endif
-
-#ifdef KRN
-/* start added for KRN */
-#include "krnsender.h"
-extern KApplication *app;
-extern KBusyPtr *kbp;
-extern KRNSender *msgSender;
-extern KMIdentity *identity;
-extern KMAddrBook *addrBook;
-extern KabApi *KABaddrBook;
-typedef QList<QWidget> WindowList;
-WindowList* windowList=new WindowList;
-#define aboutText "KRN"
-/* end added for KRN */
-#else
 #include "kmglobal.h"
-#endif
 
 #include "kmcomposewin.moc"
 
@@ -121,10 +99,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mBtnReplyTo("...",&mMainWidget),
   mId( id )
 
-#ifdef KRN
-  ,mEdtNewsgroups(this,&mMainWidget),mEdtFollowupTo(this,&mMainWidget),
-  mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
-#endif
 {
   //setWFlags( WType_TopLevel | WStyle_Dialog );
   mDone = false;
@@ -181,12 +155,10 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   setCentralWidget(&mMainWidget);
   rethinkFields();
 
-#ifndef KRN
   if (useExtEditor) {
     mEditor->setExternalEditor(true);
     mEditor->setExternalEditorPath(mExtEditor);
   }
-#endif
 
   // As family may change with charset, we must save original settings
   mSavedEditorFont=mEditor->font();
@@ -330,13 +302,10 @@ void KMComposeWin::readConfig(void)
   if (mLineBreak < 60)
     mLineBreak = 60;
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
-#ifndef KRN
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
-#endif
 
   readColorConfig();
 
-#ifndef KRN
   config->setGroup("General");
   mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
   useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
@@ -357,7 +326,6 @@ void KMComposeWin::readConfig(void)
       delete thisItem;
     }
   }
-#endif
 
   config->setGroup("Fonts");
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
@@ -489,12 +457,6 @@ void KMComposeWin::slotView(void)
     id = HDR_BCC;
   else if (act == subjectAction)
     id = HDR_SUBJECT;
-#ifdef KRN
-   else if (act == newsgroupsAction)
-     id = HDR_NEWSGROUPS;
-   else if (act == followupToAction)
-     id = HDR_FOLLOWUP_TO;
-#endif
    else
    {
      id = 0;
@@ -573,14 +535,6 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
 		    &mLblSubject, &mEdtSubject);
-#ifdef KRN
-  if (!fromSlot) newsgroupsAction->setChecked(abs(mShowHeaders)&HDR_NEWSGROUPS);
-  rethinkHeaderLine(showHeaders,HDR_NEWSGROUPS, row, i18n("&Newsgroups:"),
-		    &mLblNewsgroups, &mEdtNewsgroups);
-  if (!fromSlot) followupToAction->setChecked(abs(mShowHeaders)&HDR_FOLLOWUP_TO);
-  rethinkHeaderLine(showHeaders,HDR_FOLLOWUP_TO, row, i18n("&Followup-To:"),
-		    &mLblFollowupTo, &mEdtFollowupTo);
-#endif
   assert(row<=mNumHeaders);
 
   mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
@@ -601,10 +555,6 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   ccAction->setEnabled(!allFieldsAction->isChecked());
   bccAction->setEnabled(!allFieldsAction->isChecked());
   subjectAction->setEnabled(!allFieldsAction->isChecked());
-#ifdef KRN
-  newsgroupsAction->setEnabled(!allFieldsAction->isChecked());
-  followupToAction->setEnabled(!allFieldsAction->isChecked());
-#endif
 }
 
 
@@ -796,15 +746,6 @@ void KMComposeWin::setupActions(void)
   subjectAction = new KToggleAction (i18n("&Subject"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_subject");
-#ifdef KRN
-  (void) new KToggleAction (i18n("&Newsgroups"), 0, this,
-                            SLOT(slotView()),
-                            actionCollection(), "show_newsgroups");
-  (void) new KToggleAction (i18n("&Followup-To"), 0, this,
-                            SLOT(slotView()),
-                            actionCollection(), "show_followup_to");
-
-#endif
   //end of checkable
 
   (void) new KAction (i18n("Append S&ignature"), 0, this,
@@ -964,10 +905,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   mEdtSubject.setText(mMsg->subject());
   mEdtReplyTo.setText(mMsg->replyTo());
   mEdtBcc.setText(mMsg->bcc());
-#ifdef KRN
-  mEdtNewsgroups.setText(mMsg->groups());
-  mEdtFollowupTo.setText(mMsg->followup());
-#endif
 
   if ((mBtnIdentity.isChecked()) && (!mId.isEmpty())) {
     KMIdentity ident( mId );
@@ -1081,10 +1018,6 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setSubject(subject());
   mMsg->setReplyTo(replyTo());
   mMsg->setBcc(bcc());
-#ifdef KRN
-  mMsg->setFollowup(followupTo());
-  mMsg->setGroups(newsgroups());
-#endif
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
@@ -1101,15 +1034,12 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setHeaderField("Priority", "urgent");
   }
 
-#ifndef KRN
   _StringPair *pCH;
   for (pCH  = mCustHeaders.first();
        pCH != NULL;
        pCH  = mCustHeaders.next()) {
     mMsg->setHeaderField(pCH->name, pCH->value);
   }
-
-#endif
 
   bool isQP = kernel->msgSender()->sendQuotedPrintable();
   if(mAtmList.count() <= 0) {
@@ -1875,13 +1805,9 @@ void KMComposeWin::slotNewComposer()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotNewMailReader()
 {
-
-#ifndef KRN
   KMMainWin *kmmwin = new KMMainWin(NULL);
   kmmwin->show();
   //d->resize(d->size());
-#endif
-
 }
 
 
@@ -2011,7 +1937,6 @@ void KMComposeWin::slotSaveDraft()
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNow()
 {
-#ifndef KRN
   if (mConfirmSend) {
     switch(KMessageBox::warningYesNoCancel(&mMainWidget,
                                     i18n("About to send email..."),
@@ -2031,7 +1956,6 @@ void KMComposeWin::slotSendNow()
     }
     return;
   }
-#endif
 
   doSend(TRUE);
 }
@@ -2559,9 +2483,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
 
-#ifndef KRN
   extEditor = false;     // the default is to use ourself
-#endif
 
   mKSpell = NULL;
   mTempFile = NULL;
@@ -2604,7 +2526,6 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
   {
     QKeyEvent *k = (QKeyEvent*)e;
 
-#ifndef KRN
     if (extEditor) {
       if (k->key() == Key_Up)
       {
@@ -2644,7 +2565,6 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 
       return TRUE;
     } else {
-#endif
     if (k->key()==Key_Tab)
     {
       int col, row;
@@ -2661,9 +2581,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       return TRUE;
     }
     // ---sven's Arrow key navigation end ---
-#ifndef KRN
     }
-#endif
   }
   return FALSE;
 }
