@@ -1,8 +1,8 @@
 
 SUBDIRS = pics doc
 INCLUDES = $(all_includes)
-#LDADD	= -lkhtmlw -ljscript -ljpeg -lkfile -lkfm -lkdeui -lkdecore  -lXext  -lmimelib -lstdc++ $(LIB_QT)
-LDADD	= $(LIB_KHTMLW) -lkfile -lkfm -lkdeui -lkdecore -lkspell  -lXext  -lmimelib $(LIB_QT)
+#LDADD	= -lkhtmlw -ljscript -ljpeg -lkfile -lkfm       -lmimelib -lstdc++ $(LIB_KDEUI)
+LDADD	= $(LIB_KHTMLW) -lkfile -lkfm   -lkspell     -lmimelib $(LIB_KDEUI)
 #DEFS += -DCHARSETS
 
 bin_PROGRAMS = kmail
