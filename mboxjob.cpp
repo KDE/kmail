@@ -105,9 +105,9 @@ MboxJob::startJob()
   switch( mType ) {
   case tGetMessage:
     {
-      kdDebug()<<msg<<endl;
-      kdDebug()<<this<<endl;
-      kdDebug()<<"Done"<<endl;
+      kdDebug(5006)<<msg<<endl;
+      kdDebug(5006)<<this<<endl;
+      kdDebug(5006)<<"Done"<<endl;
       //KMMessage* msg = mParent->getMsg( mParent->find( mMsgList.first() ) );
       msg->setComplete( true );
       emit messageRetrieved( msg );

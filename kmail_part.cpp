@@ -56,13 +56,13 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
   KParts::ReadOnlyPart(parent, name), DCOPObject("KMailIface")
 {
-  kdDebug() << "KMailPart()" << endl;
-  kdDebug() << "  InstanceName: " << kapp->instanceName() << endl;
+  kdDebug(5006) << "KMailPart()" << endl;
+  kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
   setInstance(KMailFactory::instance());
 
-  kdDebug() << "KMailPart()..." << endl;
-  kdDebug() << "  InstanceName: " << kapp->instanceName() << endl;
+  kdDebug(5006) << "KMailPart()..." << endl;
+  kdDebug(5006) << "  InstanceName: " << kapp->instanceName() << endl;
 
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
@@ -151,7 +151,7 @@ KAboutData *KMailPart::createAboutData()
 
 bool KMailPart::openFile()
 {
-  kdDebug() << "KMailPart:openFile()" << endl;
+  kdDebug(5006) << "KMailPart:openFile()" << endl;
 
   widget->show();
   return true;
@@ -159,7 +159,7 @@ bool KMailPart::openFile()
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
-  kdDebug() << "KMailPart::guiActivateEvent" << endl;
+  kdDebug(5006) << "KMailPart::guiActivateEvent" << endl;
   KParts::ReadOnlyPart::guiActivateEvent(e);
 }
 

@@ -857,7 +857,7 @@ QString KMFolder::idString() const
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {
-  //kdDebug()<<"#### READING CONFIG  = "<< name() <<endl;
+  //kdDebug(5006)<<"#### READING CONFIG  = "<< name() <<endl;
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mUnreadMsgs == -1)

@@ -42,7 +42,7 @@ namespace KMail {
   SieveJob::~SieveJob() {
     kill();
     delete mDec;
-    kdDebug() << "~SieveJob()" << endl;
+    kdDebug(5006) << "~SieveJob()" << endl;
   }
 
   void SieveJob::kill( bool quiet ) {
@@ -52,33 +52,33 @@ namespace KMail {
   void SieveJob::schedule( Command command ) {
     switch ( command ) {
     case Get:
-      kdDebug() << "SieveJob::schedule: get( " << mUrl.url() << " )" << endl;
+      kdDebug(5006) << "SieveJob::schedule: get( " << mUrl.url() << " )" << endl;
       mJob = KIO::get( mUrl );
       connect( mJob, SIGNAL(data(KIO::Job*,const QByteArray&)),
 	       SLOT(slotData(KIO::Job*,const QByteArray&)) );
       break;
     case Put:
-      kdDebug() << "SieveJob::schedule: put( " << mUrl.url() << " )" << endl;
+      kdDebug(5006) << "SieveJob::schedule: put( " << mUrl.url() << " )" << endl;
       mJob = KIO::put( mUrl, 0600, true /*overwrite*/, false /*resume*/ );
       connect( mJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
 	       SLOT(slotDataReq(KIO::Job*,QByteArray&)) );
       break;
     case Activate:
-      kdDebug() << "SieveJob::schedule: chmod( " << mUrl.url() << ", 0700 )"
+      kdDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.url() << ", 0700 )"
 		<< endl;
       mJob = KIO::chmod( mUrl, 0700 );
       break;
     case Deactivate:
-      kdDebug() << "SieveJob::schedule: chmod( " << mUrl.url() << ", 0600 )"
+      kdDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.url() << ", 0600 )"
 		<< endl;
       mJob = KIO::chmod( mUrl, 0600 );
       break;
     case SearchActive:
-      kdDebug() << "SieveJob::schedule: listDir( " << mUrl.url() << " )" << endl;
+      kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.url() << " )" << endl;
       {
 	KURL url = mUrl;
 	url.cd("..");
-	kdDebug() << "SieveJob::schedule: listDir's real URL: " << url.url()
+	kdDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.url()
 		  << endl;
 	mJob = KIO::listDir( url );
 	connect( mJob, SIGNAL(entries(KIO::Job*,const KIO::UDSEntryList&)),
@@ -167,7 +167,7 @@ namespace KMail {
 
     if ( mSieveCapabilities.empty() ) {
       mSieveCapabilities = QStringList::split( ' ', job->queryMetaData( "sieveExtensions" ) );
-      kdDebug() << "received sieve extensions supported:" << endl
+      kdDebug(5006) << "received sieve extensions supported:" << endl
 		<< mSieveCapabilities.join("\n") << endl;
     }
 

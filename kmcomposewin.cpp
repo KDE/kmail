@@ -2384,7 +2384,7 @@ bool KMComposeWin::processStructuringInfo( const QString   bugURL,
                                            KMMessagePart&  resultingPart )
 {
 #ifdef DEBUG
-  kdDebug() << "||| entering KMComposeWin::processStructuringInfo()" << endl;
+  kdDebug(5006) << "||| entering KMComposeWin::processStructuringInfo()" << endl;
 #endif
   //assert(mMsg!=0);
   if(!mMsg)
@@ -2484,17 +2484,17 @@ bool KMComposeWin::processStructuringInfo( const QString   bugURL,
     mainDwPa.Parse();
     KMMessage::bodyPart(&mainDwPa, &resultingPart);
 /*
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << mainHeader << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << resultingPart.additionalCTypeParamStr() << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << mainHeader << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << resultingPart.additionalCTypeParamStr() << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
 */
     if( ! structuring.data.makeMultiMime ) {
 
@@ -2612,11 +2612,11 @@ kdDebug() << "***************************************" << endl;
         // store string representation of encoded cleartext
         codeCStr += "\n\n";
         codeCStr += codeKmPa.body();
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << codeCStr << endl;
-kdDebug() << "***************************************" << endl;
-kdDebug() << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << codeCStr << endl;
+kdDebug(5006) << "***************************************" << endl;
+kdDebug(5006) << "***************************************" << endl;
       } else {
 
         // Plugin error!
@@ -2721,7 +2721,7 @@ kdDebug() << "***************************************" << endl;
   // but the convenient CryptPlugWrapper's StructuringInfoWrapper class.
 
 #ifdef DEBUG
-  kdDebug() << "||| leaving KMComposeWin::processStructuringInfo()\n||| returning: " << bOK << endl << endl;
+  kdDebug(5006) << "||| leaving KMComposeWin::processStructuringInfo()\n||| returning: " << bOK << endl << endl;
 #endif
 
   return bOk;
@@ -3351,7 +3351,7 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
                                                 false )
                     && (0 < certSize);
       kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-      kdDebug() << "findCertificates() 1st try returned " << certificatePtr << endl;
+      kdDebug(5006) << "findCertificates() 1st try returned " << certificatePtr << endl;
       if( findCertsOk )
         certificateList.assign( certificatePtr, certSize );
     }
@@ -3383,7 +3383,7 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
                                       false )
                       && (0 < certSize);
         kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-        kdDebug() << "findCertificates() 2nd try returned " << certificatePtr << endl;
+        kdDebug(5006) << "findCertificates() 2nd try returned " << certificatePtr << endl;
         if( findCertsOk )
           certificateList.assign( certificatePtr, certSize );
       } else {

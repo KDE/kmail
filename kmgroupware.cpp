@@ -380,8 +380,8 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
 {
   assert( msg );
   assert( s != 0 || sc != 0 );
-//   kdDebug() << "KMGroupware::vPartFoundAndDecoded( " << msg->subject() << endl;
-//   kdDebug() << msg->type() << ", " << msg->subtype() << ")" << endl;
+//   kdDebug(5006) << "KMGroupware::vPartFoundAndDecoded( " << msg->subject() << endl;
+//   kdDebug(5006) << msg->type() << ", " << msg->subtype() << ")" << endl;
 
   if( ( DwMime::kTypeText == msg->type() && ( DwMime::kSubtypeVCal   == msg->subtype() ||
 					      DwMime::kSubtypeXVCard == msg->subtype() ) ) ||
@@ -854,11 +854,11 @@ void KMGroupware::requestAddresses( QString fname )
         if( unget ) mContacts->unGetMsg(i);
       }
     }else{
-      kdDebug() << "+++KMGroupware::requestAddresses(): Contacts folder does not exist" << endl;
+      kdDebug(5006) << "+++KMGroupware::requestAddresses(): Contacts folder does not exist" << endl;
     }
     file.close();
   }else{
-    kdDebug() << "+++KMGroupware::requestAddresses(): could not open file" << endl;
+    kdDebug(5006) << "+++KMGroupware::requestAddresses(): could not open file" << endl;
   }
 }
 
@@ -886,7 +886,7 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
       }
       file.close();
     }else{
-      kdDebug() << "+++KMGroupware::storeAddresses(): could not open file" << endl;
+      kdDebug(5006) << "+++KMGroupware::storeAddresses(): could not open file" << endl;
       return false;
     }
 
@@ -895,7 +895,7 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
       if( msg )
         deleteMsg( msg );
       else
-        kdDebug() << "vCard not found, cannot remove: " << *it << endl;
+        kdDebug(5006) << "vCard not found, cannot remove: " << *it << endl;
     }
 
     for( QStringList::iterator it2 = vCards.begin(); it2 != vCards.end(); ++it2 ) {
@@ -931,7 +931,7 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
       }
     }
   }else{
-    kdDebug() << "+++KMGroupware::storeAddresses(): Contacts folder does not exist" << endl;
+    kdDebug(5006) << "+++KMGroupware::storeAddresses(): Contacts folder does not exist" << endl;
   }
   return true;
 }
@@ -1126,7 +1126,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
 
   VCalType type = getVCalType( vCalIn );
   if( type == vCalUnknown ) {
-    kdDebug() << "processVCalReply called with something that is not a vCal\n";
+    kdDebug(5006) << "processVCalReply called with something that is not a vCal\n";
     return;
   }
 
@@ -1237,7 +1237,7 @@ void KMGroupware::processVCalReply( const QCString& /*receiver*/,
 {
   VCalType type = getVCalType( vCalIn );
   if( type == vCalUnknown ) {
-    kdDebug() << "processVCalReply called with something that is not a vCal\n";
+    kdDebug(5006) << "processVCalReply called with something that is not a vCal\n";
     return;
   }
 
@@ -1399,7 +1399,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QCString& vCal, QString
 {
   VCalType type = getVCalType( vCal );
   if( type == vCalUnknown ) {
-    kdDebug() << "Unkown incidence!\n";
+    kdDebug(5006) << "Unkown incidence!\n";
     return false;
   }
 
@@ -2058,7 +2058,7 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
   // Read the vCal
   QFile file( gwData );
   if( !file.open( IO_ReadOnly ) ) {
-    kdDebug() << "Could not open file " << gwData << endl;
+    kdDebug(5006) << "Could not open file " << gwData << endl;
     return true;
   }
   QTextStream ts( &file );
@@ -2143,7 +2143,7 @@ void KMGroupware::msgRemoved( KMFolder* folder, KMMessage* msg )
   // Let's try for a note
   QString noteId = msg->headerField( "X-KOrg-Note-Id" );
   if( !noteId.isEmpty() ) {
-    kdDebug() << "%%% Deleting note with id: " << noteId << endl;
+    kdDebug(5006) << "%%% Deleting note with id: " << noteId << endl;
     emit signalNoteDeleted( noteId );
   } if( vPartFoundAndDecoded( msg, iDummy, 0, &vCal ) ) {
     QString uid( "UID" );
@@ -2157,7 +2157,7 @@ void KMGroupware::msgRemoved( KMFolder* folder, KMMessage* msg )
 	emit signalTaskDeleted( uid );
     }
   } else
-    kdDebug() << "%%% Unknown groupware deletion\n";
+    kdDebug(5006) << "%%% Unknown groupware deletion\n";
 }
 
 

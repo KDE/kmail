@@ -194,7 +194,7 @@ bool KMFolderDir::reload(void)
       if( path().startsWith( locateLocal("appdata", "imap") )
 	  && ( dir.exists( imapcachefile) || dir.exists( maildir ) ) )
       {
-	kdDebug() << "KMFolderDir creating new CachedImap folder with name " << fname << endl;
+	kdDebug(5006) << "KMFolderDir creating new CachedImap folder with name " << fname << endl;
 	folder = new KMFolderCachedImap(this, fname);
         append(folder);
         folderList.append(folder);

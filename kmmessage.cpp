@@ -308,7 +308,7 @@ void KMMessage::setStatusFields(void)
 
   str[0] = (char)signatureState();
   str[1] = '\0';
-  //kdDebug() << "Setting SignatureState header field to " << str[0] << endl;
+  //kdDebug(5006) << "Setting SignatureState header field to " << str[0] << endl;
   setHeaderField("X-KMail-SignatureState", str);
 
   str[0] = static_cast<char>( mdnSentState() );
@@ -1486,7 +1486,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // RFC 2298: [ Confirmation from the user SHOULD be obtained (or no
   // MDN sent) ] if there is more than one distinct address in the
   // Disposition-Notification-To header.
-  kdDebug() << "splitEmailAddrList(receiptTo): "
+  kdDebug(5006) << "splitEmailAddrList(receiptTo): "
 	    << splitEmailAddrList(receiptTo).join("\n") << endl;
   if ( splitEmailAddrList(receiptTo).count() > 1 ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
@@ -1501,7 +1501,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // header in the message [...]
   QStrList returnPathList = headerAddrField("Return-Path");
   QString returnPath = returnPathList.isEmpty() ? 0 : returnPathList.first() ;
-  kdDebug() << "clean return path: " << returnPath << endl;
+  kdDebug(5006) << "clean return path: " << returnPath << endl;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( returnPath.isEmpty() ?
@@ -1609,7 +1609,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   receipt->cleanupHeader();
 
-  kdDebug() << "final message:\n" + receipt->asString() << endl;
+  kdDebug(5006) << "final message:\n" + receipt->asString() << endl;
 
   //
   // Set "MDN sent" status:
@@ -1801,7 +1801,7 @@ QString KMMessage::dateStr(void) const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
-  //kdDebug()<<"####  Date = "<<header.Date().AsString().c_str()<<endl;
+  //kdDebug(5006)<<"####  Date = "<<header.Date().AsString().c_str()<<endl;
 
   return KMime::DateFormatter::formatDate(
       static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )),
@@ -2506,7 +2506,7 @@ void KMMessage::setBodyAndGuessCte(const QByteArray& aBuf,
       break;
   }
 
-  kdDebug() << "CharFreq returned " << cf.type() << "/"
+  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
         << cf.printableRatio() << " and I chose "
         << allowedCte[0] << endl;
   setCte( allowedCte[0] ); // choose best fitting
@@ -2559,7 +2559,7 @@ void KMMessage::setBodyAndGuessCte(const QCString& aBuf,
     break;
   }
 
-  kdDebug() << "CharFreq returned " << cf.type() << "/"
+  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
         << cf.printableRatio() << " and I chose "
         << allowedCte[0] << endl;
   setCte( allowedCte[0] ); // choose best fitting
@@ -2774,7 +2774,7 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
     // pending(khz): Find out WHY this look does not travel down *into* an
     //               embedded "Message/RfF822" message containing a "Multipart/Mixed"
     if (curpart && curpart->hasHeaders() ) {
-      kdDebug() << curpart->Headers().ContentType().TypeStr().c_str()
+      kdDebug(5006) << curpart->Headers().ContentType().TypeStr().c_str()
 		<< "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
     }
 

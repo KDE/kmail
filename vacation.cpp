@@ -40,7 +40,7 @@ namespace KMail {
     : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 )
   {
     mUrl = findURL();
-    kdDebug() << "Vacation: found url \"" << mUrl.url() << "\"" << endl;
+    kdDebug(5006) << "Vacation: found url \"" << mUrl.url() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mUrl.setFileName( "kmail-vacation.siv" );
@@ -52,7 +52,7 @@ namespace KMail {
   Vacation::~Vacation() {
     if ( mSieveJob ) mSieveJob->kill();
     delete mDialog;
-    kdDebug() << "~Vacation()" << endl;
+    kdDebug(5006) << "~Vacation()" << endl;
   }
 
   QString Vacation::composeScript( const QDate & returnDate, int notificationInterval ) {
@@ -136,7 +136,7 @@ namespace KMail {
 
   void Vacation::slotGetResult( SieveJob * job, bool success,
 				const QString & script, bool active ) {
-    kdDebug() << "Vacation::slotGetResult( ??, " << success
+    kdDebug(5006) << "Vacation::slotGetResult( ??, " << success
 	      << ", ?, " << active << " )" << endl
 	      << "script:" << endl
 	      << script << endl;
@@ -178,13 +178,13 @@ namespace KMail {
   }
 
   void Vacation::slotDialogOk() {
-    kdDebug() << "Vacation::slotDialogOk()" << endl;
+    kdDebug(5006) << "Vacation::slotDialogOk()" << endl;
     // compose a new script:
     QString script = composeScript( mDialog->returnDate(),
 				    mDialog->notificationInterval() );
     bool active = mDialog->activateVacation();
 
-    kdDebug() << "script:" << endl << script << endl;
+    kdDebug(5006) << "script:" << endl << script << endl;
 
     // and commit the dialog's settings to the server:
     mSieveJob = SieveJob::put( mUrl, script, active );
@@ -197,7 +197,7 @@ namespace KMail {
   }
 
   void Vacation::slotDialogCancel() {
-    kdDebug() << "Vacation::slotDialogCancel()" << endl;
+    kdDebug(5006) << "Vacation::slotDialogCancel()" << endl;
     mDialog->delayedDestruct();
     mDialog = 0;
     emit result( false );
@@ -206,7 +206,7 @@ namespace KMail {
   void Vacation::slotPutResult( SieveJob *, bool success, const QString &, bool ) {
     if ( success )
       KMessageBox::information( 0, i18n("Out of Office reply installed successfully.") );
-    kdDebug() << "Vacation::slotPutResult( ???, " << success << ", ?, ? )"
+    kdDebug(5006) << "Vacation::slotPutResult( ???, " << success << ", ?, ? )"
 	      << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );

@@ -60,7 +60,7 @@ CachedImapJob::~CachedImapJob()
 {
   mAccount->displayProgress();
   if( mJob ) {
-    // kdDebug() << "~CachedImapJob(): Removing jobdata from mapJobData" << endl;
+    // kdDebug(5006) << "~CachedImapJob(): Removing jobdata from mapJobData" << endl;
     mAccount->mapJobData.remove(mJob);
   }
 
@@ -73,7 +73,7 @@ CachedImapJob::~CachedImapJob()
   //if( mMsg ) mMsg->setTransferInProgress(false);
   mAccount->displayProgress();
 
-  // kdDebug() << "~CachedImapJob(): Removing this from joblist" << endl;
+  // kdDebug(5006) << "~CachedImapJob(): Removing this from joblist" << endl;
   mAccount->mJobList.remove(this);
 }
 
@@ -89,7 +89,7 @@ void CachedImapJob::init()
   assert( mAccount != 0 );
   if( !mAccount->makeConnection() ) {
     // No connection to the IMAP server
-    kdDebug() << "mAccount->makeConnection() failed" << endl;
+    kdDebug(5006) << "mAccount->makeConnection() failed" << endl;
     mPassiveDestructor = true;
     delete this;
     return;
@@ -175,7 +175,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       mMsg->fromString(QCString((*it).data));
       //int idx = mFolder->find(mMsg);
       //if( idx >= 0 ) mFolder->take(idx);
-      //else kdDebug() << "weird, message not in folder!?!" << endl;
+      //else kdDebug(5006) << "weird, message not in folder!?!" << endl;
       mMsg->setHeaderField("X-UID",uid);
 
       mMsg->setTransferInProgress( FALSE );
@@ -306,7 +306,7 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
     delete this;
     return;
   } else {
-    // kdDebug() << "resulting data \"" << QCString((*it).data) << "\"" << endl;
+    // kdDebug(5006) << "resulting data \"" << QCString((*it).data) << "\"" << endl;
     emit messageStored(mMsg);
     int i;
     if( ( i = mFolder->find(mMsg) ) != -1 ) {
@@ -336,7 +336,7 @@ void CachedImapJob::slotAddNextSubfolder(KIO::Job * job)
       QString myError = "<qt><p><b>" + i18n("Error while uploading folder")
 	+ "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
 	+ "</p><p>" + i18n("This could be because you don't have permission to do this or because the directory is already present on the server. The error message from the server communication is here:") + "</p>";
-      // kdDebug() << "Error messages:\n 0: " << errors[0].latin1() << "\n 1: " << errors[1].latin1() << "\n 2: " << errors[2].latin1() << endl;
+      // kdDebug(5006) << "Error messages:\n 0: " << errors[0].latin1() << "\n 1: " << errors[1].latin1() << "\n 2: " << errors[2].latin1() << endl;
       KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2], errors[0] );
     }
     static_cast<KMFolderCachedImap*>((*it).parent)->setSilentUpload( false );
@@ -432,21 +432,21 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
   int a = cstr.find("X-uidValidity: ");
   if (a < 0) {
     // Something is seriously rotten here! TODO: Tell the user that he has a problem
-    kdDebug() << "No uidvalidity available for folder " << mFolder->name() << endl;
+    kdDebug(5006) << "No uidvalidity available for folder " << mFolder->name() << endl;
     return;
   }
   int b = cstr.find("\r\n", a);
   if ( (b - a - 15) >= 0 ) {
     QString uidv = cstr.mid(a + 15, b - a - 15);
-    // kdDebug() << "New uidv = " << uidv << ", old uidv = " << mFolder->uidValidity()
+    // kdDebug(5006) << "New uidv = " << uidv << ", old uidv = " << mFolder->uidValidity()
     // << endl;
     if( mFolder->uidValidity() != "" && mFolder->uidValidity() != uidv ) {
-      // kdDebug() << "Expunging the mailbox " << mFolder->name() << "!" << endl;
+      // kdDebug(5006) << "Expunging the mailbox " << mFolder->name() << "!" << endl;
       mFolder->expunge();
       mFolder->setLastUid( 0 );
     }
   } else
-    kdDebug() << "No uidvalidity available for folder " << mFolder->name() << endl;
+    kdDebug(5006) << "No uidvalidity available for folder " << mFolder->name() << endl;
 
 #if 0
   // Set access control on the folder

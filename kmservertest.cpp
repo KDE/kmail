@@ -69,8 +69,8 @@ KMServerTest::~KMServerTest()
 void KMServerTest::slotData(KIO::Job *, const QString &data)
 {
   mList = QStringList::split(' ', data);
-kdDebug() << data << endl;
-kdDebug() << "count = " << mList.count() << endl;
+kdDebug(5006) << data << endl;
+kdDebug(5006) << "count = " << mList.count() << endl;
 }
 
 

@@ -1379,8 +1379,8 @@ void AccountDialog::saveSettings()
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kernel->imapFolderMgr()->find(mAccount->name() ) );
-    kdDebug() << mAccount->name() << endl;
-    //kdDebug() << "account for folder " << mAccount->folder()->name() << endl;
+    kdDebug(5006) << mAccount->name() << endl;
+    //kdDebug(5006) << "account for folder " << mAccount->folder()->name() << endl;
 
     KMAcctCachedImap &epa = *(KMAcctCachedImap*)mAccount;
     epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );

@@ -88,11 +88,11 @@ void WizardIdentityPage::apply() const {
   ident.setOrganization( orgEdit->text().stripWhiteSpace() );
   ident.setEmailAddr( emailEdit->text().stripWhiteSpace() );
 
-  kdDebug() << "Writing identity: " << ident.identityName() << ", full name: "
+  kdDebug(5006) << "Writing identity: " << ident.identityName() << ", full name: "
 	    << ident.fullName() << ", uoid: " << ident.uoid() << ", org:"
 	    << ident.organization() << ", email: " << ident.emailAddr() << endl;
 
-  kdDebug() << ", Identitylist: " << kernel->identityManager()->identities().count()
+  kdDebug(5006) << ", Identitylist: " << kernel->identityManager()->identities().count()
 	    << ", " << kernel->identityManager()->identities()[0] << endl;
 
   kernel->identityManager()->sort();
@@ -207,7 +207,7 @@ void WizardKolabPage::apply()
   kernel->acctMgr()->writeConfig( false );
 
   // Sync new IMAP account ASAP
-  kdDebug() << mAccount->folder()->name() << endl;
+  kdDebug(5006) << mAccount->folder()->name() << endl;
 
   if( mFolder == 0 ) {
     KMFolderDir *child = mAccount->folder()->child();
@@ -496,7 +496,7 @@ void KMGroupwareWizard::back()
 void KMGroupwareWizard::next()
 {
   if( currentPage() == mAccountPage ) {
-    kdDebug() << "AccountPage appropriate: " << appropriate(mAccountPage) << endl;
+    kdDebug(5006) << "AccountPage appropriate: " << appropriate(mAccountPage) << endl;
     mAccountWidget->apply();
   } else if( currentPage() == mFolderSelectionPage ) {
     /* Find the list of folders and guess the language */

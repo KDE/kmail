@@ -738,7 +738,7 @@ void KMKernel::cleanupImapFolders()
     KMAcctCachedImap *cachedImapAcct;
 
     if (acct->type() != "cachedimap" ) continue;
-    kdDebug() << "findorCreating " << acct->name() << endl;
+    kdDebug(5006) << "findorCreating " << acct->name() << endl;
 
     cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->find(acct->name()));
     if (cfld == 0) {

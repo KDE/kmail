@@ -64,7 +64,7 @@ namespace KMail {
   }
 
   VacationDialog::~VacationDialog() {
-    kdDebug() << "~VacationDialog()" << endl;
+    kdDebug(5006) << "~VacationDialog()" << endl;
   }
 
   bool VacationDialog::activateVacation() const {

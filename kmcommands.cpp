@@ -189,7 +189,7 @@ void KMCommand::transferSelectedMsgs()
     if (thisMsg->transferInProgress()) continue;
 
     if ( thisMsg->parent() && !thisMsg->isComplete() && !mProgressDialog->wasCancelled() )
-        kdDebug()<<"### HERE, protocol = "<<thisMsg->parent()->protocol() <<endl;
+        kdDebug(5006)<<"### HERE, protocol = "<<thisMsg->parent()->protocol() <<endl;
     if (thisMsg->parent()  && !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
     {
       // the message needs to be transferred first

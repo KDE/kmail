@@ -14,7 +14,7 @@ struct save_tz set_tz( const char* _tc )
   rv.old_tz = 0;
   rv.tz_env_str = 0;
 
-  //kdDebug() << "set_tz(), timezone before = " << timezone << endl;
+  //kdDebug(5006) << "set_tz(), timezone before = " << timezone << endl;
 
   char* tz_env = 0;
   if( getenv( "TZ" ) ) {
@@ -31,7 +31,7 @@ struct save_tz set_tz( const char* _tc )
   /* tmp_env is not free'ed -- it is part of the environment */
 
   tzset();
-  //kdDebug() << "set_tz(), timezone after = " << timezone << endl;
+  //kdDebug(5006) << "set_tz(), timezone after = " << timezone << endl;
 
   return rv;
 }

@@ -367,7 +367,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
 void IdentityPage::setup()
 {
-  kdDebug() << "IdentityPage::setup()" << endl;
+  kdDebug(5006) << "IdentityPage::setup()" << endl;
   IdentityManager * im = kernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
@@ -550,7 +550,7 @@ void IdentityPage::refreshList() {
 }
 
 void IdentityPage::slotIdentitySelectionChanged( QListViewItem * i ) {
-  kdDebug() << "IdentityPage::slotIdentitySelectionChanged( " << i << " )" << endl;
+  kdDebug(5006) << "IdentityPage::slotIdentitySelectionChanged( " << i << " )" << endl;
 
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
@@ -1620,7 +1620,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * n
 
 void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 {
-  kdDebug() << "slotFontSelectorChanged() called" << endl;
+  kdDebug(5006) << "slotFontSelectorChanged() called" << endl;
   if( index < 0 || index >= mFontLocationCombo->count() )
     return; // Should never happen, but it is better to check.
 
@@ -1673,7 +1673,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
     if ( fonts.hasKey( fontNames[i].configName ) ) {
       needChange = true;
       mFont[i] = fonts.readFontEntry( fontNames[i].configName );
-      kdDebug() << "got font \"" << fontNames[i].configName
+      kdDebug(5006) << "got font \"" << fontNames[i].configName
 		<< "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
     }
   if ( needChange && mFontLocationCombo->currentItem() > 0 )
@@ -2201,7 +2201,7 @@ void AppearancePage::HeadersTab::apply() {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
       QStringList groups = KMKernel::config()->groupList().grep( QRegExp("^Folder-") );
-      kdDebug() << "groups.count() == " << groups.count() << endl;
+      kdDebug(5006) << "groups.count() == " << groups.count() << endl;
       for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
 	KConfigGroup group( KMKernel::config(), *it );
 	group.deleteEntry( "threadMessagesOverride" );
@@ -3794,7 +3794,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
 
 void SecurityPage::CryptPlugTab::setup()
 {
-  kdDebug() << "CryptPlugTab::setup(): found "
+  kdDebug(5006) << "CryptPlugTab::setup(): found "
 	    << kernel->cryptPlugList()->count()
 	    << " CryptPlugWrappers." << endl;
   mPlugList->clear();
@@ -3804,7 +3804,7 @@ void SecurityPage::CryptPlugTab::setup()
   QListViewItem * top = 0;
   for ( CryptPlugWrapperListIterator it( *(kernel->cryptPlugList()) ) ;
 	it.current() ; ++it, ++i ) {
-    kdDebug() << "processing { \"" << (*it)->displayName()
+    kdDebug(5006) << "processing { \"" << (*it)->displayName()
 	      << "\", \"" << (*it)->libName()
 	      << "\", " << (*it)->active() << " }" << endl;
     if( !(*it)->displayName().isEmpty() ) {
@@ -4076,7 +4076,7 @@ void GroupwarePage::setup()
 
 void GroupwarePage::installProfile( KConfig * /*profile*/ )
 {
-  kdDebug() << "NYI: void GroupwarePage::installProfile( KConfig * /*profile*/ )" << endl;
+  kdDebug(5006) << "NYI: void GroupwarePage::installProfile( KConfig * /*profile*/ )" << endl;
 }
 
 void GroupwarePage::apply()

@@ -1721,7 +1721,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
         i18n("..continued", "'Settings->Configure KMail->Security' dialog."),
         decryptedData );
     } else {
-      kdDebug() << "\nKMReaderWin::decryptMIME: going to call CRYPTPLUG "
+      kdDebug(5006) << "\nKMReaderWin::decryptMIME: going to call CRYPTPLUG "
                 << cryptPlug->libName() << endl;
       int errId = 0;
       char* errTxt = 0;
@@ -1743,7 +1743,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                                                          &sigMeta,
                                                          &errId,
                                                          &errTxt );
-      kdDebug() << "\nKMReaderWin::decryptMIME: returned from CRYPTPLUG" << endl;
+      kdDebug(5006) << "\nKMReaderWin::decryptMIME: returned from CRYPTPLUG" << endl;
       aErrorText = tmpHelper::pluginErrorIdToErrorText( errId, passphraseError );
       if( bDecryptionOk )
         decryptedData = cleartext;
@@ -1851,7 +1851,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
     //            During code revisal when switching to KMime
     //            all this will probably disappear anyway (or it
     //            will be optimized, resp.).       (khz, 6.12.2001)
-    kdDebug() << "*no* first body part found, creating one from Message" << endl;
+    kdDebug(5006) << "*no* first body part found, creating one from Message" << endl;
     mainBody = new DwBodyPart(aMsg->asDwString(), 0);
     mainBody->Parse();
   }

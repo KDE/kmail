@@ -173,7 +173,7 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
       break;
   }
 
-  kdDebug() << "CharFreq returned " << cf.type() << "/"
+  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
 	    << cf.printableRatio() << " and I chose "
 	    << allowedCte[0] << endl;
   setCte( allowedCte[0] ); // choose best fitting
@@ -227,7 +227,7 @@ void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
       break;
   }
 
-  kdDebug() << "CharFreq returned " << cf.type() << "/"
+  kdDebug(5006) << "CharFreq returned " << cf.type() << "/"
 	    << cf.printableRatio() << " and I chose "
 	    << allowedCte[0] << endl;
   setCte( allowedCte[0] ); // choose best fitting

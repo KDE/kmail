@@ -325,12 +325,12 @@ void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
     if ( !(*it).msgList.isEmpty() )
     {
       const ulong * sernum = (ulong *)(*it).msgList.last()->getMsgSerNum();
-      kdDebug() << "insert sernum " << (*it).msgList.last()->getMsgSerNum() << " for " << uid << endl;
+      kdDebug(5006) << "insert sernum " << (*it).msgList.last()->getMsgSerNum() << " for " << uid << endl;
       imapFolder->insertUidSerNumEntry(uid, sernum);
     } else if (mMsgList.first())
     {
       const ulong * sernum = (ulong *)mMsgList.first()->getMsgSerNum();
-      kdDebug() << "insert sernum " << mMsgList.first()->getMsgSerNum() << " for " << uid << endl;
+      kdDebug(5006) << "insert sernum " << mMsgList.first()->getMsgSerNum() << " for " << uid << endl;
       imapFolder->insertUidSerNumEntry(uid, sernum);
     }
   }

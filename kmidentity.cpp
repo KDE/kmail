@@ -281,7 +281,7 @@ void KMIdentity::readConfig( const KConfigBase * config )
   mTransport = config->readEntry("Transport");
 
   mSignature.readConfig( config );
-  kdDebug() << "KMIdentity::readConfig(): UOID = " << mUoid
+  kdDebug(5006) << "KMIdentity::readConfig(): UOID = " << mUoid
 	    << " for identity named \"" << mIdentity << "\"" << endl;
 }
 
