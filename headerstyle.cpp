@@ -383,76 +383,74 @@ namespace KMail {
     // unless really necessary
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
     QString kabcUid;
-    if ( ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) ) 
-          && ( imProxy->imAddresseeUids().count() > 0 ) )
+    if ( ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) ) )
     {
-      KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-      KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
-  
-      if( addresses.count() == 1 )
+      if ( imProxy->initialize() )
       {
-        // kabcUid is embedded in im: URIs to indicate which IM contact to message
-        kabcUid = addresses[0].uid();
-        
-        // im status
-        presence = imProxy->presenceString( kabcUid );
-        kdDebug( 5006 ) << "got presence: '" << presence << "'" << endl;
-        // picture
-        if ( strategy->showHeader( "statuspic" ) )
+        KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+        KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
+    
+        if( addresses.count() == 1 )
         {
-          QString photoURL;
-          if ( addresses[0].photo().isIntern() )
+          // kabcUid is embedded in im: URIs to indicate which IM contact to message
+          kabcUid = addresses[0].uid();
+          
+          // im status
+          presence = imProxy->presenceString( kabcUid );
+          // picture
+          if ( strategy->showHeader( "statuspic" ) )
           {
-            // get photo data and convert to data: url
-            //kdDebug( 5006 ) << "INTERNAL photo found" << endl;
-            QImage photo = addresses[0].photo().data();
-            if ( !photo.isNull() )
+            QString photoURL;
+            if ( addresses[0].photo().isIntern() )
             {
-                QByteArray ba;
-                QBuffer buffer( ba );
-                buffer.open( IO_WriteOnly );
-                photo.save( &buffer, "PNG" );
-                photoURL = QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
-            }
-          }
-          else
-          {
-            //kdDebug( 5006 ) << "URL found" << endl;
-            photoURL = addresses[0].photo().url();
-            if ( photoURL.startsWith("/") )
-              photoURL.prepend( "file:" );
-          }
-          if( !photoURL.isEmpty() )
-          {
-            //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
-            userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
-            if ( presence.isEmpty() )
-            {  
-              userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
+              // get photo data and convert to data: url
+              //kdDebug( 5006 ) << "INTERNAL photo found" << endl;
+              QImage photo = addresses[0].photo().data();
+              if ( !photo.isNull() )
+              {
+                  QByteArray ba;
+                  QBuffer buffer( ba );
+                  buffer.open( IO_WriteOnly );
+                  photo.save( &buffer, "PNG" );
+                  photoURL = QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
+              }
             }
             else
-              userHTML = QString( "<div class=\"senderpic\">"
-                                    "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
-                                    "</div>" ).arg( kabcUid )
-                                              .arg( userHTML )
-                                              .arg( presence );
+            {
+              //kdDebug( 5006 ) << "URL found" << endl;
+              photoURL = addresses[0].photo().url();
+              if ( photoURL.startsWith("/") )
+                photoURL.prepend( "file:" );
+            }
+            if( !photoURL.isEmpty() )
+            {
+              //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
+              userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
+              if ( presence.isEmpty() )
+              {  
+                userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
+              }
+              else
+                userHTML = QString( "<div class=\"senderpic\">"
+                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
+                                      "</div>" ).arg( kabcUid )
+                                                .arg( userHTML )
+                                                .arg( presence );
+            }
           }
+        }
+        else
+        {
+          kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
+          userHTML = "&nbsp;";
         }
       }
       else
-      {
-        kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
-        userHTML = "&nbsp;";
-      }
-	}
-    // if there are apps available, but presence is still empty, they must be turned off
-    if ( presence.isEmpty() )
-    {
-      if ( imProxy->imAppsAvailable() && !imProxy->isPresent( kabcUid ) )
-        presence = i18n( "No IM application running" );
-      //else - testing only!
-        //presence = i18n( "DCOP/InstantMessenger not installed" );
+        if ( imProxy->imAppsAvailable() )
+          presence = "<a href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     }
+    // do nothing - no im apps available, leave presence empty
+    //presence = i18n( "DCOP/InstantMessenger not installed" );
     kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
     //case HdrFancy:
     // the subject line and box below for details
@@ -469,8 +467,8 @@ namespace KMail {
     // QString::arg is not possible
     if ( strategy->showHeader( "from" ) )
       headerStr += QString("<tr><th>%1</th>\n"
-			   "<td>")
-                         .arg(i18n("From: "))
+                           "<td>")
+                           .arg(i18n("From: "))
                  + KMMessage::emailAddrAsAnchor(message->from(),FALSE)
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
@@ -487,39 +485,39 @@ namespace KMail {
     // to line
     if ( strategy->showHeader( "to" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
-			       "<td>%2</td></tr>\n")
+                   "<td>%2</td></tr>\n")
                             .arg(i18n("To: "))
                             .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
-			       "<td>%2</td></tr>\n")
+                   "<td>%2</td></tr>\n")
                               .arg(i18n("CC: "))
                               .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
       headerStr.append(QString("<tr><th>%1</th>\n"
-			       "<td>%2</td></tr>\n")
+                   "<td>%2</td></tr>\n")
                               .arg(i18n("BCC: "))
                               .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
-			       "<td dir=\"%2\">%3</td></tr>\n")
+                   "<td dir=\"%2\">%3</td></tr>\n")
                             .arg(i18n("Date: "))
-		            .arg( directionOf( message->dateStr() ) )
+                    .arg( directionOf( message->dateStr() ) )
                             .arg(strToHtml(dateString)));
 
-	// FIXME: Show status in synthetic header style field.  Decide whether this or current in brackets style is best and remove one.
-	/*    if( strategy->showHeader( "status" ) )
+    // FIXME: Show status in synthetic header style field.  Decide whether this or current in brackets style is best and remove one.
+    /*    if( strategy->showHeader( "status" ) )
       headerStr.append( QString( "<tr><th>%1</th>\n"
                                  "<td dir=\"%2\">%3</td></tr>\n")
                                     .arg(i18n("Sender status: "))
                                     .arg( directionOf( onlineStatus ) )
                                     .arg(onlineStatus));
-	*/
+    */
     headerStr.append(
           QString("</table></td><td align=\"center\">%1</td></tr></table>\n").arg(userHTML)
                      );

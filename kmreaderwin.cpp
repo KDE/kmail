@@ -784,7 +784,7 @@ void KMReaderWin::initHtmlWidget(void)
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
-  connect( kmkernel->imProxy(), SIGNAL( sigContactStatusChanged( const QString & ) ), 
+  connect( kmkernel->imProxy(), SIGNAL( sigContactPresenceChanged( const QString & ) ), 
           this, SLOT( contactStatusChanged( const QString & ) ) );
   connect( kmkernel->imProxy(), SIGNAL( sigPresenceInfoExpired() ), 
           this, SLOT( updateReaderWin() ) );
@@ -801,10 +801,13 @@ void KMReaderWin::contactStatusChanged( const QString &uid)
 		DOM::Node n =  presenceNodes.item( i );
 		kdDebug( 5006 ) << "name is " << n.nodeName().string() << endl;
 		kdDebug( 5006 ) << "value of content was " << n.firstChild().nodeValue().string() << endl;
-        n.firstChild().setNodeValue( kmkernel->imProxy()->presenceString( uid ) );
+        QString newPresence = kmkernel->imProxy()->presenceString( uid );
+		if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString::null )
+			newPresence = QString::fromLatin1( "ENOIMRUNNING" );
+		n.firstChild().setNodeValue( newPresence );
         kdDebug( 5006 ) << "value of content is now " << n.firstChild().nodeValue().string() << endl;
 	}
-	kdDebug( 5006 ) << "That's all folks! " << uid << endl;
+	kdDebug( 5006 ) << "and we updated the above presence nodes" << uid << endl;
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {

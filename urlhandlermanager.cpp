@@ -2,7 +2,7 @@
     urlhandlermanager.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002-2003 Klarälvdalens Datakonsult AB
+    Copyright (c) 2002-2003 Klarï¿½vdalens Datakonsult AB
     Copyright (c) 2003      Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
@@ -42,6 +42,7 @@
 #include "partnodebodypart.h"
 #include "kmreaderwin.h"
 #include "callback.h"
+#include "kimproxy.h"
 
 #include <kurl.h>
 
@@ -342,13 +343,24 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 
 namespace {
   bool ShowHtmlSwitchURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
-    if ( url.protocol() != "kmail" || url.path() != "showHTML" )
-      return false;
-    if ( w ) {
-      w->setHtmlOverride( !w->htmlOverride() );
-      w->update( true );
+    if ( url.protocol() == "kmail" )
+	{
+	  if ( url.path() == "showHTML" )
+	  {
+	    if ( w ) {
+            w->setHtmlOverride( !w->htmlOverride() );
+            w->update( true );
+        }
+        return true;
+      }
+      if ( url.path() == "startIMApp" )
+      {
+        kmkernel->imProxy()->startPreferredApp();
+        return true;
+      }
+      //FIXME: handle startIMApp urls in their own handler, or rename this one
     }
-    return true;
+    return false;
   }
 
   QString ShowHtmlSwitchURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
