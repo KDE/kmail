@@ -1846,7 +1846,7 @@ void ConfigureDialog::setupMiscPage( void )
   mMisc.showMessageBoxCheck->setChecked( state );
   state = config.readBoolEntry("exec-on-mail", false);
   mMisc.mailCommandCheck->setChecked( state );
-  mMisc.mailCommandEdit->setText( config.readEntry("mail-notify-cmd", ""));
+  mMisc.mailCommandEdit->setText( config.readEntry("exec-on-mail-cmd", ""));
   slotExternalEditorSelectionChanged();
   slotMailCommandSelectionChanged();
 }
