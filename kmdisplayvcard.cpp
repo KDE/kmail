@@ -47,7 +47,7 @@ void KMDisplayVCard::setVCard(VCard *vc) {
 void KMDisplayVCard::BuildInterface() {
 
   setOkButton(i18n("&Close"));
-  setCaption(i18n("VCard Viewer"));
+  setCaption(i18n("vCard Viewer"));
 
   addTab(getFirstTab(), i18n("&Name"));
   addTab(getSecondTab(), i18n("&Address"));
