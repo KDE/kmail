@@ -48,6 +48,7 @@ using namespace KMime::Types;
 #include <time.h>
 #include <klocale.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
