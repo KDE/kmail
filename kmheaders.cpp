@@ -11,6 +11,11 @@
 #include <qstack.h>
 #include <qqueue.h>
 #include <qheader.h>
+#include <qpainter.h>
+
+#if QT_VERSION < 300
+#  define Q_ASSERT ASSERT
+#endif
 
 #include <kaction.h>
 #include <kapp.h>
@@ -2761,7 +2766,7 @@ public:
     }
 
     inline KMHeaderItem *item() const { return mItem; }
-    inline void setItem(KMHeaderItem *i) { ASSERT(!mItem); mItem = i; }
+    inline void setItem(KMHeaderItem *i) { Q_ASSERT(!mItem); mItem = i; }
 
     inline const QString &key() const { return mKey; }
     inline void setKey(const QString &key) { mKey = key; }
