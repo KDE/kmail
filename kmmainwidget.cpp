@@ -1184,7 +1184,7 @@ void KMMainWidget::slotForwardMsg()
   } else {
     command = new KMForwardCommand( this, mHeaders->currentMsg(), mFolder->identity() );
   }
-    
+
   command->start();
 }
 
@@ -1199,7 +1199,7 @@ void KMMainWidget::slotForwardAttachedMsg()
   } else {
     command = new KMForwardAttachedCommand( this, mHeaders->currentMsg(), mFolder->identity() );
   }
-    
+
   command->start();
 }
 
@@ -2462,35 +2462,32 @@ void KMMainWidget::setupActions()
   mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
                                  0, this, SLOT(slotSetMsgStatusFlag()),
                                  actionCollection(), "status_flag");
+  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
   mStatusMenu->insert( mToggleFlagAction );
 
   mToggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
-
+  mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
   mStatusMenu->insert( mToggleRepliedAction );
+
   mToggleForwardedAction = new KToggleAction(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
                                  0, this, SLOT(slotSetMsgStatusForwarded()),
                                  actionCollection(), "status_forwarded");
+  mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
   mStatusMenu->insert( mToggleForwardedAction );
 
   mToggleQueuedAction = new KToggleAction(i18n("Mark Message as &Queued"), "kmmsgqueued",
                                  0, this, SLOT(slotSetMsgStatusQueued()),
                                  actionCollection(), "status_queued");
+  mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
   mStatusMenu->insert( mToggleQueuedAction );
 
   mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
                                  0, this, SLOT(slotSetMsgStatusSent()),
                                  actionCollection(), "status_sent");
-  mStatusMenu->insert( mToggleSentAction );
-
-#if KDE_IS_VERSION(3,2,90)
-  mToggleFlagAction->setCheckedState( i18n("Remove &Important Message Mark") );
-  mToggleRepliedAction->setCheckedState( i18n("Mark Message as Not Re&plied") );
-  mToggleForwardedAction->setCheckedState( i18n("Mark Message as Not &Forwarded") );
-  mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
   mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
-#endif
+  mStatusMenu->insert( mToggleSentAction );
 
   mStatusMenu->insert( new KActionSeparator( this ) );
 
@@ -2532,37 +2529,34 @@ void KMMainWidget::setupActions()
   mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "kmmsgflag",
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
+  mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
   mThreadStatusMenu->insert( mToggleThreadFlagAction );
 
   mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
                                        0, this, SLOT(slotSetThreadStatusReplied()),
                                        actionCollection(), "thread_replied");
+  mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
   mThreadStatusMenu->insert( mToggleThreadRepliedAction );
 
   mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
                                        0, this, SLOT(slotSetThreadStatusForwarded()),
                                        actionCollection(), "thread_forwarded");
+  mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
   mThreadStatusMenu->insert( mToggleThreadForwardedAction );
 
   mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
                                        0, this, SLOT(slotSetThreadStatusQueued()),
                                        actionCollection(), "thread_queued");
+  mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
   mThreadStatusMenu->insert( mToggleThreadQueuedAction );
 
   mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
                                        0, this, SLOT(slotSetThreadStatusSent()),
                                        actionCollection(), "thread_sent");
+  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Not &Sent") );
   mThreadStatusMenu->insert( mToggleThreadSentAction );
 
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
-
-#if KDE_IS_VERSION(3,2,90)
-  mToggleThreadFlagAction->setCheckedState( i18n("Remove &Important Thread Mark") );
-  mToggleThreadRepliedAction->setCheckedState( i18n("Mark Thread as Not R&eplied") );
-  mToggleThreadForwardedAction->setCheckedState( i18n("Mark Thread as Not &Forwarded") );
-  mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
-  mToggleThreadSentAction->setCheckedState( i18n("Mark Thread as Not &Sent") );
-#endif
 
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
