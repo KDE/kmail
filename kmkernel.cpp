@@ -115,6 +115,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_msgSender = 0;
   mWin = 0;
 
+  // make sure that we check for config updates before doing anything else
+  KMKernel::config();
+
   mGroupware = new KMGroupware( this );
 
   // Set up DCOP interface
