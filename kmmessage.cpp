@@ -8,6 +8,8 @@
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
 #include "mailinglist-magic.h"
+#include "objecttreeparser.h"
+using KMail::ObjectTreeParser;
 #include <kpgp.h>
 #include <kpgpblock.h>
 #include <kdebug.h>
@@ -759,13 +761,13 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
   partNode* curNode = rootNode.setFirstChild( new partNode( &dwPart ) );
   curNode->buildObjectTree( false );
   // initialy parse the complete message to decrypt any encrypted parts
-  KMReaderWin::parseObjectTree( 0,
-                                0,
-                                0,
-                                &rootNode,
-                                true,
-                                false,
-                                true );
+  ObjectTreeParser::parseObjectTree( 0,
+				     0,
+				     0,
+				     &rootNode,
+				     true,
+				     false,
+				     true );
   curNode = curNode->findType( DwMime::kTypeText,
                                DwMime::kSubtypeUnknown,
                                true,
@@ -775,13 +777,13 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->type();
     // now parse the TEXT message part we want to quote
-    KMReaderWin::parseObjectTree( 0,
-                                  &parsedString,
-                                  0,
-                                  curNode,
-                                  true,
-                                  false,
-                                  true );
+    ObjectTreeParser::parseObjectTree( 0,
+				       &parsedString,
+				       0,
+				       curNode,
+				       true,
+				       false,
+				       true );
   }
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    parsed string:\n\""
                 << QString( parsedString + "\"\n\n" ) << endl;

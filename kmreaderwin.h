@@ -1,4 +1,4 @@
-// Header for kmreaderwin the kmail reader
+// Header for kmreaderwin the kmail reader -*- c++ -*-
 // written by Markus Wuebben <markus.wuebben@kde.org>
 
 #ifndef KMREADERWIN_H
@@ -208,6 +208,7 @@ public:
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
 // static functions:
 
+ private:
     /** find a plugin matching a given libName */
     static bool foundMatchingCryptPlug( QString libName,
                                         CryptPlugWrapper** useThisCryptPlug_ref,
@@ -238,7 +239,7 @@ public:
                                  bool showOneMimePart=false,
                                  bool keepEncryptions=false,
                                  bool includeSignatures=true );
-
+ public:
     // This function returns the complete data that were in this
     // message parts - *after* all encryption has been removed that
     // could be removed.
