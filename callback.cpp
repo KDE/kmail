@@ -59,50 +59,24 @@ bool Callback::mailICal( const QString& to, const QString iCal,
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
-  //  msg->setTypeStr( "text" );
-  // msg->setSubtypeStr( "calendar" );
-  // msg->setContentTypeParam( "method", "reply" );
-  msg->setHeaderField( "Content-Type",
-                       "text/calendar; method=reply; charset=\"utf-8\"" );
-  // msg->setCharset( "utf-8" );
+  msg->setCharset( "utf-8" );
   msg->setSubject( subject );
   msg->setTo( to );
   msg->setBody( iCal.utf8() );
-  msg->setFrom( receiver() );
 
   KMComposeWin *cWin = new KMComposeWin(msg);
-  // cWin->setCharset( "", true );
-  cWin->slotWordWrapToggled( false );
-
-#if 0
+  cWin->setCharset( "", true );
   KMMessagePart *msgPart = new KMMessagePart;
-  msgPart->setTypeStr( "text" );
-  msgPart->setSubtypeStr( "calendar" );
-  msgPart->setParameter( "method", "reply" );
   msgPart->setName( "cal.ics");
   msgPart->setCteStr( "7bit" );
   msgPart->setBodyEncoded( iCal.utf8() );
+  msgPart->setTypeStr( "text" );
+  msgPart->setSubtypeStr( "calendar" );
+  msgPart->setParameter( "method", "reply" );
   msgPart->setContentDisposition( "attachment" );
   cWin->addAttach( msgPart );
-#endif
 
-  // Outlook will only understand the reply if the From: header is the
-  // same as the To: header of the invitation message.
-  KConfigGroup options( KMKernel::config(), "Groupware" );
-  if( options.readBoolEntry( "LegacyMangleFromToHeaders", true ) )
-    msg->setFrom( receiver() );
-  else {
-    // Try and match the receiver with an identity
-    const KPIM::Identity& identity =
-      kmkernel->identityManager()->identityForAddress( receiver() );
-    if( identity != KPIM::Identity::null )
-      // Identity found. Use this
-      msg->setFrom( identity.fullEmailAddr() );
-    else
-      // No usable identity
-      msg->setFrom( receiver() );
-  }
-
+  cWin->slotWordWrapToggled( false );
   // TODO: These are no longer available. It was an internal
   // implementation detail of kmcomposewin, anyway. Please find
   // another way...
@@ -128,26 +102,18 @@ QString Callback::receiver() const
 
   mReceiverSet = true;
 
-  QStringList addrs = KPIM::splitEmailAddrList( mMsg->to() );
-  if( addrs.count() < 2 )
-    // Only one receiver, so that has to be us
-    mReceiver = mMsg->to();
-  else {
-    bool found = false;
-    for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
-      if( kmkernel->identityManager()->identityForAddress( *it ) !=
-          KPIM::Identity::null ) {
-	// Ok, this could be us
-	if( found != 0 ) {
-	  // Whoops! Something is wrong here. Found more than one
-          found = false;
-          break;
-        } else
-          mReceiver = *it;
-      }
-    }
+  const KPIM::Identity & ident =
+    kmkernel->identityManager()->identityForAddress( mMsg->to() );
 
-    if( !found ) {
+  if( !ident.isNull() ) {
+    // That was easy
+    mReceiver = ident.emailAddr();
+  } else {
+    QStringList addrs = KPIM::splitEmailAddrList( mMsg->to() );
+    if( addrs.count() == 1 )
+      // Don't ask the user to choose between 1 items
+      mReceiver = addrs[0];
+    else {
       bool ok;
       mReceiver =
         KInputDialog::getItem( i18n( "Select Address" ),
