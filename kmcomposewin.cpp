@@ -1830,17 +1830,17 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type to
            attachPart;
            attachPart = mAtmList.next(), ++idx ) {
 kdDebug(5006) << "                                 processing " << idx << ". attachment" << endl;
-        
-        bool runPlugin = cryptPlug
-                       ? (    (encryptFlagOfAttachment( idx ) != doEncrypt)
-                           || (signFlagOfAttachment( idx )    != doSign) )
-                       : false;
-        bool encryptThisNow = runPlugin ? encryptFlagOfAttachment( idx ) : false;
-        bool signThisNow    = runPlugin ? signFlagOfAttachment( idx )    : false;
 
-        if( !earlyAddAttachments || encryptThisNow || signThisNow ) {
+        bool cryptFlagsDifferent = cryptPlug
+                        ? (    (encryptFlagOfAttachment( idx ) != doEncrypt)
+                            || (signFlagOfAttachment(    idx ) != doSign) )
+                        : false;
+        bool encryptThisNow = cryptFlagsDifferent ? encryptFlagOfAttachment( idx ) : false;
+        bool signThisNow    = cryptFlagsDifferent ? signFlagOfAttachment(    idx ) : false;
 
-          if( signThisNow || encryptThisNow ) {
+        if( cryptFlagsDifferent || !earlyAddAttachments ) {
+
+          if( encryptThisNow || signThisNow ) {
 
             KMMessagePart& rEncryptMessagePart( *attachPart );
 
@@ -1928,11 +1928,10 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
                   KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
               }
             }
-          }
-          if( signThisNow || encryptThisNow )
             msg->addBodyPart( &newAttachPart );
-          else
+          } else
             msg->addBodyPart( attachPart );
+
 kdDebug(5006) << "                                 added " << idx << ". attachment to this Multipart/Mixed" << endl;
         } else {
 kdDebug(5006) << "                                 " << idx << ". attachment was part of the BODY allready" << endl;
