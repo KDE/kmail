@@ -854,11 +854,30 @@ void AccountsPage::SendingTab::slotModifySelectedTransport()
   emit changed( true );
 }
 
-
 void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 {
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
+
+  QStringList changedIdents;
+  KPIM::IdentityManager * im = kmkernel->identityManager();
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin(); it != im->modifyEnd(); ++it ) {
+    if ( item->text( 0 ) == (*it).transport() ) {
+      (*it).setTransport( QString::null );
+      changedIdents += (*it).identityName();
+    }
+  }
+
+  // this part cannot be backported to BRANCH since it holds new strings
+  if ( !changedIdents.isEmpty() ) {
+    QString information;
+    if ( changedIdents.count() > 1 ) {
+      information = i18n( "These identitites have been changed to use the default transport:" );
+    } else {
+      information = i18n( "This identity has been changed to use the default transport:" );
+    }
+    KMessageBox::informationList( this, information, changedIdents );
+  }
 
   QPtrListIterator<KMTransportInfo> it( mTransportInfoList );
   for ( it.toFirst() ; it.current() ; ++it )
