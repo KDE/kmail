@@ -504,8 +504,16 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
     // read altered message:
     QByteArray msgText = kmkernel->getCollectedStdOut( &shProc );
 
-    if ( !msgText.isEmpty() )
+    if ( !msgText.isEmpty() ) {
+    /* If the pipe through alters the message, it could very well 
+       happen that it no longer has a X-UID header afterwards. That is
+       unfortunate, as we need to removed the original from the folder
+       using that, and look it up in the message. When the (new) message
+       is uploaded, the header is stripped anyhow. */
+      QString uid = aMsg->headerField("X-UID");
       aMsg->fromByteArray( msgText );
+      aMsg->setHeaderField("X-UID",uid);
+    }
     else
       return ErrorButGoOn;
   }
