@@ -1077,11 +1077,22 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
     }
   }
   else {
-    if ( !replyToStr.isEmpty() &&
-         ( KMMessage::getEmailAddr( mailingListPostAddress ).lower() !=
-           KMMessage::getEmailAddr( replyToStr ).lower() ) ) {
-      // no Reply-To mangling mailing list
-      toStr = replyToStr;
+    if ( !replyToStr.isEmpty() ) {
+      QStringList recipients = splitEmailAddrList( replyToStr );
+      // strip the mailing list post address from the list of Reply-To
+      // addresses since we want to reply in private
+      if ( !mailingListPostAddress.isEmpty() ) {
+        recipients = stripAddressFromAddressList( mailingListPostAddress,
+                                                  recipients );
+      }
+      if ( !recipients.isEmpty() ) {
+        toStr = recipients.join(", ");
+      }
+      else {
+        // there was only the mailing list post address in the Reply-To header,
+        // so use the From address instead
+        toStr = from();
+      }
     }
     else if ( !from().isEmpty() ) {
       toStr = from();
