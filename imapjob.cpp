@@ -469,8 +469,8 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
     QString newUid = data.section(' ', 2, 2);
 
     // get lists of uids
-    QValueList<int> olduids = KMFolderImap::splitSets(oldUid);
-    QValueList<int> newuids = KMFolderImap::splitSets(newUid);
+    QValueList<ulong> olduids = KMFolderImap::splitSets(oldUid);
+    QValueList<ulong> newuids = KMFolderImap::splitSets(newUid);
 
     int index = -1;
     if ( !(*it).msgList.isEmpty() )
@@ -510,7 +510,7 @@ void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
 
   if (data.find("UID") != -1)
   {
-    int uid = (data.right(data.length()-4)).toInt();
+    ulong uid = (data.right(data.length()-4)).toInt();
 
     if ( !(*it).msgList.isEmpty() )
     {
