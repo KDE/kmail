@@ -955,25 +955,52 @@ bool KMFolderMaildir::removeFile(const QString& filename)
   return false;
 }
 
+#include <sys/types.h>
+#include <dirent.h>
+static bool removeDirAndContentsRecursively( const QString & path )
+{
+  bool success = true;
+
+  QDir d;
+  d.setPath( path );
+  d.setFilter( QDir::Files | QDir::Dirs | QDir::Hidden | QDir::NoSymLinks );
+
+  const QFileInfoList *list = d.entryInfoList();
+  QFileInfoListIterator it( *list );
+  QFileInfo *fi;
+
+  while ( (fi = it.current()) != 0 ) {
+    if( fi->isDir() ) {
+      if ( fi->fileName() != "." && fi->fileName() != ".." )
+        success = success && removeDirAndContentsRecursively( fi->absFilePath() );
+    } else {
+      success = success && d.remove( fi->absFilePath() );
+    }
+    ++it;
+  }
+
+  if ( success ) {
+    success = success && d.rmdir( path ); // nuke ourselves, we should be empty now
+  }
+  return success;
+}
+
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::removeContents()
 {
-    if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()+ "/new/"), 0))
-        return 1;
-    if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()+ "/cur/"), 0))
-        return 1;
-    if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()+ "/tmp/"), 0))
-        return 1;
-
-    /* The subdirs are removed now. Check if there is anything else in the dir
-     * and only if not delete the dir itself. The user could have data stored
-     * that would otherwise be deleted. */
-    QDir dir(location());
-    if ( dir.count() == 2 ) { // only . and ..
-        if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()), 0))
-            return 1;
-    }
-    return 0;
+  // NOTE: Don' use KIO::netaccess, it has reentrancy problems and multiple
+  // mailchecks going on trigger them, when removing dirs
+  if ( !removeDirAndContentsRecursively( location() + "/new/" ) ) return 1;
+  if ( !removeDirAndContentsRecursively( location() + "/cur/" ) ) return 1;
+  if ( !removeDirAndContentsRecursively( location() + "/tmp/" ) ) return 1;
+  /* The subdirs are removed now. Check if there is anything else in the dir
+   * and only if not delete the dir itself. The user could have data stored
+   * that would otherwise be deleted. */
+  QDir dir(location());
+  if ( dir.count() == 2 ) { // only . and ..
+    if ( !removeDirAndContentsRecursively( location() ), 0 ) return 1;
+  }
+  return 0;
 }
 
 static QRegExp *suffix_regex = 0;
