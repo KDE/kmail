@@ -279,6 +279,13 @@ public:
    */
    void setReplyFocus( bool hasMessage = true );
 
+   /**
+    * Tries to find the given mimetype @p type in the KDE Mimetype registry.
+    * If found, returns its localized description, otherwise the @p type
+    * in lowercase.
+    */
+   static QString prettyMimeType( const QString& type );
+
 public slots:
   /**
    * Actions:

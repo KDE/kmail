@@ -37,6 +37,7 @@
 #include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kcombobox.h>
+#include <kservicetype.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
@@ -3113,6 +3114,14 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 
 
 //-----------------------------------------------------------------------------
+
+QString KMComposeWin::prettyMimeType( const QString& type )
+{
+  QString t = type.lower();
+  KServiceType::Ptr st = KServiceType::serviceType( t );
+  return st ? st->comment() : t;
+}
+
 void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
                                  KMAtmListViewItem *lvi)
 {
@@ -3124,7 +3133,7 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
     lvi->setText(0, msgPart->name());
   lvi->setText(1, KIO::convertSize( msgPart->decodedSize()));
   lvi->setText(2, msgPart->contentTransferEncodingStr());
-  lvi->setText(3, msgPart->typeStr() + "/" + msgPart->subtypeStr());
+  lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
   if( mCryptPlugList && mCryptPlugList->active() ) {
     mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmCryptoColWidth );
     mAtmListBox->setColumnWidth( mAtmColSign,    mAtmCryptoColWidth );

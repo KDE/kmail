@@ -12,7 +12,7 @@
 #include "partNode.h"
 #include <klocale.h>
 #include <kdebug.h>
-#include <kservicetype.h>
+#include "kmcomposewin.h"
 #include "kmmimeparttree.h"
 
 /*
@@ -293,10 +293,7 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         cntSize = labelSize;
     }
 
-    cntType = cntType.lower();
-    KServiceType::Ptr type = KServiceType::serviceType( cntType );
-    if ( type )
-        cntType = type->comment();
+    cntType = KMComposeWin::prettyMimeType( cntType );
 
     cntDesc += "  ";
     cntType += "  ";
