@@ -56,6 +56,8 @@ class KTabListBox : public KDNDWidget
 {
   Q_OBJECT;
   friend KTabListBoxTable;
+  friend KTabListBoxColumn;
+
 public:
   enum ColumnType { TextColumn, PixmapColumn };
 
@@ -149,6 +151,9 @@ signals:
   void selected (int Index, int column);
 	// emitted when the user double-clicks into a line
 
+  void popupMenu (int Index, int column);
+	// emitted when the user presses the right mouse button over a line
+
 protected slots:
   void horSbValue(int val);
   void horSbSlidingDone();
@@ -180,6 +185,8 @@ protected:
   KTabListBoxTable	lbox;
   int			labelHeight;
   QPixmap		dndDefaultPixmap;
+  int			columnPadding;
+  QColor		highlightColor;
 
 private:		// Disabled copy constructor and operator=
   KTabListBox (const KTabListBox &) {}
@@ -232,7 +239,8 @@ public:
   virtual void setType (KTabListBox::ColumnType);
   KTabListBox::ColumnType type (void) const { return colType; }
 
-  virtual void paintCell (QPainter*, const QString& string);
+  virtual void paintCell (QPainter*, int row, const QString& string, 
+			  bool marked);
   virtual void paint (QPainter*);
 protected:
   int iwidth;
