@@ -628,7 +628,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
 
   // "up" button: stretch 0
   // ### FIXME: shouldn't this be a QToolButton?
-  mTransportUpButton = new QPushButton( QString::null, this );
+  mTransportUpButton = new KPushButton( QString::null, this );
   mTransportUpButton->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
   //  mTransportUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
   mTransportUpButton->setAutoDefault( false );
@@ -639,7 +639,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
 
   // "down" button: stretch 0
   // ### FIXME: shouldn't this be a QToolButton?
-  mTransportDownButton = new QPushButton( QString::null, this );
+  mTransportDownButton = new KPushButton( QString::null, this );
   mTransportDownButton->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
   //  mTransportDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mTransportDownButton->setAutoDefault( false );

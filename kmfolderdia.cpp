@@ -294,7 +294,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
   mNormalIconButton->setFixedSize( 28, 28 );
-  mNormalIconButton->setIcon( QString("folder") );
+  mNormalIconButton->setIconSet( SmallIconSet("folder") );
   mNormalIconButton->setEnabled( false );
   ihl->addWidget( mNormalIconButton );
 
@@ -308,7 +308,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mUnreadIconButton->setIconSize( 16 );
   mUnreadIconButton->setStrictIconSize( true );
   mUnreadIconButton->setFixedSize( 28, 28 );
-  mUnreadIconButton->setIcon( QString("folder_open") );
+  mUnreadIconButton->setIconSet( SmallIconSet("folder_open") );
   mUnreadIconButton->setEnabled( false );
   ihl->addWidget( mUnreadIconButton );
   ihl->addStretch( 1 );
@@ -354,7 +354,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   ml->addStretch( 1 );
 
   // we want to know if the activated changes
-  connect( mBelongsTo, SIGNAL(folderChanged(KMFolder*)), 
+  connect( mBelongsTo, SIGNAL(folderChanged(KMFolder*)),
       SLOT(slotUpdateItems(KMFolder*)) );
 
   QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), this );
@@ -722,12 +722,12 @@ bool FolderDiaGeneralTab::save()
 
     if ( !mDlg->isNewFolder() )
       oldFldName = mDlg->folder()->name();
-    
-    if (!mNameEdit->text().isEmpty()) 
+
+    if (!mNameEdit->text().isEmpty())
       fldName = mNameEdit->text();
-    else 
+    else
       fldName = oldFldName;
-   
+
     if ( mDlg->parentFolder() &&
          mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
          mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
@@ -757,12 +757,12 @@ bool FolderDiaGeneralTab::save()
     KMFolderDir* folderDir = selectedFolderDir;
 
     // check that the folder can be moved
-    if ( mDlg->folder() && mDlg->folder()->child() ) 
+    if ( mDlg->folder() && mDlg->folder()->child() )
     {
       while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
-              ( folderDir != mDlg->folder()->parent() ) ) 
+              ( folderDir != mDlg->folder()->parent() ) )
       {
-        if ( folderDir->findRef( mDlg->folder() ) != -1 ) 
+        if ( folderDir->findRef( mDlg->folder() ) != -1 )
         {
           KMessageBox::error( this, message );
           return false;
@@ -791,7 +791,7 @@ bool FolderDiaGeneralTab::save()
       }
       message = i18n( "<qt>Failed to create folder <b>%1</b>."
             "</qt> " ).arg(fldName);
- 
+
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         KMFolder *newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
@@ -907,7 +907,7 @@ bool FolderDiaGeneralTab::save()
          ( oldFldName != fldName || folder->parent() != selectedFolderDir ) )
     {
       if ( folder->parent() != selectedFolderDir ) {
-        kmkernel->folderMgr()->renameFolder( folder, fldName, 
+        kmkernel->folderMgr()->renameFolder( folder, fldName,
             selectedFolderDir );
       } else {
         kmkernel->folderMgr()->renameFolder( folder, fldName );

@@ -39,8 +39,8 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kpushbutton.h>
 
-#include <qpushbutton.h>
 #include <qlayout.h>
 
 
@@ -121,8 +121,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     if ( !(buttons & Down) )
       kdDebug(5006) << "Are you sure you want to use an Up button "
 	"without a Down button??" << endl;
-    mUpButton = new QPushButton( QString::null, this );
-    mUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
+    mUpButton = new KPushButton( QString::null, this );
+    mUpButton->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
     mUpButton->setAutoDefault( false );
     mUpButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mUpButton );
@@ -134,8 +134,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     if ( !(buttons & Up) )
       kdDebug(5006) << "Are you sure you want to use a Down button "
 	"without an Up button??" << endl;
-    mDownButton = new QPushButton( QString::null, this );
-    mDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
+    mDownButton = new KPushButton( QString::null, this );
+    mDownButton->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
     mDownButton->setAutoDefault( false );
     mDownButton->setEnabled( false ); // no selection yet
     vlay->addWidget( mDownButton );

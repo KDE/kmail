@@ -23,6 +23,7 @@
 #include <kconfig.h>
 #include <kicondialog.h>
 #include <kkeybutton.h>
+#include <kpushbutton.h>
 
 // other Qt headers:
 #include <qlayout.h>
@@ -32,7 +33,6 @@
 #include <qtooltip.h>
 #include <qwhatsthis.h>
 #include <qcheckbox.h>
-#include <qpushbutton.h>
 #include <qhbox.h>
 #include <qvalidator.h>
 
@@ -433,13 +433,13 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   //----------- the first row of buttons
   QHBox *hb = new QHBox(this);
   hb->setSpacing(4);
-  mBtnUp = new QPushButton( QString::null, hb );
+  mBtnUp = new KPushButton( QString::null, hb );
   mBtnUp->setAutoRepeat( true );
-  mBtnUp->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
+  mBtnUp->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
   mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
-  mBtnDown = new QPushButton( QString::null, hb );
+  mBtnDown = new KPushButton( QString::null, hb );
   mBtnDown->setAutoRepeat( true );
-  mBtnDown->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
+  mBtnDown->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
   QToolTip::add( mBtnUp, i18n("Up") );
   QToolTip::add( mBtnDown, i18n("Down") );
