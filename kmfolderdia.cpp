@@ -1040,7 +1040,7 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
 
   QHBoxLayout *handlerLayout = new QHBoxLayout( groupLayout );
   //FIXME: add QWhatsThis
-  label = new QLabel( i18n("Preferred handler : "), mlGroup );
+  label = new QLabel( i18n("Preferred handler: "), mlGroup );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
   handlerLayout->addWidget( label, 0, Qt::AlignCenter );
@@ -1056,7 +1056,7 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
   //groupLayout->addSpacing( 10 );
 
   QVBoxLayout *idLayout = new QVBoxLayout( groupLayout );
-  label = new QLabel( i18n("<b>Mailing list description : </b>"), mlGroup );
+  label = new QLabel( i18n("<b>Mailing list description: </b>"), mlGroup );
   label->setEnabled( false );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );

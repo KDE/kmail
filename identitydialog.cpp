@@ -476,7 +476,7 @@ namespace KMail {
       return KDialogBase::slotOk();
 
     if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
-					     i18n("EMail Address Not Found in Key/Certificates"),
+					     i18n("Email Address Not Found in Key/Certificates"),
 					     KStdGuiItem::cont(), "warn_email_not_in_certificate" )
 	 == KMessageBox::Continue )
       return KDialogBase::slotOk();

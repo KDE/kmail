@@ -292,7 +292,7 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   }
   else
   {
-    QString msg = i18n( "Account type is not supported" );
+    QString msg = i18n( "Account type is not supported." );
     KMessageBox::information( topLevelWidget(),msg,i18n("Configure Account") );
     return;
   }
