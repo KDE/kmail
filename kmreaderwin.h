@@ -241,6 +241,7 @@ protected:
   QColor c1, c2, c3, c4;
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
+  bool    mUnicodeFont;
 };
 
 

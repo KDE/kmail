@@ -220,6 +220,7 @@ void KMReaderWin::readConfig(void)
   fntSize = 0;
 
   config->setGroup("Fonts");
+  mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
     fntSize = kstrToFont(mBodyFont).pointSize();
@@ -387,7 +388,9 @@ void KMReaderWin::setCodec(QTextCodec *codec)
   }
   mAutoDetectEncoding = false;
   if(mViewer)
-    mViewer->setCharset(codec->name(), true);
+    if (mUnicodeFont)
+      mViewer->setCharset("iso10646-1", true);
+    else mViewer->setCharset(codec->name(), true);
   update(true);
 }
 
@@ -513,7 +516,9 @@ void KMReaderWin::parseMsg(void)
   if (!mCodec)
     mCodec = QTextCodec::codecForName("iso8859-1");
   if (mViewer)
-    mViewer->setCharset(mCodec->name(), true);
+    if (mUnicodeFont)
+      mViewer->setCharset("iso10646-1", true);
+    else mViewer->setCharset(mCodec->name(), true);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("body { font-family: \"%1\" }\n").arg( mBodyFamily ) +

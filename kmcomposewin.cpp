@@ -323,6 +323,7 @@ void KMComposeWin::readConfig(void)
 #endif
 
   config->setGroup("Fonts");
+  mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     QString mBodyFontStr;
     mBodyFontStr = config->readEntry("body-font", "helvetica-medium-r-12");
@@ -2070,10 +2071,12 @@ void KMComposeWin::setEditCharset()
   QFont fnt=mSavedEditorFont;
   if (mCharset == "default" || mCharset.isEmpty())
     mCharset = defaultCharset();
+  QString cset = mCharset;
+  if (mUnicodeFont) cset = "iso10646-1";
   //set font only if it is really available
-  if (KGlobal::charsets()->isAvailable(mCharset))
+  if (KGlobal::charsets()->isAvailable(cset))
   {
-    KGlobal::charsets()->setQFont(fnt, KGlobal::charsets()->nameToID(mCharset));
+    KGlobal::charsets()->setQFont(fnt, KGlobal::charsets()->nameToID(cset));
     mEditor->setFont(fnt);
     mEdtFrom.setFont(fnt);
     mEdtReplyTo.setFont(fnt);

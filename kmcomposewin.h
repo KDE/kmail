@@ -416,6 +416,7 @@ private:
     bool insert;
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
+  bool mUnicodeFont;
 };
 #endif
 

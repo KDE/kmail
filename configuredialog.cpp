@@ -770,6 +770,9 @@ void ConfigureDialog::makeAppearancePage( void )
   connect( mAppearance.customFontCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotCustomFontSelectionChanged()) );
   vlay->addWidget( mAppearance.customFontCheck );
+  mAppearance.unicodeFontCheck =
+    new QCheckBox( i18n("Use unicode font for messages"), page1 );
+  vlay->addWidget( mAppearance.unicodeFontCheck );
   QFrame *hline = new QFrame( page1 );
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   vlay->addWidget( hline );
@@ -1436,6 +1439,8 @@ void ConfigureDialog::setupAppearancePage( void )
 
   bool state = config.readBoolEntry("defaultFonts", false );
   mAppearance.customFontCheck->setChecked( state == false ? true : false );
+  mAppearance.unicodeFontCheck->setChecked( config.readBoolEntry(
+    "unicodeFont", false ) );
   slotCustomFontSelectionChanged();
   updateFontSelector();
 
@@ -1910,6 +1915,8 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.setGroup("Fonts");
     bool defaultFonts = !mAppearance.customFontCheck->isChecked();
     config.writeEntry("defaultFonts", defaultFonts );
+    config.writeEntry("unicodeFont", mAppearance.unicodeFontCheck->
+      isChecked());
     config.writeEntry( "body-font",   mAppearance.fontString[0] );
     config.writeEntry( "list-font",   mAppearance.fontString[1] );
     config.writeEntry( "folder-font", mAppearance.fontString[2] );
