@@ -2779,7 +2779,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
      mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
      mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
-     mSaveAsId = mAttachMenu->insertItem( SmallIcon("filesaveas"), i18n("Save As..."), this,
+     mSaveAsId = mAttachMenu->insertItem( SmallIconSet("filesaveas"), i18n("Save As..."), this,
                                           SLOT( slotAttachSave() ) );
      mPropertiesId = mAttachMenu->insertItem( i18n("Properties"), this,
                                               SLOT( slotAttachProperties() ) );
