@@ -439,6 +439,43 @@ KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg) const
   return GoOn;
 }
 
+
+//=============================================================================
+// KMFilterActionSendReceipt - send receipt
+// Return delivery receipt.
+//=============================================================================
+class KMFilterActionSendReceipt : public KMFilterActionWithNone
+{
+public:
+  KMFilterActionSendReceipt();
+  virtual ReturnCode process(KMMessage* msg) const;
+  static KMFilterAction* newAction(void);
+};
+
+KMFilterAction* KMFilterActionSendReceipt::newAction(void)
+{
+  return (new KMFilterActionSendReceipt);
+}
+
+KMFilterActionSendReceipt::KMFilterActionSendReceipt()
+  : KMFilterActionWithNone( "confirm delivery", i18n("confirm delivery") )
+{
+}
+
+KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMMessage* msg) const
+{
+  KMMessage *receipt = msg->createDeliveryReceipt();
+  if ( !receipt ) return ErrorButGoOn;
+
+  // Queue message. This is a) so that the user can check
+  // the receipt before sending and b) for speed reasons.
+  kernel->msgSender()->send( receipt, FALSE );
+
+  return GoOn;
+}
+
+
+
 //=============================================================================
 // KMFilterActionSetTransport - set transport to...
 // Specify mail transport (smtp server) to be used when replying to a message
@@ -883,6 +920,7 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionForward::newAction );
   insert( KMFilterActionRedirect::newAction );
   insert( KMFilterActionBounce::newAction );
+  insert( KMFilterActionSendReceipt::newAction );
   insert( KMFilterActionExec::newAction );
   insert( KMFilterActionExtFilter::newAction );
   // Register custom filter actions below this line.
