@@ -75,7 +75,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mFolder = NULL;
   mFolderThreadPref = false;
   mFolderHtmlPref = false;
-          
+
 
   // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   mHorizPannerSep = new QValueList<int>;
@@ -83,7 +83,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   *mHorizPannerSep << 1 << 1;
   *mVertPannerSep << 1 << 1;
   // (khz)
-  
+
 
   setMinimumSize(400, 300);
 
@@ -100,12 +100,12 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   statusbarAction->setChecked(!statusBar()->isHidden());
 
   readConfig();
-  
+
 
   // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   activatePanners();
   // (khz, 19.04.2002)
-  
+
 
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
     idx = mFolderTree->firstChild();
@@ -141,7 +141,7 @@ KMMainWin::~KMMainWin()
   delete mHeaders;
   delete mStatusBar;
   delete mFolderTree;
-  
+
 
   // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   delete mHorizPannerSep;
@@ -155,7 +155,7 @@ KMMainWin::~KMMainWin()
 void KMMainWin::readPreConfig(void)
 {
   KConfig *config = kapp->config();
-  
+
 
   // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   { // area for config group "Geometry"
@@ -200,12 +200,12 @@ void KMMainWin::writeFolderConfig(void)
 void KMMainWin::readConfig(void)
 {
   KConfig *config = kapp->config();
-  
+
 
   // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   bool oldLongFolderList=false;
   // (khz, 19.04.2002)
-  
+
 
   QString str;
   QSize siz;
@@ -213,16 +213,16 @@ void KMMainWin::readConfig(void)
   if (mStartupDone)
   {
     writeConfig();
-  
+
 
     // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
     oldLongFolderList = mLongFolderList;
     // (khz, 19.04.2002)
-    
+
 
     readPreConfig();
     mHeaders->refreshNestedState();
-    
+
 
     // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
     if (oldLongFolderList != mLongFolderList)
@@ -248,7 +248,7 @@ void KMMainWin::readConfig(void)
     siz = config->readSizeEntry("MainWin", &defaultSize);
     if (!siz.isEmpty())
       resize(siz);
-    
+
 
     // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
     //
@@ -270,7 +270,7 @@ void KMMainWin::readConfig(void)
       (*mVertPannerSep)[1] = width() - siz.height();
     }
     // (khz, 19.04.2002)
-      
+
 
     // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
     /*
@@ -372,7 +372,7 @@ void KMMainWin::writeConfig(void)
     config->writeEntry("MessagePaneHeight", mHorizPanner->sizes()[1]);
   }
   // (khz, 19.04.2002)
-    
+
 
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("encoding", QString(mEncodingStr));
@@ -507,7 +507,10 @@ void KMMainWin::createWidgets(void)
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
 
   // create a mime part tree and store it's pointer in the reader win
-  mMimePartTree = new KMMimePartTree( mMsgView, this, "mMimePartTree" );
+  // PENDING(kalle) Made the mime part tree a toplevel window for intermediary testing/debugging
+  //  mMimePartTree = new KMMimePartTree( mMsgView, this, "mMimePartTree" );
+  mMimePartTree = new KMMimePartTree( mMsgView, 0, "mMimePartTree" );
+  mMimePartTree->show();
   mMsgView->setMimePartTree( mMimePartTree );
 
 
@@ -795,7 +798,7 @@ void KMMainWin::slotAddFolder()
       qlvi->setOpen(TRUE);
       mFolderTree->setCurrentItem( qlvi );
     }
-    if ( mFolder->needsRepainting() ) 
+    if ( mFolder->needsRepainting() )
       mFolderTree->delayedUpdate();
   }
   delete d;
@@ -926,7 +929,7 @@ void KMMainWin::slotModifyFolder()
   if (!mFolder) return;
   d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(),
 			 this, i18n("Properties of Folder %1").arg( mFolder->label() ) );
-  if (d->exec() && 
+  if (d->exec() &&
       ((mFolder->protocol() != "imap") || mFolder->needsRepainting() ) ) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
@@ -935,7 +938,7 @@ void KMMainWin::slotModifyFolder()
       mFolderTree->setCurrentItem( qlvi );
       mHeaders->msgChanged();
     }
-    if ( mFolder->needsRepainting() ) 
+    if ( mFolder->needsRepainting() )
       mFolderTree->delayedUpdate();
   }
   delete d;
@@ -2400,8 +2403,8 @@ void KMMainWin::setupMenuBar()
     actionCollection());
   statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
     actionCollection());
-  
-  
+
+
   // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
   /*
   folderAction = new KToggleAction(i18n("Show Folder Bar"), 0, this, SLOT( slotToggleFolderBar() ),
@@ -2431,8 +2434,8 @@ void KMMainWin::setupMenuBar()
 
   QObject::connect( guiFactory()->container("message", this),
 		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
-  
-  
+
+
   // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
   /*
   QObject::connect( guiFactory()->container("settings", this),

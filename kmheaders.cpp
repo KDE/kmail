@@ -327,7 +327,6 @@ public:
 
       static QPixmap mergedpix;
       mergedpix = pixmapMerge( pixmaps );
-      qDebug( "pixmapMerge returned a pixmap with size %dx%d", mergedpix.width(), mergedpix.height() );
       return &mergedpix;
     }
     return NULL;
