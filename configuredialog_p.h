@@ -761,6 +761,9 @@ public:
   void defaults() {}
   void installProfile( KConfig * profile );
 
+private slots:
+  void slotUpdateHTTPActions();
+
 private:
   SMimeConfiguration* mWidget;
   Kleo::CryptoConfig* mConfig;

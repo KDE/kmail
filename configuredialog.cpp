@@ -3712,6 +3712,11 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
   connect( mWidget->disableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->customLDAPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
 
+  connect( mWidget->disableHTTPCB, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotUpdateHTTPActions() ) );
+  connect( mWidget->ignoreHTTPDPCB, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotUpdateHTTPActions() ) );
+
   // Button-group for exclusive radiobuttons
   QButtonGroup* bgHTTPProxy = new QButtonGroup( mWidget );
   bgHTTPProxy->hide();
@@ -3856,6 +3861,19 @@ void SecurityPage::SMimeTab::load() {
     disableDirmngrWidget( mWidget->customLDAPProxy );
     disableDirmngrWidget( mWidget->customLDAPLabel );
   }
+  slotUpdateHTTPActions();
+}
+
+void SecurityPage::SMimeTab::slotUpdateHTTPActions() {
+  mWidget->ignoreHTTPDPCB->setEnabled( !mWidget->disableHTTPCB->isChecked() );
+
+  // The proxy settings only make sense when "Ignore HTTP CRL DPs of certificate" is checked.
+  bool enableProxySettings = !mWidget->disableHTTPCB->isChecked()
+                          && mWidget->ignoreHTTPDPCB->isChecked();
+  mWidget->systemHTTPProxy->setEnabled( enableProxySettings );
+  mWidget->useCustomHTTPProxyRB->setEnabled( enableProxySettings );
+  mWidget->honorHTTPProxyRB->setEnabled( enableProxySettings );
+  mWidget->customHTTPProxy->setEnabled( enableProxySettings );
 }
 
 void SecurityPage::SMimeTab::installProfile( KConfig * ) {
