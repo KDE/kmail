@@ -350,8 +350,7 @@ public:
   {
     //This code should stay pretty much like this, if you are adding new
     //columns put them in generate_key
-    const char req_col = (char)column;
-    if(mKey.isEmpty() || mKey.left(1) != &req_col) {
+    if(mKey.isEmpty() || mKey[0] != (char)column) {
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
       return ((KMHeaderItem *)this)->mKey =
 	generate_key(mMsgId, headers->folder()->getMsgBase( mMsgId ),
