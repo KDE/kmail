@@ -518,6 +518,7 @@ void KMFldSearch::closeEvent(QCloseEvent *e)
 	//Cancel search in progress by setting the search folder search to
 	//the null search
 	mFolder->setSearch(new KMSearch());
+	QTimer::singleShot(0, this, SLOT(slotClose()));
     } else {
 	KDialogBase::closeEvent(e);
     }
