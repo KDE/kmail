@@ -55,7 +55,7 @@
 #include "kmsender.h"
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
-#include "kwm.h"
+#include "kwin.h"
 #include "addtoaddressbook.h"
 
 #include <errno.h>
@@ -1007,7 +1007,7 @@ void KMMainWin::slotAtmMsg(KMMessage *msg)
 
 void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
 {
-  KWM::setMiniIcon(win->winId(), kapp->miniIcon());
+  KWin::setIcons(win->winId(), kapp->icon(), kapp->miniIcon());
   win->setCaption(msg->subject());
 
   win->setMsg(msg);

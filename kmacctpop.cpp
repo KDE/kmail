@@ -28,7 +28,7 @@
 #include <kmessagebox.h>
 
 #include <qlayout.h>
-#include <kwm.h>
+#include <kwin.h>
 #include <kstddirs.h>
 #include <kbuttonbox.h>
 
@@ -529,7 +529,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
 
   kernel->kbp()->idle();
   act = account;
-  KWM::setMiniIcon(winId(), kapp->miniIcon());
+  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
   setCaption(caption);
 
   QGridLayout *gl = new QGridLayout(this, 4, 2, 10);

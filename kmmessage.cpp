@@ -33,7 +33,7 @@
 #include <time.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <kwm.h>
+#include <kwin.h>
 
 #include "kmmsgpart.h" // for encodeBase64
 
@@ -1719,7 +1719,7 @@ void KMMessage::viewSource(const QString& aCaption) const
   QMultiLineEdit* edt;
 
   edt = new QMultiLineEdit;
-  KWM::setMiniIcon(edt->winId(), kapp->miniIcon());
+  KWin::setIcons(edt->winId(), kapp->icon(), kapp->miniIcon());
   if (aCaption) edt->setCaption(aCaption);
 
   edt->insertLine(str);

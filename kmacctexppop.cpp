@@ -31,7 +31,7 @@
 #include <qtooltip.h>
 #include "kmbroadcaststatus.h"
 
-#include <kwm.h>
+#include <kwin.h>
 #include <kbuttonbox.h>
 
 //-----------------------------------------------------------------------------
@@ -289,7 +289,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
 
   kernel->kbp()->idle();
   act = account;
-  KWM::setMiniIcon(winId(), kapp->miniIcon());
+  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
   setCaption(caption);  
 
   QGridLayout *gl = new QGridLayout(this, 5, 2, 10);

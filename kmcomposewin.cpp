@@ -46,7 +46,7 @@
 #include <kstdaccel.h>
 #include <mimelib/mimepp.h>
 #include <kfiledialog.h>
-#include <kwm.h>
+#include <kwin.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
 
@@ -2352,14 +2352,14 @@ void KMLineEdit::slotCompletion()
 void KMComposeWin::slotSpellcheckConfig()
 {
 
-  KWM kwm;
+  KWin kwin;
   QTabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
 
   qtd.addTab (&mKSpellConfig, "Spellchecker");
   qtd.setCancelButton ();
 
-  kwm.setMiniIcon (qtd.winId(), kapp->miniIcon());
+  kwin.setIcons (qtd.winId(), kapp->icon(), kapp->miniIcon());
 
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();
