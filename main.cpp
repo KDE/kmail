@@ -78,7 +78,7 @@ int KMailApplication::newInstance()
   {
     // Try again later.
     QTimer::singleShot( 100, this, SLOT(newInstance()) );
-    return;
+    return 0;
   }
   
   // process args:
