@@ -124,48 +124,48 @@ namespace KMail {
                         QString header, QString pattern, bool regExp,
                         bool bayesFilter );
     
-          int getVersion() const { return version; };
-          QString getId()  const { return id; };
-          QString getVisibleName()  const { return visibleName; };
-          QString getExecutable() const { return executable; };
-          QString getWhatsThisText() const { return whatsThisText; };
-          QString getFilterName() const { return filterName; };
-          QString getDetectCmd() const { return detectCmd; };
-          QString getSpamCmd() const { return spamCmd; };
-          QString getHamCmd() const { return hamCmd; };
-          QString getDetectionHeader() const { return detectionHeader; };
-          QString getDetectionPattern() const { return detectionPattern; };
-          bool isUseRegExp() const { return useRegExp; };
-          bool useBayesFilter() const { return supportsBayesFilter; };
+          int getVersion() const { return mVersion; };
+          QString getId()  const { return mId; };
+          QString getVisibleName()  const { return mVisibleName; };
+          QString getExecutable() const { return mExecutable; };
+          QString getWhatsThisText() const { return mWhatsThisText; };
+          QString getFilterName() const { return mFilterName; };
+          QString getDetectCmd() const { return mDetectCmd; };
+          QString getSpamCmd() const { return mSpamCmd; };
+          QString getHamCmd() const { return mHamCmd; };
+          QString getDetectionHeader() const { return mDetectionHeader; };
+          QString getDetectionPattern() const { return mDetectionPattern; };
+          bool isUseRegExp() const { return mUseRegExp; };
+          bool useBayesFilter() const { return mSupportsBayesFilter; };
     
         private:
           // used to identifiy configs for the same tool
-          QString id;
+          QString mId;
           // The version of the config data, used for merging and 
           // detecting newer configs
-          int version;
+          int mVersion;
           // the name as shown by the checkbox in the dialog page
-          QString visibleName;
+          QString mVisibleName;
           // the command to check the existance of the tool
-          QString executable;
+          QString mExecutable;
           // the What's This help text (e.g. url for the tool)
-          QString whatsThisText;
+          QString mWhatsThisText;
           // name for the created filter in the filter list
-          QString filterName;
+          QString mFilterName;
           // pipe through cmd used to detect spam messages
-          QString detectCmd;
+          QString mDetectCmd;
           // pipe through cmd to let the tool learn a spam message
-          QString spamCmd;
+          QString mSpamCmd;
           // pipe through cmd to let the tool learn a ham message
-          QString hamCmd;
+          QString mHamCmd;
           // by which header are messages marked as spam
-          QString detectionHeader;
+          QString mDetectionHeader;
           // what header pattern is used to mark spam messages
-          QString detectionPattern;
+          QString mDetectionPattern;
           // filter searches for the pattern by regExp or contain rule
-          bool useRegExp;
+          bool mUseRegExp;
           // can the tool learn spam and ham, has it a bayesian algorithm
-          bool supportsBayesFilter;
+          bool mSupportsBayesFilter;
       };
       /**
         Instances of this class control reading the configuration of the 
@@ -177,13 +177,13 @@ namespace KMail {
         public:
           ConfigReader( QValueList<SpamToolConfig> & configList );
           
-          QValueList<SpamToolConfig> & getToolList() { return toolList; };
+          QValueList<SpamToolConfig> & getToolList() { return mToolList; };
           
           void readAndMergeConfig();
           
         private:
-          QValueList<SpamToolConfig> & toolList;
-          KConfig config;
+          QValueList<SpamToolConfig> & mToolList;
+          KConfig mConfig;
           
           SpamToolConfig readToolConfig( KConfigGroup & configGroup );
           SpamToolConfig createDummyConfig();
@@ -204,15 +204,15 @@ namespace KMail {
 
     private:
       /* The pages in the wizard */
-      ASWizInfoPage * infoPage;
-      ASWizProgramsPage * programsPage;
-      ASWizRulesPage * rulesPage;
+      ASWizInfoPage * mInfoPage;
+      ASWizProgramsPage * mProgramsPage;
+      ASWizRulesPage * mRulesPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
-      QValueList<SpamToolConfig> toolList;
+      QValueList<SpamToolConfig> mToolList;
 
       /* The action collection where the filter menu action is searched in */
-      KActionCollection * actionCollection;
+      KActionCollection * mActionCollection;
   };
 
 
@@ -227,8 +227,8 @@ namespace KMail {
       void setScanProgressText( const QString &toolName );
 
     private:
-      QLabel *introText;
-      QLabel *scanProgressText;
+      QLabel *mIntroText;
+      QLabel *mScanProgressText;
   };
 
   //---------------------------------------------------------------------------
@@ -251,7 +251,7 @@ namespace KMail {
       void selectionChanged();
 
     private:
-      QDict<QCheckBox> programDict;
+      QDict<QCheckBox> mProgramDict;
   };
 
   //---------------------------------------------------------------------------
@@ -276,10 +276,10 @@ namespace KMail {
       void selectionChanged();
 
     private:
-      QCheckBox * pipeRules;
-      QCheckBox * classifyRules;
-      QCheckBox * moveRules;
-      SimpleFolderTree *folderTree;
+      QCheckBox * mPipeRules;
+      QCheckBox * mClassifyRules;
+      QCheckBox * mMoveRules;
+      SimpleFolderTree *mFolderTree;
   };
 
 
