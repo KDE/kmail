@@ -886,6 +886,9 @@ void KMMainWin::slotEditMsg()
     return;
   if(!(msg = mHeaders->getMsg(aIdx)))
     return;
+  mFolder->removeMsg(msg);
+  mHeaders->setSelected(mHeaders->currentItem(), TRUE);
+  mHeaders->highlightMessage(mHeaders->currentItem());
 
   KMComposeWin *win = new KMComposeWin;
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
