@@ -429,7 +429,7 @@ KMMessage * KMComposeView::prepareMessage()
 
 
   if(urlList->count() == 0)// If there are no elements in the list waiting it is
-    msg->setBody(temp); // a simple text message.
+    msg->setBody(text()); // a simple text message.
   else 
     {//	create bodyPart for editor text.
       KMMessagePart *part = new KMMessagePart();

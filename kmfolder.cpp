@@ -34,7 +34,7 @@ extern "C"
 #define INIT_MSGS 32
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1.0
+#define INDEX_VERSION 1.1
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -381,7 +381,7 @@ int KMFolder::writeIndex(void)
   mHeaderOffset = ftell(mIndexStream);
   for (i=0; i<mMsgs; i++)
   {
-    fprintf(mIndexStream, "%s\n", mMsgInfo[i].asString());
+    fprintf(mIndexStream, "%s\n", (const char*)mMsgInfo[i].asString());
   }
   fflush(mIndexStream);
 
@@ -627,7 +627,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (len <= 0)
   {
-    warning(nls->translate("KMFolder::addMsg():\nmessage contains no data !"));
+    debug("KMFolder::addMsg():\nmessage contains no data !");
     if (opened) close();
     return 0;
   }
@@ -656,7 +656,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     debug("writing new index entry to index file");
     assert(mIndexStream != NULL);
     fseek(mIndexStream, 0, SEEK_END);
-    fprintf(mIndexStream, "%s\n", mMsgInfo[mMsgs].asString()); 
+    fprintf(mIndexStream, "%s\n", (const char*)mMsgInfo[mMsgs].asString()); 
     fflush(mIndexStream);
   }
 
@@ -746,7 +746,7 @@ int KMFolder::sync(void)
     if (mi->dirty())
     {
       fseek(mIndexStream, offset, SEEK_SET);
-      fprintf(mIndexStream, "%s\n", mi->asString());
+      fprintf(mIndexStream, "%s\n", (const char*)mi->asString());
       rc = errno;
       if (rc) break;
       mi->setDirty(FALSE);
@@ -796,7 +796,7 @@ const char* KMFolder::msgFrom(int msgId) const
 const char* KMFolder::msgDate(int msgId) const
 {
   assert(msgId>0);
-  return mMsgInfo[msgId-1].date();
+  return mMsgInfo[msgId-1].dateStr();
 }
 
 

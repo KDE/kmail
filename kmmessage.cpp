@@ -349,16 +349,21 @@ void KMMessage::setContentTransferEncoding(int aCte)
 //-----------------------------------------------------------------------------
 const char* KMMessage::body(long* len_ret) const
 {
-  const DwString* str = &mMsg->Body().AsString();
-  if (len_ret) *len_ret = str->length();
-  return str->c_str();
+  static DwString str;
+
+  mMsg->Assemble();
+  str = mMsg->Body().AsString();
+  if (len_ret) *len_ret = str.length();
+  return str.c_str();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBody(const char* aStr)
 {
-  mMsg->Body().FromString(aStr);
+  mMsgStr.assign(aStr);
+  mMsg->Body().FromString(mMsgStr);
+  mMsg->Parse();
 }
 
 

@@ -16,31 +16,24 @@
 KMFolderSelDlg::KMFolderSelDlg(const char* caption): 
   KMFolderSelDlgInherited(NULL, caption, TRUE)
 {
-  QButton* btnOk; 
   QButton* btnCancel;
-  QGridLayout* grid = new QGridLayout(this, 2, 2);
+  QBoxLayout* box = new QVBoxLayout(this);
   KMFolderDir* fdir = &folderMgr->dir();
   KMFolder* cur;
 
   initMetaObject();
 
-  grid->setRowStretch(0, 100);
-
   mListBox = new QListBox(this, "list");
-  grid->addMultiCellWidget(mListBox, 0, 0, 0, 1);
-
-  btnOk = new QPushButton(nls->translate("Ok"), this, "Ok");
-  btnOk->setMinimumSize(btnOk->size());
-  connect(btnOk, SIGNAL(pressed()), this, SLOT(slotOkPressed()));
-  grid->addWidget(btnOk, 1, 0);
+  box->addWidget(mListBox, 100);
+  connect(mListBox, SIGNAL(highlighted(int)), this, SLOT(slotSelect(int)));
 
   btnCancel = new QPushButton(nls->translate("Cancel"), this, "Cancel");
   btnCancel->setMinimumSize(btnCancel->size());
-  connect(btnCancel, SIGNAL(pressed()), this, SLOT(slotCancelPressed()));
-  grid->addWidget(btnCancel, 1, 1);
+  connect(btnCancel, SIGNAL(pressed()), this, SLOT(slotCancel()));
+  box->addWidget(btnCancel, 1);
 
   resize(100, 300);
-  grid->activate();
+  box->activate();
 
   for (cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next())
   {
@@ -67,14 +60,14 @@ KMFolder* KMFolderSelDlg::folder(void)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotOkPressed()
+void KMFolderSelDlg::slotSelect(int)
 {
   done(1);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderSelDlg::slotCancelPressed()
+void KMFolderSelDlg::slotCancel()
 {
   done(0);
 }

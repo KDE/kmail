@@ -9,6 +9,7 @@
 
 #include <qarray.h>
 #include <qstring.h>
+#include <time.h>
 
 class KMFolder;
 
@@ -19,8 +20,6 @@ class KMMsgInfo
 
 public:
   KMMsgInfo() { mMsg=NULL; mDirty=FALSE; }
-
-  /** Delete message info object and message object if set. */
   ~KMMsgInfo();
 
   /** Init object. Second version takes a status string that is parsed. */
@@ -60,7 +59,8 @@ public:
    messages. */
   const char* subject(void) const { return mSubject; }
   const char* from(void) const { return mFrom; }
-  const char* date(void) const { return mDate; }
+  const time_t date(void) const { return mDate; }
+  const char* dateStr(void) const;
 
   /** Compare with other message info by subject. Returns -1/0/1 like strcmp.*/
   int compareBySubject(const KMMsgInfo* other) const;
@@ -83,6 +83,7 @@ protected:
   void setSubject(const char*);
   void setFrom(const char*);
   void setDate(const char*);
+  void setDate(time_t aUnixTime);
 
   // strip all trailing blanks from given string starting from given max size
   void stripBlanks(char*,int) const;
@@ -101,7 +102,9 @@ protected:
   unsigned long     mOffset;
   unsigned long     mSize;
   KMMessage*        mMsg;
-  char              mSubject[80], mFrom[60], mDate[60];
+  char              mSubject[80]; // QStrings do not get initialized 
+  char              mFrom[80];    // in KMMsgInfoList !
+  time_t	    mDate;
   bool              mDirty;
 };
 

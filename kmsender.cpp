@@ -5,6 +5,7 @@
 #include "kmmessage.h"
 #include "kmglobal.h"
 #include "kmfolder.h"
+#include "kmidentity.h"
 
 #include <kconfig.h>
 #include <kapp.h>
@@ -16,26 +17,12 @@
 
 #define SENDER_GROUP "sending mail"
 
+
 //-----------------------------------------------------------------------------
-KMSender::KMSender(KMFolderMgr* aFolderMgr)
+KMSender::KMSender()
 {
-  QString outboxName, sentName;
-
-  mFolderMgr = aFolderMgr;
-  mCfg = KApplication::getKApplication()->getConfig();
-
   mMailerProc = NULL;
-
-  mCfg->setGroup(SENDER_GROUP);
-  mMethod = (enum KMSender::Method)mCfg->readNumEntry("Method", 2);
-  mSendImmediate = (bool)mCfg->readNumEntry("Immediate", TRUE);
-  mMailer = mCfg->readEntry("Mailer", QString("/usr/sbin/sendmail"));
-  mSmtpHost = mCfg->readEntry("Smtp Host", QString("localhost"));
-  mSmtpPort = mCfg->readNumEntry("Smtp Port", 25);
-
-  mCfg->setGroup("Identity");
-  mEmailAddr= mCfg->readEntry("Email Address", "");
-  mUserName = mCfg->readEntry("Name", "");
+  readConfig();
 }
 
 
@@ -43,12 +30,50 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
 KMSender::~KMSender()
 {
   if (mMailerProc) delete mMailerProc;
+  writeConfig(TRUE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSender::readConfig(void)
+{
+  QString str;
+  KConfig* config = app->getConfig();
+
+  config->setGroup(SENDER_GROUP);
+
+  mSendImmediate = (bool)config->readNumEntry("Immediate", TRUE);
+  mMailer = config->readEntry("Mailer", "/usr/sbin/sendmail");
+  mSmtpHost = config->readEntry("Smtp Host", "localhost");
+  mSmtpPort = config->readNumEntry("Smtp Port", 25);
+
+  str = config->readEntry("Method");
+  if (str=="mail") mMethod = smMail;
+  else if (str=="smtp") mMethod = smSMTP;
+  else mMethod = smUnknown;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSender::writeConfig(bool aWithSync)
+{
+  KConfig* config = app->getConfig();
+  config->setGroup(SENDER_GROUP);
+
+  config->writeEntry("Immediate", mSendImmediate);
+  config->writeEntry("Mailer", mMailer);
+  config->writeEntry("Smtp Host", mSmtpHost);
+  config->writeEntry("Smtp Port", mSmtpPort);
+  config->writeEntry("Method", (mMethod==smSMTP) ? "smtp" : "mail");
+
+  if (aWithSync) config->sync();
 }
 
 
 //-----------------------------------------------------------------------------
 bool KMSender::sendQueued(void)
 {
+  warning("sending of queued mails is not implemented!");
   return FALSE;
 }
 
@@ -59,9 +84,18 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   bool sendOk = FALSE;
 
   assert(aMsg != NULL);
+  if (!identity->mailingAllowed())
+  {
+    warning(nls->translate("Please set the required fields in the\n"
+			   "identity settings:\n"
+			   "user-name and email-address"));
+    return FALSE;
+  }
+  if (!aMsg->to() || aMsg->to()[0]=='\0') return FALSE;
+
+  //aMsg->
 
   if (sendNow==-1) sendNow = mSendImmediate;
-
   if (!sendNow) return (queuedFolder->addMsg(aMsg)==0);
 
   if (mMethod == smSMTP) sendOk = sendSMTP(aMsg);
@@ -81,7 +115,7 @@ bool KMSender::sendSMTP(KMMessage* msg)
   // This code just must be stable. I checked every darn return code!
   // Date: 24. Sept. 97
   
-  QString str, fromStr, toStr;
+  QString str, fromStr;
   int replyCode;
   DwSmtpClient client;
   DwString dwString;
@@ -119,20 +153,15 @@ bool KMSender::sendSMTP(KMMessage* msg)
   if(replyCode != 250)
     return smtpFailed(client, "HELO", replyCode);
 
-  assert(!mEmailAddr.isEmpty()); // dump core if email address is unset.
-
-  replyCode = client.Mail((const char*)mEmailAddr);
+  replyCode = client.Mail(identity->emailAddr());
   cout << client.Response().c_str();
-  if(replyCode != 250)
-     return smtpFailed(client, "FROM", replyCode);
-
-  toStr = msg->to(); // Check if to is set.
-  assert(!toStr.isEmpty()); // dump core if "to" is unset.
+  if(replyCode != 250) 
+    return smtpFailed(client, "FROM", replyCode);
 
   replyCode = client.Rcpt(msg->to()); // Send RCPT command
   cout << client.Response().c_str();
-  if(replyCode != 250 && replyCode != 251)
-     return smtpFailed(client, "RCPT", replyCode);
+  if(replyCode != 250 && replyCode != 251) 
+    return smtpFailed(client, "RCPT", replyCode);
 
   str = msg->cc();
   if(!str.isEmpty())  // Check if cc is set.
@@ -202,19 +231,7 @@ void KMSender::smtpClose(DwSmtpClient& client)
 //-----------------------------------------------------------------------------
 bool KMSender::sendMail(KMMessage* aMsg)
 {
-  char  msgFileName[1024];
-  FILE* msgFile;
   const char* msgstr = aMsg->asString();
-  QString sendCmd;
-
-  // write message to temporary file such that mail can
-  // process it afterwards easily.
-  tmpnam(msgFileName);
-  msgFile = fopen(msgFileName, "w");
-  fwrite(msgstr, strlen(msgstr), 1, msgFile);
-  fclose(msgFile);
-
-  if (!mMailerProc) mMailerProc = new KProcess;
 
   if (mMailer.isEmpty())
   {
@@ -222,21 +239,18 @@ bool KMSender::sendMail(KMMessage* aMsg)
     return FALSE;
   }
 
-  sendCmd = mMailer.copy();
-  sendCmd += " \"";
-  sendCmd += aMsg->to();
-  sendCmd += "\" < ";
-  sendCmd += msgFileName;
+  if (!mMailerProc) mMailerProc = new KProcess;
+  assert(mMailerProc != NULL);
 
-  mMailerProc->setExecutable("/bin/sh");
-  *mMailerProc << "-c" << (const char*)sendCmd;
+  mMailerProc->clearArguments();
+  *mMailerProc << aMsg->to();
 
-  debug("sending message with command: "+sendCmd);
-  mMailerProc->start(KProcess::Block);
-  debug("sending done");
+  mMailerProc->setExecutable(mMailer);
+  mMailerProc->start(KProcess::DontCare, KProcess::Stdin);
+  if (!mMailerProc->writeStdin((char*)msgstr, strlen(msgstr))) return FALSE;
+  if (!mMailerProc->closeStdin()) return FALSE;
 
-  //unlink(msgFileName);
-  return true;
+  return TRUE;
 }
 
 
@@ -244,9 +258,6 @@ bool KMSender::sendMail(KMMessage* aMsg)
 void KMSender::setMethod(Method aMethod)
 {
   mMethod = aMethod;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("Method", (int)mMethod);
-  mCfg->sync();
 }
 
 
@@ -254,8 +265,6 @@ void KMSender::setMethod(Method aMethod)
 void KMSender::setSendImmediate(bool aSendImmediate)
 {
   mSendImmediate = aSendImmediate;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("Immediate", (int)mSendImmediate);
 }
 
 
@@ -263,8 +272,6 @@ void KMSender::setSendImmediate(bool aSendImmediate)
 void KMSender::setMailer(const QString& aMailer)
 {
   mMailer = aMailer;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("Mailer", mMailer);
 }
 
 
@@ -272,9 +279,6 @@ void KMSender::setMailer(const QString& aMailer)
 void KMSender::setSmtpHost(const QString& aSmtpHost)
 {
   mSmtpHost = aSmtpHost;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("Smtp Host", mSmtpHost);
-  mCfg->sync();
 }
 
 
@@ -282,25 +286,4 @@ void KMSender::setSmtpHost(const QString& aSmtpHost)
 void KMSender::setSmtpPort(int aSmtpPort)
 {
   mSmtpPort = aSmtpPort;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("Smtp Port", mSmtpPort);
-  mCfg->sync();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMSender::setUserName(const QString& aUserName)
-{
-  mUserName = aUserName;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("User Name", mSmtpHost);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMSender::setEmailAddr(const QString& aEmailAddr)
-{
-  mEmailAddr = aEmailAddr;
-  mCfg->setGroup(SENDER_GROUP);
-  mCfg->writeEntry("Email Address", mEmailAddr);
 }

@@ -23,8 +23,8 @@ public:
   virtual KMFolder* folder(void);
 
 protected slots:
-  void slotOkPressed();
-  void slotCancelPressed();
+  void slotSelect(int);
+  void slotCancel();
 
 protected:
   QListBox* mListBox;

@@ -13,6 +13,9 @@
 
 extern bool shuttingDown;
 
+class KMIdentity;
+extern KMIdentity* identity;
+
 class KBusyPtr;
 extern KBusyPtr* kbp;
 

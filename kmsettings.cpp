@@ -19,6 +19,7 @@
 #include <qlayout.h>
 #include <kmfoldermgr.h>
 #include <kmfolder.h>
+#include <kmidentity.h>
 
 #include "kmmainwin.h"
 #include "kmacctlocal.h"
@@ -45,8 +46,11 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   resize(500,600);
   setOKButton(nls->translate("OK"));
   setCancelButton(nls->translate("Cancel"));
+
+#ifdef NEEDS_LOTS_OF_WORK
   setDefaultButton(nls->translate("Default"));
   connect(this,SIGNAL(defaultButtonPressed()),this,SLOT(setDefaults()));
+#endif
 
   createTabIdentity(this);
   createTabNetwork(this);
@@ -122,25 +126,17 @@ void KMSettings::createTabIdentity(QWidget* parent)
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, nls->translate("Name:"), 
-				NULL, 0, 0);
+				identity->fullName(), 0, 0);
   orgEdit = createLabeledEntry(tab, grid, nls->translate("Organization:"), 
-			       NULL, 1, 0);
+			       identity->organization(), 1, 0);
   emailEdit = createLabeledEntry(tab, grid, nls->translate("Email Address:"),
-				 NULL, 2, 0);
+				 identity->emailAddr(), 2, 0);
   replytoEdit = createLabeledEntry(tab, grid, 
 				   nls->translate("Reply-To Address:"),
-				   NULL, 3, 0);
-
+				   identity->replyToAddr(), 3, 0);
   sigEdit = createLabeledEntry(tab, grid, nls->translate("Signature File:"),
-			       NULL, 4, 0, &button);
+			       identity->signatureFile(), 4, 0, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
-
-  config->setGroup("Identity");
-  nameEdit->setText(config->readEntry("Name"));
-  orgEdit->setText(config->readEntry("Organization"));
-  emailEdit->setText(config->readEntry("Email Address"));
-  replytoEdit->setText(config->readEntry("Reply-To Address"));
-  sigEdit->setText(config->readEntry("Signature File"));
 
   grid->setColStretch(0,0);
   grid->setColStretch(1,1);
@@ -209,6 +205,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
   smtpServerEdit->setText(msgSender->smtpHost());
   QString tmp;
   smtpPortEdit->setText(tmp.setNum(msgSender->smtpPort()));
+
 
   //---- group: incoming mail
   grp = new QGroupBox(nls->translate("Incoming Mail"), tab);
@@ -416,33 +413,33 @@ void KMSettings::setDefaults()
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::done(int r)
+void KMSettings::done(int ok)
 {
-  QTabDialog::done(r);
+  QTabDialog::done(ok);
 
-  if (r)
+  if (ok)
   {
-    config->setGroup("Identity");
-    config->writeEntry("Name",nameEdit->text());
-    config->writeEntry("Organization",orgEdit->text());
-    config->writeEntry("Email Address",emailEdit->text());
-    config->writeEntry("Reply-To Address",replytoEdit->text());
-    config->writeEntry("Signature File",sigEdit->text());
+    //----- identity
+    identity->setFullName(nameEdit->text());
+    identity->setOrganization(orgEdit->text());
+    identity->setEmailAddr(emailEdit->text());
+    identity->setReplyToAddr(replytoEdit->text());
+    identity->setSignatureFile(sigEdit->text());
+    identity->writeConfig(FALSE);
 
-    msgSender->setEmailAddr(emailEdit->text());
-    msgSender->setUserName(nameEdit->text());
-
-    config->setGroup("Network");
+    //----- sending mail
     if (sendmailRadio->isChecked())
       msgSender->setMethod(KMSender::smMail);
-
-    else if (smtpRadio->isChecked())
+    else
       msgSender->setMethod(KMSender::smSMTP);
 
-    config->writeEntry("Method", (int)msgSender->method());
-    config->writeEntry("Mailer",sendmailLocationEdit->text());
-    config->writeEntry("Smtp Host",smtpServerEdit->text());
-    config->writeEntry("Smtp Port",smtpPortEdit->text());
+    msgSender->setMailer(sendmailLocationEdit->text());
+    msgSender->setSmtpHost(smtpServerEdit->text());
+    msgSender->setSmtpPort(atoi(smtpPortEdit->text()));
+    msgSender->writeConfig(FALSE);
+
+    //-----
+    config->sync();
   }
 }
 

@@ -17,6 +17,9 @@
 #include <kmsgbox.h>
 #include <klocale.h>
 #include <kshortcut.h>
+#include <kmidentity.h>
+#include <dirent.h>
+#include <sys/stat.h>
 
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
@@ -30,6 +33,7 @@ KMFolder* queuedFolder = NULL;
 KMFolder* sentFolder = NULL;
 KMFolder* trashFolder = NULL;
 KShortCut* keys = NULL;
+KMIdentity* identity = NULL;
 bool shuttingDown = FALSE;
 
 static msg_handler oldMsgHandler = NULL;
@@ -61,10 +65,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 }
 
 
-#include <dirent.h>
-#include <sys/stat.h>
-
-// Torben
+//-----------------------------------------------------------------------------
 void testDir( const char *_name )
 {
     DIR *dp;
@@ -76,6 +77,7 @@ void testDir( const char *_name )
     else
 	closedir( dp );
 }
+
 
 //-----------------------------------------------------------------------------
 static void init(int argc, char *argv[])
@@ -98,6 +100,8 @@ static void init(int argc, char *argv[])
   testDir( "/.kde/share/config" );  
   testDir( "/.kde/share/apps" );
   testDir( "/.kde/share/apps/kmail" );
+
+  identity = new KMIdentity;
 
   cfg->setGroup("General");
   foldersPath = cfg->readEntry("folders", 
@@ -125,7 +129,7 @@ static void init(int argc, char *argv[])
   trashFolder->open();
 
   acctMgr->reload();
-  msgSender = new KMSender(folderMgr);
+  msgSender = new KMSender;
 }
 
 

@@ -147,7 +147,7 @@ const char* KMMessagePart::body(long* len_ret) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBody(const char* aStr)
 {
-  mBody = aStr;
+  mBody.assign(aStr);
 }
 
 

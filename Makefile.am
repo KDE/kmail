@@ -1,3 +1,5 @@
+CXXFLAGS = -g
+LDFLAGS =
 
 SUBDIRS = pics doc
 INCLUDES = $(all_includes)
@@ -15,7 +17,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kshortcut.cpp kmimemagic.cpp \
-		knewpanner.cpp kmfilteraction.cpp \
+		knewpanner.cpp kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
@@ -25,7 +27,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmacctmgr.moc kmfolderdir.moc \
 		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
-		knewpanner.moc kmfolderseldlg.moc
+		knewpanner.moc kmfolderseldlg.moc 
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -125,3 +127,7 @@ kmaccount.moc: kmaccount.h
 knewpanner.cpp: knewpanner.moc
 knewpanner.moc: knewpanner.h
 	$(MOC) knewpanner.h -o knewpanner.moc
+
+#ktablistbox.cpp: ktablistbox.moc
+#ktablistbox.moc: ktablistbox.h
+#	$(MOC) ktablistbox.h -o ktablistbox.moc

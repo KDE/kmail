@@ -30,9 +30,9 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
 
   //setNumCols(4);
   setColumn(0, nls->translate("F"), 16, KMHeadersInherited::PixmapColumn);
-  setColumn(1, nls->translate("Sender"), 220);
+  setColumn(1, nls->translate("Sender"), 200);
   setColumn(2, nls->translate("Subject"), 270);
-  setColumn(3, nls->translate("Date"), 250);
+  setColumn(3, nls->translate("Date"), 300);
   readConfig();
 
   pixNew = loader->loadIcon("kmmsgnew.xpm");
@@ -106,6 +106,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
+  debug("msgChanged() called");
   updateMessageList();
 }
 
@@ -113,6 +114,7 @@ void KMHeaders::msgChanged()
 //-----------------------------------------------------------------------------
 void KMHeaders::msgAdded(int id)
 {
+  debug("msgAdded() called");
   insertItem("", id-1);
   msgHeaderChanged(id);
 }
@@ -121,6 +123,7 @@ void KMHeaders::msgAdded(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgRemoved(int id)
 {
+  debug("msgRemoved() called");
   removeItem(id-1);
 }
 
@@ -130,6 +133,10 @@ void KMHeaders::msgHeaderChanged(int msgId)
 {
   char hdr[256];
   KMMessage::Status flag;
+
+  if (!autoUpdate()) return;
+
+  debug("msgHeaderChanged() called");
 
   flag = mFolder->msgStatus(msgId);
   sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(msgId), 
@@ -264,14 +271,16 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   assert(destFolder != NULL);
 
   kbp->busy();
+  mFolder->quiet(TRUE);
+  setAutoUpdate(FALSE);
+
+  destFolder->open();
   // getMsg gets confused when messages are removed while calling
   // it repeatedly. To avoid this we create a temporary list of
   // the messages that will be moved.
   for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
     msgList.append(msg);
 
-  mFolder->quiet(TRUE);
-  setAutoUpdate(FALSE);
   unmarkAll();
 
   // now it is safe to move the messages.
@@ -287,6 +296,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     if (cur >= mFolder->numMsgs()) cur = mFolder->numMsgs() - 1;
     setCurrentItem(cur, -1);
   }
+  destFolder->close();
   kbp->idle();
 }
 
@@ -466,6 +476,7 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
   *size = sizeof(dd);
   *type = DndRawData;
 
+  debug("Ready to drag...");
   return TRUE;
 }
 

@@ -4,27 +4,22 @@
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
-#include <stdio.h>
-#include <string.h>
-#include <qaccel.h>
-#include <qstring.h>
-#include <qdialog.h>
-#include <qwidget.h>
-#include <qpushbt.h>
-#include <qmlined.h>
-#include <qregexp.h>
-#include <qtabdlg.h>
-#include <html.h>
-#include <kapp.h>
 #include <ktopwidget.h>
-#include <ktoolbar.h>
-#include <kmenubar.h>
-#include <kmsgbox.h>
-#include "kmcomposewin.h"
-#include "kmimemagic.h"
-#include "kmmsgpart.h"
-#include <mimelib/utility.h>
-#include <mimelib/string.h>
+#include <qdialog.h>
+
+class KHTMLWidget;
+class KMFolder;
+class KMMessage;
+class KMMessage;
+class KMenuBar;
+class KMimeMagic;
+class KStatusBar;
+class KToolBar;
+class QFrame;
+class QMultiLineEdit;
+class QScrollBar;
+class QString;
+class QTabDialog;
 
 
 class KMReaderView : public QWidget
@@ -50,19 +45,20 @@ private:
 	void initKMimeMagic();                                              
 	void parseConfiguration();
 	KMimeMagic *magic;
-	u_int MAX_LINES;
+	unsigned int MAX_LINES;
 	bool showInline;
         QString selectedText;	
 
 public slots:
 	void clearCanvas();
 	void parseMessage(KMMessage*);
-	void saveMail();
+	bool saveMail();
 	void printMail();
 	void copy();
 	void markAll();
 	void viewSource();
 	void updateDisplay();
+
 
 private slots:
 	void replyMessage();
@@ -73,22 +69,20 @@ private slots:
 	void deleteMessage();
 	void slotScrollVert( int _y );
         void slotScrollHorz( int _x );
-        void slotScrollUpDo();
-        void slotScrollLeRi();
+        void slotScrollUp();
+        void slotScrollDo();
         void slotDocumentChanged();
         void slotDocumentDone();
 	void slotOpenAtmnt();
-	void slotSaveAtmnt();
-	void slotPrintAtmnt();
-	void slotViewAtmnt();
+	bool slotSaveAtmnt();
+	bool slotPrintAtmnt();
         void openURL(const char *, int);
         void popupHeaderMenu(const char *, const QPoint &);
         void popupMenu(const char *, const QPoint &);
-        void saveURL(int);
 	QString parseEAddress(QString);
 	QString parseBodyPart(KMMessagePart *,int);
-        QString bodyPartIcon(QString type, QString subtype, 
-			     QString partNumStr, QString);
+	QString bodyPartIcon(QString type, QString subType,
+			     QString pnumstring, QString comment);
 	QString decodeString(KMMessagePart*, QString); 
 	QString scanURL(QString);
                                                 
@@ -112,7 +106,9 @@ private:
                                         
 public slots:
 	void parseConfiguration();
+	void doDeleteMessage();
         void toDo(); 
+
 private slots:
 	void setupToolBar();
 	void setupMenuBar();
@@ -158,7 +154,4 @@ public:
 
 };
 #endif
-	
-		
 
-	  
