@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="22" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="23" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -29,6 +29,7 @@
    <Separator/>
    <Action name="sign_message" />
    <Action name="encrypt_message" />
+   <Action name="encrypt_message_chiasmus"/>
    <Separator/>
    <Action name="options_select_crypto" />
    <Action name="html"/>

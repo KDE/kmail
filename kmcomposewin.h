@@ -828,6 +828,8 @@ private slots:
   void slotContinuePrint( bool );
   void slotContinueDeadLetter( bool );
 
+  void slotEncryptChiasmusToggled( bool );
+
   /**
    * Helper method (you could call is a bottom-half :) for
    * startPublicKeyExport()
@@ -855,6 +857,12 @@ private:
   // These are for passing on methods over the applyChanges calls
   int mSendNow;
   bool mSaveInDrafts;
+
+#ifdef KLEO_CHIASMUS
+  KToggleAction *mEncryptChiasmusAction;
+  bool mEncryptWithChiasmus;
+  QString mChiasmusKey;
+#endif
 
   // This is the temporary object that constructs the message out of the
   // window
