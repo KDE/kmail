@@ -28,11 +28,9 @@ namespace KMail {
     /** Stop all possibly pending processing in ordeer to be able to
 	call @ref #begin() again. */
     virtual void reset() = 0;
-    /** Write out a chunk of text. @p str is subject to HTML escaping. */
-    //virtual void escapeAndWrite( const QString & str ) = 0;
     /** Write out a chunk of text. No HTML escaping is performed. */
     virtual void write( const QString & str ) = 0;
-    //virtual void escapeAndQueue( const QString & str ) = 0;
+
     virtual void queue( const QString & str ) = 0;
     /** (Start) flushing internal buffers, if any. */
     virtual void flush() = 0;

@@ -21,38 +21,30 @@
 #include <qstringlist.h>
 #include <qtimer.h>
 
-class KMReaderWin;
 class QString;
+class KHTMLPart;
 
 namespace KMail {
 
   class KHtmlPartHtmlWriter : public QObject, public HtmlWriter {
     Q_OBJECT
   public:
-    KHtmlPartHtmlWriter( KMReaderWin * readerWin,
+    KHtmlPartHtmlWriter( KHTMLPart * part,
 			 QObject * parent=0, const char * name = 0 );
     virtual ~KHtmlPartHtmlWriter();
 
     void begin();
     void end();
     void reset();
-    //void escapeAndWrite( const QString & str );
     void write( const QString & str );
-    //void escapeAndQueue( const QString & str );
     void queue( const QString & str );
     void flush();
-
-  protected:
-    //QString escapeHTML( const QString & str );
-
-  private:
-    void queueHtml( const QString & str );
 
   private slots:
     void slotWriteNextHtmlChunk();
 
   private:
-    KMReaderWin * mReaderWin;
+    KHTMLPart * mHtmlPart;
     QStringList mHtmlQueue;
     QTimer mHtmlTimer;
   };

@@ -943,7 +943,7 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->view()->setLineWidth(0);
 
   if ( !htmlWriter() )
-    mHtmlWriter = new KHtmlPartHtmlWriter( this, this );
+    mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, this );
 
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,

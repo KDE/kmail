@@ -14,8 +14,6 @@
 
 #include "khtmlparthtmlwriter.h"
 
-#include "kmreaderwin.h"
-
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <kurl.h>
@@ -26,12 +24,12 @@
 
 namespace KMail {
 
-  KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KMReaderWin * readerWin,
+  KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KHTMLPart * part,
 					    QObject * parent, const char * name )
     : QObject( parent, name ), HtmlWriter(),
-      mReaderWin( readerWin )
+      mHtmlPart( part )
   {
-    assert( readerWin );
+    assert( part );
     connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );
   }
 
@@ -40,11 +38,11 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::begin() {
-    mReaderWin->mViewer->begin( KURL( "file:/" ) );
+    mHtmlPart->begin( KURL( "file:/" ) );
   }
 
   void KHtmlPartHtmlWriter::end() {
-    mReaderWin->mViewer->end();
+    mHtmlPart->end();
   }
 
   void KHtmlPartHtmlWriter::reset() {
@@ -55,39 +53,11 @@ namespace KMail {
     mHtmlQueue.clear();
   }
 
-  //void KHtmlPartHtmlWriter::escapeAndWrite( const QString & str ) {
-  //  write( escapeHTML( str ) );
-  //}
-
   void KHtmlPartHtmlWriter::write( const QString & str ) {
-    mReaderWin->mViewer->write( str );
+    mHtmlPart->write( str );
   }
-
-  //void KHtmlPartHtmlWriter::escapeAndQueue( const QString & str ) {
-  //  queue( escapeHTML( str ) );
-  //}
 
   void KHtmlPartHtmlWriter::queue( const QString & str ) {
-    queueHtml( str );
-  }
-
-  void KHtmlPartHtmlWriter::flush() {
-    slotWriteNextHtmlChunk();
-  }
-
-#if 0
-  QString KHtmlPartHtmlWriter::escapeHTML( const QString & str ) {
-    QString result = str;
-    result.replace( '&', "&amp;" );
-    result.replace( '<', "&lt;" );
-    result.replace( '>', "&gt;" );
-    result.replace( '"', "&quot;" );
-    result.replace( '\'', "&apos;" );
-    return result;
-  }
-#endif
-
-  void KHtmlPartHtmlWriter::queueHtml( const QString & str ) {
     uint pos = 0;
     while ( str.length() > pos ) {
       mHtmlQueue += str.mid( pos, 16384 );
@@ -95,13 +65,17 @@ namespace KMail {
     }
   }
 
+  void KHtmlPartHtmlWriter::flush() {
+    slotWriteNextHtmlChunk();
+  }
+
   void KHtmlPartHtmlWriter::slotWriteNextHtmlChunk() {
     QStringList::Iterator it = mHtmlQueue.begin();
     if ( it == mHtmlQueue.end() ) {
       end();
-      mReaderWin->mViewer->view()->viewport()->setUpdatesEnabled( true );
-      mReaderWin->mViewer->view()->setUpdatesEnabled( true );
-      mReaderWin->mViewer->view()->viewport()->repaint( false );
+      mHtmlPart->view()->viewport()->setUpdatesEnabled( true );
+      mHtmlPart->view()->setUpdatesEnabled( true );
+      mHtmlPart->view()->viewport()->repaint( false );
       return;
     }
     write( *it );
