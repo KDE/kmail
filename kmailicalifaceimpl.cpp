@@ -246,10 +246,10 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
         *part = *newPart;
         delete newPart;
         msg.setNeedsAssembly();
-        kdDebug(5006) << "Attachment updated." << endl;
+        kdDebug(5006) << "Attachment " << attachmentName << " updated." << endl;
       } else {
         msg.addBodyPart( &msgPart );
-        kdDebug(5006) << "Attachment added." << endl;
+        kdDebug(5006) << "Attachment " << attachmentName << " added." << endl;
       }
       bOK = true;
     }else{
@@ -295,7 +295,7 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   // top-level parts we do *not* have to travel into embedded multiparts
   DwBodyPart* part = msg.getFirstDwBodyPart();
   while( part ){
-    if( attachmentName == part->partId() ){
+    if( attachmentName == part->Headers().ContentDisposition().Filename().c_str() ){
       DwBodyPart emptyPart;
       // Make sure the empty replacement body part is pointing
       // to the same next part as the to be deleted body part.
@@ -819,7 +819,7 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
     // top-level parts we do *not* have to travel into embedded multiparts
     DwBodyPart* part = msg->getFirstDwBodyPart();
     while( part ){
-      if( filename == part->partId() ){
+      if( filename == part->Headers().ContentDisposition().Filename().c_str() ){
         // Save the contents of the attachment.
         KMMessagePart aPart;
         msg->bodyPart( part, &aPart );
