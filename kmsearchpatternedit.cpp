@@ -164,7 +164,7 @@ void KMSearchRuleWidget::initLists() const
     sFilterFieldList.append(i18n("<To or Cc>"));
     sFilterFieldList.append(i18n("<size>"));
     sFilterFieldList.append(i18n("<age in days>"));
-    // these others only represent meassage headers and you can add to
+    // these others only represent message headers and you can add to
     // them as you like
     sFilterFieldList.append("Subject");
     sFilterFieldList.append("From");
@@ -175,6 +175,7 @@ void KMSearchRuleWidget::initLists() const
     sFilterFieldList.append("Organization");
     sFilterFieldList.append("Resent-From");
     sFilterFieldList.append("X-Loop");
+    sFilterFieldList.append("X-Mailing-List");
   }
 }
 
