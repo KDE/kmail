@@ -108,13 +108,9 @@ namespace KMail {
         @param mainFolderTree The main folder tree from which the folders
           are copied to allow the selection of a spam folder in a tree
           within one of the wizard pages.
-        @param collection In this collection there the wizard will search
-          for the filter menu actions which get created for classification
-          rules (to add them later to the main toolbar).
       */
       AntiSpamWizard( WizardMode mode,
-                      QWidget * parent, KMFolderTree * mainFolderTree,
-                      KActionCollection * collection );
+                      QWidget * parent, KMFolderTree * mainFolderTree );
 
     protected:
       /** Evaluate the settings made and create the appropriate filter rules. */
@@ -228,6 +224,9 @@ namespace KMail {
       /* generic checks if any option in a page is checked */
       bool anySpamOptionChecked();
       bool anyVirusOptionChecked();
+      
+      /* convenience function calling the appropriate filter manager method */
+      const QString uniqueNameFor( const QString & name );
 
       /* The pages in the wizard */
       ASWizInfoPage * mInfoPage;
@@ -237,9 +236,6 @@ namespace KMail {
 
       /* The configured tools and it's settings to be used in the wizard. */
       QValueList<SpamToolConfig> mToolList;
-
-      /* The action collection where the filter menu action is searched in */
-      KActionCollection * mActionCollection;
 
       /* Are any spam tools selected? */
       bool mSpamToolsUsed;

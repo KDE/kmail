@@ -54,8 +54,7 @@
 using namespace KMail;
 
 AntiSpamWizard::AntiSpamWizard( WizardMode mode,
-                                QWidget* parent, KMFolderTree * mainFolderTree,
-                                KActionCollection * collection )
+                                QWidget* parent, KMFolderTree * mainFolderTree )
   : KWizard( parent ),
     mSpamRulesPage( 0 ),
     mVirusRulesPage( 0 ),
@@ -95,8 +94,6 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
     kdDebug(5006) << "Type: " << (*it).getType() << endl << endl;
 #endif
   }
-
-  mActionCollection = collection;
 
   setCaption( ( mMode == AntiSpam ) ? i18n( "Anti-Spam Wizard" )
                                     : i18n( "Anti-Virus Wizard" ) );
@@ -160,7 +157,7 @@ void AntiSpamWizard::accept()
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
         KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
-        pipeFilterPattern->setName( (*it).getFilterName() );
+        pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
         pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
         pipeFilter->setApplyOnOutbound( FALSE);
@@ -187,7 +184,7 @@ void AntiSpamWizard::accept()
         virusFilterActions->append( virusFilterAction2 );
       }
       KMSearchPattern* virusFilterPattern = virusFilter->pattern();
-      virusFilterPattern->setName( i18n( "Virus handling" ) );
+      virusFilterPattern->setName( uniqueNameFor( i18n( "Virus handling" ) ) );
       virusFilterPattern->setOp( KMSearchPattern::OpOr );
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
             it != mToolList.end(); ++it ) {
@@ -232,7 +229,7 @@ void AntiSpamWizard::accept()
         pipeFilterAction->argsFromString( (*it).getDetectCmd() );
         pipeFilterActions->append( pipeFilterAction );
         KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
-        pipeFilterPattern->setName( (*it).getFilterName() );
+        pipeFilterPattern->setName( uniqueNameFor( (*it).getFilterName() ) );
         pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                    KMSearchRule::FuncIsLessOrEqual, "256000" ) );
         pipeFilter->setApplyOnOutbound( FALSE);
@@ -262,7 +259,7 @@ void AntiSpamWizard::accept()
         spamFilterActions->append( spamFilterAction3 );
       }
       KMSearchPattern* spamFilterPattern = spamFilter->pattern();
-      spamFilterPattern->setName( i18n( "Spam handling" ) );
+      spamFilterPattern->setName( uniqueNameFor( i18n( "Spam handling" ) ) );
       spamFilterPattern->setOp( KMSearchPattern::OpOr );
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
             it != mToolList.end(); ++it ) {
@@ -316,7 +313,7 @@ void AntiSpamWizard::accept()
       classSpamFilterActions->append( classSpamFilterActionLast );
 
       KMSearchPattern* classSpamFilterPattern = classSpamFilter->pattern();
-      classSpamFilterPattern->setName( i18n( "Classify as spam" ) );
+      classSpamFilterPattern->setName( uniqueNameFor( i18n( "Classify as spam" ) ) );
       classSpamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                       KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
       classSpamFilter->setApplyOnOutbound( FALSE);
@@ -329,6 +326,7 @@ void AntiSpamWizard::accept()
 
       // Classify messages manually as not Spam / as Ham
       KMFilter* classHamFilter = new KMFilter();
+      classHamFilter->setIcon( "mark_as_ham" );
       QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
       KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
       classHamFilterActionFirst->argsFromString( "H" );
@@ -344,7 +342,7 @@ void AntiSpamWizard::accept()
         }
       }
       KMSearchPattern* classHamFilterPattern = classHamFilter->pattern();
-      classHamFilterPattern->setName( i18n( "Classify as NOT spam" ) );
+      classHamFilterPattern->setName( uniqueNameFor( i18n( "Classify as NOT spam" ) ) );
       classHamFilterPattern->append( KMSearchRule::createInstance( "<size>",
                                      KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
       classHamFilter->setApplyOnOutbound( FALSE);
@@ -472,6 +470,12 @@ bool AntiSpamWizard::anyVirusOptionChecked()
 {
   return ( mVirusRulesPage->moveRulesSelected()
            || mVirusRulesPage->pipeRulesSelected() );
+}
+
+
+const QString AntiSpamWizard::uniqueNameFor( const QString & name )
+{
+  return KMKernel::self()->filterMgr()->createUniqueName( name );
 }
 
 

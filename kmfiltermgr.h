@@ -43,6 +43,10 @@ public:
   bool beginFiltering(KMMsgBase *msgBase) const;
   int moveMessage(KMMessage *msg) const;
   void endFiltering(KMMsgBase *msgBase) const;
+  
+  /** Check for existing filters with the &p name and extend the 
+      "name" to "name (i)" until no match is found for i=1..n */
+  const QString createUniqueName( const QString & name );
 
   /** Append the list of filters to the current list of filters and 
       write everything back into the configuration.*/
@@ -54,7 +58,6 @@ public:
 
       @param msg The message to process.
       @param aSet Select the filter set to use.
-      @param id If set the id of an individual filter to apply
       @return 2 if a critical error occurred (eg out of disk space)
       1 if the caller is still owner of the message and
       0 otherwise. If the caller does not any longer own the message

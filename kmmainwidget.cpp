@@ -3399,16 +3399,14 @@ void KMMainWidget::toggleSystemTray()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
-  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam,
-                      this, folderTree(), actionCollection() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam, this, folderTree() );
   wiz.exec();
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiVirusWizard()
 {
-  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus,
-                      this, folderTree(), actionCollection() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus, this, folderTree() );
   wiz.exec();
 }
 

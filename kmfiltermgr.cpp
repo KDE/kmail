@@ -315,6 +315,31 @@ void KMFilterMgr::createFilter( const QCString & field, const QString & value )
 
 
 //-----------------------------------------------------------------------------
+const QString KMFilterMgr::createUniqueName( const QString & name )
+{
+  QString uniqueName = name;
+  int counter = 0;
+  bool found = true;
+  
+  while ( found ) {
+    found = false;
+    for ( QPtrListIterator<KMFilter> it(*this) ;
+          it.current() ; ++it ) {
+      if ( !( (*it)->name().compare( uniqueName ) ) ) {
+        found = true;
+        ++counter;
+        uniqueName = name;
+        uniqueName += QString( " (" ) + QString::number( counter ) 
+                    + QString( ")" );
+        break;
+      }
+    }
+  }
+  return uniqueName;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMFilterMgr::appendFilters( const QPtrList<KMFilter> filters )
 {
   beginUpdate();
