@@ -36,10 +36,7 @@ Kpgp::Kpgp()
 {
   kpgpObject=this;
 
-  // open kpgp config file
-  QString aStr = kapp->localconfigdir();
-  aStr += "/kpgprc";
-  config = new KSimpleConfig(aStr);
+  config = new KSimpleConfig("kpgprc" );
 
   init();
 }
@@ -797,7 +794,7 @@ KpgpKey::~KpgpKey()
 }
 
 QString 
-KpgpKey::getKeyName(QWidget *parent, const QStrList *keys = NULL)
+KpgpKey::getKeyName(QWidget *parent, const QStrList *keys)
 {
   KpgpKey pgpkey(parent, i18n("Select key"), keys);
   pgpkey.exec();

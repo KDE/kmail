@@ -549,7 +549,7 @@ void KMFilterDlg::slotBtnCancel()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
-  app->invokeHTMLHelp( app->appName() + "/" + "index-3.html", "ss3.5" );
+  app->invokeHTMLHelp( QString( app->name() )+"/index-3.html", "ss3.5" );
 }
 
 

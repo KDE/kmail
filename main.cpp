@@ -114,8 +114,8 @@ static void ungrabPtrKb(void)
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
-  QString appName = app->appName();
-  QString msg = aMsg;
+  QString appName( app->name());
+  QString msg( aMsg );
   
 
   switch (aType)
@@ -125,7 +125,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
     break;
 
   case QtWarningMsg:
-    fprintf(stderr, "%s: %s\n", (const char*)app->appName(), msg.data());
+    fprintf(stderr, "%s: %s\n", (const char*)app->name(), msg.data());
     if (strncmp(aMsg,"KCharset:",9) != 0 &&
 	strncmp(aMsg,"QGManager:",10) != 0 &&
 	strncmp(aMsg,"QPainter:",9) != 0 &&
@@ -385,7 +385,7 @@ static void transferMail(void)
   // Markus: lol ;-)
   if (!dir.cd("KMail")) return;
 
-  rc = KMsgBox::yesNo(NULL, app->appName()+" "+i18n("warning"),
+  rc = KMsgBox::yesNo(NULL, QString(app->name())+" "+i18n("warning"),
 		      i18n(
 	    "The directory ~/KMail exists. From now on, KMail uses the\n"
 	    "directory ~/Mail for it's messages.\n"

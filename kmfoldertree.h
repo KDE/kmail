@@ -43,7 +43,7 @@ protected slots:
 
 protected:
   // Updates the number of unread messages for all folders
-  virtual void KMFolderTree::updateUnreadAll( );
+  virtual void updateUnreadAll( );
 
   // Insert folder sorted by type and name
   virtual void inSort(KMFolder*);
