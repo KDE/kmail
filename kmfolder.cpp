@@ -1759,9 +1759,13 @@ int KMFolder::compact()
       rc = fsync(fileno(tmpfile));
   rc |= fclose(tmpfile);
   if (!rc) {
-    writeIndex();
-    close(TRUE);
+    bool autoCreate = mAutoCreateIndex;
     _rename(tempName.local8Bit(), location().local8Bit());
+    writeIndex();
+    writeConfig();
+    mAutoCreateIndex = false;
+    close(TRUE);
+    mAutoCreateIndex = autoCreate;
   }
   else
   {
