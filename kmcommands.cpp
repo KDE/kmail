@@ -226,6 +226,7 @@ void KMCommand::transferSelectedMsgs()
   mCountMsgs = 0;
   mRetrievedMsgs.clear();
   mCountMsgs = mMsgList.count();
+  uint totalSize = 0;
   // the KProgressDialog for the user-feedback. Only enable it if it's needed.
   // For some commands like KMSetStatusCommand it's not needed. Note, that
   // for some reason the KProgressDialog eats the MouseReleaseEvent (if a
@@ -268,12 +269,15 @@ void KMCommand::transferSelectedMsgs()
       KMCommand::mCountJobs++;
       FolderJob *job = thisMsg->parent()->createJob(thisMsg);
       job->setCancellable( false );
+      totalSize += thisMsg->msgSizeServer();
       // emitted when the message was transferred successfully
       connect(job, SIGNAL(messageRetrieved(KMMessage*)),
               this, SLOT(slotMsgTransfered(KMMessage*)));
       // emitted when the job is destroyed
       connect(job, SIGNAL(finished()),
               this, SLOT(slotJobFinished()));
+      connect(job, SIGNAL(progress(unsigned long, unsigned long)),
+              this, SLOT(slotProgress(unsigned long, unsigned long)));
       // msg musn't be deleted
       thisMsg->setTransferInProgress(true);
       job->start();
@@ -292,7 +296,7 @@ void KMCommand::transferSelectedMsgs()
     if ( mProgressDialog ) {
       connect(mProgressDialog, SIGNAL(cancelClicked()),
               this, SLOT(slotTransferCancelled()));
-      mProgressDialog->progressBar()->setTotalSteps(KMCommand::mCountJobs);
+      mProgressDialog->progressBar()->setTotalSteps(totalSize);
     }
   }
 }
@@ -306,6 +310,11 @@ void KMCommand::slotMsgTransfered(KMMessage* msg)
 
   // save the complete messages
   mRetrievedMsgs.append(msg);
+}
+
+void KMCommand::slotProgress( unsigned long done, unsigned long /*total*/ )
+{
+  mProgressDialog->progressBar()->setProgress( done );
 }
 
 void KMCommand::slotJobFinished()
@@ -325,7 +334,6 @@ void KMCommand::slotJobFinished()
   }
   // update the progressbar
   if ( mProgressDialog ) {
-    mProgressDialog->progressBar()->advance(1);
     mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
           "Please wait while the %n messages are transferred", KMCommand::mCountJobs));
   }
