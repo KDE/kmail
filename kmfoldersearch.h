@@ -117,8 +117,6 @@ protected slots:
   void searchFinished(bool success);
   // Look at a new message and if it matches search() add it to the cache
   void examineAddedMessage(KMFolder *folder, Q_UINT32 serNum);
-  // Look at all new messages in a completed (imap) folder
-  void examineCompletedFolder(KMFolderImap *folder, bool success);
   // Look at a removed message and remove it from the cache
   void examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum);
   // Look at a message whose status has changed

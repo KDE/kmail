@@ -913,8 +913,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
     assert(folder && (idx != -1));
     assert(folder == aFolder);
-    if (!folder->isOpened())
-      return;
+    folder->open();
 
     connect( folder->storage(), 
             SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
@@ -930,6 +929,7 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, QValueList<Q_UI
             SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
             this,
             SLOT( slotSearchExamineMsgDone( KMFolder*, QValueList<Q_UINT32> ) ) );
+    folder->close();
 
     if ( serNums.empty() )
         return;
@@ -943,19 +943,6 @@ void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, QValueList<Q_UI
         {
             addSerNum( *it );
         }
-    }
-}
-
-void KMFolderSearch::examineCompletedFolder(KMFolderImap *aFolder, bool success)
-{
-    disconnect (aFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-                this, SLOT(examineCompletedFolder(KMFolderImap*, bool)));
-    if (!success) return;
-    Q_UINT32 serNum;
-    while (!mUnexaminedMessages.isEmpty()) {
-        serNum = mUnexaminedMessages.pop();
-        if (search()->searchPattern()->matches(serNum))
-            addSerNum(serNum);
     }
 }
 
