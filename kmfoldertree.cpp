@@ -847,7 +847,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     {
       folderMenu->insertSeparator();
       folderMenu->insertItem(i18n("Post to &Mailing-List"),
-                             topLevelWidget(), SLOT(slotCompose()));
+                             topLevelWidget(), SLOT(slotPostToML()));
     }
   }
 

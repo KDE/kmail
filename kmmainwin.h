@@ -147,6 +147,7 @@ protected slots:
   void slotViewChange();
   void slotAddFolder();
   void slotCompose();
+  void slotPostToML();
   void slotModifyFolder();
   void slotExpireFolder();
   void slotExpireAll();

@@ -741,6 +741,26 @@ void KMMainWin::slotCompose()
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
 
+      win = new KMComposeWin(msg, mFolder->identity());
+  } else {
+      msg->initHeader();
+      win = new KMComposeWin(msg);
+  }
+
+  win->show();
+
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotPostToML()
+{
+  KMComposeWin *win;
+  KMMessage* msg = new KMMessage;
+
+  if ( mFolder ) {
+      msg->initHeader( mFolder->identity() );
+
       if (mFolder->isMailingList()) {
           kdDebug(5006)<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
 
@@ -1998,6 +2018,9 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&New Message..."), "filenew", KStdAccel::shortcut(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
+  (void) new KAction( i18n("P&ost to Mailing-List..."), 0, this,
+		      SLOT(slotPostToML()), actionCollection(), "post_message" );
+
   (void) new KAction( i18n("next message","Ne&xt"), Key_N, this,
 		      SLOT(slotNextMessage()), actionCollection(), "next" );
 
@@ -2013,7 +2036,7 @@ void KMMainWin::setupMenuBar()
   replyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
 
-  noQuoteReplyAction = new KAction( i18n("Reply &Without Quote..."), ALT+Key_R,
+  noQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), ALT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
   replyAllAction = new KAction( i18n("Reply &All..."), "mail_replyall",
@@ -2025,7 +2048,7 @@ void KMMainWin::setupMenuBar()
   forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
 
-  forwardAttachedAction = new KAction( i18n("F&orward as Attachment"), SHIFT+Key_F, this,
+  forwardAttachedAction = new KAction( i18n("For&ward as Attachment"), SHIFT+Key_F, this,
 		      SLOT(slotForwardAttachedMsg()), actionCollection(), "forward_attached" );
 
   redirectAction = new KAction( i18n("Re&direct..."), Key_E, this,
