@@ -2831,7 +2831,7 @@ QString KMEdit::brokenText()
   {
     int lastLine = 0;
     line = textLine(i);
-    for (int j = 0; j < (int)line.length(); ++j)
+    for (int j = 0; j < (int)line.length() - 1; ++j)
     {
       if (lineOfChar(i, j) > lastLine)
       {
