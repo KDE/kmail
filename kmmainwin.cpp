@@ -1900,7 +1900,7 @@ void KMMainWin::setupMenuBar()
   modifyFolderAction = new KAction( i18n("&Properties..."), 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
-  markAllAsReadAction = new KAction( i18n("&Mark all Mails as read"), 0, this,
+  markAllAsReadAction = new KAction( i18n("&Mark All Mails as Read"), 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
   expireFolderAction = new KAction(i18n("E&xpire"), 0, this, SLOT(slotExpireFolder()),

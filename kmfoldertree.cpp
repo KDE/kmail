@@ -818,7 +818,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                              SLOT(slotCompactFolder()));
       folderMenu->insertSeparator();
       if (fti->folder->countUnread() > 0)
-        folderMenu->insertItem(i18n("&Mark all Mails as read"), topLevelWidget(),
+        folderMenu->insertItem(i18n("&Mark All Mails as Read"), topLevelWidget(),
                                SLOT(slotMarkAllAsRead()));
       folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
                              SLOT(slotEmptyFolder()));
@@ -830,7 +830,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     if (!fti->folder->noContent() && fti->folder->isMailingList())
     {
       folderMenu->insertSeparator();
-      folderMenu->insertItem(i18n("&Post to mailing-list"),
+      folderMenu->insertItem(i18n("&Post to Mailing-List"),
                              topLevelWidget(), SLOT(slotCompose()));
     }
   }
