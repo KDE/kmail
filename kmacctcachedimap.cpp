@@ -134,17 +134,9 @@ bool KMAcctCachedImap::handleJobErrorInternal( int errorCode, const QString &err
   switch( errorCode ) {
   case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
   case KIO::ERR_COULD_NOT_LOGIN: mAskAgain = TRUE; break;
-  case KIO::ERR_CONNECTION_BROKEN:
-    if ( slave() ) {
-      KIO::Scheduler::disconnectSlave( slave() );
-      mSlave = 0;
-      // TODO reset all syncs?
-    }
-    killAllJobs( true );
-    break;
   default:
     if ( abortSync )
-      killAllJobs( false );
+      killAllJobs( errorCode = KIO::ERR_CONNECTION_BROKEN );
     else
       jobsKilled = false;
     break;
