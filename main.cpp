@@ -7,10 +7,14 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <kuniqueapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <ksimpleconfig.h>
+#include <kstandarddirs.h>
+#include <knotifyclient.h>
 #include <dcopclient.h>
 #include <kcrash.h>
 
@@ -243,6 +247,21 @@ int main(int argc, char *argv[])
   KMailApplication app;
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
+  KSimpleConfig config(locateLocal("appdata", "lock"));
+  int oldPid = config.readNumEntry("pid", -1);
+  if (oldPid != -1 && getsid(oldPid) != -1)
+  {
+    QString msg = i18n("KMail can only run once at the same time. "
+      "It is already running on a different display with PID %1.").arg(oldPid);
+    KNotifyClient::userEvent( msg,  KNotifyClient::Messagebox,
+      KNotifyClient::Error );
+    fprintf(stderr, "*** KMail is already running with PID %d\n", oldPid);
+    return 1;
+  }
+
+  config.writeEntry("pid", getpid());
+  config.sync();
+
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
   //local, do the init
@@ -264,6 +283,8 @@ int main(int argc, char *argv[])
 
   // clean up
   kmailKernel.cleanup();
+  config.writeEntry("pid", -1);
+  config.sync();
   return ret;
 }
 
