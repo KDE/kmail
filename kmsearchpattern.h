@@ -228,10 +228,12 @@ namespace KMail {
     I18N_NOOP( "ignored" ),
     I18N_NOOP( "spam" ),
     I18N_NOOP( "ham" ),
-    I18N_NOOP( "todo" )
+    I18N_NOOP( "todo" ),
+    I18N_NOOP( "has an attachment")
   };
   static const int StatusValueCount =
     sizeof( StatusValues ) / sizeof( *StatusValues );
+  static const int StatusValueCountWithoutHidden = StatusValueCount - 1;
 }
 
 class KMSearchRuleStatus : public KMSearchRule

@@ -1057,7 +1057,7 @@ namespace {
 
     QComboBox *statusCombo = new QComboBox( valueStack,
                                             "statusRuleValueCombo" );
-    for ( int i = 0; i < KMail::StatusValueCount; ++i ) {
+    for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
       statusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
     }
     statusCombo->adjustSize();
@@ -1217,7 +1217,7 @@ namespace {
     // set the value
     const QString value = rule->contents();
     int valueIndex = 0;
-    for ( ; valueIndex < KMail::StatusValueCount; ++valueIndex )
+    for ( ; valueIndex < KMail::StatusValueCountWithoutHidden; ++valueIndex )
       if ( value == QString::fromLatin1(
                KMail::StatusValues[valueIndex] ) )
         break;
@@ -1226,7 +1226,7 @@ namespace {
                                                    0, false ) );
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
-      if ( valueIndex < KMail::StatusValueCount )
+      if ( valueIndex < KMail::StatusValueCountWithoutHidden )
         statusCombo->setCurrentItem( valueIndex );
       else {
         kdDebug(5006) << "StatusRuleWidgetHandler::setRule( "
