@@ -199,7 +199,10 @@ void KMTransportInfo::readPassword() const
   if ( !storePasswd() || !auth )
     return;
 
-  if ( Wallet::folderDoesNotExist(Wallet::NetworkWallet(), "kmail") ||
+  // ### workaround for broken Wallet::keyDoesNotExist() which returns wrong
+  // results for new entries without closing and reopening the wallet
+  if ( Wallet::isOpen( Wallet::NetworkWallet() ) ?
+       !kmkernel->wallet()->hasEntry( "transport-" + QString::number(mId) ) :
        Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) )
     return;
 
