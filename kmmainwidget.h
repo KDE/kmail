@@ -427,7 +427,6 @@ private:
   KAction       *mlistFilterAction;
   QCString	mEncodingStr;
   bool		mIntegrated;
-  bool          mSendOnCheck;
   bool          mBeepOnNew, mSystemTrayOnNew;
   int           mSystemTrayMode;
   bool          mConfirmEmpty;

@@ -309,7 +309,7 @@ protected:
   QPushButton *mTransportUpButton;
   QPushButton *mTransportDownButton;
   QCheckBox   *mConfirmSendCheck;
-  QCheckBox   *mSendOutboxCheck;
+  QComboBox   *mSendOnCheckCombo;
   QComboBox   *mSendMethodCombo;
   QComboBox   *mMessagePropertyCombo;
   QLineEdit   *mDefaultDomainEdit;

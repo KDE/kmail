@@ -652,11 +652,14 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   connect( mConfirmSendCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // "send messages in outbox on check" check box:
-  mSendOutboxCheck =
-    new QCheckBox(i18n("Send messages in outbox &folder on check"), group );
-  glay->addMultiCellWidget( mSendOutboxCheck, 1, 1, 0, 1 );
-  connect( mSendOutboxCheck, SIGNAL( stateChanged( int ) ),
+  // "send on check" combo:
+  mSendOnCheckCombo = new QComboBox( false, group );
+  mSendOnCheckCombo->insertStringList( QStringList()
+				      << i18n("never automatically")
+				      << i18n("on manual mail checks")
+                                      << i18n("on all mail checks") );
+  glay->addWidget( mSendOnCheckCombo, 1, 1 );
+  connect( mSendOnCheckCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "default send method" combo:
@@ -686,18 +689,26 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
            this, SLOT( slotEmitChanged( void ) ) );
 
   // labels:
+  QLabel *l =  new QLabel( mSendOnCheckCombo, /*buddy*/
+                            i18n("Send &messages in outbox folder:"), group );
+  glay->addWidget( l, 1, 0 );
+
+  QString msg = i18n( GlobalSettings::self()->sendOnCheckItem()->whatsThis().utf8() );
+  QWhatsThis::add( l, msg );
+  QWhatsThis::add( mSendOnCheckCombo, msg );
+
   glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
 			       i18n("Defa&ult send method:"), group ), 2, 0 );
   glay->addWidget( new QLabel( mMessagePropertyCombo, /*buddy*/
 			       i18n("Message &property:"), group ), 3, 0 );
-  QLabel *l = new QLabel( mDefaultDomainEdit, /*buddy*/
+  l = new QLabel( mDefaultDomainEdit, /*buddy*/
                           i18n("Defaul&t domain:"), group );
   glay->addWidget( l, 4, 0 );
 
   // and now: add QWhatsThis:
-  QString msg = i18n( "<qt><p>The default domain is used to complete email "
-                      "addresses that only consist of the user's name."
-                      "</p></qt>" );
+  msg = i18n( "<qt><p>The default domain is used to complete email "
+              "addresses that only consist of the user's name."
+              "</p></qt>" );
   QWhatsThis::add( l, msg );
   QWhatsThis::add( mDefaultDomainEdit, msg );
 }
@@ -970,11 +981,10 @@ void NetworkPage::SendingTab::load() {
 		kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
   mMessagePropertyCombo->setCurrentItem(
                 kmkernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
-  mSendOutboxCheck->setChecked( general.readBoolEntry( "sendOnCheck",
-						       false ) );
 
   mConfirmSendCheck->setChecked( composer.readBoolEntry( "confirm-before-send",
 							 false ) );
+  mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
   QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() )
   {
@@ -1004,7 +1014,7 @@ void NetworkPage::SendingTab::save() {
     (*it)->writeConfig(i);
 
   // Save common options:
-  general.writeEntry( "sendOnCheck", mSendOutboxCheck->isChecked() );
+  GlobalSettings::setSendOnCheck( mSendOnCheckCombo->currentItem() );
   kmkernel->msgSender()->setSendImmediate(
 			     mSendMethodCombo->currentItem() == 0 );
   kmkernel->msgSender()->setSendQuotedPrintable(
@@ -3129,7 +3139,7 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
   //
   // "Reading" tab:
   //
-  mGeneralTab = new GeneralTab(); // ## TODO rename
+  mGeneralTab = new GeneralTab(); //  @TODO: rename
   addTab( mGeneralTab, i18n("&Reading") );
 
   //
@@ -3891,7 +3901,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 		      "messages between folders.</p></qt>");
   QWhatsThis::add( mMailboxPrefCombo, msg );
   QWhatsThis::add( label, msg );
-
+  // @TODO: Till, move into .kcgc file
   msg = i18n( "what's this help",
 	    "<qt><p>When jumping to the next unread message, it may occur "
 	    "that no more unread messages are below the current message.</p>"

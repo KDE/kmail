@@ -346,7 +346,6 @@ void KMMainWidget::readConfig(void)
 
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
-    mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
     mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
     mSystemTrayOnNew = config->readBoolEntry("systray-on-mail", false);
     mSystemTrayMode = config->readBoolEntry("systray-on-new", true) ?
@@ -797,7 +796,11 @@ void KMMainWidget::slotCheckOneAccount(int item)
 void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
                                     const QMap<QString, int> & newInFolder )
 {
-  if(mSendOnCheck && sendOnCheck)
+  const bool sendOnAll =
+    GlobalSettings::sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnAllChecks;
+  const bool sendOnManual =
+    GlobalSettings::sendOnCheck() == GlobalSettings::EnumSendOnCheck::SendOnManualChecks;
+  if( sendOnAll || (sendOnManual && sendOnCheck ) )
     slotSendQueued();
 
   if ( !newMail || newInFolder.isEmpty() )
@@ -2227,7 +2230,7 @@ void KMMainWidget::setupActions()
 		     SLOT(slotImport()), actionCollection(), "import" );
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
-  // TODO (marc/bo): Test
+  // @TODO (marc/bo): Test
   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
 		      "configure", 0, this, SLOT(slotEditVacation()),
 		      actionCollection(), "tools_edit_vacation" );

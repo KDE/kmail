@@ -144,7 +144,8 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
 		kmail-3.3-use-ID-for-accounts.pl \
 		kmail-3.3-move-identities.pl \
 		kmail-3.3-aegypten.sh \
-		kmail-3.3-split-sign-encr-keys.sh
+		kmail-3.3-split-sign-encr-keys.sh \
+		kmail-3.3-misc.sh 
 
 confdir = $(kde_confdir)
 conf_DATA = kmail.antispamrc

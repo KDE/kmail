@@ -119,7 +119,17 @@ Script=kmail-3.3-aegypten.sh
 Id=3.3-aegypten-emailidentities-split-sign-encr-keys
 File=emailidentities
 Script=kmail-3.3-split-sign-encr-keys.sh
-
+#
+Id=3.3-misc
+########## W A R N I N G #### W A R N I N G #### W A R N I N G #######
+# collection of small adjustments. Since updates will be added to this
+# script during the pre-3.3 development, HEAD users should regularly
+# remove the "3.3-{misc,moves}-xx" keys from their kmailrc and kconf_updaterc.
+# For this to work, the script MUST be idempotent, ie. be robust
+# against being run multiple times.
+######################################################################
+File=kmailrc
+Script=kmail-3.3-misc.sh,bash
 #
 # Important notice:
 # If you add updates here, keep this text below them.

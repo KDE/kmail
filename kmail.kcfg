@@ -38,6 +38,21 @@
         <whatsthis></whatsthis>
         <default>true</default>
       </entry>
+
+      <entry name="SendOnCheck"  type="Enum">
+        <label>Send queued mail on mail check</label>
+        <whatsthis>&lt;qt&gt;&lt;p&gt;Select whether you want KMail to send "
+        "all messages in the outbox on manual or all mail checks, "
+        "or whether you do not want messages to be sent automatically "
+        "at all. &lt;/qt&gt;&lt;/p&gt;</whatsthis>
+        <choices>
+          <choice name="DontSendOnCheck"/>
+          <choice name="SendOnManualChecks"/>
+          <choice name="SendOnAllChecks"/>
+        </choices>
+        <default>DontSendOnCheck</default>
+      </entry>
+
     </group>
 
     <group name="FolderSelectionDialog">
