@@ -115,7 +115,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   : KMFolderMaildir( folder, aName ),
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
-    mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
+    mCheckFlags( true ), mAccount( NULL ),
     mLastUid( 0 ), uidWriteTimer( -1 ),
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
     mSuppressDialog( false ), mHoldSyncs( false ), mRemoveRightAway( false )
@@ -233,39 +233,14 @@ int KMFolderCachedImap::writeUidCache()
   }
 }
 
-void KMFolderCachedImap::reloadUidMap()
-{
-  uidMap.clear();
-  open();
-  for( int i = 0; i < count(); ++i ) {
-    KMMsgBase *msg = getMsgBase( i );
-    if( !msg ) continue;
-    ulong uid = msg->UID();
-    uidMap.insert( uid, i );
-    if( uid > mLastUid ) setLastUid( uid );
-  }
-  close();
-  uidMapDirty = false;
-}
-
-/* Reimplemented from KMFolderMaildir */
-KMMessage* KMFolderCachedImap::take(int idx)
-{
-  uidMapDirty = true;
-  return KMFolderMaildir::take(idx);
-}
-
 // Add a message without clearing it's X-UID field.
 int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
                                         int* index_return )
 {
   // Possible optimization: Only dirty if not filtered below
   ulong uid = msg->UID();
-  if( uid != 0 ) {
-    uidMapDirty = true;
-    if( uid > mLastUid )
-      setLastUid( uid );
-  }
+  if( uid != 0 && uid > mLastUid )
+    setLastUid( uid );
 
   // Add the message
   int rc = KMFolderMaildir::addMsg(msg, index_return);
@@ -286,18 +261,6 @@ int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 
   // Add it to storage
   return addMsgInternal( msg, false, index_return );
-}
-
-
-/* Reimplemented from KMFolderMaildir */
-void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
-{
-  uidMapDirty = true;
-
-  // Remove it from disk
-  KMFolderMaildir::removeMsg(idx,imapQuiet);
-
-  //kmkernel->dimapFolderMgr()->contentsChanged();
 }
 
 bool KMFolderCachedImap::canRemoveFolder() const {
@@ -358,33 +321,18 @@ ulong KMFolderCachedImap::lastUid()
 
 KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
 {
-  bool mapReloaded = false;
-  if( uidMapDirty ) {
-    reloadUidMap();
-    mapReloaded = true;
+  KMMsgBase* msg = 0;
+
+  open();
+  for( int i = 0; i < count() && !msg; ++i ) {
+    KMMsgBase *m = getMsgBase( i );
+    if( !m ) continue;
+    if( m->UID() == uid )
+      msg = m;
   }
+  close();
 
-  QMap<ulong,int>::Iterator it = uidMap.find( uid );
-  if( it != uidMap.end() ) {
-    KMMsgBase *msg = getMsgBase( *it );
-    if( msg && msg->UID() == uid )
-      return msg;
-  }
-
-  // Not found by now
-  if( mapReloaded )
-    // Not here then
-    return 0;
-
-  // There could be a problem in the maps. Rebuild them and try again
-  reloadUidMap();
-  it = uidMap.find( uid );
-  if( it != uidMap.end() )
-    // Since the uid map is just rebuilt, no need for the sanity check
-    return getMsg( *it );
-
-  // Then it's not here
-  return 0;
+  return msg;
 }
 
 // This finds and sets the proper account for this folder if it has
@@ -558,10 +506,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_UPLOAD_FLAGS:
     mSyncState = SYNC_STATE_LIST_SUBFOLDERS;
     if( !noContent() ) {
-       // We haven't downloaded messages yet, so we need to build the map.
-       if( uidMapDirty )
-         reloadUidMap();
-       uploadFlags();
+      uploadFlags();
       break;
     }
     // Else carry on
@@ -796,39 +741,38 @@ void KMFolderCachedImap::uploadNewMessages()
 void KMFolderCachedImap::uploadFlags()
 {
   mProgress += 10;
-  kdDebug() << name() << ": +10 (uploadFlags) -> " << mProgress << "%" << endl;
-  if( !uidMap.isEmpty() ) {
-     emit statusMsg( i18n("%1: Uploading status of messages to server").arg(name()) );
+  //kdDebug() << name() << ": +10 (uploadFlags) -> " << mProgress << "%" << endl;
 
-     emit newState( name(), mProgress, i18n("Uploading status of messages to server"));
+  emit statusMsg( i18n("%1: Uploading status of messages to server").arg(name()) );
+  emit newState( name(), mProgress, i18n("Uploading status of messages to server"));
 
-     // FIXME DUPLICATED FROM KMFOLDERIMAP
-     QMap< QString, QStringList > groups;
-     for ( QMap<ulong, int>::Iterator it = uidMap.begin(); it != uidMap.end(); ++it ) {
-        KMMsgBase *msg = 0;
-        //kdDebug(5006) << " UID: " << it.data()  << endl;
-        msg = getMsgBase(it.data());
-        if (!msg) continue;
-        QString flags = KMFolderImap::statusToFlags(msg->status());
-        // Collect uids for each typem of flags.
-        QString uid;
-        uid.setNum( it.key() );
-        groups[flags].append(uid);
-     }
-     QMapIterator< QString, QStringList > dit;
-     for ( dit = groups.begin(); dit != groups.end(); ++dit ) {
-        QCString flags = dit.key().latin1();
-        QStringList sets = KMFolderImap::makeSets( (*dit), true );
-        // Send off a status setting job for each set.
-        for (  QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
-           QString imappath = imapPath() + ";UID=" + ( *slit );
-           mAccount->setImapStatus(imappath, flags);
-        }
-     }
-     // FIXME END DUPLICATED FROM KMFOLDERIMAP
-  } else {
-    emit newState( name(), mProgress, i18n("No messages to upload to server"));
+  // FIXME DUPLICATED FROM KMFOLDERIMAP
+  QMap< QString, QStringList > groups;
+  open();
+  for( int i = 0; i < count(); ++i ) {
+    KMMsgBase* msg = getMsgBase( i );
+    if( !msg || msg->UID() == 0 )
+      // Either not a valid message or not one that is on the server yet
+      continue;
+
+    QString flags = KMFolderImap::statusToFlags(msg->status());
+    // Collect uids for each typem of flags.
+    QString uid;
+    uid.setNum( msg->UID() );
+    groups[flags].append(uid);
   }
+  QMapIterator< QString, QStringList > dit;
+  for( dit = groups.begin(); dit != groups.end(); ++dit ) {
+    QCString flags = dit.key().latin1();
+    QStringList sets = KMFolderImap::makeSets( (*dit), true );
+    // Send off a status setting job for each set.
+    for( QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
+      QString imappath = imapPath() + ";UID=" + ( *slit );
+      mAccount->setImapStatus(imappath, flags);
+    }
+  }
+  // FIXME END DUPLICATED FROM KMFOLDERIMAP
+
   serverSyncInternal();
 }
 
