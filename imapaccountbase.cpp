@@ -664,13 +664,11 @@ namespace KMail {
   {
      ImapAccountBase::JobIterator it = findJob(job);
      if ( it == jobsEnd() ) return;
-     removeJob(it);
      if (job->error() && job->error() != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
      {
-        slotSlaveError( slave(), job->error(),
-              job->errorText() );
+        slotSlaveError( slave(), job->error(), job->errorText() );
      }
-     displayProgress();
+     removeJob(it);
   }
 
   //-----------------------------------------------------------------------------
