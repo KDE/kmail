@@ -335,7 +335,7 @@ class ConfigureDialog : public KDialogBase
       QRadioButton  *rdUnreadOpen;
       QCheckBox     *htmlMailCheck;
       int           activeFontIndex;
-      QFont         font[6];
+      QFont         font[7];
       ListView      *profileList;
       QListViewItem *mListItemDefault;
       QListViewItem *mListItemDefaultHtml;
