@@ -572,10 +572,12 @@ void KMComposeWin::setupToolBar(void)
 			SLOT(slotNewComposer()), TRUE, 
 			i18n("Compose new message"));
 
+#ifdef BROKEN
   mToolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotToDo()), TRUE,
 			i18n("Save message to file"));
+#endif
 
   mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0, 
 			SIGNAL(clicked()), this,

@@ -1,5 +1,10 @@
 1999-01-29  Stefan Taferner  <taferner@kde.org> (KMail-1.0.15)
 
+	* Bugfix: disabled deleting of system folders.
+
+	* Removed save button in composer which is still not
+	implemented ;->
+
 	* Bugfix: disabled renaming of system folders (inbox, outbox,
 	sent-mails, trash).
 

@@ -468,30 +468,21 @@ void KMMainWin::slotEmptyFolder()
 
   if (!mFolder) return;
 
-#ifdef NOT_REQUIRED_ANYMORE
-  str.sprintf(i18n("Are you sure you want to discard the\n"
-		   "contents of the folder \"%s\" ?"),
-	      (const char*)mFolder->label());
-  if ((KMsgBox::yesNo(this,i18n("Confirmation"),str))==1)
+  kbp->busy();
+  mFolder->open();
+  mHeaders->setFolder(NULL);
+  mMsgView->clear();
+
+  if (mFolder != trashFolder)
   {
-#endif
-    kbp->busy();
-    mFolder->open();
-    mHeaders->setFolder(NULL);
-    mMsgView->clear();
-
-    if (mFolder != trashFolder)
-    {
-      while ((msg = mFolder->take(0)) != NULL)
-	trashFolder->addMsg(msg);
-      statusMsg(i18n("Moved all messages into trash"));
-    }
-    mFolder->close();
-    mFolder->expunge();
-    mHeaders->setFolder(mFolder);
-    kbp->idle();
-
-//}
+    while ((msg = mFolder->take(0)) != NULL)
+      trashFolder->addMsg(msg);
+    statusMsg(i18n("Moved all messages into trash"));
+  }
+  mFolder->close();
+  mFolder->expunge();
+  mHeaders->setFolder(mFolder);
+  kbp->idle();
 }
 
 
@@ -502,7 +493,8 @@ void KMMainWin::slotRemoveFolder()
   QDir dir;
 
   if (!mFolder) return;
-  if (mFolder->isSystemFolder())
+  debug("TYPE: %s", (const char*)mFolder->type());
+  if (mFolder->isSystemFolder() || strcmp(mFolder->type(),"plain")!=0)
   {
     warning(i18n("Cannot remove a\nsystem folder."));
     return;
