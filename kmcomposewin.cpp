@@ -6,8 +6,6 @@
 // keep this in sync with the define in configuredialog.h
 #define DEFAULT_EDITOR_STR "kate %f"
 
-//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_01
-
 #undef GrayScale
 #undef Color
 #include <config.h>
@@ -46,7 +44,7 @@ using KRecentAddress::RecentAddresses;
 #include <libkpimidentities/identitycombo.h>
 #include <libkpimidentities/identity.h>
 #include <libkdepim/kfileio.h>
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include <kleo/cryptobackendfactory.h>
 #include <kleo/exportjob.h>
 #include <ui/progressdialog.h>
@@ -83,6 +81,8 @@ using KRecentAddress::RecentAddresses;
 #include <kstdguiitem.h>
 #include <kiconloader.h>
 #include <kpushbutton.h>
+#include <kuserprofile.h>
+#include <krun.h>
 //#include <keditlistbox.h>
 
 #include <kspell.h>
@@ -168,11 +168,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
-  mEdtFrom = new KMLineEdit(this,false,mMainWidget);
-  mEdtReplyTo = new KMLineEdit(this,false,mMainWidget);
-  mEdtTo = new KMLineEdit(this,true,mMainWidget);
-  mEdtCc = new KMLineEdit(this,true,mMainWidget);
-  mEdtBcc = new KMLineEdit(this,true,mMainWidget);
+  mEdtFrom = new KMLineEdit(this,false,mMainWidget, "fromLine");
+  mEdtReplyTo = new KMLineEdit(this,false,mMainWidget, "replyToLine");
+  mEdtTo = new KMLineEdit(this,true,mMainWidget, "toLine");
+  mEdtCc = new KMLineEdit(this,true,mMainWidget, "ccLine");
+  mEdtBcc = new KMLineEdit(this,true,mMainWidget, "bccLine");
   mEdtSubject = new KMLineEditSpell(this,false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
   mDictionaryLabel = new QLabel( mMainWidget );
@@ -205,7 +205,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFolder = 0;
   mAutoCharset = TRUE;
   mFixedFontAction = 0;
-  mEditor = new KMEdit( mMainWidget, this, mDictionaryCombo->spellConfig() );
+  mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
+  mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
+  mSplitter->moveToFirst( mEditor );
+  mSplitter->setOpaqueResize( true );
+  
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
 
@@ -235,10 +239,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   //mBtnFrom->setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
 
-  mAtmListView = new AttachmentListView( this, mMainWidget,
+  mAtmListView = new AttachmentListView( this, mSplitter,
                                          "attachment list view" );
   mAtmListView->setSelectionMode( QListView::Extended );
-  mAtmListView->setFocusPolicy( QWidget::NoFocus );
   mAtmListView->addColumn( i18n("Name"), 200 );
   mAtmListView->addColumn( i18n("Size"), 80 );
   mAtmListView->addColumn( i18n("Encoding"), 120 );
@@ -264,6 +267,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect( mAtmListView,
            SIGNAL( selectionChanged() ),
            SLOT( slotUpdateAttachActions() ) );
+  connect( mAtmListView,
+           SIGNAL( attachmentDeleted() ),
+           SLOT( slotAttachRemove() ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -272,8 +278,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupActions();
 
   applyMainWindowSettings(KMKernel::config(), "Composer");
-  // html-toolbar always default off
-  toolBar("htmlToolBar")->hide();
 
   connect( mEdtSubject, SIGNAL( subjectTextSpellChecked() ),
            SLOT( slotSubjectTextSpellChecked() ) );
@@ -285,6 +289,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   //connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
   connect(mIdentity,SIGNAL(identityChanged(uint)),
+          SLOT(slotIdentityChanged(uint)));
+  connect( kmkernel->identityManager(), SIGNAL(changed(uint)),
           SLOT(slotIdentityChanged(uint)));
 
   connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
@@ -327,9 +333,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = true;
 }
 
+namespace {
 template <typename T>
-inline void Delete( const T * t ) {
+inline void DeleteObject( const T * t ) {
   delete t; t = 0;
+}
 }
 
 //-----------------------------------------------------------------------------
@@ -355,7 +363,15 @@ KMComposeWin::~KMComposeWin()
     job->kill();
     it = mMapAtmLoadData.begin();
   }
-  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), DeleteObject<KMMessage> );
+}
+
+void KMComposeWin::setAutoDeleteWindow( bool f )
+{
+  if ( f )
+    setWFlags( getWFlags() | WDestructiveClose );
+  else
+    setWFlags( getWFlags() & ~WDestructiveClose );
 }
 
 //-----------------------------------------------------------------------------
@@ -505,6 +521,7 @@ void KMComposeWin::readConfig(void)
   mEdtTo->setCompletionMode( (KGlobalSettings::Completion) mode );
   mEdtCc->setCompletionMode( (KGlobalSettings::Completion) mode );
   mEdtBcc->setCompletionMode( (KGlobalSettings::Completion) mode );
+  mHtmlMarkup = config->readBoolEntry("html-markup", false);
 
   readColorConfig();
 
@@ -618,6 +635,7 @@ void KMComposeWin::writeConfig(void)
         mTransportHistory.prepend(mTransport->currentText());
     config->writeEntry("transport-history", mTransportHistory );
     config->writeEntry("use-fixed-font", mUseFixedFont );
+    config->writeEntry("html-markup", mHtmlMarkup);
   }
 
   {
@@ -758,7 +776,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   for (mask=1,mNumHeaders=0; mask<=showHeaders; mask<<=1)
     if ((showHeaders&mask) != 0) mNumHeaders++;
 
-  numRows = mNumHeaders + 2;
+  numRows = mNumHeaders + 1;
 
   delete mGrid;
   mGrid = new QGridLayout(mMainWidget, numRows, 3, 4, 4);
@@ -791,13 +809,17 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
                     mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
-  rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("To:"),
-                    mLblTo, mEdtTo, mBtnTo);
-  if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
-  rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Copy to (CC):"),
-                    mLblCc, mEdtCc, mBtnCc,
+  rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("To:"),
+                    mLblTo, mEdtTo, mBtnTo,
+                    i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
-                         "in this field receives a copy of the email. "
+                         "in this field receive a copy of the email.</qt>"));
+  if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
+  rethinkHeaderLine(showHeaders, HDR_CC, row, i18n("&Copy to (CC):"),
+                    mLblCc, mEdtCc, mBtnCc,
+                    i18n("Additional Recipients"),
+                    i18n("<qt>The email addresses you put "
+                         "in this field receive a copy of the email. "
                          "Technically it is the same thing as putting all the "
                          "addresses in the <b>To:</b> field but differs in "
                          "that it usually symbolises the receiver of the "
@@ -806,6 +828,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Blind copy to (BCC):"),
                     mLblBcc, mEdtBcc, mBtnBcc,
+                    i18n("Hidden Recipients"),
                     i18n("<qt>Essentially the same thing "
                          "as the <b>Copy To:</b> field but differs in that "
                          "all other recipients do not see who receives a "
@@ -815,8 +838,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
                     mLblSubject, mEdtSubject);
   assert(row<=mNumHeaders);
 
-  mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
-  mGrid->addMultiCellWidget(mAtmListView, mNumHeaders+1, mNumHeaders+1, 0, 2);
+  mGrid->addMultiCellWidget(mSplitter, row, mNumHeaders, 0, 2);
 
   if( !mAtmList.isEmpty() )
     mAtmListView->show();
@@ -845,13 +867,15 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
                                      const QString &aLabelStr, QLabel* aLbl,
                                      QLineEdit* aEdt, QPushButton* aBtn,
-                                     const QString &toolTip )
+                                     const QString &toolTip, const QString &whatsThis )
 {
   if (aValue & aMask)
   {
     aLbl->setText(aLabelStr);
     if ( !toolTip.isEmpty() )
       QToolTip::add( aLbl, toolTip );
+    if ( !whatsThis.isEmpty() )
+      QWhatsThis::add( aLbl, whatsThis );
     aLbl->adjustSize();
     aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
     aLbl->setMinimumSize(aLbl->size());
@@ -1032,7 +1056,6 @@ void KMComposeWin::setupActions(void)
   markupAction = new KToggleAction (i18n("Formatting (HTML)"), 0, this,
                                     SLOT(slotToggleMarkup()),
                       actionCollection(), "html");
-  markupAction->setChecked(mUseHTMLEditor);
 
   mAllFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
@@ -1087,7 +1110,7 @@ void KMComposeWin::setupActions(void)
   mAttachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
-  mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties..."), 0, this,
+  mAttachPropertiesAction = new KAction (i18n("Attachment Pr&operties"), 0, this,
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
@@ -1150,11 +1173,12 @@ void KMComposeWin::setupActions(void)
   for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
     l.push_back( Kleo::cryptoMessageFormatToLabel( cryptoMessageFormats[i] ) );
 
-  mCryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ), 0,
+  mCryptoModuleAction = new KSelectAction( i18n( "&Cryptographic Message Format" ), 0,
 					   this, SLOT(slotSelectCryptoModule()),
 					   actionCollection(), "options_select_crypto" );
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+  slotSelectCryptoModule();
 
   QStringList styleItems;
   styleItems << i18n( "Standard" );
@@ -1189,13 +1213,13 @@ void KMComposeWin::setupActions(void)
   alignCenterAction = new KToggleAction (i18n("Align Center"), "text_center", 0,
                        this, SLOT(slotAlignCenter()), actionCollection(),
                        "align_center");
-  textBoldAction = new KToggleAction (i18n("&Bold"), "text_bold", 0,
+  textBoldAction = new KToggleAction( i18n("&Bold"), "text_bold", CTRL+Key_B,
                                      this, SLOT(slotTextBold()),
                                      actionCollection(), "text_bold");
-  textItalicAction = new KToggleAction (i18n("&Italic"), "text_italic", 0,
+  textItalicAction = new KToggleAction( i18n("&Italic"), "text_italic", CTRL+Key_I,
                                        this, SLOT(slotTextItalic()),
                                        actionCollection(), "text_italic");
-  textUnderAction = new KToggleAction (i18n("&Under"), "text_under", 0,
+  textUnderAction = new KToggleAction( i18n("&Underline"), "text_under", CTRL+Key_U,
                                      this, SLOT(slotTextUnder()),
                                      actionCollection(), "text_under");
   actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
@@ -1204,7 +1228,6 @@ void KMComposeWin::setupActions(void)
   actionFormatColor = new KAction( i18n( "Text Color..." ), "colorize", 0,
                                      this, SLOT( slotTextColor() ),
                                      actionCollection(), "format_color");
-
 
   createGUI("kmcomposerui.rc");
 }
@@ -1286,6 +1309,58 @@ void KMComposeWin::setupEditor(void)
 
 }
 
+
+//-----------------------------------------------------------------------------
+static QString cleanedUpHeaderString( const QString & s )
+{
+  // remove invalid characters from the header strings
+  QString res( s );
+  res.replace( '\r', "" );
+  res.replace( '\n', " " );
+  return res.stripWhiteSpace();
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::subject() const
+{
+  return cleanedUpHeaderString( mEdtSubject->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::to() const
+{
+  return cleanedUpHeaderString( mEdtTo->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::cc() const
+{
+  if ( mEdtCc->isHidden() )
+    return QString::null;
+  else
+    return cleanedUpHeaderString( mEdtCc->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::bcc() const
+{
+  if ( mEdtBcc->isHidden() )
+    return QString::null;
+  else
+    return cleanedUpHeaderString( mEdtBcc->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::from() const
+{
+  return cleanedUpHeaderString( mEdtFrom->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::replyTo() const
+{
+  return cleanedUpHeaderString( mEdtReplyTo->text() );
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
@@ -1381,8 +1456,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   KPIM::IdentityManager * im = kmkernel->identityManager();
 
   const KPIM::Identity & ident = im->identityForUoid( mIdentity->currentIdentity() );
-
-  mOldSigText = ident.signatureText();
 
   // check for the presence of a DNT header, indicating that MDN's were
   // requested
@@ -1633,7 +1706,7 @@ bool KMComposeWin::userForgotAttachment()
 
   // check whether the subject contains one of the attachment key words
   // unless the message is a reply or a forwarded message
-  QString subj = mEdtSubject->text();
+  QString subj = subject();
   gotMatch =    ( KMMessage::stripOffPrefixes( subj ) == subj )
              && ( rx.search( subj ) >= 0 );
 
@@ -1704,7 +1777,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 
 void KMComposeWin::slotComposerDone( bool rc )
 {
-  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), DeleteObject<KMMessage> );
   mComposedMessages = mComposer->composedMessageList();
   emit applyChangesDone( rc );
   delete mComposer;
@@ -1764,9 +1837,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
   // show the attachment listbox if it does not up to now
   if (mAtmList.count()==1)
   {
-    mGrid->setRowStretch(mNumHeaders+1, 50);
-    mAtmListView->setMinimumSize(100, 80);
-    mAtmListView->setMaximumHeight( 100 );
+    mAtmListView->resize(mAtmListView->width(), 50);
     mAtmListView->show();
     resize(size());
   }
@@ -1852,7 +1923,6 @@ void KMComposeWin::removeAttach(int idx)
   if( mAtmList.isEmpty() )
   {
     mAtmListView->hide();
-    mGrid->setRowStretch(mNumHeaders+1, 0);
     mAtmListView->setMinimumSize(0, 0);
     resize(size());
   }
@@ -1884,19 +1954,19 @@ void KMComposeWin::addrBookSelInto()
   QString txt;
   QStringList lst;
 
-  txt = mEdtTo->text().stripWhiteSpace();
+  txt = to();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedTo( lst );
   }
 
-  txt = mEdtCc->text().stripWhiteSpace();
+  txt = cc();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedCC( lst );
   }
 
-  txt = mEdtBcc->text().stripWhiteSpace();
+  txt = bcc();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedBCC( lst );
@@ -2352,6 +2422,8 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
+     mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
+                             SLOT(slotAttachOpen()));
      mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
      mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
@@ -2370,6 +2442,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
     }
   }
 
+  mAttachMenu->setItemEnabled( mOpenId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mViewId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mRemoveId, selectedCount > 0 );
   mAttachMenu->setItemEnabled( mSaveAsId, selectedCount == 1 );
@@ -2436,7 +2509,18 @@ void KMComposeWin::slotAttachView()
     }
   }
 }
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAttachOpen()
+{
+  int i = 0;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
+    if ( (*it)->isSelected() ) {
+      openAttach( i );
+    }
+  }
+}
 
+//-----------------------------------------------------------------------------
 bool KMComposeWin::inlineSigningEncryptionSelected() {
   if ( !mSignAction->isChecked() && !mEncryptAction->isChecked() )
     return false;
@@ -2463,6 +2547,45 @@ void KMComposeWin::viewAttach( int index )
   win->show();
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::openAttach( int index )
+{
+  KMMessagePart* msgPart = mAtmList.at(index);
+  const QString contentTypeStr =
+    ( msgPart->typeStr() + '/' + msgPart->subtypeStr() ).lower();
+
+  KMimeType::Ptr mimetype;
+  mimetype = KMimeType::mimeType( contentTypeStr );
+
+  KTempFile* atmTempFile = new KTempFile();
+  mAtmTempList.append( atmTempFile );
+  const bool autoDelete = true;
+  atmTempFile->setAutoDelete( autoDelete );
+  
+  KURL url;
+  url.setPath( atmTempFile->name() );
+  
+  KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
+    false );
+  if ( ::chmod( QFile::encodeName( atmTempFile->name() ), S_IRUSR ) != 0) {
+    QFile::remove(url.path());
+    return;
+  }
+
+  KService::Ptr offer =
+    KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+
+  if ( !offer || mimetype->name() == "application/octet-stream" ) {
+    if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
+      QFile::remove(url.path());
+    }
+  }
+  else {
+    if ( ( !KRun::run( *offer, url, autoDelete ) ) && autoDelete ) {
+        QFile::remove( url.path() );
+    }
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachSave()
@@ -3014,7 +3137,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 	if ( draftsFolder == 0 )
 	  // This is *NOT* supposed to be "imapDraftsFolder", because a
 	  // dIMAP folder works like a normal folder
-	  draftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
+	  draftsFolder = kmkernel->dimapFolderMgr()->findIdString( (*it)->drafts() );
 	if ( draftsFolder == 0 )
 	  imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
 	if ( !draftsFolder && !imapDraftsFolder ) {
@@ -3161,6 +3284,7 @@ void KMComposeWin::slotCleanSpace()
 void KMComposeWin::slotToggleMarkup()
 {
  if ( markupAction->isChecked() ) {
+    mHtmlMarkup = true;
     toolBar("htmlToolBar")->show();
    // markup will be toggled as soon as markup is actually used
    fontChanged( mEditor->currentFont().family() ); // set buttons in correct position
@@ -3179,12 +3303,18 @@ void KMComposeWin::toggleMarkup(bool markup)
     if ( !mUseHTMLEditor ) {
     kdDebug(5006) << "setting RichText editor" << endl;
     mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+    mHtmlMarkup = true;
 
     // set all highlighted text caused by spelling back to black
     int paraFrom, indexFrom, paraTo, indexTo;
     mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo);
     mEditor->selectAll();
+    // save the buttonstates because setColor calls fontChanged
+    bool _bold = textBoldAction->isChecked();
+    bool _italic = textItalicAction->isChecked();
     mEditor->setColor(QColor(0,0,0));
+    textBoldAction->setChecked(_bold);
+    textItalicAction->setChecked(_italic);
     mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo);
 
     mEditor->setTextFormat(Qt::RichText);
@@ -3198,6 +3328,7 @@ void KMComposeWin::toggleMarkup(bool markup)
   }
   else if ( mUseHTMLEditor ) {
     kdDebug(5006) << "setting PlainText editor" << endl;
+    mHtmlMarkup = false;
     mUseHTMLEditor = false;
     mEditor->setTextFormat(Qt::PlainText);
     QString text = mEditor->text();
@@ -3209,6 +3340,7 @@ void KMComposeWin::toggleMarkup(bool markup)
   }
   else if ( !markup && !mUseHTMLEditor )
     {
+      mHtmlMarkup = false;
       toolBar("htmlToolBar")->hide();
     }
 }
@@ -3238,6 +3370,16 @@ void KMComposeWin::slotSpellcheck()
   mEditor->spellcheck();
 }
 
+void KMComposeWin::polish()
+{
+  // Ensure the html toolbar is appropriately shown/hidden
+  markupAction->setChecked(mHtmlMarkup);
+  if (mHtmlMarkup)
+    toolBar("htmlToolBar")->show();
+  else
+    toolBar("htmlToolBar")->hide();
+  KMail::SecondaryWindow::polish();
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone(int result)
@@ -3288,34 +3430,66 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotIdentityChanged(uint uoid)
+void KMComposeWin::slotIdentityChanged( uint uoid )
 {
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoid( uoid );
-  if ( ident.isNull() ) return;
+  if( ident.isNull() ) return;
 
-  if(!ident.fullEmailAddr().isNull())
+  if( !ident.fullEmailAddr().isNull() )
     mEdtFrom->setText(ident.fullEmailAddr());
   // make sure the From field is shown if it's empty
-  if ( mEdtFrom->text().isEmpty() )
+  if ( from().isEmpty() )
     mShowHeaders |= HDR_FROM;
   mEdtReplyTo->setText(ident.replyToAddr());
   // don't overwrite the BCC field when the user has edited it and the
-  // BCC field of the new identity is empty
-  if( !mEdtBcc->edited() || !ident.bcc().isEmpty() )
-    mEdtBcc->setText(ident.bcc());
+  // BCC field of the new identity is not empty
+  if( !mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
+    if( mEdtBcc->text().isEmpty() ) {
+      mEdtBcc->setText( ident.bcc() );
+    } else {
+      // user type into the editbox an address that != to the preset bcc
+      // of the identity, we assume that since the user typed it
+      // they want to keep it
+      if ( mEdtBcc->text() != ident.bcc() ) {
+        QString temp_string( mEdtBcc->text() + QString::fromLatin1(",") + ident.bcc() );
+        mEdtBcc->setText( temp_string );
+      } else {
+        // if the user typed the same address as the preset BCC
+        // from the identity we will overwrite it to avoid duplicates.
+        mEdtBcc->setText( ident.bcc() );
+      }
+    }
+  }
+  // user edited the bcc box and has a preset bcc in the identity
+  // we will append whatever the user typed to the preset address
+  // allowing the user to keep all addresses
+  if( mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
+    if( !mEdtBcc->text().isEmpty() ) {
+      QString temp_string ( mEdtBcc->text() + QString::fromLatin1(",") + ident.bcc() );
+      mEdtBcc->setText( temp_string );
+    } else {
+      mEdtBcc->setText( ident.bcc() );
+    }
+  }
+  // user typed nothing and the identity does not have a preset bcc
+  // we then reset the value to get rid of any previous
+  // values if the user changed identity mid way through.
+  if( !mEdtBcc->edited() && ident.bcc().isEmpty() ) {
+    mEdtBcc->setText( ident.bcc() );
+  }
   // make sure the BCC field is shown because else it's ignored
-  if (! ident.bcc().isEmpty()) {
+  if ( !ident.bcc().isEmpty() ) {
     mShowHeaders |= HDR_BCC;
   }
-  if (ident.organization().isEmpty())
+  if ( ident.organization().isEmpty() )
     mMsg->removeHeaderField("Organization");
   else
     mMsg->setHeaderField("Organization", ident.organization());
 
-  if (!mBtnTransport->isChecked()) {
+  if ( !mBtnTransport->isChecked() ) {
     QString transp = ident.transport();
-    if (transp.isEmpty())
+    if ( transp.isEmpty() )
     {
       mMsg->removeHeaderField("X-KMail-Transport");
       transp = mTransport->text(0);
@@ -3501,6 +3675,7 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 
 void KMComposeWin::slotListAction( const QString& style )
 {
+    toggleMarkup(true);
     if ( style == i18n( "Standard" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayBlock, QStyleSheetItem::ListDisc );
     else if ( style == i18n( "Bulleted List (Disc)" ) )
@@ -3577,7 +3752,7 @@ void KMComposeWin::slotTextColor()
 {
   QColor color = mEditor->color();
 
-  if ( KColorDialog::getColor( color ) ) {
+  if ( KColorDialog::getColor( color, this ) ) {
     toggleMarkup(true);
     mEditor->setColor( color );
   }
@@ -3588,7 +3763,7 @@ void KMComposeWin::fontChanged( const QFont &f )
   QFontDatabase *fontdb = new QFontDatabase();
 
   if ( fontdb->bold(f.family(), "Bold") ) {
-    textBoldAction->setChecked( f.bold() );
+    textBoldAction->setChecked( f.bold() ); // if the user has the default font with bold, then show it in the buttonstate
     textBoldAction->setEnabled(true);
   }
   else
@@ -3667,7 +3842,11 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
             if( isQuotedLine
                 && ( bot != lineText.length() )
                 && ( col >= int( bot ) ) ) {
-                QString newLine = text( line + 1 );
+
+		// The cursor position might have changed unpredictably if there was selected
+		// text which got replaced by a new line, so we query it again:
+		getCursorPosition( &line, &col );
+                QString newLine = text( line );
                 // remove leading white space from the new line and instead
                 // add the quote indicators of the previous line
                 unsigned int leadingWhiteSpaceCount = 0;
@@ -3677,12 +3856,12 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
                 }
                 newLine = newLine.replace( 0, leadingWhiteSpaceCount,
                                            lineText.left( bot ) );
-                removeParagraph( line + 1 );
-                insertParagraph( newLine, line + 1 );
+                removeParagraph( line );
+                insertParagraph( newLine, line );
                 // place the cursor at the begin of the new line since
                 // we assume that the user split the quoted line in order
                 // to add a comment to the first part of the quoted line
-                setCursorPosition( line + 1 , 0 );
+                setCursorPosition( line, 0 );
             }
         }
         else
@@ -3857,25 +4036,27 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
 //-----------------------------------------------------------------------------
 void KMLineEdit::keyPressEvent(QKeyEvent *e)
 {
-    // ---sven's Return is same Tab and arrow key navigation start ---
-    if ((e->key() == Key_Enter || e->key() == Key_Return) &&
-        !completionBox()->isVisible())
-    {
-      mComposer->focusNextPrevEdit(this,TRUE);
-      return;
+    if ( mComposer ) {
+        // ---sven's Return is same Tab and arrow key navigation start ---
+        if ((e->key() == Key_Enter || e->key() == Key_Return) &&
+            !completionBox()->isVisible())
+        {
+          mComposer->focusNextPrevEdit(this,TRUE);
+          return;
+        }
+        if (e->key() == Key_Up)
+        {
+          mComposer->focusNextPrevEdit(this,FALSE); // Go up
+          return;
+        }
+        if (e->key() == Key_Down)
+        {
+          mComposer->focusNextPrevEdit(this,TRUE); // Go down
+          return;
+        }
+        // ---sven's Return is same Tab and arrow key navigation end ---
     }
-    if (e->key() == Key_Up)
-    {
-      mComposer->focusNextPrevEdit(this,FALSE); // Go up
-      return;
-    }
-    if (e->key() == Key_Down)
-    {
-      mComposer->focusNextPrevEdit(this,TRUE); // Go down
-      return;
-    }
-    // ---sven's Return is same Tab and arrow key navigation end ---
-  AddresseeLineEdit::keyPressEvent(e);
+    AddresseeLineEdit::keyPressEvent(e);
 }
 
 QPopupMenu *KMLineEdit::createPopupMenu()
@@ -3906,93 +4087,6 @@ void KMLineEdit::editRecentAddresses()
   }
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-void KMLineEdit::dropEvent(QDropEvent *e)
-{
-  KURL::List uriList;
-  if(KURLDrag::decode( e, uriList ))
-  {
-    for (KURL::List::ConstIterator it = uriList.begin(); it != uriList.end(); ++it)
-    {
-      smartInsert( (*it).url() );
-    }
-  }
-  else {
-    if (m_useCompletion)
-       m_smartPaste = true;
-    QLineEdit::dropEvent(e);
-    m_smartPaste = false;
-  }
-}
-
-void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
-{
-    QString newText = str.stripWhiteSpace();
-    if (newText.isEmpty())
-        return;
-
-    // remove newlines in the to-be-pasted string:
-    newText.replace( QRegExp("\r?\n"), " " );
-
-    QString contents = text();
-    // determine the position where to insert the to-be-pasted string
-    if( ( pos < 0 ) || ( pos > (int) contents.length() ) )
-        pos = contents.length();
-    int start_sel = 0;
-    int end_sel = 0;
-    if (getSelection(&start_sel, &end_sel))
-    {
-        // Cut away the selection.
-        if (pos > end_sel)
-            pos -= (end_sel - start_sel);
-        else if (pos > start_sel)
-            pos = start_sel;
-        contents = contents.left(start_sel) + contents.right(end_sel+1);
-    }
-
-    int eot = contents.length();
-    // remove trailing whitespace from the contents of the line edit
-    while ((eot > 0) && contents[eot-1].isSpace()) eot--;
-    if (eot == 0)
-     {
-         contents = QString::null;
-     }
-    else if (pos >= eot)
-    {
-        if (contents[eot-1] == ',')
-            eot--;
-        contents.truncate(eot);
-        contents += ", ";
-        pos = eot+2;
-    }
-
-    if (newText.startsWith("mailto:"))
-    {
-        kdDebug(5006) << "Pasting '" << newText << "'" << endl;
-        KURL u(newText);
-        newText = u.path();
-        kdDebug(5006) << "path of mailto URL: '" << newText << "'" << endl;
-        // Is the mailto URL RFC 2047 encoded (cf. RFC 2368)?
-        if (-1 != newText.find( QRegExp("=\\?.*\\?[bq]\\?.*\\?=") ) )
-            newText = KMMsgBase::decodeRFC2047String( newText.latin1() );
-    }
-    else if (-1 != newText.find(" at "))
-    {
-        // Anti-spam stuff
-        newText.replace( " at ", "@" );
-        newText.replace( " dot ", "." );
-    }
-    else if (newText.contains("(at)"))
-    {
-        newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
-    }
-    contents = contents.left(pos)+newText+contents.mid(pos);
-    setText(contents);
-    setEdited( true );
-    setCursorPosition(pos+newText.length());
-}
-#endif
 
 //-----------------------------------------------------------------------------
 void KMLineEdit::loadContacts()
@@ -4006,7 +4100,7 @@ void KMLineEdit::loadContacts()
     QString name, email;
     for ( ; it != recent.end(); ++it ) {
       KABC::Addressee addr;
-      getNameAndMail(*it, name, email);
+      KPIM::getNameAndMail(*it, name, email);
       addr.setNameFromString( name );
       addr.insertEmail( email, true );
       addContact( addr, 120 ); // more weight than kabc entries and more than ldap results

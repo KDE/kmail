@@ -175,7 +175,7 @@ KMSearchRuleString::KMSearchRuleString( const QCString & field,
 {
   if ( field.isEmpty() || field[0] == '<' )
     mBmHeaderField = 0;
-  else //TODO handle the unrealistic case of the message starting with mField
+  else // make sure you handle the unrealistic case of the message starting with mField
     mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data());
 }
 
@@ -239,7 +239,10 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
     if ( endOfHeader == DwString::npos )
       endOfHeader = lfcrlf.FindIn( aStr, 0 );
     const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
-    size_t start = headerField->FindIn( headers, 0, false );
+    // In case the searched header is at the beginning, we have to prepend 
+    // a newline - see the comment in KMSearchRuleString constructor
+    DwString fakedHeaders( "\n" );
+    size_t start = headerField->FindIn( fakedHeaders.append( headers ), 0, false );
     // if the header field doesn't exist then return false for positive
     // functions and true for negated functions (e.g. "does not
     // contain"); note that all negated string functions correspond
@@ -294,7 +297,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     msgContents = msg->asString();
     logContents = false;
   } else if ( field() == "<body>" ) {
-    msgContents = msg->bodyDecoded();
+    msgContents = msg->bodyToUnicode();
     logContents = false;
   } else if ( field() == "<any header>" ) {
     msgContents = msg->headerAsString();
@@ -583,10 +586,12 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
       const QString & aStatusString )
 {
   KMMsgStatus status = 0;
+  if ( ! aStatusString.compare("important") )
+    status = KMMsgStatusFlag;
   if ( ! aStatusString.compare("new") )
     status = KMMsgStatusNew;
   if ( ! aStatusString.compare("unread") )
-    status = KMMsgStatusUnread;
+    status = KMMsgStatusUnread | KMMsgStatusNew;
   if ( ! aStatusString.compare("read") )
     status = KMMsgStatusRead;
   if ( ! aStatusString.compare("old") )
@@ -601,8 +606,6 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
     status = KMMsgStatusQueued;
   if ( ! aStatusString.compare("sent") )
     status = KMMsgStatusSent;
-  if ( ! aStatusString.compare("important") )
-    status = KMMsgStatusFlag;
   if ( ! aStatusString.compare("watched") )
     status = KMMsgStatusWatched;
   if ( ! aStatusString.compare("ignored") )
@@ -613,6 +616,8 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
     status = KMMsgStatusSpam;
   if ( ! aStatusString.compare("ham") )
      status = KMMsgStatusHam;
+  if ( ! aStatusString.compare("has an attachment") )
+     status = KMMsgStatusHasAttach;
 
   return status;
 }

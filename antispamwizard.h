@@ -1,4 +1,4 @@
-/*
+/*  -*- mode: C++ -*-
     This file is part of KMail.
     Copyright (c) 2003 Andreas Gungl <a.gungl@gmx.de>
 
@@ -61,7 +61,7 @@ namespace KMail {
     The wizard will append the created filter rules after the
     last existing rule to keep possible conflicts with existing
     filter configurations minimal.
-    
+
     Anti-virus support was added by Fred Emmott <fred87@users.sf.net>
 
     The configuration for the tools to get checked and set up
@@ -89,15 +89,21 @@ namespace KMail {
     </pre>
     The name of the config file is kmail.antispamrc
     and it's expected in the config dir of KDE.
-    
+
   */
   class AntiSpamWizard : public KWizard
   {
     Q_OBJECT
 
     public:
+      /** The wizard can be used for setting up anti-spam tools and for
+          setting up anti-virus tools.
+      */
+      enum WizardMode { AntiSpam, AntiVirus };
+
       /** Constructor that needs to initialize from the main folder tree
         of KMail.
+        &param mode The mode the wizard should run in.
         @param parent The parent widget for the wizard.
         @param mainFolderTree The main folder tree from which the folders
           are copied to allow the selection of a spam folder in a tree
@@ -106,7 +112,8 @@ namespace KMail {
           for the filter menu actions which get created for classification
           rules (to add them later to the main toolbar).
       */
-      AntiSpamWizard( QWidget * parent, KMFolderTree * mainFolderTree,
+      AntiSpamWizard( WizardMode mode,
+                      QWidget * parent, KMFolderTree * mainFolderTree,
                       KActionCollection * collection );
 
     protected:
@@ -122,35 +129,35 @@ namespace KMail {
       class SpamToolConfig
       {
         public:
-          SpamToolConfig() {};
+          SpamToolConfig() {}
           SpamToolConfig( QString toolId, int configVersion,
                         QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
                         QString header, QString pattern, bool regExp,
-                        bool bayesFilter, QString type );
-    
-          int getVersion() const { return mVersion; };
-          QString getId()  const { return mId; };
-          QString getVisibleName()  const { return mVisibleName; };
-          QString getExecutable() const { return mExecutable; };
-          QString getWhatsThisText() const { return mWhatsThisText; };
-          QString getFilterName() const { return mFilterName; };
-          QString getDetectCmd() const { return mDetectCmd; };
-          QString getSpamCmd() const { return mSpamCmd; };
-          QString getHamCmd() const { return mHamCmd; };
-          QString getDetectionHeader() const { return mDetectionHeader; };
-          QString getDetectionPattern() const { return mDetectionPattern; };
-          bool isUseRegExp() const { return mUseRegExp; };
-          bool useBayesFilter() const { return mSupportsBayesFilter; };
-          QString getType() const { return mType; };
+                        bool bayesFilter, WizardMode type );
+
+          int getVersion() const { return mVersion; }
+          QString getId()  const { return mId; }
+          QString getVisibleName()  const { return mVisibleName; }
+          QString getExecutable() const { return mExecutable; }
+          QString getWhatsThisText() const { return mWhatsThisText; }
+          QString getFilterName() const { return mFilterName; }
+          QString getDetectCmd() const { return mDetectCmd; }
+          QString getSpamCmd() const { return mSpamCmd; }
+          QString getHamCmd() const { return mHamCmd; }
+          QString getDetectionHeader() const { return mDetectionHeader; }
+          QString getDetectionPattern() const { return mDetectionPattern; }
+          bool isUseRegExp() const { return mUseRegExp; }
+          bool useBayesFilter() const { return mSupportsBayesFilter; }
+          WizardMode getType() const { return mType; }
           // convinience methods for types
-          bool isSpamTool() const { return ( mType == "spam" ); };
-          bool isVirusTool() const { return ( mType == "av" ); };
-    
+          bool isSpamTool() const { return ( mType == AntiSpam ); }
+          bool isVirusTool() const { return ( mType == AntiVirus ); }
+
         private:
           // used to identifiy configs for the same tool
           QString mId;
-          // The version of the config data, used for merging and 
+          // The version of the config data, used for merging and
           // detecting newer configs
           int mVersion;
           // the name as shown by the checkbox in the dialog page
@@ -175,34 +182,37 @@ namespace KMail {
           bool mUseRegExp;
           // can the tool learn spam and ham, has it a bayesian algorithm
           bool mSupportsBayesFilter;
-          // Is the tool anti-spam ("spam") or anti-virus ("av")
-          QString mType;
+          // Is the tool AntiSpam or AntiVirus
+          WizardMode mType;
       };
       /**
-        Instances of this class control reading the configuration of the 
-        anti-spam tools from global and user config files as well as the 
+        Instances of this class control reading the configuration of the
+        anti-spam tools from global and user config files as well as the
         merging of different config versions.
       */
       class ConfigReader
       {
         public:
-          ConfigReader( QValueList<SpamToolConfig> & configList );
-          
-          QValueList<SpamToolConfig> & getToolList() { return mToolList; };
-          
+          ConfigReader( WizardMode mode,
+                        QValueList<SpamToolConfig> & configList );
+
+	~ConfigReader( );
+          QValueList<SpamToolConfig> & getToolList() { return mToolList; }
+
           void readAndMergeConfig();
-          
+
         private:
           QValueList<SpamToolConfig> & mToolList;
-          KConfig mConfig;
-          
+          KConfig *mConfig;
+          WizardMode mMode;
+
           SpamToolConfig readToolConfig( KConfigGroup & configGroup );
           SpamToolConfig createDummyConfig();
-          
+
           void mergeToolConfig( SpamToolConfig config );
       };
-      
-      
+
+
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
       void checkProgramsSelections();
@@ -219,7 +229,7 @@ namespace KMail {
       /* generic checks if any option in a page is checked */
       bool anySpamOptionChecked();
       bool anyVirusOptionChecked();
-    
+
       /* The pages in the wizard */
       ASWizInfoPage * mInfoPage;
       ASWizProgramsPage * mProgramsPage;
@@ -231,11 +241,13 @@ namespace KMail {
 
       /* The action collection where the filter menu action is searched in */
       KActionCollection * mActionCollection;
-      
+
       /* Are any spam tools selected? */
       bool mSpamToolsUsed;
       /* Are any virus tools selected? */
       bool mVirusToolsUsed;
+
+      WizardMode mMode;
   };
 
 
@@ -245,8 +257,9 @@ namespace KMail {
   class ASWizInfoPage : public QWidget
   {
     public:
-      ASWizInfoPage( QWidget *parent, const char *name );
-      
+      ASWizInfoPage( AntiSpamWizard::WizardMode mode,
+                     QWidget *parent, const char *name );
+
       void setScanProgressText( const QString &toolName );
 
     private:
@@ -289,7 +302,7 @@ namespace KMail {
       bool classifyRulesSelected() const;
       bool moveRulesSelected() const;
       bool markReadRulesSelected() const;
-      
+
       QString selectedFolderName() const;
       void allowClassification( bool enabled );
 
@@ -306,26 +319,26 @@ namespace KMail {
       SimpleFolderTree *mFolderTree;
       QCheckBox * mMarkRules;
   };
-  
+
   //-------------------------------------------------------------------------
   class ASWizVirusRulesPage : public QWidget
   {
     Q_OBJECT
-    
+
     public:
       ASWizVirusRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
-      
+
       bool pipeRulesSelected() const;
       bool moveRulesSelected() const;
       bool markReadRulesSelected() const;
-      
+
       QString selectedFolderName() const;
-      
+
     private slots:
       void processSelectionChange();
     signals:
       void selectionChanged();
-      
+
     private:
       QCheckBox * mPipeRules;
       QCheckBox * mMoveRules;

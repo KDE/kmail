@@ -34,11 +34,10 @@
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmstartup.h"
-#include "kmbroadcaststatus.h"
-#include "statusbarprogresswidget.h"
 #include "aboutdata.h"
 #include "kmkernel.h"
 #include "kmfolder.h"
+#include "kmacctmgr.h"
 #include "sidebarextension.h"
 #include "infoextension.h"
 #include "recentaddresses.h"
@@ -115,19 +114,18 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
   mStatusBar  = new KMailStatusBarExtension(this);
-  mStatusBar->addStatusBarItem( mainWidget->progressWidget(), 0, true );
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
   kmkernel->inboxFolder()->close();
 #else
-  mainWidget = new KMMainWidget( canvas, "mainWidget", actionCollection(), kapp->config());
+  mainWidget = new KMMainWidget( canvas, "mainWidget", this, actionCollection(),
+                                 kapp->config());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
   mStatusBar  = new KMailStatusBarExtension(this);
-  mStatusBar->addStatusBarItem( mainWidget->progressWidget(), 0, true );
   new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,
                                 "KMailSidebar" );
@@ -139,8 +137,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
            this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
   connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
-  connect( mainWidget, SIGNAL(modifiedToolBarConfig()),
-           this, SLOT(slotToolbarChanged()) );
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
@@ -151,6 +147,12 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
+  kdDebug(5006) << "Closing last KMMainWin: stopping mail check" << endl;
+  // Running KIO jobs prevent kapp from exiting, so we need to kill them
+  // if they are only about checking mail (not important stuff like moving messages)
+  kmkernel->abortMailCheck();
+  kmkernel->acctMgr()->cancelMailCheck();
+
   mainWidget->destruct();
   kmkernel->cleanup();
   delete kmkernel;
@@ -206,29 +208,13 @@ public:
   }
 };
 
-void KMailPart::slotToolbarChanged()
-{
-  kdDebug(5006) << "KMailPart - need to reload the toolbar" << endl;
-  reloadXML();
-  KParts::MainWindow *win =
-    dynamic_cast<KParts::MainWindow*>( mainWidget->topLevelWidget() );
-  if ( win ) {
-    ( static_cast<KPartsMainWindowWithPublicizedCreateGUI*>( win ) )
-      ->createGUIPublic( this );
-  }
-  else {
-    kdDebug(5006) << "KMailPart::slotToolbarChanged() - "
-                  << "dynamic_cast<KPart::MainWindow*>( toplevelWidget() ) "
-                  << "failed" << endl;
-  }
-}
-
 //-----------------------------------------------------------------------------
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
   kdDebug(5006) << "KMailPart::guiActivateEvent" << endl;
   KParts::ReadOnlyPart::guiActivateEvent(e);
+  mainWidget->initializeFilterActions();
 }
 
 void KMailPart::exit()

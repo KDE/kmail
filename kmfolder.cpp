@@ -14,7 +14,6 @@
 #include "kmfoldermgr.h"
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identity.h>
-#include "kmailicalifaceimpl.h"
 #include "expirejob.h"
 #include "compactionjob.h"
 #include "kmfoldertree.h"
@@ -36,8 +35,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
     mExpireAction( ExpireDelete ),
-    mUseCustomIcons( false ), mMailingListEnabled( false ),
-    mContentsType( 0 )
+    mUseCustomIcons( false ), mMailingListEnabled( false )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
@@ -64,7 +62,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   // Resend all mStorage signals
   connect( mStorage, SIGNAL( changed() ), SIGNAL( changed() ) );
   connect( mStorage, SIGNAL( cleared() ), SIGNAL( cleared() ) );
-  connect( mStorage, SIGNAL( expunged() ), SIGNAL( expunged() ) );
+  connect( mStorage, SIGNAL( expunged( KMFolder* ) ),
+           SIGNAL( expunged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( nameChanged() ), SIGNAL( nameChanged() ) );
   connect( mStorage, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
            SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ) );
@@ -120,11 +119,12 @@ void KMFolder::readConfig( KConfig* config )
   mIdentity = config->readUnsignedNumEntry("Identity",0);
 
   setUserWhoField( config->readEntry("WhoField"), false );
-  mId = config->readUnsignedNumEntry("Id", 0);
+  uint savedId = config->readUnsignedNumEntry("Id", 0);
+  // make sure that we don't overwrite a valid id
+  if ( savedId != 0 && mId == 0 )
+    mId = savedId;
   mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
   mIgnoreNewMail = config->readBoolEntry( "IgnoreNewMail", false );
-
-  setContentsType( config->readNumEntry( "ContentsType", 0 ) );
 
   if ( mUseCustomIcons )
     emit iconsChanged();
@@ -154,8 +154,6 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("Id", mId);
   config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
-
-  config->writeEntry( "ContentsType", mContentsType );
 }
 
 KMFolderType KMFolder::folderType() const
@@ -328,11 +326,6 @@ int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
 void KMFolder::emitMsgAddedSignals( int idx )
 {
   mStorage->emitMsgAddedSignals( idx );
-}
-
-bool KMFolder::canAddMsgNow( KMMessage* aMsg, int* aIndex_ret )
-{
-  return mStorage->canAddMsgNow( aMsg, aIndex_ret );
 }
 
 void KMFolder::removeMsg( int i, bool imapQuiet )
@@ -710,10 +703,11 @@ void KMFolder::daysToExpire(int& unreadDays, int& readDays) {
 void KMFolder::expireOldMessages( bool immediate )
 {
   KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
-  if ( immediate )
-    kmkernel->jobScheduler()->runTaskNow( task );
-  else
-    kmkernel->jobScheduler()->registerTask( task );
+  kmkernel->jobScheduler()->registerTask( task );
+  if ( immediate ) {
+    // #82259: compact after expiring.
+    compact( CompactLater );
+  }
 }
 
 void KMFolder::compact( CompactOptions options )
@@ -729,16 +723,6 @@ void KMFolder::compact( CompactOptions options )
 KMFolder* KMFolder::trashFolder() const
 {
   return mStorage ? mStorage->trashFolder() : 0;
-}
-
-void KMFolder::setContentsType( int type )
-{
-  // Damage control. Shouldn't happen to be used, but resort to mail anyway
-  if ( type < 0 || type > 5 ) type = 0;
-  if ( type != mContentsType ) {
-    mContentsType = type;
-    kmkernel->iCalIface().folderContentsTypeChanged( this, type );
-  }
 }
 
 int KMFolder::writeIndex( bool createEmptyIndex )
