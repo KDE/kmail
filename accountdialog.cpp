@@ -867,7 +867,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     mImap.listOnlyOpenCheck = new QCheckBox(
         i18n("List only open folders"), page1);
     QWhatsThis::add( mImap.listOnlyOpenCheck, 
-        i18n("Only folders that are open (expanded) in the foldertree are checked for subfolders. Use this if there are many folders on the server.") );
+        i18n("Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.") );
     grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
   }
 
