@@ -724,6 +724,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 
     if (stage == List) {
       QString length = qdata.mid(spc+1);
+      if (length.find(' ') != -1) length = length.left(length.find(' '));
       int len = length.toInt();
       numBytes += len;
       QString id = qdata.left(spc);
