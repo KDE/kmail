@@ -1269,7 +1269,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   START_TIMER(msgRemoved);
 
   KMHeaderItem *removedItem = mItems[id];
-  QListViewItem *next = removedItem->itemBelow();
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
@@ -1339,17 +1338,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   // Make sure our data structures are cleared.
   if (!mFolder->count())
       folderCleared();
-
-  // Housekeeping.
-  if (currentItem() == removedItem)
-    mPrevCurrent = 0;
-
-  if (next && removedItem == static_cast<KMHeaderItem*>(currentItem()) ) {
-    setCurrentItem( next );
-    setSelected( next, TRUE );
-  } else {
-    emit selected(0);
-  }
 
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
@@ -2056,6 +2044,9 @@ void KMHeaders::makeHeaderVisible()
 //-----------------------------------------------------------------------------
 void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
 {
+  // shouldnt happen but will crash if it does 
+  if (lvi && !lvi->isSelectable()) return;
+
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
   if (lvi != mPrevCurrent) {
     if (mPrevCurrent)
