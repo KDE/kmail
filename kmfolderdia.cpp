@@ -470,6 +470,23 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   hbl->addWidget( mIgnoreNewMailCheckBox );
   hbl->addStretch( 1 );
 
+  // should replies to mails in this folder be kept in this same folder?
+  QGroupBox* replyGroup = new QGroupBox( i18n("Reply Handling"), this,
+                                             "replyGroup" );
+  replyGroup->setColumnLayout( 0, Qt::Vertical );
+  topLayout->addWidget( replyGroup );
+
+  hbl = new QHBoxLayout( replyGroup->layout() );
+  hbl->setSpacing( KDialog::spacingHint() );
+  mKeepRepliesInSameFolderCheckBox =
+    new QCheckBox( i18n("Keep replies in this folder" ), replyGroup );
+  QWhatsThis::add( mKeepRepliesInSameFolderCheckBox,
+                   i18n( "Check this option if you want replies you write "
+                         "to mails in this folder to be put in this same folder "
+                         "after sending, instead of in the configured sent-mail folder." ) );
+  hbl->addWidget( mKeepRepliesInSameFolderCheckBox );
+  hbl->addStretch( 1 );
+
   topLayout->addStretch( 100 ); // eat all superfluous space
 
   KMFolder* parentFolder = mDlg->parentFolder();
@@ -584,6 +601,8 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
 
   // ignore new mail
   mIgnoreNewMailCheckBox->setChecked( folder->ignoreNewMail() );
+
+  mKeepRepliesInSameFolderCheckBox->setChecked( folder->putRepliesInSameFolder() );
 
   if (folder->folderType() == KMFolderTypeImap)
   {
@@ -752,6 +771,8 @@ bool FolderDiaGeneralTab::save()
       mDlg->folder()->setContentsType( mContentsComboBox->currentItem() );
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
+
+    folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
 
     if( mDlg->isNewFolder() )
       folder->close();

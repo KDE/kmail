@@ -147,6 +147,7 @@ private:
   QCheckBox   *mIconsCheckBox;
   QCheckBox   *mNewMailCheckBox;
   QCheckBox   *mIgnoreNewMailCheckBox;
+  QCheckBox   *mKeepRepliesInSameFolderCheckBox;
 
   KPIM::IdentityCombo *mIdentityComboBox;
   QGroupBox *mMailboxTypeGroupBox;
