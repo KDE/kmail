@@ -3,6 +3,10 @@
 #ifndef kmflock_h
 #define kmflock_h
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #ifndef HAVE_FLOCK
 #ifndef _FLOCK_EMULATE_INCLUDED
 #define _FLOCK_EMULATE_INCLUDED
