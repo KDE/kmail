@@ -288,7 +288,7 @@ void KMMailtoComposeCommand::execute()
 
   msg->initHeader(id);
   msg->setCharset("utf-8");
-  msg->setTo(mUrl.path());
+  msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   win = new KMComposeWin(msg, id);
   win->setCharset("", TRUE);
@@ -308,7 +308,7 @@ void KMMailtoReplyCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMComposeWin *win;
   KMMessage *rmsg = msg->createReply(FALSE, FALSE, mSelection );
-  rmsg->setTo(mUrl.path());
+  rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
 #ifdef IDENTITY_UOIDs
   win = new KMComposeWin(rmsg, 0);
@@ -333,7 +333,7 @@ void KMMailtoForwardCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMComposeWin *win;
   KMMessage *fmsg = msg->createForward();
-  fmsg->setTo(mUrl.path());
+  fmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
   win = new KMComposeWin(fmsg);
   win->setCharset(msg->codec()->mimeName(), TRUE);
@@ -349,7 +349,7 @@ KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
 
 void KMMailtoAddAddrBookCommand::execute()
 {
-  KMAddrBookExternal::addEmail(mUrl.path(), mParent );
+  KMAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ), mParent );
 }
 
 
@@ -361,7 +361,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
 
 void KMMailtoOpenAddrBookCommand::execute()
 {
-  KMAddrBookExternal::openEmail(mUrl.path(), mParent );
+  KMAddrBookExternal::openEmail( KMMessage::decodeMailtoUrl( mUrl.path() ), mParent );
 }
 
 
@@ -377,9 +377,9 @@ void KMUrlCopyCommand::execute()
   if (mUrl.protocol() == "mailto") {
     // put the url into the mouse selection and the clipboard
     clip->setSelectionMode( true );
-    clip->setText( mUrl.path() );
+    clip->setText( KMMessage::decodeMailtoUrl( mUrl.path() ) );
     clip->setSelectionMode( false );
-    clip->setText( mUrl.path() );
+    clip->setText( KMMessage::decodeMailtoUrl( mUrl.path() ) );
     if (mMainWin)
       mMainWin->statusMsg( i18n( "Address copied to clipboard." ));
   } else {
@@ -1200,7 +1200,7 @@ void KMUrlClickedCommand::execute()
     msg = new KMMessage;
     msg->initHeader(id);
     msg->setCharset("utf-8");
-    msg->setTo(mUrl.path());
+    msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
     QString query=mUrl.query();
     while (!query.isEmpty()) {
       QString queryPart;

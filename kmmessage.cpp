@@ -24,6 +24,7 @@
 #include <kapplication.h>
 #include <kglobalsettings.h>
 #include <khtml_part.h>
+#include <kurl.h>
 #include <qcursor.h>
 
 // we need access to the protected member DwBody::DeleteBodyParts()...
@@ -2657,6 +2658,27 @@ QCString KMMessage::lf2crlf( const QCString & src )
 
 
 //-----------------------------------------------------------------------------
+QString KMMessage::encodeMailtoUrl( const QString& str )
+{
+  QString result;
+  result = QString::fromLatin1( KMMsgBase::encodeRFC2047String( str,
+                                                                "utf-8" ) );
+  result = KURL::encode_string( result );
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMMessage::decodeMailtoUrl( const QString& url )
+{
+  QString result;
+  result = KURL::decode_string( url );
+  result = KMMsgBase::decodeRFC2047String( result.latin1() );
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
 QString KMMessage::stripEmailAddr(const QString& aStr)
 {
   QStringList list = splitEmailAddrList(aStr);
@@ -2754,7 +2776,7 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 
     if ((ch == ',' && !insideQuote) || pos + 1 >= email.length())
     {
-      result += addr;
+      result += KMMessage::encodeMailtoUrl( tmp2 );
       result += "'>";
       if (stripped) result += KMMessage::stripEmailAddr(tmp2);
       else result += addr;
@@ -2769,6 +2791,8 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
     }
   }
   result = result.replace(QRegExp("\n"),"");
+  kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
+                << "') returns:\n-->" << result << "<--" << endl;
   return result;
 }
 

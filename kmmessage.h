@@ -445,6 +445,14 @@ public:
    */
   static QCString lf2crlf( const QCString & src );
 
+  /** Encodes an email address as mailto URL
+   */
+  static QString encodeMailtoUrl( const QString& str );
+
+  /** Decodes a mailto URL
+   */
+  static QString decodeMailtoUrl( const QString& url );
+
   /** Strip email address from string. Examples:
    * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
    * "joe@nowhere.com" returns "joe@nowhere.com". Note that this only

@@ -5137,60 +5137,7 @@ void KMLineEdit::insert(const QString &t)
        KMLineEditInherited::insert(t);
        return;
     }
-    QString newText = t.stripWhiteSpace();
-    if (newText.isEmpty())
-       return;
-
-    // remove newlines in the to-be-pasted string:
-    newText.replace( QRegExp("\r?\n"), " " );
-
-    QString contents = text();
-    int start_sel = 0;
-    int end_sel = 0;
-    int pos = cursorPosition();
-    if (getSelection(&start_sel, &end_sel))
-    {
-       // Cut away the selection.
-       if (pos > end_sel)
-          pos -= (end_sel - start_sel);
-       else if (pos > start_sel)
-          pos = start_sel;
-       contents = contents.left(start_sel) + contents.right(end_sel+1);
-    }
-
-    int eot = contents.length();
-    while ((eot > 0) && contents[eot-1].isSpace()) eot--;
-    if (eot == 0)
-    {
-       contents = QString::null;
-    }
-    else if (pos >= eot)
-    {
-       if (contents[eot-1] == ',')
-          eot--;
-       contents.truncate(eot);
-       contents += ", ";
-       pos = eot+2;
-    }
-
-    if (newText.startsWith("mailto:"))
-    {
-       KURL u(newText);
-       newText = u.path();
-    }
-    else if (newText.contains(" at "))
-    {
-       // Anti-spam stuff
-       newText.replace( QRegExp(" at "), "@" );
-       newText.replace( QRegExp(" dot "), "." );
-    }
-    else if (newText.contains("(at)"))
-    {
-      newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
-    }
-    contents = contents.left(pos)+newText+contents.mid(pos);
-    setText(contents);
-    setCursorPosition(pos+newText.length());
+    smartInsert( t, cursorPosition() );
 }
 
 void KMLineEdit::paste()
@@ -5352,20 +5299,82 @@ void KMLineEdit::loadAddresses()
 
 
 //-----------------------------------------------------------------------------
+void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
+{
+    QString newText = str.stripWhiteSpace();
+    if (newText.isEmpty())
+       return;
+
+    // remove newlines in the to-be-pasted string:
+    newText.replace( QRegExp("\r?\n"), " " );
+
+    QString contents = text();
+    // determine the position where to insert the to-be-pasted string
+    if( ( pos < 0 ) || ( pos > (int) contents.length() ) )
+      pos = contents.length();
+    int start_sel = 0;
+    int end_sel = 0;
+    if (getSelection(&start_sel, &end_sel))
+    {
+       // Cut away the selection.
+       if (pos > end_sel)
+          pos -= (end_sel - start_sel);
+       else if (pos > start_sel)
+          pos = start_sel;
+       contents = contents.left(start_sel) + contents.right(end_sel+1);
+    }
+
+    int eot = contents.length();
+    // remove trailing whitespace from the contents of the line edit
+    while ((eot > 0) && contents[eot-1].isSpace()) eot--;
+    if (eot == 0)
+    {
+       contents = QString::null;
+    }
+    else if (pos >= eot)
+    {
+       if (contents[eot-1] == ',')
+          eot--;
+       contents.truncate(eot);
+       contents += ", ";
+       pos = eot+2;
+    }
+
+    if (newText.startsWith("mailto:"))
+    {
+      kdDebug(5006) << "Pasting '" << newText << "'" << endl;
+        KURL u(newText);
+        newText = u.path();
+      kdDebug(5006) << "path of mailto URL: '" << newText << "'" << endl;
+        // Is the mailto URL RFC 2047 encoded (cf. RFC 2368)?
+        if (-1 != newText.find( QRegExp("=\\?.*\\?[bq]\\?.*\\?=") ) )
+          newText = KMMsgBase::decodeRFC2047String( newText.latin1() );
+    }
+    else if (-1 != newText.find(" at "))
+    {
+       // Anti-spam stuff
+       newText.replace( QRegExp(" at "), "@" );
+       newText.replace( QRegExp(" dot "), "." );
+    }
+    else if (newText.contains("(at)"))
+    {
+      newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
+    }
+    contents = contents.left(pos)+newText+contents.mid(pos);
+    setText(contents);
+    setCursorPosition(pos+newText.length());
+}
+
+//-----------------------------------------------------------------------------
 void KMLineEdit::dropEvent(QDropEvent *e)
 {
   QStrList uriList;
   if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
   {
-    QString ct = text();
     for (QStrListIterator it(uriList); it; ++it)
     {
-      if (!ct.isEmpty()) ct.append(", ");
-      KURL u(*it);
-      if (u.protocol() == "mailto") ct.append(QString::fromUtf8(u.path().latin1()));
-      else ct.append(QString::fromUtf8(*it));
+      smartInsert( QString::fromUtf8(*it) );
     }
-    setText(ct);
   }
   else {
     if (m_useCompletion)

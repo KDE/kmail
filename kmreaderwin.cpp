@@ -4002,11 +4002,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                         signer.replace( QRegExp(">"), "&gt;" );
                         signer.replace( QRegExp("\""), "&quot;" );
                         if( blockAddrs.count() ){
-                            QString address( blockAddrs.first() );
-                            address.replace( QRegExp("&"), "&amp;" );
-                            address.replace( QRegExp("<"), "&lt;" );
-                            address.replace( QRegExp(">"), "&gt;" );
-                            address.replace( QRegExp("\""), "&quot;" );
+                            QString address = KMMessage::encodeMailtoUrl( blockAddrs.first() );
                             signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
                         }
                     }
@@ -4102,11 +4098,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
             else
             {
                 // HTMLize the signer's user id and create mailto: link
-                signer.replace( QRegExp("&"), "&amp;" );
-                signer.replace( QRegExp("<"), "&lt;" );
-                signer.replace( QRegExp(">"), "&gt;" );
-                signer.replace( QRegExp("\""), "&quot;" );
-                signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
+              signer = KMMessage::emailAddrAsAnchor( signer );
 
 
                 if (block.isGoodSignature) {
@@ -4673,8 +4665,13 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
     emit statusMsg(i18n("Show certificate 0x%1").arg(keyId));
     bOk = true;
   }
+  else if( aUrl.startsWith( "mailto:" ) )
+  {
+    emit statusMsg( KMMessage::decodeMailtoUrl( aUrl ) );
+    bOk = true;
+  }
   if( !bOk )
-    emit statusMsg(aUrl);
+    emit statusMsg( aUrl );
 }
 
 

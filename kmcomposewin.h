@@ -152,6 +152,17 @@ private slots:
 
 private:
   void loadAddresses();
+  /**
+   * Smart insertion of email addresses. If @p pos is -1 then
+   * @p str is inserted at the end of the current contents of this
+   * lineedit. Else @p str is inserted at @p pos.
+   * Features:
+   * - Automatically adds ',' if necessary to separate email addresses
+   * - Correctly decodes mailto URLs
+   * - Recognizes email addresses which are protected against address
+   *   harvesters, i.e. "name at kde dot org" and "name(at)kde.org"
+   */
+  void smartInsert( const QString &str, int pos = -1 );
 
   QString m_previousAddresses;
   bool m_useCompletion;
