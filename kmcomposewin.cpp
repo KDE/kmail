@@ -41,11 +41,12 @@
 
 #ifdef KRN
 /* start added for KRN */
+#include "krnsender.h"
 extern KLocale *nls;
 extern KStdAccel* keys;
 extern KApplication *app;
 extern KBusyPtr *kbp;
-extern KMSender *msgSender;
+extern KRNSender *msgSender;
 extern KMIdentity *identity;
 #define aboutText "KRN"
 /* end added for KRN */
