@@ -543,7 +543,6 @@ public slots:
   void slotAlignLeft();
   void slotAlignCenter();
   void slotAlignRight();
-  void slotAlignJustify();
   void slotTextBold();
   void slotTextItalic();
   void slotTextUnder();
@@ -770,8 +769,7 @@ protected:
   KSelectAction *listAction;
   KFontAction *fontAction;
   KFontSizeAction *fontSizeAction;
-  KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction,
-      *alignJustifyAction;
+  KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction;
   KToggleAction *textBoldAction, *textItalicAction, *textUnderAction;
   KToggleAction *plainTextAction, *markupAction;
   KAction *actionFormatColor;

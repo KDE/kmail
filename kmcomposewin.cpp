@@ -89,6 +89,7 @@ using KRecentAddress::RecentAddresses;
 #include <qheader.h>
 #include <qpopupmenu.h>
 #include <qwhatsthis.h>
+#include <qfontdatabase.h>
 
 #include <mimelib/mimepp.h>
 #include <sys/stat.h>
@@ -1167,10 +1168,6 @@ void KMComposeWin::setupActions(void)
   alignCenterAction = new KToggleAction (i18n("Align Center"), "text_center", 0,
                        this, SLOT(slotAlignCenter()), actionCollection(),
                        "align_center");
-  alignJustifyAction = new KToggleAction (i18n("Align Justify"), "kmtextjustify", 0,
-                        this, SLOT(slotAlignJustify()),
-                        actionCollection(),
-                        "align_justify");
   textBoldAction = new KToggleAction (i18n("&Bold"), "text_bold", 0,
                                      this, SLOT(slotTextBold()),
                                      actionCollection(), "text_bold");
@@ -3486,12 +3483,6 @@ void KMComposeWin::slotAlignRight()
     mEditor->QTextEdit::setAlignment( AlignRight );
 }
 
-void KMComposeWin::slotAlignJustify()
-{
-    toggleMarkup(true);
-    mEditor->QTextEdit::setAlignment( AlignJustify );
-}
-
 void KMComposeWin::slotTextBold()
 {
     toggleMarkup(true);
@@ -3521,11 +3512,27 @@ void KMComposeWin::slotTextColor()
 
 void KMComposeWin::fontChanged( const QFont &f )
 {
-    fontAction->setFont( f.family() );
-    fontSizeAction->setFontSize( f.pointSize() );
+  QFontDatabase *fontdb = new QFontDatabase();
+
+  if ( fontdb->bold(f.family(), "Bold") ) {
     textBoldAction->setChecked( f.bold() );
+    textBoldAction->setEnabled(true);
+  }
+  else
+    textBoldAction->setEnabled(false);
+
+  if ( fontdb->italic(f.family(), "Italic") ) {
     textItalicAction->setChecked( f.italic() );
-    textUnderAction->setChecked( f.underline() );
+    textItalicAction->setEnabled(true);
+  }
+  else
+    textItalicAction->setEnabled(false);
+
+  textUnderAction->setChecked( f.underline() );
+
+  fontAction->setFont( f.family() );
+  fontSizeAction->setFontSize( f.pointSize() );
+  delete fontdb;
 }
 
 void KMComposeWin::alignmentChanged( int a )
@@ -3534,7 +3541,6 @@ void KMComposeWin::alignmentChanged( int a )
     alignLeftAction->setChecked( ( a == AlignAuto ) || ( a & AlignLeft ) );
     alignCenterAction->setChecked( ( a & AlignHCenter ) );
     alignRightAction->setChecked( ( a & AlignRight ) );
-    alignJustifyAction->setChecked( ( a & AlignJustify ) );
 }
 
 
