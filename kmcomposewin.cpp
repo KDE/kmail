@@ -3990,7 +3990,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   i = urlStr.findRev('/');
   name = (i>=0 ? urlStr.mid(i+1, 256) : urlStr);
 
-  QCString encoding = KMMessage::autoDetectCharset(mCharset,
+  QCString encoding = KMMsgBase::autoDetectCharset(mCharset,
     KMMessage::preferredCharsets(), name);
   if (encoding.isEmpty()) encoding = "utf-8";
   QCString encName = KMMsgBase::encodeRFC2231String(name, encoding);
