@@ -3757,6 +3757,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
       else txt += ' ';
     }
   aLineEdit->setText(txt + dlg.address());
+  aLineEdit->setEdited(true);
 }
 
 
@@ -5281,8 +5282,10 @@ void KMLineEdit::doCompletion(bool ctrlT)
             box->setCancelledText( text() );
             box->popup();
         }
-        else if (completions.count() == 1)
+        else if (completions.count() == 1) {
             setText(prevAddr + completions.first());
+            setEdited( true );
+        }
         else
             box->hide();
 
@@ -5313,6 +5316,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
             if ( !match.isNull() && match != s )
             {
                 setText( prevAddr + match );
+                setEdited( true );
                 cursorAtEnd();
             }
             break;
@@ -5339,6 +5343,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
 void KMLineEdit::slotPopupCompletion( const QString& completion )
 {
     setText( m_previousAddresses + completion );
+    setEdited( true );
     cursorAtEnd();
 }
 
@@ -5426,6 +5431,7 @@ void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
     }
     contents = contents.left(pos)+newText+contents.mid(pos);
     setText(contents);
+    setEdited( true );
     setCursorPosition(pos+newText.length());
 }
 
