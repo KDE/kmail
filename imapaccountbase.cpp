@@ -88,7 +88,6 @@ namespace KMail {
       mLoadOnDemand( true ),
       mListOnlyOpenFolders( false ),
       mProgressEnabled( false ),
-      mIdle( true ),
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
@@ -101,6 +100,7 @@ namespace KMail {
                             this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
     KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
                             this, SLOT(slotSchedulerSlaveConnected(KIO::Slave *)));
+    connect(&mNoopTimer, SIGNAL(timeout()), SLOT(slotNoopTimeout()));
     connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
   }
 
@@ -434,14 +434,9 @@ namespace KMail {
     if (mSlave) removeJob(job);
   }
 
-  void ImapAccountBase::slotIdleTimeout()
+
+  void ImapAccountBase::slotNoopTimeout()
   {
-    if ( mIdle ) {
-      if ( mSlave )
-        KIO::Scheduler::disconnectSlave(mSlave);
-      mSlave = 0;
-      mIdleTimer.stop();
-    } else {
       if ( mSlave ) {
         QByteArray packedArgs;
         QDataStream stream( packedArgs, IO_WriteOnly );
@@ -452,10 +447,22 @@ namespace KMail {
         KIO::Scheduler::assignJobToSlave(mSlave, job);
         connect( job, SIGNAL(result( KIO::Job * ) ),
           this, SLOT( slotSimpleResult( KIO::Job * ) ) );
-      }else {
+      } else {
+        /* Stop the timer, we have disconnected. We have to make sure it is
+           started again when a new slave appears. */
+        mNoopTimer.stop();
+      }
+  }
+
+  void ImapAccountBase::slotIdleTimeout()
+  {
+      if ( mSlave ) {
+        KIO::Scheduler::disconnectSlave(mSlave);
+        mSlave = 0;
+        /* As for the noop timer, we need to make sure this one is started
+           again when a new slave goes up. */
         mIdleTimer.stop();
       }
-    }
   }
 
   void ImapAccountBase::slotAbortRequested()

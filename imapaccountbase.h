@@ -66,11 +66,6 @@ namespace KMail {
     /** A weak assignment operator */
     virtual void pseudoAssign( const KMAccount * a );
 
-   /**
-    * Set the account idle or busy
-    */
-   void setIdle(bool aIdle) { mIdle = aIdle; }
-
     /** IMAP folder prefix */
     QString prefix() const { return mPrefix; }
     virtual void setPrefix( const QString & prefix );
@@ -282,7 +277,11 @@ namespace KMail {
     void slotGetACLResult( KIO::Job* _job );
 
     /**
-     * Send a NOOP command or log out when idle
+     * Send a NOOP command regularly to keep the slave from disconnecting
+     */
+    void slotNoopTimeout();
+    /**
+     * Log out when idle
      */
     void slotIdleTimeout();
 
@@ -334,7 +333,10 @@ namespace KMail {
     QStringList mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes;
     QMap<KIO::Job *, jobData> mapJobData;
+    /** used to detect when the slave has not been used for a while */
     QTimer mIdleTimer;
+    /** used to send a noop to the slave in regular intervals to keep it from disonnecting */
+    QTimer mNoopTimer;
     QString mPrefix;
     int mTotal, mCountUnread, mCountLastUnread;
     QMap<QString, int> mUnreadBeforeCheck;
@@ -345,7 +347,6 @@ namespace KMail {
     bool mListOnlyOpenFolders : 1;
     bool mProgressEnabled : 1;
 
-    bool mIdle : 1;
     bool mErrorDialogIsActive : 1;
     bool mPasswordDialogIsActive : 1;
     bool mACLSupport : 1;

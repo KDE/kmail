@@ -346,7 +346,6 @@ void KMCommand::slotTransferCancelled()
     KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>(folder);
     if (imapFolder && imapFolder->account()) {
       imapFolder->account()->killAllJobs();
-      imapFolder->account()->setIdle(true);
     }
   }
 

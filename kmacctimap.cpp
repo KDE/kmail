@@ -49,8 +49,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
   mCountRemainChecks( 0 )
 {
   mFolder = 0;
-  mIdle = false; // never disconnect
-  mIdleTimer.start( 60000 ); // // send a noop every minute
+  mNoopTimer.start( 60000 ); // // send a noop every minute
   mOpenFolders.setAutoDelete(true);
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));

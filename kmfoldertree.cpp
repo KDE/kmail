@@ -789,14 +789,12 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   KMFolder* folder = 0;
   if (fti) folder = fti->folder();
 
+
   if (mLastItem && mLastItem != fti && mLastItem->folder()
      && (mLastItem->folder()->folderType() == KMFolderTypeImap))
   {
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder()->storage());
     imapFolder->setSelected(FALSE);
-    KMAcctImap *act = imapFolder->account();
-    if (act)
-      act->setIdle(TRUE);
   }
   mLastItem = fti;
 
