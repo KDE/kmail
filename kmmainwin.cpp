@@ -434,7 +434,7 @@ void KMMainWin::slotSearch() {
   if(!searchWin) {
     searchWin = new KMFldSearch(this, "Search", false);
     connect(searchWin, SIGNAL(destroyed()),
-	    this, SLOT(slotsearchClosed()));
+	    this, SLOT(slotSearchClosed()));
   } 
 
   searchWin->show();
