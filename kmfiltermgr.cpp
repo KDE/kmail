@@ -145,6 +145,9 @@ int KMFilterMgr::moveMessage(KMMessage *msg) const
 
 void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
 {
+  if (msgBase->parent() && 
+      (msgBase->parent() == MessageProperty::filterFolder( msgBase )))
+    msgBase->parent()->take( msgBase->parent()->find( msgBase ) );
   MessageProperty::setFiltering( msgBase, false );
 }
 
