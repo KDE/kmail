@@ -122,7 +122,7 @@ servicetype_DATA = dcopmail.desktop
 messages: rc.cpp
 	rm -f tips.cpp
 	$(PREPARETIPS) > tips.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot
+	$(XGETTEXT) -ktranslate *.cpp *.h -o $(podir)/kmail.pot
 	rm -f tips.cpp
 
 include ../admin/Doxyfile.am
