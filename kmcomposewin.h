@@ -791,6 +791,7 @@ protected:
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;
+  bool mUseFixedFont;
   short mBtnIdSign, mBtnIdEncrypt;
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
   QFont mBodyFont, mFixedFont;

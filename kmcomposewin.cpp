@@ -431,6 +431,7 @@ void KMComposeWin::readConfig(void)
   mAutoSign = config->readEntry("signature","auto") == "auto";
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readBoolEntry("word-wrap", true);
+  mUseFixedFont = config->readBoolEntry("use-fixed-font", false);
   mLineBreak = config->readNumEntry("break-at", 78);
   mBtnIdentity->setChecked(config->readBoolEntry("sticky-identity", false));
   if (mBtnIdentity->isChecked())
@@ -572,6 +573,7 @@ void KMComposeWin::writeConfig(void)
       ->currentText()) == -1)
         mTransportHistory.prepend(mTransport->currentText());
     config->writeEntry("transport-history", mTransportHistory );
+    config->writeEntry("use-fixed-font", mUseFixedFont );
   }
 
   {
@@ -931,6 +933,7 @@ void KMComposeWin::setupActions(void)
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
+  mFixedFontAction->setChecked(mUseFixedFont);
 
   //these are checkable!!!
   mUrgentAction = new KToggleAction (i18n("&Urgent"), 0,
@@ -4505,8 +4508,10 @@ void KMComposeWin::slotReplace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
-  mEditor->setFont( mFixedFontAction && (mFixedFontAction->isChecked())
-    ? mFixedFont : mBodyFont );
+  if ( mFixedFontAction ) {
+    mUseFixedFont = mFixedFontAction->isChecked();
+  }
+  mEditor->setFont( mUseFixedFont ? mFixedFont : mBodyFont );
 }
 
 QString KMComposeWin::quotePrefixName() const
