@@ -387,7 +387,7 @@ namespace KMail {
         }
 
         // Some servers send _lots_ of duplicates
-        if (mSubfolderNames.findIndex(name) == -1)
+        if (mSubfolderPaths.findIndex(url.path()) == -1)
         {
           mSubfolderNames.append(name);
           mSubfolderPaths.append(url.path());
