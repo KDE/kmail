@@ -68,7 +68,6 @@ KMFolder* outboxFolder = NULL;
 KMFolder* queuedFolder = NULL;
 KMFolder* sentFolder = NULL;
 KMFolder* trashFolder = NULL;
-KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
 KMFilterActionDict* filterActionDict = NULL;
 KMAddrBook* addrBook = NULL;
@@ -472,8 +471,6 @@ static void init()
   app = new KApplication();
   kbp = new KBusyPtr;
   cfg = app->config();
-
-  keys = new KStdAccel();
 
   // Stefan: Yes, we really want this message handler. Without it,
   // kmail does not show vital warning() dialogs.

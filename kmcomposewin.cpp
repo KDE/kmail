@@ -513,17 +513,17 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(i18n("&Addressbook..."),this,
 		   SLOT(slotAddrBook()));
   menu->insertItem(i18n("&Print..."),this,
-		   SLOT(slotPrint()), KStdAccel::print());
+		   SLOT(slotPrint()), KStdAccel::key(KStdAccel::Print));
   menu->insertSeparator();
   menu->insertItem(i18n("&New Composer..."),this,
-                   SLOT(slotNewComposer()), KStdAccel::openNew());
+           SLOT(slotNewComposer()), KStdAccel::key(KStdAccel::New));
 #ifndef KRN
   menu->insertItem(i18n("New Mailreader"), this,
 		   SLOT(slotNewMailReader()));
 #endif
   menu->insertSeparator();
   menu->insertItem(i18n("&Close"),this,
-		   SLOT(slotClose()), KStdAccel::close());
+		   SLOT(slotClose()), KStdAccel::key(KStdAccel::Close));
   mMenuBar->insertItem(i18n("&File"),menu);
 
 
@@ -531,24 +531,24 @@ void KMComposeWin::setupMenuBar(void)
   menu = new QPopupMenu();
 #ifdef BROKEN
   menu->insertItem(i18n("Undo"),this,
-		   SLOT(slotUndoEvent()), KStdAccel::undo());
+		   SLOT(slotUndoEvent()), KStdAccel::key(KStdAccel::Undo));
   menu->insertSeparator();
 #endif //BROKEN
   menu->insertItem(i18n("Und&o"),mEditor,
-		   SLOT(undo()), KStdAccel::undo());
+		   SLOT(undo()), KStdAccel::key(KStdAccel::Undo));
   menu->insertItem(i18n("Re&do"),mEditor,
-		   SLOT(redo()), KStdAccel::redo());
+				   SLOT(redo()), KStdAccel::key(KStdAccel::Redo));
   menu->insertSeparator();
-  menu->insertItem(i18n("C&ut"), this, SLOT(slotCut()), KStdAccel::cut());
-  menu->insertItem(i18n("&Copy"), this, SLOT(slotCopy()), KStdAccel::copy());
-  menu->insertItem(i18n("&Paste"), this, SLOT(slotPaste()), KStdAccel::paste());
+  menu->insertItem(i18n("C&ut"), this, SLOT(slotCut()), KStdAccel::key(KStdAccel::Cut));
+  menu->insertItem(i18n("&Copy"), this, SLOT(slotCopy()), KStdAccel::key(KStdAccel::Copy));
+  menu->insertItem(i18n("&Paste"), this, SLOT(slotPaste()), KStdAccel::key(KStdAccel::Paste));
   menu->insertItem(i18n("Select &All"),this,
 		   SLOT(slotMarkAll()));
   menu->insertSeparator();
   menu->insertItem(i18n("&Find..."), this,
-		   SLOT(slotFind()), KStdAccel::find());
+		   SLOT(slotFind()), KStdAccel::key(KStdAccel::Find));
   menu->insertItem(i18n("&Replace..."), this,
-		   SLOT(slotReplace()), KStdAccel::replace());
+		   SLOT(slotReplace()), KStdAccel::key(KStdAccel::Replace));
   menu->insertSeparator();
   menu->insertItem(i18n("&Spellcheck..."), this,
 		   SLOT(slotSpellcheck()));
@@ -757,9 +757,9 @@ void KMComposeWin::setupEditor(void)
   menu = new QPopupMenu();
   //#ifdef BROKEN
   menu->insertItem(i18n("Undo"),mEditor,
-		   SLOT(undo()), KStdAccel::undo());
+		   SLOT(undo()), KStdAccel::key(KStdAccel::Undo));
   menu->insertItem(i18n("Redo"),mEditor,
-		   SLOT(redo()), KStdAccel::redo());
+		   SLOT(redo()), KStdAccel::key(KStdAccel::Redo));
   menu->insertSeparator();
   //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
