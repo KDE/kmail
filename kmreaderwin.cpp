@@ -661,27 +661,38 @@ kdDebug(5006) << "* message *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypeRfc822: {
 kdDebug(5006) << "RfC 822" << endl;
+              if( curNode->mChild ) {
+kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+                parseObjectTree( reader,
+                                 &resultString,
+                                 cryptPlugList,
+                                 useThisCryptPlug,
+                                 curNode->mChild );
+                bDone = true;
+kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+              } else {
 
-              QCString rfc822message( curNode->msgPart().bodyDecoded() );
+                QCString rfc822message( curNode->msgPart().bodyDecoded() );
 
-              // paint the frame
-              PartMetaData messagePart;
-              if( reader ) {
-                messagePart.isEncrypted = false;
-                messagePart.isSigned = false;
-                messagePart.isEncapsulatedRfc822Message = true;
-                reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                // paint the frame
+                PartMetaData messagePart;
+                if( reader ) {
+                  messagePart.isEncrypted = false;
+                  messagePart.isSigned = false;
+                  messagePart.isEncapsulatedRfc822Message = true;
+                  reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                }
+                insertAndParseNewChildNode( reader,
+                                            &resultString,
+                                            cryptPlugList,
+                                            useThisCryptPlug,
+                                            *curNode,
+                                            &*rfc822message,
+                                            "encapsulated message" );
+                if( reader )
+                  reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+                bDone = true;
               }
-              insertAndParseNewChildNode( reader,
-                                          &resultString,
-                                          cryptPlugList,
-                                          useThisCryptPlug,
-                                          *curNode,
-                                          &*rfc822message,
-                                          "encapsulated message" );
-              if( reader )
-                reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
-              bDone = true;
             }
             break;
           }
@@ -709,57 +720,68 @@ kdDebug(5006) << "postscript" << endl;
             break;
           case DwMime::kSubtypeOctetStream: {
 kdDebug(5006) << "octet stream" << endl;
-              CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
-              if(    curNode->mRoot
-                  && DwMime::kTypeMultipart    == curNode->mRoot->type()
-                  && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
-                curNode->setEncrypted( true );
-                if( keepEncryptions ) {
-                  QCString cstr( curNode->msgPart().bodyDecoded() );
-                  if( reader )
-                    reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
-                  else
-                    resultString += cstr;
-                  bDone = true;
-                } else {
-                  /*
-                    ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
-                  */
-                  if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
-                    QCString decryptedData;
-                    if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
-
-                      // paint the frame
-                      PartMetaData messagePart;
-                      if( reader ) {
-                        messagePart.isDecryptable = true;
-                        messagePart.isEncrypted = true;
-                        messagePart.isSigned = false;
-                        reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
-                      }
-                      // fixing the missing attachments bug #1090-b
-                      insertAndParseNewChildNode( reader,
-                                                  &resultString,
-                                                  cryptPlugList,
-                                                  useThisCryptPlug,
-                                                  *curNode,
-                                                  &*decryptedData,
-                                                  "encrypted data" );
-                      if( reader )
-                        reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
-                    }
+              if( curNode->mChild ) {
+kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+                parseObjectTree( reader,
+                                 &resultString,
+                                 cryptPlugList,
+                                 useThisCryptPlug,
+                                 curNode->mChild );
+                bDone = true;
+kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+              } else {
+                CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
+                if(    curNode->mRoot
+                    && DwMime::kTypeMultipart    == curNode->mRoot->type()
+                    && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
+                    curNode->setEncrypted( true );
+                    if( keepEncryptions ) {
+                    QCString cstr( curNode->msgPart().bodyDecoded() );
+                    if( reader )
+                        reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
                     else
-                    {
-                      if( reader )
-                        reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
-                      else
-                        resultString += decryptedData;
+                        resultString += cstr;
+                    bDone = true;
+                    } else {
+                    /*
+                        ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
+                    */
+                    if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
+                        QCString decryptedData;
+                        if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
+
+                        // paint the frame
+                        PartMetaData messagePart;
+                        if( reader ) {
+                            messagePart.isDecryptable = true;
+                            messagePart.isEncrypted = true;
+                            messagePart.isSigned = false;
+                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                        }
+                        // fixing the missing attachments bug #1090-b
+                        insertAndParseNewChildNode( reader,
+                                                    &resultString,
+                                                    cryptPlugList,
+                                                    useThisCryptPlug,
+                                                    *curNode,
+                                                    &*decryptedData,
+                                                    "encrypted data" );
+                        if( reader )
+                            reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+                        }
+                        else
+                        {
+                        if( reader )
+                            reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
+                        else
+                            resultString += decryptedData;
+                        }
                     }
+                    bDone = true;
                   }
-                  bDone = true;
                 }
+                useThisCryptPlug = oldUseThisCryptPlug;
               }
-              useThisCryptPlug = oldUseThisCryptPlug;
             }
             break;
           case DwMime::kSubtypePgpEncrypted: {
