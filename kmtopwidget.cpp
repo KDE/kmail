@@ -33,7 +33,6 @@ KMTopLevelWidget::~KMTopLevelWidget()
 void KMTopLevelWidget::closeEvent(QCloseEvent* e)
 {
   // Almost verbatim from KMainWindow
-  writeConfig();
   KMainWindow::closeEvent( e ); 
 }
 

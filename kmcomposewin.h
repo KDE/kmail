@@ -269,7 +269,8 @@ public:
    * Set the message the composer shall work with. This discards
    * previous messages without calling applyChanges() on them before.
    */
-   void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE, bool allowDecryption=FALSE);
+   void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE, 
+	       bool allowDecryption=FALSE, bool isModified=FALSE);
 
   /**
    * Returns message of the composer. To apply the user changes to the

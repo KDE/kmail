@@ -574,7 +574,7 @@ void KMKernel::recoverDeadLetters(void)
     if (msg)
     {
       win = new KMComposeWin();
-      win->setMsg(msg, FALSE);
+      win->setMsg(msg, false, false, true);
       win->show();
     }
   }
@@ -1061,6 +1061,8 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 }
 void KMKernel::dumpDeadLetters()
 {
+  if (shuttingDown())
+    return; //All documents should be saved before shutting down is set!
   mDeadLetterTimer->stop();
   QWidget *win;
   QDir dir = QDir::home();
@@ -1208,7 +1210,18 @@ void KMKernel::slotShowConfigurationDialog()
 
 void KMKernel::notClosedByUser()
 {
+  if (!closed_by_user) // already closed
+    return;
   closed_by_user = false;
+  the_shuttingDown = true;
+  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+  KMainWindow *window = 0;
+  while ((window = it.current()) != 0) {
+    ++it;
+    if (window->inherits("KMTopLevelWidget"))
+      window->close(TRUE);
+  }
+ 
   delete the_acctMgr;
   the_acctMgr = 0;
   delete the_filterMgr;

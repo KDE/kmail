@@ -56,14 +56,17 @@ class KMailApplication : public KUniqueApplication
 {
 public:
   KMailApplication() : KUniqueApplication() { };
-
   virtual int newInstance();
+  void commitData(QSessionManager& sm);
 
-  void commitData(QSessionManager& sm) {
-    kernel->notClosedByUser();
-    KApplication::commitData( sm );
-  }
 };
+
+void KMailApplication::commitData(QSessionManager& sm) {
+  kernel->dumpDeadLetters();
+  kernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
+  KApplication::commitData( sm );
+}
+
 
 int KMailApplication::newInstance()
 {
@@ -194,9 +197,12 @@ int main(int argc, char *argv[])
   kernel->setStartingUp( false ); // Starting up is finished
   // Go!
   int ret = kapp->exec();
-
   // clean up
-  kmailKernel.cleanup();
+  if (kernel->shuttingDown())
+      kmailKernel.notClosedByUser();
+  else
+      kmailKernel.cleanup();
+
   KMail::cleanup();
   return ret;
 }

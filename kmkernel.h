@@ -166,6 +166,7 @@ public:
   bool startingUp() { return the_startingUp; }
   void setStartingUp (bool flag) { the_startingUp = flag; }
   bool shuttingDown() { return the_shuttingDown; }
+  void setShuttingDown(bool flag) { the_shuttingDown = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
   void notClosedByUser();
 

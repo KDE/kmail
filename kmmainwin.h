@@ -33,6 +33,8 @@ public:
   /** Write configuration options. */
   virtual void writeConfig(void);
 
+protected:
+  virtual bool queryClose ();
 
 public slots:
   void statusMsg(const QString&);

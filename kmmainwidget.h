@@ -177,7 +177,6 @@ protected:
   void createWidgets();
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
-  virtual bool queryClose();
 
 protected slots:
   void slotCheckOneAccount(int);

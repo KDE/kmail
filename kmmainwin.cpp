@@ -4,9 +4,12 @@
 #include "kmkernel.h"
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
+#include "kmglobal.h"
+#include "kapplication.h"
 #include <klocale.h>
 #include <kedittoolbar.h>
 #include <kconfig.h>
+#include <kmessagebox.h>
 
 #include "kmmainwin.moc"
 
@@ -156,4 +159,46 @@ void KMMainWin::writeConfig(void)
 void KMMainWin::slotQuit()
 {
     close();
+}
+
+//-----------------------------------------------------------------------------
+bool KMMainWin::queryClose() {
+  if (kernel->shuttingDown() || kapp->sessionSaving())
+    return true;
+
+  int      ret = 0;
+  QString  str = i18n("Expire old messages from all folders? "
+		      "Expired messages are permanently deleted.");
+  KConfig *config = KMKernel::config();
+
+  // Make sure this is the last window.
+  KMainWindow   *kmWin = 0;
+  int           num = 0;
+
+  kernel->setCanExpire(false);
+  for (kmWin = KMainWindow::memberList->first(); kmWin;
+       kmWin = KMainWindow::memberList->next()) {
+    if (kmWin->isA("KMMainWin")) {
+      num++;
+    }
+  }
+  // If this isn't the last open window, don't do anything.
+  if (num > 1) {
+    return true;
+  }
+
+  KConfigGroupSaver saver(config, "General");
+  if (config->readNumEntry("when-to-expire", 0) != expireAtExit) {
+    return true;
+  }
+
+  if (config->readBoolEntry("warn-before-expire")) {
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
+			 str, i18n("Expire old Messages?"), i18n("Expire"));
+    if (ret == KMessageBox::Continue) {
+      kernel->setCanExpire(true);
+    }
+  }
+
+  return true;
 }

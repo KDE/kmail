@@ -1191,7 +1191,8 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecryption)
+void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, 
+			  bool allowDecryption, bool isModified)
 {
   KMMessagePart bodyPart, *msgPart;
   int i, num;
@@ -1375,7 +1376,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   } else {
     kernel->dumpDeadLetters();
   }
-  mEditor->setModified(FALSE);
+  mEditor->setModified(isModified);
 }
 
 
@@ -1397,6 +1398,8 @@ void KMComposeWin::setFcc( const QString &idString )
 bool KMComposeWin::queryClose ()
 {
   int rc;
+  if (kernel->shuttingDown() || kapp->sessionSaving())
+    return true;
 
   if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
      mEdtTo->edited() || mEdtCc->edited() || mEdtBcc->edited() ||

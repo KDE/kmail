@@ -155,14 +155,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 KMailPart::~KMailPart()
 {
   kernel->dumpDeadLetters();
+  kernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
   mainWidget->destruct();
-  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
-  KMainWindow *window = 0;
-  while ((window = it.current()) != 0) {
-    ++it;
-    if (window->inherits("KMTopLevelWidget"))
-      window->close(TRUE);
-  }
   kernel->notClosedByUser();
   delete kernel;
   KMail::cleanup();
