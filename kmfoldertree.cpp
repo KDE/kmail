@@ -1612,11 +1612,11 @@ void KMFolderTree::createFolderList( QStringList *str,
     if (!fti || !fti->folder()) continue;
     // type checks
     KMFolder* folder = fti->folder();
-    if (!imapFolders && folder->type() == KMFolderTypeImap) continue;
-    if (!dimapFolders && folder->type() == KMFolderTypeCachedImap) continue;
-    if (!localFolders && (folder->type() == KMFolderTypeMbox || 
-                          folder->type() == KMFolderTypeMaildir)) continue;
-    if (!searchFolders && folder->type() == KMFolderTypeSearch) continue;
+    if (!imapFolders && folder->folderType() == KMFolderTypeImap) continue;
+    if (!dimapFolders && folder->folderType() == KMFolderTypeCachedImap) continue;
+    if (!localFolders && (folder->folderType() == KMFolderTypeMbox || 
+                          folder->folderType() == KMFolderTypeMaildir)) continue;
+    if (!searchFolders && folder->folderType() == KMFolderTypeSearch) continue;
     if (!includeNoContent && folder->noContent()) continue;
     if (!includeNoChildren && folder->noChildren()) continue;
     QString prefix;
