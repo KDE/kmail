@@ -1,5 +1,10 @@
 1998-06-16  Stefan Taferner  <taferner@kde.org> (KMail-0.7.3)
 
+	* Warnings: changed warning messages of QPixmap and
+	QPainter to debug messages to avoid lots of message
+	boxes from broken KToolbar code when changing color 
+	scheme.
+
 	* Composer (email-address-completion)
 	Changed email-address completion to be case insensitive.
 	I think this is more useful in the general case.
