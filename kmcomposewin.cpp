@@ -3125,6 +3125,14 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       return TRUE;
     }
     // ---sven's Arrow key navigation end ---
+
+    if (k->key() == Key_Backtab && k->state() == ShiftButton)
+    {
+      deselect();
+      mComposer->focusNextPrevEdit(0, false);
+	  return TRUE;
+    }
+
     }
   }
   else if (e->type() == QEvent::Drop)
