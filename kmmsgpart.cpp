@@ -352,8 +352,10 @@ QString KMMessagePart::fileName(void) const
     stripWhiteSpace();
 
   len = str.length();
-  if (str[0]=='"' && str[len-1]=='"')
+  if (len>1) {
+    if (str[0]=='"' && str[len-1]=='"')
       str = str.mid(1, len-2);
+  };
 
   if (RFC2231encoded)
     return KMMsgBase::decodeRFC2231String(str);
