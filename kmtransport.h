@@ -73,7 +73,7 @@ private slots:
   void slotRequiresAuthClicked();
   void slotSmtpEncryptionChanged(int);
   void slotCheckSmtpCapabilities();
-  void slotSmtpCapabilities(const QStringList &);
+  void slotSmtpCapabilities(const QStringList &, const QString &, const QString &, const QString &);
   void slotSendmailEditPath(const QString &);
 private:
   struct SendmailWidgets
@@ -114,12 +114,29 @@ private:
   void makeSmtpPage();
   void setupSettings();
   void saveSettings();
-  void checkHighest(QButtonGroup *);
+  void checkHighest( QButtonGroup * );
+  void enableAuthMethods( unsigned int which );
+  static unsigned int authMethodsFromString( const QString & s );
+  static unsigned int authMethodsFromStringList( const QStringList & sl );
 
   KMServerTest    *mServerTest;
   SmtpWidgets     mSmtp;
   SendmailWidgets mSendmail;
   KMTransportInfo *mTransportInfo;
+  enum EncryptionMethods {
+    NoEncryption = 0,
+    SSL = 1,
+    TLS = 2
+  };
+  enum AuthMethods {
+    NoAuth = 0,
+    LOGIN = 1,
+    PLAIN = 2,
+    CRAM_MD5 = 4,
+    DIGEST_MD5 = 8,
+    AllAuth = 0xffffffff
+  };
+  unsigned int mAuthNone, mAuthSSL, mAuthTLS;
 };
 
 

@@ -35,6 +35,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kseparator.h>
+#include <kdebug.h>
 
 #include "kmservertest.h"
 #include "kmtransport.h"
@@ -168,11 +169,12 @@ KMTransportDialog::KMTransportDialog( const QString & caption,
 				      KMTransportInfo *transportInfo,
 				      QWidget *parent, const char *name,
 				      bool modal )
-  : KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true )
+  : KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true ),
+    mServerTest( 0 ),
+    mTransportInfo( transportInfo ),
+    mAuthNone( AllAuth ), mAuthSSL( AllAuth ), mAuthTLS( AllAuth )
 {
   assert(transportInfo != 0);
-  mServerTest = 0;
-  mTransportInfo = transportInfo;
 
   if( transportInfo->type == QString::fromLatin1("sendmail") )
   {
@@ -390,12 +392,12 @@ void KMTransportDialog::makeSmtpPage()
 
   mSmtp.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
-  mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentication method only if you have a good reason", "&PLAIN"),
-    mSmtp.authGroup  );
   mSmtp.authLogin = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
     mSmtp.authGroup );
+  mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
+    "authentication method only if you have a good reason", "&PLAIN"),
+    mSmtp.authGroup  );
   mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD&5"), mSmtp.authGroup );
   mSmtp.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mSmtp.authGroup );
   vlay->addWidget( mSmtp.authGroup );
@@ -516,50 +518,106 @@ void KMTransportDialog::slotRequiresAuthClicked()
 
 void KMTransportDialog::slotSmtpEncryptionChanged(int id)
 {
-  if (id == 1 || mSmtp.portEdit->text() == "465")
-    mSmtp.portEdit->setText((id == 1) ? "465" : "25");
+  kdDebug() << "KMTransportDialog::slotSmtpEncryptionChanged( " << id << " )" << endl;
+  // adjust SSL port:
+  if (id == SSL || mSmtp.portEdit->text() == "465")
+    mSmtp.portEdit->setText((id == SSL) ? "465" : "25");
+
+  // switch supported auth methods:
+  QButton * old = mSmtp.authGroup->selected();
+  int authMethods = id == TLS ? mAuthTLS : id == SSL ? mAuthSSL : mAuthNone ;
+  enableAuthMethods( authMethods );
+  if ( !old->isEnabled() )
+    checkHighest( mSmtp.authGroup );
 }
 
+void KMTransportDialog::enableAuthMethods( unsigned int auth ) {
+  kdDebug() << "KMTransportDislaog::enableAuthMethods( " << auth << " )" << endl;
+  mSmtp.authPlain->setEnabled( auth & PLAIN );
+  // LOGIN doesn't offer anything over PLAIN, requires more server
+  // roundtrips and is not an official SASL mechanism, but a MS-ism,
+  // so only enable it if PLAIN isn't available:
+  mSmtp.authLogin->setEnabled( auth & LOGIN && !(auth & PLAIN));
+  mSmtp.authCramMd5->setEnabled( auth & CRAM_MD5 );
+  mSmtp.authDigestMd5->setEnabled( auth & DIGEST_MD5 );
+}
+
+unsigned int KMTransportDialog::authMethodsFromString( const QString & s ) {
+  unsigned int result = 0;
+  QStringList sl = QStringList::split( '\n', s.upper() );
+  for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
+    if (  *it == "SASL/LOGIN" )
+      result |= LOGIN;
+    else if ( *it == "SASL/PLAIN" )
+      result |= PLAIN;
+    else if ( *it == "SASL/CRAM-MD5" )
+      result |= CRAM_MD5;
+    else if ( *it == "SASL/DIGEST-MD5" )
+      result |= DIGEST_MD5;
+  return result;
+}
+
+unsigned int KMTransportDialog::authMethodsFromStringList( const QStringList & sl ) {
+  unsigned int result = 0;
+  for ( QStringList::const_iterator it = sl.begin() ; it != sl.end() ; ++it )
+    if ( *it == "LOGIN" )
+      result |= LOGIN;
+    else if ( *it == "PLAIN" )
+      result |= PLAIN;
+    else if ( *it == "CRAM-MD5" )
+      result |= CRAM_MD5;
+    else if ( *it == "DIGEST-MD5" )
+      result |= DIGEST_MD5;
+  return result;
+}
 
 void KMTransportDialog::slotCheckSmtpCapabilities()
 {
   delete mServerTest;
   mServerTest = new KMServerTest("smtp", mSmtp.hostEdit->text(),
     mSmtp.portEdit->text());
-  connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
-    SLOT(slotSmtpCapabilities(const QStringList &)));
+  connect(mServerTest, SIGNAL(capabilities(const QStringList&,const QString&,const QString&,const QString&)),
+    SLOT(slotSmtpCapabilities(const QStringList&,const QString&,const QString&, const QString&)));
   mSmtp.checkCapabilities->setEnabled(FALSE);
 }
 
 
 void KMTransportDialog::checkHighest(QButtonGroup *btnGroup)
 {
-  QButton *btn;
-  for (int i = btnGroup->count() - 1; i >= 0; i--)
+  for ( int i = btnGroup->count() - 1; i >= 0 ; --i )
   {
-    btn = btnGroup->find(i);
+    QButton * btn = btnGroup->find(i);
     if (btn && btn->isEnabled())
     {
       btn->animateClick();
-      break;
+      return;
     }
   }
 }
 
 
-void KMTransportDialog::slotSmtpCapabilities(const QStringList & list)
+void KMTransportDialog::slotSmtpCapabilities(const QStringList & list,
+    const QString & authNone, const QString & authSSL, const QString & authTLS )
 {
+  kdDebug() << "KMTransportDialog::slotSmtpCapabilities( ..., "
+	    << authNone << ", " << authSSL << ", " << authTLS << " )" << endl;
   mSmtp.checkCapabilities->setEnabled(TRUE);
   bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
   mSmtp.encryptionNone->setEnabled(nc);
   mSmtp.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
   mSmtp.encryptionTLS->setEnabled(list.findIndex("STARTTLS") != -1 && nc);
-  mSmtp.authPlain->setEnabled(list.findIndex("PLAIN") != -1);
-  mSmtp.authLogin->setEnabled(list.findIndex("LOGIN") != -1);
-  mSmtp.authCramMd5->setEnabled(list.findIndex("CRAM-MD5") != -1);
-  mSmtp.authDigestMd5->setEnabled(list.findIndex("DIGEST-MD5") != -1);
+  if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() )
+    // slave doesn't seem to support "* AUTH METHODS" metadata (or server can't do AUTH)
+    mAuthNone = mAuthSSL = mAuthTLS = authMethodsFromStringList( list );
+  else {
+    mAuthNone = authMethodsFromString( authNone );
+    mAuthSSL = authMethodsFromString( authSSL );
+    mAuthTLS = authMethodsFromString( authTLS );
+    kdDebug() << "mAuthNone = " << mAuthNone
+	      << "; mAuthSSL = " << mAuthSSL
+	      << "; mAuthTLS = " << mAuthTLS << endl;
+  }
   checkHighest(mSmtp.encryptionGroup);
-  checkHighest(mSmtp.authGroup);
   delete mServerTest;
   mServerTest = 0;
 }
