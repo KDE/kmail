@@ -335,7 +335,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
     return;
   }
   // Force digest mode, even if there is only one message in the folder
-  if (jd.total == 1) uids = *uid + "," + *uid;
+  if (jd.total == 1) uids = *uid + ":" + *uid;
   else while (uid != (*it).items.end())
   {
     int first = (*uid).toInt();
