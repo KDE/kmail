@@ -4898,21 +4898,23 @@ void KMReaderWin::slotAtmOpenWith()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmSave()
 {
-  QString fileName;
-  fileName = mSaveAttachDir;
-
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   if( node ) {
+    QString fileName;
+
     KMMessagePart& msgPart = node->msgPart();
 
     if (!msgPart.fileName().isEmpty())
-      fileName.append(msgPart.fileName());
+      fileName = msgPart.fileName();
     else
-      fileName.append(msgPart.name());
+      fileName = msgPart.name();
 
     while (fileName.find(':') != -1)
       fileName = fileName.mid(fileName.find(':') + 1).stripWhiteSpace();
+    // remove all occurrences of '/' from the file name
     fileName.replace(QRegExp("/"), "");
+    // prepend the previously used save dir
+    fileName.prepend(mSaveAttachDir);
     KURL url = KFileDialog::getSaveURL( fileName, QString::null, this );
 
     if( url.isEmpty() )
