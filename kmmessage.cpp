@@ -1758,7 +1758,7 @@ void KMMessage::setTo(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::toStrip() const
 {
-  return decodeRFC2047String( stripEmailAddr( rawHeaderField("To") ) );
+  return stripEmailAddr( to() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1801,7 +1801,7 @@ void KMMessage::setCc(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::ccStrip() const
 {
-  return decodeRFC2047String( stripEmailAddr( rawHeaderField("Cc") ) );
+  return stripEmailAddr( cc() );
 }
 
 
@@ -1868,7 +1868,7 @@ void KMMessage::setFrom(const QString& bStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::fromStrip() const
 {
-  return decodeRFC2047String( stripEmailAddr( rawHeaderField("From") ) );
+  return stripEmailAddr( from() );
 }
 
 //-----------------------------------------------------------------------------
