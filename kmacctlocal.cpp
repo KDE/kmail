@@ -77,7 +77,7 @@ bool KMAcctLocal::processNewMail(void)
     {
       rc = mFolder->addMsg(msg);
       if (rc) perror("failed to add message");
-      if (rc) warning("Failed to add message:\n" + QString(sys_errlist[rc]));
+      if (rc) warning("Failed to add message:\n" + QString(strerror(rc)));
     }
   }
   debug("done, closing folders");
