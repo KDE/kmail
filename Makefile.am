@@ -114,7 +114,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		spamheaderanalyzer.cpp antispamconfig.cpp \
                 replyphrases.kcfgc custommimeheader.kcfgc \
                 recipientseditor.cpp \
-                recipientspicker.cpp kwindowpositioner.cpp
+                recipientspicker.cpp kwindowpositioner.cpp \
+                distributionlistdialog.cpp
 
 kmail_SOURCES = main.cpp
 

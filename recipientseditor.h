@@ -211,6 +211,7 @@ class SideWidget : public QWidget
 
   signals:
     void pickedRecipient( const Recipient & );
+    void createDistributionList();
 
   protected:
     void initRecipientPicker();
@@ -221,6 +222,7 @@ class SideWidget : public QWidget
   private:
     RecipientsView *mView;
     QLabel *mTotalLabel;
+    QPushButton *mDistributionListButton;
     QPushButton *mSelectButton;
     RecipientsPicker *mRecipientPicker;
     KWindowPositioner *mPickerPositioner;
@@ -253,6 +255,7 @@ class RecipientsEditor : public QWidget
 
   protected slots:
     void slotPickedRecipient( const Recipient & );
+    void createDistributionList();
 
   private:
     RecipientsView *mRecipientsView;

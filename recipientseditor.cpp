@@ -26,6 +26,7 @@
 
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
+#include "distributionlistdialog.h"
 
 #include <libemailfunctions/email.h>
 
@@ -519,6 +520,12 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addWidget( mTotalLabel, 1 );
   mTotalLabel->hide();
 
+  mDistributionListButton = new QPushButton( "List...", this );
+  topLayout->addWidget( mDistributionListButton );
+  mDistributionListButton->hide();
+  connect( mDistributionListButton, SIGNAL( clicked() ),
+    SIGNAL( createDistributionList() ) );
+
   mSelectButton = new QPushButton( "&Select...", this );
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
@@ -556,6 +563,9 @@ void SideWidget::setTotal( int recipients, int lines )
   mTotalLabel->setText( i18n("1 recipient","%n recipients", recipients ) );
   if ( lines > 1 ) mTotalLabel->show();
   else mTotalLabel->hide();
+
+  if ( lines > 3 ) mDistributionListButton->show();
+  else mDistributionListButton->hide();
 }
 
 void SideWidget::pickRecipient()
@@ -588,6 +598,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
   topLayout->addWidget( side );
   connect( side, SIGNAL( pickedRecipient( const Recipient & ) ),
     SLOT( slotPickedRecipient( const Recipient & ) ) );
+  connect( side, SIGNAL( createDistributionList() ),
+    SLOT( createDistributionList() ) );
 
   connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
     side, SLOT( setTotal( int, int ) ) );
@@ -612,6 +624,13 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
   line->setRecipient( r );
   
   mRecipientsView->addLine()->activate();
+}
+
+void RecipientsEditor::createDistributionList()
+{
+  DistributionListDialog *dlg = new DistributionListDialog( this );
+  dlg->setRecipients( mRecipientsView->recipients() );
+  dlg->show();
 }
 
 Recipient::List RecipientsEditor::recipients() const
