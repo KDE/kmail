@@ -306,7 +306,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
   {
     changeItemColor(darkBlue, msgId);
   }
-  else changeItemColor(kapp->textColor, msgId);
+  else changeItemColor(kapp->inactiveTextColor(), msgId);
 }
 
 
@@ -842,7 +842,7 @@ void KMHeaders::updateMessageList(void)
     {
       changeItemColor(darkBlue);
     }
-    else changeItemColor(kapp->textColor);
+    else changeItemColor(kapp->inactiveTextColor());
   }
 
   setAutoUpdate(autoUpd);
@@ -911,7 +911,8 @@ void KMHeaders::sort(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::setPalette(const QPalette& p)
 {
-  QColor c = kapp->windowColor;
+  // !!! Fixme: this was  kapp.windowColor
+  QColor c = QColor(255,255,255);
 
   debug("KMHeaders::setPalette(): %d %d %d", c.red(), c.green(), c.blue());
 
