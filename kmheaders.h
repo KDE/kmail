@@ -1,17 +1,22 @@
+// -*- mode: C++ -*-
+
 #ifndef __KMHEADERS
 #define __KMHEADERS
 
-#include <qwidget.h>
-#include <qstrlist.h>
+#include "kmmessage.h"
+#include "kmime_util.h"
+#include "kmcommands.h"
+
 #include <klistview.h>
 #include <kfoldertree.h>
+#include <kpopupmenu.h>
+
+#include <qwidget.h>
+#include <qstrlist.h>
 #include <qmemarray.h>
 #include <qmap.h>
 #include <qdragobject.h>
 #include <qdict.h>
-#include "kmmessage.h"
-#include "kmime_util.h"
-#include <kpopupmenu.h>
 
 class KMFolder;
 class KMMessage;
@@ -90,7 +95,7 @@ public:
   virtual KMMessageList* selectedMsgs(bool toBeDeleted = false);
 
   /** Returns the index values of currently selected items */
-  QValueList<int> selectedItems();
+  QValueList<int> selectedItems();  
 
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
@@ -222,7 +227,7 @@ public slots:
   /** Select several items by message index
    * and if they are the parent of a closed thread, also
    * recursively select their children. */
-  void setSelectedByIndex(QValueList<int> items, bool selected);
+  void setSelectedByIndex(QValueList<int> items, bool selected);  
 
   /** switch size-column
       1 for activate, 0 for deactivate, -1 for toggle*/
@@ -299,7 +304,7 @@ protected slots:
   void rightButtonPressed( QListViewItem *, const QPoint &, int );
 
 private slots:
-  void slotMoveCompleted( bool success );
+  void slotMoveCompleted( KMCommand::Result result );
 
 private:
   /** Is equivalent to clearing the list and inserting an item for
