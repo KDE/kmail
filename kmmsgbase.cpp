@@ -799,10 +799,10 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
 
 #ifndef WORDS_BIGENDIAN
-#warning Byte order is little endian (swap is true)
+  // #warning Byte order is little endian (swap is true)
   swapEndian(ret);
 #else
-#warning Byte order is big endian (swap is false)
+  // #warning Byte order is big endian (swap is false)
 #endif  
 
   return ret;
@@ -939,10 +939,10 @@ const uchar *KMMsgBase::asIndexString(int &length) const
     } while(0)
 #define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x))
 #ifndef WORDS_BIGENDIAN
-#warning Byte order is little endian (call swapEndian)
+  // #warning Byte order is little endian (call swapEndian)
 #define SWAP_TO_NETWORK_ORDER(x) swapEndian(x)
 #else 
-#warning Byte order is big endian
+  // #warning Byte order is big endian
 #define SWAP_TO_NETWORK_ORDER(x)
 #endif
   unsigned long tmp;
