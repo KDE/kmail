@@ -1245,7 +1245,7 @@ void KMMainWin::setupMenuBar()
 {
   //----- File Menu
   fileMenu = new QPopupMenu();
-  fileMenu->insertItem(i18n("&New Mailreader"), this,
+  fileMenu->insertItem(i18n("&New Mail Client"), this,
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Save &As..."), this,
