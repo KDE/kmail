@@ -1224,8 +1224,8 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
     return 0;
   }
   folder->setType( typeString );
-  folder->storage()->setContentsType( contentsType );
   mFolderInfoMap.insert( folder, info );
+  folder->storage()->setContentsType( contentsType );
 
   folder->setSystemFolder( true );
   folder->open();
