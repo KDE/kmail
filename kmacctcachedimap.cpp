@@ -231,6 +231,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mAutoExpunge = false;
   mCountLastUnread = 0;
   mUnreadBeforeCheck.clear();
+  mIdleTimer.stop();
 
   if( interactive && isProgressDialogEnabled() ) {
     // Show progress dialog in all kmail-mainwidgets.
@@ -260,6 +261,8 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 
 void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
+  mIdleTimer.start( 60000 ); // send a noop every minute to avoid "connection broken" errors
+  mIdle = false; // noop, don't disconnect (to make interval-mail-check faster)
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   mMailCheckProgressItem->setComplete();
