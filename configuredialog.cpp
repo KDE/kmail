@@ -621,8 +621,10 @@ void IdentityPage::saveActiveIdentity()
   ident.setReplyToAddr( mReplyToEdit->text() );
   ident.setTransport( ( mTransportCheck->isChecked() ) ?
 		      mTransportCombo->currentText() : QString::null );
-  ident.setFcc( mFccCombo->getFolder()->idString() );
-  ident.setDrafts( mDraftsCombo->getFolder()->idString() );
+  ident.setFcc( mFccCombo->getFolder() ?
+                mFccCombo->getFolder()->idString() : QString::null );
+  ident.setDrafts( mDraftsCombo->getFolder() ?
+                   mDraftsCombo->getFolder()->idString() : QString::null );
 
   // "Signature" tab:
   if ( !mSignatureEnabled->isChecked() ) {
