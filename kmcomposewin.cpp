@@ -1333,7 +1333,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg(kernel->addrBook());
+  KMAddrBookEditDlg dlg( kernel->addrBook(), this );
   dlg.exec();
 }
 

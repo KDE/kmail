@@ -5,6 +5,8 @@
 #ifndef kmaddrbookdlg_h
 #define kmaddrbookdlg_h
 
+#include <kdialogbase.h>
+
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qlistbox.h>
@@ -41,12 +43,15 @@ protected:
 
 //-----------------------------------------------------------------------------
 
-#define KMAddrBookEditDlgInherited QDialog
-class KMAddrBookEditDlg: public QDialog
+
+class KMAddrBookEditDlg: public KDialogBase
 {
   Q_OBJECT
+
 public:
-  KMAddrBookEditDlg(KMAddrBook* addrBook, const char* caption=NULL);
+  KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent=0, 
+		     const char *name=0, bool modal=true );
+
   virtual ~KMAddrBookEditDlg();
 
 protected slots:
@@ -60,10 +65,8 @@ protected slots:
 
 protected:
   KMAddrBook* mAddrBook;
-  QGridLayout mGrid;
-  QListBox mListBox;
-  QLineEdit mEdtAddress;
-  QPushButton mBtnOk, mBtnCancel, mBtnAdd, mBtnRemove;
+  QListBox* mListBox;
+  QLineEdit* mEdtAddress;
   int mIndex;
 };
 

@@ -468,7 +468,7 @@ void KMMainWin::slotFilter()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg(kernel->addrBook());
+  KMAddrBookEditDlg dlg( kernel->addrBook(), this );
   dlg.exec();
 }
 
