@@ -133,7 +133,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       // popup on a not-mailto URL
       mReaderWin->urlOpenAction()->plug( menu );
       mReaderWin->urlSaveAsAction()->plug( menu );
-      mReaderWin->copyAction()->plug( menu );
+      mReaderWin->copyURLAction()->plug( menu );
       mReaderWin->addBookmarksAction()->plug( menu );
     }
   } else {

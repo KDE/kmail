@@ -212,6 +212,7 @@ public:
   KAction *addAddrBookAction() { return mAddAddrBookAction; }
   KAction *openAddrBookAction() { return mOpenAddrBookAction; }
   KAction *copyAction() { return mCopyAction; }
+  KAction *copyURLAction() { return mCopyURLAction; }
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
     KAction *addBookmarksAction() { return mAddBookmarksAction;}
@@ -480,7 +481,7 @@ protected:
   KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
       *mListFilterAction, *mViewSourceAction, *mPrintAction,
       *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-      *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction,
+      *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction;
 
   KToggleAction *mToggleFixFontAction;

@@ -1783,7 +1783,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
 	mMsgView->mailToReplyAction()->plug( menu );
 	mMsgView->mailToForwardAction()->plug( menu );
         menu->insertSeparator();
-    }
+      }
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
       mMsgView->copyAction()->plug( menu );
@@ -1791,7 +1791,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       // popup on a not-mailto URL
       mMsgView->urlOpenAction()->plug( menu );
       mMsgView->urlSaveAsAction()->plug( menu );
-      mMsgView->copyAction()->plug( menu );
+      mMsgView->copyURLAction()->plug( menu );
       mMsgView->addBookmarksAction()->plug( menu );
     }
   }
