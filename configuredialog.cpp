@@ -1959,6 +1959,14 @@ void ConfigureDialog::setupMimePage( void )
   config.setGroup("General");
 
   mMime.tagList->clear();
+  mMime.currentTagItem = 0;
+  mMime.tagNameEdit->clear();
+  mMime.tagValueEdit->clear();
+  mMime.tagNameEdit->setEnabled(false);
+  mMime.tagValueEdit->setEnabled(false);
+  mMime.tagNameLabel->setEnabled(false);
+  mMime.tagValueLabel->setEnabled(false);
+
   QListViewItem *top = 0;
 
   int count = config.readNumEntry( "mime-header-count", 0 );
