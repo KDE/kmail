@@ -8,6 +8,7 @@
 #include <kglobal.h>
 #include <kstddirs.h>
 #include <kiconloader.h>
+#include <kmimetype.h>
 #include <kdebug.h>
 
 #include "kmmsgbase.h"
@@ -221,12 +222,12 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::iconName(void) const
+const QString KMMessagePart::iconName(const QString& mimeType) const
 {
-  QString fileName;
-  fileName = KGlobal::instance()->iconLoader()->iconPath( mType.lower(), KIcon::Desktop );
-  if (fileName.isEmpty())
-    fileName = KGlobal::instance()->iconLoader()->iconPath( "unknown", KIcon::Desktop );
+  QString fileName = KMimeType::mimeType(mimeType.isEmpty() ?
+    (mType + "/" + mSubtype).lower() : mimeType.lower())->icon(QString(),FALSE);
+  fileName = KGlobal::instance()->iconLoader()->iconPath( fileName,
+    KIcon::Desktop );
   return fileName;
 }
 

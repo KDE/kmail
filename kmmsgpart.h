@@ -65,8 +65,8 @@ public:
 
   /** Tries to find a good icon for the 'Content-Type' by scanning
     the installed mimelnk files. Returns the found icon. If no matching
-    icon is found, "unknown.xpm" is returned. */
-  const QString iconName(void) const;
+    icon is found, the one for application/octet-stream is returned. */
+  const QString iconName(const QString &mimeType = QString::null) const;
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)

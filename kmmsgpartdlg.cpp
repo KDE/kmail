@@ -153,13 +153,15 @@ void KMMsgPartDlg::mimetypeChanged(const QString & name)
   } else {
     mCbxEncoding->setEnabled(mEdtMimetype->isEnabled());
   }
+  mIconPixmap.load(mMsgPart->iconName(name));
+  mLblIcon->setPixmap(mIconPixmap);
 }
 
 //-----------------------------------------------------------------------------
 void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 {
   unsigned int len, idx;
-  QString lenStr, iconName, enc;
+  QString lenStr, enc;
 
   mMsgPart = aMsgPart;
   assert(mMsgPart!=NULL);
@@ -180,11 +182,6 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
   if (len > 9999) lenStr.sprintf("%u KB", (len>>10));
   else lenStr.sprintf("%u bytes", len);
   mLblSize->setText(lenStr);
-
-  iconName = mMsgPart->iconName();
-  mIconPixmap.load(iconName);
-  mLblIcon->setPixmap(mIconPixmap);
-  mLblIcon->resize(mIconPixmap.size());
 }
 
 
