@@ -65,11 +65,11 @@ void KMFolderTreeItem::init()
   mNormalIcon = 0L; mUnreadIcon = 0L;
   if (!mFolder) return;
 
-  if (mFolder->protocol() == "imap")
+  if (mFolder->folderType() == KMFolderTypeImap)
     setProtocol(Imap);
-  else if (mFolder->protocol() == "cachedimap")
+  else if (mFolder->folderType() == KMFolderTypeCachedImap)
     setProtocol(CachedImap);
-  else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir")
+  else if (mFolder->folderType() == KMFolderTypeMbox || mFolder->folderType() == KMFolderTypeMaildir)
     setProtocol(Local);
   else
     setProtocol(NONE);
@@ -79,7 +79,7 @@ void KMFolderTreeItem::init()
   else if (mFolder->isSystemFolder())
   {
     if (mFolder == kernel->inboxFolder()
-        || mFolder->protocol() == "imap")
+        || mFolder->folderType() == KMFolderTypeImap)
       setType(Inbox);
     else if (mFolder == kernel->outboxFolder())
       setType(Outbox);
@@ -486,12 +486,8 @@ void KMFolderTree::reload(bool openFolders)
 	      fti,SLOT(slotRepaint()));
       if (isTotalActive() || isUnreadActive())
       {
-        // we want to be noticed of changes to update the unread/total columns
-        disconnect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-            this,SLOT(slotUpdateCounts(KMFolder*)));
-        connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-            this,SLOT(slotUpdateCounts(KMFolder*)));
-        if (fti->folder()->protocol() == "imap")
+
+        if (fti->folder()->folderType() == KMFolderTypeImap)
         {
           // imap-only
           disconnect(fti->folder(), SIGNAL(folderComplete(KMFolderImap*, bool)),
@@ -500,6 +496,11 @@ void KMFolderTree::reload(bool openFolders)
               this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
         } else {
           // others-only, imap doesn't need this because of the folderComplete-signal
+	  // we want to be noticed of changes to update the unread/total columns
+        disconnect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
+        connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+            this,SLOT(slotUpdateCounts(KMFolder*)));
           disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
               this,SLOT(slotUpdateCounts(KMFolder*)));
           connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
@@ -596,7 +597,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
         addDirectory( folder->child(), fti );
       // make sure that the folder-settings are correctly read on startup by calling listDirectory
       if (readIsListViewItemOpen(fti) &&
-         fti->folder() && fti->folder()->protocol() == "imap")
+         fti->folder() && fti->folder()->folderType() == KMFolderTypeImap)
         slotFolderExpanded(fti);
     }
   } // for-end
@@ -852,7 +853,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (fti) folder = fti->folder();
 
   if (mLastItem && mLastItem != fti && mLastItem->folder()
-     && (mLastItem->folder()->protocol() == "imap"))
+     && (mLastItem->folder()->folderType() == KMFolderTypeImap))
   {
     KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder());
     imapFolder->setSelected(FALSE);
@@ -873,7 +874,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   }
   else {
     emit folderSelected(folder);
-    if (folder->protocol() == "imap")
+    if (folder->folderType() == KMFolderTypeImap)
     {
       KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
       imap_folder->setSelected(TRUE);
@@ -945,7 +946,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                      kernel->folderMgr(), SLOT(compactAll()));
       folderMenu->insertItem(i18n("&Expire All Folders"),
 			     kernel->folderMgr(), SLOT(expireAll()));
-    } else if (fti->folder()->protocol() == "imap") {
+    } else if (fti->folder()->folderType() == KMFolderTypeImap) {
       folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check &Mail"),
         this,
         SLOT(slotCheckMail()));
@@ -955,7 +956,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
         folderMenu->insertItem(SmallIcon("mail_send"),
                                i18n("&Send Queued Messages"), mMainWidget,
                                SLOT(slotSendQueued()));
-    if (!fti->folder()->isSystemFolder() || fti->folder()->protocol() == "imap")
+    if (!fti->folder()->isSystemFolder() || fti->folder()->folderType() == KMFolderTypeImap)
     {
       folderMenu->insertItem(SmallIcon("folder_new"),
                              i18n("&New Subfolder..."), this,
@@ -1001,13 +1002,13 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     }
   }
   if (fti->folder() &&
-      (fti->folder()->protocol() == "imap" || fti->folder()->protocol() == "cachedimap" ))
+      (fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->protocol() == "cachedimap" ))
   {
     folderMenu->insertItem(SmallIcon("configure"),
         i18n("Subscription"), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
-    folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh"), mMainWidget, 
+    folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh"), mMainWidget,
             SLOT(slotRefreshFolder()));
 
   }
@@ -1379,7 +1380,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder() && fti->folder()->protocol() == "imap" &&
+  if (fti && fti->folder() && fti->folder()->folderType() == KMFolderTypeImap &&
       !fti->parent())
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
@@ -1398,7 +1399,7 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
   if (fti && fti->parent() == firstChild() && fti->folder()
-    && fti->folder()->protocol() == "imap")
+    && fti->folder()->folderType() == KMFolderTypeImap)
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
     folder->setSubfolderState(KMFolderImap::imapNoInformation);
@@ -1587,7 +1588,7 @@ void KMFolderTree::slotCheckMail()
     return;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
   KMFolder* folder = fti->folder();
-  if (folder && folder->protocol() == "imap")
+  if (folder && folder->folderType() == KMFolderTypeImap)
   {
     KMAccount* acct = static_cast<KMFolderImap*>(folder)->account();
     kernel->acctMgr()->singleCheckMail(acct, true);
