@@ -1294,16 +1294,14 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
           (node->name().upper() != "INBOX" || !mAccount->createInbox()) )
       {
         // This subfolder isn't present on the server
-        if( !f->uidValidity().isEmpty() ) {
-          // The folder have a uidValidity setting, so it has been
+        if( !f->imapPath().isEmpty()  ) {
+          // The folder has an imap path set, so it has been
           // on the server before. Delete it locally.
           toRemove.append( f->folder() );
-          kdDebug(5006) << node->name() << " isn't on the server. It has a uidvalidity -> delete it locally" << endl;
-        } else if ( f->noContent() ) { // separated only for better debug output
-          toRemove.append( f->folder() );
-          kdDebug(5006) << node->name() << " isn't on the server. NoContent is set -> delete it locally" << endl;
-        } else
-          kdDebug(5006) << node->name() << " isn't on the server. No uidvalidity, not NoContent -> keep it" << endl;
+          kdDebug(5006) << node->name() << " isn't on the server. It has an imapPath -> delete it locally" << endl;
+        } else { // shouldn't happen
+          kdDebug(5006) << node->name() << " isn't on the server, but has no imapPath. ERROR - why didn't createNewFolders create it?" << endl;
+        }
       } else { // folder both local and on server
         //kdDebug(5006) << node->name() << " is on the server." << endl;
       }
