@@ -60,6 +60,8 @@
 #include <kseparator.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
+#include <kstringvalidator.h>
+
 
 // Qt headers:
 #include <qregexp.h>
@@ -740,44 +742,35 @@ void IdentityPage::slotRenameIdentity()
 
   QString oldName = mIdentityCombo->currentText();
   QString message = i18n("Rename identity \"%1\" to").arg( oldName );
-  do {
-    QString newName = KLineEditDlg::getText( i18n("Rename identity"),
-			     message, oldName, &ok, this ).stripWhiteSpace();
 
-    if ( ok && newName != oldName ) {
-      if ( newName.isEmpty() ) {
-	// ###FIXME: prevent this error from happening in the first place...
-	KMessageBox::error( this, i18n("You must specify an identity name!") );
-	continue;
-      }
-      if ( mIdentities.names().contains( newName ) ) {
-	// ###FIXME: prevent this error from happening in the first place...
-	QString errorMessage =
-	  i18n("An identity named \"%1\" already exists!\n"
-	       "Please choose another name.").arg( newName );
-	KMessageBox::error( this, errorMessage );
-	continue;
-      }
+  KStringListValidator validator( mIdentities.names(), true /*rejecting*/ );
+  QString newName = KLineEditDlg::getText( i18n("Rename identity"),
+		 message, oldName, &ok, this, &validator ).stripWhiteSpace();
 
-      // change the name
-      int index = mIdentityCombo->currentItem();
-      assert( index < (int)mIdentities.count() );
-      IdentityEntry & entry = mIdentities[ index ];
-      assert( entry.identityName() == oldName );
-      entry.setIdentityName( newName );
-      
-      // resort the list:
-      mIdentities.sort();
+  if ( ok ) {
+    // these cases ahould be prevented by the validator we used above:
+    assert( newName != oldName );
+    assert( !newName.isEmpty() );
+    assert( !mIdentities.names().contains( newName ) );
 
-      // and update the view:
-      mActiveIdentity = newName;
-      QStringList identityNames = mIdentities.names();
-      mIdentityCombo->clear();
-      mIdentityCombo->insertStringList( identityNames );
-      mIdentityCombo->setCurrentItem( identityNames.findIndex( newName ) );
-      slotIdentitySelectorChanged();
-    }
-  } while ( false );
+    // change the name
+    int index = mIdentityCombo->currentItem();
+    assert( index < (int)mIdentities.count() );
+    IdentityEntry & entry = mIdentities[ index ];
+    assert( entry.identityName() == oldName );
+    entry.setIdentityName( newName );
+
+    // resort the list:
+    mIdentities.sort();
+
+    // and update the view:
+    mActiveIdentity = newName;
+    QStringList identityNames = mIdentities.names();
+    mIdentityCombo->clear();
+    mIdentityCombo->insertStringList( identityNames );
+    mIdentityCombo->setCurrentItem( identityNames.findIndex( newName ) );
+    slotIdentitySelectorChanged();
+  }
 }
 
 
