@@ -271,19 +271,12 @@ void KMPopHeadersViewItem::paintFocus(QPainter *, const QColorGroup &, const QRe
 {
 }
 
-int KMPopHeadersViewItem::compare(QListViewItem *i, int col, bool ascending)
+QString KMPopHeadersViewItem::key(int col, bool) const
 {
-	if(mParent->header()->label(col).compare(i18n("Size")) == 0)
-	{
-		// sort numeric
-		unsigned int thisSize = text(col).toUInt();
-		unsigned int thatSize = i->text(col).toUInt();
-		if(thisSize < thatSize) return -1;
-		if(thisSize == thatSize) return  0;
-		if(thisSize > thatSize) return  1;
-	}
-
-	return KListViewItem::compare(i, col, ascending);
+  if (col == 3) return KMMsgBase::skipKeyword(text(col).lower());
+  if (col == 5) return text(7);
+  if (col == 6) return QString("%1").arg(text(col), 10);
+  return text(col);
 }
 
 /////////////////////////////////////////
@@ -324,6 +317,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
   mFilteredHeaders->hide();
   vbl->addWidget(lowerBox);
 
+  mFilteredHeaders->header()->setResizeEnabled(false, 7);
+  mFilteredHeaders->setColumnWidth(7, 0);
 
   // fill the listviews with data from the headers
   KMPopHeaders *headers;
@@ -383,6 +378,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
       lvi->setText(5, KMHeaders::fancyDate(msg->date()));
       // set the size
       lvi->setText(6, QString("%1").arg(headers->header()->msgLength()));
+      // Date for sorting
+      lvi->setText(7, msg->dateIsoStr());
     }
   }
 
@@ -454,6 +451,8 @@ void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
         lvi->setText(5, KMHeaders::fancyDate(msg->date()));
         // set the size
         lvi->setText(6, QString("%1").arg(headers->header()->msgLength()));
+        // Date for sorting
+        lvi->setText(7, msg->dateIsoStr());
       }
     }
 

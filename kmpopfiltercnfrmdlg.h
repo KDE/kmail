@@ -64,7 +64,7 @@ public:
   ~KMPopHeadersViewItem();
   void check(KMPopFilterAction aAction);
   virtual void paintFocus(QPainter *, const QColorGroup & cg, const QRect &r);
-	virtual int compare(QListViewItem * i, int col, bool ascending);
+  virtual QString key(int col, bool ascending) const;
 protected:
   KMPopHeadersView *mParent;
   QMap<KMPopFilterAction, bool> mChecked;
