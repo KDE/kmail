@@ -1722,7 +1722,7 @@ void ConfigureDialog::setupAppearancePage( void )
 
   {
     KConfigGroupSaver saver(config, "Geometry");
-    state = config->readBoolEntry( "longFolderList", false );
+    state = config->readBoolEntry( "longFolderList", true );
     mAppearance.longFolderCheck->setChecked( state );
 
     state = config->readBoolEntry( "nestedMessages", false );
@@ -2007,7 +2007,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2034,7 +2034,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2060,7 +2060,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateLocalized->setChecked( true );
@@ -2072,7 +2072,7 @@ void ConfigureDialog::installProfile( void )
 
     mAppearance.customColorCheck->setChecked( false );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderCheck->setChecked( true );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.rdDateCtime->setChecked( true );
