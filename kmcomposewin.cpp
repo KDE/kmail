@@ -39,6 +39,8 @@ using KPIM::AddressesDialog;
 using KPIM::MailListDrag;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
+#include "attachmentcollector.h"
+#include "objecttreeparser.h"
 
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
@@ -1522,6 +1524,58 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
+  partNode * root = partNode::fromMessage( mMsg );
+
+  KMail::ObjectTreeParser otp; // all defaults are ok
+  otp.parseObjectTree( root );
+
+  KMail::AttachmentCollector ac;
+  ac.setDiveIntoEncryptions( true );
+  ac.setDiveIntoSignatures( true );
+  ac.setDiveIntoMessages( false );
+
+  ac.collectAttachmentsFrom( root );
+
+  for ( std::vector<partNode*>::const_iterator it = ac.attachments().begin() ; it != ac.attachments().end() ; ++it )
+    addAttach( new KMMessagePart( (*it)->msgPart() ) );
+
+  kdDebug(5006) << endl << endl << "TEXTUAL CONTENT: " << endl << otp.textualContent() << endl;
+  mEditor->setText( otp.textualContent() );
+
+  mCharset = otp.textualContentCharset();
+  if ( mCharset.isEmpty() )
+    mCharset = mMsg->charset();
+  if ( mCharset.isEmpty() )
+    mCharset = mDefCharset;
+  setCharset( mCharset );
+
+  if ( partNode * n = root->findType( DwMime::kTypeText, DwMime::kSubtypeHtml ) )
+    if ( partNode * p = n->parentNode() )
+      if ( p->hasType( DwMime::kTypeMultipart ) &&
+           p->hasSubType( DwMime::kSubtypeAlternative ) )
+        if ( mMsg->headerField( "X-KMail-Markup" ) == "true" )
+          toggleMarkup( true );
+
+  /* Handle the special case of non-mime mails */
+  if ( mMsg->numBodyParts() == 0 ) {
+    mCharset=mMsg->charset();
+    if ( mCharset.isEmpty() ||  mCharset == "default" )
+      mCharset = mDefCharset;
+
+    QCString bodyDecoded = mMsg->bodyDecoded();
+
+    if( allowDecryption )
+      decryptOrStripOffCleartextSignature( bodyDecoded );
+
+    const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+    if (codec) {
+      mEditor->setText(codec->toUnicode(bodyDecoded));
+    } else
+      mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
+  }
+
+
+#ifdef BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
   const int num = mMsg->numBodyParts();
   kdDebug(5006) << "KMComposeWin::setMsg() mMsg->numBodyParts="
                 << mMsg->numBodyParts() << endl;
@@ -1611,6 +1665,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   }
 
   setCharset(mCharset);
+#endif // BROKEN_FOR_OPAQUE_SIGNED_OR_ENCRYPTED_MAILS
 
   if( mAutoSign && mayAutoSign ) {
     //
