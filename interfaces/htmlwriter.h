@@ -50,8 +50,8 @@ namespace KMail {
    * @sect Async Mode
    *
    * In async mode, use @ref #begin() to initialize a session, then
-   * @ref #queue() some chunks of HTML code and finally end()
-   * the session by calling @ref #flush().
+   * @ref #queue() some chunks of HTML code and finally end the
+   * session by calling @ref #flush().
    *
    * Queued HTML code is fed to the html sink using a timer. For this
    * to work, control must return to the event loop so timer events
