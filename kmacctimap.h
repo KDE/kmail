@@ -149,7 +149,7 @@ public:
     QPtrList<KMMessage> msgList;
   };
   QMap<KIO::Job *, jobData> mapJobData;
-
+ 
   /**
    * Get the URL for the account
    */
@@ -164,7 +164,7 @@ public:
    * Update the progress bar
    */
   void displayProgress();
-
+ 
   /**
    * Kill all jobs related the the specified folder
    */
@@ -249,7 +249,7 @@ protected slots:
    * Send a NOOP command or log out when idle
    */
   void slotIdleTimeout();
-
+ 
   /**
    * Kills all jobs
    */
