@@ -124,7 +124,6 @@
   <Menu name="help">
    <text>&amp;Help</text>
    <Action name="help_kmail_welcomepage"/>
-   <Action name="help_show_tip"/>
   </Menu>
  </MenuBar>
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >

@@ -2409,11 +2409,7 @@ void KMMainWidget::setupActions()
 // 		      SLOT(slotCopySelectedText()), actionCollection(),
 //		      "kmail_copy" );
 
-//  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
-  (void) new KAction( KGuiItem( i18n("Tip of the &Day"), "idea",
-                                i18n("Show \"Tip of the Day\"") ),
-                      0, this, SLOT(slotShowTip()),
-                      actionCollection(), "help_show_tip" );
+  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 
   menutimer = new QTimer( this, "menutimer" );
   connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
