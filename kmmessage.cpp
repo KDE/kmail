@@ -1044,17 +1044,21 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
 #ifdef CHARSETS
-    if (charset!=""){
-         DwParameter *param=headers.ContentType().FirstParameter();
-	 while(param)
-	    if (param->Attribute()=="charset") break;
-	    else param=param->Next();
-	 if (!param){   
-            param=new DwParameter;
-            param->SetAttribute("charset");
-            headers.ContentType().AddParameter(param);
-	 }   
-         param->SetValue(charset);
+    if (!charset.isEmpty())
+    {
+      DwParameter *param=headers.ContentType().FirstParameter();
+      while(param)
+      {
+	if (param->Attribute()=="charset") break;
+	else param=param->Next();
+      }
+      if (!param)
+      {
+	param=new DwParameter;
+	param->SetAttribute("charset");
+	headers.ContentType().AddParameter(param);
+      }   
+      param->SetValue(charset);
     }
 #endif
   }
@@ -1100,7 +1104,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     headers.ContentType().SetTypeStr((const char*)type);
     headers.ContentType().SetSubtypeStr((const char*)subtype);
 #ifdef CHARSETS
-    if (charset != ""){
+    if (!charset.isEmpty()){
          DwParameter *param;
          param=new DwParameter;
          param->SetAttribute("charset");
