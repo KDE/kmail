@@ -71,7 +71,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   setMainWidget( hb );
   hb->setMinimumSize( hb->sizeHint() );
 
-  setResizeMode( KDialogBase::ResizeMinimum );
+  setInitialSize( hb->size(), true /* allow resizing */ );
 
 }
 
