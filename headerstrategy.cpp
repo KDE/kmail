@@ -31,13 +31,13 @@ namespace KMail {
 
   static const char * headerTable[] = {
     "date", // brief only
-    "subject", "from", // brief
-    "to", "cc", "bcc", // standard
+    "subject", "from", "cc", "bcc", // brief
+    "to", // standard
     "organisation", "organization", "reply-to", "date" // rich
   };
 
   static const char ** briefHeaders = &headerTable[0];
-  static const int numBriefHeaders = 3;
+  static const int numBriefHeaders = 5;
 
   static const char ** richHeaders = &headerTable[1];
   static const int numRichHeaders = sizeof headerTable / sizeof *headerTable - 1;
