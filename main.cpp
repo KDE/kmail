@@ -39,12 +39,13 @@
     "This program is covered by the GPL.\n\n"
     "Please send bugreports to taferner@kde.org";
 */
-const char *aboutText = 
+const char *aboutText =
   "KMail [" KMAIL_VERSION "] by\n\n"
   "Stefan Taferner <taferner@kde.org>,\n"
   "Don Sanders <don@sanders.org>,\n"
   "Waldo Bastian <bastian@kde.org>,\n"
-  "Andreas Gungl <Andreas.Gungle@osp-dd.de>,\n"
+  "Andreas Gungl <a.gungl@gmx.de>,\n"
+  "Michael Haeckel <michael@haeckel.net>,\n"
   "Lars Knoll <knoll@mpi-hd.mpg.de>,\n"
   "J. Nick Koston <bdraco@darkorb.net>,\n"
   "Daniel Naber <dnaber@mini.gt.owl.de>,\n"
@@ -52,14 +53,11 @@ const char *aboutText =
   "Espen Sand <espen@kde.org>,\n"
   "George Staikos <staikos@kde.org>,\n"
   "Mario Weilguni <mweilguni@sime.com>,\n"
-  "Robert D. Williams <rwilliams@kde.org>\n\n"
-  "based on the work of:\n"
-  "Lynx <lynx@topaz.hknet.com>,\n"
-  "Stephan Meyer <Stephan.Meyer@pobox.com>\n"
-  "and the above authors.\n\n"
+  "Robert D. Williams <rwilliams@kde.org>\n"
+  "Markus Wuebben <markus.wuebben@kde.org>\n\n"
   "Please send bugreports to kmail@kde.org";
 
-//static const char *description = I18N_NOOP("A KDE E-Mail client."); 
+//static const char *description = I18N_NOOP("A KDE E-Mail client.");
 static const char *description = aboutText;
 
 static KCmdLineOptions kmoptions[] =
@@ -93,8 +91,8 @@ static void signalHandler(int sigId)
   setSignalHandler(SIG_DFL);
   fprintf(stderr, "*** KMail got signal %d (Exiting)\n", sigId);
   // try to cleanup all windows
-  kernel->dumpDeadLetters(); 
-  ::exit(-1); // 
+  kernel->dumpDeadLetters();
+  ::exit(-1); //
 }
 
 // Crash recovery signal handler
@@ -190,8 +188,8 @@ int main(int argc, char *argv[])
   // a debugger. In gdb you can do this by typing "set args --nofork" before
   // typing "run".
 
-  KAboutData about("kmail", I18N_NOOP("KMail"), 
-                   KMAIL_VERSION, 
+  KAboutData about("kmail", I18N_NOOP("KMail"),
+                   KMAIL_VERSION,
                    description,
 		   KAboutData::License_GPL,
                    "(c) 1997-2000, The KMail developers" );
@@ -201,17 +199,17 @@ int main(int argc, char *argv[])
 
   if (!KMailApplication::start())
      exit(0);
-  
+
   KMailApplication app;
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
-  
+
   //local, do the init
   KMKernel kmailKernel;
   kmailKernel.init();
 
   // and session management
   kmailKernel.doSessionManagement();
-  
+
   // any dead letters?
   kmailKernel.recoverDeadLetters();
 
