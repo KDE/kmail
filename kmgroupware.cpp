@@ -985,9 +985,9 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
     }
   } else if( sMethod == "cancel" ) {
     if( type == vCalEvent ) {
-      prefix = i18n("The event %1 was cancelled").arg(sSummary);
+      prefix = i18n("The event %1 was canceled").arg(sSummary);
     } else if( type == vCalTodo ) {
-      prefix = i18n("The task %1 was cancelled").arg(sSummary);
+      prefix = i18n("The task %1 was canceled").arg(sSummary);
     }
   }
 

@@ -1660,7 +1660,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
               "<qt>Do you really want to delete the %n selected messages?<br>"
               "Once deleted, they cannot be restored!</qt>", msgList.count() ),
          i18n("Delete Messages"), i18n("De&lete"), "NoConfirmDelete") == KMessageBox::Cancel )
-    return;  // user cancelled the action
+    return;  // user canceled the action
 
   KMCommand *command = new KMMoveCommand( destFolder, msgList, this );
   command->start();

@@ -71,7 +71,7 @@ private slots:
   void slotMsgTransfered(KMMessage* msg);
   /** the KMImapJob is finished */
   void slotJobFinished();
-  /** the transfer was cancelled */
+  /** the transfer was canceled */
   void slotTransferCancelled();
 signals:
   void messagesTransfered(bool);

@@ -443,7 +443,7 @@ void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
   // This is the interesting case...
   if ( sOperator == "unless" ) { // meaning "and not", ie we need to...
     // ...invert the function (e.g. "equals" <-> "doesn't equal")
-    // We simply toggle the last bit (xor with 0x1)... This aasumes that
+    // We simply toggle the last bit (xor with 0x1)... This assumes that
     // KMSearchRule::Function's come in adjacent pairs of pros and cons
     KMSearchRule::Function func = last()->function();
     unsigned int intFunc = (unsigned int)func;

@@ -1904,7 +1904,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
           || ( ( doEncrypt == bEncrypt )  && ( doSign == bSign ) ) ) {
         // signed/encrypted body parts must be either QP or base64 encoded
         // Why not 7 bit? Because the LF->CRLF canonicalization would render
-        // e.g. 7 bit encoded shell scripts unusuable because of the CRs.
+        // e.g. 7 bit encoded shell scripts unusable because of the CRs.
         if( bSign || bEncrypt ) {
           QCString cte = attachPart->cteStr().lower();
           if( ( "8bit" == cte )

@@ -181,7 +181,7 @@ of which you have to reimplement at least the first two:
 For tabbed config pages, there exists a convenience class called
 TabbedConfigurationPage, which (as of this writing only offers the
 addTab() convenience method. It is planned to also provide
-reimplemenations of setup, dismiss, apply and installProfile that just
+reimplementations of setup, dismiss, apply and installProfile that just
 call the same functions for each tab.
 
 MDNs

@@ -383,7 +383,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     // Connect to the server (i.e. prepare the slave)
     ImapAccountBase::ConnectionState cs = mAccount->makeConnection();
-    if ( cs == ImapAccountBase::Error ) // cancelled by user, or slave can't start
+    if ( cs == ImapAccountBase::Error ) // canceled by user, or slave can't start
     {
         kdDebug(5006) << "makeConnection said Error, aborting." << endl;
         // We stop here. We're already in SYNC_STATE_INITIAL for the next time.

@@ -342,7 +342,7 @@ please visit http://webcvs.kde.org
 
 	* Pop: Fixed problems in pop authentication code.
 
-	* Pop: Enabled POP3 LAST command which was commited to
+	* Pop: Enabled POP3 LAST command which was committed to
 	kdesupport some time ago.
 
 1998-11-15  Alex Zepeda  <garbanzo@hooked.net>
@@ -394,7 +394,7 @@ please visit http://webcvs.kde.org
 	* Addressbook: finally fixed bug in not reading last line.
 	Thanks to all who reported!
 
-	* Replaced occurances of KTopLevelWidget with KTMainWindow.
+	* Replaced occurrences of KTopLevelWidget with KTMainWindow.
 
 1998-09-21  Markus Wuebben  <markus@office.DInet.de>
 

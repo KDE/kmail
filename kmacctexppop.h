@@ -173,7 +173,7 @@ protected slots:
 
   /**
    * Finished downloading the current kio job, either due to an error
-   * or because the job has been cancelled or because the complete message
+   * or because the job has been canceled or because the complete message
    * has been downloaded
    */
   void slotResult( KIO::Job* );

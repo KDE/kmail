@@ -261,7 +261,7 @@ public:
 
     int nodeId();  // node ids start at 1 (this is the top level root node)
 
-    partNode* findId( int id );  // returns the node wich has the given id (or 0, resp.)
+    partNode* findId( int id );  // returns the node which has the given id (or 0, resp.)
 
     partNode* findType( int type, int subType, bool deep=true, bool wide=true );
 
