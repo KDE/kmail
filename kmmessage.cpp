@@ -1826,19 +1826,27 @@ const QString KMMessage::stripEmailAddr(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::getEmailAddr(const QString& aStr)
 {
-  int i, j, len;
+  int a, i, j, len, found = 0;
+  QChar c;
   QString result;
-  char endCh = '>';
-
-  i = aStr.find('<');
-  if (i<0)
-  {
-    i = aStr.find('(');
-    endCh = ')';
+  // Find the '@' in the email address:
+  a = aStr.find('@');
+  if (a<0) return aStr;
+  // Loop backwards until we find '<', '(', ' ', or beginning of string.
+  for (i = a - 1; i >= 0; i--) {
+    c = aStr[i];
+    if (c == '<' || c == '(' || c == ' ') found = 1;
+    if (found) break;
   }
-  if (i<0) return aStr;
-  j = aStr.find(endCh,i+1);
-  if (j<0) return aStr;
+  // Reset found for next loop.
+  found = 0;
+  // Loop forwards until we find '>', ')', ' ', or end of string.
+  for (j = a + 1; j < aStr.length(); j++) {
+    c = aStr[j];
+    if (c == '>' || c == ')' || c == ' ') found = 1;
+    if (found) break;
+  }
+  // Calculate the length and return the result.
   len = j - (i + 1);
   result = aStr.mid(i+1,len);
   return result;
