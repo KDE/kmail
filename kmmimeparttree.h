@@ -22,6 +22,8 @@ public:
                   const char* name = 0 );
   virtual ~KMMimePartTree();
 
+  void correctSize( QListViewItem * item );
+
 protected slots:
   void itemClicked( QListViewItem* );
   void itemRightClicked( QListViewItem*, const QPoint& );
@@ -45,6 +47,7 @@ protected:
 protected:
   KMReaderWin* mReaderWin;
   KMMimePartTreeItem* mCurrentContextMenuItem;
+  int mSizeColumn;
 };
 
 class KMMimePartTreeItem :public QListViewItem
@@ -65,10 +68,14 @@ public:
                       bool revertOrder = false );
   partNode* node() const { return mPartNode; }
 
+  KIO::filesize_t origSize() const { return mOrigSize; }
+  void setOrigSize( KIO::filesize_t size ) { mOrigSize = size; }
+
 private:
   void setIconAndTextForType( const QString & mimetype );
 
   partNode* mPartNode;
+  KIO::filesize_t mOrigSize;
 };
 
 #endif // KMMIMEPARTTREE_H
