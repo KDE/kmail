@@ -37,6 +37,7 @@
 #include <qheader.h>
 #include <qlabel.h>
 #include <qlineedit.h>
+#include <qlistbox.h>
 #include <qmultilineedit.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
@@ -51,6 +52,7 @@
 #include <kfiledialog.h>
 #include <kfontdialog.h>
 #include <kiconloader.h>
+#include <klineeditdlg.h>
 #include <klistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -944,13 +946,16 @@ void ConfigureDialog::makeAppearancePage( void )
 
 void ConfigureDialog::makeComposerPage( void )
 {
-  QFrame *page = addPage( i18n("Composer"),
+   QVBox *vbox = addVBoxPage( i18n("Composer"),
 			  i18n("Phrases and general behavior"),
-    KGlobal::instance()->iconLoader()->loadIcon( "edit", KIcon::NoGroup,
-    KIcon::SizeMedium ));                                                       
-  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
-  mComposer.pageIndex = pageIndex(page);
+      KGlobal::instance()->iconLoader()->loadIcon( "edit", KIcon::NoGroup,
+      KIcon::SizeMedium ));
+  QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
+  mComposer.pageIndex = pageIndex(vbox);
 
+  QWidget *page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("General") );
+  QVBoxLayout *topLevel = new QVBoxLayout( page, spacingHint() );
   QGroupBox *group = new QGroupBox(i18n("Phrases"), page );
   topLevel->addWidget( group );
 
@@ -1023,6 +1028,84 @@ void ConfigureDialog::makeComposerPage( void )
   hlay->addStretch(10);
 
   topLevel->addStretch(10);
+
+  //second (subject) page
+  QWidget *subjectPage = new QWidget( tabWidget );
+  tabWidget->addTab( subjectPage, i18n("Subject") );
+  QVBoxLayout *topLevel2 = new QVBoxLayout( subjectPage, spacingHint() );
+
+  QGroupBox *replyGroup = new QGroupBox(i18n("Reply subject prefixes"), subjectPage );
+  topLevel2->addWidget( replyGroup );
+
+  QGridLayout *glay2 = new QGridLayout( replyGroup, 6, 3, spacingHint() );
+  glay2->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  glay2->setColStretch( 2, 10 );
+
+  label = new QLabel( replyGroup );
+  label->setText(i18n( "Recognize the following prefixes (matching is case-insensitive)"));
+  glay2->addMultiCellWidget( label, 1, 1, 0, 2 );
+
+  mComposer.replyListBox = new QListBox( replyGroup, "prefixList" );
+  glay2->addMultiCellWidget(mComposer.replyListBox, 2, 4, 0, 0);
+  connect( mComposer.replyListBox, SIGNAL(selectionChanged ()),
+	   this, SLOT(slotReplyPrefixSelected()) );
+	
+  mComposer.addReplyPrefixButton =
+     new QPushButton( i18n("Add..."), replyGroup );
+  mComposer.addReplyPrefixButton->setAutoDefault( false );
+  connect( mComposer.addReplyPrefixButton, SIGNAL(clicked()),
+  	   this, SLOT(slotAddReplyPrefix()) );
+  glay2->addWidget( mComposer.addReplyPrefixButton, 2, 1 );
+
+  mComposer.removeReplyPrefixButton =
+     new QPushButton( i18n("Remove"), replyGroup );
+  mComposer.removeReplyPrefixButton->setAutoDefault( false );
+  mComposer.removeReplyPrefixButton->setEnabled( false );
+  connect( mComposer.removeReplyPrefixButton, SIGNAL(clicked()),
+  	   this, SLOT(slotRemoveSelReplyPrefix()) );
+  glay2->addWidget( mComposer.removeReplyPrefixButton, 3, 1 );
+
+  mComposer.replaceReplyPrefixCheck =
+     new QCheckBox( i18n("Replace recognized prefix with Re:"), replyGroup );
+  glay2->addMultiCellWidget( mComposer.replaceReplyPrefixCheck, 5, 5, 0, 2);
+
+  //forward group
+  QGroupBox *forwardGroup = new QGroupBox(i18n("Forward subject prefixes"), subjectPage );
+  topLevel2->addWidget( forwardGroup );
+
+  QGridLayout *glay3 = new QGridLayout( forwardGroup, 6, 3, spacingHint() );
+  glay3->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  glay3->setColStretch( 2, 10 );
+
+  label = new QLabel( forwardGroup );
+  label->setText(i18n( "Recognize the following prefixes (matching is case-insensitive)"));
+  glay3->addMultiCellWidget( label, 1, 1, 0, 2 );
+
+  mComposer.forwardListBox = new QListBox( forwardGroup, "prefixList" );
+  glay3->addMultiCellWidget(mComposer.forwardListBox, 2, 4, 0, 0);
+  connect( mComposer.forwardListBox, SIGNAL(selectionChanged ()),
+	   this, SLOT(slotForwardPrefixSelected()) );
+
+  mComposer.addForwardPrefixButton =
+     new QPushButton( i18n("Add..."), forwardGroup );
+  mComposer.addForwardPrefixButton->setAutoDefault( false );
+  connect( mComposer.addForwardPrefixButton, SIGNAL(clicked()),
+  	   this, SLOT(slotAddForwardPrefix()) );
+  glay3->addWidget( mComposer.addForwardPrefixButton, 2, 1 );
+
+  mComposer.removeForwardPrefixButton =
+     new QPushButton( i18n("Remove"), forwardGroup );
+  mComposer.removeForwardPrefixButton->setAutoDefault( false );
+  mComposer.removeForwardPrefixButton->setEnabled( false );
+  connect( mComposer.removeForwardPrefixButton, SIGNAL(clicked()),
+  	   this, SLOT(slotRemoveSelForwardPrefix()) );
+  glay3->addWidget( mComposer.removeForwardPrefixButton, 3, 1 );
+
+  mComposer.replaceForwardPrefixCheck =
+     new QCheckBox( i18n("Replace recognized prefix with Fwd:"), forwardGroup );
+  glay3->addMultiCellWidget( mComposer.replaceForwardPrefixCheck, 5, 5, 0, 2);
+
+  topLevel2->addStretch(10);
 }
 
 
@@ -1407,7 +1490,24 @@ void ConfigureDialog::setupComposerPage( void )
 
   config.setGroup("Composer");
 
-  bool state = stricmp( config.readEntry("signature"), "auto" ) == 0;
+  // prefixes
+  QStringList prefixList = config.readListEntry("reply-prefixes", ',');
+  if (prefixList.count() == 0)
+    prefixList.append("Re:");
+  mComposer.replyListBox->clear();
+  mComposer.replyListBox->insertStringList(prefixList);
+  bool state = config.readBoolEntry("replace-reply-prefix", true);
+  mComposer.replaceReplyPrefixCheck->setChecked( state );
+
+  prefixList = config.readListEntry("forward-prefixes", ',');
+  if (prefixList.count() == 0)
+    prefixList.append("Fwd:");
+  mComposer.forwardListBox->clear();
+  mComposer.forwardListBox->insertStringList(prefixList);
+  state = config.readBoolEntry("replace-forward-prefix", true);
+  mComposer.replaceForwardPrefixCheck->setChecked( state );
+
+  state = stricmp( config.readEntry("signature"), "auto" ) == 0;
   mComposer.autoAppSignFileCheck->setChecked( state );
 
   state = config.readBoolEntry( "smart-quote", true );
@@ -1784,6 +1884,23 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry("reply-current-language", currentNr);
 
     config.setGroup("Composer");
+
+    int prefixCount = mComposer.replyListBox->count();
+    QStringList prefixList;
+    int j;
+    for (j = 0; j < prefixCount; j++)
+      prefixList.append( mComposer.replyListBox->item( j )->text() );
+    config.writeEntry("reply-prefixes", prefixList);
+    config.writeEntry("replace-reply-prefix",
+                                mComposer.replaceReplyPrefixCheck->isChecked() );
+    prefixList.clear();
+    prefixCount = mComposer.forwardListBox->count();
+    for (j = 0; j < prefixCount; j++)
+      prefixList.append( mComposer.forwardListBox->item( j )->text() );
+    config.writeEntry("forward-prefixes", prefixList);
+    config.writeEntry("replace-forward-prefix",
+                            mComposer.replaceForwardPrefixCheck->isChecked() );
+
     bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
     config.writeEntry("signature", autoSignature ? "auto" : "manual" );
     config.writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
@@ -2582,6 +2699,54 @@ void ConfigureDialog::slotLanguageChanged( const QString& )
 void ConfigureDialog::slotWordWrapSelectionChanged( void )
 {
   mComposer.wrapColumnSpin->setEnabled(mComposer.wordWrapCheck->isChecked());
+}
+
+//
+// Composer page
+//
+
+void ConfigureDialog::slotAddReplyPrefix( void )
+{
+  KLineEditDlg *linedlg = new KLineEditDlg(i18n("Enter new reply prefix"), "", this);
+  if( linedlg->exec() == QDialog::Accepted )
+  {
+    mComposer.replyListBox->insertItem( linedlg->text() );
+  }
+  delete linedlg;
+}
+
+void ConfigureDialog::slotRemoveSelReplyPrefix( void )
+{
+  int crItem = mComposer.replyListBox->currentItem();
+  if( crItem != -1 )
+    mComposer.replyListBox->removeItem( crItem );
+}
+
+void ConfigureDialog::slotReplyPrefixSelected( void )
+{
+  mComposer.removeReplyPrefixButton->setEnabled( true );
+}
+
+void ConfigureDialog::slotAddForwardPrefix( void )
+{
+  KLineEditDlg *linedlg = new KLineEditDlg(i18n("Enter new forward prefix"), "", this);
+  if( linedlg->exec() == QDialog::Accepted )
+  {
+    mComposer.forwardListBox->insertItem( linedlg->text() );
+  }
+  delete linedlg;
+}
+
+void ConfigureDialog::slotRemoveSelForwardPrefix( void )
+{
+  int crItem = mComposer.forwardListBox->currentItem();
+  if( crItem != -1 )
+    mComposer.forwardListBox->removeItem( crItem );
+}
+
+void ConfigureDialog::slotForwardPrefixSelected( void )
+{
+  mComposer.removeForwardPrefixButton->setEnabled( true );
 }
 
 

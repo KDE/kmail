@@ -49,9 +49,9 @@ static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix;
+static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix;
 static int sWrapCol;
-static QStringList sReplySubjPrefixes;
+static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 
 QString KMMessage::sForwardStr = "";
 int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
@@ -924,9 +924,30 @@ KMMessage* KMMessage::createForward(void)
     }
   }
 
-  if (strnicmp(subject(), "Fwd:", 4)!=0)
+  QStringList::Iterator it;
+  bool recognized = false;
+  for (it = sForwardSubjPrefixes.begin(); !recognized && (it != sForwardSubjPrefixes.end()); ++it)
+  {
+    QString prefix = subject().left((*it).length());
+    if (prefix.lower() == (*it).lower()) //recognized
+    {
+      if (!sReplaceForwSubjPrefix || (prefix == "Fwd:"))
+        msg->setSubject(subject());
+      else
+      {
+        //replace recognized prefix with "Fwd: "
+        //handle crappy subjects Fwd:  blah blah (note double space)
+        int subjStart = (*it).length();
+        while (subject()[subjStart].isSpace()) //strip only from beginning
+          subjStart++;
+        msg->setSubject("Fwd: " + subject().mid(subjStart,
+                                   subject().length() - subjStart));
+      }
+      recognized = true;
+    }
+  }
+  if (!recognized)
     msg->setSubject("Fwd: " + subject());
-  else msg->setSubject(subject());
   setStatus(KMMsgStatusForwarded);
 
   return msg;
@@ -2021,11 +2042,15 @@ void KMMessage::readConfig(void)
 //      break;
     }
   }
-  config->setGroup("KMMessage");
+  config->setGroup("Composer");
   sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
   if (sReplySubjPrefixes.count() == 0)
     sReplySubjPrefixes.append("Re:");
-  sReplaceSubjPrefix = config->readBoolEntry("replace-prefix", true);
+  sReplaceSubjPrefix = config->readBoolEntry("replace-reply-prefix", true);
+  sForwardSubjPrefixes = config->readListEntry("forward-prefixes", ',');
+  if (sForwardSubjPrefixes.count() == 0)
+    sForwardSubjPrefixes.append("Fwd:");
+  sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
 
   config->setGroup("Reader");
   sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);

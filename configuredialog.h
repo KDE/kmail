@@ -320,6 +320,14 @@ class ConfigureDialog : public KDialogBase
       KIntNumInput *wrapColumnSpin;
       LanguageItem *LanguageList;
       LanguageItem *CurrentLanguage;
+      QListBox *replyListBox;
+      QPushButton *addReplyPrefixButton;
+      QPushButton *removeReplyPrefixButton;
+      QCheckBox *replaceReplyPrefixCheck;
+      QListBox *forwardListBox;
+      QPushButton *addForwardPrefixButton;
+      QPushButton *removeForwardPrefixButton;
+      QCheckBox *replaceForwardPrefixCheck;
     };
     struct MimeWidget
     {
@@ -436,6 +444,12 @@ class ConfigureDialog : public KDialogBase
     void slotLanguageChanged( const QString& );
     void slotAddNewLanguage( const QString& );
     void slotWordWrapSelectionChanged( void );
+    void slotAddReplyPrefix( void );
+    void slotRemoveSelReplyPrefix( void );
+    void slotReplyPrefixSelected( void );
+    void slotAddForwardPrefix( void );
+    void slotRemoveSelForwardPrefix( void );
+    void slotForwardPrefixSelected( void );
     void slotMimeHeaderSelectionChanged( void );
     void slotMimeHeaderNameChanged( const QString &text );
     void slotMimeHeaderValueChanged( const QString &text );
