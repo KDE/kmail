@@ -139,7 +139,6 @@ void KMServerTest::slotResult(KIO::Job *job)
 void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   const QString &errorText)
 {
-  kdDebug() << k_funcinfo << error << endl;
   if (aSlave != mSlave) return;
   if (error != KIO::ERR_SLAVE_DIED && mSlave)
   {
