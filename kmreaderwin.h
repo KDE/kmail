@@ -442,11 +442,12 @@ protected:
   unsigned long mLastSerNum;
   KMMsgStatus mLastStatus;
 
-  int fntSize;
+  int fontSize() const;
+  QString bodyFontFamily() const;
+
   bool mUseFixedFont;
   bool mPrinting;
   bool mIsFirstTextPart;
-  QString mBodyFamily;
   QColor c1, c2, c3, c4;
   // colors for PGP (Frame, Header, Body)
   QColor cPgpOk1F, cPgpOk1H, cPgpOk1B,

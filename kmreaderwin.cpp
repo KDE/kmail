@@ -832,9 +832,7 @@ void KMReaderWin::readConfig(void)
   else {
     setFont(KGlobalSettings::generalFont());
   }
-  mBodyFamily = (mUseFixedFont) ? mFixedFont.family() : mBodyFont.family();
-  fntSize = (mUseFixedFont) ? mFixedFont.pointSize() : mBodyFont.pointSize();
-  mViewer->setStandardFont(mBodyFamily);
+  mViewer->setStandardFont( bodyFontFamily() );
   }
 
   {
@@ -1180,7 +1178,7 @@ void KMReaderWin::displayAboutPage()
   } else {
     info = info.arg( QString::null );
   }
-  mViewer->write(content.arg(pointsToPixel(fntSize)).arg(info));
+  mViewer->write(content.arg(pointsToPixel( fontSize() )).arg(info));
   mViewer->end();
 }
 
@@ -1326,10 +1324,10 @@ void KMReaderWin::parseMsg(void)
 		      "<style type=\"text/css\">" +
     ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; "
                            "color: #000000; background-color: #FFFFFF; }\n")
-        .arg( mBodyFamily ).arg( fntSize )
+        .arg( bodyFontFamily() ).arg( fontSize() )
       : QString("body { font-family: \"%1\"; font-size: %2px; "
         "color: %3; background-color: %4; }\n")
-        .arg( mBodyFamily ).arg( pointsToPixel(fntSize) )
+        .arg( bodyFontFamily() ).arg( pointsToPixel( fontSize() ) )
         .arg( mPrinting ? QString("#000000") : c1.name() )
         .arg( mPrinting ? QString("#FFFFFF") : c4.name() ) ) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
@@ -2890,9 +2888,7 @@ void KMReaderWin::slotFind()
 void KMReaderWin::slotToggleFixedFont()
 {
   mUseFixedFont = !mUseFixedFont;
-  mBodyFamily = (mUseFixedFont) ? mFixedFont.family() : mBodyFont.family();
-  fntSize = (mUseFixedFont) ? mFixedFont.pointSize() : mBodyFont.pointSize();
-  mViewer->setStandardFont(mBodyFamily);
+  mViewer->setStandardFont( bodyFontFamily() );
   update(true);
 }
 
@@ -3565,6 +3561,15 @@ void KMReaderWin::slotSaveMsg()
   else
     saveCommand->start();
 }
+
+int KMReaderWin::fontSize() const {
+  return mUseFixedFont ? mFixedFont.pointSize() : mBodyFont.pointSize() ;
+}
+
+QString KMReaderWin::bodyFontFamily() const {
+  return mUseFixedFont ? mFixedFont.family() : mBodyFont.family();
+}
+
 
 //-----------------------------------------------------------------------------
 #include "kmreaderwin.moc"
