@@ -54,7 +54,7 @@ FilterLog::FilterLog()
   mCurrentLogSize = 0;
   mAllowedTypes =  meta | patternDesc | ruleResult | 
                    patternResult | appliedAction;
-};
+}
 
 
 FilterLog::~FilterLog()
@@ -95,7 +95,7 @@ void FilterLog::setMaxLogSize( long size )
   mMaxLogSize = size; 
   emit logStateChanged();
   checkLogSize(); 
-};
+}
 
       
 void FilterLog::dump()
