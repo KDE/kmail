@@ -1111,15 +1111,14 @@ void KMHeaders::msgAdded(int id)
   /* Create a new KMSortCacheItem to be used for threading. */
   KMSortCacheItem *sci = new KMSortCacheItem;
   sci->setId(id);
-  // make sure the id and subject dicts grow, if necessary
-  if (mSortCacheItems.count() == (uint)mFolder->count()
-      || mSortCacheItems.count() == 0) {
-    kdDebug (5006) << "KMHeaders::msgAdded: Resizing id and subject trees." << endl;
-    mSortCacheItems.resize(mFolder->count()*2);
-    mSubjectLists.resize(mFolder->count()*2);
-  }
-
   if (isThreaded()) {
+    // make sure the id and subject dicts grow, if necessary
+    if (mSortCacheItems.count() == (uint)mFolder->count()
+        || mSortCacheItems.count() == 0) {
+      kdDebug (5006) << "KMHeaders::msgAdded: Resizing id and subject trees." << endl;
+      mSortCacheItems.resize(mFolder->count()*2);
+      mSubjectLists.resize(mFolder->count()*2);
+    }
     QString msgId = mFolder->getMsgBase(id)->msgIdMD5();
     if (msgId.isNull())
       msgId = "";
@@ -1240,8 +1239,8 @@ void KMHeaders::msgAdded(int id)
     // o/` ... my buddy and me .. o/`
     hi->setSortCacheItem(sci);
     sci->setItem(hi);
-  }
 
+  }
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
     KListView::setSorting(mSortCol, !mSortDescending );
@@ -1255,7 +1254,6 @@ void KMHeaders::msgAdded(int id)
     setSelected( hi, true );
     setCurrentItem( firstChild() );
   }
-  ensureCurrentItemVisible();
 
   END_TIMER(msgAdded);
   SHOW_TIMER(msgAdded);
@@ -1282,12 +1280,12 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   }
 
   mItems.resize( mItems.size() - 1 );
-  if ( !msgId.isEmpty() && mSortCacheItems[msgId] ) {
-    if (mSortCacheItems[msgId] == removedItem->sortCacheItem())
-      mSortCacheItems.remove(msgId);
-  }
 
   if (isThreaded() && mFolder->count()) {
+    if ( !msgId.isEmpty() && mSortCacheItems[msgId] ) {
+      if (mSortCacheItems[msgId] == removedItem->sortCacheItem())
+        mSortCacheItems.remove(msgId);
+    }
     // Remove the message from the list of potential parents for threading by
     // subject.
     if (mSubjThreading && mSubjectLists[strippedSubjMD5])
