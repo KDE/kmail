@@ -1177,8 +1177,14 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardMsg()
 {
-  KMCommand *command =
-    new KMForwardCommand( this, *mHeaders->selectedMsgs(), mFolder->identity() );
+  KMMessageList* selected = mHeaders->selectedMsgs();
+  KMCommand *command = 0L;
+  if(selected && !selected->isEmpty()) {
+    command = new KMForwardCommand( this, *selected, mFolder->identity() );
+  } else {
+    command = new KMForwardCommand( this, mHeaders->currentMsg(), mFolder->identity() );
+  }
+    
   command->start();
 }
 
@@ -1186,8 +1192,14 @@ void KMMainWidget::slotForwardMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotForwardAttachedMsg()
 {
-  KMCommand *command =
-    new KMForwardAttachedCommand( this, *mHeaders->selectedMsgs(), mFolder->identity() );
+  KMMessageList* selected = mHeaders->selectedMsgs();
+  KMCommand *command = 0L;
+  if(selected && !selected->isEmpty()) {
+    command = new KMForwardAttachedCommand( this, *selected, mFolder->identity() );
+  } else {
+    command = new KMForwardAttachedCommand( this, mHeaders->currentMsg(), mFolder->identity() );
+  }
+    
   command->start();
 }
 
