@@ -289,7 +289,11 @@ namespace KMail {
       mProgressEnabled = !mapJobData.isEmpty();
       if ( !mProgressItem ) {
         mProgressItem = ProgressManager::createProgressItem(
-          "Account" + name(), i18n("Data transmission: " ) + name() );
+          "Account" + name(),
+          i18n("Data transmission: " ) + name(),
+          QString::null,
+          true, // can be cancelled
+          useSSL() || useTLS() );
         connect ( mProgressItem,
                   SIGNAL( progressItemCanceled( ProgressItem *) ),
                   ProgressManager::instance(),

@@ -1594,6 +1594,7 @@ void KMMoveCommand::execute()
   KCursorSaver busy(KBusyPtr::busy());
 
   // TODO connect cancel
+  // TODO set SSL state according to sourceand destfolder connection?
   mProgressItem =
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),

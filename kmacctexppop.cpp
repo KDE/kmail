@@ -322,7 +322,8 @@ void KMAcctExpPop::startJob() {
     "MailCheck" + mName,
     mName,
     i18n("Preparing transmission from \"%1\"...").arg(mName),
-    true);
+    true, // can be canceled
+    useSSL() || useTLS() );
   connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
            this, SLOT( slotAbortRequested() ) );
 

@@ -54,6 +54,7 @@ class QFrame;
 
 namespace KMail {
 class TransactionItem;
+class SSLLabel;
 
 class TransactionItemView : public QScrollView {
   Q_OBJECT
@@ -94,6 +95,7 @@ public:
   void setProgress( int progress );
   void setLabel( const QString& );
   void setStatus( const QString& );
+  void setCrypto( bool );
 
   ProgressItem* item() const { return mItem; }
 
@@ -112,6 +114,7 @@ protected:
   QLabel*       mItemLabel;
   QLabel*       mItemStatus;
   QFrame*       mFrame;
+  SSLLabel*     mSSLLabel;
   ProgressItem* mItem;
 };
 
@@ -131,6 +134,7 @@ protected slots:
   void slotTransactionProgress( ProgressItem *item, unsigned int progress );
   void slotTransactionStatus( ProgressItem *item, const QString& );
   void slotTransactionLabel( ProgressItem *item, const QString& );
+  void slotTransactionUsesCrypto( ProgressItem *item, bool );
 
   void slotHide();
 

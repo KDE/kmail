@@ -33,6 +33,7 @@
 #include <config.h>
 #endif
 
+#include <qapplication.h>
 #include <qlayout.h>
 #include <qprogressbar.h>
 #include <qtimer.h>
@@ -51,8 +52,10 @@
 
 #include "progressdialog.h"
 #include "progressmanager.h"
+#include "ssllabel.h"
 #include "kmmainwidget.h"
-#include <qapplication.h>
+
+
 
 using KMail::ProgressItem;
 using KMail::ProgressManager;
@@ -153,7 +156,6 @@ TransactionItem::TransactionItem( QWidget* parent,
   mFrame->show();
   setStretchFactor( mFrame, 3 );
 
-
   QHBox *h = new QHBox( this );
   h->setSpacing( 5 );
 
@@ -167,7 +169,13 @@ TransactionItem::TransactionItem( QWidget* parent,
     connect ( mCancelButton, SIGNAL( clicked() ),
               this, SLOT( slotItemCanceled() ));
   }
-  mItemStatus =  new QLabel( item->status(), this );
+  h = new QHBox( this );
+  h->setSpacing( 5 );
+  h->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
+  mSSLLabel = new SSLLabel( h );
+  mSSLLabel->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+  mItemStatus =  new QLabel( item->status(), h );
+  setCrypto( item->usesCrypto() );
   if( first ) hideHLine();
 }
 
@@ -193,6 +201,16 @@ void TransactionItem::setLabel( const QString& label )
 void TransactionItem::setStatus( const QString& status )
 {
   mItemStatus->setText( status );
+}
+
+void TransactionItem::setCrypto( bool on )
+{
+  if (on)
+    mSSLLabel->setEncrypted( true );
+  else
+    mSSLLabel->setEncrypted( false );
+
+  mSSLLabel->setState( mSSLLabel->lastState() );
 }
 
 void TransactionItem::slotItemCanceled()
@@ -245,6 +263,8 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, 
               this, SLOT( slotTransactionStatus( ProgressItem*, const QString& ) ) );
     connect ( pm, SIGNAL( progressItemLabel( ProgressItem*, const QString& ) ),
               this, SLOT( slotTransactionLabel( ProgressItem*, const QString& ) ) );
+    connect ( pm, SIGNAL( progressItemUsesCrypto( ProgressItem*, bool ) ),
+              this, SLOT( slotTransactionUsesCrypto( ProgressItem*, bool ) ) );
 }
 
 void ProgressDialog::closeEvent( QCloseEvent* e )
@@ -321,6 +341,16 @@ void ProgressDialog::slotTransactionLabel( ProgressItem *item,
    if ( mTransactionsToListviewItems.contains( item ) ) {
      TransactionItem *ti = mTransactionsToListviewItems[ item ];
      ti->setLabel( label );
+   }
+}
+
+
+void ProgressDialog::slotTransactionUsesCrypto( ProgressItem *item,
+                                                bool value )
+{
+   if ( mTransactionsToListviewItems.contains( item ) ) {
+     TransactionItem *ti = mTransactionsToListviewItems[ item ];
+     ti->setCrypto( value );
    }
 }
 

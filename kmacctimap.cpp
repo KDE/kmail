@@ -248,8 +248,12 @@ void KMAcctImap::processNewMail(bool interactive)
   }
   // Ok, we're really checking, get a progress item;
   mMailCheckProgressItem =
-    ProgressManager::createProgressItem( "MailCheckAccount" + name(),
-          i18n("Checking account: " ) + name() );
+    ProgressManager::createProgressItem(
+        "MailCheckAccount" + name(),
+        i18n("Checking account: " ) + name(),
+        QString::null, // status
+        true, // can be canceled
+        useSSL() || useTLS() );
 
   mMailCheckProgressItem->setTotalItems( mMailCheckFolders.count() );
   connect ( mMailCheckProgressItem,

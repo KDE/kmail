@@ -88,6 +88,19 @@ class ProgressItem : public QObject
     bool canBeCanceled() const { return mCanBeCanceled; }
 
     /**
+     * @return Whether this item uses secure communication
+     * (Account uses ssl, for example.).
+     */
+    bool usesCrypto() const { return mUsesCrypto; }
+
+    /**
+     * Set whether this item uses crypted communication, so listeners
+     * can display a nice crypto icon.
+     * @param v The value.
+     */
+    void setUsesCrypto( bool v );
+
+    /**
      * @return The current progress value of this item in percent.
      */
     unsigned int progress() const { return mProgress; }
@@ -176,6 +189,13 @@ signals:
      * @param  The new label.
      */
     void progressItemLabel( ProgressItem*, const QString& );
+    /**
+     * Emitted when the crypto status of an item changed. Should be used by
+     * progress dialogs to update the crypto indicator of an item.
+     * @param  The updated item.
+     * @param  The new state.
+     */
+    void progressItemUsesCrypto( ProgressItem*, bool );
 
   protected:
     /* Only to be used by our good friend the ProgressManager */
@@ -183,7 +203,8 @@ signals:
                              const QString& id,
                              const QString& label,
                              const QString& status,
-                             bool isCancellable );
+                             bool isCancellable,
+                             bool usesCrypto );
     virtual ~ProgressItem();
 
 
@@ -199,6 +220,7 @@ signals:
     unsigned int mCompleted;
     bool mWaitingForKids;
     bool mCanceled;
+    bool mUsesCrypto;
 };
 
 /**
@@ -252,6 +274,7 @@ class ProgressManager : public QObject
      * @param label The text to be displayed by progress handlers
      * @param status Additional text to be displayed for the item.
      * @param canBeCanceled can the user cancel this operation?
+     * @param usesCrypto does the operation use secure transports (SSL)
      * Cancelling the parent will cancel the children as well (if they can be
      * cancelled) and ongoing children prevent parents from finishing.
      * @return The ProgressItem representing the operation.
@@ -260,9 +283,10 @@ class ProgressManager : public QObject
                                                const QString& id,
                                                const QString& label,
                                                const QString& status = QString::null,
-                                               bool canBeCanceled = true ) {
+                                               bool canBeCanceled = true,
+                                               bool usesCrypto = false ) {
        return instance()->createProgressItemImpl( parent, id, label, status,
-                                                  canBeCanceled );
+                                                  canBeCanceled, usesCrypto );
      }
 
      /**
@@ -273,9 +297,10 @@ class ProgressManager : public QObject
                                                const QString& id,
                                                const QString& label,
                                                const QString& status = QString::null,
-                                               bool canBeCanceled = true ) {
+                                               bool canBeCanceled = true,
+                                               bool usesCrypto = false ) {
        return instance()->createProgressItemImpl( parent, id, label,
-                                                 status, canBeCanceled );
+                                                 status, canBeCanceled, usesCrypto );
      }
 
      /**
@@ -284,8 +309,10 @@ class ProgressManager : public QObject
      static ProgressItem * createProgressItem( const QString& id,
                                                const QString& label,
                                                const QString& status = QString::null,
-                                               bool canBeCanceled = true ) {
-       return instance()->createProgressItemImpl( 0, id, label, status, canBeCanceled );
+                                               bool canBeCanceled = true,
+                                               bool usesCrypto = false ) {
+       return instance()->createProgressItemImpl( 0, id, label, status,
+                                                  canBeCanceled, usesCrypto );
      }
 
     /**
@@ -306,6 +333,8 @@ class ProgressManager : public QObject
     void progressItemStatus( ProgressItem*, const QString& );
     /** @see ProgressItem::progressItemLabel() */
     void progressItemLabel( ProgressItem*, const QString& );
+    /** @see ProgressItem::progressItemUsesCrypto() */
+    void progressItemUsesCrypto( ProgressItem*, bool );
 
   public slots:
 
@@ -328,10 +357,11 @@ class ProgressManager : public QObject
     virtual ProgressItem* createProgressItemImpl(
                 ProgressItem* parent, const QString& id,
                 const QString& label, const QString& status,
-                bool cancellable );
+                bool cancellable, bool usesCrypto );
     virtual ProgressItem* createProgressItemImpl(
                 const QString& parent,  const QString& id,
-                const QString& label, const QString& status, bool cancellable );
+                const QString& label, const QString& status,
+                bool cancellable, bool usesCrypto );
 
     QDict< ProgressItem > mTransactions;
     static ProgressManager *mInstance;
