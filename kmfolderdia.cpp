@@ -599,7 +599,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   // Make sure we don't bomb out if there isn't a folder
   // object yet (i.e. just about to create new folder).
 
-  if ( mDlg->folder() && mDlg->folder()->isSystemFolder() ) {
+  if ( mDlg->folder() && mDlg->folder()->isSystemFolder() &&
+       mDlg->folder()->folderType() != KMFolderTypeImap &&
+       mDlg->folder()->folderType() != KMFolderTypeCachedImap ) {
     fpGroup->hide();
     iconGroup->hide();
     mMailboxTypeGroupBox->hide();
