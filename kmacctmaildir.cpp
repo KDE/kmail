@@ -10,6 +10,8 @@
 #include "kmacctfolder.h"
 #include "broadcaststatus.h"
 using KPIM::BroadcastStatus;
+#include "progressmanager.h"
+using KPIM::ProgressManager;
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -101,9 +103,16 @@ void KMAcctMaildir::processNewMail(bool)
     return;
   }
 
-  //BroadcastStatus::instance()->reset();
   BroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
+
+  Q_ASSERT( !mMailCheckProgressItem );
+  mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
+    "MailCheck" + mName,
+    mName,
+    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    false, // cannot be canceled
+    false ); // no tls/ssl
 
   // run the precommand
   if (!runPrecommand(precommand()))
@@ -137,7 +146,8 @@ void KMAcctMaildir::processNewMail(bool)
   QString statusMsgStub = i18n("Moving message %3 of %2 from %1.")
     .arg(mailFolder.location()).arg(num);
 
-  //BroadcastStatus::instance()->setStatusProgressEnable( "M" + mName, true );
+  mMailCheckProgressItem->setTotalItems( num );
+
   for (i=0; i<num; i++)
   {
 
@@ -149,8 +159,9 @@ void KMAcctMaildir::processNewMail(bool)
     if (!addedOk) break;
 
     QString statusMsg = statusMsgStub.arg(i);
-    BroadcastStatus::instance()->setStatusMsg( statusMsg );
-    //BroadcastStatus::instance()->setStatusProgressPercent( "M" + mName, (i*100) / num );
+    mMailCheckProgressItem->incCompletedItems();
+    mMailCheckProgressItem->updateProgress();
+    mMailCheckProgressItem->setStatus( statusMsg );
 
     msg = mailFolder.take(0);
     if (msg)
@@ -171,9 +182,18 @@ void KMAcctMaildir::processNewMail(bool)
     }
 
   }
-  //BroadcastStatus::instance()->setStatusProgressEnable( "M" + mName, false );
-  //BroadcastStatus::instance()->reset();
 
+  if( mMailCheckProgressItem ) { // do this only once...
+    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
+    // FIXME Message reused from KMAcctExpPop, due to feature freeze
+    mMailCheckProgressItem->setStatus(
+      i18n( "Fetched 1 message from %1. Terminating transmission...",
+            "Fetched %n messages from %1. Terminating transmission...",
+            num )
+      .arg( "localhost" ) );
+    mMailCheckProgressItem->setComplete();
+    mMailCheckProgressItem = 0;
+  }
   if (addedOk)
   {
     BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
