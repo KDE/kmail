@@ -68,8 +68,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     if (curFolder->isSystemFolder()) {
       mFolders.remove(mFolders.at(i-1));
       str.remove(str.at(i));
-    }      
-    ++i;
+    } else
+      ++i;
   }
   fileInFolder->insertStringList( str );
 
