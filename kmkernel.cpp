@@ -35,6 +35,8 @@
 
 #include <X11/Xlib.h>
 
+#define DCOPADDMSG_BUF  16384
+
 KMKernel *KMKernel::mySelf = 0;
 
 /********************************************************************/
@@ -148,6 +150,113 @@ void KMKernel::compactAllFolders ()
   kdDebug() << "KMKernel::compactAllFolders called" << endl;
   the_folderMgr->compactAll();
   kdDebug() << "KMKernel::compactAllFolders finished" << endl;
+}
+
+int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
+{
+char buf[DCOPADDMSG_BUF+1];
+unsigned long len;
+FILE *msgFile;
+int retval;
+QString bericht;
+static QStringList *msgIds=NULL;
+static QString      lastFolder="";
+bool readFolderMsgIds=false;
+
+  //kdDebug() << "KMKernel::dcopAddMessage called" << endl;
+
+  if (foldername!=lastFolder) {
+    fprintf(stderr,"foldername!=lastfolder\n");
+    if (msgIds==NULL) { delete msgIds; }
+    msgIds=new QStringList;
+    readFolderMsgIds=true;
+    lastFolder=foldername;
+  }
+
+  if (!msgUrl.isEmpty() && msgUrl.isLocalFile()) {
+
+    msgFile=fopen(msgUrl.path(),"rb");
+    if (msgFile==NULL) { return -2; }
+
+    fseek(msgFile,0,SEEK_END);
+    len=ftell(msgFile);
+    fseek(msgFile,0,SEEK_SET);
+
+    while(len>DCOPADDMSG_BUF) {
+      fread(buf,DCOPADDMSG_BUF,1,msgFile);
+      len-=DCOPADDMSG_BUF;
+      buf[DCOPADDMSG_BUF]='\0';
+      {QString bf(buf); bericht+=bf; }
+    }
+
+    fread(buf,len,1,msgFile);
+    buf[len]='\0';
+    {QString bf(buf); bericht+=bf; }
+
+    fclose(msgFile);
+
+    KMMessage *M=new KMMessage();
+    M->fromString(bericht);
+
+    KMFolder  *F=the_folderMgr->findOrCreate(foldername);
+
+    if (F==NULL) { retval=-1; }
+    else {
+
+      if (readFolderMsgIds) {int i;
+
+        // Try to determine if a message already exists in
+        // the folder. The message id that is searched for, is
+        // the subject line + the date. This should be quite
+        // unique. The change that a given date with a given
+        // subject is in the folder twice is very small.
+
+        // If the subject is empty, the fromStrip string
+        // is taken.
+
+        F->open();
+        for(i=0;i<F->count();i++) {KMMsgBase *mb=F->getMsgBase(i);
+          time_t  DT=mb->date();
+          QString dt=ctime(&DT);
+          QString id=mb->subject();
+
+          if (id=="") { id=mb->fromStrip(); }
+          if (id=="") { id=mb->toStrip(); }
+
+          id+=dt;
+
+          fprintf(stderr,"%s\n",(const char *) id);
+          if (id!="") { msgIds->append(id); }
+        }
+      }
+
+      time_t  DT=M->date();
+      QString dt=ctime(&DT);
+      QString msgId=M->subject();
+
+      if (msgId=="") { msgId=M->fromStrip(); }
+      if (msgId=="") { msgId=M->toStrip(); }
+
+      msgId+=dt;
+
+      int     k=msgIds->findIndex(msgId);
+      fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
+
+      if (k==-1) {
+        if (msgId!="") { msgIds->append(msgId); }
+        if (F->addMsg(M)==0) { retval=1; }
+        else { retval=-2;delete M; }
+      }
+      else { retval=-4; }
+    }
+
+    if (F!=NULL) { F->close(); }
+
+    return retval;
+  }
+  else {
+    return -2;
+  }
 }
 
 /********************************************************************/

@@ -31,6 +31,17 @@ k_dcop:
   virtual int setBody (int composerId, QString body) = 0;
   virtual int ready() = 0; //1=yes, 0=no
   virtual void compactAllFolders() = 0;
+
+//  pre : true
+//  post: =1,  message added to folder, if folder doesn't exist, folder
+//             has been created.
+//        =0,  an error occured.
+//        =-1, couldn't create folder and it didn't exist
+//        =-2, couldn't read messageFile.
+//        =-3, Can't allocate memory.
+//        =-4, Message already exists in folder.
+  virtual int dcopAddMessage(const QString & foldername,
+                             const KURL & messagefile) = 0;
 };
 
 #endif

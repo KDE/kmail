@@ -45,6 +45,7 @@ public:
   int addAttachment(int composerId, KURL url, QString comment);
   int setBody (int composerId, QString body);
   void compactAllFolders();
+  int dcopAddMessage(const QString & foldername, const KURL & messageFile);
   // normal control stuff
 
   static KMKernel *self() { return mySelf; }
