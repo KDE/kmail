@@ -7,10 +7,9 @@
 #include "kmkernel.h"
 
 #include <kiconloader.h>
-#include <klocale.h>
+//#include <klocale.h>
 
 #include <qpushbutton.h>
-#include <qcombobox.h>
 
 //=============================================================================
 //
@@ -52,12 +51,6 @@ void KMFilterActionWithAddressWidget::slotAddrBook()
 
   mLineEdit->setText( txt + dlg.address() );
 }
-
-//=============================================================================
-//
-// class KMFilterActionAddHeaderWidget
-//
-//=============================================================================
 
 //--------------------------------------------
 #include "kmfawidgets.moc"

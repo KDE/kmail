@@ -8,9 +8,9 @@
 #include <qlineedit.h>
 #include <qstring.h>
 
-//=============================================================================
-// The param widget for KMFilterActionWithAddress
-//=============================================================================
+/** The param widget for @ref KMFilterActionWithAddress..
+    @author Marc Mutz <mutz@kde.org>
+*/
 
 class QPushButton;
 
@@ -20,7 +20,6 @@ class KMFilterActionWithAddressWidget : public QWidget
 public:
   KMFilterActionWithAddressWidget( QWidget* parent=0, const char* name=0 );
 
-public:
   void clear() { mLineEdit->clear(); }
   QString text() const { return mLineEdit->text(); }
   void setText( const QString & aString ) { mLineEdit->setText( aString ); }
@@ -32,5 +31,6 @@ private:
   QPushButton* mBtn;
   QLineEdit*   mLineEdit;
 };
+
 
 #endif /*_kmfawidget_h_*/
