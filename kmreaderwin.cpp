@@ -774,8 +774,11 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpErrB.name() )) +
         QString( "div.fancyHeaderSubj { background-color: %1; "
                                        "color: %2; padding: 4px; "
-                                       "border: solid %3 1px; }\n" )
+                                       "border: solid %3 1px; }\n"
+		 "div.fancyHeaderSubj a[href] { color: %2; }"
+		 "div.fancyHeaderSubj a[href]:hover { text-decoration: underline; }\n")
         .arg((mPrinting) ? cg.background().name() : cg.highlight().name())
+        .arg((mPrinting) ? cg.foreground().name() : cg.highlightedText().name())
         .arg((mPrinting) ? cg.foreground().name() : cg.highlightedText().name())
         .arg(cg.foreground().name()) +
         QString( "div.fancyHeaderDtls { background-color: %1; color: %2; "
