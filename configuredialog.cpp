@@ -4172,8 +4172,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            automaticSendingItem()->whatsThis().utf8() ) );
   connect( mAutomaticSending, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
-           mAutomaticSending, SLOT( setEnabled( bool ) ) );
 
   // Open space padding at the end
   new QLabel( this );
@@ -4196,6 +4194,9 @@ void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
     KMessageBox::information( this, txt, QString::null,
                               "LegacyBodyInvitesWarning" );
   }
+  // Invitations in the body are autosent in any case (no point in editing raw ICAL)
+  // So the autosend option is only available if invitations are sent as attachment.
+  mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 }
 
 void MiscPage::GroupwareTab::load() {
@@ -4209,7 +4210,7 @@ void MiscPage::GroupwareTab::load() {
   mLegacyBodyInvites->setChecked( GlobalSettings::legacyBodyInvites() );
   mLegacyBodyInvites->blockSignals( false );
   mAutomaticSending->setChecked( GlobalSettings::automaticSending() );
-  mAutomaticSending->setEnabled( mLegacyBodyInvites->isChecked() );
+  mAutomaticSending->setEnabled( !mLegacyBodyInvites->isChecked() );
 
   // Read the IMAP resource config
   mEnableImapResCB->setChecked( GlobalSettings::theIMAPResourceEnabled() );
