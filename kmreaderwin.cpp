@@ -34,6 +34,7 @@
 
 #include <mimelib/mimepp.h>
 
+#include "kmversion.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
 
@@ -428,28 +429,28 @@ void KMReaderWin::displayAboutPage()
   if (codec) mViewer->setCharset(codec->name(), true);
     else mViewer->setCharset(KGlobal::locale()->charset(), true);
   mViewer->write(content.arg(
-    i18n("<h2>Welcome to KMail 1.2</h2><p>KMail is an email client for the K "
+    i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
     "Desktop Environment. It is designed to be fully compatible with Internet "
-    "mailing standards including MIME, SMTP and POP3.</p>\n"
+    "mailing standards including MIME, SMTP, POP3 and IMAP.</p>\n"
     "<ul><li>KMail has many powerful features which are described in the "
     "<A HREF=\"%2\">documentation</A></li>\n"
     "<li>You can find news and updates at the <A HREF=\"%3\">KMail homepage"
     "</A></li></ul>\n"
     "<p>Some of the new features in this release of KMail include "
-    "(compared to KMail 1.1.99, which is part of KDE 2.0):</p>\n"
-    "<ul><li>Full support for mails in all languages and charsets supported "
-    "by Qt</li>\n"
-    "<li>Drafts folder</li>\n"
-    "<li>Mailinglist aware folders</li>\n"
-    "<li>GUI configuration of preferred PGP tool</li>\n"
-    "<li>Lots of other enhancements and bugfixes</li></ul>\n"
+    "(compared to KMail 1.2, which is part of KDE 2.1):</p>\n"
+    "<ul>\n"
+    "<li>IMAP support</li>\n"
+    "<li>Only the selected part of a mail will be quoted on reply</li>\n"
+    "<li>Delete old messages from the trash folder on exit</li>\n"
+    "</ul>\n"
     "<p>Please take a moment to fill in the KMail configuration panel at "
     "Settings-&gt;Configuration.\n"
-    "You need to at least create a primary identity and setup a mail "
-    "spool/POP3 account.</p>\n"
+    "You need to at least create a primary identity and a mail "
+    "account.</p>\n"
     "<p>We hope that you will enjoy KMail.</p>\n"
     "<p>Thank you,</p>\n"
-    "<p>&nbsp; &nbsp; The KMail Team</p>")).arg("help:kmail")
+    "<p>&nbsp; &nbsp; The KMail Team</p>")).arg(KMAIL_VERSION)
+    .arg("help:kmail")
     .arg("http://kmail.kde.org/"));
   mViewer->end();
 }
