@@ -150,7 +150,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     }
   if (!settingsOk()) return FALSE;
 
-  if (!aMsg->to() || aMsg->to()[0]=='\0')
+  if (aMsg->to().isEmpty())
   {
     warning(i18n("You must specify a receiver"));
     return FALSE;

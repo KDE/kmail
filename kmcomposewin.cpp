@@ -1527,7 +1527,7 @@ void KMComposeWin::slotToDo()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdWinTitle(const QString& text)
 {
-  if (!text || *text=='\0')
+  if (text.isEmpty())
        setCaption("("+QString(i18n("unnamed"))+")");
   else setCaption(text);
 }

@@ -1359,7 +1359,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
 	result += ", <A HREF=\"mailto:";
 	while (pos[1]==' ') pos++;
       }
-      addr[0] = '\0';
+      addr = "";
     }
   }
   return result;

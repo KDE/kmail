@@ -310,7 +310,7 @@ const char* KMMsgBase::skipKeyword(const QString aStr, char sepChar,
 const QString KMMsgBase::decodeRFC1522String(const QString _str)
 {
   QCString aStr = _str.ascii();
-  static QString result;
+  QCString result;
   char *pos, *dest, *beg, *end, *mid;
   QString str;
   char encoding, ch;
