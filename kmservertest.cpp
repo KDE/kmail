@@ -56,8 +56,6 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
     mUrl.setPort(aPort.toInt());
 
   startOffSlave();
-  connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-	   SLOT(slotData(KIO::Job*,const QString&)) );
 }
 
 //-----------------------------------------------------------------------------
@@ -90,13 +88,16 @@ void KMServerTest::startOffSlave() {
   mJob = KIO::special( mUrl, packedArgs, false );
   KIO::Scheduler::assignJobToSlave( mSlave, mJob );
   connect( mJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
+  connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
+	   SLOT(slotData(KIO::Job*,const QString&)) );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMServerTest::slotData(KIO::Job *, const QString &data)
 {
-  mList = QStringList::split(' ', data);
+  if ( mList.empty() )
+    mList = QStringList::split(' ', data);
 kdDebug(5006) << data << endl;
 kdDebug(5006) << "count = " << mList.count() << endl;
 }
@@ -132,13 +133,13 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   }
   if (!mSSL) {
     mSSL = true;
-    if (!error) mList.append("NORMAL-CONNECTION");
+    if ( error )
+      mList.clear();
+    else
+      mList.append("NORMAL-CONNECTION");
     mUrl.setProtocol(mUrl.protocol() + 's');
     mUrl.setPort(0);
     startOffSlave();
-    if ( error )
-      connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
-	       SLOT(slotData(KIO::Job*,const QString&)) );
   } else {
     mJob = 0;
     if (!error) mList.append("SSL");
