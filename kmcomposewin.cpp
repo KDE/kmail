@@ -170,6 +170,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mKSpellConfig = new KSpellConfig;
   mKSpell = NULL;
 #endif
+
+  if (mEdtTo.isVisible())
+    mEdtTo.setFocus();
 }
 
 
@@ -184,6 +187,8 @@ KMComposeWin::~KMComposeWin()
   if (mKSpellConfig) delete KSpellConfig;
   if (mKSpell) delete mKSpell;
 #endif
+  delete mMenuBar;
+  delete mToolBar;
 }
 
 
@@ -381,7 +386,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
     aEdt->setMaximumSize(1000, aLbl->height()+2);
-    aEdt->setFocusPolicy(QWidget::ClickFocus);
+    //aEdt->setFocusPolicy(QWidget::ClickFocus);
     //aEdt->setFocusPolicy(QWidget::StrongFocus);
     mEdtList.append(aEdt);
 
@@ -620,7 +625,7 @@ void KMComposeWin::setupEditor(void)
   QPopupMenu* menu;
   mEditor = new KMEdit(kapp, &mMainWidget, this);
   mEditor->toggleModified(FALSE);
-  mEditor->setFocusPolicy(QWidget::ClickFocus);
+  //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
   // Word wrapping setup
   if(mWordWrap) 
@@ -859,14 +864,17 @@ void KMComposeWin::applyChanges(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::closeEvent(QCloseEvent* e)
+void KMComposeWin::closeEvent(QCloseEvent* )
 {
   if(mEditor->isModified())
     if((KMsgBox::yesNo(0,i18n("KMail Confirm"),
 		       i18n("Close and discard\nedited message?")) == 2))
       return;
   writeConfig();
-  KMComposeWinInherited::closeEvent(e);
+  delete this;
+
+  // KTW closEvent does nothing
+  //KMComposeWinInherited::closeEvent(e);
 }
 
 
@@ -1802,10 +1810,9 @@ void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
 KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent, 
 		       const char *name): KMLineEditInherited(parent,name)
 {
-  QString Name(name);
   mComposer = composer;
-  if (Name != "subjectLine")
-    connect (this, SIGNAL(completion()), this, SLOT(complete()));
+  
+  connect (this, SIGNAL(completion()), this, SLOT(complete()));
 }
 
 //-----------------------------------------------------------------------------
@@ -1877,6 +1884,13 @@ void KMLineEdit::markAll()
 void KMLineEdit::complete()
 {
   QString t;
+  QString Name(name());
+  
+  if (Name == "subjectLine")
+  {
+    mComposer->focusNextPrevEdit(this,TRUE);
+    return;
+  }
   
   QPopupMenu *pop = new QPopupMenu;
   int n;
