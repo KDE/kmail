@@ -35,8 +35,6 @@ using KRecentAddress::RecentAddresses;
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"
-// #### disabled for now #include "startupwizard.h"
-
 
 #include <kwin.h>
 #include "kmgroupware.h"
@@ -1035,7 +1033,6 @@ void KMKernel::init()
     }
   }
   readConfig();
-  mGroupware->readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
 #if 0 //disabled for now..
@@ -1373,11 +1370,6 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
                       const KURL &messageFile,
                       const KURL::List &attachURLs)
 {
-  // Run the groupware setup wizard. It doesn't do anything if this isn't
-  // the first run. Replace this with a general wizard later
-  // #### Disabled until we have a general startup wizard.
-  // StartupWizard::run();
-
   if (mailto)
     openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);
   else

@@ -78,18 +78,6 @@ namespace {
     QString statusBarMessage( const KURL &, KMReaderWin * ) const;
   };
 
-  class GroupwareURLHandler : public KMail::URLHandler {
-  public:
-    GroupwareURLHandler() : KMail::URLHandler() {}
-    ~GroupwareURLHandler() {}
-
-    bool handleClick( const KURL &, KMReaderWin * ) const;
-    bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
-      return false;
-    }
-    QString statusBarMessage( const KURL &, KMReaderWin * ) const;
-  };
-
   class MailToURLHandler : public KMail::URLHandler {
   public:
     MailToURLHandler() : KMail::URLHandler() {}
@@ -261,7 +249,6 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
 KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new ShowHtmlSwitchURLHandler() );
   registerHandler( new SMimeURLHandler() );
-//  registerHandler( new GroupwareURLHandler() );
   registerHandler( new MailToURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
@@ -328,7 +315,6 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
-#include "kmgroupware.h"
 #include "kmmessage.h"
 #include "kmkernel.h"
 #include "kmreaderwin.h"
@@ -396,25 +382,6 @@ namespace {
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
       return QString::null;
     return i18n("Show certificate 0x%1").arg( keyId );
-  }
-}
-
-namespace {
-  bool GroupwareURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
-    if ( !kmkernel->groupware().isEnabled() )
-      return false;
-    return !w || kmkernel->groupware().handleLink( url, w->message() );
-  }
-
-  QString GroupwareURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
-    QString type, action, action2, dummy;
-    if ( url.url().find( "groupware_" ) == -1 ) return QString::null;
-    //if ( !KMGroupware::foundGroupwareLink( url.url(), type, action, action2, dummy ) )
-    //  return QString::null;
-    QString result = type + ' ' + action;
-    if ( !action2.isEmpty() )
-      result += ' ' + action2;
-    return i18n("Groupware: \"%1\"").arg( result );
   }
 }
 
