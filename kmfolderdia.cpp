@@ -378,11 +378,9 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
         newmailGroup->hide();
         break;
       case KMFolderTypeMaildir:
-        mMailboxTypeComboBox->setCurrentItem( 1 );
         newmailGroup->hide();
         break;
       case KMFolderTypeMbox:
-        mMailboxTypeComboBox->setCurrentItem( 0 );
         newmailGroup->hide();
         break;
       case KMFolderTypeImap:
