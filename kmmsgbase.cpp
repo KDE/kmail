@@ -167,7 +167,7 @@ const QString KMMsgBase::asIndexString(void) const
   int i, len;
   QString str(256);
 
-  str.sprintf("%c %-.9lu %-.9lu %-.9lu %-100s %-100s\n",
+  str.sprintf("%c %-.9lu %-.9lu %-.9lu %-100.100s %-100.100s\n",
 	      (char)status(), folderOffset(), msgSize(), (unsigned long)date(),
 	      (const char*)decodeQuotedPrintableString(from()),
 	      (const char*)decodeQuotedPrintableString(subject()));
