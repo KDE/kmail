@@ -653,7 +653,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
 
-  msg->initHeader();
+  msg->initHeader(headerField("X-KMail-Identity"));
 
   mailingListStr = headerField("X-Mailing-List");
   replyToStr = replyTo();
@@ -781,7 +781,7 @@ KMMessage* KMMessage::createForward(void)
   QString str;
   int i;
 
-  msg->initHeader();
+  msg->initHeader(headerField("X-KMail-Identity"));
 
   str = "\n\n----------  " + sForwardStr + "  ----------\n";
   str += "Subject: " + subject() + "\n";
@@ -828,9 +828,13 @@ KMMessage* KMMessage::createForward(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::initHeader(void)
+void KMMessage::initHeader( QString id )
 {
-  KMIdentity ident( "unknown" );
+  QString identStr = "unknown";
+  if (!id.isEmpty() && KMIdentity::identities().contains(id))
+    identStr = id;
+    
+  KMIdentity ident( identStr );
   ident.readConfig();
   if(ident.fullEmailAddr().isEmpty())
     setFrom("");

@@ -379,7 +379,7 @@ KMFilterActionIdentity::KMFilterActionIdentity(): KMFilterAction("set identity")
 
 int KMFilterActionIdentity::process(KMMessage* msg, bool& )
 {
-  msg->setHeaderField( "X-Kmail-Identity", id );
+  msg->setHeaderField( "X-KMail-Identity", id );
   return 0;
 }
 

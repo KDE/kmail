@@ -140,7 +140,7 @@ class KMComposeWin : public KMTopLevelWidget
   Q_OBJECT
 
 public:
-  KMComposeWin(KMMessage* msg=NULL);
+  KMComposeWin(KMMessage* msg=NULL, QString id = "unknown" );
   ~KMComposeWin();
 
   /** Write settings to app's config file. */
@@ -352,6 +352,7 @@ protected:
   QList<QLineEdit> mEdtList;
   static QString mPathAttach;
   QPalette mPalette;
+  QString mId;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;

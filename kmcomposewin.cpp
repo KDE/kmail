@@ -110,7 +110,8 @@ WindowList* windowList=new WindowList;
 QString KMComposeWin::mPathAttach = QString::null;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMTopLevelWidget (),
+KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
+  : KMTopLevelWidget (),
   mMainWidget(this),
   mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
   mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),
@@ -119,7 +120,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMTopLevelWidget (),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget),
   mBtnBcc("...",&mMainWidget),  mBtnFrom("...",&mMainWidget),
-  mBtnReplyTo("...",&mMainWidget)
+  mBtnReplyTo("...",&mMainWidget),
+  mId( id )
 
 #ifdef KRN
   ,mEdtNewsgroups(this,&mMainWidget),mEdtFollowupTo(this,&mMainWidget),
@@ -1718,7 +1720,11 @@ void KMComposeWin::slotSendNow()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  KMIdentity ident( "unknown" );
+  QString identStr = "unknown";
+  if (!mId.isEmpty() && KMIdentity::identities().contains( mId ))
+    identStr = mId;
+
+  KMIdentity ident( identStr );
   ident.readConfig();
   QString sigFileName = ident.signatureFile();
   QString sigText;

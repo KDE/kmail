@@ -133,7 +133,7 @@ public:
     setText( mPaintInfo->subCol, subjStr.simplifyWhiteSpace() );
 
     time_t mDate = mMsgBase->date();
-    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).simplifyWhiteSpace() );
+    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
 
     mColor = &mPaintInfo->colFore;
     switch (flag)
@@ -206,6 +206,15 @@ public:
 
     _cg.setColor( QColorGroup::Text, *mColor );
     
+#ifdef sanders
+    if( column == mPaintInfo->dateCol ) {
+      QFont f = p->font();
+      f.setFamily("Courier");
+      f.setPointSize( f.pointSize() + 4 );
+      p->setFont(f);
+    }
+#endif
+
     QListViewItem::paintCell( p, _cg, column, width, align );
     
     _cg.setColor( QColorGroup::Text, c );
@@ -251,6 +260,17 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mNested = false;
 
   readConfig();
+#ifdef sanders
+  mPaintInfo.flagCol = -1;
+  mPaintInfo.subCol = mPaintInfo.flagCol + 1;
+  mPaintInfo.senderCol = mPaintInfo.subCol + 1;
+  mPaintInfo.dateCol = mPaintInfo.senderCol + 1;
+  mSortCol = KMMsgList::sfDate;
+  mSortDescending = FALSE;
+  addColumn( i18n("Subject"), 270 );
+  addColumn( i18n("Sender"), 200 );
+  addColumn( i18n("Date"), 300 );
+#else
   mPaintInfo.flagCol = -1;
   mPaintInfo.senderCol = mPaintInfo.flagCol + 1;
   mPaintInfo.subCol = mPaintInfo.senderCol + 1;
@@ -260,6 +280,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   addColumn( i18n("Sender"), 200 );
   addColumn( i18n("Subject"), 270 );
   addColumn( i18n("Date"), 300 );
+#endif
 
   if (!pixmapsLoaded)
   {
@@ -891,7 +912,8 @@ void KMHeaders::forwardMsg (int msgId)
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createForward());
+  win = new KMComposeWin(msg->createForward(),
+			 msg->headerField( "X-KMail-Identity" ));
   win->show();
   kernel->kbp()->idle();
 }
@@ -907,7 +929,8 @@ void KMHeaders::replyToMsg (int msgId)
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(FALSE));
+  win = new KMComposeWin(msg->createReply(FALSE), 
+			 msg->headerField( "X-KMail-Identity" ));
   win->show();
   kernel->kbp()->idle();
 }

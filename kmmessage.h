@@ -81,7 +81,7 @@ public:
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
     of setAutomaticFields(), see below, is still required. */
-  virtual void initHeader(void);
+  virtual void initHeader(QString id = "unknown");
 
   /** Removes empty fields from the header, e.g. an empty Cc: or Bcc: 
     field. */
