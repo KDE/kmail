@@ -561,7 +561,7 @@ namespace KMail {
                        .arg( cryptPlugLibName );
             break;
           case CANT_VERIFY_SIGNATURES:
-            errorMsg = i18n( "Crypto plug-in \"%1\" cannott verify signatures." )
+            errorMsg = i18n( "Crypto plug-in \"%1\" cannot verify signatures." )
                        .arg( cryptPlugLibName );
             break;
           case NO_PLUGIN:
