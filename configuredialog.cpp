@@ -4861,7 +4861,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
   QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
   QHBoxLayout *hlay = new QHBoxLayout( vlay );
   plugListBoxCertConf = new QComboBox( this, "plugListBoxCertConf" );
-  hlay->addWidget( new QLabel( plugListBoxCertConf, i18n("Select &Plug-in:\n   "), this ), 0, AlignVCenter );
+  hlay->addWidget( new QLabel( plugListBoxCertConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
   hlay->addWidget( plugListBoxCertConf, 2 );
   connect( plugListBoxCertConf, SIGNAL( activated( int ) ),
     _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
@@ -4878,7 +4878,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
 #else
   certDialog = 0;
   
-  QPushButton* startCertManagerPB = new QPushButton( i18n( "&Start Certificate Manager" ), this, "startcertmanagerpb" );
+  QPushButton* startCertManagerPB = new QPushButton( i18n( "&Start certificate manager" ), this, "startcertmanagerpb" );
   connect( startCertManagerPB, SIGNAL( clicked() ),
            this, SLOT( slotStartCertManager() ) );
   startCertManagerPB->setFixedSize( startCertManagerPB->sizeHint() );
@@ -4935,7 +4935,7 @@ SignaturePage::SignaturePage( PluginPage* parent,
   QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
   QHBoxLayout *hlay = new QHBoxLayout( vlay );
   plugListBoxSignConf = new QComboBox( this, "plugListBoxSignConf" );
-  hlay->addWidget( new QLabel( plugListBoxSignConf, i18n("Select &Plug-in:\n   "), this ), 0, AlignVCenter );
+  hlay->addWidget( new QLabel( plugListBoxSignConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
   hlay->addWidget( plugListBoxSignConf, 2 );
   connect( plugListBoxSignConf, SIGNAL( activated( int ) ),
     _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
@@ -4978,7 +4978,7 @@ EncryptionPage::EncryptionPage( PluginPage* parent,
   QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
   QHBoxLayout* hlay = new QHBoxLayout( vlay );
   plugListBoxEncryptConf = new QComboBox( this, "plugListBoxEncryptConf" );
-  hlay->addWidget( new QLabel( plugListBoxEncryptConf, i18n("Select &Plug-in:\n   "), this ), 0, AlignVCenter );
+  hlay->addWidget( new QLabel( plugListBoxEncryptConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
   hlay->addWidget( plugListBoxEncryptConf, 2 );
   connect( plugListBoxEncryptConf, SIGNAL( activated( int ) ),
     _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
@@ -5022,7 +5022,7 @@ DirServicesPage::DirServicesPage( PluginPage* parent,
   QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
   QHBoxLayout* hlay = new QHBoxLayout( vlay );
   plugListBoxDirServConf = new QComboBox( this, "plugListBoxDirServConf" );
-  hlay->addWidget( new QLabel( plugListBoxDirServConf, i18n("Select &Plug-in:\n   "), this ), 0, AlignVCenter );
+  hlay->addWidget( new QLabel( plugListBoxDirServConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
   hlay->addWidget( plugListBoxDirServConf, 2 );
   connect( plugListBoxDirServConf, SIGNAL( activated( int ) ),
     _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
@@ -5056,121 +5056,6 @@ void DirServicesPage::installProfile( KConfig* /*profile*/ )
     // PENDING(kalle) Implement this
     qDebug( "DirServicesPage::installProfile() not implemented" );
 }
-
-
-
-
-#if 0
-void ConfigureDialogPrivate::installProfile()
-{
-  QListViewItem *item = mAppearance.profileList->selectedItem();
-  if( !item )  return;
-
-  if( item == mAppearance.mListItemDefault )
-  {
-    mAppearance.font[0] = QFont("helvetica");//
-    mAppearance.font[1] = QFont("helvetica");//
-    mAppearance.font[2] = QFont("helvetica");//
-    mAppearance.font[3] = QFont("helvetica");//
-    mAppearance.font[4] = QFont("helvetica");//
-    mAppearance.font[5] = QFont("helvetica");//
-    mAppearance.customFontCheck->setChecked( true );//
-
-    mAppearance.colorList->setColor( 0, kapp->palette().active().base() );//
-    mAppearance.colorList->setColor( 1, kapp->palette().active().text() );//
-    mAppearance.colorList->setColor( 2, red );//
-    mAppearance.colorList->setColor( 3, darkGreen );//
-    mAppearance.colorList->setColor( 4, darkMagenta );//
-    mAppearance.colorList->setColor( 5, KGlobalSettings::linkColor() );//
-    mAppearance.colorList->setColor( 6, KGlobalSettings::visitedLinkColor() );//
-    mAppearance.colorList->setColor( 7, blue );//
-    mAppearance.colorList->setColor( 8, red );//
-    mAppearance.customColorCheck->setChecked( true );//
-
-    mAppearance.longFolderCheck->setChecked( true );//
-    mAppearance.showColorbarCheck->setChecked( false );//
-    mAppearance.messageSizeCheck->setChecked( true );//
-    mAppearance.nestedMessagesCheck->setChecked( true );//
-    mAppearance.rdDateFancy->setChecked( true );//
-    mSecurity.htmlMailCheck->setChecked( false );//
-  }
-  else if( item == mAppearance.mListItemDefaultHtml )
-  {
-    mAppearance.font[0] = QFont("helvetica");
-    mAppearance.font[1] = QFont("helvetica");
-    mAppearance.font[2] = QFont("helvetica");
-    mAppearance.font[3] = QFont("helvetica");
-    mAppearance.font[4] = QFont("helvetica");
-    mAppearance.font[5] = QFont("helvetica");
-    mAppearance.customFontCheck->setChecked( true );
-
-    mAppearance.colorList->setColor( 0, kapp->palette().active().base() );
-    mAppearance.colorList->setColor( 1, kapp->palette().active().text() );
-    mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, darkGreen );
-    mAppearance.colorList->setColor( 4, darkMagenta );
-    mAppearance.colorList->setColor( 5, blue );
-    mAppearance.colorList->setColor( 6, red );
-    mAppearance.colorList->setColor( 7, blue );
-    mAppearance.colorList->setColor( 8, red );
-    mAppearance.customColorCheck->setChecked( true );
-
-    mAppearance.longFolderCheck->setChecked( true );
-    mAppearance.showColorbarCheck->setChecked( false );
-    mAppearance.messageSizeCheck->setChecked( true );
-    mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.rdDateFancy->setChecked( true );
-    mSecurity.htmlMailCheck->setChecked( true );
-  }
-  else if( item == mAppearance.mListItemContrast )
-  {
-    mAppearance.font[0] = QFont("helvetica", 14, QFont::Bold);
-    mAppearance.font[1] = QFont("helvetica", 14, QFont::Bold);
-    mAppearance.font[2] = QFont("helvetica", 14, QFont::Bold);
-    mAppearance.font[3] = QFont("helvetica", 14, QFont::Bold);
-    mAppearance.font[4] = QFont("helvetica", 14, QFont::Bold);
-    mAppearance.font[5] = QFont("helvetica", 14, QFont::Bold);
-    mAppearance.customFontCheck->setChecked( true );
-    mAppearance.colorList->setColor( 0, QColor("#FAEBD7") );
-    mAppearance.colorList->setColor( 1, black );
-    mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, darkGreen );
-    mAppearance.colorList->setColor( 4, darkMagenta );
-    mAppearance.colorList->setColor( 5, blue );
-    mAppearance.colorList->setColor( 6, red );
-    mAppearance.colorList->setColor( 7, blue );
-    mAppearance.colorList->setColor( 8, red );
-    mAppearance.customColorCheck->setChecked( true );
-
-    mAppearance.longFolderCheck->setChecked( true );
-    mAppearance.showColorbarCheck->setChecked( false );
-    mAppearance.messageSizeCheck->setChecked( true );
-    mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.rdDateLocalized->setChecked( true );
-    mSecurity.htmlMailCheck->setChecked( false );
-  }
-  else if( item == mAppearance.mListItemPurist)
-  {
-    mAppearance.customFontCheck->setChecked( false );
-
-    mAppearance.customColorCheck->setChecked( false );
-
-    mAppearance.longFolderCheck->setChecked( true );
-    mAppearance.showColorbarCheck->setChecked( false );
-    mAppearance.messageSizeCheck->setChecked( false );
-    mAppearance.nestedMessagesCheck->setChecked( false );
-    mAppearance.rdDateCtime->setChecked( true );
-    mSecurity.htmlMailCheck->setChecked( false );
-  }
-  else
-  {
-  }
-
-  slotCustomFontSelectionChanged();
-  updateFontSelector();
-  slotCustomColorSelectionChanged();
-}
-#endif
 
 
 //------------

@@ -16,10 +16,10 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     : QListView(  parent, name ),
       mReaderWin( readerWin )
 {
-    addColumn( i18n("description") );
-    addColumn( i18n("type") );
-    addColumn( i18n("encoding") );
-    addColumn( i18n("size") );
+    addColumn( i18n("Description") );
+    addColumn( i18n("Type") );
+    addColumn( i18n("Encoding") );
+    addColumn( i18n("Size") );
     setColumnAlignment(3, Qt::AlignRight);
     setResizeMode( QListView::LastColumn );
     connect( this, SIGNAL( clicked( QListViewItem* ) ),
