@@ -139,7 +139,7 @@ public:
 
   /** Find message matching a given serial number. */
   static KMMessage* findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder );
-  
+
   /** Convenience function to delete a message. */
   static void deleteMsg( KMMessage* msg );
 
@@ -171,7 +171,7 @@ private:
   KMFolder* extraFolder( const QString& type, const QString& folder );
 
   bool deleteIncidence( KMFolder& folder, const QString& uid, Q_UINT32 serNum );
-  
+
   void loadPixmaps() const;
 
   QGuardedPtr<KMFolder> mContacts;
@@ -181,6 +181,7 @@ private:
   QGuardedPtr<KMFolder> mJournals;
 
   // The extra IMAP resource folders
+  // Key: folder location. Data: struct with folder and contentsType.
   class ExtraFolder;
   QDict<ExtraFolder> mExtraFolders;
 

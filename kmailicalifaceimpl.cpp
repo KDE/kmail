@@ -343,7 +343,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
 QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
   QMap<QString, bool> map;
-  
+
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f )
@@ -354,12 +354,12 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
-    if ( it.current()->type == t 
+    if ( it.current()->type == t
          // && f->isXMLFolder()
          )
       map.insert( f->location(), !f->isReadOnly() );
   }
-  
+
   return map;
 }
 
@@ -779,17 +779,15 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
                                            const QString& folder )
 {
-  // If an extra folder exists that match the type and folder location,
+  // If an extra folder exists that matches the type and folder location,
   // use that
   int t = folderContentsType( type );
   if ( t < 1 || t > 5 )
     return 0;
 
-  QDictIterator<ExtraFolder> it( mExtraFolders );
-  for ( ; it.current(); ++it )
-    if ( it.current()->type == t &&
-         it.current()->folder->location() == folder )
-      return it.current()->folder;
+  ExtraFolder* ef = mExtraFolders.find( folder );
+  if ( ef && ef->type == t )
+    return ef->folder;
 
   return 0;
 }
