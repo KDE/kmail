@@ -883,6 +883,7 @@ void KMMainWin::slotSetHeaderStyle(int id)
     mViewMenu->setItemChecked(id, TRUE);
     mMsgView->setAttachmentStyle(id-5);
   }
+  readConfig(); // added this so _all_ the other widgets get this information
 }
 
 

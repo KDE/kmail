@@ -7,6 +7,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmmsginfo.h"
+#include "kmreaderwin.h"
 #include "kpgp.h"
 #ifndef KRN
 #include "kmfolder.h"
@@ -46,7 +47,7 @@ static QCString result;
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyStr, sForwardStr, sReplyAllStr, sIndentPrefixStr;
 static bool sSmartQuote;
-static int sWrapCol;
+static int sWrapCol, sHdrStyle;
 
 /* Start functions added for KRN */
 
@@ -793,14 +794,21 @@ KMMessage* KMMessage::createForward(void)
 
   msg->initHeader(headerField("X-KMail-Identity"));
 
-  str = "\n\n----------  " + sForwardStr + "  ----------\n";
-  str += "Subject: " + subject() + "\n";
-  str += "Date: " + dateStr() + "\n";
-  str += "From: " + from() + "\n";
-  str += "To: " + to() + "\n";
-  str += "\n";
-  str = asQuotedString(str, "", FALSE, false);
-  str += "\n-------------------------------------------------------\n";
+  if (sHdrStyle == KMReaderWin::HdrAll) {
+    str = "\n\n----------  " + sForwardStr + "  ----------\n";
+    str += asString();
+    str = asQuotedString(str, "", FALSE, false);
+    str += "\n-------------------------------------------------------\n";
+  } else {
+    str = "\n\n----------  " + sForwardStr + "  ----------\n";
+    str += "Subject: " + subject() + "\n";
+    str += "Date: " + dateStr() + "\n";
+    str += "From: " + from() + "\n";
+    str += "To: " + to() + "\n";
+    str += "\n";
+    str = asQuotedString(str, "", FALSE, false);
+    str += "\n-------------------------------------------------------\n";
+  }
 
   if (numBodyParts() <= 0)
   {
@@ -1746,6 +1754,9 @@ void KMMessage::readConfig(void)
   sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
   sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
   sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
+
+  config->setGroup("Reader");
+  sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);
 
   config->setGroup("Composer");
   sSmartQuote = config->readBoolEntry("smart-quote", true);

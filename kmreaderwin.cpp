@@ -198,8 +198,10 @@ void KMReaderWin::readConfig(void)
   mQuoteFontTag[2] = quoteFontTag(2);
 
 
-  if (mMsg)
+  if (mMsg) {
     update();
+    mMsg->readConfig();
+  }
 }
 
 
@@ -317,6 +319,7 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 {
   mHeaderStyle = aHeaderStyle;
   update(true);
+  writeConfig(true);   // added this so we can forward w/ full headers
 }
 
 
