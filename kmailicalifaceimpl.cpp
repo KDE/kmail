@@ -1898,4 +1898,14 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
   return ( administerRights && relevantForOwner ) || relevantForEveryone;
 }
 
+void KMailICalIfaceImpl::setResourceQuiet(bool q)
+{
+  mResourceQuiet = q;
+}
+
+bool KMailICalIfaceImpl::isResourceQuiet() const
+{
+  return mResourceQuiet;
+}
+
 #include "kmailicalifaceimpl.moc"
