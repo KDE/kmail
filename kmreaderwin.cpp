@@ -913,7 +913,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
       if (pgp->goodSignature())
          sig = i18n("Message was signed by");
       else
-         sig = i18n("Warning: Bad signature from");
+	 sig = i18n("Warning: Bad signature from");
 
       /* HTMLize signedBy data ### FIXME: use .arg()*/
       QString sdata=pgp->signedBy();
@@ -994,7 +994,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
       else if( prevQuoteLevel >= 0 )
       {
         line.prepend( normalStartTag );
-	line.prepend( "</font><br>" ); // Added extra BR to work around bug
+	line.prepend( "</font>" );
 	prevQuoteLevel = -1;
       }
 
@@ -1034,6 +1034,9 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
     pos++;
   }
+
+  if (prevQuoteLevel >= 0)
+    tmpStr += "</font>";
 
   htmlStr += tmpStr;
   htmlStr += "</div>"; //work around KHTML slowness
