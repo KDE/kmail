@@ -2,6 +2,7 @@
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
 #include <qfileinfo.h>
+#include <qsortedlist.h>
 
 #include "kmglobal.h"
 #include "kmfolder.h"
@@ -849,9 +850,134 @@ void KMFolder::quiet(bool beQuiet)
 
 
 //-----------------------------------------------------------------------------
+
+// Needed to use QSortedList in reduceSize()
+
+/** Compare message's date. This is useful for message sorting */
+int operator<( KMMsgBase & m1, KMMsgBase & m2 )
+{
+  return (m1.date() < m2.date());
+}
+  
+/** Compare message's date. This is useful for message sorting */
+int operator==( KMMsgBase & m1, KMMsgBase & m2 )
+{
+  return (m1.date() == m2.date());
+}
+  
+//-----------------------------------------------------------------------------
+int KMFolder::reduceSize( int aSize )
+{
+  kdDebug() << "Reducing folder to size of " << aSize << " Mo" << endl;
+  QSortedList<KMMsgBase> * slice=0L;
+  QList< QSortedList<KMMsgBase> > sliceArr;
+  KMMsgBase* mb;
+  ulong folderSize, msgSize, sliceSize, firstSliceSize, lastSliceSize, size;
+  int sliceIndex;
+  int delMsg = 0;
+  int i;
+
+  sliceArr.setAutoDelete( true );
+
+  // I put each email in a slice according to its size (slices of 500Ko, 1Mo,
+  // 2Mo, ... 10 Mo). Then I delete the oldest mail until the good size is 
+  // reached. 10 slices of 1Mo each is probably overkill. 500Ko, 1Mo, 5Mo 
+  // and 10Mo could be enough.
+
+
+// Is it 1000 or 1024 ?
+#define KILO 	(1000)
+
+  size = KILO * KILO * aSize; // to have size in Ko;
+  sliceSize = KILO * KILO ; // slice of 1 Mo
+  lastSliceSize = 10 * sliceSize; // last slice is for item > 10 Mo
+  firstSliceSize = sliceSize / 2; // first slice is for < 500 Ko
+  folderSize = 0;
+
+  for(i=0; i<12; i++) {
+    sliceArr.append( new QSortedList<KMMsgBase> );
+    sliceArr.at(i)->setAutoDelete(false);
+  }
+
+  for (i=count()-1; i>=0; i--) {
+    mb = getMsgBase(i);
+    assert(mb);
+    msgSize = mb->msgSize();
+    folderSize += msgSize;
+
+    if (msgSize < firstSliceSize) {
+      sliceIndex = 0;
+    } else if (msgSize >= lastSliceSize) {
+        sliceIndex = 11;
+    } else {
+        sliceIndex = 1 + (int) (msgSize / sliceSize); //  1 <= n < 10
+    }
+
+    sliceArr.at(sliceIndex)->append( mb );
+  }
+
+  //kdDebug() << "Folder size : " << (folderSize/KILO) << " ko" << endl;
+
+  // Ok, now we have our slices
+
+  slice = sliceArr.last();
+  while (folderSize > size) {
+    //kdDebug() << "Treating slice " << sliceArr.at()-1 << " Mo : " << slice->count() << endl;
+    assert( slice );
+    
+    slice->sort();
+
+    // Empty this slice taking the oldest mails first:
+    while( slice->count() > 0 && folderSize > size ) {
+      mb = slice->take(0);
+      msgSize = mb->msgSize();
+      //kdDebug() << "deleting msg : " << (msgSize / KILO) << " ko - " << mb->subject() << " - " << mb->dateStr();
+      assert( folderSize >= msgSize );
+      folderSize -= msgSize;
+      delMsg++;
+      removeMsg(mb);
+    }
+
+    slice = sliceArr.prev();
+
+  }
+
+  return delMsg;
+}
+
+
+
+//-----------------------------------------------------------------------------
+int KMFolder::expungeOldMsg(int days)
+{
+  int i, msgnb=0;
+  time_t msgTime, maxTime;
+  KMMsgBase* mb;
+  QValueList<int> rmvMsgList;
+
+  maxTime = time(0L) - days * 3600 * 24;
+
+  for (i=count()-1; i>=0; i--) {
+    mb = getMsgBase(i);
+    assert(mb);
+	msgTime = mb->date();
+
+	if (msgTime < maxTime) {
+		//kdDebug() << "deleting msg " << i << " : " << mb->subject() << " - " << mb->dateStr(); // << endl;
+        removeMsg( i );
+		msgnb++;
+	}
+  }
+  return msgnb;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMFolder::removeMsg(KMMsgBasePtr aMsg)
 {
-  removeMsg(find(aMsg));
+  int idx = find(aMsg);
+  assert( idx != -1);
+  removeMsg(idx);
 }
 
 

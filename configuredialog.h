@@ -323,6 +323,11 @@ class ConfigureDialog : public KDialogBase
       QCheckBox    *pgpAutoSignatureCheck;
       QCheckBox    *wordWrapCheck;
       KIntNumInput *wrapColumnSpin;
+      QCheckBox   *externalEditorCheck;
+      QLineEdit   *externalEditorEdit;
+      QPushButton *externalEditorChooseButton;
+      QLabel      *externalEditorLabel;
+      QLabel      *externalEditorHelp;
       LanguageItem *LanguageList;
       LanguageItem *CurrentLanguage;
       QListBox *replyListBox;
@@ -365,15 +370,15 @@ class ConfigureDialog : public KDialogBase
     {
       int         pageIndex;
       QCheckBox   *emptyTrashCheck;
+      QCheckBox   *keepSmallTrashCheck;
+      KIntNumInput *smallTrashSizeSpin;
+      QCheckBox   *removeOldMailCheck;
+      KIntNumInput *oldMailAgeSpin;
+      QComboBox   *timeUnitCombo;
       QCheckBox   *sendOutboxCheck;
       QCheckBox   *sendReceiptCheck;
       QCheckBox   *compactOnExitCheck;
       QCheckBox   *emptyFolderConfirmCheck;
-      QCheckBox   *externalEditorCheck;
-      QLineEdit   *externalEditorEdit;
-      QPushButton *externalEditorChooseButton;
-      QLabel      *externalEditorLabel;
-      QLabel      *externalEditorHelp;
       QCheckBox   *beepNewMailCheck;
       QCheckBox   *showMessageBoxCheck;
       QCheckBox   *mailCommandCheck;
@@ -391,6 +396,7 @@ class ConfigureDialog : public KDialogBase
       page_mimeheader,
       page_security,
       page_misc,
+      page_folder,
       page_max
     };
 
@@ -477,6 +483,7 @@ class ConfigureDialog : public KDialogBase
     void slotMailCommandSelectionChanged( void );
     void slotExternalEditorChooser( void );
     void slotMailCommandChooser( void );
+    void slotEmptyTrashState( int );
 
   private:
     IdentityWidget   mIdentity;

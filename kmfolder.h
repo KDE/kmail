@@ -116,6 +116,14 @@ public:
   virtual void removeMsg(int i);
   virtual void removeMsg(KMMsgBasePtr msg);
 
+  /** Delete messages in the folder that are older than days. Return the
+   * number of deleted messages. */
+  virtual int expungeOldMsg(int days);
+
+  /** Delete messages until the size of the folder goes below size Mo. 
+   * Returns the number of deleted messages. */
+  virtual int reduceSize( int size );
+
   /** Detaches the given message from it's current folder and
     adds it to this folder. Returns zero on success and an errno error
     code on failure. The index of the new message is stored in index_return

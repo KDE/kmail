@@ -504,11 +504,48 @@ void KMKernel::cleanup(void)
   KConfig* config =  kapp->config();
 
   if (the_trashFolder) {
+
     the_trashFolder->close(TRUE);
     config->setGroup("General");
     if (config->readBoolEntry("empty-trash-on-exit", true))
       the_trashFolder->expunge();
+
+	// Phil add on
+    if (config->readBoolEntry("remove-old-mail-from-trash", true) 
+		|| (config->readBoolEntry("keep-small-trash", true)) ) {
+      the_trashFolder->open();
+      the_trashFolder->quiet(true);
+	}
+
+    if (config->readBoolEntry("remove-old-mail-from-trash", true)) {
+      int age;
+      int old_age = config->readNumEntry("old-mail-age", 1);
+      int age_unit = config->readNumEntry("old-mail-age-unit", 1);
+      if (age_unit == 0) { // month
+        age = 31 * old_age;
+      } else if (age_unit == 1) { // week
+        age = 7 * old_age;
+      } else if (age_unit == 2) { // day
+        age = old_age;
+      } else {
+        kdDebug() << "Unknown unit for mail age : " << old_age << endl;
+        age = old_age;
+      }
+      kdDebug() << "Removing mail older than " << age << " days" << endl;
+
+	  the_trashFolder->expungeOldMsg( age );
+    }
+
+    if (config->readBoolEntry("keep-small-trash", true)) {
+      int size = config->readNumEntry("small-trash-size", 10);
+      the_trashFolder->reduceSize( size );
+    }
+
+	the_trashFolder->close();
+    the_trashFolder->compact();
+    kdDebug() << "trash clean-up done." << endl;
   }
+
 
   if (the_folderMgr) {
     if (config->readBoolEntry("compact-all-on-exit", true))

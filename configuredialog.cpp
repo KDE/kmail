@@ -959,8 +959,6 @@ void ConfigureDialog::makeAppearancePage( void )
 
 
 
-
-
 void ConfigureDialog::makeComposerPage( void )
 {
    QVBox *vbox = addVBoxPage( i18n("Composer"),
@@ -1046,7 +1044,39 @@ void ConfigureDialog::makeComposerPage( void )
 
   topLevel->addStretch(10);
 
-  //second (subject) page
+  // ----- editor page
+  page = new QWidget( tabWidget );
+  QGroupBox * editorGroup = new QGroupBox( i18n("&External Editor"), page );
+  tabWidget->addTab( page, i18n("Editor") );
+  QBoxLayout * elay = new QVBoxLayout( page, spacingHint() );
+  elay->addWidget( editorGroup );
+  elay->addStretch( 10 );
+  QBoxLayout * vlay = new QVBoxLayout( editorGroup, spacingHint() );
+  vlay->addSpacing( fontMetrics().lineSpacing() );
+  mComposer.externalEditorCheck =
+    new QCheckBox(i18n("Use external editor instead of composer"),
+    editorGroup );
+  connect( mComposer.externalEditorCheck, SIGNAL(clicked() ),
+	   this, SLOT(slotExternalEditorSelectionChanged()) );
+  vlay->addWidget( mComposer.externalEditorCheck );
+  QHBoxLayout *edhlay = new QHBoxLayout( vlay );
+  mComposer.externalEditorLabel = new QLabel( i18n("Specify editor:"),
+    editorGroup );
+  edhlay->addWidget( mComposer.externalEditorLabel );
+  mComposer.externalEditorEdit = new QLineEdit( editorGroup );
+  edhlay->addWidget( mComposer.externalEditorEdit );
+  mComposer.externalEditorChooseButton =
+    new QPushButton( i18n("Choose..."), editorGroup );
+  connect( mComposer.externalEditorChooseButton, SIGNAL(clicked()),
+	   this, SLOT(slotExternalEditorChooser()) );
+  mComposer.externalEditorChooseButton->setAutoDefault( false );
+  edhlay->addWidget( mComposer.externalEditorChooseButton );
+  mComposer.externalEditorHelp = new QLabel( editorGroup );
+  mComposer.externalEditorHelp->setText(
+    i18n("\"%f\" will be replaced with the filename to edit."));
+  vlay->addWidget( mComposer.externalEditorHelp );
+
+  // ----- subject page
   QWidget *subjectPage = new QWidget( tabWidget );
   tabWidget->addTab( subjectPage, i18n("Subject") );
   QVBoxLayout *topLevel2 = new QVBoxLayout( subjectPage, spacingHint() );
@@ -1057,6 +1087,7 @@ void ConfigureDialog::makeComposerPage( void )
   QGridLayout *glay2 = new QGridLayout( replyGroup, 6, 3, spacingHint() );
   glay2->addRowSpacing( 0, fontMetrics().lineSpacing() );
   glay2->setColStretch( 2, 10 );
+  glay2->setRowStretch( 4, 10 );
 
   label = new QLabel( replyGroup );
   label->setText(i18n( "Recognize the following prefixes (matching is case-insensitive)"));
@@ -1093,6 +1124,7 @@ void ConfigureDialog::makeComposerPage( void )
   QGridLayout *glay3 = new QGridLayout( forwardGroup, 6, 3, spacingHint() );
   glay3->addRowSpacing( 0, fontMetrics().lineSpacing() );
   glay3->setColStretch( 2, 10 );
+  glay3->setRowStretch( 4, 10 );
 
   label = new QLabel( forwardGroup );
   label->setText(i18n( "Recognize the following prefixes (matching is case-insensitive)"));
@@ -1122,9 +1154,7 @@ void ConfigureDialog::makeComposerPage( void )
      new QCheckBox( i18n("Replace recognized prefix with Fwd:"), forwardGroup );
   glay3->addMultiCellWidget( mComposer.replaceForwardPrefixCheck, 5, 5, 0, 2);
 
-  topLevel2->addStretch(10);
-
-  //third (charset) page
+  // ----- charset page
   QWidget *charsetPage = new QWidget( tabWidget );
   tabWidget->addTab( charsetPage, i18n("Charset") );
   QVBoxLayout *topLevel3 = new QVBoxLayout( charsetPage, spacingHint() );
@@ -1260,7 +1290,8 @@ void ConfigureDialog::makeSecurityPage( void )
 
 #include <kinstance.h>
 #include <kglobal.h>
-
+ 
+ 
 void ConfigureDialog::makeMiscPage( void )
 {
   //KIconLoader *loader = instace->iconLoader();
@@ -1272,14 +1303,53 @@ void ConfigureDialog::makeMiscPage( void )
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMisc.pageIndex = pageIndex(page);
 
+  //---------- group: trash folder
+  QGroupBox *tgroup = new QGroupBox( i18n("&Trash folder"), page );
+  topLevel->addWidget( tgroup );
+  QVBoxLayout *tvlay = new QVBoxLayout( tgroup, spacingHint() );
+
+  tvlay->addSpacing( fontMetrics().lineSpacing() );
+  mMisc.emptyTrashCheck =
+    new QCheckBox(i18n("Empty trash on exit"), tgroup );
+  connect( mMisc.emptyTrashCheck, SIGNAL(stateChanged(int)), 
+		  this, SLOT(slotEmptyTrashState(int)) );
+  tvlay->addWidget( mMisc.emptyTrashCheck );
+  QHBoxLayout *stlay = new QHBoxLayout( spacingHint() ,"hly1");
+  stlay->setMargin(0);
+  tvlay->addLayout( stlay );
+  mMisc.keepSmallTrashCheck =
+    new QCheckBox(i18n("Keep trash size below "), tgroup );
+  stlay->addWidget( mMisc.keepSmallTrashCheck );
+  mMisc.smallTrashSizeSpin = new KIntNumInput( tgroup );
+  //mFolder.smallTrashSizeSpin->setMinValue(1);
+  stlay->addWidget( mMisc.smallTrashSizeSpin );
+  stlay->addWidget( new QLabel( "MB", tgroup ) );
+  stlay->addStretch( 100 );
+
+  QHBoxLayout *rmvlay = new QHBoxLayout( spacingHint(),"hly2" );
+  rmvlay->setMargin(0);
+  tvlay->addLayout( rmvlay );
+  mMisc.removeOldMailCheck =
+    new QCheckBox(i18n("In trash, on exit, remove messages older than"), tgroup );
+  rmvlay->addWidget( mMisc.removeOldMailCheck );
+  mMisc.oldMailAgeSpin = new KIntNumInput( tgroup );
+  mMisc.oldMailAgeSpin->setValue(1);
+  //mFolder.oldMailAgeSpin->setMinValue(1);
+  rmvlay->addWidget( mMisc.oldMailAgeSpin );
+  mMisc.timeUnitCombo = new QComboBox( tgroup );
+  mMisc.timeUnitCombo->insertItem(i18n("month(s)"));
+  mMisc.timeUnitCombo->insertItem(i18n("week(s)"));
+  mMisc.timeUnitCombo->insertItem(i18n("day(s)"));
+  rmvlay->addWidget( mMisc.timeUnitCombo );
+  rmvlay->addStretch( 100 );
+
+
   //---------- group: folders
+
   QGroupBox *group = new QGroupBox( i18n("&Folders"), page );
   topLevel->addWidget( group );
   QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
-  mMisc.emptyTrashCheck =
-    new QCheckBox(i18n("Empty trash on exit"), group );
-  vlay->addWidget( mMisc.emptyTrashCheck );
   mMisc.sendOutboxCheck =
     new QCheckBox(i18n("Send Mail in outbox Folder on Check"), group );
   vlay->addWidget( mMisc.sendOutboxCheck );
@@ -1292,32 +1362,6 @@ void ConfigureDialog::makeMiscPage( void )
   mMisc.emptyFolderConfirmCheck =
     new QCheckBox(i18n("Confirm before emptying folders"), group );
   vlay->addWidget( mMisc.emptyFolderConfirmCheck );
-
-  //---------- group: External editor
-  group = new QGroupBox( i18n("&External Editor"), page );
-  topLevel->addWidget( group );
-  vlay = new QVBoxLayout( group, spacingHint() );
-  vlay->addSpacing( fontMetrics().lineSpacing() );
-  mMisc.externalEditorCheck =
-    new QCheckBox(i18n("Use external editor instead of composer"), group );
-  connect( mMisc.externalEditorCheck, SIGNAL(clicked() ),
-	   this, SLOT(slotExternalEditorSelectionChanged()) );
-  vlay->addWidget( mMisc.externalEditorCheck );
-  QHBoxLayout *hlay = new QHBoxLayout( vlay );
-  mMisc.externalEditorLabel = new QLabel( i18n("Specify editor:"), group );
-  hlay->addWidget( mMisc.externalEditorLabel );
-  mMisc.externalEditorEdit = new QLineEdit( group );
-  hlay->addWidget( mMisc.externalEditorEdit );
-  mMisc.externalEditorChooseButton =
-    new QPushButton( i18n("Choose..."), group );
-  connect( mMisc.externalEditorChooseButton, SIGNAL(clicked()),
-	   this, SLOT(slotExternalEditorChooser()) );
-  mMisc.externalEditorChooseButton->setAutoDefault( false );
-  hlay->addWidget( mMisc.externalEditorChooseButton );
-  mMisc.externalEditorHelp = new QLabel( group );
-  mMisc.externalEditorHelp->setText(
-    i18n("\"%f\" will be replaced with the filename to edit."));
-  vlay->addWidget( mMisc.externalEditorHelp );
 
   //---------- group: New Mail Notification
   group = new QGroupBox( i18n("&New Mail Notification"), page );
@@ -1335,7 +1379,7 @@ void ConfigureDialog::makeMiscPage( void )
   vlay->addWidget( mMisc.mailCommandCheck );
   connect( mMisc.mailCommandCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotMailCommandSelectionChanged()) );
-  hlay = new QHBoxLayout( vlay );
+  QHBoxLayout *hlay = new QHBoxLayout( vlay );
   mMisc.mailCommandLabel = new QLabel( i18n("Specify command:"), group );
   hlay->addWidget( mMisc.mailCommandLabel );
   mMisc.mailCommandEdit = new QLineEdit( group );
@@ -1346,11 +1390,6 @@ void ConfigureDialog::makeMiscPage( void )
 	   this, SLOT(slotMailCommandChooser()) );
   mMisc.mailCommandChooseButton->setAutoDefault( false );
   hlay->addWidget( mMisc.mailCommandChooseButton );
-
-  int w1 = mMisc.externalEditorLabel->sizeHint().width();
-  int w2 = mMisc.mailCommandLabel->sizeHint().width();
-  mMisc.externalEditorLabel->setMinimumWidth( QMAX( w1, w2 ) );
-  mMisc.mailCommandLabel->setMinimumWidth( QMAX( w1, w2 ) );
 
   topLevel->addStretch( 10 );
 }
@@ -1366,7 +1405,6 @@ void ConfigureDialog::setup( void )
   setupMimePage();
   setupSecurityPage();
   setupMiscPage();
-
 }
 
 
@@ -1584,6 +1622,12 @@ void ConfigureDialog::setupComposerPage( void )
   if (num == 0) slotAddNewLanguage( KGlobal::locale()->language() );
   slotLanguageChanged( NULL );
 
+  // editor
+  config.setGroup("General");
+  bool state = config.readBoolEntry( "use-external-editor", false );
+  mComposer.externalEditorCheck->setChecked( state );
+  mComposer.externalEditorEdit->setText( config.readEntry("external-editor", "") );
+
   config.setGroup("Composer");
 
   // prefixes
@@ -1592,7 +1636,7 @@ void ConfigureDialog::setupComposerPage( void )
     prefixList.append("Re:");
   mComposer.replyListBox->clear();
   mComposer.replyListBox->insertStringList(prefixList);
-  bool state = config.readBoolEntry("replace-reply-prefix", true );
+  state = config.readBoolEntry("replace-reply-prefix", true );
   mComposer.replaceReplyPrefixCheck->setChecked( state );
 
   prefixList = config.readListEntry("forward-prefixes", ',');
@@ -1692,8 +1736,18 @@ void ConfigureDialog::setupMiscPage( void )
   KConfig &config = *kapp->config();
   config.setGroup("General");
 
-  bool state = config.readBoolEntry("empty-trash-on-exit",true);
+  bool state = config.readBoolEntry("empty-trash-on-exit",false);
   mMisc.emptyTrashCheck->setChecked( state );
+  state = config.readBoolEntry("keep-small-trash", true);
+  mMisc.keepSmallTrashCheck->setChecked( state );
+  int num = config.readNumEntry("small-trash-size", 1);
+  mMisc.smallTrashSizeSpin->setValue( num );
+  state = config.readBoolEntry("remove-old-mail-from-trash", true);
+  mMisc.removeOldMailCheck->setChecked( state );
+  num = config.readNumEntry("old-mail-age", 1);
+  mMisc.oldMailAgeSpin->setValue( num );
+  num = config.readNumEntry("old-mail-age-unit", 1);
+  mMisc.timeUnitCombo->setCurrentItem( num );
   state = config.readBoolEntry("sendOnCheck", false);
   mMisc.sendOutboxCheck->setChecked( state );
   state = config.readBoolEntry("send-receipts", false );
@@ -1702,9 +1756,7 @@ void ConfigureDialog::setupMiscPage( void )
   mMisc.compactOnExitCheck->setChecked( state );
   state = config.readBoolEntry("confirm-before-empty", true );
   mMisc.emptyFolderConfirmCheck->setChecked( state );
-  state = config.readBoolEntry( "use-external-editor", false );
-  mMisc.externalEditorCheck->setChecked( state );
-  mMisc.externalEditorEdit->setText( config.readEntry("external-editor", "") );
+
   state = config.readBoolEntry("beep-on-mail", false );
   mMisc.beepNewMailCheck->setChecked( state );
   state = config.readBoolEntry("msgbox-on-mail", false);
@@ -2028,6 +2080,11 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry("reply-languages", languageCount);
     config.writeEntry("reply-current-language", currentNr);
 
+    config.writeEntry( "use-external-editor",
+		       mComposer.externalEditorCheck->isChecked() );
+    config.writeEntry( "external-editor",
+		       mComposer.externalEditorEdit->text() );
+
     config.setGroup("Composer");
 
     int prefixCount = mComposer.replyListBox->count();
@@ -2096,6 +2153,16 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.setGroup("General");
     config.writeEntry( "empty-trash-on-exit",
 		       mMisc.emptyTrashCheck->isChecked() );
+    config.writeEntry( "keep-small-trash",
+                       mMisc.keepSmallTrashCheck->isChecked() );
+    config.writeEntry( "small-trash-size", 
+                       mMisc.smallTrashSizeSpin->value() );
+    config.writeEntry( "remove-old-mail-from-trash",
+                       mMisc.removeOldMailCheck->isChecked() );
+    config.writeEntry( "old-mail-age", 
+                       mMisc.oldMailAgeSpin->value() );
+    config.writeEntry( "old-mail-age-unit",
+                       mMisc.timeUnitCombo->currentItem() );
     config.writeEntry( "sendOnCheck",
 		       mMisc.sendOutboxCheck->isChecked() );
     config.writeEntry( "send-receipts",
@@ -2104,10 +2171,7 @@ void ConfigureDialog::slotDoApply( bool everything )
 		       mMisc.compactOnExitCheck->isChecked() );
     config.writeEntry( "confirm-before-empty",
                        mMisc.emptyFolderConfirmCheck->isChecked() );
-    config.writeEntry( "use-external-editor",
-		       mMisc.externalEditorCheck->isChecked() );
-    config.writeEntry( "external-editor",
-		       mMisc.externalEditorEdit->text() );
+
     config.writeEntry( "beep-on-mail",
 		       mMisc.beepNewMailCheck->isChecked() );
     config.writeEntry( "msgbox-on-mail",
@@ -3073,11 +3137,11 @@ void ConfigureDialog::slotDeleteMimeHeader( void )
 
 void ConfigureDialog::slotExternalEditorSelectionChanged( void )
 {
-  bool flag = mMisc.externalEditorCheck->isChecked();
-  mMisc.externalEditorEdit->setEnabled( flag );
-  mMisc.externalEditorChooseButton->setEnabled( flag );
-  mMisc.externalEditorLabel->setEnabled( flag );
-  mMisc.externalEditorHelp->setEnabled( flag );
+  bool flag = mComposer.externalEditorCheck->isChecked();
+  mComposer.externalEditorEdit->setEnabled( flag );
+  mComposer.externalEditorChooseButton->setEnabled( flag );
+  mComposer.externalEditorLabel->setEnabled( flag );
+  mComposer.externalEditorHelp->setEnabled( flag );
 }
 
 
@@ -3109,7 +3173,7 @@ void ConfigureDialog::slotExternalEditorChooser( void )
       return;
     }
 
-    mMisc.externalEditorEdit->setText( url.path() );
+    mComposer.externalEditorEdit->setText( url.path() );
   }
 }
 
@@ -3137,6 +3201,15 @@ void ConfigureDialog::slotMailCommandChooser( void )
   }
 }
 
+void ConfigureDialog::slotEmptyTrashState( int state)
+{
+  bool on = ( state == 0 ); // button not checked
+  mMisc.removeOldMailCheck->setEnabled( on );
+  mMisc.oldMailAgeSpin->setEnabled( on );
+  mMisc.timeUnitCombo->setEnabled( on );
+  mMisc.keepSmallTrashCheck->setEnabled( on );
+  mMisc.smallTrashSizeSpin->setEnabled( on );
+}
 
 IdentityEntry::IdentityEntry( void )
 {
