@@ -389,7 +389,6 @@ protected:
   //  QList<QLineEdit> mEdtList;
   QList<QWidget> mEdtList;
   QList<KTempFile> mAtmTempList;
-  static QString mPathAttach;
   QPalette mPalette;
   QString mId, mOldSigText;
   QStringList mTransportHistory;

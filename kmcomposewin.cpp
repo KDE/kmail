@@ -121,8 +121,6 @@ WindowList* windowList=new WindowList;
 #define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
 #endif
 
-QString KMComposeWin::mPathAttach = QString::null;
-
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   : KMTopLevelWidget (),
@@ -153,7 +151,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAtmList.setAutoDelete(TRUE);
   mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
-  mPathAttach = QString::null;
   mEditor = NULL;
 
   mSpellCheckInProgress=FALSE;
@@ -230,7 +227,7 @@ KMComposeWin::~KMComposeWin()
     mapAtmLoadData.remove( it );
     job->kill();
     it = mapAtmLoadData.begin();
-  } 
+  }
 }
 
 bool KMComposeWin::event(QEvent *e)
@@ -1390,26 +1387,24 @@ void KMComposeWin::slotAddrBookBcc()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotAttachFile()
-{
-  // Create File Dialog and return selected file
-  // We will not care about any permissions, existence or whatsoever in
-  // this function.
-  if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
+  //-----------------------------------------------------------------------------
+  void KMComposeWin::slotAttachFile()
+  {
+    // Create File Dialog and return selected file(s)
+    // We will not care about any permissions, existence or whatsoever in
+    // this function.
 
-  KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
+      qDebug( "This sucks donkey balls" );
+    QStringList files = KFileDialog::getOpenFileNames(QString::null, "*", this, i18n("Attach File"));
+    QString name;
+    for ( QStringList::Iterator it = files.begin(); it != files.end(); ++it ) {
+      name = *it;
+      if(!name.isEmpty()) {
+        addAttach(name);
+      }
+    }
 
-  fdlg.setCaption(i18n("Attach File"));
-  if (!fdlg.exec()) return;
-
-  KURL u = fdlg.selectedURL();
-
-  mPathAttach = u.directory();
-
-  if(u.fileName().isEmpty()) return;
-  addAttach(u.prettyURL());
-  mEditor->setModified(TRUE);
-}
+  }
 
 
 //-----------------------------------------------------------------------------
@@ -1432,7 +1427,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   if (job->error())
   {
     mapAtmLoadData.remove(it);
-    job->showErrorDialog(); 
+    job->showErrorDialog();
     return;
   }
   if ((*it).insert)
@@ -1442,7 +1437,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     mEditor->insertAt((*it).data, line, col);
     mapAtmLoadData.remove(it);
     return;
-  } 
+  }
   QString name;
   QString urlStr = (*it).url.prettyURL();
   KMMessagePart* msgPart;
@@ -1474,7 +1469,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     delete msgPart;
     return;
   }
- 
+
   // add the new attachment to the list
   addAttach(msgPart);
   rethinkFields(); //work around initial-size bug in Qt-1.32
@@ -1484,15 +1479,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
-
-  KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
+  KFileDialog fdlg(QString::null, "*", this, NULL, TRUE);
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
   KURL u = fdlg.selectedURL();
-
-  mPathAttach = u.directory();
 
   if (u.fileName().isEmpty()) return;
 
@@ -1505,7 +1496,7 @@ void KMComposeWin::slotInsertFile()
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));      
+          this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1652,9 +1643,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
-
-  KURL url = KFileDialog::getSaveURL(mPathAttach, "*", NULL, pname);
+  KURL url = KFileDialog::getSaveURL(QString::null, "*", NULL, pname);
 
   if( url.isEmpty() )
     return;
@@ -1716,7 +1705,7 @@ void KMComposeWin::slotRedo()
 
   if (fw->inherits("KEdit"))
     ((QMultiLineEdit*)fw)->redo();
-    
+
 }
 
 //-----------------------------------------------------------------------------
@@ -2261,7 +2250,7 @@ void KMLineEdit::cursorAtEnd()
 
 void KMLineEdit::undo()
 {
-    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z 
+    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z
     keyPressEvent( &k );
 }
 
