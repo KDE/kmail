@@ -144,41 +144,46 @@ kdDebug(5006) << "\n\n  KMMsgSignatureState: " << myState << endl;
 
 int partNode::nodeId()
 {
+    int curId = 0;
     partNode* rootNode = this;
     while( rootNode->mRoot )
         rootNode = rootNode->mRoot;
-    return rootNode->calcNodeIdOrFindNode( 0, this, 0, 0 );
+    return rootNode->calcNodeIdOrFindNode( curId, this, 0, 0 );
 }
 
 
 partNode* partNode::findId( int id )
 {
+    int curId = 0;
     partNode* rootNode = this;
     while( rootNode->mRoot )
         rootNode = rootNode->mRoot;
     partNode* foundNode;
-    rootNode->calcNodeIdOrFindNode( 0, 0, id, &foundNode );
+    rootNode->calcNodeIdOrFindNode( curId, 0, id, &foundNode );
     return foundNode;
 }
 
 
-int partNode::calcNodeIdOrFindNode( int oldId, const partNode* findNode, int findId, partNode** foundNode )
+int partNode::calcNodeIdOrFindNode( int &curId, const partNode* findNode, int findId, partNode** foundNode )
 {
     // We use the same algorithm to determine the id of a node and
     //                           to find the node when id is known.
-    int myId = oldId+1;
+    curId++;
     // check for node ?
     if( findNode && this == findNode )
-        return myId;
+        return curId;
     // check for id ?
-    if(  foundNode && myId == findId ) {
+    if(  foundNode && curId == findId ) {
         *foundNode = this;
-        return myId;
+        return curId;
     }
     if( mChild )
-        return mChild->calcNodeIdOrFindNode( myId, findNode, findId, foundNode );
+    {
+        int res = mChild->calcNodeIdOrFindNode( curId, findNode, findId, foundNode );
+        if (res != -1) return res;
+    }
     if( mNext )
-        return mNext->calcNodeIdOrFindNode(  myId, findNode, findId, foundNode );
+        return mNext->calcNodeIdOrFindNode( curId, findNode, findId, foundNode );
 
     if(  foundNode )
         *foundNode = 0;

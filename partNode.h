@@ -58,7 +58,7 @@ private:
         adjustDefaultType( this );
     }
 
-    int calcNodeIdOrFindNode( int oldId, const partNode* calcNode,
+    int calcNodeIdOrFindNode( int& curId, const partNode* calcNode,
                               int findId, partNode** findNode );
 
 
