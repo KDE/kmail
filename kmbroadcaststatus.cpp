@@ -139,10 +139,12 @@ void KMLittleProgressDlg::setMode() {
     break;
 
   case Progress:
-    stack->show();
-    stack->raiseWidget( m_pProgressBar );
-    if ( m_bShowButton ) {
-      m_pButton->show();
+    if (stack->isVisible()) {
+      stack->show();
+      stack->raiseWidget( m_pProgressBar );
+      if ( m_bShowButton ) {
+        m_pButton->show();
+      }
     }
     break;
   }
