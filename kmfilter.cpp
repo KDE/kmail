@@ -30,6 +30,7 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
   else {
     bApplyOnInbound = TRUE;
     bApplyOnOutbound = FALSE;
+    bApplyOnExplicit = TRUE;
     bStopProcessingHere = TRUE;
   }
 }
@@ -37,7 +38,7 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
 
 KMFilter::KMFilter( KMFilter * aFilter )
 {
-	bPopFilter = aFilter->isPopFilter();
+  bPopFilter = aFilter->isPopFilter();
 
   if ( !bPopFilter )
     mActions.setAutoDelete( TRUE );
@@ -47,37 +48,33 @@ KMFilter::KMFilter( KMFilter * aFilter )
     
     if ( bPopFilter ){
       mAction = aFilter->action();
-		}
-    else {
+    } else {
       bApplyOnInbound = aFilter->applyOnInbound();
       bApplyOnOutbound = aFilter->applyOnOutbound();
+      bApplyOnExplicit = aFilter->applyOnExplicit();
       bStopProcessingHere = aFilter->stopProcessingHere();
     
       QPtrListIterator<KMFilterAction> it( *aFilter->actions() );
       for ( it.toFirst() ; it.current() ; ++it ) {
         KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
         if ( desc ) {
-	  			KMFilterAction *f = desc->create();
+	  KMFilterAction *f = desc->create();
           if ( f ) {
-	    			f->argsFromString( (*it)->argsAsString() );
-	    			mActions.append( f );
-	  			}
+	    f->argsFromString( (*it)->argsAsString() );
+	    mActions.append( f );
+	  }
         }
       }
     }
-  } 
-  else
-	{
-		if (bPopFilter)
-		{
-			mAction = Down;
-		}
-		else
-		{
+  } else {
+    if (bPopFilter) {
+      mAction = Down;
+    } else {
       bApplyOnInbound = TRUE;
       bApplyOnOutbound = FALSE;
+      bApplyOnExplicit = TRUE;
       bStopProcessingHere = TRUE;
-		}
+    }
   }
 }
 
@@ -154,17 +151,16 @@ void KMFilter::readConfig(KConfig* config)
   if (bPopFilter)
     // get the action description...
     mAction = (KMPopFilterAction) config->readNumEntry( "action" );
-  else
-  {
-    { // limit lifetime of "sets"
-      QStringList sets = config->readListEntry("apply-on");
-      if ( sets.isEmpty() ) {
-        bApplyOnOutbound = FALSE;
-        bApplyOnInbound = TRUE;
-      } else {
-        bApplyOnInbound = bool(sets.contains("check-mail"));
-        bApplyOnOutbound = bool(sets.contains("send-mail"));
-      }
+  else {
+    QStringList sets = config->readListEntry("apply-on");
+    if ( sets.isEmpty() ) {
+      bApplyOnOutbound = false;
+      bApplyOnInbound = true;
+      bApplyOnExplicit = true;
+    } else {
+      bApplyOnInbound = bool(sets.contains("check-mail"));
+      bApplyOnOutbound = bool(sets.contains("send-mail"));
+      bApplyOnExplicit = bool(sets.contains("manual-filtering"));
     }
 
     bStopProcessingHere = config->readBoolEntry("StopProcessingHere", TRUE);
@@ -214,14 +210,14 @@ void KMFilter::writeConfig(KConfig* config) const
 
   if (bPopFilter) {
     config->writeEntry( "action", mAction );
-	}
-  else {
+  } else {
     QStringList sets;
     if ( bApplyOnInbound )
       sets.append( "check-mail" );
     if ( bApplyOnOutbound )
       sets.append( "send-mail" );
-    sets.append( "manual-filtering" );
+    if ( bApplyOnExplicit )
+      sets.append( "manual-filtering" );
     config->writeEntry( "apply-on", sets );
 
     config->writeEntry( "StopProcessingHere", bStopProcessingHere );
@@ -288,6 +284,8 @@ const QString KMFilter::asString() const
       result += " Inbound";
     if ( bApplyOnOutbound )
       result += " Outbound";
+    if ( bApplyOnExplicit )
+      result += " Explicit";
     result += "\n";
     if ( bStopProcessingHere )
       result += "If it matches, processing stops at this filter.\n";

@@ -6,9 +6,10 @@
 #ifndef kmfilterdlg_h
 #define kmfilterdlg_h
 
-#include "../libkdenetwork/kwidgetlister.h"
 #include "kmfilter.h"
 #include "kmfilteraction.h"
+
+#include <kwidgetlister.h>
 
 #include <kdialogbase.h>
 
@@ -325,7 +326,7 @@ public slots:
   void slotActionChanged(const KMPopFilterAction aAction);
 
 protected slots:
-  void slotApplicabilityChanged( int aOption );
+  void slotApplicabilityChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotReset();
 
@@ -342,7 +343,7 @@ protected:
   KMPopFilterActionWidget *mActionGroup;
   /** Lets the user select whether to apply this filter on
       inbound/outbound messages, both, or only on explicit CTRL-J. */
-  QComboBox *mApplicability;
+  QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyOnCtrlJ;
   QCheckBox *mStopProcessingHere;
   QGroupBox *mAdvOptsGroup;
   QVGroupBox *mGlobalsBox;

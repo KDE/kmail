@@ -125,6 +125,18 @@ public:
   */
   bool applyOnInbound() const { return bApplyOnInbound; }
 
+  /** Set whether this filter should be applied on
+      explicit (CTRL-J) filtering (@p aApply == TRUE) or not.
+      @see setApplyOnOutbound applyOnInbound applyOnOutbound
+  */
+  void setApplyOnExplicit( bool aApply=TRUE ) { bApplyOnExplicit = aApply; }
+
+  /** @return TRUE if this filter should be applied on
+      explicit (CTRL-J) filtering, FALSE otherwise.
+      @see setApplyOnOutbound applyOnOutbound setApplyOnInbound
+  */
+  bool applyOnExplicit() const { return bApplyOnExplicit; }
+
   void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
   bool stopProcessingHere() const { return bStopProcessingHere; }
 
@@ -142,16 +154,17 @@ public:
       in the future... */
   const QString asString() const;
   /** No descriptions */
-  bool isPopFilter(void);
+  bool isPopFilter();
 
 private:
-  bool bPopFilter;
-  bool bApplyOnInbound;
-  bool bApplyOnOutbound;
-  bool bStopProcessingHere;
   KMSearchPattern mPattern;
   QPtrList<KMFilterAction> mActions;
   KMPopFilterAction mAction;
+  bool bPopFilter : 1;
+  bool bApplyOnInbound : 1;
+  bool bApplyOnOutbound : 1;
+  bool bApplyOnExplicit : 1;
+  bool bStopProcessingHere : 1;
 };
 
 #endif /*kmfilter_h*/

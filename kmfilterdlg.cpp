@@ -122,24 +122,25 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
     mActionLister = new KMFilterActionWidgetLister( agb );
     vbl->addWidget( agb, 0, Qt::AlignTop );
 
-    mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical, i18n("Advanced Options"), w);
+    mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical,
+				    i18n("Advanced Options"), w);
     {
       QWidget *adv_w = new QWidget( mAdvOptsGroup );
-      QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 2 /*cols*/,
+      QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 4 /*cols*/,
 				         0 /*border*/, spacingHint() );
-      gl->setColStretch( 1, 1 );
-      QLabel *l = new QLabel(i18n("Apply this filter on"), adv_w );
-      gl->addWidget( l, 0, 0, Qt::AlignLeft );
-      mApplicability = new QComboBox( FALSE, adv_w );
-      mApplicability->insertItem( i18n("incoming messages") );
-      mApplicability->insertItem( i18n("outgoing messages") );
-      mApplicability->insertItem( i18n("both") );
-      mApplicability->insertItem( i18n("explicit \"Apply Filters\" only") );
-      gl->addWidget( mApplicability, 0, 1, Qt::AlignLeft );
-      mStopProcessingHere = new QCheckBox( i18n("If this filter matches, stop processing here"), adv_w );
+      gl->setColStretch( 0, 1 );
+      QLabel *l = new QLabel( i18n("Apply this filter on:"), adv_w );
+      gl->addWidget( l, 0, 0, AlignLeft );
+      mApplyOnIn = new QCheckBox( i18n("&Incoming messages"), adv_w );
+      gl->addWidget( mApplyOnIn, 0, 1 );
+      mApplyOnOut = new QCheckBox( i18n("&Sent messages"), adv_w );
+      gl->addWidget( mApplyOnOut, 0, 2 );
+      mApplyOnCtrlJ = new QCheckBox( i18n("&Explicit \"Apply Filters\""), adv_w );
+      gl->addWidget( mApplyOnCtrlJ, 0, 3 );
+      mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), adv_w );
       gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
 			      1, 1, /*from to row*/
-  			      0, 1 /*from to col*/ );
+  			      0, 3 /*from to col*/ );
     }
     vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
   }
@@ -158,12 +159,15 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
     // set the action in the filter when changed
     connect( mActionGroup, SIGNAL(actionChanged(const KMPopFilterAction)),
 	     this, SLOT(slotActionChanged(const KMPopFilterAction)) );
-  }
-  else {
+  } else {
     // transfer changes from the 'Apply this filter on...'
     // combo box to the filter
-    connect( mApplicability, SIGNAL(activated(int)),
-  	     this, SLOT(slotApplicabilityChanged(int)) );
+    connect( mApplyOnIn, SIGNAL(clicked()),
+  	     this, SLOT(slotApplicabilityChanged()) );
+    connect( mApplyOnOut, SIGNAL(clicked()),
+  	     this, SLOT(slotApplicabilityChanged()) );
+    connect( mApplyOnCtrlJ, SIGNAL(clicked()),
+  	     this, SLOT(slotApplicabilityChanged()) );
 
     // transfer changes from the 'stop processing here'
     // check box to the filter
@@ -206,73 +210,70 @@ void KMFilterDlg::slotActionChanged(const KMPopFilterAction aAction)
 void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 {
   assert( aFilter );
-  int a=0;
   
   if (bPopFilter){
     mActionGroup->setAction( aFilter->action() );
     mGlobalsBox->setEnabled(true);
     mShowLaterBtn->setChecked(mFilterList->showLaterMsgs());
-  }
-  else {
-    kdDebug(5006) << "apply on inbound == "
-  	      << aFilter->applyOnInbound() << endl;
-    kdDebug(5006) << "apply on outbound == "
-	      << aFilter->applyOnOutbound() << endl;
-  
-    if ( aFilter->applyOnInbound() )
-      if ( aFilter->applyOnOutbound() )
-        a=2;
-      else
-        a=0;
-    else
-      if ( aFilter->applyOnOutbound() )
-        a=1;
-      else
-        a=3;
-    mApplicability->blockSignals(TRUE);
-    mApplicability->setCurrentItem( a );
-    mApplicability->blockSignals(FALSE);
-
-    mStopProcessingHere->blockSignals(TRUE);
-    mStopProcessingHere->setChecked( aFilter->stopProcessingHere() );
-    mStopProcessingHere->blockSignals(FALSE);
-
+  } else {
     mActionLister->setActionList( aFilter->actions() );
-  
-    mAdvOptsGroup->setEnabled(TRUE);
+
+    mAdvOptsGroup->setEnabled( true );
   }
 
   mPatternEdit->setSearchPattern( aFilter->pattern() );
   mFilter = aFilter;
+
+  if (!bPopFilter) {
+    kdDebug(5006) << "apply on inbound == "
+		  << aFilter->applyOnInbound() << endl;
+    kdDebug(5006) << "apply on outbound == "
+		  << aFilter->applyOnOutbound() << endl;
+    kdDebug(5006) << "apply on explicit == "
+		  << aFilter->applyOnExplicit() << endl;
+
+    // NOTE: setting these values activates the slot that sets them in
+    // the filter! So make sure we have the correct values _before_ we
+    // set the first one:
+    bool applyOnIn = aFilter->applyOnInbound();
+    bool applyOnOut = aFilter->applyOnOutbound();
+    bool applyOnExplicit = aFilter->applyOnExplicit();
+    bool stopHere = aFilter->stopProcessingHere();
+    
+    mApplyOnIn->setChecked( applyOnIn );
+    mApplyOnOut->setChecked( applyOnOut );
+    mApplyOnCtrlJ->setChecked( applyOnExplicit );
+    mStopProcessingHere->setChecked( stopHere );
+  }
 }
 
 void KMFilterDlg::slotReset()
 {
   mFilter = 0;
-	mPatternEdit->reset();
-
-	if(bPopFilter)
-	{
-		mActionGroup->reset();
-		mGlobalsBox->setEnabled(false);		  	
-	}
-	else
-	{
-		mActionLister->reset();
-		mAdvOptsGroup->setEnabled(FALSE);
-	}
+  mPatternEdit->reset();
+  
+  if(bPopFilter) {
+    mActionGroup->reset();
+    mGlobalsBox->setEnabled( false );
+  } else {
+    mActionLister->reset();
+    mAdvOptsGroup->setEnabled( false );
+  }
 }
 
-void KMFilterDlg::slotApplicabilityChanged( int aOption )
+void KMFilterDlg::slotApplicabilityChanged()
 {
   if ( !mFilter )
     return;
 
-  kdDebug(5006) << "KMFilterDlg: setting applicability to "
-	    << aOption << endl;
-  
-  mFilter->setApplyOnInbound( aOption == 0 || aOption == 2 );
-  mFilter->setApplyOnOutbound( aOption == 1 || aOption == 2 );
+  mFilter->setApplyOnInbound( mApplyOnIn->isChecked() );
+  mFilter->setApplyOnOutbound( mApplyOnOut->isChecked() );
+  mFilter->setApplyOnExplicit( mApplyOnCtrlJ->isChecked() );
+  kdDebug(5006) << "KMFilterDlg: setting filter to be applied at "
+		<< ( mFilter->applyOnInbound() ? "incoming " : "" )
+		<< ( mFilter->applyOnOutbound() ? "outgoing " : "" )
+		<< ( mFilter->applyOnExplicit() ? "explicit CTRL-J" : "" )
+		<< endl;
 }
 
 void KMFilterDlg::slotStopProcessingButtonToggled( bool aChecked )

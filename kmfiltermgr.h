@@ -21,7 +21,8 @@ public:
   KMFilterMgr(bool popFilter = false);
   virtual ~KMFilterMgr();
 
-  enum FilterSet { NoSet = 0x0, Inbound = 0x1, Outbound = 0x2, All = 0x80000000 };
+  enum FilterSet { NoSet = 0x0, Inbound = 0x1, Outbound = 0x2, Explicit = 0x4,
+		   All = Inbound|Outbound|Explicit };
 
   /** Reload filter rules from config file. */
   virtual void readConfig(void);
@@ -53,7 +54,7 @@ public:
     Shall be called after all messages are processed. This method
     closes all folders that have been temporarily opened with
     tempOpenFolder(). */
-  virtual void cleanup(void);
+  virtual void cleanup();
 
   /** Open given folder and mark it as temporarily open. The folder
     will be closed upon next call of cleanip(). This method is
@@ -69,7 +70,7 @@ public:
   void endUpdate() {}
 
   /** Output all rules to stdout */
-  virtual void dump(void);
+  virtual void dump();
 
   /** Called from the folder manager when a folder is removed.
     Tests if the folder aFolder is used in any action. Changes

@@ -50,14 +50,12 @@ void KMFilterMgr::readConfig(void)
     numFilters = config->readNumEntry("popfilters",0);
     mShowLater = config->readNumEntry("popshowDLmsgs",0);
     group = "PopFilter";
-  }
-  else {
+  } else {
     numFilters = config->readNumEntry("filters",0);
     group = "Filter";
   }
 
-  for (i=0; i<numFilters; i++)
-  {
+  for (i=0; i<numFilters; i++) {
     grpName.sprintf("%s #%d", group.latin1(), i);
     KConfigGroupSaver saver(config, grpName);
     filter = new KMFilter(config, bPopFilter);
@@ -101,8 +99,7 @@ void KMFilterMgr::writeConfig(bool withSync)
   if (bPopFilter) { 
     config->writeEntry("popfilters", i);
     config->writeEntry("popshowDLmsgs", mShowLater);
-  }
-  else  {
+  } else  {
     config->writeEntry("filters", i);
   }
 
@@ -115,20 +112,15 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 {
   if(bPopFilter) {
     QPtrListIterator<KMFilter> it(*this);
-    for (it.toFirst() ; it.current() ; ++it)
-    {
-      if ((*it)->pattern()->matches(msg)) {
-
+    for (it.toFirst() ; it.current() ; ++it) {
+      if ((*it)->pattern()->matches(msg))
         return (*it)->action();
-  
-      }
     }
     return NoAction;
-  }
-  else {
+  } else {
     if (!aSet) {
       kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
-	        << endl;
+		    << endl;
       return 1;
     }
 
@@ -141,7 +133,8 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
     {
       if ( aSet&All
   	   || ( (aSet&Outbound) && (*it)->applyOnOutbound() )
-  	   || ( (aSet&Inbound)  && (*it)->applyOnInbound() ) ) {
+  	   || ( (aSet&Inbound)  && (*it)->applyOnInbound() )
+	   || ( (aSet&Explicit) && (*it)->applyOnExplicit() ) ) {
 
         if ((*it)->pattern()->matches(msg)) {
 
