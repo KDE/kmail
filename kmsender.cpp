@@ -516,6 +516,7 @@ void KMSender::slotIdle()
       .arg(errString)
       .arg(mMethodStr);
     if (!errString.isEmpty()) KMessageBox::error(0,msg);
+    setStatusMsg( i18n( "Sending aborted." ) );
   } else {
     if (!mSendProc->sendOk()) {
       mCurrentMsg->setTransferInProgress( false );

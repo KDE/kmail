@@ -174,4 +174,3 @@ void KMMainWin::slotQuit()
 {
     close();
 }
-
