@@ -259,10 +259,10 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
   : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
     mAccount( account ),
     mServerTest( 0 ),
+    mCurCapa( AllCapa ),
     mCapaNormal( AllCapa ),
     mCapaSSL( AllCapa ),
     mCapaTLS( AllCapa ),
-    mCurCapa( AllCapa ),
     mSieveConfigEditor( 0 )
 {
   mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 );
