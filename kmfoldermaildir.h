@@ -86,6 +86,7 @@ private:
   QString constructValidFileName(QString& file, KMMsgStatus status);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, KMMsgInfo* mi);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, QString& aFileName, KMMsgStatus status);
+  bool removeFile(const QString& filename);
 
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on

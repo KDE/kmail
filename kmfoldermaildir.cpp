@@ -728,9 +728,12 @@ bool KMFolderMaildir::isIndexOutdated()
 //-----------------------------------------------------------------------------
 void KMFolderMaildir::removeMsg(int idx, bool)
 {
-  // removeMsg is *essentially* just a 'take' only it doesn't return
-  // the deleted message.  so we'll use it and ignore the result!
-  take(idx);
+  KMMsgBase* msg = mMsgList[idx];
+  if (!msg || !msg->fileName()) return;
+
+  removeFile(msg->fileName());
+
+  KMFolderMaildirInherited::removeMsg(idx);
 }
 
 //-----------------------------------------------------------------------------
@@ -739,34 +742,39 @@ KMMessage* KMFolderMaildir::take(int idx)
   // first, we do the high-level stuff.. then delete later
   KMMessage *msg = KMFolderMaildirInherited::take(idx);
 
-  if (!msg) return NULL;
+  if (!msg || !msg->fileName()) return NULL;
 
-  if (!msg->fileName())
+  if (removeFile(msg->fileName()))
+    return msg;
+  else
     return NULL;
+}
 
+bool KMFolderMaildir::removeFile(const QString& filename)
+{
   // we need to look in both 'new' and 'cur' since it's possible to
   // delete a message before the folder is compacted.  since the file
   // naming and moving is done in ::compact, we can't assume any
   // location at this point
   QString abs_file(location() + "/cur/");
-  abs_file += msg->fileName();
+  abs_file += filename;
 
   if (QFile::exists(abs_file) == false)
   {
     abs_file = location() + "/new/";
-    abs_file += msg->fileName();
+    abs_file += filename;
 
     if (QFile::exists(abs_file) == false)
     {
       kdDebug(5006) << "Can't delete " << abs_file << " if it doesn't exist!" << endl;
-      return msg;
+      return false;
     }
   }
 
   if(QFile::remove(abs_file) == false)
-    return msg;
+    return false;
 
-  return msg;
+  return true;
 }
 
 //-----------------------------------------------------------------------------
