@@ -93,7 +93,7 @@ public:
   void enableActions(bool on) const;
   void processVCalRequest( const QCString& receiver, const QString& vCalIn,
                            QString& choice );
-  void processVCalReply( const QCString& receiver, const QString& vCalIn,
+  void processVCalReply( const QCString& sender, const QString& vCalIn,
                          QString& choice );
 
   /* (Re-)Read configuration file */
@@ -250,7 +250,7 @@ signals:
 			    bool& );
 
   /** Answer an invitation */
-  void signalIncidenceAnswer( const QString&, QString& );
+  void signalIncidenceAnswer( const QCString&, const QString&, QString& );
 
   /** An event was deleted */
   void signalEventDeleted( const QString& );

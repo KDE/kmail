@@ -582,8 +582,10 @@ void KMGroupware::internalCreateKOrgPart()
 					      QString&, bool& ) ),
 	   mKOrgPart, SLOT(slotRejectedEvent( const QCString&, const QString&, bool&,
 					      QString&, bool& ) ) );
-  connect( this, SIGNAL( signalIncidenceAnswer( const QString&, QString& ) ),
-	   mKOrgPart, SLOT( slotIncidenceAnswer( const QString&, QString& ) ) );
+  connect( this, SIGNAL( signalIncidenceAnswer( const QCString&, const QString&,
+						QString& ) ),
+	   mKOrgPart, SLOT( slotIncidenceAnswer( const QCString&, const QString&,
+						 QString& ) ) );
   connect( this, SIGNAL( signalEventDeleted( const QString& ) ),
 	   mKOrgPart, SLOT( slotEventDeleted( const QString& ) ) );
 
@@ -1199,8 +1201,7 @@ KMGroupware::VCalType KMGroupware::getVCalType( const QString &vCal )
 }
 
 //-----------------------------------------------------------------------------
-void KMGroupware::processVCalRequest( const QCString& receiver,
-                                      const QString& vCalIn,
+void KMGroupware::processVCalRequest( const QCString& receiver, const QString& vCalIn,
                                       QString& choice )
 {
   ignore_GroupwareDataChangeSlots = true;
@@ -1209,7 +1210,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
 
   VCalType type = getVCalType( vCalIn );
   if( type == vCalUnknown ) {
-    kdDebug(5006) << "processVCalReply called with something that is not a vCal\n";
+    kdDebug(5006) << "processVCalRequest called with something that is not a vCal\n";
     return;
   }
 
@@ -1314,8 +1315,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
 
 
 //-----------------------------------------------------------------------------
-void KMGroupware::processVCalReply( const QCString& /*receiver*/,
-				    const QString& vCalIn,
+void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalIn,
                                     QString& choice )
 {
   VCalType type = getVCalType( vCalIn );
@@ -1329,7 +1329,14 @@ void KMGroupware::processVCalReply( const QCString& /*receiver*/,
     QString vCalOut;
     ignore_GroupwareDataChangeSlots = true;
     // emit signal...
-    emit signalIncidenceAnswer( vCalIn, vCalOut );
+    emit signalIncidenceAnswer( sender, vCalIn, vCalOut );
+
+    // Check for the user stopping this transaction or some error happening
+    if( vCalOut == "false" ) {
+      kdDebug(5006) << "Problem in processing the iCal reply\n";
+      ignore_GroupwareDataChangeSlots = false;
+      return;
+    }
 
     // note: If we do not get a vCalOut back, we just store the vCalIn into mCalendar
 
@@ -2149,17 +2156,33 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
   file.close();
 
   // Find the receiver if we can
-  QCString receiver;
-  if( msg )
-    receiver = KMMessage::getEmailAddr( msg->to() );
+  QString receiver;
+  if( msg ) {
+    KMIdentity ident = kernel->identityManager()->identityForAddress( msg->to() );
+    if( ident != KMIdentity::null ) {
+      receiver = ident.emailAddr();
+    } else {
+      QStringList addrs = KMMessage::splitEmailAddrList( msg->to() );
+      bool ok;
+      receiver = QInputDialog::getItem( i18n("Select Address"), 
+					i18n("None of your identities match the receiver "
+					     "of this message,<br> please choose which of "
+					     "the following addresses is yours:"), 
+					addrs, 0, FALSE, &ok, mMainWin );
+      if( !ok ) return false;
+    }
+  }
+
+  // Find the sender if we can
+  QCString sender = KMMessage::getEmailAddr( msg->from() );
 
   if( "request" == gwAction )
-    processVCalRequest( receiver, vCal, gwAction2 );
+    processVCalRequest( receiver.utf8(), vCal, gwAction2 );
   else if( "reply" == gwAction )
-    processVCalReply( receiver, vCal, gwAction2 );
+    processVCalReply( sender, vCal, gwAction2 );
   else if( "cancel" == gwAction )
     /* Note, we pass gwAction here, not gwAction2 */
-    processVCalReply( receiver, vCal, gwAction );
+    processVCalReply( sender, vCal, gwAction );
 
   return true;
 }
