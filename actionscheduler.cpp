@@ -1,5 +1,5 @@
 /*  Action Scheduler
-   
+
     This file is part of KMail, the KDE mail client.
     Copyright (c) Don Sanders <sanders@kde.org>
 
@@ -566,14 +566,14 @@ void ActionScheduler::moveMessage()
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
 
   KMCommand *cmd = new KMMoveCommand( folder, msg );
-  connect ( cmd, SIGNAL( completed(bool) ),
-	    this, SLOT( moveMessageFinished(bool) ) );
+  connect( cmd, SIGNAL( completed( KMCommand::Result ) ),
+	   this, SLOT( moveMessageFinished( KMCommand::Result ) ) );
   cmd->start();
 }
 
-void ActionScheduler::moveMessageFinished(bool success)
+void ActionScheduler::moveMessageFinished( KMCommand::Result result )
 {
-  if ( !success )
+  if ( result != KMCommand::OK )
     mResult = ResultError;
 
   if (!mSrcFolder->count())

@@ -1640,8 +1640,8 @@ void KMHeaders::deleteMsg ()
   finalizeMove( nextItem, contentX, contentY );
 
   KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList );
-  connect (command, SIGNAL(completed( bool)),
-           this, SLOT(slotMoveCompleted( bool)));
+  connect( command, SIGNAL( completed( KMCommand::Result ) ),
+           this, SLOT( slotMoveCompleted( KMCommand::Result ) ) );
   command->start();
 
   KMBroadcastStatus::instance()->setStatusMsg("");
@@ -1724,19 +1724,19 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
   finalizeMove( nextItem, contentX, contentY );
 
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
-  connect (command, SIGNAL(completed( bool)),
-           this, SLOT(slotMoveCompleted( bool)));
+  connect( command, SIGNAL( completed( KMCommand::Result ) ),
+           this, SLOT( slotMoveCompleted( KMCommand::Result ) ) );
   command->start();
 
 }
 
-void KMHeaders::slotMoveCompleted( bool success )
+void KMHeaders::slotMoveCompleted( KMCommand::Result result )
 {
-   kdDebug(5006) <<  "KMHeaders::slotMoveCompleted: " << success << endl;
-   if (success) {
+   kdDebug(5006) <<  "KMHeaders::slotMoveCompleted: " << result << endl;
+   if ( result == KMCommand::OK ) {
     KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
   } else {
-    /* The move failed or the user canceled it reset the state of all
+    /* The move failed or the user canceled it; reset the state of all
      * messages involved and repaint.
      *
      * Note: This potentially resets too many items if there is more than one
@@ -1755,7 +1755,10 @@ void KMHeaders::slotMoveCompleted( bool success )
       }
     }
     triggerUpdate();
-    KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
+    if ( result == KMCommand::Failed )
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
+    else
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));
   }
 }
 

@@ -1,3 +1,5 @@
+// -*- mode: C++ -*-
+
 #ifndef __KMHEADERS
 #define __KMHEADERS
 
@@ -12,6 +14,7 @@
 #include "kmmessage.h"
 #include "kmime_util.h"
 #include <kpopupmenu.h>
+#include "kmcommands.h"
 
 class KMFolder;
 class KMMessage;
@@ -291,7 +294,7 @@ protected slots:
   void rightButtonPressed( QListViewItem *, const QPoint &, int );
 
 private slots:
-  void slotMoveCompleted( bool success );
+  void slotMoveCompleted( KMCommand::Result result );
 
 private:
   /** Is equivalent to clearing the list and inserting an item for

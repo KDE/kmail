@@ -1589,8 +1589,10 @@ void KMMoveCommand::execute()
   typedef QMap< KMFolder*, QPtrList<KMMessage>* > FolderToMessageListMap;
   FolderToMessageListMap folderDeleteList;
 
-  if (mDestFolder && mDestFolder->open() != 0)
+  if (mDestFolder && mDestFolder->open() != 0) {
+    completeMove( Failed );
     return;
+  }
   KCursorSaver busy(KBusyPtr::busy());
 
   // TODO set SSL state according to source and destfolder connection?
@@ -1665,7 +1667,7 @@ void KMMoveCommand::execute()
         } else if (rc != 0) {
           // Something  went wrong. Stop processing here, it is likely that the
           // other moves would fail as well.
-          completeMove( false);
+          completeMove( Failed );
           return;
         }
       }
@@ -1697,11 +1699,11 @@ void KMMoveCommand::execute()
     if ( mMsgList.first() ) {
       srcFolder = mMsgList.first()->parent();
       if ( mDestFolder && mDestFolder == srcFolder ) {
-        completeMove( true );
+        completeMove( OK );
       }
     }
     if ( !mDestFolder ) {
-      emit completeMove( true );
+      completeMove( OK );
     }
   }
 }
@@ -1719,10 +1721,11 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
       kdDebug(5006) <<  "### Not all moved messages reported back that they were " << endl
                     <<  "### added to the target folder. Did uidValidity change? " << endl;
     }
+    completeMove( OK );
   } else {
     // Should we inform the user here or leave that to the caller?
+    completeMove( Failed );
   }
-  completeMove( success );
 }
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
@@ -1738,24 +1741,24 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
     }
-    completeMove( true );
+    completeMove( OK );
   } else {
     mProgressItem->incCompletedItems();
     mProgressItem->updateProgress();
   }
 }
 
-void KMMoveCommand::completeMove( bool success )
+void KMMoveCommand::completeMove( Result result )
 {
   if ( mProgressItem )
     mProgressItem->setComplete();
-  emit completed( success );
+  emit completed( result );
   deleteLater();
 }
 
 void KMMoveCommand::slotMoveCanceled()
 {
-   completeMove( false );
+   completeMove( Canceled );
 }
 
 // srcFolder doesn't make much sense for searchFolders

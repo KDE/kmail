@@ -1,4 +1,5 @@
-/*  Action Scheduler
+/*  -*- mode: C++ -*-
+    Action Scheduler
 
     This file is part of KMail, the KDE mail client.
     Copyright (c) Don Sanders <sanders@kde.org>
@@ -37,6 +38,8 @@
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfilter.h"
 #include "kmfiltermgr.h" // KMFilterMgr::FilterSet
+#include "kmcommands.h"
+
 class KMHeaders;
 
 /* A class for asynchronous filtering of messages */
@@ -107,7 +110,7 @@ private slots:
   void messageRetrieved(KMMessage*);
   void filterMessage();
   void moveMessage();
-  void moveMessageFinished(bool);
+  void moveMessageFinished( KMCommand::Result result );
 
 private:
   static KMFolderMgr *tempFolderMgr;

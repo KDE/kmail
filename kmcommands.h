@@ -34,6 +34,8 @@ class KMCommand : public QObject
   Q_OBJECT
 
 public:
+  enum Result { OK, Canceled, Failed };
+
   // Trival constructor, don't retrieve any messages
   KMCommand( QWidget *parent = 0 );
   // Retrieve all messages in msgList when start is called.
@@ -83,7 +85,7 @@ signals:
   void messagesTransfered(bool);
   /** Emitted when the command has completed.
    * @success Success or error. */
-  void completed( bool success );
+  void completed( KMCommand::Result result );
 
 private:
   // ProgressDialog for transferring messages
@@ -596,7 +598,7 @@ public slots:
 
 private:
   virtual void execute();
-  void completeMove( bool success );
+  void completeMove( Result result );
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
