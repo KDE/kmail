@@ -134,9 +134,9 @@ void KMGroupware::readConfig()
   readConfigInternal();
   if( !checkFolders() ) {
     assert( mFolderParent );
-    if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required groupware folders"
-					    " as subfolders of %1. If you dont want this, press \"No\","
-					    " and the groupware functions will be disabled").arg(mFolderParent->name()),
+    if( KMessageBox::questionYesNo( 0, i18n("<qt>KMail will now create the required groupware folders"
+					    " as subfolders of <b>%1</b>. If you don't want this, press <b>No</b>,"
+					    " and the groupware functions will be disabled.</qt>").arg(mFolderParent->name()),
 				    i18n("Groupware Folders") ) == KMessageBox::No ) {
       mUseGroupware = false;
     }
@@ -1459,7 +1459,7 @@ void KMGroupware::processVCalReply( const QCString& /*receiver*/,
     vPartMicroParser( vCalIn.utf8(), uid, descr, summary );
     if( type == vCalEvent ) {
       emit signalEventDeleted( uid );
-      KMessageBox::information( mMainWin, i18n("The event %1 was deleted from your calendar")
+      KMessageBox::information( mMainWin, i18n("<qt>The event <b>%1</b> was deleted from your calendar.</qt>")
 				.arg( descr) );
     } else if( type == vCalTodo ) {
       emit signalTaskDeleted( uid );
@@ -2161,7 +2161,7 @@ bool KMGroupware::msTNEFToHTML( KMReaderWin* reader,
                             useGroupware, prefix, postfix );
     }
   }else{
-    KMessageBox::error(0, i18n("Unable to open file %1").arg(fname));
+    KMessageBox::error(0, i18n("<qt>Unable to open file <b>%1</b>.</qt>").arg(fname));
   }
   return false;
 }
