@@ -191,7 +191,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
   if (!folder)
   {
     static bool know_type = false;
-    static KMFolderType type = KMFolderTypeMbox;
+    static KMFolderType type = KMFolderTypeMaildir;
     if (know_type == false)
     {
       know_type = true;
@@ -199,21 +199,9 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
       KConfigGroupSaver saver(config, "General");
       if (config->hasKey("default-mailbox-format"))
       {
-        if (config->readNumEntry("default-mailbox-format", 0) == 1)
-          type = KMFolderTypeMaildir;
+        if (config->readNumEntry("default-mailbox-format", 1) == 0)
+          type = KMFolderTypeMbox;
           
-      }
-      else
-      {
-        QCString MAIL(getenv("MAIL"));
-        if (!MAIL.isEmpty() && !MAIL.isNull())
-        {
-          // if the contents of $MAIL is a directory, then we likely want
-          // Maildir as our default
-          QFileInfo info(MAIL);
-          if (info.isDir())
-            type = KMFolderTypeMaildir;
-        }
       }
     }
 

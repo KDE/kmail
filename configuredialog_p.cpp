@@ -1,7 +1,11 @@
 #define QT_NO_CAST_ASCII
-#define QT_NO_COMPAT
 // configuredialog_p.cpp: classes internal to ConfigureDialog
 // see configuredialog.cpp for details.
+
+// This must be first
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 // my header:
 #include "configuredialog_p.h"
@@ -10,22 +14,30 @@
 #include "kmidentity.h" // for IdentityList::{export,import}Data
 
 // other kdenetwork headers: (none)
+
 // other KDE headers:
 #include <kemailsettings.h> // for IdentityEntry::fromControlCenter()
+#include <kmtransport.h>
 #include <kmessagebox.h>
-#include <klocale.h> // for i18n
+#include <kglobal.h>
+#include <ksimpleconfig.h>
+#include <kstandarddirs.h>
 
 // Qt headers:
+#include <qheader.h>
+#include <qtabwidget.h>
 #include <qradiobutton.h>
 #include <qbuttongroup.h>
 #include <qlabel.h>
-#include <qframe.h>
-#include <qwidget.h>
 #include <qlayout.h>
-#include <assert.h>
 
 // Other headers:
 #include <assert.h>
+#include <signal.h>
+#include <stdlib.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 // used in IdentityList::{import,export}Data
 static QString pipeSymbol = QString::fromLatin1("|");
@@ -107,9 +119,9 @@ void IdentityList::importData()
     
     entry.setSignatureInlineText( ident.signatureInlineText() );
     entry.setUseSignatureFile( ident.useSignatureFile() );
-    entry.setTransport(ident.transport());
-    entry.setFcc(ident.fcc());
-    entry.setDrafts(ident.drafts());
+    entry.setTransport( ident.transport() );
+    entry.setFcc( ident.fcc() );
+    entry.setDrafts( ident.drafts() );
 
     append( entry );
   }
@@ -153,15 +165,14 @@ void IdentityList::exportData() const
 
 
 
-// FIXME: Add the help button again if there actually _is_ a
-// help text for this dialog!
 NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 				      QWidget *parent, const char *name,
 				      bool modal )
   : KDialogBase( parent, name, modal, i18n("New Identity"),
-		 Ok|Cancel/*|Help*/, Ok, true ), mDuplicateMode( Empty )
+		 Ok|Cancel|Help, Ok, true ), mDuplicateMode( Empty )
 {
-  QFrame *page = makeMainWidget();
+  setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
+  QWidget *page = makeMainWidget();
   QVBoxLayout *vlay = new QVBoxLayout( page, marginHint(), spacingHint() );
   QGridLayout *glay = new QGridLayout( vlay, 5, 2 );
   vlay->addStretch( 1 );
@@ -210,7 +221,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 }
 
 
-void NewIdentityDialog::slotOk( void )
+void NewIdentityDialog::slotOk()
 {
   QString identity = identityName().stripWhiteSpace();
 
@@ -238,6 +249,207 @@ void NewIdentityDialog::slotRadioClicked( int which )
 	  which == (int)ExistingEntry );
   mDuplicateMode = static_cast<DuplicateMode>( which );
 }
+
+
+void ApplicationLaunch::doIt()
+{
+  // This isn't used anywhere else so
+  // it should be safe to do this here.
+  // I dont' see how we can cleanly wait
+  // on all possible childs in this app so
+  // I use this hack instead.  Another
+  // alternative is to fork() twice, recursively,
+  // but that is slower.
+  signal(SIGCHLD, SIG_IGN);
+  // FIXME use KShellProcess instead
+  system(mCmdLine.latin1());
+}
+
+void ApplicationLaunch::run()
+{
+  signal(SIGCHLD, SIG_IGN);  // see comment above.
+  if( fork() == 0 )
+  {
+    doIt();
+    exit(0);
+  }
+}
+
+
+ListView::ListView( QWidget *parent, const char *name,
+				     int visibleItem )
+  : KListView( parent, name )
+{
+  setVisibleItem(visibleItem);
+}
+
+
+void ListView::resizeEvent( QResizeEvent *e )
+{
+  KListView::resizeEvent(e);
+  resizeColums();
+}
+
+
+void ListView::showEvent( QShowEvent *e )
+{
+  KListView::showEvent(e);
+  resizeColums();
+}
+
+
+void ListView::resizeColums()
+{
+  int c = columns();
+  if( c == 0 )
+  {
+    return;
+  }
+
+  int w1 = viewport()->width();
+  int w2 = w1 / c;
+  int w3 = w1 - (c-1)*w2;
+
+  for( int i=0; i<c-1; i++ )
+  {
+    setColumnWidth( i, w2 );
+  }
+  setColumnWidth( c-1, w3 );
+}
+
+
+void ListView::setVisibleItem( int visibleItem, bool updateSize )
+{
+  mVisibleItem = QMAX( 1, visibleItem );
+  if( updateSize == true )
+  {
+    QSize s = sizeHint();
+    setMinimumSize( s.width() + verticalScrollBar()->sizeHint().width() +
+		    lineWidth() * 2, s.height() );
+  }
+}
+
+
+QSize ListView::sizeHint() const
+{
+  QSize s = QListView::sizeHint();
+
+  int h = fontMetrics().height() + 2*itemMargin();
+  if( h % 2 > 0 ) { h++; }
+
+  s.setHeight( h*mVisibleItem + lineWidth()*2 + header()->sizeHint().height());
+  return( s );
+}
+
+
+static QString flagPng = QString::fromLatin1("/flag.png");
+
+NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
+				      QWidget *parent, const char *name,
+				      bool modal )
+  : KDialogBase( parent, name, modal, i18n("New Language"), Ok|Cancel, Ok, true )
+{
+  // layout the page (a combobox with label):
+  QWidget *page = makeMainWidget();
+  QHBoxLayout *hlay = new QHBoxLayout( page, 0, spacingHint() );
+  mComboBox = new QComboBox( false, page );
+  hlay->addWidget( new QLabel( mComboBox, i18n("Choose &language:"), page ) );
+  hlay->addWidget( mComboBox, 1 );
+
+  QStringList pathList = KGlobal::dirs()->findAllResources( "locale",
+                               QString::fromLatin1("*/entry.desktop") );
+  // extract a list of language tags that should not be included:
+  QStringList suppressedAcronyms;
+  for ( LanguageItemList::Iterator lit = suppressedLangs.begin();
+	lit != suppressedLangs.end(); ++lit )
+    suppressedAcronyms << (*lit).mLanguage;
+
+  // populate the combo box:
+  for ( QStringList::ConstIterator it = pathList.begin();
+	it != pathList.end(); ++it )
+  {
+    KSimpleConfig entry( *it );
+    entry.setGroup( "KCM Locale" );
+    // full name:
+    QString name = entry.readEntry( "Name" );
+    // {2,3}-letter abbreviation:
+    // we extract it from the path: "/prefix/de/entry.desktop" -> "de"
+    QString acronym = (*it).section( '/', -2, -2 );
+
+    if ( suppressedAcronyms.find( acronym ) == suppressedAcronyms.end() ) {
+      // not found:
+      QString displayname = QString::fromLatin1("%1 (%2)")
+	.arg( name ).arg( acronym );
+      QPixmap flag( locate("locale", acronym + flagPng ) );
+      mComboBox->insertItem( flag, displayname );
+    }
+  }
+  if ( !mComboBox->count() ) {
+    mComboBox->insertItem( i18n("No more languages available") );
+    enableButtonOK( false );
+  } else mComboBox->listBox()->sort();
+}
+
+QString NewLanguageDialog::language() const
+{
+  QString s = mComboBox->currentText();
+  int i = s.findRev( '(' );
+  return s.mid( i + 1, s.length() - i - 2 );
+}
+
+
+LanguageComboBox::LanguageComboBox( bool rw, QWidget *parent, const char *name )
+  : QComboBox( rw, parent, name )
+{
+}
+
+int LanguageComboBox::insertLanguage( const QString & language )
+{
+  static QString entryDesktop = QString::fromLatin1("/entry.desktop");
+  KSimpleConfig entry( locate("locale", language + entryDesktop) );
+  entry.setGroup( "KCM Locale" );
+  QString name = entry.readEntry( "Name" );
+  QString output = QString::fromLatin1("%1 (%2)").arg( name ).arg( language );
+  insertItem( QPixmap( locate("locale", language + flagPng ) ), output );
+  return listBox()->index( listBox()->findItem(output) );
+}
+
+QString LanguageComboBox::language() const
+{
+  QString s = currentText();
+  int i = s.findRev( '(' );
+  return( s.mid( i + 1, s.length() - i - 2 ) );
+}
+
+void LanguageComboBox::setLanguage( const QString & language )
+{
+  QString parenthizedLanguage = QString::fromLatin1("(%1)").arg( language );
+  for (int i = 0; i < count(); i++)
+    if ( text(i).find( parenthizedLanguage ) >= 0 ) {
+      setCurrentItem(i);
+      return;
+    }
+}
+
+/********************************************************************
+ *
+ *     *ConfigurationPage classes
+ *
+ ********************************************************************/
+
+TabbedConfigurationPage::TabbedConfigurationPage( QWidget * parent,
+						  const char * name )
+  : ConfigurationPage( parent, name )
+{
+  QVBoxLayout *vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+  mTabWidget = new QTabWidget( this );
+  vlay->addWidget( mTabWidget );
+}
+
+void TabbedConfigurationPage::addTab( QWidget * tab, const QString & title ) {
+  mTabWidget->addTab( tab, title );
+}
+
 
 
 #include "configuredialog_p.moc"

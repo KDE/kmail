@@ -62,8 +62,8 @@ class KMTransportDialog : public KDialogBase
   Q_OBJECT
 
 public:
-  KMTransportDialog( KMTransportInfo *transportInfo, QWidget *parent=0,
-    const char *name=0, bool modal=TRUE );
+  KMTransportDialog( const QString & caption, KMTransportInfo *transportInfo,
+		     QWidget *parent=0, const char *name=0, bool modal=TRUE );
   virtual ~KMTransportDialog();
 
 private slots:

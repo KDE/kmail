@@ -80,7 +80,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   {
     KConfig *config = kapp->config();
     KConfigGroupSaver saver(config, "General");
-    mailboxType->setCurrentItem(config->readNumEntry("default-mailbox-format", 0));
+    int type = config->readNumEntry("default-mailbox-format", 1);
+    if ( type < 0 || type > 1 ) type = 1;
+    mailboxType->setCurrentItem( type );
   }
   if (aFolder) mailboxType->setEnabled(false);
   ml->addWidget( mailboxType );

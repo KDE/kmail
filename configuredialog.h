@@ -21,397 +21,57 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
-class QButtonGroup;
-class QCheckBox;
-class QComboBox;
-class QLabel;
-class QLineEdit;
-class QListViewItem;
-class QMultiLineEdit;
-class QPushButton;
-class QRadioButton;
-class KIntNumInput;
-class KColorButton;
-class KFontChooser;
-class KURLRequester;
-class ColorListBox;
-class KMAccount;
-class KMTransportInfo;
-class KMFolder;
-class KMFolderComboBox;
-
-namespace Kpgp {
-  class Config;
-};
-
-#include "configuredialog_p.h"
-
-#include <klistview.h>
 #include <kdialogbase.h>
-#include <qguardedptr.h>
-#include <qvaluelist.h>
-#include <qcombobox.h>
 
-#define DEFAULT_EDITOR_STR "kwrite %f"
+class QWidget;
+class KConfig;
 
-
-class LanguageItem
-{
-  public:
-    LanguageItem( const QString& language, const QString& reply,
-      const QString& replyAll, const QString& forward,
-      const QString& indentPrefix );
-    QString mLanguage, mReply, mReplyAll, mForward, mIndentPrefix;
-    LanguageItem *next;
-};
-
-class NewLanguageDialog : public KDialogBase
-{
-  Q_OBJECT
-
-  public:
-    NewLanguageDialog( QWidget *parent, const char *name, bool modal,
-      LanguageItem *langList );
-    QString language( void ) const;
-
-  private:
-    QComboBox *mComboBox;
-};
-
-class LanguageComboBox : public QComboBox
-{
-  Q_OBJECT
-
-  public:
-    LanguageComboBox( bool rw, QWidget *parent=0, const char *name=0 );
-    int insertLanguage( const QString & language );
-    QString language( void ) const;
-    void setLanguage( const QString & language );
-  private:
-    QString *i18nPath;
-};
-
-class KScoringEditorWidget;
+class IdentityPage;
+class NetworkPage;
+class AppearancePage;
+class ComposerPage;
+class SecurityPage;
+class MiscPage;
+class PluginPage;
 
 class ConfigureDialog : public KDialogBase
 {
   Q_OBJECT
 
-public:
-    class ApplicationLaunch
-    {
-      public:
-        ApplicationLaunch( const QString &cmd );
-        void run( void );
-
-      private:
-        void doIt( void );
-
-      private:
-	QString mCmdline;
-    };
-
-    class ListView : public KListView
-    {
-      public:
-        ListView( QWidget *parent=0, const char *name=0, int visibleItem=10 );
-	void resizeColums( void );
-
-	void setVisibleItem( int visibleItem, bool updateSize=true );
-	virtual QSize sizeHint( void ) const;
-
-      protected:
-	virtual void resizeEvent( QResizeEvent *e );
-	virtual void showEvent( QShowEvent *e );
-
-      private:
-	int mVisibleItem;
-    };
-
-private:
-    struct IdentityWidget
-    {
-      IdentityWidget() : secondIdentity( false ) {}
-      int            pageIndex;
-      QString        activeIdentity;
-      IdentityList   identities;
-      bool           secondIdentity;
-
-      QComboBox      *identityCombo;
-      QPushButton    *removeIdentityButton;
-      QPushButton    *renameIdentityButton;
-      // "General" tab:
-      QLineEdit      *nameEdit;
-      QLineEdit      *organizationEdit;
-      QLineEdit      *emailEdit;
-      // "Advanced' tab:
-      QLineEdit      *replytoEdit;
-      QLabel         *pgpIdentityLabel;
-      QCheckBox      *transportCheck;
-      QComboBox      *transportCombo;
-      KMFolderComboBox  *fccCombo;
-      KMFolderComboBox  *draftsCombo;
-      // "Signature" tab:
-      QCheckBox      *signatureEnabled;
-      QComboBox      *signatureSourceCombo;
-      KURLRequester  *signatureFileRequester;
-      QPushButton    *signatureEditButton;
-      KURLRequester  *signatureCommandRequester;
-      QMultiLineEdit *signatureTextEdit;
-    };
-    struct NetworkWidget
-    {
-      int          pageIndex;
-      // "Sending" tab:
-      ListView     *transportList;
-      QPushButton  *addTransportButton;
-      QPushButton  *modifyTransportButton;
-      QPushButton  *removeTransportButton;
-      QPushButton  *transportUpButton;
-      QPushButton  *transportDownButton;
-      // "Common options" group in "sending" tab:
-      QComboBox    *sendMethodCombo;
-      QComboBox    *messagePropertyCombo;
-      QCheckBox    *confirmSendCheck;
-      QCheckBox    *sendOutboxCheck;
-      // "Receiving" tab:
-      ListView     *accountList;
-      QPushButton  *addAccountButton;
-      QPushButton  *modifyAccountButton;
-      QPushButton  *removeAccountButton;
-      // "New Mail Notification" group box:
-      QCheckBox   *beepNewMailCheck;
-      QCheckBox   *showMessageBoxCheck;
-      QCheckBox   *mailCommandCheck;
-      QLineEdit   *mailCommandEdit;
-      QPushButton *mailCommandChooseButton;
-    };
-    struct AppearanceWidget
-    {
-      AppearanceWidget( void )
-      {
-	activeFontIndex = -1;
-      }
-
-      int           pageIndex;
-      QCheckBox     *customFontCheck;
-      QLabel        *fontLocationLabel;
-      QComboBox     *fontLocationCombo;
-      KFontChooser  *fontChooser;
-      QCheckBox     *customColorCheck;
-      ColorListBox  *colorList;
-      QCheckBox     *recycleColorCheck;
-      QCheckBox     *longFolderCheck;
-      QCheckBox     *showColorbarCheck;
-      QCheckBox     *messageSizeCheck;
-      QCheckBox     *nestedMessagesCheck;
-      QRadioButton  *rdAlwaysOpen;
-      QRadioButton  *rdDefaultOpen;
-      QRadioButton  *rdDefaultClosed;
-      QRadioButton  *rdUnreadOpen;
-      QRadioButton *rdDateCtime;
-      QRadioButton *rdDateLocalized;
-      QRadioButton *rdDateFancy;
-      int           activeFontIndex;
-      QFont         font[7];
-      ListView      *profileList;
-      QListViewItem *mListItemDefault;
-      QListViewItem *mListItemDefaultHtml;
-      QListViewItem *mListItemContrast;
-      QListViewItem *mListItemPurist;
-      QPushButton  *profileDeleteButton;
-      QComboBox     *addressbookCombo;
-      QLabel        *addressbookLabel;
-      QStringList   addressbookStrings;
-    };
-    struct ComposerWidget
-    {
-      ComposerWidget()
-	: currentTagItem( 0 ) {}
-
-      int       pageIndex;
-      LanguageComboBox *phraseLanguageCombo;
-      QPushButton  *removeButton;
-      QLineEdit    *phraseReplyEdit;
-      QLineEdit    *phraseReplyAllEdit;
-      QLineEdit    *phraseForwardEdit;
-      QLineEdit    *phraseindentPrefixEdit;
-      QCheckBox    *autoAppSignFileCheck;
-      QCheckBox    *smartQuoteCheck;
-      QCheckBox    *pgpAutoSignatureCheck;
-      QCheckBox    *pgpAutoEncryptCheck;
-      QCheckBox    *wordWrapCheck;
-      KIntNumInput *wrapColumnSpin;
-      QCheckBox   *externalEditorCheck;
-      QLineEdit   *externalEditorEdit;
-      QPushButton *externalEditorChooseButton;
-      QLabel      *externalEditorLabel;
-      QLabel      *externalEditorHelp;
-      LanguageItem *LanguageList;
-      LanguageItem *CurrentLanguage;
-      QListBox *replyListBox;
-      QPushButton *addReplyPrefixButton;
-      QPushButton *removeReplyPrefixButton;
-      QCheckBox *replaceReplyPrefixCheck;
-      QListBox *forwardListBox;
-      QPushButton *addForwardPrefixButton;
-      QPushButton *removeForwardPrefixButton;
-      QCheckBox *replaceForwardPrefixCheck;
-      QListBox *charsetListBox;
-      QPushButton *addCharsetButton;
-      QPushButton *removeCharsetButton;
-      QPushButton *charsetUpButton;
-      QPushButton *charsetDownButton;
-      QCheckBox* forceReplyCharsetCheck;
-      // custom headers tab:
-      ListView      *tagList;
-      QListViewItem *currentTagItem;
-      QLineEdit     *tagNameEdit;
-      QLineEdit     *tagValueEdit;
-      QLabel        *tagNameLabel;
-      QLabel        *tagValueLabel;
-      QCheckBox     *createOwnMessageIdCheck;
-      QLabel        *messageIdSuffixLabel;
-      QLineEdit     *messageIdSuffixEdit;
-      QLabel        *messageIdSuffixHintLabel;
-    };
-    struct SecurityWidget
-    {
-      int          pageIndex;
-      Kpgp::Config *pgpConfig;
-      QCheckBox    *htmlMailCheck;
-      QCheckBox    *externalReferences;
-      QCheckBox    *sendReceiptCheck;
-    };
-    struct MiscWidget
-    {
-      int         pageIndex;
-      QCheckBox   *emptyTrashCheck;
-      QCheckBox   *compactOnExitCheck;
-      QCheckBox   *emptyFolderConfirmCheck;
-      QComboBox   *mailboxPrefCombo;
-      QButtonGroup *expBGroup;
-      QRadioButton *manualExpiry;
-      QRadioButton *expireAtExit;
-      QRadioButton *expireAtStart;
-      QRadioButton *expireDaily;
-      QRadioButton *expireWeekly;
-      QCheckBox   *warnBeforeExpire;
-    };
-
-    enum EPage
-    {
-      page_identity = 0,
-      page_network,
-      page_appearance,
-      page_composer,
-      page_security,
-      page_misc,
-      page_folder,
-      page_max
-    };
-
   public:
     ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
-    ~ConfigureDialog( void );
-    virtual void show( void );
+    ~ConfigureDialog();
+    virtual void show();
 
-  protected:
-    virtual void slotDefault( void );
-    virtual void slotOk( void );
-    virtual void slotApply( void );
-    virtual void slotDoApply( bool everything );
-    void setup( void );
+  protected slots:
+    virtual void slotOk();
+    virtual void slotApply();
+    virtual void slotHelp();
+    /** Installs a new profile (in the dislog's widgets; to apply, the
+        user has to hit the apply button). Profiles are normal kmail
+        config files which hae an additonal group "KMail Profile"
+        containing keys "name" and "desc" for the name and
+        description, resp. Only keys that this profile is supposed to
+        alter should be included in the file.
+    */
+    virtual void slotInstallProfile( KConfig * profile );
 
-  private:
-    void makeIdentityPage( void );
-    void makeNetworkPage( void );
-    void makeAppearancePage( void );
-    void makeComposerPage( void );
-    void makeSecurityPage( void );
-    void makeMiscPage( void );
-
-    void setupIdentityPage( void );
-    void setupNetworkPage( void );
-    void setupAppearancePage( void );
-    void setupComposerPage( void );
-    void setupSecurityPage( void );
-    void setupMiscPage( void );
-    void installProfile( void );
-
-    void updateFontSelector( void );
-    void saveActiveIdentity( void );
-    void setIdentityInformation( const QString &identityName );
-    QStringList identityStrings( void );
-    QStringList occupiedNames( void );
 
   private slots:
-    void slotCancelOrClose( void );
-    void slotNewIdentity( void );
-    void slotRenameIdentity( void );
-    void slotRemoveIdentity( void );
-    void slotIdentitySelectorChanged( void );
-    void slotChangeDefaultPGPKey( void );
-    void slotSignatureEdit( void );
-    void slotEnableSignatureEditButton( const QString &filename );
-    void slotTransportSelected( void );
-    void slotUpdateTransportCombo( void );
-    void slotAddTransport( void );
-    void slotModifySelectedTransport( void );
-    void slotRemoveSelectedTransport( void );
-    void slotTransportUp( void );
-    void slotTransportDown( void );
-    void slotAccountSelected( void );
-    void slotAddAccount( void );
-    void slotModifySelectedAccount( void );
-    void slotRemoveSelectedAccount( void );
-    void slotCustomFontSelectionChanged( void );
-    void slotFontSelectorChanged( int index );
-    void slotAddressbookSelectorChanged( int index );
-    void slotCustomColorSelectionChanged( void );
-    void slotNewLanguage( void );
-    void slotRemoveLanguage( void );
-    void slotSaveOldPhrases( void );
-    void slotLanguageChanged( const QString& );
-    void slotAddNewLanguage( const QString& );
-    void slotWordWrapSelectionChanged( void );
-    void slotAddReplyPrefix( void );
-    void slotRemoveSelReplyPrefix( void );
-    void slotReplyPrefixSelected( void );
-    void slotAddForwardPrefix( void );
-    void slotRemoveSelForwardPrefix( void );
-    void slotForwardPrefixSelected( void );
-    void slotAddCharset( void );
-    void slotRemoveSelCharset( void );
-    void slotCharsetUp( void );
-    void slotCharsetDown( void );
-    void slotCharsetSelectionChanged( void );
-    void slotMimeHeaderSelectionChanged( void );
-    void slotMimeHeaderNameChanged( const QString &text );
-    void slotMimeHeaderValueChanged( const QString &text );
-    void slotNewMimeHeader( void );
-    void slotDeleteMimeHeader( void );
-    void slotExternalEditorSelectionChanged( void );
-    void slotExternalEditorChooser( void );
-    void slotMailCommandChooser( void );
+    void slotCancelOrClose();
 
-  private:
-    IdentityWidget   mIdentity;
-    NetworkWidget    mNetwork;
-    AppearanceWidget mAppearance;
-    ComposerWidget   mComposer;
-    SecurityWidget   mSecurity;
-    MiscWidget       mMisc;
+  protected:
+    void setup();
+    void apply(bool);
 
-    QValueList<QGuardedPtr<KMAccount> > mAccountsToDelete;
-    QValueList<QGuardedPtr<KMAccount> > mNewAccounts;
-    struct mModifiedAccountsType
-    {
-      QGuardedPtr<KMAccount> oldAccount;
-      QGuardedPtr<KMAccount> newAccount;
-    };
-    QValueList<mModifiedAccountsType*> mModifiedAccounts;
-    QPtrList<KMTransportInfo> mTransportList;
+  protected:
+    IdentityPage   *mIdentityPage;
+    NetworkPage    *mNetworkPage;
+    AppearancePage *mAppearancePage;
+    ComposerPage   *mComposerPage;
+    SecurityPage   *mSecurityPage;
+    MiscPage       *mMiscPage;
+    PluginPage     *mPluginPage;
 };
 
 #endif

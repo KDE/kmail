@@ -1,4 +1,4 @@
-KDE_CXXFLAGS = $(USE_RTTI)
+KDE_CXXFLAGS = $(USE_RTTI) -DQT_NO_COMPAT
 
 SUBDIRS = . about pics
 INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
@@ -8,7 +8,7 @@ bin_PROGRAMS = kmail
 
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
-		configuredialog_p.cpp \
+		configuredialog_p.cpp simplestringlisteditor.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \

@@ -299,14 +299,16 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
     }
     else
     {
-      QColor defaultColor = QColor(kapp->palette().active().text());
-      if( quoteLevel == 0 )
-	color = config->readColorEntry( "QuoutedText1", &defaultColor );
-      else if( quoteLevel == 1 )
-	color = config->readColorEntry( "QuoutedText2", &defaultColor );
-      else if( quoteLevel == 2 )
-	color = config->readColorEntry( "QuoutedText3", &defaultColor );
-      else
+      if( quoteLevel == 0 ) {
+	QColor defaultColor( 0x00, 0x80, 0x00 );
+	color = config->readColorEntry( "QuotedText1", &defaultColor );
+      } else if( quoteLevel == 1 ) {
+	QColor defaultColor( 0x00, 0x70, 0x00 );
+	color = config->readColorEntry( "QuotedText2", &defaultColor );
+      } else if( quoteLevel == 2 ) {
+	QColor defaultColor( 0x00, 0x60, 0x00 );
+	color = config->readColorEntry( "QuotedText3", &defaultColor );
+      } else
 	color = QColor(kapp->palette().active().base());
     }
   }

@@ -27,3 +27,10 @@ Group=Account 9
 RemoveKey=passwd
 Group=Account 10
 RemoveKey=passwd
+# Fix spelling of QuoutedText[123]
+Id=4
+File=kmailrc,kmailrc
+Group=Reader,Reader
+Key=QuoutedText1,QuotedText1
+Key=QuoutedText2,QuotedText2
+Key=QuoutedText3,QuotedText3

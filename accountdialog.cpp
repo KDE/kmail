@@ -220,11 +220,10 @@ ProcmailRCParser::expandVars(const QString &s)
 
 
 
-AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
+AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 			      QWidget *parent, const char *name, bool modal )
-  :KDialogBase( parent, name, modal, i18n("Configure Account"),
-		Ok|Cancel|Help, Ok, true ), mAccount(account),
-  mIdentityList( identity )
+  : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
+    mAccount(account)
 {
   mServerTest = NULL;
   setHelp("receiving-mail");
@@ -762,7 +761,6 @@ void AccountDialog::setupSettings()
 
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
-    //    mLocal.identityCombo->insertStringList( mIdentityList );
   }
   else if( accountType == "pop" )
   {
@@ -799,7 +797,6 @@ void AccountDialog::setupSettings()
 
     slotEnablePopInterval( interval >= 1 );
     folderCombo = mPop.folderCombo;
-    //    mPop.identityCombo->insertStringList( mIdentityList );
   }
   else if( accountType == "imap" )
   {

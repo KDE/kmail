@@ -40,7 +40,7 @@ class AccountDialog : public KDialogBase
   Q_OBJECT
   
   public:
-    AccountDialog( KMAccount *account, const QStringList &identity, 
+    AccountDialog( const QString & caption, KMAccount *account, 
 		   QWidget *parent=0, const char *name=0, bool modal=true );
     virtual ~AccountDialog();
   private:
@@ -175,7 +175,6 @@ class AccountDialog : public KDialogBase
     PopWidgets   mPop;
     ImapWidgets  mImap;
     KMAccount    *mAccount;
-    QStringList  mIdentityList;
     QValueList<QGuardedPtr<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     KMServerTest *mServerTest;

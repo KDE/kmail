@@ -154,16 +154,17 @@ int KMTransportSelDlg::selected( void ) const
 }
 
 
-KMTransportDialog::KMTransportDialog( KMTransportInfo *transportInfo,
-  QWidget *parent, const char *name, bool modal )
-  : KDialogBase( parent, name, modal, i18n("Configure Transport"),
-                Ok|Cancel|Help, Ok, true )
+KMTransportDialog::KMTransportDialog( const QString & caption,
+				      KMTransportInfo *transportInfo,
+				      QWidget *parent, const char *name,
+				      bool modal )
+  : KDialogBase( parent, name, modal, caption, Ok|Cancel, Ok, true )
 {
   assert(transportInfo != NULL);
   mServerTest = NULL;
   mTransportInfo = transportInfo;
  
-  if( transportInfo->type == "sendmail" )
+  if( transportInfo->type == QString::fromLatin1("sendmail") )
   {
     makeSendmailPage();
   } else {
