@@ -1023,6 +1023,7 @@ void KMHeaders::workAroundQListViewLimitation()
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
+  emit maybeDeleting();
   int i = topItemIndex();
   int cur = currentItemIndex();
   if (!isUpdatesEnabled()) return;
