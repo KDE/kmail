@@ -1382,6 +1382,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 	}
 
 	vcdlg = new KMDisplayVCard(vc);
+        kernel->kbp()->idle();
 	vcdlg->show();
 	return;
       }

@@ -31,6 +31,7 @@ KBusyPtr :: KBusyPtr ()
 //-----------------------------------------------------------------------------
 KBusyPtr :: ~KBusyPtr()
 {
+  while (busyLevel) idle();
   if (cursorList) delete[] cursorList;
   cursorList = NULL;
 }
