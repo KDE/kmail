@@ -98,9 +98,7 @@ protected:
   bool mCloseRequested;
   int mFetchingInProgress;
   int mSortColumn;
-#if QT_VERSION >= 0x030200
   SortOrder mSortOrder;
-#endif
   QGuardedPtr<KMFolderSearch> mFolder;
   QTimer *mTimer;
 

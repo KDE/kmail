@@ -52,9 +52,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mStopped(false),
   mCloseRequested(false),
   mSortColumn(0),
-#if QT_VERSION >= 0x030200
   mSortOrder(Ascending),
-#endif
   mFolder(0),
   mTimer(new QTimer(this)),
   mLastFocus(0),
@@ -374,9 +372,7 @@ void KMFldSearch::slotSearch()
     mLbxMatches->clear();
 
     mSortColumn = mLbxMatches->sortColumn();
-#if QT_VERSION >= 0x030200
     mSortOrder = mLbxMatches->sortOrder();
-#endif
     mLbxMatches->setSorting(-1);
     mLbxMatches->setShowSortIndicator(false);
 
@@ -448,9 +444,7 @@ void KMFldSearch::searchDone()
     if (mCloseRequested)
 	close();
 
-#if QT_VERSION >= 0x030200
     mLbxMatches->setSorting(mSortColumn, mSortOrder == Ascending);
-#endif
     mLbxMatches->setShowSortIndicator(true);
 }
 
