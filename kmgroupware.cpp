@@ -1393,7 +1393,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
         if( !s.isEmpty() )
           addressee.setBirthday(QDateTime::fromString(s));
 
-      bOk == (!addressee.isEmpty());
+      bOk = (!addressee.isEmpty());
 
       }else if( "IPM.NOTE" == msgClass ){
 
