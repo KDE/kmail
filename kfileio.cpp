@@ -39,7 +39,7 @@ QCString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
   if (info.isDir())
   {
     if (aVerbose)
-      msgDialog(i18n("This is a directory and not a file:\n%1").arg(aFileName));
+      msgDialog(i18n("This is a folder and not a file:\n%1").arg(aFileName));
     return QCString();
   }
   if (!info.isReadable())
@@ -110,7 +110,7 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
   if (info.isDir())
   {
     if (aVerbose)
-      msgDialog(i18n("This is a directory and not a file:\n%1")
+      msgDialog(i18n("This is a folder and not a file:\n%1")
 		.arg(aFileName));
     return result;
   }

@@ -365,7 +365,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
       QStringList errors = job->detailedErrorStrings();
       QString myError = "<qt><p><b>" + i18n("Error while uploading folder")
 	+ "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
-	+ "</p><p>" + i18n("This could be because you don't have permission to do this or because the directory is already present on the server. The error message from the server communication is here:") + "</p>";
+	+ "</p><p>" + i18n("This could be because you don't have permission to do this or because the folder is already present on the server. The error message from the server communication is here:") + "</p>";
       // kdDebug(5006) << "Error messages:\n 0: " << errors[0].latin1() << "\n 1: " << errors[1].latin1() << "\n 2: " << errors[2].latin1() << endl;
       KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2], errors[0] );
     }
