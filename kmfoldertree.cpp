@@ -246,7 +246,7 @@ void KMFolderTreeItem::slotShowExpiryProperties()
     return;
 
   KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
-  KMail::ExpiryPropertiesDialog *dlg = 
+  KMail::ExpiryPropertiesDialog *dlg =
     new KMail::ExpiryPropertiesDialog( tree, mFolder );
   dlg->show();
 }
@@ -957,7 +957,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         SLOT(slotCheckMail()));
     }
   } else { // regular folders
-  
+
     folderMenu->insertSeparator();
     if ( !fti->folder()->noChildren() ) {
       folderMenu->insertItem(SmallIconSet("folder_new"),
@@ -1114,7 +1114,7 @@ void KMFolderTree::addChildFolder()
   KMFolderDialog *d =
     new KMFolderDialog(0, dir, this, i18n("Create Subfolder") );
 
-  if (d->exec()) { // fti may be deleted here 
+  if (d->exec()) { // fti may be deleted here
     QListViewItem *qlvi = indexOfFolder( aFolder );
     if (qlvi) {
       qlvi->setOpen(TRUE);
@@ -1674,8 +1674,22 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
     connect( menu, SIGNAL(activated(int)), receiver,
         SLOT(copySelectedToFolder(int)) );
   }
-  if ( !item )
+  if ( !item ) {
     item = firstChild();
+
+    // avoid a popup menu with the single entry 'Local Folders' if there
+    // are no IMAP accounts
+    if ( childCount() == 2 ) { // only 'Local Folders' and 'Searches'
+      KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
+      if ( fti->protocol() == KFolderTreeItem::Search ) {
+        // skip 'Searches'
+        item = item->nextSibling();
+        fti = static_cast<KMFolderTreeItem*>( item );
+      }
+      folderToPopupMenu( move, receiver, aMenuToFolder, menu, fti->firstChild() );
+      return;
+    }
+  }
 
   while ( item )
   {
