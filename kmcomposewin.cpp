@@ -1784,19 +1784,18 @@ void KMComposeWin::slotPrint()
   if (printer.setup(this))
   {
     paint.begin(&printer);
-    str += i18n("To:");
-    str += " \n";
-    str += to();
-    str += "\n";
-    str += i18n("Subject:");
-    str += " \n";
-    str += subject();
+    str += i18n("To:") + " ";
+    str += to() + "\n";
+    str += i18n("Subject:") + " ";
+    str += subject() + "\n";
     str += i18n("Date:");
     str += " \n\n";
     str += mEditor->brokenText();
     str += "\n";
     //str.replace(QRegExp("\n"),"\n");
-    paint.drawText(30,30,str);
+    paint.drawText(paint.window().left() + 10, paint.window().top() + 20,
+                   paint.window().width() - 20, paint.window().height() - 40,
+                   Qt::WordBreak,str);
     paint.end();
   }
 }
