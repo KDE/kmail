@@ -14,6 +14,8 @@ Contents:
 - MDNs
 - Folders
 - Index
+- Headers
+- Display
 
 TODO: reader, composer, messages, accounts, ...
 
@@ -755,3 +757,119 @@ What happens when a message is removed from the folder?
   and its header item is finally deleted. The KMHeaderItem destructor destroys
   the KMSortCacheItem as well, which is hopefully no longer referenced anywhere
   at this point.
+
+
+
+DISPLAY (reader window - new)
+====================================
+Contact Marc Mutz <mutz@kde.org> with questions...
+
+What happens when a message is to displayed in the reader window?
+  First, since KMMessagePart and KMMessage don't work with nested body
+  parts, a hierarchical tree of MIME body parts is constructed with
+  partNode's (being wrappers around KMMessagePart and
+  DwBodyPart). This is done in KMReaderWin::parseMsg(KMMessage*).
+  After some legacy handling, an ObjectTreeParser is instantiated and
+  it's parseObjectTree() method called on the root
+  partNode. ObjectTreeParser is the result of an ongoing refactoring
+  to enhance the design of the message display code. It's an
+  implementation of the Method Object pattern, used to break down a
+  huuuge method into many smaller ones without the need to pass around
+  a whole lot of paramters (those are made members
+  instead). parseObjectTree() recurses into the partNode tree and
+  generates an HTML representation of each node in the tree (although
+  some can be hidden by setting them to processed beforehand or - the
+  new way - by using AttachmentStrategy::Hidden). The HTML generation
+  is delegated to BodyPartFormatters, while the HTML is written to
+  HTMLWriters, which abstract away HTML sinks. One of those is
+  KHTMLPartHTMLWriter, which writes to the KHTMLPart in the
+  readerwindow. This is the current state of the code. The goal of the
+  ongoing refactoring is to make the HTML generation blissfully
+  ignorant of the readerwindow and to allow display plugins that can
+  operate against stable interfaces even though the internal KMail
+  classes change dramatically.
+
+  To this end, we designed a new set of interfaces that allows plugins
+  to be written that need or want to asynchronously update their HTML
+  representation. This set of interfaces consists of the following:
+
+  BodyPartFormatterPlugin
+	the plugin base class. Allows the BodyPartFormatterFactory to
+	query it for an arbitray number of BodyPartFormatters and
+	their associated metadata and url handlers.
+
+  BodyPartFormatter
+
+	the formatter interface. Contains a single method format()
+	that takes a BodyPart to process and a HTMLWriter to write the
+	generated HTML to and returns a result code with which it can
+	request more information or delegate the formatting back to
+	some default processor. BodyPartFormatters are meant to be
+	Flyweights, implying that the format() method is not allowed
+	to maintain state between calls, but see Mememto below.
+
+  BodyPart
+	body part interface. Contains methods to retrieve the content
+	of a message part and some of the more interesting header
+	information. This interface decouples the bodypart formatters
+	from the implementation used in KMail (or KNode, for that
+	matter). Also contains methods to set and retrieve a Memento,
+	which is used by BodyPartFormatters to maintain state between
+	calls of format().
+
+  BodyPartMemento
+	interface for opaque state storage and event handling.
+	Contains only a virtual destructor to enable the backend
+	processing code to destroy the object without the help of the
+	bodypart formatter.
+
+
+During the design phase we identified a need for BodyPartFormatters to
+request their being called on some form of events, e.g. a dcop
+signal. Thus, the Memento interface also includes the IObserver and
+ISubject interfaces. If a BodyPartFormatter needs to react to a signal
+(Qt or DCOP), it implements the Memento interface using a QObject,
+connects the signal to a slot on the Memento and (as an ISubject)
+notifies it's IObservers when the slot is called. If a Memento is
+created, the reader window registers itself as an observer of the
+Memento and will magically invoke the corresponding BodyPartFormatter,
+passing along the Memento to be retrieved from the BodyPart interface.
+
+An example should make this clearer. Suppose, we want to update our
+display after 10 seconds. Initially, we just write out an icon, and
+after 10 seconds, we want to replace the icon by a "Hello world!"
+line. The following code does exactly this:
+
+class DelayedHelloWorldBodyPartFormatter
+      : public KMail::BodyPartFormatter {
+public:
+  Result format( KMail::BodyPart * bodyPart,
+		 KMail::HTMLWriter * htmlWriter ) {
+    if ( !bodyPart->memento() ) {
+      bodyPart->registerMemento( new DelayedHelloWorldBodyPartMemento() );
+      return AsIcon;
+    } else {
+      htmlWriter->write( "Hello, world!" );
+      return Ok;
+    }
+  }
+};
+
+class DelayedHelloWorldBodyPartMemento
+      : public QObject, public KMail::BodyPartMemento {
+public:
+  DelayedHelloWorldBodyPartMemento()
+    : QObject( 0, "DelayedHelloWorldBodyPartMemento" ),
+      KMail::BodyPartMemento()
+  {
+    QTimer::singleShot( 10*1000, this, SLOT(slotTimeout()) );
+  }
+
+private slots:
+  void slotTimeout() { notify(): }
+
+private:
+  // need to reimplement this abstract method...
+  bool update() { return true; }
+};
+
