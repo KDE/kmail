@@ -363,6 +363,10 @@ public slots:
   /**
    * XML-GUI stuff
    */
+#if !KDE_IS_VERSION( 3, 1, 90 )
+  void slotToggleToolBar();
+  void slotToggleStatusBar();
+#endif
   void slotStatusMessage(const QString &message);
   void slotEditToolbars();
   void slotUpdateToolbars();
@@ -714,6 +718,9 @@ protected:
   KToggleAction *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction, *fccAction;
+#if !KDE_IS_VERSION( 3, 1, 90 )
+  KToggleAction *toolbarAction, *statusbarAction;
+#endif
   KToggleAction *wordWrapAction, *fixedFontAction;
 
   KSelectAction *encodingAction;

@@ -6,10 +6,14 @@
 #define __KMMAINWIN
 
 #include "kmtopwidget.h"
+#include "kdeversion.h"
 #include "qstring.h"
 
 class KMMainWidget;
 class KMLittleProgressDlg;
+#if !KDE_IS_VERSION( 3, 1, 90 )
+class KToggleAction;
+#endif
 
 class KMMainWin : public KMTopLevelWidget
 {
@@ -34,6 +38,10 @@ public slots:
   void statusMsg(const QString&);
   void htmlStatusMsg(const QString&);
   void displayStatusMsg(const QString&);
+#if !KDE_IS_VERSION( 3, 1, 90 )
+  void slotToggleToolBar();
+  void slotToggleStatusBar();
+#endif
   void slotEditToolbars();
   void slotUpdateToolbars();
   void setupStatusBar();
@@ -42,6 +50,10 @@ protected slots:
   void slotQuit();
 
 private:
+#if !KDE_IS_VERSION( 3, 1, 90 )
+  KToggleAction *mToolbarAction;
+  KToggleAction *mStatusbarAction;
+#endif
   KMMainWidget *mKMMainWidget;
   QString      mLastStatusMsg;
   KMLittleProgressDlg *littleProgress;

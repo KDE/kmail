@@ -202,6 +202,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupEditor();
   setupActions();
   applyMainWindowSettings(KMKernel::config(), "Composer");
+#if !KDE_IS_VERSION( 3, 1, 90 )
+  toolbarAction->setChecked(!toolBar()->isHidden());
+  statusbarAction->setChecked(!statusBar()->isHidden());
+#endif
 
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
@@ -948,9 +952,16 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
+#if KDE_IS_VERSION( 3, 1, 90 )
   createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
-    
+#else
+  toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
+    actionCollection());
+  statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
+    actionCollection());
+#endif
+
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(kernel, SLOT(slotShowConfigurationDialog()), actionCollection());
@@ -5021,6 +5032,23 @@ void KMComposeWin::slotSpellcheckConfig()
 }
 
 //-----------------------------------------------------------------------------
+#if KDE_IS_VERSION( 3, 1, 90 )
+void KMComposeWin::slotToggleToolBar()
+{
+  if(toolBar("mainToolBar")->isVisible())
+    toolBar("mainToolBar")->hide();
+  else
+    toolBar("mainToolBar")->show();
+}
+
+void KMComposeWin::slotToggleStatusBar()
+{
+  if (statusBar()->isVisible())
+    statusBar()->hide();
+  else
+    statusBar()->show();
+}
+#endif
 
 void KMComposeWin::slotStatusMessage(const QString &message)
 {
@@ -5042,6 +5070,9 @@ void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
   applyMainWindowSettings(KMKernel::config(), "Composer");
+#if !KDE_IS_VERSION( 3, 1, 90 )
+  toolbarAction->setChecked(!toolBar()->isHidden());
+#endif
 }
 
 void KMComposeWin::slotEditKeys()
