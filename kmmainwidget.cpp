@@ -2895,8 +2895,7 @@ void KMMainWidget::updateMessageActions()
     updateListFilterAction();
 
     bool allSelectedInCommonThread = false;
-    bool singleMailIsPartOfThread = false;
-    if ( count > 1 && mHeaders->isThreaded() ) {
+    if ( mHeaders->isThreaded() && count > 1 ) {
       allSelectedInCommonThread = true;
       QListViewItem * curItemParent = mHeaders->currentItem();
       while ( curItemParent->parent() )
@@ -2912,16 +2911,13 @@ void KMMainWidget::updateMessageActions()
         }
       }
     }
-    if ( mHeaders->isThreaded() && count == 1 ) {
-      QListViewItem *cur = mHeaders->currentItem();
-      if ( cur )
-        singleMailIsPartOfThread = cur->parent() || cur->childCount() > 0;
+    else if ( mHeaders->isThreaded() && count == 1 ) {
+      allSelectedInCommonThread = true;
     }
 
     bool mass_actions = count >= 1;
-    bool thread_actions = mass_actions &&
-           ( allSelectedInCommonThread || singleMailIsPartOfThread ) &&
-           mHeaders->isThreaded();
+    bool thread_actions = mass_actions && allSelectedInCommonThread &&
+                          mHeaders->isThreaded();
     mStatusMenu->setEnabled( mass_actions );
     mThreadStatusMenu->setEnabled( thread_actions );
     // these need to be handled individually, the user might have them
