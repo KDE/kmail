@@ -533,7 +533,7 @@ KpgpBaseG::decrypt(const char *passphrase)
     {
       index = info.find("\n",index);
       int end = info.find("\n\n",index);
-      
+
       recipients.clear();
       while( (index2 = info.find("\n",index+1)) <= end )
       {
@@ -662,8 +662,8 @@ KpgpBaseG::signKey(const char *key, const char *passphrase)
 QString KpgpBaseG::getAsciiPublicKey(QString _person)
 {
   if (_person.isEmpty()) return _person;
-  QString toexec;
-  toexec.sprintf("--batch --armor --export \"%s\"", _person.data());
+  QCString toexec;
+  toexec.sprintf("--batch --armor --export \"%s\"", _person.local8Bit().data());
 
   status = runGpg(toexec.data());
   if(status == RUN_ERR) return 0;
@@ -1025,8 +1025,8 @@ KpgpBase2::signKey(const char *key, const char *passphrase)
 QString KpgpBase2::getAsciiPublicKey(QString _person)
 {
   if (_person.isEmpty()) return _person;
-  QString toexec;
-  toexec.sprintf("pgp +language=en -kxaf \"%s\"", _person.data());
+  QCString toexec;
+  toexec.sprintf("pgp +language=en -kxaf \"%s\"", _person.local8Bit().data());
 
   status = run(toexec.data());
   if(status == RUN_ERR) return QString::null;
@@ -1299,7 +1299,7 @@ KpgpBase5::pubKeys()
     if( (index2 = output.find("\n",index+1)) != -1)
     {
       int index3 = output.find("uid ",index);
-		    
+
       if( (index3 <index2) && (index3 != -1) )
       {
 	line = output.mid(index3+5,index2-index3-5);
@@ -1317,13 +1317,13 @@ KpgpBase5::pubKeys()
   }
   //kdDebug() << "finished reading keys" << endl;
   return publicKeys;
-}     
+}
 
 QString KpgpBase5::getAsciiPublicKey(QString _person)
 {
   if (_person.isEmpty()) return _person;
-  QString toexec;
-  toexec.sprintf("pgpk -xa \"%s\"", _person.data());
+  QCString toexec;
+  toexec.sprintf("pgpk -xa \"%s\"", _person.local8Bit().data());
 
   status = run(toexec.data());
   if(status == RUN_ERR) return QString::null;
@@ -1335,9 +1335,9 @@ int
 KpgpBase5::signKey(const char *key, const char *passphrase)
 {
   QString cmd;
-  
+
   if(passphrase == 0) return false;
-  
+
   cmd = "pgpk -f +batchmode=1";
   cmd += key;
   cmd += addUserId();
