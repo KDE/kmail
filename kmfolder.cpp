@@ -615,7 +615,7 @@ int KMFolder::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
 //-----------------------------------------------------------------------------
 int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 {
-  QString oldLoc, oldIndexLoc, newLoc, newIndexLoc;
+  QString oldLoc, oldIndexLoc, oldIdsLoc, newLoc, newIndexLoc, newIdsLoc;
   QString oldSubDirLoc, newSubDirLoc;
   QString oldName;
   int rc=0, openCount=mOpenCount;
@@ -626,6 +626,8 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   oldLoc = location();
   oldIndexLoc = indexLocation();
   oldSubDirLoc = subdirLocation();
+  if (kernel->msgDict())
+    oldIdsLoc = kernel->msgDict()->getFolderIdsLocation(this);
 
   close(TRUE);
 
@@ -638,6 +640,8 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   newLoc = location();
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
+  if (kernel->msgDict())
+    newIdsLoc = kernel->msgDict()->getFolderIdsLocation(this);
 
   if (::rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
     setName(oldName);
@@ -646,6 +650,10 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   }
   else if (!oldIndexLoc.isEmpty()) {
     ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
+    ::rename(oldIndexLoc.local8Bit() + ".sorted",
+             newIndexLoc.local8Bit() + ".sorted");
+    if (!oldIdsLoc.isEmpty())
+      ::rename(oldIdsLoc.local8Bit(), newIdsLoc.local8Bit());
     if (!::rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
       KMFolderDir* fdir = parent();
       KMFolderNode* fN;
