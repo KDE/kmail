@@ -18,8 +18,10 @@ public:
                     const char* name   = 0,
                     bool        modal  = TRUE );
     ~KListBoxDialog();
-
-    QLabel*   descriptionLA;
+    
+    void setLabelAbove(  const QString& label  );
+    void setCommentBelow(const QString& comment);
+    
     QListBox* entriesLB;
 
 private slots:
@@ -27,6 +29,8 @@ private slots:
 
 protected:
     QString& selectedString;
+    QLabel*  labelAboveLA;
+    QLabel*  commentBelowLA;
 };
 
 #endif

@@ -267,7 +267,8 @@ public:
                         KMMessage& theMessage,
                         bool doSign,
                         bool doEncrypt,
-                        bool ignoreBcc );
+                        bool ignoreBcc,
+                        QCString& certFingerprint );
 
   /**
    * If this flag is set the message of the composer is deleted when
@@ -570,7 +571,8 @@ private:
    *
    */
   QByteArray pgpSignedMsg( QCString cText,
-                           StructuringInfoWrapper& structuring );
+                           StructuringInfoWrapper& structuring,
+                           QCString& certFingerprint );
 
   /**
    * Get encrypted message.
@@ -623,7 +625,8 @@ private:
                        const QCString& encodedBody,int previousBoundaryLevel,
                        const KMMessagePart& oldBodyPart,
                        bool earlyAddAttachments, bool allAttachmentsAreInBody,
-                       KMMessagePart newBodyPart );
+                       KMMessagePart newBodyPart,
+                       QCString& certFingerprint );
 
   /**
    * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text

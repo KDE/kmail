@@ -27,18 +27,23 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
 {
     if ( !name )
       setName( "KListBoxDialog" );
-    resize( 400, 150 );
+    resize( 400, 180 );
 
     QFrame *page = makeMainWidget();
     QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
-    descriptionLA = new QLabel( page, "descriptionLA" );
-    descriptionLA->setText( labelText );
+    labelAboveLA = new QLabel( page, "labelAboveLA" );
+    labelAboveLA->setText( labelText );
 
-    topLayout->addWidget( descriptionLA );
+    topLayout->addWidget( labelAboveLA );
 
     entriesLB = new QListBox( page, "entriesLB" );
 
     topLayout->addWidget( entriesLB );
+
+    commentBelowLA = new QLabel( page, "commentBelowLA" );
+    commentBelowLA->setText( "" );
+    topLayout->addWidget( commentBelowLA );
+    commentBelowLA->hide();
 
     // signals and slots connections
     connect( entriesLB, SIGNAL( highlighted( const QString& ) ),
@@ -46,7 +51,7 @@ KListBoxDialog::KListBoxDialog( QString& _selectedString,
     connect( entriesLB, SIGNAL( selected(int) ),
                         SLOT(   slotOk() ) );
     // buddies
-    descriptionLA->setBuddy( entriesLB );
+    labelAboveLA->setBuddy( entriesLB );
 }
 
 /*
@@ -56,6 +61,26 @@ KListBoxDialog::~KListBoxDialog()
 {
     // no need to delete child widgets, Qt does it all for us
 }
+
+void KListBoxDialog::setLabelAbove(const QString& label)
+{
+    labelAboveLA->setText( label );
+    if( label.isEmpty() )
+        labelAboveLA->hide();
+    else
+        labelAboveLA->show();
+}
+
+void KListBoxDialog::setCommentBelow(const QString& comment)
+{
+    commentBelowLA->setText( comment );
+    if( comment.isEmpty() )
+        commentBelowLA->hide();
+    else
+        commentBelowLA->show();
+}
+
+
 
 void KListBoxDialog::highlighted( const QString& txt )
 {
