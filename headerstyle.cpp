@@ -391,7 +391,7 @@ namespace KMail {
         meterBar.setPixel( i, 0, i+1 );
       }
     }
-    QString titleText = i18n("%1% probability of being spam.<br><br>Full report:<br>%2")
+    QString titleText = i18n("%1% probability of being spam.\n\nFull report:\n%2")
                      .arg( QString::number( percent ), filterHeader );
     return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" title=\"%4\"> &nbsp;")
       .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
