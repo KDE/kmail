@@ -55,6 +55,13 @@ class KMFolder: public KMFolderNode
 
 public:
 
+  /** This enum indicates the status of the index file. It's returned by
+      indexStatus().
+   */
+  enum IndexStatus { IndexOk,
+                     IndexMissing,
+                     IndexTooOld
+  };
 
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -511,11 +518,13 @@ protected:
 
   bool updateIndexStreamPtr(bool just_close=FALSE);
 
-  /** Tests whether the contents (file) is newer than the index. Returns
-    TRUE if the contents has changed (and the index should be recreated),
-    and FALSE otherwise. Returns TRUE if there is no index file, and
-    TRUE if there is no contents (file). */
-  virtual bool isIndexOutdated() = 0;
+  /** Tests whether the contents of this folder is newer than the index.
+      Should return IndexTooOld if the index is older than the contents.
+      Should return IndexMissing if there is contents but no index.
+      Should return IndexOk if the folder doesn't exist anymore "physically"
+      or if the index is not older than the contents.
+  */
+  virtual IndexStatus indexStatus() = 0;
 
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and
