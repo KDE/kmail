@@ -31,11 +31,6 @@
 // other includes:
 #include <assert.h>
 
-// Using this define is save now since we made sure the
-// respective check boxes are enabled only if an active
-// plugin is there.
-#define AEGYPTEN
-
 static const struct {
   KMMsgPartDialog::Encoding encoding;
   const char * displayName;
@@ -61,8 +56,6 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   setHelp( QString::fromLatin1("attachments") );
 
-  mUnknownPixmap = kapp->iconLoader()->loadIcon( "unknown", KIcon::Desktop );
-
   for ( int i = 0 ; i < numEncodingTypes ; ++i )
     mI18nizedEncodings << i18n( encodingTypes[i].displayName );
 
@@ -72,7 +65,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 
   // mimetype icon:
   mIcon = new QLabel( plainPage() );
-  mIcon->setPixmap( mUnknownPixmap );
+  mIcon->setPixmap( DesktopIcon("unknown") );
   glay->addMultiCellWidget( mIcon, 0, 1, 0, 0 );
 
   // row 0: Type combobox:
@@ -171,7 +164,6 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "instead of the default \"attachment\".</p></qt>");
   QWhatsThis::add( mInline, msg );
 
-#ifdef AEGYPTEN
   // row 6: "Sign" checkbox:
   mSigned = new QCheckBox( i18n("&Sign this part"), plainPage() );
   glay->addMultiCellWidget( mSigned, 6, 6, 0, 1 );
@@ -192,9 +184,6 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "message</p></qt>");
   QWhatsThis::add( mEncrypted, msg );
   // (row 8: spacer)
-#else
-  mSigned = mEncrypted = 0;
-#endif
 }
 
 
@@ -294,61 +283,41 @@ void KMMsgPartDialog::setInline( bool inlined ) {
 }
 
 bool KMMsgPartDialog::isEncrypted() const {
-#ifdef AEGYPTEN
   return mEncrypted->isChecked();
-#else
-  return false;
-#endif
 }
 
 void KMMsgPartDialog::setEncrypted( bool encrypted ) {
-#ifdef AEGYPTEN
   mEncrypted->setChecked( encrypted );
-#else
-  (void)encrypted;
-#endif
 }
 
 void KMMsgPartDialog::setCanEncrypt( bool enable ) {
-#ifdef AEGYPTEN
   mEncrypted->setEnabled( enable );
-#else
-  (void)enable;
-#endif
 }
 
 bool KMMsgPartDialog::isSigned() const {
-#ifdef AEGYPTEN
   return mSigned->isChecked();
-#else
-  return false;
-#endif
 }
 
 void KMMsgPartDialog::setSigned( bool sign ) {
-#ifdef AEGYPTEN
   mSigned->setChecked( sign );
-#else
-  (void)sign;
-#endif
 }
 
 void KMMsgPartDialog::setCanSign( bool enable ) {
-#ifdef AEGYPTEN
   mSigned->setEnabled( enable );
-#else
-  (void)enable;
-#endif
 }
 
 void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
-  // message subparts MUST have 7bit encoding...
+  // message subparts MUST have 7bit or 8bit encoding...
+#if 0
+  // ...but until KMail can recode 8bit messages on attach, so that
+  // they can be signed, we can't enforce this :-(
   if ( mimeType.startsWith("message/") ) {
     setEncoding( SevenBit );
     mEncoding->setEnabled( false );
   } else {
     mEncoding->setEnabled( !mReadOnly );
   }
+#endif
   // find a mimetype icon:
   int dummy = 0;
   QString tmp = mimeType; // get rid of const'ness
@@ -356,7 +325,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
        == QValidator::Acceptable )
     mIcon->setPixmap( KMimeType::mimeType( mimeType )->pixmap( KIcon::Desktop ) );
   else
-    mIcon->setPixmap( mUnknownPixmap );
+    mIcon->setPixmap( DesktopIcon("unknown") );
 }
 
 

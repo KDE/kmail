@@ -6,7 +6,6 @@
 
 #include <kdialogbase.h>
 #include <kio/global.h>
-#include <qpixmap.h>
 
 class KMMessagePart;
 class QPushButton;
@@ -116,7 +115,6 @@ protected:
   QCheckBox  *mInline;
   QCheckBox  *mEncrypted;
   QCheckBox  *mSigned;
-  QPixmap     mUnknownPixmap;
   QStringList mI18nizedEncodings;
   bool mReadOnly;
 };
