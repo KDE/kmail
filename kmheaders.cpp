@@ -858,12 +858,13 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
-    QString str;
-    str = i18n("%1 Messages, %2 unread.")
-      .arg(mFolder->count())
-      .arg(mFolder->countUnread());
-    if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
-    mOwner->statusMsg(str);
+  QString str;
+  str = i18n("%1 message, %2.", "%1 messages, %2.", mFolder->count())
+    .arg(mFolder->count())
+    .arg(i18n("%1 unread", "%1 unread", mFolder->countUnread())
+    .arg(mFolder->countUnread()));
+  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
+  mOwner->statusMsg(str);
 }
 
 //-----------------------------------------------------------------------------

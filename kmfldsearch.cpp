@@ -171,11 +171,17 @@ void KMFldSearch::updStatus(void)
 
   if (!mSearching) {
     if(!mStopped)
-      str = i18n("Done, %1 matches (%2 messages processed)").arg(mNumMatches).arg(mCount);
+      str = i18n("Done, %1 match (%2)", "Done, %1 matches (%2)", mNumMatches)
+        .arg(mNumMatches).arg(i18n("%1 message processed",
+        "%1 messages processed", mCount).arg(mCount));
     else
-      str = i18n("Search cancelled, %1 matches so far (%3 messages processed)").arg(mNumMatches).arg(mCount);
+      str = i18n("Search cancelled, %1 match so far (%2)",
+                 "Search cancelled, %1 matches so far (%2)", mNumMatches)
+        .arg(mNumMatches).arg(i18n("%1 message processed",
+        "%1 messages processed", mCount).arg(mCount));
   } else
-    str = i18n("%1 matches, searching in %2 (message %3)")
+    str = i18n("%1 match, searching in %2 (message %3)",
+               "%1 matches, searching in %2 (message %3)", mNumMatches)
 		.arg(mNumMatches)
 		.arg(mSearchFolder)
 		.arg(mCount);

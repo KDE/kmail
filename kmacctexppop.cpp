@@ -599,8 +599,9 @@ void KMAcctExpPop::slotJobFinished() {
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
       indexOfCurrentMsg : idsOfMsgs.count();
     if (numMessages > 0) {
-      QString msg = i18n("Transmission completed. (%1 messages, %2 KB)").
-        arg(numMessages).arg(numBytesRead/1024);
+      QString msg = i18n("Transmission completed. (%1 message, %2 KB)",
+      "Transmission completed. (%1 messages, %2 KB)", numMessages)
+        .arg(numMessages).arg(numBytesRead/1024);
       if (numBytesToRead != numBytes && mLeaveOnServer)
         msg += " " + i18n("(%1 KB remain on the server)").arg(numBytes/1024);
       KMBroadcastStatus::instance()->setStatusMsg( msg );
