@@ -51,7 +51,7 @@ KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
   : KMFolderIndex(aParent, aName)
 {
   mStream         = 0;
-  mFilesLocked    = FALSE;
+  mFilesLocked    = false;
   mLockType       = None;
 }
 
@@ -59,7 +59,7 @@ KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
 //-----------------------------------------------------------------------------
 KMFolderMbox::~KMFolderMbox()
 {
-  if (mOpenCount>0) close(TRUE);
+  if (mOpenCount>0) close(true);
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
 }
 
@@ -73,7 +73,7 @@ int KMFolderMbox::open()
 
   assert(!name().isEmpty());
 
-  mFilesLocked = FALSE;
+  mFilesLocked = false;
   mStream = fopen(QFile::encodeName(location()), "r+"); // messages file
   if (!mStream)
   {
@@ -148,11 +148,11 @@ int KMFolderMbox::open()
   }
   else
   {
-    mAutoCreateIndex = FALSE;
+    mAutoCreateIndex = false;
     rc = createIndexFromContents();
   }
 
-  mChanged = FALSE;
+  mChanged = false;
 
   return rc;
 }
@@ -198,18 +198,18 @@ int KMFolderMbox::create(bool imap)
   {
     old_umask = umask(077);
     mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
-	updateIndexStreamPtr(TRUE);
+        updateIndexStreamPtr(true);
     umask(old_umask);
 
     if (!mIndexStream) return errno;
   }
   else
   {
-    mAutoCreateIndex = FALSE;
+    mAutoCreateIndex = false;
   }
 
   mOpenCount++;
-  mChanged = FALSE;
+  mChanged = false;
 
   rc = writeIndex();
   if (!rc) lock();
@@ -232,9 +232,9 @@ void KMFolderMbox::close(bool aForced)
   if (mAutoCreateIndex)
   {
       if (KMFolderIndex::IndexOk != indexStatus()) {
-	  kdDebug(5006) << "Critical error: " << location() <<
-	      " has been modified by an external application while KMail was running." << endl;
-	  //	  exit(1); backed out due to broken nfs
+          kdDebug(5006) << "Critical error: " << location() <<
+              " has been modified by an external application while KMail was running." << endl;
+          //      exit(1); backed out due to broken nfs
       }
 
       updateIndex();
@@ -243,18 +243,18 @@ void KMFolderMbox::close(bool aForced)
 
   if (!noContent()) {
     if (mStream) unlock();
-    mMsgList.clear(TRUE);
+    mMsgList.clear(true);
 
     if (mStream) fclose(mStream);
     if (mIndexStream) {
       fclose(mIndexStream);
-      updateIndexStreamPtr(TRUE);
+      updateIndexStreamPtr(true);
     }
   }
   mOpenCount   = 0;
   mStream      = 0;
   mIndexStream = 0;
-  mFilesLocked = FALSE;
+  mFilesLocked = false;
   mUnreadMsgs  = -1;
 
   mMsgList.reset(INIT_MSGS);
@@ -265,7 +265,7 @@ void KMFolderMbox::sync()
 {
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
-	!mIndexStream || fsync(fileno(mIndexStream))) {
+        !mIndexStream || fsync(fileno(mIndexStream))) {
     kmkernel->emergencyExit( i18n("Could not sync index file <b>%1</b>: %2").arg( indexLocation() ).arg(errno ? QString::fromLocal8Bit(strerror(errno)) : i18n("Internal error. Please copy down the details and report a bug.")));
     }
 }
@@ -282,7 +282,7 @@ int KMFolderMbox::lock()
   fl.l_pid=-1;
   QCString cmd_str;
   assert(mStream != 0);
-  mFilesLocked = FALSE;
+  mFilesLocked = false;
 
   switch( mLockType )
   {
@@ -291,38 +291,38 @@ int KMFolderMbox::lock()
 
       if (rc < 0)
       {
-	kdDebug(5006) << "Cannot lock folder `" << location() << "': "
-		  << strerror(errno) << " (" << errno << ")" << endl;
-	return errno;
+        kdDebug(5006) << "Cannot lock folder `" << location() << "': "
+                  << strerror(errno) << " (" << errno << ")" << endl;
+        return errno;
       }
 
       if (mIndexStream)
       {
-	rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
+        rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
 
-	if (rc < 0)
-	{
+        if (rc < 0)
+        {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(errno) << " (" << errno << ")" << endl;
-	  rc = errno;
-	  fl.l_type = F_UNLCK;
-	  rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
-	  return rc;
-	}
+          rc = errno;
+          fl.l_type = F_UNLCK;
+          rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
+          return rc;
+        }
       }
       break;
 
     case procmail_lockfile:
       cmd_str = "lockfile -l20 -r5 ";
       if (!mProcmailLockFileName.isEmpty())
-	cmd_str += QFile::encodeName(KProcess::quote(mProcmailLockFileName));
+        cmd_str += QFile::encodeName(KProcess::quote(mProcmailLockFileName));
       else
         cmd_str += QFile::encodeName(KProcess::quote(location() + ".lock"));
 
       rc = system( cmd_str.data() );
       if( rc != 0 )
       {
-	kdDebug(5006) << "Cannot lock folder `" << location() << "': "
+        kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
@@ -389,7 +389,7 @@ int KMFolderMbox::lock()
   }
 
 
-  mFilesLocked = TRUE;
+  mFilesLocked = true;
   return 0;
 }
 
@@ -425,7 +425,7 @@ int KMFolderMbox::unlock()
   QCString cmd_str;
 
   assert(mStream != 0);
-  mFilesLocked = FALSE;
+  mFilesLocked = false;
 
   switch( mLockType )
   {
@@ -505,8 +505,8 @@ int KMFolderMbox::createIndexFromContents()
   char status[8], xstatus[8];
   QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
   QCString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
-  bool atEof = FALSE;
-  bool inHeader = TRUE;
+  bool atEof = false;
+  bool inHeader = true;
   KMMsgInfo* mi;
   QString msgStr;
   QRegExp regexp(MSG_SEPERATOR_REGEX);
@@ -539,26 +539,26 @@ int KMFolderMbox::createIndexFromContents()
   while (!atEof)
   {
     off_t pos = ftell(mStream);
-    if (!fgets(line, MAX_LINE, mStream)) atEof = TRUE;
+    if (!fgets(line, MAX_LINE, mStream)) atEof = true;
 
     if (atEof ||
-	(strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 &&
-	 regexp.search(line) >= 0))
+        (strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 &&
+         regexp.search(line) >= 0))
     {
       size = pos - offs;
       pos = ftell(mStream);
 
       if (num >= 0)
       {
-	if (numStatus <= 0)
-	{
-	  msgStr = i18n("Creating index file: one message done", "Creating index file: %n messages done", num);
-	  emit statusMsg(msgStr);
-	  numStatus = 10;
-	}
+        if (numStatus <= 0)
+        {
+          msgStr = i18n("Creating index file: one message done", "Creating index file: %n messages done", num);
+          emit statusMsg(msgStr);
+          numStatus = 10;
+        }
 
-	if (size > 0)
-	{
+        if (size > 0)
+        {
           msgIdStr = msgIdStr.stripWhiteSpace();
           if( !msgIdStr.isEmpty() ) {
             int rightAngle;
@@ -603,8 +603,8 @@ int KMFolderMbox::createIndexFromContents()
               replyToAuxIdStr.truncate( rightAngle + 1 );
           }
 
-	  mi = new KMMsgInfo(this);
-	  mi->init( subjStr.stripWhiteSpace(),
+          mi = new KMMsgInfo(this);
+          mi->init( subjStr.stripWhiteSpace(),
                     fromStr.stripWhiteSpace(),
                     toStr.stripWhiteSpace(),
                     0, KMMsgStatusNew,
@@ -612,30 +612,30 @@ int KMFolderMbox::createIndexFromContents()
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                     KMMsgMDNStateUnknown, offs, size );
-	  mi->setStatus(status, xstatus);
-	  mi->setDate( dateStr.stripWhiteSpace() );
-	  mi->setDirty(FALSE);
-	  mMsgList.append(mi);
+          mi->setStatus(status, xstatus);
+          mi->setDate( dateStr.stripWhiteSpace() );
+          mi->setDirty(false);
+          mMsgList.append(mi);
 
-	  *status = '\0';
-	  *xstatus = '\0';
-	  needStatus = 3;
-	  xmarkStr = "";
-	  replyToIdStr = "";
-	  replyToAuxIdStr = "";
-	  referencesStr = "";
-	  msgIdStr = "";
-	  dateStr = "";
-	  fromStr = "";
-	  subjStr = "";
-	}
-	else num--,numStatus++;
+          *status = '\0';
+          *xstatus = '\0';
+          needStatus = 3;
+          xmarkStr = "";
+          replyToIdStr = "";
+          replyToAuxIdStr = "";
+          referencesStr = "";
+          msgIdStr = "";
+          dateStr = "";
+          fromStr = "";
+          subjStr = "";
+        }
+        else num--,numStatus++;
       }
 
       offs = ftell(mStream);
       num++;
       numStatus--;
-      inHeader = TRUE;
+      inHeader = true;
       continue;
     }
     // Is this a long header line?
@@ -643,13 +643,13 @@ int KMFolderMbox::createIndexFromContents()
     {
       i = 0;
       while (line [i]=='\t' || line [i]==' ') i++;
-      if (line [i] < ' ' && line [i]>0) inHeader = FALSE;
+      if (line [i] < ' ' && line [i]>0) inHeader = false;
       else if (lastStr) *lastStr += line + i;
     }
     else lastStr = 0;
 
     if (inHeader && (line [0]=='\n' || line [0]=='\r'))
-      inHeader = FALSE;
+      inHeader = false;
     if (!inHeader) continue;
 
     /* -sanders Make all messages read when auto-recreating index */
@@ -658,14 +658,14 @@ int KMFolderMbox::createIndexFromContents()
     if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0)
     {
       for(i=0; i<4 && line[i+8] > ' '; i++)
-	status[i] = line[i+8];
+        status[i] = line[i+8];
       status[i] = '\0';
       needStatus &= ~1;
     }
     else if ((needStatus & 2) && strncasecmp(line, "X-Status:", 9)==0)
     {
       for(i=0; i<4 && line[i+10] > ' '; i++)
-	xstatus[i] = line[i+10];
+        xstatus[i] = line[i+10];
       xstatus[i] = '\0';
       needStatus &= ~2;
     }
@@ -760,18 +760,19 @@ static size_t unescapeFrom( char* str, size_t strLen ) {
 
   while ( s < e ) {
     if ( *s == '\n' && *(s+1) == '>' ) { // we can do the lookahead, since e is 6 chars from the end!
-      *d++ = *s++ /* == '\n' */; *d++ = *s++ /* == '>' */;
+      *d++ = *s++;  // == '\n'
+      *d++ = *s++;  // == '>'
       while ( s < e && *s == '>' )
-	*d++ = *s++;
+        *d++ = *s++;
       if ( qstrncmp( s, "From ", STRDIM("From ") ) == 0 )
-	--d;
+        --d;
     }
     *d++ = *s++; // yes, s might be e here, but e is not the end :-)
   }
   // copy the rest:
   while ( s < str + strLen )
     *d++ = *s++;
-  if ( d < s ) // only NUL-terminate if it's shorter 
+  if ( d < s ) // only NUL-terminate if it's shorter
     *d = 0;
 
   return d - str;
@@ -798,7 +799,7 @@ static QCString escapeFrom( const QCString & str ) {
       break;
     case 'F':
       if ( onlyAnglesAfterLF && qstrncmp( s+1, "rom ", STRDIM("rom ") ) == 0 )
-	*d++ = '>';
+        *d++ = '>';
       // fall through
     default:
       onlyAnglesAfterLF = false;
@@ -808,7 +809,7 @@ static QCString escapeFrom( const QCString & str ) {
   }
   while ( s < str.data() + strLen )
     *d++ = *s++;
-  
+
   result.truncate( d - result.data() );
   return result;
 }
@@ -867,7 +868,7 @@ DwString KMFolderMbox::getDwString(int idx)
 int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
-  bool opened = FALSE;
+  bool opened = false;
   QCString msgText;
   char endStr[3];
   int idx = -1, rc;
@@ -878,13 +879,13 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 /* Then we can also disable it completely, this wastes time, at least for IMAP
   if (KMFolder::IndexOk != indexStatus()) {
       kdDebug(5006) << "Critical error: " << location() <<
-	  " has been modified by an external application while KMail was running." << endl;
+          " has been modified by an external application while KMail was running." << endl;
       //      exit(1); backed out due to broken nfs
   } */
 
   if (!mStream)
   {
-    opened = TRUE;
+    opened = true;
     rc = open();
     kdDebug(5006) << "addMsg-open: " << rc << endl;
     if (rc) return rc;
@@ -896,14 +897,14 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   {
     if (msgParent==this)
     {
-	if (kmkernel->folderIsDraftOrOutbox(this))
+        if (kmkernel->folderIsDraftOrOutbox(this))
           //special case for Edit message.
-	  {
-	    kdDebug(5006) << "Editing message in outbox or drafts" << endl;
-	    editing = true;
-	  }
-	else
-	  return 0;
+          {
+            kdDebug(5006) << "Editing message in outbox or drafts" << endl;
+            editing = true;
+          }
+        else
+          return 0;
       }
 
     idx = msgParent->find(aMsg);
@@ -954,13 +955,13 @@ if( fileD1.open( IO_WriteOnly ) ) {
       fseek(mStream, -2, SEEK_END);
       fread(endStr, 1, 2, mStream); // ensure separating empty line
       if (ftell(mStream) > 0 && endStr[0]!='\n') {
-	  ++growth;
-	  if (endStr[1]!='\n') {
-	      //printf ("****endStr[1]=%c\n", endStr[1]);
-	      fwrite("\n\n", 1, 2, mStream);
-	      ++growth;
-	  }
-	  else fwrite("\n", 1, 1, mStream);
+          ++growth;
+          if (endStr[1]!='\n') {
+              //printf ("****endStr[1]=%c\n", endStr[1]);
+              fwrite("\n\n", 1, 2, mStream);
+              ++growth;
+          }
+          else fwrite("\n", 1, 1, mStream);
       }
   }
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
@@ -992,9 +993,9 @@ if( fileD1.open( IO_WriteOnly ) ) {
     bool busy = kmkernel->kbp()->isBusy();
     if (busy) kmkernel->kbp()->idle();
     KMessageBox::sorry(0,
-	  i18n("Unable to add message to folder.\n"
-	       "(No space left on device or insufficient quota?)\n"
-	       "Free space and sufficient quota are required to continue safely."));
+          i18n("Unable to add message to folder.\n"
+               "(No space left on device or insufficient quota?)\n"
+               "Free space and sufficient quota are required to continue safely."));
     if (busy) kmkernel->kbp()->busy();
     if (opened) close();
     kmkernel->kbp()->idle();
@@ -1039,13 +1040,13 @@ if( fileD1.open( IO_WriteOnly ) ) {
     revert = ftell(mIndexStream);
 
     KMMsgBase * mb = &aMsg->toMsgBase();
-	int len;
-	const uchar *buffer = mb->asIndexString(len);
-	fwrite(&len,sizeof(len), 1, mIndexStream);
-	mb->setIndexOffset( ftell(mIndexStream) );
-	mb->setIndexLength( len );
-	if(fwrite(buffer, len, 1, mIndexStream) != 1)
-	    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+        int len;
+        const uchar *buffer = mb->asIndexString(len);
+        fwrite(&len,sizeof(len), 1, mIndexStream);
+        mb->setIndexOffset( ftell(mIndexStream) );
+        mb->setIndexLength( len );
+        if(fwrite(buffer, len, 1, mIndexStream) != 1)
+            kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);
@@ -1055,8 +1056,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
     if (error) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
-	kdWarning(5006) << "Undoing changes" << endl;
-	truncate( QFile::encodeName(indexLocation()), revert );
+        kdWarning(5006) << "Undoing changes" << endl;
+        truncate( QFile::encodeName(indexLocation()), revert );
       }
       if ( errno )
         kmkernel->emergencyExit( i18n("Could not add message to folder:") + QString::fromLocal8Bit(strerror(errno)));
@@ -1068,8 +1069,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
       if (busy) kmkernel->kbp()->idle();
       KMessageBox::sorry(0,
         i18n("Unable to add message to folder.\n"
-	     "(No space left on device or insufficient quota?)\n"
-	     "Free space and sufficient quota are required to continue safely."));
+             "(No space left on device or insufficient quota?)\n"
+             "Free space and sufficient quota are required to continue safely."));
       if (busy) kmkernel->kbp()->busy();
       if (opened) close();
       */
@@ -1108,7 +1109,7 @@ int KMFolderMbox::compact()
 
   if (KMFolderIndex::IndexOk != indexStatus()) {
       kdDebug(5006) << "Critical error: " << location() <<
-	  " has been modified by an external application while KMail was running." << endl;
+          " has been modified by an external application while KMail was running." << endl;
       //      exit(1); backed out due to broken nfs
   }
 
@@ -1129,9 +1130,9 @@ int KMFolderMbox::compact()
   for(unsigned int idx = 0; idx < mMsgList.count(); idx++) {
     if(!(msgs++ % 10)) {
       msgStr = i18n("Compacting folder: one message done",
-      				"Compacting folder: %n messages done", msgs);
+                                "Compacting folder: %n messages done", msgs);
       if (!kmkernel->shuttingDown())
-	  emit statusMsg(msgStr);
+          emit statusMsg(msgStr);
     }
     mi = (KMMsgInfo*)mMsgList.at(idx);
     msize = mi->msgSize();
@@ -1140,49 +1141,49 @@ int KMFolderMbox::compact()
     folder_offset = mi->folderOffset();
 
     //now we need to find the separator! grr...
-    for(off_t i = folder_offset-25; TRUE; i -= 20) {
+    for(off_t i = folder_offset-25; true; i -= 20) {
       off_t chunk_offset = i <= 0 ? 0 : i;
       if(fseek(mStream, chunk_offset, SEEK_SET) == -1) {
         rc = errno;
-	break;
+        break;
       }
       if (mtext.size() < 20)
-	mtext.resize(20);
+        mtext.resize(20);
       fread(mtext.data(), 20, 1, mStream);
       if(i <= 0) { //woops we've reached the top of the file, last try..
-	if(!strncasecmp(mtext.data(), "from ", 5)) {
-	  if (mtext.size() < (size_t)folder_offset)
-	      mtext.resize(folder_offset);
-	  if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
-	     !fread(mtext.data(), folder_offset, 1, mStream) ||
-	     !fwrite(mtext.data(), folder_offset, 1, tmpfile)) {
-	      rc = errno;
-	      break;
-	  }
-	  offs += folder_offset;
-	} else {
-	    rc = 666;
-	}
-	break;
+        if(!strncasecmp(mtext.data(), "from ", 5)) {
+          if (mtext.size() < (size_t)folder_offset)
+              mtext.resize(folder_offset);
+          if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
+             !fread(mtext.data(), folder_offset, 1, mStream) ||
+             !fwrite(mtext.data(), folder_offset, 1, tmpfile)) {
+              rc = errno;
+              break;
+          }
+          offs += folder_offset;
+        } else {
+            rc = 666;
+        }
+        break;
       } else {
-	int last_crlf = -1;
-	for(int i2 = 0; i2 < 20; i2++) {
-	  if(*(mtext.data()+i2) == '\n')
-	    last_crlf = i2;
-	}
-	if(last_crlf != -1) {
-	  int size = folder_offset - (i + last_crlf+1);
-	  if ((int)mtext.size() < size)
-	      mtext.resize(size);
-	  if(fseek(mStream, i + last_crlf+1, SEEK_SET) == -1 ||
-	     !fread(mtext.data(), size, 1, mStream) ||
-	     !fwrite(mtext.data(), size, 1, tmpfile)) {
-	      rc = errno;
-	      break;
-	  }
-	  offs += size;
-	  break;
-	}
+        int last_crlf = -1;
+        for(int i2 = 0; i2 < 20; i2++) {
+          if(*(mtext.data()+i2) == '\n')
+            last_crlf = i2;
+        }
+        if(last_crlf != -1) {
+          int size = folder_offset - (i + last_crlf+1);
+          if ((int)mtext.size() < size)
+              mtext.resize(size);
+          if(fseek(mStream, i + last_crlf+1, SEEK_SET) == -1 ||
+             !fread(mtext.data(), size, 1, mStream) ||
+             !fwrite(mtext.data(), size, 1, tmpfile)) {
+              rc = errno;
+              break;
+          }
+          offs += size;
+          break;
+        }
       }
     }
     if (rc)
@@ -1191,8 +1192,8 @@ int KMFolderMbox::compact()
     //now actually write the message
     if(fseek(mStream, folder_offset, SEEK_SET) == -1 ||
        !fread(mtext.data(), msize, 1, mStream) || !fwrite(mtext.data(), msize, 1, tmpfile)) {
-	rc = errno;
-	break;
+        rc = errno;
+        break;
     }
     mi->setFolderOffset(offs);
     offs += msize;
@@ -1214,7 +1215,7 @@ int KMFolderMbox::compact()
     writeIndex();
     writeConfig();
     mAutoCreateIndex = false;
-    close(TRUE);
+    close(true);
     mAutoCreateIndex = autoCreate;
   }
   else
