@@ -69,9 +69,10 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name, bool modal )
                                  "where you can select recipients out "
                                  "of all available addresses." ) );
   
-  mLabelTo->setBuddy( mBtnTo );
-  
   connect( mBtnTo, SIGNAL(clicked()), SLOT(slotAddrBook()) );
+  
+  mLabelTo->setBuddy( mBtnTo );
+  mEditTo->setFocus();
 }
 
 
