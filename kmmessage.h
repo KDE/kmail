@@ -209,29 +209,29 @@ public:
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
-  virtual QString typeStr(void) const;
+  virtual QCString typeStr(void) const;
   virtual int type(void) const;
-  virtual void setTypeStr(const QString& aStr);
+  virtual void setTypeStr(const QCString& aStr);
   virtual void setType(int aType);
   // Subtype
-  virtual QString subtypeStr(void) const;
+  virtual QCString subtypeStr(void) const;
   virtual int subtype(void) const;
-  virtual void setSubtypeStr(const QString& aStr);
+  virtual void setSubtypeStr(const QCString& aStr);
   virtual void setSubtype(int aSubtype);
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
     will work only for well-known encodings. */
-  virtual QString contentTransferEncodingStr(void) const;
+  virtual QCString contentTransferEncodingStr(void) const;
   virtual int  contentTransferEncoding(void) const;
-  virtual void setContentTransferEncodingStr(const QString& aStr);
+  virtual void setContentTransferEncodingStr(const QCString& aStr);
   virtual void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  QString cteStr(void) const { return contentTransferEncodingStr(); }
+  QCString cteStr(void) const { return contentTransferEncodingStr(); }
   int cte(void) const { return contentTransferEncoding(); }
-  void setCteStr(const QString& aStr) { setContentTransferEncodingStr(aStr); }
+  void setCteStr(const QCString& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
   /** Get the message body. Does not decode the body. */

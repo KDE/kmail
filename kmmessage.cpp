@@ -210,7 +210,8 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
     mDate = date();
 
   // Convert messages with a binary body into a message with attachment.
-  QString ct = QString(mMsg->Headers().ContentType().TypeStr().c_str()).lower();
+  QCString ct = mMsg->Headers().ContentType().TypeStr().c_str();
+  ct = ct.lower();
   if (ct.isEmpty() || ct == "text" || ct == "message" || ct == "multipart")
     return;
   KMMessagePart textPart;
@@ -636,13 +637,13 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
           isInline = FALSE;
       }
       if (!isInline && aIncludeAttach) {
-        result += QString("\n----------------------------------------") +
+        result += "\n----------------------------------------"
                   "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
         if (!msgPart.name().isEmpty())
           result += "; name=\"" + msgPart.name() + '"';
 
-        result += QString("\nContent-Transfer-Encoding: ")+
-                  msgPart.cteStr() + "\nContent-Description: " +
+        result += "\nContent-Transfer-Encoding: " + msgPart.cteStr();
+	result += "\nContent-Description: " +
                   msgPart.contentDescription() +
                   "\n----------------------------------------\n";
       }
@@ -1563,7 +1564,7 @@ void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::typeStr(void) const
+QCString KMMessage::typeStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().AsString().c_str();
@@ -1581,9 +1582,9 @@ int KMMessage::type(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setTypeStr(const QString& aStr)
+void KMMessage::setTypeStr(const QCString& aStr)
 {
-  mMsg->Headers().ContentType().SetTypeStr((const char*)aStr);
+  mMsg->Headers().ContentType().SetTypeStr(DwString(aStr));
   mMsg->Headers().ContentType().Parse();
   mNeedsAssembly = TRUE;
 }
@@ -1599,7 +1600,7 @@ void KMMessage::setType(int aType)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::subtypeStr(void) const
+QCString KMMessage::subtypeStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().SubtypeStr().c_str();
@@ -1617,9 +1618,9 @@ int KMMessage::subtype(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setSubtypeStr(const QString& aStr)
+void KMMessage::setSubtypeStr(const QCString& aStr)
 {
-  mMsg->Headers().ContentType().SetSubtypeStr((const char*)aStr);
+  mMsg->Headers().ContentType().SetSubtypeStr(DwString(aStr));
   mMsg->Headers().ContentType().Parse();
   mNeedsAssembly = TRUE;
 }
@@ -1634,7 +1635,7 @@ void KMMessage::setSubtype(int aSubtype)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::contentTransferEncodingStr(void) const
+QCString KMMessage::contentTransferEncodingStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
@@ -1654,9 +1655,9 @@ int KMMessage::contentTransferEncoding(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setContentTransferEncodingStr(const QString& aStr)
+void KMMessage::setContentTransferEncodingStr(const QCString& aStr)
 {
-  mMsg->Headers().ContentTransferEncoding().FromString((const char*)aStr);
+  mMsg->Headers().ContentTransferEncoding().FromString(aStr);
   mMsg->Headers().ContentTransferEncoding().Parse();
   mNeedsAssembly = TRUE;
 }
@@ -1852,9 +1853,9 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
       DwParameter *param=headers->ContentType().FirstParameter();
       while(param)
       {
-        if (QString(param->Attribute().c_str()).lower()=="charset")
-          aPart->setCharset(QString(param->Value().c_str()).lower());
-        else if (QString(param->Attribute().c_str())=="name*")
+        if (!qstricmp(param->Attribute().c_str(), "charset"))
+          aPart->setCharset(QCString(param->Value().c_str()).lower());
+        else if (param->Attribute().c_str()=="name*")
           aPart->setName(KMMsgBase::decodeRFC2231String(
             param->Value().c_str()));
         param=param->Next();
