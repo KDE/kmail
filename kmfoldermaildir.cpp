@@ -869,3 +869,4 @@ void KMFolderMaildir::msgStatusChanged(const KMMsgStatus oldStatus,
   KMFolderMaildirInherited::msgStatusChanged(oldStatus, newStatus);
 }
 
+#include "kmfoldermaildir.moc"

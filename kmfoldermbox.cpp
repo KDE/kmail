@@ -1021,3 +1021,5 @@ void KMFolderMbox::setProcmailLockFileName( const QString &fname )
 {
   mProcmailLockFileName = fname;
 }
+
+#include "kmfoldermbox.moc"

@@ -1243,3 +1243,4 @@ void KMImapPasswdDialog::slotCancelPressed()
   done(0);
 }
 
+#include "kmfolderimap.moc"
