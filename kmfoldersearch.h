@@ -152,7 +152,7 @@ public:
   virtual KMMsgBase* getMsgBase(int idx);
   virtual int find(const KMMsgBase* msg) const;
   virtual QString indexLocation() const;
-  virtual int writeIndex();
+  virtual int writeIndex( bool createEmptyIndex = false );
   DwString getDwString(int idx);
   Q_UINT32 serNum(int idx) { return mSerNums[idx]; }
 

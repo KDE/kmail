@@ -408,7 +408,7 @@ public:
 
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */
-  virtual int writeIndex() = 0;
+  virtual int writeIndex( bool createEmptyIndex = false ) = 0;
 
   /** Inserts messages into the message dictionary.  Might be called
     during kernel initialization. */
