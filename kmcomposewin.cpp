@@ -3899,7 +3899,7 @@ void KMComposeWin::addrBookSelInto()
       dlg.setSelectedBCC( lst );
   }
 
-  dlg.setRecentAddresses( RecentAddresses::self()->kabcAddresses() );
+  dlg.setRecentAddresses( RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
 
   if (dlg.exec()==QDialog::Rejected) return;
 
@@ -4972,9 +4972,9 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
 
-  RecentAddresses::self()->add( bcc() );
-  RecentAddresses::self()->add( cc() );
-  RecentAddresses::self()->add( to() );
+  RecentAddresses::self(KMKernel::config())->add( bcc() );
+  RecentAddresses::self(KMKernel::config())->add( cc() );
+  RecentAddresses::self(KMKernel::config())->add( to() );
 
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
@@ -5686,7 +5686,7 @@ void KMLineEdit::loadAddresses()
 {
     AddressLineEdit::loadAddresses();
 
-    QStringList recent = RecentAddresses::self()->addresses();
+    QStringList recent = RecentAddresses::self(KMKernel::config())->addresses();
     QStringList::Iterator it = recent.begin();
     for ( ; it != recent.end(); ++it )
         addAddress( *it );

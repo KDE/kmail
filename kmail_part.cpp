@@ -42,7 +42,8 @@
 #include <dcopclient.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-
+#include "recentaddresses.h"
+using KRecentAddress::RecentAddresses;
 #include <qlayout.h>
 
 
@@ -148,6 +149,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
+    RecentAddresses::self(KMKernel::config())->save( KMKernel::config() );
+    KMKernel::config()->sync();
   kmkernel->dumpDeadLetters();
   kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
   mainWidget->destruct();

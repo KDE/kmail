@@ -1164,7 +1164,7 @@ void KMKernel::cleanupLoop()
   mCryptPlugList = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
-  RecentAddresses::self()->save( KMKernel::config() );
+  RecentAddresses::self(KMKernel::config())->save( KMKernel::config() );
   KMKernel::config()->sync();
   if (mCleanupPopup)
   {
