@@ -476,6 +476,13 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
   win->show();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotCopyText()
+{
+  QString temp;
+  temp = mMsgView->copyText();
+  app->clipboard()->setText(temp);
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlClicked(const char* aUrl, int)
@@ -514,7 +521,7 @@ void KMMainWin::slotMsgPopup(const QPoint& aPoint)
   menu->insertItem(nls->translate("&Move..."), this, 
 		   SLOT(slotMoveMsg()), Key_M);
   menu->insertItem(nls->translate("&Copy..."), this, 
-			  SLOT(slotUnimplemented()), Key_S);
+			  SLOT(slotCopyText()), Key_S);
   menu->insertItem(nls->translate("&Delete"), this, 
 			  SLOT(slotDeleteMsg()), Key_D);
   menu->popup(aPoint, 0);
@@ -557,12 +564,10 @@ void KMMainWin::setupMenuBar()
   editMenu->insertSeparator();
   editMenu->insertItem(nls->translate("&Cut"), this, SLOT(slotUnimplemented()),
 		       keys->cut());
-  editMenu->insertItem(nls->translate("&Copy"), this, SLOT(slotUnimplemented()),
-		       keys->copy());
-  editMenu->insertItem(nls->translate("&Paste"),this, SLOT(slotUnimplemented()),
-		       keys->paste());
-  editMenu->insertSeparator();
 #endif
+  editMenu->insertItem(nls->translate("&Copy"), this, SLOT(slotCopyText()),
+		       keys->copy());
+  editMenu->insertSeparator();
   editMenu->insertItem(nls->translate("&Find..."), this, 
 		       SLOT(slotUnimplemented()), keys->find());
 
@@ -710,3 +715,4 @@ void KMMainWin::quit()
   //  return;
   qApp->quit();
 }
+

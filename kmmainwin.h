@@ -83,6 +83,7 @@ protected slots:
   void slotSendQueued();
   void slotMsgPopup(const QPoint&);
   void slotUrlClicked(const char* url, int button);
+  void slotCopyText();
 
   void folderSelected(KMFolder*);
   void slotMsgSelected(KMMessage*);

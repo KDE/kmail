@@ -58,6 +58,9 @@ public:
 
   /** Print current message. */
   virtual void printMsg(void);
+  
+  /** Return selected text */
+  QString copyText();
 
 signals:
   /** Emitted to show a text on the status line. */

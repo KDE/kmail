@@ -575,6 +575,13 @@ void KMReaderWin::slotDocumentChanged()
     mSbHorz->setRange(0, 0);
 }
 
+QString KMReaderWin::copyText()
+{
+  QString temp;
+  mViewer->getSelectedText(temp);
+  return temp;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentDone()
