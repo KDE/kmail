@@ -595,7 +595,13 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
   // open the file and get a pointer to it
   QFile f(file);
-  if (f.open(IO_ReadOnly) == false) return;
+  if ( f.open( IO_ReadOnly ) == false ) {
+    kdWarning(5006) << "The file '" << QFile::encodeName(dir) << "/" << file
+                    << "' could not be opened for reading the message. "
+                       "Please check ownership and permissions."
+                    << endl;
+    return;
+  }
 
   char line[MAX_LINE];
   bool atEof    = false;
