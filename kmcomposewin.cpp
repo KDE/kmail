@@ -956,6 +956,8 @@ void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
   mEditor->setModified(FALSE);
+  QFontMetrics fm(mBodyFont);
+  mEditor->setTabStopWidth(fm.width(QChar(' ')) * 8);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
   if (mWordWrap)
@@ -2910,17 +2912,10 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 
       return TRUE;
     } else {
-    if (k->key()==Key_Tab)
-    {
-      int col, row;
-      getCursorPosition(&row, &col);
-      insertAt("	", row, col); // insert tab character '\t'
-      emit CursorPositionChanged();
-      return TRUE;
-    }
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
-    if (k->key() == Key_Up && k->state() != ShiftButton && currentLine() == 0)
+    if (k->key() == Key_Up && k->state() != ShiftButton && currentLine() == 0
+      && lineOfChar(0, currentColumn()) == 0)
     {
       deselect();
       mComposer->focusNextPrevEdit(0, false); //take me up
