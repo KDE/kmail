@@ -42,7 +42,7 @@ public:
 
   /** Pop protocol: shall be 2 or 3 */
   short protocol(void) { return mProtocol; }
-  virtual void setProtocol(short);
+  virtual bool setProtocol(short);
 
   /** Shall messages be left on the server upon retreival (TRUE) 
     or deleted (FALSE). */

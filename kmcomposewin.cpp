@@ -692,7 +692,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   KMMessagePart bodyPart, *msgPart;
   int i, num;
 
-  assert(newMsg!=NULL);
+  //assert(newMsg!=NULL);
+  if(!newMsg)
+    {
+      debug("KMComposeWin::setMsg() : newMsg == NULL!\n");
+      return;
+    }
   mMsg = newMsg;
 
   mEdtTo.setText(mMsg->to());
@@ -769,7 +774,13 @@ void KMComposeWin::applyChanges(void)
   QString temp, replyAddr;
   KMMessagePart bodyPart, *msgPart;
 
-  assert(mMsg!=NULL);
+  //assert(mMsg!=NULL);
+  if(!mMsg)
+    {
+      debug("KMComposeWin::applyChanges() : mMsg == NULL!\n");
+      return;
+    }
+	    
 
   mMsg->setTo(to());
   mMsg->setFrom(from());
@@ -1062,7 +1073,12 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
   KMAddrBookSelDlg dlg(addrBook);
   QString txt;
 
-  assert(aLineEdit!=NULL);
+  //assert(aLineEdit!=NULL);
+  if(!aLineEdit)
+    {
+      debug("KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n");
+      return;
+    }
   if (dlg.exec()==QDialog::Rejected) return;
   txt = QString(aLineEdit->text()).stripWhiteSpace();
   if (!txt.isEmpty())
@@ -1967,7 +1983,9 @@ void KMLineEdit::slotCompletion()
   
   KMAddrBook adb;
   adb.readConfig();
-  adb.load();
+
+  if(adb.load() == IO_FatalError)
+    return;
 
   QString s(text());
   QString prevAddr;

@@ -156,6 +156,13 @@ static void testDir(const char *_name)
 {
   DIR *dp;
   QString c = getenv("HOME");
+  if(c.isEmpty()) 
+    {
+      KMsgBox::message(0,i18n("KMail notification"),
+		       i18n("$HOME is not set!\nKMail cannot start without it.\n"));
+      exit(-1);
+    }
+		       
   c += _name;
   dp = opendir(c.data());
   if (dp == NULL) ::mkdir(c.data(), S_IRWXU);
@@ -210,9 +217,10 @@ static void transferMail(void)
   QDir dir = QDir::home();
   int rc;
 
-  // This function is for all the whiners who think that KMail is
+  // Stefan: This function is for all the whiners who think that KMail is
   // broken because they cannot read mail with pine and do not
   // know how to fix this problem with a simple symbolic link  =;-)
+  // Markus: lol ;-)
   if (!dir.cd("KMail")) return;
 
   rc = KMsgBox::yesNo(NULL, app->appName()+" "+i18n("warning"),
@@ -308,10 +316,15 @@ static void init(int& argc, char *argv[])
   acctMgr->readConfig();
   filterMgr->readConfig();
   addrBook->readConfig();
-  addrBook->load();
+  if(addrBook->load() == IO_FatalError)
+    {
+      KMsgBox::message(0,i18n("KMail error"),
+		       i18n("Loading addressbook failed"));
+    }
   KMMessage::readConfig();
 
   msgSender = new KMSender;
+  assert(msgSender != NULL);
 
   setSignalHandler(signalHandler);
 
@@ -397,6 +410,7 @@ static void processArgs(int argc, char *argv[])
     if (!to.isEmpty()) msg->setTo(to);
 
     win = new KMComposeWin(msg);
+    assert(win != NULL);
     win->show();
   }
 }
@@ -416,6 +430,7 @@ main(int argc, char *argv[])
   if (!mailto)
   {
     mainWin = new KMMainWin;
+    assert( mainWin != NULL);
     mainWin->show();
   }
 
@@ -425,6 +440,7 @@ main(int argc, char *argv[])
   if (firstStart)
   {
     KMSettings* dlg = new KMSettings;
+    assert(dlg != NULL);
     dlg->show();
   }
 

@@ -70,6 +70,7 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 
   mFolder->quiet(TRUE);
   mFolder->open();
+		       
 
   num = mailFolder.count();
 

@@ -126,7 +126,12 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 #ifndef KRN
   int rc;
 
-  assert(aMsg != NULL);
+  //assert(aMsg != NULL);
+  if(!aMsg)
+    {
+      debug("KMSender::send() : aMsg == NULL\n");
+      return false;
+    }
   if (!settingsOk()) return FALSE;
 
   if (!aMsg->to() || aMsg->to()[0]=='\0')

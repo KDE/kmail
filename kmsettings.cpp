@@ -714,7 +714,8 @@ void KMSettings::removeAccount()
   acct = acctMgr->find(acctName);
   if (!acct) return;
 
-  acctMgr->remove(acct);
+  if(!acctMgr->remove(acct))
+    return;
   accountList->removeItem(idx);
   if (!accountList->count())
   {

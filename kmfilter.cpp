@@ -28,7 +28,14 @@ KMFilterActionDict* KMFilter::sActionDict = NULL;
 static int findInStrList(const char* strList[], const char* str)
 {
   int i;
-  assert(strList != NULL);
+
+  //assert(strList != NULL);
+  if(!strList)
+    {
+      debug("KMFilter::findInStrList() : strList == NULL\n");
+      return -1; // we return -1 here. Fake unsuccessfull search
+    }
+
   if (!str) return -1;
 
   for (i=0; strList[i]; i++)
@@ -286,7 +293,7 @@ bool KMFilterRule::matches(const KMMessage* msg)
 {
   QString msgContents;
 
-  assert(msg != NULL);
+  assert(msg != NULL); // This assert seems to be important
   msgContents = msg->headerField(mField);
 
   switch (mFunction)

@@ -421,10 +421,13 @@ void KMAcctPop::setPort(int aPort)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctPop::setProtocol(short aProtocol)
+bool KMAcctPop::setProtocol(short aProtocol)
 {
-  assert(aProtocol==2 || aProtocol==3);
+  //assert(aProtocol==2 || aProtocol==3);
+  if(aProtocol != 2 || aProtocol != 3)
+    return false;
   mProtocol = aProtocol;
+  return true;
 }
 
 

@@ -37,7 +37,9 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
   unsigned int len = info.size();
   QFile file(aFileName);
 
-  assert(aFileName!=NULL);
+  //assert(aFileName!=NULL);
+  if( aFileName == NULL)
+    return "";
 
   if (!info.exists())
   {
@@ -109,7 +111,9 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   QFileInfo info(aFileName);
   int writeLen, len, rc;
 
-  assert(aFileName!=NULL);
+  //assert(aFileName!=NULL);
+  if(aFileName == NULL)
+    return "";
 
   if (info.exists())
   {

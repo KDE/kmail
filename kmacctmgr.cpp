@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <iostream.h>
 
 extern KBusyPtr *kbp;
 //-----------------------------------------------------------------------------
@@ -48,6 +49,7 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
   else mBasePath = aBasePath;
 
   mBasePath.detach();
+  
 }
 
 
@@ -173,7 +175,9 @@ KMAccount* KMAcctMgr::next(void)
 //-----------------------------------------------------------------------------
 bool KMAcctMgr::remove(KMAccount* acct)
 {
-  assert(acct != NULL);
+  //assert(acct != NULL);
+  if(!acct)
+    return FALSE;
   mAcctList.remove(acct);
   return TRUE;
 }

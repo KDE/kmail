@@ -607,7 +607,12 @@ void KMFolder::removeMsg(KMMsgBasePtr aMsg)
 //-----------------------------------------------------------------------------
 void KMFolder::removeMsg(int idx)
 {
-  assert(idx>=0);
+  //assert(idx>=0);
+  if(idx < 0)
+    {
+      debug("KMFolder::removeMsg() : idx < 0\n");
+      return;
+    }
   mMsgList.take(idx);
   mDirty = TRUE;
   if (!mQuiet) emit msgRemoved(idx);

@@ -56,6 +56,12 @@ void KMAccount::setName(const QString& aName)
 //-----------------------------------------------------------------------------
 void KMAccount::setFolder(KMFolder* aFolder)
 {
+  if(!aFolder) 
+    {
+    debug("KMAccount::setFolder() : aFolder == NULL");
+    mFolder = NULL;
+    return;
+    }
   mFolder = (KMAcctFolder*)aFolder;
 }
 
@@ -125,7 +131,9 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
   QString receiptTo;
   int rc;
 
-  assert(aMsg != NULL);
+  //assert(aMsg != NULL);
+  if(!aMsg)
+    return;
 
   receiptTo = aMsg->headerField("Return-Receipt-To");
   if (!receiptTo.isEmpty()) sendReceipt(aMsg, receiptTo);

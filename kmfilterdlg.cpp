@@ -228,7 +228,7 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
   KMFilterAction* action;
   QWidget* pwidg;
 
-  assert(aFilter!=NULL);
+  assert(aFilter!=NULL); // Important assert
   clear();
 
   mRuleOp->setCurrentItem((int)aFilter->oper());
