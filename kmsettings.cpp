@@ -1462,11 +1462,19 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   if (acctType == "local")
   {
+    QString tmpStr;
     lbl->setText(i18n("Local Account"));
 
     mEdtLocation = createLabeledEntry(this, grid, i18n("Location:"),
 				      ((KMAcctLocal*)mAcct)->location(),
 				      2, 0, &btnDetail);
+    tmpStr.sprintf("%u", ((KMAccount*)mAcct)->checkInterval());
+    mChkInt = createLabeledEntry(this, grid, i18n("Check interval(minutes):"),
+				 tmpStr, 6, 0);
+    if (((KMAccount*)mAcct)->checkInterval() < 1) {
+      mChkInt->setEnabled(false);
+    }
+
     connect(btnDetail,SIGNAL(clicked()), SLOT(chooseLocation()));
   }
   else if ((acctType == "pop") || (acctType == "experimental pop"))
