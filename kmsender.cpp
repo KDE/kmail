@@ -1005,7 +1005,7 @@ void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
 {
   if(mMessage.length())
   {
-    array.duplicate(mMessage);
+    array.duplicate(mMessage, mMessage.length());
     mMessage = "";
   }
 }
