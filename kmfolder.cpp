@@ -114,12 +114,20 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
+QString KMFolder::dotEscape(const QString& aStr) const
+{
+  if (aStr[0] != '.') return aStr;
+  return aStr.left(aStr.find(QRegExp("[^\\.]"))) + aStr;
+}
+
+
+//-----------------------------------------------------------------------------
 QString KMFolder::location() const
 {
   QString sLocation(path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += name();
+  sLocation += dotEscape(name());
 
   return sLocation;
 }
@@ -132,7 +140,7 @@ QString KMFolder::indexLocation() const
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += name();
+  sLocation += dotEscape(name());
   sLocation += ".index";
 
   return sLocation;
@@ -145,7 +153,7 @@ QString KMFolder::subdirLocation() const
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += name();
+  sLocation += dotEscape(name());
   sLocation += ".directory";
 
   return sLocation;

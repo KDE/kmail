@@ -330,6 +330,9 @@ public slots:
   virtual void reallyAddCopyOfMsg(KMMessage *);
 
 protected:
+  /** Escape a leading dot */
+  virtual QString dotEscape(const QString&) const;
+
   /** Load message from file and store it at given index. Returns NULL
     on failure. */
   virtual KMMessage* readMsg(int idx);
