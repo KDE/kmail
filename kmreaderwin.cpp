@@ -1085,6 +1085,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Switching between folders is faster."),
   I18N_NOOP("The contents of all composer windows are saved to disk on composer window creation and then periodically saved to prevent mail loss in the result of a system crash."),
   I18N_NOOP("The state of KMail folders is saved to disk periodically to prevent status information loss in the result of a system crash."),
+  I18N_NOOP("You can select your startup folder")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
