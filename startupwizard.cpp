@@ -399,7 +399,7 @@ QWidget* StartupWizard::createAccountPage()
 		     " groupware configuration."));
   top->addWidget( text );
 
-  mAccountWidget = new NetworkPage( page, "account_page" );
+  mAccountWidget = new AccountsPage( page, "account_page" );
   mAccountWidget->setup();
   top->addWidget( mAccountWidget, 1 );
   setHelpEnabled( page, false );

@@ -68,9 +68,9 @@ extern "C"
 
 extern "C"
 {
-  KCModule *create_kmail_config_network( QWidget *parent, const char * )
+  KCModule *create_kmail_config_accounts( QWidget *parent, const char * )
   {
-    NetworkPage *page = new NetworkPage( parent, "kcmkmail_config_network" );
+    AccountsPage *page = new AccountsPage( parent, "kcmkmail_config_accounts" );
     return page;
   }
 }

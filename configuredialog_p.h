@@ -278,15 +278,15 @@ protected: // data members
 
 //
 //
-// NetworkPage
+// AccountsPage
 //
 //
 
 // subclasses: one class per tab:
-class NetworkPageSendingTab : public ConfigModuleTab {
+class AccountsPageSendingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  NetworkPageSendingTab( QWidget * parent=0, const char * name=0 );
+  AccountsPageSendingTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
   void load();
   void save();
@@ -319,10 +319,10 @@ protected:
 };
 
 
-class NetworkPageReceivingTab : public ConfigModuleTab {
+class AccountsPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  NetworkPageReceivingTab( QWidget * parent=0, const char * name=0 );
+  AccountsPageReceivingTab( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
   void load();
   void save();
@@ -360,16 +360,16 @@ protected:
   QValueList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
-class NetworkPage : public ConfigModuleWithTabs {
+class AccountsPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  NetworkPage( QWidget * parent=0, const char * name=0 );
+  AccountsPage( QWidget * parent=0, const char * name=0 );
   QString helpAnchor() const;
 
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
-  typedef NetworkPageSendingTab SendingTab;
-  typedef NetworkPageReceivingTab ReceivingTab;
+  typedef AccountsPageSendingTab SendingTab;
+  typedef AccountsPageReceivingTab ReceivingTab;
 
 signals:
   void transportListChanged( const QStringList & );

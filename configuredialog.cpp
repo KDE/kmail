@@ -204,7 +204,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
   showButton( User1, true );
 
   addModule ( "kmail_config_identity", false );
-  addModule ( "kmail_config_network", false );
+  addModule ( "kmail_config_accounts", false );
   addModule ( "kmail_config_appearance", false );
   addModule ( "kmail_config_composer", false );
   addModule ( "kmail_config_security", false );
@@ -526,14 +526,14 @@ void IdentityPage::slotUpdateTransportCombo( const QStringList & sl )
 
 // *************************************************************
 // *                                                           *
-// *                       NetworkPage                         *
+// *                       AccountsPage                         *
 // *                                                           *
 // *************************************************************
-QString NetworkPage::helpAnchor() const {
-  return QString::fromLatin1("configure-network");
+QString AccountsPage::helpAnchor() const {
+  return QString::fromLatin1("configure-accounts");
 }
 
-NetworkPage::NetworkPage( QWidget * parent, const char * name )
+AccountsPage::AccountsPage( QWidget * parent, const char * name )
   : ConfigModuleWithTabs( parent, name )
 {
   //
@@ -555,11 +555,11 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
   load();
 }
 
-QString NetworkPage::SendingTab::helpAnchor() const {
+QString AccountsPage::SendingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-sending");
 }
 
-NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * name )
+AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * name )
   : ConfigModuleTab( parent, name )
 {
   mTransportInfoList.setAutoDelete( true );
@@ -719,7 +719,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 }
 
 
-void NetworkPage::SendingTab::slotTransportSelected()
+void AccountsPage::SendingTab::slotTransportSelected()
 {
   QListViewItem *cur = mTransportList->selectedItem();
   mModifyTransportButton->setEnabled( cur );
@@ -743,7 +743,7 @@ static inline QString uniqueName( const QStringList & list,
   return result;
 }
 
-void NetworkPage::SendingTab::slotAddTransport()
+void AccountsPage::SendingTab::slotAddTransport()
 {
   int transportType;
 
@@ -811,7 +811,7 @@ void NetworkPage::SendingTab::slotAddTransport()
   emit changed( true );
 }
 
-void NetworkPage::SendingTab::slotModifySelectedTransport()
+void AccountsPage::SendingTab::slotModifySelectedTransport()
 {
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
@@ -849,7 +849,7 @@ void NetworkPage::SendingTab::slotModifySelectedTransport()
 }
 
 
-void NetworkPage::SendingTab::slotRemoveSelectedTransport()
+void AccountsPage::SendingTab::slotRemoveSelectedTransport()
 {
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
@@ -878,7 +878,7 @@ void NetworkPage::SendingTab::slotRemoveSelectedTransport()
 }
 
 
-void NetworkPage::SendingTab::slotTransportUp()
+void AccountsPage::SendingTab::slotTransportUp()
 {
   QListViewItem *item = mTransportList->selectedItem();
   if ( !item ) return;
@@ -917,7 +917,7 @@ void NetworkPage::SendingTab::slotTransportUp()
 }
 
 
-void NetworkPage::SendingTab::slotTransportDown()
+void AccountsPage::SendingTab::slotTransportDown()
 {
   QListViewItem * item = mTransportList->selectedItem();
   if ( !item ) return;
@@ -952,7 +952,7 @@ void NetworkPage::SendingTab::slotTransportDown()
   emit changed( true );
 }
 
-void NetworkPage::SendingTab::load() {
+void AccountsPage::SendingTab::load() {
   KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
 
@@ -1008,7 +1008,7 @@ void NetworkPage::SendingTab::load() {
 }
 
 
-void NetworkPage::SendingTab::save() {
+void AccountsPage::SendingTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
@@ -1029,11 +1029,11 @@ void NetworkPage::SendingTab::save() {
   general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
 }
 
-QString NetworkPage::ReceivingTab::helpAnchor() const {
+QString AccountsPage::ReceivingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-receiving");
 }
 
-NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char * name )
+AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char * name )
   : ConfigModuleTab ( parent, name )
 {
   // temp. vars:
@@ -1132,14 +1132,14 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
 }
 
 
-void NetworkPage::ReceivingTab::slotAccountSelected()
+void AccountsPage::ReceivingTab::slotAccountSelected()
 {
   QListViewItem * item = mAccountList->selectedItem();
   mModifyAccountButton->setEnabled( item );
   mRemoveAccountButton->setEnabled( item );
 }
 
-QStringList NetworkPage::ReceivingTab::occupiedNames()
+QStringList AccountsPage::ReceivingTab::occupiedNames()
 {
   QStringList accountNames = kmkernel->acctMgr()->getAccounts();
 
@@ -1165,7 +1165,7 @@ QStringList NetworkPage::ReceivingTab::occupiedNames()
   return accountNames;
 }
 
-void NetworkPage::ReceivingTab::slotAddAccount() {
+void AccountsPage::ReceivingTab::slotAddAccount() {
   KMAcctSelDlg accountSelectorDialog( this );
   if( accountSelectorDialog.exec() != QDialog::Accepted ) return;
 
@@ -1221,7 +1221,7 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
 
 
 
-void NetworkPage::ReceivingTab::slotModifySelectedAccount()
+void AccountsPage::ReceivingTab::slotModifySelectedAccount()
 {
   QListViewItem *listItem = mAccountList->selectedItem();
   if( !listItem ) return;
@@ -1285,7 +1285,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
 
 
 
-void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
+void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
   QListViewItem *listItem = mAccountList->selectedItem();
   if( !listItem ) return;
 
@@ -1329,7 +1329,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
   emit changed( true );
 }
 
-void NetworkPage::ReceivingTab::slotEditNotifications()
+void AccountsPage::ReceivingTab::slotEditNotifications()
 {
   if(kmkernel->xmlGuiInstance())
     KNotifyDialog::configure(this, 0, kmkernel->xmlGuiInstance()->aboutData());
@@ -1337,7 +1337,7 @@ void NetworkPage::ReceivingTab::slotEditNotifications()
     KNotifyDialog::configure(this);
 }
 
-void NetworkPage::ReceivingTab::load() {
+void AccountsPage::ReceivingTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountList->clear();
@@ -1362,7 +1362,7 @@ void NetworkPage::ReceivingTab::load() {
   mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
 }
 
-void NetworkPage::ReceivingTab::save() {
+void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new
   QValueList< QGuardedPtr<KMAccount> > newCachedImapAccounts;
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
