@@ -39,7 +39,7 @@ public:
   /** Return the instance of the singleton object for this class */
   static KMBroadcastStatus *instance();
   /** Emit an update status bar signal */
-  void setStatusMsg( const QString& );
+  void setStatusMsg( const QString& message );
   /** Sets a status bar message with timestamp */
   void setStatusMsgWithTimestamp( const QString& message );
   /** Sets a transmission completed status bar message */
@@ -55,11 +55,11 @@ public:
                                           int numBytesToRead = -1,
                                           bool mLeaveOnServer = false );
   /** Emit an enable progress widget(s) in status bar(s) signal */
-  void setStatusProgressEnable( const QString&, bool );
+  void setStatusProgressEnable( const QString& id, bool enable );
   /** Emit an update progress widget(s) percent completed signal */
-  void setStatusProgressPercent( const QString&, unsigned long );
+  void setStatusProgressPercent( const QString& id, unsigned long percent );
   /** Set if the acccount checking is using ssl */
-  void setUsingSSL( bool );
+  void setUsingSSL( bool isUsing );
 
   /** Returns true IFF the user has requested the current operation
       (the one whose progress is being shown) should be aborted.
