@@ -1898,15 +1898,15 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
       if (aHTML && (kasciistricmp(aMsgPart->subtypeStr(), "html")==0)) { // HTML
-	// ### this is broken. It doesn't stip off the HTML header and footer!
-	htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
-	mColorBar->setHtmlMode();
+        // ### this is broken. It doesn't stip off the HTML header and footer!
+        htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
+        mColorBar->setHtmlMode();
       } else { // plain text
-	const QCString str = aMsgPart->bodyDecoded();
-	ObjectTreeParser otp( this );
-	otp.writeBodyStr( str,
-			  overrideCodec() ? overrideCodec() : aMsgPart->codec(),
-			  message() ? message()->from() : QString::null );
+        const QCString str = aMsgPart->bodyDecoded();
+        ObjectTreeParser otp( this );
+        otp.writeBodyStr( str,
+                          overrideCodec() ? overrideCodec() : aMsgPart->codec(),
+                          message() ? message()->from() : QString::null );
       }
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
@@ -1942,25 +1942,28 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
       htmlWriter()->write( "<img src=\"file:" +
-			   KURL::encode_string( aFileName ) +
-			   "\" border=\"0\">\n"
-			   "</body></html>\n" );
+                           KURL::encode_string( aFileName ) +
+                           "\" border=\"0\">\n"
+                           "</body></html>\n" );
       htmlWriter()->end();
       setCaption( i18n("View Attachment: %1").arg( pname ) );
       show();
   } else {
-      MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself
-      QString str = aMsgPart->bodyDecoded();
-      // A QString cannot handle binary data. So if it's shorter than the
-      // attachment, we assume the attachment is binary:
-      if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
-        str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]",
-                    "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
-                    str.length());
-      }
-      viewer->setText(str);
-      viewer->resize(500, 550);
-      viewer->show();
+    htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
+    htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
+
+    QString str = aMsgPart->bodyDecoded();
+    // A QString cannot handle binary data. So if it's shorter than the
+    // attachment, we assume the attachment is binary:
+    if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
+      str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]",
+          "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
+          str.length());
+    }
+    htmlWriter()->write( QStyleSheet::escape( str ) );
+    htmlWriter()->queue("</body></html>");
+    htmlWriter()->flush();
+    mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
   }
   // ---Sven's view text, html and image attachments in html widget end ---
 }
