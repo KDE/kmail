@@ -2853,7 +2853,6 @@ void KMMainWidget::setupActions()
   connect( kmkernel->undoStack(),
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
-  initializeFilterActions();
   updateMessageActions();
 }
 

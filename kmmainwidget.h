@@ -185,6 +185,9 @@ public slots:
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
 
+  /** Create actions for marked filters */
+  void initializeFilterActions();
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
@@ -349,8 +352,6 @@ protected slots:
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);
   void removeDuplicates();
-  /** Create actions for marked filters */
-  void initializeFilterActions();
 
   /** Slot to reply to a message */
   void slotReplyToMsg();
