@@ -160,6 +160,12 @@ void ListJob::slotListResult( KIO::Job* job )
         true );
   } else
   {
+    // temporary debug output to trace the dimap cache eater, remove when fixed!
+    kdDebug() << "Listing folder: " << ( *it ).path << endl;
+    kdDebug() << "\tSubfolderNames: " << mSubfolderNames << endl;
+    kdDebug() << "\tSubfolderPaths: " << mSubfolderPaths << endl;
+    kdDebug() << "\tSubfolderMimeTypes: " << mSubfolderMimeTypes << endl;
+    kdDebug() << "\tSubfolderAttributes: " << mSubfolderAttributes << endl;
     // transport the information, include the jobData
     emit receivedFolders( mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes, *it );
