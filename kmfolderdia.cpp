@@ -1112,10 +1112,13 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
   //       here
   QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mlGroup );
   handleButton->setEnabled( false );
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-		    handleButton, SLOT(setEnabled(bool)) );
-  QObject::connect( handleButton, SIGNAL(clicked()),
-                    SLOT(slotInvokeHandler()) );
+  if( mDlg->folder())
+  {
+  	QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+			    handleButton, SLOT(setEnabled(bool)) );
+	  QObject::connect( handleButton, SIGNAL(clicked()),
+    	                SLOT(slotInvokeHandler()) );
+  }
   mlLayout->addWidget( handleButton, 0, 2, Qt::AlignTop );
 
   mEditList = new KEditListBox( mlGroup );
