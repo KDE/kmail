@@ -380,7 +380,7 @@ int KMFolder::lock()
       if( mIndexStream )
       {
         cmd_str = "lockfile " + indexLocation() + ".lock";
-        rc = system( cmd_str.local8Bit() );
+        rc = system( cmd_str.latin1() );
         if( rc != 0 )
         {
           kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
@@ -392,7 +392,7 @@ int KMFolder::lock()
 
     case mutt_dotlock:
       cmd_str = "mutt_dotlock " + location();
-      rc = system( cmd_str.local8Bit() );
+      rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
         kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
@@ -402,7 +402,7 @@ int KMFolder::lock()
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock " + indexLocation();
-        rc = system( cmd_str.local8Bit() );
+        rc = system( cmd_str.latin1() );
         if( rc != 0 )
         {
           kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
@@ -414,7 +414,7 @@ int KMFolder::lock()
 
     case mutt_dotlock_privileged:
       cmd_str = "mutt_dotlock -p " + location();
-      rc = system( cmd_str.local8Bit() );
+      rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
         kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
@@ -424,7 +424,7 @@ int KMFolder::lock()
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -p " + indexLocation();
-        rc = system( cmd_str.local8Bit() );
+        rc = system( cmd_str.latin1() );
         if( rc != 0 )
         {
           kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
@@ -474,31 +474,31 @@ int KMFolder::unlock()
       else
         cmd_str += location() + ".lock";
 
-      rc = system( cmd_str.local8Bit() );
+      rc = system( cmd_str.latin1() );
       if( mIndexStream )
       {
         cmd_str = "rm -f " + indexLocation() + ".lock";
-        rc = system( cmd_str.local8Bit() );
+        rc = system( cmd_str.latin1() );
       }
       break;
 
     case mutt_dotlock:
       cmd_str = "mutt_dotlock -u " + location();
-      rc = system( cmd_str.local8Bit() );
+      rc = system( cmd_str.latin1() );
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -u " + indexLocation();
-        rc = system( cmd_str.local8Bit() );
+        rc = system( cmd_str.latin1() );
       }
       break;
 
     case mutt_dotlock_privileged:
       cmd_str = "mutt_dotlock -p -u " + location();
-      rc = system( cmd_str.local8Bit() );
+      rc = system( cmd_str.latin1() );
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -p -u " + indexLocation();
-        rc = system( cmd_str.local8Bit() );
+        rc = system( cmd_str.latin1() );
       }
       break;
 

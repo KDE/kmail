@@ -443,7 +443,7 @@ void KMComposeWin::deadLetter(void)
   // basic functions as possible here.
   applyChanges();
   QString msgStr = mMsg->asString();
-  QString fname = QString::fromLocal8Bit(getenv("HOME"));
+  QString fname = getenv("HOME");
   fname += "/dead.letter";
   // Security: the file is created in the user's home directory, which
   // might be readable by other users. So the file only gets read/write
@@ -454,8 +454,8 @@ void KMComposeWin::deadLetter(void)
   if (fd != -1)
   {
     QString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
-    ::write(fd, startStr.local8Bit(), startStr.length());
-    ::write(fd, msgStr.local8Bit(), msgStr.length()); // TODO?: not unicode aware :-(
+    ::write(fd, startStr.latin1(), startStr.length());
+    ::write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
     ::write(fd, "\n", 1);
     ::close(fd);
     fprintf(stderr,"appending message to ~/dead.letter\n");
