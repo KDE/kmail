@@ -1832,7 +1832,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
   }
   if (!list.isEmpty() && mDestFolder) {
-       mDestFolder->moveMsg(list, &index);
+    mDestFolder->moveMsg(list, &index);
   } else {
     FolderToMessageListMap::Iterator it;
     for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {

@@ -407,10 +407,16 @@ public:
   KMail::FolderContentsType contentsType() const { return mContentsType; }
 
   /**
-    * Search for messages
-    * The end is signaled with searchDone()
-    */
+   * Search for messages
+   * The end is signaled with searchDone()
+   */
   virtual void search( KMSearchPattern* );
+
+  /**
+   * Check if the message matches the search criteria
+   * The end is signaled with searchDone()
+   */
+  virtual void search( KMSearchPattern*, Q_UINT32 serNum );
 
 signals:
   /** Emitted when the status, name, or associated accounts of this

@@ -285,6 +285,12 @@ namespace KMail {
 
   bool ImapAccountBase::handleJobError( KIO::Job *job, const QString& context, bool abortSync )
   {
+    JobIterator it = findJob( job );
+    if ( it != jobsEnd() && (*it).progressItem )
+    {
+      (*it).progressItem->setComplete();
+      (*it).progressItem = 0;
+    }
     return handleError( job->error(), job->errorText(), job, context, abortSync );
   }
 

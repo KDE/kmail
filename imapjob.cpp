@@ -144,8 +144,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
-    connect ( jd.progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-account, SLOT( slotAbortRequested( KPIM:ProgressItem* ) ) );
+    connect ( jd.progressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
+        account, SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
     KIO::SimpleJob *simpleJob = KIO::put( url, 0, FALSE, FALSE, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -595,7 +595,12 @@ void ImapJob::slotCopyMessageResult( KIO::Job *job )
 
   if (job->error())
   {
-    account->handleJobError( job, i18n("Error while copying messages.") );
+    mErrorCode = job->error();
+    QString errStr = i18n("Error while copying messages.");
+    if ( (*it).progressItem )
+      (*it).progressItem->setStatus( errStr );
+    account->handleJobError( job, errStr  );
+    deleteLater();
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )

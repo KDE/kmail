@@ -294,6 +294,7 @@ public:
     * is signaled with searchDone()
     */
   virtual void search( KMSearchPattern* );
+  virtual void search( KMSearchPattern*, Q_UINT32 serNum );
 
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
@@ -341,6 +342,11 @@ public slots:
    * @param newMsg specifies whether unseen messages are new or unread
    */
   static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
+
+  /**
+   * Connected to the result signal of the copy/move job
+   */ 
+  void slotCopyMsgResult( FolderJob* job );
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,

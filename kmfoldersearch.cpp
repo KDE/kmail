@@ -243,11 +243,11 @@ void KMSearch::slotProcessNextBatch()
 
 void KMSearch::slotSearchFolderDone( KMFolder* folder, QValueList<Q_UINT32> serNums )
 {
+    kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     disconnect( folder->storage(), 
             SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
             this,
             SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> ) ) );
-    kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     --mRemainingFolders;
     mLastFolder = folder->label();
     mSearchedCount += folder->count();
@@ -261,6 +261,7 @@ void KMSearch::slotSearchFolderDone( KMFolder* folder, QValueList<Q_UINT32> serN
     }
     if ( mRemainingFolders <= 0 )
     {
+        mRemainingFolders = 0;
         mRunning = false;
         mLastFolder = QString::null;
         mRemainingFolders = -1;
@@ -915,26 +916,33 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     if (!folder->isOpened())
       return;
 
-    if (folder->folderType() == KMFolderTypeImap) {
-        // Unless there is a search currently running, add the message to
-        // the list of ones to check on folderCompleted and hook up the signal.
-        KMFolderImap *imapFolder =
-           dynamic_cast<KMFolderImap*> ( folder->storage() );
-        if (!mSearch->running()) {
-            mUnexaminedMessages.push(serNum);
-            disconnect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-                    this, SLOT (examineCompletedFolder(KMFolderImap*, bool)));
-            connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-                    this, SLOT (examineCompletedFolder(KMFolderImap*, bool)));
-        }
+    connect( folder->storage(), 
+            SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
+            this,
+            SLOT( slotSearchExamineMsgDone( KMFolder*, QValueList<Q_UINT32> ) ) );
+    folder->storage()->search( search()->searchPattern(), serNum );
+}
+
+void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, QValueList<Q_UINT32> serNums )
+{
+    kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
+    disconnect( folder->storage(), 
+            SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
+            this,
+            SLOT( slotSearchExamineMsgDone( KMFolder*, QValueList<Q_UINT32> ) ) );
+
+    if ( serNums.empty() )
+        return;
+
+    if (mSearch->running()) {
+        mSearch->stop();
+        mExecuteSearchTimer->start( 0, true );
     } else {
-        if (search()->searchPattern()->matches(serNum))
-            if (mSearch->running()) {
-                mSearch->stop();
-                mExecuteSearchTimer->start(0, true);
-            } else {
-                addSerNum(serNum);
-            }
+        QValueListIterator<Q_UINT32> it;
+        for ( it = serNums.begin(); it != serNums.end(); ++it )
+        {
+            addSerNum( *it );
+        }
     }
 }
 

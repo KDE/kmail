@@ -419,6 +419,8 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
             connect(imapJob, SIGNAL(messageCopied(QPtrList<KMMessage>)),
                 SLOT(addMsgQuiet(QPtrList<KMMessage>)));
+            connect(imapJob, SIGNAL(result(KMail::FolderJob*)),
+                SLOT(slotCopyMsgResult(KMail::FolderJob*)));
             imapJob->start();
           }
         }
@@ -463,6 +465,13 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 
   if (aIndex_ret) *aIndex_ret = -1;
   return 0;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotCopyMsgResult( FolderJob* job )
+{
+  if ( job->error() ) // getFolder() will not be called in this case
+    emit folderComplete( this, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -1917,6 +1926,61 @@ void KMFolderImap::search( KMSearchPattern* pattern )
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderImap::search( KMSearchPattern* pattern, Q_UINT32 serNum )
+{
+  if ( !pattern )
+  {
+    // not much to do here
+    QValueList<Q_UINT32> serNums;
+    emit searchDone( folder(), serNums );
+    return;
+  }
+  QString searchString = searchStringFromPattern( pattern );
+  if ( searchString.isEmpty() )
+  { 
+    // download the message and search local
+    int idx = -1;
+    KMFolder *aFolder = 0;
+    kmkernel->msgDict()->getLocation(serNum, &aFolder, &idx);
+
+    mSearchSerNums.clear();
+    KMMessage * msg = getMsg( idx );
+    ImapJob *job = new ImapJob( msg );
+    job->setParentFolder( this );
+    connect( job, SIGNAL(messageRetrieved(KMMessage*)),
+        this, SLOT(slotSearchMessageArrived(KMMessage*)) );
+    mRemainingMsgs = 1;
+    mImapSearchData = "";
+    job->start();
+  } else
+  {
+    // imap search
+    // remember the serNum
+    mSearchSerNums.clear();
+    mSearchSerNums.append( serNum );
+    int idx = -1;
+    KMFolder *aFolder = 0;
+    kmkernel->msgDict()->getLocation(serNum, &aFolder, &idx);
+    assert(aFolder && (idx != -1));
+    KMMsgBase *mb = getMsgBase( idx );
+
+    // only search for that UID
+    searchString += " UID " + QString::number( mb->UID() );
+    KURL url = mAccount->getUrl();
+    url.setPath( imapPath() + ";SECTION=" + searchString );
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly );
+    stream << (int) 'E' << url;
+    KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+    connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
+        SLOT(slotSearchData(KIO::Job*,const QString&)) );
+    connect( job, SIGNAL(result(KIO::Job *)),
+        SLOT(slotSearchResult(KIO::Job *)) );
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::slotSearch()
 {
   disconnect ( this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
@@ -2007,6 +2071,12 @@ void KMFolderImap::slotSearchData( KIO::Job* job, const QString& data )
  
   if ( mLocalSearchPattern->isEmpty() )
   {
+    if ( !mSearchSerNums.empty() && !data.isEmpty() )
+    {
+      // we directly searched for these sernums
+      emit searchDone( folder(), mSearchSerNums );
+      return;
+    }
     // search for the serial number of the UIDs
     // data contains all found uids separated by blank
     QValueList<Q_UINT32> serNums;
@@ -2024,7 +2094,6 @@ void KMFolderImap::slotSearchData( KIO::Job* job, const QString& data )
   {
     // we have search patterns that can not be handled by the server
     // so we need to download all messages and check
-    mImapSearchData = data;
     mSearchSerNums.clear();
     mRemainingMsgs = 0;
     QString question = i18n("To execute your search all messages of the folder %1 "
@@ -2038,6 +2107,7 @@ void KMFolderImap::slotSearchData( KIO::Job* job, const QString& data )
       emit searchDone( folder(), serNums );
       return;
     }
+    mImapSearchData = data;
     for ( int i = 0; i < count(); ++i )
     {
       KMMessage * msg = getMsg( i );
@@ -2082,7 +2152,10 @@ void KMFolderImap::slotSearchMessageArrived( KMMessage* msg )
   if ( idx != -1 )
     unGetMsg( idx );
   if ( mRemainingMsgs == 0 )
+  {
     emit searchDone( folder(), mSearchSerNums );
+    mImapSearchData = "";
+  }
 }
 
 //-----------------------------------------------------------------------------

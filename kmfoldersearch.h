@@ -141,6 +141,9 @@ public slots:
   /** Incrementally update the index if possible else call writeIndex */
   virtual int updateIndex();
 
+  // Examine the added message
+  void slotSearchExamineMsgDone( KMFolder*, QValueList<Q_UINT32> );
+
 public:
   //See base class for documentation
   virtual QCString& getMsgString(int idx, QCString& mDest);
