@@ -1,29 +1,27 @@
 // kmfoldermgr.cpp
+// $Id$
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+	#include <config.h>
 #endif
 
-#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#endif
-
-#ifdef HAVE_FCNTL_H
-#include <fcntl.h>
-#endif
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #ifdef HAVE_SYS_STAT_H
-#include <sys/stat.h>
+	#include <sys/stat.h>
 #endif
 
+#include <assert.h>
+#include <fcntl.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <qdir.h>
-#include <assert.h>
+
+#include <kapp.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmundostack.h"
@@ -31,9 +29,6 @@
 #include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmwelcomemsg.h"
-#include <kapp.h>
-#include <klocale.h>
-#include <kmessagebox.h>
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath):
