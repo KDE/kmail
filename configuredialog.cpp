@@ -1349,10 +1349,11 @@ void ConfigureDialog::makeComposerPage( void )
   connect( button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
   button->setAutoDefault( false );
   glay->addWidget( button, 0, 2 );
-  button = new QPushButton(i18n("&Remove"), page );
-  connect( button, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()) );
-  button->setAutoDefault( false );
-  glay->addWidget( button, 1, 2 );
+  buttonRemoveHeader = new QPushButton(i18n("&Remove"), page );
+  buttonRemoveHeader->setEnabled(false);
+  connect( buttonRemoveHeader, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()) );
+  buttonRemoveHeader->setAutoDefault( false );
+  glay->addWidget( buttonRemoveHeader, 1, 2 );
 
   // "name" and "value" line edits and labels:
   mComposer.tagNameEdit = new QLineEdit( page );
@@ -3537,6 +3538,7 @@ void ConfigureDialog::slotNewMimeHeader( void )
     mComposer.tagNameLabel->setEnabled(true);
     mComposer.tagValueLabel->setEnabled(true);
     mComposer.tagNameEdit->setFocus();
+    buttonRemoveHeader->setEnabled(true);
   }
 }
 
@@ -3564,7 +3566,10 @@ void ConfigureDialog::slotDeleteMimeHeader( void )
     if( next != 0 )
     {
       mComposer.tagList->setSelected( next, true );
+      buttonRemoveHeader->setEnabled(true);
     }
+    else
+        buttonRemoveHeader->setEnabled(false);
   }
 }
 

@@ -412,6 +412,7 @@ private:
     };
     QValueList<mModifiedAccountsType*> mModifiedAccounts;
     QPtrList<KMTransportInfo> mTransportList;
+    QPushButton *buttonRemoveHeader;
 };
 
 #endif
