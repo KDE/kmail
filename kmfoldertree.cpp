@@ -179,7 +179,7 @@ void KMFolderTree::inSort(KMFolder* aFolder)
   mList.insert(i, aFolder);
 
   if (aFolder->isOpened() && aFolder->countUnread()>0)
-     changeItemColor(darkBlue, i);
+     changeItemColor(darkRed, i);
 }
 
 
