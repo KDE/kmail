@@ -719,8 +719,11 @@ void KMAcctExpPop::slotResult( KIO::Job* )
 {
   if ( job->error() )
   {
-    if (interactive)
+    if (interactive) {
+      // force the dialog to be shown next time the account is checked
+      if (!mStorePasswd) mPasswd = "";
       job->showErrorDialog();
+    }
     slotCancel();
   }
   else
