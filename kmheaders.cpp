@@ -982,7 +982,7 @@ void KMHeaders::resendMsg ()
   newMsg->fromString(msg->asString());
   newMsg->removeHeaderField("Message-Id");
   newMsg->initHeader();
-  newMsg->setCharset(msg->charset());
+  newMsg->setCharset(msg->codec()->name());
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
 
@@ -1735,6 +1735,8 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
   int idx = item->msgId();
   emit activated(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
+
+  setOpen(lvi, !lvi->isOpen());
 }
 
 
