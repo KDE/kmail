@@ -258,6 +258,7 @@ namespace KMail {
 
     bool mIdle : 1;
     bool mErrorDialogIsActive : 1;
+    bool mPasswordDialogIsActive : 1;
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
         // folders that should be checked after the current check is done

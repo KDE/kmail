@@ -77,6 +77,7 @@ namespace KMail {
       mProgressEnabled( false ),
       mIdle( true ),
       mErrorDialogIsActive( false ),
+      mPasswordDialogIsActive( false ),
       mCreateInbox( false )
   {
     mPort = imapDefaultPort;
@@ -203,6 +204,7 @@ namespace KMail {
   ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() {
     if ( mSlave ) return Connected;
 
+    if ( mPasswordDialogIsActive ) return Connecting;
     if( mAskAgain || passwd().isEmpty() || login().isEmpty() ) {
       QString log = login();
       QString pass = passwd();
@@ -215,13 +217,16 @@ namespace KMail {
       passwords.writeEntry( "Keep", storePasswd() );
       QString msg = i18n("You need to supply a username and a password to "
 			 "access this mailbox.");
+      mPasswordDialogIsActive = true; 
       if ( PasswordDialog::getNameAndPassword( log, pass, &store, msg, false,
 					       QString::null, name(),
 					       i18n("Account:") )
           != QDialog::Accepted ) {
         checkDone(false, 0);
+        mPasswordDialogIsActive = false; 
         return Error;
       }
+      mPasswordDialogIsActive = false; 
       // The user has been given the chance to change login and
       // password, so copy both from the dialog:
       setPasswd( pass, store );
