@@ -588,6 +588,7 @@ void KMFilterDlg::slotBtnDelete()
   mFilter = 0;
   mCurFilterIdx = -1;
 
+  QObject::disconnect(mFilterList,SIGNAL(highlighted(int)),this,SLOT(slotFilterSelected(int)));
   mFilterList->removeItem(idx);
   kernel->filterMgr()->remove(idx);
 
@@ -602,7 +603,9 @@ void KMFilterDlg::slotBtnDelete()
   }
   else
     mCurFilterIdx = -1;
+
   enableControls();
+  connect(mFilterList,SIGNAL(highlighted(int)),SLOT(slotFilterSelected(int)));
   slotFilterSelected( idx ); // workaround another QT bug
 }
 
