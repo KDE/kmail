@@ -2217,6 +2217,89 @@ bool KMComposeWin::queryExit ()
   return true;
 }
 
+Kpgp::Result KMComposeWin::getEncryptionCertificates(
+                                             const QStringList& recipients,
+                                             QCString& encryptionCertificates )
+{
+  Kpgp::Result result = Kpgp::Ok;
+
+  // find out whether we are dealing with the OpenPGP or the S/MIME plugin
+  if ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) {
+    // We are dealing with the OpenPGP plugin. Use Kpgp to determine
+    // the encryption keys.
+    // get the OpenPGP key ID for the chosen identity
+    const KMIdentity & ident =
+      kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+    const QCString userKeyId = ident.pgpIdentity();
+    Kpgp::Module *pgp = Kpgp::Module::getKpgp();
+    Kpgp::KeyIDList encryptionKeyIds;
+
+    // temporarily set encrypt_to_self to the value specified in the
+    // plugin configuration. this value is used implicitely by the
+    // function which determines the encryption keys.
+    const bool bEncryptToSelf_Old = pgp->encryptToSelf();
+    pgp->setEncryptToSelf( mSelectedCryptPlug->alwaysEncryptToSelf() );
+    result = pgp->getEncryptionKeys( encryptionKeyIds, recipients, userKeyId );
+    // reset encrypt_to_self to the old value
+    pgp->setEncryptToSelf( bEncryptToSelf_Old );
+
+    if ( result == Kpgp::Ok && !encryptionKeyIds.isEmpty() ) {
+      // loop over all key IDs
+      for ( Kpgp::KeyIDList::ConstIterator it = encryptionKeyIds.begin();
+           it != encryptionKeyIds.end(); ++it ) {
+        const Kpgp::Key* key = pgp->publicKey( *it );
+        if ( key ) {
+          QCString certFingerprint = key->primaryFingerprint();
+          kdDebug(5006) << "Fingerprint of encryption key: "
+                        << certFingerprint << endl;
+          // add this key to the list of encryption keys
+          if( !encryptionCertificates.isEmpty() )
+            encryptionCertificates += '\1';
+          encryptionCertificates += certFingerprint;
+        }
+      }
+    }
+  }
+  else {
+    // S/MIME
+    QStringList allRecipients = recipients;
+    if ( mSelectedCryptPlug->alwaysEncryptToSelf() )
+      allRecipients << from();
+    for ( QStringList::ConstIterator it = allRecipients.begin();
+          it != allRecipients.end();
+          ++it ) {
+      QCString certFingerprint = getEncryptionCertificate( *it );
+
+      if ( certFingerprint.isEmpty() ) {
+        // most likely the user canceled the certificate selection
+        encryptionCertificates.truncate( 0 );
+        return Kpgp::Canceled;
+      }
+
+      certFingerprint.remove( 0, certFingerprint.findRev( '(' ) + 1 );
+      certFingerprint.truncate( certFingerprint.length() - 1 );
+      kdDebug(5006) << "\n\n                    Recipient: " << *it
+                    <<   "\nFingerprint of encryption key: "
+                    << certFingerprint << "\n\n" << endl;
+
+      const bool certOkay =
+        checkForEncryptCertificateExpiry( *it, certFingerprint );
+      if( certOkay ) {
+        if( !encryptionCertificates.isEmpty() )
+          encryptionCertificates += '\1';
+        encryptionCertificates += certFingerprint;
+      }
+      else {
+        // ###### This needs to be improved: Tell the user that the certificate
+        // ###### expired and let him choose a different one.
+        encryptionCertificates.truncate( 0 );
+        return Kpgp::Failure;
+      }
+    }
+  }
+  return result;
+}
+
 Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
                                    const QStringList& recipients,
                                    bool doSign,
@@ -2239,6 +2322,34 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
   // This c-string (init empty here) is set by *first* testing of expiring
   // encryption certificate: stops us from repeatedly asking same questions.
   QCString encryptCertFingerprints;
+
+  // determine the encryption certificates in case we need them
+  if ( mSelectedCryptPlug ) {
+    bool encrypt = doEncrypt;
+    if( !encrypt ) {
+      // check whether at least one attachment is marked for encryption
+      for ( KMAtmListViewItem* atmlvi =
+              static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
+            atmlvi;
+            atmlvi = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) ) {
+        if ( atmlvi->isEncrypt() ) {
+          encrypt = true;
+          break;
+        }
+      }
+    }
+    if ( encrypt ) {
+      result = getEncryptionCertificates( recipients,
+                                          encryptCertFingerprints );
+      if ( result != Kpgp::Ok )
+        return result;
+      if ( encryptCertFingerprints.isEmpty() ) {
+        // the user wants to send the message unencrypted
+        setEncryption( false, false );
+        doEncrypt = false;
+      }
+    }
+  }
 
   // encrypt message
   if( doEncrypt ) {
@@ -2268,7 +2379,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
 
 	QByteArray encryptedBody;
         result = pgpEncryptedMsg( encryptedBody, innerContent,
-				  recipients, structuring,
+				  structuring,
 				  encryptCertFingerprints );
 
         if( Kpgp::Ok == result ) {
@@ -2434,7 +2545,7 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
               StructuringInfoWrapper structuring( mSelectedCryptPlug );
 	      QByteArray encryptedBody;
               result = pgpEncryptedMsg( encryptedBody, encodedAttachment,
-					recipients, structuring,
+					structuring,
 					encryptCertFingerprints );
 
               if( Kpgp::Ok == result ) {
@@ -3279,7 +3390,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
 //-----------------------------------------------------------------------------
 Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
-					    QCString cText, const QStringList& recipients,
+					    QCString cText,
 					    StructuringInfoWrapper& structuring,
 					    QCString& encryptCertFingerprints )
 {
@@ -3329,105 +3440,29 @@ Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
     const char* cleartext  = cText;
     const char* ciphertext = 0;
 
-
-    bool bEncrypt = true;
-    if( encryptCertFingerprints.isEmpty() ){
-      // find out whether we are dealing with the OpenPGP or the S/MIME plugin
-      if( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) {
-        // We are dealing with the OpenPGP plugin. Use Kpgp to determine
-        // the encryption keys.
-        // get the OpenPGP key ID for the chosen identity
-        const KMIdentity & ident =
-          kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-        QCString userKeyId = ident.pgpIdentity();
-        Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-        Kpgp::KeyIDList encryptionKeyIds;
-
-        // temporarily set encrypt_to_self to the value specified in the
-        // plugin configuration. this value is used implicitely by the
-        // function which determines the encryption keys.
-        bool bEncryptToSelf_Old = pgp->encryptToSelf();
-        pgp->setEncryptToSelf( mSelectedCryptPlug->alwaysEncryptToSelf() );
-        result = pgp->getEncryptionKeys( encryptionKeyIds, recipients, userKeyId );
-        // reset encrypt_to_self to the old value
-        pgp->setEncryptToSelf( bEncryptToSelf_Old );
-
-        if( Kpgp::Ok == result ) {
-          // loop over all key IDs
-          for( Kpgp::KeyIDList::ConstIterator it = encryptionKeyIds.begin();
-               it != encryptionKeyIds.end(); ++it ) {
-            Kpgp::Key* key = pgp->publicKey( *it );
-            if( key ) {
-              QCString certFingerprint = key->primaryFingerprint();
-              kdDebug(5006) << "Fingerprint of encryption key: "
-                            << QString( certFingerprint ) << endl;
-              // add this key to the list of encryption keys
-              if( !encryptCertFingerprints.isEmpty() )
-                encryptCertFingerprints += '\1';
-              encryptCertFingerprints += certFingerprint;
-            }
-          }
-        }
-        else {
-          bEncrypt = false;
-        }
-      }
-      else {
-        QStringList allRecipients = recipients;
-        if( mSelectedCryptPlug->alwaysEncryptToSelf() )
-          allRecipients << from();
-        for( QStringList::ConstIterator it = allRecipients.begin();
-             ( bEncrypt && it != allRecipients.end() );
-             ++it ) {
-          QCString certFingerprint = getEncryptionCertificate( *it );
-
-          bEncrypt = !certFingerprint.isEmpty();
-
-          if( bEncrypt ) {
-            certFingerprint.remove( 0, certFingerprint.findRev( '(' )+1 );
-            certFingerprint.truncate( certFingerprint.length()-1 );
-            kdDebug(5006) << "\n\n                    Recipient: " << *it
-                          <<   "\nFingerprint of encryption key: "
-                          << QString( certFingerprint ) << "\n\n" << endl;
-
-            bEncrypt = checkForEncryptCertificateExpiry( *it,
-                                                         certFingerprint );
-
-            if( bEncrypt ) {
-              if( !encryptCertFingerprints.isEmpty() )
-                encryptCertFingerprints += '\1';
-              encryptCertFingerprints += certFingerprint;
-            }
-          }
-        }
-      }
-    } // if( encryptCertFingerprints.isEmpty() )
-
-
     // Actually do the encryption, if the plugin supports this
     size_t cipherLen;
-    if ( bEncrypt ) {
-      int errId = 0;
-      char* errTxt = 0;
-      if( mSelectedCryptPlug->hasFeature( Feature_EncryptMessages ) &&
-          mSelectedCryptPlug->encryptMessage( cleartext,
-                                     &ciphertext, &cipherLen,
-                                     encryptCertFingerprints,
-                                     structuring,
-                                     &errId,
-                                     &errTxt )
-          && ciphertext )
-        encryptedBody.assign( ciphertext, cipherLen );
-      else {
-        bEncrypt = false;
-        QString error("#");
-        error += QString::number( errId );
-        error += "  :  ";
-        if( errTxt )
-          error += errTxt;
-        else
-          error += i18n("[unknown error]");
-        KMessageBox::sorry(this,
+
+    int errId = 0;
+    char* errTxt = 0;
+    if( mSelectedCryptPlug->hasFeature( Feature_EncryptMessages ) &&
+        mSelectedCryptPlug->encryptMessage( cleartext,
+                                            &ciphertext, &cipherLen,
+                                            encryptCertFingerprints,
+                                            structuring,
+                                            &errId,
+                                            &errTxt )
+        && ciphertext )
+      encryptedBody.assign( ciphertext, cipherLen );
+    else {
+      QString error("#");
+      error += QString::number( errId );
+      error += "  :  ";
+      if( errTxt )
+        error += errTxt;
+      else
+        error += i18n("[unknown error]");
+      KMessageBox::sorry(this,
                   i18n("<qt><p><b>This message could not be encrypted!</b></p>"
                        "<p>The Crypto Plug-In '%1' reported the following "
                        "details:</p>"
@@ -3438,10 +3473,9 @@ Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
                        "administrator.</b></p></qt>")
                   .arg(mSelectedCryptPlug->libName())
                   .arg( error ) );
-      }
-      delete errTxt;
-      errTxt = 0;
     }
+    delete errTxt;
+    errTxt = 0;
 
     // we do NOT delete the "ciphertext" !
     // bacause "encoding" will take care for it (is a QByteArray)

@@ -663,7 +663,7 @@ private:
    *
    */
   Kpgp::Result pgpEncryptedMsg( QByteArray & rEncryptedBody,
-				QCString cText, const QStringList& recipients,
+				QCString cText,
 				StructuringInfoWrapper& structuring,
 				QCString& encryptCertFingerprints );
 
@@ -714,6 +714,9 @@ private:
    */
   bool signFlagOfAttachment(int idx);
 
+
+  Kpgp::Result getEncryptionCertificates( const QStringList& recipients,
+                                          QCString& encryptionCertificates );
 
   Kpgp::Result encryptMessage( KMMessage* msg,
                        const QStringList& recipients, bool doSign, bool doEncrypt,
