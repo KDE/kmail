@@ -909,6 +909,15 @@ void KMMainWidget::slotFolderMailingListProperties()
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotFolderShortcutCommand()
+{
+  if (!mFolderTree) return;
+  KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( mFolderTree->currentItem() );
+  if ( item )
+    item->assignShortcut();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotModifyFolder()
@@ -2272,6 +2281,10 @@ void KMMainWidget::setupActions()
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
       /*"folder_mailinglist_properties",*/ 0, this, SLOT( slotFolderMailingListProperties() ),
       actionCollection(), "folder_mailinglist_properties" );
+
+  mFolderShortCutCommandAction = new KAction( i18n("&Assign Shortcut..."), "configure_shortcuts",
+                      0, this, SLOT( slotFolderShortcutCommand() ), actionCollection(),
+                      "folder_shortcut_command" );
 
 
   mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
