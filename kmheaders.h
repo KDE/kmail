@@ -158,8 +158,6 @@ public slots:
 
   /** For when a list view item has been double clicked */
   void selectMessage(QListViewItem*);
-  /** For nested message view, recusively add all children of a message */
-  void recursivelyAddChildren( int i, KMHeaderItem *parent );
   /** For when a list view item has been selected */
   void highlightMessage(QListViewItem*);
   /** For when righ mouse button is pressed */

@@ -1843,44 +1843,6 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
-{
-  KMMsgBase* mb;
-  mb = mFolder->getMsgBase( i );
-  assert( mb );
-  QString msgId = mb->msgIdMD5();
-  if (msgId.isNull())
-    msgId = "";
-
-  mIdTree.replace( msgId, parent );
-  assert( mTreeSeen[msgId] );
-  if (*(mTreeSeen[msgId])) // this can happen in the pathological case of
-    // multiple messages having the same id. This case, even the extra
-    // pathological version where messages have the same id and different
-    // reply-To-Ids, should be handled ok. Later messages with duplicate
-    // ids will be shown as children of the first one in the bunch.
-    return;
-  mTreeSeen.replace( msgId, &mTrue );
-
-  // iterator over items in children list (exclude parent)
-  // recusively add them as children of parent
-  QValueList<int> *messageList = mTree[msgId];
-  assert(messageList);
-
-  QValueList<int>::Iterator it;
-  for (it = messageList->begin(); it != messageList->end(); ++it) {
-    if (*it == i)
-      continue;
-
-	KMHeaderItem* hi = new KMHeaderItem( parent, *it );
-    assert(mItems[*it] == 0);
-    mItems.operator[](*it) = hi;
-    recursivelyAddChildren( *it, hi );
-  }
-}
-
-
-//-----------------------------------------------------------------------------
 void KMHeaders::updateMessageList(bool set_selection)
 {
   mPrevCurrent = 0;
