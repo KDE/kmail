@@ -351,8 +351,10 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
     " Groupware format.\nFor a list of such email clients please"
     " visit\nhttp:://www.kolab.org/kolab-clients.html");
   QString firstPartText = i18n( firstPartTextUntranslated );
-  firstPartText.append("\n\n-----------------------------------------------------\n\n");
-  firstPartText.append( firstPartTextUntranslated );
+  if ( firstPartText != firstPartTextUntranslated ) {
+    firstPartText.append("\n\n-----------------------------------------------------\n\n");
+    firstPartText.append( firstPartTextUntranslated );
+  }
   firstPart.setBodyFromUnicode( firstPartText );
   msg->addBodyPart( &firstPart );
 
