@@ -843,7 +843,9 @@ kdDebug(5006) << "* model *" << endl;
     mViewer->view()->setUpdatesEnabled( true );
     mViewer->view()->viewport()->repaint( false );*/
   }
+  }
 }
+
 /*
  ===========================================================================
 
