@@ -2003,7 +2003,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom (shift + F1 for help)"), KMime::DateFormatter::Custom }
+  { I18N_NOOP("C&ustom (Shift+F1 for help)"), KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
@@ -3264,7 +3264,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   // Warning label:
   label = new QLabel( i18n("<qt><b>WARNING:</b> Unconditionally returning "
-			   "confirmations undermines you privacy. See "
+			   "confirmations undermines your privacy. See "
 			   "\"What's this\" help (Shift+F1) for more.</qt>"),
 		      group );
   label->setAlignment( WordBreak );
@@ -3322,7 +3322,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
  	      "   generates a reply from which the author can learn what"
  	      "   happened to his message. Common disposition types include"
  	      "   \"displayed\" (i.e. read), \"deleted\" and \"dispatched\""
- 	      "   (i.e. e.g. forwarded).</p>"
+ 	      "   (e.g. forwarded).</p>"
  	      "<p>The following options are available to control KMail's"
  	      "   sending of MDNs:</p>"
  	      "<ul>"
