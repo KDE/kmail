@@ -22,6 +22,7 @@ class KMHeaderItem;
 class QPixmap;
 class QIconSet;
 class QDateTime;
+class KMSortCacheItem;
 
 typedef QPtrList<KMMsgBase> KMMessageList;
 typedef QValueList<Q_UINT32> SerNumList;
@@ -298,11 +299,11 @@ private:
   int mCurrentItem;
   /** Map messages ids into KMHeaderItems */
   QMemArray<KMHeaderItem*> mItems;
-  QDict< KMHeaderItem > mIdTree;
-  QDict< KMHeaderItem> mMsgSubjects;
+  QDict< KMSortCacheItem > mSortCacheItems;
+  QDict< QPtrList< KMSortCacheItem > > mSubjectLists;	
+  void buildThreadingTrees( QMemArray<KMSortCacheItem *> sortCache );
+  KMSortCacheItem* findParentForSortCacheItem(KMSortCacheItem *item);
 
-  void buildIdTrees ();
-  QDict< KMHeaderItem > mPhantomIdTree;
   bool mNested, mNestedOverride, mSubjThreading;
   NestingPolicy nestingPolicy;
   QPtrList<KMHeaderItem> mImperfectlyThreadedList;
