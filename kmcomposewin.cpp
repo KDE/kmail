@@ -1946,7 +1946,10 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
   QString hf = mMsg->headerField("X-KMail-Transport");
   QString msgId = mMsg->msgId();
+  static bool busy = 0;
   bool sentOk;
+  if (busy) return;
+  busy = true;
 
   kernel->kbp()->busy();
   //applyChanges();  // is called twice otherwise. Lars
@@ -1979,7 +1982,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     mFolder = NULL;
     close();
   }
-
+  busy = false;
 }
 
 
