@@ -36,6 +36,7 @@
 #include <kio/netaccess.h>
 #include <kio/job.h>
 #include <ktip.h>
+#include <kdeversion.h>
 #if KDE_VERSION >= 306
 #include <knotifydialog.h>
 #endif
@@ -3104,7 +3105,11 @@ void KMMainWin::slotUpdateToolbars()
 
 void KMMainWin::slotEditKeys()
 {
-  KKeyDialog::configure( actionCollection() );
+  KKeyDialog::configure( actionCollection()
+#if KDE_VERSION >= 306
+			 , true /*allow on-letter shortcuts*/
+#endif
+			 );
 }
 
 //-----------------------------------------------------------------------------

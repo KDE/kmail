@@ -43,6 +43,7 @@
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
+#include <kdeversion.h>
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
@@ -4543,7 +4544,11 @@ void KMComposeWin::slotUpdateToolbars()
 
 void KMComposeWin::slotEditKeys()
 {
-  KKeyDialog::configure( actionCollection() );
+  KKeyDialog::configure( actionCollection()
+#if KDE_VERSION >= 306 
+			 , false /*don't allow one-letter shortcuts*/
+#endif
+			 );
 }
 
 void KMComposeWin::setReplyFocus( bool hasMessage )
