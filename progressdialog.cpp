@@ -55,6 +55,7 @@
 #include "progressmanager.h"
 #include "ssllabel.h"
 #include "kmmainwidget.h"
+#include <qwhatsthis.h>
 
 
 
@@ -248,6 +249,7 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, 
     pbClose->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     pbClose->setFixedSize( 16, 16 );
     pbClose->setIconSet( KGlobal::iconLoader()->loadIconSet( "fileclose", KIcon::Small, 14 ) );
+    QToolTip::add( pbClose, i18n( "Hide detailed progress window" ) );
     connect(pbClose, SIGNAL(clicked()), this, SLOT(close()));
     QWidget* spacer = new QWidget( rightBox ); // don't let the close button take up all the height
     rightBox->setStretchFactor( spacer, 100 );

@@ -320,6 +320,13 @@ class ProgressManager : public QObject
      */
     bool isEmpty() const { return mTransactions.isEmpty(); }
 
+    /**
+     * @return the only progressitem when there's only one.
+     * Returns 0 if there is no item, or more than one item.
+     */
+    ProgressItem* singleItem() const;
+
+
   signals:
     /** @see ProgressItem::progressItemAdded() */
     void progressItemAdded( ProgressItem* );

@@ -59,7 +59,8 @@ using KMail::ProgressManager;
 
 //-----------------------------------------------------------------------------
 StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWidget* parent, bool button )
-  : QFrame( parent ), m_mainWidget( mainWidget ), mCurrentItem( 0 ), mDelayTimer( 0 )
+  : QFrame( parent ), m_mainWidget( mainWidget ),
+    mCurrentItem( 0 ), mDelayTimer( 0 ), mBusyTimer( 0 )
 {
   m_bShowButton = button;
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
@@ -86,7 +87,7 @@ StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWid
   m_pProgressBar->setMinimumWidth( w );
   stack->addWidget( m_pProgressBar, 1 );
 
-  m_pLabel = new QLabel( "", this );
+  m_pLabel = new QLabel( QString::null, this );
   m_pLabel->setAlignment( AlignHCenter | AlignVCenter );
   m_pLabel->installEventFilter( this );
   m_pLabel->setMinimumWidth( w );
@@ -116,40 +117,71 @@ StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWid
 void StatusbarProgressWidget::slotProgressItemAdded( ProgressItem *item )
 {
   if ( item->parent() ) return; // we are only interested in top level items
+  setup();
+}
+
+void StatusbarProgressWidget::setup()
+{
   if ( mCurrentItem ) {
     disconnect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
                 this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
+    mCurrentItem = 0;
   }
-  mCurrentItem = item;
-  connect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
-            this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
-  mDelayTimer->start( 1000, true );
-}
-
-void StatusbarProgressWidget::slotShowItemDelayed()
-{
-  if ( mCurrentItem ) {
-    if ( mode == None ) {
-      mode = Progress;
-      setMode();
+  // There are three cases: no progressitem, one progressitem (connect to it directly),
+  // or many progressitems (display busy indicator)
+  mCurrentItem = ProgressManager::instance()->singleItem();
+  if ( ProgressManager::instance()->isEmpty() ) { // No item
+    //kdDebug(5006) << "setup: no items" << endl;
+    // Done. In 5s the progress-widget will close, then we can clean up the statusbar
+    QTimer::singleShot( 5000, this, SLOT( slotClean() ) );
+  } else if ( mCurrentItem ) { // Exactly one item
+    //kdDebug(5006) << "setup: one item" << endl;
+    delete mBusyTimer;
+    mBusyTimer = 0;
+    connect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
+              this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
+    mDelayTimer->start( 1000, true );
+    m_pProgressBar->setTotalSteps( 100 );
+    m_pProgressBar->setProgress( mCurrentItem->progress() );
+    m_pProgressBar->setPercentageVisible( true );
+  } else { // More than one item
+    //kdDebug(5006) << "setup: multiple items" << endl;
+    if ( !mBusyTimer ) {
+      mBusyTimer = new QTimer( this );
+      connect( mBusyTimer, SIGNAL( timeout() ),
+               this, SLOT( slotBusyIndicator() ) );
+      mDelayTimer->start( 1000, true );
+      m_pProgressBar->setTotalSteps( 0 );
+    m_pProgressBar->setPercentageVisible( false );
     }
   }
 }
 
-void StatusbarProgressWidget::slotProgressItemCompleted( ProgressItem *item )
+void StatusbarProgressWidget::slotShowItemDelayed()
 {
-  if ( mCurrentItem == item )
-    mCurrentItem = 0;
-  if ( ProgressManager::instance()->isEmpty() ) {
-    // Done. In 5s the progress-widget will close, then we can clean up the statusbar
-    QTimer::singleShot( 5000, this, SLOT( slotClean() ) );
+  if ( !ProgressManager::instance()->isEmpty() && mode == None ) {
+    mode = Progress;
+    setMode();
+    if ( mBusyTimer ) // many items
+      mBusyTimer->start( 100 );
   }
+}
+
+void StatusbarProgressWidget::slotBusyIndicator()
+{
+  int p = m_pProgressBar->progress();
+  m_pProgressBar->setProgress( p + 10 );
+}
+
+void StatusbarProgressWidget::slotProgressItemCompleted( ProgressItem * )
+{
+  setup();
 }
 
 void StatusbarProgressWidget::slotProgressItemProgress( ProgressItem *item, unsigned int value )
 {
   Q_ASSERT( item == mCurrentItem); // the only one we should be connected to
-  m_pProgressBar->setValue( value );
+  m_pProgressBar->setProgress( value );
 }
 
 void StatusbarProgressWidget::slotSetSSL( bool ssl )
@@ -169,6 +201,7 @@ void StatusbarProgressWidget::setMode() {
     stack->raiseWidget( m_pLabel );
     break;
 
+#if 0
   case Label:
     if ( m_bShowButton ) {
       m_pButton->show();
@@ -177,6 +210,7 @@ void StatusbarProgressWidget::setMode() {
     stack->show();
     stack->raiseWidget( m_pLabel );
     break;
+#endif
 
   case Progress:
     stack->show();
@@ -193,8 +227,8 @@ void StatusbarProgressWidget::slotClean()
 {
   // check if a new item showed up since we started the timer. If not, clear
   if ( ProgressManager::instance()->isEmpty() ) {
-    m_pProgressBar->setValue( 0 );
-    m_pLabel->clear();
+    m_pProgressBar->setProgress( 0 );
+    //m_pLabel->clear();
     mode = None;
     setMode();
   }
@@ -217,20 +251,17 @@ bool StatusbarProgressWidget::eventFilter( QObject *, QEvent *ev )
 
 void StatusbarProgressWidget::slotProgressDialogVisible( bool b )
 {
-  // Hide the progress bar when the detailed one is showing
+  // Update the hide/show button when the detailed one is shown/hidden
   if ( b ) {
-    mode = Label;
     m_pButton->setPixmap( SmallIcon( "down" ) );
     QToolTip::remove( m_pButton );
-    QToolTip::add( m_pButton, i18n("Close detailed progress dialog") );
+    QToolTip::add( m_pButton, i18n("Hide detailed progress window") );
+    setMode();
   } else {
-    if ( mode == Label )  // not if None already
-      mode = Progress;
     m_pButton->setPixmap( SmallIcon( "up" ) );
     QToolTip::remove( m_pButton );
-    QToolTip::add( m_pButton, i18n("Open detailed progress dialog") );
+    QToolTip::add( m_pButton, i18n("Show detailed progress window") );
   }
-  setMode();
 }
 
 #include "statusbarprogresswidget.moc"

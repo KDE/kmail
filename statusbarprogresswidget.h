@@ -72,27 +72,31 @@ public slots:
 protected slots:
   void slotProgressDialogVisible( bool );
   void slotShowItemDelayed();
+  void slotBusyIndicator();
 
 protected:
+  void setMode();
+  void setup();
+
+  virtual bool eventFilter( QObject *, QEvent * );
+
+private:
   KMMainWidget* m_mainWidget;
   KProgress* m_pProgressBar;
   QLabel* m_pLabel;
   SSLLabel* m_sslLabel;
   QPushButton* m_pButton;
 
-  enum Mode { None, Label, Progress };
+  enum Mode { None, /*Label,*/ Progress };
 
   uint mode;
   bool m_bShowButton;
 
-  void setMode();
-
-
-  virtual bool eventFilter( QObject *, QEvent * );
   QBoxLayout *box;
   QWidgetStack *stack;
   ProgressItem *mCurrentItem;
   QTimer *mDelayTimer;
+  QTimer *mBusyTimer;
 };
 
 #endif

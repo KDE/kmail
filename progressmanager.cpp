@@ -199,6 +199,13 @@ void ProgressManager::slotStandardCancelHandler( ProgressItem *item )
   item->setComplete();
 }
 
+ProgressItem* ProgressManager::singleItem() const
+{
+  if ( mTransactions.count() == 1 )
+    return QDictIterator< ProgressItem >( mTransactions ).current();
+  return 0;
+}
+
 } // namespace
 
 #include "progressmanager.moc"
