@@ -212,7 +212,12 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       // top-level parts we do *not* have to travel into embedded multiparts
       DwBodyPart* part = msg.getFirstDwBodyPart();
       while( part ){
-        if( fileName == part->partId() ){
+        //  kdDebug() << part->Headers().ContentType().TypeStr().c_str() << " "
+        //          << part->Headers().ContentType().SubtypeStr().c_str() << endl;
+        if ( part->hasHeaders()
+             && part->Headers().HasContentType()
+             && part->Headers().ContentType().TypeStr() == sType
+             && part->Headers().ContentType().SubtypeStr() == sSubtype) {
           DwBodyPart* newPart = msg.createDWBodyPart( &msgPart );
           // Make sure the replacing body part is pointing
           // to the same next part as the original body part.
