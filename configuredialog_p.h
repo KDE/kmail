@@ -182,13 +182,13 @@ class ConfigModuleTab : public QWidget {
 public:
    ConfigModuleTab( QWidget *parent=0, const char* name=0 )
       :QWidget( parent, name )
-      {};
-   ~ConfigModuleTab() {};
+      {}
+  ~ConfigModuleTab() {}
   virtual void load() = 0;
   virtual void save() = 0;
   // the below are optional
-  virtual void defaults() {};
-  virtual void installProfile(){};
+  virtual void defaults() {}
+  virtual void installProfile(){}
 signals:
    // forwarded to the ConfigModule
   void changed(bool);
