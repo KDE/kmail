@@ -61,6 +61,7 @@ ExpireJob::ExpireJob( KMFolder* folder, bool immediate )
  : FolderJob( 0, tOther, folder ), mTimer( this ), mCurrentIndex( 0 ),
    mImmediate( immediate ), mFolderOpen( false )
 {
+  mSrcFolder = folder;
   mCancellable = true;
 }
 
@@ -72,8 +73,8 @@ void ExpireJob::kill()
 {
   Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
-  if ( mFolderOpen && mDestFolder && mDestFolder->storage() )
-    mDestFolder->storage()->close();
+  if ( mFolderOpen && mSrcFolder && mSrcFolder->storage() )
+    mSrcFolder->storage()->close();
   FolderJob::kill();
 }
 
@@ -84,7 +85,7 @@ void ExpireJob::execute()
   mCurrentIndex = 0;
 
   int unreadDays, readDays;
-  mDestFolder->daysToExpire( unreadDays, readDays );
+  mSrcFolder->daysToExpire( unreadDays, readDays );
   if (unreadDays > 0) {
     kdDebug(5006) << "ExpireJob: deleting unread older than "<< unreadDays << " days" << endl;
     mMaxUnreadTime = time(0) - unreadDays * 3600 * 24;
@@ -100,11 +101,11 @@ void ExpireJob::execute()
     return;
   }
 
-  FolderStorage* storage = mDestFolder->storage();
+  FolderStorage* storage = mSrcFolder->storage();
   storage->open();
   mFolderOpen = true;
   mCurrentIndex = storage->count()-1;
-  kdDebug(5006) << "ExpireJob: starting to expire in folder " << mDestFolder->location() << endl;
+  kdDebug(5006) << "ExpireJob: starting to expire in folder " << mSrcFolder->location() << endl;
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotDoWork() ) );
   mTimer.start( EXPIREJOB_TIMERINTERVAL );
   slotDoWork();
@@ -113,8 +114,8 @@ void ExpireJob::execute()
 
 void ExpireJob::slotDoWork()
 {
-  // No need to worry about mDestFolder==0 here. The FolderStorage deletes the jobs on destruction.
-  FolderStorage* storage = mDestFolder->storage();
+  // No need to worry about mSrcFolder==0 here. The FolderStorage deletes the jobs on destruction.
+  FolderStorage* storage = mSrcFolder->storage();
   int stopIndex = mImmediate ? 0 : QMAX( 0, mCurrentIndex - EXPIREJOB_NRMESSAGES );
 #ifdef DEBUG_SCHEDULER
   kdDebug(5006) << "ExpireJob: checking messages " << mCurrentIndex << " to " << stopIndex << endl;
@@ -140,34 +141,34 @@ void ExpireJob::slotDoWork()
 void ExpireJob::done()
 {
   QString str;
-  FolderStorage* storage = mDestFolder->storage();
+  FolderStorage* storage = mSrcFolder->storage();
 
   if ( !mRemovedMsgs.isEmpty() ) {
     int count = mRemovedMsgs.count();
     // The command shouldn't kill us because it opens the folder
     mCancellable = false;
-    if ( mDestFolder->expireAction() == KMFolder::ExpireDelete ) {
+    if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
       // Expire by deletion, i.e. move to null target folder
       kdDebug(5006) << "ExpireJob: finished expiring in folder "
-                    << mDestFolder->location()
+                    << mSrcFolder->location()
                     << " " << count << " messages to remove." << endl;
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
       cmd->start();
       str = i18n( "Removing 1 old message from folder %1...",
                   "Removing %n old messages from folder %1...", count )
-            .arg( mDestFolder->label() );
+            .arg( mSrcFolder->label() );
     } else {
       // Expire by moving
       KMFolder *moveToFolder =
-        kmkernel->findFolderById( mDestFolder->expireToFolderId() );
+        kmkernel->findFolderById( mSrcFolder->expireToFolderId() );
       if ( !moveToFolder ) {
         str = i18n( "Cannot expire messages from folder %1: destination "
                     "folder %2 not found" )
-              .arg( mDestFolder->label(), mDestFolder->expireToFolderId() );
+              .arg( mSrcFolder->label(), mSrcFolder->expireToFolderId() );
         kdWarning(5006) << str << endl;
       } else {
         kdDebug(5006) << "ExpireJob: finished expiring in folder "
-                      << mDestFolder->location() << " "
+                      << mSrcFolder->location() << " "
                       << mRemovedMsgs.count() << " messages to move to "
                       << moveToFolder->label() << endl;
         KMMoveCommand* cmd = new KMMoveCommand( moveToFolder, mRemovedMsgs );
@@ -175,7 +176,7 @@ void ExpireJob::done()
         str = i18n( "Moving 1 old message from folder %1 to folder %2...",
                     "Moving %n old messages from folder %1 to folder %2...",
                     count )
-              .arg( mDestFolder->label(), moveToFolder->label() );
+              .arg( mSrcFolder->label(), moveToFolder->label() );
       }
     }
   }
