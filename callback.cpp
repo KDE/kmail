@@ -77,11 +77,9 @@ bool Callback::mailICal( const QString& to, const QString iCal,
     // Try and match the receiver with an identity
     const KPIM::Identity& identity =
       kmkernel->identityManager()->identityForAddress( receiver() );
-    if( identity != KPIM::Identity::null ) {
+    if( identity != KPIM::Identity::null )
       // Identity found. Use this
       msg->setFrom( identity.fullEmailAddr() );
-      break;
-    }
   }
 
   // TODO: These are no longer available. It was an internal
