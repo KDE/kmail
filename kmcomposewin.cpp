@@ -3,8 +3,6 @@
 
 #include "kmcomposewin.h"
 #include "KEdit.h"
-#include "kmglobal.h"
-#include "kmmainwin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmsender.h"
@@ -40,6 +38,22 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <unistd.h>
+
+#ifdef KRN
+/* start added for KRN */
+extern KLocale *nls;
+extern KStdAccel* keys;
+extern KApplication *app;
+extern KBusyPtr *kbp;
+extern KMSender *msgSender;
+extern KMIdentity *identity;
+#define aboutText "KRN"
+/* end added for KRN */
+#else
+#include "kmglobal.h"
+#include "kmmainwin.h"
+#endif
+
 
 #include "kmcomposewin.moc"
 
