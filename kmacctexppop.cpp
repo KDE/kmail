@@ -595,9 +595,9 @@ void KMAcctExpPop::slotJobFinished() {
     if( idsOfMsgs.count() > 0 ) {
       int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
         indexOfCurrentMsg : idsOfMsgs.count();
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(numMessages).arg(numBytesRead/1024));
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB).").arg(numMessages).arg(numBytesRead/1024));
     } else {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed..." ));
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed." ));
     }
     kapp->processEvents(200);
     KMBroadcastStatus::instance()->setStatusProgressEnable( false );

@@ -121,7 +121,7 @@ void KMAcctLocal::processNewMail(bool)
     KMessageBox::sorry(0, aStr);
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
     emit finishedCheck(hasNewMail);
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed..." ));
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
     return;
   }
 
@@ -129,7 +129,7 @@ void KMAcctLocal::processNewMail(bool)
     kdDebug() << "mailFolder could not be locked" << endl;
     mailFolder.close();
     emit finishedCheck(hasNewMail);
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed..." ));
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
     return;
   }
 
@@ -176,7 +176,7 @@ void KMAcctLocal::processNewMail(bool)
   rc = mailFolder.expunge();
   if (rc)
     KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location().arg(strerror(rc))));
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed..." ));
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
   }
   // else warning is written already
 

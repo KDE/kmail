@@ -61,7 +61,7 @@ void KMIOStatusWdg::prepareTransmission(QString host, task _t) {
 
 void KMIOStatusWdg::transmissionCompleted() {
 
-  msgLbl->setText(i18n("Transmission completed..."));
+  msgLbl->setText(i18n("Transmission completed."));
 
 }
 
