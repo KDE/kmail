@@ -38,6 +38,7 @@
 #include <kconfig.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
+#include <kglobal.h>
 
 #include <qcolor.h>
 #include <qfont.h>
@@ -77,10 +78,13 @@ namespace KMail {
       return bodyFont( fixed, print ).pointSize();
     }
 
+    QString quoteFontTag( int level ) const;
+
   private:
     QFont mBodyFont, mPrintFont, mFixedFont;
     QFont mQuoteFont[3];
     QColor mQuoteColor[3];
+    bool mRecycleQuoteColors;
     bool mBackingPixmapOn;
     QString mBackingPixmapStr;
     QColor c1, c2, c3, c4;
@@ -103,6 +107,7 @@ namespace KMail {
       mBodyFont == other.mBodyFont &&
       mPrintFont == other.mPrintFont &&
       mFixedFont == other.mFixedFont &&
+      mRecycleQuoteColors == other.mRecycleQuoteColors &&
       mBackingPixmapOn == other.mBackingPixmapOn &&
       mBackingPixmapStr == other.mBackingPixmapStr &&
       c1 == other.c1 && c2 == other.c2 && c3 == other.c3 && c4 == other.c4 &&
@@ -163,6 +168,7 @@ namespace KMail {
 
     for ( int i = 0 ; i < 3 ; ++i )
       mQuoteColor[i] = QColor( 0x00, 0x80 - i * 0x10, 0x00 ); // shades of green
+    mRecycleQuoteColors = reader.readBoolEntry( "RecycleQuoteColors", false );
 
     if ( !reader.readBoolEntry( "defaultColors", true ) ) {
       c1 = reader.readColorEntry("ForegroundColor",&c1);
@@ -305,8 +311,19 @@ namespace KMail {
       QString( fixed ? "<body class\"fixedfont\">\n" : "<body>\n" );
   }
 
+  QString CSSHelper::Private::quoteFontTag( int level ) const {
+    if ( level < 0 )
+      level = 0;
+    static const int numQuoteLevels = sizeof mQuoteFont / sizeof *mQuoteFont ;
+    const int effectiveLevel = mRecycleQuoteColors
+      ? level % numQuoteLevels + 1
+      : kMin( level + 1, numQuoteLevels ) ;
+    return QString( "<div class=\"quotelevel%1\">" ).arg( effectiveLevel );
+  }
+
   QString CSSHelper::quoteFontTag( int level ) const {
-    return QString( "<div class=\"quotelevel%1\">" ).arg( level % 3 + 1 );
+    assert( d );
+    return d->quoteFontTag( level );
   }
 
   QString CSSHelper::nonQuotedFontTag() const {
