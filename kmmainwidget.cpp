@@ -782,26 +782,6 @@ void KMMainWidget::slotImport()
   KRun::runCommand("kmailcvt");
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotAddFolder()
-{
-  KMFolderDialog *d;
-
-  d = new KMFolderDialog(0, &(kmkernel->folderMgr()->dir()),
-			 mFolderTree, i18n("Create Folder"));
-  if (d->exec()) {
-    mFolderTree->reload();
-    QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
-    if (qlvi) {
-      qlvi->setOpen(TRUE);
-      mFolderTree->setCurrentItem( qlvi );
-    }
-  }
-  delete d;
-}
-
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
@@ -2268,8 +2248,8 @@ void KMMainWidget::setupActions()
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
   //----- Folder Menu
-  (void) new KAction( i18n("&New Folder..."), "folder_new", 0, this,
-		      SLOT(slotAddFolder()), actionCollection(), "new_folder" );
+  (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
+		      SLOT(addChildFolder()), actionCollection(), "new_folder" );
 
   mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
