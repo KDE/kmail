@@ -893,6 +893,9 @@ KpgpBase2::pubKeys()
   status = run(cmd);
   if(status == RUN_ERR) return 0;
 
+  //truncate trailing "\n"
+  if (output.length() > 1) output.truncate(output.length()-1);
+
   QStrList publicKeys;
   index = output.find("\n",1)+1; // skip first to "\n"
   while( (index = output.find("\n",index)) != -1)
@@ -1265,3 +1268,199 @@ KpgpBase5::signKey(const char *key, const char *passphrase)
   return status;
 }
 
+// -------------------------------------------------------------------------
+
+KpgpBase6::KpgpBase6()
+  : KpgpBase2()
+{
+}
+
+KpgpBase6::~KpgpBase6()
+{
+}
+
+int
+KpgpBase6::decrypt(const char *passphrase)
+{
+  QString cmd;
+  int index, index2;
+  output = "";
+
+  cmd = "pgp +batchmode -f";
+
+  status = run(cmd, passphrase);
+
+  if(status != OK)
+  {
+    errMsg = i18n("error running pgp");
+    return status;
+  }
+
+  // encrypted message
+  if( info.find("File is encrypted.") != -1)
+  {
+    //debug("kpgpbase: message is encrypted");
+    status |= ENCRYPTED;
+    if( info.find("Key for user ID") != -1)
+    {
+      // Test output length to find out, if the passphrase is
+      // bad. If someone knows a better way, please fix this.
+      if (!passphrase || !output.length())
+      {
+	errMsg = i18n("Bad pass Phrase; couldn't decrypt");
+	//debug("KpgpBase: passphrase is bad");
+        status |= BADPHRASE;
+        status |= ERROR;
+      }
+    }
+    else if( info.find("Secret key is required to read it.") != -1)
+    {
+      errMsg = i18n("Do not have the secret key for this message");
+      //debug("KpgpBase: no secret key for this message");
+      status |= NO_SEC_KEY;
+      status |= ERROR;
+    }
+  }
+
+  // signed message
+  if(((index = info.find("File is signed.")) != -1)
+    || (info.find("Good signature") != -1 ))
+  {
+    //debug("KpgpBase: message is signed");
+    status |= SIGNED;
+    if( info.find("signature not checked") != -1)
+    {
+      index = info.find("KeyID:",index);
+      signatureID = info.mid(index+7,8);
+      signature = i18n("unknown key ID ");
+      signature += " " +signatureID;
+      status |= UNKNOWN_SIG;
+      status |= GOODSIG;
+    }
+    else if((index = info.find("Good signature")) != -1 )
+    {
+      status |= GOODSIG;
+      // get signer
+      index = info.find("\"",index);
+      index2 = info.find("\"", index+1);
+      signature = info.mid(index+1, index2-index-1);
+
+      // get key ID of signer
+      index = info.find("KeyID:",index2);
+      if (index == -1)
+        signatureID = "???";
+      else
+        signatureID = info.mid(index+7,8);
+    }
+    else if( info.find("Can't find the right public key") != -1 )
+    {
+      status |= UNKNOWN_SIG;
+      status |= GOODSIG; // this is a hack...
+      signature = i18n("??? (file ~/.pgp/pubring.pkr not found)");
+      signatureID = "???";
+    }
+    else
+    {
+      status |= ERROR;
+      signature = "";
+      signatureID = "";
+    }
+  }
+  //debug("status = %d",status);
+  return status;
+}
+
+QStrList
+KpgpBase6::pubKeys()
+{
+  QString cmd;
+  int index, index2;
+  int compatibleMode = 1;
+
+  cmd = "pgp +batchmode -kv -f \"\" ~/.pgp/pubring.pkr";
+  status = run(cmd);
+  if(status != OK) return 0;
+
+  //truncate trailing "\n"
+  if (info.length() > 1) info.truncate(info.length()-1);
+
+  QStrList publicKeys;
+  index = info.find("bits/keyID",1); // skip first to "\n"
+  if (index ==-1)
+  {
+    index = info.find("Type bits",1); // skip first to "\n"
+    if (index == -1)
+      return 0;
+    else
+      compatibleMode = 0;
+  }
+
+  while( (index = info.find("\n",index)) != -1)
+  {
+    //parse line
+    QString line;
+    if( (index2 = info.find("\n",index+1)) != -1)
+      // skip last line
+    {
+      int index3;
+      if (compatibleMode)
+        index3 = info.find("pub ",index);
+      else
+      {
+        int index_rsa = info.find("RSA ",index);
+        int index_dss = info.find("DSS ",index);
+        if (index_rsa < 0)
+          index3 = index_dss;
+        else if (index_dss < 0)
+          index3 = index_rsa;
+        else
+          index3 = (index_rsa < index_dss ? index_rsa : index_dss);
+      }
+
+      if( (index3 >index2) || (index3 == -1) )
+      {
+	// second adress for the same key
+	line = info.mid(index+1,index2-index-1);
+	line = line.stripWhiteSpace();	
+	line = line.lower();
+      } else {
+	// line with new key
+	int index4 = info.find(
+	  QRegExp("/[0-9][0-9]/[0-9][0-9] "),
+	  index);
+	line = info.mid(index4+7,index2-index4-7);
+	line = line.lower();
+      }
+      //debug("KpgpBase: found key for %s",(const char *)line);
+      publicKeys.append(line);
+    }
+    index = index2;
+  }
+  return publicKeys;
+}
+
+int
+KpgpBase6::isVersion6()
+{
+  QString cmd;
+  QString empty;
+
+  cmd = "pgp";
+
+  status = run(cmd, empty);
+
+  if(status != OK)
+  {
+    errMsg = i18n("error running pgp");
+    return 0;
+  }
+
+  if( info.find("Version 6") != -1)
+  {
+    //debug("kpgpbase: pgp version 6.x detected");
+    return 1;
+  }
+
+  //debug("kpgpbase: not pgp version 6.x");
+  return 0;
+}

@@ -66,8 +66,15 @@ Kpgp::init()
     else if (haveGpg)
       pgp = new KpgpBaseG();
     else 
-      pgp = new KpgpBase2();
-
+    {
+      KpgpBase6 *pgp_v6 = new KpgpBase6();
+      if (!pgp_v6->isVersion6())
+      {
+        delete pgp_v6;
+        pgp = new KpgpBase2();
+      }
+      else pgp = pgp_v6;
+    }
   }
   else
   {
@@ -470,7 +477,7 @@ Kpgp::getPublicKey(QString _person)
   }
 
   // do the search case insensitive, but return the correct key.
-  QString adress,str;
+  QString adress,str,disp_str;
   adress = _person.lower();
 
   // first try the canonical mail adress.
@@ -478,12 +485,21 @@ Kpgp::getPublicKey(QString _person)
   for(str=publicKeys.first(); str!=0; str=publicKeys.next())
     if(str.contains(adress)) return str;
 
-  // now try the pure input
+  // now check if the key contains the address
   adress = _person.lower();
   for(str=publicKeys.first(); str!=0; str=publicKeys.next())
     if(str.contains(adress)) return str;
 
   // FIXME: let user set the key/ get from keyserver
+  // now check if the address contains the key
+  adress = _person.lower();
+  for(str=publicKeys.first(); str!=0; str=publicKeys.next())
+    if(adress.contains(str)) return str;
+
+  // no match until now, let the user choose the key:
+  adress = canonicalAdress(adress);
+  str= SelectPublicKey(publicKeys, adress);
+  if (!str.isEmpty()) return str;
 
   return QString::null;
 }
@@ -729,6 +745,21 @@ Kpgp::canonicalAdress(QString _adress)
   }
 }
 
+QString
+Kpgp::SelectPublicKey(QStrList pbkeys, const char *caption)
+{
+  KpgpSelDlg dlg(pbkeys,caption);
+  QString txt ="";
+
+  if (dlg.exec()==QDialog::Rejected) return 0;
+  txt = dlg.key();
+  if (!txt.isEmpty())
+  {
+    return txt;
+  }
+  return 0;
+}
+
 
 //----------------------------------------------------------------------
 //  widgets needed by kpgp
@@ -932,3 +963,68 @@ KpgpConfig::applySettings()
 }
 
 
+//-----------------------------------------------------------------------------
+#define KpgpDlgInherited QDialog
+KpgpSelDlg::KpgpSelDlg(QStrList aKeyList, const char *aCap):
+  KpgpDlgInherited(NULL, aCap, TRUE), mGrid(this, 2, 2),
+  mListBox(this),
+  mBtnOk(i18n("OK"),this),
+  mBtnCancel(i18n("Cancel"),this)
+{
+  const char* key;
+  QString caption;
+
+  caption=i18n("Select public key for recipient \"");
+  caption += aCap;
+  caption += i18n("\"");
+
+  initMetaObject();
+
+  setCaption(aCap ? /*(const char *)*/caption : i18n("PGP Key Selection"));
+
+  /*assert(aKeyList != NULL);*/
+  mKeyList = aKeyList;
+  mkey  = "";
+
+  mBtnOk.adjustSize();
+  mBtnOk.setMinimumSize(mBtnOk.size());
+  mBtnCancel.adjustSize();
+  mBtnCancel.setMinimumSize(mBtnCancel.size());
+
+  mGrid.addMultiCellWidget(&mListBox, 0, 0, 0, 1);
+  mGrid.addWidget(&mBtnOk, 1, 0);
+  mGrid.addWidget(&mBtnCancel, 1, 1);
+
+  mGrid.setRowStretch(0,10);
+  mGrid.setRowStretch(1,0);
+  mGrid.setColStretch(0,10);
+  mGrid.setColStretch(1,10);
+  mGrid.activate();
+
+  connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
+  connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
+  connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
+
+  for (key=mKeyList.first(); key; key=mKeyList.next())
+  {
+    //insert only real keys:
+    //    if (!(QString)key.contains("matching key"))
+	mListBox.insertItem(key);
+  }
+}
+
+void KpgpSelDlg::slotOk()
+{
+  int idx = mListBox.currentItem();
+
+  if (idx>=0) mkey = mListBox.text(idx);
+  else mkey = "";
+
+  accept();
+}
+
+void KpgpSelDlg::slotCancel()
+{
+  mkey = "";
+  reject();
+}

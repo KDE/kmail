@@ -2,6 +2,12 @@
  *        This code is under GPL V2.0
  *
  * @author Lars Knoll <knoll@mpi-hd.mpg.de>
+ *
+ * GNUPG support
+ * @author "J. Nick Koston" <bdraco@the.system.is.halted.net> 
+ *
+ * PGP6 and other enhancements
+ * @author Andreas Gungl <Andreas.Gungl@osp-dd.de>
  */
 #ifndef KPGP_H
 #define KPGP_H
@@ -12,6 +18,9 @@
 #include <qdialog.h>
 #include <qwidget.h>
 #include <qcombobox.h>
+#include <qlayout.h>
+#include <qpushbt.h>
+#include <qlistbox.h>
 
 class QLineEdit;
 class QCursor;
@@ -153,6 +162,9 @@ private:
   // transform an adress into canonical form
   QString canonicalAdress(QString _person);
 
+  //Select public key from a list of all public keys
+  QString SelectPublicKey(QStrList pbkeys, const char *caption);
+
   bool checkForPGP(void);
 
   static Kpgp *kpgpObject;
@@ -234,5 +246,27 @@ protected:
 
 };
  
+// -------------------------------------------------------------------------
+class KpgpSelDlg: public QDialog
+{
+  Q_OBJECT
+public:
+  KpgpSelDlg(QStrList aKeyList, const char *caption=NULL);
+  virtual ~KpgpSelDlg() {};
+
+  virtual const QString key(void) const {return mkey;};
+
+protected slots:
+  void slotOk();
+  void slotCancel();
+
+protected:
+  QGridLayout mGrid;
+  QListBox mListBox;
+  QPushButton mBtnOk, mBtnCancel;
+  QString mkey;
+  QStrList mKeyList;
+};
+
 #endif
 

@@ -2,6 +2,12 @@
  *        This code is under GPL V2.0
  *
  * @author Lars Knoll <knoll@mpi-hd.mpg.de>
+ *
+ * GNUPG support
+ * @author "J. Nick Koston" <bdraco@the.system.is.halted.net> 
+ *
+ * PGP6 and other enhancements
+ * @author Andreas Gungl <Andreas.Gungl@osp-dd.de>
  */
 #ifndef KPGPBASE_H
 #define KPGPBASE_H
@@ -146,6 +152,20 @@ public:
   virtual QStrList pubKeys();
   virtual QString getAsciiPublicKey(QString _person);
   virtual int signKey(const char *key, const char *passphrase);
+};
+
+
+class KpgpBase6 : public KpgpBase2
+{
+
+public:
+  KpgpBase6();
+  virtual ~KpgpBase6();
+
+  virtual int decrypt(const char *passphrase = 0);
+  virtual QStrList pubKeys();
+
+  virtual int isVersion6();
 };
 
 // ---------------------------------------------------------------------------
