@@ -2786,6 +2786,7 @@ void KMMainWin::setupMenuBar()
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
+  KStdAction::tipofDay( this, SLOT( slotShowTip() ), actionCollection() );
 
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
@@ -2797,10 +2798,6 @@ void KMMainWin::setupMenuBar()
 				i18n("Display KMail's Welcome Page") ),
 		      0, this, SLOT(slotIntro()),
 		      actionCollection(), "help_kmail_welcomepage" );
-  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), 0,
-				i18n("Show \"Tip of the Day\"") ),
-		      0, this, SLOT(slotShowTip()),
-		      actionCollection(), "help_show_tip" );
 
   createGUI( "kmmainwin.rc", false );
 
