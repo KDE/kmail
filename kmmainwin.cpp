@@ -1168,6 +1168,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     mMsgView->setMsg(0,TRUE);
     mHeaders->show();
   }
+  else mMsgView->setMsg(0,FALSE);
   if (mFolder && mFolder->account() && mFolder->account()->autoExpunge()
     && mFolder->needsCompacting())
       mFolder->account()->expungeFolder(mFolder);
