@@ -171,7 +171,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     mListNormal.append("NORMAL-CONNECTION");
     startOffSlave();
   } else {
-    mListSSL.append("SSL");
+    //mListSSL.append("SSL");
     mJob = 0;
 
     emit capabilities( mListNormal, mListSSL );
