@@ -40,6 +40,7 @@
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 
+#include <qstylesheet.h>
 #include <kio/scheduler.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -293,11 +294,12 @@ void ImapJob::slotGetNextMessage()
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
+  const QString escapedSubject = QStyleSheet::escape( msg->subject() );
   jd.progressItem = ProgressManager::createProgressItem(
                           mParentProgressItem,
                           "ImapJobDownloading"+ProgressManager::getUniqueID(),
                           i18n("Downloading message data"),
-                          i18n("Message with subject: ") + msg->subject(),
+                          i18n("Message with subject: ") + escapedSubject,
                           true,
                           account->useSSL() || account->useTLS() );
   connect ( jd.progressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
