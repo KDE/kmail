@@ -3498,8 +3498,8 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
       bool bOk = false;
       addressee = KInputDialog::getText(
                     askForDifferentSearchString
-                    ? i18n("Look for other certificates")
-                    : i18n("No certificate found"),
+                    ? i18n("Look for Other Certificates")
+                    : i18n("No Certificate Found"),
                     i18n("Enter different address for recipient %1 "
                         "or enter \" * \" to see all certificates:")
                     .arg(recipient),
