@@ -2798,7 +2798,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
           else {
             KMessageBox::sorry( this,
                                 i18n("<qt>This message could not be signed "
-                                     "because the OpenPGP which should be "
+                                     "because the OpenPGP key which should be "
                                      "used for signing messages with this "
                                      "identity couldn't be found in your "
                                      "keyring.<br><br>"
