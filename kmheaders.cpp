@@ -495,7 +495,6 @@ void KMHeaders::readConfig (void)
   mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
   mPaintInfo.dateDisplay = FancyDate;
   QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
-  kdDebug() << "datedisplay " << dateDisplay << endl;
   if ( dateDisplay == "ctime" )
       mPaintInfo.dateDisplay = CTime;
   else if ( dateDisplay == "localized" )
