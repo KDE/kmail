@@ -1580,7 +1580,7 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
 						 aMenuToFolder,
 						 new QPopupMenu() );
 	// add an item to the top of the submenu somehow subMenu
-	menu->insertItem(i18n(folder->label() + " child"), subMenu);
+	menu->insertItem(i18n("%1 child").arg(folder->label()), subMenu);
       }
     }
   return menu;
