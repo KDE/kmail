@@ -147,6 +147,8 @@ namespace KMail {
 	kroupware hacks) */
     void stdChildHandling( partNode * child );
 
+    void defaultHandling( partNode * node, ProcessResult & result );
+
     /** 1. Create a new partNode using 'content' data and Content-Description
             found in 'cntDesc'.
         2. Make this node the child of 'node'.

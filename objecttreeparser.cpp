@@ -214,41 +214,9 @@ namespace KMail {
       kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
 			    << node->typeString() << '/' << node->subTypeString()
 			    << ')' << endl;
-      const bool bDone = bpf->process( this, node, processResult );
+      if ( !bpf->process( this, node, processResult ) )
+	defaultHandling( node, processResult );
 
-      // ### (mmutz) default handling should go into the respective
-      // ### bodypartformatters.
-      if ( !bDone
-	   && mReader
-	   && ( attachmentStrategy() != AttachmentStrategy::hidden()
-		|| showOnlyOneMimePart()
-		|| !node->mRoot /* message is an attachment */ ) ) {
-	bool asIcon = true;
-	if ( showOnlyOneMimePart() )
-	  // ### (mmutz) this is wrong! If I click on an image part, I
-	  // want the equivalent of "view...", except for the extra
-	  // window!
-	  asIcon = !node->hasContentDispositionInline();
-	else if ( !processResult.neverDisplayInline() )
-	  if ( const AttachmentStrategy * as = attachmentStrategy() )
-	    asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
-	// neither image nor text -> show as icon
-	if ( !processResult.isImage()
-	     && node->type() != DwMime::kTypeText )
-	  asIcon = true;
-	if ( asIcon ) {
-	  if ( attachmentStrategy() != AttachmentStrategy::hidden()
-	       || showOnlyOneMimePart() )
-	    writePartIcon( &node->msgPart(), node->nodeId() );
-	} else if ( processResult.isImage() ) {
-	  writePartIcon( &node->msgPart(), node->nodeId(), true );
-	} else {
-	  writeBodyString( node->msgPart().bodyDecoded(),
-			   node->trueFromAddress(),
-			   codecFor( node ), processResult );
-	}
-      }
-      // end of ###
       node->mWasProcessed = true;
     }
     // parse the siblings (children are parsed in the 'multipart' case terms)
@@ -265,6 +233,42 @@ namespace KMail {
     processResult.adjustCryptoStatesOfNode( node );
     // end of ###
 
+  }
+
+  void ObjectTreeParser::defaultHandling( partNode * node, ProcessResult & result ) {
+    // ### (mmutz) default handling should go into the respective
+    // ### bodypartformatters.
+    if ( !mReader )
+      return;
+    if ( attachmentStrategy() == AttachmentStrategy::hidden() &&
+	 !showOnlyOneMimePart() &&
+	 node->mRoot /* message is not an attachment */ )
+      return;
+
+    bool asIcon = true;
+    if ( showOnlyOneMimePart() )
+      // ### (mmutz) this is wrong! If I click on an image part, I
+      // want the equivalent of "view...", except for the extra
+      // window!
+      asIcon = !node->hasContentDispositionInline();
+    else if ( !result.neverDisplayInline() )
+      if ( const AttachmentStrategy * as = attachmentStrategy() )
+	asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
+    // neither image nor text -> show as icon
+    if ( !result.isImage()
+	 && node->type() != DwMime::kTypeText )
+      asIcon = true;
+    if ( asIcon ) {
+      if ( attachmentStrategy() != AttachmentStrategy::hidden()
+	   || showOnlyOneMimePart() )
+	writePartIcon( &node->msgPart(), node->nodeId() );
+    } else if ( result.isImage() )
+      writePartIcon( &node->msgPart(), node->nodeId(), true );
+    else
+      writeBodyString( node->msgPart().bodyDecoded(),
+		       node->trueFromAddress(),
+		       codecFor( node ), result );
+    // end of ###
   }
 
   void ProcessResult::adjustCryptoStatesOfNode( partNode * node ) const {
