@@ -358,7 +358,6 @@ void KMMainWidget::readConfig(void)
   // Re-activate panners
   if (mStartupDone)
   {
-
     // Update systray
     toggleSystemTray();
 
@@ -369,13 +368,9 @@ void KMMainWidget::readConfig(void)
       activatePanners();
     }
 
+    // reload foldertree
     mFolderTree->reload();
-    QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
-    if (qlvi!=0) {
-      mFolderTree->setCurrentItem(qlvi);
-      mFolderTree->setSelected(qlvi,TRUE);
-    }
-
+    mFolderTree->showFolder( mFolder );
 
     // sanders - New code
     mHeaders->setFolder(mFolder);
@@ -3139,15 +3134,6 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-  if (mFolderTree) {
-    // add the folders
-    mFolderTree->reload();
-    // read the config
-    mFolderTree->readConfig();
-    // get rid of old-folders
-    mFolderTree->cleanupConfigFile();
-  }
-
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
 	   this, SLOT( initializeFilterActions() ));
 
@@ -3160,14 +3146,20 @@ void KMMainWidget::slotShowStartupFolder()
   }
 
   KMFolder* startup = 0;
-  if (!mStartupFolder.isEmpty()) {
+  if ( !mStartupFolder.isEmpty() ) {
     // find the startup-folder
-    startup = kmkernel->findFolderById(mStartupFolder);
+    startup = kmkernel->findFolderById( mStartupFolder );
   }
-  if (!startup)
+  if ( !startup )
     startup = kmkernel->inboxFolder();
-  mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(startup));
-  mFolderTree->ensureItemVisible(mFolderTree->indexOfFolder(startup));
+
+  if ( mFolderTree ) 
+  {
+    mFolderTree->reload();
+    mFolderTree->showFolder( startup );
+    // get rid of old-folders
+    mFolderTree->cleanupConfigFile();
+  }
 }
 
 void KMMainWidget::slotShowTipOnStart()
