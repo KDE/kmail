@@ -121,16 +121,6 @@ protected:
 
 protected slots:
   /**
-   * Send a NOOP command or log out when idle
-   */
-  void slotIdleTimeout();
-
-  /**
-   * Kills all jobs
-   */
-  void slotAbortRequested();
-
-  /**
    * Only delete information about the job
    */
   void slotSimpleResult(KIO::Job * job);

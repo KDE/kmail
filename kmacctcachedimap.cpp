@@ -64,10 +64,6 @@ KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
-
-  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotAbortRequested()));
-  connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
 }
 
 
@@ -231,40 +227,6 @@ void KMAcctCachedImap::displayProgress()
   //100*done / mTotal );
   */
 }
-
-
-//-----------------------------------------------------------------------------
-void KMAcctCachedImap::slotIdleTimeout()
-{
-  if (mIdle) // STEFFEN: Hacked this to always disconnect
-  {
-    if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
-    mSlave = NULL;
-    mIdleTimer.stop();
-  } else {
-    if (mSlave)
-    {
-      QByteArray packedArgs;
-      QDataStream stream( packedArgs, IO_WriteOnly);
-
-      stream << (int) 'N';
-
-      KIO::SimpleJob *job = KIO::special(getUrl(), packedArgs, FALSE);
-      KIO::Scheduler::assignJobToSlave(mSlave, job);
-      connect(job, SIGNAL(result(KIO::Job *)),
-        this, SLOT(slotSimpleResult(KIO::Job *)));
-    }
-    else mIdleTimer.stop();
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctCachedImap::slotAbortRequested()
-{
-  killAllJobs();
-}
-
 
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )

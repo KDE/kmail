@@ -312,6 +312,16 @@ namespace KMail {
     /// Result of getACL() job
     void slotGetACLResult( KIO::Job* _job );
 
+    /**
+     * Send a NOOP command or log out when idle
+     */
+    void slotIdleTimeout();
+
+    /**
+     * Kills all jobs
+     */
+    void slotAbortRequested();
+
   protected:
 
     virtual QString protocol() const;

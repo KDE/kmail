@@ -46,9 +46,6 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
 {
   mFolder = 0;
   mOpenFolders.setAutoDelete(true);
-  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotAbortRequested()));
-  connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
 }
@@ -118,39 +115,6 @@ void KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Jo
      if ( mFolder )
         mFolder->listDirectory( );
   }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::slotIdleTimeout()
-{
-  if (mIdle)
-  {
-    if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
-    mSlave = 0;
-    mIdleTimer.stop();
-  } else {
-    if (mSlave)
-    {
-      QByteArray packedArgs;
-      QDataStream stream( packedArgs, IO_WriteOnly);
-
-      stream << (int) 'N';
-
-      KIO::SimpleJob *job = KIO::special(getUrl(), packedArgs, FALSE);
-      KIO::Scheduler::assignJobToSlave(mSlave, job);
-      connect(job, SIGNAL(result(KIO::Job *)),
-        this, SLOT(slotSimpleResult(KIO::Job *)));
-    }
-    else mIdleTimer.stop();
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::slotAbortRequested()
-{
-  killAllJobs();
 }
 
 

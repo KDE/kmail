@@ -94,6 +94,9 @@ namespace KMail {
                             this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
     KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
                             this, SLOT(slotSchedulerSlaveConnected(KIO::Slave *)));
+    connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
+          this, SLOT(slotAbortRequested()));
+    connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
   }
 
   ImapAccountBase::~ImapAccountBase() {
@@ -545,6 +548,36 @@ namespace KMail {
     emit receivedACL( folder, job, job->entries() );
     if (mSlave) removeJob(job);
   }
+
+  void ImapAccountBase::slotIdleTimeout()
+  {
+    if ( mIdle ) {
+      if ( mSlave )
+        KIO::Scheduler::disconnectSlave(mSlave);
+      mSlave = 0;
+      mIdleTimer.stop();
+    } else {
+      if ( mSlave ) {
+        QByteArray packedArgs;
+        QDataStream stream( packedArgs, IO_WriteOnly );
+
+        stream << ( int ) 'N';
+
+        KIO::SimpleJob *job = KIO::special( getUrl(), packedArgs, false );
+        KIO::Scheduler::assignJobToSlave(mSlave, job);
+        connect( job, SIGNAL(result( KIO::Job * ) ),
+          this, SLOT( slotSimpleResult( KIO::Job * ) ) );
+      }else {
+        mIdleTimer.stop();
+      }
+    }
+  }
+
+  void ImapAccountBase::slotAbortRequested()
+  {
+    killAllJobs();
+  }
+
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveError(KIO::Slave *aSlave, int errorCode,

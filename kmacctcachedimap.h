@@ -148,15 +148,6 @@ protected:
   KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
 
 protected slots:
-  /**
-   * Send a NOOP command or log out when idle
-   */
-  void slotIdleTimeout();
-
-  /**
-   * Kills all jobs
-   */
-  void slotAbortRequested();
 
   /**
    * Only delete information about the job
