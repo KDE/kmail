@@ -271,7 +271,8 @@ void AntiSpamWizard::accept()
     // (a.gungl@gmx.de)
 
     // make the toolbar changes persistent - let's be very conservative here
-    QString config = KXMLGUIFactory::readConfigFile( "kmmainwin.rc", new KInstance( "kmail" ) );
+    QString config = 
+        KXMLGUIFactory::readConfigFile( "kmmainwin.rc", KMKernel::self()->xmlGuiInstance() );
 #ifndef NDEBUG
     kdDebug(5006) << "Read kmmainwin.rc contents (last 1000 chars printed):" << endl;
     kdDebug(5006) << config.right( 1000 ) << endl;
@@ -328,7 +329,8 @@ void AntiSpamWizard::accept()
           kdDebug(5006) << "####################################################" << endl;
 #endif
           // write back the modified resource file
-          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc", new KInstance( "kmail" ) );
+          KXMLGUIFactory::saveConfigFile( domDoc, "kmmainwin.rc", 
+              KMKernel::self()->xmlGuiInstance() );
         }
       }
       else
