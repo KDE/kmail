@@ -472,10 +472,10 @@ QString KMMessage::formatString(const QString& aStr) const
         result += from();
         break;
       case 'F':
-        result += stripEmailAddr(from());
+        result += fromStrip();
         break;
       case 'f':
-        str = stripEmailAddr(from());
+        str = fromStrip();
 
         for (j=0; str[j]>' '; j++)
           ;
@@ -489,13 +489,13 @@ QString KMMessage::formatString(const QString& aStr) const
             result += str[1];
         break;
       case 'T':
-        result += stripEmailAddr(to());
+        result += toStrip();
         break;
       case 't':
         result += to();
         break;
       case 'C':
-        result += stripEmailAddr(cc());
+        result += ccStrip();
         break;
       case 'c':
         result += cc();
@@ -1880,7 +1880,7 @@ void KMMessage::setTo(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::toStrip(void) const
 {
-  return stripEmailAddr(headerField("To"));
+  return decodeRFC2047String( stripEmailAddr( rawHeaderField("To") ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -1921,7 +1921,7 @@ void KMMessage::setCc(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::ccStrip(void) const
 {
-  return stripEmailAddr(headerField("Cc"));
+  return decodeRFC2047String( stripEmailAddr( rawHeaderField("Cc") ) );
 }
 
 
@@ -1988,7 +1988,7 @@ void KMMessage::setFrom(const QString& bStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::fromStrip(void) const
 {
-  return stripEmailAddr(headerField("From"));
+  return decodeRFC2047String( stripEmailAddr( rawHeaderField("From") ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -3227,60 +3227,315 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::stripEmailAddr(const QString& aStr)
+QCString KMMessage::stripEmailAddr( const QCString& aStr )
 {
-  QStringList list = splitEmailAddrList(aStr);
-  QString result, totalResult, partA, partB;
-  int i, j, len;
-  for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
-  {
-    char endCh = '>';
-    i = -1;
+  kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
-    //if format is something like "--<King>-- John King" <john@someemail.com>
-    if ( (*it)[0] == '"' )
-    {
-      i = 0;
-      endCh = '"';
-    }
+  if ( aStr.isEmpty() )
+    return QCString();
 
-    if (i<0)
-    {
-      i = (*it).find('<');
-      endCh = '>';
-    }
+  QCString result;
 
-    if (i<0)
-    {
-      i = (*it).find('(');
-      endCh = ')';
-    }
-    if (i<0) result = *it;
-    else {
-      partA = (*it).left(i).stripWhiteSpace();
-      j = (*it).find(endCh,i+1);
-      if (j<0) result = *it;
-      else {
-        partB = (*it).mid(i+1, j-i-1).stripWhiteSpace();
+  // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
+  // The purpose is to extract a displayable string from the mailboxes.
+  // Comments in the addr-spec are not handled. No error checking is done.
 
-        if (partA.find('@') >= 0 && !partB.isEmpty()) result = partB;
-        else if (!partA.isEmpty()) result = partA;
-        else if (endCh == '"') result = partB;
-        else result = (*it);
+  QCString name;
+  QCString comment;
+  QCString angleAddress;
+  enum { TopLevel, InComment, InAngleAddress } context = TopLevel;
+  bool inQuotedString = false;
+  int commentLevel = 0;
 
-        len = result.length();
-        if (result[0]=='"' && result[len-1]=='"')
-          result = result.mid(1, result.length()-2);
-        else if (result[0]=='<' && result[len-1]=='>')
-          result = result.mid(1, result.length()-2);
-        else if (result[0]=='(' && result[len-1]==')')
-          result = result.mid(1, result.length()-2);
+  for ( char* p = aStr.data(); *p; ++p ) {
+    switch ( context ) {
+    case TopLevel : {
+      switch ( *p ) {
+      case '"' : inQuotedString = !inQuotedString;
+                 break;
+      case '(' : if ( !inQuotedString ) {
+                   context = InComment;
+                   commentLevel = 1;
+                 }
+                 else
+                   name += *p;
+                 break;
+      case '<' : if ( !inQuotedString ) {
+                   context = InAngleAddress;
+                 }
+                 else
+                   name += *p;
+                 break;
+      case '\\' : // quoted character
+                 ++p; // skip the '\'
+                 if ( *p )
+                   name += *p;
+                 break;
+      case ',' : if ( !inQuotedString ) {
+                   // next email address
+                   if ( !result.isEmpty() )
+                     result += ", ";
+                   name = name.stripWhiteSpace();
+                   comment = comment.stripWhiteSpace();
+                   angleAddress = angleAddress.stripWhiteSpace();
+                   kdDebug(5006) << "Name    : \"" << name
+                                 << "\"" << endl;
+                   kdDebug(5006) << "Comment : \"" << comment
+                                 << "\"" << endl;
+                   kdDebug(5006) << "Address : \"" << angleAddress
+                                 << "\"" << endl;
+                   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
+                     // handle Outlook-style addresses like
+                     // john.doe@invalid (John Doe)
+                     result += comment;
+                   }
+                   else if ( !name.isEmpty() ) {
+                     result += name;
+                   }
+                   else if ( !comment.isEmpty() ) {
+                     result += comment;
+                   }
+                   else if ( !angleAddress.isEmpty() ) {
+                     result += angleAddress;
+                   }
+                   name = QCString();
+                   comment = QCString();
+                   angleAddress = QCString();
+                 }
+                 else
+                   name += *p;
+                 break;
+      default :  name += *p;
       }
+      break;
     }
-    if (!totalResult.isEmpty()) totalResult += ", ";
-    totalResult += result;
+    case InComment : {
+      switch ( *p ) {
+      case '(' : ++commentLevel;
+                 comment += *p;
+                 break;
+      case ')' : --commentLevel;
+                 if ( commentLevel == 0 ) {
+                   context = TopLevel;
+                   comment += ' '; // separate the text of several comments
+                 }
+                 else
+                   comment += *p;
+                 break;
+      case '\\' : // quoted character
+                 ++p; // skip the '\'
+                 if ( *p )
+                   comment += *p;
+                 break;
+      default :  comment += *p;
+      }
+      break;
+    }
+    case InAngleAddress : {
+      switch ( *p ) {
+      case '"' : inQuotedString = !inQuotedString;
+                 angleAddress += *p;
+                 break;
+      case '>' : if ( !inQuotedString ) {
+                   context = TopLevel;
+                 }
+                 else
+                   angleAddress += *p;
+                 break;
+      case '\\' : // quoted character
+                 ++p; // skip the '\'
+                 if ( *p )
+                   angleAddress += *p;
+                 break;
+      default :  angleAddress += *p;
+      }
+      break;
+    }
+    } // switch ( context )
   }
-  return totalResult;
+  if ( !result.isEmpty() )
+    result += ", ";
+  name = name.stripWhiteSpace();
+  comment = comment.stripWhiteSpace();
+  angleAddress = angleAddress.stripWhiteSpace();
+  kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
+  kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
+  kdDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
+  if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
+    // handle Outlook-style addresses like
+    // john.doe@invalid (John Doe)
+    result += comment;
+  }
+  else if ( !name.isEmpty() ) {
+    result += name;
+  }
+  else if ( !comment.isEmpty() ) {
+    result += comment;
+  }
+  else if ( !angleAddress.isEmpty() ) {
+    result += angleAddress;
+  }
+
+  kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
+                << "\"" << endl;
+  return result;
+}
+
+//-----------------------------------------------------------------------------
+QString KMMessage::stripEmailAddr( const QString& aStr )
+{
+  kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
+
+  if ( aStr.isEmpty() )
+    return QString::null;
+
+  QString result;
+
+  // The following is a primitive parser for a mailbox-list (cf. RFC 2822).
+  // The purpose is to extract a displayable string from the mailboxes.
+  // Comments in the addr-spec are not handled. No error checking is done.
+
+  QString name;
+  QString comment;
+  QString angleAddress;
+  enum { TopLevel, InComment, InAngleAddress } context = TopLevel;
+  bool inQuotedString = false;
+  int commentLevel = 0;
+
+  QChar ch;
+  for ( uint index = 0; index < aStr.length(); ++index ) {
+    ch = aStr[index];
+    switch ( context ) {
+    case TopLevel : {
+      switch ( ch.latin1() ) {
+      case '"' : inQuotedString = !inQuotedString;
+                 break;
+      case '(' : if ( !inQuotedString ) {
+                   context = InComment;
+                   commentLevel = 1;
+                 }
+                 else
+                   name += ch;
+                 break;
+      case '<' : if ( !inQuotedString ) {
+                   context = InAngleAddress;
+                 }
+                 else
+                   name += ch;
+                 break;
+      case '\\' : // quoted character
+                 ++index; // skip the '\'
+                 if ( index < aStr.length() )
+                   name += aStr[index];
+                 break;
+      case ',' : if ( !inQuotedString ) {
+                   // next email address
+                   if ( !result.isEmpty() )
+                     result += ", ";
+                   name = name.stripWhiteSpace();
+                   comment = comment.stripWhiteSpace();
+                   angleAddress = angleAddress.stripWhiteSpace();
+                   kdDebug(5006) << "Name    : \"" << name
+                                 << "\"" << endl;
+                   kdDebug(5006) << "Comment : \"" << comment
+                                 << "\"" << endl;
+                   kdDebug(5006) << "Address : \"" << angleAddress
+                                 << "\"" << endl;
+                   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
+                     // handle Outlook-style addresses like
+                     // john.doe@invalid (John Doe)
+                     result += comment;
+                   }
+                   else if ( !name.isEmpty() ) {
+                     result += name;
+                   }
+                   else if ( !comment.isEmpty() ) {
+                     result += comment;
+                   }
+                   else if ( !angleAddress.isEmpty() ) {
+                     result += angleAddress;
+                   }
+                   name = QString::null;
+                   comment = QString::null;
+                   angleAddress = QString::null;
+                 }
+                 else
+                   name += ch;
+                 break;
+      default :  name += ch;
+      }
+      break;
+    }
+    case InComment : {
+      switch ( ch.latin1() ) {
+      case '(' : ++commentLevel;
+                 comment += ch;
+                 break;
+      case ')' : --commentLevel;
+                 if ( commentLevel == 0 ) {
+                   context = TopLevel;
+                   comment += ' '; // separate the text of several comments
+                 }
+                 else
+                   comment += ch;
+                 break;
+      case '\\' : // quoted character
+                 ++index; // skip the '\'
+                 if ( index < aStr.length() )
+                   comment += aStr[index];
+                 break;
+      default :  comment += ch;
+      }
+      break;
+    }
+    case InAngleAddress : {
+      switch ( ch.latin1() ) {
+      case '"' : inQuotedString = !inQuotedString;
+                 angleAddress += ch;
+                 break;
+      case '>' : if ( !inQuotedString ) {
+                   context = TopLevel;
+                 }
+                 else
+                   angleAddress += ch;
+                 break;
+      case '\\' : // quoted character
+                 ++index; // skip the '\'
+                 if ( index < aStr.length() )
+                   angleAddress += aStr[index];
+                 break;
+      default :  angleAddress += ch;
+      }
+      break;
+    }
+    } // switch ( context )
+  }
+  if ( !result.isEmpty() )
+    result += ", ";
+  name = name.stripWhiteSpace();
+  comment = comment.stripWhiteSpace();
+  angleAddress = angleAddress.stripWhiteSpace();
+  kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
+  kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
+  kdDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
+  if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
+    // handle Outlook-style addresses like
+    // john.doe@invalid (John Doe)
+    result += comment;
+  }
+  else if ( !name.isEmpty() ) {
+    result += name;
+  }
+  else if ( !comment.isEmpty() ) {
+    result += comment;
+  }
+  else if ( !angleAddress.isEmpty() ) {
+    result += angleAddress;
+  }
+
+  kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
+                << "\"" << endl;
+  return result;
 }
 
 //-----------------------------------------------------------------------------

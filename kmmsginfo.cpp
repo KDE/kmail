@@ -186,8 +186,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 	kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;
     kd->subject = decodeRFC2047String(aSubject);
-    kd->from = KMMessage::stripEmailAddr( decodeRFC2047String(aFrom) );
-    kd->to = KMMessage::stripEmailAddr( decodeRFC2047String(aTo) );
+    kd->from = decodeRFC2047String( KMMessage::stripEmailAddr( aFrom ) );
+    kd->to = decodeRFC2047String( KMMessage::stripEmailAddr( aTo ) );
     kd->replyToIdMD5 = base64EncodedMD5( replyToId );
     kd->replyToAuxIdMD5 = base64EncodedMD5( replyToAuxId );
     kd->strippedSubjectMD5 = base64EncodedMD5( KMMessage::stripOffPrefixes( kd->subject ), true /*utf8*/ );

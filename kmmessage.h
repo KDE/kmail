@@ -647,11 +647,16 @@ public:
     */
   static QString decodeMailtoUrl( const QString& url );
 
-  /** Strip email address from string. Examples:
-   * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
-   * "joe@nowhere.com" returns "joe@nowhere.com". Note that this only
-   * returns the first name, e.g. "Peter Test <p@t.de>, Harald Tester <ht@test.de>"
-   * returns "Peter Test" */
+  /** This function generates a displayable string from a list of email
+      addresses.
+      Input : mailbox-list
+      Output: comma separated list of display name resp. comment resp.
+              address
+  */
+  static QCString stripEmailAddr(const QCString& emailAddr);
+
+  /** Does the same as the above function. Shouldn't be used.
+   */
   static QString stripEmailAddr(const QString& emailAddr);
 
   /** Return email address from string. Examples:
