@@ -64,6 +64,9 @@ namespace KMail {
   };
 
   class ObjectTreeParser {
+    /** Internal. Copies the context of @p other, but not it's @ref
+	resultString() */
+    ObjectTreeParser( const ObjectTreeParser & other );
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0 );
     virtual ~ObjectTreeParser();

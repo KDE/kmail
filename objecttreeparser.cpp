@@ -62,6 +62,13 @@ namespace KMail {
 
   }
 
+  ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
+    : mReader( other.mReader ),
+      mCryptPlugWrapper( other.cryptPlugWrapper() )
+  {
+
+  }
+
   ObjectTreeParser::~ObjectTreeParser() {}
 
 //pending(khz): replace this and put it into CryptPlugWrapper class  (khz, 2002/06/27)
@@ -1271,7 +1278,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    // Kroupware message found,
 	    // we ignore the plain text but process the calendar part.
 	    dataPlain->mWasProcessed = true;
-	    ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	    ObjectTreeParser otp( *this );
 	    otp.parseObjectTree( dataCal,
 				 false,
 				 keepEncryptions,
@@ -1285,7 +1292,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      // encoded Kroupware message found,
 	      // we ignore the plain text but process the MS-TNEF part.
 	      dataPlain->mWasProcessed = true;
-	      ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	      ObjectTreeParser otp( *this );
 	      otp.parseObjectTree( dataTNEF,
 				   false,
 				   keepEncryptions,
@@ -1296,7 +1303,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  }
 	}
 	if( !bDone ) {
-	  ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	  ObjectTreeParser otp( *this );
 	  otp.parseObjectTree( curNode->mChild,
 			       false,
 			       keepEncryptions,
@@ -1318,7 +1325,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	if( !mReader || (mReader->htmlMail() && dataHtml) ) {
 	  if( dataPlain )
 	    dataPlain->mWasProcessed = true;
-	  ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	  ObjectTreeParser otp( *this );
 	  otp.parseObjectTree( dataHtml,
 			       false,
 			       keepEncryptions,
@@ -1328,7 +1335,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	else if( !mReader || (!mReader->htmlMail() && dataPlain) ) {
 	  if( dataHtml )
 	    dataHtml->mWasProcessed = true;
-	  ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	  ObjectTreeParser otp( *this );
 	  otp.parseObjectTree( dataPlain,
 			       false,
 			       keepEncryptions,
@@ -1336,7 +1343,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  mResultString += otp.resultString();
 	}
 	else {
-	  ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	  ObjectTreeParser otp( *this );
 	  otp.parseObjectTree( curNode->mChild,
 			       true,
 			       keepEncryptions,
@@ -1466,7 +1473,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	if( data ) {
 	  if( data->mChild ) {
 	    kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-	    ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	    ObjectTreeParser otp( *this );
 	    otp.parseObjectTree( data->mChild,
 				 false,
 				 keepEncryptions,
@@ -1567,7 +1574,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     //  Multipart object not processed yet?  Just parse the children!
     if( !bDone ){
       if( curNode && curNode->mChild ) {
-	ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+	ObjectTreeParser otp( *this );
 	otp.parseObjectTree( curNode->mChild,
 			     false,
 			     keepEncryptions,
