@@ -182,6 +182,10 @@ protected slots:
   void slotMailingListFilter();
   void slotFromFilter();
   void slotToFilter();
+  void slotExpandThread();
+  void slotExpandAllThreads();
+  void slotCollapseThread();
+  void slotCollapseAllThreads();
   void slotSetMsgStatusNew();
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();

@@ -432,6 +432,30 @@ void KMMainWin::createWidgets(void)
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
   selectCurrentFolderAction->plugAccel( this->accel() );
 
+  KAction *expandCurrentThread
+    = new KAction( i18n("Expand Thread"), Key_Period, this,
+		   SLOT(slotExpandThread()),
+		   actionCollection(), "expand_thread" );
+  expandCurrentThread->plugAccel( this->accel() );
+
+  KAction *collapseCurrentThread
+    = new KAction( i18n("Collapse Thread"), Key_Comma, this,
+		   SLOT(slotCollapseThread()),
+		   actionCollection(), "collapse_thread" );
+  collapseCurrentThread->plugAccel( this->accel() );
+
+  KAction *expandAllThreads
+    = new KAction( i18n("Expand All Threads"), CTRL+Key_Period, this,
+		   SLOT(slotExpandAllThreads()),
+		   actionCollection(), "expand_all_threads" );
+  expandAllThreads->plugAccel( this->accel() );
+
+  KAction *collapseAllThreads
+    = new KAction( i18n("Collapse All Threads"), CTRL+Key_Comma, this,
+		   SLOT(slotCollapseAllThreads()),
+		   actionCollection(), "collapse_all_threads" );
+  collapseAllThreads->plugAccel( this->accel() );
+
   KAction *readOnAction = new KAction( i18n( "Move to the next unread text" ),
                                        Key_Space, this,  SLOT( slotReadOn() ),
                                        actionCollection(), "read_on" );
@@ -2215,6 +2239,27 @@ void KMMainWin::slotReadOn()
     }
     mFolderTree->nextUnreadFolder( true );
 }
+
+void KMMainWin::slotExpandThread()
+{
+  mHeaders->slotExpandOrCollapseThread( true ); // expand
+}
+
+void KMMainWin::slotCollapseThread()
+{
+  mHeaders->slotExpandOrCollapseThread( false ); // collapse
+}
+
+void KMMainWin::slotExpandAllThreads()
+{
+  mHeaders->slotExpandOrCollapseAllThreads( true ); // expand
+}
+
+void KMMainWin::slotCollapseAllThreads()
+{
+  mHeaders->slotExpandOrCollapseAllThreads( false ); // collapse
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::moveSelectedToFolder( int menuId )

@@ -1063,6 +1063,36 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
 }
 
 
+void KMHeaders::slotExpandOrCollapseThread( bool expand )
+{
+  if ( !isThreaded() ) return;
+  // find top-level parent of currentItem().
+  QListViewItem *item = currentItem();
+  if ( !item ) return;
+  while ( item->parent() )
+    item = item->parent();
+  KMHeaderItem * hdrItem = static_cast<KMHeaderItem*>(item);
+  hdrItem->setOpen( expand );
+  if ( !expand ) // collapse can hide the current item:
+    setCurrentMsg( hdrItem->msgId() );
+  ensureItemVisible( currentItem() );
+}
+
+void KMHeaders::slotExpandOrCollapseAllThreads( bool expand )
+{
+  if ( !isThreaded() ) return;
+  for ( QListViewItem *item = firstChild() ;
+	item ; item = item->nextSibling() )
+    static_cast<KMHeaderItem*>(item)->setOpen( expand );
+  if ( !expand ) { // collapse can hide the current item:
+    QListViewItem * item = currentItem();
+    while ( item->parent() )
+      item = item->parent();
+    setCurrentMsg( static_cast<KMHeaderItem*>(item)->msgId() );
+  }
+  ensureItemVisible( currentItem() );
+}
+
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {

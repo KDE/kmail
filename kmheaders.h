@@ -167,10 +167,14 @@ public:
       top most visible item. */
   virtual void setTopItemByIndex( int aMsgIdx );
   virtual void setNestedOverride( bool override );
-  /* Double force items to always be open */
+  /** Double force items to always be open */
   virtual void setOpen ( QListViewItem *, bool );
 
-  int getNestingPolicy(){ return nestingPolicy; }
+  int getNestingPolicy() const { return nestingPolicy; }
+  /** Returns true if the current header list is threaded. */
+  bool isThreaded() const {
+    return mNested != mNestedOverride; // xor
+  }
 
   /** Find next/prev unread message. Starts at currentItem() if startAt
     is unset. */
@@ -226,6 +230,13 @@ public slots:
   void slotNoDrag();
   /** timer function to set the current time regularly */
   void resetCurrentTime();
+
+  /** Expands (@p expand == true) or collapses (@p expand == false)
+      the current thread. */
+  void slotExpandOrCollapseThread( bool expand );
+  /** Expands (@p expand == true) or collapses (@p expand == false)
+      all threads */
+  void slotExpandOrCollapseAllThreads( bool expand );
 
   virtual void ensureCurrentItemVisible();
 
