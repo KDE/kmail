@@ -77,6 +77,10 @@ public:
   unsigned short int smtpPort(void) const { return mSmtpPort; }
   virtual void setSmtpPort(unsigned short int);
 
+  /** Precommand - command run before sending */
+  const QString& precommand(void) const { return mPrecommand; }
+  virtual void setPrecommand(const QString& cmd) { mPrecommand = cmd; }
+
   /** Read configuration from global config. */
   virtual void readConfig(void);
 
@@ -116,6 +120,7 @@ private:
   QString mMailer;
   QString mSmtpHost;
   unsigned short int mSmtpPort;
+  QString mPrecommand;
 
   bool mSentOk;
   QString mErrorMsg;

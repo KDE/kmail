@@ -198,7 +198,7 @@ void AccountDialog::makePopAccountPage()
   topLayout->addMultiCellWidget( mPop.deleteMailCheck, 8, 8, 0, 1 );
 
   mPop.retriveAllCheck = 
-    new QCheckBox( i18n("Retrieve all mail from server"), page );
+    new QCheckBox( i18n("Retrive all mail from server"), page );
   topLayout->addMultiCellWidget( mPop.retriveAllCheck, 9, 9, 0, 1 );  
 
   mPop.excludeCheck = 
@@ -229,6 +229,11 @@ void AccountDialog::makePopAccountPage()
   */
   label->setEnabled(false);
   //  mPop.identityCombo->setEnabled(false);
+
+  label = new QLabel( i18n("Precommand:"), page );
+  topLayout->addWidget( label, 15, 0 );
+  mPop.precommand = new QLineEdit( page );
+  topLayout->addWidget( mPop.precommand, 15, 1 ); 
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -266,7 +271,8 @@ void AccountDialog::setupSettings()
     mPop.intervalCheck->setChecked( interval >= 1 );
     mPop.intervalSpin->setValue( QMAX(1, interval) );
     mPop.excludeCheck->setChecked( mAccount->checkExclude() );
-    
+    mPop.precommand->setText( ap.precommand() );
+
     slotEnablePopInterval( interval >= 1 );
     folderCombo = mPop.folderCombo;
     //    mPop.identityCombo->insertStringList( mIdentityList );
@@ -352,6 +358,7 @@ void AccountDialog::saveSettings()
       pa.setPasswd( mPop.passwordEdit->text(), pa.storePasswd() );
       pa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
       pa.setRetrieveAll( mPop.retriveAllCheck->isChecked() );
+      pa.setPrecommand( mPop.precommand->text() );
     }
     else
     {

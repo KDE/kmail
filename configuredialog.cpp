@@ -1148,9 +1148,14 @@ void ConfigureDialog::makeNetworkPage( void )
     i18n("MIME Compilant (Quoted Printable)"));
   glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
   
+ label = new QLabel( i18n("Precommand:"), page2 );
+  glay->addWidget( label, 2, 0 );
+  mNetwork.precommandEdit = new QLineEdit( page2 );
+  glay->addWidget( mNetwork.precommandEdit, 2, 1 );
+
   mNetwork.confirmSendCheck = 
     new QCheckBox(i18n("Confirm before send"), page2 );
-  glay->addMultiCellWidget( mNetwork.confirmSendCheck, 2, 2, 0, 1 );
+  glay->addMultiCellWidget( mNetwork.confirmSendCheck, 3, 3, 0, 1 );
 
 
 
@@ -1630,6 +1635,7 @@ void ConfigureDialog::setupNetworkPage( void )
   mNetwork.smtpServerEdit->setText( kernel->msgSender()->smtpHost() );
   mNetwork.smtpPortEdit->setText( 
     QString().setNum(kernel->msgSender()->smtpPort()) );
+ mNetwork.precommandEdit->setText( kernel->msgSender()->precommand() );
 
   KConfig &config = *kapp->config();
   config.setGroup("Composer");
@@ -1994,6 +2000,7 @@ void ConfigureDialog::slotApply( void )
     kernel->msgSender()->setMailer(mNetwork.sendmailLocationEdit->text() );
     kernel->msgSender()->setSmtpHost( mNetwork.smtpServerEdit->text() );
     kernel->msgSender()->setSmtpPort( mNetwork.smtpPortEdit->text().toInt() );
+    kernel->msgSender()->setPrecommand( mNetwork.precommandEdit->text() );
 
     bool sendNow = mNetwork.sendMethodCombo->currentItem() == 0;
     kernel->msgSender()->setSendImmediate( sendNow );

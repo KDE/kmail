@@ -199,7 +199,8 @@ class ConfigureDialog : public KDialogBase
       QPushButton  *sendmailChooseButton;
       QLineEdit    *sendmailLocationEdit;
       QLineEdit    *smtpServerEdit;
-      QLineEdit    *smtpPortEdit;
+      QLineEdit    *smtpPortEdit;  
+      QLineEdit    *precommandEdit;
       ListView     *accountList;
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;

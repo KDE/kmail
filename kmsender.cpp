@@ -95,6 +95,7 @@ void KMSender::readConfig(void)
   mMailer = config->readEntry("Mailer",  _PATH_SENDMAIL);
   mSmtpHost = config->readEntry("Smtp Host", "localhost");
   mSmtpPort = config->readNumEntry("Smtp Port", 25);
+  mPrecommand = config->readEntry("Precommand", "");
 
   str = config->readEntry("Method");
   if (str=="mail") mMethod = smMail;
@@ -115,6 +116,7 @@ void KMSender::writeConfig(bool aWithSync)
   config->writeEntry("Smtp Host", mSmtpHost);
   config->writeEntry("Smtp Port", (int)mSmtpPort);
   config->writeEntry("Method", (mMethod==smSMTP) ? "smtp" : "mail");
+  config->writeEntry("Precommand", mPrecommand);
 
   if (aWithSync) config->sync();
 }
@@ -262,6 +264,21 @@ void KMSender::doSendMsg()
     label->setText(i18n("Initiating sender process..."));
     label->resize(400, label->sizeHint().height());
     labelDialog->show();
+
+    // Run the precommand if there is one
+    KProcess precommandProcess;
+    if (mPrecommand.length() != 0)
+    {
+      setStatusMsg(i18n(QString("Executing precommand ") + mPrecommand));
+      kapp->processEvents();
+      qDebug("Running precommand %s", mPrecommand.ascii());
+      precommandProcess << mPrecommand;
+      if (!precommandProcess.start(KProcess::Block))
+      {
+	KMessageBox::error(0, QString("Couldn't execute precommand:\n") + mPrecommand);
+      }
+    }
+
     //kapp->processEvents();
     setStatusMsg(i18n("Initiating sender process..."));
     if (!mSendProc->start())

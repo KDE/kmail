@@ -59,6 +59,7 @@ class AccountDialog : public KDialogBase
       QLineEdit *passwordEdit;
       QLineEdit *hostEdit;
       QLineEdit *portEdit;
+      QLineEdit *precommand;
       QCheckBox *storePasswordCheck;
       QCheckBox *deleteMailCheck;
       QCheckBox *retriveAllCheck;

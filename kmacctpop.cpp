@@ -23,6 +23,7 @@
 #include "kmacctfolder.h"
 #include "kmfiltermgr.h"
 #include "kmbroadcaststatus.h"
+#include "kprocess.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -109,6 +110,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
   KMPasswdDialog* dlg;
   bool opened = FALSE;
   int replyCode;
+  KProcess precommandProcess;
 
   if(mPasswd.isEmpty() || mLogin.isEmpty())
     msg = i18n("Please set Password and Username");
@@ -134,6 +136,21 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     {
       client.Quit();
       client.Close();
+    }
+
+    // Run the pre command if there is one
+    // Not sure if this should be outside the while loop or not - mpilone 
+    if (mPrecommand.length() != 0)
+    {
+       KMBroadcastStatus::instance()->setStatusMsg( 
+	  i18n( QString("Executing precommand ") + mPrecommand ));
+       kapp->processEvents();
+       qDebug("Running precommand %s", mPrecommand.ascii());
+       precommandProcess << mPrecommand;
+       if (!precommandProcess.start(KProcess::Block))
+       {
+	  return popError(QString("Couldn't execute precommand:\n") + mPrecommand, client);
+       }
     }
       
     // Open connection to server
@@ -366,6 +383,7 @@ void KMAcctPop::readConfig(KConfig& config)
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
   mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
+  mPrecommand = config.readEntry("precommand");
 }
 
 
@@ -384,6 +402,7 @@ void KMAcctPop::writeConfig(KConfig& config)
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
   config.writeEntry("retrieve-all", mRetrieveAll);
+  config.writeEntry("precommand", mPrecommand);
 }
 
 
@@ -477,6 +496,11 @@ bool KMAcctPop::setProtocol(short aProtocol)
   return true;
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctPop::setPrecommand(const QString& cmd)
+{
+   mPrecommand = cmd;
+}
 
 //=============================================================================
 //
