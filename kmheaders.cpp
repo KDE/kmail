@@ -33,7 +33,6 @@
 #include "kmcomposewin.h"
 #include "kfileio.h"
 #include "kmfiltermgr.h"
-#include "kfontutils.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
 #include "kmundostack.h"
@@ -400,7 +399,6 @@ void KMHeaders::readColorConfig (void)
 void KMHeaders::readConfig (void)
 {
   KConfig* config = kapp->config();
-  QString fntStr;
 
   // Backing pixmap support
   config->setGroup("Pixmaps");
@@ -419,8 +417,8 @@ void KMHeaders::readConfig (void)
   // Custom/System fonts
   config->setGroup("Fonts");
   if (!(config->readBoolEntry("defaultFonts",TRUE))) {
-    fntStr = config->readEntry("list-font", "helvetica-medium-r-12");
-    setFont(kstrToFont(fntStr));
+    QFont listFont = QFont("helvetica");
+    setFont(config->readFontEntry("list-font", &listFont));
   }
   else
     setFont(KGlobalSettings::generalFont());

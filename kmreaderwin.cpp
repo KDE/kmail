@@ -47,7 +47,6 @@
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
 #include "kpgp.h"
-#include "kfontutils.h"
 #include "kurl.h"
 
 // for selection
@@ -219,9 +218,17 @@ void KMReaderWin::readConfig(void)
   config->setGroup("Fonts");
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
-    mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
-    fntSize = kstrToFont(mBodyFont).pointSize();
-    mBodyFamily = kstrToFont(mBodyFont).family();
+    mBodyFont = QFont("helvetica");
+    mBodyFont = config->readFontEntry("body-font", &mBodyFont);
+    fntSize = mBodyFont.pointSize();
+    mBodyFamily = mBodyFont.family();
+    int pos = mBodyFamily.find("-");
+    // We ignore the foundary, otherwise we can't set the charset
+    if (pos != -1)
+    {
+      mBodyFamily.remove(0, pos + 1);
+      mBodyFont.setFamily(mBodyFamily);
+    }
   }
   else {
     setFont(KGlobalSettings::generalFont());
@@ -306,13 +313,13 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
   }
   else
   {
-    const char *defaultFont = "helvetica-medium-r-12";
+    const QFont defaultFont = QFont("helvetica");
     if( quoteLevel == 0 )
-      font  = kstrToFont(config.readEntry( "quote1-font", defaultFont ) );
+      font  = config.readFontEntry( "quote1-font", &defaultFont );
     else if( quoteLevel == 1 )
-      font  = kstrToFont(config.readEntry( "quote2-font", defaultFont ) );
+      font  = config.readFontEntry( "quote2-font", &defaultFont );
     else if( quoteLevel == 2 )
-      font  = kstrToFont(config.readEntry( "quote3-font", defaultFont ) );
+      font  = config.readFontEntry( "quote3-font", &defaultFont );
     else
     {
       font = KGlobalSettings::generalFont();
@@ -356,9 +363,9 @@ void KMReaderWin::initHtmlWidget(void)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setBodyFont(const QString aFont)
+void KMReaderWin::setBodyFont(const QFont aFont)
 {
-  mBodyFont = aFont.copy();
+  mBodyFont = aFont;
   update(true);
 }
 

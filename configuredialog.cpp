@@ -67,7 +67,6 @@
 #include "accountdialog.h"
 #include "colorlistbox.h"
 #include "configuredialog.h"
-#include "kfontutils.h"
 #include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
@@ -1427,18 +1426,19 @@ void ConfigureDialog::setupAppearancePage( void )
   KConfig &config = *kapp->config();
   config.setGroup("Fonts");
 
-  mAppearance.fontString[0] =
-    config.readEntry("body-font", "helvetica-medium-r-12");
-  mAppearance.fontString[1] =
-    config.readEntry("list-font", "helvetica-medium-r-12");
-  mAppearance.fontString[2] =
-    config.readEntry("folder-font", "helvetica-medium-r-12");
-  mAppearance.fontString[3] =
-    config.readEntry("quote1-font", "helvetica-medium-r-12");
-  mAppearance.fontString[4] =
-    config.readEntry("quote2-font", "helvetica-medium-r-12");
-  mAppearance.fontString[5] =
-    config.readEntry("quote3-font", "helvetica-medium-r-12");
+  mAppearance.font[0] = QFont("helvetica");
+  mAppearance.font[0] =
+    config.readFontEntry("body-font", &mAppearance.font[0]);
+  mAppearance.font[1] =
+    config.readFontEntry("list-font", &mAppearance.font[0]);
+  mAppearance.font[2] =
+    config.readFontEntry("folder-font", &mAppearance.font[0]);
+  mAppearance.font[3] =
+    config.readFontEntry("quote1-font", &mAppearance.font[0]);
+  mAppearance.font[4] =
+    config.readFontEntry("quote2-font", &mAppearance.font[0]);
+  mAppearance.font[5] =
+    config.readFontEntry("quote3-font", &mAppearance.font[0]);
 
   bool state = config.readBoolEntry("defaultFonts", false );
   mAppearance.customFontCheck->setChecked( state == false ? true : false );
@@ -1696,12 +1696,12 @@ void ConfigureDialog::installProfile( void )
 
   if( item == mAppearance.mListItemDefault )
   {
-    mAppearance.fontString[0] = "helvetica-medium-r-12";
-    mAppearance.fontString[1] = "helvetica-medium-r-12";
-    mAppearance.fontString[2] = "helvetica-medium-r-12";
-    mAppearance.fontString[3] = "helvetica-medium-i-12";
-    mAppearance.fontString[4] = "helvetica-medium-i-12";
-    mAppearance.fontString[5] = "helvetica-medium-i-12";
+    mAppearance.font[0] = QFont("helvetica");
+    mAppearance.font[1] = QFont("helvetica");
+    mAppearance.font[2] = QFont("helvetica");
+    mAppearance.font[3] = QFont("helvetica");
+    mAppearance.font[4] = QFont("helvetica");
+    mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( true );
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
@@ -1721,12 +1721,12 @@ void ConfigureDialog::installProfile( void )
   }
   else if( item == mAppearance.mListItemNewFeature )
   {
-    mAppearance.fontString[0] = "helvetica-medium-r-12";
-    mAppearance.fontString[1] = "helvetica-medium-r-12";
-    mAppearance.fontString[2] = "helvetica-medium-r-12";
-    mAppearance.fontString[3] = "helvetica-medium-r-12";
-    mAppearance.fontString[4] = "helvetica-medium-r-12";
-    mAppearance.fontString[5] = "helvetica-medium-r-12";
+    mAppearance.font[0] = QFont("helvetica");
+    mAppearance.font[1] = QFont("helvetica");
+    mAppearance.font[2] = QFont("helvetica");
+    mAppearance.font[3] = QFont("helvetica");
+    mAppearance.font[4] = QFont("helvetica");
+    mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( true );
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
@@ -1746,12 +1746,12 @@ void ConfigureDialog::installProfile( void )
   }
   else if( item == mAppearance.mListItemContrast )
   {
-    mAppearance.fontString[0] = "helvetica-bold-r-14";
-    mAppearance.fontString[1] = "helvetica-bold-r-14";
-    mAppearance.fontString[2] = "helvetica-bold-r-14";
-    mAppearance.fontString[3] = "helvetica-bold-r-14";
-    mAppearance.fontString[4] = "helvetica-bold-r-14";
-    mAppearance.fontString[5] = "helvetica-bold-r-14";
+    mAppearance.font[0] = QFont("helvetica", 14, QFont::Bold);
+    mAppearance.font[1] = QFont("helvetica", 14, QFont::Bold);
+    mAppearance.font[2] = QFont("helvetica", 14, QFont::Bold);
+    mAppearance.font[3] = QFont("helvetica", 14, QFont::Bold);
+    mAppearance.font[4] = QFont("helvetica", 14, QFont::Bold);
+    mAppearance.font[5] = QFont("helvetica", 14, QFont::Bold);
     mAppearance.customFontCheck->setChecked( true );
     mAppearance.colorList->setColor( 0, QColor("#FAEBD7") );
     mAppearance.colorList->setColor( 1, black );
@@ -1789,10 +1789,7 @@ void ConfigureDialog::updateFontSelector( void )
   if( mAppearance.activeFontIndex < 0 ) mAppearance.activeFontIndex = 0;
 
   int i=mAppearance.activeFontIndex;
-  if( mAppearance.fontString[i].isEmpty() == false )
-  {
-    mAppearance.fontChooser->setFont( kstrToFont(mAppearance.fontString[i] ) );
-  }
+  mAppearance.fontChooser->setFont( mAppearance.font[i] );
 }
 
 
@@ -1924,12 +1921,12 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry("defaultFonts", defaultFonts );
     config.writeEntry("unicodeFont", mAppearance.unicodeFontCheck->
       isChecked());
-    config.writeEntry( "body-font",   mAppearance.fontString[0] );
-    config.writeEntry( "list-font",   mAppearance.fontString[1] );
-    config.writeEntry( "folder-font", mAppearance.fontString[2] );
-    config.writeEntry( "quote1-font", mAppearance.fontString[3] );
-    config.writeEntry( "quote2-font", mAppearance.fontString[4] );
-    config.writeEntry( "quote3-font", mAppearance.fontString[5] );
+    config.writeEntry( "body-font",   mAppearance.font[0] );
+    config.writeEntry( "list-font",   mAppearance.font[1] );
+    config.writeEntry( "folder-font", mAppearance.font[2] );
+    config.writeEntry( "quote1-font", mAppearance.font[3] );
+    config.writeEntry( "quote2-font", mAppearance.font[4] );
+    config.writeEntry( "quote3-font", mAppearance.font[5] );
 //  GS - should this be here?
 //    printf("WRITE: %s\n", mAppearance.fontString[3].latin1() );
 
@@ -2724,16 +2721,15 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
   //
   if( mAppearance.activeFontIndex >= 0 )
   {
-    mAppearance.fontString[mAppearance.activeFontIndex] =
-      kfontToStr( mAppearance.fontChooser->font() );
+    mAppearance.font[mAppearance.activeFontIndex] =
+      mAppearance.fontChooser->font();
   }
   mAppearance.activeFontIndex = index;
 
   //
   // Display the new setting
   //
-  if( mAppearance.fontString[index].isEmpty() == false )
-    mAppearance.fontChooser->setFont(kstrToFont(mAppearance.fontString[index]));
+  mAppearance.fontChooser->setFont(mAppearance.font[index]);
 
   //
   // Disable Family and Size list if we have selected a qoute font

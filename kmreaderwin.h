@@ -91,8 +91,8 @@ public:
   void setAutoDelete(bool f) { mAutoDelete=f; }
 
   /** Get/set message body font. */
-  virtual void setBodyFont(const QString);
-  const QString bodyFont(void) const { return mBodyFont; }
+  virtual void setBodyFont(const QFont);
+  const QFont& bodyFont(void) const { return mBodyFont; }
 
   /** Returns path where attachments are kept. Gets set with first
   KMReaderWin that is created. */
@@ -228,7 +228,7 @@ protected:
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;
-  QString mBodyFont;
+  QFont mBodyFont;
   bool inlineImage;
   static QString mAttachDir;
   static const int delay;

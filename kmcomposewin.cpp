@@ -27,7 +27,6 @@
 #include "kmfolder.h"
 
 #include <kabapi.h>
-#include <kfontutils.h>
 #include <kaction.h>
 #include <kcharsets.h>
 #include <kcursor.h>
@@ -362,9 +361,13 @@ void KMComposeWin::readConfig(void)
   config->setGroup("Fonts");
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
-    QString mBodyFontStr;
-    mBodyFontStr = config->readEntry("body-font", "helvetica-medium-r-12");
-    mBodyFont = kstrToFont(mBodyFontStr);
+    mBodyFont = QFont("helvetica");
+    mBodyFont = config->readFontEntry("body-font", &mBodyFont);
+    QString bodyFamily = mBodyFont.family();
+    int pos = bodyFamily.find("-");
+    // We ignore the foundary, otherwise we can't set the charset
+    if (pos != -1)
+      mBodyFont.setFamily(bodyFamily.right(bodyFamily.length()-pos-1));
   }
   else
     mBodyFont = KGlobalSettings::generalFont();

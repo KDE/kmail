@@ -295,7 +295,7 @@ class ConfigureDialog : public KDialogBase
       QCheckBox     *nestedMessagesCheck;
       QCheckBox     *htmlMailCheck;
       int           activeFontIndex;
-      QString       fontString[6];
+      QFont         font[6];
       ListView      *profileList;
       QListViewItem *mListItemDefault;
       QListViewItem *mListItemNewFeature;

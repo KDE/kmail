@@ -13,7 +13,6 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
-#include "kfontutils.h"
 
 #include "kmglobal.h"
 #include "kmdragdata.h"
@@ -261,8 +260,8 @@ void KMFolderTree::readConfig (void)
   // Custom/Ssystem font support
   conf->setGroup("Fonts");
   if (!conf->readBoolEntry("defaultFonts",TRUE)) {
-    fntStr = conf->readEntry("folder-font", "helvetica-medium-r-12");
-    setFont(kstrToFont(fntStr));
+    QFont folderFont = QFont("helvetica");
+    setFont(conf->readFontEntry("folder-font", &folderFont));
   }
   else
     setFont(KGlobalSettings::generalFont());
