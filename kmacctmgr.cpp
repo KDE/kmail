@@ -253,7 +253,7 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id
     act = new KMAcctImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
 
   else if (aType == "cachedimap")
-    act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("Disconnected IMAP") : aName, id);
+    act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
 
   if (act)
   {
