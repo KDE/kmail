@@ -72,17 +72,6 @@ public:
   KMReaderWin* messageView(void) const { return mMsgView; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
-  /** Returns a popupmenu containing a hierarchy of folder names
-      starting at the given (@p aFolderDir) folder directory
-      Each item in the popupmenu is connected to a slot, if
-      move is TRUE this slot will cause all selected messages to
-      be moved into the given folder, otherwise messages will be
-      copied.
-      Am empty @ref KMMenuToFolder must be passed in. */
-  virtual QPopupMenu* folderToPopupMenu(bool move,
-					QObject *receiver,
-					KMMenuToFolder *aMenuToFolder,
-					QPopupMenu *menu);
   QPopupMenu* makeFolderMenu(KMFolderTreeItem* item,
                     bool move,
 					QObject *receiver,
@@ -196,21 +185,8 @@ protected slots:
   void slotRedirectMsg();
   void slotBounceMsg();
 
-  /** these are called when incomplete (imap-)messages have been transferred 
-   *  they call the corresponding action and disconnect the signal */
-  void slotReallyReplyToMsg(bool);
-  void slotReallyNoQuoteReplyToMsg(bool);
-  void slotReallyReplyAllToMsg(bool);
-  void slotReallyReplyListToMsg(bool);
-  void slotReallyForwardMsg(bool);
-  void slotReallyForwardAttachedMsg(bool);
-  void slotReallyRedirectMsg(bool);
-  void slotReallyBounceMsg(bool);
-  void slotReallySaveMsg(bool);
-
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
-  void slotEditMsg(KMMessage*);
   void slotTrashMsg();   // move to trash
   void slotDeleteMsg();  // completely delete message
   void slotUndo();
@@ -314,7 +290,6 @@ protected slots:
 
   /** Save the page to a file */
   void slotUrlSave();
-  void slotUrlSaveResult(KIO::Job*);
 
   /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
@@ -342,15 +317,6 @@ protected slots:
   void slotUpdateToolbars();
   void slotEditNotifications();
   void slotEditKeys();
-
-  /** the msg has been transferred */
-  void slotMsgTransfered(KMMessage*);
-
-  /** the transfer was cancelled */
-  void slotTransferCancelled();
-
-  /** the KMImapJob is finished */
-  void slotJobFinished();
 
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);

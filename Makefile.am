@@ -9,7 +9,7 @@ bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
-		simplestringlisteditor.cpp \
+		simplestringlisteditor.cpp kmcommands.cpp \
 		configmanager.cpp identitymanager.cpp identitycombo.cpp \
 		identitydrag.cpp identitylistview.cpp identitydialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \

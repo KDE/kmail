@@ -47,6 +47,7 @@
 #include "kmfolderdia.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
+#include "kmcommands.h"
 #include "kmfoldertree.h"
 #include "kmreaderwin.h"
 #include "kmfolderimap.h"
@@ -1232,105 +1233,48 @@ void KMMainWin::slotOverrideThread()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotPrintMsg()
 {
-  if(mHeaders->currentItemIndex() >= 0)
-    mMsgView->printMsg();
+  if (!mHeaders->currentMsg())
+    return;
+  KMCommand *command = new KMPrintCommand( this, mHeaders->currentMsg() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyToMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    // disable the reply-action
-    replyAction->setEnabled(false);
-
-    // transfer the selected messages first
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyReplyToMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->replyToMsg(mMsgView->copyText());
-  }
+  KMCommand *command = new KMReplyToCommand( this, mHeaders->currentMsg(),
+                                            mMsgView->copyText() );
+  command->start();
 }
 
-void KMMainWin::slotReallyReplyToMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyReplyToMsg(bool)));
-  replyAction->setEnabled(true);
-  if (success) mHeaders->replyToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotNoQuoteReplyToMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    // transfer the selected messages first
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyNoQuoteReplyToMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->noQuoteReplyToMsg();
-  }
-}
-
-void KMMainWin::slotReallyNoQuoteReplyToMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyNoQuoteReplyToMsg(bool)));
-  if (success) mHeaders->noQuoteReplyToMsg(mSelectedMsgs.getFirst());
+  KMCommand *command = new KMNoQuoteReplyToCommand( this,
+                                                    mHeaders->currentMsg() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyAllToMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    // disable the action
-    replyAllAction->setEnabled(false);
-
-    // transfer the selected messages first
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyReplyAllToMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->replyAllToMsg(mMsgView->copyText());
-  }
-}
-
-void KMMainWin::slotReallyReplyAllToMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyReplyAllToMsg(bool)));
-  replyAllAction->setEnabled(true);
-  if (success) mHeaders->replyAllToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
+  KMCommand *command = new KMReplyToAllCommand( this,  mHeaders->currentMsg(),
+                                               mMsgView->copyText() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyListToMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    // transfer the selected messages first
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyReplyListToMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->replyListToMsg(mMsgView->copyText());
-  }
+  KMCommand *command = new KMReplyListCommand( this, mHeaders->currentMsg(),
+                                              mMsgView->copyText() );
+  command->start();
 }
 
-void KMMainWin::slotReallyReplyListToMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-	     this, SLOT(slotReallyReplyListToMsg(bool)));
-  if (success)
-    mHeaders->replyListToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
-}
 
 void KMMainWin::slotForward() {
   // ### FIXME: remember the last used subaction and use that
@@ -1341,89 +1285,34 @@ void KMMainWin::slotForward() {
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    // disable the forward-action
-    forwardAction->setEnabled(false);
-
-    // transfer the selected messages first
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyForwardMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->forwardMsg();
-  }
-}
-
-void KMMainWin::slotReallyForwardMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyForwardMsg(bool)));
-  forwardAction->setEnabled(true);
-  if (success) mHeaders->forwardMsg(&mSelectedMsgs);
+  KMCommand *command = new KMForwardCommand( this, *mHeaders->selectedMsgs(),
+                                             mFolder );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardAttachedMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyForwardAttachedMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->forwardAttachedMsg();
-  }
-}
-
-void KMMainWin::slotReallyForwardAttachedMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyForwardAttachedMsg(bool)));
-  if (success) mHeaders->forwardAttachedMsg(&mSelectedMsgs);
+  KMCommand *command = new KMForwardAttachedCommand( this,
+    *mHeaders->selectedMsgs(), mFolder );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotRedirectMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyRedirectMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->redirectMsg();
-  }
-}
-
-void KMMainWin::slotReallyRedirectMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyRedirectMsg(bool)));
-  if (success) mHeaders->redirectMsg(mSelectedMsgs.getFirst());
+  KMCommand *command = new KMRedirectCommand( this, mHeaders->currentMsg() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotBounceMsg()
 {
-  if (mFolder->protocol() == "imap")
-  {
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallyBounceMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->bounceMsg();
-  }
-}
-
-void KMMainWin::slotReallyBounceMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallyBounceMsg(bool)));
-  if (success) mHeaders->bounceMsg(mSelectedMsgs.getFirst());
+  KMCommand *command = new KMBounceCommand( this, mHeaders->currentMsg() );
+  command->start();
 }
 
 
@@ -1439,54 +1328,9 @@ void KMMainWin::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEditMsg()
 {
-  KMMessage *msg;
-  int aIdx;
-
-  if((aIdx = mHeaders->currentItemIndex()) <= -1)
-    return;
-  if(!(msg = mHeaders->getMsg(aIdx)))
-    return;
-
-  slotEditMsg(msg);
+  KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
+  command->start();
 }
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotEditMsg(KMMessage* msg)
-{
-  if (!kernel->folderIsDraftOrOutbox(mFolder))
-    return;
-  if (mFolder == kernel->outboxFolder() && kernel->msgSender()->sending())
-  {
-    KMessageBox::sorry(this, i18n("You can't edit messages that are already in "
-      "progress of being sent."));
-    return;
-  }
-
-  if ( !msg->isComplete() && mFolder->protocol() == "imap" )
-  {
-    // transfer the message first
-    kdDebug(5006) << "slotEditMsg: transfer message" << endl;
-    if (msg->transferInProgress()) return;
-    msg->setTransferInProgress(TRUE);
-    KMImapJob *job = new KMImapJob(msg);
-    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
-            SLOT(slotEditMsg(KMMessage*)));
-    return;
-  }
-
-  mFolder->removeMsg(msg);
-  mHeaders->setSelected(mHeaders->currentItem(), TRUE);
-  mHeaders->highlightMessage(mHeaders->currentItem(), true);
-
-  KMComposeWin *win = new KMComposeWin();
-  QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
-		    this, SLOT( slotMessageQueuedOrDrafted()) );
-  win->setMsg(msg,FALSE, TRUE);
-  win->setFolder(mFolder);
-  win->show();
-}
-
 
 
 //-----------------------------------------------------------------------------
@@ -1520,25 +1364,16 @@ void KMMainWin::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotShowMsgSrc()
 {
-  KMMessage* msg = mHeaders->getMsg(-1);
-  if (msg)
-  {
-    QTextCodec *codec = mCodec;
-    if (!codec) //this is Auto setting
-    {
-       QCString cset = msg->charset();
-       if (!cset.isEmpty())
-         codec = KMMsgBase::codecForName(cset);
-    }
-    msg->viewSource(i18n("Message as Plain Text"), codec,
-		    mMsgView->isfixedFont());
-  }
+  KMCommand *command = new KMShowMsgSrcCommand( this, mHeaders->currentMsg(),
+    mCodec, mMsgView->isfixedFont() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotToggleFixedFont()
 {
-  mMsgView->slotToggleFixedFont();
+  KMCommand *command = new KMToggleFixedCommand( mMsgView );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
@@ -1600,23 +1435,16 @@ void KMMainWin::slotCopyMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSaveMsg()
 {
-  if(mHeaders->currentItemIndex() == -1)
+  KMMessage *msg = mHeaders->currentMsg();
+  if (!msg)
     return;
-  if (mFolder->protocol() == "imap")
-  {
-    connect(this, SIGNAL(messagesTransfered(bool)),
-          this, SLOT(slotReallySaveMsg(bool)));
-    transferSelectedMsgs();
-  } else {
-    mHeaders->saveMsg(-1);
-  }
-}
+  KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( this,
+    *mHeaders->selectedMsgs(), mFolder );
 
-void KMMainWin::slotReallySaveMsg(bool success)
-{
-  disconnect(this, SIGNAL(messagesTransfered(bool)),
-      this, SLOT(slotReallySaveMsg(bool)));
-  if (success) mHeaders->saveMsg(-1, &mSelectedMsgs);
+  if (saveCommand->url().isEmpty())
+    delete saveCommand;
+  else
+    saveCommand->start();
 }
 
 
@@ -1901,36 +1729,40 @@ void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSubjectFilter()
 {
-  KMMessage* msg = mHeaders->getMsg(-1);
-  if (msg)
-    kernel->filterMgr()->createFilter( "Subject", msg->subject());
+  KMMessage *msg = mHeaders->currentMsg();
+  if (msg) {
+    KMCommand *command = new KMFilterCommand( "Subject", msg->subject() );
+    command->start();
+  }
 }
 
 void KMMainWin::slotMailingListFilter()
 {
-    KMMessage* msg = mHeaders->getMsg(-1);
-    if (msg) {
-        QCString name;
-        QString value;
-        if ( !KMMLInfo::name( msg, name, value ).isNull() )
-            kernel->filterMgr()->createFilter( name, value );
-    }
+  if (mHeaders->currentMsg()) {
+    KMCommand *command = new KMMailingListFilterCommand( this,
+      mHeaders->currentMsg() );
+    command->start();
+  }
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotFromFilter()
 {
-  KMMessage* msg = mHeaders->getMsg(-1);
-  if (msg)
-    kernel->filterMgr()->createFilter( "From", msg->from());
+  KMMessage *msg = mHeaders->currentMsg();
+  if (msg) {
+    KMCommand *command = new KMFilterCommand( "From",  msg->from() );
+    command->start();
+  }
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotToFilter()
 {
-  KMMessage* msg = mHeaders->getMsg(-1);
-  if (msg)
-    kernel->filterMgr()->createFilter( "To", msg->to());
+  KMMessage *msg = mHeaders->currentMsg();
+  if (msg) {
+    KMCommand *command = new KMFilterCommand( "To",  msg->to() );
+    command->start();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2140,214 +1972,76 @@ void KMMainWin::slotSelectText() {
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 {
-  KMComposeWin *win;
-  KMMessage* msg;
-
-  if (aUrl.protocol() == "mailto")
-  {
-#ifdef IDENTITY_UOIDs
-    uint id = 0;
-#else
-    QString id = "";
-#endif
-    if ( mFolder )
-      id = mFolder->identity();
-
-    msg = new KMMessage;
-    msg->initHeader(id);
-    msg->setCharset("utf-8");
-    msg->setTo(aUrl.path());
-    QString query=aUrl.query();
-    while (!query.isEmpty()) {
-      QString queryPart;
-      int secondQuery = query.find('?',1);
-      if (secondQuery != -1)
-	queryPart = query.left(secondQuery);
-      else
-	queryPart = query;
-      query = query.mid(queryPart.length());
-
-      if (queryPart.left(9) == "?subject=")
-	msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
-      else if (queryPart.left(6) == "?body=")
-	// It is correct to convert to latin1() as URL should not contain
-	// anything except ascii.
-	msg->setBody( KURL::decode_string(queryPart.mid(6)).latin1() );
-      else if (queryPart.left(4) == "?cc=")
-	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
-    }
-
-    win = new KMComposeWin(msg, id);
-    win->setCharset("", TRUE);
-    win->show();
-  }
-  else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
-           (aUrl.protocol() == "ftp") || (aUrl.protocol() == "file") ||
-           (aUrl.protocol() == "ftps") || (aUrl.protocol() == "sftp" ) ||
-           (aUrl.protocol() == "help") || (aUrl.protocol() == "vnc") ||
-           (aUrl.protocol() == "smb"))
-  {
-    statusMsg(i18n("Opening URL..."));
-    KMimeType::Ptr mime = KMimeType::findByURL( aUrl );
-    if (mime->name() == "application/x-desktop" ||
-        mime->name() == "application/x-executable" ||
-        mime->name() == "application/x-shellscript" )
-    {
-      if (KMessageBox::warningYesNo( 0, i18n( "Do you really want to execute"
-        " '%1'? " ).arg( aUrl.prettyURL() ) ) != KMessageBox::Yes) return;
-    }
-    (void) new KRun( aUrl );
-  }
-  // handle own links
-  else if( aUrl.protocol() == "kmail" )
-  {
-    if( aUrl.path() == "showHTML" )
-    {
-      mMsgView->setHtmlOverride(!mFolderHtmlPref);
-      mMsgView->update( true );
-    }
-  }
+  KMCommand *command = new KMUrlClickedCommand( aUrl, mFolder, mMsgView,
+                                               mFolderHtmlPref, this );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoCompose()
 {
-  KMComposeWin *win;
-  KMMessage *msg = new KMMessage;
-#ifdef IDENTITY_UOIDs
-  uint id = 0;
-#else
-  QString id = "";
-#endif
-
-  if ( mMsgCurrent )
-    id = mMsgCurrent->parent()->identity();
-  else
-    if ( mFolder )
-      id = mFolder->identity();
-  msg->initHeader(id);
-  msg->setCharset("utf-8");
-  msg->setTo(mUrlCurrent.path());
-
-  win = new KMComposeWin(msg, id);
-  win->setCharset("", TRUE);
-  win->show();
+  KMCommand *command = new KMMailtoComposeCommand( mUrlCurrent,
+                                                  mHeaders->currentMsg() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoReply()
 {
-  KMComposeWin *win;
-  KMMessage *msg, *rmsg;
-
-  /* if (!(msg = mHeaders->getMsg(-1))) return; */
-  msg = mMsgCurrent;
-  rmsg = msg->createReply(FALSE, FALSE, mMsgView->copyText());
-  rmsg->setTo(mUrlCurrent.path());
-
-#ifdef IDENTITY_UOIDs
-  win = new KMComposeWin(rmsg, 0);
-#else
-  win = new KMComposeWin(rmsg, QString::null);
-#endif
-  win->setCharset(msg->codec()->mimeName(), TRUE);
-  win->setReplyFocus();
-  win->show();
+  KMCommand *command = new KMMailtoReplyCommand( this, mUrlCurrent,
+    mHeaders->currentMsg(), mMsgView->copyText() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoForward()
 {
-  KMComposeWin *win;
-  KMMessage *msg, *fmsg;
-
-  /* if (!(msg = mHeaders->getMsg(-1))) return; */
-  msg = mMsgCurrent;
-  fmsg = msg->createForward();
-  fmsg->setTo(mUrlCurrent.path());
-
-  win = new KMComposeWin(fmsg);
-  win->setCharset(msg->codec()->mimeName(), TRUE);
-  win->show();
+  KMCommand *command = new KMMailtoForwardCommand( this, mUrlCurrent,
+                                                  mHeaders->currentMsg() );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoAddAddrBook()
 {
-  KMAddrBookExternal::addEmail(mUrlCurrent.path(), this);
+  KMCommand *command = new KMMailtoAddAddrBookCommand( mUrlCurrent, this );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoOpenAddrBook()
 {
-  KMAddrBookExternal::openEmail(mUrlCurrent.path(), this);
+  KMCommand *command = new KMMailtoOpenAddrBookCommand( mUrlCurrent, this );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlCopy()
 {
-  QClipboard* clip = QApplication::clipboard();
-
-  if (mUrlCurrent.protocol() == "mailto")
-  {
-    // put the url into the mouse selection and the clipboard
-    clip->setSelectionMode(true);
-    clip->setText(mUrlCurrent.path());
-    clip->setSelectionMode(false);
-    clip->setText(mUrlCurrent.path());
-    statusMsg(i18n("Address copied to clipboard."));
-  }
-  else
-  {
-    // put the url into the mouse selection and the clipboard
-    clip->setSelectionMode(true);
-    clip->setText(mUrlCurrent.url());
-    clip->setSelectionMode(false);
-    clip->setText(mUrlCurrent.url());
-    statusMsg(i18n("URL copied to clipboard."));
-  }
+  KMCommand *command = new KMUrlCopyCommand( mUrlCurrent, this );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlOpen()
 {
-  if (mUrlCurrent.isEmpty()) return;
-  //  mMsgView->slotUrlOpen(mUrlCurrent, QString::null, 0);
-  mMsgView->slotUrlOpen( mUrlCurrent, KParts::URLArgs() );
+  KMCommand *command = new KMUrlOpenCommand( mUrlCurrent, mMsgView );
+  command->start();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlSave()
 {
-  if (mUrlCurrent.isEmpty()) return;
-  KURL saveUrl = KFileDialog::getSaveURL(mUrlCurrent.fileName(), QString::null,
-    this);
-  if (saveUrl.isEmpty()) return;
-  if (KIO::NetAccess::exists(saveUrl))
-  {
-    if (KMessageBox::warningContinueCancel(0,
-        i18n("File %1 exists.\nDo you want to replace it?")
-        .arg(saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
-        != KMessageBox::Continue)
-      return;
-  }
-  KIO::Job *job = KIO::file_copy(mUrlCurrent, saveUrl, -1, true);
-  connect(job, SIGNAL(result(KIO::Job*)), SLOT(slotUrlSaveResult(KIO::Job*)));
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotUrlSaveResult(KIO::Job *job)
-{
-  if (job->error()) job->showErrorDialog();
+  KMCommand *command = new KMUrlSaveCommand( mUrlCurrent, this );
+  command->start();
 }
 
 
@@ -3182,113 +2876,13 @@ void KMMainWin::copySelectedToFolder(int menuId )
 
 
 //-----------------------------------------------------------------------------
-QPopupMenu* KMMainWin::folderToPopupMenu(bool move,
-					 QObject *receiver,
-					 KMMenuToFolder *aMenuToFolder,
-					 QPopupMenu *menu )
-{
-  while ( menu->count() )
-  {
-    QPopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
-    if (popup)
-      delete popup;
-    else
-      menu->removeItemAt( 0 );
-  }
-
-  QListViewItem *startItem = mFolderTree->firstChild();
-  if (!startItem->nextSibling())
-  {
-     makeFolderMenu(dynamic_cast<KMFolderTreeItem*>(startItem),
-        move, receiver, aMenuToFolder, menu);
-     return menu;
-  }
-
-  for (QListViewItem *item = startItem;
-     item; item = item->nextSibling())
-  {
-    // operate on top-level items
-    QString label = item->text(0);
-    // make a new Submenu
-    QPopupMenu* subMenu = new QPopupMenu(menu);
-    subMenu = makeFolderMenu(dynamic_cast<KMFolderTreeItem*>(item),
-        move, receiver, aMenuToFolder, subMenu);
-    menu->insertItem( label, subMenu );
-  }
-
-  return menu;
-}
-
-//-----------------------------------------------------------------------------
-QPopupMenu* KMMainWin::makeFolderMenu(KMFolderTreeItem* item,
-					 bool move,
-					 QObject *receiver,
-					 KMMenuToFolder *aMenuToFolder,
-					 QPopupMenu *menu )
-{
-  // connect the signals
-  if (move)
-  {
-    disconnect(menu, SIGNAL(activated(int)), receiver,
-           SLOT(moveSelectedToFolder(int)));
-    connect(menu, SIGNAL(activated(int)), receiver,
-             SLOT(moveSelectedToFolder(int)));
-  } else {
-    disconnect(menu, SIGNAL(activated(int)), receiver,
-           SLOT(copySelectedToFolder(int)));
-    connect(menu, SIGNAL(activated(int)), receiver,
-             SLOT(copySelectedToFolder(int)));
-  }
-
-  if (item->folder() && !item->folder()->isDir()
-      && !item->folder()->noContent())
-  {
-    int menuId;
-    if (move)
-      menuId = menu->insertItem(i18n("Move to this Folder"));
-    else
-      menuId = menu->insertItem(i18n("Copy to this Folder"));
-    aMenuToFolder->insert( menuId, item->folder() );
-    menu->insertSeparator();
-  }
-
-  for (QListViewItem *it = item->firstChild();
-      it; it = it->nextSibling())
-  {
-    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it);
-    if (fti->folder())
-    {
-      QString label = fti->text(0);
-      label.replace(QRegExp("&"),QString("&&"));
-      if (fti->firstChild())
-      {
-        // descend
-        QPopupMenu *subMenu = makeFolderMenu(fti, move, receiver,
-                                                aMenuToFolder,
-                                                new QPopupMenu(menu, "subMenu"));
-        menu->insertItem(label, subMenu);
-      } else {
-        // insert an item
-        if (!fti->folder()->isDir())
-        {
-          int menuId = menu->insertItem(label);
-          aMenuToFolder->insert( menuId, fti->folder() );
-        }
-      }
-    }
-  }
-  return menu;
-}
-
-
-
-
-//-----------------------------------------------------------------------------
 void KMMainWin::updateMessageMenu()
 {
     mMenuToFolder.clear();
-    folderToPopupMenu( true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
-    folderToPopupMenu( false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+    KMMenuCommand::folderToPopupMenu( true, this, &mMenuToFolder,
+      moveActionMenu->popupMenu() );
+    KMMenuCommand::folderToPopupMenu( false, this, &mMenuToFolder,
+      copyActionMenu->popupMenu() );
     updateMessageActions();
 }
 
@@ -3482,140 +3076,6 @@ bool KMMainWin::queryClose() {
   return true;
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWin::transferSelectedMsgs()
-{
-  // make sure no other transfer is active
-  if (mCountJobs > 0)
-    return;
-
-  bool complete = true;
-  mCountJobs = 0;
-  mCountMsgs = 0;
-  mSelectedMsgs.clear();
-
-  // get the selected messages
-  QPtrList<KMMsgBase>* msgList = mHeaders->selectedMsgs();
-  mCountMsgs = msgList->count();
-  // the KProgressDialog for the user-feedback
-  mProgressDialog = new KProgressDialog(this, "transferProgress",
-      i18n("Please wait"),
-      i18n("Please wait while the message is transferred",
-        "Please wait while the %n messages are transferred", msgList->count()),
-      true);
-  mProgressDialog->setMinimumDuration(1000);
-  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next())
-  {
-    // check if all messages are complete
-    int idx = mFolder->find(mb);
-    if (idx < 0) continue;
-    KMMessage *thisMsg = mFolder->getMsg(idx);
-    if (!thisMsg) continue;
-    if (thisMsg->parent() && thisMsg->parent()->protocol() == "imap" &&
-        !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
-    {
-      // the message needs to be transferred first
-      complete = false;
-      mCountJobs++;
-      KMImapJob *imapJob = new KMImapJob(thisMsg);
-      // emitted when the message was transferred successfully
-      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-          this, SLOT(slotMsgTransfered(KMMessage*)));
-      // emitted when the job is destroyed
-      connect(imapJob, SIGNAL(finished()),
-          this, SLOT(slotJobFinished()));
-      // msg musn't be deleted
-      thisMsg->setTransferInProgress(true);
-    } else {
-      mSelectedMsgs.append(thisMsg);
-    }
-  }
-
-  if (complete)
-  {
-    delete mProgressDialog;
-    emit messagesTransfered(true);
-  } else {
-    // wait for the transfer and tell the progressBar the necessary steps
-    connect(mProgressDialog, SIGNAL(cancelClicked()),
-        this, SLOT(slotTransferCancelled()));
-    mProgressDialog->progressBar()->setTotalSteps(mCountJobs);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotMsgTransfered(KMMessage* msg)
-{
-  msg->setTransferInProgress(false);
-  if (mProgressDialog->wasCancelled()) return;
-  // save the complete messages
-  mSelectedMsgs.append(msg);
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotJobFinished()
-{
-  // the job is finished (with / without error)
-  mCountJobs--;
-
-  if (mProgressDialog->wasCancelled()) return;
-
-  if ( (mCountMsgs - static_cast<int>(mSelectedMsgs.count())) > mCountJobs )
-  {
-    // the message wasn't retrieved before => error
-    mProgressDialog->hide();
-    slotTransferCancelled();
-    return;
-  }
-  // update the progressbar
-  mProgressDialog->progressBar()->advance(1);
-  mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
-          "Please wait while the %n messages are transferred", mCountJobs));
-  if (mCountJobs == 0)
-  {
-    // all done
-    delete mProgressDialog;
-    emit messagesTransfered(true);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotTransferCancelled()
-{
-  if (mFolder->protocol() != "imap") return;
-
-  emit messagesTransfered(false);
-  // kill the pending jobs
-  KMAcctImap* acct = static_cast<KMFolderImap*>(mFolder)->account();
-  if (acct)
-  {
-    acct->killAllJobs();
-    acct->setIdle(true);
-  }
-
-  mCountJobs = 0;
-  mCountMsgs = 0;
-  // unget the transfered messages
-  QPtrListIterator<KMMessage> it( mSelectedMsgs );
-  KMMessage* msg;
-  while ( (msg = it.current()) != 0 )
-  {
-    ++it;
-    int idx = mFolder->find(msg);
-    if (idx > 0) mFolder->unGetMsg(idx);
-  }
-  mSelectedMsgs.clear();
-  // unget the selected messages
-  QPtrList<KMMsgBase>* msgList = mHeaders->selectedMsgs();
-  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next())
-  {
-    if (mb->isMessage())
-    {
-      int idx = mFolder->find(mb);
-      if (idx > 0) mFolder->unGetMsg(idx);
-    }
-  }
-}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotIntro() {

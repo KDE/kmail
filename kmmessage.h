@@ -29,8 +29,7 @@ class DwHeaders;
 #define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase
 {
-  friend class KMFolder;
-  friend class KMHeaders;    // needed for MIME Digest forward
+  friend class KMForwardCommand;    // needed for MIME Digest forward
 
 public:
   /** Straight forward initialization. */
@@ -422,7 +421,7 @@ public:
   virtual void deleteBodyParts(void);
 
   /** Open a window containing the complete, unparsed, message. */
-  virtual void viewSource(const QString& windowCaption, QTextCodec *codec,
+  virtual void viewSource(const QString& windowCaption, const QTextCodec *codec,
 					bool fixedfont);
 
   /** Set "Status" and "X-Status" fields of the message from the
