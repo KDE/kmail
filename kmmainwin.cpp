@@ -2640,9 +2640,9 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
   {
       int menuId;
       if (move)
-          menuId = menu->insertItem(i18n("Move to This Folder"));
+          menuId = menu->insertItem(i18n("Move to this Folder"));
       else
-          menuId = menu->insertItem(i18n("Copy to This Folder"));
+          menuId = menu->insertItem(i18n("Copy to this Folder"));
       aMenuToFolder->insert( menuId, fti->folder );
       menu->insertSeparator();
   }

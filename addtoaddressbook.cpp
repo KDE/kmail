@@ -38,11 +38,11 @@
 
 AddToKabDialog::AddToKabDialog(QString url_, KabAPI * api_, QWidget *parent)
   : KDialogBase(parent, "AddToKabDialog", true,
-		i18n("Add address to the address book"),
+		i18n("Add Address to the Address Book"),
 		KDialogBase::User1|KDialogBase::User2|KDialogBase::Cancel,
 		KDialogBase::User1, true,
-		i18n("Create a new entry..."),
-		i18n("Add email address")),
+		i18n("Create a new Entry..."),
+		i18n("Add Email Address")),
   api(api_),
   url(url_)
 {

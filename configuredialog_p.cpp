@@ -258,7 +258,7 @@ NewLanguageDialog::NewLanguageDialog( LanguageItemList & suppressedLangs,
     }
   }
   if ( !mComboBox->count() ) {
-    mComboBox->insertItem( i18n("No more languages available") );
+    mComboBox->insertItem( i18n("No more Languages Available") );
     enableButtonOK( false );
   } else mComboBox->listBox()->sort();
 }

@@ -1002,7 +1002,7 @@ void KMComposeWin::setupEditor(void)
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
   menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
   menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
-  menu->insertItem(i18n("Mark all"),this, SLOT(slotMarkAll()));
+  menu->insertItem(i18n("Mark All"),this, SLOT(slotMarkAll()));
   menu->insertSeparator();
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));

@@ -1077,7 +1077,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 
   // "Common options" groupbox:
   group = new QGroupBox( 0, Qt::Vertical,
-			 i18n("Common options"), this );
+			 i18n("Common Options"), this );
   vlay->addWidget(group);
 
   // a grid layout for the contents of the "common options" group box
