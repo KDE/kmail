@@ -3,6 +3,9 @@
 
 #include "kmfolder.h"
 #include "kmmessage.h"
+#include "kmglobal.h"
+
+#include <klocale.h>
 
 #include <mimelib/mimepp.h>
 
@@ -451,19 +454,7 @@ void KMFolder::readMsg(int msgno)
   dwmsg = DwMessage::NewMessage(msg->msgStr(), 0);
   dwmsg->Parse();
 
-  printf("Message #%d: contentType=%d\n", msgno, 
-	 dwmsg->Headers().ContentType().Type());
-
   msg->takeMessage(dwmsg);
-
-  DwBodyPart* part = dwmsg->Body().FirstBodyPart();
-  while (part)
-  {
-    printf("part\n");
-    part = part->Next();
-  }
-
-  printf("numBodyParts=%d\n", msg->numBodyParts());
 }
 
 
@@ -478,7 +469,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (len <= 0)
   {
-    warning("KMFolder::addMsg():\nmessage contains no data !");
+    warning(nls->translate("KMFolder::addMsg():\nmessage contains no data !"));
     return 0;
   }
 

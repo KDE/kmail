@@ -59,7 +59,7 @@ void KMMsgInfo::setStatus(const char* aStatusStr)
   {
     KMMessage::stDeleted, KMMessage::stNew, 
     KMMessage::stUnread, KMMessage::stOld, 
-    KMMessage::stUnknown /*...must be at the end of this list! */
+    KMMessage::stUnknown   /*...must be at the end of this list! */
   };
   int i;
 
@@ -74,10 +74,11 @@ void KMMsgInfo::setStatus(const char* aStatusStr)
 void KMMsgInfo::fromString(const char* aStr)
 {
   char st;
+  static char fromStr[256], subjStr[256];
 
   assert(aStr != NULL);
 
-  sscanf(aStr,"%c %lu %lu", &st, &mOffset, &mSize);
+  sscanf(aStr,"%c %lu %lu |%s|%s", &st, &mOffset, &mSize, fromStr, subjStr);
   mStatus = (KMMessage::Status)st;
   mMsg = NULL;
 }
@@ -86,7 +87,9 @@ void KMMsgInfo::fromString(const char* aStr)
 //-----------------------------------------------------------------------------
 const char* KMMsgInfo::asString(void) const
 {
-  static char str[80];
-  sprintf(str, "%c %-.8lu %-.8lu", (char)mStatus, mOffset, mSize);
+  static char str[512];
+
+  sprintf(str, "%c %-.8lu %-.8lu |%s|%s", (char)mStatus, mOffset, mSize,
+	mMsg ? mMsg->from() : "", mMsg ? mMsg->subject() : "");
   return str;
 }

@@ -140,7 +140,7 @@ void KMMainWin::setupMenuBar()
 
   //----- Menubar
   menuBar  = new KMenuBar(this);
-  menuBar->insertItem(nls->translate("&File"), fileMenu);
+  menuBar->insertItem(nls->translate("File"), fileMenu);
   menuBar->insertItem(nls->translate("&Edit"), editMenu);
   menuBar->insertItem(nls->translate("&Message"), messageMenu);
   menuBar->insertItem(nls->translate("F&older"), folderMenu);
