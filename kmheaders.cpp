@@ -225,7 +225,7 @@ public:
   }
 
   // Return the msgId of the message associated with this item
-  int msgId()
+  int msgId() const
   {
     return mMsgId;
   }
@@ -1251,6 +1251,7 @@ void KMHeaders::msgAdded(int id)
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
 
+  emit messageListUpdated();
   END_TIMER(msgAdded);
   SHOW_TIMER(msgAdded);
 }
@@ -1825,14 +1826,18 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
   if ( !item )
     return;
 
-  KListView::setSelected( item, selected );
+  if ( item->isVisible() )
+    KListView::setSelected( item, selected );
+
   // If the item is the parent of a closed thread recursively select
   // children .
   if ( isThreaded() && !item->isOpen() && item->firstChild() ) {
       QListViewItem *nextRoot = item->itemBelow();
       QListViewItemIterator it( item->firstChild() );
-      for( ; (*it) != nextRoot; ++it )
-         (*it)->setSelected( selected );
+      for( ; (*it) != nextRoot; ++it ) {
+        if ( (*it)->isVisible() )
+           (*it)->setSelected( selected );
+      }
   }
 }
 
@@ -2572,6 +2577,13 @@ void KMHeaders::setOpen( QListViewItem *item, bool open )
 {
   if ((nestingPolicy != AlwaysOpen)|| open)
       ((KMHeaderItem*)item)->setOpenRecursive( open );
+}
+
+//-----------------------------------------------------------------------------
+const KMMsgBase* KMHeaders::getMsgBaseForItem( const QListViewItem *item ) const
+{
+  const KMHeaderItem *hi = static_cast<const KMHeaderItem *> ( item );
+  return mFolder->getMsgBase( hi->msgId() );
 }
 
 //-----------------------------------------------------------------------------

@@ -92,7 +92,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
 		korganizeriface.stub messagecomposer.cpp \
 		globalsettings.kcfgc \
-		regexplineedit.cpp rulewidgethandlermanager.cpp
+		regexplineedit.cpp rulewidgethandlermanager.cpp \
+		headerlistquicksearch.cpp
 
 kmail_SOURCES = main.cpp
 

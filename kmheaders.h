@@ -33,6 +33,7 @@ enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 class KMHeaders : public KListView
 {
   Q_OBJECT
+
   friend class KMHeaderItem; // For easy access to the pixmaps
 
 public:
@@ -136,7 +137,7 @@ public:
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
 
   void highlightMessage(QListViewItem*, bool markitread);
-  
+
   /** return a string relativ to the current time */
   static QString fancyDate( time_t otime );
 
@@ -146,6 +147,9 @@ public:
 
   // filter events for popup
   bool eventFilter ( QObject *o, QEvent *e );
+
+    /** gets the message represented by the item as a KMMsgBase. */
+  const KMMsgBase * getMsgBaseForItem( const QListViewItem *item ) const;
 
 signals:
   /** emitted when the list view item corresponding to this message
@@ -186,7 +190,7 @@ public slots:
   void prevMessage();
   /** Same as prevMessage() but don't clear the current selection */
   void selectPrevMessage();
-  /** Make the nextUnread message header visible scrolling if necessary, returning 
+  /** Make the nextUnread message header visible scrolling if necessary, returning
     true if an unread message is found */
   bool nextUnreadMessage(bool acceptCurrent = false);
   /** Make the previous message header visible scrolling if necessary, returning
@@ -207,10 +211,10 @@ public slots:
   virtual void ensureCurrentItemVisible();
 
   /** Select an item and if it is the parent of a closed thread, also
-    recursively select its children. */   
+    recursively select its children. */
   virtual void setSelected(QListViewItem *item, bool selected);
 
-  /** switch size-column 
+  /** switch size-column
       1 for activate, 0 for deactivate, -1 for toggle*/
   void slotToggleSizeColumn(int mode = -1);
 
@@ -303,7 +307,7 @@ private:
   int mCurrentItem;
   /** Map messages ids into KMHeaderItems */
   QMemArray<KMHeaderItem*> mItems;
-  
+
   // ===== threading and sorting ==========
   bool mNested, mNestedOverride, mSubjThreading;
   NestingPolicy nestingPolicy;
@@ -318,14 +322,14 @@ private:
       uint removed : 1;
   } mSortInfo;
 
- 
+
   /** */
   QDict< KMSortCacheItem > mSortCacheItems;
   /** */
-  QDict< QPtrList< KMSortCacheItem > > mSubjectLists;	
+  QDict< QPtrList< KMSortCacheItem > > mSubjectLists;
   /** */
   QPtrList<KMHeaderItem> mImperfectlyThreadedList;
-  
+
   /** Initializes the mSortCacheItems tree with the contents of the folder */
   void buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
   /** Initializes the mSubjectLists tree with the contents of the folder */

@@ -1,4 +1,4 @@
-/* -*- mode: C++; c-file-style: "gnu" -*-
+ /* -*- mode: C++; c-file-style: "gnu" -*-
  * kmail main window
  * Copyright 2002 Don Sanders <sanders@kde.org>
  * Based on the work of Stefan Taferner <taferner@kde.org>
@@ -51,16 +51,13 @@ namespace KIO {
   class Job;
 }
 
-namespace KPIM {
-  class KListViewSearchLine;
-}
-
 namespace KMail {
   class Vacation;
   class AttachmentStrategy;
   class HeaderStrategy;
   class HeaderStyle;
   class FolderJob;
+  class HeaderListQuickSearch;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -299,7 +296,6 @@ protected slots:
   void slotShowTip();
   void slotAntiSpamWizard();
   void slotFilterLogViewer();
-  void slotResetQuickSearch();
 
   /** Message navigation */
   void slotNextMessage();
@@ -412,8 +408,7 @@ private:
   KMHeaders    *mHeaders;
   QVBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
-  KPIM::KListViewSearchLine *mQuickSearchLine;
-  QComboBox    *mQuickSearchCombo;
+  KMail::HeaderListQuickSearch *mQuickSearchLine;
   KMFolder     *mFolder;
   const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;

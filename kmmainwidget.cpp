@@ -34,7 +34,6 @@
 #include <ktip.h>
 #include <knotifydialog.h>
 #include <kstandarddirs.h>
-#include <klistviewsearchline_pimcopy.h>
 #include <dcopclient.h>
 
 #include "globalsettings.h"
@@ -80,6 +79,8 @@ using KMail::AntiSpamWizard;
 using KMail::FilterLogDialog;
 #include <cryptplugwrapperlist.h>
 #include <cryptplugfactory.h>
+#include <headerlistquicksearch.h>
+using KMail::HeaderListQuickSearch;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -95,8 +96,7 @@ using KMime::Types::AddrSpecList;
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 			   KActionCollection *actionCollection, KConfig* config ) :
     QWidget(parent, name),
-    mQuickSearchLine( 0 ),
-    mQuickSearchCombo( 0 )
+    mQuickSearchLine( 0 )
 {
   // must be the first line of the constructor:
   mSearchWin = 0;
@@ -471,39 +471,16 @@ void KMMainWidget::createWidgets(void)
   mSearchAndHeaders = new QVBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
   mSearchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
+  QLabel *label = new QLabel( i18n("S&earch:"), mSearchToolBar, "kde toolbar widget" );
 
-  KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
-                                           QApplication::reverseLayout()
-                                           ? "clear_left"
-                                           : "locationbar_erase",
-                                           0, this,
-                                           SLOT( slotResetQuickSearch() ),
-                                           actionCollection(),
-                                           "reset_quicksearch" );
-  resetQuickSearch->plug( mSearchToolBar );
-  resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
-                                        "Resets the quick search so that "
-                                        "all messages are shown again." ) );
 
-  QLabel *label = new QLabel( i18n("&Quick search:"), mSearchToolBar,
-                              "kde toolbar widget" );
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-  mQuickSearchLine = new KPIM::KListViewSearchLine( mSearchToolBar, mHeaders,
-                                                    "headers quick search line" );
+  mQuickSearchLine = new HeaderListQuickSearch( mSearchToolBar, mHeaders,
+                                                    actionCollection(), "headers quick search line" );
   label->setBuddy( mQuickSearchLine );
   mSearchToolBar->setStretchableWidget( mQuickSearchLine );
-  connect( mHeaders, SIGNAL( messageListUpdated() ),
+    connect( mHeaders, SIGNAL( messageListUpdated() ),
            mQuickSearchLine, SLOT( updateSearch() ) );
-
-  label = new QLabel( i18n("Sho&w only mail with status:"), mSearchToolBar,
-                      "kde toolbar widget" );
-
-  // FIXME hook up to real status widget once that is back in
-  mQuickSearchCombo = new QComboBox( mSearchToolBar,
-                                     "quick search status combo box" );
-  mQuickSearchCombo->insertItem( i18n("Any Status") );
-  label->setBuddy( mQuickSearchCombo );
-
   if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
 
   mHeaders->setFullWidth(true);
@@ -568,7 +545,7 @@ void KMMainWidget::createWidgets(void)
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
   connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
-           this, SLOT( slotResetQuickSearch() ) );
+           mQuickSearchLine, SLOT( reset() ) );
   connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
 	  this, SLOT(folderSelectedUnread(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
@@ -1141,16 +1118,9 @@ void KMMainWidget::slotToggleShowQuickSearch()
   if ( GlobalSettings::quickSearchActive() )
     mSearchToolBar->show();
   else {
-    slotResetQuickSearch();
+    mQuickSearchLine->reset();
     mSearchToolBar->hide();
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotResetQuickSearch()
-{
-  mQuickSearchLine->clear();
-  mQuickSearchCombo->setCurrentItem( 0 );
 }
 
 //-----------------------------------------------------------------------------

@@ -6,6 +6,7 @@
 #ifndef _kmsearchpattern_h_
 #define _kmsearchpattern_h_
 
+#include <klocale.h>
 #include <qptrlist.h>
 #include <qstring.h>
 #include <qcstring.h>
@@ -208,6 +209,28 @@ public:
     @short This class represents a search pattern rule operating on message
     status.
 */
+namespace KMail {
+// The below are used in several places and here so they are accessible.
+  static const char * const StatusValues[] = {
+    I18N_NOOP( "new" ),
+    I18N_NOOP( "unread" ),
+    I18N_NOOP( "read" ),
+    I18N_NOOP( "old" ),
+    I18N_NOOP( "deleted" ),
+    I18N_NOOP( "replied" ),
+    I18N_NOOP( "forwarded" ),
+    I18N_NOOP( "queued" ),
+    I18N_NOOP( "sent" ),
+    I18N_NOOP( "important" ),
+    I18N_NOOP( "watched" ),
+    I18N_NOOP( "ignored" ),
+    I18N_NOOP( "spam" ),
+    I18N_NOOP( "ham" ),
+    I18N_NOOP( "todo" )
+  };
+  static const int StatusValueCount =
+    sizeof( StatusValues ) / sizeof( *StatusValues );
+}
 
 class KMSearchRuleStatus : public KMSearchRule
 {
@@ -220,7 +243,8 @@ public:
   virtual bool matches( const DwString &, KMMessage &,
                         const DwBoyerMoore *,
 			int ) const;
-private:
+  static KMMsgStatus statusFromEnglishName(const QString&);
+  private:
   KMMsgStatus mStatus;
 };
 

@@ -640,26 +640,6 @@ namespace {
   static const int StatusFunctionCount =
     sizeof( StatusFunctions ) / sizeof( *StatusFunctions );
 
-  static const char * const StatusValues[] = {
-    I18N_NOOP( "new" ),
-    I18N_NOOP( "unread" ),
-    I18N_NOOP( "read" ),
-    I18N_NOOP( "old" ),
-    I18N_NOOP( "deleted" ),
-    I18N_NOOP( "replied" ),
-    I18N_NOOP( "forwarded" ),
-    I18N_NOOP( "queued" ),
-    I18N_NOOP( "sent" ),
-    I18N_NOOP( "important" ),
-    I18N_NOOP( "watched" ),
-    I18N_NOOP( "ignored" ),
-    I18N_NOOP( "spam" ),
-    I18N_NOOP( "ham" ),
-    I18N_NOOP( "todo" )
-  };
-  static const int StatusValueCount =
-    sizeof( StatusValues ) / sizeof( *StatusValues );
-
   //---------------------------------------------------------------------------
 
   QWidget * StatusRuleWidgetHandler::createFunctionWidget( int number,
@@ -691,8 +671,8 @@ namespace {
 
     QComboBox *statusCombo = new QComboBox( valueStack,
                                             "statusRuleValueCombo" );
-    for ( int i = 0; i < StatusValueCount; ++i ) {
-      statusCombo->insertItem( i18n( StatusValues[i] ) );
+    for ( int i = 0; i < KMail::StatusValueCount; ++i ) {
+      statusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
     }
     statusCombo->adjustSize();
     QObject::connect( statusCombo, SIGNAL( activated( int ) ),
@@ -760,7 +740,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return QString::fromLatin1( StatusValues[status] );
+      return QString::fromLatin1( KMail::StatusValues[status] );
     else
       return QString::null;
   }
@@ -776,7 +756,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return i18n( StatusValues[status] );
+      return i18n( KMail::StatusValues[status] );
     else
       return QString::null;
   }
@@ -851,15 +831,16 @@ namespace {
     // set the value
     const QString value = rule->contents();
     int valueIndex = 0;
-    for ( ; valueIndex < StatusValueCount; ++valueIndex )
-      if ( value == QString::fromLatin1( StatusValues[valueIndex] ) )
+    for ( ; valueIndex < KMail::StatusValueCount; ++valueIndex )
+      if ( value == QString::fromLatin1( 
+               KMail::StatusValues[valueIndex] ) )
         break;
     QComboBox *statusCombo =
       dynamic_cast<QComboBox*>( valueStack->child( "statusRuleValueCombo",
                                                    0, false ) );
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
-      if ( valueIndex < StatusValueCount )
+      if ( valueIndex < KMail::StatusValueCount )
         statusCombo->setCurrentItem( valueIndex );
       else {
         kdDebug(5006) << "StatusRuleWidgetHandler::setRule( "

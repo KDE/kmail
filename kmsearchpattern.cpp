@@ -517,44 +517,52 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 //
 //==================================================
 
+
 KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
                                         Function func, const QString & aContents )
           : KMSearchRule(field, func, aContents)
 {
   // the values are always in english, both from the conf file as well as
   // the patternedit gui
-  if ( ! aContents.compare("new") )
-    mStatus = KMMsgStatusNew;
-  if ( ! aContents.compare("unread") )
-    mStatus = KMMsgStatusUnread;
-  if ( ! aContents.compare("read") )
-    mStatus = KMMsgStatusRead;
-  if ( ! aContents.compare("old") )
-    mStatus = KMMsgStatusOld;
-  if ( ! aContents.compare("deleted") )
-    mStatus = KMMsgStatusDeleted;
-  if ( ! aContents.compare("replied") )
-    mStatus = KMMsgStatusReplied;
- if ( ! aContents.compare("forwarded") )
-    mStatus = KMMsgStatusForwarded;
- if ( ! aContents.compare("queued") )
-    mStatus = KMMsgStatusQueued;
- if ( ! aContents.compare("sent") )
-    mStatus = KMMsgStatusSent;
- if ( ! aContents.compare("important") )
-    mStatus = KMMsgStatusFlag;
- if ( ! aContents.compare("watched") )
-    mStatus = KMMsgStatusWatched;
- if ( ! aContents.compare("ignored") )
-    mStatus = KMMsgStatusIgnored;
- /*
-  if ( ! aContents.compare("todo") )
-    mStatus = KMMsgStatusTodo;
-  */
- if ( ! aContents.compare("spam") )
-    mStatus = KMMsgStatusSpam;
-if ( ! aContents.compare("ham") )
-    mStatus = KMMsgStatusHam;
+  mStatus = statusFromEnglishName( aContents );
+}
+
+KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
+      const QString & aStatusString )
+{
+  KMMsgStatus status = 0;
+  if ( ! aStatusString.compare("new") )
+    status = KMMsgStatusNew;
+  if ( ! aStatusString.compare("unread") )
+    status = KMMsgStatusUnread;
+  if ( ! aStatusString.compare("read") )
+    status = KMMsgStatusRead;
+  if ( ! aStatusString.compare("old") )
+    status = KMMsgStatusOld;
+  if ( ! aStatusString.compare("deleted") )
+    status = KMMsgStatusDeleted;
+  if ( ! aStatusString.compare("replied") )
+    status = KMMsgStatusReplied;
+  if ( ! aStatusString.compare("forwarded") )
+    status = KMMsgStatusForwarded;
+  if ( ! aStatusString.compare("queued") )
+    status = KMMsgStatusQueued;
+  if ( ! aStatusString.compare("sent") )
+    status = KMMsgStatusSent;
+  if ( ! aStatusString.compare("important") )
+    status = KMMsgStatusFlag;
+  if ( ! aStatusString.compare("watched") )
+    status = KMMsgStatusWatched;
+  if ( ! aStatusString.compare("ignored") )
+    status = KMMsgStatusIgnored;
+  if ( ! aStatusString.compare("todo") )
+    status = KMMsgStatusTodo;
+  if ( ! aStatusString.compare("spam") )
+    status = KMMsgStatusSpam;
+  if ( ! aStatusString.compare("ham") )
+     status = KMMsgStatusHam;
+
+  return status;
 }
 
 bool KMSearchRuleStatus::isEmpty() const
