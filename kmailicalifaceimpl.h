@@ -80,26 +80,9 @@ class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
 public:
   KMailICalIfaceImpl();
 
-  bool addIncidence( const QString& type, const QString& folder,
-                     const QString& uid, const QString& ical );
-  bool deleteIncidence( const QString& type, const QString& folder,
-                        const QString& uid );
-  QStringList incidences( const QString& type, const QString& folder );
-
-  QStringList subresources( const QString& type );
-
   bool isWritableFolder( const QString& type, const QString& resource );
 
   StorageFormat storageFormat( const QString &resource );
-
-  // This saves the iCals/vCards in the entries in the folder.
-  // The format in the string list is uid, entry, uid, entry...
-  bool update( const QString& type, const QString& folder,
-               const QStringList& entries );
-
-  // Update a single entry in the storage layer
-  bool update( const QString& type, const QString& folder,
-               const QString& uid, const QString& entry );
 
   /// Update a kolab storage entry.
   /// If message is not there, it is added and

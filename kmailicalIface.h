@@ -68,17 +68,6 @@ k_dcop:
   /// This bitfield indicates which changes have been made in a folder, at syncing time.
   enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
 
-  virtual bool addIncidence( const QString& type, const QString& folder,
-                             const QString& uid, const QString& ical ) = 0;
-  virtual bool deleteIncidence( const QString& type, const QString& folder,
-                                const QString& uid ) = 0;
-  virtual QStringList incidences( const QString& type,
-                                  const QString& folder ) = 0;
-  /**
-   * Return list of subresources. @p type is
-   * Mail, Calendar, Contact, Note, Task or Journal
-   */
-  virtual QStringList subresources( const QString& type ) = 0;
   virtual bool isWritableFolder( const QString& type,
                                  const QString& resource ) = 0;
 
@@ -88,17 +77,8 @@ k_dcop:
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
 
-  // This saves the iCals/vCards in the entries in the folder.
-  // The format in the string list is uid, entry, uid, entry...
-  virtual bool update( const QString& type, const QString& folder,
-                       const QStringList& entries ) = 0;
-
-  // Update a single entry in the storage layer
-  virtual bool update( const QString& type, const QString& folder,
-                       const QString& uid, const QString& entry ) = 0;
-
   /// Update a kolab storage entry. Returns the new mail serial number,
-  /// or 0 if something went wrong
+  /// or 0 if something went wrong. Can be used for adding as well.
   virtual Q_UINT32 update( const QString& resource,
                            Q_UINT32 sernum,
                            const QString& subject,
@@ -128,22 +108,13 @@ k_dcop:
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
 k_dcop_signals:
-  // For vcard/ical type storage (imap resource)
-  void incidenceAdded( const QString& type, const QString& folder,
-                       const QString& entry );
-  void asyncLoadResult( const QStringList& list, const QString& type,
-                        const QString& folder );
-
-  // For xml kolab style storage
   void incidenceAdded( const QString& type, const QString& folder,
                        Q_UINT32 sernum, int format, const QString& entry );
   void asyncLoadResult( const QMap<Q_UINT32, QString>, const QString& type,
                         const QString& folder );
-  //common
   void incidenceDeleted( const QString& type, const QString& folder,
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );
-  void subresourceAdded( const QString& type, const QString& resource );
   void subresourceAdded( const QString& type, const QString& resource,
                          const QString& label );
   void subresourceDeleted( const QString& type, const QString& resource );
