@@ -397,7 +397,7 @@ void KMSendProc::preSendInit(void)
 {
   mSending = FALSE;
   mSendOk = FALSE;
-  mMsg = 0;
+  mMsg = QString::null;
 }
 
 //-----------------------------------------------------------------------------

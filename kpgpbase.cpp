@@ -188,12 +188,12 @@ KpgpBase::addUserId()
 void 
 KpgpBase::clear()
 {
-  input = 0;
-  output = 0;
-  info = 0;
-  errMsg = 0;
-  signature = 0;
-  signatureID = 0;
+  input = QString::null;
+  output = QString::null;
+  info = QString::null;
+  errMsg = QString::null;
+  signature = QString::null;
+  signatureID = QString::null;
   recipients.clear();
   status = OK;
 }
@@ -201,7 +201,7 @@ KpgpBase::clear()
 void 
 KpgpBase::clearOutput()
 {
-  output = 0;
+  output = QString::null;
 }
 
 QString 

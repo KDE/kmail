@@ -55,7 +55,7 @@ KMFilter::KMFilter(KConfig* config)
   if (config) readConfig(config);
   else
   {
-    mName = 0;
+    mName = QString::null;
     mOperator = OpIgnore;
     for (i=0; i<=FILTER_MAX_ACTIONS; i++)
       mAction[i] = NULL;

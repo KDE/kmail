@@ -55,7 +55,7 @@ void
 Kpgp::init()
 {
   havePassPhrase = FALSE;
-  passphrase = 0;
+  passphrase = QString::null;
 
   // do we have a pgp executable
   checkForPGP();
@@ -218,7 +218,7 @@ Kpgp::cleanupPass(void)
   if(!storePass)
   {
     passphrase.replace(QRegExp(".")," ");
-    passphrase = 0;
+    passphrase = QString::null;
     havePassPhrase = false;
   }
 }
@@ -534,7 +534,7 @@ Kpgp::setPassPhrase(const QString aPass)
   {
     if (!passphrase.isEmpty())
       passphrase.replace(QRegExp(".")," ");
-    passphrase = 0;
+    passphrase = QString::null;
     havePassPhrase = FALSE;
   }
 }
@@ -554,10 +554,10 @@ Kpgp::clear(bool erasePassPhrase)
   if(erasePassPhrase && havePassPhrase && !passphrase.isEmpty())
   {
     passphrase.replace(QRegExp(".")," ");
-    passphrase = 0;
+    passphrase = QString::null;
   }
-  front = 0;
-  back = 0;
+  front = QString::null;
+  back = QString::null;
 }
 
 const QString 

@@ -74,7 +74,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) :
   mType           = "plain";
   mAcctList       = NULL;
   mDirty          = FALSE;
-  mWhoField       = 0;
+  // mWhoField       = QString::null; // default constructor value anyway (David)
 }
 
 
