@@ -741,7 +741,7 @@ void AccountDialog::slotImapSSLChanged()
       x.sprintf("%u", ntohs(serv->s_port));
       mImap.portEdit->setText(x);
     } else {
-      mImap.portEdit->setText("995");
+      mImap.portEdit->setText("993");
     }
     mImap.useTLSCheck->setChecked( FALSE );
   } else {
