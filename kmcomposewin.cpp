@@ -423,7 +423,12 @@ void KMComposeWin::readConfig(void)
     mTransportHistory.remove( mTransportHistory.last() );
   mTransport->insertStringList( mTransportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
+  {
+    for (int i = 0; i < mTransport->count(); i++)
+      if (mTransport->text(i) == currentTransport)
+        mTransport->setCurrentItem(i);
     mTransport->setEditText( currentTransport );
+  }
 
   if ( !mBtnFcc->isChecked() )
   {
@@ -1046,7 +1051,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport->isChecked() && !transport.isEmpty())
+  {
+    for (int i = 0; i < mTransport->count(); i++)
+      if (mTransport->text(i) == transport)
+        mTransport->setCurrentItem(i);
     mTransport->setEditText( transport );
+  }
 
   if (!mBtnFcc->isChecked() && !mMsg->fcc().isEmpty())
     mFcc->setFolder(mMsg->fcc());
