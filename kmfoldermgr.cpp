@@ -180,7 +180,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
     warning(i18n("Creating missing folder `%s'.\n"), (const char*)aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
-    if (!folder) fatal(i18n("Cannot create folder `%s' in %s."),
+    if (!folder) fatal(i18n("Cannot create file `%s' in %s."),
 		       (const char*)aFolderName, (const char*)mBasePath);
 
     if (aFolderName == "inbox") {
@@ -190,20 +190,19 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       welcomeMessage->setAutomaticFields();
       welcomeMessage->setDate(time(NULL));
       welcomeMessage->setTo(getenv("USER"));
-      welcomeMessage->setReplyTo(i18n("DO NOT REPLY TO THIS"));
+      welcomeMessage->setReplyTo(i18n("kmail@kde.org"));
       welcomeMessage->setFrom(i18n("KMail"));
       welcomeMessage->setSubject(i18n("Welcome to KMail!"));
-      // FIXME - we need a real body put in here!
       welcomeMessage->setBody(_KM_WelcomeMsg);
       welcomeMessage->setStatus(KMMsgStatusNew);
 
       switch(kernel->filterMgr()->process(welcomeMessage)) {
       case 2:
-        KMessageBox::information(0,(i18n("Error: Unable to create welcome mail.")));
+        KMessageBox::error(0,(i18n("Error: Unable to create welcome mail.")));
         break;
       case 1:
         if (folder->addMsg(welcomeMessage)) {
-          KMessageBox::information(0,(i18n("Error: Unable to create welcome mail.")));
+          KMessageBox::error(0,(i18n("Error: Unable to create welcome mail.")));
         }
         break;
       case 0:

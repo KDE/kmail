@@ -84,7 +84,7 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr)
   rc = fld->create();
   if (rc)
   {
-    QString wmsg = i18n("Error while creating folder `%1':\n%2").arg(aFolderName).arg(strerror(rc));
+    QString wmsg = i18n("Error while creating file `%1':\n%2").arg(aFolderName).arg(strerror(rc));
     KMessageBox::information(0,wmsg );
     delete fld;
     return NULL;
