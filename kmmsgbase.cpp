@@ -399,9 +399,13 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
         }
         stop = start + dif;
       }
-/*      p = stop;       Causes space eating
+      p = stop;
       while (p > start && _str.at(p) != ' ') p--;
-      if (p > start) stop = p; */
+      if (p > start) stop = p;
+      if (result.right(3) == "?= ") start--;
+      if (result.right(5) == "?=\n  ") {
+        start--; result.truncate(result.length() - 1);
+      }
       int lastNewLine = result.findRev("\n ");
       if (!result.mid(lastNewLine).stripWhiteSpace().isEmpty()
         && result.length() - lastNewLine + encLength + 2 > maxLen)
