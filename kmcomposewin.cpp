@@ -1683,9 +1683,19 @@ void KMComposeWin::slotInsertMyPublicKey()
   QString str, name;
   KMMessagePart* msgPart;
 
-  // load the file
   kernel->kbp()->busy();
-  str=Kpgp::getKpgp()->getAsciiPublicKey(Kpgp::getKpgp()->user());
+
+  // get PGP user id for the chosen identity
+  QString pgpUserId;
+  QString identStr = i18n( "Default" );
+  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
+    identStr = mId;
+  }
+  KMIdentity ident(identStr);
+  ident.readConfig();
+  pgpUserId = ident.pgpIdentity();
+
+  str=Kpgp::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (str.isEmpty())
   {
     kernel->kbp()->idle();
@@ -1719,9 +1729,11 @@ void KMComposeWin::slotInsertPublicKey()
 
   pgp=Kpgp::getKpgp();
 
-  str=pgp->getAsciiPublicKey(
-         KpgpKey::getKeyName(this, pgp->keys()));
+  name = KpgpKey::getKeyName(this, pgp->keys());
+  if (name.isEmpty())
+    return;
 
+  str = pgp->getAsciiPublicKey(name);
   if (!str.isEmpty()) {
     // create message part
     msgPart = new KMMessagePart;
