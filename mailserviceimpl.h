@@ -34,9 +34,9 @@
 
 class QString;
 class KURL;
-//class KURL::List;
 template <typename T> class QMemArray;
 typedef QMemArray<char> QByteArray;
+
 
 namespace KMail {
 
@@ -44,12 +44,22 @@ namespace KMail {
   {
   public:
     MailServiceImpl();
+     bool sendMessage( const QString& from, const QString& to, const QString& cc, 
+                      const QString& bcc,  const QString& subject, const QString& body,
+                      const KURL::List& attachments );
+
     bool sendMessage( const QString& to, const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
                       const KURL::List& attachments );
+
+    bool sendMessage( const QString& from, const QString& to, const QString& cc, const QString& bcc,
+                      const QString& subject, const QString& body,
+                      const QByteArray& attachment );
+
     bool sendMessage( const QString& to, const QString& cc, const QString& bcc,
                       const QString& subject, const QString& body,
                       const QByteArray& attachment );
+  
   };
 }
 

@@ -51,7 +51,7 @@ MailServiceImpl::MailServiceImpl()
 {
 }
 
-bool MailServiceImpl::sendMessage( const QString& to, const QString& cc, const QString& bcc,
+bool MailServiceImpl::sendMessage( const QString& from, const QString& to, const QString& cc, const QString& bcc,
                                    const QString& subject, const QString& body,
                                    const KURL::List& attachments )
 {
@@ -62,7 +62,8 @@ bool MailServiceImpl::sendMessage( const QString& to, const QString& cc, const Q
   msg->initHeader();
 
   msg->setCharset( "utf-8" );
-
+  
+  if( !from.isEmpty() )     msg->setFrom( from );
   if ( !to.isEmpty() )      msg->setTo( to );
   if ( !cc.isEmpty() )      msg->setCc( cc );
   if ( !bcc.isEmpty() )     msg->setBcc( bcc );
@@ -83,16 +84,25 @@ bool MailServiceImpl::sendMessage( const QString& to, const QString& cc, const Q
 
 bool MailServiceImpl::sendMessage( const QString& to, const QString& cc, const QString& bcc,
                                    const QString& subject, const QString& body,
+                                   const KURL::List& attachments )
+{
+  return sendMessage("", to, cc, bcc, subject, body, attachments);
+}
+
+
+bool MailServiceImpl::sendMessage( const QString& from, const QString& to, const QString& cc, const QString& bcc,
+                                   const QString& subject, const QString& body,
                                    const QByteArray& attachment )
 {
-  if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
+   if ( to.isEmpty() && cc.isEmpty() && bcc.isEmpty() )
     return false;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
 
   msg->setCharset( "utf-8" );
-
+  
+  if( !from.isEmpty() )     msg->setFrom( from );
   if ( !to.isEmpty() )      msg->setTo( to );
   if ( !cc.isEmpty() )      msg->setCc( cc );
   if ( !bcc.isEmpty() )     msg->setBcc( bcc );
@@ -107,6 +117,14 @@ bool MailServiceImpl::sendMessage( const QString& to, const QString& cc, const Q
   KMComposeWin *cWin = new KMComposeWin( msg );
   cWin->setCharset("", TRUE);
   return true;
+}
+
+
+bool MailServiceImpl::sendMessage( const QString& to, const QString& cc, const QString& bcc,
+                                   const QString& subject, const QString& body,
+                                   const QByteArray& attachment )
+{
+   return sendMessage("", to, cc, bcc, subject, body, attachment);
 }
 
 }//end namespace KMail
