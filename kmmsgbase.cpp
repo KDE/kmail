@@ -1021,8 +1021,10 @@ namespace {
       g_chunk_offset = g_chunk_length;
       kdDebug( 5006 ) << "This should never happen.. "
 		      << __FILE__ << ":" << __LINE__ << endl;
-      memset( &x, sizeof(T), '\0' );
+      x = 0;
     } else {
+      // the memcpy is optimized out by the compiler for the values 
+      // of sizeof(T) that is called with
       memcpy( &x, g_chunk + g_chunk_offset, sizeof(T) );
       g_chunk_offset += sizeof(T);
     }
