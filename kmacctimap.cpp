@@ -358,6 +358,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   }
   QString uids;
   QStringList::Iterator uid;
+  (*it).parent->folder->quiet(TRUE);
   // Check for already retrieved headers
   if ((*it).parent->folder->count())
   {
@@ -375,8 +376,8 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
       else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
       serverUid = (*uid).toLong();
       if (mailUid < serverUid) folder->removeMsg(idx, TRUE);
-      else if (mailUid > serverUid) uid++;
-      else { idx++; uid = (*it).items.remove(uid); }
+      else if (mailUid == serverUid) { idx++; uid = (*it).items.remove(uid); }
+      else break;  // happens only, if deleted mails reappear on the server
     }
     while (idx < folder->count()) folder->removeMsg(idx, TRUE);
   }
@@ -412,7 +413,6 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   KURL url = getUrl();
   url.setPath((*it).parent->folder->imapPath() + ";UID=" + uids
     + ";SECTION=ENVELOPE");
-  (*it).parent->folder->quiet(TRUE);
   makeConnection();
   KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mSlave, newJob);
