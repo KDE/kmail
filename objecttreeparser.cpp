@@ -204,7 +204,7 @@ namespace KMail {
       mReader->mColorBar->hide();
 
       // start the new viewer content
-      htmlWriter()->begin();
+      htmlWriter()->begin( cssHelper()->cssDefinitions( mReader->isFixedFont() ) );
       htmlWriter()->write( cssHelper()->htmlHead( mReader->isFixedFont() ) );
       if ( !node ) { // no node, no content:
 	htmlWriter()->queue("</body></html>");
@@ -1048,10 +1048,8 @@ namespace KMail {
     }
     // process old style not-multipart Mailman messages to
     // enable verification of the embedded messages' signatures
-    bool bDone = false;
-    if ( isMailmanMessage( curNode ) )
-      bDone = processMailmanMessage( curNode );
-    if ( !bDone )
+    if ( !isMailmanMessage( curNode ) ||
+	 !processMailmanMessage( curNode ) )
       writeBodyString( cstr, curNode->trueFromAddress(),
 		       codecFor( curNode ), result );
     if ( bDrawFrame )
