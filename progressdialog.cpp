@@ -63,10 +63,11 @@ TransactionItemView::TransactionItemView( QWidget * parent,
                                           const char * name,
                                           WFlags f )
     : QScrollView( parent, name, f ) {
-    mBigBox = new QVBox( viewport() );
-    mBigBox->setSpacing(2);
-    addChild( mBigBox );
-    setResizePolicy( QScrollView::AutoOneFit ); // Fit so that the box expands horizontally
+  setFrameStyle( NoFrame );
+  mBigBox = new QVBox( viewport() );
+  mBigBox->setSpacing( 5 );
+  addChild( mBigBox );
+  setResizePolicy( QScrollView::AutoOneFit ); // Fit so that the box expands horizontally
 }
 
 TransactionItem* TransactionItemView::addTransactionItem( ProgressItem* item, bool first )
@@ -108,6 +109,8 @@ TransactionItem::TransactionItem( QWidget* parent,
   : QVBox( parent ), mCancelButton( 0 )
 
 {
+  setSpacing( 2 );
+  setMargin( 2 );
   setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
   if ( !first ) {
     QFrame *f = new QFrame( this );
