@@ -25,6 +25,7 @@
 #endif
 
 #include "kmfolderimap.h"
+#include "kmfoldermbox.h"
 #include "kmfoldertree.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
@@ -194,7 +195,18 @@ void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
     deleteMessage(msgList);
 
   mLastUid = 0;
-  KMFolderImapInherited::removeMsg(msgList);
+
+  /* Remove the messages from the local store as well.
+     We don't call KMFolderInherited::removeMsg(QPtrList<KMMessage>) but
+     iterate ourselves, as that would call KMFolderImap::removeMsg(int)
+     and not the one from the store we want to be used. */
+  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  {
+    int idx = find(msg);
+    assert( idx != -1);
+    // ATTENTION port me to maildir
+    KMFolderMbox::removeMsg(idx, quiet);
+  }
 }
 
 //-----------------------------------------------------------------------------
