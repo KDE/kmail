@@ -33,6 +33,7 @@
 #define __KMAIL_ATTACHMENTSTRATEGY_H__
 
 class QString;
+class partNode;
 
 namespace KMail {
 
@@ -67,7 +68,10 @@ namespace KMail {
     // Bahavioural:
     //
 
+    enum Display { None, AsIcon, Inline };
+
     virtual bool inlineNestedMessages() const = 0;
+    virtual Display defaultDisplay( const partNode * node ) const = 0;
   };
 
 } // namespace KMail

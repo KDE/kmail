@@ -31,6 +31,8 @@
 
 #include "attachmentstrategy.h"
 
+#include "partNode.h"
+
 #include <kdebug.h>
 
 
@@ -54,6 +56,7 @@ namespace KMail {
     const AttachmentStrategy * prev() const { return hidden(); }
 
     bool inlineNestedMessages() const { return false; }
+    Display defaultDisplay( const partNode * ) const { return AsIcon; }
   };
 
   //
@@ -74,6 +77,9 @@ namespace KMail {
     const AttachmentStrategy * prev() const { return iconic(); }
 
     bool inlineNestedMessages() const { return true; }
+    Display defaultDisplay( const partNode * node ) const {
+      return node->hasContentDispositionInline() ? Inline : AsIcon ;
+    }
   };
 
   //
@@ -93,6 +99,7 @@ namespace KMail {
     const AttachmentStrategy * prev() const { return smart(); }
 
     bool inlineNestedMessages() const { return true; }
+    Display defaultDisplay( const partNode * ) const { return Inline; }
   };
 
   //
@@ -112,6 +119,7 @@ namespace KMail {
     const AttachmentStrategy * prev() const { return inlined(); }
 
     bool inlineNestedMessages() const { return false; }
+    Display defaultDisplay( const partNode * ) const { return None; }
   };
 
 
