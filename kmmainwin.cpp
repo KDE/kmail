@@ -1261,7 +1261,7 @@ void KMMainWin::setupMenuBar()
   getAccountMenu();
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
 
-  (void) new KAction( i18n("Send &Queued"), 0, this, 
+  (void) new KAction( i18n("&Send Queued"), 0, this, 
 		      SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
   (void) new KAction( i18n("Configuration..."), 0, this, 
@@ -1317,7 +1317,7 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
   //----- Message Menu
-  (void) new KAction( i18n("New &Message..."), "filenew", KStdAccel::key(KStdAccel::New), this, 
+  (void) new KAction( i18n("New Message..."), "filenew", KStdAccel::key(KStdAccel::New), this, 
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
   (void) new KAction( i18n("&Next"), Key_N, mHeaders, 
