@@ -161,7 +161,7 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("Id", mId);
   config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
   config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
-  if ( !mShortcut.isNull() ) 
+  if ( !mShortcut.isNull() )
     config->writeEntry( "Shortcut", mShortcut.toString() );
   else
     config->deleteEntry( "Shortcut" );
@@ -522,10 +522,13 @@ QString KMFolder::label() const
 //-----------------------------------------------------------------------------
 QString KMFolder::prettyURL() const
 {
+  QString parentUrl;
   if ( parent() )
-    return parent()->prettyURL() + "/" + label();
+    parentUrl = parent()->prettyURL();
+  if ( !parentUrl.isEmpty() )
+    return parentUrl + '/' + label();
   else
-    return "/" + label();
+    return label();
 }
 
 //--------------------------------------------------------------------------

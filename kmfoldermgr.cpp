@@ -37,7 +37,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
   QObject(), mDir(this, QString::null, dirType)
 {
   if ( dirType == KMStandardDir )
-    mDir.setBaseURL( I18N_NOOP("Local") );
+    mDir.setBaseURL( I18N_NOOP("Local Folders") );
   mQuiet = 0;
   mChanged = FALSE;
   setBasePath(aBasePath);
@@ -586,7 +586,7 @@ void KMFolderMgr::moveFolder( KMFolder* folder, KMFolderDir *newParent )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName, 
+void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName,
                                 KMFolderDir *newParent )
 {
   RenameJob* job = new RenameJob( folder->storage(), newName, newParent );
