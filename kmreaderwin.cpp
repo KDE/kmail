@@ -1,6 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
+#include <qdir.h>
 #include <kfiledialog.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -34,6 +35,7 @@
 #include <qcursor.h>
 #include <qmlined.h>
 #include <qregexp.h>
+
 
 #define hand_width 16
 #define hand_height 16
@@ -769,13 +771,15 @@ void KMReaderWin::slotAtmSave()
 {
   KMMessagePart msgPart;
   QString fileName, str;
-  const char *fname =0;
+  fileName = QDir::currentDirPath();
+  fileName.append("/");
+
   
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-  fname = msgPart.name();
+  fileName.append(msgPart.name());
+  debug (fileName.data());
   
-  fileName = msgPart.name();
-  fileName = KFileDialog::getSaveFileName(NULL, "*", this, fname);
+  fileName = KFileDialog::getSaveFileName(fileName.data(), "*", this);
   if(fileName.isEmpty()) return;
 
   kbp->busy();
