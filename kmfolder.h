@@ -442,6 +442,8 @@ public:
   virtual QString unreadIconPath() const { return mUnreadIconPath; }
   virtual void setIconPaths(const QString &normalPath, const QString &unreadPath);
 
+  void removeJobs();
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

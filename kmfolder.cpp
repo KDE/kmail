@@ -1098,4 +1098,12 @@ void KMFolder::setIconPaths(const QString &normalPath, const QString &unreadPath
   emit iconsChanged();
 }
 
+//-----------------------------------------------------------------------------
+void KMFolder::removeJobs()
+{
+  mJobList.setAutoDelete( true );
+  mJobList.clear();
+  mJobList.setAutoDelete( false );
+}
+
 #include "kmfolder.moc"
