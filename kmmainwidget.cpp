@@ -1717,8 +1717,6 @@ void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
        ( mFolder == msg->parent()
       || mFolder->folderType() == KMFolderTypeSearch ) )
     {
-      if ( msg->isComplete() )
-        msg->cleanupHeader(); // assemble the message, important for signature-check
       mMsgView->setMsg(msg, TRUE);
     } else {
       kdDebug( 5006 ) <<  "KMMainWidget::slotUpdateImapMessage - ignoring update for already left folder" << endl;
@@ -1911,11 +1909,8 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
 
   assert( msg != 0 );
   KMReaderMainWin *win = new KMReaderMainWin( mFolderHtmlPref );
-  KMMessage *newMessage = new KMMessage();
-  newMessage->fromString( msg->asString() );
-  newMessage->setStatus( msg->status() );
+  KMMessage *newMessage = new KMMessage(*msg);
   newMessage->setParent( msg->parent() );
-  newMessage->setMsgSize( msg->msgSize() );
   newMessage->setMsgSerNum( msg->getMsgSerNum() );
   win->showMsg( mCodec, newMessage );
   win->resize( 550, 600 );
