@@ -1,3 +1,8 @@
+1998-07-03  Stefan Taferner  <taferner@kde.org>
+
+	* PGP: fixed crash when no ~/.pgp/pubring.pgp is installed
+	and signed message is selected.
+
 1998-06-30  Stefan Taferner  <taferner@kde.org> (KMail-0.7.9)
 
 	* PGP: removed dialog asking for pass phrase when only

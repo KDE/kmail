@@ -205,8 +205,6 @@ Kpgp::decrypt(void)
 bool 
 Kpgp::testSign(void)
 {
-  bool retval;
-
   // everything prepared?
   if(!prepare(FALSE)) return FALSE;
   // ok now try to decrypt the message.
@@ -688,7 +686,10 @@ bool Kpgp::parseInfo(int action)
 	// get signer
 	index = info.find("\"",index);
 	index2 = info.find("\"", index+1);
-	signature = info.mid(index+1, index2-index-1);
+
+	if (index>=0 && index2>=0)
+	  signature = info.mid(index+1, index2-index-1);
+	else signature = i18n("Unknown");
 		    
 	// get key ID of signer
 	index = info.find("key ID ",index2);
