@@ -44,8 +44,12 @@
 #include "dictionarycombobox.h"
 
 
-// other kdenetwork headers:
-#include <kpgpui.h>
+// other kdepim headers:
+// libkdepim
+#include <libkdepim/identity.h>
+// libkleopatra:
+#include <ui/keyrequester.h>
+#include <kleo/cryptobackendfactory.h>
 
 // other KDE headers:
 #include <klineedit.h>
@@ -57,8 +61,35 @@
 #include <qtabwidget.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
+#include <qlayout.h>
+#include <qpushbutton.h>
+#include <qcheckbox.h>
+#include <qcombobox.h>
 
-// other headers: (none)
+// other headers:
+#include <gpgmepp/key.h>
+#include <iterator>
+#include <algorithm>
+
+static const Kleo::CryptoMessageFormat cryptoMessageFormats[] = {
+  Kleo::AutoFormat,
+  Kleo::InlineOpenPGPFormat,
+  Kleo::OpenPGPMIMEFormat,
+  Kleo::SMIMEFormat,
+  Kleo::SMIMEOpaqueFormat,
+};
+static const int numCryptoMessageFormats = sizeof cryptoMessageFormats / sizeof *cryptoMessageFormats ;
+
+static inline Kleo::CryptoMessageFormat cb2format( int idx ) {
+  return cryptoMessageFormats[ idx >= 0 || idx < numCryptoMessageFormats ? idx : 0 ];
+}
+
+static inline int format2cb( Kleo::CryptoMessageFormat f ) {
+  for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
+    if ( f == cryptoMessageFormats[i] )
+      return i;
+  return 0;
+}
 
 namespace KMail {
 
@@ -130,6 +161,135 @@ namespace KMail {
     QWhatsThis::add( mEmailEdit, msg );
 
     //
+    // Tab Widget: Cryptography
+    //
+    row = -1;
+    mCryptographyTab = tab = new QWidget( tabWidget );
+    tabWidget->addTab( tab, i18n("Cryptograph&y") );
+    glay = new QGridLayout( tab, 6, 2, marginHint(), spacingHint() );
+    glay->setColStretch( 1, 1 );
+
+    // "OpenPGP Signature Key" requester and label:
+    ++row;
+    mPGPSigningKeyRequester = new Kleo::SigningKeyRequester( false, Kleo::SigningKeyRequester::OpenPGP, tab );
+    mPGPSigningKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
+    mPGPSigningKeyRequester->setDialogCaption( i18n("Your OpenPGP Signature Key") );
+    msg = i18n("Select the OpenPGP key which should be used to "
+	       "digitally sign your messages.");
+    mPGPSigningKeyRequester->setDialogMessage( msg );
+
+    msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
+               "to digitally sign messages. You can also use GnuPG keys.</p>"
+               "<p>You can leave this blank, but KMail won't be able "
+               "to digitally sign emails using OpenPGP. "
+	       "Normal mail functions won't be affected.</p>"
+               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
+
+    label = new QLabel( mPGPSigningKeyRequester, i18n("OpenPGP signing key:"), tab );
+    QWhatsThis::add( mPGPSigningKeyRequester, msg );
+    QWhatsThis::add( label, msg );
+
+    glay->addWidget( label, row, 0 );
+    glay->addWidget( mPGPSigningKeyRequester, row, 1 );
+
+
+    // "OpenPGP Encryption Key" requester and label:
+    ++row;
+    mPGPEncryptionKeyRequester = new Kleo::EncryptionKeyRequester( false, Kleo::EncryptionKeyRequester::OpenPGP, tab );
+    mPGPEncryptionKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
+    mPGPEncryptionKeyRequester->setDialogCaption( i18n("Your OpenPGP Encryption Key") );
+    msg = i18n("Select the OpenPGP key which should be used when encrypting "
+	       "to yourself and for the \"Attach My Public Key\" "
+	       "feature in the composer.");
+    mPGPEncryptionKeyRequester->setDialogMessage( msg );
+
+    msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
+               "to encrypt messages to yourself and for the \"Attach My Public Key\" "
+	       "feature in the composer. You can also use GnuPG keys.</p>"
+               "<p>You can leave this blank, but KMail won't be able "
+               "to encrypt copies of outgoing messages to you using OpenPGP. "
+	       "Normal mail functions won't be affected.</p>"
+               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
+    label = new QLabel( mPGPEncryptionKeyRequester, i18n("OpenPGP encryption key:"), tab );
+    QWhatsThis::add( mPGPEncryptionKeyRequester, msg );
+    QWhatsThis::add( label, msg );
+
+    glay->addWidget( label, row, 0 );
+    glay->addWidget( mPGPEncryptionKeyRequester, row, 1 );
+
+
+    // "S/MIME Signature Key" requester and label:
+    ++row;
+    mSMIMESigningKeyRequester = new Kleo::SigningKeyRequester( false, Kleo::SigningKeyRequester::SMIME, tab );
+    mSMIMESigningKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
+    mSMIMESigningKeyRequester->setDialogCaption( i18n("Your S/MIME Signature Certificate") );
+    msg = i18n("Select the S/MIME certificate which should be used to "
+	       "digitally sign your messages.");
+    mSMIMESigningKeyRequester->setDialogMessage( msg );
+
+    msg = i18n("<qt><p>The S/MIME (X.509) certificate you choose here will be used "
+               "to digitally sign messages.</p>"
+               "<p>You can leave this blank, but KMail won't be able "
+               "to digitally sign emails using S/MIME. "
+	       "Normal mail functions won't be affected.</p></qt>");
+    label = new QLabel( mSMIMESigningKeyRequester, i18n("S/MIME signing certificate:"), tab );
+    QWhatsThis::add( mSMIMESigningKeyRequester, msg );
+    QWhatsThis::add( label, msg );
+    glay->addWidget( label, row, 0 );
+    glay->addWidget( mSMIMESigningKeyRequester, row, 1 );
+
+    const Kleo::CryptoBackend::Protocol * smimeProtocol
+      = Kleo::CryptoBackendFactory::instance()->smime();
+
+    label->setEnabled( smimeProtocol );
+    mSMIMESigningKeyRequester->setEnabled( smimeProtocol );
+
+    // "S/MIME Encryption Key" requester and label:
+    ++row;
+    mSMIMEEncryptionKeyRequester = new Kleo::EncryptionKeyRequester( false, Kleo::EncryptionKeyRequester::SMIME, tab );
+    mSMIMEEncryptionKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
+    mSMIMEEncryptionKeyRequester->setDialogCaption( i18n("Your S/MIME Encryption Certificate") );
+    msg = i18n("Select the S/MIME certificate which should be used when encrypting "
+	       "to yourself and for the \"Attach My Certificate\" "
+	       "feature in the composer.");
+    mSMIMEEncryptionKeyRequester->setDialogMessage( msg );
+
+    msg = i18n("<qt><p>The S/MIME certificate you choose here will be used "
+               "to encrypt messages to yourself and for the \"Attach My Certificate\" "
+	       "feature in the composer.</p>"
+               "<p>You can leave this blank, but KMail won't be able "
+               "to encrypt copies of outgoing messages to you using S/MIME. "
+	       "Normal mail functions won't be affected.</p></qt>");
+    label = new QLabel( mSMIMEEncryptionKeyRequester, i18n("S/MIME encryption certificate:"), tab );
+    QWhatsThis::add( mSMIMEEncryptionKeyRequester, msg );
+    QWhatsThis::add( label, msg );
+
+    glay->addWidget( label, row, 0 );
+    glay->addWidget( mSMIMEEncryptionKeyRequester, row, 1 );
+
+    label->setEnabled( smimeProtocol );
+    mSMIMEEncryptionKeyRequester->setEnabled( smimeProtocol );
+
+    // "Preferred Crypto Message Format" combobox and label:
+    ++row;
+    mPreferredCryptoMessageFormat = new QComboBox( false, tab );
+    QStringList l;
+    l << Kleo::cryptoMessageFormatToLabel( Kleo::AutoFormat )
+      << Kleo::cryptoMessageFormatToLabel( Kleo::InlineOpenPGPFormat )
+      << Kleo::cryptoMessageFormatToLabel( Kleo::OpenPGPMIMEFormat )
+      << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEFormat )
+      << Kleo::cryptoMessageFormatToLabel( Kleo::SMIMEOpaqueFormat );
+    mPreferredCryptoMessageFormat->insertStringList( l );
+    label = new QLabel( mPreferredCryptoMessageFormat,
+			i18n("Preferred Crypto Message Format:"), tab );
+
+    glay->addWidget( label, row, 0 );
+    glay->addWidget( mPreferredCryptoMessageFormat, row, 1 );
+
+    ++row;
+    glay->setRowStretch( row, 1 );
+
+    //
     // Tab Widget: Advanced
     //
     row = -1;
@@ -174,30 +334,6 @@ namespace KMail {
                "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mBccEdit, msg );
-
-    // "OpenPGP Key" requester and label:
-    ++row;
-    mPgpKeyRequester = new Kpgp::SecretKeyRequester( tab );
-    mPgpKeyRequester->dialogButton()->setText( i18n("Chang&e...") );
-    mPgpKeyRequester->setDialogCaption( i18n("Your OpenPGP Key") );
-    mPgpKeyRequester->setDialogMessage( i18n("Select the OpenPGP key which "
-                                             "should be used to sign your "
-                                             "messages and when encrypting to "
-                                             "yourself.") );
-    msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
-               "to sign messages and to encrypt messages to "
-               "yourself; you can also use GnuPG keys.</p>"
-               "<p>You can leave this blank, but KMail will not be able "
-               "to cryptographically sign emails; normal mail functions will not "
-               "be affected.</p>"
-               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
-
-    label = new QLabel( mPgpKeyRequester, i18n("OpenPGP key:"), tab );
-    QWhatsThis::add( mPgpKeyRequester, msg );
-    QWhatsThis::add( label, msg );
-
-    glay->addWidget( label, row, 0 );
-    glay->addWidget( mPgpKeyRequester, row, 1 );
 
     // "Dictionary" combo box and label:
     ++row;
@@ -246,11 +382,104 @@ namespace KMail {
     if ( geometry.hasKey( "Identity Dialog size" ) )
       resize( geometry.readSizeEntry( "Identity Dialog size" ) );
     mNameEdit->setFocus();
+
+    connect( tabWidget, SIGNAL(currentChanged(QWidget*)),
+	     SLOT(slotAboutToShow(QWidget*)) );
   }
 
   IdentityDialog::~IdentityDialog() {
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     geometry.writeEntry( "Identity Dialog size", size() );
+  }
+
+  void IdentityDialog::slotAboutToShow( QWidget * w ) {
+    if ( w == mCryptographyTab ) {
+      // set the configured email address as inital query of the key
+      // requesters:
+      const QString email = mEmailEdit->text().stripWhiteSpace();
+      mPGPEncryptionKeyRequester->setInitialQuery( email );
+      mPGPSigningKeyRequester->setInitialQuery( email );
+      mSMIMEEncryptionKeyRequester->setInitialQuery( email );
+      mSMIMESigningKeyRequester->setInitialQuery( email );
+    }
+  }
+
+  namespace {
+    struct DoesntMatchEMailAddress {
+      explicit DoesntMatchEMailAddress( const QString & s )
+	: email( s.stripWhiteSpace().lower() ) {}
+      bool operator()( const GpgME::Key & key ) const;
+    private:
+      bool checkForEmail( const char * email ) const;
+      static QString extractEmail( const char * email );
+      const QString email;
+    };
+
+    bool DoesntMatchEMailAddress::operator()( const GpgME::Key & key ) const {
+      const std::vector<GpgME::UserID> uids = key.userIDs();
+      for ( std::vector<GpgME::UserID>::const_iterator it = uids.begin() ; it != uids.end() ; ++it )
+	if ( checkForEmail( it->email() ? it->email() : it->id() ) )
+	  return false;
+      return true; // note the negation!
+    }
+
+    bool DoesntMatchEMailAddress::checkForEmail( const char * e ) const {
+      const QString em = extractEmail( e );
+      return !em.isEmpty() && email == em;
+    }
+
+    QString DoesntMatchEMailAddress::extractEmail( const char * e ) {
+      if ( !e || !*e )
+	return QString::null;
+      const QString em = QString::fromUtf8( e );
+      if ( e[0] == '<' )
+	return em.mid( 1, em.length() - 2 );
+      else
+	return em;
+    }
+  }
+
+  void IdentityDialog::slotOk() {
+    const QString email = mEmailEdit->text().stripWhiteSpace();
+    if ( email.isEmpty() )
+      return KDialogBase::slotOk();
+    const std::vector<GpgME::Key> & pgpSigningKeys = mPGPSigningKeyRequester->keys();
+    const std::vector<GpgME::Key> & pgpEncryptionKeys = mPGPEncryptionKeyRequester->keys();
+    const std::vector<GpgME::Key> & smimeSigningKeys = mSMIMESigningKeyRequester->keys();
+    const std::vector<GpgME::Key> & smimeEncryptionKeys = mSMIMEEncryptionKeyRequester->keys();
+    QString msg;
+    if ( std::find_if( pgpSigningKeys.begin(), pgpSigningKeys.end(),
+		       DoesntMatchEMailAddress( email ) ) != pgpSigningKeys.end() )
+      msg = i18n("One of the configured OpenPGP signing keys does not contain "
+		 "any user ID with the configured email address for this "
+		 "identity (%1).\n"
+		 "This might result in warning messages on the receiving side "
+		 "when trying to verify signatures made with this configuration.");
+    else if ( std::find_if( pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
+			    DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() )
+      msg = i18n("One of the configured OpenPGP encryption keys does not contain "
+		 "any user ID with the configured email address for this "
+		 "identity (%1).");
+    else if ( std::find_if( smimeSigningKeys.begin(), smimeSigningKeys.end(),
+			    DoesntMatchEMailAddress( email ) ) != smimeSigningKeys.end() )
+      msg = i18n("One of the configured S/MIME signing certificates does not contain "
+		 "the configured email address for this "
+		 "identity (%1).\n"
+		 "This might result in warning messages on the receiving side "
+		 "when trying to verify signatures made with this configuration.");
+    else if ( std::find_if( smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
+			    DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() )
+      msg = i18n("One of the configured S/MIME encryption certificates does not contain "
+		 "the configured email address for this "
+		 "identity (%1).");
+    else
+      return KDialogBase::slotOk();
+
+    if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
+					     i18n("EMail Address not Found in Key/Certificates"),
+					     KStdGuiItem::cont(), "warn_email_not_in_certificate" )
+	 == KMessageBox::Continue )
+      return KDialogBase::slotOk();
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
@@ -272,8 +501,14 @@ namespace KMail {
     mOrganizationEdit->setText( ident.organization() );
     mEmailEdit->setText( ident.emailAddr() );
 
+    // "Cryptography" tab:
+    mPGPSigningKeyRequester->setFingerprint( ident.pgpSigningKey() );
+    mPGPEncryptionKeyRequester->setFingerprint( ident.pgpEncryptionKey() );
+    mSMIMESigningKeyRequester->setFingerprint( ident.smimeSigningKey() );
+    mSMIMEEncryptionKeyRequester->setFingerprint( ident.smimeEncryptionKey() );
+    mPreferredCryptoMessageFormat->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
+
     // "Advanced" tab:
-    mPgpKeyRequester->setKeyIDs( Kpgp::KeyIDList() << ident.pgpIdentity() );
     mReplyToEdit->setText( ident.replyToAddr() );
     mBccEdit->setText( ident.bcc() );
     mTransportCheck->setChecked( !ident.transport().isEmpty() );
@@ -329,8 +564,13 @@ namespace KMail {
                           i18n("Invalid Email Address") );
     }
     ident.setEmailAddr( email );
+    // "Cryptography" tab:
+    ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().latin1() );
+    ident.setPGPEncryptionKey( mPGPEncryptionKeyRequester->fingerprint().latin1() );
+    ident.setSMIMESigningKey( mSMIMESigningKeyRequester->fingerprint().latin1() );
+    ident.setSMIMEEncryptionKey( mSMIMEEncryptionKeyRequester->fingerprint().latin1() );
+    ident.setPreferredCryptoMessageFormat( cb2format( mPreferredCryptoMessageFormat->currentItem() ) );
     // "Advanced" tab:
-    ident.setPgpIdentity( mPgpKeyRequester->keyIDs().first() );
     ident.setReplyToAddr( mReplyToEdit->text() );
     ident.setBcc( mBccEdit->text() );
     ident.setTransport( ( mTransportCheck->isChecked() ) ?

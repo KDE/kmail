@@ -34,15 +34,19 @@
 
 #include <kdialogbase.h>
 
-namespace KPIM { class Identity; }
+
 class QLineEdit;
 class KMFolderComboBox;
 class QCheckBox;
 class QComboBox;
 class QString;
 class QStringList;
-namespace Kpgp {
-  class SecretKeyRequester;
+namespace Kleo {
+  class EncryptionKeyRequester;
+  class SigningKeyRequester;
+}
+namespace KPIM {
+  class Identity;
 }
 namespace KMail {
   class SignatureConfigurator;
@@ -64,7 +68,12 @@ namespace KMail {
   public slots:
     void slotUpdateTransportCombo( const QStringList & sl );
 
-  protected:
+  protected slots:
+    void slotAboutToShow( QWidget * w );
+    /*! \reimp */
+    void slotOk();
+
+  private:
     bool checkFolderExists( const QString & folder, const QString & msg );
 
   protected:
@@ -72,10 +81,16 @@ namespace KMail {
     QLineEdit                    *mNameEdit;
     QLineEdit                    *mOrganizationEdit;
     QLineEdit                    *mEmailEdit;
+    // "cryptography" tab:
+    QWidget                      *mCryptographyTab;
+    Kleo::SigningKeyRequester    *mPGPSigningKeyRequester;
+    Kleo::EncryptionKeyRequester *mPGPEncryptionKeyRequester;
+    Kleo::SigningKeyRequester    *mSMIMESigningKeyRequester;
+    Kleo::EncryptionKeyRequester *mSMIMEEncryptionKeyRequester;
+    QComboBox                    *mPreferredCryptoMessageFormat;
     // "advanced" tab:
     QLineEdit                    *mReplyToEdit;
     QLineEdit                    *mBccEdit;
-    Kpgp::SecretKeyRequester     *mPgpKeyRequester;
     KMail::DictionaryComboBox    *mDictionaryCombo;
     KMFolderComboBox             *mFccCombo;
     KMFolderComboBox             *mDraftsCombo;
