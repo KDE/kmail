@@ -83,12 +83,12 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ivl->setSpacing( 6 );
 
   QHBoxLayout *ihl = new QHBoxLayout( ivl );
-  mIconsCheckBox = new QCheckBox( i18n("Use custom icons"), iconGroup );
+  mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), iconGroup );
   mIconsCheckBox->setChecked( folder ? folder->useCustomIcons() : false );
   ihl->addWidget( mIconsCheckBox );
 
   ihl = new QHBoxLayout( ivl );
-  QLabel *ilabel = new QLabel( i18n("Normal:"), iconGroup );
+  QLabel *ilabel = new QLabel( i18n("&Normal:"), iconGroup );
   ihl->addWidget( ilabel );
 
   mNormalIconButton = new KIconButton( iconGroup );
@@ -102,7 +102,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ihl->addWidget( mNormalIconButton );
   ihl->addStretch( 1 );
   
-  QLabel *ilabel2 = new QLabel( i18n("Unread:"), iconGroup );
+  QLabel *ilabel2 = new QLabel( i18n("&Unread:"), iconGroup );
   ihl->addWidget( ilabel2 );
 
   mUnreadIconButton = new KIconButton( iconGroup );
@@ -237,7 +237,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
            this, SLOT( slotReadExpiryUnitChanged( int ) ) );
 
   // Expiry time for unread documents.
-  label = new QLabel(i18n("Expire &unread email after:"), expGroup);
+  label = new QLabel(i18n("Expire unr&ead email after:"), expGroup);
   label->setEnabled(false);
   QObject::connect( expireFolder, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
