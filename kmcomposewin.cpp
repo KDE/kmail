@@ -305,8 +305,9 @@ void KMComposeWin::readConfig(void)
   else
   {
     mDefCharset = str;
-    if ( !KGlobal::charsets()->isAvailable(mDefCharset) )
-      mDefCharset = "default";
+    if ( !KGlobal::charsets()->isAvailable(
+      KGlobal::charsets()->charsetForEncoding(mDefCharset)) )
+        mDefCharset = "default";
   }
 
   kdDebug() << "Default charset: " << (const char*)mDefCharset << endl;
@@ -984,7 +985,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
   if (num > 0)
   {
-    QCString bodyDecoded;
+    QString bodyDecoded; // Workaroud for bug in QT-2.2.4, better use QCString
     mMsg->bodyPart(0, &bodyPart);
 
     mCharset = bodyPart.charset();
@@ -1028,9 +1029,10 @@ if (mCharset == "utf-8")
 else
 {
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-    if (codec)
-      mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
-    else
+    if (codec) {
+      QString bodyDecoded = mMsg->bodyDecoded();
+      mEditor->setText(codec->toUnicode(bodyDecoded));
+    } else
       mEditor->setText(QString::fromLocal8Bit(mMsg->bodyDecoded()));
 }
   }
@@ -1227,10 +1229,10 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
   } else
       cText = codec->fromUnicode(text);
 
-  if (!text.isEmpty() && codec && mCharset != "utf-8" && codec->toUnicode(cText) != text)
+  if (!text.isEmpty() && codec && mCharset != "utf-8" && codec->toUnicode(QString(cText)) != text) // Workaround for bug in QT-2.2.4
   {
     QString oldText = mEditor->text();
-    mEditor->setText(codec->toUnicode(cText));
+    mEditor->setText(codec->toUnicode(QString(cText))); // Workaround
     kernel->kbp()->idle();
     bool anyway = (KMessageBox::warningYesNo(0L,
     i18n("Not all characters fit into the chosen"
@@ -2153,18 +2155,14 @@ void KMComposeWin::setEditCharset()
     mCharset = defaultCharset();
   QString cset = mCharset;
   if (mUnicodeFont) cset = "iso10646-1";
-  //set font only if it is really available
-  if (KGlobal::charsets()->isAvailable(cset))
-  {
-    KGlobal::charsets()->setQFont(fnt, KGlobal::charsets()->nameToID(cset));
-    mEditor->setFont(fnt);
-    mEdtFrom.setFont(fnt);
-    mEdtReplyTo.setFont(fnt);
-    mEdtTo.setFont(fnt);
-    mEdtCc.setFont(fnt);
-    mEdtBcc.setFont(fnt);
-    mEdtSubject.setFont(fnt);
-  }
+  fnt.setCharSet(KGlobal::charsets()->charsetForEncoding(cset));
+  mEditor->setFont(fnt);
+  mEdtFrom.setFont(fnt);
+  mEdtReplyTo.setFont(fnt);
+  mEdtTo.setFont(fnt);
+  mEdtCc.setFont(fnt);
+  mEdtBcc.setFont(fnt);
+  mEdtSubject.setFont(fnt);
 }
 
 //-----------------------------------------------------------------------------
@@ -2196,6 +2194,8 @@ const QString KMComposeWin::defaultCharset(void)
     }
     //we should be pretty safe: still if sth goes wrong we return iso-8859-1
   }
+  else if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
+  else if (retval == "ksc5601.1987-0") retval = "euc-kr";
   return retval;
 }
 
