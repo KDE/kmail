@@ -1,3 +1,8 @@
+1998-04-29  Markus Wuebben  <markus@kde.org>
+
+	* Reader: Fixed the url parsing which made kmail 
+	loop.
+
 1998-04-28  Stefan Taferner  <taferner@kde.org> (KMail-0.6.6)
 
 	* Folders: Emptying of the trash folder resulted in an infinite 
