@@ -145,6 +145,15 @@ public:
         delete( mNext );
     }
 
+    void dump( int chars=0 ) const {
+      kdDebug() << QString().fill( ' ', chars ) << "+ "
+		<< typeString() << '/' << subTypeString() << endl;
+      if ( mChild )
+	mChild->dump( chars + 1 );
+      if ( mNext )
+	mNext->dump( chars );
+    }
+
     void buildObjectTree( bool processSiblings=true );
 
     DwBodyPart* dwPart() const {
@@ -182,9 +191,13 @@ public:
         return mType;
     }
 
+    QCString typeString() const;
+
     int subType() const {
         return mSubType;
     }
+
+    QCString subTypeString() const;
 
     void setCryptoType( CryptoType cryptoType ) {
         mCryptoType = cryptoType;

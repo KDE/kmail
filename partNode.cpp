@@ -13,6 +13,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include "kmmimeparttree.h"
+#include <mimelib/utility.h>
 
 /*
   ===========================================================================
@@ -56,6 +57,17 @@ void partNode::buildObjectTree( bool processSiblings )
     }
 }
 
+QCString partNode::typeString() const {
+  DwString s;
+  DwTypeEnumToStr( type(), s );
+  return s.c_str();
+}
+
+QCString partNode::subTypeString() const {
+  DwString s;
+  DwSubtypeEnumToStr( subType(), s );
+  return s.c_str();
+}
 
 partNode::CryptoType partNode::firstCryptoType() const
 {
