@@ -214,8 +214,9 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KUR
   partNode * node = partNodeFromXKMailUrl( url, w, &path );
   if ( !node )
     return false;
-
-  Callback callback( w->message() );
+  KMMessage *msg = w->message();
+  if ( !msg ) return false;
+  Callback callback( msg );
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( &part, path, callback ) )
