@@ -79,6 +79,8 @@ using KMail::FolderRequester;
 #include <iterator>
 #include <algorithm>
 
+using namespace KPIM;
+
 namespace KMail {
 
   IdentityDialog::IdentityDialog( QWidget * parent, const char * name )
@@ -435,24 +437,12 @@ namespace KMail {
     }
   }
 
-  void IdentityDialog::slotOk() {
+void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().stripWhiteSpace();
-    int atCount = email.contains('@');
-    if (  KPIM::getEmailAddr( email ).isEmpty() || atCount == 0 ) {
-      KMessageBox::sorry( this, "<qt>"+
-          i18n("Your email address is not valid because it "
-            "does not contain a <emph>@</emph>: "
-            "you will not create valid messages if you do not "
-            "change your address.") + "</qt>",
-          i18n("Invalid Email Address") );
-      return;
-    } else if ( atCount > 1 ) {
-      KMessageBox::sorry( this, "<qt>" +
-                          i18n("Your email address is not valid because it "
-                               "contains more than one <emph>@</emph>: "
-                               "you will not create valid messages if you do not "
-                               "change your address.") + "</qt>",
-                          i18n("Invalid Email Address") );
+    emailParseResult errorCode = isValidEmailAddress( email );
+    if ( errorCode != AddressOk ) {
+      QString errorMsg( emailParseResultToString( errorCode ));
+      KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
       return;
     }
 
