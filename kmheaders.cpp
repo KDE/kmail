@@ -136,10 +136,8 @@ public:
     time_t mDate = mMsgBase->date();
     setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
 
-    if (mPaintInfo->showSize) {
-      QString sizeStr = QString( "%1" ).arg( mMsgBase->msgSize(), 9 );
-      setText( mPaintInfo->sizeCol, sizeStr );
-    }
+    if (mPaintInfo->showSize)
+      setText( mPaintInfo->sizeCol, QString( "%1" ).arg( mMsgBase->msgSize()));
 
     mColor = &mPaintInfo->colFore;
     switch (flag)
@@ -240,6 +238,12 @@ public:
 	return KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) 
 	  + " " + mSortArrival;
     }
+    else if (column == mPaintInfo->sizeCol) {
+      KMMsgBase *mMsgBase = mFolder->getMsgBase( mMsgId );
+      if(mMsgBase==NULL)
+	return text(column);
+      return QString( "%1" ).arg( mMsgBase->msgSize(), 9 );
+    }
     else
       return text(column);
   }
@@ -283,6 +287,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   addColumn( i18n("Date"), 170 );
   if (mPaintInfo.showSize) {
     addColumn( i18n("Size"), 80 );
+    setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
     showingSize = true;
   } else {
     showingSize = false;
@@ -622,6 +627,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
         // add in the size field
         int x = config->readNumEntry("SizeWidth", 80);
         addColumn(colText, x>0?x:10);
+	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
       }
       showingSize = true;
     } else {
