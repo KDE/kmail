@@ -709,8 +709,10 @@ void KMMainWin::slotCompose()
           msg->setTo(mFolder->mailingListPostAddress());
       }
       win = new KMComposeWin(msg, mFolder->identity());
-  } else
+  } else {
+      msg->initHeader();
       win = new KMComposeWin(msg);
+  }
 
   win->show();
 
