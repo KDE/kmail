@@ -46,9 +46,10 @@
 #include <kprocess.h>
 
 #include <qdom.h>
-#include <qlayout.h>
-#include <qwhatsthis.h>
 #include <qlabel.h>
+#include <qlayout.h>
+#include <qtooltip.h>
+#include <qwhatsthis.h>
 
 using namespace KMail;
 
@@ -570,6 +571,7 @@ ASWizProgramsPage::ASWizProgramsPage( QWidget * parent, const char * name,
     if ( it2 != checkBoxWhatsThisList.end() )
     {
       QWhatsThis::add( box, *it2 );
+      QToolTip::add( box, *it2 );
       ++it2;
     }
     grid->addWidget( box, row++, 0 );
