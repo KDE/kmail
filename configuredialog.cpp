@@ -1540,6 +1540,7 @@ void ConfigureDialog::setupAppearancePage( void )
     "unicodeFont", false ) );
   slotCustomFontSelectionChanged();
   updateFontSelector();
+  slotFontSelectorChanged( mAppearance.fontLocationCombo->currentItem() );
 
   config.setGroup("Reader");
 
@@ -1936,7 +1937,6 @@ void ConfigureDialog::updateFontSelector( void )
   if( mAppearance.activeFontIndex < 0 ) mAppearance.activeFontIndex = 0;
 
   int i=mAppearance.activeFontIndex;
-  slotFontSelectorChanged( i );
   mAppearance.fontChooser->setFont( mAppearance.font[i] );
 }
 
