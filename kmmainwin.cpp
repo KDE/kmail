@@ -2789,6 +2789,10 @@ void KMMainWin::setupMenuBar()
 				i18n("Display KMail's Welcome Page") ),
 		      0, this, SLOT(slotIntro()),
 		      actionCollection(), "help_kmail_welcomepage" );
+  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), 0,
+				i18n("Show \"Tip of the Day\"") ),
+		      0, kernel, SLOT(slotShowTip()),
+		      actionCollection(), "help_show_tip" );
 
   createGUI( "kmmainwin.rc", false );
 

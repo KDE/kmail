@@ -35,6 +35,7 @@
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include <kwin.h>
+#include <ktip.h>
 
 #include <X11/Xlib.h>
 #include <kapplication.h>
@@ -1007,6 +1008,14 @@ IdentityManager * KMKernel::identityManager() {
     mIdentityManager = new IdentityManager( this, "mIdentityManager" );
   }
   return mIdentityManager;
+}
+
+void KMKernel::slotShowTipOnStart() {
+  KTipDialog::showTip(0);
+}
+
+void KMKernel::slotShowTip() {
+  KTipDialog::showTip( 0, QString::null, true );
 }
 
 

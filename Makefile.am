@@ -75,6 +75,9 @@ updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
 		upgrade-signature.pl kmail-upd-identities.pl
 
+tipdir = $(kde_datadir)/kmail
+tip_DATA = tips
+
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot
 

@@ -149,6 +149,12 @@ public:
   QByteArray getCollectedStdErr(KProcess*);
 
 public slots:
+  /** Show tip-of-the-day on startup */
+  void slotShowTipOnStart();
+
+  /** Show tip-of-the-day, forced */
+  void slotShowTip();
+
   /** Connect the received* signals of K(Shell)Process to these slots
       to let the kernel collect the output for you.
 

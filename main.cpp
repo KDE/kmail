@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <qtimer.h>
+
 #include <kuniqueapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -314,6 +316,9 @@ int main(int argc, char *argv[])
 
   // any dead letters?
   kmailKernel.recoverDeadLetters();
+
+  // show tip-of-the-day:
+  QTimer::singleShot( 5000, &kmailKernel, SLOT(slotShowTipOnStart()) );
 
   setSignalHandler(signalHandler);
 
