@@ -3691,32 +3691,75 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
   mEnableImapResCB =
     new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
+  QToolTip::add( mEnableImapResCB,  i18n( "This enables the IMAP storage for "
+                                          "the Kontact applications" ) );
+  QWhatsThis::add( mEnableImapResCB,
+                   i18n( "<p>Enabling this makes it possible to store the "
+                         "entries from the Kontact applications KOrganizer, "
+                         "KAddressBook, and KNotes.</p><p>In addition to "
+                         "this, you must set the applications to use the "
+                         "IMAP resource. This is done in the KDE Control "
+                         "Center." ) );
   connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  mBox = new QVBox( b1 );
-  mBox->setSpacing( KDialog::spacingHint() );
+
+  mBox = new QWidget( b1 );
+  QGridLayout* grid = new QGridLayout( mBox, 3, 2, 0, KDialog::spacingHint() );
+  grid->setColStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
 	   mBox, SLOT( setEnabled(bool) ) );
-  QLabel* languageLA = new QLabel( i18n("&Language for groupware folders:"),
+  QLabel* languageLA = new QLabel( i18n("&Language of the groupware folders:"),
                                    mBox );
+  QString toolTip = i18n( "Set the language of the folder names" );
+  QString whatsThis = i18n( "<p>If you want to set the foldernames of the "
+                            "IMAP storage to your local language, you can "
+                            "choose between these available languages.</p>"
+                            "<p>Please note, that the only reason to do so "
+                            "is for compatibility with Microsoft Outlook. It "
+                            "is considered a bad idea to set this, since it "
+                            "makes changing languages impossible.</p><p>So "
+                            "do not set this unless you have to.</p>" );
+  grid->addWidget( languageLA, 0, 0 );
+  QToolTip::add( languageLA, toolTip );
+  QWhatsThis::add( languageLA, whatsThis );
   mLanguageCombo = new QComboBox( false, mBox );
   languageLA->setBuddy( mLanguageCombo );
   QStringList lst;
   lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
+  grid->addWidget( mLanguageCombo, 0, 1 );
+  QToolTip::add( mLanguageCombo, toolTip );
+  QWhatsThis::add( mLanguageCombo, whatsThis );
   connect( mLanguageCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   QLabel* subfolderLA =
     new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
+  toolTip = i18n( "Set the parent of the resource folders" );
+  whatsThis = i18n( "<p>This chooses the parent of the IMAP resource "
+                    "folders.</p><p>The standard of the Kolab server is "
+                    "to set the IMAP inbox as the parent.</p>" );
+  grid->addWidget( subfolderLA, 1, 0 );
+  QToolTip::add( subfolderLA, toolTip );
+  QWhatsThis::add( subfolderLA, whatsThis );
   mFolderCombo = new KMFolderComboBox( mBox );
   subfolderLA->setBuddy( mFolderCombo );
+  grid->addWidget( mFolderCombo, 1, 1 );
+  QToolTip::add( mFolderCombo, toolTip );
+  QWhatsThis::add( mFolderCombo, whatsThis );
   connect( mFolderCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide Groupware Folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
-  QToolTip::add( mHideGroupwareFolders, i18n( "When this is true, you will not see the IMAP resource folders in the folder tree" ) );
+  grid->addMultiCellWidget( mHideGroupwareFolders, 2, 2, 0, 1 );
+  QToolTip::add( mHideGroupwareFolders,
+                 i18n( "When this is checked, you will not see the IMAP "
+                       "resource folders in the folder tree." ) );
+  QWhatsThis::add( mHideGroupwareFolders,
+                   i18n( "<p>Usually you will not have any reason to see the "
+                         "folders that hold the IMAP resources. But if you "
+                         "need to see them, you can set that here.</p>" ) );
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
@@ -3733,6 +3776,12 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
   mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), gBox );
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+  QWhatsThis::add( mLegacyMangleFromTo,
+                   i18n( "Microsoft Outlook has a number of shortcomings "
+                         "in it's implementation of the iCalendar standard. "
+                         "This option works around one of them. If you have "
+                         "problems with Outlook users not being able to "
+                         "get your replies, try setting this option" ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 

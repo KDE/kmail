@@ -781,7 +781,7 @@ private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
 
-  QVBox* mBox;
+  QWidget* mBox;
   QVBox* gBox;
 
   QComboBox* mLanguageCombo;
