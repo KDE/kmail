@@ -1308,10 +1308,8 @@ void KMHeaders::bounceMsg ()
   if (!msg) return;
 
   newMsg = msg->createBounce( TRUE /* with UI */);
-  // Queue the message for sending, so the user can still intercept
-  // it. This is currently for testing
   if (newMsg)
-    kernel->msgSender()->send(newMsg, FALSE);
+    kernel->msgSender()->send(newMsg, kernel->msgSender()->sendImmediate());
 }
 
 
