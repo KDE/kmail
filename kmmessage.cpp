@@ -4158,6 +4158,8 @@ void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
 void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
   if ( mMDNSentState == status )
     return;
+  if ( status == 0 )
+    status = KMMsgMDNStateUnknown;
   mMDNSentState = status;
   mDirty = true;
   KMMsgBase::setMDNSentState( status, idx );
