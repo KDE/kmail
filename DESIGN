@@ -509,3 +509,249 @@ Currently allocated bits for the Status BitField are:
 All bits and combinations marked as reserved MUST NOT be altered if
 set and MUST be set to zero (0) when creating the bitfield.
 
+
+Headers (Threading and Sorting)
+===============================
+
+Contact Till Adam <till@adam-lilienthal.de> or
+	Don Sanders <sanders@kde.org>
+with questions...
+
+Threading and sorting is implemented in kmheaders.[cpp|h] and involves a 
+handfull of players, namely:
+
+class KMHeaders: 
+  this is the listview that contains the subject, date etc of each mail. 
+  It's a singleton, which means there is only one, per mainwidget headers 
+  list. It is actually a member of KMMainwidget and accessible there.
+
+class KMHeaderItem: 
+  these are the [Q|K]ListViewItem descendend items the KMHeaders listview 
+  consists of. There's one for each message.
+
+class KMSortCacheItem: 
+  these are what the threading and sorting as well as the caching of those
+  operate on. Each is paired with a KMHeaderItem, such that each holds a
+  pointer to one, and vice versa, each header item holds a pointer to it's
+  associated sort cache item.
+  
+.sorted file:
+  The order of the sorted and threaded (if threading is turned on for this
+  folder) messages is cached on disk in a file named .$FOLDER.index.sorted 
+  so if, for example the name of a folder is foo, the associated sorting 
+  cache file would be called ".foo.index.sorted".
+  For each message, its serial number, that of its parent, the length of its
+  sorting key, and the key itself are written to this file. At the start of
+  the file several per folder counts and flags are cached additionally,
+  immediately after a short file headers. The entries from the start of the
+  file are:
+  - "## KMail Sort V%04d\n\t" (magic header and version string)
+  - byteOrder flag containing 0x12345678 for byte order testing
+  - column, the sort column used for the folder
+  - ascending, the sort direction
+  - threaded, is the view threaded or is it not?
+  - appended, have there been items appended to the file (obsolete?)
+  - discovered_count, number of new mail discovered since the last sort file
+    generation
+  - sorted_count, number of sorted messages in the header list
+
+What is used for figuring out threading?
+  - messages can have an In-Reply-To header that contains the message id of
+    another message. This is called a perfect parent.
+  - additionally there is the References header which, if present, holds a 
+    list of message ids that the current message is a follow up to. We
+    currently use the second to last entry in that list only. See further 
+    down for the reasoning behind that.
+  - If the above two fail and the message is prefixed (Re: foo, Fwd: foo etc.)
+    an attempt is made to find a parent by looking for messages with the same
+    subject. How that is done is explained below as well.
+  
+  For all these comparisons of header contents, the md5 hashes of the headers
+  are used for speed reasons. They are stored in the index entry for each 
+  message. All data structures described below use md5 hash strings unless
+  stated otherwise.
+
+Strategy:
+  When a folder is opened, updateMessageList is called, which in turn calls
+  readSortOrder where all the fun happens. If there is a .sorted file at the 
+  expected location, it is openend and parsed. The header flags are read in
+  order to figure out the state in which this .sorted file was written. This
+  means the sort direction, whether the folder is threaded or not etc. 
+  FIXME: is there currently sanity checking going on?
+  Now the file is parsed and for each message in the file a KMSortCacheItem is
+  created, which holds the offset in the .sorted file for this message as well
+  as it's sort key as read from the file. That sort cache item is entered into
+  the global mSortCache structure (member of the KMHeaders instance), which is
+  a  QMemArray<KMSortCacheItem *> of the size mFolder->count(). Note that this
+  is the size reported by the folder, not as read from the .sorted file. The
+  mSortCache (along with some other structures) is updated when messages are
+  added or removed. More on that further down.
+  As soon as the serial number is read from the file, that number is looked up
+  in the message dict, to ensure it is still in the current folder. If not, it
+  has been moved away in the meantime (possibly by outside forces such as
+  other clients) and a deleted counter is incremented and all further
+  processing stopped for this message.
+  The messages parent serial number, as read from the sorted file is then
+  used to look up the parent and reset it to -1 should it not be in the 
+  current folder anymore. -1 and -2 are special values that can show up
+  as parent serial numbers and are used to encode the following:
+  -1 means this message has no perfect parent, a parent for it needs to
+  be found from among the other messages, if there is a suitable one
+  -2 means this message is top level and will forever stay so, no need
+  to even try to find a parent. This is also used for the non-threaded
+  case. These are messages that have neither an In-Reply-To header nor
+  a References header and have a subject that is not prefixed.
+  In case there is a perfect parent, the current sort cache item is
+  appended to the parents list of unsorted children, or to that of
+  root, if there is not. A sort cache item is created in the mSortCache
+  for the parent, if it is not already there. Messages with a parent of
+  -1 are appended to the "unparented" list, which is later traversed and
+  its elements threaded. Messages with -2 as the parent are children of
+  root as well, as noted above, and will remain so. 
+
+  Once the end of the file is reached, we should have a nicely filled 
+  mSortCache, containing a sort cache item for each message that was in the 
+  sorted file. Messages with perfect parents know about them, top level 
+  messages know about that as well, all others are on a list and will be
+  threaded later.
+
+  Now, what happens when messages have been added to the store since the last
+  update of the .sorted file? Right, they don't have a sort cache item yet, 
+  and would be overlooked. Consequently all message ids in the folder from 0
+  to mFolder->count() are looked at and a KMSortCacheItem is created for the
+  ones that do not have one yet. This is where all sort cache items are created
+  if there was no sorted file. The items created here are by definition un-
+  sorted as well as unparented. On creation their sort key is figured out as
+  well.
+
+  The next step is finding parents for those messages that are either new, or
+  had a parent of -1 in the .sorted file. To that end, a dict of all sort
+  cache items indexed by the md5 hash of their messsage id headers is created,
+  that will be used for looking up sort cache items by message id. The list of
+  yet unparented messages is then traversed and findParent() called for each 
+  element wihch checks In-Reply-To and References headers and looks up the 
+  sort cache item of those parents in the above mentioned dict. Should none be
+  found, the item is added to a second list the items of which will be subject
+  threaded. 
+  
+  How does findParent() work, well, it tries to find the message pointed to by
+  the In-Reply-To header and if that fails looks for the one pointed to by the
+  second to last entry of the References header list. Why the second to last?
+  Imagine the following situation in Bob's kmail:
+  - Bob get's mail from Alice
+  - Bob replies to Alice's mail, but his mail is stored in the Outbox, not the
+    Inbox.
+  - Alice replies again, so Bob now has two mails from Alice which are part of
+    the same thread. The mail in the middle is somewhere else. We want that to
+    thread as follows:
+      Bob             <- In-Reply-To: Alice1
+    ============
+      Alice1          
+        |_Alice       <- In-Reply-To: Bob (not here), References: Alice, Bob
+
+  - since the above is a common special case, it is worth trying. I think. ;)
+
+  If the parent found is perfect (In-Reply-To), the sort cache items is marked
+  as such. mIsImperfectlyThreaded is used for that purposer, we will soon see
+  why that flag is needed.
+
+  On this first pass, no subject threading is attempted yet. Once it is done,
+  the messages that are now top-level, the current thread heads, so to speak, 
+  are collected into a second dict ( QDict< QPtrList< KMSortCacheItem > > )
+  that contains for each different subject an entry holding a list of (so far
+  top level) messages with that subject, that are potential parents for 
+  threading by subjects. These lists are sorted by date, so the parent closest
+  by date can be chosen. Sorting of these lists happens via insertion sort 
+  while they are built because not only are they expected to be short (apart
+  from hard corner cases such as cvs commit lists, for which subject threading 
+  makes little sense anyhow and where it should be turned off), but also since
+  the messages should be roughly pre sorted by date in the store already. 
+  Some cursory benchmarking supports that assumption. 
+  If now a parent is needed for a message with a certain subject, the list of
+  top level messages with that subject is traversed and the first one that is
+  older than our message is chosen as it's parent. Parents more than six weeks
+  older than the message are not accepted. The reasoning being that if a new
+  message with the same subject turns up after such a long time, the chances
+  that it is still part of the same thread are slim. The value of six weeks
+  is chosen as a result of a poll conducted on #kde-devel, so it's probably
+  bogus. :) All of this happens in the aptly named: findParentBySubject().
+
+  Everthing that still has no parent after this ends up at toplevel, no further
+  attemp is made at finding one. If you are reading this because you want to
+  implement threading by body search or somesuch, please go away, I don't like
+  you. :)
+
+  Ok, so far we have only operated on sort cache items, nothing ui wise has
+  happened yet. Now that we have established the parent/child relations of all
+  messages, it's time to create KMHeaderItems for them for use in the header
+  list. But wait, you say, what about sorting? Wouldn't it make sense to do
+  that first? Exactly, you're a clever bugger, ey? Here, have a cookie. ;)
+  Both creation of header items and sorting of the as of yet unsorted sort
+  cache items happen at the same time. 
+  
+  As previously mentioned (or not) each sort cache item holds a list of its
+  sorted and one of its unsorted children. Starting with the root node the
+  unsorted list is first qsorted, and then merged with the list of already
+  sorted children. To achieve that, the heads of both lists are compared and
+  the one with the "better" key is added to the list view next by creating a
+  KMHeaderListItem for it. That header item receives both its sort key as well
+  as its id from the sort cache item. Should the current sort cache item have
+  children, it is added to the end of a queue of nodes to repeat these steps
+  on after the current level is sorted. This way, a breadth first merge sort
+  is performed on the sort cache items and header items are created at each
+  node.
+ 
+  What follows is another iteration over all message ids in the folder, to
+  make sure that there are KMHeaderItems for each now. Should that not be the
+  case, top level emergency items are created. This loop is also used to add
+  all header items that are imperfectly threaded to a list so they can be
+  reevalutated when a new message arrives. Here the reverse mapping from
+  header items to sort cache items are made as well. Those are also necessary
+  so the sort cache item based data structures can be updated when a message
+  is removed. 
+
+  The rest of readSortOrder should make sense on itself, I guess, if not, drop
+  me an email.
+
+What happens when a message arrives in the folder?
+  Among other things, the msgAdded slot is called, which creates the necessary
+  sort cache item and header item for the new message and makes sure the data 
+  structures described above are updated accordingly. If threading is enabled,
+  the new message is threaded using the same findParent and findParentBySubject
+  methods used on folder open. If the message ends up in a watched or ignored
+  thread, those status bits are inherited from the parent. The message is also
+  added to the dict of header items, the index of messages by message id and,
+  if applicable and if the message is threaded at top level, to the list of
+  potential parents for subject threading. 
+
+  After those house keeping tasks are performed, the list of as of yet imper-
+  fectly threaded messages is traversed and our newly arrived message is 
+  considered as a new parent for each item on it. This is especially important
+  to ensure that parents arriving out of order after their children still end
+  up as parents. If necessary, the entries in the .sorted file of rethreaded
+  messages are updated. An entry for the new message itself is appended to the
+  .sorted file as well.
+
+What happens when a message is removed from the folder?
+  In this case the msgRemoved slot kicks in and updates the headers list. First
+  the sort cache item and header item representing our message are removed from
+  the data structures and the ids of all items after it in the store decre-
+  mented. Then a list of children of the message is assembled containing those
+  children that have to be reparented now that our message has gone away. If 
+  one of those children has been marked as toBeDeleted, it is simply added to 
+  root at top level, because there is no need to find a parent for it if it is
+  to go away as well. This is an optimization to avoid rethreading  all 
+  messages in a thread when deleting several messages in a thread, or even the
+  whole thread. The KMMoveCommand marks all messages that will be moved out of
+  the folder as such so that can be detected here and the useless reparenting
+  can be avoided. Note that that does not work when moving messages via filter
+  action. 
+
+  That list of children is then traversed and a new parent found for each one
+  using, again, findParent and findParentBySubject. When a message becomes
+  imperfectly threaded in the process, it is added to the corresponding list.
+
+  The message itself is removed from the list of imperfectly threaded messages
+  and its header item is finally deleted. The KMHeaderItem destructor destroys
+  the KMSortCacheItem as well, which is hopefully no longer referenced anywhere
+  at this point.
