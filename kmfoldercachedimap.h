@@ -21,10 +21,9 @@
 #ifndef kmfoldercachedimap_h
 #define kmfoldercachedimap_h
 
-#include <assert.h>
+#include <kdialogbase.h>
 #include <qvaluelist.h>
 #include <qptrlist.h>
-
 #include <qdialog.h>
 
 #include "kmfoldermaildir.h"
@@ -36,6 +35,22 @@
 
 using KMail::FolderJob;
 class KMAcctCachedImap;
+
+class DImapTroubleShootDialog : public KDialogBase
+{
+  Q_OBJECT
+public:
+  DImapTroubleShootDialog( QWidget* parent=0, const char* name=0 );
+
+  static int run();
+
+private slots:
+  void slotRebuildIndex();
+  void slotRebuildCache();
+
+private:
+  int rc;
+};
 
 class KMFolderCachedImap : public KMFolderMaildir
 {
@@ -54,7 +69,7 @@ public:
   virtual int remove();
 
   /** Synchronize this folder and it's subfolders with the server */
-  virtual void serverSync();
+  virtual void serverSync( bool suppressDialog );
 
   /** Force the sync state to be done. */
   void resetSyncState() { mSyncState = SYNC_STATE_INITIAL; }
@@ -80,7 +95,7 @@ public:
   ulong lastUid();
 
   /** Find message by UID. Returns NULL if it doesn't exist */
-  KMMsgBase* findByUID( ulong uid );
+  KMMessage* findByUID( ulong uid );
 
   /** The uidvalidity of the last update */
   void setUidValidity(const QString &validity) { mUidValidity = validity; }
@@ -138,6 +153,16 @@ public:
    */
   void setSilentUpload( bool silent ) { mSilentUpload = silent; }
   bool silentUpload() { return mSilentUpload; }
+
+  virtual int createIndexFromContents()
+    { return KMFolderMaildir::createIndexFromContents(); }
+
+  // Mark for resync
+  void resync() { mResync = true; }
+
+  virtual void holdSyncs( bool hold ) { mHoldSyncs = hold; }
+
+  void removeRightAway() { mRemoveRightAway = true; }
 
   /**
    * List a directory and add the contents to kmfoldermgr
@@ -198,6 +223,16 @@ public slots:
    */
   void slotSimpleData(KIO::Job * job, const QByteArray & data);
 
+  /**
+   * Troubleshoot the IMAP cache
+   */
+  void slotTroubleshoot();
+
+  /**
+   * Sync this folder and it's subfolders.
+   */
+  void processNewMail();
+
 private slots:
   void serverSyncInternal();
 
@@ -251,6 +286,7 @@ private:
   QValueList<ulong> uidsOnServer;
   QValueList<ulong> uidsForDeletionOnServer;
   QValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
+  QValueList<ulong> mUidsForDownload;
   QStringList       foldersForDeletionOnServer;
 
   QValueList<KMFolderCachedImap*> mSubfoldersForSync;
@@ -268,6 +304,10 @@ private:
 
   bool mSilentUpload;
   bool mFolderRemoved;
+  bool mResync;
+  bool mSuppressDialog;
+  bool mHoldSyncs;
+  bool mRemoveRightAway;
 };
 
 #endif /*kmfoldercachedimap_h*/

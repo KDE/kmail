@@ -29,18 +29,27 @@ using KMail::SieveConfig;
 using KMail::IMAPProgressDialog;
 
 #include "kmbroadcaststatus.h"
+#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmfoldercachedimap.h"
+#include "kmmainwin.h"
+#include "kmkernel.h"
 
+#include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
+#include <kmessagebox.h>
 #include <kdebug.h>
+#include <kstandarddirs.h>
+#include <kapplication.h>
 #include <kconfig.h>
 
-KMAcctCachedImap::KMAcctCachedImap(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMail::ImapAccountBase(aOwner, aAccountName), mFolder(0),
-  mProgressDialogEnabled(true)
+
+KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
+				    const QString& aAccountName )
+  : KMail::ImapAccountBase( aOwner, aAccountName ), mFolder( 0 ),
+    mProgressDialogEnabled( true ), mSyncActive( false )
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
@@ -107,6 +116,31 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 }
 
 //-----------------------------------------------------------------------------
+void KMAcctCachedImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
+  const QString &errorMsg)
+{
+  if (aSlave != mSlave) return;
+  if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
+  if (errorCode == KIO::ERR_COULD_NOT_LOGIN) mAskAgain = TRUE;
+
+  // Note: HEAD has a killAllJobs() call here
+
+  // check if we still display an error
+  if ( !mErrorDialogIsActive )
+  {
+    mErrorDialogIsActive = true;
+    KMessageBox::messageBox(kapp->activeWindow(), KMessageBox::Error,
+          KIO::buildErrorString(errorCode, errorMsg),
+          i18n("Error"));
+    mErrorDialogIsActive = false;
+  } else
+    kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+
+  mSyncActive = false;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctCachedImap::displayProgress()
 {
   if (mProgressEnabled == mapJobData.isEmpty())
@@ -117,11 +151,8 @@ void KMAcctCachedImap::displayProgress()
     if (!mProgressEnabled) kmkernel->filterMgr()->cleanup();
   }
   mIdle = FALSE;
-  if (mapJobData.isEmpty())  {
-    //mIdleTimer.start(15000);
+  if( mapJobData.isEmpty() )
     mIdleTimer.start(0);
-    // kdDebug(5006) << "KMAcctCachedImap::displayProgress no more jobs, disconnecting slave" << endl;
-  }
   else
     mIdleTimer.stop();
   int total = 0, done = 0;
@@ -132,9 +163,8 @@ void KMAcctCachedImap::displayProgress()
     total += (*it).total; // always ==1 (in kmfoldercachedimap.cpp)
     //done += (*it).done;
     Q_ASSERT( (*it).parent );
-    if( (*it).parent )  {
+    if( (*it).parent )
       done += static_cast<KMFolderCachedImap*>((*it).parent)->progress();
-    }
   }
   if (total == 0) // can't happen
   {
@@ -215,13 +245,33 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     KIO::Scheduler::disconnectSlave( slave() );
     mSlave = 0;
   }
+
+  // Finally allow new syncs to proceed
+  mSyncActive = false;
 }
+
+
+//-----------------------------------------------------------------------------
+void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
+{
+  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
+  while (it != mapJobData.end())
+  {
+    if (it.data().parent == fti->folder())
+    {
+      killAllJobs();
+      break;
+    }
+    else ++it;
+  }
+}
+
 
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
 {
   JobIterator it = findJob( job );
-  bool quiet = FALSE;
+  bool quiet = false;
   if (it != mapJobData.end())
   {
     quiet = (*it).quiet;
@@ -232,36 +282,47 @@ void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
     if (!quiet) slotSlaveError(mSlave, job->error(),
         job->errorText() );
     if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
+    mSyncActive = false;
   }
   displayProgress();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctCachedImap::processNewMail(bool interactive)
+void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
+				       bool interactive )
 {
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
 
-  // This assertion must hold, otherwise we have to search for the root folder
-  // assert(mFolder && mFolder->imapPath() == "/");
+  // Guard against parallel runs
+  if( mSyncActive ) {
+    kdDebug(5006) << "Already processing new mail, won't start again\n";
+    return;
+  }
+  mSyncActive = true;
 
+  emit newMailsProcessed(-1);
   if( interactive && isProgressDialogEnabled() ) {
     imapProgressDialog()->clear();
     imapProgressDialog()->show();
     imapProgressDialog()->raise();
   }
 
-  mFolder->setAccount(this);
-  mFolder->serverSync();
+  folder->setAccount(this);
+  connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
+	  this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
+  folder->serverSync( interactive && isProgressDialogEnabled() );
   checkDone(false, 0);
 }
 
-void KMAcctCachedImap::postProcessNewMail(KMFolderCachedImap* folder, bool)
+void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
+  mSyncActive = false;
+  emit finishedCheck(false);
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
       this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  postProcessNewMail(static_cast<KMFolder*>(folder));
+  //postProcessNewMail(static_cast<KMFolder*>(folder));
 }
 
 //
@@ -282,12 +343,18 @@ void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
 
 void KMAcctCachedImap::invalidateIMAPFolders()
 {
-  mFolder->setAccount(this);
+  invalidateIMAPFolders( mFolder );
+}
+
+void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
+{
+  folder->setAccount(this);
 
   QStringList strList;
   QValueList<QGuardedPtr<KMFolder> > folderList;
-  kmkernel->imapFolderMgr()->createFolderList(&strList, &folderList,
-					    mFolder->child(), QString::null, false);
+  kmkernel->imapFolderMgr()->createFolderList( &strList, &folderList,
+					       folder->child(), QString::null,
+					       false );
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   mCountRemainChecks = 0;
   mCountLastUnread = 0;
@@ -302,6 +369,8 @@ void KMAcctCachedImap::invalidateIMAPFolders()
 	cfolder->writeUidCache();
       }
     }
+  folder->setUidValidity("INVALID");
+  folder->writeUidCache();
 
   processNewMail(false);
 }
@@ -322,7 +391,7 @@ void KMAcctCachedImap::listDirectory()
 IMAPProgressDialog* KMAcctCachedImap::imapProgressDialog() const
 {
   if( !mProgressDlg ) {
-    mProgressDlg = new IMAPProgressDialog(0);
+    mProgressDlg = new IMAPProgressDialog( KMKernel::self()->mainWin() );
   }
   return mProgressDlg;
 }

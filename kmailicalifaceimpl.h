@@ -91,6 +91,8 @@ public:
   /** Convenience function to delete a message. */
   static void deleteMsg( KMMessage* msg );
 
+  bool isEnabled() const { return mUseResourceIMAP; }
+
 public slots:
   void slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum );
   void slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum );

@@ -50,6 +50,7 @@ class KMAccount: public QObject, public KAccount
   Q_OBJECT
   friend class KMAcctMgr;
   friend class FolderJob;
+  friend class KMFolderCachedImap; /* HACK for processNewMSg() */
 
 public:
   virtual ~KMAccount();

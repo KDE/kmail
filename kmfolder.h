@@ -484,6 +484,9 @@ signals:
   /** Emitted when number of unread messages has changed. */
   void numUnreadMsgsChanged( KMFolder* );
 
+  // Emitted by KMFolderCachedIMAP to signal syncing
+  void syncRunning( KMFolder*, bool );
+
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
   virtual int updateIndex() = 0;

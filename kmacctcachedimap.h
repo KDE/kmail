@@ -65,12 +65,19 @@ public:
    * Inherited methods.
    */
   virtual QString type() const;
-  virtual void processNewMail(bool);
+  virtual void processNewMail( bool i ) { processNewMail( mFolder, i ); }
+
+  void processNewMail( KMFolderCachedImap*, bool );
 
   /**
    * Update the progress bar
    */
   virtual void displayProgress();
+
+  /**
+   * Kill all jobs related the the specified folder
+   */
+  void killJobsForItem(KMFolderTreeItem * fti);
 
   /**
    * Kill the slave if any jobs are active
@@ -81,6 +88,8 @@ public:
    * Set the account idle or busy
    */
   void setIdle(bool aIdle) { mIdle = aIdle; }
+
+  void slaveDied() { mSlave = 0; killAllJobs(); }
 
   /**
    * Set the top level pseudo folder
@@ -98,6 +107,7 @@ public:
    * Invalidate the local cache.
    */
   virtual void invalidateIMAPFolders();
+  virtual void invalidateIMAPFolders( KMFolderCachedImap* );
 
   /**
    * Lists the directory starting from @p path
@@ -114,7 +124,12 @@ public:
   virtual void listDirectory();
 
 public slots:
-  void processNewMail() { processNewMail(TRUE); }
+  void processNewMail() { processNewMail( mFolder, true ); }
+
+  /**
+   * Display an error message
+   */
+  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
 protected:
   friend class KMAcctMgr;
@@ -145,6 +160,7 @@ private:
   KMFolderCachedImap *mFolder;
   mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;
+  bool mSyncActive;
 };
 
 #endif /*KMAcctCachedImap_h*/

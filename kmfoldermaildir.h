@@ -100,17 +100,17 @@ protected:
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
 
+  /** Create index file from messages file and fill the message-info list
+      mMsgList. Returns 0 on success and an errno value (see fopen) on
+      failure. */
+  virtual int createIndexFromContents();
+
 private:
   void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
   QString constructValidFileName(QString& file, KMMsgStatus status);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, KMMsgInfo* mi);
   QString moveInternal(const QString& oldLoc, const QString& newLoc, QString& aFileName, KMMsgStatus status);
   bool removeFile(const QString& filename);
-
-  /** Create index file from messages file and fill the message-info list
-      mMsgList. Returns 0 on success and an errno value (see fopen) on
-      failure. */
-  virtual int createIndexFromContents();
 
   /** Tests whether the contents of this folder is newer than the index.
       Returns IndexTooOld if the index is older than the contents.
