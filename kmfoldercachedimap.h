@@ -226,7 +226,7 @@ public:
   /// Free-busy and alarms relevance of this folder, i.e. for whom should
   /// events in this calendar lead to "busy" periods in their freebusy lists,
   /// and who should get alarms for the incidences in this folder.
-  /// Applies to Calendar, Notes and Tasks folders only.
+  /// Applies to Calendar and Task folders only.
   ///
   /// IncForNobody: not relevant for free-busy and alarms to anybody
   /// IncForOwner: free-busy and alarms relevant for the owner of the calendar only

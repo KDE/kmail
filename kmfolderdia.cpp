@@ -456,11 +456,24 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     relevanceLayout->setSpacing( 6 );
     topLayout->addWidget( mIncidencesForGroup );
 
-    QLabel* label = new QLabel( i18n( "Generate free/busy and activate alarms for:" ), mIncidencesForGroup );
+    QLabel* label = new QLabel( i18n( "Generate free/&busy and activate alarms for:" ), mIncidencesForGroup );
     relevanceLayout->addWidget( label );
     mIncidencesForComboBox = new QComboBox( mIncidencesForGroup );
     label->setBuddy( mIncidencesForComboBox );
     relevanceLayout->addWidget( mIncidencesForComboBox, 3 );
+
+    QWhatsThis::add( mIncidencesForComboBox,
+                     i18n( "This setting defines which users sharing "
+                           "this folder should get \"busy\" periods in their freebusy lists "
+                           "and should see the alarms for the events or tasks in this folder. "
+                           "The setting applies to Calendar and Task folders only "
+                           "(for tasks, this setting is only used for alarms).\n\n"
+                           "Example use cases: if the boss shares a folder with his secretary, "
+                           "only the boss should be marked as busy for his meetings, so he should "
+                           "select \"Owner\".\n"
+                           "On the other hand if a working group shares a Calendar for "
+                           "group meetings, all readers of the folders should be marked "
+                           "as busy for meetings." ) );
 
     mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
     mIncidencesForComboBox->insertItem( i18n( "Owner of this folder" ) );
