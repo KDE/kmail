@@ -1242,13 +1242,11 @@ void KMComposeWin::slotInsertPublicKey()
   QString str;
   int col, line;
   Kpgp *pgp;
-  const QStrList *keys;
 
-  pgp=Kpgp->getKpgp();
-  keys=pgp->keys;
+  pgp=Kpgp::getKpgp();
   
   str=pgp->getAsciiPublicKey(
-         KpgpKey::getKeyName(this, keys));
+         KpgpKey::getKeyName(this, pgp->keys()));
 
   mEditor->getCursorPosition(&line, &col);
   mEditor->insertAt(str, line, col);
