@@ -1300,7 +1300,7 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
-  emit maybeDeleting();
+  //emit maybeDeleting();
   if (mFolder->count() == 0) { // Folder cleared
     clear();
     return;
