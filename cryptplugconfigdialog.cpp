@@ -204,7 +204,11 @@ void CryptPlugConfigDialog::slotOk() {
   bool warnSendUnencrypted = mEncryptionTab->warnUnencryptedCB->isChecked();
   mWrapper->setWarnSendUnencrypted( warnSendUnencrypted );
   config->writeEntry( "WarnSendUnencrypted", warnSendUnencrypted );
-
+  
+  bool allwaysEncryptToSelf = mEncryptionTab->allwaysEncryptToSelfCB->isChecked();
+  mWrapper->setAllwaysEncryptToSelf( allwaysEncryptToSelf );
+  config->writeEntry( "AllwaysEncryptToSelf", allwaysEncryptToSelf );
+    
   // Encryption Settings group box
   QString encAlgoStr = mEncryptionTab->encryptionAlgorithmCO->currentText();
   EncryptionAlgorithm encAlgo = EncryptAlg_RSA;
@@ -459,7 +463,8 @@ void CryptPlugConfigDialog::setPluginInformation() {
     kdDebug( 5006 ) << "Unknown email encryption setting" << endl;
   };
   mEncryptionTab->warnUnencryptedCB->setChecked( mWrapper->warnSendUnencrypted() );
-    
+  mEncryptionTab->allwaysEncryptToSelfCB->setChecked( mWrapper->allwaysEncryptToSelf() );
+
   // Encryption Settings group box
   QString encAlgoStr;
   switch( mWrapper->encryptionAlgorithm() ) {
