@@ -248,7 +248,7 @@ bool KMFilter::isEmpty() const
   if (bPopFilter)
     return mPattern.isEmpty();
   else
-    return mPattern.isEmpty() || mActions.isEmpty();
+    return mPattern.isEmpty() && mActions.isEmpty();
 }
 
 #ifndef NDEBUG
