@@ -210,7 +210,10 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusWatched;
       mStatus |= KMMsgStatusIgnored;
       break;
-      
+
+    case KMMsgStatusSpam:
+      mStatus |= KMMsgStatusSpam;
+      break;
     default:
       mStatus = aStatus;
       break;
@@ -241,6 +244,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
     if (strchr(aXStatusStr, 'Q')) setStatus(KMMsgStatusQueued);
     if (strchr(aXStatusStr, 'S')) setStatus(KMMsgStatusSent);
     if (strchr(aXStatusStr, 'G')) setStatus(KMMsgStatusFlag);
+    if (strchr(aXStatusStr, 'P')) setStatus(KMMsgStatusSpam);
   }
 
   // Merge the contents of the "Status" field
@@ -407,6 +411,13 @@ bool KMMsgBase::isIgnored(void) const
 }
 
 //-----------------------------------------------------------------------------
+bool KMMsgBase::isSpam(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusSpam);
+}
+
+//-----------------------------------------------------------------------------
 QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 {
   QCString sstr;
@@ -422,6 +433,7 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
   if (status & KMMsgStatusFlag) sstr += 'G';
   if (status & KMMsgStatusWatched) sstr += 'W';
   if (status & KMMsgStatusIgnored) sstr += 'I';
+  if (status & KMMsgStatusSpam) sstr += 'P';
 
   return sstr;
 }
@@ -429,7 +441,7 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 //-----------------------------------------------------------------------------
 QString KMMsgBase::statusToSortRank()
 {
-  QString sstr = "bcbbbbbb";
+  QString sstr = "bcbbbbbbb";
 
   // put watched ones first, then normal ones, ignored ones last
   if (status() & KMMsgStatusWatched) sstr[0] = 'a';
@@ -448,6 +460,7 @@ QString KMMsgBase::statusToSortRank()
   if (status() & KMMsgStatusForwarded) sstr[5] = 'a';
   if (status() & KMMsgStatusQueued) sstr[6] = 'a';
   if (status() & KMMsgStatusSent) sstr[7] = 'a';
+  if (status() & KMMsgStatusSpam) sstr[8] = 'a';
 
   return sstr;
 }

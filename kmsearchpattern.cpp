@@ -457,6 +457,9 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
     mStatus = KMMsgStatusIgnored;
  if ( ! aContents.compare("todo") )
     mStatus = KMMsgStatusTodo;
+ if ( ! aContents.compare("spam") )
+    mStatus = KMMsgStatusSpam;
+
 }
 
 bool KMSearchRuleStatus::isEmpty() const
