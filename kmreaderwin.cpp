@@ -30,6 +30,7 @@
 #include <string.h>
 #include <qbitmap.h>
 #include <qcursor.h>
+#include <qmlined.h>
 
 #define hand_width 16
 #define hand_height 16
@@ -312,9 +313,8 @@ void KMReaderWin::writeMsgHeader(void)
     break;
 
   case HdrAll:
-    t = mMsg->headerAsString();
-    t = t.replace(QRegExp("\n"),"<br>");
-    mViewer->write(t+"<br><br>");
+    mViewer->write(strToHtml(mMsg->headerAsString()));
+    mViewer->write("<br><br>");
     break;
 
   default:
@@ -458,10 +458,11 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	}
 	while((x&7) != 0);
       }
-      else aPreserveBlanks = FALSE;
+      // else aPreserveBlanks = FALSE;
     }
     if (ch=='<') htmlStr += "&lt;";
     else if (ch=='>') htmlStr += "&gt;";
+    else if (ch=='\n') htmlStr += "<BR>";
     else if (ch=='&') htmlStr += "&amp;";
     else if ((ch=='h' && strncmp(pos,"http:",5)==0) ||
 	     (ch=='f' && strncmp(pos,"ftp:",4)==0) ||
@@ -586,6 +587,7 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
     mAtmCurrent = id-1;
     menu = new QPopupMenu();
     menu->insertItem(nls->translate("Open..."), this, SLOT(slotAtmOpen()));
+    menu->insertItem(nls->translate("View..."), this, SLOT(slotAtmView()));
     menu->insertItem(nls->translate("Save as..."), this, SLOT(slotAtmSave()));
     //menu->insertItem(nls->translate("Print..."), this, SLOT(slotAtmPrint()));
     menu->insertItem(nls->translate("Properties..."), this,
@@ -596,13 +598,37 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
 
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmView()
+{
+  QString str, pname;
+  KMMessagePart msgPart;
+  QMultiLineEdit* edt = new QMultiLineEdit;
+
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  pname = msgPart.name();
+  if (pname.isEmpty()) pname=msgPart.contentDescription();
+  if (pname.isEmpty()) pname="unnamed";
+
+  kbp->busy();
+  str = msgPart.bodyDecoded();
+
+  edt->setCaption(nls->translate("View Attachment: ") + pname);
+  edt->insertLine(str);
+  edt->setReadOnly(TRUE);
+  edt->show();
+
+  kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmOpen()
 {
   QString str, pname, cmd, fileName;
+  KMMessagePart msgPart;
   char* tmpName;
   int c;
 
-  KMMessagePart msgPart;
   mMsg->bodyPart(mAtmCurrent, &msgPart);
 
   pname = msgPart.name();

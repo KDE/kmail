@@ -10,12 +10,16 @@
 #include <assert.h>
 #include <kconfig.h>
 #include <klocale.h>
+#include <qregexp.h>
 
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmaccount.h"
 #include "kmglobal.h"
 #include "kmfoldermgr.h"
+#include "kmfiltermgr.h"
+#include "kmsender.h"
+#include "kmmessage.h"
 
 //----------------------
 #include "kmaccount.moc"
@@ -86,6 +90,52 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
+{
+  KMMessage* newMsg = new KMMessage;
+  QString str, receiptTo;
+
+  receiptTo = aReceiptTo;
+  receiptTo.replace(QRegExp("\\n"),"");
+
+  newMsg->initHeader();
+  newMsg->setTo(receiptTo);
+  newMsg->setSubject(nls->translate("Receipt: ") + aMsg->subject());
+
+  str  = "Your message was successfully delivered.";
+  str += "\n\n---------- Message header follows ----------\n";
+  str += aMsg->headerAsString();
+  str += "--------------------------------------------\n";
+  newMsg->setBody(str);
+
+  msgSender->send(newMsg);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAccount::processNewMsg(KMMessage* aMsg)
+{
+  QString receiptTo;
+  int rc;
+
+  assert(aMsg != NULL);
+
+  receiptTo = aMsg->headerField("Return-Receipt-To");
+  if (!receiptTo.isEmpty()) sendReceipt(aMsg, receiptTo);
+
+  if (filterMgr->process(aMsg))
+  {
+    rc = mFolder->addMsg(aMsg);
+    if (rc) perror("failed to add message");
+    if (rc) warning(nls->translate("Failed to add message:")+
+		    '\n' + QString(strerror(rc)));
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAccount::installTimer()
 {
   if(!mTimer) {
@@ -101,9 +151,10 @@ void KMAccount::installTimer()
     printf("Starting old Timer with interval: %d\n",mInterval*1000*60);
     mTimer->start(mInterval*1000*60);
   }   
-      
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAccount::deinstallTimer()
 {
   printf("Calling deinstallTimer()\n");
@@ -116,12 +167,16 @@ void KMAccount::deinstallTimer()
   }
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {
   printf("Emitting signal\n");
   emit requestCheck(this);
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAccount::stateChanged()
 {
   printf("stateChanged called\n");

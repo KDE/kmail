@@ -385,6 +385,13 @@ void KMMainWin::slotForwardMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotResendMsg()
+{ 
+  mHeaders->resendMsg();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotDeleteMsg()
 { 
   mHeaders->deleteMsg();
@@ -409,6 +416,19 @@ void KMMainWin::slotMoveMsg()
   if (!(dest = dlg.folder())) return;
 
   mHeaders->moveMsgToFolder(dest);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotCopyMsg()
+{ 
+  KMFolderSelDlg dlg(nls->translate("Select Folder"));
+  KMFolder* dest;
+
+  if (!dlg.exec()) return;
+  if (!(dest = dlg.folder())) return;
+
+  mHeaders->copyMsgToFolder(dest);
 }
 
 
@@ -774,9 +794,12 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(nls->translate("&Move..."), this, 
 			  SLOT(slotMoveMsg()), Key_M);
   messageMenu->insertItem(nls->translate("&Copy..."), this, 
-			  SLOT(slotUnimplemented()), Key_S);
+			  SLOT(slotCopyMsg()), Key_S);
   messageMenu->insertItem(nls->translate("&Delete"), this, 
 			  SLOT(slotDeleteMsg()), Key_D);
+  messageMenu->insertSeparator();
+  messageMenu->insertItem(nls->translate("Send again..."), this, 
+			  SLOT(slotResendMsg()));
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("View Source..."), this,
 			  SLOT(slotShowMsgSrc()));

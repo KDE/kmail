@@ -242,6 +242,29 @@ void KMHeaders::saveMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::resendMsg (int msgId)
+{
+  KMComposeWin *win;
+  KMMessage *msg, *newMsg;
+
+  msg = getMsg(msgId);
+  if (!msg) return;
+
+  kbp->busy();
+  newMsg = new KMMessage;
+  newMsg->fromString(msg->asString());
+  newMsg->initHeader();
+  newMsg->setTo(msg->to());
+  newMsg->setSubject(msg->subject());
+
+  win = new KMComposeWin;
+  win->setMsg(newMsg, FALSE);
+  win->show();
+  kbp->idle(); 
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::forwardMsg (int msgId)
 {
   KMComposeWin *win;
@@ -324,6 +347,35 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   setTopItem(top);
 
   if (destFolder) destFolder->close();
+  kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
+{
+  KMMessageList* msgList;
+  KMMessage *msg, *newMsg;
+  int top, rc;
+
+  if (!destFolder) return;
+
+  kbp->busy();
+  top = topItem();
+
+  destFolder->open();
+  msgList = selectedMsgs(msgId);
+  for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
+  {
+    newMsg = new KMMessage;
+    newMsg->fromString(msg->asString());
+    assert(newMsg != NULL);
+
+    destFolder->addMsg(newMsg);
+  }
+  destFolder->close();
+
+  unmarkAll();
   kbp->idle();
 }
 

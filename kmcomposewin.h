@@ -74,7 +74,7 @@ public:
 
   /** Set the message the composer shall work with. This discards
     previous messages without calling applyChanges() on them before. */
-  virtual void setMsg(KMMessage* newMsg);
+  virtual void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE);
 
   /** Returns message of the composer. To apply the user changes to the
     message, call applyChanges() first. */
@@ -130,9 +130,7 @@ public slots:
   /** Message flags. */
   void slotToggleConfirmDelivery();
   void slotToggleConfirmRead();
-  void slotSetPriHigh();
-  void slotSetPriNormal();
-  void slotSetPriLow();
+  void slotToggleUrgent();
 
   /** Change visibility of a header field. */
   void slotMenuViewActivated(int id);
@@ -233,8 +231,7 @@ protected:
   int mLineBreak;
   int mWordWrap;
   short mBtnIdSign, mBtnIdEncrypt;
-  short mMnuIdPriHigh, mMnuIdPriNormal, mMnuIdPriLow;
-  short mMnuIdConfDeliver, mMnuIdConfRead;
+  short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
   QString mForeColor, mBackColor;
 #ifdef HAS_KSPELL
   KSpell* mKSpell;

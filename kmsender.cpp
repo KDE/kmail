@@ -560,13 +560,20 @@ bool KMSendSMTP::smtpSend(KMMessage* msg)
 bool KMSendSMTP::smtpSendRcptList(const QString aRecipients)
 {
   QString receiver;
-  int index, lastindex, replyCode;
+  int index, lastindex, replyCode, i, j;
 
   lastindex = -1;
   do
   {
     index = aRecipients.find(",",lastindex+1);
     receiver = aRecipients.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
+    i = receiver.find('<');
+    if (i >= 0)
+    {
+      j = receiver.find('>', i+1);
+      receiver = receiver.mid(i+1, j-i-1);
+    }
+
     if (!receiver.isEmpty())
     {
       smtpInCmd("RCPT");

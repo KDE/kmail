@@ -101,6 +101,7 @@ public slots:
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
+  void slotAtmView();
   void slotAtmPrint();
   void slotAtmSave();
   void slotAtmProperties();

@@ -210,7 +210,7 @@ bool KMAcctPop::doProcessNewMail(void)
     msg = new KMMessage;
     msg->fromString(response);
     if (mRetrieveAll || msg->status()!=KMMsgStatusOld)
-      mFolder->addMsg(msg);
+      processNewMsg(msg);
     else delete msg;
 
     if(!mLeaveOnServer)

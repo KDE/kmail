@@ -400,21 +400,17 @@ KMMessage* KMMessage::createForward(void)
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader(void)
 {
-  struct timeval tval;
-
   assert(identity != NULL);
   setFrom(identity->fullEmailAddr());
   setTo("");
   setSubject("");
+  setDateToday();
   if (!identity->replyToAddr().isEmpty()) setReplyTo(identity->replyToAddr());
 #ifdef KRN
   setHeaderField("X-NewsReader", "KRN http://ultra7.unl.edu.ar");
 #else
   setHeaderField("X-Mailer", "KMail [version " KMAIL_VERSION "]");
 #endif
-
-  gettimeofday(&tval, NULL);
-  setDate((time_t)tval.tv_sec);
 }
 
 
@@ -467,6 +463,15 @@ time_t KMMessage::date(void) const
   DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsUnixTime();
   return (time_t)-1;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setDateToday(void)
+{
+  struct timeval tval;
+  gettimeofday(&tval, NULL);
+  setDate((time_t)tval.tv_sec);
 }
 
 

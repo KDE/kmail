@@ -179,12 +179,15 @@ static void init(int argc, char *argv[])
 
   identity = new KMIdentity;
 
-  transferMail();
-
   cfg->setGroup("General");
-  foldersPath = cfg->readEntry("folders", 
-			       QDir::homeDirPath() + QString("/Mail"));
+  foldersPath = cfg->readEntry("folders", "");
   acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
+
+  if (foldersPath.isEmpty())
+  {
+    foldersPath = QDir::homeDirPath() + QString("/Mail");
+    transferMail();
+  }
 
   folderMgr = new KMFolderMgr(foldersPath);
   acctMgr   = new KMAcctMgr(acctPath);

@@ -15,6 +15,7 @@ class KMAcctMgr;
 class KMFolder;
 class KMAcctFolder;
 class KConfig;
+class KMMessage;
 
 class KMAccount: public QObject
 {
@@ -63,6 +64,14 @@ public:
 
 protected:
   KMAccount(KMAcctMgr* owner, const char* accountName);
+
+  /** Does filtering and storing in a folder for the given message.
+    Shall be called from within processNewMail() to process the new
+    messages. */
+  virtual void processNewMsg(KMMessage* msg);
+
+  /** Send receipt of message back to sender (confirming delivery). */
+  virtual void sendReceipt(KMMessage* msg, const QString receiptTo) const;
 
   QString       mName;
   KMAcctMgr*    mOwner;

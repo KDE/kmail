@@ -5,7 +5,6 @@
 #include "kmmessage.h"
 #include "kmacctfolder.h"
 #include "kmglobal.h"
-#include "kmfiltermgr.h"
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -79,15 +78,7 @@ bool KMAcctLocal::processNewMail(void)
   {
     debug("processing message %ld", i);
     msg = mailFolder.take(0);
-    if (msg) 
-    {
-      if (filterMgr->process(msg))
-      {
-	rc = mFolder->addMsg(msg);
-	if (rc) perror("failed to add message");
-	if (rc) warning("Failed to add message:\n" + QString(strerror(rc)));
-      }
-    }
+    if (msg) processNewMsg(msg);
   }
   debug("done, closing folders");
 

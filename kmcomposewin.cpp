@@ -100,6 +100,12 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   setCaption(nls->translate("KMail Composer"));
   setMinimumSize(200,200);
 
+  mBtnTo.setFocusPolicy(QWidget::NoFocus);
+  mBtnCc.setFocusPolicy(QWidget::NoFocus);
+  mBtnBcc.setFocusPolicy(QWidget::NoFocus);
+  mBtnFrom.setFocusPolicy(QWidget::NoFocus);
+  mBtnReplyTo.setFocusPolicy(QWidget::NoFocus);
+
   mAtmListBox = new KTabListBox(&mMainWidget, NULL, 5);
   mAtmListBox->setColumn(0, nls->translate("F"),16, KTabListBox::PixmapColumn);
   mAtmListBox->setColumn(1, nls->translate("Name"), 200);
@@ -135,15 +141,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   rethinkFields();
 
   mMsg = NULL;
-  if (aMsg)
-  { 
-    setMsg(aMsg);
-    if(mEditor->text().isEmpty())
-      mEditor->toggleModified(FALSE);
-  }
-
-  if (mAutoSign)
-    slotAppendSignature();
+  if (aMsg) setMsg(aMsg);
 
 #ifdef HAS_KSPELL
   mKSpellConfig = new KSpellConfig;
@@ -376,15 +374,8 @@ void KMComposeWin::setupMenuBar(void)
   menu = new QPopupMenu();
   menu->setCheckable(TRUE);
 
-  mMnuIdPriHigh = menu->insertItem(nls->translate("&High priority"), this,
-				   SLOT(slotSetPriHigh()));
-  mMnuIdPriNormal=menu->insertItem(nls->translate("&Normal priority"), this,
-				   SLOT(slotSetPriNormal()));
-  mMnuIdPriLow = menu->insertItem(nls->translate("&Low priority"), this,
-				  SLOT(slotSetPriLow()));
-  menu->setItemChecked(mMnuIdPriNormal, TRUE);
-  menu->insertSeparator();
-
+  mMnuIdUrgent = menu->insertItem(nls->translate("&Urgent"), this,
+				  SLOT(slotToggleUrgent()));
   mMnuIdConfDeliver=menu->insertItem(nls->translate("&Confirm delivery"), this,
 				     SLOT(slotToggleConfirmDelivery()));
   mMnuIdConfRead = menu->insertItem(nls->translate("&Confirm read"), this,
@@ -578,7 +569,7 @@ void KMComposeWin::setupEditor(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg(KMMessage* newMsg)
+void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 {
   KMMessagePart bodyPart, *msgPart;
   int i, num;
@@ -610,6 +601,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg)
     }
   }
   else mEditor->setText(mMsg->body());
+
+  if (mAutoSign && mayAutoSign) slotAppendSignature();
   mEditor->toggleModified(FALSE);
 }
 
@@ -618,7 +611,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg)
 void KMComposeWin::applyChanges(void)
 {
   QString str, atmntStr;
-  QString temp;
+  QString temp, replyAddr;
   KMMessagePart bodyPart, *msgPart;
 
   assert(mMsg!=NULL);
@@ -631,6 +624,21 @@ void KMComposeWin::applyChanges(void)
   if (!bcc().isEmpty()) mMsg->setBcc(bcc());
   if (!followupTo().isEmpty()) mMsg->setFollowup(followupTo());
   if (!newsgroups().isEmpty()) mMsg->setGroups(newsgroups());
+
+  if (!replyTo().isEmpty()) replyAddr = replyTo();
+  else replyAddr = from();
+
+  if (mMnuOptions->isItemChecked(mMnuIdConfDeliver))
+    mMsg->setHeaderField("Return-Receipt-To", replyAddr);
+
+  if (mMnuOptions->isItemChecked(mMnuIdConfRead))
+    mMsg->setHeaderField("X-Chameleon-Return-To", replyAddr);
+
+  if (mMnuOptions->isItemChecked(mMnuIdUrgent))
+  {
+    mMsg->setHeaderField("X-PRIORITY", "2 (High)");
+    mMsg->setHeaderField("Priority", "urgent");
+  }
 
   if(mAtmList.count() <= 0)
   {
@@ -882,29 +890,10 @@ void KMComposeWin::slotToggleConfirmRead()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotSetPriHigh()
+void KMComposeWin::slotToggleUrgent()
 {
-  mMnuOptions->setItemChecked(mMnuIdPriHigh, TRUE);
-  mMnuOptions->setItemChecked(mMnuIdPriNormal, FALSE);
-  mMnuOptions->setItemChecked(mMnuIdPriLow, FALSE);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSetPriNormal()
-{
-  mMnuOptions->setItemChecked(mMnuIdPriHigh, FALSE);
-  mMnuOptions->setItemChecked(mMnuIdPriNormal, TRUE);
-  mMnuOptions->setItemChecked(mMnuIdPriLow, FALSE);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSetPriLow()
-{
-  mMnuOptions->setItemChecked(mMnuIdPriHigh, FALSE);
-  mMnuOptions->setItemChecked(mMnuIdPriNormal, FALSE);
-  mMnuOptions->setItemChecked(mMnuIdPriLow, TRUE);
+  mMnuOptions->setItemChecked(mMnuIdUrgent,
+			      !mMnuOptions->isItemChecked(mMnuIdUrgent));
 }
 
 
@@ -1249,6 +1238,7 @@ void KMComposeWin::slotAppendSignature()
 
   if (!sigText.isEmpty())
   {
+    mEditor->insertLine("--", -1);
     mEditor->insertLine(sigText, -1);
     mEditor->toggleModified(mod);
   }

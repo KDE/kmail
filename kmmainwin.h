@@ -79,6 +79,8 @@ protected slots:
   void slotSaveMsg();
   void slotPrintMsg();
   void slotMoveMsg();
+  void slotCopyMsg();
+  void slotResendMsg();
   void slotSetMsgStatus(int);
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);

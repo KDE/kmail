@@ -91,6 +91,9 @@ public:
   virtual void setDate(const QString str);
   virtual void setDate(time_t aUnixTime);
 
+  /** Set the 'Date' header field to the current date. */
+  virtual void setDateToday(void);
+
   /** Get or set the 'To' header field */
   virtual const QString to(void) const;
   virtual void setTo(const QString aStr);
@@ -136,9 +139,6 @@ public:
 
   /** Returns the message ID, useful for followups (Added for krn)*/
   virtual const QString id(void) const;
-
-  /* End of functions added by KRN */
-
 
   /** Get or set header field with given name */
   virtual const QString headerField(const QString name) const;
