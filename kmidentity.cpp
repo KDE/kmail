@@ -138,7 +138,7 @@ void KMIdentity::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::writeConfig(bool aWithSync)
+void KMIdentity::writeConfig(bool aWithSync) const
 {
   KConfig* config = kapp->config();
 
