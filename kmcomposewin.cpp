@@ -2730,7 +2730,7 @@ bool KMComposeWin::processStructuringInfo( const QString   bugURL,
 
 
     DwString mainDwStr;
-    mainDwStr = mainHeader;
+    mainDwStr = mainHeader + "\n\n";
     DwBodyPart mainDwPa( mainDwStr, 0 );
     mainDwPa.Parse();
     KMMessage::bodyPart(&mainDwPa, &resultingPart);
@@ -2810,7 +2810,7 @@ kdDebug(5006) << "***************************************" << endl;
           versStr += structuring.data.contentTEncVersion;
         }
 
-        DwBodyPart versDwPa( versStr, 0 );
+        DwBodyPart versDwPa( versStr + "\n\n", 0 );
         versDwPa.Parse();
         KMMessagePart versKmPa;
         KMMessage::bodyPart(&versDwPa, &versKmPa);
@@ -2818,7 +2818,7 @@ kdDebug(5006) << "***************************************" << endl;
         // store string representation of the cleartext headers
         versCStr = versDwPa.Headers().AsString().c_str();
         // store string representation of encoded cleartext
-        versCStr += "\n\n";
+        versCStr += "\n";
         versCStr += versKmPa.body();
       }
 
@@ -2847,7 +2847,7 @@ kdDebug(5006) << "***************************************" << endl;
           codeStr += structuring.data.contentDispCode;
         }
 
-        DwBodyPart codeDwPa( codeStr, 0 );
+        DwBodyPart codeDwPa( codeStr + "\n\n", 0 );
         codeDwPa.Parse();
         KMMessagePart codeKmPa;
         KMMessage::bodyPart(&codeDwPa, &codeKmPa);
@@ -2861,7 +2861,7 @@ kdDebug(5006) << "***************************************" << endl;
         // store string representation of the cleartext headers
         codeCStr = codeDwPa.Headers().AsString().c_str();
         // store string representation of encoded cleartext
-        codeCStr += "\n\n";
+        codeCStr += "\n";
         codeCStr += codeKmPa.body();
 #if 0
         kdDebug(5006) << "***************************************" << endl;
