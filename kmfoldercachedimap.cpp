@@ -1729,6 +1729,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
         for ( uint i = 0 ; i < sizeof s_contentsType2Annotation / sizeof *s_contentsType2Annotation; ++i ) {
           if ( type == s_contentsType2Annotation[i] ) {
             // Case 3: known content-type on server, get it
+            kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
             setContentsType( static_cast<KMail::FolderContentsType>( i ) );
             mContentsTypeChanged = false; // we changed it, not the user
             foundKnownType = true;

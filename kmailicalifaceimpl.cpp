@@ -582,7 +582,7 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
 {
   QMap<QString, bool> map;
 
-  kdDebug(5006) << k_funcinfo << endl;
+  kdDebug(5006) << k_funcinfo << contentsType << endl;
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
@@ -1192,6 +1192,18 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* f
   if ( it != mFolderInfoMap.end() )
     return (*it).mStorageFormat;
   return StorageIcalVcard;
+}
+
+void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
+{
+  FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() )
+    (*it).mStorageFormat = format;
+  else {
+    FolderInfo info;
+    info.mStorageFormat = format;
+    mFolderInfoMap.insert( folder, info );
+  }
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )

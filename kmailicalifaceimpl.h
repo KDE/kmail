@@ -163,6 +163,8 @@ public:
 
   /// @return the storage format of a given folder
   StorageFormat storageFormat( KMFolder* folder ) const;
+  /// Set the storage format of a given folder. Called when seeing the kolab annotation.
+  void setStorageFormat( KMFolder* folder, StorageFormat format );
 
 public slots:
   /* (Re-)Read configuration file */
