@@ -349,7 +349,7 @@ int KMFolder::createIndexFromContents(void)
   mMsgList.clear();
 
   num     = -1;
-  numStatus= 101;
+  numStatus= 11;
   offs    = 0;
   size    = 0;
   dateStr = "";
@@ -378,7 +378,7 @@ int KMFolder::createIndexFromContents(void)
 	{
 	  msgStr.sprintf(i18n("Creating index file: %d messages done"), num);
 	  emit statusMsg(msgStr);
-	  numStatus = 100;
+	  numStatus = 10;
 	}
 
 	if (size > 0)
@@ -887,13 +887,13 @@ int KMFolder::compact(void)
   tempFolder->open();
   open();
 
-  for(num=1,numStatus=100; count() > 0; num++, numStatus--)
+  for(num=1,numStatus=9; count() > 0; num++, numStatus--)
   {
     if (numStatus <= 0)
     {
       msgStr.sprintf(i18n("Compacting folder: %d messages done"), num);
       emit statusMsg(msgStr);
-      numStatus = 100;
+      numStatus = 10;
     }
 
     msg = getMsg(0);

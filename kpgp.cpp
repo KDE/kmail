@@ -205,7 +205,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   QStrList* pl;
   char* pers;
 
-  if(!prepare(TRUE)) return FALSE;
+  if(!prepare(FALSE)) return FALSE;
 
   persons.clear();
   pl = (QStrList*)&aPers;
@@ -246,7 +246,7 @@ Kpgp::havePublicKey(QString _person)
 bool 
 Kpgp::sign(void)
 {
-  if (!prepare(TRUE)) return FALSE;
+  if (!prepare(FALSE)) return FALSE;
   return runPGP(SIGN);
 }
 
@@ -475,39 +475,12 @@ Kpgp::decode(const QString text, bool returnHTML)
 bool 
 Kpgp::checkForPGP(void)
 {
-  // get path
-  QString path;
-  QStrList pSearchPaths;
-  int index = 0;
-  int lastindex = 0;
+  int rc = system("pgp -h 2>/dev/null >/dev/null");
 
-  flagNoPGP=TRUE;
+  if (rc != -1 && rc != 127) flagNoPGP = FALSE;
+  else flagNoPGP = TRUE;
 
-  path = getenv("PATH");
-  while((index = path.find(":",lastindex+1)) != -1)
-  {
-    pSearchPaths.append(path.mid(lastindex+1,index-lastindex-1));
-    lastindex = index;
-  }
-  if(lastindex != (int)path.size() - 2)
-    pSearchPaths.append( path.mid(lastindex+1,path.size()-lastindex-1) );
-
-  QStrListIterator it(pSearchPaths);
-
-  while ( it.current() )
-  {
-    path = it.current();
-    path += "/pgp";
-    if ( !access( path, X_OK ) )
-    {
-      flagNoPGP=FALSE;
-      //debug("Kpgp: found pgp");
-      return TRUE;
-    }
-    ++it;
-  }
-  debug("Kpgp: didn't find pgp");
-  return FALSE;
+  return flagNoPGP;
 }
 
 bool
@@ -588,7 +561,6 @@ Kpgp::runPGP(int action, const char* args)
   rc = system(cmd.data());
   alarm(0);
   signal(SIGALRM,oldsig);
-  debug("pgp: system() rc=%d. Reading results", rc);
 
   output = 0;
   outfd = open(outName.data(), O_RDONLY);  

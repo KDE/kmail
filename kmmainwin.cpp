@@ -189,7 +189,7 @@ void KMMainWin::statusMsg(const char* aText)
 {
   mStatusBar->changeItem(aText, mMessageStatusId);
   kapp->flushX();
-  kapp->processEvents(300);
+  kapp->processEvents(100);
 }
 
 

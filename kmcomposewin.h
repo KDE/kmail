@@ -120,8 +120,9 @@ public:
   virtual KMMessage* msg(void) const { return mMsg; }
 
   /** Applies the user changes to the message object of the composer
-    and signs/encrypts the message if activated. */
-  virtual void applyChanges(void);
+    and signs/encrypts the message if activated. Returns FALSE in
+    case of an error (e.g. if PGP encryption fails). */
+  virtual bool applyChanges(void);
 
   /** If this flag is set the message of the composer is deleted when
     the composer is closed and the message was not sent. Default: FALSE */

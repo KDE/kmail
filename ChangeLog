@@ -1,12 +1,19 @@
+1998-06-24  Stefan Taferner  <taferner@kde.org>
+
+	* Pgp detection simplified and bugfixed.
+
+	* Folder status messages for index creation and
+	compacting folder reduced from every 100th to every 10th.
+
 1998-06-23  Markus Wuebben  <markus@kde.org> (KMail-0.7.7)
 
 	* removed various unnecessary assert()s. and replaced them
 	with if()s. Especially in functions that return void this
 	is very helpfull and makes kmail more stable.
+
 	* Checked return values with if()s for some functions to
 	make sure that we run into to trouble with those problems.
 	
-
 1998-06-23  Stefan Taferner  <taferner@kde.org> (KMail-0.7.7)
 
 	* Removed lots of old debug messages.

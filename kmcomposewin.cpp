@@ -768,7 +768,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::applyChanges(void)
+bool KMComposeWin::applyChanges(void)
 {
   QString str, atmntStr;
   QString temp, replyAddr;
@@ -819,11 +819,14 @@ void KMComposeWin::applyChanges(void)
       mMsg->setCteStr("quoted-printable");
 #ifdef CHARSETS      
       str=convertToSend(pgpProcessedMsg());
+      if (str.isNull()) return FALSE;
       cout<<"Setting charset to: "<<mCharset<<"\n";
       mMsg->setCharset(mCharset);
       mMsg->setBodyEncoded(str);
-#else      
-      mMsg->setBodyEncoded(pgpProcessedMsg());
+#else
+      str = pgpProcessedMsg();
+      if (str.isNull()) return FALSE;
+      mMsg->setBodyEncoded(str);
 #endif      
     }
     else
@@ -833,11 +836,14 @@ void KMComposeWin::applyChanges(void)
       mMsg->setCteStr("8bit");
 #ifdef CHARSETS      
       str=convertToSend(pgpProcessedMsg());
+      if (str.isNull()) return FALSE;
       cout<<"Setting charset to: "<<mCharset<<"\n";
       mMsg->setCharset(mCharset);
       mMsg->setBody(str);
 #else      
-      mMsg->setBody(pgpProcessedMsg());
+      str = pgpProcessedMsg();
+      if (str.isNull()) return FALSE;
+      mMsg->setBody(str);
 #endif      
     }
   }
@@ -874,6 +880,7 @@ void KMComposeWin::applyChanges(void)
 
   // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
   mMsg->cleanupHeader();
+  return TRUE;
 }
 
 
@@ -929,8 +936,8 @@ const QString KMComposeWin::pgpProcessedMsg(void)
 	{
 	  kbp->idle();
 	  warning(i18n("public key for %s not found.\n"
-				 "This person will not be able to " 
-				 "decrypt the message."),
+		       "This person will not be able to " 
+		       "decrypt the message."),
 		  (const char *)receiver);
 	  kbp->busy();
 	} 
@@ -952,7 +959,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   warning(i18n("Error during PGP:") + QString("\n") + 
 	  pgp->lastErrorMsg());
 
-  return mEditor->text();
+  return 0;
 }
 
  
@@ -1527,8 +1534,7 @@ void KMComposeWin::slotSendLater()
 void KMComposeWin::slotSendNow()
 {
   kbp->busy();
-  applyChanges();
-  if(msgSender->send(mMsg,TRUE))
+  if(applyChanges() && msgSender->send(mMsg,TRUE))
   {
     mAutoDeleteMsg = FALSE;
     close();
