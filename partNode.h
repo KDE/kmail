@@ -62,7 +62,6 @@ public:
 private:
     partNode() :
         mRoot(      0 ),
-        mPrev(      0 ),
         mNext(      0 ),
         mChild(     0 ),
         mWasProcessed( false ),
@@ -88,7 +87,6 @@ public:
               int explicitSubType = DwMime::kSubtypeUnknown,
 	      bool deleteDwBodyPart = false ) :
         mRoot(      0 ),
-        mPrev(      0 ),
         mNext(      0 ),
         mChild(     0 ),
         mWasProcessed( false ),
@@ -126,7 +124,6 @@ public:
     partNode( bool deleteDwBodyPart,
               DwBodyPart* dwPart ) :
         mRoot(      0 ),
-        mPrev(      0 ),
         mNext(      0 ),
         mChild(     0 ),
         mWasProcessed( false ),
@@ -282,7 +279,6 @@ public:
         mNext = next;
         if( mNext ){
             mNext->mRoot = mRoot;
-            mNext->mPrev = this;
             adjustDefaultType( mNext );
         }
         return mNext;
@@ -325,7 +321,6 @@ public:
 
 public:
     partNode*     mRoot;
-    partNode*     mPrev;
     partNode*     mNext;
     partNode*     mChild;
     bool          mWasProcessed; // to be used by parseObjectTree()
