@@ -404,7 +404,7 @@ void KMAcctImap::slotMailCheckCanceled()
 }
 
 //-----------------------------------------------------------------------------
-FolderStorage* KMAcctImap::rootFolder()
+FolderStorage* const KMAcctImap::rootFolder() const
 {
   return mFolder;
 }

@@ -582,10 +582,6 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
 //  kdDebug(5006) << name() << ": " << subfolderNames.join(",") << "; inboxOnly:" << it_inboxOnly
 //    << ", createinbox:" << createInbox << ", hasinbox:" << mAccount->hasInbox() << endl;
 
-  // update progress
-  account()->listDirProgressItem()->incCompletedItems();
-  account()->listDirProgressItem()->updateProgress();
-  account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
 
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(true);
@@ -667,6 +663,10 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       }
       if (f)
       {
+        // update progress
+        account()->listDirProgressItem()->incCompletedItems();
+        account()->listDirProgressItem()->updateProgress();
+        account()->listDirProgressItem()->setStatus( folder()->prettyURL() + i18n(" completed") );
         f->setAccount(mAccount);
         if ( f->hasChildren() == FolderStorage::ChildrenUnknown )
         {
@@ -1663,7 +1663,8 @@ bool KMFolderImap::processNewMail(bool)
 
   mMailCheckProgressItem = ProgressManager::createProgressItem(
               "MailCheckAccount" + account()->name(),
-              "MailCheck" + folder()->prettyURL(), folder()->prettyURL(),
+              "MailCheck" + folder()->prettyURL(),
+              folder()->prettyURL(),
               i18n("updating message counts"),
               false,
               account()->useSSL() || account()->useTLS() );

@@ -45,6 +45,7 @@ using KMail::ImapJob;
 #include "protocols.h"
 #include "progressmanager.h"
 using KPIM::ProgressManager;
+#include "kmfoldermgr.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -849,8 +850,20 @@ namespace KMail {
           SIGNAL( progressItemCanceled( ProgressItem* ) ),
           this,
           SLOT( slotAbortRequested( ProgressItem* ) ) );
+      // Start with a guessed value of the old folder count plus 5%. As long
+      // as the list of folders doesn't constantly change, that should be good
+      // enough.
+      unsigned int count = folderCount();
+      mListDirProgressItem->setTotalItems( count + (unsigned int)(count*0.05) );
     }
     return mListDirProgressItem;
+  }
+
+  unsigned int ImapAccountBase::folderCount() const
+  {
+    if ( !rootFolder() || !rootFolder()->folder() || !rootFolder()->folder()->child() )
+      return 0;
+    return kmkernel->imapFolderMgr()->folderCount( rootFolder()->folder()->child() );
   }
 
 } // namespace KMail

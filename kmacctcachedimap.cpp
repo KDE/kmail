@@ -407,7 +407,7 @@ void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
   killAllJobs( false );
 }
 
-FolderStorage* KMAcctCachedImap::rootFolder()
+FolderStorage* const KMAcctCachedImap::rootFolder() const
 {
   return mFolder;
 }

@@ -173,7 +173,7 @@ public:
   /**
    * Returns the root folder of this account
    */
-  virtual FolderStorage* rootFolder();
+  virtual FolderStorage* const rootFolder() const;
 
 protected:
   friend class KMAcctMgr;
