@@ -62,7 +62,7 @@ int MessageHighlighter::highlightParagraph( const QString &text, int )
 {
     QString simplified = text;
     simplified = simplified.replace( "\s", QString::null ).replace( "|", ">" );
-    while ( simplified.startsWith( ">>>>" ) ) 
+    while ( simplified.startsWith( ">>>>" ) )
 	simplified = simplified.mid(3);
     if	( simplified.startsWith( ">>>" ) || simplified.startsWith( "> >	>" ) )
 	setFormat( 0, text.length(), col2 );
@@ -82,6 +82,7 @@ SpellChecker::SpellChecker( QTextEdit *textEdit )
   KConfigGroupSaver saver(config, "Reader");
   QColor c = QColor("red");
   mColor = config->readColorEntry("NewMessage", &c);
+  mIntraWordEditing = false;
 }
 
 SpellChecker::~SpellChecker()
@@ -114,7 +115,15 @@ int SpellChecker::highlightParagraph( const QString& text,
 	currentWord = "";
 	for ( int i = 0; i < len; i++ ) {
 	    if ( text[i].isSpace() || text[i] == '-' ) {
-		flushCurrentWord();
+		if ((para != parano) ||
+		    !intraWordEditing() ||
+		    (i - currentWord.length() > (uint)index) ||
+		    (i < index)) {
+		    flushCurrentWord();
+		} else {
+		    qDebug( "ignoring word %s, len %d, index %d, i %d", currentWord.latin1(), currentWord.length(), index, i );
+		    currentWord = "";
+		}
 		currentPos = i + 1;
 	    } else {
 		currentWord += text[i];
@@ -139,6 +148,7 @@ QStringList SpellChecker::personalWords()
     l.append( "Konqueror" );
     l.append( "KSpell" );
     l.append( "Kontact" );
+    l.append( "Qt" );
     return l;
 }
 
@@ -175,7 +185,6 @@ DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
     mAutomatic = true;
     textEdit->installEventFilter( this );
     textEdit->viewport()->installEventFilter( this );
-    mInitialMove = true;
     mRehighlightRequested = false;
     mSpell = 0;
     mSpellKey = spellKey();
@@ -335,7 +344,6 @@ void DictSpellChecker::slotAutoDetection()
 
 bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 {
-    //TODO mouse moves, pgup, home ctrl etc.
     if (o == textEdit() && (e->type() == QEvent::FocusIn)) {
 	if (mSpell && mSpellKey != spellKey()) {
 	    mSpellKey = spellKey();
@@ -355,15 +363,15 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	    k->key() == Key_PageUp ||
 	    k->key() == Key_PageDown ||
 	    k->key() == Key_Home) {
-	    if (mInitialMove) {
+	    if (intraWordEditing()) {
+		setIntraWordEditing(false);
 		if (!mRehighlightRequested) {
 		    mRehighlightRequested = true;
 		    QTimer::singleShot(0, this, SLOT(slotRehighlight()));
 		}
-		mInitialMove = false;
 	    }
 	} else {
-	    mInitialMove = true;
+	    setIntraWordEditing(true);
 	}
 	if (k->key() == Key_Space ||
 	    k->key() == Key_Enter ||
@@ -373,12 +381,12 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 
     if (o == textEdit()->viewport() &&
 	(e->type() == QEvent::MouseButtonPress)) {
-	if (mInitialMove) {
+	if (intraWordEditing()) {
+	    setIntraWordEditing(false);
 	    if (!mRehighlightRequested) {
 		mRehighlightRequested = true;
 		QTimer::singleShot(0, this, SLOT(slotRehighlight()));
 	    }
-	    mInitialMove = false;
 	}
     }
 

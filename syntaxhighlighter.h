@@ -21,6 +21,7 @@
 #define SYNTAXHIGHLIGHTER_H
 
 #include <qtextedit.h>
+#include <qtimer.h>
 #include <qsyntaxhighlighter.h>
 #include <qcolor.h>
 #include <qstringlist.h>
@@ -56,6 +57,8 @@ public:
     virtual int highlightParagraph( const QString& text,
 				    int endStateOfLastPara );
     virtual bool isMisspelled( const QString& word ) = 0;
+    bool intraWordEditing() { return mIntraWordEditing; }
+    void setIntraWordEditing(bool editing) { mIntraWordEditing = editing; }
     static QStringList personalWords();
 
 private:
@@ -65,6 +68,7 @@ private:
     int currentPos;
     bool alwaysEndsWithSpace;
     QColor mColor;
+    bool mIntraWordEditing;
 };
 
 class DictSpellChecker : public QObject, public SpellChecker
@@ -100,7 +104,6 @@ private:
     KSpell *mSpell;
     bool mRehighlightRequested;
     QString mSpellKey;
-    bool mInitialMove;
     int mWordCount, mErrorCount;
     bool mActive, mAutomatic, mAutoReady;
 };
