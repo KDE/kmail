@@ -1709,7 +1709,9 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir,
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
 
-      int menuId = menu->insertItem(folder->label());
+      QString label(folder->label());
+      label.replace(QRegExp("&"),QString("&&"));
+      int menuId = menu->insertItem(label);
       aMenuToFolder->insert( menuId, folder );
 
       KMFolderDir *child = folder->child();
