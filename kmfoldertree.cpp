@@ -132,8 +132,9 @@ void KMFolderTree::doDropAction(KDNDDropZone* aDropZone)
   KMMessage* msg;
   QPoint pos;
   int i;
-
+  
   if (aDropZone!=mDropZone) return;
+  if (aDropZone->getDataType() != DndRawData) return; //sven
 
   dd = (KMDragData*)aDropZone->getData();
   if (!dd || sizeof(*dd)!=sizeof(KMDragData)) return;
