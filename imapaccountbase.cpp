@@ -461,6 +461,13 @@ namespace KMail {
       kdDebug(5006) << "suppressing error:" << errorMsg << endl;
   }
 
+  //-----------------------------------------------------------------------------
+  QString ImapAccountBase::jobData::htmlURL() const
+  {
+    KURL u(  url );
+    return u.htmlURL();
+  }
+
 }; // namespace KMail
 
 #include "imapaccountbase.moc"

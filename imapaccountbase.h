@@ -89,13 +89,17 @@ namespace KMail {
      */
     struct jobData
     {
-     // Needed by QMap, don't use
-     jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), inboxOnly(false), quiet(false) {}
-      jobData( QString _url, KMFolder *_parent = 0,
+      // Needed by QMap, don't use
+      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), inboxOnly(false), quiet(false) {}
+      // Real constructor
+      jobData( const QString& _url, KMFolder *_parent = 0,
           int _total = 1, int _done = 0, bool _quiet = false, bool _inboxOnly = false )
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
       inboxOnly(_inboxOnly), quiet(_quiet)
       {}
+      // Return "url" in a form that can be displayed in HTML (w/o password)
+      QString htmlURL() const;
+
       QString path;
       QString url;
       QByteArray data;
