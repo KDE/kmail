@@ -1,15 +1,12 @@
 // Author: Don Sanders <sanders@kde.org>
 // License GPL
 
-#ifdef HAVE_CONFIG_H
+
 #include <config.h>
-#endif
-#include <errno.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+
+#include "kmstartup.h"
+
+#include "kmkernel.h" //control center
 
 #include <klocale.h>
 #include <ksimpleconfig.h>
@@ -17,9 +14,14 @@
 #include <knotifyclient.h>
 #include <dcopclient.h>
 #include <kcrash.h>
+#include <kglobal.h>
 
-#include "kmkernel.h" //control center
-#include "kmstartup.h"
+#include <errno.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #undef Status // stupid X headers
 
@@ -58,19 +60,19 @@ void kmsetSignalHandler(void (*handler)(int))
 }
 //-----------------------------------------------------------------------------
 
-namespace KMail
-{
-QString getMyHostName(void)
-{
-  char hostNameC[256];
-  // null terminate this C string
-  hostNameC[255] = 0;
-  // set the string to 0 length if gethostname fails
-  if(gethostname(hostNameC, 255))
-    hostNameC[0] = 0;
-  return QString::fromLocal8Bit(hostNameC);
-}
+namespace {
+  QString getMyHostName() {
+    char hostNameC[256];
+    // null terminate this C string
+    hostNameC[255] = 0;
+    // set the string to 0 length if gethostname fails
+    if(gethostname(hostNameC, 255))
+      hostNameC[0] = 0;
+    return QString::fromLocal8Bit(hostNameC);
+  }
+} // anon namespace
 
+namespace KMail {
 
 void checkConfigUpdates() {
   static const char * const updates[] = {
@@ -128,7 +130,7 @@ void lockOrDie() {
 }
 
 void insertLibraryCatalogues() {
-  static const char * catalogues[] = {
+  static const char * const catalogues[] = {
     "libkdenetwork",
     "libkdepim",
     "libktnef",

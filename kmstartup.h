@@ -14,7 +14,6 @@ void kmcrashHandler(int sigId);
 
 namespace KMail
 {
-    QString getMyHostName(void);
     void checkConfigUpdates();
     void lockOrDie();
     void insertLibraryCatalogues();
