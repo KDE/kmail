@@ -1365,7 +1365,7 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
 //-----------------------------------------------------------------------------
 void KMHeaders::updateMessageList(void)
 {
-  long i;
+  int i;
   KMMsgBase* mb;
   bool autoUpd;
 
@@ -1414,7 +1414,7 @@ void KMHeaders::updateMessageList(void)
 
   if (mNested) {
     for (i=0; i<mFolder->count(); i++)
-      mItems.operator[](i) = 0;
+      mItems[i] = 0;
 
     clear();
     mTree.setAutoDelete( true );
@@ -1480,13 +1480,13 @@ void KMHeaders::updateMessageList(void)
       assert(mTreeToplevel[msgId]);
       if (*mTreeToplevel[msgId]) {
 	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-	mItems.operator[](i) = hi;
+	mItems[i] = hi;
 	recursivelyAddChildren( i, hi );
       }
     }
 
     for (i=0; i<mFolder->count(); i++)
-      assert(mItems.operator[](i) != 0);
+      assert(mItems[i] != 0);
 
     mTree.clear();
     mTreeSeen.clear();
@@ -1500,10 +1500,10 @@ void KMHeaders::updateMessageList(void)
 	
 	if (i >= oldSize) {
 	  KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-	  mItems.operator[](i) = hi;
+	  mItems[i] = hi;
 	}
 	else
-	  mItems.operator[](i)->reset( mFolder, i );
+	  mItems[i]->reset( mFolder, i );
       }
   }
 
