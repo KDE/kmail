@@ -635,6 +635,7 @@ public:
   KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList );
   KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
   KMMoveCommand( KMFolder* destFolder, KMMsgBase * msgBase );
+  KMFolder* destFolder() const { return mDestFolder; }
 
 public slots:
   void slotImapFolderCompleted(KMFolderImap *folder, bool success);
