@@ -1050,7 +1050,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
       fname += "/unnamed";
     else
     {
-      fname = fname + "/" + fileName;
+      fname = fname + "/" + fileName.replace(QRegExp("/"),"");
       // remove quotes from the filename so that the shell does not get confused
       int c = 0;
       while ((c = fname.find('"', c)) >= 0)
@@ -1605,6 +1605,7 @@ void KMReaderWin::slotAtmOpenWith()
 //-----------------------------------------------------------------------------
 QString KMReaderWin::getAtmFilename(QString pname, QString msgpartname) {
   if (pname.isEmpty()) pname=msgpartname;
+  pname.replace(QRegExp("/"),"");
   if (pname.isEmpty()) pname="unnamed";
   QString fileName = QString("%1part%2/%3")
              .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
