@@ -232,6 +232,17 @@ void RecipientLine::setComboWidth( int w )
   mCombo->setFixedWidth( w );
 }
 
+void RecipientLine::fixTabOrder( QWidget *previous )
+{
+  setTabOrder( previous, mCombo );
+  setTabOrder( mCombo, mEdit );
+}
+
+QWidget *RecipientLine::tabOut() const
+{
+  return mEdit;
+}
+
 
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent )
@@ -276,6 +287,7 @@ RecipientLine *RecipientsView::addLine()
 
   if ( mLines.last() ) {
     line->setRecipientType( mLines.last()->recipientType() );
+    line->fixTabOrder( mLines.last()->tabOut() );
   }
 
   mLines.append( line );
@@ -345,7 +357,7 @@ void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
 }
 
 void RecipientsView::slotDeleteDueLine()
-{ 
+{
    RecipientLine *line = mCurDelLine;
    int pos = mLines.find( line );
 
@@ -467,9 +479,9 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addWidget( mTotalLabel, 1 );
   mTotalLabel->hide();
 
-  QPushButton *button = new QPushButton( "&Select...", this );
-  topLayout->addWidget( button );
-  connect( button, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
+  mSelectButton = new QPushButton( "&Select...", this );
+  topLayout->addWidget( mSelectButton );
+  connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
 
   initRecipientPicker();
 }

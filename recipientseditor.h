@@ -36,6 +36,7 @@ class KWindowPositioner;
 
 class QComboBox;
 class QLabel;
+class QPushButton;
 
 class Recipient
 {
@@ -101,6 +102,9 @@ class RecipientLine : public QWidget
     bool isEmpty();
 
     void setComboWidth( int w );
+
+    void fixTabOrder( QWidget *previous );
+    QWidget *tabOut() const;
 
   signals:
     void returnPressed( RecipientLine * );
@@ -198,6 +202,7 @@ class SideWidget : public QWidget
   private:
     RecipientsView *mView;
     QLabel *mTotalLabel;
+    QPushButton *mSelectButton;
     RecipientsPicker *mRecipientPicker;
     KWindowPositioner *mPickerPositioner;
 };
