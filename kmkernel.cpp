@@ -20,6 +20,7 @@
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmmessage.h"
+#include "kmserial.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmfiltermgr.h"
@@ -455,6 +456,7 @@ void KMKernel::init()
 
   the_undoStack = new KMUndoStack(20);
   the_folderMgr = new KMFolderMgr(foldersPath);
+  the_serial = new KMSerial();
   the_acctMgr   = new KMAcctMgr(acctPath);
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
@@ -516,8 +518,8 @@ void KMKernel::cleanup(void)
     if (config->readBoolEntry("empty-trash-on-exit", true))
       the_trashFolder->expunge();
 
-	// Phil add on
-    if (config->readBoolEntry("remove-old-mail-from-trash", true) 
+    // Phil add on
+    if (config->readBoolEntry("remove-old-mail-from-trash", true)
 		|| (config->readBoolEntry("keep-small-trash", true)) ) {
       the_trashFolder->open();
       the_trashFolder->quiet(true);
@@ -547,13 +549,14 @@ void KMKernel::cleanup(void)
       the_trashFolder->reduceSize( size );
     }
 
-	the_trashFolder->close();
+    the_trashFolder->close();
     the_trashFolder->compact();
     kdDebug() << "trash clean-up done." << endl;
   }
 
 
   if (the_folderMgr) {
+    config->setGroup("General");
     if (config->readBoolEntry("compact-all-on-exit", true))
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
   }
