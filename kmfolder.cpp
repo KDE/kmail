@@ -373,6 +373,8 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
   aMsg->setTransferInProgress( false );
   addMsg( aMsg );
   unGetMsg( count() - 1 );
+  // We have been opened before the transfer was started.
+  close( );
 }
 
 

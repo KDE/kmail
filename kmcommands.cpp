@@ -1081,7 +1081,8 @@ void KMCopyCommand::execute()
 
       if (srcFolder && !newMsg->isComplete())
       {
-	kernel->filterMgr()->tempOpenFolder(mDestFolder);
+        // will be closed in reallyAddCopyOfMsg
+        mDestFolder->open(); 
 	newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
