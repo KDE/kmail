@@ -1842,7 +1842,7 @@ void KMHeaders::setCurrentMsg(int cur)
 //-----------------------------------------------------------------------------
 void KMHeaders::setSelected( QListViewItem *item, bool selected )
 {
-  if ( !item || item->isSelected() == selected )
+  if ( !item )
     return;
 
   KListView::setSelected( item, selected );
@@ -2335,6 +2335,8 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
       mMousePressed = true;
   }
   KListView::contentsMousePressEvent(e);
+  if ( lvi )
+    setSelected( lvi, true );
 }
 
 //-----------------------------------------------------------------------------
