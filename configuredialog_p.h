@@ -632,7 +632,7 @@ public:
   void defaults() {}
 
 protected slots:
-  void slotOutlookCompatibleChanged( int );
+  void slotOutlookCompatibleClicked();
 
 protected:
   QCheckBox   *mOutlookCompatibleCheck;

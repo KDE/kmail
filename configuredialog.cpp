@@ -3032,8 +3032,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
     "containing non-English characters" ) );
   connect( mOutlookCompatibleCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mOutlookCompatibleCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotOutlookCompatibleChanged( int ) ) );
+  connect( mOutlookCompatibleCheck, SIGNAL( clicked() ),
+           this, SLOT( slotOutlookCompatibleClicked() ) );
   vlay->addWidget( mOutlookCompatibleCheck );
   vlay->addSpacing( 5 );
 
@@ -3100,9 +3100,9 @@ void ComposerPage::AttachmentsTab::save() {
                        mAttachWordsListEditor->stringList() );
 }
 
-void ComposerPageAttachmentsTab::slotOutlookCompatibleChanged( int state )
+void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
 {
-  if (state == QButton::On) {
+  if (mOutlookCompatibleCheck->isChecked()) {
     KMessageBox::information(0,i18n("You have choosen to "
     "encode attachment names containing non-English characters in a way that "
     "is understood by Outlook(tm) and other mail clients that do not "
