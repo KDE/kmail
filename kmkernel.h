@@ -10,7 +10,7 @@
 
 #include <kconfig.h>
 #include <kdeversion.h>
-#include "kimproxy.h"
+#include <kimproxy.h>
 
 #include "kmailIface.h"
 

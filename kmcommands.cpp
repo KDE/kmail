@@ -56,6 +56,7 @@
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
+#include <kimproxy.h>
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -81,7 +82,6 @@ using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
-#include "kimproxy.h"
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;

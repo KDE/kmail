@@ -49,7 +49,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include "kimproxy.h"
+#include <kimproxy.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/addresseelist.h>
 #include <kmdcodec.h>

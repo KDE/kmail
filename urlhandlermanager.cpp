@@ -42,8 +42,8 @@
 #include "partnodebodypart.h"
 #include "kmreaderwin.h"
 #include "callback.h"
-#include "kimproxy.h"
 
+#include <kimproxy.h>
 #include <kurl.h>
 
 #include <algorithm>
