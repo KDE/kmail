@@ -260,39 +260,54 @@ private:
     struct IdentityWidget
     {
       int            pageIndex;
+      QString        mActiveIdentity;
       QComboBox      *identityCombo;
       QPushButton    *removeIdentityButton;
       QPushButton    *renameIdentityButton;
+      // "General" tab:
       QLineEdit      *nameEdit;
       QLineEdit      *organizationEdit;
       QLineEdit      *emailEdit;
+      // "Advanced' tab:
       QLineEdit      *replytoEdit;
       QLabel         *pgpIdentityLabel;
       QCheckBox      *transportCheck;
       QComboBox      *transportCombo;
       KMFolderComboBox  *fccCombo;
-      KURLRequester  *signatureFileEdit;
-      QLabel         *signatureFileLabel;
-      QCheckBox      *signatureExecCheck;
+      // "Signature" tab:
+      QCheckBox      *signatureEnabled;
+      QComboBox      *signatureSourceCombo;
+      KURLRequester  *signatureFileRequester;
       QPushButton    *signatureEditButton;
-      QRadioButton   *signatureFileRadio;
-      QRadioButton   *signatureTextRadio;
+      KURLRequester  *signatureCommandRequester;
       QMultiLineEdit *signatureTextEdit;
-      QString        mActiveIdentity;
     };
     struct NetworkWidget
     {
       int          pageIndex;
+      // "Sending" tab:
       ListView     *transportList;
       QPushButton  *addTransportButton;
       QPushButton  *modifyTransportButton;
       QPushButton  *removeTransportButton;
       QPushButton  *transportUpButton;
       QPushButton  *transportDownButton;
+      // "Common options" group in "sending" tab:
+      QComboBox    *sendMethodCombo;
+      QComboBox    *messagePropertyCombo;
+      QCheckBox    *confirmSendCheck;
+      QCheckBox    *sendOutboxCheck;
+      // "Receiving" tab:
       ListView     *accountList;
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;
       QPushButton  *removeAccountButton;
+      // "New Mail Notification" group box:
+      QCheckBox   *beepNewMailCheck;
+      QCheckBox   *showMessageBoxCheck;
+      QCheckBox   *mailCommandCheck;
+      QLineEdit   *mailCommandEdit;
+      QPushButton *mailCommandChooseButton;
     };
     struct AppearanceWidget
     {
@@ -334,9 +349,6 @@ private:
     struct ComposerWidget
     {
       int       pageIndex;
-      QComboBox    *sendMethodCombo;
-      QComboBox    *messagePropertyCombo;
-      QCheckBox    *confirmSendCheck;
       LanguageComboBox *phraseLanguageCombo;
       QPushButton  *removeButton;
       QLineEdit    *phraseReplyEdit;
@@ -401,15 +413,8 @@ private:
     {
       int         pageIndex;
       QCheckBox   *emptyTrashCheck;
-      QCheckBox   *sendOutboxCheck;
       QCheckBox   *compactOnExitCheck;
       QCheckBox   *emptyFolderConfirmCheck;
-      QCheckBox   *beepNewMailCheck;
-      QCheckBox   *showMessageBoxCheck;
-      QCheckBox   *mailCommandCheck;
-      QLineEdit   *mailCommandEdit;
-      QPushButton *mailCommandChooseButton;
-      QLabel      *mailCommandLabel;
       QButtonGroup *expBGroup;
       QRadioButton *manualExpiry;
       QRadioButton *expireAtExit;
@@ -475,11 +480,8 @@ private:
     void slotRemoveIdentity( void );
     void slotIdentitySelectorChanged( void );
     void slotChangeDefaultPGPKey( void );
-    void slotSignatureType( int id );
-    void slotSignatureChooser( KURLRequester * );
     void slotSignatureEdit( void );
-    void slotSignatureFile( const QString &filename );
-    void slotSpecialTransportClicked( void );
+    void slotEnableSignatureEditButton( const QString &filename );
     void slotTransportSelected( void );
     void slotUpdateTransportCombo( void );
     void slotAddTransport( void );
@@ -519,7 +521,6 @@ private:
     void slotNewMimeHeader( void );
     void slotDeleteMimeHeader( void );
     void slotExternalEditorSelectionChanged( void );
-    void slotMailCommandSelectionChanged( void );
     void slotExternalEditorChooser( void );
     void slotMailCommandChooser( void );
 

@@ -35,9 +35,12 @@
 #include <qtabwidget.h>
 #include <qvbox.h>
 #include <qwhatsthis.h>
+#include <qwidgetstack.h>
+#include <qvgroupbox.h>
 
 #include <kapplication.h>
 #include <kcharsets.h>
+#include <kdebug.h>
 #include <kemailsettings.h>
 #include <kfiledialog.h>
 #include <kfontdialog.h>
@@ -497,32 +500,40 @@ void ConfigureDialog::show( void )
 
 void ConfigureDialog::makeIdentityPage( void )
 {
-  QFrame *page = addPage( i18n("Identity"), i18n("Personal information"),
+  // temp. vars:
+  QGridLayout *glay;
+  QWidget     *page;
+  QVBoxLayout *vlay;
+  QHBoxLayout *hlay;
+
+  QFrame *topLevel = addPage( i18n("Identity"), i18n("Personal information"),
     KGlobal::instance()->iconLoader()->loadIcon( "identity", KIcon::NoGroup,
     KIcon::SizeMedium ));
-  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
-  mIdentity.pageIndex = pageIndex(page);
+  mIdentity.pageIndex = pageIndex( topLevel );
+  //
+  // the identity selector:
+  //
+  glay = new QGridLayout( topLevel, 3, 2, spacingHint() );
+  glay->setColStretch( 1, 1 );
+  glay->setRowStretch( 2, 1 );
 
-  QGridLayout *glay = new QGridLayout( topLevel, 13, 3 );
-  glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  //glay->addRowSpacing( 6, spacingHint() );
-  glay->setRowStretch( 12, 10 );
-  glay->setColStretch( 1, 10 );
-
-  QLabel *label = new QLabel( i18n("&Identity:"), page );
-  glay->addWidget( label, 0, 0 );
-  mIdentity.identityCombo = new QComboBox( false, page );
-  label->setBuddy( mIdentity.identityCombo );
+  // "Identity" combobox with label:
+  mIdentity.identityCombo = new QComboBox( false, topLevel );
+  glay->addWidget( new QLabel( mIdentity.identityCombo,
+			       i18n("&Identity:"), topLevel ), 0, 0 );
+  glay->addWidget( mIdentity.identityCombo, 0, 1 );
   connect( mIdentity.identityCombo, SIGNAL(activated(int)),
 	   this, SLOT(slotIdentitySelectorChanged()) );
-  glay->addMultiCellWidget( mIdentity.identityCombo, 0, 0, 1, 2 );
 
-  QWidget *helper = new QWidget( page );
-  glay->addMultiCellWidget( helper, 1, 1, 1, 2 );
-  QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
-  QPushButton *newButton = new QPushButton( i18n("&New..."), helper );
-  mIdentity.renameIdentityButton = new QPushButton( i18n("&Rename..."), helper);
-  mIdentity.removeIdentityButton = new QPushButton( i18n("Re&move"), helper );
+  // "new...", "rename...", "remove" buttons:
+  hlay = new QHBoxLayout(); // inherits spacing from parent layout
+  glay->addLayout( hlay, 1, 1 );
+
+  QPushButton *newButton = new QPushButton( i18n("&New..."), topLevel );
+  mIdentity.renameIdentityButton =
+    new QPushButton( i18n("&Rename..."), topLevel);
+  mIdentity.removeIdentityButton =
+    new QPushButton( i18n("Re&move"), topLevel );
   newButton->setAutoDefault( false );
   mIdentity.renameIdentityButton->setAutoDefault( false );
   mIdentity.removeIdentityButton->setAutoDefault( false );
@@ -535,127 +546,192 @@ void ConfigureDialog::makeIdentityPage( void )
   hlay->addWidget( newButton );
   hlay->addWidget( mIdentity.renameIdentityButton );
   hlay->addWidget( mIdentity.removeIdentityButton );
+  
+  //
+  // Tab Widget: General
+  //
+  QTabWidget *tabWidget = new QTabWidget( topLevel, "config-identity-tab" );
+  glay->addMultiCellWidget( tabWidget, 2, 2, 0, 1 );
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("&General") );
+  glay = new QGridLayout( page, 4, 2, spacingHint() );
+  glay->setRowStretch( 3, 1 );
+  glay->setColStretch( 1, 1 );
 
-
-  label = new QLabel( i18n("&Name:"), page );
-  glay->addWidget( label, 2, 0 );
+  // row 0: "Name" line edit and label:
   mIdentity.nameEdit = new QLineEdit( page );
-  label->setBuddy(mIdentity.nameEdit);
-  glay->addMultiCellWidget( mIdentity.nameEdit, 2, 2, 1, 2 );
+  glay->addWidget( mIdentity.nameEdit, 0, 1 );
+  glay->addWidget( new QLabel( mIdentity.nameEdit, i18n("&Name:"), page ), 0, 0 );
 
-  label = new QLabel( i18n("&Organization:"), page );
-  glay->addWidget( label, 3, 0 );
+  // row 1: "Organization" line edit and label:
   mIdentity.organizationEdit = new QLineEdit( page );
-  label->setBuddy(mIdentity.organizationEdit);
-  glay->addMultiCellWidget( mIdentity.organizationEdit, 3, 3, 1, 2 );
+  glay->addWidget( mIdentity.organizationEdit, 1, 1 );
+  glay->addWidget( new QLabel( mIdentity.organizationEdit,
+			       i18n("&Organization:"), page ), 1, 0 );
 
-  label = new QLabel( i18n("&Email Address:"), page );
-  glay->addWidget( label, 4, 0 );
+  // row 2: "Email Address" line edit and label:
+  // (row 3: spacer)
   mIdentity.emailEdit = new QLineEdit( page );
-  label->setBuddy(mIdentity.emailEdit);
-  glay->addMultiCellWidget( mIdentity.emailEdit, 4, 4, 1, 2 );
+  glay->addWidget( mIdentity.emailEdit, 2, 1 );
+  glay->addWidget( new QLabel( mIdentity.emailEdit,
+			       i18n("&Email Address:"), page ), 2, 0 );
 
-  label = new QLabel( i18n("&Reply-To Address:"), page );
-  glay->addWidget( label, 5, 0 );
+  //
+  // Tab Widget: Advanced
+  //
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("&Advanced") );
+  glay = new QGridLayout( page, 5, 3, spacingHint() );
+  glay->setRowStretch( 4, 1 );
+  glay->setColStretch( 1, 1 );
+
+  // row 0: "Reply-To Address" line edit and label:
   mIdentity.replytoEdit = new QLineEdit( page );
-  label->setBuddy(mIdentity.replytoEdit);
-  glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.replytoEdit, 0, 0, 1, 2 );
+  glay->addWidget( new QLabel( mIdentity.replytoEdit,
+			       i18n("&Reply-To Address:"), page ), 0, 0 );
 
-  label = new QLabel( i18n("Sen&t-mail Folder:"), page );
-  glay->addWidget( label, 6, 0 );
-  mIdentity.fccCombo = new KMFolderComboBox( page );
-  mIdentity.fccCombo->showOutboxFolder( FALSE );
-  label->setBuddy(mIdentity.fccCombo);
-  glay->addMultiCellWidget( mIdentity.fccCombo, 6, 6, 1, 2 );
-
-  label = new QLabel( i18n("Default PGP &Key:"), page );
-  glay->addWidget( label, 7, 0 );
+  // row 1: "PGP KeyID" requester and label:
+  QPushButton *changeKey = new QPushButton( i18n("Change..."), page );
+  changeKey->setAutoDefault( false );
+  glay->addWidget( changeKey, 1, 2 );
+  glay->addWidget( new QLabel( changeKey, i18n("OpenPGP &Key:"), page ), 1, 0 );
   mIdentity.pgpIdentityLabel = new QLabel( page );
   mIdentity.pgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  glay->addWidget( mIdentity.pgpIdentityLabel, 7, 1 );
-  QPushButton *changeKey = new QPushButton( i18n("Change..."), page );
+  glay->addWidget( mIdentity.pgpIdentityLabel, 1, 1 );
   connect( changeKey, SIGNAL(clicked()), 
            this, SLOT(slotChangeDefaultPGPKey()) );
-  changeKey->setAutoDefault( false );
-  glay->addWidget( changeKey, 7, 2 );
-  QWhatsThis::add(label,
+  QWhatsThis::add(mIdentity.pgpIdentityLabel,
                   i18n("<qt><p>The PGP key you choose here will be used "
                        "to sign messages and to encrypt messages to "
                        "yourself.</p></qt>"));
 
-  mIdentity.transportCheck = new QCheckBox( i18n("Spe&cial transport"), page );
-  glay->addWidget( mIdentity.transportCheck, 8, 0 );
-  mIdentity.transportCombo = new QComboBox( page );
-  mIdentity.transportCombo->setEditable( TRUE );
-  label->setBuddy(mIdentity.transportCombo);
-  glay->addMultiCellWidget( mIdentity.transportCombo, 8, 8, 1, 2 );
-  connect(mIdentity.transportCheck, SIGNAL(clicked()),
-    SLOT(slotSpecialTransportClicked()));
+  // row 2: "Sent-mail Folder" combo box and label:
+  mIdentity.fccCombo = new KMFolderComboBox( page );
+  mIdentity.fccCombo->showOutboxFolder( FALSE );
+  glay->addMultiCellWidget( mIdentity.fccCombo, 2, 2, 1, 2 );
+  glay->addWidget( new QLabel( mIdentity.fccCombo,
+			       i18n("Sen&t-mail Folder:"), page ), 2, 0 );
 
-  QButtonGroup *buttonGroup = new QButtonGroup( page );
-  connect( buttonGroup, SIGNAL(clicked(int)),
-	   this, SLOT(slotSignatureType(int)) );
-  buttonGroup->hide();
-  mIdentity.signatureFileRadio =
-    new QRadioButton( i18n("&Use a signature from file"), page );
-  buttonGroup->insert( mIdentity.signatureFileRadio );
-  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 9, 9, 0, 1 );
+  // row 3: "Special transport" combobox and label:
+  // (row 4: spacer)
+  mIdentity.transportCheck = new QCheckBox( i18n("Spe&cial transport:"), page );
+  glay->addWidget( mIdentity.transportCheck, 3, 0 );
+  mIdentity.transportCombo = new QComboBox( true, page );
+  mIdentity.transportCombo->setEnabled( false );
+  glay->addMultiCellWidget( mIdentity.transportCombo, 3, 3, 1, 2 );
+  connect( mIdentity.transportCheck, SIGNAL(toggled(bool)),
+	   mIdentity.transportCombo, SLOT(setEnabled(bool)) );
 
-  mIdentity.signatureFileLabel = new QLabel( i18n("&Signature File:"), page );
-  glay->addWidget( mIdentity.signatureFileLabel, 10, 0 );
-  mIdentity.signatureFileEdit = new KURLRequester( page );
-  mIdentity.signatureFileLabel->setBuddy(mIdentity.signatureFileEdit);
-  QPushButton *button = mIdentity.signatureFileEdit->button();
-  button->setText( i18n("&Choose...") );
-  button->setAutoDefault( false );
-  connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
-	   this, SLOT( slotSignatureFile(const QString &)) );
-  glay->addMultiCellWidget( mIdentity.signatureFileEdit, 10, 10, 1, 2 );
+  //
+  // Tab Widget: Signature
+  //
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("&Signature") );
+  vlay = new QVBoxLayout( page, spacingHint() );
 
-  mIdentity.signatureExecCheck =
-    new QCheckBox( i18n("&The file is a program"), page );
-  glay->addWidget( mIdentity.signatureExecCheck, 11, 1 );
+  // "enable signatue" checkbox:
+  mIdentity.signatureEnabled = new QCheckBox( i18n("&Enable Signature"), page );
+  vlay->addWidget( mIdentity.signatureEnabled );
+
+  // "obtain signature text from" combo and label:
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mIdentity.signatureSourceCombo = new QComboBox( false, page );
+  mIdentity.signatureSourceCombo->setEnabled( false );
+  mIdentity.signatureSourceCombo->insertStringList(
+         QStringList() << i18n("file")
+		       << i18n("output of command")
+		       << i18n("input field below") );
+  QLabel* label = new QLabel( mIdentity.signatureSourceCombo,
+			      i18n("&Obtain signature text from"), page );
+  label->setEnabled( false );
+  hlay->addWidget( label );
+  hlay->addWidget( mIdentity.signatureSourceCombo, 1 );
+
+  // widget stack that is controlled by the source combo:
+  QWidgetStack *widgetStack = new QWidgetStack( page );
+  widgetStack->setEnabled( false );
+  vlay->addWidget( widgetStack, 1 );
+  connect( mIdentity.signatureSourceCombo, SIGNAL(highlighted(int)),
+	   widgetStack, SLOT(raiseWidget(int)) );
+  // connects for the enabling of the widgets depending on
+  // signatureEnabled:
+  connect( mIdentity.signatureEnabled, SIGNAL(toggled(bool)),
+	   mIdentity.signatureSourceCombo, SLOT(setEnabled(bool)) );
+  connect( mIdentity.signatureEnabled, SIGNAL(toggled(bool)),
+	   widgetStack, SLOT(setEnabled(bool)) );
+  connect( mIdentity.signatureEnabled, SIGNAL(toggled(bool)),
+	   label, SLOT(setEnabled(bool)) );
+
+  // page 1: "signature file" requester, label, "edit file" button:
+  page = new QWidget( widgetStack );
+  widgetStack->addWidget( page, 0 ); // force sequential numbers (play safe)
+  vlay = new QVBoxLayout( page, spacingHint() );
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mIdentity.signatureFileRequester = new KURLRequester( page );
+  hlay->addWidget( new QLabel( mIdentity.signatureFileRequester,
+			       i18n("&Specify file:"), page ) );
+  hlay->addWidget( mIdentity.signatureFileRequester, 1 );
+  mIdentity.signatureFileRequester->button()->setAutoDefault( false );
+  connect( mIdentity.signatureFileRequester,
+	   SIGNAL(textChanged(const QString &)),
+	   this, SLOT(slotEnableSignatureEditButton(const QString &)) );
   mIdentity.signatureEditButton = new QPushButton( i18n("Ed&it File"), page );
   connect( mIdentity.signatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureEditButton, 11, 2 );
-  button->setMinimumSize( mIdentity.signatureEditButton->sizeHint() );
+  hlay->addWidget( mIdentity.signatureEditButton, 0 );
+  vlay->addStretch( 1 ); // spacer
 
-  mIdentity.signatureTextRadio =
-    new QRadioButton( i18n("S&pecify signature below"), page );
-  buttonGroup->insert( mIdentity.signatureTextRadio );
-  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 12, 12, 0, 2 );
+  // page 2: "signature command" requester and label:
+  page = new QWidget( widgetStack );
+  widgetStack->addWidget( page, 1 ); // force sequential numbers (play safe)
+  vlay = new QVBoxLayout( page, spacingHint() );
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mIdentity.signatureCommandRequester = new KURLRequester( page );
+  hlay->addWidget( new QLabel( mIdentity.signatureCommandRequester,
+			       i18n("&Specify command:"), page ) );
+  hlay->addWidget( mIdentity.signatureCommandRequester, 1 );
+  mIdentity.signatureCommandRequester->button()->setAutoDefault( false );
+  vlay->addStretch( 1 ); // spacer
 
-  mIdentity.signatureTextEdit = new QMultiLineEdit( page );
-  mIdentity.signatureTextEdit->setText("Does not work yet");
-  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 13, 13, 0, 2 );
+  // page 3: input field for direct entering:
+  mIdentity.signatureTextEdit = new QMultiLineEdit( widgetStack );
+  widgetStack->addWidget( mIdentity.signatureTextEdit, 2 );
 }
 
 
 
 void ConfigureDialog::makeNetworkPage( void )
 {
-  QFrame *page = addPage( i18n("Network"),
-			  i18n("Setup for sending and receiving messages"),
+  // temp. variables:
+  QWidget     *page;
+  QVBoxLayout *vlay, *btn_vlay;
+  QHBoxLayout *hlay;
+  QGroupBox   *group;
+
+  QVBox *vbox = addVBoxPage( i18n("Network"),
+			     i18n("Setup for sending and receiving messages"),
     KGlobal::instance()->iconLoader()->loadIcon( "network", KIcon::NoGroup,
     KIcon::SizeMedium ));
-  QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
-  mNetwork.pageIndex = pageIndex(page);
+  QTabWidget *tabWidget = new QTabWidget( vbox, "config-network-tab" );
+  mNetwork.pageIndex = pageIndex(vbox);
 
-  QButtonGroup *buttonGroup = new QButtonGroup(i18n("Outgoing Mail"), page);
-  topLevel->addWidget(buttonGroup, 10);
+  //
+  // "Sending" tab:
+  //
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("Sending") );
+  vlay = new QVBoxLayout( page, spacingHint() );
+  // label: zero stretch
+  vlay->addWidget( new QLabel( i18n("SMTP or sendmail"), page ) );
 
-  QGridLayout *glay = new QGridLayout(buttonGroup, 8, 2, spacingHint());
-  glay->addColSpacing( 0, fontMetrics().maxWidth()*15 );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
-  glay->setColStretch( 0, 10 );
-  glay->setRowStretch( 5, 100 );
+  // hbox layout: stretch 10, spacing inherited from vlay
+  hlay = new QHBoxLayout();
+  vlay->addLayout( hlay, 10 );
 
-  QLabel *label = new QLabel( buttonGroup );
-  label->setText(i18n("SMTP or sendmail"));
-  glay->addMultiCellWidget(label, 1, 1, 0, 1);
-  mNetwork.transportList = new ListView( buttonGroup, "transportList", 5 );
+  // transport list: left widget in hlay; stretch 1
+  mNetwork.transportList = new ListView( page, "transportList", 5 );
   mNetwork.transportList->addColumn( i18n("Name") );
   mNetwork.transportList->addColumn( i18n("Type") );
   mNetwork.transportList->setAllColumnsShowFocus( true );
@@ -665,60 +741,110 @@ void ConfigureDialog::makeNetworkPage( void )
            SLOT(slotTransportSelected()) );
   connect( mNetwork.transportList, SIGNAL(doubleClicked( QListViewItem *)),
            SLOT(slotModifySelectedTransport()) );
-  glay->addMultiCellWidget( mNetwork.transportList, 2, 7, 0, 0 );
+  hlay->addWidget( mNetwork.transportList, 1 );
 
+  // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
+  btn_vlay = new QVBoxLayout( hlay );
+
+  // "add..." button: stretch 0
   mNetwork.addTransportButton =
-    new QPushButton( i18n("&Add..."), buttonGroup );
+    new QPushButton( i18n("&Add..."), page );
   mNetwork.addTransportButton->setAutoDefault( false );
   connect( mNetwork.addTransportButton, SIGNAL(clicked()),
 	   this, SLOT(slotAddTransport()) );
-  glay->addWidget( mNetwork.addTransportButton, 2, 1 );
+  btn_vlay->addWidget( mNetwork.addTransportButton );
 
+  // "modify..." button: stretch 0
   mNetwork.modifyTransportButton =
-    new QPushButton( i18n("&Modify..."), buttonGroup );
+    new QPushButton( i18n("&Modify..."), page );
   mNetwork.modifyTransportButton->setAutoDefault( false );
   mNetwork.modifyTransportButton->setEnabled( false );
   connect( mNetwork.modifyTransportButton, SIGNAL(clicked()),
 	   this, SLOT(slotModifySelectedTransport()) );
-  glay->addWidget( mNetwork.modifyTransportButton, 3, 1 );
+  btn_vlay->addWidget( mNetwork.modifyTransportButton );
 
+  // "remove..." button: stretch 0
   mNetwork.removeTransportButton
-    = new QPushButton( i18n("&Remove..."), buttonGroup );
+    = new QPushButton( i18n("&Remove..."), page );
   mNetwork.removeTransportButton->setAutoDefault( false );
   mNetwork.removeTransportButton->setEnabled( false );
   connect( mNetwork.removeTransportButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveSelectedTransport()) );
-  glay->addWidget( mNetwork.removeTransportButton, 4, 1 );
+  btn_vlay->addWidget( mNetwork.removeTransportButton );
 
+  // "up" button: stretch 0
   mNetwork.transportUpButton
-    = new QPushButton( QString::null, buttonGroup );
+    = new QPushButton( QString::null, page );
   mNetwork.transportUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
   mNetwork.transportUpButton->setEnabled( false );
   connect( mNetwork.transportUpButton, SIGNAL(clicked()),
            this, SLOT(slotTransportUp()) );
-  glay->addWidget( mNetwork.transportUpButton, 5, 1 );
+  btn_vlay->addWidget( mNetwork.transportUpButton );
 
+  // "down" button: stretch 0
   mNetwork.transportDownButton
-    = new QPushButton( QString::null, buttonGroup );
+    = new QPushButton( QString::null, page );
   mNetwork.transportDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mNetwork.transportDownButton->setEnabled( false );
   connect( mNetwork.transportDownButton, SIGNAL(clicked()),
            this, SLOT(slotTransportDown()) );
-  glay->addWidget( mNetwork.transportDownButton, 6, 1 );
+  btn_vlay->addWidget( mNetwork.transportDownButton );
+  btn_vlay->addStretch( 1 ); // spacer
 
-  buttonGroup = new QButtonGroup(i18n("Incoming Mail"), page );
-  topLevel->addWidget(buttonGroup, 10 );
+  // "Common options" groupbox:
+  group = new QGroupBox( 0, Qt::Vertical,
+			 i18n("Common options"), page );
+  vlay->addWidget(group);
 
-  glay = new QGridLayout( buttonGroup, 6, 2, spacingHint() );
-  glay->addColSpacing( 0, fontMetrics().maxWidth()*15 );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
-  glay->setColStretch( 0, 10 );
-  glay->setRowStretch( 5, 100 );
+  // a grid layout for the contents of the "common options" group box
+  QGridLayout *glay = new QGridLayout( group->layout(), 4, 3, spacingHint() );
+  glay->setColStretch( 2, 10 );
 
-  label = new QLabel( buttonGroup );
-  label->setText(i18n("Accounts:   (add at least one account!)"));
-  glay->addMultiCellWidget(label, 1, 1, 0, 1);
-  mNetwork.accountList = new ListView( buttonGroup, "accountList", 5 );
+  // "default send method" combo:
+  mNetwork.sendMethodCombo = new QComboBox( false, group );
+  mNetwork.sendMethodCombo->insertItem(i18n("Send now"));
+  mNetwork.sendMethodCombo->insertItem(i18n("Send later"));
+  glay->addWidget( mNetwork.sendMethodCombo, 0, 1 );
+
+  // "message property" combo:
+  mNetwork.messagePropertyCombo = new QComboBox( false, group );
+  mNetwork.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
+  mNetwork.messagePropertyCombo->insertItem(
+    i18n("MIME Compliant (Quoted Printable)"));
+  glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
+
+  // labels:
+  glay->addWidget( new QLabel( mNetwork.sendMethodCombo, /*buddy*/
+			       i18n("&Default send method:"), group ), 0, 0 );
+  glay->addWidget( new QLabel( mNetwork.messagePropertyCombo, /*buddy*/
+			       i18n("Message &Property:"), group ), 1, 0 );
+
+  // "confirm before send" check box:
+  mNetwork.confirmSendCheck =
+    new QCheckBox(i18n("&Confirm before send"), group );
+  glay->addMultiCellWidget( mNetwork.confirmSendCheck, 2, 2, 0, 1 );
+
+  // "send mail in outbox on check" check box:
+  mNetwork.sendOutboxCheck =
+    new QCheckBox(i18n("&Send mail in Outbox folder on check"), group );
+  glay->addMultiCellWidget( mNetwork.sendOutboxCheck, 3, 3, 0, 1 );
+
+  //
+  // "Receiving" tab:
+  //
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("Receiving") );
+  vlay = new QVBoxLayout( page, spacingHint() );
+
+  // label: zero stretch
+  vlay->addWidget( new QLabel( i18n("Accounts:   (add at least one account!)"), page ) );
+
+  // hbox layout: stretch 10, spacing inherited from vlay
+  hlay = new QHBoxLayout();
+  vlay->addLayout( hlay, 10 );
+
+  // account list: left widget in hlay; stretch 1
+  mNetwork.accountList = new ListView( page, "accountList", 5 );
   mNetwork.accountList->addColumn( i18n("Name") );
   mNetwork.accountList->addColumn( i18n("Type") );
   mNetwork.accountList->addColumn( i18n("Folder") );
@@ -729,30 +855,86 @@ void ConfigureDialog::makeNetworkPage( void )
 	   this, SLOT(slotAccountSelected()) );
   connect( mNetwork.accountList, SIGNAL(doubleClicked( QListViewItem *)),
 	   this, SLOT(slotModifySelectedAccount()) );
-  glay->addMultiCellWidget( mNetwork.accountList, 2, 5, 0, 0 );
+  hlay->addWidget( mNetwork.accountList, 1 );
 
+  // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
+  btn_vlay = new QVBoxLayout( hlay );
+
+  // "add..." button: stretch 0
   mNetwork.addAccountButton =
-    new QPushButton( i18n("&Add..."), buttonGroup );
+    new QPushButton( i18n("&Add..."), page );
   mNetwork.addAccountButton->setAutoDefault( false );
   connect( mNetwork.addAccountButton, SIGNAL(clicked()),
 	   this, SLOT(slotAddAccount()) );
-  glay->addWidget( mNetwork.addAccountButton, 2, 1 );
+  btn_vlay->addWidget( mNetwork.addAccountButton );
 
+  // "modify..." button: stretch 0
   mNetwork.modifyAccountButton =
-    new QPushButton( i18n("&Modify..."), buttonGroup );
+    new QPushButton( i18n("&Modify..."), page );
   mNetwork.modifyAccountButton->setAutoDefault( false );
   mNetwork.modifyAccountButton->setEnabled( false );
   connect( mNetwork.modifyAccountButton, SIGNAL(clicked()),
 	   this, SLOT(slotModifySelectedAccount()) );
-  glay->addWidget( mNetwork.modifyAccountButton, 3, 1 );
+  btn_vlay->addWidget( mNetwork.modifyAccountButton );
 
+  // "remove..." button: stretch 0
   mNetwork.removeAccountButton
-    = new QPushButton( i18n("&Remove..."), buttonGroup );
+    = new QPushButton( i18n("&Remove..."), page );
   mNetwork.removeAccountButton->setAutoDefault( false );
   mNetwork.removeAccountButton->setEnabled( false );
   connect( mNetwork.removeAccountButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveSelectedAccount()) );
-  glay->addWidget( mNetwork.removeAccountButton, 4, 1 );
+  btn_vlay->addWidget( mNetwork.removeAccountButton );
+  btn_vlay->addStretch( 1 ); // spacer
+
+  // "New Mail Notification" group box: stretch 0
+  group = new QVGroupBox( i18n("&New Mail Notification"), page );
+  vlay->addWidget( group );
+  group->layout()->setSpacing( spacingHint() );
+
+  // "beep on new mail" check box:
+  mNetwork.beepNewMailCheck =
+    new QCheckBox(i18n("&Beep on new mail"), group );
+  //  vlay->addWidget( mNetwork.beepNewMailCheck );
+
+  // "display message box" check box:
+  mNetwork.showMessageBoxCheck =
+    new QCheckBox(i18n("&Display message box on new mail"), group );
+  //  vlay->addWidget( mNetwork.showMessageBoxCheck );
+
+  // "Execute command" check box:
+  mNetwork.mailCommandCheck =
+    new QCheckBox( i18n("E&xecute command line on new mail"), group );
+
+  // HBox layout for the "specify command" line:
+  QHBox *hbox = new QHBox( group );
+  
+
+  // command line edit (stretch 1) and label (stretch 0):
+  QLabel *label =
+    new QLabel( i18n("Specify command:"), hbox );
+  mNetwork.mailCommandEdit = new QLineEdit( hbox );
+  mNetwork.mailCommandEdit->setEnabled( false );
+  label->setBuddy( mNetwork.mailCommandEdit );
+  label->setEnabled( false );
+
+  // "choose..." button (stretch 0):
+  mNetwork.mailCommandChooseButton =
+    new QPushButton( i18n("&Choose..."), hbox );
+  mNetwork.mailCommandChooseButton->setAutoDefault( false );
+  mNetwork.mailCommandChooseButton->setEnabled( false );
+
+  connect( mNetwork.mailCommandChooseButton, SIGNAL(clicked()),
+	   this, SLOT(slotMailCommandChooser()) );
+  // Connections that {en,dis}able the "specify command" according to
+  // the state of the "Execute command" check box:
+  connect( mNetwork.mailCommandCheck, SIGNAL(toggled(bool)),
+	   label, SLOT(setEnabled(bool)) );
+  connect( mNetwork.mailCommandCheck, SIGNAL(toggled(bool)),
+	   mNetwork.mailCommandEdit, SLOT(setEnabled(bool)) );
+  connect( mNetwork.mailCommandCheck, SIGNAL(toggled(bool)),
+	   mNetwork.mailCommandChooseButton, SLOT(setEnabled(bool)) );
+
 }
 
 
@@ -1038,32 +1220,6 @@ void ConfigureDialog::makeComposerPage( void )
   hlay->addWidget( mComposer.wrapColumnSpin, 0, AlignLeft );
   hlay->addStretch(10);
 
-  QGroupBox *sendingGroup = new QGroupBox( i18n("Sending"), page );
-  topLevel->addWidget(sendingGroup);
-  QGridLayout *glay = new QGridLayout( sendingGroup, 4, 3, spacingHint() );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
-  glay->setColStretch( 2, 10 );
-  QLabel *label = new QLabel( i18n("&Default send method:"), sendingGroup );
-  glay->addWidget( label, 1, 0 );
-  mComposer.sendMethodCombo = new QComboBox( sendingGroup );
-  label->setBuddy( mComposer.sendMethodCombo );
-  mComposer.sendMethodCombo->insertItem(i18n("Send now"));
-  mComposer.sendMethodCombo->insertItem(i18n("Send later"));
-  glay->addWidget( mComposer.sendMethodCombo, 1, 1 );
-
-  label = new QLabel( i18n("Message &Property:"), sendingGroup );
-  glay->addWidget( label, 2, 0 );
-  mComposer.messagePropertyCombo = new QComboBox( sendingGroup );
-  label->setBuddy( mComposer.messagePropertyCombo );
-  mComposer.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
-  mComposer.messagePropertyCombo->insertItem(
-    i18n("MIME Compliant (Quoted Printable)"));
-  glay->addWidget( mComposer.messagePropertyCombo, 2, 1 );
-
-  mComposer.confirmSendCheck =
-    new QCheckBox(i18n("&Confirm before send"), sendingGroup );
-  glay->addMultiCellWidget( mComposer.confirmSendCheck, 3, 3, 0, 1 );
-
   QGroupBox * editorGroup = new QGroupBox( i18n("External Editor"), page );
   topLevel->addWidget(editorGroup);
   QBoxLayout * vlay = new QVBoxLayout( editorGroup, spacingHint() );
@@ -1103,11 +1259,11 @@ void ConfigureDialog::makeComposerPage( void )
   topLevel->addWidget( group );
   topLevel->addStretch( 10 );
 
-  glay = new QGridLayout( group, 8, 2, spacingHint() );
+  QGridLayout *glay = new QGridLayout( group, 8, 2, spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   glay->setColStretch( 1, 10 );
 
-  label = new QLabel( group );
+  QLabel *label = new QLabel( group );
   label->setText(
      i18n( "The following placeholders are supported in the reply phrases:\n"
 	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space, %L=linebreak"));
@@ -1545,44 +1701,12 @@ void ConfigureDialog::makeMiscPage( void )
   topLevel->addWidget( group );
   QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
-  mMisc.sendOutboxCheck =
-    new QCheckBox(i18n("&Send Mail in outbox Folder on Check"), group );
-  vlay->addWidget( mMisc.sendOutboxCheck );
   mMisc.compactOnExitCheck =
     new QCheckBox(i18n("C&ompact all folders on exit"), group );
   vlay->addWidget( mMisc.compactOnExitCheck );
   mMisc.emptyFolderConfirmCheck =
     new QCheckBox(i18n("Conf&irm before emptying folders"), group );
   vlay->addWidget( mMisc.emptyFolderConfirmCheck );
-
-  //---------- group: New Mail Notification
-  group = new QGroupBox( i18n("&New Mail Notification"), page );
-  topLevel->addWidget( group );
-  vlay = new QVBoxLayout( group, spacingHint() );
-  vlay->addSpacing( fontMetrics().lineSpacing() );
-  mMisc.beepNewMailCheck =
-    new QCheckBox(i18n("&Beep on new mail"), group );
-  vlay->addWidget( mMisc.beepNewMailCheck );
-  mMisc.showMessageBoxCheck =
-    new QCheckBox(i18n("&Display message box on new mail"), group );
-  vlay->addWidget( mMisc.showMessageBoxCheck );
-  mMisc.mailCommandCheck =
-    new QCheckBox( i18n("E&xecute command line on new mail"), group );
-  vlay->addWidget( mMisc.mailCommandCheck );
-  connect( mMisc.mailCommandCheck, SIGNAL(clicked() ),
-	   this, SLOT(slotMailCommandSelectionChanged()) );
-  QHBoxLayout *hlay = new QHBoxLayout( vlay );
-  mMisc.mailCommandLabel = new QLabel( i18n("Specify command:"), group );
-  hlay->addWidget( mMisc.mailCommandLabel );
-  mMisc.mailCommandEdit = new QLineEdit( group );
-  mMisc.mailCommandLabel->setBuddy(mMisc.mailCommandEdit);
-  hlay->addWidget( mMisc.mailCommandEdit );
-  mMisc.mailCommandChooseButton =
-    new QPushButton( i18n("&Choose..."), group );
-  connect( mMisc.mailCommandChooseButton, SIGNAL(clicked()),
-	   this, SLOT(slotMailCommandChooser()) );
-  mMisc.mailCommandChooseButton->setAutoDefault( false );
-  hlay->addWidget( mMisc.mailCommandChooseButton );
 
   topLevel->addStretch( 10 );
 }
@@ -1628,6 +1752,19 @@ void ConfigureDialog::setupNetworkPage( void )
     top = listItem;
   }
 
+  mNetwork.sendMethodCombo->setCurrentItem(
+    kernel->msgSender()->sendImmediate() ? 0 : 1 );
+  mNetwork.messagePropertyCombo->setCurrentItem(
+    kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
+  {
+    KConfigGroupSaver saver(config, "Composer");
+
+    mNetwork.confirmSendCheck->setChecked(
+      config->readBoolEntry( "confirm-before-send", false ) );
+  }
+  mNetwork.sendOutboxCheck->setChecked( config->readBoolEntry("sendOnCheck", false) );
+
+
   QListViewItem *listItem = mNetwork.transportList->firstChild();
   if (listItem)
   {
@@ -1655,6 +1792,11 @@ void ConfigureDialog::setupNetworkPage( void )
     mNetwork.accountList->setCurrentItem( listItem );
     mNetwork.accountList->setSelected( listItem, true );
   }
+
+  mNetwork.beepNewMailCheck->setChecked( config->readBoolEntry("beep-on-mail", false ) );
+  mNetwork.showMessageBoxCheck->setChecked( config->readBoolEntry("msgbox-on-mail", false) );
+  mNetwork.mailCommandCheck->setChecked( config->readBoolEntry("exec-on-mail", false) );
+  mNetwork.mailCommandEdit->setText( config->readEntry("exec-on-mail-cmd", ""));
 }
 
 void ConfigureDialog::setupAppearancePage( void )
@@ -1866,15 +2008,6 @@ void ConfigureDialog::setupComposerPage( void )
     mComposer.wrapColumnSpin->setValue( value );
     slotWordWrapSelectionChanged();
 
-    mComposer.sendMethodCombo->setCurrentItem(
-      kernel->msgSender()->sendImmediate() ? 0 : 1 );
-
-    mComposer.messagePropertyCombo->setCurrentItem(
-      kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
-
-    mComposer.confirmSendCheck->setChecked(
-      config->readBoolEntry( "confirm-before-send", false ) );
-
     //charsets
     QStringList charsets = config->readListEntry("pref-charsets");
     for(QStringList::Iterator it = charsets.begin(); it!= charsets.end(); ++it)
@@ -1973,22 +2106,12 @@ void ConfigureDialog::setupMiscPage( void )
   state = config->readBoolEntry("warn-before-expire", true);
   mMisc.warnBeforeExpire->setChecked(state);
 
-  state = config->readBoolEntry("sendOnCheck", false);
-  mMisc.sendOutboxCheck->setChecked( state );
   state = config->readBoolEntry("compact-all-on-exit", true );
   mMisc.compactOnExitCheck->setChecked( state );
   state = config->readBoolEntry("confirm-before-empty", true );
   mMisc.emptyFolderConfirmCheck->setChecked( state );
 
-  state = config->readBoolEntry("beep-on-mail", false );
-  mMisc.beepNewMailCheck->setChecked( state );
-  state = config->readBoolEntry("msgbox-on-mail", false);
-  mMisc.showMessageBoxCheck->setChecked( state );
-  state = config->readBoolEntry("exec-on-mail", false);
-  mMisc.mailCommandCheck->setChecked( state );
-  mMisc.mailCommandEdit->setText( config->readEntry("exec-on-mail-cmd", ""));
   slotExternalEditorSelectionChanged();
-  slotMailCommandSelectionChanged();
 }
 
 
@@ -2178,6 +2301,20 @@ void ConfigureDialog::slotDoApply( bool everything )
     for (uint i = 1; i <= mTransportList.count(); i++)
       mTransportList.at(i-1)->writeConfig(i);
 
+    // Save common options
+    bool sendNow = mNetwork.sendMethodCombo->currentItem() == 0;
+    kernel->msgSender()->setSendImmediate( sendNow );
+    bool quotedPrintable = mNetwork.messagePropertyCombo->currentItem() == 1;
+    kernel->msgSender()->setSendQuotedPrintable( quotedPrintable );
+    kernel->msgSender()->writeConfig(FALSE);
+    {
+      KConfigGroupSaver(config, "Composer");
+      bool confirmBeforeSend = mNetwork.confirmSendCheck->isChecked();
+      config->writeEntry("confirm-before-send", confirmBeforeSend );
+    }
+    config->writeEntry( "sendOnCheck",
+			mNetwork.sendOutboxCheck->isChecked() );
+
     // Add accounts marked as new
     QValueList< QGuardedPtr<KMAccount> >::Iterator it;
     for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
@@ -2208,6 +2345,16 @@ void ConfigureDialog::slotDoApply( bool everything )
     // Incoming mail
     kernel->acctMgr()->writeConfig(FALSE);
     kernel->cleanupImapFolders();
+
+    // Save Mail notification settings
+    config->writeEntry( "beep-on-mail",
+			mNetwork.beepNewMailCheck->isChecked() );
+    config->writeEntry( "msgbox-on-mail",
+			mNetwork.showMessageBoxCheck->isChecked() );
+    config->writeEntry( "exec-on-mail",
+			mNetwork.mailCommandCheck->isChecked() );
+    config->writeEntry( "exec-on-mail-cmd",
+			mNetwork.mailCommandEdit->text() );
   }
   if( activePage == mAppearance.pageIndex || everything )
   {
@@ -2363,14 +2510,6 @@ void ConfigureDialog::slotDoApply( bool everything )
       config->writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
       config->writeEntry("break-at", mComposer.wrapColumnSpin->value() );
 
-      bool sendNow = mComposer.sendMethodCombo->currentItem() == 0;
-      kernel->msgSender()->setSendImmediate( sendNow );
-      bool quotedPrintable = mComposer.messagePropertyCombo->currentItem() == 1;
-      kernel->msgSender()->setSendQuotedPrintable( quotedPrintable );
-      kernel->msgSender()->writeConfig(FALSE);
-      bool confirmBeforeSend = mComposer.confirmSendCheck->isChecked();
-      config->writeEntry("confirm-before-send", confirmBeforeSend );
-
       config->writeEntry("force-reply-charset",
 			 !mComposer.forceReplyCharsetCheck->isChecked() );
     }
@@ -2418,21 +2557,10 @@ void ConfigureDialog::slotDoApply( bool everything )
     KConfigGroupSaver saver(config, "General");
     config->writeEntry( "empty-trash-on-exit",
 			mMisc.emptyTrashCheck->isChecked() );
-    config->writeEntry( "sendOnCheck",
-			mMisc.sendOutboxCheck->isChecked() );
     config->writeEntry( "compact-all-on-exit",
 			mMisc.compactOnExitCheck->isChecked() );
     config->writeEntry( "confirm-before-empty",
 			mMisc.emptyFolderConfirmCheck->isChecked() );
-
-    config->writeEntry( "beep-on-mail",
-			mMisc.beepNewMailCheck->isChecked() );
-    config->writeEntry( "msgbox-on-mail",
-			mMisc.showMessageBoxCheck->isChecked() );
-    config->writeEntry( "exec-on-mail",
-			mMisc.mailCommandCheck->isChecked() );
-    config->writeEntry( "exec-on-mail-cmd",
-			mMisc.mailCommandEdit->text() );
 
     // There's got to be a better way to handle radio buttons...
     if (mMisc.manualExpiry->isChecked()) {
@@ -2482,31 +2610,54 @@ void ConfigureDialog::slotDoApply( bool everything )
 void ConfigureDialog::saveActiveIdentity( void )
 {
   IdentityEntry *entry = mIdentityList.get(mIdentity.mActiveIdentity);
-  if( entry != 0 )
+  if( entry )
   {
+    // "General" tab:
     entry->setFullName( mIdentity.nameEdit->text() );
     entry->setOrganization( mIdentity.organizationEdit->text() );
-    entry->setPgpIdentity( mIdentity.pgpIdentityLabel->text() );
     entry->setEmailAddress( mIdentity.emailEdit->text() );
+    // "Advanced" tab:
+    entry->setPgpIdentity( mIdentity.pgpIdentityLabel->text() );
     entry->setReplyToAddress( mIdentity.replytoEdit->text() );
-    entry->setSignatureFileName( mIdentity.signatureFileEdit->url() );
-    entry->setSignatureInlineText( mIdentity.signatureTextEdit->text() );
-    entry->setSignatureFileIsAProgram(
-      mIdentity.signatureExecCheck->isChecked() );
-    entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
     entry->setTransport( (mIdentity.transportCheck->isChecked()) ?
       mIdentity.transportCombo->currentText() : QString::null );
     entry->setFcc( mIdentity.fccCombo->getFolder()->idString() );
+    // "Signature" tab:
+    if ( mIdentity.signatureEnabled->isChecked() ) {
+      switch ( mIdentity.signatureSourceCombo->currentItem() ) {
+      case 0: // signature from file
+	entry->setSignatureFileName( mIdentity.signatureFileRequester->url() );
+	entry->setUseSignatureFile( true );
+	entry->setSignatureFileIsAProgram( false );
+	break;
+      case 1: // signature from command
+	entry->setSignatureFileName( mIdentity.signatureCommandRequester->url() );
+	entry->setUseSignatureFile( true );
+	entry->setSignatureFileIsAProgram( true );
+	break;
+      case 2: // inline specified
+	entry->setSignatureFileName( QString::null );
+	entry->setUseSignatureFile( false );
+	entry->setSignatureFileIsAProgram( false );
+	break;
+      default:
+	kdFatal(5006) << "mIdentity.signatureSourceCombo->currentItem() > 2"
+		      << endl;
+      }
+    } else {
+      // not enabled - fake empty data file:
+      entry->setSignatureFileName( QString::null );
+      entry->setUseSignatureFile( true );
+      entry->setSignatureFileIsAProgram( false );
+    }
+    entry->setSignatureInlineText( mIdentity.signatureTextEdit->text() );
   }
 }
 
 
 void ConfigureDialog::setIdentityInformation( const QString &identity )
 {
-  if( mIdentity.mActiveIdentity == identity )
-  {
-    return;
-  }
+  if( mIdentity.mActiveIdentity == identity ) return;
 
   //
   // 1. Save current settings to the list
@@ -2518,35 +2669,33 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   //
   // 2. Display the new settings
   //
-  bool useSignatureFile;
   IdentityEntry *entry = mIdentityList.get( mIdentity.mActiveIdentity );
 
-  if( entry == 0 )
-  {
+  if( !entry ) { // new entry:
+    // "General" tab:
     mIdentity.nameEdit->clear();
     mIdentity.organizationEdit->clear();
-    mIdentity.pgpIdentityLabel->clear();
     mIdentity.emailEdit->clear();
+    // "Advanced" tab:
     mIdentity.replytoEdit->clear();
-    mIdentity.signatureFileEdit->clear();
-    mIdentity.signatureExecCheck->setChecked( false );
-    mIdentity.signatureTextEdit->clear();
-    useSignatureFile = true;
+    mIdentity.pgpIdentityLabel->clear();
     mIdentity.transportCheck->setChecked( false );
-    mIdentity.transportCombo->setEditText( QString::null );
+    mIdentity.transportCombo->clearEdit();
     mIdentity.fccCombo->setFolder( kernel->sentFolder() );
-  }
-  else
-  {
+    // "Signature" tab:
+    mIdentity.signatureEnabled->setChecked( false );
+    mIdentity.signatureSourceCombo->setCurrentItem( 0 );
+    mIdentity.signatureFileRequester->clear();
+    mIdentity.signatureCommandRequester->clear();
+    mIdentity.signatureTextEdit->clear();
+  } else { // existing entry:
+    // "General" tab:
     mIdentity.nameEdit->setText( entry->fullName() );
     mIdentity.organizationEdit->setText( entry->organization() );
-    mIdentity.pgpIdentityLabel->setText( entry->pgpIdentity() );
     mIdentity.emailEdit->setText( entry->emailAddress() );
+    // "Advanced" tab:
+    mIdentity.pgpIdentityLabel->setText( entry->pgpIdentity() );
     mIdentity.replytoEdit->setText( entry->replyToAddress() );
-    mIdentity.signatureFileEdit->setURL( entry->signatureFileName() );
-    mIdentity.signatureExecCheck->setChecked(entry->signatureFileIsAProgram());
-    mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
-    useSignatureFile = entry->useSignatureFile();
     mIdentity.transportCheck->setChecked(!entry->transport().isEmpty());
     mIdentity.transportCombo->setEditText(entry->transport());
     mIdentity.transportCombo->setEnabled(!entry->transport().isEmpty());
@@ -2554,17 +2703,37 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
         entry->setFcc( kernel->sentFolder()->idString() );
     QString theFcc = entry->fcc();
     mIdentity.fccCombo->setFolder( theFcc );
-  }
-
-  if( useSignatureFile == true )
-  {
-    mIdentity.signatureFileRadio->setChecked(true);
-    slotSignatureType(0);
-  }
-  else
-  {
-    mIdentity.signatureTextRadio->setChecked(true);
-    slotSignatureType(1);
+    // "Signature" tab:
+    if ( entry->useSignatureFile() ) {
+      if ( entry->signatureFileName().stripWhiteSpace().isEmpty() ) {
+	// disable signatures:
+	mIdentity.signatureEnabled->setChecked( false );
+	mIdentity.signatureFileRequester->clear();
+	mIdentity.signatureCommandRequester->clear();
+	mIdentity.signatureSourceCombo->setCurrentItem( 0 );
+      } else {
+	mIdentity.signatureEnabled->setChecked( true );
+	if ( entry->signatureFileIsAProgram() ) {
+	  // use file && file is a program
+	  mIdentity.signatureFileRequester->clear();
+	  mIdentity.signatureCommandRequester->setURL( entry->signatureFileName() );
+	  mIdentity.signatureSourceCombo->setCurrentItem( 1 );
+	} else {
+	  // use file && file is data file
+	  mIdentity.signatureFileRequester->setURL( entry->signatureFileName() );
+	  mIdentity.signatureCommandRequester->clear();
+	  mIdentity.signatureSourceCombo->setCurrentItem( 0 );
+	}
+      }
+    } else {
+      mIdentity.signatureEnabled->setChecked(
+               !entry->signatureInlineText().isEmpty() );
+      // !use file, specify inline
+      mIdentity.signatureFileRequester->clear();
+      mIdentity.signatureCommandRequester->clear();
+      mIdentity.signatureSourceCombo->setCurrentItem( 2 );
+    }
+    mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
   }
 }
 
@@ -2697,12 +2866,6 @@ void ConfigureDialog::slotIdentitySelectorChanged( void )
 }
 
 
-void ConfigureDialog::slotSpecialTransportClicked( void )
-{
-  mIdentity.transportCombo->setEnabled(mIdentity.transportCheck->isChecked());
-}
-
-
 void ConfigureDialog::slotChangeDefaultPGPKey( void )
 {
   Kpgp::Module *pgp;
@@ -2717,81 +2880,34 @@ void ConfigureDialog::slotChangeDefaultPGPKey( void )
 }
 
 
-void ConfigureDialog::slotSignatureType( int id )
+void ConfigureDialog::slotEnableSignatureEditButton( const QString &filename )
 {
-  bool flag;
-  if( id == 0 )
-  {
-    flag = true;
-  }
-  else if( id == 1 )
-  {
-    flag = false;
-  }
-  else
-  {
-    return;
-  }
-
-  mIdentity.signatureFileLabel->setEnabled( flag );
-  mIdentity.signatureFileEdit->setEnabled( flag );
-  mIdentity.signatureExecCheck->setEnabled( flag );
-  if( flag==true )
-  {
-    mIdentity.signatureEditButton->setEnabled(
-      !mIdentity.signatureExecCheck->isChecked()&& !mIdentity.signatureFileEdit->lineEdit()->text().isEmpty());
-  }
-  else
-  {
-    mIdentity.signatureEditButton->setEnabled( false );
-  }
-  mIdentity.signatureTextEdit->setEnabled( !flag );
-}
-
-
-void ConfigureDialog::slotSignatureChooser( KURLRequester *req )
-{
-  if ( req->url().isEmpty() )
-    req->fileDialog()->setURL( QDir::homeDirPath() );
-
-  req->fileDialog()->setCaption(i18n("Choose Signature File"));
-}
-
-
-void ConfigureDialog::slotSignatureFile( const QString &filename )
-{
-  QString path = filename.stripWhiteSpace();
-  if( mIdentity.signatureFileRadio->isChecked() == true )
-  {
-    bool state = path.isEmpty() == false ? true : false;
-    mIdentity.signatureEditButton->setEnabled( state );
-    mIdentity.signatureExecCheck->setEnabled( state );
-  }
+  mIdentity.signatureEditButton->setDisabled( filename.stripWhiteSpace().isEmpty() );
 }
 
 
 void ConfigureDialog::slotSignatureEdit( void )
 {
-  QString fileName = mIdentity.signatureFileEdit->url().stripWhiteSpace();
-  if( fileName.isEmpty() == true )
+  QString fileName = mIdentity.signatureFileRequester->url().stripWhiteSpace();
+  if( fileName.isEmpty() )
   {
     KMessageBox::error( this, i18n("You must specify a filename") );
     return;
   }
 
   QFileInfo fileInfo( fileName );
-  if( fileInfo.isDir() == true )
+  if( fileInfo.isDir() )
   {
     QString msg = i18n("You have specified a directory\n\n%1").arg(fileName);
     KMessageBox::error( this, msg );
     return;
   }
 
-  if( fileInfo.exists() == false )
+  if( !fileInfo.exists() )
   {
     // Create the file first
     QFile file( fileName );
-    if( file.open( IO_ReadWrite ) == false )
+    if( !file.open( IO_ReadWrite ) )
     {
       QString msg = i18n("Unable to create new file at\n\n%1").arg(fileName);
       KMessageBox::error( this, msg );
@@ -2799,7 +2915,7 @@ void ConfigureDialog::slotSignatureEdit( void )
     }
   }
 
-  QString cmdline = QString(DEFAULT_EDITOR_STR);
+  QString cmdline = QString::fromLatin1(DEFAULT_EDITOR_STR);
 
   QString argument = "\"" + fileName + "\"";
   ApplicationLaunch kl(cmdline.replace(QRegExp("\\%f"), argument ));
@@ -3568,15 +3684,6 @@ void ConfigureDialog::slotExternalEditorSelectionChanged( void )
 }
 
 
-void ConfigureDialog::slotMailCommandSelectionChanged( void )
-{
-  bool flag = mMisc.mailCommandCheck->isChecked();
-  mMisc.mailCommandEdit->setEnabled( flag );
-  mMisc.mailCommandChooseButton->setEnabled( flag );
-  mMisc.mailCommandLabel->setEnabled( flag );
-}
-
-
 void ConfigureDialog::slotExternalEditorChooser( void )
 {
   KFileDialog dialog("/", QString::null, this, 0, true );
@@ -3620,7 +3727,7 @@ void ConfigureDialog::slotMailCommandChooser( void )
       return;
     }
 
-    mMisc.mailCommandEdit->setText( url.path() );
+    mNetwork.mailCommandEdit->setText( url.path() );
   }
 }
 
