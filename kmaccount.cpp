@@ -36,6 +36,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   mFolder = NULL;
   mTimer  = NULL;
   mInterval = 0;
+  mExclude = false;
   mCheckingMail = FALSE;
 }
 
@@ -78,6 +79,7 @@ void KMAccount::readConfig(KConfig& config)
   mName   = config.readEntry("Name", i18n("Unnamed"));
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
+  setCheckExclude(config.readBoolEntry("check-exclude", false));
 
   if (!folderName.isEmpty())
   {
@@ -100,6 +102,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Name", mName);
   config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
   config.writeEntry("check-interval", mInterval);
+  config.writeEntry("check-exclude", mExclude);
 }
 
 
@@ -187,6 +190,12 @@ void KMAccount::setCheckInterval(int aInterval)
     mInterval = aInterval;
     installTimer();
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMAccount::setCheckExclude(bool aExclude)
+{
+  mExclude = aExclude;
 }
 
 

@@ -58,6 +58,11 @@ public:
   virtual void setCheckInterval(int aInterval);
   int checkInterval(void) const { return mInterval; }
 
+  /** Set/get whether account should be part of the accounts checked
+    with "Check Mail". */
+  virtual void setCheckExclude(bool aExclude);
+  int checkExclude(void) const { return mExclude; }
+
 protected slots:
   virtual void mailCheck();
 
@@ -82,6 +87,7 @@ protected:
   KMAcctFolder* mFolder;
   QTimer *mTimer;
   int mInterval;
+  bool mExclude;
   bool mCheckingMail;
 };
 

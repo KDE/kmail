@@ -222,6 +222,8 @@ bool KMAcctMgr::checkMail(bool interactive)
     wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
     wid->show();
   }
+
+  int accounts = 0;
   
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
@@ -235,15 +237,31 @@ bool KMAcctMgr::checkMail(bool interactive)
       warning(tmp);
       break;
     }
-  else   if (cur->processNewMail(wid))
+    else   if (cur->checkExclude())
     {
-      hasNewMail = TRUE;
-      emit newMail(cur);
+      // Account excluded from mail check.
+    }
+    else
+    {
+      accounts++;
+      if (cur->processNewMail(wid))
+      {
+        hasNewMail = TRUE;
+        emit newMail(cur);
+      }
     }
   }
   if (wid)
     delete wid;
   filterMgr->cleanup();
+  if (!accounts)
+  {
+    QString tmp; 
+    tmp = i18n("All accounts are excluded from \"Check Mail\".\n"
+               "Select a specific account to check or\n"
+               "change your account settings!");
+    warning(tmp);
+  }
   debug ("checked mail, server ready");
   serverReady(true);
   return hasNewMail;

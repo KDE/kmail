@@ -1033,7 +1033,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   acctType = mAcct->type();
 
   setCaption("Configure Account");
-  grid = new QGridLayout(this, 18, 3, 8, 4);
+  grid = new QGridLayout(this, 19, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(i18n("Type:"), this);
@@ -1101,6 +1101,11 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mChkInterval->setMinimumSize(mChkInterval->sizeHint());
   mChkInterval->setChecked(mAcct->checkInterval() > 0);
   grid->addMultiCellWidget(mChkInterval, 9, 9, 1, 2);
+
+  mChkExclude = new QCheckBox(i18n("Exclude from \"Check Mail\""), this);
+  mChkExclude->setMinimumSize(mChkExclude->sizeHint());
+  mChkExclude->setChecked(mAcct->checkExclude());
+  grid->addMultiCellWidget(mChkExclude, 10, 10, 1, 2);
 
   // label with "Local Account" or "Pop Account" created previously
   lbl->adjustSize();
@@ -1193,6 +1198,7 @@ void KMAccountSettings::accept()
   mAcct->setFolder((KMFolder*)fld);
 
   mAcct->setCheckInterval(mChkInterval->isChecked() ? 3 : 0);
+  mAcct->setCheckExclude(mChkExclude->isChecked());
 
   if (acctType == "local")
   {
