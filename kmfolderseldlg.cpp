@@ -210,7 +210,7 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption,
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
 
-  resize(220, 300);
+  readConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -229,7 +229,7 @@ KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
 
-  resize(220, 300);
+  readConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -239,6 +239,8 @@ KMFolderSelDlg::~KMFolderSelDlg()
   if ( cur && mUseGlobalSettings ) {
     GlobalSettings::setLastSelectedFolder( cur->idString() );
   }
+
+  writeConfig();
 }
 
 
@@ -265,6 +267,22 @@ void KMFolderSelDlg::setFlags( bool mustBeReadWrite, bool showOutbox,
                                bool showImapFolders )
 {
   mTreeView->reload( mustBeReadWrite, showOutbox, showImapFolders );
+}
+
+void KMFolderSelDlg::readConfig()
+{
+  KConfig *config = KGlobal::config();
+  config->setGroup( "FolderSelectionDialog" );
+  QSize size = config->readSizeEntry( "Size" );
+  if ( !size.isEmpty() ) resize( size );
+  else resize( 220, 300 );
+}
+
+void KMFolderSelDlg::writeConfig()
+{
+  KConfig *config = KGlobal::config();
+  config->setGroup( "FolderSelectionDialog" );
+  config->writeEntry( "Size", size() );
 }
 
 } // namespace KMail

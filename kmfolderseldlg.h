@@ -78,6 +78,9 @@ namespace KMail {
       void slotSelect();
 
     protected:
+      void readConfig();
+      void writeConfig();
+
       SimpleFolderTree * mTreeView;
       bool mUseGlobalSettings;
   };
