@@ -3297,8 +3297,10 @@ void KMMainWidget::initializeFilterActions()
       // FIXME
       // uncomment the next if statement after the filter dialog supports
       // separate activation of filters for the toolbar - currently 
-      // we better use the coupled way
+      // we better depend on whether an icon is defined, so the current
+      // IF statement is intermediate
       // if ( (*it)->configureToolbar() )
+      if ( !(*it)->icon().isEmpty() )
         mFilterTBarActions.append(filterAction);
     }
   }
