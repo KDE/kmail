@@ -16,6 +16,7 @@
 #include "kmmessage.h" // for KabBridge
 #include "kmaddrbookdlg.h" // for kmaddrbookexternal
 #include <krun.h> // for kmaddrbookexternal
+#include "addtoaddressbook.h"
 
 //-----------------------------------------------------------------------------
 KMAddrBook::KMAddrBook(): KMAddrBookInherited()
@@ -295,8 +296,28 @@ bool KabBridge::replace(QString address, KabKey kabKey)
 
 
 //-----------------------------------------------------------------------------
+void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
+  KConfig *config = kapp->config();
+  config->setGroup("General");
+  int ab = config->readNumEntry("addressbook", -1);
+  KURL::List list;
+  if (ab == 3) {
+    KURL::List list;
+    KRun::run( "abbrowser -a \"" + addr + "\"", list );
+    return;
+  }
+  if (!kernel->useKAB()) {
+    if (addr.isEmpty()) return;
+    kernel->addrBook()->insert(addr);
+    //    statusMsg(i18n("Address added to addressbook."));
+  }
+  else {
+    AddToKabDialog dialog(addr, kernel->KABaddrBook(), parent);
+    dialog.exec();
+  }
+}
+
 void KMAddrBookExternal::launch(QWidget *parent) {
-  debug( "first" );
   KConfig *config = kapp->config();
   config->setGroup("General");
   int ab = config->readNumEntry("addressbook", -1);

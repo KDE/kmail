@@ -60,7 +60,6 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kwin.h"
-#include "addtoaddressbook.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -1142,15 +1141,7 @@ void KMMainWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoAddAddrBook()
 {
-  if (!kernel->useKAB()) {
-    if (mUrlCurrent.isEmpty()) return;
-    kernel->addrBook()->insert(mUrlCurrent.path());
-    statusMsg(i18n("Address added to addressbook."));
-  }
-  else {
-    AddToKabDialog dialog(mUrlCurrent.path(), kernel->KABaddrBook(), this);
-    dialog.exec();
-  }
+  KMAddrBookExternal::addEmail(mUrlCurrent.path(), this);
 }
 
 

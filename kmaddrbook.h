@@ -75,7 +75,7 @@ public:
 
 class KMAddrBookExternal {
 public:
-  static void addEntry(QString) {};
+  static void addEmail(QString addr, QWidget *parent);
   static void launch(QWidget *parent);
 };
 
