@@ -379,7 +379,6 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
-  removeTempFiles();
   if (aMsg)
       kdDebug(5006) << aMsg->subject() << " " << aMsg->fromStrip() << endl;
 
@@ -578,6 +577,7 @@ void KMReaderWin::parseMsg(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
+  removeTempFiles();
   KMMessagePart msgPart;
   int i, numParts;
   QCString type, subtype, contDisp;
