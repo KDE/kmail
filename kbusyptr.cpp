@@ -110,9 +110,8 @@ bool KBusyPtr :: loadBitmap (QBitmap& bm, const QString& filename)
   }
   else 
   {
-    f = app->kdedir();
-    f.detach();
-    f += "/share/apps/kmail/pics/";
+    f = app->kde_datadir().copy();
+    f += "/kmail/pics/";
     f += filename;
   }
   rc = bm.load(f);
