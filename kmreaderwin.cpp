@@ -1148,7 +1148,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	     (ch=='f' && strncmp(pos,"ftp:", 4)==0) ||
 	     (ch=='m' && strncmp(pos,"mailto:", 7)==0))
     {
-      for (i=0; *pos && *pos > ' ' &&
+      for (i=0; *pos && *pos > ' ' && *pos != '\"' &&
                 *pos != '<' &&		// handle cases like this: <link>http://foobar.org/</link>
 		i < 255; i++, pos++)
 	str[i] = *pos;
