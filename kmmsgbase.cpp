@@ -722,6 +722,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     result += LWSP_buffer;
     result += "=?";
     lastWasEncodedWord = false;
+    ++pos; // eat '?' (for loop eats '=')
     LWSP_buffer = 0;
   }
   return result;
