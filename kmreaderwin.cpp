@@ -1749,37 +1749,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         deb += new_cleartext;
         deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
         kdDebug(5006) << deb << endl;
-
         insertAndParseNewChildNode( sign,
                                     new_cleartext,
                                     "opaqued signed data" );
-        /*
-        DwBodyPart* myBody = new DwBodyPart(DwString( new_cleartext ), sign.dwPart());
-        myBody->Parse();
-        if( myBody->hasHeaders() ) {
-          DwText& desc = myBody->Headers().ContentDescription();
-          desc.FromString( "opaque signed data" );
-          desc.SetModified();
-          //desc.Assemble();
-          myBody->Headers().Parse();
-        }
-        sign.setFirstChild( new partNode( false, myBody ) )->buildObjectTree( false );
-
-        if( sign.mimePartTreeItem() ) {
-kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
-          sign.mChild->fillMimePartTree( sign.mimePartTreeItem(),
-                                         0,
-                                         "",   // cntDesc,
-                                         "",   // mainCntTypeStr,
-                                         "",   // cntEnc,
-                                         "" ); // cntSize );
-kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
-        } else {
-kdDebug(5006) << "\n     ------  Sorry, curNode->mimePartTreeItem() returns ZERO so"
-              << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
-        }
-        parseObjectTree( sign.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
-        */
         delete new_cleartext;
       } else {
         txt = "<hr><b><h2>";
