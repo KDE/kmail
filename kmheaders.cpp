@@ -700,6 +700,11 @@ void KMHeaders::msgAdded(int id)
 
   mItems[id] = hi;
   msgHeaderChanged(id);
+
+  if ((childCount() == 1) && hi) {
+    setSelected( hi, true );
+    highlightMessage( hi );
+  }
 }
 
 
