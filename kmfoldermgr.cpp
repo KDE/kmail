@@ -281,7 +281,7 @@ void KMFolderMgr::createFolderList(QStringList *str,
 				   bool i18nized)
 {
   KMFolderNode* cur;
-  KMFolderDir* fdir = adir ? adir : &(kernel->folderMgr()->dir());
+  KMFolderDir* fdir = adir ? adir : &mDir;
 
   for (cur=fdir->first(); cur; cur=fdir->next()) {
     if (cur->isDir())

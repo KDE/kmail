@@ -28,6 +28,7 @@
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "kmidentity.h"
+#include "kmfolderimap.h"
 
 #include "kmfolderdia.moc"
 
@@ -92,6 +93,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ml->addStretch( 1 );
 
   QStringList str;
+  if (!folder) kernel->imapFolderMgr()->createFolderList( &str, &mFolders );
   kernel->folderMgr()->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
   QGuardedPtr<KMFolder> curFolder;
@@ -206,6 +208,7 @@ void KMFolderDialog::slotOk()
     QString acctName;
     QString fldName, oldFldName;
     KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
+    KMFolder *selectedFolder = NULL;
     int curFolder = fileInFolder->currentItem();
 
     if (folder) oldFldName = folder->name();
@@ -215,7 +218,10 @@ void KMFolderDialog::slotOk()
     fldName.replace(QRegExp("^\\."), "");
     if (fldName.isEmpty()) fldName = i18n("unnamed");
     if (curFolder != 0)
-      selectedFolderDir = (*mFolders.at(curFolder - 1))->createChildFolder();
+    {
+      selectedFolder = *mFolders.at(curFolder - 1);
+      selectedFolderDir = selectedFolder->createChildFolder();
+    }
 
     QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
     if ((selectedFolderDir->hasNamedFolder(fldName)) &&
@@ -255,7 +261,9 @@ void KMFolderDialog::slotOk()
     }
 
     if (!folder) {
-      if (mailboxType->currentItem() == 1)
+      if (selectedFolder && selectedFolder->protocol() == "imap")
+        static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
+      else if (mailboxType->currentItem() == 1)
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       else
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );

@@ -525,9 +525,7 @@ void KMFolderTree::delayedUpdate()
 void KMFolderTree::doFolderListChanged()
 {
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
-  if (!fti || !fti->folder)
-    return;
-  KMFolder* folder = fti->folder;
+  KMFolder* folder = (fti) ? fti->folder : NULL;
   reload();
   QListViewItem *qlvi = indexOfFolder(folder);
   if (qlvi) {
@@ -787,43 +785,40 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
   if (!fti )
     return;
-  // ignore IMAP root folders
-  if (fti && fti->folder && (fti->folder->protocol() == "imap") && fti->folder->noContent())
-     return;
   if ((!fti->folder || fti->folder->noContent()))
-     {
+  {
+    folderMenu->insertItem(i18n("&Create Child Folder..."), this,
+                           SLOT(addChildFolder()));
+    if (fti->folder->protocol() != "imap")
+      folderMenu->insertItem(i18n("Compact All &Folders"),
+                     kernel->folderMgr(), SLOT(compactAll()));
+  } else {
+    if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
+        folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),
+                                     SLOT(slotSendQueued()));
+    if (!fti->folder->isSystemFolder() || fti->folder->protocol() == "imap")
+    {
       folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                              SLOT(addChildFolder()));
-      folderMenu-> insertItem(i18n("Compact All &Folders"),
-                     kernel->folderMgr(), SLOT(compactAll()));
-     }
-  else {
-  if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
-      folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),
-                                   SLOT(slotSendQueued()));
-  if (!fti->folder->isSystemFolder() || fti->folder->protocol() == "imap")
-     {
-     if (fti->folder->protocol() != "imap")  // protect from imap folders
-         folderMenu->insertItem(i18n("&Create Child Folder..."), this,
-                                       SLOT(addChildFolder()));
-         folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
-                                      SLOT(slotModifyFolder()));
-     }
-  folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
-                         SLOT(slotCompactFolder()));
-  {
-     folderMenu->insertSeparator();
-     folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
-                            SLOT(slotEmptyFolder()));
-  if ( !fti->folder->isSystemFolder() )
+      folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
+                             SLOT(slotModifyFolder()));
+    }
+
+    folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
+                           SLOT(slotCompactFolder()));
+    folderMenu->insertSeparator();
+    folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
+                           SLOT(slotEmptyFolder()));
+    if ( !fti->folder->isSystemFolder() )
         folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
-                                     SLOT(slotRemoveFolder()));
-     }
-  if (fti->folder->isMailingList()) {
-     folderMenu->insertSeparator();
-     folderMenu->insertItem(i18n("&Post to mailing-list"),
-                                 topLevelWidget(), SLOT(slotCompose()));
-     }
+                               SLOT(slotRemoveFolder()));
+
+    if (fti->folder->isMailingList())
+    {
+      folderMenu->insertSeparator();
+      folderMenu->insertItem(i18n("&Post to mailing-list"),
+                             topLevelWidget(), SLOT(slotCompose()));
+    }
   }
 
   folderMenu->exec (p, 0);

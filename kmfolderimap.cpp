@@ -224,7 +224,7 @@ void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
     + ";TYPE=LIST");
   if (!mAccount->makeConnection())
   { 
-    fti->setOpen( FALSE );
+    if (fti) fti->setOpen( FALSE );
     return;
   }
   if (!secondStep) mHasInbox = FALSE;
@@ -724,32 +724,18 @@ void KMFolderImap::createFolder(const QString &name)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
 {
-/*
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
-  assert(it != mAccount->mapJobData.end());
-  if (job->error()) job->showErrorDialog(); else {
-    KMFolderTreeItem *fti = new KMFolderTreeItem( (*it).parent,
-      new KMFolderImap((*it).parent->folder->createChildFolder(),
-      *(*it).items.begin()), (*it).parent->mPaintInfo );
-    KMFolderImap *fti_folder = static_cast<KMFolderImap*>(fti->folder);
-    if (fti_folder->create())
-    {
-      fti_folder->remove();
-      fti_folder->create();
-    }
-    fti->setText(0, *(*it).items.begin());
-    fti_folder->setAccount( mAccount );
-    KMFolderImap *it_folder = static_cast<KMFolderImap*>((*it).parent->folder);
-    fti_folder->setImapPath( it_folder->imapPath()
-      + *(*it).items.begin() + "/" );
-    connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-            static_cast<KMFolderTree*>(fti->listView()),
-            SLOT(refresh(KMFolder*)));
+  if (it == mAccount->mapJobData.end()) return;
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
+  } else {
+    listDirectory(NULL);
   }
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
-*/
 }
 
 
@@ -869,7 +855,6 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
     account->mapJobData.find(job);
   if (it == account->mapJobData.end()) return;
-  assert(it != account->mapJobData.end());
   if (job->error())
   {
     job->showErrorDialog();
