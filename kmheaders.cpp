@@ -972,7 +972,7 @@ void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
   QString str;
-  KURL url = KFileDialog::getSaveURL(QString::null, "*");
+  KURL url = KFileDialog::getSaveURL(QString::null, QString::null);
 
   if( url.isEmpty() )
     return;

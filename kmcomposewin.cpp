@@ -1436,8 +1436,8 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KURL::List files = KFileDialog::getOpenURLs(QString::null, "*", this,
-    i18n("Attach File"));
+  KURL::List files = KFileDialog::getOpenURLs(QString::null, QString::null, 
+	this, i18n("Attach File"));
   for (KURL::List::Iterator it = files.begin(); it != files.end(); ++it)
     addAttach(*it);
 }
@@ -1515,7 +1515,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  KFileDialog fdlg(QString::null, "*", this, NULL, TRUE);
+  KFileDialog fdlg(QString::null, QString::null, this, NULL, TRUE);
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
@@ -1696,7 +1696,7 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  KURL url = KFileDialog::getSaveURL(QString::null, "*", NULL, pname);
+  KURL url = KFileDialog::getSaveURL(QString::null, QString::null, 0, pname);
 
   if( url.isEmpty() )
     return;

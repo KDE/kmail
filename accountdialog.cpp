@@ -792,7 +792,7 @@ void AccountDialog::slotLocationChooser()
 {
   static QString directory( "/" );
 
-  KFileDialog dialog( directory, "*", this, 0, true );
+  KFileDialog dialog( directory, QString::null, this, 0, true );
   dialog.setCaption( i18n("Choose Location") );
 
   bool result = dialog.exec();

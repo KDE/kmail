@@ -2594,7 +2594,7 @@ void ConfigureDialog::slotSignatureExecMode( bool state )
 
 void ConfigureDialog::slotSendmailChooser( void )
 {
-  KFileDialog dialog("/", "*", this, 0, true );
+  KFileDialog dialog("/", QString::null, this, 0, true );
   dialog.setCaption(i18n("Choose Sendmail Location") );
 
   if( dialog.exec() == QDialog::Accepted )
@@ -3226,7 +3226,7 @@ void ConfigureDialog::slotMailCommandSelectionChanged( void )
 
 void ConfigureDialog::slotExternalEditorChooser( void )
 {
-  KFileDialog dialog("/", "*", this, 0, true );
+  KFileDialog dialog("/", QString::null, this, 0, true );
   dialog.setCaption(i18n("Choose External Editor") );
 
   if( dialog.exec() == QDialog::Accepted )
@@ -3250,7 +3250,7 @@ void ConfigureDialog::slotExternalEditorChooser( void )
 
 void ConfigureDialog::slotMailCommandChooser( void )
 {
-  KFileDialog dialog("/", "*", this, 0, true );
+  KFileDialog dialog("/", QString::null, this, 0, true );
   dialog.setCaption(i18n("Choose External Command") );
 
   if( dialog.exec() == QDialog::Accepted )
@@ -3732,7 +3732,7 @@ void ConfigureTransportDialog::slotSendmailType( int id )
 
 void ConfigureTransportDialog::slotSendmailChooser( void )
 {
-  KFileDialog dialog("/", "*", this, 0, true );
+  KFileDialog dialog("/", QString::null, this, 0, true );
   dialog.setCaption(i18n("Choose Sendmail Location") );
 
   if( dialog.exec() == QDialog::Accepted )
