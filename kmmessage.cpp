@@ -356,6 +356,8 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
     setSignatureStateChar(  headerField("X-KMail-SignatureState").at(0) );
     setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).latin1() ) );
   }
+  if (attachmentState() == KMMsgAttachmentUnknown && readyToShow())
+    updateAttachmentState();
 
   mNeedsAssembly = FALSE;
   mDate = date();
@@ -4153,6 +4155,48 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     // notify observers
     notify();
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::updateAttachmentState( DwBodyPart* part )
+{
+  if ( !part ) 
+    part = getFirstDwBodyPart();
+  if ( !part ) 
+  {
+    setStatus( KMMsgStatusHasNoAttach );
+    return;
+  }
+
+  if ( part->hasHeaders() &&
+       part->Headers().HasContentDisposition() &&
+       !part->Headers().ContentDisposition().Filename().empty() )
+  {
+    setStatus( KMMsgStatusHasAttach );
+    return;
+  }
+
+  // multipart
+  if ( part->hasHeaders() &&
+       part->Headers().HasContentType() &&
+       part->Body().FirstBodyPart() &&
+       (DwMime::kTypeMultipart == part->Headers().ContentType().Type() ) )
+  {
+    updateAttachmentState( part->Body().FirstBodyPart() );
+  }
+
+  // encapsulated message
+  if ( part->Body().Message() &&
+       part->Body().Message()->Body().FirstBodyPart() )
+  {
+    updateAttachmentState( part->Body().Message()->Body().FirstBodyPart() );
+  }
+
+  // next part
+  if ( part->Next() )
+    updateAttachmentState( part->Next() );
+  else if ( attachmentState() == KMMsgAttachmentUnknown ) 
+    setStatus( KMMsgStatusHasNoAttach );
 }
 
 void KMMessage::setBodyFromUnicode( const QString & str ) {

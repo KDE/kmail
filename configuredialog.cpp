@@ -1912,10 +1912,14 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 
   mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto &icons" ), group );
 
+  mAttachmentCheck = new QCheckBox( i18n("&Display attachment icon"), group );
+
   mNestedMessagesCheck =
     new QCheckBox( i18n("&Thread list of message headers"), group );
 
   connect( mMessageSizeCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mAttachmentCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mCryptoIconsCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2017,6 +2021,7 @@ void AppearancePage::HeadersTab::load() {
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize", false ) );
   mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons", false ) );
+  mAttachmentCheck->setChecked( general.readBoolEntry( "showAttachmentIcon", true ) );
 
   // "Message Header Threading Options":
   int num = geometry.readNumEntry( "nestingPolicy", 3 );
@@ -2056,6 +2061,8 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
 
   if( general.hasKey( "showCryptoIcons" ) )
     mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons" ) );
+  if ( general.hasKey( "showAttachmentIcon" ) )
+    mAttachmentCheck->setChecked( general.readBoolEntry( "showAttachmentIcon" ) );
 
   if ( geometry.hasKey( "nestingPolicy" ) ) {
     int num = geometry.readNumEntry( "nestingPolicy" );
@@ -2094,6 +2101,7 @@ void AppearancePage::HeadersTab::save() {
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
   general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
+  general.writeEntry( "showAttachmentIcon", mAttachmentCheck->isChecked() );
 
   int dateDisplayID = mDateDisplay->id( mDateDisplay->selected() );
   // check bounds:

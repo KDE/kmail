@@ -209,8 +209,9 @@ public slots:
     recursively select its children. */   
   virtual void setSelected(QListViewItem *item, bool selected);
 
-  /** switch size-column */
-  void slotToggleSizeColumn();
+  /** switch size-column 
+      1 for activate, 0 for deactivate, -1 for toggle*/
+  void slotToggleSizeColumn(int mode = -1);
 
   /** Provide information about number of messages in a folder */
   void setFolderInfoStatus();
@@ -221,7 +222,7 @@ protected:
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
       *pixFiller, *pixEncryptionProblematic,
-      *pixSignatureProblematic;
+      *pixSignatureProblematic, *pixAttachment;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);
@@ -340,8 +341,6 @@ private:
   /** */
   bool readSortOrder(bool set_selection=false);
 
-  /** are we currently showing the size field? */
-  bool showingSize;
   /** Updated as side effect of KMHeaders::getMsg */
   int getMsgIndex;
   /** ditto */

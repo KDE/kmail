@@ -235,6 +235,14 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusSpam;
       mStatus |= KMMsgStatusHam;
       break;
+    case KMMsgStatusHasAttach:
+      mStatus &= ~KMMsgStatusHasNoAttach;
+      mStatus |= KMMsgStatusHasAttach;
+      break;
+    case KMMsgStatusHasNoAttach:
+      mStatus &= ~KMMsgStatusHasAttach;
+      mStatus |= KMMsgStatusHasNoAttach;
+      break;
     default:
       mStatus = aStatus;
       break;
@@ -267,6 +275,8 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
     if (strchr(aXStatusStr, 'G')) setStatus(KMMsgStatusFlag);
     if (strchr(aXStatusStr, 'P')) setStatus(KMMsgStatusSpam);
     if (strchr(aXStatusStr, 'H')) setStatus(KMMsgStatusHam);
+    if (strchr(aXStatusStr, 'T')) setStatus(KMMsgStatusHasAttach);
+    if (strchr(aXStatusStr, 'C')) setStatus(KMMsgStatusHasNoAttach);
   }
 
   // Merge the contents of the "Status" field
@@ -464,6 +474,8 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
   if (status & KMMsgStatusIgnored) sstr += 'I';
   if (status & KMMsgStatusSpam) sstr += 'P';
   if (status & KMMsgStatusHam) sstr += 'H';
+  if (status & KMMsgStatusHasAttach) sstr += 'T';
+  if (status & KMMsgStatusHasNoAttach) sstr += 'C';
 
   return sstr;
 }
@@ -1020,6 +1032,18 @@ void KMMsgBase::setTransferInProgress(bool value, bool force)
   MessageProperty::setTransferInProgress( getMsgSerNum(), value, force );
 }
 
+
+//-----------------------------------------------------------------------------
+KMMsgAttachmentState KMMsgBase::attachmentState()
+{
+  KMMsgStatus st = status();
+  if (st & KMMsgStatusHasAttach)
+    return KMMsgHasAttachment;
+  else if (st & KMMsgStatusHasNoAttach)
+    return KMMsgHasNoAttachment;
+  else
+    return KMMsgAttachmentUnknown;
+}
 
 //-----------------------------------------------------------------------------
 static void swapEndian(QString &str)

@@ -35,7 +35,9 @@ enum MsgStatus
     KMMsgStatusIgnored =           0x00000800, 
     KMMsgStatusTodo =              0x00001000,
     KMMsgStatusSpam =              0x00002000,
-    KMMsgStatusHam =               0x00004000 
+    KMMsgStatusHam =               0x00004000, 
+    KMMsgStatusHasAttach =         0x00008000, 
+    KMMsgStatusHasNoAttach =       0x00010000 
 };
 
 typedef uint KMMsgStatus;
@@ -102,6 +104,13 @@ typedef enum
     KMMsgDnDActionASK=2
 } KMMsgDnDAction;
 
+/** Flags for attachment state */
+typedef enum
+{
+  KMMsgHasAttachment,
+  KMMsgHasNoAttachment,
+  KMMsgAttachmentUnknown
+} KMMsgAttachmentState;
 
 
 class KMMsgBase
@@ -360,6 +369,9 @@ public:
   bool transferInProgress();
   /** Set that the message shall not be deleted because it is still required */
   void setTransferInProgress(bool value, bool force = false);
+
+  /** Return if the message has at least one attachment */
+  virtual KMMsgAttachmentState attachmentState();
 
 protected:
   KMFolder* mParent;

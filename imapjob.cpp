@@ -324,20 +324,24 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         if ( size > 0 && mPartSpecifier.isEmpty() )
           (*it).done = size;
         ulong uid = msg->UID();
+        // must set this first so that msg->fromByteArray sets the attachment status
+        if ( mPartSpecifier.isEmpty() ) 
+          msg->setComplete( true );
+        else
+          msg->setReadyToShow( false );
+
         msg->fromByteArray( (*it).data );
         // reconstruct as it may be overwritten above
         msg->setUID(uid);
         if ( size > 0 && msg->msgSizeServer() == 0 ) 
           msg->setMsgSizeServer(size);
 
-        if ( mPartSpecifier.isEmpty() ) 
-          msg->setComplete( true );
-        else
-          msg->setReadyToShow( false );
       } else {
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
         msg->setReadyToShow( true );
+        if (msg->attachmentState() != KMMsgHasAttachment)
+          msg->updateAttachmentState();
       }
     } else {
       kdDebug(5006) << "ImapJob::slotGetMessageResult - got no data for " << mPartSpecifier << endl;

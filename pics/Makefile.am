@@ -8,7 +8,7 @@ pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgpartiallyencrypted.png \
 	kmmsgpartiallysigned.png kmmsgfiller.png kmmsgfullyencrypted.png \
 	kmmsgfullysigned.png kmmsgundefinedencrypted.png \
-	kmmsgundefinedsigned.png kmmsgspam.png \
+	kmmsgundefinedsigned.png kmmsgspam.png kmmsgattachment.png \
 	kmailwindowlayout1.png \
 	kmailwindowlayout2.png kmailwindowlayout3.png kmailwindowlayout4.png \
 	kmailwindowlayout5.png kmailwindowlayout1_smart_mime.png \

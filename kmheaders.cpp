@@ -71,6 +71,7 @@ QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
 QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
+QPixmap* KMHeaders::pixAttachment = 0;
 
 #define KMAIL_SORT_VERSION 1012
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
@@ -376,11 +377,15 @@ public:
           else if( mMsgBase->signatureState() == KMMsgSignatureProblematic )
               pixmaps << *KMHeaders::pixSignatureProblematic;
       }
+      // Only merge the attachment icon in if that is configured.
+      if( headers->paintInfo()->showAttachmentIcon && 
+          mMsgBase->attachmentState() == KMMsgHasAttachment ) 
+        pixmaps << *KMHeaders::pixAttachment;
 
       static QPixmap mergedpix;
       mergedpix = pixmapMerge( pixmaps );
       return &mergedpix;
-    }
+    } 
     return 0;
   }
 
@@ -555,34 +560,20 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPopup = new KPopupMenu(this);
   mPopup->insertTitle(i18n("View Columns"));
   mPopup->setCheckable(true);
-  mSizeColumn = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
+  mSizeColumn = mPopup->insertItem(i18n("Size"), this, SLOT(slotToggleSizeColumn()));
+  mPaintInfo.showSize = false;
 
   mPaintInfo.flagCol = -1;
   mPaintInfo.subCol    = mPaintInfo.flagCol   + 1;
   mPaintInfo.senderCol = mPaintInfo.subCol    + 1;
   mPaintInfo.dateCol   = mPaintInfo.senderCol + 1;
-  mPaintInfo.sizeCol   = mPaintInfo.dateCol   + 1;
   mPaintInfo.orderOfArrival = false;
   mPaintInfo.status = false;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = false;
 
-  readConfig();
-  restoreLayout(KMKernel::config(), "Header-Geometry");
   setShowSortIndicator(true);
   setFocusPolicy( WheelFocus );
-
-  addColumn( i18n("Subject"), 310 );
-  addColumn( i18n("Sender"), 170 );
-  addColumn( i18n("Date"), 170 );
-
-  if (mPaintInfo.showSize) {
-    addColumn( i18n("Size"), 80 );
-    setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
-    showingSize = true;
-  } else {
-    showingSize = false;
-  }
 
   if (!pixmapsLoaded)
   {
@@ -608,7 +599,15 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixUndefinedEncrypted = new QPixmap( UserIcon( "kmmsgundefinedencrypted" ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic = new QPixmap( UserIcon( "kmmsgsignatureproblematic" ) );
+    pixAttachment  = new QPixmap( UserIcon( "kmmsgattachment" ) );
   }
+
+  addColumn( i18n("Subject"), 310 );
+  addColumn( i18n("Sender"), 170 );
+  addColumn( i18n("Date"), 170 );
+
+  readConfig();
+  restoreLayout(KMKernel::config(), "Header-Geometry");
 
   connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
            this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int )));
@@ -648,19 +647,26 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::slotToggleSizeColumn ()
+void KMHeaders::slotToggleSizeColumn(int mode)
 {
-  mPaintInfo.showSize = !mPaintInfo.showSize;
+  bool old = mPaintInfo.showSize;
+  if (mode == -1)
+    mPaintInfo.showSize = !mPaintInfo.showSize;
+  else
+    mPaintInfo.showSize = mode;
+
   mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize);
+  if (mPaintInfo.showSize && !old)
+    mPaintInfo.sizeCol = addColumn(i18n("Size"), 80);
+  else if (!mPaintInfo.showSize && old) {
+    removeColumn(mPaintInfo.sizeCol);
+    mPaintInfo.sizeCol = -1;
+  }
 
-  // we need to write it back so that
-  // the configure-dialog knows the correct status
-  KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "General");
-  config->writeEntry("showMessageSize", mPaintInfo.showSize);
-
-  setFolder(mFolder);
+  if (mode == -1)
+    writeConfig();
 }
+
 
 //-----------------------------------------------------------------------------
 // Support for backing pixmap
@@ -743,9 +749,12 @@ void KMHeaders::readConfig (void)
 
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
-    mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
-    mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize);
+    bool show = config->readBoolEntry("showMessageSize");
+    mPopup->setItemChecked(mSizeColumn, show);
+    slotToggleSizeColumn(show);
+
     mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", false );
+    mPaintInfo.showAttachmentIcon = config->readBoolEntry( "showAttachmentIcon", true );
 
     KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
@@ -860,7 +869,10 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeConfig (void)
 {
-  saveLayout(KMKernel::config(), "Header-Geometry");
+  KConfig* config = KMKernel::config();
+  saveLayout(config, "Header-Geometry");
+  KConfigGroupSaver saver(config, "General");
+  config->writeEntry("showMessageSize", mPaintInfo.showSize);
 }
 
 //-----------------------------------------------------------------------------
@@ -873,7 +885,8 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
   QString str;
 
   mSortInfo.fakeSort = 0;
-  setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
+  // carsten: really needed?
+//  setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
   if (mFolder && mFolder==aFolder) {
     int top = topItemIndex();
     id = currentItemIndex();
@@ -987,27 +1000,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     colText = colText + i18n( " (Status)" );
   setColumnText( mPaintInfo.subCol, colText);
 
-
-  if (mFolder) {
-    if (mPaintInfo.showSize) {
-      colText = i18n( "Size" );
-      if (showingSize) {
-        setColumnText( mPaintInfo.sizeCol, colText);
-      } else {
-        // add in the size field
-        addColumn(colText);
-
-        setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
-      }
-      showingSize = true;
-    } else {
-      if (showingSize) {
-        // remove the size field
-        removeColumn(mPaintInfo.sizeCol);
-      }
-      showingSize = false;
-    }
-  }
   END_TIMER(set_folder);
   SHOW_TIMER(set_folder);
 }
@@ -2598,8 +2590,9 @@ void KMHeaders::setOpen( QListViewItem *item, bool open )
 void KMHeaders::setSorting( int column, bool ascending )
 {
   if (column != -1) {
-    if (column != mSortCol)
-      setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
+  // carsten: really needed?
+//    if (column != mSortCol)
+//      setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
     if(mSortInfo.dirty || column != mSortInfo.column || ascending != mSortInfo.ascending) { //dirtied
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
         mSortInfo.dirty = true;

@@ -804,6 +804,8 @@ public:
   /** Returns the last DwBodyPart that was updated */
   DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
 
+  void updateAttachmentState(DwBodyPart * part = 0);
+
 private:
   /** Returns message body with quoting header and indented by the
     given indentation string. This is suitable for including the message

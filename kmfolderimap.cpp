@@ -912,7 +912,8 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
       else if ((*eIt).m_uds == KIO::UDS_ACCESS)
         flags = (*eIt).m_long;
     }
-    if (mimeType == "message/rfc822-imap" && !(flags & 8))
+    if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") && 
+        !(flags & 8))
       (*it).items.append(name + "," + QString::number(flags));
   }
 }
@@ -1061,7 +1062,9 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
        mAccount && mAccount->loadOnDemand() &&
        ( msg->msgSizeServer() > 5000 || msg->msgSizeServer() == 0 ) &&
        ( msg->signatureState() == KMMsgNotSigned || 
-         msg->signatureState() == KMMsgSignatureStateUnknown ) )
+         msg->signatureState() == KMMsgSignatureStateUnknown ) &&
+       ( msg->encryptionState() == KMMsgNotEncrypted || 
+         msg->encryptionState() == KMMsgEncryptionStateUnknown ) )
   {
     // load-on-demand: retrieve the BODYSTRUCTURE and to speed things up also the headers
     // this is not activated for small or signed messages

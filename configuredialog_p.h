@@ -459,6 +459,7 @@ protected: // methods
 
 protected: // data
   QCheckBox    *mMessageSizeCheck;
+  QCheckBox    *mAttachmentCheck;
   QCheckBox    *mNestedMessagesCheck;
   QCheckBox    *mCryptoIconsCheck;
   QButtonGroup *mNestingPolicy;
