@@ -5,7 +5,6 @@
 #include <kmfldsearch.h>
 
 #ifdef MALLOC_DEBUG
-#include <qmessagebox.h>
 #include <malloc.h>
 #endif
 
@@ -1623,7 +1622,7 @@ void KMMainWin::slotMemInfo() {
 		      "Max. freeable memory      : %5\n")
     .arg(mi.hblks).arg(fmt(mi.uordblks)).arg(fmt(mi.fordblks))
     .arg(fmt(mi.arena)).arg(fmt(mi.keepcost));
-  QMessageBox::information(0, "Malloc information", s);
+  KMessageBox::information(0, s, "Malloc information", s);
 #endif
 }
 

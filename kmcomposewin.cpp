@@ -66,7 +66,6 @@
 #include <qpixmap.h>
 #include <qregexp.h>
 #include <qcursor.h>
-#include <qmessagebox.h>
 #include <qbuffer.h>
 
 #include <sys/stat.h>
@@ -1889,21 +1888,18 @@ void KMComposeWin::slotSendNow()
 {
 #ifndef KRN
   if (mConfirmSend) {
-    switch(QMessageBox::information(&mMainWidget,
-                                    i18n("Send Confirmation"),
+    switch(KMessageBox::warningYesNoCancel(&mMainWidget,
                                     i18n("About to send email..."),
+                                    i18n("Send Confirmation"),
                                     i18n("Send &Now"),
-                                    i18n("Send &Later"),
-                                    i18n("&Cancel"),
-                                    0,
-                                    2)) {
-    case 0:        // send now
+                                    i18n("Send &Later"))) {
+    case KMessageBox::Yes:        // send now
         doSend(TRUE);
       break;
-    case 1:        // send later
+    case KMessageBox::No:        // send later
         doSend(FALSE);
       break;
-    case 2:        // cancel
+    case KMessageBox::Cancel:        // cancel
       break;
     default:
       ;    // whoa something weird happened here!

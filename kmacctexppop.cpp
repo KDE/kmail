@@ -30,7 +30,6 @@
 #include <kprocess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <qmessagebox.h> // just for kioslave testing
 #include <qtooltip.h>
 #include "kmbroadcaststatus.h"
 
@@ -486,8 +485,9 @@ void KMAcctExpPop::startJob() {
   // Run the precommand
   if (!runPrecommand(precommand()))
     {
-      QMessageBox::warning(0, i18n("Kmail Error Message"),
-			    i18n("Couldn't execute precommand: %1").arg(precommand()) );
+      KMessageBox::sorry(0, 
+                         i18n("Couldn't execute precommand: %1").arg(precommand()),
+                         i18n("Kmail Error Message"));
       emit finishedCheck(idsOfMsgs.count() > 0);
       return;
     }
@@ -502,8 +502,8 @@ void KMAcctExpPop::startJob() {
   }
   KURL url = text;
   if ( url.isMalformed() ) {
-    QMessageBox::critical(0, i18n("Kioslave Error Message"),
-			  i18n("Source URL is malformed") );
+    KMessageBox::error(0, i18n("Source URL is malformed"), 
+                          i18n("Kioslave Error Message") );
     return;
   }
 
@@ -731,8 +731,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     stage = Idle;
     job->kill();
     job = 0L;
-    QMessageBox::critical(0, i18n("Invalid response from server"),
-			  i18n( "Unable to complete LIST operation" ));
+    KMessageBox::error(0, i18n( "Unable to complete LIST operation" ),
+                          i18n("Invalid response from server"));
     return;
   }
 }
