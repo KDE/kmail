@@ -120,6 +120,7 @@ update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
 		upgrade-signature.pl kmail-upd-identities.pl \
                 kmail-3.1-use-UOID-for-identities.pl \
                 kmail-3.1-update-new-mail-notification-settings.pl \
+                kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl \
 		kmail-3.2-update-loop-on-goto-unread-settings.sh
 
 tipdir = $(kde_datadir)/kmail

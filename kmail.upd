@@ -68,6 +68,10 @@ File=kmailrc
 Group=Behaviour
 Key=LoopOnGotoUnread
 Script=kmail-3.2-update-loop-on-goto-unread-settings.sh,bash
+# due to a bug the first identity always had UOID 0, assign another UOID
+Id=3.1.4-dont-use-UOID-0-for-any-identity
+File=kmailrc
+Script=kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl,perl
 #
 # Important notice:
 # If you add updates here, keep this text below them.
