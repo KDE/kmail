@@ -3760,6 +3760,7 @@ struct SMIMECryptoConfigEntries {
     mIgnoreServiceURLEntry = configEntry( "dirmngr", "OCSP", "ignore-ocsp-service-url", Kleo::CryptoConfigEntry::ArgType_None, false );
     mIgnoreHTTPDPEntry = configEntry( "dirmngr", "HTTP", "ignore-http-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
     mDisableHTTPEntry = configEntry( "dirmngr", "HTTP", "disable-http", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mHonorHTTPProxy = configEntry( "dirmngr", "HTTP", "honor-http-proxy", Kleo::CryptoConfigEntry::ArgType_None, false );
 
     mIgnoreLDAPDPEntry = configEntry( "dirmngr", "LDAP", "ignore-ldap-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
     mDisableLDAPEntry = configEntry( "dirmngr", "LDAP", "disable-ldap", Kleo::CryptoConfigEntry::ArgType_None, false );
@@ -3785,6 +3786,7 @@ struct SMIMECryptoConfigEntries {
   Kleo::CryptoConfigEntry* mIgnoreServiceURLEntry;
   Kleo::CryptoConfigEntry* mIgnoreHTTPDPEntry;
   Kleo::CryptoConfigEntry* mDisableHTTPEntry;
+  Kleo::CryptoConfigEntry* mHonorHTTPProxy;
   Kleo::CryptoConfigEntry* mIgnoreLDAPDPEntry;
   Kleo::CryptoConfigEntry* mDisableLDAPEntry;
   // Other widgets
@@ -3841,14 +3843,14 @@ void SecurityPage::SMimeTab::load() {
   initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
   initializeDirmngrCheckbox( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
   if ( e.mCustomHTTPProxy ) {
-    const QString systemProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
-    if ( !systemProxy.isEmpty() )
-      mWidget->systemHTTPProxy->setText( systemProxy );
-    const QString currentProxy = e.mCustomHTTPProxy->stringValue();
-    const bool honor = ( systemProxy == currentProxy );
+    QString systemProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
+    if ( systemProxy.isEmpty() )
+      systemProxy = i18n( "no proxy" );
+    mWidget->systemHTTPProxy->setText( i18n( "(Current system setting: %1)" ).arg( systemProxy ) );
+    bool honor = e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue();
     mWidget->honorHTTPProxyRB->setChecked( honor );
     mWidget->useCustomHTTPProxyRB->setChecked( !honor );
-    mWidget->customHTTPProxy->setText( currentProxy );
+    mWidget->customHTTPProxy->setText( e.mCustomHTTPProxy->stringValue() );
   } else {
     disableDirmngrWidget( mWidget->honorHTTPProxyRB );
     disableDirmngrWidget( mWidget->useCustomHTTPProxyRB );
@@ -3921,13 +3923,15 @@ void SecurityPage::SMimeTab::save() {
   saveCheckBoxToKleoEntry( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
   saveCheckBoxToKleoEntry( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
   if ( e.mCustomHTTPProxy ) {
-    QString chosenProxy;
-    if ( mWidget->honorHTTPProxyRB->isChecked() )
-      chosenProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
-    else
-      chosenProxy = mWidget->customHTTPProxy->text();
-    if ( chosenProxy != e.mCustomHTTPProxy->stringValue() )
-      e.mCustomHTTPProxy->setStringValue( chosenProxy );
+    const bool honor = mWidget->honorHTTPProxyRB->isChecked();
+    if ( e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue() != honor )
+        e.mHonorHTTPProxy->setBoolValue( honor );
+    if ( !honor )
+    {
+      QString chosenProxy = mWidget->customHTTPProxy->text();
+      if ( chosenProxy != e.mCustomHTTPProxy->stringValue() )
+        e.mCustomHTTPProxy->setStringValue( chosenProxy );
+    }
   }
   txt = mWidget->customLDAPProxy->text();
   if ( e.mCustomLDAPProxy && e.mCustomLDAPProxy->stringValue() != txt )
