@@ -1616,29 +1616,28 @@ void KMMessage::setMsgId(const QString& aStr)
 //-----------------------------------------------------------------------------
 QStrList KMMessage::headerAddrField(const QCString& aName) const
 {
+  QString header = headerField(aName);
+  QStringList list = splitEmailAddrList(header);
   QStrList resultList;
-  DwHeaders& header = mMsg->Headers();
-
-  QCString content = header.FieldBody(aName.data()).AsString().c_str();
-  if (content.isEmpty()) return resultList;
-
-  bool insideQuote1 = FALSE, insideQuote2 = FALSE;
-  char *start = content.data(), *stop;
-  while (*start)
+  int i,j;
+  for (QStringList::Iterator it = list.begin(); it != list.end(); it++)
   {
-    while (*start == ' ') start++;
-    stop = start;
-    while (*stop && (*stop != ',' || insideQuote1 || insideQuote2))
+    i = (*it).find('<');
+    if (i >= 0)
     {
-      if (*stop == '"') insideQuote1 = !insideQuote1;
-      else if (*stop == '\'') insideQuote2 = !insideQuote2;
-      stop++;
+      j = (*it).find('>', i+1);
+      if (j > i) (*it) = (*it).mid(i+1, j-i-1);
     }
-    resultList.append(content.mid(start - content.data(), stop - start));
-    start = stop;
-    if (*start) start++;
+    else // if it's "radej@kde.org (Sven Radej)"
+    {
+      i = (*it).find('(');
+      if (i > 0)
+        (*it).truncate(i);  // "radej@kde.org "
+    }
+    (*it) = (*it).stripWhiteSpace();
+    if (!(*it).isEmpty())
+      resultList.append((*it).latin1());
   }
-
   return resultList;
 }
 

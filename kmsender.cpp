@@ -692,31 +692,12 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
 {
   QStrList* recpList = (QStrList*)&aRecipientList;
   QString receiver;
-  int i, j;
   bool rc;
 
   for (receiver=recpList->first(); !receiver.isNull(); receiver=recpList->next())
   {
-    i = receiver.find('<');
-    if (i >= 0)
-    {
-      j = receiver.find('>', i+1);
-      if (j > i) receiver = receiver.mid(i+1, j-i-1);
-    }
-    else // if it's "radej@kde.org (Sven Radej)"
-    {
-      i=receiver.find('(');
-      if (i > 0)
-        receiver.truncate(i);  // "radej@kde.org "
-    }
-    //printf ("Receiver = %s\n", receiver.data());
-
-    receiver = receiver.stripWhiteSpace();
-    if (!receiver.isEmpty())
-    {
-      rc = addOneRecipient(receiver);
-      if (!rc) return FALSE;
-    }
+    rc = addOneRecipient(receiver);
+    if (!rc) return FALSE;
   }
   return TRUE;
 }
