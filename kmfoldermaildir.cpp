@@ -199,17 +199,8 @@ void KMFolderMaildir::sync()
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::expunge()
+int KMFolderMaildir::expungeContents()
 {
-  int openCount = mOpenCount;
-
-  assert(!name().isEmpty());
-
-  close(TRUE);
-
-  if (mAutoCreateIndex) truncate(QFile::encodeName(indexLocation()), mHeaderOffset);
-  else unlink(QFile::encodeName(indexLocation()));
-
   // nuke all messages in this folder now
   QDir d(location() + "/new");
   d.setFilter(QDir::Files);
@@ -217,31 +208,12 @@ int KMFolderMaildir::expunge()
   QStringList::ConstIterator it(files.begin());
   for ( ; it != files.end(); ++it)
     QFile::remove(d.filePath(*it));
-
+  
   d.setPath(location() + "/cur");
   files = d.entryList();
   for (it = files.begin(); it != files.end(); ++it)
     QFile::remove(d.filePath(*it));
-
-  mDirty = FALSE;
-
-  mMsgList.reset(INIT_MSGS);
-  needsCompact = false; //we're cleared and truncated no need to compact
-
-  if (openCount > 0)
-  {
-    open();
-    mOpenCount = openCount;
-  }
-
-  mUnreadMsgs = 0;
-  emit numUnreadMsgsChanged( this );
-  if (mAutoCreateIndex)
-    writeConfig();
-  if (!mQuiet)
-    emit changed();
-  else
-    mChanged = TRUE;
+  
   return 0;
 }
 
@@ -784,21 +756,14 @@ bool KMFolderMaildir::removeFile(const QString& filename)
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderMaildir::remove()
+int KMFolderMaildir::removeContents()
 {
-  assert(name() != "");
-
-  close(TRUE);
-  unlink(QFile::encodeName(indexLocation()));
-
   // it would be nice if QDir could delete recursively.. but since it
   // doesn't, we have to do this hack
   QString cmd;
   cmd.sprintf("rm -rf '%s'", QFile::encodeName(location()).data());
   system(cmd.ascii());
-
-  mMsgList.reset(INIT_MSGS);
-  needsCompact = false; //we are dead - no need to compact us
+  
   return 0;
 }
 

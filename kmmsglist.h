@@ -41,15 +41,16 @@ public:
   virtual int append(KMMsgBasePtr msg, bool syncDict = true);
 
   /** Clear messages. If autoDelete is set (default) the messages are 
-      deleted. The array is not resized.  Does not sync message dictionary. */
-  virtual void clear(bool autoDelete=TRUE);
+      deleted. The array is not resized.  If @p syncDict, also updates
+      the message dictionary. */
+  virtual void clear(bool autoDelete=TRUE, bool syncDict = false);
 
   /** Resize array and initialize new elements if any. Returns
-    FALSE if memory cannot be allocated.  Does not sync message dictionary. */
+    FALSE if memory cannot be allocated. */
   virtual bool resize(int size);
 
   /** Clear the array and resize it to given size. Returns FALSE
-    if memory cannot be allocated.  Does not sync message dictionary. */
+    if memory cannot be allocated. */
   virtual bool reset(int size);
 
   /** Returns message at given index. */

@@ -57,16 +57,6 @@ public:
       c-library fopen call otherwise. */
   virtual int create(bool imap = FALSE);
 
-  /** Removes the folder physically from disk and empties the contents
-    of the folder in memory. Note that the folder is closed during this
-    process, whether there are others using it or not. */
-  virtual int remove();
-
-  /** Delete contents of folder. Forces a close *but* opens the
-    folder again afterwards. Returns errno(3) error code or zero on
-    success. */
-  virtual int expunge();
-
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */
   virtual int compact();
@@ -80,7 +70,17 @@ protected:
   /** Load message from file and store it at given index. Returns NULL
     on failure. */
   virtual KMMessage* readMsg(int idx);
-
+  
+  /** Called by KMFolder::remove() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int removeContents();
+  
+  /** Called by KMFolder::expunge() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int expungeContents();
+  
 private:
   void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
   QString constructValidFileName(QString& file, KMMsgStatus status);

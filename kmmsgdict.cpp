@@ -73,7 +73,7 @@ public:
   
   ulong get(int index)
   {
-    if (array && index >= 0 && index < array->size())
+    if (array && index >= 0 && (unsigned)index < array->size())
       return array->at(index);
     return 0;
   }
@@ -135,7 +135,7 @@ unsigned long KMMsgDict::getNextMsgSerNum() {
 //-----------------------------------------------------------------------------
 
 unsigned long KMMsgDict::insert(unsigned long msgSerNum,
-                                const KMMsgBase *msg, int index = -1)
+                                const KMMsgBase *msg, int index)
 {
   unsigned long msn = msgSerNum;
   if (!msn)
@@ -159,7 +159,7 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   return msn;
 }
 
-unsigned long KMMsgDict::insert(const KMMsgBase *msg, int index = -1)
+unsigned long KMMsgDict::insert(const KMMsgBase *msg, int index)
 {
   unsigned long msn = msg->getMsgSerNum();
   return insert(msn, msg, index);
@@ -235,7 +235,7 @@ bool KMMsgDict::isFolderIdsOutdated(const KMFolder *folder)
   
   QFileInfo indexInfo(folder->indexLocation());
   QFileInfo idsInfo(getFolderIdsLocation(folder));
-
+  
   if (!indexInfo.exists() || !idsInfo.exists())
     outdated = true;
   if (indexInfo.lastModified() > idsInfo.lastModified())
@@ -370,7 +370,7 @@ int KMMsgDict::writeFolderIds(const KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::touchFolderIds(const KMFolder *folder, int index)
+int KMMsgDict::touchFolderIds(const KMFolder *folder)
 {
   KMMsgDictREntry *rentry = openFolderIds(folder);
   if (rentry)
@@ -404,7 +404,6 @@ int KMMsgDict::appendtoFolderIds(const KMFolder *folder, int index)
   }
   
   long ofs = (count - 1) * sizeof(ulong);
-//  printf("*** offset is +%ld\n", ofs);
   if (ofs > 0)
     fseek(rentry->fp, ofs, SEEK_CUR);
 
@@ -426,4 +425,15 @@ bool KMMsgDict::hasFolderIds(const KMFolder *folder)
 {
   KMMsgDictREntry *rentry = rdict->find((void *)folder);
   return rentry != 0;
+}
+
+//-----------------------------------------------------------------------------
+
+bool KMMsgDict::removeFolderIds(const KMFolder *folder)
+{
+  KMMsgDictREntry *rentry = rdict->find((void *)folder);
+  if (rentry)
+    rdict->remove(rentry);
+  QString filename = getFolderIdsLocation(folder);
+  return unlink(filename.local8Bit());
 }

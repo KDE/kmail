@@ -193,12 +193,13 @@ public:
 
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
-    process, whether there are others using it or not. */
+    process, whether there are others using it or not.
+    @see KMFolder::removeContents */
   virtual int remove();
 
-  /** Delete contents of folder. Forces a close *but* opens the
+  /** Delete entire folder. Forces a close *but* opens the
     folder again afterwards. Returns errno(3) error code or zero on
-    success. */
+    success.  @see KMFolder::expungeContents */
   virtual int expunge();
 
   /** Remove deleted messages from the folder. Returns zero on success
@@ -464,12 +465,22 @@ protected:
     TRUE if there is no contents (file). */
   virtual bool isIndexOutdated() = 0;
 
+  /** Called by KMFolder::remove() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int removeContents() = 0;
+  
+  /** Called by KMFolder::expunge() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int expungeContents() = 0;
+  
   /** Write the config file */
   virtual void writeConfig();
 
   /** Read the config file */
   virtual void readConfig();
-
+  
   /** table of contents file */
   FILE* mIndexStream;
   /** list of index entries or messages */

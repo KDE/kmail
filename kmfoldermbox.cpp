@@ -1039,4 +1039,22 @@ void KMFolderMbox::setProcmailLockFileName( const QString &fname )
   mProcmailLockFileName = fname;
 }
 
+//-----------------------------------------------------------------------------
+int KMFolderMbox::removeContents()
+{
+  int rc = 0;
+  rc = unlink(location().local8Bit());
+  return rc;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolderMbox::expungeContents()
+{
+  int rc = 0;
+  if (truncate(location().local8Bit(), 0))
+    rc = errno;
+  return rc;
+}
+
+//-----------------------------------------------------------------------------
 #include "kmfoldermbox.moc"

@@ -1005,7 +1005,6 @@ void KMHeaders::msgHeaderChanged(int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 {
   QListViewItem *qitem;
-  bool unget;
   for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
     if (qitem->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);

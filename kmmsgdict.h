@@ -58,7 +58,7 @@ public:
   int writeFolderIds(const KMFolder *folder);
   
   /** Touches the .folder.index.ids file.  Returns 0 on success. */
-  int touchFolderIds(const KMFolder *folder, int index = -1);
+  int touchFolderIds(const KMFolder *folder);
   
   /** Appends the message to the .folder.index.ids file.
    * Returns 0 on success. */
@@ -66,6 +66,9 @@ public:
   
   /** Returns true if the folder has a .folder.index.ids file.  */
   bool hasFolderIds(const KMFolder *folder);
+  
+  /** Removes the .folder.index.ids file. */
+  bool removeFolderIds(const KMFolder *folder);
   
 protected:
   /** Returns the next message serial number for use. */

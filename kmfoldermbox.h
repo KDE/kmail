@@ -99,8 +99,17 @@ protected:
     and FALSE otherwise. Returns TRUE if there is no index file, and
     TRUE if there is no contents (file). */
   virtual bool isIndexOutdated();
-
-
+  
+  /** Called by KMFolder::remove() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int removeContents();
+  
+  /** Called by KMFolder::expunge() to delete the actual contents.
+    At the time of the call the folder has already been closed, and
+    the various index files deleted.  Returns 0 on success. */
+  virtual int expungeContents();
+  
 private:
   FILE *mStream;
   bool mFilesLocked; // TRUE if the files of the folder are locked (writable)

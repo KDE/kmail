@@ -23,16 +23,24 @@ KMMsgList::~KMMsgList()
 
 
 //-----------------------------------------------------------------------------
-void KMMsgList::clear(bool doDelete)
+void KMMsgList::clear(bool doDelete, bool syncDict)
 {
   KMMsgBasePtr msg = 0;
   long i;
-
+  
+  KMMsgDict *dict = 0;
+  if (syncDict)
+    dict = kernel->msgDict();
+  
   for (i=mHigh-1; i>=0; i--)
   {
     msg = at(i);
-    KMMsgListInherited::at(i) = NULL;
-    if (msg && doDelete) delete msg;
+    if (msg) {
+      if (dict)
+        dict->remove(msg);
+      KMMsgListInherited::at(i) = NULL;
+      if (doDelete) delete msg;
+    }
   }
   mHigh  = 0;
   mCount = 0;
@@ -112,7 +120,9 @@ void KMMsgList::insert(int idx, KMMsgBasePtr aMsg, bool syncDict)
   int i, doubleSize;
 
   assert(idx>=0);
-  KMMsgDict *dict = kernel->msgDict();
+  KMMsgDict *dict = 0;
+  if (syncDict)
+    dict = kernel->msgDict();
 
   if (idx >= size())
   {
@@ -123,15 +133,15 @@ void KMMsgList::insert(int idx, KMMsgBasePtr aMsg, bool syncDict)
   if (aMsg) mCount++;
 
   for (i=mHigh; i>idx; i--) {
-    if (syncDict && dict)
+    if (dict)
       dict->remove(at(i - 1));
     KMMsgListInherited::at(i) = KMMsgListInherited::at(i-1);
-    if (syncDict && dict)
+    if (dict)
       dict->insert(at(i), i);
   }
 
   KMMsgListInherited::at(idx) = aMsg;
-  if (dict && syncDict)
+  if (dict)
     dict->insert(at(idx), idx);
 
   mHigh++;

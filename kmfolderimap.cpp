@@ -164,13 +164,13 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
     {
       if (static_cast<KMFolderImap*>(msgParent)->account() == account())
       {
-				KMImapJob *imapJob = NULL;
-				if (this == msgParent) {
-        	imapJob = new KMImapJob(aMsg, KMImapJob::tPutMessage, this);
-				} else {	
-        	imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);
-				}	
-				connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
+        KMImapJob *imapJob = NULL;
+        if (this == msgParent) {
+          imapJob = new KMImapJob(aMsg, KMImapJob::tPutMessage, this);
+        } else {	
+          imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);
+        }	
+        connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
           SLOT(addMsgQuiet(KMMessage*)));
         aMsg->setTransferInProgress(TRUE);
 				if (this == msgParent) this->getFolder();

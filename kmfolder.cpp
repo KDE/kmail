@@ -903,17 +903,18 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 //-----------------------------------------------------------------------------
 int KMFolder::remove()
 {
-  int rc;
-
   assert(name() != "");
 
+  mMsgList.clear(true, true);   // delete and remove from dict
   close(TRUE);
+
+  kernel->msgDict()->removeFolderIds(this);
   unlink(indexLocation().local8Bit() + ".sorted");
   unlink(indexLocation().local8Bit());
-  rc = unlink(location().local8Bit());
+  
+  int rc = removeContents();
   if (rc) return rc;
 
-  mMsgList.reset(INIT_MSGS);
   needsCompact = false; //we are dead - no need to compact us
   return 0;
 }
@@ -926,15 +927,17 @@ int KMFolder::expunge()
 
   assert(name() != "");
 
+  mMsgList.clear(true, true);   // delete and remove from dict
   close(TRUE);
 
+  kernel->msgDict()->removeFolderIds(this);
   if (mAutoCreateIndex) truncate(indexLocation().local8Bit(), mHeaderOffset);
   else unlink(indexLocation().local8Bit());
-
-  if (truncate(location().local8Bit(), 0)) return errno;
+  
+  int rc = expungeContents();
+  if (rc) return rc;
+  
   mDirty = FALSE;
-
-  mMsgList.reset(INIT_MSGS);
   needsCompact = false; //we're cleared and truncated no need to compact
 
   if (openCount > 0)
@@ -1028,7 +1031,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx = -1)
+void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 {
   if (mQuiet)
   {
