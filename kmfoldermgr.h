@@ -93,7 +93,8 @@ protected:
   virtual void createFolderList( QStringList *str,
  				 QValueList<QGuardedPtr<KMFolder> > *folders,
   				 KMFolderDir *adir,
-  				 const QString& prefix);
+  				 const QString& prefix,
+				 bool i18nized=FALSE );
 
   QString mBasePath;
   KMFolderRootDir mDir;

@@ -1,5 +1,3 @@
-#undef QT_NO_ASCII_CAST
-#undef QT_NO_COMPAT
 // kmfoldermgr.cpp
 // $Id$
 
@@ -81,7 +79,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
 {
   QDir dir;
 
-  assert(aBasePath != NULL);
+  assert(!aBasePath.isNull());
 
   if (aBasePath[0] == '~')
   {
@@ -90,10 +88,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
     mBasePath.append(aBasePath.mid(1));
   }
   else
-  {
-    mBasePath = "";
-    mBasePath.append(aBasePath);
-  }
+    mBasePath = aBasePath;
   
 
   dir.setPath(mBasePath);
@@ -101,12 +96,12 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   {
     KMessageBox::information(0, i18n("Directory\n%1\ndoes not exist.\n\n"
 				  "KMail will create it now.").arg(mBasePath));
-    // dir.mkdir(mBasePath, TRUE);
-    mkdir(mBasePath.data(), 0700);
-    mDir.setPath(mBasePath.local8Bit());
+    // FIXME: mkdir can fail!
+    mkdir(QFile::encodeName(mBasePath), 0700);
+    mDir.setPath(mBasePath);
   }
 
-  mDir.setPath(mBasePath.local8Bit());
+  mDir.setPath(mBasePath);
   mDir.reload();
   emit changed();
 }
@@ -214,6 +209,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder)
 
 void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
 {
+  QDir dir;
   QString folderDirLocation = aFolderDir->path();
   KMFolderNode* fN;
   for (fN = aFolderDir->first(); fN != 0; fN = aFolderDir->next()) {
@@ -224,7 +220,7 @@ void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
   }
   aFolderDir->clear();
   aFolderDir->parent()->remove(aFolderDir);
-  unlink(folderDirLocation);
+  dir.remove(folderDirLocation);
 }
 
 //-----------------------------------------------------------------------------
@@ -257,19 +253,15 @@ void KMFolderMgr::createFolderList(QStringList *str,
 void KMFolderMgr::createI18nFolderList(QStringList *str, 
 				   QValueList<QGuardedPtr<KMFolder> > *folders)
 {
-  createFolderList( str, folders, 0, "" );
-  for (unsigned int i = 0; i < str->count() && i < folders->count(); i++)
-  {
-    if ((*folders->at(i))->isSystemFolder())
-      *str->at(i) = i18n(*str->at(i));
-  }
+  createFolderList( str, folders, 0, QString::null, true );
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::createFolderList(QStringList *str, 
 				   QValueList<QGuardedPtr<KMFolder> > *folders,
 				   KMFolderDir *adir, 
-				   const QString& prefix)
+				   const QString& prefix,
+				   bool i18nized=FALSE)
 {
   KMFolderNode* cur;
   KMFolderDir* fdir = adir ? adir : &(kernel->folderMgr()->dir());
@@ -279,7 +271,10 @@ void KMFolderMgr::createFolderList(QStringList *str,
       continue;
 
     QGuardedPtr<KMFolder> folder = static_cast<KMFolder*>(cur);
-    str->append(prefix + folder->name());
+    if (i18nized)
+      str->append(prefix + folder->label());
+    else
+      str->append(prefix + folder->name());
     folders->append( folder );
     if (folder->child())
       createFolderList( str, folders, folder->child(), "  " + prefix );
