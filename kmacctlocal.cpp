@@ -79,9 +79,10 @@ void KMAcctLocal::processNewMail(bool)
   }
 
   KMFolder mailFolder(0, location(), KMFolderTypeMbox);
-  static_cast<KMFolderMbox*>(mailFolder.storage())->setLockType( mLock );
+  KMFolderMbox* mboxStorage = static_cast<KMFolderMbox*>(mailFolder.storage());
+  mboxStorage->setLockType( mLock );
   if ( mLock == procmail_lockfile)
-    static_cast<KMFolderMbox*>(mailFolder.storage())->setProcmailLockFileName( mProcmailLockFileName );
+    mboxStorage->setProcmailLockFileName( mProcmailLockFileName );
 
   long num = 0;
   long i;
@@ -122,7 +123,7 @@ void KMAcctLocal::processNewMail(bool)
     return;
   }
 
-  if (mailFolder.isReadOnly()) { // mailFolder is locked
+  if (!mboxStorage->isLocked()) {
     kdDebug(5006) << "mailFolder could not be locked" << endl;
     mailFolder.close();
     checkDone( hasNewMail, CheckError );

@@ -92,7 +92,10 @@ public:
   int compact( unsigned int startIndex, int nbMessages, FILE* tmpFile, off_t& offs, bool& done );
 
   /** Is the folder read-only? */
-  virtual bool isReadOnly() const { return !mFilesLocked; }
+  virtual bool isReadOnly() const { return false; }
+
+  /** Is the folder locked? */
+  bool isLocked() const { return mFilesLocked; }
 
   void setLockType( LockType ltype=FCNTL );
 
