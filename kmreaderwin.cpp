@@ -254,9 +254,6 @@ kdDebug(5006) << "signed" << endl;
           case DwMime::kSubtypeEncrypted: {
 kdDebug(5006) << "encrypted" << endl;
               if ( child ) {
-                /*
-                    ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-                */
                 partNode* data =
                   child->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
                 if ( !data )
@@ -1238,6 +1235,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     //       This could be changed in the objectTreeToDecryptedMsg() function
     //       by deciding when (or when not, resp.) to set the 'dataNode' to
     //       something different than 'curNode'.
+    //
+    // additional requirenment, according to AEgypten issue #167:
+    //       There should be a dialog raising each time to ask whether
+    //       the encryption should really be removed. There should be
+    //       no option "don't show this request again".
 
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
 /*
@@ -1261,32 +1263,42 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
         && (    (KMMsgFullyEncrypted == encryptionState)
              || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
 
+      // ask if the user really wants to save in unencrypted state
+      // (We do not show a "[ ] Do not ask me again" option here.)
+      if ( KMessageBox::questionYesNo( this,
+            i18n( "Should this message really be saved unencrypted?" ),
+            i18n( "Save message in mail folder" ),
+            KStdGuiItem::yes(), KStdGuiItem::no() ) // defaults
+          == KMessageBox::Yes )
+      {
+
 kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
 
-      NewByteArray decryptedData;
-      // note: The following call may change the message's headers.
-      objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
-      // add a \0 to the data
-      decryptedData.appendNULL();
-      QCString resultString( decryptedData.data() );
+        NewByteArray decryptedData;
+        // note: The following call may change the message's headers.
+        objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
+        // add a \0 to the data
+        decryptedData.appendNULL();
+        QCString resultString( decryptedData.data() );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
 
-      if( !resultString.isEmpty() ) {
+        if( !resultString.isEmpty() ) {
 kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
-        // try this:
-        aMsg->setBody( resultString );
-        KMMessage* unencryptedMessage = new KMMessage( *aMsg );
-        // because this did not work:
-        /*
-        DwMessage dwMsg( DwString( aMsg->asString() ) );
-        dwMsg.Body() = DwBody( DwString( resultString.data() ) );
-        dwMsg.Body().Parse();
-        KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
-        */
+          // try this:
+          aMsg->setBody( resultString );
+          KMMessage* unencryptedMessage = new KMMessage( *aMsg );
+          // because this did not work:
+          /*
+          DwMessage dwMsg( DwString( aMsg->asString() ) );
+          dwMsg.Body() = DwBody( DwString( resultString.data() ) );
+          dwMsg.Body().Parse();
+          KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
+          */
 kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
 kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
-        aMsg->setUnencryptedMsg( unencryptedMessage );
-        emitReplaceMsgByUnencryptedVersion = true;
+          aMsg->setUnencryptedMsg( unencryptedMessage );
+          emitReplaceMsgByUnencryptedVersion = true;
+        }
       }
     }
   }
