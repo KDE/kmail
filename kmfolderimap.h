@@ -246,6 +246,8 @@ public:
     others still use it (e.g. other mail reader windows). This also
     cancels all pending jobs. */
   virtual void close(bool force=FALSE);
+
+  void setCheckingValidity( bool val ) { mCheckingValidity = val; }
   
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
