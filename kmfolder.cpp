@@ -88,6 +88,8 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   unreadExpireUnits = expireNever;
   readExpireAge = 14;
   readExpireUnits = expireNever;
+  mRDict = 0;
+  kdDebug(5006) << "Created folder " << aName << endl;
 }
 
 
@@ -695,7 +697,6 @@ void KMFolder::removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet)
     removeMsg(idx, imapQuiet);
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFolder::removeMsg(int idx, bool)

@@ -171,17 +171,11 @@ void KMMsgList::remove(int idx)
       dict->remove(at(idx));
   }
   
-  unsigned long msn = 0;
   mHigh--;
   for (i=idx; i<mHigh; i++) {
     if (dict)
-    {
-      msn = dict->getMsgSerNum(at(i + 1)->parent(), i + 1);
-      dict->remove(msn);
-    }
+      dict->update(at(i + 1), i + 1, i);
     KMMsgListInherited::at(i) = KMMsgListInherited::at(i+1);
-    if (dict)
-      dict->insert(msn, at(i), i);
   }
   
   KMMsgListInherited::at(mHigh) = NULL;

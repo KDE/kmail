@@ -30,6 +30,7 @@ class KMMessage;
 class KMFolderDir;
 class KMAcctList;
 class KMMsgDict;
+class KMMsgDictREntry;
 
 #define KMFolderInherited KMFolderNode
 
@@ -412,6 +413,12 @@ public:
   /** Append message to end of message serial number file. */
   int appendtoMsgDict(int idx = -1);
   
+  /** Sets the reverse-dictionary for this folder. */
+  void setRDict(KMMsgDictREntry *rentry) { mRDict = rentry; }
+  
+  /** Returns the reverse-dictionary for this folder. */
+  KMMsgDictREntry *rDict() const { return mRDict; }
+  
   /** Set the status of the message at index @p idx to @p status. */
   virtual void setStatus(int idx, KMMsgStatus status);
   
@@ -541,6 +548,9 @@ protected:
   ExpireUnits  readExpireUnits;
 
   int          daysToExpire(int num, ExpireUnits units);
+  
+  /** Points at the reverse dictionary for this folder. */
+  KMMsgDictREntry *mRDict;
 
 };
 

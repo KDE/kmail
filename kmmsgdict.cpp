@@ -4,6 +4,7 @@
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
+#include "kmdict.h"
 
 #include <qfileinfo.h>
 
@@ -24,15 +25,12 @@
 
 //-----------------------------------------------------------------------------
 
-class KMMsgDictEntry
+class KMMsgDictEntry : public KMDictItem
 {
 public:
   KMMsgDictEntry(const KMFolder *aFolder, int aIndex)
     { folder = aFolder; index = aIndex; }
-
-  KMMsgDictEntry(const KMMsgDictEntry *a)
-    { folder = a->folder; index = a->index; }
-
+  
   const KMFolder *folder;
   int index;
 };
@@ -44,43 +42,53 @@ class KMMsgDictREntry
 public:
   KMMsgDictREntry(int size = 0)
   {
-    array = new QMemArray<ulong>(size);
+    array.resize(size);
+    for (int i = 0; i < size; i++)
+      array.at(i) = 0;
     fp = NULL;
   }
   
   ~KMMsgDictREntry()
   {
-    delete array;
+    array.resize(0);
     if (fp)
       fclose(fp);
   }
   
-  void set(int index, ulong msn)
+  void set(int index, KMMsgDictEntry *entry)
   {
-    if (array && index >= 0) {
-      int size = array->size();
+    if (index >= 0) {
+      int size = array.size();
       if (index >= size) {
         int newsize = QMAX(size + 25, index + 1);
-        array->resize(newsize);
+        array.resize(newsize);
         for (int j = size; j < newsize; j++)
-          array->at(j) = 0;
+          array.at(j) = 0;
       }
-      array->at(index) = msn;
+      array.at(index) = entry;
     }
   }
   
-  ulong get(int index)
+  KMMsgDictEntry *get(int index)
   {
-    if (array && index >= 0 && (unsigned)index < array->size())
-      return array->at(index);
+    if (index >= 0 && (unsigned)index < array.size())
+      return array.at(index);
+    return 0;
+  }
+  
+  ulong getMsn(int index)
+  {
+    KMMsgDictEntry *entry = get(index);
+    if (entry)
+      return entry->key;
     return 0;
   }
   
   int getRealSize()
   {
-    int count = array->size() - 1;
+    int count = array.size() - 1;
     while (count >= 0) {
-      if (array->at(count))
+      if (array.at(count))
         break;
       count--;
     }
@@ -93,7 +101,7 @@ public:
   }
   
 public:
-  QMemArray<ulong> *array;
+  QMemArray<KMMsgDictEntry *> array;
   FILE *fp;
 };
 
@@ -101,12 +109,8 @@ public:
 
 KMMsgDict::KMMsgDict()
 {
-  dict = new QIntDict<KMMsgDictEntry>(997);
-  dict->setAutoDelete(true);
-
-  rdict = new QPtrDict<KMMsgDictREntry>;
-  rdict->setAutoDelete(true);
-
+  dict = new KMDict(9973);
+  
   nextMsgSerNum = 1;
   kernel->folderMgr()->readMsgDict(this);
   kernel->imapFolderMgr()->readMsgDict(this);
@@ -119,7 +123,6 @@ KMMsgDict::~KMMsgDict()
   kernel->folderMgr()->writeMsgDict(this);
   kernel->imapFolderMgr()->writeMsgDict(this);
   delete dict;
-  delete rdict;
 }
 
 //-----------------------------------------------------------------------------
@@ -150,12 +153,12 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
   dict->replace((long)msn, entry);
   
-  KMMsgDictREntry *rentry = rdict->find(folder);
+  KMMsgDictREntry *rentry = folder->rDict();
   if (!rentry) {
     rentry = new KMMsgDictREntry();
-    rdict->insert((void *)folder, rentry);
+    folder->setRDict(rentry);
   }
-  rentry->set(index, msn);
+  rentry->set(index, entry);
   
   return msn;
 }
@@ -171,13 +174,15 @@ unsigned long KMMsgDict::insert(const KMMsgBase *msg, int index)
 void KMMsgDict::remove(unsigned long msgSerNum)
 {
   long key = (long)msgSerNum;
-  KMMsgDictEntry *entry = dict->find(key);
+  KMMsgDictEntry *entry = (KMMsgDictEntry *)dict->find(key);
   if (!entry)
     return;
   
-  KMMsgDictREntry *rentry = rdict->find((void *)entry->folder);
-  if (rentry)
-    rentry->set(entry->index, 0);
+  if (entry->folder) {
+    KMMsgDictREntry *rentry = entry->folder->rDict();
+    if (rentry)
+      rentry->set(entry->index, 0);
+  }
   
   dict->remove((long)key);
 }
@@ -191,16 +196,31 @@ unsigned long KMMsgDict::remove(const KMMsgBase *msg)
 
 //-----------------------------------------------------------------------------
 
+void KMMsgDict::update(const KMMsgBase *msg, int index, int newIndex)
+{
+  KMMsgDictREntry *rentry = msg->parent()->rDict();
+  if (rentry) {
+    KMMsgDictEntry *entry = rentry->get(index);
+    if (entry) {
+      entry->index = newIndex;
+      rentry->set(index, 0);
+      rentry->set(newIndex, entry);
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+
 void KMMsgDict::getLocation(unsigned long key,
                             KMFolder **retFolder, int *retIndex)
 {
-  KMMsgDictEntry *entry = dict->find((long)key);
+  KMMsgDictEntry *entry = (KMMsgDictEntry *)dict->find((long)key);
   if (entry) {
     *retFolder = (KMFolder *)entry->folder;
     *retIndex = entry->index;
   } else {
     *retFolder = 0;
-    *retIndex = 0;
+    *retIndex = -1;
   }
 }
 
@@ -215,9 +235,9 @@ void KMMsgDict::getLocation(const KMMsgBase *msg,
 unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index)
 {
   unsigned long msn = 0;
-  KMMsgDictREntry *rentry = rdict->find((void *)folder);
+  KMMsgDictREntry *rentry = folder->rDict();
   if (rentry)
-    msn = rentry->get(index);
+    msn = rentry->getMsn(index);
   return msn;
 }
 
@@ -247,7 +267,7 @@ bool KMMsgDict::isFolderIdsOutdated(const KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::readFolderIds(const KMFolder *folder)
+int KMMsgDict::readFolderIds(KMFolder *folder)
 {
   if (isFolderIdsOutdated(folder))
     return -1;
@@ -277,7 +297,7 @@ int KMMsgDict::readFolderIds(const KMFolder *folder)
 
     if (!fread(&msn, sizeof(msn), 1, fp)) {
       for (int i = 0; i < index; i++) {
-        msn = rentry->get(i);
+        msn = rentry->getMsn(i);
         dict->remove((long)msn);
       }
       delete rentry;
@@ -289,27 +309,27 @@ int KMMsgDict::readFolderIds(const KMFolder *folder)
       //kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
     
     KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
-    dict->insert((long)msn, entry);
+    dict->replace((long)msn, entry);
     if (msn >= nextMsgSerNum)
       nextMsgSerNum = msn + 1;
 
-    rentry->set(index, msn);
+    rentry->set(index, entry);
   }
 
   fclose(fp);
-  rdict->insert((void *)folder, rentry);
+  folder->setRDict(rentry);
 
   return 0;
 }
 
 //-----------------------------------------------------------------------------
 
-KMMsgDictREntry *KMMsgDict::openFolderIds(const KMFolder *folder)
+KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder)
 {
-  KMMsgDictREntry *rentry = rdict->find((void *)folder);
+  KMMsgDictREntry *rentry = folder->rDict();
   if (!rentry) {
     rentry = new KMMsgDictREntry();
-    rdict->insert((void *)folder, rentry);
+    folder->setRDict(rentry);
   }
   
   if (!rentry->fp) {
@@ -338,7 +358,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds(const KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::writeFolderIds(const KMFolder *folder)
+int KMMsgDict::writeFolderIds(KMFolder *folder)
 {
   KMMsgDictREntry *rentry = openFolderIds(folder);
   if (!rentry)
@@ -355,7 +375,7 @@ int KMMsgDict::writeFolderIds(const KMFolder *folder)
   }
   
   for (int index = 0; index < count; index++) {
-    unsigned long msn = rentry->get(index);
+    unsigned long msn = rentry->getMsn(index);
     if (!fwrite(&msn, sizeof(msn), 1, fp))
       return -1;
   }
@@ -371,7 +391,7 @@ int KMMsgDict::writeFolderIds(const KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::touchFolderIds(const KMFolder *folder)
+int KMMsgDict::touchFolderIds(KMFolder *folder)
 {
   KMMsgDictREntry *rentry = openFolderIds(folder);
   if (rentry)
@@ -381,7 +401,7 @@ int KMMsgDict::touchFolderIds(const KMFolder *folder)
 
 //-----------------------------------------------------------------------------
 
-int KMMsgDict::appendtoFolderIds(const KMFolder *folder, int index)
+int KMMsgDict::appendtoFolderIds(KMFolder *folder, int index)
 {
   KMMsgDictREntry *rentry = openFolderIds(folder);
   if (!rentry)
@@ -408,7 +428,7 @@ int KMMsgDict::appendtoFolderIds(const KMFolder *folder, int index)
   if (ofs > 0)
     fseek(rentry->fp, ofs, SEEK_CUR);
 
-  ulong msn = rentry->get(index);
+  ulong msn = rentry->getMsn(index);
   if (!fwrite(&msn, sizeof(msn), 1, rentry->fp)) {
     kdDebug(5006) << "Dict cannot write count for folder " << folder->label() << ": "
                   << strerror(errno) << " (" << errno << ")" << endl;
@@ -424,17 +444,18 @@ int KMMsgDict::appendtoFolderIds(const KMFolder *folder, int index)
 
 bool KMMsgDict::hasFolderIds(const KMFolder *folder)
 {
-  KMMsgDictREntry *rentry = rdict->find((void *)folder);
-  return rentry != 0;
+  return folder->rDict() != 0;
 }
 
 //-----------------------------------------------------------------------------
 
-bool KMMsgDict::removeFolderIds(const KMFolder *folder)
+bool KMMsgDict::removeFolderIds(KMFolder *folder)
 {
-  KMMsgDictREntry *rentry = rdict->find((void *)folder);
-  if (rentry)
-    rdict->remove(rentry);
+  KMMsgDictREntry *rentry = folder->rDict();
+  if (rentry) {
+    folder->setRDict(0);
+    delete rentry;
+  }
   QString filename = getFolderIdsLocation(folder);
   return unlink(filename.local8Bit());
 }

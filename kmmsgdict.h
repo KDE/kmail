@@ -6,13 +6,11 @@
 #ifndef __KMMSGDICT
 #define __KMMSGDICT
 
-#include <qintdict.h>
-#include <qptrdict.h>
-
 class KMFolder;
 class KMMsgBase;
 class KMMsgDictEntry;
 class KMMsgDictREntry;
+class KMDict;
 
 
 class KMMsgDict
@@ -37,6 +35,9 @@ public:
   /** Removes a message, and returns its message serial number. */
   unsigned long remove(const KMMsgBase *msg);
   
+  /** Updates index for a message. */
+  void update(const KMMsgBase *msg, int index, int newIndex);
+  
   /** Returns (folder,index) pair for a message. */
   void getLocation(unsigned long key, KMFolder **retFolder, int *retIndex);
   void getLocation(const KMMsgBase *msg, KMFolder **retFolder, int *retIndex);
@@ -52,23 +53,23 @@ public:
   bool isFolderIdsOutdated(const KMFolder *folder);
   
   /** Reads the .folder.index.ids file.  Returns 0 on success. */
-  int readFolderIds(const KMFolder *folder);
+  int readFolderIds(KMFolder *folder);
   
   /** Writes the .folder.index.ids file.  Returns 0 on success. */
-  int writeFolderIds(const KMFolder *folder);
+  int writeFolderIds(KMFolder *folder);
   
   /** Touches the .folder.index.ids file.  Returns 0 on success. */
-  int touchFolderIds(const KMFolder *folder);
+  int touchFolderIds(KMFolder *folder);
   
   /** Appends the message to the .folder.index.ids file.
    * Returns 0 on success. */
-  int appendtoFolderIds(const KMFolder *folder, int index);
+  int appendtoFolderIds(KMFolder *folder, int index);
   
   /** Returns true if the folder has a .folder.index.ids file.  */
   bool hasFolderIds(const KMFolder *folder);
   
   /** Removes the .folder.index.ids file. */
-  bool removeFolderIds(const KMFolder *folder);
+  bool removeFolderIds(KMFolder *folder);
   
 protected:
   /** Returns the next message serial number for use. */
@@ -76,13 +77,11 @@ protected:
   
   /** Opens the .folder.index.ids file, and writes the header
    * information at the beginning of the file. */
-  KMMsgDictREntry *openFolderIds(const KMFolder *folder);
+  KMMsgDictREntry *openFolderIds(KMFolder *folder);
   
   /** The dictionary. */
-  QIntDict<KMMsgDictEntry> *dict;
-  /** The reverse-dictionary. */
-  QPtrDict<KMMsgDictREntry> *rdict;
-
+  KMDict *dict;
+  
   /** Highest message serial number we know of. */
   unsigned long nextMsgSerNum;
 };
