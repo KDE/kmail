@@ -39,13 +39,13 @@ namespace KMail {
 
 
 ProgressListViewItem::ProgressListViewItem(int col, int pro, QListView* parent,
-					   const QString& label1,
+                                           const QString& label1,
                                            const QString& label2,
-					   const QString& label3,
+                                           const QString& label3,
                                            const QString& label4,
-					   const QString& label5,
+                                           const QString& label5,
                                            const QString& label6,
-					   const QString& label7,
+                                           const QString& label7,
                                            const QString& label8 )
   : QListViewItem( parent, label1, label2, label3, label4, label5, label6,
                    label7, label8 )
@@ -58,13 +58,13 @@ ProgressListViewItem::ProgressListViewItem(int col, int pro, QListView* parent,
 
 ProgressListViewItem::ProgressListViewItem(int col, int pro, QListView* parent,
                                            ProgressListViewItem* after,
-					   const QString& label1,
+                                           const QString& label1,
                                            const QString& label2,
-					   const QString& label3,
+                                           const QString& label3,
                                            const QString& label4,
-					   const QString& label5,
+                                           const QString& label5,
                                            const QString& label6,
-					   const QString& label7,
+                                           const QString& label7,
                                            const QString& label8 )
   : QListViewItem( parent, after, label1, label2, label3, label4, label5,
                    label6, label7, label8 )
@@ -108,17 +108,17 @@ void ProgressListViewItem::paintCell( QPainter *p, const QColorGroup &cg,
       flags |= QStyle::Style_Enabled;
 
     listView()->style().drawControl(QStyle::CE_ProgressBarGroove, &paint, mProgress,
-			QStyle::visualRect(listView()->style().subRect(QStyle::SR_ProgressBarGroove, mProgress), mProgress ),
-			listView()->colorGroup(), flags);
+                        QStyle::visualRect(listView()->style().subRect(QStyle::SR_ProgressBarGroove, mProgress), mProgress ),
+                        listView()->colorGroup(), flags);
 
     listView()->style().drawControl(QStyle::CE_ProgressBarContents, &paint, mProgress,
-			QStyle::visualRect(listView()->style().subRect(QStyle::SR_ProgressBarContents, mProgress), mProgress ),
-			listView()->colorGroup(), flags);
+                        QStyle::visualRect(listView()->style().subRect(QStyle::SR_ProgressBarContents, mProgress), mProgress ),
+                        listView()->colorGroup(), flags);
 
     if (mProgress->percentageVisible())
       listView()->style().drawControl(QStyle::CE_ProgressBarLabel, &paint, mProgress,
-			  QStyle::visualRect(listView()->style().subRect(QStyle::SR_ProgressBarLabel, mProgress), mProgress ),
-			  listView()->colorGroup(), flags);
+                          QStyle::visualRect(listView()->style().subRect(QStyle::SR_ProgressBarLabel, mProgress), mProgress ),
+                          listView()->colorGroup(), flags);
     paint.end();
 
     p->drawPixmap( bar.x(), bar.y(), pm );
@@ -139,7 +139,7 @@ IMAPProgressDialog::IMAPProgressDialog( QWidget* parent, const char* name, bool 
     resize( 360, 328 );
 
     QBoxLayout* topLayout = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint(),
-					     "topLayout");
+                                             "topLayout");
 
     mSyncEditorListView = new QListView( this, "SyncEditorListView" );
     mSyncEditorListView->addColumn( i18n( "Folder" ) );
@@ -174,7 +174,7 @@ void IMAPProgressDialog::clear()
 /* retrieves the info needed to update the list view items and it's  progress bar */
 
 void IMAPProgressDialog::syncState( const QString& folderName,
-				    int progress, const QString& syncStatus )
+                                    int progress, const QString& syncStatus )
 {
   //kdDebug(5006) << "syncState: " << folderName << " " << progress << " " << syncStatus << endl;
   ProgressListViewItem* item = 0;

@@ -30,21 +30,21 @@ namespace KMail {
 class ProgressListViewItem : public QListViewItem {
 public:
   ProgressListViewItem(  int pBColumn, int pPro, QListView * parent,
-			 const QString&, const QString& = QString::null,
-			 const QString& = QString::null,
+                         const QString&, const QString& = QString::null,
                          const QString& = QString::null,
-			 const QString& = QString::null,
                          const QString& = QString::null,
-			 const QString& = QString::null,
+                         const QString& = QString::null,
+                         const QString& = QString::null,
+                         const QString& = QString::null,
                          const QString& = QString::null);
   ProgressListViewItem(  int pBColumn, int pPro, QListView * parent,
                          ProgressListViewItem* after,
-			 const QString&, const QString& = QString::null,
-			 const QString& = QString::null,
+                         const QString&, const QString& = QString::null,
                          const QString& = QString::null,
-			 const QString& = QString::null,
                          const QString& = QString::null,
-			 const QString& = QString::null,
+                         const QString& = QString::null,
+                         const QString& = QString::null,
+                         const QString& = QString::null,
                          const QString& = QString::null);
 
   ~ProgressListViewItem();
@@ -67,7 +67,7 @@ class IMAPProgressDialog : public QDialog
 
 public:
     IMAPProgressDialog( QWidget* parent = 0, const char* name = 0, bool modal = FALSE,
-			WFlags fl = 0 );
+                        WFlags fl = 0 );
     ~IMAPProgressDialog();
 public slots:
 
