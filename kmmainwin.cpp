@@ -337,10 +337,8 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
 	  this, SLOT(slotMsgActivated(KMMessage*)));
-#ifdef thisIsReallySlow
   connect( mHeaders, SIGNAL( selectionChanged() ),
-           SLOT( updateMessageMenu() ) );
-#endif
+           SLOT( slotUpdateMessageMenu() ) );
   accel->connectItem(accel->insertItem(Key_Left),
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right),
@@ -1309,9 +1307,9 @@ void KMMainWin::slotCopyText()
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMarkAll() {
-  QListViewItem *item;
-  for (item = mHeaders->firstChild(); item; item = item->itemBelow())
-    mHeaders->setSelected( item, TRUE );
+    QListViewItem *item;
+    for (item = mHeaders->firstChild(); item; item = item->itemBelow())
+        mHeaders->setSelected( item, TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -1806,6 +1804,10 @@ void KMMainWin::setupMenuBar()
 		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
 
   conserveMemory();
+
+  menutimer = new QTimer( this, "menutimer" );
+  connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageMenu() ) );
+
   updateMessageMenu();
 
 }
@@ -1970,15 +1972,19 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotUpdateMessageMenu()
+{
+    menutimer->stop();
+    menutimer->start( 20, true );
+}
+
 void KMMainWin::updateMessageMenu()
 {
-   mMenuToFolder.clear();
-   folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
-   folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+    kdDebug() << "updateMessageMenu\n";
 
-#ifdef thisIsReallySlow
-    
-  mMenuToFolder.clear();
+    mMenuToFolder.clear();
+    folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
+    folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
 
     int count = 0;
 
@@ -2037,7 +2043,6 @@ void KMMainWin::updateMessageMenu()
     action( "next_unread" )->setEnabled( mails );
     action( "previous" )->setEnabled( mails );
     action( "previous_unread" )->setEnabled( mails );
-#endif
 }
 
 

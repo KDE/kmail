@@ -101,8 +101,10 @@ public slots:
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
 
+  // sets the timer for the message menu update
+  void updateMessageMenu();
   // Update the "Move to" and "Copy to" popoutmenus in the Messages menu.
-  virtual void updateMessageMenu();
+  void slotUpdateMessageMenu();
 
 protected:
   void setupMenuBar();
@@ -243,6 +245,8 @@ protected:
   KAction *modifyFolderAction, *removeFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *toolbarAction, *statusbarAction;
+
+  QTimer *menutimer;
 };
 
 #endif
