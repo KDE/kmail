@@ -9,9 +9,18 @@
 #include <qdrawutl.h>
 #include <kapp.h>
 
+#include <stdarg.h>
+
 #define INIT_MAX_ITEMS 16
 
 #include "ktablistbox.moc"
+
+
+int KTabListBox::mMouseCol=-1;
+int KTabListBox::mMouseColLeft=0;
+int KTabListBox::mMouseColWidth=0;
+bool KTabListBox::mMouseAction=FALSE;
+QPoint KTabListBox::mMouseStart;
 
 
 //=============================================================================
@@ -73,6 +82,7 @@ KTabListBoxColumn::KTabListBoxColumn(KTabListBox* pa, int w): QObject()
 {
   initMetaObject();
   iwidth = w;
+  idefwidth = w;
   colType = KTabListBox::TextColumn;
   parent = pa;
 }
@@ -88,6 +98,13 @@ KTabListBoxColumn::~KTabListBoxColumn()
 void KTabListBoxColumn::setWidth(int w)
 {
   iwidth = w;
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBoxColumn::setDefaultWidth(int w)
+{
+  idefwidth = w;
 }
 
 
@@ -113,7 +130,8 @@ void KTabListBoxColumn::paintCell(QPainter* paint, int row,
 		     parent->highlightColor);
   }
 
-  switch(colType)
+  if (!string.isEmpty()) 
+    switch(colType)
   {
   case KTabListBox::PixmapColumn:
     if (string) pix = parent->dict().find(string);
@@ -144,12 +162,13 @@ void KTabListBoxColumn::paintCell(QPainter* paint, int row,
 	pix = parent->dict().find(pixName);
 	if (!pix)
 	{
-	  warning("KTabListBox: no pixmap with name '"+pixName+
-		  "' registered. This is a program bug.\n");
+	  warning("KTabListBox "+QString(name())+
+		  ":\nno pixmap with\ninternal name '"+pixName+
+		  "' registered.");
 	} 
 	paint->drawPixmap(x, 0, *pix);
 	x += pix->width()+1;
-	beg = end+1;
+	beg = end;
       }
       else break;
     }
@@ -188,7 +207,6 @@ KTabListBox::KTabListBox(QWidget *parent, const char *name, int columns,
   const QFontMetrics* fm = &fontMetrics();
   QString f;
   QColorGroup g = colorGroup();
-  KConfig* conf = KApplication::getKApplication()->getConfig();
 
   initMetaObject();
 
@@ -206,6 +224,12 @@ KTabListBox::KTabListBox(QWidget *parent, const char *name, int columns,
   labelHeight = fm->height() + 4;
   columnPadding = fm->height() / 2;
   highlightColor = g.mid();
+  mResizeCol = FALSE;
+  mSortCol   = -1;
+  numColumns = columns;
+
+  //setCursor(sizeHorCursor);
+  setMouseTracking(TRUE);
 
   lbox.setGeometry(0, labelHeight, width(), height()-labelHeight);
 
@@ -249,11 +273,52 @@ void KTabListBox::setNumCols(int aCols)
 
   if (aCols < 0) aCols = 0;
   lbox.setNumCols(aCols);
+  numColumns = aCols;
   if (aCols <= 0) return;
 
   colList  = new KTabListBoxColumn[aCols](this);
   itemList = new KTabListBoxItem[INIT_MAX_ITEMS](aCols);
   maxItems = INIT_MAX_ITEMS;
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::readConfig(void)
+{
+  KConfig* conf = KApplication::getKApplication()->getConfig();
+  int beg, end, i, w;
+  int cols = numColumns;
+  QString str, substr;
+
+  conf->setGroup(name());
+  str = conf->readEntry("colwidth");
+
+  if (!str.isEmpty())
+    for (i=0, beg=0, end=0; i<cols;)
+  {
+    end = str.find(',', beg);
+    if (end < 0) break;
+    w = str.mid(beg,end-beg).toInt();
+    colList[i++].setWidth(w);
+    beg = end+1;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::setDefaultColumnWidth(int aWidth, ...)
+{
+  va_list ap;
+  int i, cols;
+
+  cols = numColumns;
+  va_start(ap, aWidth);
+  for (i=0; aWidth && i<cols; i++)
+  {
+    colList[i].setDefaultWidth(aWidth);
+    aWidth = va_arg(ap, int);
+  }
+  va_end(ap);
 }
 
 
@@ -336,11 +401,15 @@ void KTabListBox::unmarkAll(void)
 //-----------------------------------------------------------------------------
 const QString& KTabListBox::text(int row, int col) const
 {
-  KTabListBoxItem* item = getItem(row);
+  const KTabListBoxItem* item = getItem(row);
   static QString str;
   int i, cols;
 
-  if (!item) return NULL;
+  if (!item) 
+  {
+    str = NULL;
+    return str;
+  }
   if (col >= 0) return item->text(col);
 
   cols = item->columns - 1;
@@ -553,13 +622,110 @@ void KTabListBox::paintEvent(QPaintEvent* e)
       paint.setClipRect(clipR);
 
       colList[i].paint(&paint);
-      qDrawShadePanel(&paint, 0, 0, w, labelHeight, 
-		       KTabListBoxInherited::colorGroup());
+      if (mMouseCol != i)
+      {
+	qDrawShadePanel(&paint, 0, 0, w, labelHeight, 
+			KTabListBoxInherited::colorGroup());
+      }
     }
     matrix.translate(w, 0);
     x += w;
   }
-  paint.end();
+  paint.end();  
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::mouseMoveEvent(QMouseEvent* e)
+{
+  register int i, x, ex;
+  bool mayResize = FALSE;
+
+  ex = e->pos().x();
+
+  if ((e->state() & LeftButton))
+  {
+    if (mResizeCol && abs(mMouseStart.x() - ex) > 4)
+      doMouseResizeCol(e);
+
+    else if (!mResizeCol && 
+	     (ex < mMouseColLeft || 
+	      ex > (mMouseColLeft+mMouseColWidth)))
+      doMouseMoveCol(e);
+
+    return;
+  }
+
+  if (e->pos().y() <= labelHeight)
+  {
+    for (i=0, x=0; ; i++)
+    {
+      if (ex >= x-4 && ex <= x+4)
+      {
+	mayResize = TRUE;
+	break;
+      }
+      if (i >= numColumns) break;
+      x += colList[i].width();
+    }
+  }
+
+  if (mayResize)
+  {
+    if (!mResizeCol)
+    {
+      mResizeCol = TRUE;
+      setCursor(sizeHorCursor);
+    }
+  }
+  else
+  {
+    if (mResizeCol)
+    {
+      mResizeCol = FALSE;
+      setCursor(arrowCursor);
+    }
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::mousePressEvent(QMouseEvent* e)
+{
+  if (e->button() == LeftButton)
+  {
+    mMouseStart = e->pos();
+    mMouseCol = findCol(e->pos().x());
+    mMouseColWidth = colList[mMouseCol].width();
+    colXPos(mMouseCol, &mMouseColLeft);
+    repaint();
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::mouseReleaseEvent(QMouseEvent* e)
+{
+  if (e->button() == LeftButton)
+  {
+    mMouseCol = -1;
+    mMouseAction = FALSE;
+    repaint();
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::doMouseResizeCol(QMouseEvent* e)
+{
+  if (!mMouseAction) mMouseAction = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::doMouseMoveCol(QMouseEvent* e)
+{
+  if (!mMouseAction) mMouseAction = TRUE;
 }
 
 
@@ -644,6 +810,9 @@ KTabListBoxTable::KTabListBoxTable(KTabListBox *parent):
   setCellWidth(0);
   setCellHeight(fm.lineSpacing() + 1);
   setNumRows(0);
+
+  //setCursor(arrowCursor);
+  setMouseTracking(FALSE);
 
   setFocusPolicy(StrongFocus);
 }

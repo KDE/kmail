@@ -1,0 +1,427 @@
+# Makefile.in generated automatically by automake 1.2 from Makefile.am
+
+# Copyright (C) 1994, 1995, 1996, 1997 Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy, distribute and modify it.
+
+
+SHELL = /bin/sh
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+transform = @program_transform_name@
+
+NORMAL_INSTALL = true
+PRE_INSTALL = true
+POST_INSTALL = true
+NORMAL_UNINSTALL = true
+PRE_UNINSTALL = true
+POST_UNINSTALL = true
+build_alias = @build_alias@
+build_triplet = @build@
+host_alias = @host_alias@
+host_triplet = @host@
+target_alias = @target_alias@
+target_triplet = @target@
+CC = @CC@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
+CXX = @CXX@
+CXXFLAGS = @CXXFLAGS@
+GLINC = @GLINC@
+GLLIB = @GLLIB@
+GMSGFMT = @GMSGFMT@
+KDE_INCLUDES = @KDE_INCLUDES@
+KDE_LDFLAGS = @KDE_LDFLAGS@
+LD = @LD@
+LDFLAGS = @LDFLAGS@
+LIBCOMPAT = @LIBCOMPAT@
+LIBCRYPT = @LIBCRYPT@
+LIBJPEG = @LIBJPEG@
+LIBOBJS = @LIBOBJS@
+LIBSOCKET = @LIBSOCKET@
+LIBTOOL = @LIBTOOL@
+LN_S = @LN_S@
+MAKEINFO = @MAKEINFO@
+MSGFMT = @MSGFMT@
+PACKAGE = @PACKAGE@
+PAMINC = @PAMINC@
+PAMLIBPATHS = @PAMLIBPATHS@
+PAMLIBS = @PAMLIBS@
+QT_INCLUDES = @QT_INCLUDES@
+QT_LDFLAGS = @QT_LDFLAGS@
+RANLIB = @RANLIB@
+USE_NLS = @USE_NLS@
+VERSION = @VERSION@
+XPMINC = @XPMINC@
+XPMLIB = @XPMLIB@
+X_INCLUDES = @X_INCLUDES@
+X_LDFLAGS = @X_LDFLAGS@
+all_includes = @all_includes@
+all_libraries = @all_libraries@
+kde_includes = @kde_includes@
+kde_libraries = @kde_libraries@
+qt_includes = @qt_includes@
+qt_libraries = @qt_libraries@
+topdir = @topdir@
+
+INCLUDES=	-I.. @all_includes@
+LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lmimelib
+MOC	=	@MOC@
+
+bin_PROGRAMS = kmail
+
+kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
+		kmsettings.cpp util.cpp kmaccount.cpp kmheaders.cpp \
+		ktablistbox.cpp kmcomposewin.cpp kmfolder.cpp \
+		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
+		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
+		kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp \
+		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
+		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
+		kmacctseldlg.cpp kshortcut.cpp
+
+BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
+		kmfoldertree.moc kmsettings.moc kmheaders.moc \
+		ktablistbox.moc kmcomposewin.moc kbusyptr.moc \
+		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
+		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
+		kmfoldernode.moc kmacctseldlg.moc
+
+CLEAN_FILES = $(BUILT_SOURCES)
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = ../config.h
+CONFIG_CLEAN_FILES = 
+PROGRAMS =  $(bin_PROGRAMS)
+
+
+DEFS = @DEFS@ -I. -I$(srcdir) -I..
+CPPFLAGS = @CPPFLAGS@
+LIBS = @LIBS@
+kmail_OBJECTS =  kmmainwin.o kmfolderdia.o kmfoldertree.o kmsettings.o \
+util.o kmaccount.o kmheaders.o ktablistbox.o kmcomposewin.o kmfolder.o \
+kmmessage.o kmreaderwin.o kbusyptr.o kalarmtimer.o KEdit.o kmmsgpart.o \
+kmmsginfo.o kmacctmgr.o main.o kmmainview.o kmacctfolder.o \
+kmacctlocal.o kmacctpop.o kmfolderdir.o kmfoldermgr.o kmfoldernode.o \
+kmsender.o kmacctseldlg.o kshortcut.o
+kmail_LDADD = $(LDADD)
+kmail_DEPENDENCIES = 
+kmail_LDFLAGS = 
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)
+CXXLINK = $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@
+DIST_COMMON =  README COPYING INSTALL Makefile.am Makefile.in
+
+
+DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
+
+TAR = tar
+GZIP = --best
+DEP_FILES =  .deps/KEdit.P .deps/kalarmtimer.P .deps/kbusyptr.P \
+.deps/kmaccount.P .deps/kmacctfolder.P .deps/kmacctlocal.P \
+.deps/kmacctmgr.P .deps/kmacctpop.P .deps/kmacctseldlg.P \
+.deps/kmcomposewin.P .deps/kmfolder.P .deps/kmfolderdia.P \
+.deps/kmfolderdir.P .deps/kmfoldermgr.P .deps/kmfoldernode.P \
+.deps/kmfoldertree.P .deps/kmheaders.P .deps/kmmainview.P \
+.deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsginfo.P .deps/kmmsgpart.P \
+.deps/kmreaderwin.P .deps/kmsender.P .deps/kmsettings.P \
+.deps/ktablistbox.P .deps/main.P .deps/util.P
+CXXMKDEP = $(CXX) -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)
+SOURCES = $(kmail_SOURCES)
+OBJECTS = $(kmail_OBJECTS)
+
+default: all
+
+.SUFFIXES:
+.SUFFIXES: .c .cpp .o
+$(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu kmail/Makefile
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+
+mostlyclean-binPROGRAMS:
+
+clean-binPROGRAMS:
+	test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+
+distclean-binPROGRAMS:
+
+maintainer-clean-binPROGRAMS:
+
+install-binPROGRAMS: $(bin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(bindir)
+	@list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  if test -f $$p; then \
+	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`; \
+	  else :; fi; \
+	done
+
+uninstall-binPROGRAMS:
+	$(NORMAL_UNINSTALL)
+	list='$(bin_PROGRAMS)'; for p in $$list; do \
+	  rm -f $(bindir)/`echo $$p|sed '$(transform)'`; \
+	done
+
+.c.o:
+	$(COMPILE) -c $<
+
+mostlyclean-compile:
+	rm -f *.o core
+
+clean-compile:
+
+distclean-compile:
+	rm -f *.tab.c
+
+maintainer-clean-compile:
+
+kmail: $(kmail_OBJECTS) $(kmail_DEPENDENCIES)
+	@rm -f kmail
+	$(CXXLINK) $(kmail_LDFLAGS) $(kmail_OBJECTS) $(kmail_LDADD) $(LIBS)
+.cpp.o:
+	$(CXXCOMPILE) -c $<
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES)
+	here=`pwd` && cd $(srcdir) && mkid -f$$here/ID $(SOURCES) $(HEADERS)
+
+TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES)
+	tags=; \
+	here=`pwd`; \
+	test -z "$(ETAGS_ARGS)$(SOURCES)$(HEADERS)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $(SOURCES) $(HEADERS) -o $$here/TAGS)
+
+mostlyclean-tags:
+
+clean-tags:
+
+distclean-tags:
+	rm -f TAGS ID
+
+maintainer-clean-tags:
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+subdir = kmail
+
+distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu kmail/Makefile
+	@for file in $(DISTFILES); do \
+	  d=$(srcdir); \
+	  test -f $(distdir)/$$file \
+	  || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	  || cp -p $$d/$$file $(distdir)/$$file; \
+	done
+
+MKDEP = gcc -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
+
+DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+-include .deps/.P
+.deps/.P: $(BUILT_SOURCES)
+	echo > $@
+
+-include $(DEP_FILES)
+
+mostlyclean-depend:
+
+clean-depend:
+
+distclean-depend:
+
+maintainer-clean-depend:
+	rm -rf .deps
+
+.deps/%.P: %.c
+	@echo "Computing dependencies for $<..."
+	@o='o'; \
+	test -n "$o" && o='$$o'; \
+	$(MKDEP) $< >$@.tmp \
+	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
+	  && rm -f $@.tmp
+
+.deps/%.P: %.cpp
+	@echo "Computing dependencies for $<..."
+	@o='o'; \
+	$(CXXMKDEP) $< >$@.tmp \
+	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
+	  && rm -f $@.tmp
+info:
+dvi:
+check: all
+	$(MAKE)
+installcheck:
+install-exec: install-binPROGRAMS
+	@$(NORMAL_INSTALL)
+
+install-data: 
+	@$(NORMAL_INSTALL)
+
+install: install-exec install-data all
+	@:
+
+uninstall: uninstall-binPROGRAMS
+
+all: Makefile $(PROGRAMS)
+
+install-strip:
+	$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' INSTALL_SCRIPT='$(INSTALL_PROGRAM)' install
+installdirs:
+	$(mkinstalldirs)  $(bindir)
+
+
+mostlyclean-generic:
+	test -z "$(MOSTLYCLEANFILES)" || rm -f $(MOSTLYCLEANFILES)
+
+clean-generic:
+	test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+
+distclean-generic:
+	rm -f Makefile $(DISTCLEANFILES)
+	rm -f config.cache config.log stamp-h stamp-h[0-9]*
+	test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+
+maintainer-clean-generic:
+	test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+	test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+mostlyclean:  mostlyclean-binPROGRAMS mostlyclean-compile \
+		mostlyclean-tags mostlyclean-depend mostlyclean-generic
+
+clean:  clean-binPROGRAMS clean-compile clean-tags clean-depend \
+		clean-generic mostlyclean
+
+distclean:  distclean-binPROGRAMS distclean-compile distclean-tags \
+		distclean-depend distclean-generic clean
+	rm -f config.status
+
+maintainer-clean:  maintainer-clean-binPROGRAMS maintainer-clean-compile \
+		maintainer-clean-tags maintainer-clean-depend \
+		maintainer-clean-generic distclean
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+.PHONY: default mostlyclean-binPROGRAMS distclean-binPROGRAMS \
+clean-binPROGRAMS maintainer-clean-binPROGRAMS uninstall-binPROGRAMS \
+install-binPROGRAMS mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile tags mostlyclean-tags distclean-tags \
+clean-tags maintainer-clean-tags distdir mostlyclean-depend \
+distclean-depend clean-depend maintainer-clean-depend info dvi \
+installcheck install-exec install-data install uninstall all \
+installdirs mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
+
+
+kmfolderdia.cpp:kmfolderdia.moc
+kmfolderdia.moc: kmfolderdia.h
+	$(MOC) kmfolderdia.h -o kmfolderdia.moc
+
+kmfolder.cpp:kmfolder.moc
+kmfolder.moc: kmfolder.h
+	$(MOC) kmfolder.h -o kmfolder.moc
+
+kmfoldertree.cpp:kmfoldertree.moc
+kmfoldertree.moc: kmfoldertree.h
+	$(MOC) kmfoldertree.h -o kmfoldertree.moc
+
+kmacctseldlg.cpp:kmacctseldlg.moc
+kmacctseldlg.moc: kmacctseldlg.h
+	$(MOC) kmacctseldlg.h -o kmacctseldlg.moc
+
+kmfoldernode.cpp:kmfoldernode.moc
+kmfoldernode.moc: kmfoldernode.h
+	$(MOC) kmfoldernode.h -o kmfoldernode.moc
+
+kmmainview.cpp:kmmainview.moc
+kmmainview.moc: kmmainview.h
+	$(MOC) kmmainview.h -o kmmainview.moc
+
+kmacctmgr.cpp:kmacctmgr.moc
+kmacctmgr.moc: kmacctmgr.h
+	$(MOC) kmacctmgr.h -o kmacctmgr.moc
+
+kmsettings.cpp:kmsettings.moc
+kmsettings.moc: kmsettings.h
+	$(MOC) kmsettings.h -o kmsettings.moc
+
+KEdit.cpp:KEdit.moc
+KEdit.moc: KEdit.h
+	$(MOC) KEdit.h -o KEdit.moc
+
+kmreaderwin.cpp:kmreaderwin.moc
+kmreaderwin.moc: kmreaderwin.h
+	$(MOC) kmreaderwin.h -o kmreaderwin.moc
+
+kmmessage.cpp:kmmessage.moc
+kmmessage.moc: kmmessage.h
+	$(MOC) kmmessage.h -o kmmessage.moc
+
+kmmainwin.cpp:kmmainwin.moc
+kmmainwin.moc: kmmainwin.h
+	$(MOC) kmmainwin.h -o kmmainwin.moc
+
+kmheaders.cpp:kmheaders.moc
+kmheaders.moc: kmheaders.h
+	$(MOC) kmheaders.h -o kmheaders.moc
+
+kmfolderdir.cpp:kmfolderdir.moc
+kmfolderdir.moc: kmfolderdir.h
+	$(MOC) kmfolderdir.h -o kmfolderdir.moc
+
+kmcomposewin.cpp:kmcomposewin.moc
+kmcomposewin.moc: kmcomposewin.h
+	$(MOC) kmcomposewin.h -o kmcomposewin.moc
+
+ktablistbox.cpp:ktablistbox.moc
+ktablistbox.moc: ktablistbox.h
+	$(MOC) ktablistbox.h -o ktablistbox.moc
+
+kbusyptr.cpp:kbusyptr.moc
+kbusyptr.moc: kbusyptr.h
+	$(MOC) kbusyptr.h -o kbusyptr.moc
+
+kalarmtimer.cpp:kalarmtimer.moc
+kalarmtimer.moc: kalarmtimer.h
+	$(MOC) kalarmtimer.h -o kalarmtimer.moc
+
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

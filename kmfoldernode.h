@@ -39,6 +39,17 @@ public:
    "inbox". */
   virtual const QString& path(void) const;
 
+  /** Returns type of the folder (or folder node/dir). This type can be e.g.:
+    "in" for folders that have at least one account associated
+         (this is hardcoded in KMAcctFolder::type()),
+    "out" for the outgoing mail queue of the KMSender object,
+    "plain" for an ordinary folder,
+    "dir" for a directory,
+    "node" for the abstract folder node.
+    Other types may follow. */
+  virtual const char* type(void) const;
+  virtual void setType(const char*);
+
   /** Name of the node. Also used as file name. */
   const QString& name(void) const { return mName; }
   void setName(const QString& aName) { mName = aName; }
@@ -49,6 +60,7 @@ public:
 
 protected:
   QString mName;
+  const char* mType;
 };
 
 typedef QList<KMFolderNode> KMFolderNodeList;

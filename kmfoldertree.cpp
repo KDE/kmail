@@ -34,6 +34,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   setColumn(0, "Folders", 400, KTabListBox::MixedColumn);
 
   dict().insert("dir", new QPixmap(kdir+"/lib/pics/closed.xpm"));
+  dict().insert("node", new QPixmap(kdir+"/lib/pics/green-bullet.xpm"));
+  dict().insert("plain", new QPixmap(kdir+"/lib/pics/kmfolder.xpm"));
   dict().insert("fld", new QPixmap(kdir+"/lib/pics/kmfolder.xpm"));
   dict().insert("in", new QPixmap(kdir+"/lib/pics/kmfldin.xpm"));
   dict().insert("out", new QPixmap(kdir+"/lib/pics/kmfldout.xpm"));

@@ -1,9 +1,10 @@
-// alarm timer
+// kalarmtimer.cpp
 
 #include "kalarmtimer.h"
 #include <sys/time.h>
 #include <signal.h>
 #include <sys/signal.h>
+#include <stdio.h>
 
 #undef DEBUG
 
@@ -84,6 +85,7 @@ void KAlarmTimer :: internalTimerEvent (KAlarmTimerId id)
 
   gettimeofday(&tod,NULL);
 
+  emit timeout(id);
   timerEvent();
   dprintf ("%s: event #%ld %d\n", time2str(tod), id, msec);
 

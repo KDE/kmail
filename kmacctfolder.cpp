@@ -24,7 +24,8 @@ KMAcctFolder::~KMAcctFolder()
 //-----------------------------------------------------------------------------
 const char* KMAcctFolder::type(void) const
 {
-  return "account";
+  if (!mAcctList.isEmpty()) return "in";
+  return KMAcctFolderInherited::type();
 }
 
 
@@ -106,7 +107,6 @@ int KMAcctFolder::createTocHeader(void)
 void KMAcctFolder::readTocHeader(void)
 {
   char line[256];
-  char fldType;
   int  numAcct, i;
   KMAccount* act;
 

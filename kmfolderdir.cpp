@@ -44,6 +44,8 @@ KMFolderDir::KMFolderDir(KMFolderDir* parent, const char* name):
   initMetaObject();
 
   setAutoDelete(TRUE);
+
+  mType = "dir";
 }
 
 
@@ -71,7 +73,7 @@ KMAcctFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
   if (rc)
   {
     delete fld;
-    return rc;
+    return NULL;
   }
 
   append(fld);

@@ -34,7 +34,7 @@ public:
   virtual void clearAccountList(void);
 
   /** Returns TRUE if the folder is a kmail system folder. These are
-    the folders 'inbox', 'outbox', 'sent', 'trash'. The name of these
+    the folders 'outbox', 'sent', 'trash'. The name of these
     folders is also nationalized in the folder display. */
   bool isSystemFolder(void) const { return mIsSystemFolder; }
   void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }

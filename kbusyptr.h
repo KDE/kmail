@@ -1,4 +1,7 @@
-/* animated busy pointer handling
+/* Animated Busy Pointer for KDE
+ *
+ * Author: Stefan Taferner <taferner@salzburg.co.at>
+ * This code is under GPL
  */
 #ifndef kbusyptr_h_
 #define kbusyptr_h_
@@ -13,7 +16,7 @@ class KBusyPtr: public KAlarmTimer
   Q_OBJECT;
 
 public:
-  KBusyPtr(KApplication*);
+  KBusyPtr();
   virtual ~KBusyPtr();
 
   virtual void busy(void);

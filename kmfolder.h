@@ -41,26 +41,33 @@ public:
   /** Detach message from this folder. Usable to call addMsg()
     with the message for another folder. */
   virtual void detachMsg(int index);
+  virtual void detachMsg(KMMessage* msg);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
     an errno error code on failure. The index of the new message
-    is optionally returned. 
+    is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index = NULL);
+  virtual int addMsg(KMMessage* msg, int* index_return = NULL);
+
+  /** Detaches the given message from it's current folder and
+    adds it to this folder. Returns zero on success and an errno error
+    code on failure. The index of the new message is stored in index_return
+    if given. */
+  virtual int moveMsg(KMMessage* msg, int* index_return = NULL);
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int indexOfMsg(const KMMessage*) const;
 
-  /** total number of messages in this folder (may include already deleted
+  /** Total number of messages in this folder (may include already deleted
    messages) */
   virtual long numMsgs(void) const { return mMsgs; }
 
-  /** number of unread messages */
+  /** Number of unread messages */
   virtual int numUnreadMsgs(void) const { return mUnreadMsgs; }
 
-  /** number of active (not deleted) messages in folder */
+  /** Number of active (not deleted) messages in folder */
   virtual int numActiveMsgs(void) const { return mActiveMsgs; }
 
   virtual int isValid(unsigned long);

@@ -61,7 +61,7 @@ void KMMainView::initSeparated()
   folderTree->resize(folderTree->size());
   folderTree->show();
 
-  headers = new KMHeaders;
+  headers = new KMHeaders(NULL,"Header List");
   connect(headers, SIGNAL(messageSelected(KMMessage*)),
 	  this, SLOT(messageSelected(KMMessage *)));
   headers->setCaption(nls->translate("KMail Message List"));
@@ -90,7 +90,7 @@ void KMMainView::initIntegrated()
   connect(folderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
 
-  headers = new KMHeaders(vertPanner->child1());
+  headers = new KMHeaders(vertPanner->child1(), "Header List");
   connect(headers, SIGNAL(messageSelected(KMMessage*)),
 	  this, SLOT(messageSelected(KMMessage*)));
 

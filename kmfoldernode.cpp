@@ -11,6 +11,7 @@ KMFolderNode::KMFolderNode(KMFolderDir* aParent, const char* aName):
 {
   initMetaObject();
 
+  mType = "node";
   mName = aName;
   mName.detach();
   setName(mName);
@@ -20,6 +21,20 @@ KMFolderNode::KMFolderNode(KMFolderDir* aParent, const char* aName):
 //-----------------------------------------------------------------------------
 KMFolderNode::~KMFolderNode()
 {
+}
+
+
+//-----------------------------------------------------------------------------
+const char* KMFolderNode::type(void) const
+{
+  return mType;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderNode::setType(const char* aType)
+{
+  mType = aType;
 }
 
 

@@ -42,6 +42,8 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
     mQueue = mFolderMgr->createFolder("outbox", TRUE);
     if (!mQueue) fatal("Cannot create the folder `outbox'.");
   }
+
+  mQueue->setType("out");
   mQueue->setLabel(nls->translate("outbox"));
 }
 

@@ -26,6 +26,7 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
   setColumn(1, nls->translate("Sender"), 200);
   setColumn(2, nls->translate("Subject"), 250);
   setColumn(3, nls->translate("Date"), 100);
+  readConfig();
 
   dict().insert(KMMessage::statusToStr(KMMessage::stNew),
 		new QPixmap(kdir+"/lib/pics/kmmsgnew.xpm"));
@@ -112,11 +113,11 @@ void KMHeaders::setMsgRead (int msgId)
 void KMHeaders::deleteMsg (int msgId)
 {
   KMMessage* msg;
+  int rc;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {    
-    msg->del();
-    //changeItemPart(msg->status(), getMsgIndex, 0);
+    rc = trashFolder->moveMsg(msg);
   }
 }
 
@@ -195,8 +196,18 @@ void KMHeaders::replyAllToMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::moveMsgToFolder (KMFolder*/*destination*/, int /*msgId*/)
+void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
+  KMMessage *msg = new KMMessage();
+
+  assert(destFolder != NULL);
+
+  kbp->busy();
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    destFolder->moveMsg(msg);
+  }
+  kbp->idle(); 
 }
 
 
@@ -262,9 +273,8 @@ void KMHeaders::changeItemPart (char c, int itemIndex, int column)
 void KMHeaders::highlightMessage(int idx, int/*colId*/)
 {
   kbp->busy();
-  if (idx >= 0) setMsgRead(idx);
-  
   emit messageSelected(folder->getMsg(idx+1));
+  if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }
 

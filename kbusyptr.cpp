@@ -1,15 +1,15 @@
-// animated busy pointer
+// kbusyptr.cpp
 
 #include "kbusyptr.h"
 #include <kapp.h>
 #include <qcursor.h>
 #include <qtimer.h>
+#include <assert.h>
 
 //-----------------------------------------------------------------------------
-KBusyPtr :: KBusyPtr (KApplication* aApp)
+KBusyPtr :: KBusyPtr ()
 {
-  app = aApp;
-  if (!app) printf ("KBusyPtr error: KApplication required\n");
+  app = KApplication::getKApplication();
 
   busyLevel  = 0;
   numCursors = 0;
@@ -36,8 +36,6 @@ KBusyPtr :: ~KBusyPtr()
 //-----------------------------------------------------------------------------
 void KBusyPtr :: busy (void)
 {
-  KAlarmTimer* kat;
-
   if (busyLevel <= 0)
   {
     currentCursor = 0;
@@ -93,7 +91,7 @@ bool KBusyPtr :: loadBitmap (QBitmap& bm, const QString& filename)
   }
   else 
   {
-    f = kapp->kdedir();
+    f = app->kdedir();
     f.detach();
     f += "/lib/pics/";
     f += filename;

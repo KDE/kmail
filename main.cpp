@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <kmsgbox.h>
 #include <klocale.h>
+#include <kshortcut.h>
 
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
@@ -23,6 +24,7 @@ KMFolderMgr* folderMgr = NULL;
 KMSender* msgSender = NULL;
 KLocale* nls = NULL;
 KMFolder* trashFolder = NULL;
+KShortCut* keys = NULL;
 
 static msg_handler oldMsgHandler = NULL;
 
@@ -63,8 +65,10 @@ static void init(int argc, char *argv[])
   app = new KApplication(argc, argv, "kmail");
   nls = new KLocale;
 
-  kbp = new KBusyPtr(app);
+  kbp = new KBusyPtr;
   cfg = app->getConfig();
+
+  keys = new KShortCut(cfg);
 
   oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
 

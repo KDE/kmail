@@ -44,6 +44,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) :
   mOpenCount  = 0;
   mQuiet      = 0;
   mAutoCreateToc = TRUE;
+  mType = "plain";
 }
 
 
@@ -396,6 +397,14 @@ int KMFolder::indexOfMsg(const KMMessage* aMsg) const
 
 
 //-----------------------------------------------------------------------------
+void KMFolder::detachMsg(KMMessage* aMsg)
+{
+  int msgno = indexOfMsg(aMsg);
+  detachMsg(msgno);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMFolder::detachMsg(int msgno)
 {
   KMMsgInfo* mi;
@@ -455,6 +464,15 @@ void KMFolder::readMsg(int msgno)
   dwmsg->Parse();
 
   msg->takeMessage(dwmsg);
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
+{
+  assert(aMsg != NULL);
+  detachMsg(aMsg);
+  return addMsg(aMsg, aIndex_ret);
 }
 
 

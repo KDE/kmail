@@ -29,6 +29,9 @@ extern KMSender* msgSender;
 class KLocale;
 extern KLocale* nls;
 
+class KShortCut;
+extern KShortCut* keys;
+
 class KMFolder;
 extern KMFolder* trashFolder;
 
