@@ -33,7 +33,6 @@ class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
 class KMFolderTreeItem;
-class KMHeaders;
 class KMCommand;
 class KMMetaFilterActionCommand;
 class FolderShortcutCommand;
@@ -42,6 +41,7 @@ class KMFolder;
 class KMAccount;
 class KMFldSearch;
 class KMSystemTray;
+class KMHeaders;
 
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
@@ -53,9 +53,6 @@ namespace KIO {
 
 namespace KMail {
   class Vacation;
-  class AttachmentStrategy;
-  class HeaderStrategy;
-  class HeaderStyle;
   class FolderJob;
   class HeaderListQuickSearch;
 }
@@ -128,8 +125,6 @@ public:
 
   KToggleAction *watchThreadAction() const { return mWatchThreadAction; }
   KToggleAction *ignoreThreadAction() const { return mIgnoreThreadAction; }
-
-
 
   KMHeaders *headers() const { return mHeaders; }
   void toggleSystemTray();
