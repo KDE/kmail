@@ -54,6 +54,7 @@
 #include <qwhatsthis.h>
 
 #include <assert.h>
+#include <kmessagebox.h>
 
 using namespace KMail;
 
@@ -575,8 +576,14 @@ void KMail::FolderDiaACLTab::slotRemoveACL()
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
   if ( !ACLitem )
     return;
-  if ( !ACLitem->isNew() )
+  if ( !ACLitem->isNew() ) {
+    if ( mImapAccount && mImapAccount->login() == ACLitem->userId() ) {
+      if ( KMessageBox::Cancel == KMessageBox::warningContinueCancel( topLevelWidget(),
+         i18n( "Do you really want to remove your own permissions for this folder? You will not be able to access it afterwards." ), i18n( "Remove" ) ) )
+        return;
+    }
     mRemovedACLs.append( ACLitem->userId() );
+  }
   delete ACLitem;
   emit changed(true);
 }
