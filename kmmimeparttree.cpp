@@ -28,6 +28,7 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     : KListView(  parent, name ),
       mReaderWin( readerWin )
 {
+    setLineWidth(0); // don't draw ugly frame
     addColumn( i18n("Description") );
     addColumn( i18n("Type") );
     addColumn( i18n("Encoding") );
