@@ -195,8 +195,8 @@ void ImapListJob::slotListResult( KIO::Job* job )
   } else
   {
     // transport the information, include the jobData
-    mFolder->slotListResult( mSubfolderNames, mSubfolderPaths, 
-        mSubfolderMimeTypes, mSubfolderAttributes, *it );
+    //mFolder->slotListResult( mSubfolderNames, mSubfolderPaths, 
+    //    mSubfolderMimeTypes, mSubfolderAttributes, *it );
   }
   mAccount->removeJob( it );
   delete this;
@@ -268,8 +268,8 @@ void DImapListJob::slotListResult( KIO::Job* job )
   } else
   {
     // transport the information, include the jobData
-    mFolder->slotListResult( mSubfolderNames, mSubfolderPaths, 
-        mSubfolderMimeTypes, mSubfolderAttributes, *it );
+    //mFolder->slotListResult( mSubfolderNames, mSubfolderPaths, 
+    //    mSubfolderMimeTypes, mSubfolderAttributes, *it );
   }
   mAccount->removeJob( it );
   delete this;
