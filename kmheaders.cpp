@@ -22,6 +22,7 @@
 #include <kfiledialog.h>
 
 #include "kmfolderimap.h"
+#include "kmfoldermgr.h"
 #include "kmheaders.h"
 #include "kbusyptr.h"
 #include "kmmainwin.h"
@@ -1156,16 +1157,29 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-  if (mFolder != kernel->trashFolder())
-  {
-    // move messages into trash folder
-    moveMsgToFolder(kernel->trashFolder(), msgId);
-  }
-  else
-  {
-    // We are in the trash folder -> really delete messages
-    moveMsgToFolder(NULL, msgId);
-  }
+	KMFolder* folder = NULL;
+	if (mFolder->protocol() == "imap")
+	{
+		KMFolderImap* fi = static_cast<KMFolderImap*> (mFolder);
+		KMFolder* trash = kernel->imapFolderMgr()->findIdString(fi->account()->trash());
+		if (!trash) trash = kernel->trashFolder();
+		if (mFolder != trash)
+		{
+			folder = trash;
+		}	
+
+	} else {
+
+  	if (mFolder != kernel->trashFolder())
+  	{
+			// move to trash folder
+			folder = kernel->trashFolder();
+		}
+	}	
+			
+  // move messages
+  moveMsgToFolder(folder, msgId);
+  
    mSortInfo.dirty = TRUE;
   mOwner->statusMsg("");
   //  triggerUpdate();

@@ -92,6 +92,9 @@ public:
   const QString& prefix(void) const { return mPrefix; }
   virtual void setPrefix(const QString&);
 
+  const QString& trash(void) const { return mTrash; }
+  virtual void setTrash(const QString&);
+
   /**
    * Automatically expunge deleted messages when leaving the folder
    */
@@ -205,6 +208,7 @@ protected:
   QString mLogin, mPasswd;
   QString mHost, mAuth;
   QString mPrefix;
+  QString mTrash;
   unsigned short int mPort;
   bool    mStorePasswd;
   bool    mAskAgain;

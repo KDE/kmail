@@ -680,6 +680,11 @@ void AccountDialog::makeImapAccountPage()
   mImap.intervalSpin->setValue( 1 );
   grid->addWidget( mImap.intervalSpin, 12, 1 );
 
+	mImap.trashCombo = new KMFolderComboBox( page1 );
+	mImap.trashCombo->showOutboxFolder( FALSE );
+	grid->addMultiCellWidget( mImap.trashCombo, 13, 13, 1, 2 );
+	grid->addWidget( new QLabel( mImap.trashCombo, i18n("Trash Folder:"), page1 ), 13, 0 );
+
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
@@ -819,6 +824,10 @@ void AccountDialog::setupSettings()
     mImap.excludeCheck->setChecked( ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
+		QString trashfolder = ai.trash();
+		if (trashfolder.isEmpty())
+			trashfolder = kernel->trashFolder()->idString();
+		mImap.trashCombo->setFolder( trashfolder );	
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( TRUE );
@@ -1099,6 +1108,7 @@ void AccountDialog::saveSettings()
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
+    epa.setTrash( mImap.trashCombo->getFolder()->idString() );
     epa.setCheckExclude( mImap.excludeCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );

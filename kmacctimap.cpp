@@ -30,6 +30,7 @@
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 #include <qregexp.h>
 
@@ -115,6 +116,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setPort(acct->port());
   setPrefix(acct->prefix());
   setLogin(acct->login());
+  setTrash(acct->trash());
   setAuth(acct->auth());
   setAutoExpunge(acct->autoExpunge());
   setHiddenFolders(acct->hiddenFolders());
@@ -138,6 +140,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mAuth = config.readEntry("auth", "*");
   mPrefix = config.readEntry("prefix", "/");
+  mTrash = config.readEntry("trash");
   if (mFolder) mFolder->setImapPath(mPrefix);
   mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
@@ -161,6 +164,7 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("port", static_cast<int>(mPort));
   config.writeEntry("auth", mAuth);
   config.writeEntry("prefix", mPrefix);
+  config.writeEntry("trash", mTrash);
   config.writeEntry("auto-expunge", mAutoExpunge);
   config.writeEntry("hidden-folders", mHiddenFolders);
   config.writeEntry("subscribed-folders", mOnlySubscribedFolders);
@@ -234,6 +238,12 @@ void KMAcctImap::setPrefix(const QString& aPrefix)
   if (mPrefix.isEmpty() || mPrefix.at(0) != '/') mPrefix = '/' + mPrefix;
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
   if (mFolder) mFolder->setImapPath(mPrefix);
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setTrash(const QString& aTrash)
+{
+  mTrash = aTrash;
 }
 
 

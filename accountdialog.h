@@ -22,6 +22,7 @@
 #define _ACCOUNT_DIALOG_H_
 
 #include <kdialogbase.h>
+#include "kmfoldercombobox.h"
 
 class QCheckBox;
 class QComboBox;
@@ -138,6 +139,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authDigestMd5;
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
+			KMFolderComboBox  *trashCombo;
     };
 
   private slots:
