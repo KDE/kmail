@@ -227,11 +227,11 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       msg = 0;
     }
   }
-  account->displayProgress();
   if (account->slave()) {
       account->mapJobData.remove(it);
       account->mJobList.remove(this);
   }
+  account->displayProgress();
   /* This needs to be emitted last, so the slots that are hooked to it
    * don't unGetMsg the msg before we have finished. */
   emit messageRetrieved(msg);
