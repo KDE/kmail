@@ -32,7 +32,10 @@ k_dcop:
   virtual int ready() = 0; //1=yes, 0=no
   virtual void compactAllFolders() = 0;
 
-//  pre : true
+//  pre : foldername : the requested foldername in kmail (at the
+//                     zero level in the foldertree.
+//        messagefile: the name of the filename (local) with the
+//                     message to be added.
 //  post: =1,  message added to folder, if folder doesn't exist, folder
 //             has been created.
 //        =0,  an error occured.
