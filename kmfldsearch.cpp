@@ -10,7 +10,6 @@
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
-#include "kmfoldercombobox.h"
 #include "kmfolderdia.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
@@ -18,6 +17,8 @@
 #include "kmfoldertree.h"
 #include "kmsearchpatternedit.h"
 #include "kmsearchpattern.h"
+#include "folderrequester.h"
+using KMail::FolderRequester;
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -89,12 +90,14 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mChkbxSpecificFolders->setChecked(true);
   radioGroup->insert( mChkbxSpecificFolders );
 
-  mCbxFolders = new KMFolderComboBox(false, searchWidget);
+  mCbxFolders = new FolderRequester( searchWidget, 
+      kmkernel->getKMMainWidget()->folderTree() );
+  mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
   hbl->addWidget(mCbxFolders);
 
-  connect(mCbxFolders, SIGNAL(activated(int)),
-          this, SLOT(slotFolderActivated(int)));
+  connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
+          this, SLOT(slotFolderActivated(KMFolder*)));
     
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
@@ -350,10 +353,8 @@ void KMFldSearch::keyPressEvent(QKeyEvent *evt)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::slotFolderActivated(int /*nr*/)
+void KMFldSearch::slotFolderActivated( KMFolder* folder )
 {
-    KMFolder* folder = mCbxFolders->getFolder();
-
     mChkbxSpecificFolders->setChecked(true);
     mBtnSearch->setEnabled(folder);
 }
@@ -422,7 +423,7 @@ void KMFldSearch::slotSearch()
     if (mChkbxAllFolders->isChecked()) {
 	search->setRecursive(true);
     } else {
-	search->setRoot(mCbxFolders->getFolder());
+	search->setRoot(mCbxFolders->folder());
 	search->setRecursive(mChkSubFolders->isChecked());
     }
 

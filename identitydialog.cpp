@@ -37,12 +37,15 @@
 
 // other KMail headers:
 #include "signatureconfigurator.h"
-#include "kmfoldercombobox.h"
+#include "folderrequester.h"
+using KMail::FolderRequester;
 #include "kmfoldermgr.h"
 #include "transportmanager.h"
 #include "kmkernel.h"
 #include "dictionarycombobox.h"
 #include "kleo_util.h"
+#include "kmmainwidget.h"
+#include "kmfolder.h"
 
 // other kdepim headers:
 // libkdepim
@@ -328,16 +331,18 @@ namespace KMail {
 
     // "Sent-mail Folder" combo box and label:
     ++row;
-    mFccCombo = new KMFolderComboBox( tab );
-    mFccCombo->showOutboxFolder( false );
+    mFccCombo = new FolderRequester( tab, 
+        kmkernel->getKMMainWidget()->folderTree() );
+    mFccCombo->setShowOutbox( false );
     glay->addWidget( mFccCombo, row, 1 );
     glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
                      row, 0 );
 
     // "Drafts Folder" combo box and label:
     ++row;
-    mDraftsCombo = new KMFolderComboBox( tab );
-    mDraftsCombo->showOutboxFolder( false );
+    mDraftsCombo = new FolderRequester( tab,
+        kmkernel->getKMMainWidget()->folderTree() );
+    mDraftsCombo->setShowOutbox( false );
     glay->addWidget( mDraftsCombo, row, 1 );
     glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts folder:"), tab ),
                      row, 0 );
@@ -581,10 +586,10 @@ namespace KMail {
     ident.setTransport( ( mTransportCheck->isChecked() ) ?
                         mTransportCombo->currentText() : QString::null );
     ident.setDictionary( mDictionaryCombo->currentDictionary() );
-    ident.setFcc( mFccCombo->getFolder() ?
-                  mFccCombo->getFolder()->idString() : QString::null );
-    ident.setDrafts( mDraftsCombo->getFolder() ?
-                     mDraftsCombo->getFolder()->idString() : QString::null );
+    ident.setFcc( mFccCombo->folder() ?
+                  mFccCombo->folder()->idString() : QString::null );
+    ident.setDrafts( mDraftsCombo->folder() ?
+                     mDraftsCombo->folder()->idString() : QString::null );
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
   }

@@ -36,7 +36,6 @@
 
 
 class QLineEdit;
-class KMFolderComboBox;
 class QCheckBox;
 class QComboBox;
 class QString;
@@ -51,6 +50,7 @@ namespace KPIM {
 namespace KMail {
   class SignatureConfigurator;
   class DictionaryComboBox;
+  class FolderRequester;
 }
 
 namespace KMail {
@@ -92,8 +92,8 @@ namespace KMail {
     QLineEdit                    *mReplyToEdit;
     QLineEdit                    *mBccEdit;
     KMail::DictionaryComboBox    *mDictionaryCombo;
-    KMFolderComboBox             *mFccCombo;
-    KMFolderComboBox             *mDraftsCombo;
+    FolderRequester              *mFccCombo;
+    FolderRequester              *mDraftsCombo;
     QCheckBox                    *mTransportCheck;
     QComboBox                    *mTransportCombo; // should be a KMTransportCombo...
     // "signature" tab:

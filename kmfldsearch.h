@@ -27,7 +27,6 @@ class KAction;
 class KActionMenu;
 class KMFolder;
 class KMFolderSearch;
-class KMFolderComboBox;
 class KMFolderImap;
 class KMFolderMgr;
 class KMMainWidget;
@@ -36,6 +35,9 @@ class KMSearchPattern;
 class KMSearchPatternEdit;
 class KStatusBar;
 class DwBoyerMoore;
+namespace KMail {
+  class FolderRequester;
+}
 
 typedef QPtrList<KMMsgBase> KMMessageList;
 
@@ -68,7 +70,7 @@ protected slots:
   virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );
   virtual void copySelectedToFolder( int menuId );
   virtual void moveSelectedToFolder( int menuId );
-  virtual void slotFolderActivated(int nr);
+  virtual void slotFolderActivated( KMFolder* );
   void slotClearSelection();
   void slotReplyToMsg();
   void slotReplyAllToMsg();
@@ -105,7 +107,7 @@ protected:
   // GC'd by Qt
   QRadioButton *mChkbxAllFolders;
   QRadioButton *mChkbxSpecificFolders;
-  KMFolderComboBox *mCbxFolders;
+  KMail::FolderRequester *mCbxFolders;
   QPushButton *mBtnSearch;
   QPushButton *mBtnStop;
   QCheckBox *mChkSubFolders;
