@@ -139,6 +139,11 @@ Script=kmail-3.3b1-misc.pl,perl
 Id=3.4
 File=kmailrc
 Script=kmail-3.4-misc.pl,perl
+# Remove the MenuBar key so that menu bar will be visible in the separate reader window 
+Id=3.4a
+File=kmailrc
+Group=Separate Reader Window
+RemoveKey=MenuBar
 #
 # Important notice:
 # If you add updates here, keep this text below them.
