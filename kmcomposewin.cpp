@@ -1195,7 +1195,7 @@ void KMComposeWin::setupActions(void)
   textItalicAction = new KToggleAction (i18n("&Italic"), "text_italic", 0,
                                        this, SLOT(slotTextItalic()),
                                        actionCollection(), "text_italic");
-  textUnderAction = new KToggleAction (i18n("&Under"), "text_under", 0,
+  textUnderAction = new KToggleAction (i18n("&Underline"), "text_under", 0,
                                      this, SLOT(slotTextUnder()),
                                      actionCollection(), "text_under");
   actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
