@@ -142,14 +142,6 @@ public:
   void setIdOfLastViewedMessage( const QString & msgId )
     { mIdOfLastViewedMessage = msgId; }
 
-#if 0
-  /** Specify whether message is to be shown completely or not.
-      This is used to make sure message contains it's headers
-      when displayed in separate Viewer window after double-click */
-  void setShowCompleteMessage( bool showCompleteMessage )
-    { mShowCompleteMessage = showCompleteMessage; }
-#endif
-
   /** Clear the reader and discard the current message. */
   void clear(bool force = false) { setMsg(0, force); }
 
@@ -350,8 +342,6 @@ protected:
 
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg( KMMessage* msg  );
-
-  //void parseMsgHeader( KMMessage * msg );
 
   /** Creates a nice mail header depending on the current selected
     header style. */
