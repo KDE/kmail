@@ -82,7 +82,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mPanner2Sep = new QValueList<int>;
   mPanner3Sep = new QValueList<int>;
   *mPanner1Sep << 1 << 1;
-  *mPanner2Sep << 1 << 1;
+  *mPanner2Sep << 1 << 1 << 1;
   *mPanner3Sep << 1 << 1;
 
 
@@ -299,11 +299,11 @@ void KMMainWin::readConfig(void)
       /** unread / total columns */
 
       // get the number (aka section) of the column; -1 is de-activated
-      int unreadColumn = config->readNumEntry("UnreadColumn", -1); 
+      int unreadColumn = config->readNumEntry("UnreadColumn", -1);
       int totalColumn = config->readNumEntry("TotalColumn", -1);
 
       // activate them
-      if (unreadColumn != -1) { 
+      if (unreadColumn != -1) {
         slotToggleUnreadColumn();
         mFolderTree->setColumnWidth(mFolderTree->getUnreadColumnNumber(), config->readNumEntry("UnreadColumnWidth"));
       }
@@ -448,14 +448,14 @@ void KMMainWin::writeConfig(void)
     {
       config->writeEntry("UnreadColumn", mFolderTree->getUnreadColumnNumber());
       config->writeEntry("UnreadColumnWidth", mFolderTree->columnWidth(mFolderTree->getUnreadColumnNumber()));
-    } else 
+    } else
       config->writeEntry("UnreadColumn", -1);
 
     if (mFolderTree->isTotalActive())
     {
       config->writeEntry("TotalColumn", mFolderTree->getTotalColumnNumber());
       config->writeEntry("TotalColumnWidth", mFolderTree->columnWidth(mFolderTree->getTotalColumnNumber()));
-    } else 
+    } else
       config->writeEntry("TotalColumn", -1);
   }
 
