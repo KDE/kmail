@@ -5763,7 +5763,8 @@ void KMEdit::slotSpellcheck2(KSpell*)
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellResult(const QString &s)
 {
-  spellcheck_stop();
+    if( !spellLineEdit)
+        spellcheck_stop();
 
   int dlgResult = mKSpell->dlgResult();
   if ( dlgResult == KS_CANCEL )
