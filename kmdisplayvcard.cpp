@@ -4,6 +4,8 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <klocale.h>
+#include <qmultilineedit.h>
+#include <qbutton.h>
 
 KMDisplayVCard::KMDisplayVCard(VCard *vc, QWidget *parent, const char *name) : KTabCtl(parent, name) {
   _vc = vc;
@@ -26,6 +28,12 @@ void KMDisplayVCard::BuildInterface() {
   addTab(getFirstTab(), i18n("Name"));
   addTab(getSecondTab(), i18n("Address"));
   addTab(getThirdTab(), i18n("Misc"));
+  // now add a button bar for the following:
+  // [Save to Disk]     [Import to Address Book]         [Close]
+  // QButton *save = new QButton(mainWidget, i18n("&Save"));
+  // QButton *import = new QButton(mainWidget, i18n("&Import"));
+  // QButton *close = new QButton(mainWidget, i18n("&Close"));
+  
 }
 
 
@@ -233,20 +241,79 @@ return page;
 
 #undef DO_PHONENUMBER
 
+#define ADDENTRY(X,Y)  tmpstr = _vc->getValue(X);            \
+                       if (tmpstr.length() > 0) {            \
+                         name = new QLabel(i18n(Y), page);   \
+                         value = new QLabel(tmpstr, page);   \
+                         grid->addWidget(name, row, 0);      \
+                         grid->addWidget(value, row++, 1);   \
+                       }
+
 QWidget *KMDisplayVCard::getThirdTab() {
 QFrame *page = new QFrame(this);
-QGridLayout *grid = new QGridLayout(page, 5, 2);
+QGridLayout *grid = new QGridLayout(page, 9, 2);
 QLabel *name;
 QLabel *value;
 QString tmpstr;
 QValueList<QString> values;
+int row = 0;
+
+  // So far we provide:
+  // mailer
+  // version
+  // rev
+  // class
+  // role
+  // uid
+  // geo
+  // timezone
+  // note
+  ADDENTRY(VCARD_MAILER, "Mailer:");
+  ADDENTRY(VCARD_PRODID, "vCard made by:");
+  ADDENTRY(VCARD_VERSION, "vCard Version:");
+  ADDENTRY(VCARD_REV, "Last revised:");
+  ADDENTRY(VCARD_CLASS, "Class:");
+  ADDENTRY(VCARD_ROLE, "Role:");
+  ADDENTRY(VCARD_UID, "UID:");
+  values = _vc->getValues(VCARD_GEO);
+  if (!values.isEmpty()) {
+    tmpstr.sprintf("(%s, %s)", values[0].ascii(), values[1].ascii());
+    name = new QLabel(i18n("Location:"), page);
+    value = new QLabel(tmpstr, page);
+    grid->addWidget(name, row, 0);
+    grid->addWidget(value, row++, 1);
+  }
+ 
+  values = _vc->getValues(VCARD_TZ);
+  if (!values.isEmpty()) {
+    tmpstr = "";
+    for (unsigned int i = 0; i < values.count(); i++) {
+      tmpstr += values[i];
+      if (i != values.count()-1) tmpstr += ", ";
+    }
+    name = new QLabel(i18n("Timezone:"), page);
+    value = new QLabel(tmpstr, page);
+    grid->addWidget(name, row, 0);
+    grid->addWidget(value, row++, 1);
+  }
+
+  name = new QLabel(i18n("Note:"), page);
+  QMultiLineEdit *qtb = new QMultiLineEdit(page);
+  qtb->setReadOnly(true);
+  qtb->setText(_vc->getValue(VCARD_NOTE));
+  qtb->resize(qtb->minimumSizeHint());
+  grid->addWidget(name, row, 0);
+  grid->addWidget(qtb, row++, 1);
 
 return page;
 }
 
 
+#undef ADDENTRY
+
+
 void KMDisplayVCard::slotChangeAddress() {
-int c = mAddrList->currentItem();
+unsigned int c = mAddrList->currentItem();
 
   if (mAddresses.count() > c) {
     mAddr_PO->setText(mAddresses[c][0]);
