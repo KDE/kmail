@@ -796,7 +796,7 @@ void FolderStorage::writeConfig()
 {
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-  config->writeEntry("UnreadMsgs", countUnread());
+  config->writeEntry("UnreadMsgs", mGuessedUnreadMsgs == -1 ? mUnreadMsgs : -1);
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
 
