@@ -551,7 +551,7 @@ private:
   QPtrList<KMMsgBase> mMsgList;
 };
 
-class KMDeleteMsgCommand : public KMCommand
+class KMDeleteMsgCommand : public KMMoveCommand
 {
   Q_OBJECT
 
@@ -559,7 +559,6 @@ public:
   KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList );
   KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
 
-  virtual void execute();
 private:
   static KMFolder * findTrashFolder( KMFolder * srcFolder );
 };

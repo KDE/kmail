@@ -1420,30 +1420,21 @@ void KMMoveCommand::execute()
   }
 }
 
-
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList )
+:KMMoveCommand(findTrashFolder( srcFolder ), msgList)
 {
-  KMFolder* folder = findTrashFolder( srcFolder );
-
-  if (folder) {
-    KMCommand *command = new KMMoveCommand( folder, msgList);
-    command->start();
-  }
 }
 
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
+:KMMoveCommand(findTrashFolder( srcFolder ), msg)
 {
-  KMFolder* folder = findTrashFolder( srcFolder );
-
-  if (folder) {
-    KMCommand *command = new KMMoveCommand( folder, msg );
-    command->start();
-  }
 }
 
-KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder ) {
+
+KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder ) 
+{
   if (folder->folderType()== KMFolderTypeImap)
   {
     KMFolderImap* fi = static_cast<KMFolderImap*> (folder);
@@ -1459,11 +1450,6 @@ KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder ) {
   }
   return 0;
 }
-
-void KMDeleteMsgCommand::execute()
-{
-}
-
 
 KMUrlClickedCommand::KMUrlClickedCommand( const KURL &url, uint identity,
   KMReaderWin *readerWin, bool htmlPref, KMMainWidget *mainWidget )
