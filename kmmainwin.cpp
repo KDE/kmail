@@ -1943,7 +1943,7 @@ void KMMainWin::setupMenuBar()
                                    "mlist_filter");
   filterMenu->insert( mlistFilterAction );
 
-  statusMenu = new KActionMenu ( i18n( "Set Status" ), actionCollection(), "set_status" );
+  statusMenu = new KActionMenu ( i18n( "Mark as" ), actionCollection(), "set_status" );
 
   //----- Set status submenu
   KAction *newAction= new KAction( i18n("&New"), "kmmsgnew", 0, this,
