@@ -969,7 +969,10 @@ if (mCharset == "utf-8") mEditor->setText(QString::fromUtf8(bodyDecoded));
 else
 {
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-    mEditor->setText(codec->toUnicode(bodyDecoded));
+    if (codec)
+      mEditor->setText(codec->toUnicode(bodyDecoded));
+    else
+      mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
     mEditor->insertLine("\n", -1);
 }
 
@@ -992,7 +995,10 @@ if (mCharset == "utf-8")
 else
 {
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-    mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
+    if (codec)
+      mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
+    else
+      mEditor->setText(QString::fromLocal8Bit(mMsg->bodyDecoded()));
 }
   }
 
