@@ -5,6 +5,7 @@ about_DATA = \
 	bar-middle-left.png    bottom-right.png       box-top-middle.png \
 	bar-middle-right.png   box-bottom-left.png    box-top-right.png \
 	bar-top-left.png       box-bottom-middle.png  \
-	bar-top-middle.png     box-bottom-right.png   top-left.png          main.html
+	bar-top-middle.png     box-bottom-right.png   top-left.png \
+	main.html              kmail_about.css        kmail_about_extra.css
 
 aboutdir = $(kde_datadir)/kmail/about
