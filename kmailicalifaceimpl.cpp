@@ -817,9 +817,12 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
                                               const QString& folder )
 {
   if( mUseResourceIMAP ) {
-    KMFolder* f = extraFolder( type, folder );
-    if ( f )
-      return f;
+    KMFolder* f = 0;
+    if ( !folder.isEmpty() ) {
+      f = extraFolder( type, folder );
+      if ( f )
+        return f;
+    }
 
     if( type == "Calendar" ) f = mCalendar;
     else if( type == "Contact" ) f = mContacts;
