@@ -374,6 +374,9 @@ void KMMainWidget::readConfig(void)
     }
   }
 
+  // reload foldertree
+  mFolderTree->reload();
+
   // Re-activate panners
   if (mStartupDone)
   {
@@ -387,8 +390,6 @@ void KMMainWidget::readConfig(void)
       activatePanners();
     }
 
-    // reload foldertree
-    mFolderTree->reload();
     mFolderTree->showFolder( mFolder );
 
     // sanders - New code
@@ -1762,9 +1763,9 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
       mFolder->unGetMsg( newMsgIdx );
       int idx = mFolder->find( oldMsg );
       Q_ASSERT( idx != -1 );
-      /* only select here, so the old one is not un-Gotten before, which would 
+      /* only select here, so the old one is not un-Gotten before, which would
        * render the pointer we hold invalid so that find would fail */
-      mHeaders->setCurrentItemByIndex( newMsgIdx ); 
+      mHeaders->setCurrentItemByIndex( newMsgIdx );
       // remove the old one
       if ( idx != -1 ) {
         kdDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
@@ -1773,7 +1774,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 
       kdDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
       updateMessageActions();
-      
+
       kdDebug(5006) << "KMMainWidget  -  done." << endl;
     } else
       kdDebug(5006) << "KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
@@ -2767,10 +2768,10 @@ void KMMainWidget::copySelectedToFolder(int menuId )
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateMessageMenu()
 {
-    mMenuToFolder.clear();
-    folderTree()->folderToPopupMenu( true, this, &mMenuToFolder, mMoveActionMenu->popupMenu() );
-    folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, mCopyActionMenu->popupMenu() );
-    updateMessageActions();
+  mMenuToFolder.clear();
+  folderTree()->folderToPopupMenu( true, this, &mMenuToFolder, mMoveActionMenu->popupMenu() );
+  folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, mCopyActionMenu->popupMenu() );
+  updateMessageActions();
 }
 
 void KMMainWidget::startUpdateMessageActionsTimer()
