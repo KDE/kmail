@@ -281,9 +281,11 @@ void KMSender::doSendMsg()
     // no more message: cleanup and done
     if ( ( sentFolder != kernel->sentFolder() ) && ( sentFolder != 0 ) )
         sentFolder->close();
-    cleanup();
     if (someSent)
-      setStatusMsg(i18n("Queued messages successfully sent."));
+      setStatusMsg(i18n("%n queued message successfully sent.",
+			"%n queued messages successfully sent.",
+			mSentMessages));
+    cleanup();
     return;
   }
   mCurrentMsg->setTransferInProgress( TRUE );
@@ -373,7 +375,9 @@ void KMSender::doSendMsgAux()
   // start sending the current message
 
   mSendProc->preSendInit();
-  setStatusMsg(i18n("Sending message: %1").arg(mCurrentMsg->subject()));
+  setStatusMsg(i18n("%3: subject of message","Sending message %1 of %2: %3")
+	       .arg(mSentMessages+1).arg(mTotalMessages)
+	       .arg(mCurrentMsg->subject()));
   if (!mSendProc->send(mCurrentMsg))
   {
     cleanup();
