@@ -17,6 +17,7 @@
 #include "globalsettings.h"
 #include "kmcommands.h"
 #include "foldershortcutdialog.h"
+#include "acljobs.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -923,7 +924,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         folderMenu->insertItem(SmallIconSet("folder_new"),
                                createChild, this,
                                SLOT(addChildFolder()));
-    
+
     if (!fti->folder()) {
       mMainWidget->action("compact_all_folders")->plug(folderMenu);
       mMainWidget->action("expire_all_folders")->plug(folderMenu);
@@ -1042,6 +1043,22 @@ void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
   KFolderTree::contentsMouseReleaseEvent(me);
 }
 
+// little static helper
+static bool folderHasCreateRights( const KMFolder *folder )
+{
+  bool createRights = true; // we don't have acls for local folders yet
+  if ( folder && folder->folderType() == KMFolderTypeImap ) {
+    const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
+    createRights =
+      imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
+  } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
+    const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
+    createRights =
+      dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create );
+  }
+  return createRights;
+}
+
 //-----------------------------------------------------------------------------
 // Create a subfolder.
 // Requires creating the appropriate subdirectory and show a dialog
@@ -1051,13 +1068,22 @@ void KMFolderTree::addChildFolder()
   if (!fti)
     return;
   KMFolder *aFolder = fti->folder();
-  if (fti->folder())
-    if (!fti->folder()->createChildFolder())
+  if (aFolder) {
+    if (!aFolder->createChildFolder())
       return;
+    if ( !folderHasCreateRights( aFolder ) ) {
+      const QString message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
+                                    "permissions on the server. If you think you should be able to create "
+                                    "subfolders here, ask your administrator to grant you rights to do so."
+                                    "</qt> " ).arg(aFolder->name());
+      KMessageBox::error( this, message );
+      return;
+    }
+  }
 
   KMFolderDir *dir = &(kmkernel->folderMgr()->dir());
-  if (fti->folder())
-    dir = fti->folder()->child();
+  if (aFolder)
+    dir = aFolder->child();
 
   KMFolderDialog *d =
     new KMFolderDialog(0, dir, this, i18n("Create Subfolder") );
