@@ -2272,11 +2272,16 @@ void KMMainWin::slotEditToolbars()
 {
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
-  if (dlg.exec() == true)
-  {
-    createGUI("kmmainwin.rc");
-    toolbarAction->setChecked(!toolBar()->isHidden());
-  }
+  connect( &dlg, SIGNAL(newToolbarConfig()),
+	   SLOT(slotUpdateToolbars()) );
+
+  dlg.exec();
+}
+
+void KMMainWin::slotUpdateToolbars()
+{
+  createGUI("kmmainwin.rc");
+  toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
 void KMMainWin::slotEditKeys()

@@ -2616,11 +2616,16 @@ void KMComposeWin::slotEditToolbars()
 {
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
 
-  if (dlg.exec() == true)
-  {
-    createGUI("kmcomposerui.rc");
-    toolbarAction->setChecked(!toolBar()->isHidden());
-  }
+  connect( &dlg, SIGNAL(newToolbarConfig()),
+	   SLOT(slotUpdateToolbars()) );
+
+  dlg.exec();
+}
+
+void KMComposeWin::slotUpdateToolbars()
+{
+  createGUI("kmcomposerui.rc");
+  toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
 void KMComposeWin::slotEditKeys()

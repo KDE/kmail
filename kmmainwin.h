@@ -254,6 +254,7 @@ protected slots:
   void slotToggleToolBar();
   void slotToggleStatusBar();
   void slotEditToolbars();
+  void slotUpdateToolbars();
   void slotEditKeys();
 
 protected:

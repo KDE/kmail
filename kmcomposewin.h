@@ -266,7 +266,7 @@ public slots:
   void slotPaste();
   void slotMarkAll();
   
-	void slotFolderRemoved(KMFolder*);
+  void slotFolderRemoved(KMFolder*);
 
   /**
    * toggle fixed width font.
@@ -295,6 +295,7 @@ public slots:
   void slotToggleToolBar();
   void slotToggleStatusBar();
   void slotEditToolbars();
+  void slotUpdateToolbars();
   void slotEditKeys();
   /**
    * Read settings from app's config file.
