@@ -1050,7 +1050,7 @@ void KMMainWin::slotEmptyFolder()
 
     if (KMessageBox::warningYesNo(this, str, i18n("Empty Folder"),
 				  i18n("&Empty"), KStdGuiItem::cancel() )
-       !=KMessageBox::Continue) return;
+        !=KMessageBox::Yes) return;
   }
 
   if (mFolder->protocol() == "imap")
