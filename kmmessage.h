@@ -682,7 +682,7 @@ protected:
   mutable DwMessage* mMsg;
   mutable bool mNeedsAssembly;
   bool mIsComplete, mDecodeHTML;
-  int mTransferInProgress;
+  bool mTransferInProgress;
   static int sHdrStyle;
   static QString sForwardStr;
   const QTextCodec* mCodec;

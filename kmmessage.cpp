@@ -3477,8 +3477,7 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
 //-----------------------------------------------------------------------------
 void KMMessage::setTransferInProgress(bool value)
 {
-  value ? ++mTransferInProgress : --mTransferInProgress;
-  assert(mTransferInProgress >= 0 && mTransferInProgress <= 1);
+  mTransferInProgress = value;
 }
 
 
