@@ -356,9 +356,9 @@ void KMComposeWin::readConfig(void)
   else
   {
     mDefCharset = str;
-    if ( !KGlobal::charsets()->isAvailable(
+/*    if ( !KGlobal::charsets()->isAvailable(   obsolete with QT3
       KGlobal::charsets()->charsetForEncoding(mDefCharset)) )
-        mDefCharset = "default";
+        mDefCharset = "default"; */
   }
 
   kdDebug(5006) << "Default charset: " << mDefCharset << endl;
@@ -2298,7 +2298,7 @@ void KMComposeWin::setEditCharset()
   if (mCharset == "default" || mCharset.isEmpty())
     mCharset = defaultCharset();
   QString cset = mCharset;
-  if (mUnicodeFont) cset = "iso10646-1";
+/*  if (mUnicodeFont) cset = "iso10646-1";   obsolete with QT3
   fnt.setCharSet(KGlobal::charsets()->charsetForEncoding(cset));
   mEditor->setFont(fnt);
   mEdtFrom.setFont(fnt);
@@ -2306,7 +2306,7 @@ void KMComposeWin::setEditCharset()
   mEdtTo.setFont(fnt);
   mEdtCc.setFont(fnt);
   mEdtBcc.setFont(fnt);
-  mEdtSubject.setFont(fnt);
+  mEdtSubject.setFont(fnt); */
 }
 
 //-----------------------------------------------------------------------------
@@ -2317,7 +2317,7 @@ QCString KMComposeWin::defaultCharset(void) const
   // however KGlobal::locale->charset() has a fallback value of iso-8859-1,
   // we try to be smarter
   QCString aStr = QTextCodec::codecForLocale()->name();
-  if ((retval == "iso-8859-1") && (aStr != "ISO 8859-1"))
+/*  if ((retval == "iso-8859-1") && (aStr != "ISO 8859-1"))
   {
     // read locale if it really gives iso-8859-1
     KConfig *globalConfig = KGlobal::instance()->config();
@@ -2339,7 +2339,7 @@ QCString KMComposeWin::defaultCharset(void) const
     }
     //we should be pretty safe: still if sth goes wrong we return iso-8859-1
   }
-  else if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
+  else */ if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
   else if (retval == "ksc5601.1987-0") retval = "euc-kr";
   return retval;
 }
