@@ -7,7 +7,7 @@ LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell -lmimelib $(LIB_
 bin_PROGRAMS = kmail
 
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
+kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp \
 		kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
@@ -26,7 +26,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmtopwidget.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmscoring.cpp \
-		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp \
+		kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
 		kmdisplayvcard.cpp vcard.cpp md5.c \
