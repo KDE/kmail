@@ -157,7 +157,7 @@ void KMTransportInfo::writeConfig(int id)
 
   // delete already stored password if password storage is disabled
   if ( !storePasswd() ) {
-    if ( !Wallet::keyDoesNotExist( 
+    if ( !Wallet::keyDoesNotExist(
           Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) ) {
       Wallet *wallet = kmkernel->wallet();
       if ( wallet )
@@ -229,10 +229,14 @@ void KMTransportInfo::readPassword() const
 
   // ### workaround for broken Wallet::keyDoesNotExist() which returns wrong
   // results for new entries without closing and reopening the wallet
-  if ( Wallet::isOpen( Wallet::NetworkWallet() ) ?
-       !kmkernel->wallet()->hasEntry( "transport-" + QString::number(mId) ) :
-       Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) )
-    return;
+  if ( Wallet::isOpen( Wallet::NetworkWallet() ) ) {
+    Wallet* wallet = kmkernel->wallet();
+    if ( !wallet || !wallet->hasEntry( "transport-" + QString::number(mId) ) )
+      return;
+  } else {
+    if ( Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) )
+      return;
+  }
 
   if ( kmkernel->wallet() )
     kmkernel->wallet()->readPassword( "transport-" + QString::number(mId), mPasswd );
