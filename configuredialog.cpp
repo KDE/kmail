@@ -219,6 +219,16 @@ void ConfigureDialog::hideEvent( QHideEvent * ) {
 ConfigureDialog::~ConfigureDialog() {
 }
 
+void ConfigureDialog::slotApply() {
+  GlobalSettings::writeConfig();
+  KCMultiDialog::slotApply();
+}
+
+void ConfigureDialog::slotOk() {
+  GlobalSettings::writeConfig();
+  KCMultiDialog::slotOk();
+}
+
 void ConfigureDialog::slotUser2() {
   if ( mProfileDialog ) {
     mProfileDialog->raise();
@@ -3693,7 +3703,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
     new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
   QToolTip::add( mEnableImapResCB,  i18n( "This enables the IMAP storage for "
                                           "the Kontact applications" ) );
-  QWhatsThis::add( mEnableImapResCB, 
+  QWhatsThis::add( mEnableImapResCB,
         i18n( GlobalSettings::self()->theIMAPResourceEnabledItem()->whatsThis().utf8() ) );
   connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -3793,7 +3803,7 @@ void MiscPage::GroupwareTab::load() {
 void MiscPage::GroupwareTab::save() {
   // Write the groupware config
   GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
-  GlobalSettings::setGroupwareLegacyMangleFromToHeaders( 
+  GlobalSettings::setGroupwareLegacyMangleFromToHeaders(
         mLegacyMangleFromTo->isChecked() );
 
   // Write the IMAP resource config

@@ -82,7 +82,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
 // Receive an iCal or vCard from the resource
 bool KMailICalIfaceImpl::addIncidence( const QString& type,
                                        const QString& uid,
-                                       const QString& ical )
+                                       const QString& ical,
+                                       const QString& /*resource*/ )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << type << ", "
             << uid << ", " << ical << " )" << endl;
@@ -127,7 +128,8 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
 // The resource orders a deletion
 bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
-                                          const QString& uid )
+                                          const QString& uid,
+                                          const QString& /*resource*/ )
 {
   if( !mUseResourceIMAP )
     return false;
@@ -157,7 +159,8 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
 }
 
 // The resource asks for a full list of incidences
-QStringList KMailICalIfaceImpl::incidences( const QString& type )
+QStringList KMailICalIfaceImpl::incidences( const QString& type,
+                                            const QString& /*resource*/ )
 {
   if( !mUseResourceIMAP )
     return QStringList();
@@ -185,7 +188,8 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
 }
 
 bool KMailICalIfaceImpl::update( const QString& type,
-                                 const QStringList& entries )
+                                 const QStringList& entries,
+                                 const QString& /*resource*/ )
 {
   if( !mUseResourceIMAP )
     return false;
@@ -216,7 +220,8 @@ bool KMailICalIfaceImpl::update( const QString& type,
 }
 
 bool KMailICalIfaceImpl::update( const QString& type, const QString& uid,
-                                 const QString& entry )
+                                 const QString& entry,
+                                 const QString& /*resource*/ )
 {
   if( !mUseResourceIMAP )
     return false;
@@ -232,12 +237,12 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& uid,
     if( msg ) {
       // Message found - update it
       deleteMsg( msg );
-      addIncidence( type, uid, entry );
+      addIncidence( type, uid, entry, "" );
       rc = true;
     } else {
       kdDebug(5006) << type << " not found, cannot update uid " << uid << endl;
       // Since it doesn't seem to be there, save it instead
-      addIncidence( type, uid, entry );
+      addIncidence( type, uid, entry, "" );
     }
   } else {
     kdError() << "Not an IMAP resource folder" << endl;
@@ -269,10 +274,10 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
-      arg << type << s;
+      arg << type << s << "";
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
-                << ", " << s << " )" << endl;
-      emitDCOPSignal( "incidenceAdded(QString,QString)", data );
+                << ", " << s << ", \"\" )" << endl;
+      emitDCOPSignal( "incidenceAdded(QString,QString,QString)", data );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -302,10 +307,10 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
       vPartMicroParser( s, uid );
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
-      arg << type << uid;
+      arg << type << uid << "";
       kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
-                << type << ", " << uid << " )" << endl;
-      emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
+                << type << ", " << uid << ", \"\" )" << endl;
+      emitDCOPSignal( "incidenceDeleted(QString,QString,QString)", data );
     }
     if( unget ) folder->unGetMsg(i);
   } else

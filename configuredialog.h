@@ -48,10 +48,21 @@ signals:
 protected:
   void hideEvent( QHideEvent *i );
 protected slots:
-  /** @reimplemented 
+  /** @reimplemented
+   * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
+   */
+  void slotApply();
+
+  /** @reimplemented
+   * Saves the GlobalSettings stuff before passing on to KCMultiDialog.
+   */
+  void slotOk();
+
+  /** @reimplemented
    * Brings up the profile loading/editing dialog. We can't use User1, as
    * KCMultiDialog uses that for "Reset". */
   void slotUser2();
+
 private:
   QGuardedPtr<ProfileDialog>  mProfileDialog;
 };
