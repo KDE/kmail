@@ -6,6 +6,7 @@
 #define kmacctmgr_h
 
 #include <qobject.h>
+#include <qqueue.h>
 #include <qlist.h>
 #include <qstring.h>
 #include <qdir.h>
@@ -70,7 +71,8 @@ public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
 
   virtual void intCheckMail(int, bool _interactive = true);
-  virtual void processNextAccount(bool newMail); 
+  virtual void processNextAccount(bool newMail);
+  virtual void processNextCheck(bool _newMail);
 
 signals:
   /** emitted if new mail has been collected */
@@ -80,6 +82,7 @@ private:
   QString      mBasePath;
   KMAcctList   mAcctList;
   QListIterator< KMAccount > *mAccountIt;
+  QQueue< KMAccount > *mAcctChecking;
   KMAccount *lastAccountChecked;
   bool checking;
   bool newMailArrived;

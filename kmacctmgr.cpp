@@ -29,6 +29,7 @@ KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
   mAcctList.setAutoDelete(TRUE);
   setBasePath(aBasePath);
   mAccountIt = new QListIterator<KMAccount>(mAcctList);
+  mAcctChecking = new QQueue<KMAccount>();
   checking = false;
   lastAccountChecked = 0;
 }
@@ -38,6 +39,7 @@ KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
 KMAcctMgr::~KMAcctMgr()
 {
   delete mAccountIt;
+  delete mAcctChecking;
   writeConfig(FALSE);
   mAcctList.clear();
 }
@@ -115,34 +117,78 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   newMailArrived = false;
   interactive = _interactive;
 
-  if (checking)
-    return;
+  mAcctChecking->enqueue(account);
 
-  if (account->folder() == 0)
-  {
-    QString tmp; //Unsafe
-    tmp = i18n("Account %1 has no mailbox defined!\n"
- 	        "Mail checking aborted\n"
-	        "Check your account settings!")
-		.arg(account->name());
-    KMessageBox::information(0,tmp);
+  if (checking) {
     return;
   }
+
+//   if (account->folder() == 0)
+//   {
+//     QString tmp; //Unsafe
+//     tmp = i18n("Account %1 has no mailbox defined!\n"
+//  	        "Mail checking aborted\n"
+// 	        "Check your account settings!")
+// 		.arg(account->name());
+//     KMessageBox::information(0,tmp);
+//     return;
+//   }
 
   checking = true;
 
   kdDebug() << "checking mail, server busy" << endl;
   kernel->serverReady (false);
+  lastAccountChecked = 0;
 
-  mAccountIt->toLast(); 
-  ++(*mAccountIt);
+  processNextCheck(false);
 
-  lastAccountChecked = account;
-  connect( account, SIGNAL(finishedCheck(bool)),
-	   this, SLOT(processNextAccount(bool)) );
-  account->processNewMail(interactive);
+//   mAccountIt->toLast(); 
+//   ++(*mAccountIt);
+
+//   lastAccountChecked = account;
+//   connect( account, SIGNAL(finishedCheck(bool)),
+// 	   this, SLOT(processNextCheck(bool)) );
+//   account->processNewMail(interactive);
 }
 
+void KMAcctMgr::processNextCheck(bool _newMail)
+{
+  newMailArrived |= _newMail;
+
+  if (lastAccountChecked)
+    disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
+		this, SLOT(processNextCheck(bool)) );
+
+  if (mAcctChecking->isEmpty()) {
+    kernel->filterMgr()->cleanup();
+    kdDebug() << "checked mail, server ready" << endl;
+    kernel->serverReady (true);
+    checking = false;
+    emit checkedMail(newMailArrived);
+    return;
+  }
+  
+  KMAccount *curAccount = mAcctChecking->dequeue();
+  connect( curAccount, SIGNAL(finishedCheck(bool)),
+	   this, SLOT(processNextCheck(bool)) );
+
+  lastAccountChecked = curAccount;
+
+  if (curAccount->folder() == 0)
+    {
+      QString tmp; //Unsafe
+      tmp = i18n("Account %1 has no mailbox defined!\n"
+		 "Mail checking aborted\n"
+		 "Check your account settings!")
+	         .arg(curAccount->name());
+      KMessageBox::information(0,tmp);
+      processNextCheck(false);
+    }
+  
+  kdDebug() << "processing next mail check, server busy" << endl;
+  
+  curAccount->processNewMail(interactive);  
+}
 
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctMgr::create(const QString aType, const QString aName) 
