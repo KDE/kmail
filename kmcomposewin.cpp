@@ -2387,7 +2387,7 @@ void KMComposeWin::slotAppendSignature()
     mEditor->sync();
     mEditor->append("\n");
     if (!sigText.startsWith("-- \n") && (sigText.find("\n-- \n") == -1))
-      mEditor->append("-- ");
+      mEditor->append("-- \n");
     mEditor->append(sigText);
     mEditor->update();
     mEditor->setModified(mod);
@@ -2491,9 +2491,6 @@ void KMComposeWin::slotIdentityActivated(int)
   else
     mMsg->setHeaderField("Organization", ident.organization());
 
-  QString edtText = mEditor->text();
-  int pos = edtText.findRev( "\n-- \n" + mOldSigText);
-
   if (!mBtnTransport->isChecked()) {
     if (ident.transport().isEmpty())
       mMsg->removeHeaderField("X-KMail-Transport");
@@ -2525,18 +2522,41 @@ void KMComposeWin::slotIdentityActivated(int)
       mFcc->setFolder( ident.fcc() );
   }
 
-  if (((pos >= 0) && (pos + mOldSigText.length() + 5 == edtText.length())) ||
-      (mOldSigText.isEmpty())) {
-    if (pos >= 0)
-      edtText.truncate(pos);
-    if (!ident.signature().isEmpty() && mAutoSign) {
+  QString edtText = mEditor->text();
+  bool appendNewSig = true;
+  // try to truncate the old sig
+  if( !mOldSigText.isEmpty() )
+  {
+    if( mOldSigText.startsWith( "-- \n" ) || 
+        ( mOldSigText.find( "\n-- \n" ) != -1 ) )
+    { // the old sig contains the sig marker
+      if( edtText.endsWith( "\n" + mOldSigText ) )
+        edtText.truncate( edtText.length() - mOldSigText.length() - 1 );
+      else
+        appendNewSig = false;
+    }
+    else
+    { // the old sig doesn't contain the sig marker
+      if( edtText.endsWith( "\n-- \n" + mOldSigText ) )
+        edtText.truncate( edtText.length() - mOldSigText.length() - 5 );
+      else
+        appendNewSig = false;
+    }
+  }
+  // now append the new sig
+  mOldSigText = ident.signature();
+  if( appendNewSig )
+  {
+    if( !mOldSigText.isEmpty() && mAutoSign )
+    {
       edtText.append( "\n" );
-      if (!ident.signature().startsWith("-- \n")) edtText.append( "-- \n" );
-      edtText.append( ident.signature() );
+      if( !mOldSigText.startsWith( "-- \n" )  &&
+          ( mOldSigText.find( "\n-- \n" ) == -1 ) )
+        edtText.append( "-- \n" );
+      edtText.append( mOldSigText );
     }
     mEditor->setText( edtText );
   }
-  mOldSigText = ident.signature();
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
