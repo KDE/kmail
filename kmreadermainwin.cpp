@@ -80,6 +80,7 @@ void KMReaderMainWin::setupAccel()
 {
   if (kernel->xmlGuiInstance())
     setInstance( kernel->xmlGuiInstance() );
+  KStdAction::close( this, SLOT( close() ), actionCollection() );
   applyMainWindowSettings(KMKernel::config(), "Separate Reader Window");
   QAccel *accel = new QAccel(mReaderWin, "showMsg()");
   accel->connectItem(accel->insertItem(Key_Up),
