@@ -40,6 +40,7 @@ class AccountDialog : public KDialogBase
   public:
     AccountDialog( KMAccount *account, const QStringList &identity, 
 		   QWidget *parent=0, const char *name=0, bool modal=true );
+    virtual ~AccountDialog();
   private:
     struct LocalWidgets
     {

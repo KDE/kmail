@@ -262,6 +262,10 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
   setupSettings();
 }
 
+AccountDialog::~AccountDialog()
+{
+  if (mServerTest) delete mServerTest;
+}
 
 void AccountDialog::makeLocalAccountPage()
 {
@@ -901,7 +905,6 @@ void AccountDialog::slotCheckImapCapabilities()
 
 void AccountDialog::slotPopCapabilities(const QStringList &list)
 {
-  mServerTest = NULL;
   mPop.checkCapabilities->setEnabled(TRUE);
   bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
   mPop.usePipeliningCheck->setChecked(list.findIndex("PIPELINING") != -1);
@@ -914,12 +917,13 @@ void AccountDialog::slotPopCapabilities(const QStringList &list)
   mPop.authAPOP->setEnabled(list.findIndex("APOP") != -1);
   checkHighest(mPop.encryptionGroup);
   checkHighest(mPop.authGroup);
+  if (mServerTest) delete mServerTest;
+  mServerTest = NULL;
 }
 
 
 void AccountDialog::slotImapCapabilities(const QStringList &list)
 {
-  mServerTest = NULL;
   mImap.checkCapabilities->setEnabled(TRUE);
   bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
   mImap.encryptionNone->setEnabled(nc);
@@ -931,6 +935,8 @@ void AccountDialog::slotImapCapabilities(const QStringList &list)
   mImap.authAnonymous->setEnabled(list.findIndex("AUTH=ANONYMOUS") != -1);
   checkHighest(mImap.encryptionGroup);
   checkHighest(mImap.authGroup);
+  if (mServerTest) delete mServerTest;
+  mServerTest = NULL;
 }
 
 
