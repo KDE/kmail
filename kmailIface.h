@@ -1,6 +1,7 @@
 #ifndef _KMCONTROLIFACE
 #define _KMCONTROLIFACE
 
+// no forward declarations - dcopidl2cpp won't work
 #include <dcopobject.h>
 #include <dcopref.h>
 #include <kurl.h>
