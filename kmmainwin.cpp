@@ -1550,8 +1550,10 @@ void KMMainWin::updateMessageMenu()
 //-----------------------------------------------------------------------------
 void KMMainWin::updateFolderMenu()
 {
-  modifyFolderAction->setEnabled( !mFolder->isSystemFolder() );
-  removeFolderAction->setEnabled( !mFolder->isSystemFolder() );
+  modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
+    : false );
+  removeFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
+    : false );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );
   threadMessagesAction->setEnabled( mFolder ? true : false );
