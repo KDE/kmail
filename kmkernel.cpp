@@ -826,7 +826,7 @@ void KMKernel::cleanupImapFolders()
       }
     }
 
-    //cfld->setNoContent(TRUE);
+    cfld->setNoContent(true);
     cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
     cfld->setAccount(cachedImapAcct);
     cachedImapAcct->setImapFolder(cfld);
