@@ -1547,7 +1547,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   {
     kernel->kbp()->idle();
     KMessageBox::sorry( 0L, i18n("Couldn't get your public key for\n%1.")
-      .arg(from()) );
+      .arg(Kpgp::getKpgp()->user()) );
     return;
   }
 

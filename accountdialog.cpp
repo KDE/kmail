@@ -215,7 +215,8 @@ void AccountDialog::makePopAccountPage()
   topLayout->addWidget( mPop.portEdit, 6, 1 ); 
 
   mPop.useSSLCheck =
-    new QCheckBox( i18n("Use SSL for secure mail download"), page);
+    new QCheckBox( i18n("Use SSL for secure mail download") + " " +
+      i18n("(experimental)"), page);
   topLayout->addMultiCellWidget( mPop.useSSLCheck, 7, 7, 0, 1);
   connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
 
