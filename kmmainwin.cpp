@@ -2050,6 +2050,13 @@ void KMMainWin::slotMailtoAddAddrBook()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotMailtoOpenAddrBook()
+{
+  KMAddrBookExternal::openEmail(mUrlCurrent.path(), this);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotUrlCopy()
 {
   QClipboard* clip = QApplication::clipboard();
@@ -2134,8 +2141,10 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
                          SLOT(slotMailtoForward()));
         menu->insertSeparator();
       }
-      menu->insertItem(i18n("Add to Addressbook..."), this,
+      menu->insertItem(i18n("Add to Addressbook"), this,
 		       SLOT(slotMailtoAddAddrBook()));
+      menu->insertItem(i18n("Open in Addressbook..."), this,
+		       SLOT(slotMailtoOpenAddrBook()));
       menu->insertItem(i18n("Copy to Clipboard"), this,
 		       SLOT(slotUrlCopy()));
     }

@@ -267,6 +267,7 @@ protected slots:
   void slotMailtoReply();
   void slotMailtoForward();
   void slotMailtoAddAddrBook();
+  void slotMailtoOpenAddrBook();
 
   /** Open URL in mUrlCurrent using Kfm. */
   void slotUrlOpen();

@@ -162,16 +162,53 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 }
 
 //-----------------------------------------------------------------------------
-void KMAddrBookExternal::addEmail(QString addr, QWidget *) {
-  if (useKAddressbook())
-  {
-    KRun::runCommand( "kaddressbook -a \"" + addr.replace(QRegExp("\""), "")
-      + "\"" );
+void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
+  QString address = addr;
+  address.replace( QRegExp("\""), "" );
+  if (useKAddressbook()) {
+    KRun::runCommand( "kaddressbook -a \"" + address + "\"" );
     return;
   }
 
   // TODO: Start a simple add-to-addressbook-dialog, or just add the address
   // silently to kabc.
+}
+
+//-----------------------------------------------------------------------------
+void KMAddrBookExternal::addEmail( const QString &addr, QWidget *parent) {
+  QString email;
+  QString name;
+
+#if KDE_VERSION >= 305
+  KABC::Addressee::parseEmailAddress( addr, name, email );
+#else
+  parseEmailAddress( addr, name, email );
+#endif
+
+  KABC::AddressBook *ab = KABC::StdAddressBook::self();
+
+  KABC::Addressee::List addressees = ab->findByEmail( email );
+
+  if ( addressees.isEmpty() ) {
+    KABC::Addressee a;
+    a.setNameFromString( name );
+    a.insertEmail( email, true );
+    
+    ab->insertAddressee(a);
+    
+    if ( !KABC::StdAddressBook::save() ) {
+      KMessageBox::error( parent, i18n("Can't save to addressbook.") );
+    } else {
+      QString text = i18n("The email address '%1' was added to your "
+                          "addressbook. You can add more information to this "
+                          "entry by opening the addressbook.").arg( addr );
+      KMessageBox::information( parent, text, QString::null, "addedtokabc" );
+    }
+  } else {
+    QString text = i18n("The email address '%1' is already in your "
+                        "addressbook.").arg( addr );
+    KMessageBox::information( parent, text );
+  }
 }
 
 void KMAddrBookExternal::launch(QWidget *) {
@@ -208,4 +245,63 @@ bool KMAddrBookExternal::useKAddressbook()
   return (ab == 1);
 }
 
+#if KDE_VERSION < 305
+// FIXME: This function is duplicated from kdelibs/kabc. Remove it, when KMail
+// depends on the 3.1 libs.
+void KMAddrBookExternal::parseEmailAddress( const QString &rawEmail,
+                                            QString &fullName, 
+                                            QString &email)
+{
+  int startPos, endPos, len;
+  QString partA, partB, result;
+  char endCh = '>';
+  
+  startPos = rawEmail.find('<');
+  if (startPos < 0)
+  {
+    startPos = rawEmail.find('(');
+    endCh = ')';
+  }
+  if (startPos < 0)
+  {
+    // We couldn't find any separators, so we assume the whole string
+    // is the email address
+    email = rawEmail;
+    fullName = "";
+  }
+  else 
+  {
+    // We have a start position, try to find an end
+    endPos = rawEmail.find(endCh, startPos+1);
+    
+    if (endPos < 0) 
+    {
+      // We couldn't find the end of the email address. We can only
+      // assume the entire string is the email address.
+      email = rawEmail;
+      fullName = "";
+    }
+    else
+    {
+      // We have a start and end to the email address
+      
+      // Grab the name part
+      fullName = rawEmail.left(startPos).stripWhiteSpace();
+      
+      // grab the email part
+      email = rawEmail.mid(startPos+1, endPos-startPos-1).stripWhiteSpace();
+
+      // Check that we do not have any extra characters on the end of the
+      // strings
+      len = fullName.length();
+      if (fullName[0]=='"' && fullName[len-1]=='"')
+        fullName = fullName.mid(1, len-2);
+      else if (fullName[0]=='<' && fullName[len-1]=='>')
+        fullName = fullName.mid(1, len-2);
+      else if (fullName[0]=='(' && fullName[len-1]==')')
+        fullName = fullName.mid(1, len-2);
+    }
+  }
+}
+#endif
 
