@@ -29,6 +29,7 @@
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmaddrbook.h"
+#include "kfileio.h"
 #include <kabapi.h>
 #include <kwin.h>
 
@@ -68,7 +69,7 @@ void KMKernel::checkMail () //might create a new reader but won´t show!!
   mWin->slotCheckMail();
 }
 
-void KMKernel::openReader( KURL /*messageFile*/)
+void KMKernel::openReader()
 {
 #warning Ugly hack! (sven)
   KMMainWin *mWin = 0;
@@ -87,14 +88,11 @@ void KMKernel::openReader( KURL /*messageFile*/)
     mWin = new KMMainWin;
   mWin->show();
   KWin::setActiveWindow(mWin->winId());
-  //and "Activate" by kwin?
-
-  //if (!messageFile.isEmpty())
-  //  mWin->viewMessage(messageFile);
 }
 
 int KMKernel::openComposer (QString to, QString cc,
-                            QString bcc, QString subject, int hidden)
+                            QString bcc, QString subject, int hidden,
+			    KURL messageFile )
 {
   debug ("KMKernel::openComposer called");
 
@@ -105,10 +103,12 @@ int KMKernel::openComposer (QString to, QString cc,
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!to.isEmpty()) msg->setTo(to);
 
+  if (!messageFile.isEmpty() && messageFile.isLocalFile())
+    msg->setBody( kFileToString( messageFile.path(), true, false ) );
+
   KMComposeWin *cWin = new KMComposeWin(msg);
   if (hidden == 0)
     cWin->show();
-  //return cWin->composerId()
   return 1;
 }
 
@@ -508,9 +508,9 @@ void KMKernel::action(bool mailto, bool check, QString to, QString cc,
 {
 
   if (mailto)
-    openComposer (to, cc, bcc, subj, 0);
+    openComposer (to, cc, bcc, subj, 0, messageFile);
   else
-    openReader(messageFile);
+    openReader();
 
   if (check)
     checkMail();

@@ -37,8 +37,8 @@ public:
   void checkMail ();
   //returns id of composer if more are opened
   int openComposer (QString to, QString cc, QString bcc, QString subject,
-                    int hidden);
-  void openReader(KURL messageFile);
+                    int hidden, KURL messageFile);
+  void openReader();
   int ready();
   int send(int composerId, int how); //0=now, 1=later
   int addAttachment(int composerId, KURL url, QString comment);

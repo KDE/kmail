@@ -154,6 +154,12 @@ int KMailApplication::newInstance()
      bcc = args->getOption("bcc");
   }
 
+  if (args->getOption("msg"))
+  {
+     mailto = true;
+     messageFile = QString::fromLocal8Bit(args->getOption("msg"));
+  }
+
   if (args->isSet("composer"))
     mailto = true;
 
