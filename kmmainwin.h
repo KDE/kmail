@@ -7,8 +7,6 @@
 
 #include "kmtopwidget.h"
 #include <kurl.h>
-#include <kdockwidget.h>
-#include <qlistview.h>
 
 class KMFolder;
 class KMFolderDir;
@@ -19,6 +17,7 @@ class KMHeaders;
 class KMReaderWin;
 class QSplitter;
 class QTextCodec;
+class QListViewItem;
 class KMenuBar;
 class KToolBar;
 class KStatusBar;
@@ -367,10 +366,10 @@ protected:
 
   QTimer *menutimer;
 
-  KDockWidget* mMsgDock;
-  KDockWidget* mHeaderDock;
-  KDockWidget* mFolderDock;
-  KDockWidget* mMimeDock;
+  //KDockWidget* mMsgDock;
+  //KDockWidget* mHeaderDock;
+  //KDockWidget* mFolderDock;
+  //KDockWidget* mMimeDock;
 
   // ProgressDialog for transfering messages
   KProgressDialog* mProgressDialog;
