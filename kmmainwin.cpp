@@ -869,7 +869,7 @@ void KMMainWin::slotAddFolder()
       qlvi->setOpen(TRUE);
       mFolderTree->setCurrentItem( qlvi );
     }
-    if ( mFolder->needsRepainting() )
+    if ( mFolder && mFolder->needsRepainting() )
       mFolderTree->delayedUpdate();
   }
   delete d;
