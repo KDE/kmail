@@ -376,7 +376,6 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
     if( msg && msg->UID() == uid )
       return msg;
   }
-
   // Not found by now
   if( mapReloaded )
     // Not here then
@@ -389,7 +388,6 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
     return getMsg( *it );
   // Then it's not here
   return 0;
-
 }
 
 // This finds and sets the proper account for this folder if it has
@@ -883,16 +881,16 @@ bool KMFolderCachedImap::deleteMessages()
 {
   /* Delete messages from cache that are gone from the server */
   QPtrList<KMMessage> msgsForDeletion;
-
+  
   // It is not possible to just go over all indices and remove
   // them one by one because the index list can get resized under
   // us. So use msg pointers instead
-  for( int i = 0; i < count(); ++i ) {
-    KMMsgBase *msg = getMsgBase( i );
-    if( !msg ) continue;
-    ulong uid = msg->UID();
+
+  QMap<ulong,int>::const_iterator it = uidMap.constBegin();
+  for( ; it != uidMap.end(); it++ ) {
+    ulong uid ( it.key() );
     if( uid!=0 && !uidsOnServer.contains( uid ) )
-      msgsForDeletion.append( getMsg( i ) );
+      msgsForDeletion.append( getMsg( *it ) );
   }
 
   if( !msgsForDeletion.isEmpty() ) {
@@ -1010,7 +1008,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
     ulong uid = msg->UID();
-    if( uid != 0 ) 
+    if( uid != 0 )
        uidsOnServer.append( uid );
     if ( /*flags & 8 ||*/ uid <= lastUid()) {
       /* 
