@@ -39,11 +39,11 @@ namespace KMail {
   //
   // Convenience functions:
   //
-#if 0
   static inline QString directionOf( const QString & str ) {
     return str.isRightToLeft() ? "rtl" : "ltr" ;
   }
 
+#if 0
   // Converts to html. Changes URLs into href's, escapes HTML special
   // chars and inserts the result into an <div> or <span> tag with
   // "dir" set to "rtl" or "ltr" depending on the direction of @p str.
@@ -89,8 +89,6 @@ namespace KMail {
     if ( !strategy )
       strategy = HeaderStrategy::brief();
 
-    // ### from kmreaderwin begin
-
     // The direction of the header is determined according to the direction
     // of the application layout.
 
@@ -104,9 +102,9 @@ namespace KMail {
 
     QString subjectDir;
     if (!message->subject().isEmpty())
-      subjectDir = ( message->cleanSubject().isRightToLeft() ) ? "rtl" : "ltr";
+      subjectDir = directionOf( message->cleanSubject() );
     else
-      subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
+      subjectDir = directionOf( i18n("No Subject") );
 
     // Prepare the date string (when printing always use the localized date)
     QString dateString;
@@ -119,13 +117,13 @@ namespace KMail {
       dateString = message->dateStr();
     }
 
-    QString headerStr = QString("<div dir=\"%1\">\n"
-				"<div dir=\"%2\">\n").arg( dir ).arg( subjectDir );
+    QString headerStr = "<div dir=\"" + dir + "\">\n";
 
     if ( strategy->showHeader( "subject" ) )
-      headerStr += "<b style=\"font-size:130%\">" +
+      headerStr += "<div dir=\"" + subjectDir + "\">\n"
+	           "<b style=\"font-size:130%\">" +
 			   strToHtml( message->subject() ) +
-			   "</b>";
+			   "</b></div>";
 
     QStringList headerParts;
 
@@ -148,8 +146,6 @@ namespace KMail {
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
     headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
 
-    // ### check for balanced <div>'s (elsewhere, too).
-    headerStr.append("</div>");
     headerStr += "</div>";
 
     // ### iterate over the rest of strategy->headerToDisplay() (or
@@ -201,9 +197,9 @@ namespace KMail {
 
     QString subjectDir;
     if (!message->subject().isEmpty())
-      subjectDir = ( message->cleanSubject().isRightToLeft() ) ? "rtl" : "ltr";
+      subjectDir = directionOf( message->cleanSubject() );
     else
-      subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
+      subjectDir = directionOf( i18n("No Subject") );
 
     // Prepare the date string (when printing always use the localized date)
     QString dateString;
@@ -324,9 +320,9 @@ namespace KMail {
 
     QString subjectDir;
     if ( !message->subject().isEmpty() )
-      subjectDir = ( message->cleanSubject().isRightToLeft() ) ? "rtl" : "ltr";
+      subjectDir = directionOf( message->cleanSubject() );
     else
-      subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
+      subjectDir = directionOf( i18n("No Subject") );
 
     // Prepare the date string (when printing always use the localized date)
     QString dateString;
@@ -390,7 +386,7 @@ namespace KMail {
     if ( strategy->showHeader( "date" ) )
       headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
                             .arg(i18n("Date: "))
-			    .arg(message->dateStr().isRightToLeft() ? "rtl" : "ltr")
+		            .arg( directionOf( message->dateStr() ) )
                             .arg(strToHtml(dateString)));
     headerStr.append("</table></div>");
 
