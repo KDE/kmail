@@ -70,6 +70,12 @@ public:
   virtual void setAuth(const QString &);
 
   /**
+   * Sending of several commands at once
+   */
+  bool usePipelining(void) const { return mUsePipelining; }
+  virtual void setUsePipelining(bool);
+
+  /**
    * Will the password be stored in the config file ?
    */
   bool storePasswd(void) const { return mStorePasswd; }
@@ -150,6 +156,7 @@ protected:
   bool    mUseSSL;
   bool    mUseTLS;
   QString mAuth;
+  bool    mUsePipelining;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
   bool    gotMsgs;
@@ -165,7 +172,7 @@ protected:
   QStringList uidsOfMsgs;
   QStringList uidsOfSeenMsgs;
   QStringList uidsOfNextSeenMsgs;
-  KURL::List idsOfMsgsToDelete;
+  QStringList idsOfMsgsToDelete;
   int indexOfCurrentMsg;
 
   QValueList<KMMessage*> msgsAwaitingProcessing;
@@ -204,6 +211,12 @@ protected slots:
    * to get the message whose id is at the head of the queue
    */
   void slotGetNextMsg();
+
+  /**
+   * A messages has been retrieved successfully. The next data belongs to the
+   * next message.
+   */
+  void slotMsgRetrieved(KIO::Job*, const QString &);
 
   /**
    * New data has arrived append it to the end of the current message

@@ -462,9 +462,9 @@ void AccountDialog::makePopAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 13, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 12, 10 );
+  grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -499,40 +499,44 @@ void AccountDialog::makePopAccountPage()
   label->setBuddy( mPop.portEdit );
   grid->addWidget( mPop.portEdit, 4, 1 );
 
+  mPop.usePipeliningCheck =
+    new QCheckBox( i18n("Use pipelining for faster mail download"), page1 );
+  grid->addMultiCellWidget( mPop.usePipeliningCheck, 5, 5, 0, 1 );
+
   mPop.storePasswordCheck =
     new QCheckBox( i18n("Store POP password in configuration file"), page1 );
-  grid->addMultiCellWidget( mPop.storePasswordCheck, 5, 5, 0, 1 );
+  grid->addMultiCellWidget( mPop.storePasswordCheck, 6, 6, 0, 1 );
 
   mPop.deleteMailCheck =
     new QCheckBox( i18n("Delete mail from server"), page1 );
-  grid->addMultiCellWidget( mPop.deleteMailCheck, 6, 6, 0, 1 );
+  grid->addMultiCellWidget( mPop.deleteMailCheck, 7, 7, 0, 1 );
 
   mPop.excludeCheck =
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page1 );
-  grid->addMultiCellWidget( mPop.excludeCheck, 7, 7, 0, 1 );
+  grid->addMultiCellWidget( mPop.excludeCheck, 8, 8, 0, 1 );
 
   mPop.intervalCheck =
     new QCheckBox( i18n("Enable interval mail checking"), page1 );
-  grid->addMultiCellWidget( mPop.intervalCheck, 8, 8, 0, 1 );
+  grid->addMultiCellWidget( mPop.intervalCheck, 9, 9, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
   mPop.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page1 );
-  grid->addWidget( mPop.intervalLabel, 9, 0 );
+  grid->addWidget( mPop.intervalLabel, 10, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
   mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mPop.intervalSpin->setValue( 1 );
-  grid->addWidget( mPop.intervalSpin, 9, 1 );
+  grid->addWidget( mPop.intervalSpin, 10, 1 );
 
   label = new QLabel( i18n("Destination folder:"), page1 );
-  grid->addWidget( label, 10, 0 );
+  grid->addWidget( label, 11, 0 );
   mPop.folderCombo = new QComboBox( false, page1 );
-  grid->addWidget( mPop.folderCombo, 10, 1 );
+  grid->addWidget( mPop.folderCombo, 11, 1 );
 
   label = new QLabel( i18n("Pre&command:"), page1 );
-  grid->addWidget( label, 11, 0 );
+  grid->addWidget( label, 12, 0 );
   mPop.precommand = new QLineEdit( page1 );
   label->setBuddy(mPop.precommand);
-  grid->addWidget( mPop.precommand, 11, 1 );
+  grid->addWidget( mPop.precommand, 12, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -714,6 +718,7 @@ void AccountDialog::setupSettings()
     mPop.portEdit->setText( QString("%1").arg( ap.port() ) );
     mPop.useSSLCheck->setChecked( ap.useSSL() );
     mPop.useTLSCheck->setChecked( ap.useTLS() );
+    mPop.usePipeliningCheck->setChecked( ap.usePipelining() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
     mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
     mPop.intervalCheck->setChecked( interval >= 1 );
@@ -941,6 +946,7 @@ void AccountDialog::saveSettings()
     epa.setPasswd( mPop.passwordEdit->text(), true );
     epa.setUseSSL( mPop.useSSLCheck->isChecked() );
     epa.setUseTLS( mPop.useTLSCheck->isChecked() );
+    epa.setUsePipelining( mPop.usePipeliningCheck->isChecked() );
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );

@@ -91,6 +91,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authLogin;
       QRadioButton *authCRAM_MD5;
       QRadioButton *authAPOP;
+      QCheckBox    *usePipeliningCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
       QCheckBox    *retriveAllCheck;

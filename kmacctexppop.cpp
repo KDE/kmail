@@ -45,6 +45,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):
   mUseSSL = FALSE;
   mUseTLS = FALSE;
   mStorePasswd = FALSE;
+  mUsePipelining = TRUE;
   mLeaveOnServer = FALSE;
   mProtocol = 3;
   struct servent *serv = getservbyname("pop-3", "tcp");
@@ -104,6 +105,7 @@ void KMAcctExpPop::init(void)
   mProtocol = 3;
   mUseSSL = FALSE;
   mUseTLS = FALSE;
+  mUsePipelining = TRUE;
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
 }
@@ -138,6 +140,7 @@ void KMAcctExpPop::pseudoAssign(KMAccount* account)
   setUseSSL(acct->useSSL());
   setUseTLS(acct->useTLS());
   setAuth(acct->auth());
+  setUsePipelining(acct->usePipelining());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
   setLeaveOnServer(acct->leaveOnServer());
@@ -186,6 +189,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mUseSSL = config.readNumEntry("use-ssl", FALSE);
   mUseTLS = config.readNumEntry("use-tls", FALSE);
   mAuth = config.readEntry("auth", "AUTO");
+  mUsePipelining = config.readNumEntry("pipelining", TRUE);
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
@@ -205,6 +209,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("use-tls", mUseTLS);
   config.writeEntry("auth", mAuth);
+  config.writeEntry("pipelining", TRUE);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
@@ -261,6 +266,12 @@ void KMAcctExpPop::setUseTLS(bool b)
 void KMAcctExpPop::setAuth(const QString &aAuth)
 {
   mAuth = aAuth;
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setUsePipelining(bool b)
+{
+  mUsePipelining = b;
 }
 
 //-----------------------------------------------------------------------------
@@ -440,8 +451,10 @@ void KMAcctExpPop::connectJob() {
   if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
 	  SLOT( slotData( KIO::Job*, const QByteArray &)));
-  connect( job, SIGNAL( result( KIO::Job * ) ),
-	   SLOT( slotResult( KIO::Job * ) ) );
+  connect(job, SIGNAL( result( KIO::Job * ) ),
+	  SLOT( slotResult( KIO::Job * ) ) );
+  connect(job, SIGNAL(infoMessage( KIO::Job*, const QString & )),
+          SLOT( slotMsgRetrieved(KIO::Job*, const QString &)));
 }
 
 void KMAcctExpPop::slotCancel()
@@ -462,8 +475,6 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
-
-  KURL url = getUrl();
 
   while (cur != msgsAwaitingProcessing.end()) {
     // note we can actually end up processing events in processNewMsg
@@ -486,8 +497,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
       break;
     }
     else {
-      url.setPath(QString("/%1").arg(*curId));
-      idsOfMsgsToDelete.append(url.url());
+      idsOfMsgsToDelete.append( *curId );
       uidsOfNextSeenMsgs.append( *curUid );
     }
     ++cur;
@@ -556,6 +566,7 @@ void KMAcctExpPop::startJob() {
   stage = List;
   mSlaveConfig.clear();
   mSlaveConfig.insert("progress", "off");
+  mSlaveConfig.insert("pipelining", (mUsePipelining) ? "on" : "off");
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
   if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5")
   {
@@ -572,6 +583,21 @@ void KMAcctExpPop::startJob() {
   url.setPath(QString("/index"));
   job = KIO::get( url.url(), false, false );
   connectJob();
+}
+
+void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg) {
+  if (infoMsg != "message complete") return;
+  kdDebug(5006) << "stage == Retr" << endl;
+  KMMessage *msg = new KMMessage;
+  curMsgData.resize(curMsgData.size() + 1);
+  curMsgData[curMsgData.size() - 1] = '\0';
+  msg->fromString(QCString(curMsgData),TRUE);
+  kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
+
+  msgsAwaitingProcessing.append(msg);
+  msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
+  msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
+  slotGetNextMsg();
 }
 
 void KMAcctExpPop::slotJobFinished() {
@@ -594,38 +620,36 @@ void KMAcctExpPop::slotJobFinished() {
     for (len = lensOfMsgsPendingDownload.begin();
       len != lensOfMsgsPendingDownload.end(); len++)
         numBytesToRead += *len;
+    KURL url = getUrl();
+    url.setPath("/download/" + idsOfMsgsPendingDownload.join(","));
+    job = KIO::get( url, false, false );
+    connectJob();
     slotGetNextMsg();
     processMsgsTimer.start(processingDelay);
-
   }
   else if (stage == Retr) {
-    kdDebug(5006) << "stage == Retr" << endl;
-    KMMessage *msg = new KMMessage;
-    curMsgData.resize(curMsgData.size() + 1);
-    curMsgData[curMsgData.size() - 1] = '\0';
-    msg->fromString(QCString(curMsgData),TRUE);
-    kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
+    processRemainingQueuedMessagesAndSaveUidList();
+    kernel->folderMgr()->syncAllFolders();
 
-    msgsAwaitingProcessing.append(msg);
-    msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
-    msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
-    // Have to user timer otherwise littleProgress only works for
-    // one job->get call.
-    ss->start( 0, true );
+    KURL url = getUrl();
+    if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
+      url.setPath(QString("/commit"));
+      job = KIO::get(url.url(), false, false );
+    }
+    else {
+      stage = Dele;
+      url.setPath("/remove/" + idsOfMsgsToDelete.join(","));
+      idsOfMsgsToDelete.clear();
+      job = KIO::get( url, false, false );
+    }
+    connectJob();
   }
   else if (stage == Dele) {
     kdDebug(5006) << "stage == Dele" << endl;
-    if (idsOfMsgsToDelete.isEmpty())
-    {
-      KURL url = getUrl();
-      url.setPath(QString("/commit"));
-      job = KIO::get(  url.url(), false, false );
-      stage = Quit;
-    } else {
-      KURL::List::Iterator it = idsOfMsgsToDelete.begin();
-      job = KIO::file_delete( *it, false );
-      idsOfMsgsToDelete.remove(it);
-    }
+    KURL url = getUrl();
+    url.setPath(QString("/commit"));
+    job = KIO::get( url.url(), false, false );
+    stage = Quit;
     connectJob();
   }
   else if (stage == Quit) {
@@ -683,31 +707,16 @@ void KMAcctExpPop::slotGetNextMsg()
   curMsgStrm = 0;
 
   if (next == idsOfMsgsPendingDownload.end()) {
-    processRemainingQueuedMessagesAndSaveUidList();
-    kernel->folderMgr()->syncAllFolders();
-
-    if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
-      KURL url = getUrl();
-      url.setPath(QString("/commit"));
-      job = KIO::get(url.url(), false, false );
-    }
-    else {
-      stage = Dele;
-      KURL::List::Iterator it = idsOfMsgsToDelete.begin();
-      job = KIO::file_delete( *it, false );
-      idsOfMsgsToDelete.remove(it);
-    }
+  kdDebug(5006) << "KMAcctExpPop::slotGetNextMsg was called too often" << endl;
   }
   else {
     curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
     curMsgLen = *nextLen;
     ++indexOfCurrentMsg;
-    job = KIO::get( *next, false, false );
     idsOfMsgsPendingDownload.remove( next );
     kdDebug(5006) << QString("Length of message about to get %1").arg( *nextLen ) << endl;
     lensOfMsgsPendingDownload.remove( nextLen ); //xxx
   }
-  connectJob();
 }
 
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
@@ -745,8 +754,6 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   QString qdata = data;
   int spc = qdata.find( ' ' );
   if (spc > 0) {
-    KURL url = getUrl();
-
     if (stage == List) {
       QString length = qdata.mid(spc+1);
       if (length.find(' ') != -1) length = length.left(length.find(' '));
@@ -755,28 +762,25 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       QString id = qdata.left(spc);
       idsOfMsgs.append( id );
       lensOfMsgsPendingDownload.append( len );
-      url.setPath(QString("/download/%1").arg(id));
-      idsOfMsgsPendingDownload.append(url.url());
+      idsOfMsgsPendingDownload.append( id );
     }
     else { // stage == Uidl
       QString uid = qdata.mid(spc + 1);
       uidsOfMsgs.append( uid );
       if (uidsOfSeenMsgs.contains(uid)) {
         QString id = qdata.left(spc);
-        url.setPath(QString("/download/%1").arg(id));
-        int idx = idsOfMsgsPendingDownload.findIndex(url.url());
+        int idx = idsOfMsgsPendingDownload.findIndex(id);
         if (idx != -1) {
           lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
                                             .at( idx ));
-          idsOfMsgsPendingDownload.remove(url.url());
+          idsOfMsgsPendingDownload.remove( id );
           idsOfMsgs.remove( id );
           uidsOfMsgs.remove( uid );
         }
         else
           kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
-        url.setPath(QString("/%1").arg(id));
         if (uidsOfSeenMsgs.contains( uid ))
-          idsOfMsgsToDelete.append(url.url());
+          idsOfMsgsToDelete.append( id );
         uidsOfNextSeenMsgs.append( uid );
       }
     }
