@@ -243,6 +243,8 @@ protected slots:
   /** Fires a new-mail-check of the account that is accociated with currentItem */
   void slotCheckMail();
 
+  void slotNewMessageToMailingList();
+
 protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
