@@ -69,11 +69,15 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       mFolders.remove(mFolders.at(i-1));
       str.remove(str.at(i));
     }      
-    else if (curFolder->child() == aFolderDir)
-      fileInFolder->setCurrentItem( i );
     ++i;
   }
   fileInFolder->insertStringList( str );
+
+  for( i = 1; mFolders.at(i - 1) != mFolders.end(); ++i ) {
+    curFolder = *mFolders.at(i - 1);
+    if (curFolder->child() == aFolderDir)
+      fileInFolder->setCurrentItem( i );
+  }
 }
 
 
