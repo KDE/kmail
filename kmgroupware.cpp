@@ -161,8 +161,8 @@ void KMGroupware::readConfig()
   internalCreateKOrgPart();
 
   // Make KOrganizer re-read everything
-  emit signalRefresh( "Calendar" );
-  emit signalRefresh( "Task" );
+  slotRefreshCalendar();
+  slotRefreshTasks();
   slotNotesFolderChanged();
 }
 
@@ -273,6 +273,12 @@ KMFolder* KMGroupware::initFolder( KFolderTreeItem::Type itemType, const char* t
   folder->setSystemFolder( true );
   folder->open();
 
+  // Setup the signals for the IMAP resource
+  connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+	   this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+  connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+	   this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+
   return folder;
 }
 
@@ -291,14 +297,10 @@ void KMGroupware::initFolders()
     // TODO: Change Notes and Contacts to work like calendar and tasks and add Journals
     // Connect the notes folder. This is the old way to do it :-(
     connect( mNotes, SIGNAL( changed() ), this, SLOT( slotNotesFolderChanged() ) );
-    connect( mNotes, SIGNAL( msgAdded(int) ), this, SLOT( slotNotesFolderChanged() ) );
-    connect( mNotes, SIGNAL( msgRemoved(int, QString) ), this, SLOT( slotNotesFolderChanged() ) );
     slotNotesFolderChanged();
 
-    connect( mCalendar, SIGNAL( msgAdded( KMFolder*, int ) ), this, SLOT( slotIncidenceAdded( KMFolder*, int ) ) );
-    connect( mCalendar, SIGNAL( expunged() ), this, SIGNAL( signalCalendarFolderExpunged() ) );
-    connect( mTasks, SIGNAL( msgAdded( KMFolder*, int ) ), this, SLOT( slotIncidenceAdded( KMFolder*, int ) ) );
-    connect( mTasks, SIGNAL( expunged() ), this, SIGNAL( signalTasksFolderExpunged() ) );
+    connect( mCalendar, SIGNAL( expunged() ), this, SLOT( slotRefreshCalendar() ) );
+    connect( mTasks, SIGNAL( expunged() ), this, SLOT( slotRefreshTasks() ) );
 
     // Make the folder tree show the icons or not
     if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
@@ -552,8 +554,8 @@ void KMGroupware::internalCreateKOrgPart()
 
   // initialize Groupware using data stored in our folders
   // ignore_GroupwareDataChangeSlots = true;
-  emit signalRefresh( "Calendar" );
-  emit signalRefresh( "Task" );
+  slotRefreshCalendar();
+  slotRefreshTasks();
   // Notes
   slotNotesFolderChanged();
   // ignore_GroupwareDataChangeSlots = false;
@@ -1044,6 +1046,17 @@ void KMGroupware::slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum )
   }
   if( unget ) folder->unGetMsg(i);
 }
+
+void KMGroupware::slotRefreshCalendar()
+{
+  emit signalRefresh( "Calendar" );
+}
+
+void KMGroupware::slotRefreshTasks()
+{
+  emit signalRefresh( "Task" );
+}
+
 
 KMGroupware::VCalType KMGroupware::getVCalType( const QString &vCal )
 {
