@@ -103,9 +103,6 @@ namespace {
 	mContext = Addresses;
     }
 
-    void stringArgument( const QString & string, bool ) {
-      stringArgument( string, false, QString::null );
-    }
     void stringArgument( const QString & string, bool, const QString & ) {
       kdDebug( 5006 ) << "VacationDataExtractor::stringArgument( \"" << string << "\" )" << endl;
       if ( mContext == Addresses ) {
@@ -129,9 +126,6 @@ namespace {
     }
 
     void stringListArgumentStart() {}
-    void stringListEntry( const QString & string, bool ) {
-      stringListEntry( string, false, QString::null );
-    }
     void stringListEntry( const QString & string, bool, const QString & ) {
       kdDebug( 5006 ) << "VacationDataExtractor::stringListEntry( \"" << string << "\" )" << endl;
       if ( mContext != Addresses )
