@@ -46,8 +46,9 @@
 //-----------------------------------------------------------------------------
 KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   const QString &aPort)
-  : mProtocol( aProtocol ), mHost( aHost ), mSSL( false ),
-    mJob( 0 ), mSlave( 0 )
+  : QObject(),
+    mProtocol( aProtocol ), mHost( aHost ),
+    mSSL( false ), mJob( 0 ), mSlave( 0 )
 {
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
