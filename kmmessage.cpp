@@ -2644,8 +2644,10 @@ int KMMessage::numBodyParts(void) const
   while (part)
   {
     //dive into multipart messages
-    while ( part && part->Headers().HasContentType() &&
-	    (mp == part->Headers().ContentType().TypeStr().c_str()) )
+    while (    part
+            && part->hasHeaders()
+            && part->Headers().HasContentType()
+            && (mp == part->Headers().ContentType().TypeStr().c_str()) )
     {
       parts.append( part );
       part = part->Body().FirstBodyPart();
@@ -2689,6 +2691,7 @@ int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
   while (curpart && !idx) {
     //dive into multipart messages
     while(    curpart
+           && curpart->hasHeaders()
            && curpart->Headers().HasContentType()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
