@@ -460,7 +460,7 @@ kdDebug(5006) << "* text *" << endl;
                                   "border:2px solid %1;padding:10px;"
                                   "text-align:left;font-size:90%\">")
                                   .arg( reader->cHtmlWarning.name() ) );
-                reader->writeHTMLStr(i18n("<b>Note:</b> This is a HTML message. For "
+                reader->writeHTMLStr(i18n("<b>Note:</b> This is an HTML message. For "
                                   "security reasons, only the raw HTML code "
                                   "is shown. If you trust the sender of this "
                                   "message then you can activate formatted "
