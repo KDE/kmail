@@ -92,10 +92,12 @@ KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
   mDest = NULL;
 }
 
-bool KMFilterActionMove::process(KMMessage* msg, bool&)
+bool KMFilterActionMove::process(KMMessage* msg, bool&stop)
 {
   if (!mDest) return TRUE;
   mDest->moveMsg(msg);
+  stop = TRUE;
+
   return FALSE;
 }
 
