@@ -984,11 +984,11 @@ QString KMMessage::replacePrefixes( const QString& str,
   // 2. matches at least one of the part regexps in prefixRegExps
   QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
                       .arg( prefixRegExps.join(")|(?:") );
-  kdDebug(5006) << "KMMessage::replacePrefixes(): bigRegExp = \"" << bigRegExp
-		<< "\"" << endl;
   QRegExp rx( bigRegExp, false /*case insens.*/ );
   if ( !rx.isValid() ) {
-    kdWarning(5006) << "prefix regexp is invalid!" << endl;
+    kdWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
+                    << bigRegExp << "\"\n"
+                    << "prefix regexp is invalid!" << endl;
     // try good ole Re/Fwd:
     recognized = str.startsWith( newPrefix );
   } else { // valid rx
