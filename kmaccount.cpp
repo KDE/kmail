@@ -158,7 +158,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
     warning(i18n("Critical error: Unable to collect mail (out of space?)"));
     return false;
   }
-  else if (processResult == 1)
+  else
   {
     rc = mFolder->addMsg(aMsg);
     if (rc) {
