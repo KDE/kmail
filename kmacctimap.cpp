@@ -211,7 +211,11 @@ void KMAcctImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
     && fti->folder->imapPath() == mPrefix;
   KURL url = getUrl();
   url.setPath((jd.inboxOnly) ? QString("/") : fti->folder->imapPath());
-  makeConnection();
+  if (!makeConnection())
+  { 
+    fti->setOpen( FALSE );
+    return;
+  }
   KIO::SimpleJob *job = KIO::listDir(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mSlave, job);
   mapJobData.insert(job, jd);
