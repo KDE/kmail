@@ -64,7 +64,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   hl->addWidget( fileInFolder );
   label2->setBuddy( fileInFolder );
 
-  QGroupBox *mtGroup = new QGroupBox( i18n("Folder Type"), page, "mtGroup" );
+  mtGroup = new QGroupBox( i18n("Folder Type"), page, "mtGroup" );
   mtGroup->setColumnLayout( 0,  Qt::Vertical );
 
   topLayout->addWidget( mtGroup );
@@ -101,12 +101,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       ++i;
   }
   fileInFolder->insertStringList( str );
-
-  for( i = 1; mFolders.at(i - 1) != mFolders.end(); ++i ) {
-    curFolder = *mFolders.at(i - 1);
-    if (curFolder->child() == aFolderDir)
-      fileInFolder->setCurrentItem( i );
-  }
+	// we want to know if the activated changes
+	connect( fileInFolder, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
 
   if (aFolder && (aFolder->protocol() == "imap")) {
     label->setEnabled( false );
@@ -140,7 +136,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   //
   // Expiry data.
   //
-  QGroupBox *expGroup = new QGroupBox(i18n("Old Message Expiry"), page);
+  expGroup = new QGroupBox(i18n("Old Message Expiry"), page);
   expGroup->setColumnLayout(0, Qt::Vertical);
   QGridLayout *expLayout = new QGridLayout(expGroup->layout());
   expLayout->setSpacing(6);
@@ -208,6 +204,14 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   markAnyMessage = new QCheckBox( i18n( "&Mark any message in this folder" ), mcGroup );
   mcLayout->addWidget( markAnyMessage );
   mcGroup->hide();
+
+  for( i = 1; mFolders.at(i - 1) != mFolders.end(); ++i ) {
+    curFolder = *mFolders.at(i - 1);
+    if (curFolder->child() == aFolderDir) {
+      fileInFolder->setCurrentItem( i );
+			slotUpdateItems( i );
+		}	
+  }
 
 //   hl = new QHBoxLayout();
 //   topLayout->addLayout( hl );
@@ -299,6 +303,24 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   kdDebug(5006)<<"Exiting KMFolderDialog::KMFolderDialog()\n";
 }
 
+
+//-----------------------------------------------------------------------------
+void KMFolderDialog::slotUpdateItems ( int current )
+{
+	KMFolder* selectedFolder = NULL;
+	// check if the index is valid (the top level has no entrance in the mFolders)
+	if (current > 0) selectedFolder = *mFolders.at(current - 1);
+	if (selectedFolder && selectedFolder->protocol() == "imap")
+	{
+		// deactivate stuff that is not available for imap
+		mtGroup->setEnabled( false );
+		expGroup->setEnabled( false );
+	} else {
+		// activate it
+		mtGroup->setEnabled( true );
+		expGroup->setEnabled( true );
+	}
+}
 
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()

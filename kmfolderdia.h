@@ -11,6 +11,7 @@ class QPushButton;
 class QLineEdit;
 class QListBox;
 class QComboBox;
+class QGroupBox;
 class KMFolder;
 class KMFolderDir;
 template <typename T> class QGuardedPtr;
@@ -30,6 +31,12 @@ protected slots:
   virtual void slotHoldsML( bool );
   virtual void slotExpireFolder( bool );
 
+	/*
+	* is called if the folder dropdown changes
+	* then we update the other items to reflect the capabilities
+	*/
+	void slotUpdateItems( int );
+
 protected:
   QComboBox *fileInFolder;
   QComboBox *mailboxType;
@@ -42,6 +49,7 @@ protected:
   QCheckBox *holdsMailingList, *markAnyMessage, *expireFolder;
   QLineEdit *mailingListPostAddress;
   QComboBox *identity;
+	QGroupBox *expGroup, *mtGroup;
 //   QLineEdit *mailingListAdminAddress;
 
   KIntNumInput *readExpiryTime, *unreadExpiryTime;
