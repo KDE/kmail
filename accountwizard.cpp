@@ -194,7 +194,7 @@ void AccountWizard::setupWelcomePage()
   new QLabel( i18n( "<qt>It seems you have started KMail for the first time. "
                     "You can use this wizard to setup your mail accounts. Just "
                     "enter the connection data that you received from your email provider "
-                    "into the following masks.</qt>" ), mWelcomePage );
+                    "into the following pages.</qt>" ), mWelcomePage );
 
   addPage( mWelcomePage, i18n( "Welcome" ) );
 }
