@@ -8,6 +8,9 @@ while read; do
 	    [Ff][Aa][Ll][Ss][Ee]|0)
 	        echo "LoopOnGotoUnread=0"
 		;;
+	    2)  # we were run already, be nice and don't change anything
+		echo "LoopOnGotoUnread=2"
+		;;
 	    *)  # default
 	        echo "LoopOnGotoUnread=1"
 		;;
