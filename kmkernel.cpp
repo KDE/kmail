@@ -119,6 +119,10 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
+  // this shares the kmailrc parsing too (via KSharedConfig), and reads values from it
+  // so better do it here, than in some code where changing the group of config()
+  // would be unexpected
+  GlobalSettings::self();
 
   mGroupware = new KMGroupware( this );
 
