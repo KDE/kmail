@@ -576,7 +576,7 @@ void KMAcctExpPop::startJob() {
 void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
-    kdDebug() << "stage == List" << endl;
+    kdDebug(5006) << "stage == List" << endl;
     KURL url = getUrl();
     url.setPath(QString("/uidl"));
     job = KIO::get( url.url(), false, false );
@@ -584,7 +584,7 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Uidl;
   }
   else if (stage == Uidl) {
-    kdDebug() << "stage == Uidl" << endl;
+    kdDebug(5006) << "stage == Uidl" << endl;
     mUidlFinished = TRUE;
     stage = Retr;
     numMsgs = idsOfMsgsPendingDownload.count();
@@ -598,10 +598,10 @@ void KMAcctExpPop::slotJobFinished() {
 
   }
   else if (stage == Retr) {
-    kdDebug() << "stage == Retr" << endl;
+    kdDebug(5006) << "stage == Retr" << endl;
     KMMessage *msg = new KMMessage;
     msg->fromString(curMsgData,TRUE);
-    kdDebug() << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
+    kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
 
     msgsAwaitingProcessing.append(msg);
     msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
@@ -611,7 +611,7 @@ void KMAcctExpPop::slotJobFinished() {
     ss->start( 0, true );
   }
   else if (stage == Dele) {
-    kdDebug() << "stage == Dele" << endl;
+    kdDebug(5006) << "stage == Dele" << endl;
     if (idsOfMsgsToDelete.isEmpty())
     {
       KURL url = getUrl();
@@ -626,7 +626,7 @@ void KMAcctExpPop::slotJobFinished() {
     connectJob();
   }
   else if (stage == Quit) {
-    kdDebug() << "stage == Quit" << endl;
+    kdDebug(5006) << "stage == Quit" << endl;
     job = 0L;
     if (slave) KIO::Scheduler::disconnectSlave(slave);
     slave = NULL;
@@ -700,7 +700,7 @@ void KMAcctExpPop::slotGetNextMsg()
     ++indexOfCurrentMsg;
     job = KIO::get( *next, false, false );
     idsOfMsgsPendingDownload.remove( next );
-    kdDebug() << QString("Length of message about to get %1").arg( *nextLen ) << endl;
+    kdDebug(5006) << QString("Length of message about to get %1").arg( *nextLen ) << endl;
     lensOfMsgsPendingDownload.remove( nextLen ); //xxx
   }
   connectJob();
@@ -709,7 +709,7 @@ void KMAcctExpPop::slotGetNextMsg()
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
-    kdDebug() << "Data: <End>" << endl;
+    kdDebug(5006) << "Data: <End>" << endl;
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     return;
@@ -769,7 +769,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
           uidsOfMsgs.remove( uid );
         }
         else
-          kdDebug() << "KMAcctExpPop::slotData synchronization failure." << endl;
+          kdDebug(5006) << "KMAcctExpPop::slotData synchronization failure." << endl;
         url.setPath(QString("/%1").arg(id));
         if (uidsOfSeenMsgs.contains( uid ))
           idsOfMsgsToDelete.append(url.url());

@@ -2491,7 +2491,7 @@ void ConfigureDialog::slotDoApply( bool everything )
 			mMisc.mailCommandEdit->text() );
   }
 
-  kdDebug() << "KMScoringManager::globalScoringManager()->save();" << endl;
+  kdDebug(5006) << "KMScoringManager::globalScoringManager()->save();" << endl;
   KMScoringManager::globalScoringManager()->save();
 
   //

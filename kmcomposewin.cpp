@@ -305,7 +305,7 @@ void KMComposeWin::readConfig(void)
         mDefCharset = "default";
   }
 
-  kdDebug() << "Default charset: " << (const char*)mDefCharset << endl;
+  kdDebug(5006) << "Default charset: " << (const char*)mDefCharset << endl;
 
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
@@ -500,7 +500,7 @@ void KMComposeWin::slotView(void)
    else
    {
      id = 0;
-     kdDebug() << "Something is wrong (Oh, yeah?)" << endl;
+     kdDebug(5006) << "Something is wrong (Oh, yeah?)" << endl;
      return;
    }
 
@@ -548,7 +548,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   mEdtList.clear();
   row = 0;
-  kdDebug() << "KMComposeWin::rethinkFields" << endl;
+  kdDebug(5006) << "KMComposeWin::rethinkFields" << endl;
   if (!fromSlot) allFieldsAction->setChecked(showHeaders==HDR_ALL);
 
   if (!fromSlot) identityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
@@ -933,7 +933,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   //assert(newMsg!=NULL);
   if(!newMsg)
     {
-      kdDebug() << "KMComposeWin::setMsg() : newMsg == NULL!\n" << endl;
+      kdDebug(5006) << "KMComposeWin::setMsg() : newMsg == NULL!\n" << endl;
       return;
     }
   mMsg = newMsg;
@@ -1064,7 +1064,7 @@ bool KMComposeWin::applyChanges(void)
   //assert(mMsg!=NULL);
   if(!mMsg)
   {
-    kdDebug() << "KMComposeWin::applyChanges() : mMsg == NULL!\n" << endl;
+    kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == NULL!\n" << endl;
     return FALSE;
   }
 
@@ -1225,7 +1225,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   if (mCharset == "us-ascii")
     cText = KMMsgBase::toUsAscii(text);
   else if (codec == NULL) {
-    kdDebug() << "Something is wrong and I can not get a codec." << endl;
+    kdDebug(5006) << "Something is wrong and I can not get a codec." << endl;
     cText = text.local8Bit();
   } else
       cText = codec->fromUnicode(text);
@@ -1387,7 +1387,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
   //assert(aLineEdit!=NULL);
   if(!aLineEdit)
     {
-      kdDebug() << "KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n" << endl;
+      kdDebug(5006) << "KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n" << endl;
       return;
     }
   if (dlg.exec()==QDialog::Rejected) return;
@@ -1801,7 +1801,7 @@ void KMComposeWin::slotCut()
     ((QMultiLineEdit*)fw)->cut();
   else if (fw->inherits("KMLineEdit"))
     ((KMLineEdit*)fw)->cut();
-  else kdDebug() << "wrong focus widget" << endl;
+  else kdDebug(5006) << "wrong focus widget" << endl;
 }
 
 
@@ -2124,7 +2124,7 @@ void KMComposeWin::slotSpellcheck()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone()
 {
-  kdDebug() << "spell check complete" << endl;
+  kdDebug(5006) << "spell check complete" << endl;
   mSpellCheckInProgress=FALSE;
   statusBar()->changeItem(i18n("Spellcheck complete."),0);
 
@@ -2515,7 +2515,7 @@ void KMLineEdit::slotCompletion()
     if ( mode != KGlobalSettings::CompletionNone )
         match = s_completion->makeCompletion( s );
 
-    // kdDebug() << "** completion for: " << s << " : " << match << endl;
+    // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
 
     switch ( mode )
     {

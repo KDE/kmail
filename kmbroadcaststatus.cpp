@@ -111,7 +111,7 @@ void KMLittleProgressDlg::slotEnable( bool enabled )
 {
   if (enabled) {
     mode = Progress;
-    kdDebug() << "enable progress" << endl;
+    kdDebug(5006) << "enable progress" << endl;
   }
   else {
     mode = None;

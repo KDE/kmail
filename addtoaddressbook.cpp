@@ -107,7 +107,7 @@ void AddToKabDialog::addToEntry()
   // ----- get the selected entries key:
   if(list->currentItem()<0)
     {
-      kdDebug() << "AddToKabDialog::addToEntry: called, but no selection." << endl;
+      kdDebug(5006) << "AddToKabDialog::addToEntry: called, but no selection." << endl;
       accept(); // this should not return
       return;
     }
@@ -123,10 +123,10 @@ void AddToKabDialog::addToEntry()
 	  if(api->addressbook()->change(key, entry)
 	     ==AddressBook::NoError)
 	    {
-	      kdDebug() << "AddToKabDialog::addToEntry: changes done." << endl;
+	      kdDebug(5006) << "AddToKabDialog::addToEntry: changes done." << endl;
 	      if(api->save(true)==AddressBook::NoError)
 		{
-		  kdDebug() << "AddToKabDialog::addToEntry: " << endl;
+		  kdDebug(5006) << "AddToKabDialog::addToEntry: " << endl;
 		} else {
 		  KMessageBox::information
 		    (this,
@@ -206,10 +206,10 @@ void AddToKabDialog::newEntry()
       entry.emails.append(address);
       if(api->add(entry, dummy)==AddressBook::NoError)
 	{
-	  kdDebug() << "AddToKabDialog::newEntry: entry added." << endl;
+	  kdDebug(5006) << "AddToKabDialog::newEntry: entry added." << endl;
 	  if(api->save(true)==AddressBook::NoError)
 	    {
-	      kdDebug() << "AddToKabDialog::newEntry: " << endl;
+	      kdDebug(5006) << "AddToKabDialog::newEntry: " << endl;
 	      accept();
 	    } else {
 	      KMessageBox::information

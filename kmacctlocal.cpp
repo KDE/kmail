@@ -140,7 +140,7 @@ void KMAcctLocal::processNewMail(bool)
   }
 
   if (mailFolder.isReadOnly()) { // mailFolder is locked
-    kdDebug() << "mailFolder could not be locked" << endl;
+    kdDebug(5006) << "mailFolder could not be locked" << endl;
     mailFolder.close();
     emit finishedCheck(hasNewMail);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));

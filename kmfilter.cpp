@@ -73,7 +73,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   QListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; !stopIt && it.current() ; ++it ) {
 
-    kdDebug() << "####### KMFilter::process: going to apply action "
+    kdDebug(5006) << "####### KMFilter::process: going to apply action "
 	      << (*it)->label() << " \"" << (*it)->argsAsString()
 	      << "\"" << endl;
 
@@ -88,7 +88,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
       break;
     case KMFilterAction::Finished:
       // Message saved in a folder
-      kdDebug() << "got result Finished" << endl;
+      kdDebug(5006) << "got result Finished" << endl;
       status = MsgExpropriated;
     default:
       break;

@@ -40,7 +40,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
 {
   mFolder = aFolder;
-  kdDebug()<<"KMFolderDialog::KMFolderDialog()\n";
+  kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()\n";
 
   QFrame *page = plainPage();
 
@@ -170,7 +170,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       }
   }
 
-  kdDebug()<<"Exiting KMFolderDialog::KMFolderDialog()\n";
+  kdDebug(5006)<<"Exiting KMFolderDialog::KMFolderDialog()\n";
 }
 
 

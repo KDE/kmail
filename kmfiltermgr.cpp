@@ -47,7 +47,7 @@ void KMFilterMgr::readConfig(void)
     filter = new KMFilter(config);
     filter->purify();
     if ( filter->isEmpty() ) {
-      kdDebug() << "KMFilter::readConfig: filter\n" << filter->asString()
+      kdDebug(5006) << "KMFilter::readConfig: filter\n" << filter->asString()
 		<< "is empty!" << endl;
       delete filter;
     } else
@@ -85,7 +85,7 @@ void KMFilterMgr::writeConfig(bool withSync)
 int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 {
   if (!aSet) {
-    kdDebug() << "KMFilterMgr: process() called with not filter set selected"
+    kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
 	      << endl;
     return 1;
   }
@@ -193,6 +193,6 @@ void KMFilterMgr::dump(void)
   QListIterator<KMFilter> it(*this);
   for ( it.toFirst() ; it.current() ; ++it )
   {
-    kdDebug() << (*it)->asString() << endl;
+    kdDebug(5006) << (*it)->asString() << endl;
   }
 }

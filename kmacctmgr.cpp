@@ -138,7 +138,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
   checking = true;
 
-  kdDebug() << "checking mail, server busy" << endl;
+  kdDebug(5006) << "checking mail, server busy" << endl;
   kernel->serverReady (false);
   lastAccountChecked = 0;
 
@@ -163,7 +163,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 
   if (mAcctChecking->isEmpty()) {
     kernel->filterMgr()->cleanup();
-    kdDebug() << "checked mail, server ready" << endl;
+    kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
     checking = false;
     emit checkedMail(newMailArrived);
@@ -187,7 +187,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       processNextCheck(false);
     }
 
-  kdDebug() << "processing next mail check, server busy" << endl;
+  kdDebug(5006) << "processing next mail check, server busy" << endl;
 
   curAccount->processNewMail(interactive);
 }
@@ -297,7 +297,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 
   if (!cur) {
     kernel->filterMgr()->cleanup();
-    kdDebug() << "checked mail, server ready" << endl;
+    kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
     checking = false;
     emit checkedMail(newMailArrived);
@@ -383,7 +383,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   checking = true;
 
-  kdDebug() << "checking mail, server busy" << endl;
+  kdDebug(5006) << "checking mail, server busy" << endl;
   kernel->serverReady (false);
 
   mAccountIt->toLast();

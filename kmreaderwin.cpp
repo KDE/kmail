@@ -391,13 +391,13 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
-      kdDebug() << aMsg->subject() << " " << aMsg->fromStrip() << endl;
+      kdDebug(5006) << aMsg->subject() << " " << aMsg->fromStrip() << endl;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   //if (!force && aMsg && mMsg == aMsg)
   //  return;
 
-  kdDebug() << "Not equal" << endl;
+  kdDebug(5006) << "Not equal" << endl;
 
   mMsg = aMsg;
   if (mMsg) mMsg->setCodec(mCodec);
@@ -626,7 +626,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
         if (vc) {
           delete vc;
-          kdDebug() << "FOUND A VALID VCARD" << endl;
+          kdDebug(5006) << "FOUND A VALID VCARD" << endl;
           vcnum = j;
           break;
         }
@@ -643,7 +643,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     // text/html
     if (type.find("multipart/alternative") != -1 && numParts == 2)
     {
-      kdDebug() << "Alternative message, type: " << type.data() << endl;
+      kdDebug(5006) << "Alternative message, type: " << type.data() << endl;
       //Now: Only two attachments one of them is html
       for (i=0; i<2; i++)                   // count parts...
       {
@@ -678,9 +678,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       type = msgPart.typeStr();
       subtype = msgPart.subtypeStr();
       contDisp = msgPart.contentDisposition();
-      kdDebug() << "type: " << type.data() << endl;
-      kdDebug() << "subtye: " << subtype.data() << endl;
-      kdDebug() << "contDisp " << contDisp.data() << endl;
+      kdDebug(5006) << "type: " << type.data() << endl;
+      kdDebug(5006) << "subtye: " << subtype.data() << endl;
+      kdDebug(5006) << "contDisp " << contDisp.data() << endl;
 
       if (i <= 0) asIcon = FALSE;
       else switch (mAttachmentStyle)
@@ -860,7 +860,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   default:
-    kdDebug() << "Unsupported header style " << mHeaderStyle << endl;
+    kdDebug(5006) << "Unsupported header style " << mHeaderStyle << endl;
   }
   mViewer->write("<br>\n");
 }
@@ -1044,11 +1044,11 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   QString fileName;
 
   if(aMsgPart == NULL) {
-    kdDebug() << "writePartIcon: aMsgPart == NULL\n" << endl;
+    kdDebug(5006) << "writePartIcon: aMsgPart == NULL\n" << endl;
     return;
   }
 
-  kdDebug() << "writePartIcon: PartNum: " << aPartNum << endl;
+  kdDebug(5006) << "writePartIcon: PartNum: " << aPartNum << endl;
 
   comment = aMsgPart->contentDescription();
 
@@ -1610,7 +1610,7 @@ void KMReaderWin::slotAtmOpen()
       openhandler->displayOpenWithDialog(lst);
     }
   } else {					// Cancel
-    kdDebug() << "Canceled opening attachment" << endl;
+    kdDebug(5006) << "Canceled opening attachment" << endl;
   }
 
 }

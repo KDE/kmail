@@ -49,7 +49,7 @@ KMKernel *KMKernel::mySelf = 0;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent, name),  DCOPObject("KMailIface")
 {
-  //kdDebug() << "KMKernel::KMKernel" << endl;
+  //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
   new KMpgpWrap();
 }
@@ -65,7 +65,7 @@ KMKernel::~KMKernel ()
     it = mPutJobs.begin();
   }
   mySelf = 0;
-  kdDebug() << "KMKernel::~KMKernel" << endl;
+  kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
 
 
@@ -74,7 +74,7 @@ KMKernel::~KMKernel ()
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won´t show!!
 {
-  kdDebug() << "KMKernel::checkMail called" << endl;
+  kdDebug(5006) << "KMKernel::checkMail called" << endl;
   KMMainWin *mWin = 0;
   KMainWindow *kmWin = 0;
 
@@ -95,7 +95,7 @@ void KMKernel::openReader()
 {
   KMMainWin *mWin = 0;
   KMainWindow *ktmw = 0;
-  kdDebug() << "KMKernel::openReader called" << endl;
+  kdDebug(5006) << "KMKernel::openReader called" << endl;
 
   if (KMainWindow::memberList)
     for (ktmw = KMainWindow::memberList->first(); ktmw;
@@ -120,7 +120,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const KURL &messageFile,
 			    const KURL &attachURL)
 {
-  kdDebug() << "KMKernel::openComposer called" << endl;
+  kdDebug(5006) << "KMKernel::openComposer called" << endl;
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
@@ -144,34 +144,34 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
 int KMKernel::setBody (int /*composerId*/, QString /*body*/)
 {
-  kdDebug() << "KMKernel::setBody called" << endl;
+  kdDebug(5006) << "KMKernel::setBody called" << endl;
   return 1;
 }
 
 int KMKernel::addAttachment(int /*composerId*/, KURL /*url*/,
                             QString /*comment*/)
 {
-  kdDebug() << "KMKernel::addAttachment called" << endl;
+  kdDebug(5006) << "KMKernel::addAttachment called" << endl;
   return 1;
 }
 
 int KMKernel::send(int /*composerId*/, int /*when*/)
 {
-  kdDebug() << "KMKernel::send called" << endl;
+  kdDebug(5006) << "KMKernel::send called" << endl;
   return 1;
 }
 
 int KMKernel::ready()
 {
-  kdDebug() << "KMKernel::ready called" << endl;
+  kdDebug(5006) << "KMKernel::ready called" << endl;
   return 1;
 }
 
 void KMKernel::compactAllFolders ()
 {
-  kdDebug() << "KMKernel::compactAllFolders called" << endl;
+  kdDebug(5006) << "KMKernel::compactAllFolders called" << endl;
   the_folderMgr->compactAll();
-  kdDebug() << "KMKernel::compactAllFolders finished" << endl;
+  kdDebug(5006) << "KMKernel::compactAllFolders finished" << endl;
 }
 
 int KMKernel::dcopAddMessage(const QString & foldername,const QString & msgUrlString)
@@ -187,7 +187,7 @@ static QStringList *msgIds=NULL;
 static QString      lastFolder="";
 bool readFolderMsgIds=false;
 
-  //kdDebug() << "KMKernel::dcopAddMessage called" << endl;
+  //kdDebug(5006) << "KMKernel::dcopAddMessage called" << endl;
 
   if (foldername!=lastFolder) {
     if (msgIds!=NULL) { delete msgIds; }
@@ -441,7 +441,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
 void KMKernel::init()
 {
-  kdDebug() << "entering KMKernel::init()" << endl;
+  kdDebug(5006) << "entering KMKernel::init()" << endl;
   QCString  acctPath, foldersPath;
   KConfig* cfg;
 
@@ -451,7 +451,7 @@ void KMKernel::init()
 
   the_kbp = new KBusyPtr;
   cfg = kapp->config();
-  //kdDebug() << "1" << endl;
+  //kdDebug(5006) << "1" << endl;
 
   QDir dir;
   QString d = locateLocal("data", "kmail/");
@@ -503,7 +503,7 @@ void KMKernel::init()
     }
   }
   // filterMgr->dump();
-  kdDebug() << "exiting KMKernel::init()" << endl;
+  kdDebug(5006) << "exiting KMKernel::init()" << endl;
 }
 
 bool KMKernel::doSessionManagement()
@@ -553,10 +553,10 @@ void KMKernel::cleanup(void)
       } else if (age_unit == 2) { // day
         age = old_age;
       } else {
-        kdDebug() << "Unknown unit for mail age : " << old_age << endl;
+        kdDebug(5006) << "Unknown unit for mail age : " << old_age << endl;
         age = old_age;
       }
-      kdDebug() << "Removing mail older than " << age << " days" << endl;
+      kdDebug(5006) << "Removing mail older than " << age << " days" << endl;
 
 	  the_trashFolder->expungeOldMsg( age );
     }
@@ -568,7 +568,7 @@ void KMKernel::cleanup(void)
 
     the_trashFolder->close();
     the_trashFolder->compact();
-    kdDebug() << "trash clean-up done." << endl;
+    kdDebug(5006) << "trash clean-up done." << endl;
   }
 
 
@@ -593,7 +593,7 @@ void KMKernel::cleanup(void)
   KMRecentAddresses::self()->save( KGlobal::config() );
   kapp->config()->sync();
   //--- Sven's save attachments to /tmp start ---
-  //kdDebug() << "cleaned" << endl;
+  //kdDebug(5006) << "cleaned" << endl;
   QString cmd;
   // This is a dir with attachments and it is not critical if they are
   // left behind.
@@ -661,17 +661,17 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
   switch (aType)
   {
   case QtDebugMsg:
-    kdDebug() << msg;
+    kdDebug(5006) << msg;
     break;
 
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)kapp->name(), msg.data());
-    kdDebug() << msg;
+    kdDebug(5006) << msg;
     break;
 
   case QtFatalMsg:
     ungrabPtrKb();
-    kdDebug() << appName << " " << i18n("fatal error") << " " << msg.data() << endl;
+    kdDebug(5006) << appName << " " << i18n("fatal error") << " " << msg.data() << endl;
     KMessageBox::error(0, aMsg);
     abort();
   }
@@ -757,11 +757,11 @@ KabAPI* KMKernel::KABaddrBook()
   CHECK_PTR(the_KAB_addrBook);
   if(KABaddrBook()->init()!=AddressBook::NoError)
   { // this connects to the default address book and opens it:
-    kdDebug() << "Error initializing the connection to your KAB address book." << endl;
+    kdDebug(5006) << "Error initializing the connection to your KAB address book." << endl;
     the_KAB_addrBook=0;
   }
   else {
-    kdDebug() << "KMKernel::init: KabApi initialized." << endl;
+    kdDebug(5006) << "KMKernel::init: KabApi initialized." << endl;
   }
 
   return the_KAB_addrBook;

@@ -984,7 +984,7 @@ void KMFolderTree::cleanupConfigFile()
         original = FALSE;
       } else {
         config.deleteGroup(*grpIt, TRUE);
-kdDebug() << "Deleting information about folder " << wholeName << endl;
+kdDebug(5006) << "Deleting information about folder " << wholeName << endl;
         break;
       }
     }

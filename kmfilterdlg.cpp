@@ -180,9 +180,9 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
   assert( aFilter );
   int a=0;
   
-  kdDebug() << "apply on inbound == "
+  kdDebug(5006) << "apply on inbound == "
 	    << aFilter->applyOnInbound() << endl;
-  kdDebug() << "apply on outbound == "
+  kdDebug(5006) << "apply on outbound == "
 	    << aFilter->applyOnOutbound() << endl;
   
   if ( aFilter->applyOnInbound() )
@@ -221,7 +221,7 @@ void KMFilterDlg::slotApplicabilityChanged( int aOption )
   if ( !mFilter )
     return;
 
-  kdDebug() << "KMFilterDlg: setting applicability to "
+  kdDebug(5006) << "KMFilterDlg: setting applicability to "
 	    << aOption << endl;
   
   mFilter->setApplyOnInbound( aOption == 0 || aOption == 2 );
@@ -410,7 +410,7 @@ void KMFilterListBox::slotNew()
 void KMFilterListBox::slotDelete()
 {
   if ( mIdxSelItem < 0 ) {
-    kdDebug() << "KMFilterListBox::slotDelete called while no filter is selected, ignoring." << endl;
+    kdDebug(5006) << "KMFilterListBox::slotDelete called while no filter is selected, ignoring." << endl;
     return;
   }
   
@@ -444,11 +444,11 @@ void KMFilterListBox::slotDelete()
 void KMFilterListBox::slotUp()
 {
   if ( mIdxSelItem < 0 ) {
-    kdDebug() << "KMFilterListBox::slotUp called while no filter is selected, ignoring." << endl;
+    kdDebug(5006) << "KMFilterListBox::slotUp called while no filter is selected, ignoring." << endl;
     return;
   }
   if ( mIdxSelItem == 0 ) {
-    kdDebug() << "KMFilterListBox::slotUp called while the _topmost_ filter is selected, ignoring." << endl;
+    kdDebug(5006) << "KMFilterListBox::slotUp called while the _topmost_ filter is selected, ignoring." << endl;
     return;
   }
 
@@ -459,11 +459,11 @@ void KMFilterListBox::slotUp()
 void KMFilterListBox::slotDown()
 {
   if ( mIdxSelItem < 0 ) {
-    kdDebug() << "KMFilterListBox::slotDown called while no filter is selected, ignoring." << endl;
+    kdDebug(5006) << "KMFilterListBox::slotDown called while no filter is selected, ignoring." << endl;
     return;
   }
   if ( mIdxSelItem == (int)mListBox->count() - 1 ) {
-    kdDebug() << "KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring." << endl;
+    kdDebug(5006) << "KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring." << endl;
     return;
   }
   
@@ -474,7 +474,7 @@ void KMFilterListBox::slotDown()
 void KMFilterListBox::slotRename()
 {
   if ( mIdxSelItem < 0 ) {
-    kdDebug() << "KMFilterListBox::slotRename called while no filter is selected, ignoring." << endl;
+    kdDebug(5006) << "KMFilterListBox::slotRename called while no filter is selected, ignoring." << endl;
     return;
   }
 
@@ -725,7 +725,7 @@ void KMFilterActionWidgetLister::setActionList( QList<KMFilterAction> *aList )
 
   int superfluousItems = (int)mActionList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
-    kdDebug() << "KMFilterActionWidgetLister: Clipping action list to "
+    kdDebug(5006) << "KMFilterActionWidgetLister: Clipping action list to "
 	      << mMaxWidgets << " items!" << endl;
 
     for ( ; superfluousItems ; superfluousItems-- )

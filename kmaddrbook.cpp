@@ -267,12 +267,12 @@ bool KabBridge::add(QString address, KabKey &kabkey)
 
   if (kernel->KABaddrBook()->addressbook()->add( entry, kabkey, true ) !=
       AddressBook::NoError) {
-    kdDebug() << "Error occurred trying to update database: operation insert.0" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: operation insert.0" << endl;
     return false;
   }
   if (kernel->KABaddrBook()->addressbook()->save("", true) !=
       AddressBook::NoError) {
-    kdDebug() << "Error occurred trying to update database: opeation insert.1" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: opeation insert.1" << endl;
     return false;
   }
   return true;
@@ -282,13 +282,13 @@ bool KabBridge::remove(KabKey kabKey)
 {
   if (kernel->KABaddrBook()->addressbook()->remove( kabKey ) !=
       AddressBook::NoError) {
-    kdDebug() << "Error occurred trying to update database: operation remove.0" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: operation remove.0" << endl;
     return false;
   }
 
   if (kernel->KABaddrBook()->addressbook()->save("", true) !=
       AddressBook::NoError) {
-    kdDebug() << "Error occurred trying to update database: operation remove.1" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: operation remove.1" << endl;
     return false;
   }
   return true;
@@ -299,7 +299,7 @@ bool KabBridge::replace(QString address, KabKey kabKey)
   AddressBook::Entry old;
   if (AddressBook::NoError !=
       kernel->KABaddrBook()->addressbook()->getEntry( kabKey, old )) {
-    kdDebug() << "Error occurred trying to update database: operation replace.0" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: operation replace.0" << endl;
     return false;
   }
 
@@ -310,13 +310,13 @@ bool KabBridge::replace(QString address, KabKey kabKey)
 
   if (kernel->KABaddrBook()->addressbook()->change( kabKey, old ) !=
       AddressBook::NoError) {
-    kdDebug() << "Error occurred trying to update database: operation replace.1" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: operation replace.1" << endl;
     return false;
   }
 
   if (kernel->KABaddrBook()->addressbook()->save("", true) !=
       AddressBook::NoError) {
-    kdDebug() << "Error occurred trying to update database: operation replace.2" << endl;
+    kdDebug(5006) << "Error occurred trying to update database: operation replace.2" << endl;
     return false;
   }
   return true;
@@ -365,7 +365,7 @@ void KMAddrBookExternal::launch(QWidget *parent) {
     KRun::runCommand("kaddressbook");
     break;
   default:
-    kdDebug() << "Unknown address book type" << endl;
+    kdDebug(5006) << "Unknown address book type" << endl;
   }
 }
 

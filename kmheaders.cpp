@@ -393,7 +393,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   setLineWidth(0);
 
   if (!mScoringManager) {
-    kdDebug() << "KMHeaders::KMHeaders() : no globalScoringManager"
+    kdDebug(5006) << "KMHeaders::KMHeaders() : no globalScoringManager"
               << endl;
   }
 
@@ -1206,7 +1206,7 @@ void KMHeaders::forwardMsg ()
       msgPartText = i18n("\nThis is a MIME digest forward.  The content of the"
                          " message is contained in the attachment(s).\n\n\n"
                          "--\n");
-      kdDebug() << "Doing a mime digest forward\n" << endl;
+      kdDebug(5006) << "Doing a mime digest forward\n" << endl;
       // iterate through all the messages to be forwarded
       for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
         int idx = mFolder->find(mb);
@@ -1222,7 +1222,7 @@ void KMHeaders::forwardMsg ()
         msgPartText += "\nContent-Type: MESSAGE/RFC822";
         msgPartText += QString("; CHARSET=%1").arg(thisMsg->charset());
         msgPartText += "\n";
-        kdDebug() << "Adding message ID " << thisMsg->id() << "\n" << endl;
+        kdDebug(5006) << "Adding message ID " << thisMsg->id() << "\n" << endl;
         DwHeaders dwh;
         dwh.MessageId().CreateDefault();
         msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
@@ -1237,7 +1237,7 @@ void KMHeaders::forwardMsg ()
         msgPartText += "\n";     // eot
         msgCnt++;
       }
-      kdDebug() << "Done adding messages to the digest\n" << endl;
+      kdDebug(5006) << "Done adding messages to the digest\n" << endl;
       msgPart->setTypeStr("MULTIPART");
       msgPart->setSubtypeStr(QString("Digest; boundary=\"%1\"").arg(fwdMsg->mMsg->Headers().ContentType().Boundary().c_str()));
       msgPart->setName("unnamed");
@@ -1245,7 +1245,7 @@ void KMHeaders::forwardMsg ()
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
       // THIS HAS TO BE AFTER setCte()!!!!
       msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
-      kdDebug() << "Launching composer window\n" << endl;
+      kdDebug(5006) << "Launching composer window\n" << endl;
       kernel->kbp()->busy();
       win = new KMComposeWin(fwdMsg, id);
       win->addAttach(msgPart);
@@ -1339,11 +1339,11 @@ void KMHeaders::forwardAttachedMsg ()
   fwdMsg->initHeader(id);
   fwdMsg->setAutomaticFields(true);
 
-  kdDebug() << "Launching composer window\n" << endl;
+  kdDebug(5006) << "Launching composer window\n" << endl;
   kernel->kbp()->busy();
   win = new KMComposeWin(fwdMsg, id);
 
-  kdDebug() << "Doing forward as attachment\n" << endl;
+  kdDebug(5006) << "Doing forward as attachment\n" << endl;
   // iterate through all the messages to be forwarded
   for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
     int idx = mFolder->find(mb);
@@ -1556,7 +1556,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   emit selected( 0 );
   if (curMsg) {
-    kdDebug() << "new message should be current!" << endl;
+    kdDebug(5006) << "new message should be current!" << endl;
     setSelected( currentItem(), TRUE );
     setCurrentMsg( mFolder->find( curMsg ) );
     highlightMessage( currentItem(), true);
@@ -2146,7 +2146,7 @@ KMHeaders::messageScore(int msgId)
   if (!mScoringManager) return 0;
 
   if ( !mPaintInfo.showScore ) {
-    kdDebug() << "KMFolder::scoreMessages() : Skipping this group - no rules for it"
+    kdDebug(5006) << "KMFolder::scoreMessages() : Skipping this group - no rules for it"
               << endl;
     return 0;
   }
@@ -2156,7 +2156,7 @@ KMHeaders::messageScore(int msgId)
   folder()->getMsgString(msgId, cStr);
 
   if (!cStr) {
-    kdDebug() << "KMFolder::scoreMessages() : Skipping msg" << endl;
+    kdDebug(5006) << "KMFolder::scoreMessages() : Skipping msg" << endl;
     return 0;
   }
 
@@ -2627,9 +2627,9 @@ bool KMHeaders::writeSortOrder()
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(sortFile);
-	kdDebug() << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
-	kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
-	kdDebug() << __FILE__ << ":" << __LINE__ << endl;
+	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
+	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
+	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);
     }
     fclose(sortStream);
@@ -2661,9 +2661,9 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(sortFile);
-	kdDebug() << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
-	kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
-	kdDebug() << __FILE__ << ":" << __LINE__ << endl;
+	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
+	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
+	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);
     }
     fclose(sortStream);
@@ -2807,7 +2807,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    qDebug( "foo sorted_count %d, discovered_count %d, foler count %d", sorted_count, discovered_count, mFolder->count() );
 
             if (sorted_count + discovered_count > mFolder->count()) { //sanity check
-		kdDebug() << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+		kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 		fclose(sortStream);
 		sortStream = NULL;
 	    }
@@ -3044,9 +3044,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(sortFile);
-	kdDebug() << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
-	kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
-	kdDebug() << __FILE__ << ":" << __LINE__ << endl;
+	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
+	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
+	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);
     }
     if(sortStream)

@@ -124,7 +124,7 @@ bool KBusyPtr :: loadBitmap (QBitmap& bm, const QString& filename)
     f = locate("data", "kmail/pics/" + filename);
   }
   rc = bm.load(f);
-  if (!rc) kdDebug() << "ERROR: cannot load bitmap %s\n" << f << endl;
+  if (!rc) kdDebug(5006) << "ERROR: cannot load bitmap %s\n" << f << endl;
   return rc;
 }
 

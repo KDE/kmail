@@ -96,7 +96,7 @@ KMScoringManager::setMainWin(QObject *parent)
 {
   mMainWin = dynamic_cast<KMMainWin*>(parent);
   if (!mMainWin) {
-    kdDebug() << "KMScoringManager::setMainWin() : mMainWin == 0" << endl;
+    kdDebug(5006) << "KMScoringManager::setMainWin() : mMainWin == 0" << endl;
   }
 }
 

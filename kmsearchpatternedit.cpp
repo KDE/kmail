@@ -214,7 +214,7 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule> *aList )
 
   int superfluousItems = (int)mRuleList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
-    kdDebug() << "KMSearchRuleWidgetLister: Clipping rule list to "
+    kdDebug(5006) << "KMSearchRuleWidgetLister: Clipping rule list to "
 	      << mMaxWidgets << " items!" << endl;
 
     for ( ; superfluousItems ; superfluousItems-- )
@@ -327,7 +327,7 @@ void KMSearchPatternEdit::initLayout()
     connect( srw, SIGNAL(contentsChanged(const QString &)),
 	     this, SLOT(slotAutoNameHack()) );
   } else
-    kdDebug() << "KMSearchPatternEdit: no first KMSearchRuleWidget, though slotClear() has been called!" << endl;
+    kdDebug(5006) << "KMSearchPatternEdit: no first KMSearchRuleWidget, though slotClear() has been called!" << endl;
 }
 
 void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )

@@ -695,7 +695,7 @@ void KMMainWin::slotCompose()
       msg->initHeader( mFolder->identity() );
 
       if (mFolder->isMailingList()) {
-          kdDebug()<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
+          kdDebug(5006)<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;;
 
           msg->setTo(mFolder->mailingListPostAddress());
       }
@@ -787,7 +787,7 @@ void KMMainWin::slotRemoveFolder()
   if (!mFolder) return;
   if (mFolder->isSystemFolder() || strcmp(mFolder->type(),"plain")!=0)
   {
-    kdDebug() << "Cannot remove a\nsystem folder." << endl;
+    kdDebug(5006) << "Cannot remove a\nsystem folder." << endl;
     return;
   }
 
@@ -2045,7 +2045,7 @@ void KMMainWin::slotUpdateMessageMenu()
 
 void KMMainWin::updateMessageMenu()
 {
-    kdDebug() << "updateMessageMenu\n";
+    kdDebug(5006) << "updateMessageMenu\n";
 
     mMenuToFolder.clear();
     folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );

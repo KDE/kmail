@@ -346,7 +346,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       if ( tf->status() != 0 ) {
 	tf->close();
 	delete tf;
-	kdDebug() << "KMFilterActionWithCommand: Could not create temp file!" << endl;
+	kdDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
 	return QString::null;
       }
       tf->setAutoDelete(TRUE);
@@ -1017,7 +1017,7 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   if ( mFolder->moveMsg(msg) == 0 )
     return Finished; // ok, added
   else {
-    kdDebug() << "KMfilterAction - couldn't move msg" << endl;
+    kdDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
     return CriticalError; // critical error: couldn't add
   }
 }
@@ -1055,7 +1055,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   msg->setTo( mParameter );
 
   if ( !kernel->msgSender()->send(msg) ) {
-    kdDebug() << "KMFilterAction: could not forward message (sending failed)" << endl;
+    kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
   return GoOn;
@@ -1094,7 +1094,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
   msg->setTo( mParameter );
 
   if ( !kernel->msgSender()->send(msg) ) {
-    kdDebug() << "KMFilterAction: could not redirect message (sending failed)" << endl;
+    kdDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
   return GoOn;

@@ -197,7 +197,7 @@ int KMFolder::open()
   mStream = fopen(location(), "r+"); // messages file
   if (!mStream)
   {
-    kdDebug() << "Cannot open folder `" << (const char*)location() << "': " << strerror(errno) << endl;
+    kdDebug(5006) << "Cannot open folder `" << (const char*)location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
     return errno;
   }
@@ -245,11 +245,11 @@ int KMFolder::create()
   assert(name() != "");
   assert(mOpenCount == 0);
 
-  kdDebug() << "Creating folder " << endl;
+  kdDebug(5006) << "Creating folder " << endl;
   if (access(location(), F_OK) == 0) {
-    kdDebug() << "KMFolder::create call to access function failed." << endl;
-    kdDebug() << "File:: " << endl;
-    kdDebug() << "Error " << endl;
+    kdDebug(5006) << "KMFolder::create call to access function failed." << endl;
+    kdDebug(5006) << "File:: " << endl;
+    kdDebug(5006) << "Error " << endl;
     return EEXIST;
   }
 
@@ -341,7 +341,7 @@ int KMFolder::lock()
 
       if (rc < 0)
       {
-	kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+	kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
 		  << strerror(errno) << " (" << errno << ")" << endl;
 	return errno;
       }
@@ -352,7 +352,7 @@ int KMFolder::lock()
 
 	if (rc < 0)
 	{
-          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
                     << strerror(errno) << " (" << errno << ")" << endl;
 	  rc = errno;
 	  fl.l_type = F_UNLCK;
@@ -372,7 +372,7 @@ int KMFolder::lock()
       rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
-	kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+	kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
@@ -382,7 +382,7 @@ int KMFolder::lock()
         rc = system( cmd_str.latin1() );
         if( rc != 0 )
         {
-          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
           return rc;
         }
@@ -394,7 +394,7 @@ int KMFolder::lock()
       rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
-        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+        kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
@@ -404,7 +404,7 @@ int KMFolder::lock()
         rc = system( cmd_str.latin1() );
         if( rc != 0 )
         {
-          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
           return rc;
         }
@@ -416,7 +416,7 @@ int KMFolder::lock()
       rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
-        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+        kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
@@ -426,7 +426,7 @@ int KMFolder::lock()
         rc = system( cmd_str.latin1() );
         if( rc != 0 )
         {
-          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
           return rc;
         }
@@ -563,7 +563,7 @@ int KMFolder::createIndexFromContents()
   whoFieldName = QString(whoField()) + ':'; //unused (sven)
   whoFieldLen = whoFieldName.length();      //unused (sven)
 
-  //kdDebug() << "***whoField: " << //      (const char*)whoFieldName << " (" << whoFieldLen << ")" << endl;
+  //kdDebug(5006) << "***whoField: " << //      (const char*)whoFieldName << " (" << whoFieldLen << ")" << endl;
 
   while (!atEof)
   {
@@ -792,14 +792,14 @@ bool KMFolder::readIndexHeader(int *gv)
       *gv = indexVersion;
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
-	  kdDebug() << "Converting old index file " << (const char*)indexLocation() << " to utf-8" << endl;
+	  kdDebug(5006) << "Converting old index file " << (const char*)indexLocation() << " to utf-8" << endl;
 	  mConvertToUtf8 = TRUE;
       }
       return TRUE;
   } else if (indexVersion == 1505) {
       fseek(mIndexStream, sizeof(char), SEEK_CUR );
   } else if (indexVersion < INDEX_VERSION) {
-      kdDebug() << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
+      kdDebug(5006) << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
       createIndexFromContents();
       return FALSE;
   } else if(indexVersion > INDEX_VERSION) {
@@ -949,7 +949,7 @@ int operator==( KMMsgBase & m1, KMMsgBase & m2 )
 //-----------------------------------------------------------------------------
 int KMFolder::reduceSize( int aSize )
 {
-  kdDebug() << "Reducing folder to size of " << aSize << " Mo" << endl;
+  kdDebug(5006) << "Reducing folder to size of " << aSize << " Mo" << endl;
   QSortedList<KMMsgBase> * slice=0L;
   QList< QSortedList<KMMsgBase> > sliceArr;
   KMMsgBase* mb;
@@ -997,13 +997,13 @@ int KMFolder::reduceSize( int aSize )
     sliceArr.at(sliceIndex)->append( mb );
   }
 
-  //kdDebug() << "Folder size : " << (folderSize/KILO) << " ko" << endl;
+  //kdDebug(5006) << "Folder size : " << (folderSize/KILO) << " ko" << endl;
 
   // Ok, now we have our slices
 
   slice = sliceArr.last();
   while (folderSize > size) {
-    //kdDebug() << "Treating slice " << sliceArr.at()-1 << " Mo : " << slice->count() << endl;
+    //kdDebug(5006) << "Treating slice " << sliceArr.at()-1 << " Mo : " << slice->count() << endl;
     assert( slice );
 
     slice->sort();
@@ -1012,7 +1012,7 @@ int KMFolder::reduceSize( int aSize )
     while( slice->count() > 0 && folderSize > size ) {
       mb = slice->take(0);
       msgSize = mb->msgSize();
-      //kdDebug() << "deleting msg : " << (msgSize / KILO) << " ko - " << mb->subject() << " - " << mb->dateStr();
+      //kdDebug(5006) << "deleting msg : " << (msgSize / KILO) << " ko - " << mb->subject() << " - " << mb->dateStr();
       assert( folderSize >= msgSize );
       folderSize -= msgSize;
       delMsg++;
@@ -1044,7 +1044,7 @@ int KMFolder::expungeOldMsg(int days)
     msgTime = mb->date();
 
     if (msgTime < maxTime) {
-      //kdDebug() << "deleting msg " << i << " : " << mb->subject() << " - " << mb->dateStr(); // << endl;
+      //kdDebug(5006) << "deleting msg " << i << " : " << mb->subject() << " - " << mb->dateStr(); // << endl;
       removeMsg( i );
       msgnb++;
     }
@@ -1068,7 +1068,7 @@ void KMFolder::removeMsg(int idx, bool imapQuiet)
   //assert(idx>=0);
   if(idx < 0)
   {
-    kdDebug() << "KMFolder::removeMsg() : idx < 0\n" << endl;
+    kdDebug(5006) << "KMFolder::removeMsg() : idx < 0\n" << endl;
     return;
   }
   KMMsgBase* mb = mMsgList[idx];
@@ -1324,7 +1324,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   {
     opened = TRUE;
     rc = open();
-    kdDebug() << "addMsg-open: " << rc << endl;
+    kdDebug(5006) << "addMsg-open: " << rc << endl;
     if (rc) return rc;
   }
 
@@ -1390,7 +1390,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   clearerr(mStream);
   if (len <= 0)
   {
-    kdDebug() << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
+    kdDebug(5006) << "Message added to folder `" << name() << "' contains no data. Ignoring it." << endl;
     if (opened) close();
     return 0;
   }
@@ -1431,12 +1431,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 
   error = ferror(mStream);
   if (error) {
-    kdDebug() << "Error: Could not add message to folder (No space left on device?)" << endl;
+    kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
     if (ftell(mStream) > revert) {
-      kdDebug() << "Undoing changes" << endl;
+      kdDebug(5006) << "Undoing changes" << endl;
       truncate( location(), revert );
     }
-    kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
+    kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
     exit(1);
     /* This code is not 100% reliable
     bool busy = kernel->kbp()->isBusy();
@@ -1493,12 +1493,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
     fflush(mIndexStream);
     error = ferror(mIndexStream);
     if (error) {
-      kdDebug() << "Error: Could not add message to folder (No space left on device?)" << endl;
+      kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
-	kdDebug() << "Undoing changes" << endl;
+	kdDebug(5006) << "Undoing changes" << endl;
 	truncate( indexLocation(), revert );
       }
-      kdDebug() << "Abnormally terminating to prevent data loss, now." << endl;
+      kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
       exit(1);
       /* This code may not be 100% reliable
       bool busy = kernel->kbp()->isBusy();
@@ -1661,7 +1661,7 @@ int KMFolder::compact()
 
   if (!needsCompact)
     return 0;
-  kdDebug() << "Compacting " << endl;
+  kdDebug(5006) << "Compacting " << endl;
 
   tempName = path().local8Bit() + "/." + name().local8Bit() + ".compacted";
   mode_t old_umask = umask(077);
@@ -1746,8 +1746,8 @@ int KMFolder::compact()
   else
   {
     close();
-    kdDebug() << "Error occurred while compacting" << endl;
-    kdDebug() << "Compaction aborted." << endl;
+    kdDebug(5006) << "Error occurred while compacting" << endl;
+    kdDebug(5006) << "Compaction aborted." << endl;
   }
 
   if (openCount > 0)

@@ -254,7 +254,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   kapp->processEvents();
   if (aFld->open() != 0)
   {
-    kdDebug() << "Cannot open folder '" << aFld->name() << "'" << endl;
+    kdDebug(5006) << "Cannot open folder '" << aFld->name() << "'" << endl;
     return;
   }
 
@@ -455,7 +455,7 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   if (!fld)
     return;
   // This could goto the wrong folder if the folder list has been modified
-  kdDebug() << "fld " << endl;
+  kdDebug(5006) << "fld " << endl;
 
   mMainWin->slotSelectFolder(fld);
   msg = fld->getMsg(item->text(MSGID_COLUMN).toInt());
@@ -624,7 +624,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
   case NotMatchesRegExp:
     return (value.find(QRegExp(mValue, FALSE)) < 0);
   default:
-    kdDebug() << "KMFldSearchRule::matches: wrong rule func #" << mFunc << endl;
+    kdDebug(5006) << "KMFldSearchRule::matches: wrong rule func #" << mFunc << endl;
     return false;
   }
 }

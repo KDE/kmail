@@ -72,7 +72,7 @@ void KMAccount::setFolder(KMFolder* aFolder)
 {
   if(!aFolder)
     {
-    kdDebug() << "KMAccount::setFolder() : aFolder == NULL" << endl;
+    kdDebug(5006) << "KMAccount::setFolder() : aFolder == NULL" << endl;
     mFolder = NULL;
     return;
     }
@@ -101,7 +101,7 @@ void KMAccount::readConfig(KConfig& config)
       mFolder = folder;
       mFolder->addAccount(this);
     }
-    else kdDebug() << "Cannot find folder `" << folderName << "' for account `" << mName << "'." << endl;
+    else kdDebug(5006) << "Cannot find folder `" << folderName << "' for account `" << mName << "'." << endl;
   }
 }
 
@@ -256,7 +256,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
 
   for (unsigned int i = 0; i < args.count(); i++)
     {
-      //kdDebug() << "KMAccount::runPrecommand: arg " << i << " = " << args[i] << endl;
+      //kdDebug(5006) << "KMAccount::runPrecommand: arg " << i << " = " << args[i] << endl;
       precommandProcess << args[i];
     }
 
@@ -265,7 +265,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
   connect(&precommandProcess, SIGNAL(processExited(KProcess *)),
           &priv, SLOT(precommandExited(KProcess *)));
 
-  kdDebug() << "Running precommand " << precommand << endl;
+  kdDebug(5006) << "Running precommand " << precommand << endl;
   precommandProcess.start( KProcess::NotifyOnExit );
 
   kapp->enter_loop();
@@ -281,7 +281,7 @@ KMAccountPrivate::KMAccountPrivate( QObject *p ) :
 
 void  KMAccountPrivate::precommandExited(KProcess *p)
 {
-    kdDebug() << "precommand exited " << p->exitStatus() << endl;
+    kdDebug(5006) << "precommand exited " << p->exitStatus() << endl;
     kapp->exit_loop();
 }
 

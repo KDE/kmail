@@ -2072,7 +2072,7 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec) const
   edt->setCursorPosition(0, 0);  edt->show();
 
 #else //not ALLOW_GUI
-  kdDebug() << "Message source: " << (aCaption.isEmpty() ? "" : (const char*)aCaption) << "\n" << str << "\n--- end of message ---" << endl;
+  kdDebug(5006) << "Message source: " << (aCaption.isEmpty() ? "" : (const char*)aCaption) << "\n" << str << "\n--- end of message ---" << endl;
 
 #endif
 }

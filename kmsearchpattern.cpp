@@ -37,7 +37,7 @@ static int findInStrList(const char* strList[], const char* str)
   //assert(strList != NULL);
   if(!strList)
     {
-      kdDebug() << "KMFilter::findInStrList() : strList == NULL\n" << endl;
+      kdDebug(5006) << "KMFilter::findInStrList() : strList == NULL\n" << endl;
       return -1; // we return -1 here. Fake unsuccessfull search
     }
 
@@ -277,7 +277,7 @@ void KMSearchPattern::purify()
   it.toLast();
   while ( it.current() )
     if ( (*it)->isEmpty() ) {
-      kdDebug() << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
+      kdDebug(5006) << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
       remove( *it );
     } else {
       --it;
@@ -290,7 +290,7 @@ void KMSearchPattern::readConfig( KConfig *config )
 
   mName = config->readEntry("name");
   if ( !config->hasKey("rules") ) {
-    kdDebug() << "KMSearchPattern::readConfig: found legacy config! Converting." << endl;
+    kdDebug(5006) << "KMSearchPattern::readConfig: found legacy config! Converting." << endl;
     importLegacyConfig(config);
     return;
   }
