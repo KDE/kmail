@@ -1045,7 +1045,10 @@ void MessageComposer::composeInlineOpenPGPMessage( KMMessage& theMessage,
     } else {
       if ( doSign ) { // Sign but don't encrypt
         pgpSignedMsg( body, Kleo::InlineOpenPGPFormat );
-        assert( !mSignature.isNull() ); // if you hit this, check gpg-agent is running, then blame gpgme.
+        if ( mSignature.isNull() ) {
+          mRc = false;
+          return;
+        }
         mOldBodyPart.setBodyEncodedBinary( mSignature );
       } else { // don't sign nor encrypt -> nothing to do
         assert( !body.isNull() );
@@ -1852,6 +1855,10 @@ void MessageComposer::pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageF
   }
 
   mSignature = signature;
+  Q_ASSERT( !mSignature.isNull() ); // if you hit this, check gpg-agent is running, then blame gpgme.
+  if ( mSignature.isNull() ) {
+    KMessageBox::error( mComposeWin, i18n( "The signing operation failed for an unknown reason." ) );
+  }
 }
 
 //-----------------------------------------------------------------------------
