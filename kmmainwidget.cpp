@@ -3061,8 +3061,25 @@ void KMMainWidget::statusMsg(const QString& message)
     return mainKMWin->statusMsg( message );
 
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
-  if (mainWin && mainWin->statusBar())
-    mainWin->statusBar()->changeItem( message, 1 );
+  if ( mainWin && mainWin->statusBar() ) {
+    // FIXME FIXME FIXME FIXME FIXME
+    // The following makes the status bar (and thus the window) grow so that
+    // the full message fits. What an insane behavior! In KMail we know
+    // the size of the text field in the status bar and can therefore
+    // use KStringHandler::rPixelSqueeze() to make the text fit into the
+    // status bar (cf. KMMainWin::displayStatusMsg()). But in Kontact
+    // we don't know the size because this stupid KStatusBar is not able
+    // to return the widget corresponding to id = 1.
+    // I guess we have to give the status message to Kontact and let Kontact
+    // take care of displaying the appropriately squeezed message.
+    //mainWin->statusBar()->changeItem( message, 1 );
+
+    // the following makes the status bar wobble in Kontact (try it for
+    // yourself if you don't understand what I mean). But wobbling is less
+    // annoying than an infinitely growing window.
+    mainWin->statusBar()->message( message );
+    // FIXME FIXME FIXME FIXME FIXME
+  }
 }
 
 
