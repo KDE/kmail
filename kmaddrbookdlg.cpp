@@ -12,10 +12,11 @@
 #include <qvbox.h>
 #include <qpushbutton.h>
 
-#include <kglobal.h>
+#include <kapplication.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, const QString& aCap):
@@ -48,27 +49,30 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, const QString& aCap):
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::~KMAddrBookSelDlg()
 {
+  saveConfig();
 }
 
 void KMAddrBookSelDlg::readConfig()
 {
-  KConfig *config = KGlobal::config();
-  KConfigGroupSaver cs( config, "General" );
-  mCheckBox->setChecked( config->readBoolEntry("Show recent addresses in Addresses-dialog", false) );
+  KConfigGroup general( kapp->config(), "General" );
+  mCheckBox->setChecked( general.readBoolEntry("Show recent addresses in Addresses-dialog", false) );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
+  if ( geometry.hasKey( "AddressBook dialog size" ) )
+    resize( geometry.readSizeEntry( "AddressBook dialog size" ) );
 }
 
 void KMAddrBookSelDlg::saveConfig()
 {
-  KConfig *config = KGlobal::config();
-  KConfigGroupSaver cs( config, "General" );
-  config->writeEntry( "Show recent addresses in Addresses-dialog",
+  KConfigGroup general( kapp->config(), "General" );
+  general.writeEntry( "Show recent addresses in Addresses-dialog",
                       mCheckBox->isChecked() );
+  KConfigGroup geometry( kapp->config(), "Geometry" );
+  geometry.writeEntry( "AddressBook dialog size", size() );
 }
 
 void KMAddrBookSelDlg::toggleShowRecent( bool on )
 {
   showAddresses(AddressBookAddresses | (on ? RecentAddresses : 0));
-  saveConfig();
 }
 
 void KMAddrBookSelDlg::showAddresses( int addressTypes )
