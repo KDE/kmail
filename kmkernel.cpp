@@ -164,7 +164,7 @@ KMKernel::~KMKernel ()
 bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 {
   QString to, cc, bcc, subj, body;
-  KURL messageFile = QString::null;
+  KURL messageFile;
   KURL::List attachURLs;
   bool mailto = false;
   bool checkMail = false;
@@ -1361,7 +1361,7 @@ void KMKernel::dumpDeadLetters()
 
     while ((win = it.current()) != 0) {
       ++it;
-      if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
+      if (::qt_cast<KMComposeWin*>(win)) ((KMComposeWin*)win)->deadLetter();
       //    delete win; // WABA: Don't delete, we might crash in there!
     }
   }
