@@ -564,7 +564,7 @@ void KMMainWidget::createWidgets(void)
                      mFolderTree, SLOT(incCurrentFolder()));
 
   new KAction(
-    i18n("Abort current operation"), Key_Escape, KMBroadcastStatus::instance(),
+    i18n("Abort Current Operation"), Key_Escape, KMBroadcastStatus::instance(),
     SLOT(requestAbort()), actionCollection(), "cancel" );
   accel->connectItem(accel->insertItem(Key_Escape),
                      KMBroadcastStatus::instance(), SLOT(requestAbort()));
