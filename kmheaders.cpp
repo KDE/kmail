@@ -1101,7 +1101,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
   }
   mItems.resize( mItems.size() - 1 );
   QListViewItem *next = removedItem->itemBelow();
-  if (next) {
+  if (next && removedItem == static_cast<KMHeaderItem*>(currentItem()) ) {
     setCurrentItem( next );
     setSelected( next, TRUE );
   }
