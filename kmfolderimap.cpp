@@ -605,6 +605,10 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
 //-----------------------------------------------------------------------------
 void KMFolderImap::checkValidity()
 {
+  if (!mAccount) {
+    emit folderComplete(this, false);
+    return;
+  }
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
   kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
