@@ -52,8 +52,10 @@ namespace KMail {
     { "Michael H\303\244ckel", I18N_NOOP("Former maintainer"),
       "haeckel@kde.org", 0 },
 
+    { "Till Adam", I18N_NOOP("Core developer"),
+      "till@adam-lilienthal.de", 0 },
     { "Carsten Burghardt", I18N_NOOP("Core developer"),
-      "carsten.burghardt@web.de", 0 },
+      "burghardt@kde.org", 0 },
     { "Marc Mutz", I18N_NOOP("Core developer"),
       "mutz@kde.org", 0 },
     { "Daniel Naber", I18N_NOOP("Documentation"),
@@ -145,9 +147,6 @@ namespace KMail {
   };
 
   static const about_data credits[] = {
-    { "Till Adam", I18N_NOOP("improved threading, threading by subject\n"
-                             "check single IMAP folder"),
-      "till@adam-lilienthal.de", 0 },
     { "Heiko Hund", I18N_NOOP("POP filters"),
       "heiko@ist.eigentlich.net", 0 },
     { "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
