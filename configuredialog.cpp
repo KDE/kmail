@@ -1411,7 +1411,7 @@ void NetworkPage::ReceivingTab::save() {
   for ( it = mAccountsToDelete.begin() ;
 	it != mAccountsToDelete.end() ; ++it ) {
     kmkernel->acctMgr()->writeConfig( true );
-    if ( !(*it) || !kmkernel->acctMgr()->remove(*it) )
+    if ( (*it) && !kmkernel->acctMgr()->remove(*it) )
       KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
 			  .arg( (*it)->name() ) );
   }
