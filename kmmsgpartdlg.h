@@ -117,6 +117,7 @@ protected:
   QCheckBox  *mSigned;
   QPixmap     mUnknownPixmap;
   QStringList mI18nizedEncodings;
+  bool mReadOnly;
 };
 
 /** @short The attachment dialog with convenience backward compatible methods

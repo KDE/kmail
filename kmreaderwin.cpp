@@ -1697,6 +1697,8 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     menu->insertItem(i18n("Open with..."), this, SLOT(slotAtmOpenWith()));
     menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
     menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
+    menu->insertItem(i18n("Properties..."), this,
+		     SLOT(slotAtmProperties()));
     menu->exec(aPos,0);
     delete menu;
   }
@@ -1983,6 +1985,21 @@ void KMReaderWin::slotAtmSave()
   mSaveAttachDir = url.directory() + "/";
 
   kernel->byteArrayToRemoteFile(msgPart.bodyDecodedBinary(), url);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmProperties()
+{
+  KMMessagePart msgPart;
+  KMMsgPartDialogCompat dlg(0,TRUE);
+
+  kernel->kbp()->busy();
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  dlg.setMsgPart(&msgPart);
+  kernel->kbp()->idle();
+
+  dlg.exec();
 }
 
 

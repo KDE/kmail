@@ -178,6 +178,7 @@ protected slots:
   void slotAtmOpenWith();
   void slotAtmView();
   void slotAtmSave();
+  void slotAtmProperties();
   void slotDelayedResize();
 
 protected:

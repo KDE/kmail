@@ -345,7 +345,7 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
     setEncoding( SevenBit );
     mEncoding->setEnabled( false );
   } else {
-    mEncoding->setEnabled( true );
+    mEncoding->setEnabled( !mReadOnly );
   }
   // find a mimetype icon:
   int dummy = 0;
@@ -360,10 +360,19 @@ void KMMsgPartDialog::slotMimeTypeChanged( const QString & mimeType ) {
 
 
 
-KMMsgPartDialogCompat::KMMsgPartDialogCompat( const char *, bool )
+KMMsgPartDialogCompat::KMMsgPartDialogCompat( const char *, bool readOnly)
   : KMMsgPartDialog(), mMsgPart( 0 )
 {
   setShownEncodings( SevenBit|EightBit|QuotedPrintable|Base64 );
+  mReadOnly = readOnly;
+  if (readOnly)
+  {
+    mMimeType->setEnabled(false);
+    mFileName->setEnabled(false);
+    mDescription->setEnabled(false);
+    mEncoding->setEnabled(false);
+    mInline->setEnabled(false);
+  }
 }
 
 KMMsgPartDialogCompat::~KMMsgPartDialogCompat() {}
