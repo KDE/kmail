@@ -34,51 +34,75 @@ public:
   virtual ~KMAcctExpPop();
   virtual void init(void);
 
-  /** Pop user login name */
+  /**
+   * Pop user login name
+   */
   QString login(void) const { return mLogin; }
   virtual void setLogin(const QString&);
 
-  /** Pop user password */
+  /**
+   * Pop user password
+   */
   QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
 
-  /** Set the password to "" (empty string) */
+  /**
+   * Set the password to "" (empty string)
+   */
   virtual void clearPasswd();
 
-  /** Use SSL? */
+  /**
+   * Use SSL?
+   */
   bool useSSL(void) const { return mUseSSL; }
   virtual void setUseSSL(bool);
 
-  /** Use TLS? */
+  /**
+   * Use TLS?
+   */
   bool useTLS(void) const { return mUseTLS; }
   virtual void setUseTLS(bool);
 
-  /** Authentification method */
+  /**
+   * Authentification method
+   */
   QString auth(void) const { return mAuth; }
   virtual void setAuth(const QString &);
 
-  /** Will the password be stored in the config file ? */
+  /**
+   * Will the password be stored in the config file ?
+   */
   bool storePasswd(void) const { return mStorePasswd; }
   virtual void setStorePasswd(bool);
 
-  /** Pop host */
+  /**
+   * Pop host
+   */
   const QString& host(void) const { return mHost; }
   virtual void setHost(const QString&);
 
-  /** Port on pop host */
+  /**
+   * Port on pop host
+   */
   unsigned short int port(void) { return mPort; }
   virtual void setPort(unsigned short int);
 
-  /** Pop protocol: shall be 2 or 3 */
+  /**
+   * Pop protocol: shall be 2 or 3
+   */
   short protocol(void) { return mProtocol; }
   virtual bool setProtocol(short);
 
-  /** Shall messages be left on the server upon retreival (TRUE)
-    or deleted (FALSE). */
+  /**
+   * Shall messages be left on the server upon retreival (TRUE)
+   * or deleted (FALSE).
+   */
   bool leaveOnServer(void) const { return mLeaveOnServer; }
   virtual void setLeaveOnServer(bool);
 
-  /** Inherited methods. */
+  /**
+   * Inherited methods.
+   */
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
@@ -91,22 +115,32 @@ protected:
   friend class KMPasswdDialog;
   KMAcctExpPop(KMAcctMgr* owner, const QString& accountName);
 
-  /** Very primitive en/de-cryption so that the password is not
-      readable in the config file. But still very easy breakable. */
+  /**
+   * Very primitive en/de-cryption so that the password is not
+   * readable in the config file. But still very easy breakable.
+   */
   QString encryptStr(const QString& inStr) const;
   QString decryptStr(const QString& inStr) const;
 
-  /** Start a KIO Job to get a list of messages on the pop server */
+  /**
+   * Start a KIO Job to get a list of messages on the pop server
+   */
   void startJob();
 
-  /** Connect up the standard signals/slots for the KIO Jobs */
+  /**
+   * Connect up the standard signals/slots for the KIO Jobs
+   */
   void connectJob();
 
-  /** Get an URL for the account */
+  /**
+   * Get an URL for the account
+   */
   KURL getUrl();
 
-  /** Process any queued messages and save the list of seen uids
-      for this user/server */
+  /**
+   * Process any queued messages and save the list of seen uids
+   * for this user/server
+   */
   void processRemainingQueuedMessagesAndSaveUidList();
 
   QString mLogin, mPasswd;
@@ -153,39 +187,55 @@ protected:
   int dataCounter;
 
 protected slots:
-  /** Messages are downloaded in the background and then once every x seconds
-      a batch of messages are processed. Messages are processed in batches to
-      reduce flicker (multiple refreshes of the qlistview of messages headers
-      in a single second causes flicker) when using a fast pop server such as
-      one on a lan.
-
-      Processing a message means applying KMAccount::processNewMsg to it and
-      adding its UID to the list of seen UIDs */
+  /**
+   * Messages are downloaded in the background and then once every x seconds
+   * a batch of messages are processed. Messages are processed in batches to
+   * reduce flicker (multiple refreshes of the qlistview of messages headers
+   * in a single second causes flicker) when using a fast pop server such as
+   * one on a lan.
+   *
+   * Processing a message means applying KMAccount::processNewMsg to it and
+   * adding its UID to the list of seen UIDs
+   */
   void slotProcessPendingMsgs();
 
-  /** If there are more messages to be downloaded then start a new kio job
-      to get the message whose id is at the head of the queue */
+  /**
+   * If there are more messages to be downloaded then start a new kio job
+   * to get the message whose id is at the head of the queue
+   */
   void slotGetNextMsg();
 
-  /** New data has arrived append it to the end of the current message */
+  /**
+   * New data has arrived append it to the end of the current message
+   */
   void slotData( KIO::Job*, const QByteArray &);
 
-  /** Finished downloading the current kio job, either due to an error
-      or because the job has been cancelled or because the complete message
-      has been downloaded */
+  /**
+   * Finished downloading the current kio job, either due to an error
+   * or because the job has been cancelled or because the complete message
+   * has been downloaded
+   */
   void slotResult( KIO::Job* );
 
-  /** Cleans up after a user cancels the current job */
+  /**
+   * Cleans up after a user cancels the current job
+   */
   void slotCancel();
 
-  /** Kills the job if still stage == List */
+  /**
+   * Kills the job if still stage == List
+   */
   void slotAbortRequested();
 
-  /* Called when a job is finished. Basically a finite state machine for
-   cycling through the Idle, List, Uidl, Retr, Quit stages */
+  /**
+   * Called when a job is finished. Basically a finite state machine for
+   * cycling through the Idle, List, Uidl, Retr, Quit stages
+   */
   void slotJobFinished();
 
-  /** Slave error handling */
+  /**
+   * Slave error handling
+   */
   void slotSlaveError(KIO::Slave *, int, const QString &);
 };
 

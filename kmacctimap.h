@@ -83,84 +83,130 @@ public:
   virtual ~KMAcctImap();
   virtual void init(void);
 
-  /** Initialize the slave configuration */
+  /**
+   * Initialize the slave configuration
+   */
   virtual void initSlaveConfig();
 
-  /** Imap user login name */
+  /**
+   * Imap user login name
+   */
   const QString& login(void) const { return mLogin; }
   virtual void setLogin(const QString&);
 
-  /** Imap user password */
+  /**
+   * Imap user password
+   */
   QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
 
-  /** Imap authentificaion method */
+  /**
+   * Imap authentificaion method
+   */
   QString auth(void) const { return mAuth; }
   virtual void setAuth(const QString&);
 
-  /** Will the password be stored in the config file ? */
+  /**
+   * Will the password be stored in the config file ?
+   */
   bool storePasswd(void) const { return mStorePasswd; }
   virtual void setStorePasswd(bool);
 
-  /** Imap host */
+  /**
+   * Imap host
+   */
   const QString& host(void) const { return mHost; }
   virtual void setHost(const QString&);
 
-  /** Port on Imap host */
+  /**
+   * Port on Imap host
+   */
   unsigned short int port(void) { return mPort; }
   virtual void setPort(unsigned short int);
 
-  /** Prefix to the Imap folders */
+  /**
+   * Prefix to the Imap folders
+   */
   const QString& prefix(void) const { return mPrefix; }
   virtual void setPrefix(const QString&);
 
-  /** Automatically expunge deleted messages when leaving the folder */
+  /**
+   * Automatically expunge deleted messages when leaving the folder
+   */
   bool autoExpunge() { return mAutoExpunge; }
   virtual void setAutoExpunge(bool);
 
-  /** Show hidden files on the server */
+  /**
+   * Show hidden files on the server
+   */
   bool hiddenFolders() { return mHiddenFolders; }
   virtual void setHiddenFolders(bool);
 
-  /** Use SSL or not */
+  /**
+   * Use SSL or not
+   */
   bool useSSL() { return mUseSSL; }
   virtual void setUseSSL(bool);
 
-  /** Use TLS or not */
+  /**
+   * Use TLS or not
+   */
   bool useTLS() { return mUseTLS; }
   virtual void setUseTLS(bool);
 
-  /** List a directory and add the contents to a KMFolderTreeItem */
+  /**
+   * List a directory and add the contents to a KMFolderTreeItem
+   */
   void listDirectory(KMFolderTreeItem * fti, bool secondStep = FALSE);
 
-  /** Retrieve all mails in a folder */
+  /**
+   * Retrieve all mails in a folder
+   */
   void getFolder(KMFolderTreeItem * fti);
 
-  /** Get the whole message */
+  /**
+   * Get the whole message
+   */
   void getMessage(KMFolder * folder, KMMessage * msg);
 
-  /** Create a new subfolder */
+  /**
+   * Create a new subfolder
+   */
   void createFolder(KMFolderTreeItem * fti, const QString &name);
 
-  /** Kill all jobs related the the specified folder */
+  /**
+   * Kill all jobs related the the specified folder
+   */
   void killJobsForItem(KMFolderTreeItem * fti);
 
-  /** Kill the slave if any jobs are active */
+  /**
+   * Kill the slave if any jobs are active
+   */
   void killAllJobs();
 
-  /** Set the account idle or busy */
+  /**
+   * Set the account idle or busy
+   */
   void setIdle(bool aIdle) { mIdle = aIdle; }
 
-  /** Delete a message */
+  /**
+   * Delete a message
+   */
   void deleteMessage(KMMessage * msg);
 
-  /** Change the status of a message */
+  /**
+   * Change the status of a message
+   */
   void setStatus(KMMessage * msg, KMMsgStatus status);
 
-  /** Expunge deleted messages from the folder */
+  /**
+   * Expunge deleted messages from the folder
+   */
   void expungeFolder(KMFolder * aFolder);
 
-  /** Inherited methods. */
+  /**
+   * Inherited methods.
+   */
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
@@ -178,20 +224,28 @@ public:
   };
   QMap<KIO::Job *, jobData> mapJobData;
 
-  /** Get the URL for the account */
+  /**
+   * Get the URL for the account
+    */
   KURL getUrl();
 
-  /** Update the progress bar */
+  /**
+   * Update the progress bar
+   */
   void displayProgress();
 
-  /** Get the Slave used for the account */
+  /**
+   * Get the Slave used for the account
+   */
   KIO::Slave * slave() { return mSlave; }
   void slaveDied() { mSlave = NULL; }
 
 signals:
   void folderComplete(KMFolderTreeItem * fti, bool success);
 
-  /** Emitted, when the account is deleted */
+  /**
+   * Emitted, when the account is deleted
+   */
   void deleted(KMAcctImap*);
 
 protected:
@@ -199,12 +253,16 @@ protected:
   friend class KMPasswdDialog;
   KMAcctImap(KMAcctMgr* owner, const QString& accountName);
 
-  /** Very primitive en/de-cryption so that the password is not
-      readable in the config file. But still very easy breakable. */
+  /**
+   * Very primitive en/de-cryption so that the password is not
+   * readable in the config file. But still very easy breakable.
+   */
   QString encryptStr(const QString &inStr) const;
   QString decryptStr(const QString &inStr) const;
 
-  /** Connect to the IMAP server, if no connection is active */
+  /**
+   * Connect to the IMAP server, if no connection is active
+   */
   bool makeConnection();
 
   QString mLogin, mPasswd;
@@ -228,50 +286,78 @@ protected:
   QList<KMImapJob> mJobList;
 
 protected slots:
-  /** Send a NOOP command or log out when idle */
+  /**
+   * Send a NOOP command or log out when idle
+   */
   void slotIdleTimeout();
 
-  /** Kills all jobs */
+  /**
+   * Kills all jobs
+   */
   void slotAbortRequested();
 
-  /** Add the imap folders to the folder tree */
+  /**
+   * Add the imap folders to the folder tree
+   */
   void slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
 
-  /** Free the resources */
+  /**
+   * Free the resources
+   */
   void slotListResult(KIO::Job * job);
 
-  /** Retrieve the whole folder or only the changes */
+  /**
+   * Retrieve the whole folder or only the changes
+   */
   void checkValidity(KMFolderTreeItem * fti);
   void slotCheckValidityResult(KIO::Job * job);
 
-  /** Get the folder now (internal) */
+  /**
+   * Get the folder now (internal)
+   */
   void reallyGetFolder(KMFolderTreeItem * fti);
 
-  /** Retrieve the next message */
+  /**
+   * Retrieve the next message
+   */
   void getNextMessage(jobData & jd);
 
-  /** For listing the contents of a folder */
+  /**
+   * For listing the contents of a folder
+   */
   void slotListFolderResult(KIO::Job * job);
   void slotListFolderEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
 
-  /** For retrieving a message digest */
+  /**
+   * For retrieving a message digest
+   */
   void slotGetMessagesResult(KIO::Job * job);
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
 
-  /** For creating a new subfolder */
+  /**
+   * For creating a new subfolder
+   */
   void slotCreateFolderResult(KIO::Job * job);
 
-  /** Only delete information about the job */
+  /**
+   * Only delete information about the job
+   */
   void slotSimpleResult(KIO::Job * job);
 
-  /** Only delete information about the job and ignore write errors */
+  /**
+   * Only delete information about the job and ignore write errors
+   */
   void slotSetStatusResult(KIO::Job * job);
 
-  /** Display an error message, that connecting failed */
+  /**
+   * Display an error message, that connecting failed
+   */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
 public slots:
-  /** Add the data a KIO::Job retrieves to the buffer */
+  /**
+   * Add the data a KIO::Job retrieves to the buffer
+   */
   void slotSimpleData(KIO::Job * job, const QByteArray & data);
 };
 
