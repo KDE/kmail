@@ -2763,7 +2763,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
     int cipherLen = ciphertext.size();
-#define KHZ_TEST
+//#define KHZ_TEST
 #ifdef KHZ_TEST
     QFile fileC( "testdat_xx1.encrypted" );
     if( fileC.open( IO_WriteOnly ) ) {
