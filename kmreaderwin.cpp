@@ -1191,7 +1191,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 		i < 255; i++, pos++)
 	str[i] = aStr[pos];
       pos--;
-      while (i>0 && str[i-1].isPunct() && str[i-1]!='/')
+      while (i>0 && str[i-1].isPunct() && str[i-1]!='/' && str[i-1]!='#')
       {
 	i--;
 	pos--;
