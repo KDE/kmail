@@ -143,10 +143,10 @@ bool KMSearchRule::matches(const KMMessage* msg) const
       return (QString::compare(msgContents.lower(), mContents.lower()) != 0);
 
   case KMSearchRule::FuncContains:
-    return msgContents.contains(mContents, FALSE);
+    return ( msgContents.find(mContents, 0, FALSE) >= 0 );
 
   case KMSearchRule::FuncContainsNot:
-    return ( msgContents.find(mContents, FALSE) < 0 );
+    return ( msgContents.find(mContents, 0, FALSE) < 0 );
 
   case KMSearchRule::FuncRegExp:
     {
