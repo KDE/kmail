@@ -28,7 +28,7 @@ extern KBusyPtr *kbp;
 
 
 //-----------------------------------------------------------------------------
-KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly): 
+KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   KMMsgPartDlgInherited(NULL, "msgpartdlg", TRUE), mIconPixmap()
 {
   QGridLayout* grid = new QGridLayout(this, 6, 4, 8, 8);
@@ -63,7 +63,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   grid->addMultiCellWidget(mEdtMimetype, 0, 0, 1, 3);
   connect(mEdtMimetype, SIGNAL(textChanged(const QString &)),
     SLOT(mimetypeChanged(const QString &)));
-  
+
   //-----
   mLblSize = new QLabel(this);
   mLblSize->adjustSize();
@@ -132,6 +132,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   if (w1 < w2) w1 = w2;
   if (w1 < 120) w1 = 120;
   btnOk->setMaximumSize(w1, h);
+  btnOk->setFocus();
   btnCancel->setMaximumSize(w1, h);
 
   //-----
@@ -219,7 +220,7 @@ void KMMsgPartDlg::applyChanges(void)
     mMsgPart->setContentDescription(str);
 
   if (mEdtMimetype->currentText() == "message/rfc822")
-  { 
+  {
     str = "7bit";
   } else {
     idx = mCbxEncoding->currentItem();
