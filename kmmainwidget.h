@@ -123,6 +123,9 @@ public:
   
   KActionMenu *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu, *applyFilterActionsMenu;
+  KAction *markThreadAsNewAction;
+  KAction *markThreadAsReadAction;
+  KAction *markThreadAsUnreadAction;
   KToggleAction *toggleThreadRepliedAction;
   KToggleAction *toggleThreadForwardedAction;
   KToggleAction *toggleThreadQueuedAction;

@@ -2200,20 +2200,23 @@ void KMMainWidget::setupActions()
   threadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
 
-  threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
-                                                i18n("Mark all messages in the selected thread as new")),
-                                       0, this, SLOT(slotSetThreadStatusNew()),
-                                       actionCollection(), "thread_new"));
+  markThreadAsNewAction = new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
+                                               i18n("Mark all messages in the selected thread as new")),
+                                               0, this, SLOT(slotSetThreadStatusNew()),
+                                               actionCollection(), "thread_new");
+  threadStatusMenu->insert( markThreadAsNewAction );
 
-  threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
+  markThreadAsUnreadAction = new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
                                                 i18n("Mark all messages in the selected thread as unread")),
-                                       0, this, SLOT(slotSetThreadStatusUnread()),
-                                       actionCollection(), "thread_unread"));
+                                                0, this, SLOT(slotSetThreadStatusUnread()),
+                                                actionCollection(), "thread_unread");
+  threadStatusMenu->insert( markThreadAsUnreadAction );
 
-  threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
+  markThreadAsReadAction = new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
                                                 i18n("Mark all messages in the selected thread as read")),
-                                       0, this, SLOT(slotSetThreadStatusRead()),
-                                       actionCollection(), "thread_read"));
+                                                0, this, SLOT(slotSetThreadStatusRead()),
+                                                actionCollection(), "thread_read");
+  threadStatusMenu->insert( markThreadAsReadAction );
 
   //----- "Mark Thread" toggle actions
   toggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
@@ -2664,12 +2667,22 @@ void KMMainWidget::updateMessageActions()
 
     bool mass_actions = count >= 1;
     bool thread_actions = mass_actions &&
-			  allSelectedInCommonThread &&
-			  mHeaders->isThreaded();
+           allSelectedInCommonThread &&
+           mHeaders->isThreaded();
     statusMenu->setEnabled( mass_actions );
     threadStatusMenu->setEnabled( thread_actions );
+    // these need to be handled individually, the user might have them 
+    // in the toolbar
     watchThreadAction->setEnabled( thread_actions );
     ignoreThreadAction->setEnabled( thread_actions );
+    markThreadAsNewAction->setEnabled( thread_actions );
+    markThreadAsReadAction->setEnabled( thread_actions );
+    markThreadAsUnreadAction->setEnabled( thread_actions );
+    toggleThreadRepliedAction->setEnabled( thread_actions );
+    toggleThreadForwardedAction->setEnabled( thread_actions );
+    toggleThreadQueuedAction->setEnabled( thread_actions );
+    toggleThreadSentAction->setEnabled( thread_actions );
+    toggleThreadFlagAction->setEnabled( thread_actions );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
       toggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
