@@ -1995,7 +1995,7 @@ void KMMainWidget::setupActions()
 					"mail_forward", mActionCollection,
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotForwardMsg()) );
+	   SLOT(slotForwardAttachedMsg()) );
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
 				mActionCollection, "message_forward_inline" );
