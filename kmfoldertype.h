@@ -7,7 +7,8 @@ typedef enum
   KMFolderTypeMaildir,
   KMFolderTypeCachedImap,
   KMFolderTypeImap,
-  KMFolderTypeSearch
+  KMFolderTypeSearch,
+  KMFolderTypeUnknown
 } KMFolderType;
 
 typedef enum
