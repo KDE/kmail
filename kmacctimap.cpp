@@ -199,7 +199,7 @@ void KMAcctImap::displayProgress()
   }
   mIdle = FALSE;
   if (mapJobData.isEmpty())
-    mIdleTimer.start(30000);
+    mIdleTimer.start(15000);
   else
     mIdleTimer.stop();
   int total = 0, done = 0;
@@ -233,6 +233,8 @@ void KMAcctImap::slotIdleTimeout()
     {
       KIO::SimpleJob *job = KIO::special(getUrl(), QCString("NOOP"), FALSE);
       KIO::Scheduler::assignJobToSlave(mSlave, job);
+      connect(job, SIGNAL(result(KIO::Job *)),
+        this, SLOT(slotSimpleResult(KIO::Job *)));
     }
     else mIdleTimer.stop();
   }
@@ -993,8 +995,7 @@ void KMAcctImap::expungeFolder(KMFolder * aFolder)
 void KMAcctImap::slotSimpleResult(KIO::Job * job)
 {
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
-  if (it == mapJobData.end()) return;
-  mapJobData.remove(it);
+  if (it != mapJobData.end()) mapJobData.remove(it);
   if (job->error())
   {
     job->showErrorDialog();
