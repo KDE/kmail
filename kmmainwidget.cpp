@@ -24,6 +24,7 @@
 #include <kfiledialog.h>
 #include <ktip.h>
 #include <knotifydialog.h>
+#include <dcopclient.h>
 
 #include "kcursorsaver.h"
 #include "kmbroadcaststatus.h"
@@ -713,7 +714,7 @@ void KMMainWidget::slotSetEncoding()
     }
     else
       mCodec = KMMsgBase::codecForName( mEncodingStr );
-    mMsgView->setCodec(mCodec);
+    mMsgView->setOverrideCodec(mCodec);
     return;
 }
 
@@ -733,7 +734,6 @@ void KMMainWidget::show()
   QWidget::show();
 }
 
-#include <dcopclient.h>
 //-------------------------------------------------------------------------
 void KMMainWidget::slotSearch()
 {

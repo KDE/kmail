@@ -75,8 +75,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mIsComplete(false),
     mDecodeHTML(false),
     mTransferInProgress(0),
-    mCodec(0),
-    mAutoDetectCodec(true),
+    mOverrideCodec(0),
     mUnencryptedMsg(0)
 {
   mEncryptionState = KMMsgEncryptionStateUnknown;
@@ -98,8 +97,7 @@ void KMMessage::assign( const KMMessage& other )
   mNeedsAssembly = true;//other.mNeedsAssembly;
   if( other.mMsg )
     mMsg = new DwMessage( *(other.mMsg) );
-  mCodec = other.mCodec;
-  mAutoDetectCodec = other.mAutoDetectCodec;
+  mOverrideCodec = other.mOverrideCodec;
   mDecodeHTML = other.mDecodeHTML;
   mIsComplete = false;//other.mIsComplete;
   mTransferInProgress = other.mTransferInProgress;
@@ -165,8 +163,7 @@ KMMessage::KMMessage(KMFolderIndex* parent): KMMessageInherited(parent)
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
-  mCodec = 0;
-  mAutoDetectCodec = true;
+  mOverrideCodec = 0;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = 0;
@@ -189,8 +186,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
-  mCodec = 0;
-  mAutoDetectCodec = true;
+  mOverrideCodec = 0;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = 0;
@@ -802,7 +798,7 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
     QCString parsedString;
     bool isHTML = false;
     bool clearSigned = false;
-    const QTextCodec* codec = 0;
+    const QTextCodec * codec = 0;
 
     if( numBodyParts() == 0 ) {
       DwBodyPart * mainBody = 0;
@@ -820,15 +816,7 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
         parseTextStringFromDwPart( 0, dwPart, parsedString, codec, isHTML );
     }
 
-    if( !mAutoDetectCodec )
-      codec = mCodec;
-    if( !codec ) {
-      QCString cset = charset();
-      if( !cset.isEmpty() )
-        codec = KMMsgBase::codecForName( cset );
-      if( !codec )
-        codec = kernel->networkCodec();
-    }
+    codec = this->codec();
 
     if( !parsedString.isEmpty() ) {
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
@@ -2551,7 +2539,7 @@ void KMMessage::setBodyAndGuessCte( const QByteArray& aBuf,
 {
   CharFreq cf( aBuf ); // it's safe to pass null arrays
 
-  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
+  allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
 #ifndef NDEBUG
   DwString dwCte;
@@ -2574,7 +2562,7 @@ void KMMessage::setBodyAndGuessCte( const QCString& aBuf,
 {
   CharFreq cf( aBuf.data(), aBuf.length() ); // it's safe to pass null strings
 
-  allowedCte = KMMessage::determineAllowedCtes( cf, allow8Bit, willBeSigned );
+  allowedCte = determineAllowedCtes( cf, allow8Bit, willBeSigned );
 
 #ifndef NDEBUG
   DwString dwCte;
@@ -3136,8 +3124,6 @@ QCString KMMessage::html2source( const QCString & src )
         *d++ = '<';
         *d++ = 'b';
         *d++ = 'r';
-        *d++ = ' ';
-        *d++ = '/';
         *d++ = '>';
         ++s;
       }
@@ -3159,7 +3145,7 @@ QCString KMMessage::html2source( const QCString & src )
         ++s;
       }
       break;
-    case '\"': {
+    case '"': {
         *d++ = '&';
         *d++ = 'q';
         *d++ = 'u';
@@ -3167,6 +3153,15 @@ QCString KMMessage::html2source( const QCString & src )
         *d++ = 't';
         *d++ = ';';
         ++s;
+      }
+      break;
+    case '\'': {
+        *d++ = '&';
+	*d++ = 'a';
+	*d++ = 'p';
+	*d++ = 's';
+	*d++ = ';';
+	++s;
       }
       break;
     default:
@@ -3693,4 +3688,37 @@ void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) cons
     else if (type == "forward")
       *retStatus = KMMsgStatusForwarded;
   }
+}
+
+void KMMessage::setBodyFromUnicode( const QString & str ) {
+  QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
+  if ( encoding.isEmpty() )
+    encoding = "utf-8";
+  const QTextCodec * codec = KMMsgBase::codecForName( encoding );
+  assert( codec );
+  QValueList<int> dummy;
+  setCharset( encoding );
+  setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
+}
+
+const QTextCodec * KMMessage::codec() const {
+  const QTextCodec * c = mOverrideCodec;
+  if ( !c )
+    // no override-codec set for this message, try the CT charset parameter:
+    c = KMMsgBase::codecForName( charset() );
+  if ( !c )
+    // no charset means us-ascii (RFC 2045), so using local encoding should
+    // be okay
+    c = kernel->networkCodec();
+  assert( c );
+  return c;
+}
+
+QString KMMessage::bodyToUnicode(const QTextCodec* codec) const {
+  if ( !codec )
+    // No codec was given, so try the charset in the mail
+    codec = this->codec();
+  assert( codec );
+
+  return codec->toUnicode( bodyDecoded() );
 }

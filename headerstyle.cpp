@@ -137,7 +137,7 @@ namespace KMail {
       headerStr += "<div dir=\"" + subjectDir + "\">\n"
 	           "<b style=\"font-size:130%\">" +
 			   strToHtml( message->subject() ) +
-			   "</b></div>";
+			   "</b></div>\n";
 
     QStringList headerParts;
 
@@ -160,7 +160,7 @@ namespace KMail {
     // remove all empty (modulo whitespace) entries and joins them via ", \n"
     headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
 
-    headerStr += "</div>";
+    headerStr += "</div>\n";
 
     // ### iterate over the rest of strategy->headerToDisplay() (or
     // ### all headers if DefaultPolicy == Display) (elsewhere, too)
@@ -239,11 +239,11 @@ namespace KMail {
     //case HdrLong:
     if ( strategy->showHeader( "subject" ) )
       headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-			   strToHtml(message->subject()) + "</b></div>")
+			   strToHtml(message->subject()) + "</b></div>\n")
                         .arg(subjectDir);
 
     if ( strategy->showHeader( "date" ) )
-      headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>");
+      headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
 
     if ( strategy->showHeader( "from" ) ) {
       headerStr.append(i18n("From: ") +
@@ -255,26 +255,26 @@ namespace KMail {
 	   && !message->headerField("Organization").isEmpty())
 	headerStr.append("&nbsp;&nbsp;(" +
 			 strToHtml(message->headerField("Organization")) + ")");
-      headerStr.append("<br>");
+      headerStr.append("<br>\n");
     }
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18n("To: ")+
-		       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>");
+		       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(message->cc(),FALSE) + "<br>");
+                       KMMessage::emailAddrAsAnchor(message->cc(),FALSE) + "<br>\n");
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
       headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(message->bcc(),FALSE) + "<br>");
+                       KMMessage::emailAddrAsAnchor(message->bcc(),FALSE) + "<br>\n");
 
     if ( strategy->showHeader( "reply-to" ) && !message->replyTo().isEmpty())
       headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(message->replyTo(),FALSE) + "<br>");
+                     KMMessage::emailAddrAsAnchor(message->replyTo(),FALSE) + "<br>\n");
 
-    headerStr += "</div>";
+    headerStr += "</div>\n";
 
     return headerStr;
   }
@@ -286,7 +286,7 @@ namespace KMail {
     for ( const DwField * field = headers.FirstField() ; field ; field = field->Next() ) {
       result += ( field->FieldNameStr() + ": " ).c_str();
       result += strToHtml( field->FieldBodyStr().c_str() );
-      result += "<br>";
+      result += "<br>\n";
     }
 
     return result;
@@ -324,7 +324,7 @@ namespace KMail {
     // of the application layout.
 
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    QString headerStr = QString("<div class=\"header\" dir=\"%1\">").arg(dir);
+    QString headerStr = QString("<div class=\"fancy header\" dir=\"%1\">\n").arg(dir);
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -353,21 +353,19 @@ namespace KMail {
     //case HdrFancy:
     // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) )
-      headerStr += QString("<div class=\"fancyHeaderSubj\" dir=\"%1\">"
-			   "<b>%2</b></div>")
+      headerStr += QString("<div dir=\"%1\">%2</div>\n")
                         .arg(subjectDir)
 		        .arg(message->subject().isEmpty()?
 			     i18n("No Subject") :
 			     strToHtml(message->subject()));
-    headerStr +=        "<div class=\"fancyHeaderDtls\">"
-                        "<table class=\"fancyHeaderDtls\">";
+    headerStr += "<table>\n";
 
     // from line
     // the mailto: URLs can contain %3 etc., therefore usage of multiple
     // QString::arg is not possible
     if ( strategy->showHeader( "from" ) )
-      headerStr += QString("<tr><th class=\"fancyHeaderDtls\">%1</th>"
-			   "<td class=\"fancyHeaderDtls\">")
+      headerStr += QString("<tr><th>%1</th>\n"
+			   "<td>")
                          .arg(i18n("From: "))
                  + KMMessage::emailAddrAsAnchor(message->from(),FALSE)
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
@@ -378,33 +376,37 @@ namespace KMail {
                               : "&nbsp;&nbsp;("
                                 + strToHtml(message->headerField("Organization"))
                                 + ")")
-                 + "</td></tr>";
+                 + "</td></tr>\n";
     // to line
     if ( strategy->showHeader( "to" ) )
-      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
+      headerStr.append(QString("<tr><th>%1</th>\n"
+			       "<td>%2</td></tr>\n")
                             .arg(i18n("To: "))
                             .arg(KMMessage::emailAddrAsAnchor(message->to(),FALSE)));
 
     // cc line, if any
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty())
-      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
+      headerStr.append(QString("<tr><th>%1</th>\n"
+			       "<td>%2</td></tr>\n")
                               .arg(i18n("CC: "))
                               .arg(KMMessage::emailAddrAsAnchor(message->cc(),FALSE)));
 
     // Bcc line, if any
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty())
-      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
+      headerStr.append(QString("<tr><th>%1</th>\n"
+			       "<td>%2</td></tr>\n")
                               .arg(i18n("BCC: "))
                               .arg(KMMessage::emailAddrAsAnchor(message->bcc(),FALSE)));
 
     if ( strategy->showHeader( "date" ) )
-      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
+      headerStr.append(QString("<tr><th>%1</th>\n"
+			       "<td dir=\"%2\">%3</td></tr>\n")
                             .arg(i18n("Date: "))
 		            .arg( directionOf( message->dateStr() ) )
                             .arg(strToHtml(dateString)));
-    headerStr.append("</table></div>");
+    headerStr.append("</table>\n");
 
-    headerStr += "</div>";
+    headerStr += "</div>\n\n";
 
     return headerStr;
   }

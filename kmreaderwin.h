@@ -41,6 +41,7 @@ namespace KMail {
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
   class HtmlStatusBar;
+  class CSSHelper;
 };
 
 class partNode; // might be removed when KMime is used instead of mimelib
@@ -80,17 +81,11 @@ public:
   /** tell KMReaderWin whether groupware functionality may be used */
   virtual void setUseGroupware( bool );
 
-  /** Read color settings and set palette */
-  virtual void readColorConfig(void);
-
   /** Read settings from app's config file. */
   virtual void readConfig(void);
 
   /** Write settings to app's config file. Calls sync() if withSync is TRUE. */
   virtual void writeConfig(bool withSync=TRUE);
-
-  /** Builds the font tag that will be used for quouted lines */
-  QString quoteFontTag( int quoteLevel );
 
   const KMail::HeaderStyle * headerStyle() const {
     return mHeaderStyle;
@@ -111,9 +106,18 @@ public:
   }
   void setAttachmentStrategy( const KMail::AttachmentStrategy * strategy );
 
-  /** Get/set codec for reader win. */
-  const QTextCodec *codec(void) const { return mCodec; }
-  virtual void setCodec(const QTextCodec *codec);
+  /** Get override-codec for the reader win.
+      @return The codec selected by the user or 0 if charset
+      auto-detection is in force. */
+  const QTextCodec * overrideCodec() const { return mOverrideCodec; }
+
+  /** Set the override-codec for the reader win. If @p codec is 0,
+      switches to charset auto-detection */
+  void setOverrideCodec( const QTextCodec * codec );
+
+  /** @return true if charset autodetection is in force, false
+      otherwise */
+  bool autoDetectEncoding() const { return !overrideCodec(); }
 
   /** Set printing mode */
   virtual void setPrinting(bool enable) { mPrinting = enable; }
@@ -124,9 +128,8 @@ public:
 
   /** Instead of settings a message to be shown sets a message part
       to be shown */
-  virtual void setMsgPart( KMMessagePart* aMsgPart,
-    bool aHTML, const QString& aFileName, const QString& pname,
-    const QTextCodec *codec );
+  void setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
+		   const QString& aFileName, const QString& pname );
 
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
@@ -181,7 +184,7 @@ public:
 
   bool atBottom() const;
 
-  bool isfixedFont() { return mUseFixedFont; }
+  bool isFixedFont() { return mUseFixedFont; }
 
   /** Return the @ref HtmlWriter connected to the @ref KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
@@ -346,15 +349,13 @@ protected:
   virtual void parseMsg(void);
 
   /** Parse given message and add it's contents to the reader window. */
-  virtual void parseMsg(KMMessage* msg, bool onlyProcessHeaders=false);
+  virtual void parseMsg( KMMessage* msg  );
+
+  //void parseMsgHeader( KMMessage * msg );
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  virtual QString writeMsgHeader(KMMessage* aMsg, bool hasVCard);
-
-  /** Feeds the HTML widget with the contents of the given HTML message-body
-    string. May contain body parts. */
-  virtual void writeHTMLStr(const QString& aStr);
+  QString writeMsgHeader(KMMessage* aMsg, bool hasVCard=false);
 
   /** Writes the given message part to a temporary file and returns the
       name of this file or QString::null if writing failed.
@@ -362,14 +363,10 @@ protected:
   QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
 
   /** show window containing infos about a vCard. */
-  virtual void showVCard(KMMessagePart *msgPart, const QTextCodec *codec);
+  void showVCard(KMMessagePart *msgPart);
   
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
-
-  /** @return HTML head including style sheet definitions and the
-      &gt;body&lt; tag */
-  QString htmlHead( bool printing=false ) const;
 
   /** Some necessary event handling. */
   virtual void closeEvent(QCloseEvent *);
@@ -400,33 +397,15 @@ protected:
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mDelayedMarkTimer;
-  const QTextCodec *mCodec;
-  bool mAutoDetectEncoding;
+  const QTextCodec * mOverrideCodec;
   bool mMsgDisplay;
   bool mDelayedMarkAsRead;
   unsigned long mLastSerNum;
   KMMsgStatus mLastStatus;
 
-  // style info (fonts/color)
-  int fontSize() const;
-  QString bodyFontFamily() const;
-
-  QFont mBodyFont, mFixedFont;
+  KMail::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
   bool mPrinting;
-  bool mBackingPixmapOn;
-  QString mBackingPixmapStr;
-  QColor c1, c2, c3, c4;
-  // colors for PGP (Frame, Header, Body)
-  QColor cPgpOk1F, cPgpOk1H, cPgpOk1B,
-         cPgpOk0F, cPgpOk0H, cPgpOk0B,
-         cPgpWarnF, cPgpWarnH, cPgpWarnB,
-         cPgpErrF, cPgpErrH, cPgpErrB,
-         cPgpEncrF, cPgpEncrH, cPgpEncrB;
-  // color of frame of warning preceding the source of HTML messages
-  QColor cHtmlWarning;
-  QString mQuoteFontTag[3];
-  // end style info
 
   bool mShowColorbar;
   //bool mShowCompleteMessage;

@@ -28,6 +28,7 @@
 #include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"
 #include "htmlstatusbar.h"
+#include "csshelper.h"
 
 // other module headers
 #include <mimelib/enum.h>
@@ -81,7 +82,8 @@ namespace KMail {
 				      bool showOnlyOneMimePart, bool keepEncryptions,
 				      bool includeSignatures,
 				      const AttachmentStrategy * strategy,
-				      HtmlWriter * htmlWriter )
+				      HtmlWriter * htmlWriter,
+				      CSSHelper * cssHelper )
     : mReader( reader ),
       mCryptPlugWrapper( wrapper ),
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
@@ -89,13 +91,16 @@ namespace KMail {
       mIncludeSignatures( includeSignatures ),
       mIsFirstTextPart( true ),
       mAttachmentStrategy( strategy ),
-      mHtmlWriter( htmlWriter )
+      mHtmlWriter( htmlWriter ),
+      mCSSHelper( cssHelper )
   {
     if ( !attachmentStrategy() )
       mAttachmentStrategy = reader ? reader->attachmentStrategy()
 	                           : AttachmentStrategy::smart();
     if ( reader && !this->htmlWriter() )
       mHtmlWriter = reader->htmlWriter();
+    if ( reader && !this->cssHelper() )
+      mCSSHelper = reader->mCSSHelper;
   }
   
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
@@ -106,7 +111,8 @@ namespace KMail {
       mIncludeSignatures( other.includeSignatures() ),
       mIsFirstTextPart( other.mIsFirstTextPart ),
       mAttachmentStrategy( other.attachmentStrategy() ),
-      mHtmlWriter( other.htmlWriter() )
+      mHtmlWriter( other.htmlWriter() ),
+      mCSSHelper( other.cssHelper() )
   {
 
   }
@@ -179,7 +185,7 @@ namespace KMail {
 
       // start the new viewer content
       htmlWriter()->begin();
-      htmlWriter()->write( mReader->htmlHead( mReader->mPrinting ) );
+      htmlWriter()->write( cssHelper()->htmlHead( mReader->isFixedFont() ) );
     }
     if (node && (showOnlyOneMimePart() || (mReader && /*mReader->mShowCompleteMessage &&*/ !node->mRoot ))) {
       if ( showOnlyOneMimePart() ) {
@@ -800,7 +806,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     QCString cstr( curNode->msgPart().bodyDecoded() );
-    //resultingRawData += cstr;
+
     mResultString = cstr;
     if ( !mReader )
       return true;
@@ -827,22 +833,17 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	}
 	// ---Sven's strip </BODY> and </HTML> from end of attachment end-
       } else {
-	mReader->writeHTMLStr(QString("<div style=\"margin:0px 5%;"
-				      "border:2px solid %1;padding:10px;"
-				      "text-align:left;\">")
-			      .arg( mReader->cHtmlWarning.name() ) );
-	mReader->writeHTMLStr(i18n("<b>Note:</b> This is an HTML message. For "
-				   "security reasons, only the raw HTML code "
-				   "is shown. If you trust the sender of this "
-				   "message then you can activate formatted "
-				   //"HTML display by enabling <em>Prefer HTML "
-				   //"to Plain Text</em> in the <em>Folder</em> "
-				   //"menu."));
-				   "HTML display for this message "
-				   "<a href=\"kmail:showHTML\">by clicking here</a>."));
-	mReader->writeHTMLStr(     "</div><br /><br />");
+	htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
+	htmlWriter()->queue( i18n("<b>Note:</b> This is an HTML message. For "
+				  "security reasons, only the raw HTML code "
+				  "is shown. If you trust the sender of this "
+				  "message then you can activate formatted "
+				  "HTML display for this message "
+				  "<a href=\"kmail:showHTML\">by clicking here</a>.") );
+	htmlWriter()->queue( "</div><br><br>" );
       }
-      mReader->writeHTMLStr(mReader->mCodec->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
+      htmlWriter()->queue( codecFor( curNode )->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
+      mReader->mColorBar->setHtmlMode();
       return true;
     }
     return false;
@@ -1472,7 +1473,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     curNode->setFromAddress( rfc822message.from() );
     kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822message.from() << "\"\n" << endl;
     if ( mReader )
-      mReader->parseMsg( &rfc822message, true );
+      htmlWriter()->queue( mReader->writeMsgHeader( &rfc822message ) );
+      //mReader->parseMsgHeader( &rfc822message );
     // display the body of the encapsulated message
     insertAndParseNewChildNode( *curNode,
 				&*rfc822messageStr,
@@ -2587,24 +2589,18 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
 QString ObjectTreeParser::quotedHTML(const QString& s)
 {
   assert( mReader );
+  assert( cssHelper() );
 
   QString htmlStr;
-  QString normalStartTag;
-  const QString normalEndTag = "</div>";
-  const QString quoteEnd = "</div>";
+  const QString normalStartTag = cssHelper()->nonQuotedFontTag() +'\n';
+  QString quoteFontTag[3];
+  for ( int i = 0 ; i < 3 ; ++i )
+    quoteFontTag[i] = cssHelper()->quoteFontTag( i ) + '\n';
+  const QString normalEndTag = "</div>\n";
+  const QString quoteEnd = "</div>\n";
 
   unsigned int pos, beg;
-  unsigned int length = s.length();
-
-  QString style;
-  if( mReader->mBodyFont.bold() )
-    style += "font-weight:bold;";
-  if( mReader->mBodyFont.italic() )
-    style += "font-style:italic;";
-  if( style.isEmpty() )
-    normalStartTag = "<div>";
-  else
-    normalStartTag = QString("<div style=\"%1\">").arg( style );
+  const unsigned int length = s.length();
 
   // skip leading empty lines
   for ( pos = 0; pos < length && s[pos] <= ' '; pos++ );
@@ -2655,7 +2651,7 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
       if (actQuoteLevel == -1)
         htmlStr += normalStartTag;
       else
-        htmlStr += mReader->mQuoteFontTag[currQuoteLevel%3];
+        htmlStr += quoteFontTag[currQuoteLevel%3];
     }
 
     // don't write empty <div ...></div> blocks (they have zero height)
@@ -2666,10 +2662,10 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
       else
         htmlStr += QString( "<div dir=\"ltr\">" );
       htmlStr += LinkLocator::convertToHtml( line, true /* preserve blanks */);
-      htmlStr += QString( "</div>" );
+      htmlStr += QString( "</div>\n" );
     }
     else
-      htmlStr += "<br>";
+      htmlStr += "<br>\n";
   } /* while() */
 
   /* really finish the last quotelevel */
@@ -2689,8 +2685,8 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
 
   const QTextCodec * ObjectTreeParser::codecFor( partNode * node ) const {
     assert( node );
-    if ( mReader && !mReader->mAutoDetectEncoding )
-      return mReader->mCodec;
+    if ( mReader && mReader->overrideCodec() )
+      return mReader->overrideCodec();
     return node->msgPart().codec();
   }
 

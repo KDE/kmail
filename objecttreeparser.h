@@ -33,6 +33,7 @@ namespace KMail {
   class AttachmentStrategy;
   class HtmlWriter;
   class PartMetaData;
+  class CSSHelper;
 
   class ProcessResult {
   public:
@@ -86,7 +87,8 @@ namespace KMail {
 		      bool showOneMimePart=false, bool keepEncryptions=false,
 		      bool includeSignatures=true,
 		      const KMail::AttachmentStrategy * attachmentStrategy=0,
-		      KMail::HtmlWriter * htmlWriter=0 );
+		      KMail::HtmlWriter * htmlWriter=0,
+		      KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
     QCString resultString() const { return mResultString; }
@@ -118,6 +120,8 @@ namespace KMail {
     }
 
     KMail::HtmlWriter * htmlWriter() const { return mHtmlWriter; }
+
+    KMail::CSSHelper * cssHelper() const { return mCSSHelper; }
 
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
@@ -263,6 +267,7 @@ namespace KMail {
     bool mIsFirstTextPart;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
+    KMail::CSSHelper * mCSSHelper;
   };
 
 }; // namespace KMail

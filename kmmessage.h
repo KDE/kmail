@@ -509,6 +509,15 @@ public:
   void setCteStr(const QCString& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
+  /** Sets this body part's content to @p str. @p str is subject to
+      automatic charset and CTE detection.
+   **/
+  void setBodyFromUnicode( const QString & str );
+
+  /** Returns the body part decoded to unicode.
+   **/
+  QString bodyToUnicode(const QTextCodec* codec=0) const;
+
   /** Get the message body. Does not decode the body. */
   QCString body(void) const;
 
@@ -685,13 +694,11 @@ public:
   /** Set the message charset. */
   void setCharset(const QCString& aStr);
 
-  /** Get the charset the user selected for the message to display */
-  const QTextCodec* codec(void) const
-  { return mCodec; }
+  /** Get a @ref QTextCodec suitable for this message part */
+  const QTextCodec * codec() const;
 
   /** Set the charset the user selected for the message to display */
-  void setCodec( const QTextCodec* aCodec, bool autoDetect )
-  { mCodec = aCodec; mAutoDetectCodec = autoDetect; }
+  void setOverrideCodec( const QTextCodec* codec ) { mOverrideCodec = codec; }
 
   /** Allow decoding of HTML for quoting */
   void setDecodeHTML(bool aDecodeHTML)
@@ -782,8 +789,7 @@ private:
   int mTransferInProgress;
   static const KMail::HeaderStrategy * sHeaderStrategy;
   static QString sForwardStr;
-  const QTextCodec* mCodec;
-  bool mAutoDetectCodec;
+  const QTextCodec * mOverrideCodec;
 
   QString mFileName;
   off_t mFolderOffset;

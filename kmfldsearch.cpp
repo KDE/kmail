@@ -33,7 +33,6 @@
 #include <qbuttongroup.h>
 #include <qobjectlist.h> //for mPatternEdit->queryList( 0, "mRuleField" )->first();
 #include <qcursor.h>
-#include <qtextcodec.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/boyermor.h>
@@ -609,33 +608,7 @@ KMMessage* KMFldSearch::message()
     if (!folder || msgIndex < 0)
 	return 0;
 
-    KMMessage* message = folder->getMsg(msgIndex);
-    if (!message)
-	return 0;
-
-    //TODO: Factor this codec code out of here and KMReaderWin::parseMsg
-    //and put it somewhere else.
-    int mainType = message->type();
-    bool isMultipart = ( DwMime::kTypeMultipart == mainType );
-    QTextCodec *codec = 0;
-    QCString encoding;
-    if (DwMime::kTypeText == mainType)
-	encoding = message->charset();
-    else if (isMultipart) {
-	if (message->numBodyParts() > 0) {
-	    KMMessagePart msgPart;
-	    message->bodyPart(0, &msgPart);
-	    encoding = msgPart.charset();
-	}
-    }
-    if (encoding.isEmpty())
-	encoding = kernel->networkCodec()->name();
-    codec = KMMsgBase::codecForName(encoding);
-    if (!codec)
-	codec = QTextCodec::codecForName("iso8859-1");
-    message->setCodec(codec, true);
-
-    return message;
+    return folder->getMsg(msgIndex);
 }
 
 //-----------------------------------------------------------------------------

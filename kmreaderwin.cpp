@@ -5,7 +5,7 @@
 
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
-// #define KMAIL_READER_HTML_DEBUG
+//#define KMAIL_READER_HTML_DEBUG 1
 
 #include <config.h>
 
@@ -45,6 +45,8 @@ using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
 #include "htmlstatusbar.h"
 using KMail::HtmlStatusBar;
+#include "csshelper.h"
+using KMail::CSSHelper;
 
 #ifdef KMAIL_READER_HTML_DEBUG
 #include "filehtmlwriter.h"
@@ -73,10 +75,6 @@ using namespace KMime;
 #include <ktempfile.h>
 #include <kprocess.h>
 #include <kdialog.h>
-
-// libkdepim headers
-#include <addresseeview.h>
-using KPIM::AddresseeView;
 
 // KABC includes
 #include <kabc/addressee.h>
@@ -464,6 +462,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
+    mOverrideCodec( 0 ),
+    mCSSHelper( 0 ),
     //mShowCompleteMessage( false ),
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
@@ -491,9 +491,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   	   this, SLOT(slotDelayedResize()) );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
-
-  mCodec = 0;
-  mAutoDetectEncoding = true;
 
   if(getenv("KMAIL_DEBUG_READER_CRYPTO") != 0){
     QCString cE = getenv("KMAIL_DEBUG_READER_CRYPTO");
@@ -658,166 +655,24 @@ bool KMReaderWin::event(QEvent *e)
 {
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
-     readColorConfig();
-     if (message())
-	 message()->readConfig();
-     update( true ); // Force update
-     return true;
+    delete mCSSHelper;
+    mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
+    if (message())
+      message()->readConfig();
+    update( true ); // Force update
+    return true;
   }
   return KMReaderWinInherited::event(e);
 }
 
 
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::readColorConfig(void)
-{
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Reader");
-
-  c1 = QColor(kapp->palette().active().text());
-  c2 = KGlobalSettings::linkColor();
-  c3 = KGlobalSettings::visitedLinkColor();
-  c4 = QColor(kapp->palette().active().base());
-  cHtmlWarning = QColor( 0xFF, 0x40, 0x40 ); // warning frame color: light red
-
-  // The default colors are also defined in configuredialog.cpp
-  cPgpEncrH = QColor( 0x00, 0x80, 0xFF ); // light blue
-  cPgpOk1H  = QColor( 0x40, 0xFF, 0x40 ); // light green
-  cPgpOk0H  = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
-  cPgpWarnH = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
-  cPgpErrH  = QColor( 0xFF, 0x00, 0x00 ); // red
-
-  if (!config->readBoolEntry("defaultColors",TRUE)) {
-    c1 = config->readColorEntry("ForegroundColor",&c1);
-    c2 = config->readColorEntry("LinkColor",&c2);
-    c3 = config->readColorEntry("FollowedColor",&c3);
-    c4 = config->readColorEntry("BackgroundColor",&c4);
-    cPgpEncrH = config->readColorEntry( "PGPMessageEncr", &cPgpEncrH );
-    cPgpOk1H  = config->readColorEntry( "PGPMessageOkKeyOk", &cPgpOk1H );
-    cPgpOk0H  = config->readColorEntry( "PGPMessageOkKeyBad", &cPgpOk0H );
-    cPgpWarnH = config->readColorEntry( "PGPMessageWarn", &cPgpWarnH );
-    cPgpErrH  = config->readColorEntry( "PGPMessageErr", &cPgpErrH );
-    cHtmlWarning = config->readColorEntry( "HTMLWarningColor", &cHtmlWarning );
-  }
-
-  // determine the frame and body color for PGP messages from the header color
-  // if the header color equals the background color then the other colors are
-  // also set to the background color (-> old style PGP message viewing)
-  // else
-  // the brightness of the frame is set to 4/5 of the brightness of the header
-  // and in case of a light background color
-  // the saturation of the body is set to 1/8 of the saturation of the header
-  // while in case of a dark background color
-  // the value of the body is set to the value of the background color
-
-  // Check whether the user uses a light color scheme
-  int h, s, v, vBackground;
-  c4.hsv( &h, &s, &vBackground );
-  bool bLightBackground = ( vBackground >= 128 );
-  if ( cPgpOk1H == c4 )
-  { // header color == background color?
-    cPgpOk1F = c4;
-    cPgpOk1B = c4;
-  }
-  else
-  {
-    cPgpOk1H.hsv( &h, &s, &v );
-    cPgpOk1F.setHsv( h, s, v*4/5 );
-    if( bLightBackground ) {
-      cPgpOk1B.setHsv( h, s/8, v );
-    }
-    else {
-      cPgpOk1B.setHsv( h, s, vBackground );
-    }
-  }
-  if ( cPgpOk0H == c4 )
-  { // header color == background color?
-    cPgpOk0F = c4;
-    cPgpOk0B = c4;
-  }
-  else
-  {
-    cPgpOk0H.hsv( &h, &s, &v );
-    cPgpOk0F.setHsv( h, s, v*4/5 );
-    if( bLightBackground ) {
-      cPgpOk0B.setHsv( h, s/8, v );
-    }
-    else {
-      cPgpOk0B.setHsv( h, s, vBackground );
-    }
-  }
-  if ( cPgpWarnH == c4 )
-  { // header color == background color?
-    cPgpWarnF = c4;
-    cPgpWarnB = c4;
-  }
-  else
-  {
-    cPgpWarnH.hsv( &h, &s, &v );
-    cPgpWarnF.setHsv( h, s, v*4/5 );
-    if( bLightBackground ) {
-      cPgpWarnB.setHsv( h, s/8, v );
-    }
-    else {
-      cPgpWarnB.setHsv( h, s, vBackground );
-    }
-  }
-  if ( cPgpErrH == c4 )
-  { // header color == background color?
-    cPgpErrF = c4;
-    cPgpErrB = c4;
-  }
-  else
-  {
-    cPgpErrH.hsv( &h, &s, &v );
-    cPgpErrF.setHsv( h, s, v*4/5 );
-    if( bLightBackground ) {
-      cPgpErrB.setHsv( h, s/8, v );
-    }
-    else {
-      cPgpErrB.setHsv( h, s, vBackground );
-    }
-  }
-
-  if ( cPgpEncrH == c4 )
-  { // header color == background color?
-    cPgpEncrF = c4;
-    cPgpEncrB = c4;
-  }
-  else
-  {
-    cPgpEncrH.hsv( &h, &s, &v );
-    cPgpEncrF.setHsv( h, s, v*4/5 );
-    if( bLightBackground ) {
-      cPgpEncrB.setHsv( h, s/8, v );
-    }
-    else {
-      cPgpEncrB.setHsv( h, s, vBackground );
-    }
-  }
-
-  //
-  // Prepare the quoted fonts
-  //
-  mQuoteFontTag[0] = quoteFontTag(0);
-  mQuoteFontTag[1] = quoteFontTag(1);
-  mQuoteFontTag[2] = quoteFontTag(2);
-}
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
   KConfig *config = KMKernel::config();
-  QString encoding;
 
-  { // block defines the lifetime of KConfigGroupSaver
-  KConfigGroupSaver saver(config, "Pixmaps");
-  mBackingPixmapOn = FALSE;
-  mBackingPixmapStr = config->readPathEntry("Readerwin");
-  if (!mBackingPixmapStr.isEmpty())
-    mBackingPixmapOn = TRUE;
-  }
+  delete mCSSHelper;
+  mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
 
   { // must be done before setHeaderStyleAndStrategy
     KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
@@ -852,23 +707,6 @@ void KMReaderWin::readConfig(void)
   config->writeEntry( "showColorbar", mShowColorbar );
   }
 
-  {
-  KConfigGroupSaver saver(config, "Fonts");
-  mBodyFont = KGlobalSettings::generalFont();
-  mFixedFont = KGlobalSettings::fixedFont();
-  if (!config->readBoolEntry("defaultFonts",TRUE)) {
-    mBodyFont = config->readFontEntry((mPrinting) ? "print-font" : "body-font",
-      &mBodyFont);
-    mFixedFont = config->readFontEntry("fixed-font", &mFixedFont);
-  }
-  else {
-    setFont(KGlobalSettings::generalFont());
-  }
-  mViewer->setStandardFont( mBodyFont.family() );
-  }
-
-  readColorConfig();
-
   if (message()) {
     update();
     message()->readConfig();
@@ -890,75 +728,6 @@ void KMReaderWin::writeConfig(bool aWithSync)
     config->writeEntry("attachment-strategy",attachmentStrategy()->name());
   if (aWithSync) config->sync();
 }
-
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::quoteFontTag( int quoteLevel )
-{
-  KConfig *config = KMKernel::config();
-
-  QColor color;
-
-  { // block defines the lifetime of KConfigGroupSaver
-    KConfigGroupSaver saver(config, "Reader");
-    if( config->readBoolEntry( "defaultColors", true ) == true )
-    {
-      color = QColor(kapp->palette().active().text());
-    }
-    else
-    {
-      if( quoteLevel == 0 ) {
-	QColor defaultColor( 0x00, 0x80, 0x00 );
-	color = config->readColorEntry( "QuotedText1", &defaultColor );
-      } else if( quoteLevel == 1 ) {
-	QColor defaultColor( 0x00, 0x70, 0x00 );
-	color = config->readColorEntry( "QuotedText2", &defaultColor );
-      } else if( quoteLevel == 2 ) {
-	QColor defaultColor( 0x00, 0x60, 0x00 );
-	color = config->readColorEntry( "QuotedText3", &defaultColor );
-      } else
-	color = QColor(kapp->palette().active().base());
-    }
-  }
-
-  QFont font;
-  {
-    KConfigGroupSaver saver(config, "Fonts");
-    if( config->readBoolEntry( "defaultFonts", true ) == true )
-    {
-      font = KGlobalSettings::generalFont();
-      font.setItalic(true);
-    }
-    else
-    {
-      const QFont defaultFont = QFont("helvetica");
-      if( quoteLevel == 0 )
-	font  = config->readFontEntry( "quote1-font", &defaultFont );
-      else if( quoteLevel == 1 )
-	font  = config->readFontEntry( "quote2-font", &defaultFont );
-      else if( quoteLevel == 2 )
-	font  = config->readFontEntry( "quote3-font", &defaultFont );
-      else
-      {
-	font = KGlobalSettings::generalFont();
-	font.setItalic(true);
-      }
-    }
-  }
-
-  QString style;
-  if( mPrinting )
-    style = "color:#000000;";
-  else
-    style = QString( "color:%1;" ).arg( color.name() );
-  if( font.italic() )
-    style += "font-style:italic;";
-  if( font.bold() )
-    style += "font-weight:bold;";
-
-  return QString( "<div style=\"%1\">" ).arg( style );
-}
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
@@ -1015,17 +784,11 @@ void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
   update( true );
 }
 
-//-----------------------------------------------------------------------------
-void KMReaderWin::setCodec(const QTextCodec *codec)
-{
-  mCodec = codec;
-  if(!codec) {
-    mAutoDetectEncoding = true;
-    update(true);
+void KMReaderWin::setOverrideCodec( const QTextCodec * codec ) {
+  if ( mOverrideCodec == codec )
     return;
-  }
-  mAutoDetectEncoding = false;
-  update(true);
+  mOverrideCodec = codec;
+  update( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1058,10 +821,9 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     Q_ASSERT(0);
   }
 
-  if (aMsg)
-  {
-    aMsg->setCodec(mCodec, mAutoDetectEncoding);
-    aMsg->setDecodeHTML(htmlMail());
+  if (aMsg) {
+    aMsg->setOverrideCodec( overrideCodec() );
+    aMsg->setDecodeHTML( htmlMail() );
     mLastStatus = aMsg->status();
   } else {
     mLastStatus = KMMsgStatusUnknown;
@@ -1196,7 +958,7 @@ void KMReaderWin::displayAboutPage()
 
   info = info.arg("1.5").arg( changesItems );
 
-  mViewer->write(content.arg(pointsToPixel( mBodyFont.pointSize() )).arg(info));
+  mViewer->write(content.arg(pointsToPixel( mCSSHelper->bodyFont().pointSize() )).arg(info));
   mViewer->end();
 }
 
@@ -1223,7 +985,7 @@ void KMReaderWin::updateReaderWin()
   {
     mColorBar->hide();
     htmlWriter()->begin();
-    htmlWriter()->write( htmlHead( mPrinting ) + "</body></html>" );
+    htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
     if( mMimePartTree )
       mMimePartTree->clear();
@@ -1233,7 +995,7 @@ void KMReaderWin::updateReaderWin()
 //-----------------------------------------------------------------------------
 int KMReaderWin::pointsToPixel(int pointSize) const
 {
-  QPaintDeviceMetrics const pdm(mViewer->view());
+  const QPaintDeviceMetrics pdm(mViewer->view());
 
   return (pointSize * pdm.logicalDpiY() + 36) / 72;
 }
@@ -1249,239 +1011,6 @@ void KMReaderWin::showHideMimeTree( bool showIt )
   }
 }
 
-QString KMReaderWin::htmlHead( bool printing ) const {
-  QString fgColor = printing ? QString("#000000") : c1.name();
-  QString bgColor = printing ? QString("#FFFFFF") : c4.name();
-  QString linkColor = printing ? QString("#000000") : c2.name();
-  QString headerFont = ( printing
-                         ? QString("font-family: \"%1\"; "
-                                   "font-size: %2pt; ")
-                           .arg( mBodyFont.family() )
-                           .arg( mBodyFont.pointSize() )
-                         : QString("font-family: \"%1\"; "
-                                   "font-size: %2px; ")
-                           .arg( mBodyFont.family() )
-                           .arg( pointsToPixel( mBodyFont.pointSize() ) ) );
-  QString background = ( mBackingPixmapOn && !printing
-                         ? QString( "background-image:url(file://%1)" )
-                           .arg( mBackingPixmapStr )
-                         : QString( "background-color: %1;" )
-                           .arg( bgColor ) );
-  QString bodyFontSize = printing
-    ? QString::number( fontSize() ) + "pt"
-    : QString::number( pointsToPixel( fontSize() ) ) + "px" ;
-  QColorGroup cg = kapp->palette().active();
-
-  return
-    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-    "<html><head><title></title>\n"
-    "<style type=\"text/css\">\n"
-    +
-    QString( "body {\n"
-	     "  font-family: \"%1\";\n"
-	     "  font-size: %2;\n"
-	     "  color: %3;\n"
-	     "  %4\n"
-	     "}\n\n" )
-    .arg( bodyFontFamily() )
-    .arg( bodyFontSize )
-    .arg( fgColor )
-    .arg( background )
-    +
-    QString( "a {\n"
-	     "  color: %1;\n"
-	     "  text-decoration: none;\n"
-	     "}\n\n" )
-    .arg( linkColor )
-    +
-    QString( "table.textAtm {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border-width: 0px;\n"
-	     "  margin-top: 10pt;\n"
-	     "  margin-bottom: 10pt;\n"
-	     "}\n\n" )
-    .arg( fgColor )
-    +
-    QString( "tr.textAtmH {\n"
-	     "  background-color: %1;\n"
-	     "  %2\n"
-	     "  font-weight: normal;\n"
-	     "}\n\n" )
-    .arg( bgColor )
-    .arg( headerFont )
-    +
-    QString( "tr.textAtmB {\n"
-	     "  background-color: %1;\n"
-	     "  font-weight: normal;\n"
-	     "}\n\n" )
-    .arg( bgColor )
-    +
-    "tr.textAtmH td { padding: 3px; }\n\n"
-    "tr.textAtmB td { padding: 3px; }\n\n"
-    +
-    QString( "table.rfc822 {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border: solid 1px black;\n"
-	     "  margin-top: 10pt;\n"
-	     "  margin-bottom: 10pt;\n"
-	     "}\n\n" )
-    .arg( bgColor )
-    +
-    QString( "tr.rfc822H {\n"
-	     "  %1\n"
-	     "  font-weight: bold;\n"
-	     "}\n\n" )
-    .arg( headerFont )
-    +
-    "tr.rfc822B { font-weight: normal; }\n"
-    +
-    QString( "table.encr {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border-width: 0px;\n"
-	     "}\n\n" )
-    .arg( cPgpEncrF.name() )
-    +
-    QString( "tr.encrH {\n"
-	     "  background-color: %1;\n"
-	     "  %2\n"
-	     "  font-weight: bold;\n"
-	     "}\n" )
-    .arg( cPgpEncrH.name() )
-    .arg( headerFont )
-    +
-    QString( "tr.encrB { background-color: %1; }\n\n" )
-    .arg( cPgpEncrB.name() )
-    +
-    QString( "table.signOkKeyOk {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border-width: 0px;\n"
-	     "}\n\n" )
-    .arg( cPgpOk1F.name() )
-    +
-    QString( "tr.signOkKeyOkH {\n"
-	     "  background-color: %1;\n"
-	     "  %2\n"
-	     "  font-weight: bold;\n"
-	     "}\n\n" )
-    .arg( cPgpOk1H.name() )
-    .arg( headerFont )
-    +
-    QString( "tr.signOkKeyOkB { background-color: %1; }\n\n" )
-    .arg( cPgpOk1B.name() )
-    +
-    QString( "table.signOkKeyBad {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border-width: 0px;\n"
-	     "}\n\n" )
-    .arg( cPgpOk0F.name() )
-    +
-    QString( "tr.signOkKeyBadH {\n"
-	     "  background-color: %1;\n"
-	     "  %2\n"
-	     "  font-weight: bold;\n"
-	     "}\n\n" )
-    .arg( cPgpOk0H.name() )
-    .arg( headerFont )
-    +
-    QString( "tr.signOkKeyBadB { background-color: %1; }\n\n" )
-    .arg( cPgpOk0B.name() )
-    +
-    QString( "table.signWarn {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border-width: 0px;\n"
-	     "}\n" )
-    .arg( cPgpWarnF.name() )
-    +
-    QString( "tr.signWarnH {\n"
-	     "  background-color: %1;\n"
-	     "  %2\n"
-	     "  font-weight: bold;\n"
-	     "}\n\n" )
-    .arg( cPgpWarnH.name() )
-    .arg( headerFont )
-    +
-    QString( "tr.signWarnB { background-color: %1; }\n\n" )
-    .arg( cPgpWarnB.name() )
-    +
-    QString( "table.signErr {\n"
-	     "  width: 100%;\n"
-	     "  background-color: %1;\n"
-	     "  border-width: 0px;\n"
-	     "}\n\n" )
-    .arg( cPgpErrF.name() )
-    +
-    QString( "tr.signErrH {\n"
-	     "  background-color: %1;\n"
-	     "  %2\n"
-	     "  font-weight: bold;\n"
-	     "}\n\n" )
-    .arg( cPgpErrH.name() )
-    .arg( headerFont )
-    +
-    QString( "tr.signErrB { background-color: %1; }\n\n" )
-    .arg( cPgpErrB.name() )
-    +
-    QString( "div.header { %1 }\n\n" )
-    .arg( headerFont )
-    +
-    QString( "div.fancyHeaderSubj {\n"
-	     "  background-color: %1;\n"
-	     "  color: %2;\n"
-	     "  padding: 4px;\n"
-	     "  border: solid %3 1px;\n"
-	     "}\n\n"
-             "div.fancyHeaderSubj a[href] { color: %2; }\n\n"
-             "div.fancyHeaderSubj a[href]:hover { text-decoration: underline; }\n\n")
-    .arg((printing) ? cg.background().name() : cg.highlight().name())
-    .arg((printing) ? cg.foreground().name() : cg.highlightedText().name())
-    .arg((printing) ? cg.foreground().name() : cg.highlightedText().name())
-    .arg(cg.foreground().name())
-    +
-    QString( "div.fancyHeaderDtls {\n"
-	     "  background-color: %1;\n"
-	     "  color: %2;\n"
-	     "  border-bottom: solid %3 1px;\n"
-	     "  border-left: solid %4 1px;\n"
-	     "  border-right: solid %5 1px;\n"
-	     "  margin-bottom: 1em;\n"
-	     "  padding: 2px;\n"
-	     "}\n\n" )
-    .arg(cg.background().name())
-    .arg(cg.foreground().name())
-    .arg(cg.foreground().name())
-    .arg(cg.foreground().name())
-    .arg(cg.foreground().name())
-    +
-    "table.fancyHeaderDtls {\n"
-    "  width: 100%;\n"
-    "  border-width: 0px;\n"
-    "  align: left\n"
-    "}\n\n"
-    "th.fancyHeaderDtls {\n"
-    "  padding: 0px;\n"
-    "  white-space: nowrap;\n"
-    "  border-spacing: 0px;\n"
-    "  text-align: left;\n"
-    "  vertical-align: top;\n"
-    "}\n\n"
-    "td.fancyHeaderDtls {\n"
-    "  padding: 0px;\n"
-    "  border-spacing: 0px;\n"
-    "  text-align: left;\n"
-    "  text-valign: top;\n"
-    "  width: 100%;\n"
-    "}\n\n"
-    "</style></head>\n"
-    "<body>\n";
-}
-
-//-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
   KMMessage *msg = message();
@@ -1496,35 +1025,22 @@ void KMReaderWin::parseMsg(void)
 
   showHideMimeTree( isMultipart );
 
+  msg->setOverrideCodec( overrideCodec() );
+
   htmlWriter()->begin();
-
-  if (mAutoDetectEncoding) {
-    mCodec = 0;
-    QCString encoding;
-    if( DwMime::kTypeText == mainType )
-      encoding = msg->charset();
-    else if ( isMultipart ) {
-      if (msg->numBodyParts() > 0) {
-        KMMessagePart msgPart;
-        msg->bodyPart(0, &msgPart);
-        encoding = msgPart.charset();
-      }
-    }
-    if (encoding.isEmpty())
-      encoding = kernel->networkCodec()->name();
-    mCodec = KMMsgBase::codecForName(encoding);
-  }
-
-  if (!mCodec)
-    mCodec = QTextCodec::codecForName("iso8859-1");
-  msg->setCodec(mCodec, mAutoDetectEncoding);
-
-  htmlWriter()->queue( htmlHead( mPrinting ) );
+  htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
   if (!parent())
     setCaption(msg->subject());
 
+  removeTempFiles();
+
+  mColorBar->setNeutralMode();
+
   parseMsg(msg);
+
+  if( mColorBar->isNeutral() )
+    mColorBar->setNormalMode();
 
   htmlWriter()->queue("</body></html>");
   htmlWriter()->flush();
@@ -1532,31 +1048,18 @@ void KMReaderWin::parseMsg(void)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
+void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
 #ifndef NDEBUG
-  QString s("\n#######\n#######\n#######  parseMsg(KMMessage* aMsg ");
-  if( aMsg == message() )
-    s += "==";
-  else
-    s += "!=";
-  s += " aMsg, bool onlyProcessHeaders == ";
-  if( onlyProcessHeaders )
-    s += "true";
-  else
-    s += "false";
-  s += "\n#######\n#######";
-  kdDebug(5006) << s << endl;
+  kdDebug( 5006 )
+    << "\n#######\n#######\n#######  parseMsg(KMMessage* aMsg "
+    << ( aMsg == message() ? "==" : "!=" )
+    << " aMsg )\n#######\n#######";
 #endif
 
-  mColorBar->setNeutralMode();
-
-  if( !onlyProcessHeaders )
-    removeTempFiles();
   KMMessagePart msgPart;
   QCString subtype, contDisp;
   QByteArray str;
-  partNode* savedRootNode = 0;
 
   assert(aMsg!=0);
 
@@ -1596,11 +1099,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
     mainBody->Parse();
   }
 
-  if( onlyProcessHeaders )
-    savedRootNode = mRootNode;
-  else
-    delete mRootNode;
-
+  delete mRootNode;
   mRootNode = new partNode( mainBody, mainType, mainSubType, true );
   mRootNode->setFromAddress( aMsg->from() );
 
@@ -1620,14 +1119,14 @@ kdDebug(5006) << "\n     ----->  First body part *was* found, filling the Mime P
     partNode* curNode = mRootNode->setFirstChild( new partNode(firstBodyPart) );
     curNode->buildObjectTree();
     // fill the MIME part tree viewer
-    if( mMimePartTree && !onlyProcessHeaders )
+    if( mMimePartTree )
       mRootNode->fillMimePartTree( 0,
                                    mMimePartTree,
                                    cntDesc,
                                    mainCntTypeStr,
                                    cntEnc,
                                    cntSize );
-  } else if( mMimePartTree && !onlyProcessHeaders ) {
+  } else if( mMimePartTree ) {
 kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" << endl;
     mRootNode->fillMimePartTree( 0,
                                  mMimePartTree,
@@ -1636,18 +1135,14 @@ kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" <<
                                  cntEnc,
                                  cntSize );
 kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tree" << endl;
-  } else if(  !onlyProcessHeaders ){
+  } else {
 kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root Node!" << endl;
   }
 
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
   bool hasVCard = false;
   if( vCardNode ) {
-    const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
-      KMMsgBase::codecForName(vCardNode->msgPart().charset()) : mCodec;
-
-    if (!atmCodec) atmCodec = mCodec;
-    QString vcard = atmCodec->toUnicode(vCardNode->msgPart().bodyDecoded());
+    const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
     KABC::VCardConverter vc;
     KABC::Addressee a;
     bool isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v3_0);
@@ -1659,16 +1154,12 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
       writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
     }
   }
-  htmlWriter()->queue("<div id=\"header\">"
-          + (writeMsgHeader(aMsg, hasVCard))
-          + "</div><div><br></div>");
+  htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard) );
 
 
   // show message content
-  if( !onlyProcessHeaders ) {
-    ObjectTreeParser otp( this );
-    otp.parseObjectTree( mRootNode );
-  }
+  ObjectTreeParser otp( this );
+  otp.parseObjectTree( mRootNode );
 
   // store encrypted/signed status information in the KMMessage
   //  - this can only be done *after* calling parseObjectTree()
@@ -1696,7 +1187,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
 
 
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
-kdDebug(5006) << "(!onlyProcessHeaders) = "                        << (!onlyProcessHeaders) << endl;
 kdDebug(5006) << "(aMsg == msg) = "                               << (aMsg == message()) << endl;
 kdDebug(5006) << "   (KMMsgStatusUnknown == mLastStatus) = "           << (KMMsgStatusUnknown == mLastStatus) << endl;
 kdDebug(5006) << "|| (KMMsgStatusNew     == mLastStatus) = "           << (KMMsgStatusNew     == mLastStatus) << endl;
@@ -1705,12 +1195,8 @@ kdDebug(5006) << "(mIdOfLastViewedMessage != aMsg->msgId()) = "    << (mIdOfLast
 kdDebug(5006) << "   (KMMsgFullyEncrypted == encryptionState) = "     << (KMMsgFullyEncrypted == encryptionState) << endl;
 kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgPartiallyEncrypted == encryptionState) << endl;
          // only proceed if we were called the normal way - not by
-         // click in the MIME tree viewer
-  if(    !onlyProcessHeaders
-         // only proceed if we were called the normal way - not by
          // double click on the message (==not running in a separate window)
-
-      && (aMsg == message())
+  if(    (aMsg == message())
          // only proceed if this message was not saved encryptedly before
          // to make sure only *new* messages are saved in decrypted form
       && (    (KMMsgStatusUnknown == mLastStatus)
@@ -1754,11 +1240,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
 
   // save current main Content-Type before deleting mRootNode
   int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
-  // if necessary restore original mRootNode
-  if(onlyProcessHeaders) {
-    delete mRootNode;
-    mRootNode = savedRootNode;
-  }
+
   // store message id to avoid endless recursions
   setIdOfLastViewedMessage( aMsg->msgId() );
 
@@ -1767,15 +1249,107 @@ kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
     emit replaceMsgByUnencryptedVersion();
   } else {
 kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
-    if (!onlyProcessHeaders)
       showHideMimeTree( (DwMime::kTypeMultipart   == rootNodeCntType) ||
                         (DwMime::kTypeApplication == rootNodeCntType) ||
                         (DwMime::kTypeMessage     == rootNodeCntType) ||
                         (DwMime::kTypeModel       == rootNodeCntType) );
   }
-  if( mColorBar->isNeutral() )
-    mColorBar->setNormalMode();
 }
+
+#if 0
+void KMReaderWin::parseMsgHeader(KMMessage* aMsg)
+{
+  // ### this is wrong here, belongs in parseMsg()
+  //mColorBar->setNeutralMode();
+
+  assert(aMsg!=0);
+
+  // ### (mmutz) All this just to show a [vCard] label in the headers?
+  // ### I don't think it's pulling it's weight...
+#if 0
+  int mainType    = aMsg->type();
+  int mainSubType = aMsg->subtype();
+  if ( mainType == DwMime::kTypeNull || mainType == DwMime::kTypeUnknown ) {
+    mainType    = DwMime::kTypeText;
+    mainSubType = DwMime::kSubtypePlain;
+  }
+
+  // store message body in mRootNode if *no* body parts found
+  // (please read the comment below before crying about me)  :-)
+  DwBodyPart* mainBody = 0;
+  DwBodyPart* firstBodyPart = aMsg->getFirstDwBodyPart();
+  if( !firstBodyPart ) {
+    // ATTENTION: This definitely /should/ be optimized.
+    //            Copying the message text into a new body part
+    //            surely is not the most efficient way to go.
+    //            I decided to do so for being able to get a
+    //            solution working for old style (== non MIME)
+    //            mails without spending much time on implementing.
+    //            During code revisal when switching to KMime
+    //            all this will probably disappear anyway (or it
+    //            will be optimized, resp.).       (khz, 6.12.2001)
+    kdDebug(5006) << "*no* first body part found, creating one from Message" << endl;
+    mainBody = new DwBodyPart(aMsg->asDwString(), 0);
+    mainBody->Parse();
+  }
+
+  partNode * savedRootNode = mRootNode;
+
+  mRootNode = new partNode( mainBody, mainType, mainSubType, true );
+  mRootNode->setFromAddress( aMsg->from() );
+
+  if( firstBodyPart ) {
+    kdDebug(5006) << "\n----->  First body part *was* found, filling the Mime Part Tree" << endl;
+    // store pointers to the MIME objects in our fast access tree
+    partNode* curNode = mRootNode->setFirstChild( new partNode(firstBodyPart) );
+    curNode->buildObjectTree();
+  }
+
+  partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
+  bool hasVCard = false;
+  if( vCardNode ) {
+    const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
+    KABC::VCardConverter vc;
+    KABC::Addressee a;
+    bool isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v3_0);
+    if (!isOk)
+      isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v2_1);
+    if( isOk ) {
+      hasVCard = true;
+      kdDebug(5006) << "FOUND A VALID VCARD" << endl;
+      writeMessagePartToTempFile( &vCardNode->msgPart(), vCardNode->nodeId() );
+    }
+  }
+#endif
+  htmlWriter()->queue( writeMsgHeader( aMsg ) );
+
+  // ### (mmutz) the only user of this function destroys aMsg
+  // ### immeediately after calling this method, so no use in saving
+  // ### sign state ;-)
+#if 0
+  // store encrypted/signed status information in the KMMessage
+  //  - this can only be done *after* calling parseObjectTree()
+  KMMsgEncryptionState encryptionState = mRootNode->overallEncryptionState();
+  KMMsgSignatureState  signatureState  = mRootNode->overallSignatureState();
+  aMsg->setEncryptionState( encryptionState );
+  aMsg->setSignatureState(  signatureState  );
+#endif
+
+#if 0 // see above
+  // restore original mRootNode
+  delete mRootNode;
+  mRootNode = savedRootNode;
+#endif
+
+  // store message id to avoid endless recursions
+  // ### (mmutz) this is probably also wrong here...:
+  //setIdOfLastViewedMessage( aMsg->msgId() );
+
+  // ### (mmutz) this, too is wrong here, belongs in parseMsg()...
+  //if( mColorBar->isNeutral() )
+  //  mColorBar->setNormalMode();
+}
+#endif
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
@@ -1794,13 +1368,6 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 }
 
 
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::writeHTMLStr(const QString& aStr)
-{
-  mColorBar->setHtmlMode();
-  htmlWriter()->queue(aStr);
-}
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
@@ -1845,21 +1412,18 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showVCard(KMMessagePart *msgPart, const QTextCodec *codec)
-{
-  QString vCard = codec->toUnicode(msgPart->bodyDecoded());
+void KMReaderWin::showVCard( KMMessagePart * msgPart ) {
+  const QString vCard = msgPart->bodyToUnicode( overrideCodec() );
 
   VCardViewer *vcv = new VCardViewer(this, vCard, "vCardDialog");
   vcv->show();
-
-  return;
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::printMsg()
 {
   if (!message()) return;
-    mViewer->view()->print();
+  mViewer->view()->print();
 }
 
 
@@ -2160,16 +1724,15 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->fromString(aMsgPart->bodyDecoded());
   assert(msg != 0);
   KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( mCodec, msg );
+  win->showMsg( overrideCodec(), msg );
   win->resize(550,600);
   win->show();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
-    bool aHTML, const QString& aFileName, const QString& pname,
-    const QTextCodec *aCodec )
+void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
+			      const QString& aFileName, const QString& pname )
 {
   KCursorSaver busy(KBusyPtr::busy());
   if (qstricmp(aMsgPart->typeStr(), "message")==0) {
@@ -2182,23 +1745,21 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       setAutoDelete(true);
   } else if (qstricmp(aMsgPart->typeStr(), "text")==0) {
       if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
-        showVCard(aMsgPart, aCodec);
-		return;
+        showVCard( aMsgPart );
+	return;
       }
-      if ( aCodec )
-	setCodec( aCodec );
-      else
-	setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
       htmlWriter()->begin();
-      htmlWriter()->queue( htmlHead( mPrinting ) );
+      htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
-      QCString str = aMsgPart->bodyDecoded();
-      if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
-	writeHTMLStr(codec()->toUnicode(str));
-      else { // plain text
+      if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0)) { // HTML
+	// ### this is broken. It doesn't stip off the HTML header and footer!
+	htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
+	mColorBar->setHtmlMode();
+      } else { // plain text
+	const QCString str = aMsgPart->bodyDecoded();
 	ObjectTreeParser otp( this );
 	otp.writeBodyStr( str,
-			  codec(),
+			  overrideCodec() ? overrideCodec() : aMsgPart->codec(),
 			  message() ? message()->from() : QString::null );
       }
       htmlWriter()->queue("</body></html>");
@@ -2240,7 +1801,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       }
       // Just write the img tag to HTML:
       htmlWriter()->begin();
-      htmlWriter()->write( htmlHead( mPrinting ) );
+      htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
       htmlWriter()->write( "<img src=\"file:" +
 			   KURL::encode_string( aFileName ) +
 			   "\" border=\"0\">\n"
@@ -2277,17 +1838,14 @@ void KMReaderWin::slotAtmView()
     if (pname.isEmpty()) pname=msgPart.contentDescription();
     if (pname.isEmpty()) pname="unnamed";
     // image Attachment is saved already
-    const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
-      KMMsgBase::codecForName(msgPart.charset()) : mCodec;
-    if (!atmCodec) atmCodec = mCodec;
     if (qstricmp(msgPart.typeStr(), "message")==0) {
       atmViewMsg(&msgPart);
     } else if ((qstricmp(msgPart.typeStr(), "text")==0) &&
 	       (qstricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
-      setMsgPart( &msgPart, htmlMail(), mAtmCurrentName, pname, atmCodec );
+      setMsgPart( &msgPart, htmlMail(), mAtmCurrentName, pname );
     } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
-	mAtmCurrentName, pname, atmCodec );
+	mAtmCurrentName, pname, overrideCodec() );
       win->show();
     }
   }
@@ -2314,11 +1872,7 @@ void KMReaderWin::slotAtmOpen()
   if (qstricmp(msgPart.typeStr(), "text") == 0)
   {
     if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
-      const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
-          KMMsgBase::codecForName(msgPart.charset()) : mCodec;
-     if (!atmCodec) atmCodec = mCodec;
-
-     showVCard(&msgPart, atmCodec);
+     showVCard( &msgPart );
      return;
     }
   }
@@ -2385,33 +1939,31 @@ void KMReaderWin::slotAtmOpenWith()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmSave()
 {
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if( node ) {
-    KMMessagePart& msgPart = node->msgPart();
+  if ( !mRootNode )
+    return;
 
-    QString fileName = mAtmCurrentName;
+  partNode * node = mRootNode->findId( mAtmCurrent );
+  if ( !node )
+    return;
 
-    // strip off the leading path
-    int slashPos = fileName.findRev( '/' );
-    if( -1 != slashPos )
-      fileName = fileName.mid( slashPos + 1 );
+  const KMMessagePart & msgPart = node->msgPart();
 
-    // replace all ':' with '_' because ':' isn't allowed on FAT volumes
-    int colonPos = -1;
-    while( -1 != ( colonPos = fileName.find(':', colonPos + 1) ) )
-      fileName[colonPos] = '_';
+  // prepend the previously used save dir,
+  // replace all ':' with '_' because ':' isn't allowed on FAT volumes
+  const QString fileName =
+    mSaveAttachDir + mAtmCurrentName.section( '/', -1 ).replace( ':', '_' );
 
-    // prepend the previously used save dir
-    fileName.prepend(mSaveAttachDir);
-    KURL url = KFileDialog::getSaveURL( fileName, QString::null, this );
+  // ### getSaveURL should allow setting "::<attachments>" _and_ a
+  // ### proposed filename (currently, it's xor)...
+  // ### We could then get rid of mSaveAttachDir!
+  const KURL url = KFileDialog::getSaveURL( fileName, QString::null, this,
+					    i18n("Save Attachment As") );
+  if ( url.isEmpty() )
+    return;
 
-    if( url.isEmpty() )
-      return;
+  mSaveAttachDir = url.directory() + '/';
 
-    mSaveAttachDir = url.directory() + "/";
-
-    kernel->byteArrayToRemoteFile(msgPart.bodyDecodedBinary(), url);
-  }
+  kernel->byteArrayToRemoteFile( msgPart.bodyDecodedBinary(), url );
 }
 
 
@@ -2774,7 +2326,7 @@ void KMReaderWin::slotMailtoReply()
 void KMReaderWin::slotShowMsgSrc()
 {
   KMCommand *command = new KMShowMsgSrcCommand( mMainWindow, message(),
-                                                isfixedFont() );
+                                                isFixedFont() );
   command->start();
 }
 
@@ -2795,15 +2347,6 @@ void KMReaderWin::slotSaveMsg()
   else
     saveCommand->start();
 }
-
-int KMReaderWin::fontSize() const {
-  return mUseFixedFont ? mFixedFont.pointSize() : mBodyFont.pointSize() ;
-}
-
-QString KMReaderWin::bodyFontFamily() const {
-  return mUseFixedFont ? mFixedFont.family() : mBodyFont.family();
-}
-
 
 //-----------------------------------------------------------------------------
 #include "kmreaderwin.moc"

@@ -53,7 +53,8 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
 {
   resize( 550, 600 );
   mReaderWin = new KMReaderWin( this, this, actionCollection() ); //new reader
-  mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname, codec );
+  mReaderWin->setOverrideCodec( codec );
+  mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   setCentralWidget( mReaderWin );
   setupAccel();
 }
@@ -67,11 +68,10 @@ KMReaderMainWin::~KMReaderMainWin()
 
 void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 {
-  mReaderWin->setCodec( codec );
+  mReaderWin->setOverrideCodec( codec );
   mReaderWin->setMsg( msg, true );
   setCaption( msg->subject() );
   mMsg = msg;
-  mCodec = codec;
 }
 
 
