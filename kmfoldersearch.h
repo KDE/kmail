@@ -9,6 +9,7 @@
 #include <qguardedptr.h>
 #include <qvaluelist.h>
 #include <qvaluevector.h>
+#include <qvaluestack.h>
 #include "kmfolder.h"
 
 /** A search folder is a folder that shows the result of evaluating a
@@ -109,6 +110,8 @@ protected slots:
   void searchFinished(bool success);
   // Look at a new message and if it matches search() add it to the cache
   void examineAddedMessage(KMFolder *folder, Q_UINT32 serNum);
+  // Look at all new messages in a completed (imap) folder
+  void examineCompletedFolder(KMFolderImap *folder, bool success);
   // Look at a removed message and remove it from the cache
   void examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum);
   // Look at a message whose status has changed
@@ -173,6 +176,7 @@ protected:
 private:
   QValueVector<Q_UINT32> mSerNums;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
+  QValueStack<Q_UINT32> mUnexaminedMessages;
   FILE *mIdsStream;
   KMSearch *mSearch;
   bool mInvalid, mUnlinked;

@@ -940,7 +940,7 @@ private:
   QCheckBox* mAutoResCB;
   QCheckBox* mAutoDeclConflCB;
   QCheckBox* mAutoDeclRecurCB;
-    
+
     QCheckBox* mLegacyMangleFromTo;
 };
 

@@ -948,14 +948,49 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     assert(folder && (idx != -1));
     assert(folder == aFolder);
     assert(folder->isOpened());
-    KMMessage *msg = folder->getMsg(idx); //TODO handle IMAP
-    if (search()->searchPattern()->matches(msg))
-	if (mSearch->running()) {
-	    mSearch->stop();
-	    QTimer::singleShot(0, this, SLOT(executeSearch()));
-	} else {
-	    addSerNum(serNum);
+
+    if (folder->folderType() == KMFolderTypeImap) {
+        // Unless there is a search currently running, add the message to
+	// the list of ones to check on folderCompleted and hook up the signal.
+	if (!mSearch->running()) {
+	    mUnexaminedMessages.push(serNum);
+            disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+	           this, SLOT (examineCompletedFolder(KMFolderImap*, bool)));
+	    connect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+	           this, SLOT (examineCompletedFolder(KMFolderImap*, bool)));
 	}
+    } else {
+        KMMessage *msg = folder->getMsg(idx);
+        if (search()->searchPattern()->matches(msg))
+            if (mSearch->running()) {
+                mSearch->stop();
+                QTimer::singleShot(0, this, SLOT(executeSearch()));
+            } else {
+                addSerNum(serNum);
+            }
+    }
+}
+
+void KMFolderSearch::examineCompletedFolder(KMFolderImap *aFolder, bool success)
+{
+    if (!success) return;
+    disconnect (aFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+                this, SLOT(examineCompletedFolder(KMFolderImap*, bool)));
+    Q_UINT32 serNum;
+    while (!mUnexaminedMessages.isEmpty()) {
+        serNum = mUnexaminedMessages.pop();
+        int idx = -1;
+        KMFolder *folder = 0;
+        kernel->msgDict()->getLocation(serNum, &folder, &idx);
+        assert(folder && (idx != -1));
+        // Could it be another folder?
+        assert(folder == aFolder);
+        assert(folder->isOpened());
+        // FIXME separate headers and body matching
+        KMMessage *msg = folder->getMsg(idx);
+        if (search()->searchPattern()->matches(msg))
+            addSerNum(serNum);
+    }
 }
 
 void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
