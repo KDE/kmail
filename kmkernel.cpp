@@ -1642,7 +1642,7 @@ bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
 KPIM::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
     kdDebug(5006) << "instantating KPIM::IdentityManager" << endl;
-    mIdentityManager = new KPIM::IdentityManager( this, "mIdentityManager" );
+    mIdentityManager = new KPIM::IdentityManager( false, this, "mIdentityManager" );
   }
   return mIdentityManager;
 }
