@@ -125,6 +125,7 @@ signals:
   void completion();
 
 public slots:
+   void undo();
    void copy();
    void cut();
    void paste();
@@ -152,7 +153,7 @@ public:
 
   /** To catch palette changes */
   virtual bool event(QEvent *e);
-  
+
   /** update colors */
   void readColorConfig();
 
@@ -194,6 +195,8 @@ public slots:
 
   void slotFind();
   void slotReplace();
+  void slotUndo();
+  void slotRedo();
   void slotCut();
   void slotCopy();
   void slotPaste();
@@ -209,9 +212,9 @@ public slots:
   void slotToggleStatusBar();
   void slotEditToolbars();
   void slotEditKeys();
-  
+
   void readConfig(void); // Read settings from app's config file.
-  
+
   void slotUpdWinTitle(const QString& ); // Change window title to given string.
 
   /** Append signature file to the end of the text in the editor. */
@@ -232,7 +235,7 @@ public slots:
   /** Returns the number of the current attachment in the listbox,
   or -1 if there is no current attachment */
   int currentAttachmentNum();
-  
+
   /** Attachment operations. */
   void slotAttachView();
   void slotAttachRemove();
@@ -250,7 +253,7 @@ public slots:
 
   void slotCleanSpace();
 
-  
+
 //  void slotSpellConfigure();
   void slotSpellcheckDone();
 
@@ -263,7 +266,7 @@ public slots:
   void slotSetCharsets(const char *message,const char *composer,
 		       bool ascii,bool quote,bool def);
   void slotView();
-  
+
   /** Move focus to next/prev edit widget */
   void focusNextPrevEdit(const QWidget* current, bool next);
 
@@ -283,13 +286,13 @@ protected:
   void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString labelStr, QLabel* lbl,
 				 QComboBox* cbx, QCheckBox *chk);
-  
+
   /** Initialization methods */
   void setupActions();
   void setupStatusBar();
   void setupEditor();
-  
-  
+
+
   /** Header fields. */
    const QString subject(void) const { return mEdtSubject.text(); }
    const QString to(void) const { return mEdtTo.text(); }

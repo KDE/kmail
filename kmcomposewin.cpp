@@ -706,8 +706,8 @@ void KMComposeWin::setupActions(void)
   KStdAction::print (this, SLOT(slotPrint()), actionCollection());
   KStdAction::close (this, SLOT(slotClose()), actionCollection());
 
-  KStdAction::undo (mEditor, SLOT(undo()), actionCollection());
-  KStdAction::redo (mEditor, SLOT(redo()), actionCollection());
+  KStdAction::undo (this, SLOT(slotUndo()), actionCollection());
+  KStdAction::redo (this, SLOT(slotRedo()), actionCollection());
   KStdAction::cut (this, SLOT(slotCut()), actionCollection());
   KStdAction::copy (this, SLOT(slotCopy()), actionCollection());
   KStdAction::paste (this, SLOT(slotPaste()), actionCollection());
@@ -1655,6 +1655,28 @@ void KMComposeWin::slotReplace()
 
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::slotUndo()
+{
+  QWidget* fw = focusWidget();
+  if (!fw) return;
+
+  if (fw->inherits("KEdit"))
+    ((QMultiLineEdit*)fw)->undo();
+  else if (fw->inherits("KMLineEdit"))
+    ((KMLineEdit*)fw)->undo();
+}
+
+void KMComposeWin::slotRedo()
+{
+  QWidget* fw = focusWidget();
+  if (!fw) return;
+
+  if (fw->inherits("KEdit"))
+    ((QMultiLineEdit*)fw)->redo();
+    
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotCut()
 {
   QWidget* fw = focusWidget();
@@ -1762,27 +1784,10 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
-  QPrinter printer;
-  QPainter paint;
-  QString  str;
-
-  if (printer.setup(this))
-  {
-    paint.begin(&printer);
-    str += i18n("To:") + " ";
-    str += to() + "\n";
-    str += i18n("Subject:") + " ";
-    str += subject() + "\n";
-    str += i18n("Date:");
-    str += " \n\n";
-    str += mEditor->brokenText();
-    str += "\n";
-    //str.replace(QRegExp("\n"),"\n");
-    paint.drawText(paint.window().left() + 10, paint.window().top() + 20,
-                   paint.window().width() - 20, paint.window().height() - 40,
-                   Qt::WordBreak,str);
-    paint.end();
-  }
+  KMReaderWin rw;
+  applyChanges();
+  rw.setMsg(mMsg, true);
+  rw.printMsg();
 }
 
 
@@ -2211,6 +2216,12 @@ void KMLineEdit::cursorAtEnd()
   QLineEdit::keyPressEvent( &ev );
 }
 
+
+void KMLineEdit::undo()
+{
+    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z 
+    keyPressEvent( &k );
+}
 
 //-----------------------------------------------------------------------------
 void KMLineEdit::copy()
