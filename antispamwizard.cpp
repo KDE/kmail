@@ -218,7 +218,8 @@ void AntiSpamWizard::accept()
     for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
           it != mToolList.end(); ++it ) {
       if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
-         ( mSpamRulesPage->pipeRulesSelected() && (*it).isSpamTool() ) )
+         ( mSpamRulesPage->pipeRulesSelected() && (*it).isSpamTool() &&
+         !(*it).isDetectionOnly() ) )
       {
         // pipe messages through the anti-spam tools,
         // one single filter for each tool
@@ -301,7 +302,7 @@ void AntiSpamWizard::accept()
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
             it != mToolList.end(); ++it ) {
         if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
-            && (*it).useBayesFilter() )
+            && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
         {
           KMFilterAction* classSpamFilterAction = dict["execute"]->create();
           classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
@@ -334,7 +335,7 @@ void AntiSpamWizard::accept()
       for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
             it != mToolList.end(); ++it ) {
         if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
-            && (*it).useBayesFilter() )
+            && (*it).useBayesFilter() && !(*it).isDetectionOnly() )
         {
           KMFilterAction* classHamFilterAction = dict["execute"]->create();
           classHamFilterAction->argsFromString( (*it).getHamCmd() );
@@ -483,12 +484,14 @@ const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId,
       int configVersion,QString name, QString exec,
       QString url, QString filter, QString detection, QString spam, QString ham,
-      QString header, QString pattern, bool regExp, bool bayesFilter, WizardMode type)
+      QString header, QString pattern, bool detectionOnly, bool regExp, 
+      bool bayesFilter, WizardMode type)
   : mId( toolId ), mVersion( configVersion ),
     mVisibleName( name ), mExecutable( exec ), mWhatsThisText( url ),
     mFilterName( filter ), mDetectCmd( detection ), mSpamCmd( spam ),
     mHamCmd( ham ), mDetectionHeader( header ), mDetectionPattern( pattern ),
-    mUseRegExp( regExp ), mSupportsBayesFilter( bayesFilter ), mType( type )
+    mDetectionOnly( detectionOnly ), mUseRegExp( regExp ), 
+    mSupportsBayesFilter( bayesFilter ), mType( type )
 {
 }
 
@@ -564,11 +567,13 @@ AntiSpamWizard::SpamToolConfig
   QString hamCmd = configGroup.readEntry( "ExecCmdHam" );
   QString header = configGroup.readEntry( "DetectionHeader" );
   QString pattern = configGroup.readEntry( "DetectionPattern" );
-  bool useRegExp  = configGroup.readBoolEntry( "UseRegExp" );
+  bool detectionOnly = configGroup.readBoolEntry( "DetectionOnly", false );
+  bool useRegExp = configGroup.readBoolEntry( "UseRegExp" );
   bool supportsBayes = configGroup.readBoolEntry( "SupportsBayes", false );
   return SpamToolConfig( id, version, name, executable, url,
                          filterName, detectCmd, spamCmd, hamCmd,
-                         header, pattern, useRegExp, supportsBayes, mMode );
+                         header, pattern, detectionOnly, useRegExp, 
+                         supportsBayes, mMode );
 }
 
 
@@ -581,7 +586,7 @@ AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
                         "sa-learn -L --spam --no-rebuild --single",
                         "sa-learn -L --ham --no-rebuild --single",
                         "X-Spam-Flag", "yes",
-                        false, true, AntiSpam );
+                        false, false, true, AntiSpam );
 }
 
 

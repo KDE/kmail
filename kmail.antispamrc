@@ -1,5 +1,5 @@
 [General]
-tools=3
+tools=4
 
 [Spamtool #1]
 Ident=spamassassin
@@ -13,6 +13,7 @@ ExecCmdSpam=sa-learn -L --spam --no-rebuild --single
 ExecCmdHam=sa-learn -L --ham --no-rebuild --single
 DetectionHeader=X-Spam-Flag
 DetectionPattern=yes
+DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
 
@@ -28,6 +29,7 @@ ExecCmdSpam=bogofilter -N -s
 ExecCmdHam=bogofilter -S -n
 DetectionHeader=X-Bogosity
 DetectionPattern=yes
+DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
 
@@ -43,5 +45,22 @@ ExecCmdSpam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-fil
 ExecCmdHam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-filter/Dict.bin --phrasemin 1 --phrasemax 2 --mail - --prune --write $HOME/.annoyance-filter/Dict.bin --fwrite $HOME/.annoyance-filter/FastDict.bin
 DetectionHeader=X-Annoyance-Filter-Classification
 DetectionPattern=Junk
+DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
+
+[Spamtool #4]
+Ident=gmx-antispam
+Version=1
+VisibleName=&GMX Spam Filter
+Executable=echo
+URL=http://www.gmx.net/de/produkte/virenschutz/index.html
+PipeFilterName=
+PipeCmdDetect=
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-GMX-Antispam
+DetectionPattern=^[2345]
+DetectionOnly=1
+UseRegExp=1
+SupportsBayes=0

@@ -83,6 +83,7 @@ namespace KMail {
     ExecCmdHam=sa-learn --ham --no-rebuild --single
     DetectionHeader=X-Spam-Flag
     DetectionPattern=yes
+    DetectionOnly=0
     UseRegExp=0
     SupportsBayes=1
     type=spam
@@ -129,8 +130,8 @@ namespace KMail {
           SpamToolConfig( QString toolId, int configVersion,
                         QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
-                        QString header, QString pattern, bool regExp,
-                        bool bayesFilter, WizardMode type );
+                        QString header, QString pattern, bool detectionOnly, 
+                        bool regExp, bool bayesFilter, WizardMode type );
 
           int getVersion() const { return mVersion; }
           QString getId()  const { return mId; }
@@ -143,6 +144,7 @@ namespace KMail {
           QString getHamCmd() const { return mHamCmd; }
           QString getDetectionHeader() const { return mDetectionHeader; }
           QString getDetectionPattern() const { return mDetectionPattern; }
+          bool isDetectionOnly() const { return mDetectionOnly; }
           bool isUseRegExp() const { return mUseRegExp; }
           bool useBayesFilter() const { return mSupportsBayesFilter; }
           WizardMode getType() const { return mType; }
@@ -174,6 +176,8 @@ namespace KMail {
           QString mDetectionHeader;
           // what header pattern is used to mark spam messages
           QString mDetectionPattern;
+          // filter cannot search actively but relies on pattern by regExp or contain rule
+          bool mDetectionOnly;
           // filter searches for the pattern by regExp or contain rule
           bool mUseRegExp;
           // can the tool learn spam and ham, has it a bayesian algorithm
