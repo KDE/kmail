@@ -1,6 +1,6 @@
 about_DATA = \
 	top-right-kmail.png \
 	main.html \
-	kmail.css
+	kmail_about.css
 
 aboutdir = $(kde_datadir)/kmail/about
