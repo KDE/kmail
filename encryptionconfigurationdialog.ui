@@ -58,7 +58,7 @@
                         <cstring>storeEncryptedCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Store saved messages &amp;encrypted</string>
+                        <string>Store sent messages &amp;encrypted</string>
                     </property>
                     <property name="checked">
                         <bool>false</bool>
