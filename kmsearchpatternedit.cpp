@@ -145,7 +145,7 @@ QString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) const
   if (i18nVal == i18n("<body>")) return QString::fromLatin1("<body>");
   if (i18nVal == i18n("<message>")) return QString::fromLatin1("<message>");
   if (i18nVal == i18n("<any header>")) return QString::fromLatin1("<any header>");
-  if (i18nVal == i18n("<size>")) return QString::fromLatin1("<size>");
+  if (i18nVal == i18n("<size in bytes>")) return QString::fromLatin1("<size in bytes>");
   if (i18nVal == i18n("<age in days>")) return QString::fromLatin1("<age in days>");
   return i18nVal;
 }
@@ -193,7 +193,7 @@ void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
     if( !headersOnly )  mFilterFieldList.append(i18n("<body>"));
     mFilterFieldList.append(i18n("<any header>"));
     mFilterFieldList.append(i18n("<recipients>"));
-    mFilterFieldList.append(i18n("<size>"));
+    mFilterFieldList.append(i18n("<size in bytes>"));
     if ( !absoluteDates )  mFilterFieldList.append(i18n("<age in days>"));
     // these others only represent message headers and you can add to
     // them as you like

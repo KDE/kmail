@@ -170,7 +170,7 @@ bool KMSearchRule::matches(const KMMessage* msg) const
         || matches( false, 0, 0, msg->headerField("Cc") );
     //
     msgContents = msg->headerField("To") + msg->headerField("Cc");
-  } else if( mField == "<size>" ) {
+  } else if( mField == "<size in bytes>" ) {
     numerical = TRUE;
     numericalMsgContents = int(msg->msgLength());
     numericalValue = mContents.toInt(); // isEmpty() checks this
@@ -288,7 +288,7 @@ bool KMSearchRule::isEmpty() const
 {
   bool ok;
 
-  if ( mField == "<size>" || mField == "<age in days>" ) {
+  if ( mField == "<size in bytes>" || mField == "<age in days>" ) {
     ok = FALSE;
     mContents.toInt(&ok);
   } else
