@@ -96,7 +96,7 @@ public:
   /** Recusively add folders in a folder directory to a listview item. */
   virtual void addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent );
 
-  /** Find index of given folder. Returns -1 if not found */
+  /** Find index of given folder. Returns 0 if not found */
   virtual QListViewItem* indexOfFolder(const KMFolder*);
 
   /** Create a list of all folders */
