@@ -25,6 +25,7 @@
 #include <html.h>
 #include <kapp.h>
 #include <kconfig.h>
+#include <kcursor.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 #include <qstring.h>
@@ -43,18 +44,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-
-#define hand_width 16
-#define hand_height 16
-
-static unsigned char hand_bits[] = {
-  0x00,0x00,0xfe,0x01,0x01,0x02,0x7e,0x04,0x08,0x08,0x70,0x08,0x08,0x08,0x70,
-  0x14,0x08,0x22,0x30,0x41,0xc0,0x20,0x40,0x12,0x80,0x08,0x00,0x05,0x00,0x02,
-  0x00,0x00};
-static unsigned char hand_mask_bits[] = {
-  0xfe,0x01,0xff,0x03,0xff,0x07,0xff,0x0f,0xfe,0x1f,0xf8,0x1f,0xfc,0x1f,0xf8,
-  0x3f,0xfc,0x7f,0xf8,0xff,0xf0,0x7f,0xe0,0x3f,0xc0,0x1f,0x80,0x0f,0x00,0x07,
-  0x00,0x02};
 
 #ifdef KRN
 extern KApplication *app;
@@ -142,13 +131,9 @@ void KMReaderWin::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
-  QBitmap handImg(hand_width, hand_height, hand_bits, TRUE);
-  QBitmap handMask(hand_width, hand_height, hand_mask_bits, TRUE);
-  QCursor handCursor(handImg, handMask, 0, 0);
-
   mViewer = new KHTMLWidget(this, mPicsDir);
   mViewer->resize(width()-16, height()-110);
-  mViewer->setURLCursor(handCursor);
+  mViewer->setURLCursor(KCursor::handCursor());
   mViewer->setDefaultBGColor(QColor("#ffffff"));
   /*
   mViewer->setDefaultBGColor(pal->normal().background());

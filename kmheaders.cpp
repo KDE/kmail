@@ -191,13 +191,17 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       id = findUnread(TRUE, 0, TRUE);
       if (id >= 0)
       {
+	setMsgRead(id);
 	setCurrentItem(id);
-	msgHeaderChanged(id);
 	makeHeaderVisible();
+	updateItem(id, FALSE);
       }
-      else {
-	  setTopItem(mTopItem);
-	  setCurrentItem(mCurrentItem);
+      else
+      {
+	setTopItem(mTopItem);
+	setCurrentItem(mCurrentItem);
+	setMsgRead(mCurrentItem);
+	updateItem(mCurrentItem, FALSE);
       }
     }
     else setCurrentItem(0);

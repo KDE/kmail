@@ -1,3 +1,15 @@
+1998-12-16  Stefan Taferner  <taferner@kde.org> (KMail-1.0.9)
+
+	* Switched busy pointer (if not animated) and hand cursor 
+	to new KCursor class.
+
+	* Headers: status of message is now set to read also for
+	messages that are displayed when the folder is opened.
+
+1998-12-07  Stefan Taferner  <taferner@kde.org>
+
+	* Updated documentation
+
 1998-12-06  Stefan Taferner  <taferner@kde.org>
 
 	* Added i18n() around label in folder list.

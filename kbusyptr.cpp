@@ -2,6 +2,7 @@
 
 #include "kbusyptr.h"
 #include <kapp.h>
+#include <kcursor.h>
 #include <qbitmap.h>
 #include <qcursor.h>
 #include <qtimer.h>
@@ -44,7 +45,8 @@ void KBusyPtr :: busy (void)
     currentCursor = 0;
     if (!cursorList)
     {
-      app->setOverrideCursor(waitCursor);
+      if (animated) app->setOverrideCursor(waitCursor);
+      else app->setOverrideCursor(KCursor::waitCursor());
     }
     else
     {
