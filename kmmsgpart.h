@@ -9,6 +9,7 @@
 
 template <typename T>
 class QValueList;
+class QTextCodec;
 
 class KMMessagePart
 {
@@ -26,6 +27,10 @@ public:
       automatic charset and CTE detection.
    **/
   void setBodyFromUnicode( const QString & str );
+
+  /** Returns the body part decoded to unicode.
+   **/
+  QString bodyToUnicode(const QTextCodec* codec=0) const;
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. This routine is meant for binary data.
