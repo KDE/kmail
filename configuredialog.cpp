@@ -4221,6 +4221,8 @@ void PluginPage::slotPlugSelectionChanged()
 
 bool PluginPage::isPluginConfigEqual( int pluginno ) const
 {
+    if ( mCryptPlugList->isEmpty() ) // happens initially
+        return true;
     CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
     Q_ASSERT( wrapper );
     if( !wrapper ) {
