@@ -196,7 +196,7 @@ bool KMAcctLocal::fetchMsg()
   if (kmkernel->mailCheckAborted()) break; */
 
   const QString statusMsg = mStatusMsgStub.arg( mMsgsFetched );
-  BroadcastStatus::instance()->setStatusMsg( statusMsg );
+  //BroadcastStatus::instance()->setStatusMsg( statusMsg );
   mMailCheckProgressItem->incCompletedItems();
   mMailCheckProgressItem->updateProgress();
   mMailCheckProgressItem->setStatus( statusMsg );
