@@ -66,9 +66,14 @@ public:
    */
   KFolderTreeItem::Type folderType( KMFolder* folder ) const;
 
-  void folderPixmap( KMFolder* folder, QString& iconName ) const;
+  /**
+   * Returns the name of the standard icon for a folder of given type or
+   * QString::null if the type is no groupware type.
+   */
+  QString folderPixmap( KFolderTreeItem::Type type ) const;
 
-  /** Return the localized hame of a folder type. */
+  /** Returns the localized name of a folder of given type.
+   */
   QString folderName( KFolderTreeItem::Type type, int language = -1 ) const;
 
   /** Get the folder that holds *type* entries */

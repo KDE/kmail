@@ -257,7 +257,7 @@ QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
 
 
 // Global tables of foldernames is different languages
-// For now: 0->English, 1->German
+// For now: 0->English, 1->German, 2->French, 3->Dutch
 static QMap<KFolderTreeItem::Type,QString> folderNames[4];
 QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language ) const
 {
@@ -296,8 +296,12 @@ QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language
     folderNames[3][KFolderTreeItem::Notes] = QString::fromLatin1("Notities");
   }
 
-  if( language < 0 || language > 3 ) return folderNames[mFolderLanguage][type];
-  else return folderNames[language][type];
+  if( language < 0 || language > 3 ) {
+    return folderNames[mFolderLanguage][type];
+  }
+  else {
+    return folderNames[language][type];
+  }
 }
 
 
@@ -510,21 +514,23 @@ void KMailICalIfaceImpl::loadPixmaps() const
 
 
 //-----------------------------------------------------------------------------
-void KMailICalIfaceImpl::folderPixmap( KMFolder* folder, QString& icon ) const
+QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
 {
-  if( !mUseResourceIMAP || !folder )
-    return;
+  if( !mUseResourceIMAP )
+    return QString::null;
 
-  if( folder->label() == folderName( KFolderTreeItem::Contacts ) )
-    icon = "kmgroupware_folder_contacts";
-  else if( folder->label() == folderName( KFolderTreeItem::Calendar ) )
-    icon = "kmgroupware_folder_calendar";
-  else if( folder->label() == folderName( KFolderTreeItem::Notes ) )
-    icon = "kmgroupware_folder_notes";
-  else if( folder->label() == folderName( KFolderTreeItem::Tasks ) )
-    icon = "kmgroupware_folder_tasks";
-  else if( folder->label() == folderName( KFolderTreeItem::Journals ) )
-    icon = "kmgroupware_folder_journals";
+  if( type == KFolderTreeItem::Contacts )
+    return QString::fromLatin1( "kmgroupware_folder_contacts" );
+  else if( type == KFolderTreeItem::Calendar )
+    return QString::fromLatin1( "kmgroupware_folder_calendar" );
+  else if( type == KFolderTreeItem::Notes )
+    return QString::fromLatin1( "kmgroupware_folder_notes" );
+  else if( type == KFolderTreeItem::Tasks )
+    return QString::fromLatin1( "kmgroupware_folder_tasks" );
+  else if( type == KFolderTreeItem::Journals )
+    return QString::fromLatin1( "kmgroupware_folder_journals" );
+
+  return QString::null;
 }
 
 

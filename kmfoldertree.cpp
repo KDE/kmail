@@ -84,7 +84,6 @@ static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
 QPixmap KMFolderTreeItem::normalIcon(int size) const
 {
   QString icon;
-  icon = "folder";
   if ( (!mFolder && type() == Root) || depth() == 0 ) {
     switch ( protocol() ) {
       case KFolderTreeItem::Imap:
@@ -102,12 +101,16 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case Outbox: icon = "folder_outbox"; break;
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
-      default: kernel->iCalIface().folderPixmap( mFolder, icon ); break;
+      default: icon = kernel->iCalIface().folderPixmap( type() ); break;
       case Drafts: icon = "folder";break;
     }
   } else if ( protocol() == KMFolderTreeItem::Search) {
     icon = "mail_find";
   }
+
+  if ( icon.isEmpty() )
+    icon = "folder";
+    
   if (mFolder && mFolder->useCustomIcons() ) {
     icon = mFolder->normalIconPath();
   }
