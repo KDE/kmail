@@ -133,14 +133,14 @@ public:
   */
   void setUnencryptedMsg( KMMessage* unencrypted );
 
-  /** Returns TRUE is the massage contains an unencrypted copy of itself. */
+  /** Returns TRUE if the message contains an unencrypted copy of itself. */
   bool hasUnencryptedMsg() const { return 0 != mUnencryptedMsg; }
 
   /** Returns an unencrypted copy of this message or 0 if none exists. */
   KMMessage* unencryptedMsg() const { return mUnencryptedMsg; }
 
   /** Returns an unencrypted copy of this message or 0 if none exists.
-      \note This functions removed the internal unencrypted message pointer
+      \note This function removes the internal unencrypted message pointer
       from the message: the process calling takeUnencryptedMsg() must
       delete the returned pointer when no longer needed.
   */
