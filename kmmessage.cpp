@@ -717,7 +717,7 @@ void KMMessage::setDateToday(void)
 void KMMessage::setDate(time_t aDate)
 {
   KMMessageInherited::setDate(aDate);
-  mMsg->Headers().Date().FromUnixTime(aDate);
+  mMsg->Headers().Date().FromCalendarTime(aDate);
   mMsg->Headers().Date().Assemble();
   mNeedsAssembly = TRUE;
   mDirty = TRUE;
