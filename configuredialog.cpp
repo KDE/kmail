@@ -70,6 +70,7 @@
 #include <qwidgetstack.h>
 #include <qvgroupbox.h>
 #include <qvbuttongroup.h>
+#include <qtooltip.h>
 
 // other headers:
 
@@ -388,25 +389,40 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   //
   tab = new QWidget( tabWidget );
   tabWidget->addTab( tab, i18n("Ad&vanced") );
-  glay = new QGridLayout( tab, 6, 3, KDialog::spacingHint() );
+  glay = new QGridLayout( tab, 6, 4, KDialog::spacingHint() );
   glay->setMargin( KDialog::marginHint() );
   glay->setRowStretch( 5, 1 );
   glay->setColStretch( 1, 1 );
 
   // row 0: "Reply-To Address" line edit and label:
   mReplyToEdit = new QLineEdit( tab );
-  glay->addMultiCellWidget( mReplyToEdit, 0, 0, 1, 2 );
+  glay->addMultiCellWidget( mReplyToEdit, 0, 0, 1, 3 );
   glay->addWidget( new QLabel( mReplyToEdit,
 			       i18n("Re&ply-To Address:"), tab ), 0, 0 );
 
-  // row 1: "PGP KeyID" requester and label:
-  button = new QPushButton( i18n("Chang&e..."), tab );
-  button->setAutoDefault( false );
-  glay->addWidget( button, 1, 2 );
+  // row 1: "OpenPGP Key" requester and label:
+  // the label
   glay->addWidget( new QLabel( button, i18n("OpenPGP &Key:"), tab ), 1, 0 );
+  // the Key Id label
   mPgpIdentityLabel = new QLabel( tab );
   mPgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
   glay->addWidget( mPgpIdentityLabel, 1, 1 );
+  // the Clear button
+  button = new QPushButton( tab );
+  // change the size policy in order to make this button use the same vertical
+  // space as the Change button
+  button->setSizePolicy( QSizePolicy( QSizePolicy::Minimum,
+                                      QSizePolicy::Minimum ) );
+  button->setPixmap( SmallIcon( "clear_left" ) );
+  button->setAutoDefault( false );
+  QToolTip::add( button, i18n( "Clear" ) );
+  glay->addWidget( button, 1, 2 );
+  connect( button, SIGNAL( clicked() ),
+           mPgpIdentityLabel, SLOT( clear() ) );
+  // the Change button
+  button = new QPushButton( i18n("Chang&e..."), tab );
+  button->setAutoDefault( false );
+  glay->addWidget( button, 1, 3 );
   connect( button, SIGNAL(clicked()), 
            this, SLOT(slotChangeDefaultPGPKey()) );
   QWhatsThis::add( mPgpIdentityLabel,
@@ -417,14 +433,14 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   // row 2: "Sent-mail Folder" combo box and label:
   mFccCombo = new KMFolderComboBox( tab );
   mFccCombo->showOutboxFolder( false );
-  glay->addMultiCellWidget( mFccCombo, 2, 2, 1, 2 );
+  glay->addMultiCellWidget( mFccCombo, 2, 2, 1, 3 );
   glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &Folder:"), tab ),
 		   2, 0 );
 
   // row 3: "Drafts Folder" combo box and label:
   mDraftsCombo = new KMFolderComboBox( tab );
   mDraftsCombo->showOutboxFolder( false );
-  glay->addMultiCellWidget( mDraftsCombo, 3, 3, 1, 2 );
+  glay->addMultiCellWidget( mDraftsCombo, 3, 3, 1, 3 );
   glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts Folder:"), tab ),
 		   3, 0 );
 
@@ -434,7 +450,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   glay->addWidget( mTransportCheck, 4, 0 );
   mTransportCombo = new QComboBox( true, tab );
   mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-  glay->addMultiCellWidget( mTransportCombo, 4, 4, 1, 2 );
+  glay->addMultiCellWidget( mTransportCombo, 4, 4, 1, 3 );
   connect( mTransportCheck, SIGNAL(toggled(bool)),
 	   mTransportCombo, SLOT(setEnabled(bool)) );
 
