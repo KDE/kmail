@@ -1258,7 +1258,8 @@ void KMHeaders::updateMessageList(void)
   }
 
   //  KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
-  resort();
+// WABA: resort??
+//  resort();
 
   // Reggie: This is comment especially for you.
   //
