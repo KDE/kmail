@@ -62,7 +62,6 @@ KMSender::~KMSender()
 {
   writeConfig(FALSE);
   if (mSendProc) delete mSendProc;
-  if (labelDialog) delete labelDialog;
 }
 
 //-----------------------------------------------------------------------------
@@ -152,8 +151,8 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   if (aMsg->to().isEmpty())
   {
     // RFC822 says:
-    // Note that the "Bcc" field may be empty, while the "To" field is required to 
-    // have at least one address. 
+    // Note that the "Bcc" field may be empty, while the "To" field is required to
+    // have at least one address.
     kernel->kbp()->idle();
     KMessageBox::information(0,i18n("You must specify at least one receiver in the To: field."));
     return FALSE;
