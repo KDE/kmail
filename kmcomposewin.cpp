@@ -357,6 +357,7 @@ void KMComposeWin::readConfig(void)
   if (h<200) h=200;
   resize(w, h);
 
+  mIdentity.clear();
   mIdentity.insertStringList( KMIdentity::identities() );
   for (int i=0; i < mIdentity.count(); ++i)
     if (mIdentity.text(i) == mId) {
