@@ -30,6 +30,7 @@ KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
   mAcctChecking = new QPtrList<KMAccount>();
   checking = false;
   lastAccountChecked = 0;
+  mTotalNewMailsArrived=0;
 }
 
 
