@@ -98,9 +98,6 @@ public:
   virtual void setImapFolder(KMFolderCachedImap *);
   KMFolderCachedImap* imapFolder() const { return mFolder; }
 
-  bool isProgressDialogEnabled() const { return mProgressDialogEnabled; }
-  void setProgressDialogEnabled( bool enable ) { mProgressDialogEnabled = enable; }
-
   virtual void readConfig( /*const*/ KConfig/*Base*/ & config );
   virtual void writeConfig( KConfig/*Base*/ & config ) /*const*/;
 
@@ -198,7 +195,6 @@ private:
 private:
   QPtrList<CachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;
-  bool mProgressDialogEnabled;
   QStringList mDeletedFolders; // folders deleted in this session
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session
   QMap<QString, RenamedFolder> mRenamedFolders;

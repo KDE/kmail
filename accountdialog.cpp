@@ -874,11 +874,6 @@ void AccountDialog::makeImapAccountPage( bool connected )
   mImap.hiddenFoldersCheck = new QCheckBox( i18n("Sho&w hidden folders"), page1);
   grid->addMultiCellWidget( mImap.hiddenFoldersCheck, row, row, 0, 1 );
 
-  if( connected ) {
-    ++row;
-    mImap.progressDialogCheck = new QCheckBox( i18n("Show &progress window"), page1);
-    grid->addMultiCellWidget( mImap.progressDialogCheck, row, row, 0, 1 );
-  }
 
   ++row;
   mImap.subscribedFoldersCheck = new QCheckBox(
@@ -1177,7 +1172,6 @@ void AccountDialog::setupSettings()
     if (!prefix.isEmpty() && prefix[prefix.length() - 1] == '/')
       prefix = prefix.left(prefix.length() - 1);
     mImap.prefixEdit->setText( prefix );
-    mImap.progressDialogCheck->setChecked( ai.isProgressDialogEnabled() );
 #if 0
     mImap.resourceCheck->setChecked( ai.resource() );
 #endif
@@ -1750,7 +1744,6 @@ void AccountDialog::saveSettings()
     if (prefix[prefix.length() - 1] != '/') prefix += "/";
     epa.setPrefix( prefix );
     epa.setLogin( mImap.loginEdit->text().stripWhiteSpace() );
-    epa.setProgressDialogEnabled( mImap.progressDialogCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );

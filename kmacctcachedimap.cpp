@@ -59,7 +59,7 @@ using KMail::SieveConfig;
 KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 				    const QString& aAccountName, uint id )
   : KMail::ImapAccountBase( aOwner, aAccountName, id ), mFolder( 0 ),
-    mProgressDialogEnabled( true ), mAnnotationCheckPassed(false)
+    mAnnotationCheckPassed(false)
 {
   // Never EVER set this for the cached IMAP account
   mAutoExpunge = false;
@@ -81,8 +81,6 @@ QString KMAcctCachedImap::type() const
 
 void KMAcctCachedImap::init() {
   ImapAccountBase::init();
-
-  setProgressDialogEnabled( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -93,9 +91,6 @@ void KMAcctCachedImap::pseudoAssign( const KMAccount * a ) {
     mFolder->setContentState(KMFolderCachedImap::imapNoInformation);
     mFolder->setSubfolderState(KMFolderCachedImap::imapNoInformation);
   }
-
-  setProgressDialogEnabled(static_cast<const KMAcctCachedImap*>(a)->isProgressDialogEnabled());
-
   ImapAccountBase::pseudoAssign( a );
 }
 
@@ -242,11 +237,6 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   // stop sending noops during sync, that will keep the connection open
   mNoopTimer.stop();
 
-  if( interactive && isProgressDialogEnabled() ) {
-    // Show progress dialog in all listeners.
-    KPIM::ProgressManager::emitShowProgressDialog();
-  }
-
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + QString::number( id() ),
@@ -315,7 +305,6 @@ void KMAcctCachedImap::addLastUnreadMsgCount( const KMFolderCachedImap *folder,
 
 void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
   ImapAccountBase::readConfig( config );
-  setProgressDialogEnabled( config.readBoolEntry( "progressdialog", true ) );
   // Apparently this method is only ever called once (from KMKernel::init) so this is ok
   mPreviouslyDeletedFolders = config.readListEntry( "deleted-folders" );
   mDeletedFolders.clear(); // but just in case...
@@ -330,7 +319,6 @@ void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
 
 void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
   ImapAccountBase::writeConfig( config );
-  config.writeEntry( "progressdialog", isProgressDialogEnabled() );
   config.writeEntry( "deleted-folders", mDeletedFolders + mPreviouslyDeletedFolders );
   config.writeEntry( "renamed-folders-paths", mRenamedFolders.keys() );
   const QValueList<RenamedFolder> values = mRenamedFolders.values();
