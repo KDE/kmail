@@ -18,13 +18,15 @@ public:
   KMMimePartTree( KMReaderWin* readerWin,
                   QWidget* parent,
                   const char* name = 0 );
-  virtual ~KMMimePartTree(); 
+  virtual ~KMMimePartTree();
 
 protected slots:
   void itemClicked( QListViewItem* );
   void itemRightClicked( QListViewItem*, const QPoint& );
   void slotSaveAs();
   void slotSaveAsEncoded();
+  void slotSaveSelected();
+  void slotSaveItem( KMMimePartTreeItem* item, const QString& filename );
 
 protected:
   void restoreLayoutIfPresent();

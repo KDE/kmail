@@ -42,6 +42,7 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*,
                                                  const QPoint&, int ) ),
              this, SLOT( itemRightClicked( QListViewItem*, const QPoint& ) ) );
+    setSelectionMode( QListView::Extended );
     setRootIsDecorated( false );
     setAllColumnsShowFocus( true );
     setShowToolTips( true );
@@ -113,6 +114,8 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         popup->insertItem( i18n( "Save &As..." ), this, SLOT( slotSaveAs() ) );
         popup->insertItem( i18n( "Save As &Encoded..." ), this,
                            SLOT( slotSaveAsEncoded() ) );
+        popup->insertItem( i18n( "Save Selected Items..." ), this,
+                           SLOT( slotSaveSelected() ) );
         popup->exec( point );
         //mReaderWin->parseObjectTree( mCurrentContextMenuItem->node(), true );
         mCurrentContextMenuItem = 0;
@@ -139,43 +142,10 @@ void KMMimePartTree::slotSaveAs()
                     KMessageBox::No )
                     return;
             }
-
-            bool bSaveEncrypted = false;
-            bool bEncryptedParts = mCurrentContextMenuItem->node()->encryptionState() != KMMsgNotEncrypted;
-            if( bEncryptedParts )
-                if( KMessageBox::questionYesNo( this,
-                                                i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
-                                                i18n( "KMail Question" ) ) ==
-                    KMessageBox::Yes )
-                    bSaveEncrypted = true;
-
-            bool bSaveWithSig = true;
-            if( mCurrentContextMenuItem->node()->signatureState() != KMMsgNotSigned )
-                if( KMessageBox::questionYesNo( this,
-                                                i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
-                                                i18n( "KMail Question" ) ) !=
-                    KMessageBox::Yes )
-                    bSaveWithSig = false;
-
-            QFile file( filename );
-            if( file.open( IO_WriteOnly ) ) {
-                QDataStream ds( &file );
-                if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
-                    QByteArray cstr = mCurrentContextMenuItem->node()->msgPart().bodyDecodedBinary();
-                    ds.writeRawBytes( cstr, cstr.size() );
-                } else {
-                    ObjectTreeParser otp( mReaderWin, 0, true,
-					  bSaveEncrypted, bSaveWithSig );
-		    otp.parseObjectTree( mCurrentContextMenuItem->node() );
-                }
-                file.close();
-            } else
-                KMessageBox::error( this, i18n( "Could not write the file" ),
-                                    i18n( "KMail Error" ) );
+            slotSaveItem( mCurrentContextMenuItem, filename );
         }
     }
 }
-
 
 void KMMimePartTree::slotSaveAsEncoded()
 {
@@ -211,6 +181,82 @@ void KMMimePartTree::slotSaveAsEncoded()
                 KMessageBox::error( this, i18n( "Could not write the file" ),
                                     i18n( "KMail Error" ) );
         }
+    }
+}
+
+void KMMimePartTree::slotSaveItem( KMMimePartTreeItem* item, const QString& filename )
+{
+    if ( item && !filename.isEmpty() ) {
+        bool bSaveEncrypted = false;
+        bool bEncryptedParts = item->node()->encryptionState() != KMMsgNotEncrypted;
+        if( bEncryptedParts )
+            if( KMessageBox::questionYesNo( this,
+                                            i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
+                                            i18n( "KMail Question" ) ) ==
+                KMessageBox::Yes )
+                bSaveEncrypted = true;
+
+        bool bSaveWithSig = true;
+        if( item->node()->signatureState() != KMMsgNotSigned )
+            if( KMessageBox::questionYesNo( this,
+                                            i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
+                                            i18n( "KMail Question" ) ) !=
+                KMessageBox::Yes )
+                bSaveWithSig = false;
+
+        QFile file( filename );
+        if( file.open( IO_WriteOnly ) ) {
+            QDataStream ds( &file );
+            if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
+                QByteArray cstr = item->node()->msgPart().bodyDecodedBinary();
+                ds.writeRawBytes( cstr, cstr.size() );
+            } else {
+                ObjectTreeParser otp( mReaderWin, 0, true,
+                                      bSaveEncrypted, bSaveWithSig );
+                otp.parseObjectTree( item->node() );
+            }
+            file.close();
+        } else
+            KMessageBox::error( this, i18n( "Could not write the file" ),
+                                i18n( "KMail Error" ) );
+    }
+}
+
+void KMMimePartTree::slotSaveSelected()
+{
+    QPtrList<QListViewItem> selected = selectedItems();
+
+    Q_ASSERT( selected.count() > 0 );
+
+    QPtrListIterator<QListViewItem> it( selected );
+    KFileDialog fdlg( QString::null, QString::null, this, 0, TRUE );
+    fdlg.setMode( KFile::Directory );
+    if (!fdlg.exec()) return;
+    QString dir = fdlg.selectedURL().path();
+
+    while ( it.current() ) {
+        KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( it.current() );
+        QString s = item->text(0);
+        if( s.startsWith( "file: " ) )
+            s = s.mid(6).stripWhiteSpace();
+        else
+            s = s.stripWhiteSpace();
+
+        QString filename = dir + "/" + s;
+
+        if( !filename.isEmpty() ) {
+            if( QFile::exists( filename ) ) {
+                if( KMessageBox::warningYesNo( this,
+                                               i18n( "A file with this name already exists. Do you want to overwrite it?" ),
+                                               i18n( "KMail Warning" ) ) ==
+                    KMessageBox::No ) {
+                    ++it;
+                    continue;
+                }
+            }
+            slotSaveItem( item, filename );
+        }
+        ++it;
     }
 }
 
