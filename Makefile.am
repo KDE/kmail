@@ -30,21 +30,6 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
 		kmdisplayvcard.cpp vcard.cpp md5.c
 
-METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
-		kmfoldertree.moc kmheaders.moc \
-		kmcomposewin.moc kbusyptr.moc kmfoldermgr.moc \
-		kalarmtimer.moc kmreaderwin.moc kmsender.moc \
-		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
-		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
-		kmacctpop.moc kmaccount.moc \
-		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
-		kmaddrbookdlg.moc kmiostatusdlg.moc \
-		kmnewiostatus.moc kmnewiostatuswdg.moc \
-		charsetsDlg.moc kmtopwidget.moc \
-		kmbroadcaststatus.moc kmacctexppop.moc configuredialog.moc \
-		colorlistbox.moc kmkernel.moc accountdialog.moc \
-		addtoaddressbook.moc kmdisplayvcard.moc
-
 
 include_HEADERS = kmailIface.h
 
