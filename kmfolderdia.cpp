@@ -35,6 +35,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
                            KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
   folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
 {
+  mFolder = aFolder;
     qDebug("KMFolderDialog::KMFolderDialog()");
 
   // Main tab
@@ -61,8 +62,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   hl->addSpacing( spacingHint() );
 
-  label = new QLabel( i18n("File under:" ), page );
-  hl->addWidget( label );
+  QLabel *label2 = new QLabel( i18n("File under:" ), page );
+  hl->addWidget( label2 );
 
   fileInFolder = new QComboBox(page);
   hl->addWidget( fileInFolder );
@@ -86,6 +87,13 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     curFolder = *mFolders.at(i - 1);
     if (curFolder->child() == aFolderDir)
       fileInFolder->setCurrentItem( i );
+  }
+
+  if (aFolder->account()) {
+    label->setEnabled( false );
+    nameEdit->setEnabled( false );
+    label2->setEnabled( false );
+    fileInFolder->setEnabled( false );
   }
 
   // Mailing-list data tab
@@ -138,60 +146,62 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()
 {
-  QString acctName;
-  QString fldName, oldFldName;
-  KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
-  int curFolder = fileInFolder->currentItem();
+  if (!mFolder || !mFolder->account())
+  {
+    QString acctName;
+    QString fldName, oldFldName;
+    KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
+    int curFolder = fileInFolder->currentItem();
 
-  if (folder) oldFldName = folder->name();
-  if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
-  else fldName = oldFldName;
-  fldName.replace(QRegExp("/"), "");
-  if (fldName.isEmpty()) fldName = i18n("unnamed");
-  if (curFolder != 0)
-    selectedFolderDir = (*mFolders.at(curFolder - 1))->createChildFolder();
+    if (folder) oldFldName = folder->name();
+    if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
+    else fldName = oldFldName;
+    fldName.replace(QRegExp("/"), "");
+    if (fldName.isEmpty()) fldName = i18n("unnamed");
+    if (curFolder != 0)
+      selectedFolderDir = (*mFolders.at(curFolder - 1))->createChildFolder();
 
-  QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
-  if ((selectedFolderDir->hasNamedFolder(fldName)) &&
+    QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
+    if ((selectedFolderDir->hasNamedFolder(fldName)) &&
       (!((folder) &&
-	 (selectedFolderDir == folder->parent()) &&
-	 (folder->name() == fldName)))) {
-    KMessageBox::error( this, message );
-    return;
-  }
-
-  message = i18n( "Cannot move a parent folder into a child folder." );
-  KMFolderDir* folderDir = selectedFolderDir;
-
-
-  // Buggy?
-  if (folder && folder->child())
-    while ((folderDir != &kernel->folderMgr()->dir()) &&
-	   (folderDir != folder->parent())){
-      if (folderDir->findRef( folder ) != -1) {
-	KMessageBox::error( this, message );
-	return;
-      }
-      folderDir = folderDir->parent();
+      (selectedFolderDir == folder->parent()) &&
+      (folder->name() == fldName)))) {
+        KMessageBox::error( this, message );
+      return;
     }
-  // End buggy?
+
+    message = i18n( "Cannot move a parent folder into a child folder." );
+    KMFolderDir* folderDir = selectedFolderDir;
 
 
-  if (folder && folder->child() && (selectedFolderDir) &&
+    // Buggy?
+    if (folder && folder->child())
+      while ((folderDir != &kernel->folderMgr()->dir()) &&
+        (folderDir != folder->parent())){
+        if (folderDir->findRef( folder ) != -1) {
+          KMessageBox::error( this, message );
+          return;
+        }
+        folderDir = folderDir->parent();
+      }
+    // End buggy?
+
+
+    if (folder && folder->child() && (selectedFolderDir) &&
       (selectedFolderDir->path().find( folder->child()->path() + "/" ) == 0)) {
-    KMessageBox::error( this, message );
-    return;
-  }
+      KMessageBox::error( this, message );
+      return;
+    }
 
-  if (folder && folder->child() && (selectedFolderDir == folder->child())) {
-    KMessageBox::error( this, message );
-    return;
-  }
+    if (folder && folder->child() && (selectedFolderDir == folder->child())) {
+      KMessageBox::error( this, message );
+      return;
+    }
 
-  if (!folder) {
-    folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, selectedFolderDir );
-  }
-  else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
+    if (!folder) {
+      folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, selectedFolderDir );
+    }
+    else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
       if (folder->parent() != selectedFolderDir)
 	folder->rename(fldName, selectedFolderDir );
@@ -199,6 +209,7 @@ void KMFolderDialog::slotOk()
 	folder->rename(fldName);
       kernel->folderMgr()->contentsChanged();
     }
+  }
 
   folder->setMailingList( holdsMailingList->isChecked() );
   folder->setMailingListPostAddress( mailingListPostAddress->text() );

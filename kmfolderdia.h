@@ -32,6 +32,7 @@ protected:
   QComboBox *fileInFolder;
   QLineEdit *nameEdit;
   KMAcctFolder* folder;
+  KMFolder *mFolder;
   KMFolderDir* mFolderDir;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 

@@ -688,7 +688,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
   QPopupMenu *folderMenu = new QPopupMenu;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
-  if (!fti || !fti->folder)
+  if (!fti || !fti->folder || fti->folder->isDir())
     return;
 
   int m1 = folderMenu->insertItem(i18n("&Create Child Folder..."), this,
@@ -708,15 +708,14 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                                   topLevelWidget(),
 				  SLOT(slotCompose()));
 
-  if (fti->folder->isSystemFolder()) {
+  if (fti->folder->account() || fti->folder->isSystemFolder()) {
     folderMenu->setItemEnabled(m1,false);
-    folderMenu->setItemEnabled(m2,false);
     folderMenu->setItemEnabled(m3,false);
   }
-
-  if (!fti->folder->isMailingList()) {
+  if (fti->folder->isSystemFolder())
+    folderMenu->setItemEnabled(m2,false);
+  if (!fti->folder->isMailingList())
     folderMenu->setItemEnabled(m4,false);
-  }
 
   folderMenu->exec (p, 0);
   triggerUpdate();
