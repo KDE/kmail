@@ -505,7 +505,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
-    return FALSE;
+    return false;
 
   // connect to folderlisting
   connect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
@@ -513,9 +513,13 @@ bool KMFolderImap::listDirectory(bool secondStep)
       this, SLOT(slotListResult(QStringList, QStringList,
           QStringList, const ImapAccountBase::jobData &)));
 
+  // start a new listing for the root-folder
+  bool reset = (mImapPath == mAccount->prefix() && 
+                !secondStep && !mIsSystemFolder) ? true : false;
+
   // get the folders
   mAccount->listDirectory(mImapPath, mAccount->onlySubscribedFolders(),
-      secondStep, this);
+      secondStep, this, reset);
 
   return true;
 }
@@ -551,6 +555,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     if (mIsSystemFolder && mImapPath == "/INBOX/"
         && mAccount->prefix() == "/INBOX/")
     {
+      // do not create folders under INBOX
       mAccount->setCreateInbox(FALSE);
       mSubfolderNames.clear();
     }
@@ -1488,8 +1493,8 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
         }
       }
     }
-    emit numUnreadMsgsChanged( this );
   }
+  emit numUnreadMsgsChanged( this );
   mAccount->displayProgress();
 }
 

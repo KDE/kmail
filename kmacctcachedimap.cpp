@@ -376,9 +376,9 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::listDirectory(QString path, bool onlySubscribed,
-    bool secondStep, KMFolder* parent)
+    bool secondStep, KMFolder* parent, bool reset)
 {
-  ImapAccountBase::listDirectory( path, onlySubscribed, secondStep, parent );
+  ImapAccountBase::listDirectory( path, onlySubscribed, secondStep, parent, reset );
 }
 
 //-----------------------------------------------------------------------------

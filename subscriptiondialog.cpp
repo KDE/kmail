@@ -179,7 +179,7 @@ void SubscriptionDialog::slotLoadFolders()
   if ( ai->prefix().isEmpty() )
     return;
   // get folders
-  ai->listDirectory( ai->prefix(), false );
+  ai->listDirectory( ai->prefix(), false, false, 0, true );
   ai->listDirectory( ai->prefix(), true );
 }
 

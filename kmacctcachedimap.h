@@ -116,7 +116,7 @@ public:
    * connects to slotListResult and slotListEntries
    */
   void listDirectory(QString path, bool onlySubscribed,
-      bool secondStep = FALSE, KMFolder* parent = NULL);  
+      bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false);  
 
   /** 
    * Starts the folderlisting for the root folder

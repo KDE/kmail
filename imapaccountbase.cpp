@@ -303,18 +303,19 @@ namespace KMail {
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::listDirectory(QString path, bool onlySubscribed,
-      bool secondStep, KMFolder* parent)
+      bool secondStep, KMFolder* parent, bool reset)
   {
     if (makeConnection() == Error) 
       return;
     // create jobData
     jobData jd;
     jd.total = 1; jd.done = 0;
+    // reset for a new listing
+    if (reset)
+      mHasInbox = false; 
     // this inboxonly switch is only needed when you set the INBOX as prefix
     jd.inboxOnly = !secondStep && prefix() != "/"
-      && path == prefix() && !mHasInbox; 
-    if ( !secondStep && prefix() != "/" && path == prefix() )
-      mHasInbox = false; // reset when a new listing starts
+      && path == prefix() && !mHasInbox;
     jd.onlySubscribed = onlySubscribed;
     if (parent) jd.parent = parent;
     if (!secondStep) mCreateInbox = FALSE;
