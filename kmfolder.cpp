@@ -1318,7 +1318,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   int idx = -1, rc;
   KMFolder* msgParent;
   bool editing = false;
-  int growth = 0;
+  int growth = 0, oldlength = 0;
 
   if (!mStream)
   {
@@ -1398,6 +1398,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   // Make sure the file is large enough to check for an end
   // character
   fseek(mStream, 0, SEEK_END);
+  revert = ftell(mStream);
   if (ftell(mStream) >= 2) {
       // write message to folder file
       fseek(mStream, -2, SEEK_END);
@@ -1413,7 +1414,6 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
       }
   }
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
-  revert = ftell(mStream);
   int error = ferror(mStream);
   if (error)
   {
@@ -1471,8 +1471,11 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   idx = mMsgList.append(aMsg);
 
   // change the length of the previous message to encompass white space added
-  if ((idx > 0) && (growth > 0))
+  if ((idx > 0) && (growth > 0)) {
+    // don't grow if a deleted message claims space at the end of the file
+    if (revert ==  mMsgList[idx - 1]->folderOffset()  + mMsgList[idx - 1]->msgSize() )
       mMsgList[idx - 1]->setMsgSize( mMsgList[idx - 1]->msgSize() + growth );
+  }
 
   // write index entry if desired
   if (mAutoCreateIndex)
