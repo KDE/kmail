@@ -47,7 +47,8 @@ MessageHighlighter::MessageHighlighter( QTextEdit *textEdit, SyntaxMode mode )
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
   QColor defaultColor3( 0x00, 0x60, 0x00 );
-  col1 = QColor(kapp->palette().active().text());
+  QColor defaultForeground( kapp->palette().active().text() );
+  col1 = config->readColorEntry( "ForegroundColor", &defaultForeground );
   col2 = config->readColorEntry( "QuotedText3", &defaultColor3 );
   col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
   col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
