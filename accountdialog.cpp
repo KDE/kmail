@@ -28,7 +28,6 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qwhatsthis.h>
-#include <qtooltip.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -479,7 +478,6 @@ void AccountDialog::makePopAccountPage()
   grid->addWidget( mPop.nameEdit, 0, 1 );
 
   label = new QLabel( i18n("&Login:"), page1 );
-  QToolTip::add( label, i18n("User name used for authentication purposes") );
   QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address ( the part before <em>@</em> ).") );
   grid->addWidget( label, 1, 0 );
   mPop.loginEdit = new QLineEdit( page1 );
@@ -641,7 +639,6 @@ void AccountDialog::makeImapAccountPage()
   grid->addWidget( mImap.nameEdit, 0, 1 );
 
   label = new QLabel( i18n("&Login:"), page1 );
-  QToolTip::add( label, i18n("User name used for authentication purposes") );
   QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address ( the part before <em>@</em> ).") );
   grid->addWidget( label, 1, 0 );
   mImap.loginEdit = new QLineEdit( page1 );
