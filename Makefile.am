@@ -72,9 +72,6 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		kmmimeparttree.cpp \
-		certificatehandlingdialog.ui \
-		certificatehandlingdialogimpl.cpp \
-		certificatewizard.ui certificatewizardimpl.cpp \
 		mailinglist-magic.cpp kmacctmaildir.cpp \
 		attachmentstrategy.cpp \
 		headerstrategy.cpp headerstyle.cpp khtmlparthtmlwriter.cpp \
