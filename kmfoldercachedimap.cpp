@@ -806,7 +806,7 @@ void KMFolderCachedImap::uploadFlags()
      QMap< QString, QStringList > groups;
      for ( QMap<ulong, int>::Iterator it = uidMap.begin(); it != uidMap.end(); ++it ) {
         KMMsgBase *msg = 0;
-        kdDebug(5006) << " UID: " << it.data()  << endl;
+        //kdDebug(5006) << " UID: " << it.data()  << endl;
         msg = getMsgBase(it.data());
         if (!msg) continue;
         QString flags = KMFolderImap::statusToFlags(msg->status());
@@ -1019,7 +1019,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       } else {
          /* The message is OK, update flags */
          flagsToStatus( existingMessage, flags );
-         kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
+         //kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
       delete msg;
     } else {
