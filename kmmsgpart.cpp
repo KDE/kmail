@@ -61,7 +61,7 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
   QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
     encoding = "utf-8";
-  QTextCodec * codec = KMMessage::codecForName( encoding );
+  QTextCodec * codec = KMMsgBase::codecForName( encoding );
   assert( codec );
   QValueList<int> dummy;
   setCharset( encoding );
@@ -69,7 +69,7 @@ void KMMessagePart::setBodyFromUnicode( const QString & str ) {
 }
 
 const QTextCodec * KMMessagePart::codec() const {
-  const QTextCodec * c = KMMessage::codecForName( charset() );
+  const QTextCodec * c = KMMsgBase::codecForName( charset() );
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
     // be okay
@@ -473,7 +473,7 @@ QString KMMessagePart::contentDescription(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDescription(const QString &aStr)
 {
-  QCString encoding = KMMessage::autoDetectCharset(charset(),
+  QCString encoding = KMMsgBase::autoDetectCharset(charset(),
     KMMessage::preferredCharsets(), aStr);
   if (encoding.isEmpty()) encoding = "utf-8";
   mContentDescription = KMMsgBase::encodeRFC2047String(aStr, encoding);

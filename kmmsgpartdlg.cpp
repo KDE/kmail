@@ -421,7 +421,7 @@ void KMMsgPartDialogCompat::applyChanges()
   QString name = fileName();
   if ( !name.isEmpty() || !mMsgPart->name().isEmpty()) {
     mMsgPart->setName( name );
-    QCString encoding = KMMessage::autoDetectCharset( mMsgPart->charset(),
+    QCString encoding = KMMsgBase::autoDetectCharset( mMsgPart->charset(),
       KMMessage::preferredCharsets(), name );
     if ( encoding.isEmpty() ) encoding = "utf-8";
     QCString encName = KMMsgBase::encodeRFC2231String( name, encoding );
