@@ -81,6 +81,7 @@ KMMsgInfo::KMMsgInfo(KMFolder* p, off_t off, short len) :
 {
     setIndexOffset(off);
     setIndexLength(len);
+    setEnableUndo(true);
 }
 
 

@@ -21,7 +21,7 @@
 #include "kmundostack.h"
 
 KMUndoStack::KMUndoStack(int size)
- : mSize(size)
+ : QObject(0, "undostack"), mSize(size)
 {
    mStack.setAutoDelete(true);
 }
@@ -41,6 +41,7 @@ KMUndoStack::pushAction(ulong serNum, KMFolder *folder, KMFolder *destFolder)
    if ((int) mStack.count() == mSize)
       mStack.removeLast();
    mStack.prepend(info);
+   emit undoStackChanged();
 }
 
 void 
@@ -74,6 +75,7 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
       else
          info = mStack.next();     
    }
+   emit undoStackChanged();
 }
 
 bool 
@@ -85,5 +87,8 @@ KMUndoStack::popAction(ulong &serNum, KMFolder *&folder, KMFolder *&destFolder)
    folder = info->folder;
    destFolder = info->destFolder;
    delete info;
+   emit undoStackChanged();
    return true;
 }
+
+#include "kmundostack.moc"

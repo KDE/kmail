@@ -23,6 +23,7 @@
 
 #include <qptrlist.h>
 #include <qstring.h>
+#include <qobject.h>
 
 class KMFolder;
 class KMMsgBase;
@@ -36,8 +37,10 @@ public:
    KMFolder *destFolder;
 };
 
-class KMUndoStack
+class KMUndoStack : public QObject
 {
+  Q_OBJECT
+
 public:
    KMUndoStack(int size);
 
@@ -50,6 +53,9 @@ public:
 protected:
    QPtrList<KMUndoInfo> mStack;
    int mSize;
+
+signals:
+   void undoStackChanged();
 };
 
 #endif

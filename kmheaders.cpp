@@ -1441,7 +1441,6 @@ bool KMHeaders::canUndo() const
 //-----------------------------------------------------------------------------
 void KMHeaders::undo()
 {
-  KMMessage *msg;
   ulong serNum;
   int idx = -1;
   KMFolder *folder, *curFolder, *oldCurFolder;
@@ -1449,13 +1448,23 @@ void KMHeaders::undo()
   {
     kernel->msgDict()->getLocation(serNum, &curFolder, &idx);
     if (idx == -1 || curFolder != oldCurFolder)
+    {
+      KMessageBox::sorry(this, i18n("There is nothing to undo!"));
       return;
+    }
     curFolder->open();
-    msg = curFolder->getMsg( idx );
-    folder->moveMsg( msg );
-    if (folder->count() > 1)
-      folder->unGetMsg( folder->count() - 1 );
-    curFolder->close();
+    KMMsgBase * msg = curFolder->getMsgBase(idx);
+    if (msg)
+    {
+      // disable undo for the next action
+      msg->setEnableUndo(false);
+      mSelMsgBaseList.clear();
+      mSelMsgBaseList.append(msg);
+      KMCommand *command = new KMMoveCommand( curFolder, folder, mSelMsgBaseList, this );
+      command->start();
+    }
+    updateMessageList();
+    // do _not_ close the folder as the message might be transferred
   }
   else
   {

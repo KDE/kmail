@@ -39,6 +39,7 @@
 #include <kparts/browserextension.h>
 #include <kprogress.h>
 #include <krun.h>
+#include <kdebug.h>
 
 #include "kbusyptr.h"
 #include "mailinglist-magic.h"
@@ -1086,6 +1087,7 @@ void KMMoveCommand::execute()
   QPtrList<KMMessage> list;
   for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next())
   {
+    bool undo = msgBase->enableUndo();
     int idx = mSrcFolder->find(msgBase);
     assert(idx != -1);
     msg = mSrcFolder->getMsg(idx);
@@ -1099,8 +1101,11 @@ void KMMoveCommand::execute()
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
-          kernel->undoStack()->pushAction( mb->getMsgSerNum(), mSrcFolder,
-					   mDestFolder );
+          if (undo)
+          {
+            kernel->undoStack()->pushAction( mb->getMsgSerNum(), mSrcFolder,
+                mDestFolder );
+          }
         }
       }
     }

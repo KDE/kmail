@@ -232,11 +232,16 @@ public:
   /** Returns the message serial number for the message. */
   virtual unsigned long getMsgSerNum() const;
 
+  /** If undo for this message should be enabled */
+  virtual bool enableUndo() { return mEnableUndo; }
+  virtual void setEnableUndo( bool enable ) { mEnableUndo = enable; }
+
 protected:
   KMFolder* mParent;
   bool mDirty;
   off_t mIndexOffset;
   short mIndexLength;
+  bool mEnableUndo;
 
 public:
   enum MsgPartType

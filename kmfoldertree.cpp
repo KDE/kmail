@@ -97,7 +97,7 @@ KMFolderTree::KMFolderTree( QWidget *parent,
 
   addAcceptableDropMimetype("x-kmail-drag/message", false);
 
-  int namecol = addColumn( i18n("Folder"), 160 );
+  int namecol = addColumn( i18n("Folder"), 250 );
   header()->setStretchEnabled( true, namecol );
 
   // connect

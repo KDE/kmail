@@ -61,6 +61,7 @@
 #include "kmmsgdict.h"
 #include "kmacctfolder.h"
 #include "kmmimeparttree.h"
+#include "kmundostack.h"
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -232,66 +233,53 @@ void KMMainWin::readConfig(void)
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
     mThreadPref = config->readBoolEntry( "nestedMessages", false );
-    QSize defaultSize(600,600);
+    // size of the mainwin
+    QSize defaultSize(750, 560);
     siz = config->readSizeEntry("MainWin", &defaultSize);
     if (!siz.isEmpty())
       resize(siz);
-
+    // default width of the foldertree
+    uint folderpanewidth = 250;
 
     // the default sizes are dependent on the actual layout
     switch( mWindowLayout ) {
     case 0:
-        // the default value for the FolderPaneWidth should be about
-        // 160 but the  default is set to 0 to enable the workaround
-        // (see below)
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", 0 );
-        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
-        mPanner2Sep[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
+        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
+        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
+        mPanner2Sep[0] = config->readNumEntry( "HeaderPaneHeight", 180 );
         mPanner2Sep[1] = config->readNumEntry( "MimePaneHeight", 100 );
-        mPanner2Sep[2] = config->readNumEntry( "MessagePaneHeight", 300 );
+        mPanner2Sep[2] = config->readNumEntry( "MessagePaneHeight", 280 );
         break;
     case 1:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", 0 );
-        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
-        mPanner2Sep[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
-        mPanner2Sep[1] = config->readNumEntry( "MessagePaneHeight", 300 );
+        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
+        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
+        mPanner2Sep[0] = config->readNumEntry( "HeaderPaneHeight", 180 );
+        mPanner2Sep[1] = config->readNumEntry( "MessagePaneHeight", 280 );
         mPanner2Sep[2] = config->readNumEntry( "MimePaneHeight", 100 );
         break;
     case 2:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", 0 );
-        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
-        mPanner2Sep[0] = config->readNumEntry( "FolderPaneHeight", 400 );
-        mPanner2Sep[1] = config->readNumEntry( "MimePaneHeight", 200 );
-        mPanner3Sep[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
-        mPanner3Sep[1] = config->readNumEntry( "MessagePaneHeight", 400 );
+        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
+        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
+        mPanner2Sep[0] = config->readNumEntry( "FolderPaneHeight", 380 );
+        mPanner2Sep[1] = config->readNumEntry( "MimePaneHeight", 180 );
+        mPanner3Sep[0] = config->readNumEntry( "HeaderPaneHeight", 180 );
+        mPanner3Sep[1] = config->readNumEntry( "MessagePaneHeight", 380 );
         break;
     case 3:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneHeight", 300 );
-        mPanner1Sep[1] = config->readNumEntry( "MessagePaneHeight", 300 );
-        mPanner2Sep[0] = config->readNumEntry( "FolderPaneWidth", 160 );
-        mPanner2Sep[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
-        mPanner3Sep[0] = config->readNumEntry( "HeaderPaneHeight", 150 );
-        mPanner3Sep[1] = config->readNumEntry( "MimePaneHeight", 150 );
+        mPanner1Sep[0] = config->readNumEntry( "FolderPaneHeight", 280 );
+        mPanner1Sep[1] = config->readNumEntry( "MessagePaneHeight", 280 );
+        mPanner2Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
+        mPanner2Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
+        mPanner3Sep[0] = config->readNumEntry( "HeaderPaneHeight", 140 );
+        mPanner3Sep[1] = config->readNumEntry( "MimePaneHeight", 140 );
         break;
     case 4:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneHeight", 200 );
+        mPanner1Sep[0] = config->readNumEntry( "FolderPaneHeight", 180 );
         mPanner1Sep[1] = config->readNumEntry( "MimePaneHeight", 100 );
-        mPanner1Sep[2] = config->readNumEntry( "MessagePaneHeight", 300 );
-        mPanner2Sep[0] = config->readNumEntry( "FolderPaneWidth", 160 );
-        mPanner2Sep[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
+        mPanner1Sep[2] = config->readNumEntry( "MessagePaneHeight", 280 );
+        mPanner2Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
+        mPanner2Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
         break;
-    }
-
-    // workaround to support the old buggy way of saving the dimensions of the panes
-    if (mPanner1Sep[0] == 0) {
-      defaultSize = QSize(300,130);
-      siz = config->readSizeEntry("Panners", &defaultSize);
-      if (siz.isEmpty())
-        siz = QSize(100,100); // why not defaultSize?
-      mPanner2Sep[0] = siz.width();
-      mPanner1Sep[0] = siz.height();
-      mPanner2Sep[1] = height() - siz.width();
-      mPanner1Sep[1] = width() - siz.height();
     }
 
     if (!mStartupDone ||
@@ -2738,6 +2726,8 @@ void KMMainWin::setupMenuBar()
 
   menutimer = new QTimer( this, "menutimer" );
   connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
+  connect( kernel->undoStack(),
+      SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));  
 
   updateMessageActions();
 
@@ -2918,8 +2908,8 @@ void KMMainWin::updateMessageActions()
             if (item->isSelected() )
 	        selectedItems.append(item);
         if ( selectedItems.isEmpty() && mFolder->count() ) // there will always be one in mMsgView
-            count = 1;
-	else count = selectedItems.count();
+          count = 1;
+        else count = selectedItems.count();
     }
 
     mlistFilterAction->setText( i18n("Filter on Mailing-List...") );
@@ -2971,6 +2961,15 @@ void KMMainWin::updateMessageActions()
     saveAsAction->setEnabled( mass_actions );
     viewSourceAction->setEnabled( single_actions );
 
+    bool mails = mFolder && mFolder->count();
+    action( "go_next_message" )->setEnabled( mails );
+    action( "go_next_unread_message" )->setEnabled( mails );
+    action( "go_prev_message" )->setEnabled( mails );
+    action( "go_prev_unread_message" )->setEnabled( mails );
+
+    action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
+    action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
+
     if ( count == 1 ) {
         KMMessage *msg;
         int aIdx;
@@ -2989,15 +2988,12 @@ void KMMainWin::updateMessageActions()
             mlistFilterAction->setText( i18n( "Filter on Mailing-List %1..." ).arg( lname ) );
         }
     }
+}
 
-    bool mails = mFolder && mFolder->count();
-    action( "go_next_message" )->setEnabled( mails );
-    action( "go_next_unread_message" )->setEnabled( mails );
-    action( "go_prev_message" )->setEnabled( mails );
-    action( "go_prev_unread_message" )->setEnabled( mails );
-
-    action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
-    action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUpdateUndo()
+{
+  action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 }
 
 

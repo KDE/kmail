@@ -758,13 +758,18 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
 //-----------------------------------------------------------------------------
 void KMFolder::reallyAddMsg(KMMessage* aMsg)
 {
+  aMsg->setTransferInProgress(FALSE);
   KMFolder *folder = aMsg->parent();
   int index;
   ulong serNum = aMsg->getMsgSerNum();
+  bool undo = aMsg->enableUndo();
   addMsg(aMsg, &index);
   if (index < 0) return;
   unGetMsg(index);
-  kernel->undoStack()->pushAction( serNum, folder, this );
+  if (undo)
+  {
+    kernel->undoStack()->pushAction( serNum, folder, this );
+  }
 }
 
 
@@ -891,6 +896,7 @@ KMMessage* KMFolder::getMsg(int idx)
   return readMsg(idx);
 #else
   KMMessage *msg = 0;
+  bool undo = mb->enableUndo();
   if (mb->isMessage()) {
       msg = ((KMMessage*)mb);
   } else {
@@ -904,6 +910,7 @@ KMMessage* KMFolder::getMsg(int idx)
 	  writeConfig();
       }
   }
+  msg->setEnableUndo(undo);
   
   if (msg->getMsgSerNum() == 0) {
     msg->setMsgSerNum(kernel->msgDict()->insert(0, msg, idx));

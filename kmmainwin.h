@@ -130,6 +130,9 @@ public slots:
   /** Update message actions */
   void updateMessageActions();
 
+  /** Update the undo action */
+  void slotUpdateUndo();
+
 protected:
   void setupMenuBar();
   void setupStatusBar();

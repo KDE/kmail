@@ -399,7 +399,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
   aMsg->setParent(this);
   aMsg->setMsgSize(size);
   idx = mMsgList.append(aMsg);
-  aMsg->setMsgSerNum();
+  if (aMsg->getMsgSerNum() <= 0)
+    aMsg->setMsgSerNum();
 
   // write index entry if desired
   if (mAutoCreateIndex)
