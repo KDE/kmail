@@ -333,7 +333,7 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
   KMFolder *msgParent = aMsg->parent();
   if (aMsg->transferInProgress())
       return false;
-  #warning "FIXME : extract tempOpenFolder to some base class"
+#warning "FIXME : extract tempOpenFolder to some base class"
   if (msgParent  && msgParent->protocol() == "imap" &&!aMsg->isComplete())
   {
     FolderJob *job = msgParent->createJob(aMsg);

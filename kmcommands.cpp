@@ -204,9 +204,9 @@ void KMCommand::transferSelectedMsgs()
       // emitted when the job is destroyed
       connect(job, SIGNAL(finished()),
               this, SLOT(slotJobFinished()));
-      job->start();
       // msg musn't be deleted
       thisMsg->setTransferInProgress(true);
+      job->start();
     } else {
       thisMsg->setTransferInProgress(true);
       mRetrievedMsgs.append(thisMsg);
@@ -1087,6 +1087,8 @@ void KMCopyCommand::execute()
         FolderJob *job = srcFolder->createJob(newMsg);
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
 		mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+        // msg musn't be deleted
+        newMsg->setTransferInProgress(true);
         job->start();
       } else {
 	int rc, index;

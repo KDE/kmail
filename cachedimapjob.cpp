@@ -151,7 +151,7 @@ void CachedImapJob::deleteMessages( const QString& uids )
   KURL url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + QString::fromLatin1(";UID=%1").arg(uids) );
 
-  KIO::SimpleJob *job = KIO::file_delete( url, FALSE );
+  KIO::SimpleJob *job = KIO::file_delete( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   ImapAccountBase::jobData jd( url.url(), mFolder );
   mAccount->insertJob( job, jd );
@@ -164,7 +164,7 @@ void CachedImapJob::expungeFolder()
   // Special URL that means EXPUNGE
   url.setPath( mFolder->imapPath() + QString::fromLatin1(";UID=*") );
 
-  KIO::SimpleJob *job = KIO::file_delete( url, FALSE );
+  KIO::SimpleJob *job = KIO::file_delete( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   ImapAccountBase::jobData jd( url.url(), mFolder );
   mAccount->insertJob( job, jd );
@@ -215,8 +215,8 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       //else kdDebug(5006) << "weird, message not in folder!?!" << endl;
       mMsg->setHeaderField("X-UID",uid);
 
-      mMsg->setTransferInProgress( FALSE );
-      mMsg->setComplete( TRUE );
+      mMsg->setTransferInProgress( false );
+      mMsg->setComplete( true );
       mFolder->addMsgInternal(mMsg);
       emit messageRetrieved(mMsg);
       /*mFolder->unGetMsg(idx);*/ // Is this OK? /steffen
@@ -247,8 +247,8 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   url.setPath(mFolder->imapPath() + QString(";UID=%1").arg(mfd.uid));
 
   ImapAccountBase::jobData jd( url.url(), mFolder );
-  mMsg->setTransferInProgress(TRUE);
-  KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
+  mMsg->setTransferInProgress(true);
+  KIO::SimpleJob *simpleJob = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
   connect(simpleJob, SIGNAL(processedSize(KIO::Job *, KIO::filesize_t)),
@@ -294,8 +294,8 @@ void CachedImapJob::slotPutNextMessage()
   }
   jd.data = mData;
 
-  mMsg->setTransferInProgress(TRUE);
-  KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
+  mMsg->setTransferInProgress(true);
+  KIO::SimpleJob *simpleJob = KIO::put(url, 0, false, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
   connect( simpleJob, SIGNAL( result(KIO::Job *) ), SLOT( slotPutMessageResult(KIO::Job *) ) );
@@ -345,20 +345,20 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   }
 
   // kdDebug(5006) << "resulting data \"" << QCString((*it).data) << "\"" << endl;
-  emit messageStored(mMsg);
+  emit messageStored( mMsg );
   int i;
   if( ( i = mFolder->find(mMsg) ) != -1 ) {
-    mFolder->quiet( TRUE );
+    mFolder->quiet( true );
     mFolder->removeMsg(i);
-    mFolder->quiet( FALSE );
+    mFolder->quiet( false );
   }
   mMsg = NULL;
-  mAccount->removeJob(it);
+  mAccount->removeJob( it );
   slotPutNextMessage();
 }
 
 
-void CachedImapJob::slotAddNextSubfolder(KIO::Job * job)
+void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
 {
   if (job) {
     KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
@@ -430,7 +430,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
   KURL url = mAccount->getUrl();
   url.setPath(folderPath);
   ImapAccountBase::jobData jd( url.url(), mFolder );
-  KIO::SimpleJob *simpleJob = KIO::file_delete(url, FALSE);
+  KIO::SimpleJob *simpleJob = KIO::file_delete(url, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
   connect( simpleJob, SIGNAL( result(KIO::Job *) ), SLOT( slotDeleteNextFolder(KIO::Job *) ) );
@@ -443,7 +443,7 @@ void CachedImapJob::checkUidValidity()
 
   ImapAccountBase::jobData jd( url.url(), mFolder );
 
-  KIO::SimpleJob *job = KIO::get( url, FALSE, FALSE );
+  KIO::SimpleJob *job = KIO::get( url, false, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL(result(KIO::Job *)), SLOT(slotCheckUidValidityResult(KIO::Job *)) );
@@ -520,7 +520,7 @@ void CachedImapJob::renameFolder( const QString &newName )
   ImapAccountBase::jobData jd( newName, mFolder );
   jd.path = imapPath;
 
-  KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, FALSE );
+  KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), simpleJob );
   mAccount->insertJob( simpleJob, jd );
   connect( simpleJob, SIGNAL(result(KIO::Job *)), SLOT(slotRenameFolderResult(KIO::Job *)) );
