@@ -1234,8 +1234,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
-    
-    StorageFormat format= GlobalSettings::theIMAPResourceStorageFormat() 
+
+    StorageFormat format= GlobalSettings::theIMAPResourceStorageFormat()
       == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
     FolderInfo info( format, NoChange );
     mFolderInfoMap.insert( folder, info );
@@ -1628,6 +1628,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
       folder = static_cast<KMFolder *>( node );
       folder->storage()->setContentsType( contentsType );
       kdDebug(5006) << "Adjusted type of " << folder->location() << " to contentsType " << contentsType << endl;
+      folder->storage()->writeConfig();
     }
   }
 
@@ -1659,8 +1660,8 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
   }
   folder->setType( typeString );
   folder->storage()->setContentsType( contentsType );
-
   folder->setSystemFolder( true );
+  folder->storage()->writeConfig();
   folder->open();
   // avoid multiple connections
   disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
