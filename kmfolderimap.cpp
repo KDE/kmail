@@ -909,6 +909,22 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     int p = (*it).cdata.find("\r\nX-uidValidity:");
     if (p != -1) setUidValidity((*it).cdata
       .mid(p + 17, (*it).cdata.find("\r\n", p+1) - p - 17));
+    int c = (*it).cdata.find("\r\nX-Count:");
+    if ( c != -1 )
+    {
+      bool ok;
+      int exists = (*it).cdata.mid( c+10, 
+          (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
+      if ( ok && exists < count() )
+      {
+        kdDebug(5006) << "KMFolderImap::slotGetMessagesData - server has less messages (" << 
+          exists << ") then folder (" << count() << "), so reload" << endl;
+        mAccount->displayProgress();
+        reallyGetFolder( QString::null );
+        (*it).cdata.remove(0, pos);
+        return;
+      }
+    }
     (*it).cdata.remove(0, pos);
   }
   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
