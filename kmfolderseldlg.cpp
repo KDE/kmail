@@ -7,9 +7,10 @@
 #include "globalsettings.h"
 
 #include <kdebug.h>
-#include <qvbox.h>
+#include <klineedit.h>
 
-#include <assert.h>
+#include <qlayout.h>
+#include <qtoolbutton.h>
 
 namespace KMail {
 
@@ -58,28 +59,45 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
                                     KMFolderTree * folderTree,
                                     const QString & preSelection,
                                     bool mustBeReadWrite )
-  : KListView( parent )
+  : KListView( parent ), mFolderTree( folderTree )
 {
-  assert( folderTree );
-
-  int columnIdx = addColumn( i18n( "Folder" ) );
+  mFolderColumn = addColumn( i18n( "Folder" ) );
   setRootIsDecorated( true );
   setSorting( -1 );
 
+  reload( mustBeReadWrite, true, true, preSelection );
+}
+
+void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
+                               bool showImapFolders, const QString& preSelection )
+{
+  clear();
   FolderItem * lastItem = 0;
   FolderItem * lastTopItem = 0;
   FolderItem * selectedItem = 0;
   int lastDepth = 0;
 
-  for ( QListViewItemIterator it( folderTree ) ; it.current() ; ++it ) {
+  QString selected = preSelection;
+  if ( selected.isEmpty() && folder() )
+    selected = folder()->idString();
+
+  for ( QListViewItemIterator it( mFolderTree ) ; it.current() ; ++it ) 
+  {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem *>( it.current() );
 
+    // search folders are never shown
     if ( !fti || fti->protocol() == KFolderTreeItem::Search )
       continue;
 
+    // imap folders?
+    if ( fti->protocol() == KFolderTreeItem::Imap && !showImapFolders )
+      continue;
+
+    // the outbox?
+    if ( fti->type() == KFolderTreeItem::Outbox && !showOutbox )
+      continue;
+
     int depth = fti->depth();// - 1;
-    //kdDebug( 5006 ) << "LastDepth=" << lastDepth << "\tdepth=" << depth
-    //                << "\tname=" << fti->text( 0 ) << endl;
     FolderItem * item = 0;
     if ( depth <= 0 ) {
       // top level - first top level item or after last existing top level item
@@ -119,14 +137,14 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
       }
     }
 
-    item->setText( columnIdx, fti->text( 0 ) );
+    item->setText( mFolderColumn, fti->text( 0 ) );
     // Make items without folders and top level items unselectable
     // (i.e. root item Local Folders and IMAP accounts)
     if ( !fti->folder() || depth == 0 || ( mustBeReadWrite && fti->folder()->isReadOnly() ) ) {
       item->setSelectable( false );
     } else {
       item->setFolder( fti->folder() );
-      if ( preSelection == item->folder()->idString() )
+      if ( selected == item->folder()->idString() )
         selectedItem = item;
     }
     lastItem = item;
@@ -143,27 +161,49 @@ SimpleFolderTree::SimpleFolderTree( QWidget * parent,
 const KMFolder * SimpleFolderTree::folder() const
 {
   QListViewItem * item = currentItem();
-  if( item ) {
+  if ( item ) {
     const KMFolder * folder = static_cast<FolderItem *>( item )->folder();
     if( folder ) return folder;
   }
   return 0;
 }
 
-} // namespace KMail
+//-----------------------------------------------------------------------------
+void SimpleFolderTree::setFolder( KMFolder *folder )
+{
+  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) 
+  {
+    const KMFolder *fld = static_cast<FolderItem *>( it.current() )->folder();
+    if ( fld == folder )
+    {
+      setSelected( it.current(), true );
+      ensureItemVisible( it.current() );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+void SimpleFolderTree::setFolder( const QString& idString )
+{
+  setFolder( kmkernel->findFolderById( idString ) );
+}
 
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, bool mustBeReadWrite )
+KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, 
+    bool mustBeReadWrite, bool useGlobalSettings )
   : KDialogBase( parent, "folder dialog", true, caption,
-                 Ok|Cancel, Ok, true ) // mainwin as parent, modal
+                 Ok|Cancel, Ok, true ), // mainwin as parent, modal
+    mUseGlobalSettings( useGlobalSettings )             
 {
   KMFolderTree * ft = parent->folderTree();
   assert( ft );
 
+  QString global = mUseGlobalSettings ? 
+    GlobalSettings::lastSelectedFolder() : QString::null;
   mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), ft,
-                                           GlobalSettings::lastSelectedFolder(),
-                                           mustBeReadWrite );
+                                           global, mustBeReadWrite );
+                                           
   mTreeView->setFocus();
   connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
            this, SLOT( slotSelect() ) );
@@ -171,12 +211,30 @@ KMFolderSelDlg::KMFolderSelDlg( KMMainWidget * parent, const QString& caption, b
   resize(220, 300);
 }
 
+//-----------------------------------------------------------------------------
+KMFolderSelDlg::KMFolderSelDlg( QWidget * parent, KMFolderTree * tree,
+    const QString& caption, bool mustBeReadWrite, bool useGlobalSettings )
+  : KDialogBase( parent, "folder dialog", true, caption,
+                 Ok|Cancel, Ok, true ), // mainwin as parent, modal
+    mUseGlobalSettings( useGlobalSettings )             
+{
+  QString global = mUseGlobalSettings ? 
+    GlobalSettings::lastSelectedFolder() : QString::null;
+  mTreeView = new KMail::SimpleFolderTree( makeVBoxMainWidget(), tree,
+                                           global, mustBeReadWrite );
+                                          
+  mTreeView->setFocus();
+  connect( mTreeView, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),
+           this, SLOT( slotSelect() ) );
+
+  resize(220, 300);
+}
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::~KMFolderSelDlg()
 {
   const KMFolder * cur = folder();
-  if ( cur ) {
+  if ( cur && mUseGlobalSettings ) {
     GlobalSettings::setLastSelectedFolder( cur->idString() );
   }
 }
@@ -189,11 +247,24 @@ KMFolder * KMFolderSelDlg::folder( void )
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderSelDlg::setFolder( KMFolder* folder )
+{
+  mTreeView->setFolder( folder );
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotSelect()
 {
   accept();
 }
 
-
 //-----------------------------------------------------------------------------
+void KMFolderSelDlg::setFlags( bool mustBeReadWrite, bool showOutbox, 
+                               bool showImapFolders )
+{
+  mTreeView->reload( mustBeReadWrite, showOutbox, showImapFolders );
+}
+
+} // namespace KMail
+
 #include "kmfolderseldlg.moc"

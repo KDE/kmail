@@ -32,6 +32,7 @@
 #include <qpushbutton.h>
 #include <qwhatsthis.h>
 #include <qhbox.h>
+#include <qcombobox.h>
 
 #include <kfiledialog.h>
 #include <klocale.h>
@@ -58,6 +59,10 @@ using KMail::SieveConfigEditor;
 #include "kmfoldermgr.h"
 #include "kmservertest.h"
 #include "protocols.h"
+#include "folderrequester.h"
+using KMail::FolderRequester;
+#include "kmmainwidget.h"
+#include "kmfolder.h"
 
 #include <cassert>
 #include <stdlib.h>
@@ -780,10 +785,10 @@ void AccountDialog::makeImapAccountPage( bool connected )
   tabWidget->addTab( page1, i18n("&General") );
 
   int row = -1;
-  QGridLayout *grid = new QGridLayout( page1, 15, 2, marginHint(), spacingHint() );
-  grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 15, 10 );
-  grid->setColStretch( 1, 10 );
+  QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
+  grid->addColSpacing( 1, fontMetrics().maxWidth()*16 );
+//  grid->setRowStretch( 15, 10 );
+//  grid->setColStretch( 1, 10 );
 
   ++row;
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -880,8 +885,8 @@ void AccountDialog::makeImapAccountPage( bool connected )
     grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
   }
 
-  ++row;
 #if 0
+  ++row;
   QHBox* resourceHB = new QHBox( page1 );
   resourceHB->setSpacing( 11 );
   mImap.resourceCheck =
@@ -929,10 +934,13 @@ void AccountDialog::makeImapAccountPage( bool connected )
   grid->addWidget( mImap.intervalSpin, row, 1 );
 
   ++row;
-  mImap.trashCombo = new KMFolderComboBox( page1 );
-  mImap.trashCombo->showOutboxFolder( FALSE );
+  label = new QLabel( i18n("&Trash folder:"), page1 );
+  grid->addWidget( label, row, 0 );
+  mImap.trashCombo = new FolderRequester( page1, 
+      kmkernel->getKMMainWidget()->folderTree() );
+  mImap.trashCombo->setShowOutbox( false );
+  label->setBuddy( mImap.trashCombo );
   grid->addWidget( mImap.trashCombo, row, 1 );
-  grid->addWidget( new QLabel( mImap.trashCombo, i18n("&Trash folder:"), page1 ), row, 0 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -1672,9 +1680,9 @@ void AccountDialog::saveSettings()
     epa.setListOnlyOpenFolders( mImap.listOnlyOpenCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
-    KMFolder *t = mImap.trashCombo->getFolder();
+    KMFolder *t = mImap.trashCombo->folder();
     if ( t )
-      epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+      epa.setTrash( mImap.trashCombo->folder()->idString() );
     else
       epa.setTrash( kmkernel->trashFolder()->idString() );
 #if 0
@@ -1727,9 +1735,9 @@ void AccountDialog::saveSettings()
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
-    KMFolder *t = mImap.trashCombo->getFolder();
+    KMFolder *t = mImap.trashCombo->folder();
     if ( t )
-      epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+      epa.setTrash( mImap.trashCombo->folder()->idString() );
     else
       epa.setTrash( kmkernel->trashFolder()->idString() );
 #if 0

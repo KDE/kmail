@@ -48,6 +48,8 @@
 #include "kmailicalifaceimpl.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
+#include "folderrequester.h"
+using KMail::FolderRequester;
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -86,7 +88,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
   mPositionInFolderList( 0 ),
-  mIsNewFolder( aFolder == 0 )
+  mIsNewFolder( aFolder == 0 ),
+  mFolderTree( aParent )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
@@ -285,9 +288,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   QLabel* belongsToLabel = new QLabel( i18n("&Belongs to:" ), fpGroup );
   hl->addWidget( belongsToLabel );
 
-  mBelongsToComboBox = new QComboBox(fpGroup);
-  hl->addWidget( mBelongsToComboBox );
-  belongsToLabel->setBuddy( mBelongsToComboBox );
+  mBelongsTo = new FolderRequester( fpGroup, mDlg->folderTree() );
+  hl->addWidget( mBelongsTo );
+  belongsToLabel->setBuddy( mBelongsTo );
 
   //start icons group
   QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), this, "iconGroup" );
@@ -373,9 +376,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   ml->addWidget( mMailboxTypeComboBox );
   ml->addStretch( 1 );
 
-  mBelongsToComboBox->insertStringList( mDlg->folderNameList() );
   // we want to know if the activated changes
-  connect( mBelongsToComboBox, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
+  connect( mBelongsTo, SIGNAL(folderChanged(KMFolder*)), 
+      SLOT(slotUpdateItems(KMFolder*)) );
 
   QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), this );
   idGroup->setColumnLayout( 0, Qt::Vertical );
@@ -547,8 +550,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   KMFolder* parentFolder = mDlg->parentFolder();
 
   if ( parentFolder ) {
-    mBelongsToComboBox->setCurrentItem( mDlg->positionInFolderList() );
-    slotUpdateItems( mDlg->positionInFolderList() );
+    mBelongsTo->setFolder( parentFolder );
+    slotUpdateItems( parentFolder );
   }
 
   if ( mDlg->folder() ) {
@@ -560,7 +563,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       case KMFolderTypeSearch:
         mMailboxTypeComboBox->setCurrentItem( 2 );
         belongsToLabel->hide();
-        mBelongsToComboBox->hide();
+        mBelongsTo->hide();
         newmailGroup->hide();
         break;
       case KMFolderTypeMaildir:
@@ -573,12 +576,12 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         break;
       case KMFolderTypeImap:
         belongsToLabel->setEnabled( false );
-        mBelongsToComboBox->setEnabled( false );
+        mBelongsTo->setEnabled( false );
         mMailboxTypeGroupBox->hide();
         break;
       case KMFolderTypeCachedImap:
         belongsToLabel->setEnabled( false );
-        mBelongsToComboBox->setEnabled( false );
+        mBelongsTo->setEnabled( false );
         mMailboxTypeGroupBox->hide();
         newmailGroup->hide();
         break;
@@ -595,7 +598,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       case KMFolderTypeSearch:
         mMailboxTypeComboBox->setCurrentItem( 2 );
         belongsToLabel->hide();
-        mBelongsToComboBox->hide();
+        mBelongsTo->hide();
         newmailGroup->hide();
         break;
       case KMFolderTypeMaildir:
@@ -613,6 +616,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         break;
       default: ;
     }
+  } else {
+    // creating new top level local folder
+    newmailGroup->hide();
   }
 
   // Musn't be able to edit details for a system folder.
@@ -684,11 +690,8 @@ void FolderDiaGeneralTab::slotFolderNameChanged( const QString& str )
 }
 
 //-----------------------------------------------------------------------------
-void FolderDiaGeneralTab::slotUpdateItems ( int current )
+void FolderDiaGeneralTab::slotUpdateItems ( KMFolder* selectedFolder )
 {
-  KMFolder* selectedFolder = 0;
-  // check if the index is valid (the top level has no entrance in the mDlg->folders())
-  if (current > 0) selectedFolder = *mDlg->folders().at(current - 1);
   if (selectedFolder && (selectedFolder->folderType() == KMFolderTypeImap ||
 			 selectedFolder->folderType() == KMFolderTypeCachedImap))
   {
@@ -744,8 +747,7 @@ bool FolderDiaGeneralTab::save()
     QString acctName;
     QString fldName, oldFldName;
     KMFolderDir *selectedFolderDir = &(kmkernel->folderMgr()->dir());
-    KMFolder *selectedFolder = 0;
-    int curFolder = mBelongsToComboBox->currentItem();
+    KMFolder *selectedFolder = mBelongsTo->folder();
 
     if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
     if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
@@ -760,9 +762,8 @@ bool FolderDiaGeneralTab::save()
     if (mMailboxTypeComboBox->currentItem() == 2) {
       selectedFolderDir = &(kmkernel->searchFolderMgr()->dir());
     }
-    else if (curFolder != 0)
+    else if (selectedFolder)
     {
-      selectedFolder = *mDlg->folders().at(curFolder - 1);
       selectedFolderDir = selectedFolder->createChildFolder();
     }
 

@@ -46,9 +46,13 @@
 #include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>
+#include "folderrequester.h"
+using KMail::FolderRequester;
 #include "accountcombobox.h"
 #include "imapaccountbase.h"
 #include "folderstorage.h"
+#include "kmfolder.h"
+#include "kmmainwidget.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -3905,12 +3909,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 
   // "On startup..." option:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mOnStartupOpenFolder = new KMFolderComboBox( this );
+  mOnStartupOpenFolder = new FolderRequester( this, 
+      kmkernel->getKMMainWidget()->folderTree() );
   label = new QLabel( mOnStartupOpenFolder,
                       i18n("Open this folder on startup:"), this );
   hlay->addWidget( label );
   hlay->addWidget( mOnStartupOpenFolder, 1 );
-  connect( mOnStartupOpenFolder, SIGNAL( activated( int ) ),
+  connect( mOnStartupOpenFolder, SIGNAL( folderChanged( KMFolder* ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Empty &trash on program exit" option:
@@ -3983,8 +3988,8 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
-  general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
-				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
+  general.writeEntry( "startupFolder", mOnStartupOpenFolder->folder() ?
+				  mOnStartupOpenFolder->folder()->idString() : QString::null );
 
   GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
   GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
@@ -4076,11 +4081,12 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 
   // First possibility in the widgetstack: a combo showing the list of all folders
   // This is used with the ical/vcard storage
-  mFolderCombo = new KMFolderComboBox( mBox );
+  mFolderCombo = new FolderRequester( mBox, 
+      kmkernel->getKMMainWidget()->folderTree() );
   mFolderComboStack->addWidget( mFolderCombo, 0 );
   QToolTip::add( mFolderCombo, toolTip );
   QWhatsThis::add( mFolderCombo, whatsThis );
-  connect( mFolderCombo, SIGNAL( activated( int ) ),
+  connect( mFolderCombo, SIGNAL( folderChanged( KMFolder* ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // Second possibility in the widgetstack: a combo showing the list of accounts
@@ -4242,7 +4248,7 @@ void MiscPage::GroupwareTab::save() {
   // return 0. In that case we really don't have it enabled
   QString folderId;
   if (  format == 0 ) {
-    KMFolder* folder = mFolderCombo->getFolder();
+    KMFolder* folder = mFolderCombo->folder();
     if (  folder )
       folderId = folder->idString();
   } else {

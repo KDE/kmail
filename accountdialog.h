@@ -24,7 +24,7 @@
 #define _ACCOUNT_DIALOG_H_
 
 #include <kdialogbase.h>
-#include "kmfoldercombobox.h"
+#include <qguardedptr.h>
 
 class QRegExpValidator;
 class QCheckBox;
@@ -40,6 +40,7 @@ class KMServerTest;
 class QButtonGroup;
 namespace KMail {
   class SieveConfigEditor;
+  class FolderRequester;
 }
 
 class AccountDialog : public KDialogBase
@@ -176,7 +177,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authNTLM;
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
-      KMFolderComboBox  *trashCombo;
+      KMail::FolderRequester *trashCombo;
     };
 
   private slots:

@@ -32,7 +32,6 @@ class QListBox;
 class QButtonGroup;
 class QRegExpValidator;
 class QVBox;
-class KMFolderComboBox;
 class KMAccount;
 class KMTransportInfo;
 class ListView;
@@ -52,6 +51,7 @@ namespace KMail {
   class IdentityDialog;
   class IdentityListView;
   class AccountComboBox;
+  class FolderRequester;
 }
 namespace Kleo {
   class BackendConfigWidget;
@@ -846,7 +846,7 @@ protected:
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
-  KMFolderComboBox *mOnStartupOpenFolder;
+  KMail::FolderRequester *mOnStartupOpenFolder;
 };
 
 class MiscPageGroupwareTab : public ConfigModuleTab  {
@@ -872,7 +872,7 @@ private:
 
   QLabel* mFolderComboLabel;
   QWidgetStack* mFolderComboStack;
-  KMFolderComboBox* mFolderCombo; // in the widgetstack
+  KMail::FolderRequester* mFolderCombo; // in the widgetstack
   KMail::AccountComboBox* mAccountCombo; // in the widgetstack
 
   QCheckBox* mHideGroupwareFolders;

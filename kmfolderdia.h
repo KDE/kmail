@@ -55,6 +55,7 @@ namespace KPIM { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
 template <typename T> class QGuardedPtr;
+namespace KMail { class FolderRequester; }
 
 namespace KMail {
 
@@ -128,7 +129,7 @@ private slots:
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities
    */
-  void slotUpdateItems( int );
+  void slotUpdateItems( KMFolder* );
   void slotFolderNameChanged( const QString& );
   void slotFolderContentsSelectionChanged( int );
 
@@ -136,13 +137,12 @@ private:
   void initializeWithValuesFromFolder( KMFolder* folder );
 
 private:
-  QComboBox *mBelongsToComboBox;
+  FolderRequester *mBelongsTo;
   QComboBox *mMailboxTypeComboBox;
   QComboBox *mShowSenderReceiverComboBox;
   QComboBox *mContentsComboBox;
   QGroupBox *mIncidencesForGroup;
   QComboBox *mIncidencesForComboBox;
-  QLineEdit *mNameEdit;
   QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;
   QLabel      *mUnreadIconLabel;
@@ -151,6 +151,7 @@ private:
   QCheckBox   *mNewMailCheckBox;
   QCheckBox   *mIgnoreNewMailCheckBox;
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
+  KLineEdit   *mNameEdit;
 
   KPIM::IdentityCombo *mIdentityComboBox;
   QGroupBox *mMailboxTypeGroupBox;
@@ -263,6 +264,8 @@ public:
   KMFolder* parentFolder() const { return mParentFolder; }
   int positionInFolderList() const { return mPositionInFolderList; }
 
+  KMFolderTree* folderTree() const { return mFolderTree; }
+
 protected slots:
   void slotChanged( bool );
   virtual void slotOk();
@@ -291,6 +294,7 @@ private:
 
   QValueVector<KMail::FolderDiaTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day
+  KMFolderTree* mFolderTree;
 };
 
 #endif /*__KMFOLDERDIA*/
