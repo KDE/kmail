@@ -452,6 +452,7 @@ void KMReaderWin::displayAboutPage()
     "<li>Better procmail support via the local account</li>\n"
     "<li>Messages can be flagged</li>\n"
     "<li>Read the new messages by only hitting the space key</li>\n"
+    "<li>SSL and TLS support for POP3</li>\n"
     "</ul>\n");
   if( kernel->firstStart() ) {
     info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
