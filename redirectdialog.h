@@ -53,11 +53,18 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      /** Constructor */
-      RedirectDialog( QWidget *parent=0, const char *name=0, bool modal=false );
+      /** Constructor 
+        @param immediate True, if the Send Now button should be default 
+                         or false if the Queue button should be default
+      */
+      RedirectDialog( QWidget *parent=0, const char *name=0, 
+                      bool modal=false, bool immediate=true );
       
       /** Return the addresses for the redirection */
-      QString to();
+      QString to() { return mResentTo; };
+    
+      /** Returns the send mode */
+      bool sendImmediate() { return mImmediate; };
     
     protected:
       /** Evaluate the settings, an empty To field is not allowed. */
@@ -66,12 +73,16 @@ namespace KMail {
     protected slots:
       /** Open addressbook editor dialog. */
       void slotAddrBook();
+      
+      void slotUser1();
+      void slotUser2();
 
     private:
       QLabel      *mLabelTo;
       KMLineEdit  *mEditTo;
       QPushButton *mBtnTo;
       QString     mResentTo;
+      bool        mImmediate;
   };
   
 } // namespace KMail

@@ -1257,13 +1257,14 @@ KMCommand::Result KMRedirectCommand::execute()
   if ( !msg || !msg->codec() )
     return Failed;
     
-  RedirectDialog dlg( parentWidget() );
+  RedirectDialog dlg( parentWidget(), "redirect", true,
+                      kmkernel->msgSender()->sendImmediate() );
   if (dlg.exec()==QDialog::Rejected) return Failed;
 
   KMMessage *newMsg = msg->createRedirect( dlg.to() );
   KMFilterAction::sendMDN( msg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send( newMsg, kmkernel->msgSender()->sendImmediate() ) ) {
+  if ( !kmkernel->msgSender()->send( newMsg, dlg.sendImmediate() ) ) {
     kdDebug(5006) << "KMRedirectCommand: could not redirect message (sending failed)" << endl;
     return Failed; // error: couldn't send
   }

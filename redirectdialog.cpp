@@ -48,9 +48,10 @@ using KRecentAddress::RecentAddresses;
 
 using namespace KMail;
 
-RedirectDialog::RedirectDialog( QWidget *parent, const char *name, bool modal )
+RedirectDialog::RedirectDialog( QWidget *parent, const char *name, 
+                                bool modal, bool immediate )
   : KDialogBase( parent, name, modal, i18n( "Redirect the Message" ),
-                 Ok|Cancel, Ok )
+                 User1|User2|Cancel, ( immediate ? User1 : User2 ), false )
 {
   QVBox *vbox = makeVBoxMainWidget();
   mLabelTo = new QLabel( i18n( "Select the recipient addresses "
@@ -73,15 +74,25 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name, bool modal )
   
   mLabelTo->setBuddy( mBtnTo );
   mEditTo->setFocus();
+
+  setButtonGuiItem( User1, KGuiItem( i18n("&Send now"), "mail_send" ) );
+  setButtonGuiItem( User2, KGuiItem( i18n("&Queue"), "queue" ) );
 }
 
 
 //-----------------------------------------------------------------------------
-QString RedirectDialog::to()
+void RedirectDialog::slotUser1()
 {
-  return mResentTo;
+  mImmediate = true;
+  accept();
 }
 
+//-----------------------------------------------------------------------------
+void RedirectDialog::slotUser2()
+{
+  mImmediate = false;
+  accept();
+}
 
 //-----------------------------------------------------------------------------
 void RedirectDialog::accept()
