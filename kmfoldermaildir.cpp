@@ -91,6 +91,8 @@ int KMFolderMaildir::open()
   mQuiet = 0;
   mChanged = FALSE;
 
+  readConfig();
+
   return rc;
 }
 
