@@ -238,9 +238,6 @@ bool KMAcctLocal::fetchMsg()
 //-----------------------------------------------------------------------------
 void KMAcctLocal::postProcess()
 {
-  //BroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, false );
-  //BroadcastStatus::instance()->reset();
-
   if (mAddedOk)
   {
     kmkernel->folderMgr()->syncAllFolders();
