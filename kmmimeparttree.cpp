@@ -29,13 +29,7 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     : KListView(  parent, name ),
       mReaderWin( readerWin )
 {
-    // determine a reasonable line width for the frame
-    int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
-    if ( frameWidth < 0 )
-      frameWidth = 0;
-    setLineWidth( frameWidth );
-    kdDebug(5006) << "KMMimePartTree::frameStyle() returns " << frameStyle()
-                  << endl;
+    setStyleDependantFrameWidth();
     addColumn( i18n("Description") );
     addColumn( i18n("Type") );
     addColumn( i18n("Encoding") );
@@ -189,6 +183,27 @@ void KMMimePartTree::saveMultipleFiles( const QPtrList<QListViewItem>& selected,
 }
 
 
+//-----------------------------------------------------------------------------
+void KMMimePartTree::setStyleDependantFrameWidth()
+{
+  // set the width of the frame to a reasonable value for the current GUI style
+  int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if ( frameWidth < 0 )
+    frameWidth = 0;
+  if ( frameWidth != lineWidth() )
+    setLineWidth( frameWidth );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMimePartTree::styleChange( QStyle& oldStyle )
+{
+  setStyleDependantFrameWidth();
+  KMMimePartTreeInherited::styleChange( oldStyle );
+}
+
+
+//=============================================================================
 KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         partNode* node,
                                         const QString & description,

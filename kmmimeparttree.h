@@ -11,7 +11,8 @@ class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
 
-class KMMimePartTree : public KListView
+#define KMMimePartTreeInherited KListView
+class KMMimePartTree : public KMMimePartTreeInherited
 {
   Q_OBJECT
   friend class KMReaderWin;
@@ -30,6 +31,14 @@ protected slots:
   void slotSaveAll();
 
 protected:
+  /** reimplemented in order to update the frame width in case of a changed
+      GUI style */
+  void styleChange( QStyle& oldStyle );
+
+  /** Set the width of the frame to a reasonable value for the current GUI
+      style */
+  void setStyleDependantFrameWidth();
+
   void saveOneFile( QListViewItem* item, bool encoded );
   void saveMultipleFiles( const QPtrList<QListViewItem>& selected, bool encoded );
   void restoreLayoutIfPresent();
