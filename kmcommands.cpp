@@ -1727,7 +1727,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
 {
-  if (folder != mDestFolder) {
+  if (folder != mDestFolder || !mLostBoys.contains( serNum ) ) {
     kdDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
                      "folder or invalid serial number." << endl;
     return;
