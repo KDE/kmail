@@ -2886,9 +2886,13 @@ void KMReaderWin::slotDelayedResize()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTouchMessage()
 {
-  // mark message as read
   if (mMsg)
-    mMsg->touch();
+  {
+    KMMsgStatus st = mMsg->status();
+    if (st == KMMsgStatusNew || st == KMMsgStatusUnread
+        || st == KMMsgStatusRead)
+      mMsg->setStatus(KMMsgStatusOld);
+  }
 }
 
 
