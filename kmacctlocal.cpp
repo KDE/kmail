@@ -198,12 +198,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
 */
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
-      QString c = msg->headerField( "X-KMail-EncryptionState" );
-      if( !c.isEmpty() )
-        msg->setEncryptionState( c.latin1() );
-      c = msg->headerField( "X-KMail-SignatureState" );
-      if( !c.isEmpty() )
-        msg->setSignatureState( c.latin1() );
+      msg->setEncryptionState( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
+      msg->setSignatureState( msg->headerField( "X-KMail-SignatureState" ).at(0));
       
       addedOk = processNewMsg(msg);
 

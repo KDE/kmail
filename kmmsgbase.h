@@ -107,7 +107,7 @@ public:
    * the parent folder. */
   virtual void setEncryptionState(const KMMsgEncryptionState status, 
                                   int idx = -1 );
-    virtual void setEncryptionState( const char* status, 
+    virtual void setEncryptionState( QChar status,
                                      int idx = -1 );
     
   /** Set signature status of the message and mark dirty. Optional
@@ -115,7 +115,7 @@ public:
    * the parent folder. */
   virtual void setSignatureState(const KMMsgSignatureState status,
                                  int idx = -1 );
-    virtual void setSignatureState( const char* status,
+    virtual void setSignatureState( QChar status,
                                     int idx = -1 );
     
 

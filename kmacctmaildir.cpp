@@ -170,12 +170,8 @@ void KMAcctMaildir::processNewMail(bool)
     {
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
-      char* c = (char*)msg->headerField( "X-KMail-EncryptionState" ).latin1();
-      if( c )
-        msg->setEncryptionState( c );
-      c = (char*)msg->headerField( "X-KMail-SignatureState" ).latin1();
-      if( c )
-        msg->setSignatureState( c );
+      msg->setEncryptionState( msg->headerField( "X-KMail-EncryptionState" ).at(0));
+      msg->setSignatureState( msg->headerField( "X-KMail-SignatureState" ).at(0));
 
       addedOk = processNewMsg(msg);
       if (addedOk)
