@@ -778,7 +778,7 @@ bool KMComposeWin::applyChanges(void)
   if(!mMsg)
     {
       debug("KMComposeWin::applyChanges() : mMsg == NULL!\n");
-      return;
+      return false;
     }
 	    
 
