@@ -2236,8 +2236,10 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("Filter &Log Viewer..."), 0, this,
  		      SLOT(slotFilterLogViewer()), actionCollection(), "filter_log_viewer" );
 
-  (void) new KAction( i18n("&Anti-Spam/Virus Wizard..."), 0, this,
+  (void) new KAction( i18n("&Anti-Spam Wizard..."), 0, this,
  		      SLOT(slotAntiSpamWizard()), actionCollection(), "antiSpamWizard" );
+  (void) new KAction( i18n("&Anti-Virus Wizard..."), 0, this,
+ 		      SLOT(slotAntiVirusWizard()), actionCollection(), "antiVirusWizard" );
 
   //----- Edit Menu
   mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
@@ -3375,9 +3377,19 @@ void KMMainWidget::toggleSystemTray()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotAntiSpamWizard()
 {
-  AntiSpamWizard wiz( this, folderTree(), actionCollection() );
+  AntiSpamWizard wiz( AntiSpamWizard::AntiSpam,
+                      this, folderTree(), actionCollection() );
   wiz.exec();
   emit modifiedToolBarConfig();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotAntiVirusWizard()
+{
+  AntiSpamWizard wiz( AntiSpamWizard::AntiVirus,
+                      this, folderTree(), actionCollection() );
+  wiz.exec();
+  //emit modifiedToolBarConfig();
 }
 
 //-----------------------------------------------------------------------------
