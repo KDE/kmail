@@ -21,14 +21,138 @@ using KMail::SieveJob;
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
 #include "kmmessage.h"
+#include "identitymanager.h"
+#include "kmidentity.h"
+
+#include <kmime_header_parsing.h>
+using KMime::Types::AddrSpecList;
+
+#include <ksieve/parser.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
 #include <qregexp.h>
+#include <qdatetime.h>
+#include <qfile.h>
 
 #include <cassert>
+
+namespace {
+
+  class VacationDataExtractor : public KSieve::ScriptBuilder {
+    enum Context {
+      None = 0,
+      // command itself:
+      VacationCommand,
+      // tagged args:
+      Days, Addresses
+    };
+  public:
+    VacationDataExtractor()
+      : KSieve::ScriptBuilder(),
+	mContext( None ), mNotificationInterval( 0 )
+    {
+      kdDebug() << "VacationDataExtractor instantiated" << endl;
+    }
+    virtual ~VacationDataExtractor() {}
+
+    int notificationInterval() const { return mNotificationInterval; }
+    const QString & messageText() const { return mMessageText; }
+    const QStringList & aliases() const { return mAliases; }
+
+  private:
+    void commandStart( const QString & identifier ) {
+      kdDebug( 5006 ) << "VacationDataExtractor::commandStart( \"" << identifier << "\" )" << endl;
+      if ( identifier != "vacation" )
+	return;
+      reset();
+      mContext = VacationCommand;
+    }
+
+    void commandEnd() {
+      kdDebug( 5006 ) << "VacationDataExtractor::commandEnd()" << endl;
+      mContext = None;
+    }
+
+    void testStart( const QString & ) {}
+    void testEnd() {}
+    void testListStart() {}
+    void testListEnd() {}
+    void blockStart() {}
+    void blockEnd() {}
+    void hashComment( const QString & ) {}
+    void bracketComment( const QString & ) {}
+    void error( const KSieve::Error & e ) {
+      kdDebug( 5006 ) << "VacationDataExtractor::error() ### "
+		      << e.asString() << " @ " << e.line() << "," << e.column()
+		      << endl;
+    }
+    void finished() {}
+    
+    void taggedArgument( const QString & tag ) {
+      kdDebug( 5006 ) << "VacationDataExtractor::taggedArgument( \"" << tag << "\" )" << endl;
+      if ( mContext != VacationCommand )
+	return;
+      if ( tag == "days" )
+	mContext = Days;
+      else if ( tag == "addresses" )
+	mContext = Addresses;
+    }
+
+    void stringArgument( const QString & string, bool ) {
+      kdDebug( 5006 ) << "VacationDataExtractor::stringArgument( \"" << string << "\" )" << endl;
+      if ( mContext == Addresses ) {
+	mAliases.push_back( string );
+	mContext = VacationCommand;
+      } else if ( mContext == VacationCommand ) {
+	mMessageText = string;
+	mContext = VacationCommand;
+      }
+    }
+
+    void numberArgument( unsigned long number, char ) {
+      kdDebug( 5006 ) << "VacationDataExtractor::numberArgument( \"" << number << "\" )" << endl;
+      if ( mContext != Days )
+	return;
+      if ( number > INT_MAX )
+	mNotificationInterval = INT_MAX;
+      else
+	mNotificationInterval = number;
+      mContext = VacationCommand;
+    }
+
+    void stringListArgumentStart() {}
+    void stringListEntry( const QString & string, bool ) {
+      kdDebug( 5006 ) << "VacationDataExtractor::stringListEntry( \"" << string << "\" )" << endl;
+      if ( mContext != Addresses )
+	return;
+      mAliases.push_back( string );
+    }
+    void stringListArgumentEnd() {
+      kdDebug( 5006 ) << "VacationDataExtractor::stringListArgumentEnd()" << endl;
+      if ( mContext != Addresses )
+	return;
+      mContext = VacationCommand;
+    }
+
+  private:
+    Context mContext;
+    int mNotificationInterval;
+    QString mMessageText;
+    QStringList mAliases;
+
+    void reset() {
+      kdDebug() << "VacationDataExtractor::reset()" << endl;
+      mContext = None;
+      mNotificationInterval = 0;
+      mAliases.clear();
+      mMessageText = QString::null;
+    }
+  };
+
+}
 
 namespace KMail {
 
@@ -61,20 +185,29 @@ namespace KMail {
       return s.replace( "\n.", "\n.." );
   }
 
-  QString Vacation::composeScript( const QDate & returnDate, int notificationInterval ) {
-    QString script
-      = QString::fromLatin1("require \"vacation\";\n"
-			    "# keep next two lines:\n"
-			    // if you change these lines, change parseScript, too!
-			    "# return date: %1\n"
-			    "# notification interval: %2\n"
-			    "vacation ").arg( returnDate.toString( ISODate ) )
-                                        .arg( notificationInterval );
+  QString Vacation::composeScript( const QString & messageText,
+				   int notificationInterval,
+				   const AddrSpecList & addrSpecs )
+  {
+    QString addressesArgument;
+    QStringList aliases;
+    if ( !addrSpecs.empty() ) {
+      addressesArgument += ":addresses [ ";
+      QStringList sl;
+      for ( AddrSpecList::const_iterator it = addrSpecs.begin() ; it != addrSpecs.end() ; ++it ) {
+	sl.push_back( '"' + (*it).asString().replace( '\\', "\\\\" ).replace( '"', "\\\"" ) + '"' );
+	aliases.push_back( (*it).asString() );
+      }
+      addressesArgument += sl.join( ", " ) + " ] ";
+    }
+    QString script = QString::fromLatin1("require \"vacation\";\n"
+					 "\n"
+					 "vacation ");
+    script += addressesArgument;
     if ( notificationInterval > 0 )
       script += QString::fromLatin1(":days %1 ").arg( notificationInterval );
     script += QString::fromLatin1("text:\n");
-    script += dotstuff( i18n("This is to inform you that I'm out of office until %1.") )
-      .arg( KGlobal::locale()->formatDate( returnDate ) );
+    script += dotstuff( messageText.isEmpty() ? defaultMessageText() : messageText );
     script += QString::fromLatin1( "\n.\n;\n" );
     return lf2crlf( script );
   }
@@ -110,32 +243,59 @@ namespace KMail {
     return KURL();
   }
 
-  bool Vacation::parseScript( const QString & script, QDate & returnDate,
-			      int & notificationInterval ) {
-    if ( script.isEmpty() ) {
-      returnDate = defaultReturnDate();
+  bool Vacation::parseScript( const QString & script, QString & messageText,
+			      int & notificationInterval, QStringList & aliases ) {
+    if ( script.stripWhiteSpace().isEmpty() ) {
+      messageText = defaultMessageText();
       notificationInterval = defaultNotificationInterval();
+      aliases = defaultMailAliases();
       return true;
     }
-    // extract the data from the comments we added in composeScript():
-    QRegExp rx("#\\s*return\\s+date:\\s*(\\d{4}-\\d{2}-\\d{2}).*"
-	       "#\\s*notification\\s+interval:\\s*(-?\\d+)", false );
-    if ( rx.search( script, 0 ) != -1 ) {
-      // found
-      returnDate = QDate::fromString( rx.cap(1), ISODate );
-      notificationInterval = rx.cap(2).toInt();
-      return true;
-    }
-    return false;
+
+    // The stripWhiteSpace() call below prevents parsing errors. The
+    // slave somehow omits the last \n, which results in a lone \r at
+    // the end, leading to a parse error.
+    const QCString scriptUTF8 = script.stripWhiteSpace().utf8();
+    kdDebug() << "scriptUtf8 = \"" + scriptUTF8 + "\"" << endl;
+    KSieve::Parser parser( scriptUTF8.begin(),
+			   scriptUTF8.begin() + scriptUTF8.length() );
+    VacationDataExtractor vdx;
+    parser.setScriptBuilder( &vdx );
+    if ( !parser.parse() )
+      return false;
+    messageText = vdx.messageText().stripWhiteSpace();
+    notificationInterval = vdx.notificationInterval();
+    aliases = vdx.aliases();
+    return true;
   };
 
-  QDate Vacation::defaultReturnDate() {
-    return QDate::currentDate().addDays( 1 );
+  QString Vacation::defaultMessageText() {
+    return i18n("I am out of office till %1.\n"
+		"\n"
+		"In urgent cases, please contact Mrs. <vacation replacement>\n"
+		"\n"
+		"email: <email address of vacation replacement>\n"
+		"phone: +49 711 1111 11\n"
+		"fax.:  +49 711 1111 12\n"
+		"\n"
+		"Yours sincerely,\n"
+		"-- <enter your name and email address here>\n")
+      .arg( KGlobal::locale()->formatDate( QDate::currentDate().addDays( 1 ) ) );
   }
 
   int Vacation::defaultNotificationInterval() {
     return 7; // days
   }
+
+  QStringList Vacation::defaultMailAliases() {
+    QStringList sl;
+    for ( IdentityManager::ConstIterator it = kernel->identityManager()->begin() ;
+	  it != kernel->identityManager()->end() ; ++it )
+      if ( !(*it).emailAddr().isEmpty() )
+	sl.push_back( (*it).emailAddr() );
+    return sl;
+  }
+
 
   void Vacation::slotGetResult( SieveJob * job, bool success,
 				const QString & script, bool active ) {
@@ -159,11 +319,12 @@ namespace KMail {
     if ( !mDialog )
       mDialog = new VacationDialog( i18n("Configure Out Of Office Replies"), 0, 0, false );
 
-    QDate returnDate = defaultReturnDate();
+    QString messageText = defaultMessageText();
     int notificationInterval = defaultNotificationInterval();
+    QStringList aliases = defaultMailAliases();
     if ( !success ) active = false; // default to inactive
 
-    if ( !success || !parseScript( script, returnDate, notificationInterval ) )
+    if ( !success || !parseScript( script, messageText, notificationInterval, aliases ) )
       KMessageBox::information( 0, i18n("Someone (probably you) changed the "
 					"vacation script on the server.\n"
 					"KMail is no longer able to determine "
@@ -172,21 +333,33 @@ namespace KMail {
 
     mWasActive = active;
     mDialog->setActivateVacation( active );
-    mDialog->setReturnDate( returnDate );
+    mDialog->setMessageText( messageText );
     mDialog->setNotificationInterval( notificationInterval );
+    mDialog->setMailAliases( aliases.join(", ") );
 
     connect( mDialog, SIGNAL(okClicked()), SLOT(slotDialogOk()) );
     connect( mDialog, SIGNAL(cancelClicked()), SLOT(slotDialogCancel()) );
+    connect( mDialog, SIGNAL(defaultClicked()), SLOT(slotDialogDefaults()) );
 
     mDialog->show();
+  }
+
+  void Vacation::slotDialogDefaults() {
+    if ( !mDialog )
+      return;
+    mDialog->setActivateVacation( true );
+    mDialog->setMessageText( defaultMessageText() );
+    mDialog->setNotificationInterval( defaultNotificationInterval() );
+    mDialog->setMailAliases( defaultMailAliases().join(", ") );
   }
 
   void Vacation::slotDialogOk() {
     kdDebug(5006) << "Vacation::slotDialogOk()" << endl;
     // compose a new script:
-    QString script = composeScript( mDialog->returnDate(),
-				    mDialog->notificationInterval() );
-    bool active = mDialog->activateVacation();
+    const QString script = composeScript( mDialog->messageText(),
+				    mDialog->notificationInterval(),
+				    mDialog->mailAliases() );
+    const bool active = mDialog->activateVacation();
 
     kdDebug(5006) << "script:" << endl << script << endl;
 

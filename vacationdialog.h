@@ -18,10 +18,19 @@
 #include "kdialogbase.h"
 
 class QString;
-class QDate;
 class QCheckBox;
+class QLineEdit;
+class QTextEdit;
 class KDateWidget;
 class KIntSpinBox;
+template <typename T> class QValueList;
+
+namespace KMime {
+  namespace Types {
+    struct AddrSpec;
+    typedef QValueList<AddrSpec> AddrSpecList;
+  }
+}
 
 namespace KMail {
 
@@ -35,18 +44,23 @@ namespace KMail {
     bool activateVacation() const;
     virtual void setActivateVacation( bool activate );
 
-    QDate returnDate() const;
-    virtual void setReturnDate( const QDate & date );
+    QString messageText() const;
+    virtual void setMessageText( const QString & text );
 
     int notificationInterval() const;
     virtual void setNotificationInterval( int days );
 
+    KMime::Types::AddrSpecList mailAliases() const;
+    virtual void setMailAliases( const KMime::Types::AddrSpecList & aliases );
+    virtual void setMailAliases( const QString & aliases );
+
   protected:
     QCheckBox   * mActiveCheck;
-    KDateWidget * mDateWidget;
     KIntSpinBox * mIntervalSpin;
+    QLineEdit   * mMailAliasesEdit;
+    QTextEdit   * mTextEdit;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_VACATIONDIALOG_H__

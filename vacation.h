@@ -20,11 +20,18 @@
 #include <kurl.h>
 
 class QString;
-class QDate;
+class QStringList;
+template <typename T> class QValueList;
 namespace KMail {
   class SieveJob;
   class VacationDialog;
-};
+}
+namespace KMime {
+  namespace Types {
+    struct AddrSpec;
+    typedef QValueList<AddrSpec> AddrSpecList;
+  }
+}
 
 namespace KMail {
 
@@ -36,22 +43,25 @@ namespace KMail {
 
     bool isUsable() const { return !mUrl.isEmpty(); }
 
-    static QDate defaultReturnDate();
+    static QString defaultMessageText();
     static int defaultNotificationInterval();
+    static QStringList defaultMailAliases();
 
   protected:
-    static QString composeScript( const QDate & returnData,
-				  int notificationInterval );
-    static bool parseScript( const QString & script, QDate & returnDate,
-			     int & notificationInterval );
+    static QString composeScript( const QString & messageText,
+				  int notificationInterval,
+				  const KMime::Types::AddrSpecList & aliases);
+    static bool parseScript( const QString & script, QString & messageText,
+			     int & notificationInterval, QStringList & aliases );
     KURL findURL() const;
 
   signals:
     void result( bool success );
 
   protected slots:
+    void slotDialogDefaults();
     void slotGetResult( KMail::SieveJob * job, bool success,
-			const QString & scipt, bool active );
+			const QString & script, bool active );
     void slotDialogOk();
     void slotDialogCancel();
     void slotPutResult( KMail::SieveJob * job, bool success,
@@ -66,6 +76,6 @@ namespace KMail {
     bool mWasActive;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif // __KMAIL_VACATION_H__
