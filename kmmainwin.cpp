@@ -341,8 +341,13 @@ void KMMainWin::createWidgets(void)
   accel->connectItem(accel->insertItem(Key_Right),
 		     mHeaders, SLOT(nextMessage()));
 
-  QString charset("iso8859-1");
-  mCodec = KGlobal::charsets()->codecForName(charset);
+  if (!mEncodingStr.isEmpty())
+    if (mEncodingStr != i18n("Auto"))
+      mCodec = KGlobal::charsets()->codecForName(mEncodingStr);
+    else
+      mCodec = 0;
+  else
+    mCodec = KGlobal::charsets()->codecForName("iso8859-1");
 
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
@@ -859,7 +864,17 @@ void KMMainWin::slotUndo()
 void KMMainWin::slotShowMsgSrc()
 {
   KMMessage* msg = mHeaders->getMsg(-1);
-  if (msg) msg->viewSource(i18n("Message as Plain Text"),mCodec);
+  if (msg)
+  {
+    QTextCodec *codec = mCodec;
+    if (!codec) //this is Auto setting
+    {
+       QString cset = msg->charset();
+       if (!cset.isEmpty())
+         codec = KGlobal::charsets()->codecForName(cset);
+    }
+    msg->viewSource(i18n("Message as Plain Text"), codec);
+  }
 }
 
 
