@@ -36,6 +36,7 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
     bApplyOnExplicit = true;
     bStopProcessingHere = true;
     bConfigureShortcut = false;
+    bConfigureToolbar = false;
   }
 }
 
@@ -57,6 +58,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
     bApplyOnExplicit = aFilter.applyOnExplicit();
     bStopProcessingHere = aFilter.stopProcessingHere();
     bConfigureShortcut = aFilter.configureShortcut();
+    bConfigureToolbar = aFilter.configureToolbar();
     mIcon = aFilter.icon();
 
     QPtrListIterator<KMFilterAction> it( aFilter.mActions );
@@ -180,6 +182,8 @@ void KMFilter::readConfig(KConfig* config)
 
     bStopProcessingHere = config->readBoolEntry("StopProcessingHere", true);
     bConfigureShortcut = config->readBoolEntry("ConfigureShortcut", false);
+    bConfigureToolbar = config->readBoolEntry("ConfigureToolbar", false);
+    bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config->readEntry( "Icon", "gear" );
 
     int i, numActions;
@@ -251,6 +255,7 @@ void KMFilter::writeConfig(KConfig* config) const
 
     config->writeEntry( "StopProcessingHere", bStopProcessingHere );
     config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
+    config->writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config->writeEntry( "Icon", mIcon );
 
     QString key;

@@ -154,10 +154,42 @@ public:
   void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
   bool stopProcessingHere() const { return bStopProcessingHere; }
 
-  void setConfigureShortcut( bool aShort ) { bConfigureShortcut = aShort; }
+  /** Set whether this filter should be plugged into the filter menu.
+  */
+  void setConfigureShortcut( bool aShort ) { 
+    bConfigureShortcut = aShort; 
+    bConfigureToolbar = bConfigureToolbar && bConfigureShortcut; 
+  }
+  
+  /** @return TRUE if this filter should be plugged into the filter menu, 
+      FALSE otherwise.
+      @see setConfigureShortcut
+  */
   bool configureShortcut() const { return bConfigureShortcut; }
 
+  /** Set whether this filter should be plugged into the toolbar.
+      This can be done only if a shortcut is defined.
+      @see setConfigureShortcut
+  */
+  void setConfigureToolbar( bool aTool ) { 
+    bConfigureToolbar = aTool && bConfigureShortcut; 
+  }
+  
+  /** @return TRUE if this filter should be plugged into the toolbar, 
+      FALSE otherwise.
+      @see setConfigureToolbar
+  */
+  bool configureToolbar() const { return bConfigureToolbar; }
+
+  /** Set the icon to be used if plugged into the filter menu 
+      or toolbar. Default is the gear icon.
+      @see setConfigureShortcut setConfigureToolbar
+  */
   void setIcon( QString icon ) { mIcon = icon; }
+  
+  /** @return The name of the icon to be used. 
+      @see setIcon
+  */
   QString icon() const { return mIcon; }
 
   /**
@@ -191,6 +223,7 @@ private:
   bool bApplyOnExplicit : 1;
   bool bStopProcessingHere : 1;
   bool bConfigureShortcut : 1;
+  bool bConfigureToolbar : 1;
 };
 
 #endif /*kmfilter_h*/

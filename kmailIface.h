@@ -101,6 +101,7 @@ k_dcop:
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
   virtual void selectFolder( QString folder ) =0;
+  virtual bool canQueryClose() =0;
 
   virtual int timeOfLastMessageCountChange() const =0;
 
@@ -110,6 +111,9 @@ k_dcop_signals:
   void unreadCountChanged( const QString& folderURL, int numUnread );
 
 k_dcop_hidden:
+  /** DCOP call which is used by the Kontact plugin to create a new message. */
+  virtual DCOPRef newMessage() = 0;
+
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
   /**
    * DCOP-enabled for KMailUniqueAppHandler in the kontact plugin
@@ -121,6 +125,11 @@ k_dcop_hidden:
    * not handled (due to noArgsOpensReader==false).
    */
   virtual bool handleCommandLine( bool /*noArgsOpensReader*/ ) = 0;
+  /**
+   *
+   * DCOP-enabled for use in kaddressbook drop
+   */
+  virtual QString getFrom( Q_UINT32 serialNumber ) = 0;
 };
 
 #endif
