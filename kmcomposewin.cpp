@@ -1812,7 +1812,8 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     innerBodyPart.setContentDisposition( "inline" );
     // innerBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
     QValueList<int> allowedCTEs;
-    innerBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP);
+    // the signed body must not be 8bit encoded
+    innerBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign);
     innerBodyPart.setCharset(mCharset);
     innerBodyPart.setBodyEncoded( body );
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
@@ -1831,9 +1832,23 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
         attachPart;
         attachPart=mAtmList.next(),
         ++idx ) {
+      bool bEncrypt = encryptFlagOfAttachment( idx );
+      bool bSign = signFlagOfAttachment( idx );
       if( !mSelectedCryptPlug
-          || (    doEncrypt == encryptFlagOfAttachment( idx )
-              && doSign    == signFlagOfAttachment(    idx ) ) ){
+          || ( ( doEncrypt == bEncrypt )  && ( doSign == bSign ) ) ) {
+        // signed/encrypted body parts must be either QP or base64 encoded
+        // Why not 7 bit? Because the LF->CRLF canonicalization would render
+        // e.g. 7 bit encoded shell scripts unusuable because of the CRs.
+        if( bSign || bEncrypt ) {
+          QCString cte = attachPart->cteStr().lower();
+          if( ( "7bit" == cte ) || ( "8bit" == cte ) ) {
+            QByteArray body = attachPart->bodyDecodedBinary();
+            attachPart->setCteStr( "quoted-printable" );
+            attachPart->setBodyEncodedBinary( body );
+            kdDebug(5006) << "Changed encoding of message part from "
+                          << cte << " to quoted-printable" << endl;
+          }
+        }
         innerDwPart = theMessage.createDWBodyPart( attachPart );
         innerDwPart->Assemble();
         body += "\n--";
@@ -1852,7 +1867,8 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   {
     // oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
     QValueList<int> allowedCTEs;
-    oldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP);
+    // the signed body must not be 8bit encoded
+    oldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP && !doSign);
     oldBodyPart.setCharset(mCharset);
   }
   // create S/MIME body part for signing and/or encrypting
@@ -2163,6 +2179,15 @@ kdDebug(5006) << "                                 processing " << idx << ". att
             KMMessagePart& rEncryptMessagePart( *attachPart );
 
             // prepare the attachment's content
+            // signed/encrypted body parts must be either QP or base64 encoded
+            QCString cte = attachPart->cteStr().lower();
+            if( ( "7bit" == cte ) || ( "8bit" == cte ) ) {
+              QByteArray body = attachPart->bodyDecodedBinary();
+              attachPart->setCteStr( "quoted-printable" );
+              attachPart->setBodyEncodedBinary( body );
+              kdDebug(5006) << "Changed encoding of message part from "
+                            << cte << " to quoted-printable" << endl;
+            }
             DwBodyPart* innerDwPart = msg->createDWBodyPart( attachPart );
             innerDwPart->Assemble();
             QCString encodedAttachment = innerDwPart->AsString().c_str();
