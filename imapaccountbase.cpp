@@ -485,7 +485,9 @@ namespace KMail {
     if ( job->error() )
       kdWarning(5006) << "slotGetUserRightsResult: " << job->errorString() << endl;
     else {
+#ifndef NDEBUG
       kdDebug(5006) << "User Rights: " << ACLJobs::permissionsToString( job->permissions() ) << endl;
+#endif
       // TODO store the permissions somewhere (in the folder? storage?)
     }
     if (mSlave) removeJob(job);
