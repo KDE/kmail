@@ -49,7 +49,7 @@ public:
   KMFilter( const KMFilter & other );
 
   /** Cleanup. */
-  ~KMFilter() {};
+  ~KMFilter() {}
 
   /** Equivalent to @pattern()->name(). @return name of the filter */
   QString name() const {
