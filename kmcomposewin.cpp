@@ -54,7 +54,7 @@ using KRecentAddress::RecentAddresses;
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kwin.h>
-#include <klineeditdlg.h>
+#include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
 #include <kio/scheduler.h>
@@ -3467,14 +3467,15 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
     }
     while( !findCertsOk ) {
       bool bOk = false;
-      addressee = KLineEditDlg::getText(
+      addressee = KInputDialog::getText(
                     askForDifferentSearchString
                     ? i18n("Look for other certificates")
                     : i18n("No certificate found"),
                     i18n("Enter different address for recipient %1 "
                         "or enter \" * \" to see all certificates:")
                     .arg(recipient),
-                    addressee, &bOk, this ).stripWhiteSpace().utf8();
+                    addressee, &bOk, this )
+                  .stripWhiteSpace().utf8();
       askForDifferentSearchString = false;
       if( bOk ) {
         addressee = addressee.simplifyWhiteSpace();
