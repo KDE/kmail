@@ -347,15 +347,18 @@ public:
       if(mMsgBase->isIgnored()) pixmaps << *KMHeaders::pixIgnored;
       if(mMsgBase->isWatched()) pixmaps << *KMHeaders::pixWatched;
 
+      if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
+      if(mMsgBase->isSent()) pixmaps << *KMHeaders::pixSent;
+
       if(mMsgBase->isNew()) pixmaps << *KMHeaders::pixNew;
       if(mMsgBase->isRead() || mMsgBase->isOld()) pixmaps << *KMHeaders::pixRead;
       if(mMsgBase->isUnread()) pixmaps << *KMHeaders::pixUns;
       if(mMsgBase->isDeleted()) pixmaps << *KMHeaders::pixDel;
-      if(mMsgBase->isImportant()) pixmaps << *KMHeaders::pixFlag;
-      if(mMsgBase->isReplied()) pixmaps << *KMHeaders::pixRep;
-      if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
-      if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
-      if(mMsgBase->isSent()) pixmaps << *KMHeaders::pixSent;
+
+      // Only merge the attachment icon in if that is configured.
+      if( headers->paintInfo()->showAttachmentIcon &&
+          mMsgBase->attachmentState() == KMMsgHasAttachment )
+        pixmaps << *KMHeaders::pixAttachment;
 
       // Only merge the crypto icons in if that is configured.
       if( headers->paintInfo()->showCryptoIcons ) {
@@ -377,15 +380,15 @@ public:
           else if( mMsgBase->signatureState() == KMMsgSignatureProblematic )
               pixmaps << *KMHeaders::pixSignatureProblematic;
       }
-      // Only merge the attachment icon in if that is configured.
-      if( headers->paintInfo()->showAttachmentIcon && 
-          mMsgBase->attachmentState() == KMMsgHasAttachment ) 
-        pixmaps << *KMHeaders::pixAttachment;
+
+      if(mMsgBase->isImportant()) pixmaps << *KMHeaders::pixFlag;
+      if(mMsgBase->isReplied()) pixmaps << *KMHeaders::pixRep;
+      if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
 
       static QPixmap mergedpix;
       mergedpix = pixmapMerge( pixmaps );
       return &mergedpix;
-    } 
+    }
     return 0;
   }
 
