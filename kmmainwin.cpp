@@ -116,12 +116,11 @@ void KMMainWin::readConfig(void)
 {
   KConfig *config = app->config();
   bool oldLongFolderList=false;
-  int w, h, folderIdx=0;
+  int w, h;
   QString str;
 
   if (mStartupDone)
   {
-    folderIdx = mFolderTree->currentItem();
     writeConfig();
     oldLongFolderList = mLongFolderList;
     readPreConfig();
