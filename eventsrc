@@ -2,6 +2,7 @@
 IconName=kmail
 Comment=KMail
 Comment[be]=K Пошта
+Comment[hi]=के-मेल
 Comment[sv]=Kmail
 Comment[xx]=xxKMailxx
 
@@ -20,6 +21,7 @@ Comment[es]=Hay correo nuevo
 Comment[et]=Saabus uus meil
 Comment[fi]=Uutta postia saapunut
 Comment[fr]=Un nouveau message est arrivé
+Comment[hi]=नई डाक आई
 Comment[hu]=Új e-mail érkezett
 Comment[it]=Arrivata nuova posta
 Comment[ja]=新規メールが到着しました
