@@ -2940,7 +2940,7 @@ void KMMainWin::setupMenuBar()
                          "P;Left", this, SLOT(slotPrevMessage()),
                          actionCollection(), "go_prev_message" );
 
-  new KAction( KGuiItem( i18n("Previous U&nread Message"), "previous",
+  new KAction( KGuiItem( i18n("Previous Unread &Message"), "previous",
                          i18n("Go to the previous unread message") ),
                          Key_Minus, this, SLOT(slotPrevUnreadMessage()),
                          actionCollection(), "go_prev_unread_message" );

@@ -837,7 +837,7 @@ void KMComposeWin::setupActions(void)
   confirmReadAction = new KToggleAction (i18n("Confirm &Read"), 0,
                                          actionCollection(), "confirm_read");
   //----- Message-Encoding Submenu
-  encodingAction = new KSelectAction( i18n( "Set &Encoding" ), "charset",
+  encodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
 				      0, this, SLOT(slotSetCharset() ),
 				      actionCollection(), "charsets" );
   wordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
@@ -922,7 +922,7 @@ void KMComposeWin::setupActions(void)
                                   "signature", 0,
                                   actionCollection(), "sign_message");
 
-  selectCryptoAction = new KAction (i18n("&Select Crypto..."),
+  selectCryptoAction = new KAction (i18n("Se&lect Crypto..."),
                                     0, //KStdAccel::shortcut( .. ),
                                     this,
                                     SLOT(slotSelectCrypto()),
