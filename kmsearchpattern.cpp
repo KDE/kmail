@@ -583,6 +583,8 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
       const QString & aStatusString )
 {
   KMMsgStatus status = 0;
+  if ( ! aStatusString.compare("important") )
+    status = KMMsgStatusFlag;
   if ( ! aStatusString.compare("new") )
     status = KMMsgStatusNew;
   if ( ! aStatusString.compare("unread") )
@@ -601,8 +603,6 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
     status = KMMsgStatusQueued;
   if ( ! aStatusString.compare("sent") )
     status = KMMsgStatusSent;
-  if ( ! aStatusString.compare("important") )
-    status = KMMsgStatusFlag;
   if ( ! aStatusString.compare("watched") )
     status = KMMsgStatusWatched;
   if ( ! aStatusString.compare("ignored") )

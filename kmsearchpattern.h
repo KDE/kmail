@@ -214,6 +214,7 @@ public:
 namespace KMail {
 // The below are used in several places and here so they are accessible.
   static const char * const StatusValues[] = {
+    I18N_NOOP( "important" ),
     I18N_NOOP( "new" ),
     I18N_NOOP( "unread" ),
     I18N_NOOP( "read" ),
@@ -223,7 +224,6 @@ namespace KMail {
     I18N_NOOP( "forwarded" ),
     I18N_NOOP( "queued" ),
     I18N_NOOP( "sent" ),
-    I18N_NOOP( "important" ),
     I18N_NOOP( "watched" ),
     I18N_NOOP( "ignored" ),
     I18N_NOOP( "spam" ),
