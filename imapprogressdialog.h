@@ -47,6 +47,8 @@ public:
 			 const QString& = QString::null, 
                          const QString& = QString::null);
   
+  ~ProgressListViewItem();
+
   void setProgress( int progress );
   
 protected:

@@ -70,6 +70,11 @@ ProgressListViewItem::ProgressListViewItem(int col, int pro, QListView* parent,
   mProgress->setProgress( prog );
 }
 
+ProgressListViewItem::~ProgressListViewItem()
+{
+  delete mProgress;
+}
+
 void ProgressListViewItem::setProgress( int progress )
 {
   mProgress->setProgress( progress );
