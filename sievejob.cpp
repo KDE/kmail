@@ -81,7 +81,9 @@ namespace KMail {
       kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyURL() << " )" << endl;
       {
 	KURL url = mUrl;
+	QString query = url.query(); //save query part, because KURL::cd() erases it
 	url.cd("..");
+	url.setQuery( query );
 	kdDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.prettyURL()
 		  << endl;
 	mJob = KIO::listDir( url );

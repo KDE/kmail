@@ -228,6 +228,7 @@ namespace KMail {
       u.setUser( a->login() );
       u.setPass( a->passwd() );
       u.setPort( sieve.port() );
+      u.setQuery( "x-mech=" + (a->auth() == "*" ? "PLAIN" : a->auth()) ); //translate IMAP LOGIN to PLAIN
       return u;
     } else {
       return sieve.alternateURL();
