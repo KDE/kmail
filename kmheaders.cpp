@@ -2054,22 +2054,13 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
       }
     }
     triggerUpdate();
-#if 0 // enable after the message-freeze
     if ( command->result() == KMCommand::Failed )
       BroadcastStatus::instance()->setStatusMsg(
            deleted ? i18nTODO("Deleting messages failed.") : i18nTODO("Moving messages failed.") );
     else
       BroadcastStatus::instance()->setStatusMsg(
            deleted ? i18nTODO("Deleting messages canceled.") : i18nTODO("Moving messages canceled.") );
-#else
-    if ( !deleted ) {
-      if ( command->result() == KMCommand::Failed )
-        BroadcastStatus::instance()->setStatusMsg( i18n("Moving messages failed.") );
-      else
-        BroadcastStatus::instance()->setStatusMsg( i18n("Moving messages canceled.") );
-    }
-#endif
-  }
+ }
 }
 
 bool KMHeaders::canUndo() const
