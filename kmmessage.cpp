@@ -601,9 +601,14 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     pgp->setMessage(cStr);
     if(pgp->isEncrypted()) {
       pgp->decrypt();
-      result = codec->toUnicode(pgp->message().stripWhiteSpace());
+      result = codec->toUnicode(pgp->message());
     } else
-      result = codec->toUnicode(cStr.stripWhiteSpace());
+      result = codec->toUnicode(cStr);
+
+    // Remove blank lines at the beginning
+    for( i = 0; i < (int)result.length() && result[i] <= ' '; i++ );
+    while (i > 0 && result[i-1] == ' ') i--;
+    result.remove(0,i);
 
     result.replace(reNL, '\n' + indentStr);
     result = indentStr + result + '\n';
