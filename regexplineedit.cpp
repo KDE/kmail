@@ -73,6 +73,7 @@ namespace KMail {
     QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
 
     mLineEdit = new KLineEdit( str, this );
+    setFocusProxy( mLineEdit );
     hlay->addWidget( mLineEdit );
 
     connect( mLineEdit, SIGNAL( textChanged( const QString & ) ),
