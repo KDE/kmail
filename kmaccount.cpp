@@ -223,8 +223,6 @@ void KMAccount::installTimer()
 void KMAccount::deinstallTimer()
 {
   if(mTimer) {
-    mTimer->stop();
-    disconnect(mTimer);
     delete mTimer;
     mTimer = NULL;
   }

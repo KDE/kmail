@@ -491,6 +491,7 @@ void KMReaderWin::updateReaderWin()
 
   mViewer->view()->setUpdatesEnabled( false );
   mViewer->view()->viewport()->setUpdatesEnabled( false );
+  static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
   if (mMsg) parseMsg();
   else
   {
