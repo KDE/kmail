@@ -54,10 +54,6 @@ namespace KMail {
     QString prefix() const { return mPrefix; }
     virtual void setPrefix( const QString & prefix );
 
-    /** Dedicated Trash folder for this account */
-    QString trash() const { return mTrash; }
-    virtual void setTrash( const QString & trash );
-
     /** @return whether to automatically expunge deleted messages when
         leaving the folder */
     bool autoExpunge() const { return mAutoExpunge; }
@@ -99,7 +95,7 @@ namespace KMail {
 
   protected:
     QTimer mIdleTimer;
-    QString mPrefix, mTrash;
+    QString mPrefix;
     int mTotal, mCountUnread, mCountLastUnread, mCountRemainChecks;
     bool mAutoExpunge : 1;
     bool mHiddenFolders : 1;

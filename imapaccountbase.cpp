@@ -74,7 +74,6 @@ namespace KMail {
 
   void ImapAccountBase::init() {
     mPrefix = '/';
-    mTrash = QString::null;
     mAutoExpunge = true;
     mHiddenFolders = false;
     mOnlySubscribedFolders = false;
@@ -88,7 +87,6 @@ namespace KMail {
     if ( !i ) return;
 
     setPrefix( i->prefix() );
-    setTrash( i->trash() );
     setAutoExpunge( i->autoExpunge() );
     setHiddenFolders( i->hiddenFolders() );
     setOnlySubscribedFolders( i->onlySubscribedFolders() );
@@ -122,10 +120,6 @@ namespace KMail {
 #endif
   }
 
-  void ImapAccountBase::setTrash( const QString & trash ) {
-    mTrash = trash;
-  }
-
   void ImapAccountBase::setAutoExpunge( bool expunge ) {
     mAutoExpunge = expunge;
   }
@@ -148,7 +142,6 @@ namespace KMail {
     base::readConfig( config );
 
     setPrefix( config.readEntry( "prefix", "/" ) );
-    setTrash( config.readEntry( "trash" ) );
     setAutoExpunge( config.readBoolEntry( "auto-expunge", false ) );
     setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
     setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
@@ -158,7 +151,6 @@ namespace KMail {
     base::writeConfig( config );
     
     config.writeEntry( "prefix", prefix() );
-    config.writeEntry( "trash", trash() );
     config.writeEntry( "auto-expunge", autoExpunge() );
     config.writeEntry( "hidden-folders", hiddenFolders() );
     config.writeEntry( "subscribed-folders", onlySubscribedFolders() );
