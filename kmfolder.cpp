@@ -1210,10 +1210,12 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void KMFolder::addMsgQuiet(KMMessage* aMsg)
 {
+  open();
   KMFolder *folder = aMsg->parent();
   addMsg( aMsg, NULL, TRUE );
   KMMsgBase *mb = unGetMsg(count() - 1);
   kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
+  close();
 }
 
 

@@ -150,9 +150,12 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   const QString &errorMsg)
 {
   if (aSlave != mSlave) return;
-  if (errorCode == KIO::ERR_SLAVE_DIED) mSlave = NULL;
-  KMessageBox::error(0,
-    i18n("The process for the\n%1 protocol\ndied unexpectedly").arg(errorMsg));
+  if (errorCode == KIO::ERR_SLAVE_DIED)
+  {
+    mSlave = NULL;
+    KMessageBox::error(0,
+    i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
+  }
 }
 
 
