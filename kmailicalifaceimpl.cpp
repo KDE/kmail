@@ -332,13 +332,8 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
   // top-level parts we do *not* have to travel into embedded multiparts
   DwBodyPart* part = findBodyPart( msg, attachmentName );
   if ( part ) {
-    // ### BROKEN. REWRITE ME.
-    DwBodyPart emptyPart;
-    // Make sure the empty replacement body part is pointing
-    // to the same next part as the to be deleted body part.
-    emptyPart.SetNext( part->Next() );
-    // call DwBodyPart::operator =
-    *part = emptyPart;
+    msg.getTopLevelPart()->Body().RemoveBodyPart( part );
+    delete part;
     msg.setNeedsAssembly();
     kdDebug(5006) << "Attachment deleted." << endl;
     bOK = true;
