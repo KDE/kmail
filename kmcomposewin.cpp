@@ -2138,6 +2138,8 @@ void KMComposeWin::slotIdentityActivated(int)
     mEdtFrom.setText(ident.fullEmailAddr());
   if(!ident.replyToAddr().isNull())
     mEdtReplyTo.setText(ident.replyToAddr());
+  else
+    mEdtReplyTo.setText("");
   if (ident.organization().isEmpty())
     mMsg->removeHeaderField("Organization");
   else
