@@ -80,7 +80,7 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolderImap(KMFolderDir* parent=NULL, const QString& name=NULL);
+  KMFolderImap(KMFolderDir* parent=0, const QString& name=QString::null);
   virtual ~KMFolderImap();
 
   virtual QCString protocol() const { return "imap"; }

@@ -5,14 +5,15 @@
 #define KMREADERWIN_H
 
 #include <qwidget.h>
-#include <qdialog.h>
 #include <qtimer.h>
 #include <qcolor.h>
-#include <qtextcodec.h>
+#include <qstringlist.h>
 
 class KHTMLPart;
 class KMFolder;
 class KMMessage;
+class KMMessagePart;
+class KURL;
 class QFrame;
 class QMultiLineEdit;
 class QScrollBar;
@@ -20,6 +21,7 @@ class QString;
 class QTabDialog;
 class QLabel;
 class QHBox;
+class QTextCodec;
 
 namespace KParts
 {

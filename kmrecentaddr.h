@@ -3,6 +3,8 @@
 
 #include <qstringlist.h>
 
+class KConfig;
+
 /**
  * Handles a list of "recent email-addresses". Simply set a max-count and
  * call @ref add() to add entries.

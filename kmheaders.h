@@ -19,6 +19,7 @@ class QPalette;
 class KMHeaderItem;
 class QPixmap;
 class QIconSet;
+class QDateTime;
 #ifdef SCORING
 class KMScoringManager;
 #endif

@@ -33,6 +33,7 @@ class KIntNumInput;
 class KMAccount;
 class KMFolder;
 class KMServerTest;
+class QButtonGroup;
 
 class AccountDialog : public KDialogBase
 {

@@ -157,7 +157,7 @@ class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
   friend class KMHeaders;         // needed for the digest forward
 
 public:
-  KMComposeWin(KMMessage* msg=0L, QString id = "unknown");
+  KMComposeWin(KMMessage* msg=0L, QString id=QString::fromLatin1("unknown"));
   ~KMComposeWin();
 
   /**

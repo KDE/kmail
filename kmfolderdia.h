@@ -10,8 +10,10 @@ class QCheckBox;
 class QPushButton;
 class QLineEdit;
 class QListBox;
-class QComboBox ;
+class QComboBox;
 class KMFolder;
+class KMFolderDir;
+template <typename T> class QGuardedPtr;
 
 /** Dialog for handling the properties of a mail folder
  */

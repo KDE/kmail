@@ -8,6 +8,10 @@
 #ifndef kfileio_h
 #define kfileio_h
 
+#include <qcstring.h>
+
+class QString;
+
 /** Load a file. Returns a pointer to the memory-block that contains
  * the loaded file. Returns a NULL string if the file could not be loaded.
  * If withDialogs is FALSE no warning dialogs are opened if there are
@@ -16,10 +20,10 @@
  * byte longer than the file itself.
  * If ensureNewline is TRUE the string will always have a trailing newline.
  */
-QCString kFileToString(const QString &fileName, bool ensureNewline=TRUE,
-		      bool withDialogs=TRUE);
+QCString kFileToString(const QString &fileName, bool ensureNewline=true,
+		      bool withDialogs=true);
 
-QByteArray kFileToBytes(const QString &fileName, bool withDialogs=TRUE);
+QByteArray kFileToBytes(const QString &fileName, bool withDialogs=true);
 
 
 /** Save a file. If withDialogs is FALSE no warning dialogs are opened if 
@@ -28,12 +32,12 @@ QByteArray kFileToBytes(const QString &fileName, bool withDialogs=TRUE);
  * Makes a copy if the file exists to filename~ if createBackup==TRUE.
  */
 bool kCStringToFile(const QCString& buffer, const QString &fileName, 
-		   bool askIfExists=FALSE, bool createBackup=TRUE,
-		   bool withDialogs=TRUE);
+		   bool askIfExists=false, bool createBackup=true,
+		   bool withDialogs=true);
 /** Does not stop at NUL */
 bool kByteArrayToFile(const QByteArray& buffer, const QString &fileName, 
-		   bool askIfExists=FALSE, bool createBackup=TRUE,
-		   bool withDialogs=TRUE);
+		   bool askIfExists=false, bool createBackup=true,
+		   bool withDialogs=true);
 
 
 #endif /*kfileio_h*/
