@@ -421,6 +421,9 @@ signals:
   /** Emitted when the name of the folder changes. */
   void nameChanged();
 
+  /** Emitted when the readonly status of the folder changes. */
+  void readOnlyChanged(KMFolder*);
+
   /** Emitted before a message is removed from the folder. */
   void msgRemoved(KMFolder*, Q_UINT32 sernum);
 
