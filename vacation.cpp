@@ -76,7 +76,7 @@ namespace KMail {
     return script;
   }
 
-  static KURL findUrlForAccount( const KMAcctImap * a ) {
+  static KURL findUrlForAccount( const KMail::ImapAccountBase * a ) {
     assert( a );
     SieveConfig sieve = a->sieveConfig();
     if ( !sieve.managesieveSupported() )
@@ -99,8 +99,8 @@ namespace KMail {
     KMAcctMgr * am = kernel->acctMgr();
     assert( am );
     for ( KMAccount * a = am->first() ; a ; a = am->next() )
-      if ( dynamic_cast<KMAcctImap*>(a) ) {
-	KURL u = findUrlForAccount( static_cast<KMAcctImap*>(a) );
+      if ( dynamic_cast<KMail::ImapAccountBase*>(a) ) {
+	KURL u = findUrlForAccount( static_cast<KMail::ImapAccountBase*>(a) );
 	if ( !u.isEmpty() )
 	  return u;
       }
