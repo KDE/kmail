@@ -104,6 +104,26 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
   return KMail::ContentsTypeMail;
 }
 
+static QString localizedDefaultFolderName( KMail::FolderContentsType type )
+{
+  switch ( type ) {
+    case KMail::ContentsTypeCalendar:
+      return i18n( "Calendar" );
+   case KMail::ContentsTypeTask:
+      return i18n( "Tasks" );
+   case KMail::ContentsTypeJournal:
+      return i18n( "Journal" );
+   case KMail::ContentsTypeNote:
+      return i18n( "Notes" );
+   case KMail::ContentsTypeContact:
+      return i18n( "Contacts" );
+   default:
+      kdWarning( 5006 ) << "localizedDefaultFolderName requested for unknown type: " << type;
+      break;
+  }
+  return "";
+}
+
 const char* KMailICalIfaceImpl::annotationForContentsType( KMail::FolderContentsType type )
 {
   return s_folderContentsType[type].annotation;
@@ -1277,6 +1297,18 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     FolderInfo info( format, NoChange );
     mFolderInfoMap.insert( folder, info );
 
+    // Adjust the folder names of all foo.default folders, since if a german 
+    // user exports her calendar, known to her as Kalender, it's strange if it
+    // shows up as /user/Louise/Calendar for other people. That way japanese users
+    // will also get japanse shared folder names at least for standard resouce folders
+    // which are shared.
+    if ( folder->folderType() == KMFolderTypeCachedImap ) {
+      QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
+      kdDebug(5006) << "folderContentsTypeChanged: " << folder->name() << " has annotation " << annotation << endl;
+      if ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
+        folder->setLabel( localizedDefaultFolderName( contentsType ) );
+    }
+
     // avoid multiple connections
     disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
                 this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
@@ -1588,12 +1620,6 @@ void KMailICalIfaceImpl::readConfig()
   mContacts = initFolder( "GCo", KMail::ContentsTypeContact );
   mNotes    = initFolder( "GNo", KMail::ContentsTypeNote );
 
-  mCalendar->setLabel( i18n( "Calendar" ) );
-  mTasks->setLabel( i18n( "Tasks" ) );
-  mJournals->setLabel( i18n( "Journal" ) );
-  mContacts->setLabel( i18n( "Contacts" ) );
-  mNotes->setLabel( i18n( "Notes" ) );
-
   // Store final annotation (with .default) so that we won't ask again on next startup
   if ( mCalendar->folderType() == KMFolderTypeCachedImap )
     static_cast<KMFolderCachedImap *>( mCalendar->storage() )->updateAnnotationFolderType();
@@ -1683,6 +1709,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
     if ( node && !node->isDir() ) {
       folder = static_cast<KMFolder *>( node );
       folder->storage()->setContentsType( contentsType );
+      folder->setLabel( localizedDefaultFolderName( contentsType ) );
       kdDebug(5006) << "Adjusted type of " << folder->location() << " to contentsType " << contentsType << endl;
       folder->storage()->writeConfig();
     }
@@ -1847,8 +1874,12 @@ KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderPar
         if ( folder->folderType() == KMFolderTypeCachedImap ) {
           QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
           //kdDebug(5006) << "findStandardResourceFolder: " << folder->name() << " has annotation " << annotation << endl;
-          if ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
+          // this is a default folder and it is below our default resources parent folder => Bingo
+          if ( ( annotation == QString( s_folderContentsType[contentsType].annotation ) + ".default" )
+              && folder->parent()->owner()->idString() == GlobalSettings::theIMAPResourceFolderParent() ) {
             return folder;
+          }
+
         }
       }
     }

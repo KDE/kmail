@@ -1849,17 +1849,9 @@ void KMFolderCachedImap::slotAnnotationResult(const QString& entry, const QStrin
         FolderContentsType contentsType = static_cast<KMail::FolderContentsType>( i );
         if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) ) {
           // Case 3: known content-type on server, get it
-          //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation" << endl;
+          //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation: " << type << endl;
           kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
           mAnnotationFolderType = value;
-          if ( folder()->parent()->owner()->idString() != GlobalSettings::theIMAPResourceFolderParent()
-               && GlobalSettings::theIMAPResourceEnabled()
-               && subtype == "default" ) {
-            // Truncate subtype if this folder can't be a default resource folder for us,
-            // although it apparently is for someone else.
-            mAnnotationFolderType = type;
-            kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: parent folder is " << folder()->parent()->owner()->idString() << " => truncating annotation to " << value << endl;
-          }
           setContentsType( contentsType );
           mAnnotationFolderTypeChanged = false; // we changed it, not the user
           foundKnownType = true;
