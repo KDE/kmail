@@ -513,10 +513,15 @@ void KMMessage::initHeader(void)
   else
     setReplyTo(identity->replyToAddr());
 
+  if (identity->organization().isEmpty())
+    removeHeaderField("Organization");
+  else
+    setHeaderField("Organization", identity->organization());
+
   setTo("");
   setSubject("");
   setDateToday();
-  if (!identity->replyToAddr().isEmpty()) setReplyTo(identity->replyToAddr());
+
 #ifdef KRN
   setHeaderField("X-NewsReader", "KRN http://ultra7.unl.edu.ar");
 #else

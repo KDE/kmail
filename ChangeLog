@@ -1,5 +1,8 @@
 1998-12-03  Stefan Taferner  <stefan@idefix> (KMail-1.0.8)
 
+	* New messages: added organization to message header
+	if given.
+
 	* Headers: position of top message in folder list is
 	stored and reused upon next opening. Exception: if there
 	is a new or unread message in the folder, then the
