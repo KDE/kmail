@@ -1,4 +1,4 @@
-
+#ifdef SCORING
 #include <kdebug.h>
 
 #include "kmmainwin.h"
@@ -138,3 +138,4 @@ KMScoringManager::globalScoringManager()
 KMScoringManager*
 KMScoringManager::mScoringManager = 0;
 #include "kmscoring.moc"
+#endif // SCORING
