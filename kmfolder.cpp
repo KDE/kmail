@@ -45,7 +45,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1503
+#define INDEX_VERSION 1504
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -84,6 +84,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   needsCompact    = FALSE;
   mChild          = 0;
   mLockType       = FCNTL;
+  mConvertToUtf8  = FALSE;
 }
 
 
@@ -730,7 +731,12 @@ bool KMFolder::readIndexHeader()
   assert(mIndexStream != NULL);
 
   fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
-  if (indexVersion < INDEX_VERSION)
+  if (indexVersion == 1503 && INDEX_VERSION == 1504)
+  {
+    kdDebug() << "Converting index file " << (const char*)indexLocation() << " to utf-8" << endl;
+    mConvertToUtf8 = TRUE;
+  }
+  else if (indexVersion < INDEX_VERSION)
   {
     kdDebug() << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
     createIndexFromContents();
@@ -764,7 +770,7 @@ void KMFolder::readIndex()
     if (feof(mIndexStream)) break;
 
     mi = new KMMsgInfo(this);
-    mi->fromIndexString(line);
+    mi->fromIndexString(line, mConvertToUtf8);
     if (mi->status() == KMMsgStatusDeleted)
     {
       delete mi;  // skip messages that are marked as deleted
@@ -783,6 +789,12 @@ void KMFolder::readIndex()
 	(mi->status() == KMMsgStatusUnread))
       ++mUnreadMsgs;
     mMsgList.append(mi);
+  }
+  if (mConvertToUtf8)
+  {
+    mConvertToUtf8 = FALSE;
+    mDirty = TRUE;
+    writeIndex();
   }
 }
 

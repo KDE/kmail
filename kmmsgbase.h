@@ -82,7 +82,7 @@ public:
 
   /** Return contents as index string. This string is of fixed size
     that can be read with indexStringLength(). */
-  virtual const QString asIndexString(void) const;
+  virtual const QCString asIndexString(void) const;
 
   /** Returns fixed length of index strings returned by asIndexString(). */
   static int indexStringLength(void);

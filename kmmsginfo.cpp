@@ -149,7 +149,7 @@ void KMMsgInfo::setMsgIdMD5(const QString& aMsgIdMD5)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::fromIndexString(const QString& str)
+void KMMsgInfo::fromIndexString(const QString& str, bool toUtf8)
 {
   char statusCh;
   unsigned long ldate;
@@ -160,9 +160,16 @@ void KMMsgInfo::fromIndexString(const QString& str)
   mDate    = (time_t)ldate;
   mStatus  = (KMMsgStatus)statusCh;
   mXMark   = str.mid(33, 3).stripWhiteSpace();
-  mSubject = str.mid(37, 100).stripWhiteSpace();
-  mFromStrip = str.mid(138, 50).stripWhiteSpace();
-  mToStrip = str.mid(189, 50).stripWhiteSpace();
+  if (toUtf8)
+  {
+    mSubject = str.mid(37, 100).stripWhiteSpace();
+    mFromStrip = str.mid(138, 50).stripWhiteSpace();
+    mToStrip = str.mid(189, 50).stripWhiteSpace();
+  } else {
+    mSubject = QString::fromUtf8(str.mid(37, 100).stripWhiteSpace());
+    mFromStrip = QString::fromUtf8(str.mid(138, 50).stripWhiteSpace());
+    mToStrip = QString::fromUtf8(str.mid(189, 50).stripWhiteSpace());
+  }
   mReplyToIdMD5 = str.mid(240, 22).stripWhiteSpace();
   mMsgIdMD5 = str.mid(263, 22).stripWhiteSpace();
   mDirty = FALSE;

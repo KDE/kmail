@@ -188,25 +188,25 @@ const QString KMMsgBase::dateStr(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::asIndexString(void) const
+const QCString KMMsgBase::asIndexString(void) const
 {
   int i, len;
-  QString str; 
+  QCString str; 
   unsigned long dateTen = date();
 //  dateTen %= 10000000000; // In index only 10 chars are reserved for the date
 //  This is nonsense because 10000000000 is bigger than the highest unsigned
 //  long. (Or is there any compiler that defines unsigned long as something
 //  really huge?? )
 
-  QString a((const char*)decodeQuotedPrintableString(subject()));
+  QCString a(subject().utf8());
   a.truncate(100);
-  QString b((const char*)decodeQuotedPrintableString(fromStrip()));
+  QCString b(fromStrip().utf8());
   b.truncate(50);
-  QString c((const char*)decodeQuotedPrintableString(toStrip()));
+  QCString c(toStrip().utf8());
   c.truncate(47);
-  QString d((const char*)replyToIdMD5());
+  QCString d((const char*)replyToIdMD5());
   d.truncate(22);
-  QString e((const char*)msgIdMD5());
+  QCString e((const char*)msgIdMD5());
   e.truncate(22);
 
   // don't forget to change indexStringLength() below !!
@@ -282,8 +282,10 @@ QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
 const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 {
   QCString aStr = _str.ascii();
-  QCString result;
-  char *pos, *dest, *beg, *end, *mid;
+  QString result;
+  QCString charset;
+  char *pos, *beg, *end, *mid;
+  QCString cstr;
   QString str;
   char encoding, ch;
   bool valid;
@@ -292,20 +294,23 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 
   if (aStr.find("=?") < 0) return aStr;
 
-  result.truncate(aStr.length());
-  for (pos=aStr.data(), dest=result.data(); *pos; pos++)
+  for (pos=aStr.data(); *pos; pos++)
   {
     if (pos[0]!='=' || pos[1]!='?')
     {
-      *dest++ = *pos;
+      result += *pos;
       continue;
     }
     beg = pos+2;
     end = beg;
     valid = TRUE;
     // parse charset name
+    charset = "";
     for (i=2,pos+=2; i<maxLen && (*pos!='?'&&(ispunct(*pos)||isalnum(*pos))); i++)
+    {
+      charset += *pos;
       pos++;
+    }
     if (*pos!='?' || i<4 || i>=maxLen) valid = FALSE;
     else
     {
@@ -338,16 +343,22 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 	// decode quoted printable text
 	for (i=str.length()-1; i>=0; i--)
 	  if (str[i]=='_') str[i]=' ';
-	str = decodeQuotedPrintable(str);
+	cstr = decodeQuotedPrintable(str);
       }
       else
       {
 	// decode base64 text
-	str = decodeBase64(str);
+	cstr = decodeBase64(str);
       }
+      QTextCodec *codec = QTextCodec::codecForName(charset);
+      if (!codec) codec = QTextCodec::codecForName(KGlobal::locale()
+        ->charset());
+      if (codec) str = codec->toUnicode(cstr);
+      else str = QString::fromLocal8Bit(cstr);
       *pos = ch;
-      for (i=0; i < (int)str.length(); i++)
-	*dest++ = (char)(QChar)str[i];
+      result += str;
+//      for (i=0; i < (int)str.length(); i++)
+//	result += (char)(QChar)str[i];
 
       pos = end -1;
     }
@@ -356,11 +367,10 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
       //result += "=?";
       //pos = beg -1; // because pos gets increased shortly afterwards
       pos = beg - 2;
-      *dest++ = *pos++;
-      *dest++ = *pos;
+      result += *pos++;
+      result += *pos;
     }
   }
-  *dest = '\0';
   return result;
 }
 

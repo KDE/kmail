@@ -527,7 +527,7 @@ void KMReaderWin::parseMsg(void)
                  bkgrdStr + ">" );
 
   if (!parent())
-    setCaption(mCodec->toUnicode(mMsg->subject()));
+    setCaption(mMsg->subject());
 
   parseMsg(mMsg);
 
@@ -718,7 +718,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
   switch (mHeaderStyle)
   {
     case HdrBrief:
-    mViewer->write("<font size=\"+1\"><b>" + mCodec->toUnicode(strToHtml(mMsg->subject())) +
+    mViewer->write("<font size=\"+1\"><b>" + strToHtml(mMsg->subject()) +
                    "</b></font>&nbsp; (" +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
     if (!mMsg->cc().isEmpty())
@@ -733,7 +733,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
   case HdrStandard:
     mViewer->write("<font size=\"+1\"><b>" +
-                   mCodec->toUnicode(strToHtml(mMsg->subject())) + "</b></font><br>\n");
+                   strToHtml(mMsg->subject()) + "</b></font><br>\n");
     mViewer->write(i18n("From: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (vcpartnum >= 0) {
@@ -757,7 +757,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     mViewer->write(QString("<table><tr><td><img src=") +
 		   locate("data", "kmail/pics/kdelogo.xpm") +
                    "></td><td hspace=\"50\"><b><font size=\"+2\">");
-    mViewer->write(mCodec->toUnicode(strToHtml(mMsg->subject())) + "</font></b><br>");
+    mViewer->write(strToHtml(mMsg->subject()) + "</font></b><br>");
     mViewer->write(i18n("From: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (vcpartnum >= 0) {
@@ -781,7 +781,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
   case HdrLong:
     mViewer->write("<font size=\"+1\"><b>" +
-                   mCodec->toUnicode(strToHtml(mMsg->subject())) + "</B></font><br>");
+                   strToHtml(mMsg->subject()) + "</B></font><br>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<br>");
     mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
@@ -1067,7 +1067,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 				     bool aPreserveBlanks) const
 {
-  QString qpstr, iStr, result;
+  QCString qpstr, iStr, result;
   const char *pos;
   char ch, str[256];
   int i, i1, x, len;
@@ -1076,8 +1076,9 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
   char* htmlPos;
   bool startOfLine = true;
 
-  if (aDecodeQP) qpstr = KMMsgBase::decodeRFC2047String(aStr);
-  else qpstr = aStr;
+  // FIXME: use really unicode within a QString instead of utf8
+  if (aDecodeQP) qpstr = KMMsgBase::decodeRFC2047String(aStr).utf8();
+  else qpstr = aStr.utf8();
 
 #define HTML_ADD(str,len) strcpy(htmlPos,str),htmlPos+=len
 
@@ -1196,7 +1197,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 
   *htmlPos = '\0';
   result += htmlStr;
-  return result;
+  return QString::fromUtf8(result);
 }
 
 

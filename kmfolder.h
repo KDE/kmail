@@ -318,6 +318,7 @@ protected:
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
   KMFolderDir* mChild;
   LockType mLockType;
+  bool mConvertToUtf8;
 };
 
 #endif /*kmfolder_h*/

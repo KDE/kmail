@@ -676,6 +676,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   mailingListStr = headerField("X-Mailing-List");
   replyToStr = replyTo();
 
+  msg->setCharset(charset());
+
   if (replyToAll)
   {
     int i;
@@ -798,8 +800,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (!recognized)
     msg->setSubject("Re: " + subject());
 
-  if ( !sForceReplyCharset )
-    msg->setCharset(charset());
+  if ( sForceReplyCharset )
+    msg->setCharset("");
   setStatus(KMMsgStatusReplied);
 
   return msg;
@@ -1136,7 +1138,7 @@ void KMMessage::setTo(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::toStrip(void) const
 {
-  return stripEmailAddr(decodeRFC2047String(headerField("To")));
+  return stripEmailAddr(headerField("To"));
 }
 
 //-----------------------------------------------------------------------------
@@ -1221,13 +1223,13 @@ void KMMessage::setFrom(const QString& bStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::fromStrip(void) const
 {
-  return stripEmailAddr(decodeRFC2047String(headerField("From")));
+  return stripEmailAddr(headerField("From"));
 }
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::fromEmail(void) const
 {
-  return getEmailAddr(decodeRFC2047String(headerField("From")));
+  return getEmailAddr(headerField("From"));
 }
 
 
@@ -1368,7 +1370,7 @@ const QString KMMessage::headerField(const QString& aName) const
 {
   DwHeaders& header = mMsg->Headers();
   DwField* field;
-  QCString result;
+  QString result;
 
   if (aName.isEmpty() || !(field = header.FindField((const char*)aName)))
     result = "";
@@ -1971,11 +1973,13 @@ const QString KMMessage::getEmailAddr(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 {
-  QString result, addr, tmp2;
+  QCString result, addr, tmp2;
   const char *pos;
   char ch;
   bool insideQuote = false;
-  QString email = decodeRFC2047String(aEmail);
+
+  // FIXME: use unicode instead of utf8
+  QCString email = aEmail.utf8();
 
   if (email.isEmpty()) return email;
 
@@ -2010,7 +2014,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
       addr = "";
     }
   }
-  return result;
+  return QString::fromUtf8(result);
 }
 
 
