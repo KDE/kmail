@@ -1072,7 +1072,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   QString str, receiptTo;
   KMMessage *receipt;
 
-  receiptTo = headerField("Return-Receipt-To");
+  receiptTo = headerField("Disposition-Notification-To");
   if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
   receiptTo.replace(QRegExp("\\n"),"");
 

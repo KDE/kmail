@@ -1184,7 +1184,7 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setHeaderField("Return-Receipt-To", replyAddr);
 
   if (confirmReadAction->isChecked())
-    mMsg->setHeaderField("X-Chameleon-Return-To", replyAddr);
+    mMsg->setHeaderField("Disposition-Notification-To", replyAddr);
 
   if (urgentAction->isChecked())
   {
