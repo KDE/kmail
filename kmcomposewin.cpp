@@ -1640,7 +1640,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     mEditor->getCursorPosition(&line, &col);
     (*it).data.resize((*it).data.size() + 1);
     (*it).data[(*it).data.size() - 1] = '\0';
-    mEditor->insertAt(QString::fromLocal8Bit((*it).data), line, col);
+    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+    if (codec)
+      mEditor->insertAt(codec->toUnicode((*it).data), line, col);
+    else
+      mEditor->insertAt(QString::fromLocal8Bit((*it).data), line, col);
     mapAtmLoadData.remove(it);
     return;
   }
