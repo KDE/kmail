@@ -5104,17 +5104,20 @@ void GeneralPage::slotActivatePlugIn( void )
     int pos = 0;
     while( ( current = lvit.current() ) )
     {
-        if(  current == currentPlugItem )
-        {
-            // This is the one the user wants to (de)activate
-            _pluginPage->mCryptPlugList->at( pos )->setActive( activate );
-            current->setText( 3, activate ? "*" : "" );
-        }
-        else
-        {
-            // This is one of the other entries
-            _pluginPage->mCryptPlugList->at( pos )->setActive( false );
-            current->setText( 3, "" );
+        CryptPlugWrapper* plug = _pluginPage->mCryptPlugList->at( pos );
+        if( plug ) {
+            if(  current == currentPlugItem )
+            {
+                // This is the one the user wants to (de)activate
+                plug->setActive( activate );
+                current->setText( 3, activate ? "*" : "" );
+            }
+            else
+            {
+                // This is one of the other entries
+                plug->setActive( false );
+                current->setText( 3, "" );
+            }
         }
         ++lvit;
         ++pos;
