@@ -356,6 +356,14 @@ KMComposeWin::~KMComposeWin()
   std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
 }
 
+void KMComposeWin::setAutoDeleteWindow( bool f )
+{
+  if ( f )
+    setWFlags( getWFlags() | WDestructiveClose );
+  else
+    setWFlags( getWFlags() & ~WDestructiveClose );
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::send(int how)
 {

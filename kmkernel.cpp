@@ -422,7 +422,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !to.isEmpty() ) msg->setTo(to);
   if ( !body.isEmpty() ) msg->setBody(body.utf8());
 
-  bool iCalHack = false;
+  bool iCalAutoSend = false;
   KConfigGroup options( config(), "Groupware" );
   if (  !attachData.isEmpty() ) {
     if ( attachName == "cal.ics" && attachType == "text" &&
@@ -436,7 +436,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 			   arg( attachParamValue ) );
 
       // Don't show the composer window, if the automatic sending is checked
-      iCalHack = options.readBoolEntry( "AutomaticSending", true );
+      iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
     } else {
       // Just do what we're told to do
       msgPart = new KMMessagePart;
@@ -456,14 +456,15 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   }
 
   KMComposeWin *cWin = new KMComposeWin( msg );
-  if( iCalHack )
+  cWin->setAutoDelete( true );
+  if( iCalAutoSend )
     cWin->slotWordWrapToggled( false );
   else
     cWin->setCharset( "", true );
   if ( msgPart )
     cWin->addAttach(msgPart);
 
-  if ( hidden == 0 && !iCalHack ) {
+  if ( hidden == 0 && !iCalAutoSend ) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
@@ -471,8 +472,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
   } else {
-    // TODO: Delete the window
-    kdDebug(5006) << "Hidden send now window\n";
+    cWin->setAutoDeleteWindow( true );
     cWin->slotSendNow();
   }
 

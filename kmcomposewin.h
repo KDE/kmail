@@ -314,6 +314,12 @@ public:
    inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
   /**
+   * If this flag is set, the compose window will delete itself after
+   * the window has been closed.
+   */
+  void setAutoDeleteWindow( bool f );
+
+  /**
    * If this folder is set, the original message is inserted back after
    * cancelling
    */
