@@ -11,6 +11,7 @@
 #include "kmmsgbase.h" // for KMMsgStatus
 #include <mimelib/string.h>
 #include <kdepimmacros.h>
+#include <kservice.h>
 
 class QPopupMenu;
 class QTextCodec;
@@ -844,5 +845,79 @@ private:
   KMMessage *mMessage;
 };
 
+class KDE_EXPORT KMHandleAttachmentCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  /** Supported types of attachment handling */  
+  enum AttachmentAction 
+  {
+    Open = 1,
+    OpenWith = 2,
+    View = 3,
+    Save = 4,
+    Properties = 5
+  };
+  /** 
+   * Construct a new command
+   * @p node the partNode
+   * @p msg the KMMessage
+   * @p atmId the ID of the attachment, the partNode must know this
+   * @p atmName the name of the attachment
+   * @p action what to do with the attachment
+   * @p offer specify a KService that should handle the "open" action
+   */ 
+  KMHandleAttachmentCommand( partNode* node, KMMessage* msg, int atmId, 
+      const QString& atmName, AttachmentAction action, KService::Ptr offer = 0 );
+
+private slots:
+  /** Called from start() via a single shot timer. */
+  virtual void slotStart();
+
+  /** 
+   * Called when the part was downloaded
+   * Calls execute
+   */
+  void slotPartComplete();
+
+signals:
+  void showAttachment( int id, const QString& name );
+
+private:
+  virtual Result execute();
+
+  QString createAtmFileLink() const;
+
+  /** Get a KService if it was not specified */
+  KService::Ptr getServiceOffer();
+
+  /** Open needs a valid KService */
+  void atmOpen();
+
+  /** Display an open-with dialog */
+  void atmOpenWith();
+
+  /** 
+   * Viewing is not supported by this command 
+   * so it just emits showAttachment
+   */
+  void atmView();
+
+  /** Save the attachment */
+  void atmSave();
+
+  /** Display the properties */
+  void atmProperties();
+
+private:
+  partNode* mNode;
+  KMMessage* mMsg;
+  int mAtmId;
+  const QString& mAtmName;
+  AttachmentAction mAction;
+  KService::Ptr mOffer;
+
+};
 
 #endif /*KMCommands_h*/

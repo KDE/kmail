@@ -350,16 +350,10 @@ protected slots:
   void slotHideAttachments();
 
   /** Some attachment operations. */
-  void slotAtmOpen();
-  void slotDoAtmOpen();
-  void slotAtmOpenWith();
-  void slotAtmView();
-  void slotAtmSave();
-  void slotAtmProperties();
+  void slotAtmView( int id, const QString& name );
   void slotDelayedResize();
   void slotTouchMessage();
-  void slotAtmLoadPart( int );
-  void slotAtmDistributeClick();
+  void slotHandleAttachment( int );
 
 protected:
   /** reimplemented in order to update the frame width in case of a changed
@@ -470,7 +464,6 @@ private:
   // an attachment should be updated
   bool mAtmUpdate;
   int mChoice;
-  KService::Ptr mOffer;
   unsigned long mWaitingForSerNum;
 };
 

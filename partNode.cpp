@@ -193,7 +193,7 @@ void partNode::buildObjectTree( bool processSiblings )
         //dive into multipart messages
         while( DwMime::kTypeMultipart == curNode->type() ) {
             partNode * newNode = new partNode( curNode->dwPart()->Body().FirstBodyPart() );
-	    curNode->setFirstChild( newNode );
+            curNode->setFirstChild( newNode );
             curNode = newNode;
         }
         // go up in the tree until reaching a node with next
@@ -210,7 +210,7 @@ void partNode::buildObjectTree( bool processSiblings )
         if( curNode && curNode->dwPart() && curNode->dwPart()->Next() ) {
             partNode* nextNode = new partNode( curNode->dwPart()->Next() );
             curNode->setNext( nextNode );
-	    curNode = nextNode;
+            curNode = nextNode;
         } else
             curNode = 0;
     }
@@ -409,6 +409,18 @@ partNode* partNode::findType( int type, int subType, bool deep, bool wide )
         return mNext->findType(  type, subType, deep, wide );
     else
         return 0;
+}
+
+partNode* partNode::findNodeForDwPart( DwBodyPart* part )
+{
+    partNode* found = 0;
+    if( dwPart()->partId() == part->partId() )
+        return this;
+    if( mChild )
+        found = mChild->findNodeForDwPart( part );
+    if( mNext && !found )
+        found = mNext->findNodeForDwPart( part );
+    return found;
 }
 
 partNode* partNode::findTypeNot( int type, int subType, bool deep, bool wide )

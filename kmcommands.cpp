@@ -57,6 +57,7 @@
 #include <kstandarddirs.h>
 #include <ktempfile.h>
 #include <kimproxy.h>
+#include <kuserprofile.h>
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include "mailinglist-magic.h"
@@ -72,6 +73,7 @@ using KMail::ActionScheduler;
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmsender.h"
+#include "kmmsgpartdlg.h"
 #include "undostack.h"
 #include "kcursorsaver.h"
 #include "partNode.h"
@@ -85,10 +87,13 @@ using KMail::MailSourceViewer;
 using KMail::SecondaryWindow;
 #include <redirectdialog.h>
 using KMail::RedirectDialog;
+#include <libkdepim/kfileio.h>
 
 #include "progressmanager.h"
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
+#include <kmime_mdn.h>
+using namespace KMime;
 
 #include "broadcaststatus.h"
 
@@ -2607,3 +2612,185 @@ KMCommand::Result KMIMChatCommand::execute()
     return Failed;
   }
 }
+
+KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node, 
+     KMMessage* msg, int atmId, const QString& atmName, 
+     AttachmentAction action, KService::Ptr offer )
+: mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ), 
+  mAction( action ), mOffer( offer )
+{
+}
+
+void KMHandleAttachmentCommand::slotStart()
+{
+  if ( !mNode->msgPart().isComplete() )
+  {
+    // load the part
+    KMLoadPartsCommand *command = new KMLoadPartsCommand( mNode, mMsg );
+    connect( command, SIGNAL( partsRetrieved() ),
+        this, SLOT( slotPartComplete() ) );
+    command->start();
+  } else
+  {
+    execute();
+  }
+}
+
+void KMHandleAttachmentCommand::slotPartComplete()
+{
+  execute();
+}
+
+KMCommand::Result KMHandleAttachmentCommand::execute()
+{
+  switch( mAction )
+  {
+    case Open:
+      atmOpen();
+      break;
+    case OpenWith:
+      atmOpenWith();
+      break;
+    case View:
+      atmView();
+      break;
+    case Save:
+      atmSave();
+      break;
+    case Properties:
+      atmProperties();
+      break;
+    default:
+      kdDebug(5006) << "unknown action " << mAction << endl;
+      break;
+  }
+  setResult( OK );
+  emit completed( this );
+  deleteLater();
+  return OK;
+}
+
+QString KMHandleAttachmentCommand::createAtmFileLink() const
+{
+  QFileInfo atmFileInfo( mAtmName );
+
+  if ( atmFileInfo.size() == 0 )
+  {
+    kdDebug(5006) << k_funcinfo << "rewriting attachment" << endl;
+    // there is something wrong so write the file again
+    QByteArray data = mNode->msgPart().bodyDecodedBinary();
+    size_t size = data.size();
+    if ( mNode->msgPart().type() == DwMime::kTypeText && size) {
+      // convert CRLF to LF before writing text attachments to disk
+      size = KMFolder::crlf2lf( data.data(), size );
+    }
+    KPIM::kBytesToFile( data.data(), size, mAtmName, false, false, false );
+  }
+
+  KTempFile *linkFile = new KTempFile( locateLocal("tmp", atmFileInfo.fileName() +"_["),
+                          "]."+ atmFileInfo.extension() );
+
+  linkFile->setAutoDelete(true);
+  QString linkName = linkFile->name();
+  delete linkFile;
+
+  if ( link(QFile::encodeName( mAtmName ), QFile::encodeName( linkName )) == 0 ) {
+    return linkName; // success
+  }
+  return QString::null;
+}
+
+KService::Ptr KMHandleAttachmentCommand::getServiceOffer()
+{
+  KMMessagePart& msgPart = mNode->msgPart();
+  const QString contentTypeStr =
+    ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).lower();
+
+  if ( contentTypeStr == "text/x-vcard" ) {
+    atmView();
+    return 0;
+  }
+  // determine the MIME type of the attachment
+  KMimeType::Ptr mimetype;
+  // prefer the value of the Content-Type header
+  mimetype = KMimeType::mimeType( contentTypeStr );
+  if ( mimetype->name() == "application/octet-stream" ) {
+    // consider the filename if Content-Type is application/octet-stream
+    mimetype = KMimeType::findByPath( mAtmName, 0, true /* no disk access */ );
+  }
+  if ( ( mimetype->name() == "application/octet-stream" )
+       && msgPart.isComplete() ) {
+    // consider the attachment's contents if neither the Content-Type header
+    // nor the filename give us a clue
+    mimetype = KMimeType::findByFileContent( mAtmName );
+  }
+  return KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+}
+
+void KMHandleAttachmentCommand::atmOpen()
+{
+  if ( !mOffer )
+    mOffer = getServiceOffer();
+  if ( !mOffer )
+    return;
+
+  KURL::List lst;
+  KURL url;
+  bool autoDelete = true;
+  QString fname = createAtmFileLink();
+
+  if ( fname.isNull() ) {
+    autoDelete = false;
+    fname = mAtmName;
+  }
+
+  url.setPath( fname );
+  lst.append( url );
+  if ( (KRun::run( *mOffer, lst, autoDelete ) <= 0) && autoDelete ) {
+      QFile::remove(url.path());
+  }
+}
+
+void KMHandleAttachmentCommand::atmOpenWith()
+{
+  KURL::List lst;
+  KURL url;
+  bool autoDelete = true;
+  QString fname = createAtmFileLink();
+
+  if ( fname.isNull() ) {
+    autoDelete = false;
+    fname = mAtmName;
+  }
+
+  url.setPath( fname );
+  lst.append( url );
+  if ( (! KRun::displayOpenWithDialog(lst, autoDelete)) && autoDelete ) {
+    QFile::remove( url.path() );
+  }
+}
+
+void KMHandleAttachmentCommand::atmView()
+{
+  // we do not handle this ourself
+  emit showAttachment( mAtmId, mAtmName );
+}
+
+void KMHandleAttachmentCommand::atmSave()
+{
+  QPtrList<partNode> parts;
+  parts.append( mNode );
+  // save, do not leave encoded
+  KMSaveAttachmentsCommand *command =
+    new KMSaveAttachmentsCommand( 0, parts, mMsg, false );
+  command->start();
+}
+
+void KMHandleAttachmentCommand::atmProperties()
+{
+  KMMsgPartDialogCompat dlg( 0, true );
+  KMMessagePart& msgPart = mNode->msgPart();
+  dlg.setMsgPart( &msgPart );
+  dlg.exec();
+}
+

@@ -798,8 +798,10 @@ void KMReaderWin::slotMessageArrived( KMMessage *msg )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::update( KMail::Interface::Observable * observable ) {
+void KMReaderWin::update( KMail::Interface::Observable * observable ) 
+{
   if ( !mAtmUpdate ) {
+    // reparse the msg
     kdDebug(5006) << "KMReaderWin::update - message" << endl;
     updateReaderWin();
     return;
@@ -808,28 +810,27 @@ void KMReaderWin::update( KMail::Interface::Observable * observable ) {
   if ( !mRootNode )
     return;
 
-  kdDebug(5006) << "KMReaderWin::update - attachment " << mAtmCurrentName << endl;
-  partNode * node = mRootNode->findId( mAtmCurrent );
+  KMMessage* msg = static_cast<KMMessage*>( observable );
+  assert( msg != 0 );
+
+  // find our partNode and update it
+  partNode* node = mRootNode->findNodeForDwPart( msg->lastUpdatedPart() );
   if ( !node ) {
-    kdWarning(5006) << "KMReaderWin::update - Could not find node for attachment!" << endl;
+    kdDebug(5006) << "KMReaderWin::update - can't find node for part" << endl;
     return;
   }
+  node->setDwPart( msg->lastUpdatedPart() );
 
-  assert( dynamic_cast<KMMessage*>( observable ) != 0 );
-  // if the assert ever fails, this curious construction needs to
-  // be rethought:
-
-  // replace the dwpart of the node
-  node->setDwPart( static_cast<KMMessage*>( observable )->lastUpdatedPart() );
   // update the tmp file
   // we have to set it writeable temporarily
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
-  KPIM::kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
-		    false, false, true );
+  QByteArray data = node->msgPart().bodyDecodedBinary();
+  size_t size = data.size();
+  if ( node->msgPart().type() == DwMime::kTypeText && size) {
+    size = KMFolder::crlf2lf( data.data(), size );
+  }
+  KPIM::kBytesToFile( data.data(), size, mAtmCurrentName, false, false, false );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
-
-  // no need to redisplay here as we only replaced the tmp file so that
-  // the desired function (e.g. save) can work with it
 }
 
 //-----------------------------------------------------------------------------
@@ -1732,7 +1733,9 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   }
 }
 
-void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p ) {
+//-----------------------------------------------------------------------------
+void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p ) 
+{
   mAtmCurrent = id;
   mAtmCurrentName = name;
   KPopupMenu *menu = new KPopupMenu();
@@ -1741,7 +1744,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
   menu->insertItem(i18n("Properties"), 5);
-  connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
+  connect(menu, SIGNAL(activated(int)), this, SLOT(slotHandleAttachment(int)));
   menu->exec( p ,0 );
   delete menu;
 }
@@ -1771,45 +1774,16 @@ void KMReaderWin::styleChange( QStyle& oldStyle )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmLoadPart( int choice )
+void KMReaderWin::slotHandleAttachment( int choice )
 {
-  mChoice = choice;
-
+  mAtmUpdate = true;
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if ( node && !node->msgPart().isComplete() )
-  {
-    // load the part
-    mAtmUpdate = true;
-    KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
-    connect( command, SIGNAL( partsRetrieved() ),
-        this, SLOT( slotAtmDistributeClick() ) );
-    command->start();
-  } else
-    slotAtmDistributeClick();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmDistributeClick()
-{
-  switch ( mChoice )
-  {
-    case 1:
-      slotAtmOpen();
-      break;
-    case 2:
-      slotAtmOpenWith();
-      break;
-    case 3:
-      slotAtmView();
-      break;
-    case 4:
-      slotAtmSave();
-      break;
-    case 5:
-      slotAtmProperties();
-      break;
-    default: kdWarning(5006) << "unknown menu item " << mChoice << endl;
-  }
+  KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
+      message(), mAtmCurrent, mAtmCurrentName, 
+      KMHandleAttachmentCommand::AttachmentAction( choice ), 0 );
+  connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+      this, SLOT( slotAtmView( int, const QString& ) ) );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
@@ -1970,10 +1944,13 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmView()
+void KMReaderWin::slotAtmView( int id, const QString& name )
 {
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
   if( node ) {
+    mAtmCurrent = id;
+    mAtmCurrentName = name;
+
     KMMessagePart& msgPart = node->msgPart();
     QString pname = msgPart.fileName();
     if (pname.isEmpty()) pname=msgPart.name();
@@ -1984,23 +1961,18 @@ void KMReaderWin::slotAtmView()
       atmViewMsg(&msgPart);
     } else if ((kasciistricmp(msgPart.typeStr(), "text")==0) &&
 	       (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
-      setMsgPart( &msgPart, htmlMail(), mAtmCurrentName, pname );
+      setMsgPart( &msgPart, htmlMail(), name, pname );
     } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
-	mAtmCurrentName, pname, overrideCodec() );
+          name, pname, overrideCodec() );
       win->show();
     }
   }
 }
 
-
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmOpen()
+void KMReaderWin::openAttachment( int id, const QString & name ) 
 {
-  openAttachment( mAtmCurrent, mAtmCurrentName );
-}
-
-void KMReaderWin::openAttachment( int id, const QString & name ) {
   mAtmCurrentName = name;
   mAtmCurrent = id;
 
@@ -2045,8 +2017,6 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
   KService::Ptr offer =
     KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
 
-  // remember for slotDoAtmOpen; FIXME, this is ugly
-  mOffer = offer;
   QString open_text;
   QString filenameText = msgPart.fileName();
   if ( filenameText.isEmpty() )
@@ -2065,110 +2035,26 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
       QString::fromLatin1("askSave") + mimetype->name() ); // dontAskAgainName
 
   if( choice == KMessageBox::Yes ) {		// Save
-    slotAtmLoadPart( 4 );
+    mAtmUpdate = true;
+    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
+        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Save, 
+        offer );
+    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+        this, SLOT( slotAtmView( int, const QString& ) ) );
+    command->start();
   }
   else if( choice == KMessageBox::No ) {	// Open
-    // this load-part is duplicated from slotAtmLoadPart but is needed here
-    // to first display the choice before the attachment is actually downloaded
-    if ( !msgPart.isComplete() ) {
-      // load the part
-      mAtmUpdate = true;
-      KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
-      connect( command, SIGNAL( partsRetrieved() ),
-          this, SLOT( slotDoAtmOpen() ) );
-      command->start();
-    } else {
-      slotDoAtmOpen();
-    }
+    mAtmUpdate = true;
+    KMHandleAttachmentCommand* command = new KMHandleAttachmentCommand( node,
+        message(), mAtmCurrent, mAtmCurrentName, KMHandleAttachmentCommand::Open, 
+        offer );
+    connect( command, SIGNAL( showAttachment( int, const QString& ) ),
+        this, SLOT( slotAtmView( int, const QString& ) ) );
+    command->start();
   } else {					// Cancel
     kdDebug(5006) << "Canceled opening attachment" << endl;
   }
 }
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotDoAtmOpen()
-{
-  if ( !mOffer ) {
-    slotAtmOpenWith();
-    return;
-  }
-
-  KURL::List lst;
-  KURL url;
-  bool autoDelete = true;
-  QString fname = createAtmFileLink();
-
-  if ( fname.isNull() ) {
-    autoDelete = false;
-    fname = mAtmCurrentName;
-  }
-
-  url.setPath( fname );
-  lst.append( url );
-  if ( (KRun::run( *mOffer, lst, autoDelete ) <= 0) && autoDelete ) {
-      QFile::remove(url.path());
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmOpenWith()
-{
-  // It makes sense to have an extra "Open with..." entry in the menu
-  // so the user can change filetype associations.
-
-    KURL::List lst;
-    KURL url;
-    bool autoDelete = true;
-    QString fname = createAtmFileLink();
-
-    if ( fname.isNull() ) {
-      autoDelete = false;
-      fname = mAtmCurrentName;
-    }
-
-    url.setPath( fname );
-    lst.append(url);
-    if ( (! KRun::displayOpenWithDialog(lst, autoDelete)) && autoDelete ) {
-      QFile::remove(url.path());
-    }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmSave()
-{
-  if ( !mRootNode )
-    return;
-
-  partNode * node = mRootNode->findId( mAtmCurrent );
-  if ( !node ) {
-    kdWarning(5006) << "KMReaderWin::slotAtmSave - could not find node " << mAtmCurrent << endl;
-    return;
-  }
-
-  QPtrList<partNode> parts;
-  parts.append( node );
-  // save, do not leave encoded
-  KMSaveAttachmentsCommand *command =
-    new KMSaveAttachmentsCommand( this, parts, message(), false );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotAtmProperties()
-{
-    KMMsgPartDialogCompat dlg(0,TRUE);
-
-    partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-    if( node ) {
-        KMMessagePart& msgPart = node->msgPart();
-
-        dlg.setMsgPart(&msgPart);
-        dlg.exec();
-    }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()

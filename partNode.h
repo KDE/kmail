@@ -160,6 +160,8 @@ public:
     partNode* findTypeNot( int type, int subType, bool deep=true,
                            bool wide=true );
 
+    partNode* findNodeForDwPart( DwBodyPart* part );
+
     void fillMimePartTree( KMMimePartTreeItem* parentItem,
                            KMMimePartTree*     mimePartTree,
                            QString labelDescr    = QString::null,
