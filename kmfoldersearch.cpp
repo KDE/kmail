@@ -1069,7 +1069,11 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
     if (mSearch)
         mSearch->stop();
 
-    removeContents();
+    if (!mUnlinked) {
+        unlink(QFile::encodeName(indexLocation()));
+        mUnlinked = true;
+    }
+
     if (!isOpened()) //give up, until the user manually opens the folder
         return;
 
