@@ -366,6 +366,14 @@ public:
     mSubjectTextWasSpellChecked = _spell;
   }
   bool subjectTextWasSpellChecked() const { return mSubjectTextWasSpellChecked; }
+
+
+  /** Disabled signing and encryption completely for this composer window. */
+  void setSigningAndEncryptionDisabled( bool v )
+  {
+    mSigningAndEncryptionExplicitlyDisabled = v;
+  }
+
 public slots:
   void polish();
   /**
@@ -760,6 +768,7 @@ protected:
   int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
+  bool mSigningAndEncryptionExplicitlyDisabled;
   bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
   bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;

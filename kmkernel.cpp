@@ -442,8 +442,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                                     "charset=\"utf-8\"" ).
                            arg( attachParamValue ) );
 
-      // Don't show the composer window, if the automatic sending is checked
-      iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
+      iCalAutoSend = true; // no point in editing raw ICAL
       noWordWrap = true; // we shant word wrap inline invitations
     } else {
       // Just do what we're told to do
@@ -460,11 +459,16 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         // << attachCharset << endl;
         msgPart->setCharset( attachCharset );
       }
+      // Don't show the composer window, if the automatic sending is checked
+      KConfigGroup options(  config(), "Groupware" );
+      iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
     }
   }
 
   KMComposeWin *cWin = new KMComposeWin();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
+  cWin->setSigningAndEncryptionDisabled( isICalInvitation 
+     && options.readBoolEntry( "LegacyBodyInvites", false ) );
   cWin->setAutoDelete( true );
   if( noWordWrap )
     cWin->slotWordWrapToggled( false );
