@@ -173,12 +173,12 @@ const QString KMMessagePart::iconName(void) const
     config.setDesktopGroup();
     icon = config.readEntry("Icon");
     if(icon.isEmpty()) // If no icon specified.
-      icon = "unknown";
+      icon = "mimetypes/unknown";
   }
   else
   {
     // not found, use default
-    icon = "unknown";
+    icon = "mimetypes/unknown";
   }
 
   return locate( "icon", "large/hicolor/" + icon + ".png" );
