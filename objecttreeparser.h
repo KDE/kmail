@@ -22,7 +22,10 @@
 class KMReaderWin;
 class QCString;
 class QString;
+class QWidget;
 class partNode;
+template <typename T> class QMemArray;
+typedef QMemArray<char> QByteArray;
 
 namespace KMail {
 
@@ -51,6 +54,17 @@ namespace KMail {
 				 bool keepEncryptions=false,
 				 bool includeSignatures=true );
 
+    /** Save a QByteArray into a new temp. file using the extention
+        given in dirExt to compose the directory name and
+        the name given in fileName as file name
+        and return the path+filename.
+        If parameter reader is valid the directory and file names are added
+        to the reader's temp directories and temp files lists. */
+    static QString byteArrayToTempFile( KMReaderWin* reader,
+                                        const QString& dirExt,
+                                        const QString& fileName,
+                                        const QByteArray& theBody );
+
   private:
     /** if data is 0:
 	Feeds the HTML widget with the contents of the opaque signed
@@ -71,6 +85,25 @@ namespace KMail {
 						  QCString * cleartextData=0,
 						  struct CryptPlugWrapper::SignatureMetaData * paramSigMeta=0,
 						  bool hideErrors=false );
+
+    /** find a plugin matching a given libName */
+    static bool foundMatchingCryptPlug( const QString & libName,
+                                        CryptPlugWrapper** useThisCryptPlug_ref,
+                                        QWidget* parent=0,
+                                        const QString & verboseName=QString::null );
+
+    /** Returns the contents of the given multipart/encrypted
+        object. Data is decypted.  May contain body parts. */
+    static bool okDecryptMIME( KMReaderWin* reader,
+                               CryptPlugWrapper*     useThisCryptPlug,
+                               partNode& data,
+                               QCString& decryptedData,
+                               bool& signatureFound,
+                               struct CryptPlugWrapper::SignatureMetaData& sigMeta,
+                               bool showWarning,
+                               bool& passphraseError,
+                               QString& aErrorText );
+
   };
 
 }; // namespace KMail

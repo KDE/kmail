@@ -207,16 +207,7 @@ public:
   KAction *copyAction() { return mCopyAction; }
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
-// static functions:
 
- private:
-    /** find a plugin matching a given libName */
-    static bool foundMatchingCryptPlug( const QString & libName,
-                                        CryptPlugWrapper** useThisCryptPlug_ref,
-                                        QWidget* parent=0,
-                                        const QString & verboseName=QString::null );
-
- public:
     // This function returns the complete data that were in this
     // message parts - *after* all encryption has been removed that
     // could be removed.
@@ -226,29 +217,6 @@ public:
                                    KMMessage& theMessage,
                                    bool weAreReplacingTheRootNode = false,
                                    int recCount = 0 );
-
-    /** Returns the contents of the given multipart/encrypted
-        object. Data is decypted.  May contain body parts. */
-    static bool okDecryptMIME( KMReaderWin* reader,
-                               CryptPlugWrapper*     useThisCryptPlug,
-                               partNode& data,
-                               QCString& decryptedData,
-                               bool& signatureFound,
-                               struct CryptPlugWrapper::SignatureMetaData& sigMeta,
-                               bool showWarning,
-                               bool& passphraseError,
-                               QString& aErrorText );
-
-    /** Save a QByteArray into a new temp. file using the extention
-        given in dirExt to compose the directory name and
-        the name given in fileName as file name
-        and return the path+filename.
-        If parameter reader is valid the directory and file names are added
-        to the reader's temp directories and temp files lists. */
-    static QString byteArrayToTempFile( KMReaderWin* reader,
-                                        const QString& dirExt,
-                                        const QString& fileName,
-                                        const QByteArray& theBody );
 
 signals:
   /** Emitted after parsing of a message to have it stored

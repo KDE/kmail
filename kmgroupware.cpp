@@ -1,7 +1,6 @@
 // kmgroupware.cpp
 // Author: Karl-Heinz Zimmer <khz@klaralvdalens-datakonsult.se>
 
-#include <kdeversion.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -34,6 +33,8 @@
 #include "kmcommands.h"
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
+#include "objecttreeparser.h"
+using KMail::ObjectTreeParser;
 
 #include <ktnef/ktnefparser.h>
 #include <ktnef/ktnefattach.h>
@@ -2150,7 +2151,7 @@ bool KMGroupware::msTNEFToHTML( KMReaderWin* reader,
     QCString vPartc;
     if( msTNEFToVPart( tnef, updateCounter, &vPart, &vPartc ) ){
       QByteArray theBody( vPartc );
-      QString fname2( KMReaderWin::byteArrayToTempFile( reader,
+      QString fname2( ObjectTreeParser::byteArrayToTempFile( reader,
                                                         "groupware",
                                                         "vPart_decoded.raw",
                                                         theBody ) );

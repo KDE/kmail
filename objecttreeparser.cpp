@@ -13,6 +13,10 @@
     Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, US
 */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 // my header file
 #include "objecttreeparser.h"
 
@@ -21,6 +25,7 @@
 #include "partNode.h"
 #include "kmgroupware.h"
 #include "kmkernel.h"
+#include "kfileio.h"
 #include "partmetadata.h"
 using KMail::PartMetaData;
 
@@ -36,6 +41,7 @@ using KMail::PartMetaData;
 #include <khtml_part.h>
 #include <khtmlview.h>
 #include <kmessagebox.h>
+#include <ktempfile.h>
 
 // other Qt headers
 #include <qlabel.h>
@@ -44,9 +50,142 @@ using KMail::PartMetaData;
 #include <qfile.h>
 
 // other headers
-
+#include <sys/stat.h>
+#include <sys/types.h>
 
 namespace KMail {
+
+//pending(khz): replace this and put it into CryptPlugWrapper class  (khz, 2002/06/27)
+class tmpHelper {
+public:
+    static QString pluginErrorIdToErrorText( int errId, bool& passphraseError )
+    {
+        /* The error numbers used by GPGME.  */
+    /*
+        typedef enum
+        {
+            GPGME_EOF                = -1,
+            GPGME_No_Error           = 0,
+            GPGME_General_Error      = 1,
+            GPGME_Out_Of_Core        = 2,
+            GPGME_Invalid_Value      = 3,
+            GPGME_Busy               = 4,
+            GPGME_No_Request         = 5,
+            GPGME_Exec_Error         = 6,
+            GPGME_Too_Many_Procs     = 7,
+            GPGME_Pipe_Error         = 8,
+            GPGME_No_Recipients      = 9,
+            GPGME_No_Data            = 10,
+            GPGME_Conflict           = 11,
+            GPGME_Not_Implemented    = 12,
+            GPGME_Read_Error         = 13,
+            GPGME_Write_Error        = 14,
+            GPGME_Invalid_Type       = 15,
+            GPGME_Invalid_Mode       = 16,
+            GPGME_File_Error         = 17,  // errno is set in this case.
+            GPGME_Decryption_Failed  = 18,
+            GPGME_No_Passphrase      = 19,
+            GPGME_Canceled           = 20,
+            GPGME_Invalid_Key        = 21,
+            GPGME_Invalid_Engine     = 22,
+            GPGME_Invalid_Recipients = 23
+        }
+    */
+        /*
+        NOTE:
+            The following hack *must* be changed into something
+            using an extra enum specified in the CryptPlug API
+            *and* the file error number (case 17) must be taken
+            into account.                     (khz, 2002/27/06)
+        */
+        passphraseError = false;
+        switch( errId ){
+            case /*GPGME_EOF                = */-1:
+                return(i18n("End of File reached during operation."));
+                break;
+            case /*GPGME_No_Error           = */0:
+                return(i18n("No error."));
+                break;
+            case /*GPGME_General_Error      = */1:
+                return(i18n("General error."));
+                break;
+            case /*GPGME_Out_Of_Core        = */2:
+                return(i18n("Out of core!"));
+                break;
+            case /*GPGME_Invalid_Value      = */3:
+                return(i18n("Invalid value."));
+                break;
+            case /*GPGME_Busy               = */4:
+                return(i18n("Engine is busy."));
+                break;
+            case /*GPGME_No_Request         = */5:
+                return(i18n("No request."));
+                break;
+            case /*GPGME_Exec_Error         = */6:
+                return(i18n("Execution error."));
+                break;
+            case /*GPGME_Too_Many_Procs     = */7:
+                return(i18n("Too many processes."));
+                break;
+            case /*GPGME_Pipe_Error         = */8:
+                return(i18n("Pipe error."));
+                break;
+            case /*GPGME_No_Recipients      = */9:
+                return(i18n("No recipients."));
+                break;
+            case /*GPGME_No_Data            = */10:
+                return(i18n("No data."));
+                break;
+            case /*GPGME_Conflict           = */11:
+                return(i18n("Conflict."));
+                break;
+            case /*GPGME_Not_Implemented    = */12:
+                return(i18n("Not implemented."));
+                break;
+            case /*GPGME_Read_Error         = */13:
+                return(i18n("Read error."));
+                break;
+            case /*GPGME_Write_Error        = */14:
+                return(i18n("Write error."));
+                break;
+            case /*GPGME_Invalid_Type       = */15:
+                return(i18n("Invalid type."));
+                break;
+            case /*GPGME_Invalid_Mode       = */16:
+                return(i18n("Invalid mode."));
+                break;
+            case /*GPGME_File_Error         = */17:  // errno is set in this case.
+                return(i18n("File error."));
+                break;
+            case /*GPGME_Decryption_Failed  = */18:
+                return(i18n("Decryption failed."));
+                break;
+            case /*GPGME_No_Passphrase      = */19:
+                passphraseError = true;
+                return(i18n("No passphrase."));
+                break;
+            case /*GPGME_Canceled           = */20:
+                passphraseError = true;
+                return(i18n("Canceled."));
+                break;
+            case /*GPGME_Invalid_Key        = */21:
+                passphraseError = true;
+                return(i18n("Invalid key."));
+                break;
+            case /*GPGME_Invalid_Engine     = */22:
+                return(i18n("Invalid engine."));
+                break;
+            case /*GPGME_Invalid_Recipients = */23:
+                return(i18n("Invalid recipients."));
+                break;
+            default:
+                return(i18n("Unknown error."));
+            }
+    }
+};
+
+
+
 
   void ObjectTreeParser::insertAndParseNewChildNode( KMReaderWin* reader,
 						     QCString* resultStringPtr,
@@ -326,10 +465,10 @@ namespace KMail {
                   QCString vCal( curNode->msgPart().bodyDecoded() );
                   if( reader ){
                     QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
-                    QString fname( reader->byteArrayToTempFile( reader,
-                                                                "groupware",
-                                                                "vCal_request.raw",
-                                                                theBody ) );
+                    QString fname( byteArrayToTempFile( reader,
+							"groupware",
+							"vCal_request.raw",
+							theBody ) );
                     if( !fname.isEmpty() && !showOneMimePart ){
                       QString prefix;
                       QString postfix;
@@ -661,7 +800,7 @@ namespace KMail {
 		data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
 		if( data ){
 		  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-		  plugFound = KMReaderWin::foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+		  plugFound = foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
 		}
 	      }
 	      else {
@@ -671,7 +810,7 @@ namespace KMail {
 		  data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
 		  if( data ){
 		    curNode->setCryptoType( partNode::CryptoTypeSMIME );
-		    plugFound = KMReaderWin::foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" );
+		    plugFound = foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" );
 		  }
 		} else {
 		  kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
@@ -740,13 +879,13 @@ namespace KMail {
 	      if( data ){
 		isOpenPGP = true;
 		curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-		plugFound = KMReaderWin::foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+		plugFound = foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
 	      }
 	      if( !data ) {
 		data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
 		if( data ){
 		  curNode->setCryptoType( partNode::CryptoTypeSMIME );
-		  plugFound = KMReaderWin::foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" );
+		  plugFound = foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" );
 		}
 	      }
 	      /*
@@ -779,7 +918,7 @@ namespace KMail {
 		  sigMeta.nota_xml            = 0;
 		  bool passphraseError;
 
-		  bool bOkDecrypt = KMReaderWin::okDecryptMIME( reader, useThisCryptPlug,
+		  bool bOkDecrypt = okDecryptMIME( reader, useThisCryptPlug,
 						   *data,
 						   decryptedData,
 						   signatureFound,
@@ -986,7 +1125,7 @@ namespace KMail {
 		    ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
 		  */
 		  PartMetaData messagePart;
-		  if( KMReaderWin::foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
+		  if( foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
 		    QCString decryptedData;
 		    bool signatureFound;
 		    struct CryptPlugWrapper::SignatureMetaData sigMeta;
@@ -995,7 +1134,7 @@ namespace KMail {
 		    sigMeta.extended_info_count = 0;
 		    sigMeta.nota_xml            = 0;
 		    bool passphraseError;
-		    if( KMReaderWin::okDecryptMIME( reader, useThisCryptPlug,
+		    if( okDecryptMIME( reader, useThisCryptPlug,
 				       *curNode,
 				       decryptedData,
 				       signatureFound,
@@ -1070,7 +1209,7 @@ namespace KMail {
 	      if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
 		CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
 		
-		if( KMReaderWin::foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" ) ) {
+		if( foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" ) ) {
 		  
 		  DwHeaders& headers( curNode->dwPart()->Headers() );
 		  QCString ctypStr( headers.ContentType().AsString().c_str() );
@@ -1103,7 +1242,7 @@ namespace KMail {
 		    sigMeta.extended_info_count = 0;
 		    sigMeta.nota_xml            = 0;
 		    bool passphraseError;
-		    if( KMReaderWin::okDecryptMIME( reader, useThisCryptPlug,
+		    if( okDecryptMIME( reader, useThisCryptPlug,
 				       *curNode,
 				       decryptedData,
 				       signatureFound,
@@ -1197,10 +1336,10 @@ namespace KMail {
 	    kdDebug(5006) << "MS TNEF encoded" << endl;
 	    QString vPart( curNode->msgPart().bodyDecoded() );
 	    QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
-	    QString fname( KMReaderWin::byteArrayToTempFile( reader,
-                                                               "groupware",
-                                                               "msTNEF.raw",
-                                                               theBody ) );
+	    QString fname( byteArrayToTempFile( reader,
+						"groupware",
+						"msTNEF.raw",
+						theBody ) );
 	    if( !fname.isEmpty() ){
 	      QString prefix;
 	      QString postfix;
@@ -1657,6 +1796,198 @@ namespace KMail {
 		  << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
     return bIsOpaqueSigned;
   }
+
+//
+// THIS IS AN INTERIM SOLUTION
+// TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
+//
+// STATIC:
+bool ObjectTreeParser::foundMatchingCryptPlug( const QString & libName,
+					       CryptPlugWrapper** useThisCryptPlug_ref,
+					       QWidget* parent,
+					       const QString & verboseName )
+{
+  if ( !useThisCryptPlug_ref ) {
+    kdWarning(5006) << "ObjectTreeParser::foundMatchingCryptPlug: useThisCryptPlug_ref is NULL!" << endl;
+    return false;
+  }
+  CryptPlugWrapperList *plugins = kernel->cryptPlugList();
+  if ( plugins ) *useThisCryptPlug_ref = plugins->findForLibName( libName );
+  else *useThisCryptPlug_ref = 0;
+  // ### What's the semantics of kernel->cryptPlugList() == 0??
+  // This would lead to a better error message... (mm)
+  if( parent && !*useThisCryptPlug_ref )
+    KMessageBox::information(parent,
+      i18n("Problem: %1 plug-in was not specified.\n"
+           "Use the 'Settings->Configure KMail->Security' dialog to specify the "
+           "plug-in or ask your system administrator to do that for you.")
+           .arg(verboseName),
+           QString::null,
+           "cryptoPluginBox");
+  return *useThisCryptPlug_ref;
+}
+
+bool ObjectTreeParser::okDecryptMIME( KMReaderWin* reader,
+				      CryptPlugWrapper*     useThisCryptPlug,
+				      partNode& data,
+				      QCString& decryptedData,
+				      bool& signatureFound,
+				      struct CryptPlugWrapper::SignatureMetaData& sigMeta,
+				      bool showWarning,
+				      bool& passphraseError,
+				      QString& aErrorText )
+{
+  CryptPlugWrapperList *cryptPlugList = kernel->cryptPlugList();
+  passphraseError = false;
+  aErrorText = "";
+  const QString errorContentCouldNotBeDecrypted( i18n("Content could *not* be decrypted.") );
+
+  bool bDecryptionOk = false;
+  CryptPlugWrapper* cryptPlug = useThisCryptPlug ? useThisCryptPlug : cryptPlugList->active();
+  if( cryptPlug ) {
+    QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
+    QCString cipherStr( ciphertext );
+    bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
+                          (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
+                          (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
+    int cipherLen = ciphertext.size();
+
+    if( reader && reader->mDebugReaderCrypto ){
+      QFile fileC( "dat_04_reader.encrypted" );
+      if( fileC.open( IO_WriteOnly ) ) {
+        QDataStream dc( &fileC );
+        dc.writeRawBytes( ciphertext, ciphertext.size() );
+        fileC.close();
+      }
+    }
+
+    QCString deb;
+    deb =  "\n\nE N C R Y P T E D    D A T A = ";
+    if( cipherIsBinary )
+      deb += "[binary data]";
+    else {
+      deb += "\"";
+      deb += ciphertext;
+      deb += "\"";
+    }
+    deb += "\n\n";
+    kdDebug(5006) << deb << endl;
+
+
+
+
+    char* cleartext = 0;
+    const char* certificate = 0;
+
+    if( reader && ! cryptPlug->hasFeature( Feature_DecryptMessages ) ) {
+      reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+        i18n("Crypto plug-in %1 can not decrypt any messages.").arg(cryptPlug->libName()),
+        i18n("Please split translation across this and the next message",
+	     "Please specify a matching plug-in from the"),
+        i18n("..continued", "'Settings->Configure KMail->Security' dialog."),
+        decryptedData );
+    } else {
+      kdDebug(5006) << "ObjectTreeParser::decryptMIME: going to call CRYPTPLUG "
+                << cryptPlug->libName() << endl;
+      int errId = 0;
+      char* errTxt = 0;
+      /*
+      bDecryptionOk = cryptPlug->decryptMessage( ciphertext,
+                                                         cipherIsBinary,
+                                                         cipherLen,
+                                                         &cleartext,
+                                                         certificate,
+                                                         &errId,
+                                                         &errTxt );
+      */
+      bDecryptionOk = cryptPlug->decryptAndCheckMessage( ciphertext,
+                                                         cipherIsBinary,
+                                                         cipherLen,
+                                                         &cleartext,
+                                                         certificate,
+                                                         &signatureFound,
+                                                         &sigMeta,
+                                                         &errId,
+                                                         &errTxt );
+      kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG" << endl;
+      aErrorText = tmpHelper::pluginErrorIdToErrorText( errId, passphraseError );
+      if( bDecryptionOk )
+        decryptedData = cleartext;
+      else if( reader && showWarning ){
+        reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+          i18n("Crypto Plug-In %1 could not decrypt the data.")
+            .arg(cryptPlug->libName()),
+          i18n("Error: %1")
+            .arg( aErrorText ),
+          passphraseError
+          ? ""
+          : i18n("Make sure the plug-in is installed properly and check "
+                 "your specifications made in the "
+                 "'Settings->Configure KMail->Security' dialog."),
+          decryptedData );
+      }
+      delete errTxt;
+    }
+
+    delete cleartext;
+
+  } else {
+      if( reader )
+        reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+          i18n("No Crypto plug-in settings found."),
+          i18n("Please split translation across this and the next message",
+	       "Please specify a plug-in from the"),
+          i18n("...continued", "'Settings->Configure KMail->Security' dialog."),
+          decryptedData );
+  }
+  if( reader && reader->mDebugReaderCrypto ){
+    QFile fileC2( "dat_05_reader.decrypted" );
+    if( fileC2.open( IO_WriteOnly ) ) {
+      QDataStream dc( &fileC2 );
+      dc.writeRawBytes( decryptedData, decryptedData.size() );
+      fileC2.close();
+    }
+  }
+  return bDecryptionOk;
+}
+
+QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
+					       const QString& dirExt,
+					       const QString& orgName,
+					       const QByteArray& theBody )
+{
+  KTempFile *tempFile = new KTempFile( QString::null, "." + dirExt );
+  tempFile->setAutoDelete(true);
+  QString fname = tempFile->name();
+  delete tempFile;
+
+  bool bOk = true;
+
+  if (access(QFile::encodeName(fname), W_OK) != 0) // Not there or not writable
+    if (mkdir(QFile::encodeName(fname), 0) != 0
+      || chmod (QFile::encodeName(fname), S_IRWXU) != 0)
+        bOk = false; //failed create
+
+  if( bOk )
+  {
+    QString fileName( orgName );
+    if( reader )
+      reader->mTempDirs.append(fname);
+    //fileName.replace(QRegExp("[/\"\']"),"");
+    // strip of a leading path
+    int slashPos = fileName.findRev( '/' );
+    if ( -1 != slashPos )
+      fileName = fileName.mid( slashPos + 1 );
+    if (fileName.isEmpty()) fileName = "unnamed";
+    fname += "/" + fileName;
+
+    if (!kByteArrayToFile(theBody, fname, false, false, false))
+      bOk = false;
+    if( reader )
+      reader->mTempFiles.append(fname);
+  }
+  return bOk ? fname : QString();
+}
 
 
 
