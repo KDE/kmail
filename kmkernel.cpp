@@ -293,6 +293,7 @@ bool readFolderMsgIds=false;
           //fprintf(stderr,"%s\n",(const char *) id);
           if (id!="") { msgIds->append(id); }
         }
+        F->close();
       }
 
       time_t  DT=M->date();
@@ -314,8 +315,6 @@ bool readFolderMsgIds=false;
       }
       else { retval=-4; }
     }
-
-    if (F!=NULL) { F->close(); }
 
     return retval;
   }
