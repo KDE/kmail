@@ -329,10 +329,10 @@ void DictSpellChecker::slotAutoDetection()
     if (mActive != savedActive) {
 	if (mWordCount > 1)
 	    if (mActive)
-		emit activeChanged( "Automatic spell checking enabled." );
+		emit activeChanged( i18n("Automatic spell checking enabled.") );
 	    else
-		emit activeChanged( "Too many misspelled words: automatic "
-				"spell checking disabled." );
+		emit activeChanged( i18n("Too many misspelled words: "
+                                         "automatic spell checking disabled.") );
 	rehighlightRequest->start(100, true);
     }
 }
