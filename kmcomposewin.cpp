@@ -2314,7 +2314,7 @@ void KMComposeWin::setReplyFocus( bool hasMessage )
 {
   mEditor->setFocus();
   if ( hasMessage )
-    mEditor->setCursorPosition( 0, 0 );
+    mEditor->setCursorPosition( 1, 0 );
 }
 
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
