@@ -606,7 +606,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       subfolderNames.clear();
     }
     folder()->createChildFolder();
-    KMFolderImap *f;
+    KMFolderImap *f = 0;
     KMFolderNode *node = folder()->child()->first();
     while (node)
     {
@@ -667,12 +667,14 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       if (node)
         f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
       else {
-        f = static_cast<KMFolderImap*>
-          (folder()->child()->createFolder(subfolderNames[i])->storage());
-        if (f)
-        {
-          f->close();
-        } else {
+        KMFolder *newFolder = folder()->child()->createFolder(subfolderNames[i]);
+        if ( newFolder ) {
+          f = static_cast<KMFolderImap*> ( newFolder->storage() );
+          if ( f ) {
+            f->close();
+          }
+        }
+        if ( !f ) {
           kdWarning(5006) << "can't create folder " << subfolderNames[i] << endl;
         }
       }
