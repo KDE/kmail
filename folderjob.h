@@ -80,6 +80,8 @@ signals:
   void messageCopied( KMMessage * );
   void messageCopied( QPtrList<KMMessage> );
   void finished();
+  void progress( unsigned long bytesDownloaded, unsigned long bytesTotal );
+
 protected:
   virtual void execute()=0;
   virtual void expireMessages()=0;

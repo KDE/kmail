@@ -84,15 +84,6 @@ public:
   void setPassiveDestructor( bool passive ) { mPassiveDestructor = passive; }
   bool passiveDestructor() { return mPassiveDestructor; }
 
-signals:
-  /**
-   * This progress signal contains the "done" and the "total" numbers so
-   * that the caller can either make a % out of it, or combine it into
-   * a higher-level progress info.
-   * ### maybe move to FolderJob
-   */
-  void progress( unsigned long bytesDownloaded, unsigned long bytesTotal );
-
 protected:
   virtual void execute();
   virtual void expireMessages();
