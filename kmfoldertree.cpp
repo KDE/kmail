@@ -184,12 +184,12 @@ void KMFolderTreeItem::init()
       setType( SentMail );
     else if ( kmkernel->folderIsTrash( mFolder ) )
       setType( Trash );
-    else if( kmkernel->iCalIface().isResourceImapFolder(mFolder) )
+    else if( kmkernel->iCalIface().isResourceFolder(mFolder) )
       setType( kmkernel->iCalIface().folderType(mFolder) );
     // System folders on dimap or imap which are not resource folders are
     // inboxes. Urgs.
     if ( mFolder->isSystemFolder() &&
-        !kmkernel->iCalIface().isResourceImapFolder( mFolder) &&
+        !kmkernel->iCalIface().isResourceFolder( mFolder) &&
          ( mFolder->folderType() == KMFolderTypeImap
         || mFolder->folderType() == KMFolderTypeCachedImap ) )
       setType( Inbox );
@@ -604,7 +604,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       fti->setExpandable( true );
     } else {
       // Check if this is an IMAP resource folder
-      if ( kmkernel->iCalIface().hideResourceImapFolder( folder ) )
+      if ( kmkernel->iCalIface().hideResourceFolder( folder ) )
         // It is
         continue;
 
@@ -1163,7 +1163,7 @@ void KMFolderTree::cleanupConfigFile()
     if (folderMap.find(name) == folderMap.end())
     {
       KMFolder* folder = kmkernel->findFolderById( name );
-      if ( folder && kmkernel->iCalIface().hideResourceImapFolder( folder ) )
+      if ( folder && kmkernel->iCalIface().hideResourceFolder( folder ) )
         continue; // hidden IMAP resource folder, don't delete info
 
       config->deleteGroup(*grpIt, TRUE);

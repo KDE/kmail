@@ -413,7 +413,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   sl->addStretch( 1 );
 
   if ( kmkernel->iCalIface().isEnabled() &&
-       !kmkernel->iCalIface().isResourceImapFolder( mDlg->folder() ) ) {
+       !kmkernel->iCalIface().isResourceFolder( mDlg->folder() ) ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
     QGroupBox *typeGroup = new QGroupBox( i18n("Contents" ), this );

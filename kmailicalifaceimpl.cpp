@@ -1124,16 +1124,21 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
 
 // Returns true if folder is a resource folder. If the resource isn't enabled
 // this always returns false
-bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
+bool KMailICalIfaceImpl::isResourceFolder( KMFolder* folder ) const
 {
   return mUseResourceIMAP && folder &&
-    ( folder == mCalendar || folder == mTasks || folder == mJournals ||
-      folder == mNotes || folder == mContacts || mExtraFolders.find( folder->location() )!=0 );
+    ( isStandardResourceFolder( folder ) || mExtraFolders.find( folder->location() )!=0 );
 }
 
-bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
+bool KMailICalIfaceImpl::isStandardResourceFolder( KMFolder* folder ) const
 {
-  return mHideFolders && isResourceImapFolder( folder );
+  return ( folder == mCalendar || folder == mTasks || folder == mJournals ||
+           folder == mNotes || folder == mContacts );
+}
+
+bool KMailICalIfaceImpl::hideResourceFolder( KMFolder* folder ) const
+{
+  return mHideFolders && isResourceFolder( folder );
 }
 
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
@@ -1265,7 +1270,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
                 << ", " << contentsType << ")\n";
 
-  if ( isResourceImapFolder( folder ) )
+  if ( isStandardResourceFolder( folder ) )
     return;
 
   // Check if already know that 'extra folder'
