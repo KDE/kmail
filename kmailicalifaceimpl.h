@@ -41,12 +41,41 @@
 
 #include <qdict.h>
 #include <qguardedptr.h>
+#include <qmap.h>
 
 class KMFolder;
 class KMMessage;
 class KMFolderDir;
 class KMFolderTreeItem;
 
+namespace {
+
+// Local helper classes
+class ExtraFolder {
+public:
+  ExtraFolder( KMFolder* f, KMail::FolderContentsType t ) : folder( f ), type( t ) {}
+  KMFolder* folder;
+  KMail::FolderContentsType type;
+};
+
+class Accumulator {
+public:
+  Accumulator( const QString& t, const QString& f, int c )
+  :type( t ), folder( f ), count( c ) {}
+
+  void add( const QString& incidence ) {
+    incidences << incidence;
+    count--;
+  }
+  bool isFull() { return count == 0; }
+
+  const QString type;
+  const QString folder;
+  QStringList incidences;
+  int count;
+};
+
+}
 
 class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
   Q_OBJECT
@@ -116,7 +145,7 @@ public:
   QString icalFolderType( KMFolder* folder ) const;
 
   /** Find message matching a given UID. */
-  static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
+  KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
 
   /** Convenience function to delete a message. */
   static void deleteMsg( KMMessage* msg );
@@ -142,6 +171,7 @@ private slots:
   void slotRefreshNotes();
 
   void slotCheckDone();
+  void slotMessageRetrieved( KMMessage* );
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */
@@ -158,8 +188,10 @@ private:
   QGuardedPtr<KMFolder> mJournals;
 
   // The extra IMAP resource folders
-  class ExtraFolder;
   QDict<ExtraFolder> mExtraFolders;
+
+  // used for collecting incidences during async loading
+  QDict<Accumulator> mAccumulators;
 
   unsigned int mFolderLanguage;
 
@@ -171,8 +203,19 @@ private:
   static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks;
 
   bool mUseResourceIMAP;
-  bool mResourceQuiet;
   bool mHideFolders;
+
+  /*
+   * Bunch of maps to keep track of incidents currently in transfer, ones
+   * which need to be ungotten, once we are done, once with updates pending.
+   * Since these are transient attributes of only a small but changing number
+   * of incidences they are not encapsulated in a struct or somesuch.
+   */
+  QMap<QString, Q_UINT32> mUIDToSerNum;
+  QMap<Q_UINT32, bool> mTheUnGetMes;
+  QMap<QString, QString> mPendingUpdates;
+  QMap<QString, bool> mInTransit;
+
 };
 
 #endif // KMAILICALIFACEIMPL_H

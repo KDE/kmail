@@ -60,14 +60,6 @@
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
 
-// Local helper class
-class KMailICalIfaceImpl::ExtraFolder {
-public:
-  ExtraFolder( KMFolder* f, KMail::FolderContentsType t ) : folder( f ), type( t ) {}
-  KMFolder* folder;
-  KMail::FolderContentsType type;
-};
-
 // The index in this array is the KMail::FolderContentsType enum
 static const struct {
   const char* contentsTypeStr; // the string used in the DCOP interface
@@ -106,13 +98,13 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
-    mFolderLanguage( 0 ), mUseResourceIMAP( false ), mResourceQuiet( false ),
-    mHideFolders( true )
+    mFolderLanguage( 0 ), mUseResourceIMAP( false ), mHideFolders( true )
 {
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
 
   mExtraFolders.setAutoDelete( true );
+  mAccumulators.setAutoDelete( true );
 }
 
 // Receive an iCal or vCard from the resource
@@ -128,8 +120,10 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
     return false;
 
   bool rc = false;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
+
+  if ( !mInTransit.contains( uid ) ) {
+    mInTransit.insert( uid, true );
+  }
 
   // Find the folder
   KMFolder* f = folderFromType( type, folder );
@@ -153,12 +147,10 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
     // Mark the message as read and store it in the folder
     msg->touch();
     f->addMsg( msg );
-
     rc = true;
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -174,8 +166,6 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
             << uid << " )" << endl;
 
   bool rc = false;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
@@ -185,12 +175,12 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
       // Message found - delete it and return happy
       deleteMsg( msg );
       rc = true;
+      mUIDToSerNum.remove( uid );
     } else
       kdDebug(5006) << type << " not found, cannot remove uid " << uid << endl;
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -211,13 +201,71 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
     QString s;
     for( int i=0; i<f->count(); ++i ) {
       bool unget = !f->isMessage(i);
-      if( KMGroupware::vPartFoundAndDecoded( f->getMsg( i ), s ) )
-        ilist << s;
-      if( unget ) f->unGetMsg(i);
+      KMMessage *msg = f->getMsg( i );
+      Q_ASSERT( msg );
+      if( msg->isComplete() ) {
+        if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+          QString uid( "UID" );
+          vPartMicroParser( s, uid );
+          const Q_UINT32 sernum = msg->getMsgSerNum();
+          kdDebug(5006) << "Insert uid: " << uid << endl;
+          mUIDToSerNum.insert( uid, sernum );
+          ilist << s;
+        }
+        if( unget ) f->unGetMsg(i);
+      } else {
+        // message needs to be gotten first, once it arrives, we'll
+        // accumulate it and add it to the resource
+        if ( !mAccumulators[ folder ] )
+          mAccumulators.insert( folder, new Accumulator( type, folder, f->count() ));
+        if ( unget ) mTheUnGetMes.insert( msg->getMsgSerNum(), true );
+        FolderJob *job = msg->parent()->createJob( msg );
+        connect( job, SIGNAL( messageRetrieved( KMMessage* ) ),
+                 this, SLOT( slotMessageRetrieved( KMMessage* ) ) );
+        job->start();
+      }
     }
   }
-
   return ilist;
+}
+
+void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
+{
+  if( !msg ) return;
+
+  KMFolder *parent = msg->parent();
+  Q_ASSERT( parent );
+  Q_UINT32 sernum = msg->getMsgSerNum();
+
+  // do we have an accumulator for this folder?
+  Accumulator *ac = mAccumulators.find( parent->location() );
+  if( ac ) {
+    QString s;
+    if ( !KMGroupware::vPartFoundAndDecoded( msg, s ) ) return;
+    QString uid( "UID" );
+    vPartMicroParser( s, uid );
+    const Q_UINT32 sernum = msg->getMsgSerNum();
+    mUIDToSerNum.insert( uid, sernum );
+    ac->add( s );
+    if( ac->isFull() ) {
+      /* if this was the last one we were waiting for, tell the resource
+       * about the new incidences and clean up. */
+      asyncLoadResult( ac->incidences, ac->type, ac->folder );
+      mAccumulators.remove( ac->folder ); // autodelete
+    }
+  } else {
+    /* We are not accumulating for this folder, so this one was added
+     * by KMail. Do your thang. */
+     slotIncidenceAdded( msg->parent(), msg->getMsgSerNum() );
+  }
+
+  if ( mTheUnGetMes.contains( sernum ) ) {
+    mTheUnGetMes.remove( sernum );
+    int i = 0;
+    KMFolder* folder = 0;
+    kmkernel->msgDict()->getLocation( sernum, &folder, &i );
+    folder->unGetMsg( i );
+  }
 }
 
 QStringList KMailICalIfaceImpl::subresources( const QString& type )
@@ -289,8 +337,15 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 
   kdDebug(5006) << "Update( " << type << ", " << folder << ", " << uid << ")\n";
   bool rc = true;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
+
+  if ( !mInTransit.contains( uid ) ) {
+    mInTransit.insert( uid, true );
+  } else {
+    // this is reentrant, if a new update comes in, we'll just
+    // replace older ones
+    mPendingUpdates.insert( uid, entry );
+    return rc;
+  }
 
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
@@ -299,19 +354,15 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
     if( msg ) {
       // Message found - update it
       deleteMsg( msg );
-      addIncidence( type, folder, uid, entry );
-      rc = true;
+      mUIDToSerNum.remove( uid );
     } else {
       kdDebug(5006) << type << " not found, cannot update uid " << uid << endl;
-      // Since it doesn't seem to be there, save it instead
-      addIncidence( type, folder, uid, entry );
     }
+    addIncidence( type, folder, uid, entry );
   } else {
     kdError(5006) << "Not an IMAP resource folder" << endl;
     rc = false;
   }
-
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -319,7 +370,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
                                              Q_UINT32 sernum )
 {
-  if( mResourceQuiet || !mUseResourceIMAP )
+  if( !mUseResourceIMAP )
     return;
 
   QString type = icalFolderType( folder );
@@ -333,10 +384,38 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
     QString s;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
+    KMMessage *msg = folder->getMsg( i );
+    if( !msg ) return;
+    if( msg->isComplete() ) {
+      if ( !KMGroupware::vPartFoundAndDecoded( msg, s ) ) return;
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                     << ", " << folder->location() << ", " << s << " )" << endl;
-      incidenceAdded( type, folder->location(), s );
+      QString uid( "UID" );
+      vPartMicroParser( s, uid );
+      const Q_UINT32 sernum = msg->getMsgSerNum();
+      kdDebug(5006) << "Insert uid: " << uid << endl;
+      mUIDToSerNum.insert( uid, sernum );
+      // tell the resource if we didn't trigger this ourselves
+      if( !mInTransit.contains( uid ) )
+        incidenceAdded( type, folder->location(), s );
+      else
+        mInTransit.remove( uid );
+
+      // Check if new updates have since arrived, if so, trigger them
+      if ( mPendingUpdates.contains( uid ) ) {
+        kdDebug(5006) << "KMailICalIfaceImpl::slotIncidenceAdded - Pending Update" << endl;
+        QString entry = mPendingUpdates[ uid ];
+        mPendingUpdates.remove( uid );
+        update( type, folder->location(), uid, entry );
+      }
+    } else {
+      // go get the rest of it, then try again
+      if ( unget ) mTheUnGetMes.insert( msg->getMsgSerNum(), true );
+      FolderJob *job = msg->parent()->createJob( msg );
+      connect( job, SIGNAL( messageRetrieved( KMMessage* ) ),
+               this, SLOT( slotMessageRetrieved( KMMessage* ) ) );
+      job->start();
+      return;
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -347,7 +426,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
 void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
                                                Q_UINT32 sernum )
 {
-  if( mResourceQuiet || !mUseResourceIMAP )
+  if( !mUseResourceIMAP )
     return;
 
   QString type = icalFolderType( folder );
@@ -367,7 +446,8 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
       kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
                     << type << ", " << folder->location() << ", " << uid
                     << " )" << endl;
-      incidenceDeleted( type, folder->location(), uid );
+      if( !mInTransit.contains( uid ) ) // we didn't delete it ourselves
+        incidenceDeleted( type, folder->location(), uid );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -521,24 +601,12 @@ QString KMailICalIfaceImpl::folderName( KFolderTreeItem::Type type, int language
 // Find message matching a given UID
 KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* folder )
 {
-  if( !folder ) return 0;
-
-  for( int i=0; i<folder->count(); ++i ) {
-    bool unget = !folder->isMessage(i);
-    KMMessage* msg = folder->getMsg( i );
-    if( msg ) {
-      QString vCal;
-      if( KMGroupware::vPartFoundAndDecoded( msg, vCal ) ) {
-        QString msgUid( "UID" );
-        vPartMicroParser( vCal, msgUid );
-        if( msgUid == uid )
-          return msg;
-      }
-    }
-    if( unget ) folder->unGetMsg(i);
-  }
-
-  return 0;
+  if( !folder || !mUIDToSerNum.contains( uid ) ) return 0;
+  int i;
+  KMFolder *aFolder;
+  kmkernel->msgDict()->getLocation( mUIDToSerNum[uid], &aFolder, &i );
+  Q_ASSERT( aFolder == folder );
+  return folder->getMsg( i );
 }
 
 void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
@@ -583,6 +651,12 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // Make a new entry for the list
     ef = new ExtraFolder( folder, contentsType );
     mExtraFolders.insert( folder->location(), ef );
+
+    // avoid multiple connections
+    disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+                this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+    disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+                this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
 
     // And listen to changes from it
     connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
@@ -807,7 +881,11 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   folder->setType( typeString );
   folder->setSystemFolder( true );
   folder->open();
-
+  // avoid multiple connections
+  disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+              this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+  disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+              this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );

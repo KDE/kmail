@@ -66,6 +66,8 @@ k_dcop_signals:
   void signalRefresh( const QString& type, const QString& folder );
   void subresourceAdded( const QString& type, const QString& resource );
   void subresourceDeleted( const QString& type, const QString& resource );
+  void asyncLoadResult( const QStringList& list, const QString& type,
+                        const QString& folder );
 };
 
 #endif
