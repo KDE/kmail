@@ -246,13 +246,14 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
       else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
         mimeType = (*eIt).m_str;
     }
-    if ((mimeType == "inode/directory" || mimeType == "message/digest")
+    if ((mimeType == "inode/directory" || mimeType == "message/digest"
+        || mimeType == "message/directory")
         && name != ".." && (mHiddenFolders || name.at(0) != '.')
         && (!(*it).inboxOnly || name == "INBOX"))
     {
       static_cast<KMFolderTree*>((*it).parent->listView())
         ->addImapChildFolder((*it).parent, name, KURL(url).path(), 
-        mimeType == "inode/directory", (*it).inboxOnly);
+        mimeType, (*it).inboxOnly);
     }
   }
   static_cast<KMFolderTree*>((*it).parent->listView())->delayedUpdate();
@@ -451,6 +452,7 @@ void KMAcctImap::slotListFolderEntries(KIO::Job * job,
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   if (it == mapJobData.end()) return;
   assert(it != mapJobData.end());
+  QString mimeType, name;
   for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
     udsIt != uds.end(); udsIt++)
   {
@@ -458,8 +460,11 @@ void KMAcctImap::slotListFolderEntries(KIO::Job * job,
       eIt != (*udsIt).end(); eIt++)
     {
       if ((*eIt).m_uds == KIO::UDS_NAME)
-        (*it).items.append((*eIt).m_str);
+        name = (*eIt).m_str;
+      else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
+        mimeType = (*eIt).m_str;
     }
+    if (mimeType == "message/rfc822-imap") (*it).items.append(name);
   }
 }
 

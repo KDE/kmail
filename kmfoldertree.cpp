@@ -127,7 +127,8 @@ QString KMFolderTreeItem::key( int, bool ) const
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
-  const QString& name, const QString& url, bool expandable, bool noPrefix)
+  const QString& name, const QString& url, const QString& mimeType,
+  bool noPrefix)
 {
   KMFolderTreeItem *fti = new KMFolderTreeItem( item,
     new KMFolder(item->folder->createChildFolder(), name), &mPaintInfo );
@@ -149,10 +150,10 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
     fti->setText(0, name);
     fti->folder->setLabel(name);
   }
-  if (expandable)
+  if (mimeType == "message/directory" || mimeType == "inode/directory")
   {
     fti->setExpandable( TRUE );
-    fti->folder->setDir( TRUE );
+    if (mimeType == "inode/directory") fti->folder->setDir( TRUE );
     if (readIsListViewItemOpen( fti )) setOpen( fti, TRUE );
     slotFolderExpanded( fti );
   }
