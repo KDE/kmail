@@ -103,6 +103,11 @@ public:
   KMailApplication() : KUniqueApplication() { };
 
   virtual int newInstance();
+
+  void commitData(QSessionManager& sm) {
+    kernel->notClosedByUser();
+    KApplication::commitData( sm );
+  }
 };
 
 int KMailApplication::newInstance()
@@ -145,7 +150,7 @@ int KMailApplication::newInstance()
      mailto = true;
      body = args->getOption("body");
   }
-  
+
   if (args->getOption("attach"))
   {
      mailto = true;

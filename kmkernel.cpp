@@ -50,6 +50,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
+  closed_by_user = true;
   new KMpgpWrap();
 }
 
@@ -576,7 +577,11 @@ void KMKernel::cleanup(void)
   if (the_addrBook) delete the_addrBook;
   the_addrBook = 0;
 
-  if (the_trashFolder) {
+  if (!closed_by_user) {
+      if (the_trashFolder)
+	  the_trashFolder->close();
+  }
+  else if (the_trashFolder) {
 
     the_trashFolder->close(TRUE);
     if (config->readBoolEntry("empty-trash-on-exit", true))
@@ -619,7 +624,7 @@ void KMKernel::cleanup(void)
   }
 
 
-  if (the_folderMgr) {
+  if (closed_by_user && the_folderMgr) {
     if (config->readBoolEntry("compact-all-on-exit", true))
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
   }
@@ -805,6 +810,11 @@ KabAPI* KMKernel::KABaddrBook()
   }
 
   return the_KAB_addrBook;
+}
+
+void KMKernel::notClosedByUser()
+{
+    closed_by_user = false;
 }
 
 

@@ -109,6 +109,7 @@ public:
   inline bool checkingMail() { return the_checkingMail; }
   inline void setCheckingMail(bool flag) { the_checkingMail = flag; }
   inline void serverReady (bool flag) { the_server_is_ready = flag; }
+  void notClosedByUser();
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
@@ -134,7 +135,7 @@ private:
     QByteArray data;
   };
   QMap<KIO::Job *, putData> mPutJobs;
-  /** previous KMail version. If different from current, 
+  /** previous KMail version. If different from current,
       the user has just updated. read from config */
   QString the_previousVersion;
   /** is this the first start?  read from config */
@@ -145,7 +146,8 @@ private:
   bool the_checkingMail;
   /** are we in the middle of network operations (needed?) */
   bool the_server_is_ready;
-
+  /** true unles kmail is closed by session management */
+  bool closed_by_user;
   static KMKernel *mySelf;
 };
 
