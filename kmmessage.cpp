@@ -963,7 +963,8 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
                                    bool selectionIsBody /* = false */)
 {
   KMMessage* msg = new KMMessage;
-  QString str, replyStr, mailingListStr, replyToStr, toStr;
+  QString str, replyStr, mailingListStr, replyToStr, toStr,
+    mailingListPostAddress;
   QCString refStr, headerName;
 
   msg->initFromMessage(this);
@@ -973,40 +974,65 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
 
   msg->setCharset("utf-8");
 
-  if( replyToList && !headerField( "Mail-Followup-To" ).isEmpty() ) {
-    // strip my own address from the list of recipients
-    QStringList recipients =
-      splitEmailAddrList( headerField( "Mail-Followup-To" ) );
-    toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
+  // determine the mailing list posting address
+  if ( parent() && parent()->isMailingList() ) {
+    mailingListPostAddress = parent()->mailingListPostAddress();
   }
-  else if (replyToList && parent() && parent()->isMailingList())
-  {
-    // Reply to mailing-list posting address
-    toStr = parent()->mailingListPostAddress();
-  }
-  else if (replyToList
-	   && headerField("List-Post").find("mailto:", 0, false) != -1 )
-  {
+  else if ( headerField("List-Post").find( "mailto:", 0, false ) != -1 ) {
     QString listPost = headerField("List-Post");
     QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
     if ( rx.search( listPost, 0 ) != -1 ) // matched
-      toStr = rx.cap(1) + '@' + rx.cap(2);
+      mailingListPostAddress = rx.cap(1) + '@' + rx.cap(2);
   }
-  else if (replyToAll)
-  {
+
+  if ( replyToList ) {
+    if ( !headerField( "Mail-Followup-To" ).isEmpty() ) {
+      toStr = headerField( "Mail-Followup-To" );
+    }
+    else if ( !mailingListPostAddress.isEmpty() ) {
+      toStr = mailingListPostAddress;
+    }
+    else if ( !replyToStr.isEmpty() ) {
+      // assume a Reply-To header mangling mailing list
+      toStr = replyToStr;
+    }
+    else if ( !to().isEmpty() ) {
+      // the mailing list address has to be in the To header
+      toStr = to();
+    }
+    // strip my own address from the list of recipients
+    QStringList recipients = splitEmailAddrList( toStr );
+    toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
+  }
+  else if ( replyToAll ) {
     QStringList recipients;
+    QStringList ccRecipients;
 
     // add addresses from the Reply-To header to the list of recipients
-    if( !replyToStr.isEmpty() )
+    if( !replyToStr.isEmpty() ) {
       recipients += splitEmailAddrList( replyToStr );
+      // strip the mailing list post address from the list of Reply-To
+      // addresses
+      if( !mailingListPostAddress.isEmpty() )
+        recipients = stripAddressFromAddressList( mailingListPostAddress,
+                                                  recipients );
+        
+    }
 
-    // add From address to the list of recipients if it's not already there
-    if( !from().isEmpty() )
-      if( !addressIsInAddressList( from(), recipients ) ) {
+    // add From address to the list of recipients (or to the list of CC
+    // recipients in case of a mailing list message ) if it's not already there
+    if ( !from().isEmpty() ) {
+      if ( !mailingListPostAddress.isEmpty() ) {
+        ccRecipients += from();
+        kdDebug(5006) << "Added " << from() << " to the list of CC recipients"
+                      << endl;
+      }
+      else if ( !addressIsInAddressList( from(), recipients ) ) {
         recipients += from();
         kdDebug(5006) << "Added " << from() << " to the list of recipients"
                       << endl;
       }
+    }
 
     // add only new addresses from the To header to the list of recipients
     if( !to().isEmpty() ) {
@@ -1025,7 +1051,6 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
 
     // the same for the cc field
     if( !cc().isEmpty() ) {
-      QStringList ccRecipients;
       // add only new addresses from the CC header to the list of CC recipients
       QStringList list = splitEmailAddrList( cc() );
       for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
@@ -1036,17 +1061,24 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
                         << endl;
         }
       }
+    }
 
+    if ( !ccRecipients.isEmpty() ) {
       // strip my own address from the list of CC recipients
       ccRecipients = stripAddressFromAddressList( msg->from(), ccRecipients );
       msg->setCc( ccRecipients.join(", ") );
     }
-
   }
-  else
-  {
-    if (!replyToStr.isEmpty()) toStr = replyToStr;
-    else if (!from().isEmpty()) toStr = from();
+  else {
+    if ( !replyToStr.isEmpty() &&
+         ( KMMessage::getEmailAddr( mailingListPostAddress ).lower() !=
+           KMMessage::getEmailAddr( replyToStr ).lower() ) ) {
+      // no Reply-To mangling mailing list
+      toStr = replyToStr;
+    }
+    else if ( !from().isEmpty() ) {
+      toStr = from();
+    }
   }
 
   msg->setTo(toStr);
