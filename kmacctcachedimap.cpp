@@ -170,26 +170,14 @@ void KMAcctCachedImap::displayProgress()
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
   //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
+  // Make list of folders to reset. This must be done last, since folderComplete
+  // can trigger the next queued mail check already.
+  QValueList<KMFolderCachedImap*> folderList;
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-  for (it = mapJobData.begin(); it != mapJobData.end(); ++it)
+  for (it = mapJobData.begin(); it != mapJobData.end(); ++it) {
     if ((*it).parent)
-    {
-      KMFolderCachedImap *fld = static_cast<KMFolderCachedImap*>((*it).parent->storage());
-      fld->resetSyncState();
-      fld->setContentState(KMFolderCachedImap::imapNoInformation);
-      fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-      fld->sendFolderComplete(FALSE);
-    }
-#if 0
-  // Steffen Hansen doesn't remember why he wrote this.
-  // But we don't need to kill the slave upon the slightest error (e.g. permission denied)
-  // For big errors we have disconnectSlave anyway.
-  if (mSlave && mapJobData.begin() != mapJobData.end())
-  {
-    mSlave->kill();
-    mSlave = 0;
+      folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
   }
-#endif
   mapJobData.clear();
 
   // Clear the joblist. Make SURE to stop the job emitting "finished"
@@ -207,6 +195,13 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   {
     checkDone(false, 0);
     mCountRemainChecks = 0;
+  }
+  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+    KMFolderCachedImap *fld = *it;
+    fld->resetSyncState();
+    fld->setContentState(KMFolderCachedImap::imapNoInformation);
+    fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
+    fld->sendFolderComplete(FALSE);
   }
 }
 

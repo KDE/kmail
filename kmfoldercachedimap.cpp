@@ -777,8 +777,8 @@ void KMFolderCachedImap::serverSyncInternal()
       if( mSubfoldersForSync.isEmpty() ) {
         mSyncState = SYNC_STATE_INITIAL;
         emit statusMsg( i18n("%1: Synchronization done").arg(label()) );
-        emit folderComplete( this, TRUE );
         close();
+        emit folderComplete( this, TRUE );
       } else {
         mCurrentSubfolder = mSubfoldersForSync.front();
         mSubfoldersForSync.pop_front();
@@ -1353,8 +1353,8 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
 
     mSubfoldersForSync.clear();
     mSyncState = SYNC_STATE_INITIAL;
-    emit folderComplete( this, false );
     close();
+    emit folderComplete( this, false );
   }
 }
 
