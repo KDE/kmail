@@ -742,34 +742,78 @@ KMMessage* KMFolderMbox::readMsg(int idx)
 }
 
 
-//-----------------------------------------------------------------------------
-size_t KMFolderMbox::unescapeFrom( char* str, const size_t strLen )
-{
-  const char* source = str;
-  const char* sourceEnd = source + strLen;
-
-  // search the first occurrence of "\n>From"
-  for ( ; source < sourceEnd - 5; ++source ) {
-    if ( *source == '\n' && qstrncmp( source + 1, ">From", 5 ) == 0 )
-      break;
-  }
-
-  if ( source == sourceEnd - 5 ) {
-    // no "\n>From" found
+#define STRDIM(x) (sizeof(x)/sizeof(*x)-1)
+// performs (\n|^)>{n}From_ -> \1>{n-1}From_ conversion
+static size_t unescapeFrom( char* str, size_t strLen ) {
+  if ( !str )
+    return 0;
+  if ( strLen <= STRDIM(">From ") )
     return strLen;
-  }
 
-  // replace all occurrences of "\n>From" with "\nFrom" (in place)
-  ++source;
-  char* target = const_cast<char*>( source ); // target points to '>'
-  ++source; // source points to 'F'
-  for ( ; source < sourceEnd; ++source ) {
-    if ( *source != '>' || qstrncmp( source - 1, "\n>From", 6 ) != 0 )
-      *target++ = *source;
+  // yes, *d++ = *s++ is a no-op as long as d == s (until after the
+  // first >From_), but writes are cheap compared to reads and the
+  // data is already in the cache from the read, so special-casing
+  // might even be slower...
+  const char * s = str;
+  char * d = str;
+  const char * const e = str + strLen - STRDIM(">From ");
+
+  while ( s < e ) {
+    if ( *s == '\n' && *(s+1) == '>' ) { // we can do the lookahead, since e is 6 chars from the end!
+      *d++ = *s++ /* == '\n' */; *d++ = *s++ /* == '>' */;
+      while ( s < e && *s == '>' )
+	*d++ = *s++;
+      if ( qstrncmp( s, "From ", STRDIM("From ") ) == 0 )
+	--d;
+    }
+    *d++ = *s++; // yes, s might be e here, but e is not the end :-)
   }
-  *target = '\0'; // terminate result
-  return target - str;
+  // copy the rest:
+  while ( s < str + strLen )
+    *d++ = *s++;
+  if ( d < s ) // only NUL-terminate if it's shorter 
+    *d = 0;
+
+  return d - str;
 }
+
+static QCString escapeFrom( const QCString & str ) {
+  const unsigned int strLen = str.length();
+  if ( strLen <= STRDIM("From ") )
+    return str;
+  // worst case: \nFrom_\nFrom_\nFrom_... => grows to 7/6
+  QCString result( int( strLen + 5 ) / 6 * 7 + 1 );
+
+  const char * s = str.data();
+  const char * const e = s + strLen - STRDIM("From ");
+  char * d = result.data();
+
+  bool onlyAnglesAfterLF = false; // dont' match ^From_
+  while ( s < e ) {
+    switch ( *s ) {
+    case '\n':
+      onlyAnglesAfterLF = true;
+      break;
+    case '>':
+      break;
+    case 'F':
+      if ( onlyAnglesAfterLF && qstrncmp( s+1, "rom ", STRDIM("rom ") ) == 0 )
+	*d++ = '>';
+      // fall through
+    default:
+      onlyAnglesAfterLF = false;
+      break;
+    }
+    *d++ = *s++;
+  }
+  while ( s < str.data() + strLen )
+    *d++ = *s++;
+  
+  result.truncate( d - result.data() );
+  return result;
+}
+
+#undef STRDIM
 
 //-----------------------------------------------------------------------------
 QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
@@ -889,7 +933,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
   msgText = aMsg->asString();
-  msgText.replace("\nFrom ", "\n>From ");
+  escapeFrom( msgText );
   size_t len = msgText.length();
 
   assert(mStream != 0);

@@ -129,12 +129,6 @@ protected:
   virtual int expungeContents();
 
 private:
-  /** Unescape all escaped "From", i.e. replace all occurrences of "\n>From"
-      in place with "\nFrom". Returns the length of the unescaped string.
-  */
-  static size_t unescapeFrom( char* str, const size_t strLen );
-
-
   FILE *mStream;
   bool mFilesLocked; // TRUE if the files of the folder are locked (writable)
   LockType mLockType;
