@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kpopupmenu.h>
 #include <kfoldertree.h>
+#include <kiconloader.h>
 
 #include <qwidget.h>
 #include <qtimer.h>
@@ -54,8 +55,8 @@ public:
                     KMFolder* folder );
   virtual ~KMFolderTreeItem();
 
-  QPixmap normalIcon() const;
-  QPixmap unreadIcon() const;
+  QPixmap normalIcon(KIcon::StdSizes size=KIcon::SizeLarge) const;
+  QPixmap unreadIcon(KIcon::StdSizes size=KIcon::SizeLarge) const;
 
   /** associated folder */
   KMFolder* folder() { return mFolder; }

@@ -80,62 +80,64 @@ static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
   }
 }
 
-static QPixmap pixmapForRootOfProtocol( KFolderTreeItem::Protocol p ) {
-  // ### move to kfoldertreeitem
-  switch ( p ) {
-  case KFolderTreeItem::Imap:
-  case KFolderTreeItem::CachedImap:
-  case KFolderTreeItem::News:
-    return SmallIcon( "server" );
-  case KFolderTreeItem::Search:
-    return SmallIcon( "viewmag" );
-  default:
-    return SmallIcon( "folder" );
-  }
-}
-
-QPixmap KMFolderTreeItem::normalIcon() const {
-  if ( !mFolder )
-    if ( type() == Root )
-      return pixmapForRootOfProtocol( protocol() );
-    else
-      return SmallIcon( "folder" );
-
-  if ( depth() == 0 )
-    return pixmapForRootOfProtocol( protocol() );
-
-  if ( mFolder->isSystemFolder() )
-    switch ( type() ) {
-    case Inbox: return SmallIcon( "folder_inbox" );
-    case Outbox: return SmallIcon( "folder_outbox" );
-    case SentMail: return SmallIcon( "folder_sent_mail" );
-    case Trash: return SmallIcon( "trashcan_empty" );
-    default:
-    case Drafts: return SmallIcon( "folder" );
+QPixmap KMFolderTreeItem::normalIcon(KIcon::StdSizes size) const 
+{
+  QString icon;
+  icon = "folder";
+  if ( (!mFolder && type() == Root) || depth() == 0 ) {
+    switch ( protocol() ) {
+      case KFolderTreeItem::Imap:
+      case KFolderTreeItem::CachedImap:
+      case KFolderTreeItem::News:
+        icon = "server"; break;
+      case KFolderTreeItem::Search:
+        icon = "viewmag";break;
+      default:
+        icon = "folder";break;
     }
-
-  if ( mFolder->useCustomIcons() ) {
-    QPixmap pm = KGlobal::instance()->iconLoader()
-      ->loadIcon( mFolder->normalIconPath(), KIcon::Small, 0, KIcon::DefaultState, 0, true );
-    return pm.isNull() ? SmallIcon( "folder" ) : pm ;
+  } else if ( mFolder->isSystemFolder() ) {
+    switch ( type() ) {
+      case Inbox: icon = "folder_inbox"; break;
+      case Outbox: icon = "folder_outbox"; break;
+      case SentMail: icon = "folder_sent_mail"; break;
+      case Trash: icon = "trashcan_empty"; break;
+      default:
+      case Drafts: icon = "folder";break;
+    }
+  } else if ( mFolder->useCustomIcons() ) {
+    icon = mFolder->normalIconPath();
+  }
+  KIconLoader * il = KGlobal::instance()->iconLoader();
+  QPixmap pm = il->loadIcon( icon, KIcon::Small, size, 
+                             KIcon::DefaultState, 0, true );
+  if ( pm.isNull() ) {
+      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size, 
+                         KIcon::DefaultState, 0, true );
   }
 
-  return SmallIcon( "folder" );
+  return pm;
 }
 
-QPixmap KMFolderTreeItem::unreadIcon() const {
+QPixmap KMFolderTreeItem::unreadIcon(KIcon::StdSizes size) const 
+{
+  QPixmap pm;
+
   if ( !mFolder || depth() == 0 || mFolder->isSystemFolder() )
-    return normalIcon();
+    pm = normalIcon( size );
 
+  KIconLoader * il = KGlobal::instance()->iconLoader();
   if ( mFolder->useCustomIcons() ) {
-    KIconLoader * il = KGlobal::instance()->iconLoader();
-    QPixmap pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, 0, KIcon::DefaultState, 0, true );
+    pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, size, 
+                       KIcon::DefaultState, 0, true );
     if ( pm.isNull() )
-      pm = il->loadIcon(  mFolder->normalIconPath(), KIcon::Small, 0, KIcon::DefaultState, 0, true );
-    return pm.isNull() ? SmallIcon( "folder_open" ) : pm ;
+      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size, 
+                         KIcon::DefaultState, 0, true );
   }
+  if ( pm.isNull() )
+    pm = il->loadIcon( "folder_open", KIcon::Small, size, 
+                       KIcon::DefaultState, 0, true );
 
-  return SmallIcon( "folder_open" );
+  return pm;
 }
 
 void KMFolderTreeItem::init()
