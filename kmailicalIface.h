@@ -39,28 +39,23 @@ class KMailICalIface : virtual public DCOPObject
 {
     K_DCOP
   k_dcop:
-    virtual bool addIncidence( const QString& type, const QString& uid,
-			       const QString& ical,
-                               const QString& subresource ) = 0;
-    virtual bool deleteIncidence( const QString& type, const QString& uid,
-                                  const QString& resource ) = 0;
-    virtual QStringList incidences( const QString& type,
-                                    const QString& resource ) = 0;
+    virtual bool addIncidence( const QString& folder, const QString& uid, 
+			       const QString& ical ) = 0;
+    virtual bool deleteIncidence( const QString& folder, const QString& uid ) = 0;
+    virtual QStringList incidences( const QString& folder ) = 0;
 
     // This saves the iCals/vCards in the entries in the folder.
     // The format in the string list is uid, entry, uid, entry...
-    virtual bool update( const QString& folder, const QStringList& entries,
-                         const QString& resource ) = 0;
+    virtual bool update( const QString& folder,
+			 const QStringList& entries ) = 0;
 
     // Update a single entry in the storage layer
     virtual bool update( const QString& folder, const QString& uid,
-			 const QString& entry, const QString& resource ) = 0;
+			 const QString& entry ) = 0;
 
   k_dcop_signals:
-    void incidenceAdded( const QString& folder, const QString& ical,
-                         const QString& resource );
-    void incidenceDeleted( const QString& folder, const QString& uid,
-                           const QString& resource );
+    void incidenceAdded( const QString& folder, const QString& ical );
+    void incidenceDeleted( const QString& folder, const QString& uid );
 };
 
 #endif
