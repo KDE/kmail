@@ -175,6 +175,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
+  printf("~KMComposeWin\n");
   windowList->remove(this);
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;

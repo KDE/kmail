@@ -348,6 +348,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
     else if (!loopToStr.isEmpty()) toStr = loopToStr + ", ";
     if (!from().isEmpty()) toStr += from() + ", ";
     toStr.truncate(toStr.length()-2);
+    msg->setCc(cc());
   }
   else
   {
@@ -361,7 +362,6 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (replyToAll || !loopToStr.isEmpty()) replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
 
-  msg->setCc(cc());
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr));
 
   if (strnicmp(subject(), "Re:", 3)!=0)

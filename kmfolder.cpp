@@ -657,6 +657,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   long offs, size, len;
   bool opened = FALSE;
   QString msgText;
+  char endStr[3];
   int idx;
   KMFolder* msgParent;
 
@@ -689,7 +690,13 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   }
 
   // write message to folder file
-  fseek(mStream, 0, SEEK_END);
+  fseek(mStream, -2, SEEK_END);
+  fread(endStr, 2, 1, mStream); // ensure separating empty line
+  if (ftell(mStream) > 0 && endStr[0]!='\n') 
+  {
+    if (endStr[1]!='\n') fwrite("\n\n", 2, 1, mStream);
+    else fwrite("\n", 1, 1, mStream);
+  }
   fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
