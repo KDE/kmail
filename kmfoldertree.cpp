@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <assert.h>
 
+#include <kpopupmenu.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
@@ -980,6 +981,12 @@ void KMFolderTree::cleanupConfigFile()
 //-----------------------------------------------------------------------------
 // Drag and Drop handling -- based on the Troll Tech dirview example
 
+enum {
+  DRAG_COPY = 0,
+  DRAG_MOVE = 1,
+  DRAG_CANCEL = 2
+};
+
 void KMFolderTree::openFolder()
 {
     autoopen_timer.stop();
@@ -1139,8 +1146,25 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 	KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
 	if (fti && (fti != oldSelected) && (fti->folder))
         {
-          if (e->action() == QDropEvent::Copy) emit folderDropCopy(fti->folder);
-	  if (e->action() == QDropEvent::Move) emit folderDrop(fti->folder);
+	  KPopupMenu *menu = new KPopupMenu( this );
+	  menu->insertItem( i18n("Copy"), DRAG_COPY, 0 );
+	  menu->insertItem( i18n("Move"), DRAG_MOVE, 1 );
+	  menu->insertSeparator();
+	  menu->insertItem( i18n("Cancel"), DRAG_CANCEL, 3 );
+	  int id = menu->exec( mapToGlobal(e->pos()), 0 );
+	  switch(id) {
+	  case DRAG_COPY:
+	    emit folderDropCopy(fti->folder);
+	    break;
+	  case DRAG_MOVE:
+	    emit folderDrop(fti->folder);
+	    break;
+	  case DRAG_CANCEL:
+	    //just chill, doing nothing
+	    break;
+	  default:
+	    kdDebug(5006)<<"## This should never happen! ##"<<endl;
+	  }
         }
 	e->accept();
     } else
