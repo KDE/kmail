@@ -1173,7 +1173,12 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   KMMsgEncryptionState encryptionState = mRootNode->overallEncryptionState();
   KMMsgSignatureState  signatureState  = mRootNode->overallSignatureState();
   aMsg->setEncryptionState( encryptionState );
-  aMsg->setSignatureState(  signatureState  );
+  // Don't reset the signature state to "not signed" (e.g. if one canceled the
+  // decryption of a signed messages which has already been decrypted before).
+  if ( signatureState != KMMsgNotSigned ||
+       aMsg->signatureState() == KMMsgSignatureStateUnknown ) {
+    aMsg->setSignatureState( signatureState );
+  }
 
   bool emitReplaceMsgByUnencryptedVersion = false;
   const KConfigGroup reader( KMKernel::config(), "Reader" );
