@@ -276,8 +276,8 @@ void KMIdentity::readConfig( const KConfigBase * config )
   mPgpIdentity = config->readEntry("Default PGP Key").local8Bit();
   mReplyToAddr = config->readEntry("Reply-To Address");
   mBcc = config->readEntry("Bcc");
-  mFcc = config->readEntry("Fcc");
-  mDrafts = config->readEntry("Drafts");
+  mFcc = config->readEntry("Fcc", "sent-mail");
+  mDrafts = config->readEntry("Drafts", "drafts");
   mTransport = config->readEntry("Transport");
 
   mSignature.readConfig( config );
