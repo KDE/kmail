@@ -565,10 +565,10 @@ void AccountDialog::makePopAccountPage()
     i18n("Authentication method"), page2 );
   mPop.authUser = new QRadioButton( i18n("Clear text") , mPop.authGroup );
   mPop.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentification method only, if you have a good reason", "PLAIN"),
+    "authentication method only, if you have a good reason", "PLAIN"),
     mPop.authGroup  );
   mPop.authLogin = new QRadioButton( i18n("Please translate this "
-    "authentification method only, if you have a good reason", "LOGIN"),
+    "authentication method only, if you have a good reason", "LOGIN"),
     mPop.authGroup );
   mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD5"), mPop.authGroup );
   mPop.authDigestMd5 = new QRadioButton( i18n("DIGEST-MD5"), mPop.authGroup );
@@ -684,10 +684,10 @@ void AccountDialog::makeImapAccountPage()
     i18n("Authentication method"), page2 );
   mImap.authUser = new QRadioButton( i18n("Clear text"), mImap.authGroup );
   mImap.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentification method only, if you have a good reason", "PLAIN"),
+    "authentication method only, if you have a good reason", "PLAIN"),
      mImap.authGroup );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
-    "authentification method only, if you have a good reason", "LOGIN"),
+    "authentication method only, if you have a good reason", "LOGIN"),
     mImap.authGroup );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), mImap.authGroup );
   mImap.authDigestMd5 = new QRadioButton( i18n("DIGEST-MD5"), mImap.authGroup );
