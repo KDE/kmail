@@ -146,10 +146,10 @@ void FilterLogDialog::slotUser2()
     if ( !FilterLog::instance()->saveToFile( fdlg.selectedFile() ) )
     {
       KMessageBox::error( this,
-                          i18n( "%1 is detailed error description",
-                                "Could not write the file:\n%2" )
-                          .arg( QString::fromLocal8Bit( strerror( errno ) ) )
-                          .arg( fileName ),
+                          i18n( "Could not write the file %1:\n"
+                                "\"%2\" is the detailed error description." )
+                          .arg( fileName )
+                          .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
                           i18n( "KMail Error" ) );
     }
   }
