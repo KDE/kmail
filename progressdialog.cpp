@@ -79,7 +79,8 @@ TransactionItemView::TransactionItemView( QWidget * parent,
 TransactionItem* TransactionItemView::addTransactionItem( ProgressItem* item, bool first )
 {
    TransactionItem *ti = new TransactionItem( mBigBox, item, first );
-   ti->show();
+   ti->hide();
+   QTimer::singleShot( 1000, ti, SLOT( show() ) );
    return ti;
 }
 

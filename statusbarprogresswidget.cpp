@@ -59,7 +59,7 @@ using KMail::ProgressManager;
 
 //-----------------------------------------------------------------------------
 StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWidget* parent, bool button )
-  : QFrame( parent ), m_mainWidget( mainWidget ), mCurrentItem( 0 )
+  : QFrame( parent ), m_mainWidget( mainWidget ), mCurrentItem( 0 ), mDelayTimer( 0 )
 {
   m_bShowButton = button;
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
@@ -107,6 +107,10 @@ StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWid
 
   connect ( mainWidget, SIGNAL( progressDialogVisible( bool )),
             this, SLOT( slotProgressDialogVisible( bool ) ) );
+
+  mDelayTimer = new QTimer( this );
+  connect ( mDelayTimer, SIGNAL( timeout() ),
+            this, SLOT( slotShowItemDelayed() ) );
 }
 
 void StatusbarProgressWidget::slotProgressItemAdded( ProgressItem *item )
@@ -114,14 +118,21 @@ void StatusbarProgressWidget::slotProgressItemAdded( ProgressItem *item )
   if ( item->parent() ) return; // we are only interested in top level items
   if ( mCurrentItem ) {
     disconnect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
-                 this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
+                this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
   }
   mCurrentItem = item;
   connect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
             this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
-  if ( mode == None ) {
-    mode = Progress;
-    setMode();
+  mDelayTimer->start( 1000, true );
+}
+
+void StatusbarProgressWidget::slotShowItemDelayed()
+{
+  if ( mCurrentItem ) {
+    if ( mode == None ) {
+      mode = Progress;
+      setMode();
+    }
   }
 }
 

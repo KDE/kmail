@@ -43,6 +43,7 @@ class QPushButton;
 class QWidgetStack;
 class QBoxLayout;
 class QLabel;
+class QTimer;
 namespace KMail {
   class SSLLabel;
   class ProgressItem;
@@ -70,6 +71,7 @@ public slots:
 
 protected slots:
   void slotProgressDialogVisible( bool );
+  void slotShowItemDelayed();
 
 protected:
   KMMainWidget* m_mainWidget;
@@ -90,6 +92,7 @@ protected:
   QBoxLayout *box;
   QWidgetStack *stack;
   ProgressItem *mCurrentItem;
+  QTimer *mDelayTimer;
 };
 
 #endif
