@@ -391,7 +391,7 @@ void KMFolderDialog::createMLTab()
   }
 
   QLabel* label;
-  QFrame *page = addPage( i18n("Mailing list") );
+  QFrame *page = addPage( i18n("Mailing List") );
   mLastItem = 0;
 
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint(),
@@ -409,7 +409,7 @@ void KMFolderDialog::createMLTab()
 
   groupLayout->addSpacing( 10 );
 
-  mDetectButton = new QPushButton( i18n("Detect automatically..."), mlGroup );
+  mDetectButton = new QPushButton( i18n("Detect Automatically"), mlGroup );
   mDetectButton->setEnabled( false );
   QObject::connect( mDetectButton, SIGNAL(pressed()), SLOT(slotDetectMailingList()) );
   groupLayout->addWidget( mDetectButton, 0, Qt::AlignHCenter );
@@ -461,7 +461,7 @@ void KMFolderDialog::createMLTab()
   //FIXME: if the mailing list actions have either KAction's or toolbar buttons
   //       associated with them - remove this button since it's really silly
   //       here
-  QPushButton *handleButton = new QPushButton( i18n( "Invoke handler" ), mlGroup );
+  QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mlGroup );
   handleButton->setEnabled( false );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    handleButton, SLOT(setEnabled(bool)) );

@@ -469,7 +469,7 @@ void KMMainWidget::createWidgets(void)
   mSearchAndHeaders = new QVBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
   mSearchToolBar->boxLayout()->setSpacing(5);
-  new QLabel(i18n("Quick Search:"), mSearchToolBar, "kde toolbar widget");
+  new QLabel(i18n("Quick search:"), mSearchToolBar, "kde toolbar widget");
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
   KPIM::KListViewSearchLine *quickSearchLine =
     new KPIM::KListViewSearchLine(mSearchToolBar, mHeaders, "headers quick search line");
@@ -481,8 +481,8 @@ void KMMainWidget::createWidgets(void)
 
   // FIXME hook up to real status widget once that is back in
   QComboBox *cb = new QComboBox(mSearchToolBar, "quick search status combo box");
-  cb->insertItem(i18n("any status"));
-  
+  cb->insertItem(i18n("Any Status"));
+
   if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
 
   mHeaders->setFullWidth(true);
@@ -1115,7 +1115,7 @@ void KMMainWidget::slotOverrideHtml()
         "\"spam\" and may increase the likelihood that your system will be "
         "compromised by other present and anticipated security exploits." ),
       i18n( "Security Warning" ),
-      i18n( "Continue" ),
+      i18n( "Use HTML" ),
       "OverrideHtmlWarning", false);
     if( result == KMessageBox::Cancel ) {
       mPreferHtmlAction->setChecked( false );

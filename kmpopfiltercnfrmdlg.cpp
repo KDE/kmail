@@ -35,19 +35,19 @@ KMPopHeadersView::KMPopHeadersView(QWidget *aParent, KMPopFilterCnfrmDlg *aDialo
 			        //it does not necessarily be true - you could redefine mapToColumn and mapToAction to eg. shift those numbers by 1
   addColumn(QIconSet(QPixmap(mLater)), QString::null, 24);
   addColumn(QIconSet(QPixmap(mDel)), QString::null, 24);
-  
+
   /*int subjCol =*/ addColumn(i18n("Subject"), 180);
   /*int sendCol =*/ addColumn(i18n("Sender"), 150);
   int dateCol = addColumn(i18n("Date"), 120);
   int sizeCol = addColumn(i18n("Size"), 80);
 
   setAllColumnsShowFocus(true);
-  
+
   setColumnAlignment(Down, Qt::AlignHCenter);
   setColumnAlignment(Later, Qt::AlignHCenter);
   setColumnAlignment(Delete, Qt::AlignHCenter);
   setColumnAlignment(sizeCol, Qt::AlignRight);
-  
+
   setSorting(dateCol, false);
   setShowSortIndicator(true);
   header()->setResizeEnabled(false, Down);
@@ -69,7 +69,7 @@ KMPopHeadersView::~KMPopHeadersView()
 }
 
 //Handle keystrokes - Left and Right key select previous/next action correspondingly
-void KMPopHeadersView::keyPressEvent( QKeyEvent *e ) 
+void KMPopHeadersView::keyPressEvent( QKeyEvent *e )
 {
     if (e->key() == Key_Left) {
 	    KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>( selectedItem() );
@@ -281,7 +281,7 @@ QString KMPopHeadersViewItem::key(int col, bool) const
 /////////////////////////////////////////
 /////////////////////////////////////////
 KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const QString &aAccount, bool aShowLaterMsgs, QWidget *aParent, const char *aName)
-      : KDialogBase(aParent, aName, TRUE, i18n("KMail POP Filter"), Ok | Help, Ok, FALSE)
+      : KDialogBase(aParent, aName, TRUE, i18n("POP Filter"), Ok | Help, Ok, FALSE)
 {
   unsigned int rulesetCount = 0;
   //mHeaders = aHeaders;
@@ -381,7 +381,7 @@ KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
 {
 }
 
-void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg) 
+void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg)
 {
       // set the subject
       QString tmp = msg->subject();
@@ -401,7 +401,7 @@ void KMPopFilterCnfrmDlg::setupLVI(KMPopHeadersViewItem *lvi, KMMessage *msg)
       lvi->setText(7, msg->dateIsoStr());
 }
 
-void KMPopFilterCnfrmDlg::setAction(QListViewItem *aItem, KMPopFilterAction aAction) 
+void KMPopFilterCnfrmDlg::setAction(QListViewItem *aItem, KMPopFilterAction aAction)
 {
     mItemMap[aItem]->setAction(aAction);
 }

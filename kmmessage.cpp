@@ -1188,7 +1188,7 @@ KMMessage* KMMessage::createBounce( bool )
 	     "%1, is valid.\n"
              "The failing address will be reported to be %2.")
         .arg(senderStr).arg(receiver),
-	i18n("Bounce Message"), i18n("Continue")) == KMessageBox::Cancel)
+	i18n("Bounce Message"), i18n("Bounce")) == KMessageBox::Cancel)
     {
       return 0;
     }

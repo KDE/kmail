@@ -49,26 +49,26 @@ using namespace KMail;
 
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )
-: KDialogBase( parent, "FilterLogDlg", false, i18n( "KMail Filter Log Viewer" ),
+: KDialogBase( parent, "FilterLogDlg", false, i18n( "Filter Log Viewer" ),
               User1|User2|Close, Close, true, i18n("Clea&r"), i18n("&Save...") )
 {
   setWFlags( WDestructiveClose );
   QVBox *page = makeVBoxMainWidget();
-  
+
   mTextEdit = new QTextEdit( page );
   mTextEdit->setReadOnly( true );
   mTextEdit->setWordWrap( QTextEdit::NoWrap );
   mTextEdit->setTextFormat( QTextEdit::LogText );
 
   QStringList logEntries = FilterLog::instance()->getLogEntries();
-  for ( QStringList::Iterator it = logEntries.begin(); 
-        it != logEntries.end(); ++it ) 
+  for ( QStringList::Iterator it = logEntries.begin();
+        it != logEntries.end(); ++it )
   {
     mTextEdit->append( *it );
   }
 
   mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation"), page );
-  mLogRuleEvaluationBox->setChecked( 
+  mLogRuleEvaluationBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogRuleEvaluation(void)) );
@@ -77,7 +77,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   connect( mLogActiveBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogState(void)) );
-            
+
   QHBox * hbox = new QHBox( page );
   new QLabel( i18n("Log size limit:"), hbox );
   mLogMemLimitSpin = new QSpinBox( hbox );
@@ -90,13 +90,13 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotChangeLogMemLimit(int)) );
 
-  connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)), 
+  connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)),
           this, SLOT(slotLogEntryAdded(QString)));
-  connect(FilterLog::instance(), SIGNAL(logShrinked(void)), 
+  connect(FilterLog::instance(), SIGNAL(logShrinked(void)),
           this, SLOT(slotLogShrinked(void)));
-  connect(FilterLog::instance(), SIGNAL(logStateChanged(void)), 
+  connect(FilterLog::instance(), SIGNAL(logStateChanged(void)),
           this, SLOT(slotLogStateChanged(void)));
-  
+
   setInitialSize( QSize( 500, 400 ) );
 }
 
@@ -119,7 +119,7 @@ void FilterLogDialog::slotLogShrinked()
 void FilterLogDialog::slotLogStateChanged()
 {
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
-  mLogRuleEvaluationBox->setChecked( 
+  mLogRuleEvaluationBox->setChecked(
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
 
   int newLogSize = FilterLog::instance()->getMaxLogSize() / 1024;
@@ -160,7 +160,7 @@ void FilterLogDialog::slotUser2()
 {
   QString fileName;
   KFileDialog fdlg( QString::null, QString::null, this, 0, true );
-  
+
   fdlg.setMode( KFile::File );
   fdlg.setSelection( "kmail-filter.log" );
   fdlg.setOperationMode( KFileDialog::Saving );
