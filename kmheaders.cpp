@@ -797,6 +797,16 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
       static_cast<QMouseEvent*>(e)->button() == RightButton &&
       o->isA("QHeader") )
   {
+    // if we currently only show one of either sender/receiver column
+    // modify the popup text in the way, that it displays the text of the other of the two
+    if ( mPaintInfo.showReceiver )
+      mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
+    else
+      if ( mFolder && (mFolder->whoField().lower() == "to") )
+        mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Sender"));
+      else
+        mPopup->changeItem(KPaintInfo::COL_RECEIVER, i18n("Receiver"));
+
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;
   }
