@@ -89,7 +89,7 @@ protected:
 
   KMComposeWin* mComposer;
 private:
-  KSpell *mKSpell; 
+  KSpell *mKSpell;
 #ifndef KRN
   bool extEditor;
   QString mExtEditor;
@@ -104,7 +104,7 @@ class KMLineEdit : public QLineEdit
   Q_OBJECT
 
 public:
-  KMLineEdit(KMComposeWin* composer = NULL, QWidget *parent = NULL, 
+  KMLineEdit(KMComposeWin* composer = NULL, QWidget *parent = NULL,
 	     const char *name = NULL);
   virtual ~KMLineEdit();
 
@@ -264,7 +264,7 @@ protected:
   virtual void rethinkFields(void);
 
   /** Show or hide header lines */
-  virtual void rethinkHeaderLine(int value, int mask, int& row, 
+  virtual void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString labelStr, QLabel* lbl,
 				 QLineEdit* edt, QPushButton* btn=NULL);
   /** Initialization methods */
@@ -304,21 +304,21 @@ protected:
   /** Open addressbook and append selected addresses to the given
     edit field. */
   virtual void addrBookSelInto(KMLineEdit* destEdit);
-  
+
 private:
   /** Get message including signing and encrypting it */
   virtual const QString pgpProcessedMsg(void);
-  
-#if defined CHARSETS  
+
+#if defined CHARSETS
   /** Converts message text for sending. */
   void convertToSend(const QString str);
- 
+
   /** Test if string has any 8-bit characters */
   bool is8Bit(const QString str);
- 
+
   /** Set edit widget charset */
   void setEditCharset();
-#endif  
+#endif
 
   /** Send the message */
   void doSend(int sendNow=-1);
@@ -367,11 +367,11 @@ protected:
   int m7BitAscii;
   QString mDefaultCharset;
   QString mCharset;
-  QString mDefComposeCharset; 
-  QString mComposeCharset; 
+  QString mDefComposeCharset;
+  QString mComposeCharset;
   int mQuoteUnknownCharacters;
   QFont mSavedEditorFont;
-#endif  
+#endif
 
 private:
   QColor foreColor,backColor;

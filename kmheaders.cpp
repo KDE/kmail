@@ -67,11 +67,11 @@ public:
   QColor *mColor;
   QString mSortDate, mSortSubject, mSortSender, mSortArrival;
   KMPaintInfo *mPaintInfo;
-  
+
   // Constuction a new list view item with the given colors and pixmap
-  KMHeaderItem( QListView* parent, KMFolder* folder, int msgId, 
+  KMHeaderItem( QListView* parent, KMFolder* folder, int msgId,
 		KMPaintInfo *aPaintInfo )
-    : QListViewItem( parent ), 
+    : QListViewItem( parent ),
       mFolder( folder ),
       mMsgId( msgId ),
       mPaintInfo( aPaintInfo )
@@ -84,7 +84,7 @@ public:
   {
     mMsgId = aMsgId;
   }
-  
+
   // Profiling note: About 30% of the time taken to initialize the
   // listview is spent in this function. About 60% is spent in operator
   // new and QListViewItem::QListViewItem.
@@ -94,7 +94,8 @@ public:
     KMMsgStatus flag;
     QString fromStr, subjStr;
     KMMsgBase *mMsgBase = mFolder->getMsgBase( mMsgId );
-    assert(mMsgBase!=NULL);
+    if(mMsgBase==NULL)
+	return;
 
     flag = mMsgBase->status();
     setText( 0, " " + QString( QChar( (char)flag )));
@@ -171,7 +172,7 @@ public:
   void reset( KMFolder *aFolder, int aMsgId )
   {
     mFolder = aFolder;
-    mMsgId = aMsgId;    
+    mMsgId = aMsgId;
     irefresh();
   }
 
@@ -182,7 +183,7 @@ public:
     repaint();
   }
 
-// Begin this code may be relicensed by Troll Tech  
+// Begin this code may be relicensed by Troll Tech
   void paintCell( QPainter * p, const QColorGroup & cg,
 				int column, int width, int align )
   {
@@ -202,13 +203,13 @@ public:
       QRect rect = lv->itemRect( this );
       int cw = 0;
       cw = lv->header()->cellPos( column );
-      
-      p->drawTiledPixmap( 0, 0, width, height(), 
+
+      p->drawTiledPixmap( 0, 0, width, height(),
 			  mPaintInfo->pixmap,
-			  rect.left() + cw + lv->contentsX(), 
+			  rect.left() + cw + lv->contentsX(),
 			  rect.top() + lv->contentsY() );
     }
-    
+
     if ( isSelected() &&
          (column==0 || listView()->allColumnsShowFocus()) ) {
       p->fillRect( r - marg, 0, width - r + marg, height(),
@@ -217,7 +218,7 @@ public:
     } else {
       p->setPen( *mColor );
     }
-    
+
     if ( icon ) {
         p->drawPixmap( r, (height()-icon->height())/2, *icon );
         r += icon->width() + listView()->itemMargin();
@@ -229,7 +230,7 @@ public:
                      align | AlignVCenter, t );
     }
   }
-  // End this code may be relicensed by Troll Tech  
+  // End this code may be relicensed by Troll Tech
 
   virtual QString key( int column, bool /*ascending*/ ) const {
     if (column == 3) {
@@ -292,7 +293,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   	  this,SLOT(selectMessage(QListViewItem*)));
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
-  
+
   beginSelection = 0;
   endSelection = 0;
 }
@@ -314,11 +315,11 @@ KMHeaders::~KMHeaders ()
 void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 {
   if (mPaintInfo.pixmapOn)
-    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(), 
-			mPaintInfo.pixmap, 
-			rect.left() + contentsX(), 
+    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(),
+			mPaintInfo.pixmap,
+			rect.left() + contentsX(),
 			rect.top() + contentsY() );
-  else 
+  else
     p->fillRect( rect, colorGroup().base() );
 }
 
@@ -680,7 +681,7 @@ void KMHeaders::headerClicked(int column)
   kbp->idle();
 }
 */
-                                                             
+
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 {
@@ -717,10 +718,10 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
       warning(i18n("Critical error: Unable to process messages (out of space?)"));
       break;
     }
-  
+
   if (cur > (int)mItems.size()) cur = mItems.size()-1;
   clearSelection();
-  
+
   setContentsPos( topX, topY );
   if (next) {
     setCurrentItem( next );
@@ -739,7 +740,7 @@ void KMHeaders::setMsgRead (int msgId)
 {
   KMMessage* msg;
   KMMsgStatus st;
-  
+
   for (msg=getMsg(msgId); msg; msg=getMsg())
     {
       st = msg->status();
@@ -849,7 +850,7 @@ void KMHeaders::bounceMsg (int msgId)
   }
 
   // No composer appears. So better ask before sending.
-  if (KMessageBox::warningContinueCancel(this, 
+  if (KMessageBox::warningContinueCancel(this,
       i18n("Return the message to the sender as undeliverable?\n"
 	   "This will only work if the email address of the sender,\n"
 	   "%1, is valid.").arg(fromStr),
@@ -1038,9 +1039,9 @@ void KMHeaders::undo()
   KMFolder *folder;
   if (undoStack->popAction(msg, folder))
   {
-     folder->moveMsg( msg );     
+     folder->moveMsg( msg );
   }
-  else 
+  else
   {
     // Sorry.. stack is empty..
     KMessageBox::sorry(this, i18n("I can't undo anything, sorry!"));
@@ -1048,7 +1049,7 @@ void KMHeaders::undo()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::copySelectedToFolder(int menuId ) 
+void KMHeaders::copySelectedToFolder(int menuId )
 {
   if (mMenuToFolder[menuId])
     copyMsgToFolder( mMenuToFolder[menuId] );
@@ -1225,12 +1226,12 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
     item = mItems[aStartAt];
   else {
     item = currentHeaderItem();
-    if (!item) 
+    if (!item)
       item = static_cast<KMHeaderItem*>(firstChild());
-    if (!item) 
+    if (!item)
       return -1;
-    
-    if (aDirNext) 
+
+    if (aDirNext)
       item = static_cast<KMHeaderItem*>(item->itemBelow());
     else
       item = static_cast<KMHeaderItem*>(item->itemAbove());
@@ -1250,7 +1251,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   if (item)
     return item->msgId();
 
-  
+
   // A cludge to try to keep the number of unread messages in sync
   int unread = mFolder->countUnread();
   if (((unread == 0) && foundUnreadMessage) ||
@@ -1351,7 +1352,7 @@ void KMHeaders::updateMessageList(void)
   for (int temp = oldSize; temp > mFolder->count(); --temp)
     if (mItems[temp-1])
       delete mItems[temp-1];
-  
+
   mItems.resize( mFolder->count() );
   for (i=0; i<mFolder->count(); i++)
   {
@@ -1394,7 +1395,7 @@ void KMHeaders::updateMessageList(void)
   setUpdatesEnabled(autoUpd);
   if (autoUpd) repaint();
   // WABA: The following line is somehow necassery
-  // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+) 
+  // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+)
   //  highlightMessage(currentItem());
 }
 
@@ -1416,9 +1417,9 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     KMHeadersInherited::contentsMousePressEvent(e);
     return;
   }
-  
+
   setCurrentItem( lvi );
-  if ((e->button() == LeftButton) && 
+  if ((e->button() == LeftButton) &&
       !(e->state() & ControlButton) &&
       !(e->state() & ShiftButton)) {
     if (!(lvi->isSelected())) {
@@ -1447,8 +1448,8 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
   QListViewItem *endSelection = itemAt( contentsToViewport( e->pos() ));
 
-  if ((e->button() == LeftButton) 
-      && !(e->state() & ControlButton) 
+  if ((e->button() == LeftButton)
+      && !(e->state() & ControlButton)
       && !(e->state() & ShiftButton)) {
     clearSelectionExcept( endSelection );
   }
@@ -1624,7 +1625,7 @@ void KMHeaders::setSorting( int column, bool ascending )
     if (mPaintInfo.orderOfArrival)
       colText = i18n( "Date (Order of Arrival)" );
     setColumnText( 3, colText);
-    
+
     if (ascending)
       setColumnText( column, *up, columnText(column));
     else

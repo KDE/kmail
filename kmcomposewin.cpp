@@ -121,6 +121,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
 #endif
 {
+    setWFlags( WType_TopLevel | WStyle_Dialog );
 
   mGrid = NULL;
   mAtmListBox = NULL;
@@ -227,7 +228,7 @@ void KMComposeWin::readConfig(void)
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
 #ifndef KRN
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
-#endif  
+#endif
 
   config->setGroup("Reader");
   QColor c1=QColor(app->palette().normal().text());
@@ -873,7 +874,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 #else
   else {
     QString bodyDecoded = QString(mMsg->bodyDecoded());
-    verifyWordWrapLengthIsAdequate(bodyDecoded);    
+    verifyWordWrapLengthIsAdequate(bodyDecoded);
     mEditor->setText(bodyDecoded);
   }
 #endif
@@ -1013,11 +1014,11 @@ bool KMComposeWin::applyChanges(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
-  int rc;
+    int rc;
 
   if(mEditor->isModified())
   {
-    rc = KMessageBox::warningContinueCancel(this, 
+    rc = KMessageBox::warningContinueCancel(this,
            i18n("Close and discard\nedited message?"),
            i18n("Close message"), i18n("&Discard"));
     if (rc == KMessageBox::Cancel)
@@ -1026,7 +1027,8 @@ void KMComposeWin::closeEvent(QCloseEvent* e)
        return;
     }
   }
-  KMComposeWinInherited::closeEvent(e);
+  delete this; // ugh
+  //KMComposeWinInherited::closeEvent(e);
 }
 
 
@@ -1478,10 +1480,10 @@ void KMComposeWin::slotAttachSave()
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
 
   KURL url = KFileDialog::getSaveURL(mPathAttach, "*", NULL, pname);
-  
+
   if( url.isEmpty() )
     return;
-  
+
   if( !url.isLocalFile() )
   {
     KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
@@ -1725,8 +1727,8 @@ void KMComposeWin::slotSend()
 {
 #ifndef KRN
   if (mConfirmSend) {
-    switch(QMessageBox::information(&mMainWidget, 
-                                    i18n("Send Confirmation"), 
+    switch(QMessageBox::information(&mMainWidget,
+                                    i18n("Send Confirmation"),
                                     i18n("About to send email..."),
                                     i18n("Send &Now"),
                                     i18n("Send &Later"),
@@ -1781,12 +1783,12 @@ void KMComposeWin::slotAppendSignature()
     KFileDialog dlg(getenv("HOME"),QString::null,this,0, TRUE);
 
     dlg.setCaption(i18n("Choose Signature File"));
-    
+
     if( !dlg.exec() )
       return;
-    
+
     KURL url = dlg.selectedURL();
-    
+
     if( url.isEmpty() )
       return;
 
@@ -1795,7 +1797,7 @@ void KMComposeWin::slotAppendSignature()
       KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
       return;
     }
-    
+
     sigFileName = url.path();
     sigText = kFileToString(sigFileName, TRUE);
     identity->setSignatureFile(sigFileName);
@@ -2266,7 +2268,7 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
 //          mailFile.readLine(oneLine, 1024);
 //          insertLine(oneLine, -1);
 //       }
-      
+
 //       setModified(true);
 //       mailFile.close();
 
