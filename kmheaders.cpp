@@ -1728,7 +1728,9 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
 {
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
   if (!item)
-    return;
+  {
+    emit selected( NULL ); return;
+  }
   int idx = item->msgId();
 
   mOwner->statusMsg("");
@@ -1759,7 +1761,8 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
   emit activated(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
 
-  setOpen(lvi, !lvi->isOpen());
+  if (mFolder != kernel->outboxFolder() && mFolder != kernel->draftsFolder())
+    setOpen(lvi, !lvi->isOpen());
 }
 
 
@@ -2278,8 +2281,8 @@ void KMHeaders::setNestedOverride( bool override )
 //-----------------------------------------------------------------------------
 void KMHeaders::setOpen( QListViewItem *item, bool open )
 {
-	if( (nestingPolicy) || open )
-   	KMHeadersInherited::setOpen( item, open );
+  if( (nestingPolicy) || open )
+  KMHeadersInherited::setOpen( item, open );
 }
 
 //-----------------------------------------------------------------------------

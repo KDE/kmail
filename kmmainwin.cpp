@@ -1139,8 +1139,13 @@ void KMMainWin::slotSetMsgStatusSent()
 //called from heders. Message must not be deleted on close
 void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
-  KMReaderWin *win;
+  if (mFolder == kernel->outboxFolder() || mFolder == kernel->draftsFolder())
+  {
+    slotEditMsg(); return;
+  }
+
   assert(msg != NULL);
+  KMReaderWin *win;
 
   win = new KMReaderWin;
   win->setAutoDelete(true);
