@@ -1825,12 +1825,12 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
       // adjust the message id
       {
         QString msgId( oldMsg->msgId() );
-        int leftAngle = msgId.findRev( '<' );
-        int idx = (-1 == leftAngle) ? 0 : ++leftAngle;
         QString prefix("DecryptedMsg.");
         int oldIdx = msgId.find(prefix, 0, false);
-        if( -1 == oldIdx )
-          msgId = msgId.insert( idx, prefix );
+        if( -1 == oldIdx ) {
+          int leftAngle = msgId.findRev( '<' );
+          msgId = msgId.insert( (-1 == leftAngle) ? 0 : ++leftAngle, prefix );
+        }
         else {
           // toggle between "DecryptedMsg." and "DeCryptedMsg."
           // to avoid same message id
