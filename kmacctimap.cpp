@@ -228,7 +228,7 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   if (it == mapJobData.end()) return;
   assert(it != mapJobData.end());
-  QString name, mimeType;
+  QString name, url, mimeType;
   for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
     udsIt != uds.end(); udsIt++)
   {
@@ -238,6 +238,8 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
     {
       if ((*eIt).m_uds == KIO::UDS_NAME)
         name = (*eIt).m_str;
+      else if ((*eIt).m_uds == KIO::UDS_URL)
+        url = (*eIt).m_str;
       else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
         mimeType = (*eIt).m_str;
     }
@@ -246,8 +248,8 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
         && (!(*it).inboxOnly || name == "INBOX"))
     {
       static_cast<KMFolderTree*>((*it).parent->listView())
-      ->addImapChildFolder((*it).parent, name, mimeType == "inode/directory",
-      (*it).inboxOnly);
+        ->addImapChildFolder((*it).parent, name, KURL(url).path(), 
+        mimeType == "inode/directory", (*it).inboxOnly);
     }
   }
   static_cast<KMFolderTree*>((*it).parent->listView())->delayedUpdate();

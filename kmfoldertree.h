@@ -90,7 +90,7 @@ public:
 
   /** Add an item for an Imap foler */
   void addImapChildFolder(KMFolderTreeItem *item, const QString& name,
-    bool expandable, bool noPrefix);
+    const QString& url, bool expandable, bool noPrefix);
 
   /** Find index of given folder. Returns -1 if not found */
   virtual QListViewItem* indexOfFolder(const KMFolder*);

@@ -127,7 +127,7 @@ QString KMFolderTreeItem::key( int, bool ) const
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
-  const QString& name, bool expandable, bool noPrefix)
+  const QString& name, const QString& url, bool expandable, bool noPrefix)
 {
   KMFolderTreeItem *fti = new KMFolderTreeItem( item,
     new KMFolder(item->folder->createChildFolder(), name), &mPaintInfo );
@@ -157,8 +157,7 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
     }
   }
   fti->folder->setAccount(item->folder->account());
-  fti->folder->setImapPath( (noPrefix) ? ("/" + name) :
-    item->folder->imapPath() + name + "/" );
+  fti->folder->setImapPath( url );
 
   connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
           SLOT(refresh(KMFolder*)));
