@@ -2098,12 +2098,14 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 					 KMMenuToFolder *aMenuToFolder,
 					 QPopupMenu *menu )
 {
-    while ( menu->count() ) {
-        delete menu->findItem( menu->idAt( 0 ) )->popup();
-        menu->removeItemAt( 0 );
-    }
-
-    menu->clear();
+  while ( menu->count() ) 
+  {
+    QPopupMenu *popup = menu->findItem( menu->idAt( 0 ) )->popup();
+    if (popup)
+      delete popup;
+    else        
+      menu->removeItemAt( 0 );
+  }
 
   if (!fti) fti = static_cast<KMFolderTreeItem*>(mFolderTree->firstChild());
   if (move)
