@@ -76,6 +76,7 @@ namespace KMail {
 
   private:
     bool checkFolderExists( const QString & folder, const QString & msg );
+    bool validateAddresses( const QString & addresses );
 
   protected:
     // "general" tab:

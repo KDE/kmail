@@ -64,6 +64,7 @@ using KMail::FolderRequester;
 #include <kconfig.h>
 #include <kfileitem.h>
 #include <kurl.h>
+#include <kdebug.h>
 
 // Qt headers:
 #include <qtabwidget.h>
@@ -437,30 +438,37 @@ namespace KMail {
     }
   }
 
+bool IdentityDialog::validateAddresses( const QString & addresses )
+{
+  QString brokenAddress;
+  KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( addresses ), brokenAddress );
+  if ( !( errorCode == KPIM::AddressOk || errorCode == KPIM::AddressEmpty ) ) {
+    QString errorMsg( "<qt><p><b>" + brokenAddress +
+                      "</b></p><p>" + KPIM::emailParseResultToString( errorCode ) +
+                      "</p></qt>" );
+    KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
+    return false;
+  } 
+  return true;
+}
+
 void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().stripWhiteSpace();
+ 
+    // Validate email addresses
     if ( !isValidSimpleEmailAddress( email )) {
       QString errorMsg( simpleEmailAddressErrorMsg());
       KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
       return;
     }
 
-    // check the reply-to address
-    const QString replyTo = mReplyToEdit->text().stripWhiteSpace();
-    if ( !( isValidSimpleEmailAddress( replyTo ) || replyTo.isEmpty() )) {
-      QString errorMsg( simpleEmailAddressErrorMsg());
-      KMessageBox::sorry( this, errorMsg, i18n("Invalid Reply-To Address") );
+    if ( !validateAddresses( mReplyToEdit->text().stripWhiteSpace() ) ) {
       return;
     }
-
-    // check the Bcc address
-    const QString bcc = mBccEdit->text().stripWhiteSpace();
-    if ( !( isValidSimpleEmailAddress( bcc ) || bcc.isEmpty() )) {
-      QString errorMsg( simpleEmailAddressErrorMsg());
-      KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") ); //FIXME:change to Invalid Bcc Address after stringfreeze
+ 
+    if ( !validateAddresses( mBccEdit->text().stripWhiteSpace() ) ) {
       return;
     }
-
 
     const std::vector<GpgME::Key> & pgpSigningKeys = mPGPSigningKeyRequester->keys();
     const std::vector<GpgME::Key> & pgpEncryptionKeys = mPGPEncryptionKeyRequester->keys();
