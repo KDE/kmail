@@ -134,7 +134,7 @@ KMMessage* KMFolderImap::getMsg(int idx)
 void KMFolderImap::setAccount(KMAcctImap *aAccount)
 {
   mAccount = aAccount;
-  if( !folder() && !folder()->child() ) return;
+  if( !folder() || !folder()->child() ) return;
   KMFolderNode* node;
   for (node = folder()->child()->first(); node;
        node = folder()->child()->next())
