@@ -149,6 +149,7 @@ class AccountDialog : public KDialogBase
     void slotEnableLocalInterval( bool state );
     void slotEnableMaildirInterval( bool state );
     void slotFontChanged();
+    void slotPipeliningClicked();
     void slotPopEncryptionChanged(int);
     void slotImapEncryptionChanged(int);
     void slotCheckPopCapabilities();

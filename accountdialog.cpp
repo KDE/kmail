@@ -505,10 +505,6 @@ void AccountDialog::makePopAccountPage()
   label->setBuddy( mPop.portEdit );
   grid->addWidget( mPop.portEdit, 4, 1 );
 
-  mPop.usePipeliningCheck =
-    new QCheckBox( i18n("Use pipelining for faster mail download"), page1 );
-  grid->addMultiCellWidget( mPop.usePipeliningCheck, 5, 5, 0, 1 );
-
   mPop.storePasswordCheck =
     new QCheckBox( i18n("Store POP password in configuration file"), page1 );
   grid->addMultiCellWidget( mPop.storePasswordCheck, 6, 6, 0, 1 );
@@ -545,8 +541,15 @@ void AccountDialog::makePopAccountPage()
   grid->addWidget( mPop.precommand, 12, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("S&ecurity") );
+  tabWidget->addTab( page2, i18n("&Extras") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
+
+  mPop.usePipeliningCheck =
+    new QCheckBox( i18n("Use pipelining for faster mail download"), page2 );
+  connect(mPop.usePipeliningCheck, SIGNAL(clicked()),
+    SLOT(slotPipeliningClicked()));
+  vlay->addWidget( mPop.usePipeliningCheck );
+
   mPop.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mPop.encryptionNone =
@@ -897,6 +900,23 @@ void AccountDialog::setupSettings()
     if (folderCombo->count() == 0)
       folderCombo->insertItem( i18n("inbox") );
   }
+}
+
+
+void AccountDialog::slotPipeliningClicked()
+{
+  if (mPop.usePipeliningCheck->isChecked())
+    KMessageBox::information(0, 
+      i18n("Please note that this feature can cause some POP3 servers\n"
+      "that don't support pipelining to send corrupted mails.\n\n"
+      "This is configurable, because some servers support pipelining\n"
+      "but don't announce their capabilities. To check, if your POP3 server\n"
+      "announces pipelining support, use the button at the bottom of\n"
+      "the dialog.\n"
+      "If your server doesn't announce it, but you want more speed\n"
+      "you should do some testing first by sending yourself a bunch\n"
+      "of mails and downloading them."), QString::null,
+      "pipelining");
 }
 
 
