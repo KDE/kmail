@@ -37,11 +37,22 @@ public:
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 
-protected:
+private slots:
+  bool preProcess();
+  bool fetchMsg();
+  void postProcess();
+
+private:
   QString mLocation;
   QString mProcmailLockFileName;
-  bool hasNewMail;
+  bool mHasNewMail;
+  bool mProcessingNewMail;
+  bool mAddedOk;
   LockType mLock;
+  int mNumMsgs;
+  int mMsgsFetched;
+  KMFolder *mMailFolder;
+  QString mStatusMsgStub;
 };
 
 #endif /*kmacctlocal_h*/

@@ -25,7 +25,9 @@
 
 //-----------------------------------------------------------------------------
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
-  KMAccount(aOwner, aAccountName, id)
+  KMAccount(aOwner, aAccountName, id), mHasNewMail( false ),
+  mProcessingNewMail( false ), mAddedOk( true ), mNumMsgs( 0 ),
+  mMsgsFetched( 0 ), mMailFolder( 0 )
 {
   mLock = procmail_lockfile;
 }
@@ -66,34 +68,59 @@ void KMAcctLocal::pseudoAssign( const KMAccount * a )
 //-----------------------------------------------------------------------------
 void KMAcctLocal::processNewMail(bool)
 {
-  QTime t;
-  hasNewMail = false;
+  if ( mProcessingNewMail )
+    return;
 
+  mHasNewMail = false;
+  mProcessingNewMail = true;
+
+  if ( !preProcess() ) {
+    mProcessingNewMail = false;
+    return;
+  }
+
+  QTime t;
+  t.start();
+
+  for ( mMsgsFetched = 0; mMsgsFetched < mNumMsgs; ++mMsgsFetched )
+  {
+    if ( !fetchMsg() )
+      break;
+
+    if (t.elapsed() >= 200) { //hardwired constant
+      kapp->processEvents();
+      t.start();
+    }
+  }
+
+  postProcess();
+  mProcessingNewMail = false;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMAcctLocal::preProcess()
+{
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( fi.size() == 0 ) {
       KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
-      checkDone( hasNewMail, CheckOK );
-      return;
+      checkDone( mHasNewMail, CheckOK );
+      return false;
     }
   }
 
-  KMFolder mailFolder(0, location(), KMFolderTypeMbox);
-  KMFolderMbox* mboxStorage = static_cast<KMFolderMbox*>(mailFolder.storage());
+  mMailFolder = new KMFolder( 0, location(), KMFolderTypeMbox );
+  KMFolderMbox* mboxStorage =
+    static_cast<KMFolderMbox*>(mMailFolder->storage());
   mboxStorage->setLockType( mLock );
   if ( mLock == procmail_lockfile)
     mboxStorage->setProcmailLockFileName( mProcmailLockFileName );
 
-  long num = 0;
-  long i;
-  int rc;
-  KMMessage* msg;
-  bool addedOk;
-
   if (!mFolder) {
-    checkDone( hasNewMail, CheckError );
+    checkDone( mHasNewMail, CheckError );
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
-    return;
+    return false;
   }
 
   //KMBroadcastStatus::instance()->reset();
@@ -104,117 +131,120 @@ void KMAcctLocal::processNewMail(bool)
   if (!runPrecommand(precommand()))
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
-    checkDone( hasNewMail, CheckError );
+    checkDone( mHasNewMail, CheckError );
   }
 
-  mailFolder.setAutoCreateIndex(FALSE);
+  mMailFolder->setAutoCreateIndex(FALSE);
 
-  rc = mailFolder.open();
-  if (rc)
-  {
+  const int rc = mMailFolder->open();
+  if ( rc != 0 ) {
     QString aStr;
     aStr = i18n("Cannot open file:");
-    aStr += mailFolder.path()+"/"+mailFolder.name();
+    aStr += mMailFolder->path()+"/"+mMailFolder->name();
     KMessageBox::sorry(0, aStr);
-    kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
-      << mailFolder.name() << endl;
-    checkDone( hasNewMail, CheckError );
+    kdDebug(5006) << "cannot open file " << mMailFolder->path() << "/"
+      << mMailFolder->name() << endl;
+    checkDone( mHasNewMail, CheckError );
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
-    return;
+    return false;
   }
 
   if (!mboxStorage->isLocked()) {
     kdDebug(5006) << "mailFolder could not be locked" << endl;
-    mailFolder.close();
-    checkDone( hasNewMail, CheckError );
+    mMailFolder->close();
+    checkDone( mHasNewMail, CheckError );
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
-      .arg( mailFolder.location() );
+      .arg( mMailFolder->location() );
     KMBroadcastStatus::instance()->setStatusMsg( errMsg );
-    return;
+    return false;
   }
 
   mFolder->open();
 
-  num = mailFolder.count();
-
-  addedOk = true;
-  t.start();
+  mNumMsgs = mMailFolder->count();
 
   // prepare the static parts of the status message:
-  QString statusMsgStub = i18n("Moving message %3 of %2 from %1.")
-    .arg(mailFolder.location()).arg(num);
+  mStatusMsgStub = i18n("Moving message %3 of %2 from %1.")
+    .arg(mMailFolder->location()).arg( mNumMsgs );
 
   //KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
-  for (i=0; i<num; i++)
+  return true;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMAcctLocal::fetchMsg()
+{
+  KMMessage* msg;
+
+  /* This causes mail eating
+  if (kmkernel->mailCheckAborted()) break; */
+
+  const QString statusMsg = mStatusMsgStub.arg( mMsgsFetched );
+  KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
+  //KMBroadcastStatus::instance()->setStatusProgressPercent( "L" + mName, (mMsgsFetched*100) / mNumMsgs );
+
+  msg = mMailFolder->take(0);
+  if (msg)
   {
-
-    if (!addedOk) break;
-
-    /* This causes mail eating
-    if (kmkernel->mailCheckAborted()) break; */
-
-    QString statusMsg = statusMsgStub.arg(i);
-    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
-    //KMBroadcastStatus::instance()->setStatusProgressPercent( "L" + mName, (i*100) / num );
-
-    msg = mailFolder.take(0);
-    if (msg)
-    {
 #if 0
-      // debug code, don't remove
-      QFile fileD0( "testdat_xx-0-0" );
-      if( fileD0.open( IO_WriteOnly ) ) {
-        QCString s = msg->asString();
-        uint l = s.length();
-        if ( l > 0 ) {
-          QDataStream ds( &fileD0 );
-          ds.writeRawBytes( s.data(), l );
-        }
-        fileD0.close();  // If data is 0 we just create a zero length file.
+    // debug code, don't remove
+    QFile fileD0( "testdat_xx-0-0" );
+    if( fileD0.open( IO_WriteOnly ) ) {
+      QCString s = msg->asString();
+      uint l = s.length();
+      if ( l > 0 ) {
+        QDataStream ds( &fileD0 );
+        ds.writeRawBytes( s.data(), l );
       }
+      fileD0.close();  // If data is 0 we just create a zero length file.
+    }
 #endif
-      msg->setStatus(msg->headerField("Status").latin1(),
-        msg->headerField("X-Status").latin1());
-      msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
-      msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
-      msg->setComplete(true);
-      msg->updateAttachmentState();
+    msg->setStatus(msg->headerField("Status").latin1(),
+      msg->headerField("X-Status").latin1());
+    msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
+    msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
+    msg->setComplete(true);
+    msg->updateAttachmentState();
 
-      addedOk = processNewMsg(msg);
+    mAddedOk = processNewMsg(msg);
 
-      if (addedOk)
-        hasNewMail = true;
-    }
+    if (mAddedOk)
+      mHasNewMail = true;
 
-    if (t.elapsed() >= 200) { //hardwired constant
-      kapp->processEvents();
-      t.start();
-    }
-
+    return mAddedOk;
   }
+  return true;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctLocal::postProcess()
+{
   //KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, false );
   //KMBroadcastStatus::instance()->reset();
 
-  if (addedOk)
+  if (mAddedOk)
   {
     kmkernel->folderMgr()->syncAllFolders();
-    rc = mailFolder.expunge();
-    if (rc)
+    const int rc = mMailFolder->expunge();
+    if ( rc != 0 ) {
       KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
                                      i18n( "<qt>Cannot remove mail from "
                                            "mailbox <b>%1</b>:<br>%2</qt>" )
-                                     .arg( mailFolder.location() )
+                                     .arg( mMailFolder->location() )
                                      .arg( strerror( rc ) ) );
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
+    }
+    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
   }
   // else warning is written already
 
-  mailFolder.close();
+  mMailFolder->close();
+  delete mMailFolder; mMailFolder = 0;
+
   mFolder->close();
 
-  checkDone( hasNewMail, CheckOK );
-
-  return;
+  checkDone( mHasNewMail, CheckOK );
 }
 
 
