@@ -29,6 +29,7 @@
 #include <qtextcodec.h>
 #include <qstrlist.h>
 
+#include <kmime_util.h>
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
 #include <assert.h>
@@ -297,13 +298,8 @@ QString KMMessage::formatString(const QString& aStr) const
 	   to have a long form of the date used? I don't
 	   like this change to a short XX/XX/YY date format.
 	   At least not for the default. -sanders */
-        {
-          QDateTime datetime;
-          datetime.setTime_t(date());
-          KLocale locale("kmail");
-          locale.setLanguage(sReplyLanguage);
-          result += locale.formatDateTime(datetime, false);
-        }
+	result += KMime::DateFormatter::formatDate( KMime::DateFormatter::Localized, 
+						    date(), sReplyLanguage, false );
         break;
       case 'e':
         result += from();
@@ -1274,7 +1270,15 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 //-----------------------------------------------------------------------------
 QString KMMessage::dateStr(void) const
 {
-    return headerField("Date").stripWhiteSpace();
+  KConfigGroup general( kapp->config(), "General" );
+  DwHeaders& header = mMsg->Headers();
+  time_t unixTime;
+
+  if (!header.HasDate()) return "";
+  unixTime = header.Date().AsUnixTime();
+  
+  return KMime::DateFormatter::formatDate( static_cast<KMime::DateFormatter::FormatType>(general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy )), 
+					   unixTime, general.readEntry( "customDateFormat" ) );
 }
 
 

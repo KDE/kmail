@@ -10,6 +10,7 @@
 #include <qdragobject.h>
 #include <qdict.h>
 #include "kmmessage.h"
+#include "kmime_util.h"
 
 class KMFolder;
 class KMMessage;
@@ -36,12 +37,6 @@ public:
     static bool canDecode( QDropEvent* e );
 };
 
-typedef enum  {
-      CTime,
-      Localized,
-      FancyDate
-} KMDateDisplay;
-
 /** Information shared by all items in a list view */
 struct KMPaintInfo {
   bool pixmapOn;
@@ -65,7 +60,6 @@ struct KMPaintInfo {
   int scoreCol;
 #endif
   int sizeCol;
-  KMDateDisplay dateDisplay;
 };
 
 /** The widget that shows the contents of folders */
@@ -190,8 +184,6 @@ public:
 
   /** return a string relativ to the current time */
   static QString fancyDate( time_t otime );
-
-  static QString formatDate( time_t otime, KMDateDisplay date );
 
   QFont dateFont;
 
@@ -389,10 +381,7 @@ private:
   bool writeSortOrder();
   bool readSortOrder(bool set_selection=FALSE);
 
-  /** cached values for fancyDate */
-  static QDateTime *now;
-  static time_t now_time;
-
+  KMime::DateFormatter mDate;
   /** value of config key Behaviour/LoopOnGotoUnread */
   bool mLoopOnGotoUnread;
 };

@@ -5,6 +5,7 @@
 #include <klocale.h>
 #include <kcharsets.h>
 
+#include <kmime_util.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 #include <qtextcodec.h>
@@ -190,7 +191,7 @@ void KMMsgBase::setDate(const QCString& aDateStr)
 QString KMMsgBase::dateStr(void) const
 {
   time_t d = date();
-  return KMHeaders::fancyDate(d);
+  return KMime::DateFormatter::formatDate(KMime::DateFormatter::Fancy, d);
 }
 
 

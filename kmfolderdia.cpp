@@ -92,7 +92,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ihl->addWidget( mLineEdit1 );
 
   mNormalIconButton = new KIconButton( iconGroup );
-  mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any );
+  mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any, true );
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
   mNormalIconButton->setFixedSize( 28, 28 );
@@ -112,7 +112,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ihl->addWidget( mLineEdit2 );
 
   mUnreadIconButton = new KIconButton( iconGroup );
-  mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any );
+  mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
   mUnreadIconButton->setIconSize( 16 );
   mUnreadIconButton->setStrictIconSize( true );
    mUnreadIconButton->setFixedSize( 28, 28 );

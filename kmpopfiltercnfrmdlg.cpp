@@ -379,7 +379,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
         tmp = i18n("unknown");
       lvi->setText(4, msg->fromStrip());
       // set the date
-      lvi->setText(5, KMHeaders::fancyDate(msg->date()));
+      lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
       // set the size
       lvi->setText(6, QString("%1").arg(headers->header()->msgLength()));
       // Date for sorting
@@ -452,7 +452,7 @@ void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
           tmp = i18n("unknown");
         lvi->setText(4, msg->fromStrip());
         // set the date
-        lvi->setText(5, KMHeaders::fancyDate(msg->date()));
+        lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
         // set the size
         lvi->setText(6, QString("%1").arg(headers->header()->msgLength()));
         // Date for sorting

@@ -8,6 +8,7 @@
 
 
 #include "kmheaders.h"
+#include "kmime_util.h"
 
 #include <qlineedit.h>
 #include <qcombobox.h>
@@ -577,11 +578,10 @@ protected:
   QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
   
-  enum { numDateDisplayConfig = 3 };
+  enum { numDateDisplayConfig = 4 };
   static const struct dateDisplayConfigType {
-    const char *  configName;
     const char *  displayName;
-    KMDateDisplay dateDisplay;
+    KMime::DateFormatter::FormatType dateDisplay;
   } dateDisplayConfig[ numDateDisplayConfig ];
 
 };

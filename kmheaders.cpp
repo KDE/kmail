@@ -197,7 +197,7 @@ public:
 	tmp = tmp.simplifyWhiteSpace();
 
     } else if(col == headers->paintInfo()->dateCol) {
-        tmp = KMHeaders::formatDate(mMsgBase->date(), headers->paintInfo()->dateDisplay );
+	tmp = headers->mDate.dateString( mMsgBase->date() );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
         if (headers->folder()->protocol() == "imap")
@@ -596,12 +596,11 @@ void KMHeaders::readConfig (void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
-    mPaintInfo.dateDisplay = FancyDate;
-    QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
-    if ( dateDisplay == "ctime" )
-      mPaintInfo.dateDisplay = CTime;
-    else if ( dateDisplay == "localized" )
-      mPaintInfo.dateDisplay = Localized;
+  
+    KMime::DateFormatter::FormatType t = 
+      (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
+    mDate.setCustomFormat( config->readEntry("customDateFormat", QString::null ) );
+    mDate.setFormat( t );
   }
 
   readColorConfig();
@@ -2212,80 +2211,9 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   setFolderInfoStatus();
 }
 
-QString KMHeaders::formatDate( time_t time, KMDateDisplay option)
-{
-    switch ( option )
-    {
-    case FancyDate:
-        return KMHeaders::fancyDate( time );
-    case CTime:
-        return QString::fromLatin1( ctime(  &time ) ).stripWhiteSpace() ;
-    case Localized:
-    {
-        QDateTime tmp;
-        tmp.setTime_t( time );
-	// format date according to locale: short format, show secs
-        return KGlobal::locale()->formatDateTime( tmp, true, true );
-    }
-    }
-    return QString::null;
-}
-
-QDateTime *KMHeaders::now = 0;
-time_t KMHeaders::now_time = 0;
-
-QString KMHeaders::fancyDate( time_t otime )
-{
-    if ( otime <= 0 )
-        return i18n( "unknown" );
-
-    if ( !now ) {
-        time( &now_time );
-        now = new QDateTime();
-        now->setTime_t( now_time );
-    }
-
-    QDateTime old;
-    old.setTime_t( otime );
-
-    // not more than an hour in the future
-    if ( now_time + 60 * 60 >= otime ) {
-        time_t diff = now_time - otime;
-
-        if ( diff < 24 * 60 * 60 ) {
-            if ( old.date().year() == now->date().year() &&
-                 old.date().dayOfYear() == now->date().dayOfYear() )
-                return i18n( "Today %1" ).arg( KGlobal::locale()->
-                                               formatTime( old.time(), true ) );
-        }
-        if ( diff < 2 * 24 * 60 * 60 ) {
-            QDateTime yesterday( now->addDays( -1 ) );
-            if ( old.date().year() == yesterday.date().year() &&
-                 old.date().dayOfYear() == yesterday.date().dayOfYear() )
-                return i18n( "Yesterday %1" ).arg( KGlobal::locale()->
-                                                   formatTime( old.time(), true) );
-        }
-        for ( int i = 3; i < 7; i++ )
-            if ( diff < i * 24 * 60 * 60 ) {
-                QDateTime weekday( now->addDays( -i + 1 ) );
-                if ( old.date().year() == weekday.date().year() &&
-                     old.date().dayOfYear() == weekday.date().dayOfYear() )
-                    return i18n( "1. weekday, 2. time", "%1 %2" ).
-                        arg( KGlobal::locale()->weekDayName( old.date().dayOfWeek() ) ).
-                        arg( KGlobal::locale()->
-                             formatTime( old.time(), true) );
-            }
-    }
-
-    return KGlobal::locale()->
-        formatDateTime( old );
-}
-
 void KMHeaders::resetCurrentTime()
 {
-    delete now;
-    now = 0;
-    now_time = 0;
+    mDate.reset();
     QTimer::singleShot( 1000, this, SLOT( resetCurrentTime() ) );
 }
 

@@ -41,6 +41,8 @@
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
 
+#include "qlineedit.h"
+#include "qobjectlist.h"
 
 // other kdenetwork headers:
 #include <kpgp.h>
@@ -2140,9 +2142,10 @@ QString AppearancePage::LayoutTab::helpAnchor() {
 // hrmpf. Needed b/c I18N_NOOP can't take hints.
 const AppearancePage::LayoutTab::dateDisplayConfigType
 AppearancePage::LayoutTab::dateDisplayConfig[] = {
-  { "ctime", I18N_NOOP("Sta&ndard format (%1)"), CTime },
-  { "localized", I18N_NOOP("Locali&zed format (%1)"), Localized },
-  { "fancyDate", I18N_NOOP("Fanc&y format (%1)"), FancyDate },
+  { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
+  { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
+  { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
+  { I18N_NOOP("&Custom (shift + F1 for help)"), KMime::DateFormatter::Custom }
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
@@ -2188,13 +2191,23 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   // a button group for three radiobuttons:
   mDateDisplay = new QVButtonGroup( i18n( "Display of date" ), this );
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
-  time_t currentTime;
-  time( &currentTime );
-  for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
-    mDateDisplay->insert( new QRadioButton( i18n(dateDisplayConfig[i].displayName)
-			         .arg( KMHeaders::formatDate( currentTime,
-				   dateDisplayConfig[i].dateDisplay ) ),
-      mDateDisplay ), i );
+  
+  for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
+    if ( dateDisplayConfig[i].dateDisplay == KMime::DateFormatter::Custom ) {
+      QRadioButton *b = new QRadioButton( i18n(dateDisplayConfig[i].displayName),
+					  mDateDisplay );
+      mDateDisplay->insert(b);
+      QLineEdit *le = new QLineEdit( mDateDisplay );
+      QWhatsThis::add(le, i18n( "<B>These expressions may be used for the date:</B> <br><UL><LI>d - the day as number without a leading zero (1-31) <LI>dd - the day as number with a leading zero (01-31) <LI>ddd - the abbrevated day name (Mon - Sun). <LI>dddd - the long day name (Monday - Sunday). <LI>M - the month as number without a leading zero (1-12) <LI>MM - the month as number with a leading zero (01-12) <LI>MMM - the abbrevated month name (Jan - Dec). <LI>MMMM - the long month name (January - December). <LI>yy - the year as two digit number (00-99) <LI>yyyy - the year as four digit number (0000-9999) </UL> <B>These expressions may be used for the time:</B> <UL><LI>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display) <LI>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display) <LI>m - the minute without a leading zero (0-59) <LI>mm - the minute with a leading zero (00-59) <LI>s - the second whithout a leading zero (0-59) <LI>ss - the second whith a leading zero (00-59) <LI>z - the milliseconds without leading zeroes (0-999) <LI>zzz - the milliseconds with leading zeroes (000-999) <LI>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".<LI>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\". <LI>Z - zone in the numeric form ( -0500 )</UL><B>All other input characters will be ignored.</B>") );
+      le->setEnabled( false );
+      QObject::connect( b, SIGNAL(toggled(bool)), le, SLOT(setEnabled(bool)) );
+    } else {
+      mDateDisplay->insert( new QRadioButton( i18n(dateDisplayConfig[i].displayName)
+					      .arg( KMime::DateFormatter::formatCurrentDate( 
+                                                         dateDisplayConfig[i].dateDisplay ) ),
+					                 mDateDisplay ), i );
+      }
+  }
 
   vlay->addWidget( mDateDisplay );
   vlay->addStretch( 10 ); // spacer
@@ -2214,15 +2227,19 @@ void AppearancePage::LayoutTab::setup() {
   if ( num < 0 || num > 3 ) num = 3;
   mNestingPolicy->setButton( num );
 
-  QString dateDisplay = general.readEntry( "dateDisplay", "fancyDate" );
+  KMime::DateFormatter::FormatType dateDisplay = static_cast<KMime::DateFormatter::FormatType>( general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy ) );
   int i;
   for ( i = 0 ; i < numDateDisplayConfig ; i++ )
-    if ( dateDisplay == QString::fromLatin1( dateDisplayConfig[i].configName ) ) {
+    if ( dateDisplay == dateDisplayConfig[i].dateDisplay ) {
+      if ( dateDisplay == KMime::DateFormatter::Custom ) {
+	QObjectListIt it( *mDateDisplay->queryList( "QLineEdit" ) );
+	static_cast<QLineEdit*>(it.current())->setText( general.readEntry( "customDateFormat", QString::null) );
+      } 
       mDateDisplay->setButton( i );
       break;
     }
   if ( i >= numDateDisplayConfig )
-    mDateDisplay->setButton( numDateDisplayConfig - 1 ); // default
+    mDateDisplay->setButton( numDateDisplayConfig - 2 ); // default
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -2244,11 +2261,11 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
     mNestingPolicy->setButton( num );
   }
 
-  if ( general.hasKey( "dateDisplay" ) ) {
-    QString dateDisplay = general.readEntry( "dateDisplay" );
+  if ( general.hasKey( "dateFormat" ) ) {
+    KMime::DateFormatter::FormatType dateFormat = static_cast<KMime::DateFormatter::FormatType>( general.readNumEntry( "dateFormat", KMime::DateFormatter::Fancy ) );
     for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
-      if ( dateDisplay
-	   == QString::fromLatin1( dateDisplayConfig[i].configName ) ) {
+      if ( dateFormat
+	   == dateDisplayConfig[i].dateDisplay ) {
 	mDateDisplay->setButton( i );
 	break;
       }
@@ -2296,9 +2313,14 @@ void AppearancePage::LayoutTab::apply() {
   int dateDisplayID = mDateDisplay->id( mDateDisplay->selected() );
   // check bounds:
   if ( dateDisplayID < 0 || dateDisplayID > numDateDisplayConfig - 1 )
-    dateDisplayID = numDateDisplayConfig - 1;
-  general.writeEntry( "dateDisplay",
-		      dateDisplayConfig[ dateDisplayID ].configName );
+    dateDisplayID = numDateDisplayConfig - 2;//Fancy
+  general.writeEntry( "dateFormat",
+		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
+  if ( dateDisplayID == numDateDisplayConfig - 1 ) {//custom
+    QObjectListIt it( *mDateDisplay->queryList( "QLineEdit" ) );
+    general.writeEntry( "customDateFormat",
+			static_cast<QLineEdit*>(it.current())->text() );
+  }
 }
 
 
