@@ -11,7 +11,7 @@ class KMFolder;
 class KMFolderTree;
 class KMHeaders;
 class KMReaderWin;
-class KNewPanner;
+class QSplitter;
 class KMenuBar;
 class KToolBar;
 class KStatusBar;
@@ -134,7 +134,7 @@ protected:
   KStatusBar   *mStatusBar;
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
-  KNewPanner   *mHorizPanner, *mVertPanner;
+  QSplitter   *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;

@@ -12,12 +12,12 @@
 
 #include <kapp.h>
 #include <kconfig.h>
-#include <kmsgbox.h>
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
 #include <klocale.h>
+#include <qmessagebox.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>	/* defines _PATH_MAILDIR */
@@ -83,7 +83,7 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
     QString aStr;
     aStr = i18n("Cannot open file:");
     aStr += mailFolder.path()+"/"+mailFolder.name();
-    KMsgBox::message(0,"KMail notification",aStr);
+    QMessageBox::information(0,i18n("KMail notification"),aStr, i18n("OK"));
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
     return FALSE;
   }

@@ -75,7 +75,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 {
   initMetaObject();
 
-  mPicsDir = app->kde_datadir()+"/kmail/pics/";
   mAutoDelete = FALSE;
   mMsg = NULL;
 

@@ -23,7 +23,6 @@
 #include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <kmsgbox.h>
 #include <kapp.h>
 #include <kstdaccel.h>
 #include <kmidentity.h>
@@ -114,7 +113,7 @@ static void ungrabPtrKb(void)
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
-  QString appName = app->name();
+  QString appName = app->getCaption();
   QString msg = aMsg;
   static int recurse=-1;
 
@@ -136,8 +135,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 	!recurse)
     {
       ungrabPtrKb();
-      KMsgBox::message(NULL, appName+" "+i18n("warning"), msg.data(),
-		       KMsgBox::EXCLAMATION);
+      QMessageBox::warning(NULL, kapp->getCaption(), msg, i18n("OK"));
     }
     else kdebug(KDEBUG_INFO, 0, msg);
     break;
@@ -145,8 +143,8 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
   case QtFatalMsg:
     ungrabPtrKb();
     fprintf(stderr, appName+" "+i18n("fatal error")+": %s\n", msg.data());
-    KMsgBox::message(NULL, appName+" "+i18n("fatal error"),
-		     aMsg, KMsgBox::STOP);
+    QMessageBox::critical(NULL, appName+" "+i18n("fatal error"),
+		       aMsg, i18n("OK"));
     abort();
   }
 
@@ -325,8 +323,10 @@ static void testDir(const char *_name)
   QString c = getenv("HOME");
   if(c.isEmpty())
     {
-      KMsgBox::message(0,i18n("KMail notification"),
-		       i18n("$HOME is not set!\nKMail cannot start without it.\n"));
+     QMessageBox::critical(0,i18n("KMail notification"),
+			   i18n("$HOME is not set!\n"
+				"KMail cannot start without it.\n"),
+			   i18n("OK"));
       exit(-1);
     }
 		
@@ -722,6 +722,10 @@ main(int argc, char *argv[])
       sprintf (lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
       msg = fopen (lf, "w");
       int i;
+      KGlobal::dirs()->
+	addResourceType("kmail_pic", 
+			KStandardDirs::kde_default("data") + "kmail/pics/");
+
       app = new KApplication(argc, argv, "kmail"); // clear arg list
       argc--;
       argv++;

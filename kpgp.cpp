@@ -26,8 +26,8 @@
 #include <ksimpleconfig.h>
 #include <kiconloader.h>
 #include <kglobal.h>
-#include <kmsgbox.h>
 #include <klocale.h>
+#include <qmessagebox.h>
 
 Kpgp *Kpgp::kpgpObject = 0L;
 
@@ -282,12 +282,11 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     }
     if(persons.isEmpty())
     {
-      int ret = KMsgBox::yesNo(0,i18n("PGP Warning"),
+      int ret = QMessageBox::warning(0,i18n("PGP Warning"),
 			       i18n("Could not find the public keys for the\n" 
 				    "recipients of this mail.\n"
 				    "Message will not be encrypted."),
-			       KMsgBox::EXCLAMATION, 
-			       i18n("Continue"), i18n("Cancel"));
+				     i18n("Continue"), i18n("Cancel"));
       if(ret == 2) return false;
     }
     else if(!noKeyFor.isEmpty())

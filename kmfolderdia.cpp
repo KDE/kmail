@@ -5,7 +5,6 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qtextstream.h>
-#include <kmsgbox.h>
 #include <kapp.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>

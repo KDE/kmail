@@ -16,7 +16,6 @@
 #include <qpalette.h>
 #include <keditcl.h>
 
-#include <kmsgbox.h>
 #include "kmmsgpart.h"
 
 

@@ -20,7 +20,6 @@
 
 #include <kapp.h>
 #include <kapp.h>
-#include <kmsgbox.h>
 #include <kfiledialog.h>
 #include <ktablistbox.h>
 #include <qbuttongroup.h>

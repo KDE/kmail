@@ -3,7 +3,6 @@
 
 #include <kapp.h>
 #include <kapp.h>
-#include <kmsgbox.h>
 #include <qmessagebox.h>
 #include <qstring.h>
 #include <unistd.h>
@@ -24,8 +23,8 @@ static void msgDialog(const char* msg, const char* arg=NULL)
   if (arg) str.sprintf(msg, arg);
   else str = msg;
 
-  KMsgBox::message(NULL, i18n("File I/O Error"), str,
-		   KMsgBox::STOP, i18n("OK"));
+  QMessageBox::warning(NULL, i18n("File I/O Error"), str,
+		       i18n("OK"));
 }
 
 

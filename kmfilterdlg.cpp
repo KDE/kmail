@@ -11,7 +11,6 @@
 #include "kmfoldermgr.h"
 
 #include <kapp.h>
-#include <kmsgbox.h>
 #include <ktablistbox.h>
 #include <kbuttonbox.h>
 #include <qbuttongroup.h>

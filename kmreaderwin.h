@@ -173,7 +173,6 @@ protected:
   KMMessage *mMsg;
   KHTMLWidget *mViewer;
   QScrollBar *mSbVert, *mSbHorz;
-  QString mPicsDir;
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;

@@ -5,8 +5,8 @@
 #include "kmaddrbook.h"
 #include <assert.h>
 #include <kapp.h>
-#include <kmsgbox.h>
 #include <klocale.h>
+#include <qmessagebox.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
@@ -176,8 +176,9 @@ void KMAddrBookEditDlg::slotOk()
   }
   if(mAddrBook->store() == IO_FatalError)
     {
-      KMsgBox::message(0,i18n("KMail error"),
-		       i18n("Storing addressbook failed"));
+      QMessageBox::warning(0,i18n("KMail error"),
+			   i18n("Storing addressbook failed"),
+			   i18n("OK"));
     }
   accept();
 }

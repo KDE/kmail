@@ -5,7 +5,7 @@
 #include <ktablistbox.h>
 #include "kmfolder.h"
 
-class KDNDDropZone;
+class QDropEvent;
 class QTimer;
 
 #define KMFolderTreeInherited KTabListBox
@@ -33,7 +33,7 @@ protected slots:
   void doFolderListChanged();
 
   /** called when a drop occurs. */
-  void doDropAction(KDNDDropZone*);
+  void dropEvent(QDropEvent*);
 
   /** Updates the folder tree only if some folder lable has changed */
   void refresh(KMFolder*);
@@ -51,7 +51,6 @@ protected:
   virtual void resizeEvent(QResizeEvent*);
 
   KMFolderNodeList mList;
-  KDNDDropZone* mDropZone;
   QTimer* mUpdateTimer;
 };
 

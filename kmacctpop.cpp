@@ -23,6 +23,7 @@
 #include "kmacctfolder.h"
 #include "kmfiltermgr.h"
 #include <klocale.h>
+#include <qmessagebox.h>
 
 
 //-----------------------------------------------------------------------------
@@ -327,7 +328,7 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 		.arg(name())
 		.arg(aStage)
 		.arg(msg);
-  KMsgBox::message(0, caption, tmp);
+  QMessageBox::information(0, caption, tmp, i18n("OK"));
   //kbp->busy();
   aClient.Quit();
   return gotMsgs;

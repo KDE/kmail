@@ -6,6 +6,7 @@
 
 #include "kmaccount.h"
 #include <kapp.h>
+#include <qdialog.h>
 class QLineEdit;
 class QPushButton;
 class DwPopClient;

@@ -165,8 +165,7 @@ const QString KMMessagePart::iconName(void) const
   QString fileName, icon;
   QDir dir;
 
-  fileName = KApplication::kde_mimedir() + "/" + mType + "/" + 
-             mSubtype + ".kdelnk";
+  fileName = locate("mime", mType + "/" + mSubtype + ".desktop");
 
   if (dir.exists(fileName))
   {

@@ -8,7 +8,6 @@
 #include <kiconloader.h>
 #include <qtimer.h>
 #include <qpopupmenu.h>
-#include <drag.h>
 #include <klocale.h>
 #include <kglobal.h>
 
@@ -35,9 +34,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   mUpdateTimer = NULL;
 
-  mDropZone = new KDNDDropZone(this, DndRawData);
-  connect(mDropZone, SIGNAL(dropAction(KDNDDropZone*)),
-	  this, SLOT(doDropAction(KDNDDropZone*)));
+  setDropAccepted(true);
 
   connect(this, SIGNAL(highlighted(int,int)),
 	  this, SLOT(doFolderSelected(int,int)));
@@ -114,8 +111,7 @@ KMFolderTree::~KMFolderTree()
 
   disconnect(folderMgr, SIGNAL(changed()), this, SLOT(doFolderListChanged()));
 
-  if (mDropZone) delete mDropZone;
-  if (mUpdateTimer) delete mUpdateTimer;
+  delete mUpdateTimer;
 }
 
 
@@ -204,7 +200,7 @@ void KMFolderTree::doFolderListChanged()
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::doDropAction(KDNDDropZone* aDropZone)
+void KMFolderTree::dropEvent(QDropEvent * event)
 {
   KMFolder *toFld, *fromFld;
   KMDragData* dd;

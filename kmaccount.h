@@ -9,7 +9,6 @@
 #include <qlist.h>
 #include <qtimer.h>
 #include <qsignal.h>
-#include <kmsgbox.h>
 #include "kmnewiostatuswdg.h"
 
 class KMAcctMgr;

@@ -28,13 +28,11 @@
 #include <qpixmap.h>
 #include <qfile.h>
 #include <qtextstream.h>
-#include <kmsgbox.h>
 #include <kconfig.h>
 #include <kapp.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <kstdaccel.h>
-#include <knewpanner.h>
 #include <krun.h>
 
 #include <errno.h>
@@ -183,7 +181,7 @@ void KMMainWin::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::createWidgets(void)
 {
-  KNewPanner *pnrMsgView, *pnrMsgList, *pnrFldList;
+  QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
   QAccel *accel = new QAccel(this);
 
   // create panners
@@ -398,8 +396,8 @@ void KMMainWin::slotCheckMail()
 
  if(checkingMail) 
  {
-    KMsgBox::message(0,i18n("KMail error"),
-		     i18n("Already checking for mail!"));
+    QMessageBox::warning(0,i18n("KMail error"),
+			 i18n("Already checking for mail!"), i18n("OK"));
     return;
   }
     
@@ -432,8 +430,8 @@ void KMMainWin::slotCheckOneAccount(int item)
 
   if(checkingMail)
   {
-    KMsgBox::message(0,i18n("KMail error"),
-		     i18n("Already checking for mail!"));
+    QMessageBox::warning(0,i18n("KMail error"),
+			 i18n("Already checking for mail!"), i18n("OK"));
     return;
   }
     
@@ -524,7 +522,7 @@ void KMMainWin::slotRemoveFolder()
   str = i18n("Are you sure you want to remove the folder\n"
 			     "\"%1\", discarding it's contents ?")
 			     .arg(mFolder->label());
-  if ((KMsgBox::yesNo(this,i18n("Confirmation"),str, KMsgBox::DB_SECOND))==1)
+  if ((QMessageBox::information(this,i18n("Confirmation"),str, i18n("Yes"), i18n("No")))==0)
   {
     mHeaders->setFolder(NULL);
     mMsgView->clear();

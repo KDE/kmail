@@ -8,6 +8,7 @@
 #include <qtimer.h>
 #include <assert.h>
 #include <stdio.h>
+#include <kstddirs.h>
 
 //-----------------------------------------------------------------------------
 KBusyPtr :: KBusyPtr ()
@@ -115,9 +116,7 @@ bool KBusyPtr :: loadBitmap (QBitmap& bm, const QString& filename)
   }
   else 
   {
-    f = app->kde_datadir().copy();
-    f += "/kmail/pics/";
-    f += filename;
+    f = locate("data", "kmail/pics/" + filename);
   }
   rc = bm.load(f);
   if (!rc) printf ("ERROR: cannot load bitmap %s\n", f.data());

@@ -22,12 +22,10 @@
 #endif
 
 #include <assert.h>
-#include <drag.h>
 #include <kapp.h>
 #include <kiconloader.h>
 #include <kapp.h>
 #include <kmenubar.h>
-#include <kmsgbox.h>
 #include <kstatusbar.h>
 #include <ktablistbox.h>
 #include <ktoolbar.h>
@@ -52,6 +50,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <klocale.h>
+#include <drag.h>
 
 #if defined CHARSETS
 #include <kcharsets.h>

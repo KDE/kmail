@@ -4,7 +4,6 @@
 #include <qstrlist.h>
 #include "kmcomposewin.h"
 #include <kfiledialog.h>
-#include <drag.h>
 #include <qpalette.h>
 #include <qcolor.h>
 
