@@ -43,7 +43,7 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   
   QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox"), group );
   vlay->addWidget( radioButton1 );
-  QRadioButton *radioButton2 = new QRadioButton( i18n("&Pop3"), group );
+  QRadioButton *radioButton2 = new QRadioButton( i18n("&POP3"), group );
   vlay->addWidget( radioButton2 );
   QRadioButton *radioButton3 = new QRadioButton( i18n("&IMAP"), group );
   vlay->addWidget( radioButton3 );

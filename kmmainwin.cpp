@@ -3042,7 +3042,7 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );
-  (void) new KAction( i18n("Configure &Pop Filters..."), 0, this,
+  (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
  		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
 
   (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,

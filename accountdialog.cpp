@@ -458,7 +458,7 @@ void AccountDialog::makePopAccountPage()
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
 
   mPop.titleLabel = new QLabel( page );
-  mPop.titleLabel->setText( i18n("Account type: Pop Account") );
+  mPop.titleLabel->setText( i18n("Account type: POP Account") );
   QFont titleFont( mPop.titleLabel->font() );
   titleFont.setBold( true );
   mPop.titleLabel->setFont( titleFont );
@@ -539,7 +539,7 @@ void AccountDialog::makePopAccountPage()
   grid->addMultiCellWidget( hbox, 9, 9, 0, 1 );
   connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
 	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
-  QString msg = i18n("If you select this option, Pop Filters will be used to "
+  QString msg = i18n("If you select this option, POP Filters will be used to "
 		     "decide what to do with messages. You can then select "
 		     "to download, delete or keep them on the server." );
   QWhatsThis::add( mPop.filterOnServerCheck, msg );
