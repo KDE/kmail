@@ -1322,7 +1322,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     // convert CRLF to LF before writing text attachments to disk
     size = KMFolder::crlf2lf( data.data(), size );
   }
-  if( size == 0 || !kBytesToFile( data.data(), size, fname, false, false, false ) )
+  if( !kBytesToFile( data.data(), size, fname, false, false, false ) )
     return QString::null;
 
   mTempFiles.append( fname );
