@@ -602,11 +602,12 @@ QString KMFolder::idString() const
     return "";
   while ( folderNode->parent() )
     folderNode = folderNode->parent();
-  int pathLen = path().length() - folderNode->path().length();
-  QString relativePath = path().right( pathLen );
+  QString myPath = path();
+  int pathLen = myPath.length() - folderNode->path().length();
+  QString relativePath = myPath.right( pathLen );
   if (!relativePath.isEmpty())
     relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
-  QString escapedName = QString( name() );
+  QString escapedName = name();
   /* Escape [ and ] as they are disallowed for kconfig sections and that is
      what the idString is primarily used for. */
   escapedName.replace( "[", "%(" );
