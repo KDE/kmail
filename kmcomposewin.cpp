@@ -1376,7 +1376,7 @@ bool KMComposeWin::applyChanges(void)
     QCString body = breakLinesAndApplyCodec();
 
     qDebug( "***body = %s", body.data() );
-    
+
     if (body.isNull()) return FALSE;
 
     if (body.isEmpty()) body = "\n"; // don't crash
@@ -1398,7 +1398,8 @@ bool KMComposeWin::applyChanges(void)
     // create temporary bodyPart for editor text
     // (and for all attachments, if mail is to be singed and/or encrypted)
     bool earlyAddAttachments =
-      ((0 < mAtmList.count()) && ( doSign || doEncrypt ) && cryptPlug );
+      cryptPlug && (0 < mAtmList.count()) && (doSign || doEncrypt);
+
     KMMessagePart oldBodyPart;
     oldBodyPart.setTypeStr(   earlyAddAttachments ? "multipart" : "text" );
     oldBodyPart.setSubtypeStr(earlyAddAttachments ? "mixed"     : "plain");
@@ -1407,7 +1408,7 @@ bool KMComposeWin::applyChanges(void)
     //       used for signing *first*.
     if( doSign || doEncrypt )
       oldBodyPart.setContentDescription( doSign
-                                        ? "signed data"
+                                        ? (cryptPlug ? "signed data" : "clearsigned data")
                                         : "encrypted data" );
     oldBodyPart.setContentDisposition( "inline" );
 
@@ -1461,37 +1462,40 @@ bool KMComposeWin::applyChanges(void)
     QCString encodedBody; // only needed if signing and/or encrypting
 
     if( doSign || doEncrypt ) {
-      // get string representation of body part (including the attachments)
-      DwBodyPart* dwPart = mMsg->createDWBodyPart( &oldBodyPart );
-      dwPart->Assemble();
-      encodedBody = dwPart->AsString().c_str();
-      delete dwPart;
+      if( cryptPlug ) {
+        // get string representation of body part (including the attachments)
+        DwBodyPart* dwPart = mMsg->createDWBodyPart( &oldBodyPart );
+        dwPart->Assemble();
+        encodedBody = dwPart->AsString().c_str();
+        delete dwPart;
 
-      // manually add a boundary definition to the Content-Type header
-      if( !boundaryCStr.isEmpty() ) {
-        int boundPos = encodedBody.find( '\n' );
-        if( -1 < boundPos ) {
-          // insert new "boundary" parameter
-          QCString bStr( ";\n  boundary=\"" );
-          bStr += boundaryCStr;
-          bStr += "\"";
-          encodedBody.insert( boundPos, bStr );
+        // manually add a boundary definition to the Content-Type header
+        if( !boundaryCStr.isEmpty() ) {
+          int boundPos = encodedBody.find( '\n' );
+          if( -1 < boundPos ) {
+            // insert new "boundary" parameter
+            QCString bStr( ";\n  boundary=\"" );
+            bStr += boundaryCStr;
+            bStr += "\"";
+            encodedBody.insert( boundPos, bStr );
+          }
         }
-      }
 
-      // NOTE: the following code runs only for S/MIME
-      //
-      if( cryptPlug && (0 <= cryptPlug->libName().find( "smime", 0, false )) ) {
-        // replace simple LFs by CRLSs
-        // according to RfC 2633, 3.1.1 Canonicalization
-        int posLF = encodedBody.find( '\n' );
-        if(    ( 0 < posLF )
-            && ( '\r'  != encodedBody[posLF - 1] ) ) {
-          kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-          encodedBody = KMMessage::lf2crlf( encodedBody );
-          kdDebug(5006) << "                                                       done." << endl;
+        // NOTE: the following code runs only for S/MIME
+        //
+        if( 0 <= cryptPlug->libName().find( "smime", 0, false ) ) {
+          // replace simple LFs by CRLSs
+          // according to RfC 2633, 3.1.1 Canonicalization
+          int posLF = encodedBody.find( '\n' );
+          if(    ( 0 < posLF )
+              && ( '\r'  != encodedBody[posLF - 1] ) ) {
+            kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+            encodedBody = KMMessage::lf2crlf( encodedBody );
+            kdDebug(5006) << "                                                       done." << endl;
+          }
         }
-      }
+      } else
+        encodedBody = body;
     }
 
     // S/MIME multi part parts
@@ -1522,6 +1526,7 @@ bool KMComposeWin::applyChanges(void)
           if( bOk ) {
             if( newBodyPart.name().isEmpty() )
               newBodyPart.setName("signed message part");
+            newBodyPart.setCharset( oldBodyPart.charset() );
           } else
             KMessageBox::sorry(this, mErrorProcessingStructuringInfo );
         }
@@ -1529,7 +1534,7 @@ bool KMComposeWin::applyChanges(void)
       else {
         // we try calling the *old* build-in code for OpenPGP clearsigning
         Kpgp::Block block;
-        block.setText( body );
+        block.setText( encodedBody );
 
         // get PGP user id for the chosen identity
         const KMIdentity & ident =
@@ -1540,9 +1545,13 @@ bool KMComposeWin::applyChanges(void)
         bOk = block.clearsign( pgpUserId, mCharset );
 
         if( bOk ) {
-          newBodyPart.setBodyEncodedBinary( block.text() );
-          if( newBodyPart.name().isEmpty() )
-            newBodyPart.setName("clearsigned message part");
+          newBodyPart.setType(                       oldBodyPart.type() );
+          newBodyPart.setSubtype(                    oldBodyPart.subtype() );
+          newBodyPart.setCharset(                    oldBodyPart.charset() );
+          newBodyPart.setContentTransferEncodingStr( oldBodyPart.contentTransferEncodingStr() );
+          newBodyPart.setContentDescription(         oldBodyPart.contentDescription() );
+          newBodyPart.setContentDisposition(         oldBodyPart.contentDisposition() );
+          newBodyPart.setBodyEncoded( block.text() );
         }
         else
           KMessageBox::sorry(this,
@@ -1694,31 +1703,16 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
     }
   }
 
+
   if( bOk ) {
-    const KMMessagePart& ourFineBodyPart( ( doSign || doEncrypt )
+    const KMMessagePart& ourFineBodyPart( (doSign || doEncrypt)
                                           ? newBodyPart
                                           : oldBodyPart );
-    if( earlyAddAttachments || !mAtmList.count() ) {
 
-      if( ourFineBodyPart.originalContentTypeStr() ) {
-        msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
-        msg->headers().Parse();
-kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from originalContentTypeStr()" << endl;
-      } else {
-        msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
-kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from typeStr()/subtypeStr()" << endl;
-      }    
-      msg->setHeaderField( "Content-Transfer-Encoding",
-                            ourFineBodyPart.contentTransferEncodingStr() );
-      msg->setHeaderField( "Content-Description",
-                            ourFineBodyPart.contentDescription() );
-      msg->setHeaderField( "Content-Disposition",
-                            ourFineBodyPart.contentDisposition() );
-      msg->setBody( ourFineBodyPart.body() );
-kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body adjusted" << endl;
-    }
-    else
-    {
+    if( mAtmList.count() && !earlyAddAttachments ) {
+      // set the content type header
+      msg->headers().ContentType().FromString( "Multipart/Mixed" );
+kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type to Multipart/Mixed" << endl;
 //      msg->setBody( "This message is in MIME format.\n"
 //                    "Since your mail reader does not understand this format,\n"
 //                    "some or all parts of this message may not be legible." );
@@ -1729,7 +1723,27 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body ad
       KMMessagePart *msgPart;
       for( msgPart = mAtmList.first(); msgPart; msgPart=mAtmList.next() )
         msg->addBodyPart( msgPart );
+    } else {
+      if( ourFineBodyPart.originalContentTypeStr() ) {
+        msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
+        msg->headers().Parse();
+kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from originalContentTypeStr()" << endl;
+      } else {
+        msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
+kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from typeStr()/subtypeStr()" << endl;
+      }
+      msg->setCharset( ourFineBodyPart.charset() );
+      msg->setHeaderField( "Content-Transfer-Encoding",
+                            ourFineBodyPart.contentTransferEncodingStr() );
+      msg->setHeaderField( "Content-Description",
+                            ourFineBodyPart.contentDescription() );
+      msg->setHeaderField( "Content-Disposition",
+                            ourFineBodyPart.contentDisposition() );
+kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body adjusted" << endl;
+      // set body content
+      msg->setBody( ourFineBodyPart.body() );
     }
+
   }
   return bOk;
 }
