@@ -764,8 +764,8 @@ void KMFolderCachedImap::serverSyncInternal()
       mSyncState = SYNC_STATE_GET_ANNOTATIONS;
 
   case SYNC_STATE_GET_ANNOTATIONS:
-//#define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
-#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
+#define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
+//#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
