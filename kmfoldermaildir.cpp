@@ -31,6 +31,7 @@ using KMail::MaildirJob;
 #include <sys/types.h>
 #include <unistd.h>
 #include <assert.h>
+#include <limits.h>
 
 #ifndef isblank
 #  define isblank(x) ((x)==' '||(x)=='\t')
