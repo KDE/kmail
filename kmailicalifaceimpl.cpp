@@ -1132,8 +1132,8 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
 {
   if ( !mUseResourceIMAP )
     return;
-  kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
-                << ", " << contentsType << ")\n";
+//  kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
+//                << ", " << contentsType << ")\n";
 
   // The builtins can't change type
   if ( isStandardResourceFolder( folder ) )
@@ -1159,7 +1159,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     if ( contentsType == 0 )
         return;
 
-    kdDebug(5006) << "registering " << location << " as extra folder" << endl;
+    //kdDebug(5006) << "registering " << location << " as extra folder" << endl;
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
