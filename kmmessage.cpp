@@ -651,6 +651,7 @@ const QStrList KMMessage::headerAddrField(const QString aName) const
   if (aName.isEmpty()) return resultList;
   addrList = (DwAddressList*)&header.FieldBody((const char*)aName);
 
+  resultList.clear();
   for (addr=addrList->FirstAddress(); addr; addr=addr->Next())
   {
     resultList.append(decodeRFC1522String(addr->AsString().c_str()));
