@@ -10,6 +10,7 @@ class QTextCodec;
 class KIO::Job;
 class KMainWindow;
 class KProgressDialog;
+class KMFilter;
 class KMFolder;
 class KMFolderNode;
 class KMHeaders;
@@ -395,6 +396,41 @@ private:
 
   QCString mField;
   QString mValue;
+};
+
+
+class KMFilterActionCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMFilterActionCommand( QWidget *parent,
+			 const QPtrList<KMMsgBase> &msgList,
+			 KMFolder *folder,
+			 KMFilter *filter );
+
+private:
+  virtual void execute();
+
+  KMFilter *mFilter;
+};
+
+
+class KMMetaFilterActionCommand : public QObject
+{
+  Q_OBJECT
+
+public:
+  KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers, 
+			     KMMainWin *main );
+
+public slots:
+  void start();
+
+private:
+  KMFilter *mFilter;
+  KMHeaders *mHeaders;
+  KMMainWin *mMainWidget;
 };
 
 

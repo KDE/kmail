@@ -853,6 +853,52 @@ void KMFilterCommand::execute()
 }
 
 
+KMFilterActionCommand::KMFilterActionCommand( QWidget *parent,
+					      const QPtrList<KMMsgBase> &msgList,
+					      KMFolder *folder,
+					      KMFilter *filter )
+  : KMCommand( parent, msgList, folder ), mFilter( filter  )
+{
+}
+
+void KMFilterActionCommand::execute()
+{
+  QPtrList<KMMessage> msgList = retrievedMsgs();
+
+  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next())
+    kernel->filterMgr()->tempOpenFolder(msg->parent());
+
+  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+    msg->setTransferInProgress(false);
+
+    int filterResult = kernel->filterMgr()->process(msg, KMFilterMgr::Explicit,
+						    mFilter);
+    if (filterResult == 2) {
+      // something went horribly wrong (out of space?)
+	kernel->emergencyExit( i18n("Not enough free disk space." ));
+    }
+    msg->setTransferInProgress(true);
+  }
+  kernel->filterMgr()->cleanup();
+}
+
+
+KMMetaFilterActionCommand::KMMetaFilterActionCommand( KMFilter *filter,
+						      KMHeaders *headers,
+						      KMMainWin *main )
+    : QObject( main ),
+      mFilter( filter ), mHeaders( headers ), mMainWidget( main )
+{
+}
+
+void KMMetaFilterActionCommand::start()
+{
+  KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
+    *mHeaders->selectedMsgs(), mHeaders->folder(), mFilter);
+  filterCommand->start();
+}
+
+
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
   KMMsgBase *msgBase )
   : KMCommand( parent, msgBase )
