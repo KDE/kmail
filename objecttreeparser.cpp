@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     objecttreeparser.cpp
 
     KMail, the KDE mail client.
@@ -18,7 +18,7 @@
 // my header file
 #include "objecttreeparser.h"
 
-// other KMail headers 
+// other KMail headers
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "kmgroupware.h"
@@ -105,7 +105,7 @@ namespace KMail {
     if ( reader && !this->cssHelper() )
       mCSSHelper = reader->mCSSHelper;
   }
-  
+
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
     : mReader( other.mReader ),
       mCryptPlugWrapper( other.cryptPlugWrapper() ),
@@ -139,18 +139,18 @@ namespace KMail {
       myBody->Headers().Parse();
     }
 
-    if ( ( !myBody->Body().FirstBodyPart() || 
+    if ( ( !myBody->Body().FirstBodyPart() ||
            myBody->Body().AsString().length() == 0 ) &&
          startNode.dwPart() &&
          startNode.dwPart()->Body().Message() &&
-         startNode.dwPart()->Body().Message()->Body().FirstBodyPart() ) 
+         startNode.dwPart()->Body().Message()->Body().FirstBodyPart() )
     {
       // if encapsulated imap messages are loaded the content-string is not complete
       // so we need to keep the child dwparts by copying them to the new dwpart
       kdDebug(5006) << "copy parts" << endl;
-      myBody->Body().AddBodyPart( 
+      myBody->Body().AddBodyPart(
           startNode.dwPart()->Body().Message()->Body().FirstBodyPart() );
-      myBody->Body().FromString( 
+      myBody->Body().FromString(
           startNode.dwPart()->Body().Message()->Body().FirstBodyPart()->Body().AsString() );
     }
 
@@ -260,7 +260,7 @@ namespace KMail {
 	     && node->type() != DwMime::kTypeText )
 	  asIcon = true;
 	if ( asIcon ) {
-	  if ( attachmentStrategy() != AttachmentStrategy::hidden() 
+	  if ( attachmentStrategy() != AttachmentStrategy::hidden()
 	       || showOnlyOneMimePart() )
 	    writePartIcon( &node->msgPart(), node->nodeId() );
 	} else if ( processResult.isImage() ) {
@@ -599,7 +599,7 @@ namespace KMail {
       ObjectTreeParser otp( mReader, cryptPlug );
       otp.parseObjectTree( data );
       mResultString += otp.resultString();
-	
+
       if ( mReader )
         htmlWriter()->queue( writeSigstatFooter( messagePart ) );
     }
@@ -812,49 +812,49 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return false;
   }
 
-  bool ObjectTreeParser::processTextVCalSubtype( partNode * curNode, ProcessResult & ) {
-    bool bDone = false;
+  bool ObjectTreeParser::processTextVCalSubtype( partNode * curNode,
+                                                 ProcessResult & result ) {
+    // It doesn't make sense to display raw vCals inline
+    result.setNeverDisplayInline( true );
+
+    // For special treatment of invitations etc. we need a reader window
+    if ( !mReader )
+      return false;
+
     DwMediaType ct = curNode->dwPart()->Headers().ContentType();
-    DwParameter * param = ct.FirstParameter();
-    QCString method( "" );
-    while( param && !bDone ) {
-      if ( DwStrcasecmp(param->Attribute(), "method") == 0 ){
-	// Method parameter found, here we are!
-	bDone = true;
-	method = QCString( param->Value().c_str() ).lower();
-	kdDebug(5006) << "         method=" << method << endl;
+    for( DwParameter * param = ct.FirstParameter(); param;
+         param = param->Next() ) {
+      if ( DwStrcasecmp( param->Attribute(), "method" ) == 0 ) {
+        QCString method = QCString( param->Value().c_str() ).lower();
+        kdDebug(5006) << "         method=" << method << endl;
 	if ( method == "request" || // an invitation to a meeting *or*
-	    method == "reply" ||   // a reply to an invitation we sent
-	    method == "cancel" ) { // Outlook uses this when cancelling
-	  QCString vCalC( curNode->msgPart().bodyDecoded() );
-	  QString vCal( curNode->msgPart().bodyToUnicode() );
-	  if ( mReader ){
-	    QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
-	    QString fname( byteArrayToTempFile( mReader,
-						"groupware",
-						"vCal_request.raw",
-						theBody ) );
-	    if ( !fname.isEmpty() && !showOnlyOneMimePart() ){
-	      QString prefix;
-	      QString postfix;
-	      // We let KMGroupware do most of our 'print formatting':
-	      // generates text preceding to and following to the vCal
-	      if ( kmkernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
-						    vCal, fname, prefix,
-						    postfix ) )
-	      {
-		htmlWriter()->queue( prefix );
-		htmlWriter()->queue( quotedHTML( vCal ) );
-		htmlWriter()->queue( postfix );
-	      }
-	    }
+             method == "reply" ||   // a reply to an invitation we sent
+             method == "cancel" ) { // Outlook uses this when cancelling
+          QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
+          QString fname( byteArrayToTempFile( mReader,
+                                              "groupware",
+                                              "vCal_request.raw",
+                                              theBody ) );
+          if ( !fname.isEmpty() && !showOnlyOneMimePart() ) {
+            QString vCal( curNode->msgPart().bodyToUnicode() );
+            QString prefix;
+            QString postfix;
+            // We let KMGroupware do most of our 'print formatting':
+            // generates text preceding to and following to the vCal
+            if ( kmkernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
+                                                    vCal, fname, prefix,
+                                                    postfix ) ) {
+              htmlWriter()->queue( prefix );
+              htmlWriter()->queue( quotedHTML( vCal ) );
+              htmlWriter()->queue( postfix );
+              return true;
+            }
 	  }
-	  mResultString = vCalC;
 	}
+        return false; // we found a "method" but we couldn't handle it
       }
-      param = param->Next();
     }
-    return bDone;
+    return false;
   }
 
   bool ObjectTreeParser::processTextVCardSubtype( partNode *, ProcessResult & result ) {
@@ -1056,7 +1056,7 @@ namespace KMail {
       htmlWriter()->queue( "</td></tr></table>" );
 
     mIsFirstTextPart = false;
-      
+
     return true;
   }
 
@@ -1347,7 +1347,7 @@ namespace KMail {
       bDone = true;
     }
     setCryptPlugWrapper( oldUseThisCryptPlug );
-    return bDone;    
+    return bDone;
   }
 
 
@@ -1691,7 +1691,7 @@ namespace KMail {
     QString href = fileName.isEmpty() ?
       "part://" + QString::number( partNum + 1 ) :
       "file:" + KURL::encode_string( fileName ) ;
-    
+
     QString iconName;
     if( inlineImage )
       iconName = href;
