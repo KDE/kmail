@@ -1613,7 +1613,8 @@ void KMMainWidget::slotSendQueued()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueuedVia( int item )
 {
-  QString customTransport = mSendMenu->text( item );
+  QStringList availTransports= KMail::TransportManager::transportNames();
+  QString customTransport = availTransports[ item ];
 
   kmkernel->msgSender()->sendQueued( customTransport );
 }
