@@ -8,6 +8,7 @@
 #include "kmfoldermbox.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
+#include "kbusyptr.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -89,6 +90,46 @@ int KMFolderMbox::open()
   {
     if (isIndexOutdated()) // test if contents file has changed
     {
+      bool busy = kernel->kbp()->isBusy();
+      if (busy) kernel->kbp()->idle();
+      if( 0 ) {
+        // #### FIXME: Either make the link work or remove the following code.
+        //             It's only there to get translated.
+      KMessageBox::information( 0,
+                                i18n("<qt><p>The index of folder '%1' seems "
+                                     "to be out of date. To prevent message "
+                                     "corruption the index will be "
+                                     "regenerated. As a result deleted "
+                                     "messages might reappear and status "
+                                     "flags might be lost.</p>"
+                                     "<p>Please read the corresponding entry "
+                                     "in the <a href=\"%2\">FAQ section of the manual of "
+                                     "KMail</a> for "
+                                     "information about how to prevent this "
+                                     "problem from happening again.</p></qt>")
+                                .arg(name())
+                                .arg("help:/kmail/faq.html"),
+                                i18n("Index Out of Date"),
+                                "dontshowIndexRegenerationWarning");
+      }
+      else {
+      KMessageBox::information( 0,
+                                i18n("<qt><p>The index of folder '%1' seems "
+                                     "to be out of date. To prevent message "
+                                     "corruption the index will be "
+                                     "regenerated. As a result deleted "
+                                     "messages might reappear and status "
+                                     "flags might be lost.</p>"
+                                     "<p>Please read the corresponding entry "
+                                     "in the FAQ section of the manual of "
+                                     "KMail for "
+                                     "information about how to prevent this "
+                                     "problem from happening again.</p></qt>")
+                                .arg(name()),
+                                i18n("Index Out of Date"),
+                                "dontshowIndexRegenerationWarning");
+      }
+      if (busy) kernel->kbp()->busy();
       QString str;
       mIndexStream = NULL;
       str = i18n("Folder `%1' changed. Recreating index.")
