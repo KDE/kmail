@@ -3214,6 +3214,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
     } while(!s.isEmpty());
     
     for(int x = 0; x < mFolder->count(); x++) {	    //cleanup
+	if (!sortCache[x]) { // not yet there?
+	    continue;
+	}
+
 	if (!sortCache[x]->item()) { // we missed a message, how did that happen ?
             kdDebug(5006) << "KMHeaders::readSortOrder - msg could not be threaded. " 
                   << endl << "Please talk to your threading counselor asap. " <<  endl;
