@@ -141,7 +141,6 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   {
     // FIXME: mkdir can fail!
     mkdir(QFile::encodeName(mBasePath), 0700);
-    mDir.setPath(mBasePath);
   }
 
   mDir.setPath(mBasePath);
