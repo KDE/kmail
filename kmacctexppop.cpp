@@ -9,6 +9,7 @@
 #include "kmacctexppop.h"
 
 #include "kmbroadcaststatus.h"
+#include "progressmanager.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmpopfiltercnfrmdlg.h"
@@ -275,8 +276,8 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 void KMAcctExpPop::slotAbortRequested()
 {
   if (stage == Idle) return;
-  disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotAbortRequested()));
+  disconnect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+           this, SLOT( slotAbortRequested() ) );
   stage = Quit;
   if (job) job->kill();
   job = 0;
@@ -315,12 +316,15 @@ void KMAcctExpPop::startJob() {
   headersOnServer.clear();
   headers = false;
   indexOfCurrentMsg = -1;
-  KMBroadcastStatus::instance()->reset();
-  KMBroadcastStatus::instance()->setStatusProgressEnable( "P" + mName, true );
-  KMBroadcastStatus::instance()->setStatusMsg(
-	i18n("Preparing transmission from \"%1\"...").arg(mName));
-  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-          this, SLOT(slotAbortRequested()));
+
+  Q_ASSERT( !mMailCheckProgressItem );
+  mMailCheckProgressItem = KMail::ProgressManager::createProgressItem(
+    "MailCheck" + mName,
+    mName,
+    i18n("Preparing transmission from \"%1\"...").arg(mName),
+    true);
+  connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+           this, SLOT( slotAbortRequested() ) );
 
   numBytes = 0;
   numBytesRead = 0;
@@ -607,16 +611,15 @@ void KMAcctExpPop::slotJobFinished() {
     if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
     stage = Idle;
-    KMBroadcastStatus::instance()->setStatusProgressPercent( "P" + mName, 100 );
-    int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
-      indexOfCurrentMsg : idsOfMsgs.count();
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-      numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer );
-    KMBroadcastStatus::instance()->setStatusProgressEnable( "P" + mName,
-                                                            false );
-    KMBroadcastStatus::instance()->reset();
-
-    checkDone((numMessages > 0), numMessages);
+    if( mMailCheckProgressItem ) { // do this only once...
+      bool canceled = KMBroadcastStatus::instance()->abortRequested() || mMailCheckProgressItem->canceled();
+      int numMessages = canceled ? indexOfCurrentMsg : idsOfMsgs.count();
+      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+        numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer );
+      mMailCheckProgressItem->setComplete();
+      mMailCheckProgressItem = 0;
+      checkDone((numMessages > 0), numMessages);
+    }
   }
 }
 
@@ -707,10 +710,10 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 	  .arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024)
 	  .arg(numBytesToRead/1024).arg(mHost);
       }
-      KMBroadcastStatus::instance()->setStatusMsg( msg );
-      KMBroadcastStatus::instance()->setStatusProgressPercent("P" + mName,
+      mMailCheckProgressItem->setStatus( msg );
+      mMailCheckProgressItem->setProgress(
         (numBytesToRead <= 100) ? 50  // We never know what the server tells us
-        // This way of dividing is reqired for > 21MB of mail
+        // This way of dividing is required for > 21MB of mail
         : (numBytesRead / (numBytesToRead / 100)) );
     }
     return;
