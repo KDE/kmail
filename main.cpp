@@ -38,6 +38,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kstddirs.h>
+#include <kmessagebox.h>
 //--- Sven's pseudo IPC&locking end ---
  // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
