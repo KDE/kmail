@@ -396,7 +396,7 @@ bool KMMsgBase::isIgnored(void) const
 }
 
 //-----------------------------------------------------------------------------
-static const QCString KMMsgBase::statusToStr(KMMsgStatus status)
+const QCString KMMsgBase::statusToStr(KMMsgStatus status)
 {
   QCString sstr;
   if (status & KMMsgStatusNew) sstr += 'N';
