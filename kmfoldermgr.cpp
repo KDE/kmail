@@ -27,7 +27,6 @@
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
-#include "undostack.h"
 #include "kmmsgdict.h"
 #include "folderstorage.h"
 #include "renamejob.h"
@@ -49,8 +48,6 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  if  (kmkernel->undoStack())
-    kmkernel->undoStack()->clear(); // Speed things up a bit.
   mBasePath = QString::null;
 }
 
