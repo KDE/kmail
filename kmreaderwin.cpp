@@ -455,6 +455,7 @@ void KMReaderWin::displayAboutPage()
   mViewer->begin(location);
   QTextCodec *codec = QTextCodec::codecForName(KGlobal::locale()->charset());
   if (codec) mViewer->setCharset(codec->name(), true);
+    else mViewer->setCharset(KGlobal::locale()->charset(), true);
   mViewer->write(content.arg(
     i18n("<h2>Welcome to KMail 1.2</h2><p>KMail is an email client for the K "
     "Desktop Environment. It is designed to be fully compatible with Internet "
