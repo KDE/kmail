@@ -42,6 +42,7 @@ class QTimer;
 class KProgress;
 class KPassivePopup;
 class KMMainWin;
+class KMainWindow;
 class KMGroupware;
 class KMailICalIfaceImpl;
 class CryptPlugWrapperList;
@@ -180,7 +181,7 @@ public:
   QByteArray getCollectedStdErr(KProcess*);
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
-  KMMainWin* mainWin();
+  KMainWindow* mainWin();
 
 public slots:
   //Save contents of all open composer widnows to ~/dead.letter

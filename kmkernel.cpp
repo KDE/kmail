@@ -1337,7 +1337,7 @@ KMMsgIndex *KMKernel::msgIndex()
     return the_msgIndex;
 }
 
-KMMainWin* KMKernel::mainWin()
+KMainWindow* KMKernel::mainWin()
 {
   KMainWindow *kmWin = 0;
 
@@ -1347,7 +1347,7 @@ KMMainWin* KMKernel::mainWin()
       if (kmWin->isA("KMMainWin")) break;
   }
   if (kmWin) {
-    return (KMMainWin *) kmWin;
+    return kmWin;
   } else {
     // There is not a single KMMainWin. Create one. Should
     // not happen.
