@@ -661,6 +661,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
 
   msg->initHeader(headerField("X-KMail-Identity"));
+  if (!headerField("X-KMail-Transport").isEmpty())
+    msg->setHeaderField("X-KMail-Transport", headerField("X-KMail-Transport"));
 
   mailingListStr = headerField("X-Mailing-List");
   replyToStr = replyTo();

@@ -94,6 +94,9 @@ public:
 
   /** sets a status msg and emits statusMsg() */  
   void setStatusMsg(const QString&);
+
+  /** returns current outgoing mail settings in string format */
+  QString transportString(void) const;
   
 signals:
   /** Emitted regularly to inform the user of what is going on */
@@ -114,18 +117,29 @@ protected:
       Returns TRUE if everything is Ok. */
   virtual bool settingsOk(void) const;
 
+  /** Save mMethod, mMail, mSmtpHost, and mSmtpPort */
+  virtual void saveTransportSettings(void);
+
+  /** Restore saved mMethod, mMail, mSmtpHost, and mSmtpPort */
+  virtual void restoreTransportSettings(void);
+
+  /** Parse protocol '://' (host port? | mailer) string and 
+      set transport settings */
+  virtual KMSendProc* parseTransportFromString(QString transport); 
+
 private:
-  Method mMethod;
+  Method mMethod, mOldMethod;
   bool mSendImmediate, mSendQuotedPrintable;
-  QString mMailer;
-  QString mSmtpHost;
-  unsigned short int mSmtpPort;
+  QString mMailer, mOldMailer;
+  QString mSmtpHost, mOldSmtpHost;
+  unsigned short int mSmtpPort, mOldSmtpPort;
   QString mPrecommand;
 
   bool mSentOk;
   QString mErrorMsg;
   KMIOStatusDlg* mSendDlg;
-  KMSendProc* mSendProc;
+  KMSendProc *mSendProc, *mMsgSendProc;
+  QString mMethodStr;
   bool mSendProcStarted;
   bool mSendInProgress;
   KMMessage * mCurrentMsg;

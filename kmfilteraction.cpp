@@ -502,6 +502,69 @@ const QString KMFilterActionIdentity::argsAsString(void) const
 
 
 //=============================================================================
+// Specify mail transport (smtp server) to be used when replying to a message
+//=============================================================================
+class KMFilterActionTransport: public KMFilterAction
+{
+public:
+  KMFilterActionTransport();
+  virtual const QString label(void) const;
+  virtual int process(KMMessage* msg, bool& stopIt);
+  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
+  virtual void applyParamWidgetValue(QWidget* paramWidget);
+  virtual void argsFromString(const QString argsStr);
+  virtual const QString argsAsString(void) const;
+  static KMFilterAction* newAction(void);
+protected:
+  QString mTransport;
+};
+
+KMFilterAction* KMFilterActionTransport::newAction(void)
+{
+  return (new KMFilterActionTransport);
+}
+
+const QString KMFilterActionTransport::label(void) const
+{
+  return i18n("set transport");
+}
+
+KMFilterActionTransport::KMFilterActionTransport(): KMFilterAction("set transport")
+{
+  mTransport = kernel->msgSender()->transportString();
+}
+
+int KMFilterActionTransport::process(KMMessage* msg, bool& )
+{
+  msg->setHeaderField( "X-KMail-Transport", mTransport );
+  return -1;
+}
+
+QWidget* KMFilterActionTransport::createParamWidget(KMGFilterDlg* aParent)
+{
+  QLineEdit* edt;
+  edt = aParent->createEdit(mTransport);
+  return edt;
+}
+ 
+void KMFilterActionTransport::applyParamWidgetValue(QWidget* aParamWidget)
+{
+  QLineEdit* w = (QLineEdit*)aParamWidget;
+  mTransport = w->text();
+}
+
+void KMFilterActionTransport::argsFromString(const QString argsStr)
+{
+  mTransport = argsStr;
+}
+
+const QString KMFilterActionTransport::argsAsString(void) const
+{
+  return mTransport;
+}
+
+
+//=============================================================================
 //
 //   Filter  Action  Dictionary
 //
@@ -510,6 +573,8 @@ void KMFilterActionDict::init(void)
 {
   insert("set identity", i18n("set identity"),
 	 KMFilterActionIdentity::newAction);
+  insert("set transport", i18n("set transport"),
+	 KMFilterActionTransport::newAction);
   insert("transfer", i18n("transfer"),
 	 KMFilterActionMove::newAction);
   insert("skip rest", i18n("skip rest"),

@@ -52,9 +52,9 @@
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
 {
-//  initMetaObject();
   mSendDlg = NULL;
   mSendProc = NULL;
+  mMsgSendProc = NULL;
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;
   mCurrentMsg = NULL;
@@ -62,7 +62,6 @@ KMSender::KMSender()
   quitOnDone = false;
   labelDialog = new QDialog(0);
   label = new QLabel(labelDialog);
-  //label->setAutoResize(true);
   labelDialog->setCaption("KMail");
   labelDialog->setIcon(kapp->miniIcon());
 }
@@ -272,6 +271,16 @@ void KMSender::doSendMsg()
       mCurrentMsg = NULL;
     }
   
+  // If we have been using a message specific transport, lose it now.
+  // Would be more efficient to only do this when the mail transport
+  // (server or port) has changed
+  if (mMsgSendProc) {
+    mMsgSendProc->finish();
+    delete mMsgSendProc;
+    mMsgSendProc = 0;
+    restoreTransportSettings();
+    mSendProcStarted = FALSE;
+  }
 
   // See if there is another queued message
   mCurrentMsg = kernel->outboxFolder()->getMsg(0);
@@ -302,14 +311,45 @@ void KMSender::doSendMsg()
       }
 
     setStatusMsg(i18n("Initiating sender process..."));
+  }
+
+  mMethodStr = transportString();
+
+  QString msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
+  if (!msgTransport.isEmpty()  && (msgTransport != mMethodStr)) {
+    if (mSendProcStarted && mSendProc) {
+      mSendProc->finish();
+      mSendProcStarted = FALSE;
+    }
+
+    saveTransportSettings();
+
+    mMsgSendProc = parseTransportFromString(mCurrentMsg->headerField("X-KMail-Transport"));
+    mMethodStr = transportString();
+
+    if (!mMsgSendProc || !mMsgSendProc->start()) {
+      if (mMsgSendProc) {
+	mMsgSendProc->finish();
+	delete mMsgSendProc;
+      }
+      else
+	setStatusMsg(i18n("Unrecognised transport protocol, could not send message."));
+      mMsgSendProc = 0;
+      mSendProcStarted = false;
+      restoreTransportSettings();
+      cleanup();
+      return;
+    }
+    connect(mMsgSendProc,SIGNAL(idle()),SLOT(slotIdle()));
+  } 
+  else if (!mSendProcStarted)
     if (!mSendProc->start())
     {
       cleanup();
       return;
     }
-    mSendProcStarted = TRUE;
-    mSendInProgress = TRUE;
-  }
+  mSendProcStarted = TRUE;
+  mSendInProgress = TRUE;
 
   // remove header fields that shall not be included in sending
   mCurrentMsg->removeHeaderField("Status");
@@ -318,13 +358,25 @@ void KMSender::doSendMsg()
   mCurrentMsg->removeHeaderField("X-KMail-Transport");
 
   // start sending the current message
-  mSendProc->preSendInit();
-  setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
-  if (!mSendProc->send(mCurrentMsg))
-  {
-    cleanup();
-    setStatusMsg(i18n("Failed to send (some) queued messages."));
-    return;
+
+  if (mMsgSendProc) {
+    mMsgSendProc->preSendInit();
+    setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
+    if (!mMsgSendProc->send(mCurrentMsg))
+      {
+	cleanup();
+	setStatusMsg(i18n("Failed to send (some) queued messages."));
+	return;
+      }
+  } else {
+    mSendProc->preSendInit();
+    setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
+    if (!mSendProc->send(mCurrentMsg))
+      {
+	cleanup();
+	setStatusMsg(i18n("Failed to send (some) queued messages."));
+	return;
+      }
   }
   // Do *not* add code here, after send(). It can happen that this method
   // is called recursively if send() emits the idle signal directly.
@@ -370,23 +422,37 @@ void KMSender::slotIdle()
 {
   assert(mSendProc != NULL);
   //assert(!mSendProc->sending());
-  if (mSendProc->sendOk())
-  {
+  if (mMsgSendProc) {
+    if (mMsgSendProc->sendOk()) {
+      doSendMsg();
+      return;
+    }
+  } else if (mSendProc->sendOk()) {
     // sending succeeded
     doSendMsg();
+    return;
   }
-  else
-  {
-    // sending of message failed
-    QString msg;
-    msg = i18n("Sending failed:");
-    msg += '\n';
-    msg += mSendProc->message();
-    msg += i18n("\nThe message will stay in the 'Outbox' folder and will be resent.\n");
-    msg += i18n("Please remove it from there if you do not want the message to \nbe resent\n");
-    KMessageBox::information(0,msg);
-    cleanup();
+
+
+  // sending of message failed
+  QString msg;
+  msg = i18n("Sending failed:");
+  msg += '\n';
+  msg += mSendProc->message();
+  msg += i18n("\nThe message will stay in the 'outbox' folder and will be resent.\n");
+  msg += i18n("Please remove it from there if you do not want the message to \nbe resent\n");
+  msg += i18n("\nThe following transport protocol was used:\n  ");
+  msg += mMethodStr;
+  KMessageBox::information(0,msg);
+  
+  if (mMsgSendProc) {
+    mMsgSendProc->finish();
+    delete mMsgSendProc;
+    mMsgSendProc = 0;
+    mSendProcStarted = false;
+    restoreTransportSettings();
   }
+  cleanup();
 }
 
 //-----------------------------------------------------------------------------
@@ -429,6 +495,64 @@ void KMSender::setSmtpPort(unsigned short int aSmtpPort)
 {
   mSmtpPort = aSmtpPort;
 }
+
+
+//-----------------------------------------------------------------------------
+void KMSender::saveTransportSettings(void)
+{
+  mOldMethod = mMethod;
+  mOldMailer = mMailer;
+  mOldSmtpHost = mSmtpHost;
+  mOldSmtpPort = mSmtpPort;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSender::restoreTransportSettings(void)
+{
+  mMethod = mOldMethod;
+  mMailer = mOldMailer;
+  mSmtpHost = mOldSmtpHost;
+  mSmtpPort = mOldSmtpPort;
+}
+
+
+//-----------------------------------------------------------------------------
+KMSendProc* KMSender::parseTransportFromString(QString transport)
+{
+  if (transport.left(7) == "smtp://") { // to i18n or not to i18n?
+    mMethod = smSMTP;
+    QString serverport = transport.mid(7);
+    QString server = serverport;
+    QString port = "25";
+    int colon = serverport.find(":");
+    if (colon != -1) {
+      server = serverport.left(colon);
+      port = serverport.mid(colon + 1);
+    }
+    mSmtpHost = server;
+    mSmtpPort = port.toInt();
+    return new KMSendSMTP(this);
+  }
+  else if (transport.left(7) == "file://") {
+    mMethod = smMail;
+    mMailer = transport.mid(7);
+    return new KMSendSendmail(this);
+  }
+  else return 0;
+}
+
+//-----------------------------------------------------------------------------
+QString KMSender::transportString(void) const
+{
+  if (mMethod == smSMTP)
+    return QString("smtp://%1:%2").arg(mSmtpHost).arg(mSmtpPort);
+  else if (mMethod == smMail)
+    return QString("file://%1").arg(mMailer);
+  else
+    return "";
+}
+
 
 
 //=============================================================================
@@ -725,7 +849,6 @@ bool KMSendSMTP::start(void)
   replyCode = mClient->Helo(); // Send HELO command
   smtpDebug("HELO");
   if (replyCode != 250) return smtpFailed("HELO", replyCode);
-
   return TRUE;
 }
 
