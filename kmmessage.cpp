@@ -45,6 +45,7 @@
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
+#include <ktextbrowser.h>
 #include <qmultilineedit.h>
 #endif
 
@@ -2424,23 +2425,21 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixe
     kernel->networkCodec()->toUnicode(asString());
 
 #if ALLOW_GUI
-  QMultiLineEdit *edt;
+  KTextBrowser *browser = new KTextBrowser();
+  browser->setTextFormat( Qt::PlainText );
 
-  edt = new QMultiLineEdit;
-  KWin::setIcons(edt->winId(), kapp->icon(), kapp->miniIcon());
-  if (!aCaption.isEmpty()) edt->setCaption(aCaption);
+  KWin::setIcons(browser->winId(), kapp->icon(), kapp->miniIcon());
+  if (!aCaption.isEmpty()) browser->setCaption(aCaption);
 
-  edt->setTextFormat(Qt::PlainText);
-  edt->setText(str);
+  browser->setText(str);
   if (fixedfont)
-    edt->setFont(KGlobalSettings::fixedFont());
-  edt->setReadOnly(TRUE);
+    browser->setFont(KGlobalSettings::fixedFont());
 
   // Well, there is no widget to be seen here, so we have to use QCursor::pos()
   int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
-  edt->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
+  browser->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
 	      2*QApplication::desktop()->screenGeometry(scnum).height()/3);
-  edt->setCursorPosition(0, 0);  edt->show();
+  browser->show();
 
 #else //not ALLOW_GUI
   kdDebug(5006) << "Message source: " << (aCaption.isEmpty() ? "" : (const char*)aCaption) << "\n" << str << "\n--- end of message ---" << endl;
