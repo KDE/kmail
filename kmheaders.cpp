@@ -1673,6 +1673,9 @@ void KMHeaders::setCurrentMsg(int cur)
 //-----------------------------------------------------------------------------
 void KMHeaders::setSelected( QListViewItem *item, bool selected )
 {
+  if ( !item || item->isSelected() == selected )
+    return;
+
   KMHeadersInherited::setSelected( item, selected );
   // If the item is the parent of a closed thread recursively select
   // children .
