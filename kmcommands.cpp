@@ -26,6 +26,8 @@
 // The type of async operation supported by KMCommand is retrieval
 // of messages from an IMAP server.
 
+#include <errno.h>
+
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
