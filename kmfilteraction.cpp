@@ -547,18 +547,84 @@ const QString KMFilterActionTransport::argsAsString(void) const
 
 
 //=============================================================================
+// Set the Reply-to header in a message
+//=============================================================================
+class KMFilterActionReplyTo: public KMFilterAction
+{
+public:
+  KMFilterActionReplyTo();
+  virtual const QString label(void) const;
+  virtual int process(KMMessage* msg, bool& stopIt);
+  virtual QWidget* createParamWidget(KMGFilterDlg* parent);
+  virtual void applyParamWidgetValue(QWidget* paramWidget);
+  virtual void argsFromString(const QString argsStr);
+  virtual const QString argsAsString(void) const;
+  static KMFilterAction* newAction(void);
+protected:
+  QString mReplyTo;
+};
+
+KMFilterAction* KMFilterActionReplyTo::newAction(void)
+{
+  return (new KMFilterActionReplyTo);
+}
+
+const QString KMFilterActionReplyTo::label(void) const
+{
+  return i18n("set Reply-To");
+}
+
+KMFilterActionReplyTo::KMFilterActionReplyTo(): KMFilterAction("set Reply-To")
+{
+  mReplyTo = "";
+}
+
+int KMFilterActionReplyTo::process(KMMessage* msg, bool& )
+{
+  msg->setHeaderField( "Reply-To", mReplyTo );
+  return -1;
+}
+
+QWidget* KMFilterActionReplyTo::createParamWidget(KMGFilterDlg* aParent)
+{
+  QLineEdit* edt;
+  edt = aParent->createEdit(mReplyTo);
+  return edt;
+}
+
+void KMFilterActionReplyTo::applyParamWidgetValue(QWidget* aParamWidget)
+{
+  QLineEdit* w = (QLineEdit*)aParamWidget;
+  mReplyTo = w->text();
+}
+
+void KMFilterActionReplyTo::argsFromString(const QString argsStr)
+{
+  mReplyTo = argsStr;
+}
+
+const QString KMFilterActionReplyTo::argsAsString(void) const
+{
+  return mReplyTo;
+}
+
+
+
+//=============================================================================
 //
 //   Filter  Action  Dictionary
 //
 //=============================================================================
 void KMFilterActionDict::init(void)
 {
+  insert("transfer", i18n("transfer"),
+	 KMFilterActionMove::newAction);
   insert("set identity", i18n("set identity"),
 	 KMFilterActionIdentity::newAction);
   insert("set transport", i18n("set transport"),
 	 KMFilterActionTransport::newAction);
-  insert("transfer", i18n("transfer"),
-	 KMFilterActionMove::newAction);
+  insert("set Reply-To", i18n("set Reply-To"),
+	 KMFilterActionReplyTo::newAction);
   insert("forward", i18n("forward to"),
          KMFilterActionForward::newAction);
   insert("execute", i18n("execute"),
