@@ -130,8 +130,10 @@ public:
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
   void selectFolder( QString folder );
+  int timeOfLastMessageCountChange() const;
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
   int viewMessage( const KURL & messageFile );
+
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }
@@ -263,6 +265,11 @@ public:
 
   bool canQueryClose();
 
+  /**
+   * Called by the folder tree if the count of unread/total messages changed.
+   */
+  void messageCountChanged();
+
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
@@ -349,6 +356,11 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
+
+  // the time of the last change of the unread or total count of a folder;
+  // this can be queried via DCOP in order to determine whether the counts
+  // need to be updated (e.g. in the Summary in Kontact)
+  int mTimeOfLastMessageCountChange;
 
   // KIMProxy provides access to up to date instant messaging presence data
   ::KIMProxy *mKIMProxy;

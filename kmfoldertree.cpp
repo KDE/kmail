@@ -931,7 +931,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
   }
   if (fti->folder() &&
-      (fti->folder()->folderType() == KMFolderTypeImap || 
+      (fti->folder()->folderType() == KMFolderTypeImap ||
        fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
     folderMenu->insertSeparator();
@@ -1474,6 +1474,8 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
     fti->setNeedsRepaint( true );
     refresh();
   }
+  // tell the kernel that one of the counts has changed
+  kmkernel->messageCountChanged();
 }
 
 void KMFolderTree::updatePopup() const

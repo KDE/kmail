@@ -1728,4 +1728,14 @@ bool KMKernel::canQueryClose()
   return true;
 }
 
+void KMKernel::messageCountChanged()
+{
+  mTimeOfLastMessageCountChange = ::time( 0 );
+}
+
+int KMKernel::timeOfLastMessageCountChange() const
+{
+  return mTimeOfLastMessageCountChange;
+}
+
 #include "kmkernel.moc"

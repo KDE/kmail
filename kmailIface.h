@@ -97,8 +97,12 @@ k_dcop:
   virtual DCOPRef getFolder( const QString& vpath ) =0;
   virtual void selectFolder( QString folder ) =0;
 
+  virtual int timeOfLastMessageCountChange() const =0;
+
 k_dcop_signals:
   void unreadCountChanged();
+
+  void unreadCountChanged( const QString& folderURL, int numUnread );
 
 k_dcop_hidden:
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
