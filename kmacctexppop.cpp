@@ -105,6 +105,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 				       ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
+    uidsOfNextSeenMsgs.clear();
 
     interactive = _interactive;
     startJob();
