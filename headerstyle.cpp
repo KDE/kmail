@@ -334,7 +334,9 @@ namespace KMail {
     const HeaderStyle * prev() const { return plain(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-		    const QString & vCardName, bool printing ) const;
+            const QString & vCardName, bool printing ) const;
+    static QString imgToDataUrl( const QImage &image );
+
   };
 
   QString FancyHeaderStyle::format( const KMMessage * message,
@@ -397,6 +399,12 @@ namespace KMail {
           
           // im status
           presence = imProxy->presenceString( kabcUid );
+          if ( !presence.isEmpty() )
+          {  
+            QString presenceIcon = QString::fromLatin1( " <img src=\"%1\"/>" )
+                .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).convertToImage() ) );
+            presence += presenceIcon;
+          }
           // picture
           if ( strategy->showHeader( "statuspic" ) )
           {
@@ -408,11 +416,7 @@ namespace KMail {
               QImage photo = addresses[0].photo().data();
               if ( !photo.isNull() )
               {
-                  QByteArray ba;
-                  QBuffer buffer( ba );
-                  buffer.open( IO_WriteOnly );
-                  photo.save( &buffer, "PNG" );
-                  photoURL = QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
+                photoURL = imgToDataUrl( photo );
               }
             }
             else
@@ -447,7 +451,7 @@ namespace KMail {
       }
       else
         if ( imProxy->imAppsAvailable() )
-          presence = "<a href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
+          presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     }
     // do nothing - no im apps available, leave presence empty
     //presence = i18n( "DCOP/InstantMessenger not installed" );
@@ -526,6 +530,14 @@ namespace KMail {
     return headerStr;
   }
 
+QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
+{
+  QByteArray ba;
+  QBuffer buffer( ba );
+  buffer.open( IO_WriteOnly );
+  image.save( &buffer, "PNG" );
+  return QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
+}  
   //
   // HeaderStyle abstract base:
   //
