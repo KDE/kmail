@@ -144,7 +144,7 @@ namespace KMail {
     widgetStack->addWidget( page, pageno ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
-    mFromFileBtn = new QPushButton( i18n("Select File"), page );
+    mFromFileBtn = new QPushButton( i18n("Select File..."), page );
     QWhatsThis::add( mFromFileBtn,
                      i18n("Use this to select an image file to create the picture from. "
                          "The image should be of high contrast and nearly quadratic shape. "

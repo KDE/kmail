@@ -2196,7 +2196,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
     i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
   QWhatsThis::add( mCharsetCombo, fallbackCharsetWhatsThis );
 
-  QLabel *label = new QLabel( i18n("Fallback Ch&aracter Encoding"), this );
+  QLabel *label = new QLabel( i18n("Fallback ch&aracter encoding:"), this );
   label->setBuddy( mCharsetCombo );
 
   hlay->addWidget( label );
@@ -2214,7 +2214,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
     i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().utf8() );
   QWhatsThis::add( mOverrideCharsetCombo, overrideCharsetWhatsThis );
 
-    label = new QLabel( i18n("&Override Character Encoding"), this );
+  label = new QLabel( i18n("&Override character encoding:"), this );
   label->setBuddy( mOverrideCharsetCombo );
 
   hlay2->addWidget( label );

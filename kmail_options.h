@@ -24,7 +24,7 @@ KCmdLineOptions kmail_options[] =
   { "+[address|URL]",		I18N_NOOP("Send message to 'address' resp. "
                                           "attach the file the 'URL' points "
                                           "to"), 0 },
-//  { "+[file]",                  I18N_NOOP("Show message from file 'file'."), 0 },
+//  { "+[file]",                  I18N_NOOP("Show message from 'file'"), 0 },
   KCmdLineLastOption
 };
 
