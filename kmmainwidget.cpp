@@ -500,7 +500,7 @@ void KMMainWidget::createWidgets(void)
             this, SLOT(slotMsgSelected(KMMessage*)));
   }
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
-	  this, SLOT(slotMsgActivated(KMMessage*)));
+          this, SLOT(slotMsgActivated(KMMessage*)));
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
   accel->connectItem(accel->insertItem(SHIFT+Key_Left),
@@ -1991,6 +1991,12 @@ void KMMainWidget::slotPrevImportantMessage() {
   //mHeaders->prevImportantMessage();
 }
 
+void KMMainWidget::slotDisplayCurrentMessage()
+{
+  if ( mHeaders->currentMsg() )
+    slotMsgActivated( mHeaders->currentMsg() );
+}
+
 //-----------------------------------------------------------------------------
 //called from headers. Message must not be deleted on close
 void KMMainWidget::slotMsgActivated(KMMessage *msg)
@@ -2735,6 +2741,10 @@ void KMMainWidget::setupActions()
   mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
                                    SLOT(slotShowMsgSrc()), actionCollection(),
                                    "view_source" );
+
+  ( void ) new KAction( i18n("&Display Message"), Key_Return, this,
+                        SLOT( slotDisplayCurrentMessage() ), actionCollection(),
+                        "display_message" );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,
