@@ -17,6 +17,7 @@
 #include <kapp.h>
 #include <kmessagebox.h>
 #include <qregexp.h>
+#include <qdialog.h>
 
 #ifdef KRN
 #include <kapp.h>
@@ -57,10 +58,11 @@ KMSender::KMSender()
   mCurrentMsg = NULL;
   readConfig();
   quitOnDone = false;
-  label = new QLabel(0);
+  labelDialog = new QDialog(0);
+  label = new QLabel(labelDialog);
   //label->setAutoResize(true);
-  label->setCaption("KMail");
-  label->setIcon(kapp->miniIcon());
+  labelDialog->setCaption("KMail");
+  labelDialog->setIcon(kapp->miniIcon());
 }
 
 
@@ -69,7 +71,7 @@ KMSender::~KMSender()
 {
   writeConfig(FALSE);
   if (mSendProc) delete mSendProc;
-  if (label) delete label;
+  if (labelDialog) delete labelDialog;
 }
 
 //-----------------------------------------------------------------------------
@@ -259,7 +261,7 @@ void KMSender::doSendMsg()
     
     label->setText(i18n("Initiating sender process..."));
     label->resize(400, label->sizeHint().height());
-    label->show();
+    labelDialog->show();
     //kapp->processEvents();
     setStatusMsg(i18n("Initiating sender process..."));
     if (!mSendProc->start())
@@ -309,7 +311,7 @@ void KMSender::cleanup(void)
 
   setStatusMsg(i18n("Done sending messages."));
   kernel->serverReady (true); // sven - enable ipc
-  label->hide();
+  labelDialog->hide();
   if (quitOnDone)
   {
     debug ("Done sending messages.");
