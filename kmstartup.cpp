@@ -73,23 +73,23 @@ QString getMyHostName(void)
 
 
 void checkConfigUpdates() {
-  //Please update the currentUpdateLevel when new updates are created.
-  const int currentUpdateLevel = 100;
+  static const char * const updates[] = {
+    "9",
+    "3.1-update-identities",
+    "3.1-use-identity-uoids",
+    "3.1-new-mail-notification",
+  };
+  static const int numUpdates = sizeof updates / sizeof *updates;
+
   KConfig * config = KMKernel::config();
   KConfigGroup startup( config, "Startup" );
-  int configUpdateLevel = startup.readNumEntry( "update-level", 0 );
-  if (configUpdateLevel == currentUpdateLevel) //Allow downgrading
-      return;
+  const int configUpdateLevel = startup.readNumEntry( "update-level", 0 );
+  if ( configUpdateLevel == numUpdates ) // Optimize for the common case that everything is OK
+    return;
 
-  const QString updateFile = QString::fromLatin1("kmail.upd");
-  QStringList updates;
-  updates << "9"
-	  << "3.1-update-identities"
-	  << "3.1-use-identity-uoids"
-	  << "3.1-new-mail-notification";
-  for ( QStringList::const_iterator it = updates.begin() ; it != updates.end() ; ++it )
-    config->checkUpdate( *it, updateFile );
-  startup.writeEntry( "update-level", currentUpdateLevel );
+  for ( int i = 0 ; i < numUpdates ; ++i )
+    config->checkUpdate( updates[i], "kmail.upd" );
+  startup.writeEntry( "update-level", numUpdates );
 }
 
 void lockOrDie() {
