@@ -356,6 +356,18 @@ void RecipientsPicker::insertCollection( RecipientsCollection *coll )
   mCollectionMap.insert( index, coll );
 }
 
+void RecipientsPicker::updateRecipient( const Recipient &recipient )
+{
+  RecipientItem::List allRecipients = mAllRecipients->items();
+  RecipientItem::List::ConstIterator itAll;
+  for( itAll = allRecipients.begin(); itAll != allRecipients.end(); ++itAll ) {
+    if ( (*itAll)->recipient() == recipient.email() ) {
+      (*itAll)->setRecipientType( recipient.typeLabel() );
+    }
+  }
+  updateList();
+}
+
 void RecipientsPicker::setRecipients( const Recipient::List &recipients )
 {
   RecipientItem::List allRecipients = mAllRecipients->items();
@@ -415,7 +427,6 @@ void RecipientsPicker::slotPicked( QListViewItem *viewItem )
     RecipientItem *i = item->recipientItem();
     emit pickedRecipient( Recipient( i->recipient(), Recipient::Undefined ) );
   }
-  mRecipientList->clearSelection(); 
 }
 
 void RecipientsPicker::pick( Recipient::Type type )
@@ -433,7 +444,6 @@ void RecipientsPicker::pick( Recipient::Type type )
       }
     }
   }
-  mRecipientList->clearSelection(); 
 }
 
 void RecipientsPicker::keyPressEvent( QKeyEvent *ev )

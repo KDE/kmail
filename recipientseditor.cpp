@@ -560,6 +560,11 @@ SideWidget::~SideWidget()
 {
 }
 
+RecipientsPicker* SideWidget::picker() const
+{
+  return mRecipientPicker;
+}
+
 void SideWidget::setFocus()
 {
   mSelectButton->setFocus();
@@ -617,21 +622,26 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
   connect( mRecipientsView, SIGNAL( focusUp() ), SIGNAL( focusUp() ) );
   connect( mRecipientsView, SIGNAL( focusDown() ), SIGNAL( focusDown() ) );
 
-  SideWidget *side = new SideWidget( mRecipientsView, this );
-  topLayout->addWidget( side );
-  connect( side, SIGNAL( pickedRecipient( const Recipient & ) ),
+  mSideWidget = new SideWidget( mRecipientsView, this );
+  topLayout->addWidget( mSideWidget );
+  connect( mSideWidget, SIGNAL( pickedRecipient( const Recipient & ) ),
     SLOT( slotPickedRecipient( const Recipient & ) ) );
-  connect( side, SIGNAL( createDistributionList() ),
+  connect( mSideWidget, SIGNAL( createDistributionList() ),
     SLOT( createDistributionList() ) );
 
   connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
-    side, SLOT( setTotal( int, int ) ) );
+    mSideWidget, SLOT( setTotal( int, int ) ) );
   connect( mRecipientsView, SIGNAL( focusRight() ),
-    side, SLOT( setFocus() ) );
+    mSideWidget, SLOT( setFocus() ) );
 }
 
 RecipientsEditor::~RecipientsEditor()
 {
+}
+
+RecipientsPicker* RecipientsEditor::picker() const
+{
+  return mSideWidget->picker();
 }
 
 void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
@@ -643,9 +653,12 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
   if ( r.type() == Recipient::Undefined ) {
     r.setType( line->recipientType() );
   }
-  
+
   line->setRecipient( r );
-  
+
+  if ( picker() )
+    picker()->updateRecipient( r );
+
   mRecipientsView->addLine()->activate();
 }
 

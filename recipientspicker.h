@@ -119,6 +119,7 @@ class RecipientsPicker : public QWidget
     ~RecipientsPicker();
 
     void setRecipients( const Recipient::List & );
+    void updateRecipient( const Recipient & );
 
   signals:
     void pickedRecipient( const Recipient & );

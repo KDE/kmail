@@ -38,6 +38,7 @@ class KWindowPositioner;
 class QComboBox;
 class QLabel;
 class QPushButton;
+class SideWidget;
 
 class Recipient
 {
@@ -160,7 +161,7 @@ class RecipientsView : public QScrollView
     RecipientLine *activeLine();
 
     RecipientLine *emptyLine();
-
+    
     Recipient::List recipients() const;
 
     void activateLine( RecipientLine * );
@@ -218,6 +219,8 @@ class SideWidget : public QWidget
     SideWidget( RecipientsView *view, QWidget *parent );
     ~SideWidget();
 
+    RecipientsPicker* picker() const;
+
   public slots:
     void setTotal( int recipients, int lines );
     void setFocus();
@@ -251,6 +254,7 @@ class RecipientsEditor : public QWidget
     void clear();
 
     Recipient::List recipients() const;
+    RecipientsPicker* picker() const;
 
     void setRecipientString( const QString &, Recipient::Type );
     QString recipientString( Recipient::Type );
@@ -272,6 +276,7 @@ class RecipientsEditor : public QWidget
 
   private:
     RecipientsView *mRecipientsView;
+    SideWidget* mSideWidget;
 };
 
 #endif
