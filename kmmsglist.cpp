@@ -101,6 +101,7 @@ void KMMsgList::set(int idx, KMMsgBasePtr aMsg)
   if (!at(idx) && aMsg) mCount++;
   else if (at(idx) && !aMsg) mCount--;
 
+  delete at(idx);
   KMMsgListInherited::at(idx) = aMsg;
   if (!aMsg || idx >= mHigh) rethinkHigh();
 }
