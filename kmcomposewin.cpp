@@ -3991,7 +3991,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( mRecipientsEditor ) {
     // remove BCC of old identity and add BCC of new identity (if they differ)
     const KPIM::Identity & oldIdentity =
-      kmkernel->identityManager()->identityForUoid( mId );
+      kmkernel->identityManager()->identityForUoidOrDefault( mId );
     if ( oldIdentity.bcc() != ident.bcc() ) {
       mRecipientsEditor->removeRecipient( oldIdentity.bcc(), Recipient::Bcc );
       mRecipientsEditor->addRecipient( ident.bcc(), Recipient::Bcc );
