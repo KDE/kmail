@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // KMAcctExpPop.cpp
 // Authors: Don Sanders, (based on kmacctpop by)
 //          Stefan Taferner and Markus Wuebben
@@ -343,9 +342,10 @@ bool KMAcctExpPop::setProtocol(short aProtocol)
 //=============================================================================
 
 KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
-			             KMAcctExpPop *account ,
+			             KMAcctExpPop *account,
 				     const QString& caption,
-			             const char *login, const QString &passwd)
+			             const QString& login,
+                                     const QString &passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you
@@ -417,7 +417,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   connect(cancel, SIGNAL(pressed()),
 	  this, SLOT(slotCancelPressed()));
 
-  if(strlen(login) > 0)
+  if(!login.isEmpty())
     passwdLEdit->setFocus();
   else
     usernameLEdit->setFocus();

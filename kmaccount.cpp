@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // KMail Account
 
 #include <stdlib.h>
@@ -102,7 +101,7 @@ void KMAccount::readConfig(KConfig& config)
       mFolder = folder;
       mFolder->addAccount(this);
     }
-    else kdDebug() << "Cannot find folder `" << (const char*)folderName << "' for account `" << (const char*)mName << "'." << endl;
+    else kdDebug() << "Cannot find folder `" << folderName << "' for account `" << mName << "'." << endl;
   }
 }
 

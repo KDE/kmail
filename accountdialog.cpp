@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 /*
  *   kmail: KDE mail client  
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
@@ -185,7 +184,7 @@ ProcmailRCParser::processLocalLock(const QString &s)
         val += ".lock";
     }
 
-    if ( val && !mLockFiles.contains(val) )
+    if ( !val.isNull() && !mLockFiles.contains(val) )
       mLockFiles << val;
   }
 
