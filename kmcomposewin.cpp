@@ -1196,13 +1196,13 @@ void KMComposeWin::setupActions(void)
   alignCenterAction = new KToggleAction (i18n("Align Center"), "text_center", 0,
                        this, SLOT(slotAlignCenter()), actionCollection(),
                        "align_center");
-  textBoldAction = new KToggleAction (i18n("&Bold"), "text_bold", 0,
+  textBoldAction = new KToggleAction( i18n("&Bold"), "text_bold", CTRL+Key_B,
                                      this, SLOT(slotTextBold()),
                                      actionCollection(), "text_bold");
-  textItalicAction = new KToggleAction (i18n("&Italic"), "text_italic", 0,
+  textItalicAction = new KToggleAction( i18n("&Italic"), "text_italic", CTRL+Key_I,
                                        this, SLOT(slotTextItalic()),
                                        actionCollection(), "text_italic");
-  textUnderAction = new KToggleAction (i18n("&Underline"), "text_under", 0,
+  textUnderAction = new KToggleAction( i18n("&Underline"), "text_under", CTRL+Key_U,
                                      this, SLOT(slotTextUnder()),
                                      actionCollection(), "text_under");
   actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
