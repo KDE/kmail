@@ -43,7 +43,7 @@ class KMAccount;
 #include <qvaluelist.h>
 #include <qcombobox.h>
 
-#define DEFAULT_EDITOR_STR "kedit %f"
+#define DEFAULT_EDITOR_STR "kwrite %f"
 
 class NewIdentityDialog : public KDialogBase
 {

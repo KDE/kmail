@@ -2167,11 +2167,7 @@ void ConfigureDialog::slotSignatureEdit( void )
     }
   }
 
-  QString cmdline( "kedit %f" );
-  if( cmdline.length() == 0 )
-  {
-    cmdline = DEFAULT_EDITOR_STR;
-  }
+  QString cmdline = QString(DEFAULT_EDITOR_STR);
 
   QString argument = "\"" + fileName + "\"";
   ApplicationLaunch kl(cmdline.replace(QRegExp("\\%f"), argument ));
