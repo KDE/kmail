@@ -206,9 +206,9 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   QString result;
   QCString charset;
   char *pos, *beg, *end, *mid;
-  QCString str, cstr;
+  QCString str, cstr, LWSP_buffer;
   char encoding, ch;
-  bool valid;
+  bool valid, lastWasEncodedWord=FALSE;
   const int maxLen=200;
   int i;
 
@@ -216,11 +216,28 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 
   for (pos=aStr.data(); *pos; pos++)
   {
-    if (pos[0]!='=' || pos[1]!='?')
-    {
-      result += *pos;
+    // line unfolding
+    if ( pos[0] == '\r' && pos[1] == '\n' ) {
+      pos++;
       continue;
     }
+    if ( pos[0] == '\n' )
+      continue;
+    // collect LWSP after encoded-words,
+    // because we might need to throw it out
+    // (when the next word is an encoded-word)
+    if ( lastWasEncodedWord && ( pos[0] == ' ' || pos[0] == '\t' ) ) {
+      LWSP_buffer += pos[0];
+      continue;
+    }
+    // verbatimly copy normal text
+    if (pos[0]!='=' || pos[1]!='?')
+    {
+      result += LWSP_buffer + pos[0];
+      LWSP_buffer = 0;
+      continue;
+    }
+    // found possible encoded-word
     beg = pos+2;
     end = beg;
     valid = TRUE;
@@ -255,6 +272,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     }
     if (valid)
     {
+      // valid encoding: decode and throw away separating LWSP
       ch = *pos;
       *pos = '\0';
       str = QCString(mid).left((int)(mid - pos - 1));
@@ -274,20 +292,25 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
       if (!codec) codec = codecForName(KGlobal::locale()->charset().latin1());
       if (codec) result += codec->toUnicode(cstr);
       else result += QString::fromLocal8Bit(cstr);
+      lastWasEncodedWord = TRUE;
 
       *pos = ch;
       pos = end -1;
     }
     else
     {
+      // invalid encoding, keep separating LWSP.
       //result += "=?";
       //pos = beg -1; // because pos gets increased shortly afterwards
       pos = beg - 2;
+      result += LWSP_buffer;
       result += *pos++;
       result += *pos;
+      lastWasEncodedWord = FALSE;
     }
+    LWSP_buffer = 0;
   }
-  return result.replace(QRegExp("\n[ \t]")," ");
+  return result;
 }
 
 
