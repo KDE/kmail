@@ -520,10 +520,10 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   if ( !ac )
       return;
 
-  mMailToComposeAction = new KAction( i18n("Send To..."), 0, this,
+  mMailToComposeAction = new KAction( i18n("New Message To..."), 0, this,
 				    SLOT(slotMailtoCompose()), ac,
 				    "mailto_compose" );
-  mMailToReplyAction = new KAction( i18n("Send Reply To..."), 0, this,
+  mMailToReplyAction = new KAction( i18n("Reply To..."), 0, this,
 				    SLOT(slotMailtoReply()), ac,
 				    "mailto_reply" );
   mMailToForwardAction = new KAction( i18n("Forward To..."),
