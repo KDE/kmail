@@ -84,7 +84,7 @@ void KMSender::readConfig(void)
   KConfigGroupSaver saver(config, SENDER_GROUP);
 
   mSendImmediate = (bool)config->readNumEntry("Immediate", TRUE);
-  mSendQuotedPrintable = (bool)config->readNumEntry("Quoted-Printable", FALSE);
+  mSendQuotedPrintable = (bool)config->readNumEntry("Quoted-Printable", TRUE);
   mMailer = config->readEntry("Mailer",  _PATH_SENDMAIL);
   mSmtpHost = config->readEntry("Smtp Host", "localhost");
   mSmtpPort = config->readNumEntry("Smtp Port", 25);
