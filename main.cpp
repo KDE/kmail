@@ -1,6 +1,7 @@
 // KMail startup and initialize code
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
+#include <config.h>
 #include <signal.h>
 #include <unistd.h>
 #include <stdio.h>

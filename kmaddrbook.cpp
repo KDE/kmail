@@ -2,6 +2,7 @@
 // Author: Stefan Taferner <taferner@kde.org>
 // This code is under GPL
 
+#include <config.h>
 #include "kmaddrbook.h"
 #include <kapp.h>
 #include <kconfig.h>
@@ -112,7 +113,6 @@ int KMAddrBook::load(const QString &aFileName)
   while ( !t.eof() )
   {
     line = t.readLine();
-    kdDebug() << QString("load ") + line << endl;
       if (line[0]!='#' && !line.isNull()) inSort((const char *)line.local8Bit());
   }
   rc = file.status();

@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */                                                                             
+ */
 
 //
 // VCard class to handle creation and parsing of Netscape
@@ -26,6 +26,7 @@
 // FIXME: do proper CRLF/CR handling
 // FIXME: handle TYPE=x,y,z qualifiers
 
+#include <config.h>
 #include "vcard.h"
 #include <stdlib.h>
 #include <ctype.h>
@@ -41,9 +42,9 @@ begin := begin:vcard
 end   := end:vcard
 line  := <name>;<qualifiers>:<value> | <name>:<value>
 qualifiers := <qualifier> | <qualifier>;<qualifiers>
-name  := 
+name  :=
 qualifier :=
-value := 
+value :=
 
 */
 
@@ -191,7 +192,7 @@ QValueList<QString> lines;
       tmplinetoken = (*j);
       tmplinetoken.truncate(tail);
       linetokens.append(tmplinetoken);
-      tmplinetoken = &((*j).ascii()[tail+1]); 
+      tmplinetoken = &((*j).ascii()[tail+1]);
       linetokens.append(tmplinetoken);
 
       // check for qualifiers and
@@ -222,7 +223,7 @@ QValueList<QString> lines;
       } else {
         _err = VC_ERR_INVALID_LINE;
       }
- 
+
       if (_err != 0) break;
 
       if (_vcl.name == VCARD_VERSION)
@@ -235,7 +236,7 @@ QValueList<QString> lines;
       //    split into tokens by ;
       //    add to parameters vector
       //_vcl.parameters = tokenizeBy(linetokens[1], ';');
-      if (b64) { 
+      if (b64) {
         if (linetokens[1][linetokens[1].length()-1] != '=')
           do {
             linetokens[1] += *(++j);
@@ -548,7 +549,7 @@ int c;
     } else {
       x += y[i];
     }
-  }  
+  }
 }
 
 
@@ -563,12 +564,12 @@ int c;
     if (y[i] == '=') {
       char p = y[++i].latin1();
       char q = y[++i].latin1();
-      x += (char) ((p <= '9' ? p - '0': p - 'A' + 10)*16 + 
+      x += (char) ((p <= '9' ? p - '0': p - 'A' + 10)*16 +
                    (q <= '9' ? q - '0': q - 'A' + 10));
     } else {
       x += y[i];
     }
-  }  
+  }
 }
 
 
@@ -605,7 +606,7 @@ bool VCardLine::isValid() const {
     if (name == VCARD_BDAY)
       return true;
    break;
-  case 'c': 
+  case 'c':
     if (name == VCARD_CATEGORIES)
       return true;
     if (name == VCARD_CLASS && qualified &&
@@ -680,7 +681,7 @@ bool VCardLine::isValid() const {
    break;
   case 'q':
    break;
-  case 'r': 
+  case 'r':
     if (name == VCARD_ROLE)
       return true;
     if (name == VCARD_REV)
@@ -693,7 +694,7 @@ bool VCardLine::isValid() const {
       return true;
    break;
   case 't':
-    if (name == VCARD_TEL && qualified && 
+    if (name == VCARD_TEL && qualified &&
                             (qualifiers.contains(VCARD_TEL_HOME)  ||
                              qualifiers.contains(VCARD_TEL_WORK)  ||
                              qualifiers.contains(VCARD_TEL_PREF)  ||

@@ -1,6 +1,7 @@
 // kmfilter.cpp
 // Author: Stefan Taferner <taferner@kde.org>
 
+#include <config.h>
 #include "kmfilter.h"
 #include "kmglobal.h"
 #include "kmmessage.h"
