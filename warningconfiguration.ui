@@ -84,7 +84,7 @@ It is recommended to leave this option turned on for maximum security.
         </widget>
         <widget class="QGroupBox">
             <property name="name">
-                <cstring>groupBox8</cstring>
+                <cstring>warnGroupBox</cstring>
             </property>
             <property name="title">
                 <string>Warn if certificates/keys expire soon (configure thresholds below)</string>
