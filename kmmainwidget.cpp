@@ -915,7 +915,6 @@ void KMMainWidget::slotExpireFolder()
 void KMMainWidget::slotEmptyFolder()
 {
   QString str;
-  KMMessage* msg;
 
   if (!mFolder) return;
   bool isTrash = kmkernel->folderIsTrash(mFolder);
