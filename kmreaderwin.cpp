@@ -1210,8 +1210,7 @@ void KMReaderWin::displayAboutPage()
 	 "%4: prior KMail version; %5: prior KDE version; "
 	 "%6: generated list of new features; "
 	 "%7: First-time user text (only shown on first start); "
-	 "%8: prior KMail version; "
-         "%9: generated list of important changes; "
+         "%8: generated list of important changes; "
 	 "--- end of comment ---",
 	 "<h2 style='margin-top: 0px;'>Welcome to KMail %1</h2><p>KMail is the email client for the K "
 	 "Desktop Environment. It is designed to be fully compatible with "
