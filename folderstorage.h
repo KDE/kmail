@@ -145,6 +145,12 @@ public:
   /** Checks if the message is already "gotten" with getMsg */
   virtual bool isMessage(int idx);
 
+  /** Load message from file and do NOT store it, only return it.
+      This is equivalent to, but faster than, getMsg+unGetMsg
+      WARNING: the caller has to delete the returned value!
+  */
+  virtual KMMessage* readTemporaryMsg(int idx);
+
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest) = 0;
 
