@@ -427,8 +427,9 @@ void MessageComposer::readFromComposeWin()
   // we have to remember the Bcc because it might have been overwritten
   // by a custom header (therefore we can't use bcc() later) and because
   // mimelib removes addresses without domain part (therefore we can't use
-  // mReferenceMessage->bcc() later)
-  mBcc = mReferenceMessage->bcc();
+  // mReferenceMessage->bcc() later and also not now. So get the Bcc from
+  // the composer window.)
+  mBcc = mComposeWin->bcc();
   mTo = KPIM::splitEmailAddrList( mComposeWin->to().stripWhiteSpace() );
   mCc = KPIM::splitEmailAddrList( mComposeWin->cc().stripWhiteSpace() );
   mBccList = KPIM::splitEmailAddrList( mBcc.stripWhiteSpace() );
