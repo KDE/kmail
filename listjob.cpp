@@ -44,6 +44,8 @@ using KPIM::ProgressManager;
 #include <kio/global.h>
 #include <klocale.h>
 
+#include <stdlib.h>
+
 using namespace KMail;
 
 ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
