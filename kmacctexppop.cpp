@@ -840,8 +840,6 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 
   if (stage == Head) {
     curMsgStrm->writeRawBytes( data.data(), data.size() );
-    // there is no \n at the end of the line so we have to add it!
-    curMsgStrm->writeRawBytes( "\n", 1 );
     return;
   }
 
