@@ -1146,7 +1146,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mSystrayCheck = new QCheckBox( i18n("S&ystem tray notification"), group );
 
   // System tray modes
-  QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray modes"), group);
+  QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray Modes"), group);
   bgroup->setColumnLayout(0, Qt::Horizontal);
   bgroup->layout()->setSpacing( 0 );
   bgroup->layout()->setMargin( 0 );
@@ -3611,7 +3611,7 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mOnStartupOpenFolder = new KMFolderComboBox( this );
   label = new QLabel( mOnStartupOpenFolder,
-                      i18n("Open this folder on startup"), this );
+                      i18n("Open this folder on startup:"), this );
   hlay->addWidget( label );
   hlay->addWidget( mOnStartupOpenFolder, 1 );
 
