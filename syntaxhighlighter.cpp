@@ -89,8 +89,10 @@ SpellChecker::~SpellChecker()
 }
 
 int SpellChecker::highlightParagraph( const QString& text,
-				      int endStateOfLastPara )
+				      int parano )
 {
+    if (parano == -2)
+	parano = 0;
     // leave #includes, diffs, and quoted replies alone
     QString diffAndCo( ">|" );
 
@@ -99,12 +101,11 @@ int SpellChecker::highlightParagraph( const QString& text,
     if ( !text.endsWith(" ") )
 	alwaysEndsWithSpace = FALSE;
 
-    MessageHighlighter::highlightParagraph( text, endStateOfLastPara );
+    MessageHighlighter::highlightParagraph( text, -2 );
 
     if ( !isCode ) {
         int para, index;
 	textEdit()->getCursorPosition( &para, &index );
-	QString paraText = textEdit()->text( para );
 	int len = text.length();
 	if ( alwaysEndsWithSpace )
 	    len--;
@@ -119,12 +120,12 @@ int SpellChecker::highlightParagraph( const QString& text,
 		currentWord += text[i];
 	    }
 	}
-	if ( !text[len - 1].isLetter() || 
-	     index + 1 != text.length() || 
-	     text != paraText)
+	if ( !text[len - 1].isLetter() ||
+	     index + 1 != text.length() ||
+	     para != parano)
 	    flushCurrentWord();
     }
-    return endStateOfLastPara;
+    return ++parano;
 }
 
 QStringList SpellChecker::personalWords()
@@ -239,7 +240,7 @@ bool DictSpellChecker::isMisspelled( const QString& word )
 
     // there is no 'spelt correctly' signal so default to Okay
     dict.replace( word, Okay );
-    
+
     // yes I tried checkWord, the docs lie and it didn't give useful signals :-(
     if (mSpell)
 	mSpell->check( word, false );
@@ -341,15 +342,15 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	    DictSpellChecker::dictionaryChanged();
 	}
     }
-    
+
     if (o == textEdit() && (e->type() == QEvent::KeyPress)) {
 	QKeyEvent *k = (QKeyEvent*)e;
 	mAutoReady = true;
 	if (k->key() == Key_Enter ||
-	    k->key() == Key_Return || 
-	    k->key() == Key_Up || 
-	    k->key() == Key_Down || 
-	    k->key() == Key_Left || 
+	    k->key() == Key_Return ||
+	    k->key() == Key_Up ||
+	    k->key() == Key_Down ||
+	    k->key() == Key_Left ||
 	    k->key() == Key_Right ||
 	    k->key() == Key_PageUp ||
 	    k->key() == Key_PageDown ||
@@ -369,8 +370,8 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	    k->key() == Key_Return)
 	    QTimer::singleShot(0, this, SLOT(slotAutoDetection()));
     }
-    
-    if (o == textEdit()->viewport() && 
+
+    if (o == textEdit()->viewport() &&
 	(e->type() == QEvent::MouseButtonPress)) {
 	if (mInitialMove) {
 	    if (!mRehighlightRequested) {
