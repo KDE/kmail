@@ -132,7 +132,8 @@ void KMSearchRuleWidget::reset()
   mRuleField->setCurrentItem( 0 );
 
   mRuleFunc->setCurrentItem( 0 );
-
+  if (mRuleEditBut)
+      mRuleEditBut->setEnabled( false );
   mRuleValue->clear();
 
   blockSignals(FALSE);
