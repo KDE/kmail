@@ -45,7 +45,6 @@ using KMail::SieveConfig;
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "progressmanager.h"
-#include "progressdialog.h"
 
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
@@ -236,13 +235,8 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mNoopTimer.stop();
 
   if( interactive && isProgressDialogEnabled() ) {
-    // Show progress dialog in all kmail-mainwidgets.
-    QPtrList<KMMainWidget>* lst = KMMainWidget::mainWidgetList();
-    if ( lst ) {
-      for( QPtrListIterator<KMMainWidget> it( *lst ); *it; ++it ) {
-        (*it)->progressDialog()->setVisible( true );
-      }
-    }
+    // Show progress dialog in all listeners.
+    KPIM::ProgressManager::emitShowProgressDialog();
   }
 
   Q_ASSERT( !mMailCheckProgressItem );
