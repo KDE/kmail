@@ -324,9 +324,6 @@ void KMLittleProgressDlg::setMode() {
     }
     m_sslLabel->setState( m_sslLabel->lastState() );
     stack->show();
-    /* FIXME Shoud we maybe hook this up to the status signal of the current item? */
-    if ( mCurrentItem )
-      m_pLabel->setText( mCurrentItem->label() );
     stack->raiseWidget( m_pLabel );
     break;
 
@@ -362,15 +359,16 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
   if ( ev->type() == QEvent::MouseButtonPress ) {
     QMouseEvent *e = (QMouseEvent*)ev;
 
-    if ( e->button() == LeftButton ) {    // toggle view on left mouse button
-/*
+    if ( e->button() == LeftButton && mode != Clean ) {    // toggle view on left mouse button
+
+      // Hide the progress bar when the detailed one is showing
       if ( mode == Label ) {
         mode = Progress;
       } else if ( mode == Progress ) {
         mode = Label;
       }
       setMode();
-*/
+
       // Consensus seems to be that we should show/hide the fancy dialog when the user
       // clicks anywhere in the small one.
       m_mainWidget->slotToggleProgressDialog();
