@@ -66,17 +66,40 @@ TransactionItemView::TransactionItemView( QWidget * parent,
     mBigBox = new QVBox( viewport() );
     mBigBox->setSpacing(2);
     addChild( mBigBox );
-    setResizePolicy( QScrollView::AutoOneFit );
+    setResizePolicy( QScrollView::AutoOneFit ); // Fit so that the box expands horizontally
+    setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
 }
 
 TransactionItem* TransactionItemView::addTransactionItem( ProgressItem* item, bool first )
 {
    TransactionItem *ti = new TransactionItem( mBigBox, item, first );
    ti->show();
-
    return ti;
 }
 
+void TransactionItemView::resizeContents( int w, int h )
+{
+  //kdDebug(5006) << k_funcinfo << w << "," << h << endl;
+  QScrollView::resizeContents( w, h );
+  // Tell the parent (progressdialog) to adapt itself to our new size
+  updateGeometry();
+}
+
+QSize TransactionItemView::sizeHint() const
+{
+  return minimumSizeHint();
+}
+
+QSize TransactionItemView::minimumSizeHint() const
+{
+  int f = 2 * frameWidth();
+  int minw = topLevelWidget()->width() / 3;
+  int maxh = topLevelWidget()->height() / 2;
+  QSize sz( mBigBox->minimumSizeHint() );
+  sz.setWidth( QMAX( sz.width(), minw ) + f );
+  sz.setHeight( QMIN( sz.height(), maxh ) + f );
+  return sz;
+}
 
 // ----------------------------------------------------------------------------
 
@@ -179,6 +202,7 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const cha
               this, SLOT( slotTransactionStatus( ProgressItem*, const QString& ) ) );
     connect ( pm, SIGNAL( progressItemLabel( ProgressItem*, const QString& ) ),
               this, SLOT( slotTransactionLabel( ProgressItem*, const QString& ) ) );
+   adjustSize();
 }
 
 void ProgressDialog::clear()
@@ -196,7 +220,7 @@ void ProgressDialog::closeEvent( QCloseEvent* e )
 
 void ProgressDialog::showEvent( QShowEvent* e )
 {
-  resize( sizeHint() );
+  adjustSize();
   OverlayWidget::showEvent( e );
 }
 
@@ -219,6 +243,7 @@ void ProgressDialog::slotTransactionAdded( ProgressItem *item )
    } else {
      ti = mScrollView->addTransactionItem( item, mTransactionsToListviewItems.empty() );
    }
+   adjustSize();
    if ( ti )
      mTransactionsToListviewItems.replace( item, ti );
 }
@@ -234,8 +259,6 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.empty() )
      QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
-   else
-     resize( sizeHint() );
 }
 
 void ProgressDialog::slotTransactionCanceled( ProgressItem * )
@@ -272,9 +295,10 @@ void ProgressDialog::slotTransactionLabel( ProgressItem *item,
 void ProgressDialog::slotHide()
 {
   // check if a new item showed up since we started the timer. If not, hide
-  if ( mTransactionsToListviewItems.size() == 0 )
+  if ( mTransactionsToListviewItems.isEmpty() )
     hide();
 }
 
 }
+
 #include "progressdialog.moc"

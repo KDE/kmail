@@ -64,6 +64,13 @@ public:
   {}
   TransactionItem* addTransactionItem( ProgressItem *item, bool first );
 
+
+  QSize sizeHint() const;
+  QSize minimumSizeHint() const;
+
+protected:
+  virtual void resizeContents ( int w, int h );
+
 private:
   QVBox *                  mBigBox;
 };
