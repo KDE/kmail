@@ -1188,7 +1188,7 @@ int KMFolderMbox::compact()
       fread(mtext.data(), 20, 1, mStream);
       if(i <= 0) { //woops we've reached the top of the file, last try..
 	if(!strncasecmp(mtext.data(), "from ", 5)) {
-	  if (mtext.size() < folder_offset)
+	  if (mtext.size() < (size_t)folder_offset)
 	      mtext.resize(folder_offset);
 	  if(fseek(mStream, chunk_offset, SEEK_SET) == -1 ||
 	     !fread(mtext.data(), folder_offset, 1, mStream) ||
