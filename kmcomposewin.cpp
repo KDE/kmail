@@ -3232,10 +3232,12 @@ void KMEdit::slotSpellDone()
   if (status == KSpell::Error)
   {
      KMessageBox::sorry(this, i18n("ISpell/Aspell could not be started. Please make sure you have ISpell or Aspell properly configured and in your PATH."));
+     emit spellcheck_done( KS_CANCEL );
   }
   else if (status == KSpell::Crashed)
   {
      spellcheck_stop();
      KMessageBox::sorry(this, i18n("ISpell/Aspell seems to have crashed."));
+     emit spellcheck_done( KS_CANCEL );
   }
 }
