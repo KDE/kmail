@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
@@ -456,11 +457,7 @@ void KMReaderWin::createWidgets() {
   vlay->addWidget( mSplitter );
   mMimePartTree = new KMMimePartTree( this, mSplitter, "mMimePartTree" );
   mBox = new QHBox( mSplitter, "mBox" );
-  // determine a reasonable line width for the frame
-  int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
-  if ( frameWidth < 0 )
-    frameWidth = 0;
-  mBox->setLineWidth( frameWidth );
+  setStyleDependantFrameWidth();
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
   mViewer = new KHTMLPart( mBox, "mViewer" );
@@ -1144,6 +1141,8 @@ kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tre
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
   bool hasVCard = false;
   if( vCardNode ) {
+    // ### FIXME: We should only do this if the vCard belongs to the sender,
+    // ### i.e. if the sender's email address is contained in the vCard.
     const QString vcard = vCardNode->msgPart().bodyToUnicode( overrideCodec() );
     KABC::VCardConverter vc;
     KABC::Addressee a;
@@ -1238,7 +1237,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
       emitReplaceMsgByUnencryptedVersion = true;
     }
   }
-#endif
+#endif // STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
   // save current main Content-Type before deleting mRootNode
   const int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeText;
@@ -1598,6 +1597,26 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::setStyleDependantFrameWidth()
+{
+  if ( !mBox )
+    return;
+  // set the width of the frame to a reasonable value for the current GUI style
+  int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if ( frameWidth < 0 )
+    frameWidth = 0;
+  if ( frameWidth != mBox->lineWidth() )
+    mBox->setLineWidth( frameWidth );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::styleChange( QStyle& oldStyle )
+{
+  setStyleDependantFrameWidth();
+  KMReaderWinInherited::styleChange( oldStyle );
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmLoadPart( int choice )
 {
   mChoice = choice;
@@ -1848,7 +1867,7 @@ void KMReaderWin::slotAtmOpen()
     slotAtmLoadPart( 4 );
   } else if( choice == KMessageBox::No ) {	// Open
 
-    // this load-part is duplicated from slotAtmLoadPart but is needed here 
+    // this load-part is duplicated from slotAtmLoadPart but is needed here
     // to first display the choice before the attachment is actually downloaded
     if ( node && !node->msgPart().isComplete() )
     {
@@ -1910,7 +1929,7 @@ void KMReaderWin::slotAtmSave()
   QPtrList<partNode> parts;
   parts.append( node );
   // save, do not leave encoded
-  KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts, 
+  KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts,
       message(), false );
   command->start();
 /*

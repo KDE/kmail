@@ -303,6 +303,14 @@ protected slots:
   void slotAtmDistributeClick();
 
 protected:
+  /** reimplemented in order to update the frame width in case of a changed
+      GUI style */
+  void styleChange( QStyle& oldStyle );
+
+  /** Set the width of the frame to a reasonable value for the current GUI
+      style */
+  void setStyleDependantFrameWidth();
+
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
