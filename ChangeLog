@@ -2,6 +2,11 @@
 
 	* so nice little fixes
 
+1998-09-11  Juraj Bednar    <bednar@isternet.sk>
+
+	* finally wrote PGP replying and forwarding decryption
+	* PGP 5.0i should work now with no problems (should ;-)
+
 Sun Sep  6 19:20:34 1998  Markus Wuebben  <mason@HoneyBunny.uni-dortmund.de>
 
 	* kmacctpop.cpp (setPasswd): Fixed password problem.
