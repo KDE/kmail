@@ -90,10 +90,14 @@ QString LinkLocator::getUrl()
 // keep this in sync with KMMainWin::slotUrlClicked()
 bool LinkLocator::atUrl() const
 {
-  // the character directly before the URL must not be a letter, a number or
-  // a dot
+    // the following characters are allowed in a dot-atom (RFC 2822):
+    // a-z A-Z 0-9 . ! # $ % & ' * + - / = ? ^ _ ` { | } ~
+    const QString allowedSpecialChars = QString(".!#$%&'*+-/=?^_`{|}~");
+
+  // the character directly before the URL must not be a letter, a number or any
+  // other character allowed in a dot-atom (RFC 2822).
   if( ( mPos > 0 )
-      && ( mText[mPos-1].isLetterOrNumber() || ( mText[mPos-1] == '.' ) ) )
+      && ( mText[mPos-1].isLetterOrNumber() || ( allowedSpecialChars.find(mText[mPos-1]) != -1 ) ) )
     return false;
 
   QChar ch = mText[mPos];
