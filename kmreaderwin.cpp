@@ -1739,7 +1739,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         bIsOpaqueSigned = true;
       } else {
         txt = "<hr><b><h2>";
-        txt.append( i18n( "The crypto engine returned no cleartext data !" ) );
+        txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
         txt.append( "</h2></b>" );
         txt.append( "<br>&nbsp;<br>" );
         txt.append( i18n( "Status: " ).local8Bit() );
