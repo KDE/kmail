@@ -235,6 +235,8 @@ void KMFolderDialog::setFolder( KMFolder* folder )
 {
   Q_ASSERT( mFolder.isNull() );
   mFolder = folder;
+  if ( folder )
+    mIsNewFolder = false;
 }
 
 //----------------------------------------------------------------------------
@@ -787,7 +789,7 @@ bool FolderDiaGeneralTab::save()
       {
         mDlg->setFolder( kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir ) );
         KMFolderImap* selectedStorage = static_cast<KMFolderImap*>(selectedFolder->storage());
-        selectedStorage->createFolder(fldName);
+        selectedStorage->createFolder(fldName); // create it on the server
         static_cast<KMFolderImap*>(mDlg->folder()->storage())->setAccount( selectedStorage->account() );
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
         mDlg->setFolder( kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir ) );
