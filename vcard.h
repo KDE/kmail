@@ -95,6 +95,9 @@
   #define VCARD_KEY_PGP      "pgp"
 
 #define VCARD_QUOTED_PRINTABLE "quoted-printable"
+// this one is a temporary hack until we support TYPE=VALUE
+#define VCARD_ENCODING_QUOTED_PRINTABLE "encoding=quoted-printable"
+#define VCARD_BASE64           "base64"
 
 /* X-xxxxx also usable */
 

@@ -187,6 +187,7 @@ QValueList<QString> lines;
       //QValueList<QString> nametokens = tokenizeBy(linetokens[0], ';');
       QValueList<QString> nametokens = tokenizeBy(linetokens[0], QRegExp(";"));
       bool qp = false, first_pass = true;
+      bool b64 = false;
 
       if (nametokens.count() > 0) {
         _vcl.qualified = false;
@@ -195,11 +196,14 @@ QValueList<QString> lines;
         for (QValueListIterator<QString> z = nametokens.begin();
                                          z != nametokens.end();
                                          ++z) {
-          if (*z == VCARD_QUOTED_PRINTABLE) {
+          QString zz = (*z).lower();
+          if (zz == VCARD_QUOTED_PRINTABLE || zz == VCARD_ENCODING_QUOTED_PRINTABLE) {
             qp = true;
+          } else if (zz == VCARD_BASE64) {
+            b64 = true;
 	  } else if (!first_pass) {
             _vcl.qualified = true;
-            _vcl.qualifiers.append((*z).lower());
+            _vcl.qualifiers.append(zz);
           }
           first_pass = false;
 	}
@@ -219,13 +223,26 @@ QValueList<QString> lines;
       //    split into tokens by ;
       //    add to parameters vector
       //_vcl.parameters = tokenizeBy(linetokens[1], ';');
-      _vcl.parameters = tokenizeBy(linetokens[1], QRegExp(";"), true);
-      if (qp) {
-        for (QValueListIterator<QString> z = _vcl.parameters.begin();
-                                         z != _vcl.parameters.end();
-	                                 ++z) {
-          _vcl.qpDecode(*z);
-	}
+      if (b64) { 
+        if (linetokens[1][linetokens[1].length()-1] != '=')
+          do {
+            linetokens[1] += *(++j);
+          } while ((*j)[(*j).length()-1] != '=');
+      } else {
+        if (qp) {        // join any split lines
+          while (linetokens[1][linetokens[1].length()-1] == '=') {
+            linetokens[1].remove(linetokens[1].length()-1, 1);
+            linetokens[1].append(*(++j));
+          }
+        }
+        _vcl.parameters = tokenizeBy(linetokens[1], QRegExp(";"), true);
+        if (qp) {        // decode the quoted printable
+          for (QValueListIterator<QString> z = _vcl.parameters.begin();
+                                           z != _vcl.parameters.end();
+	                                   ++z) {
+            _vcl.qpDecode(*z);
+          }
+        }
       }
     } else {
       _err = VC_ERR_INTERNAL;

@@ -221,6 +221,7 @@ QValueList<QString> values;
   // try to add each type of phone number if we have them
   QString thisnum;
   int row = 3;
+  // note: don't use i18n with this macro - it does it for you
   DO_PHONENUMBER(VCARD_TEL_HOME, "Home");
   DO_PHONENUMBER(VCARD_TEL_WORK, "Work");
   DO_PHONENUMBER(VCARD_TEL_PREF, "Preferred");
