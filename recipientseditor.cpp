@@ -263,11 +263,7 @@ RecipientLine *RecipientsView::addLine()
 
   line->resize( viewport()->width(), mLineHeight );
 
-  resizeContents( viewport()->width(), mLines.count() * mLineHeight );
-
-  if ( mLines.count() < 6 ) {
-    setFixedHeight( mLineHeight * mLines.count() );
-  }
+  resizeView();
 
   calculateTotal();
 
@@ -339,8 +335,16 @@ void RecipientsView::slotDeleteDueLine()
      RecipientLine *line = mLines.at( i );
      moveChild( line, childX( line ), childY( line ) - mLineHeight );
    }
-   resizeContents( viewport()->width(), mLines.count() * mLineHeight );
-   setFixedHeight( mLines.count() * mLineHeight );
+   resizeView();
+}
+
+void RecipientsView::resizeView()
+{
+  resizeContents( viewport()->width(), mLines.count() * mLineHeight );
+
+  if ( mLines.count() < 6 ) {
+    setFixedHeight( mLineHeight * mLines.count() );
+  }
 }
 
 void RecipientsView::activateLine( RecipientLine *line )

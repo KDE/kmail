@@ -152,6 +152,7 @@ class RecipientsView : public QScrollView
 
   protected:
     void viewportResizeEvent( QResizeEvent * );
+    void resizeView();
 
   protected slots:
     void slotReturnPressed( RecipientLine * );
