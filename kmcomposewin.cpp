@@ -49,6 +49,8 @@ using KRecentAddress::RecentAddresses;
 #include "attachmentcollector.h"
 #include "objecttreeparser.h"
 
+#include "kmfoldermaildir.h"
+
 #include <libkpimidentities/identitymanager.h>
 #include <libkpimidentities/identitycombo.h>
 #include <libkpimidentities/identity.h>
@@ -109,6 +111,7 @@ using KRecentAddress::RecentAddresses;
 #include <ksyntaxhighlighter.h>
 #include <kcolordialog.h>
 #include <kzip.h>
+#include <ksavefile.h>
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -157,7 +160,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mEncodingAction( 0 ),
     mCryptoModuleAction( 0 ),
     mComposer( 0 ),
-    mLabelWidth( 0 )
+    mLabelWidth( 0 ),
+    mAutoSaveTimer( 0 ), mLastAutoSaveErrno( 0 )
 {
   mClassicalRecipients = GlobalSettings::recipientsEditorType() ==
     GlobalSettings::EnumRecipientsEditorType::Classic;
@@ -373,6 +377,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mEditor->setUseExternalEditor(true);
     mEditor->setExternalEditorPath( GlobalSettings::externalEditor() );
   }
+
+  initAutoSave();
 
   mMsg = 0;
   if (aMsg)
@@ -655,12 +661,17 @@ void KMComposeWin::writeConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::deadLetter()
+void KMComposeWin::autoSaveMessage()
 {
-  if (!mMsg || mComposer) return;
+  kdDebug(5006) << k_funcinfo << endl;
+  if ( !mMsg || mComposer || mAutoSaveFilename.isEmpty() )
+    return;
+  kdDebug(5006) << k_funcinfo << "autosaving message" << endl;
 
+  if ( mAutoSaveTimer )
+    mAutoSaveTimer->stop();
   connect( this, SIGNAL( applyChangesDone( bool ) ),
-           this, SLOT( slotContinueDeadLetter( bool ) ) );
+           this, SLOT( slotContinueAutoSave( bool ) ) );
   // This method is called when KMail crashed, so don't try signing/encryption
   // and don't disable controls because it is also called from a timer and
   // then the disabling is distracting.
@@ -675,36 +686,49 @@ void KMComposeWin::deadLetter()
     return;
   }
   KMMessage *msg = mComposedMessages.first();
-  if ( !msg )
-    return;
-  QCString msgStr = msg->asString();
-  QCString fname = getenv("HOME");
-  fname += "/dead.letter.tmp";
-  // Security: the file is created in the user's home directory, which
-  // might be readable by other users. So the file only gets read/write
-  // permissions for the user himself. Note that we create the file with
-  // correct permissions, we do not set them after creating the file!
-  // (dnaber, 2000-02-27):
-  int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
-  if (fd != -1)
-  {
-    QCString startStr( msg->mboxMessageSeparator() );
-    ::write(fd, startStr, startStr.length());
-    ::write(fd, msgStr, msgStr.length());
-    ::write(fd, "\n", 1);
-    ::close(fd);
-    fprintf(stderr,"appending message to ~/dead.letter.tmp\n");
-  } else {
-    perror("cannot open ~/dead.letter.tmp for saving the current message");
-    kmkernel->emergencyExit( i18n("cannot open ~/dead.letter.tmp for saving the current message: ")  +
-                              QString::fromLocal8Bit(strerror(errno)));
+
+  kdDebug(5006) << k_funcinfo << "opening autoSaveFile " << mAutoSaveFilename
+                << endl;
+  const QString filename =
+    KMKernel::localDataPath() + "autosave/cur/" + mAutoSaveFilename;
+  KSaveFile autoSaveFile( filename, 0600 );
+  int status = autoSaveFile.status();
+  kdDebug(5006) << k_funcinfo << "autoSaveFile.status() = " << status << endl;
+  if ( status == 0 ) { // no error
+    kdDebug(5006) << "autosaving message in " << filename << endl;
+    int fd = autoSaveFile.handle();
+    QCString msgStr = msg->asString();
+    if ( ::write( fd, msgStr, msgStr.length() ) == -1 )
+      status = errno;
   }
+  if ( status == 0 ) {
+    kdDebug(5006) << k_funcinfo << "closing autoSaveFile" << endl;
+    autoSaveFile.close();
+    mLastAutoSaveErrno = 0;
+  }
+  else {
+    kdDebug(5006) << k_funcinfo << "autosaving failed" << endl;
+    autoSaveFile.abort();
+    if ( status != mLastAutoSaveErrno ) {
+      // don't show the same error message twice
+      KMessageBox::queuedMessageBox( 0, KMessageBox::Sorry,
+                                     i18n("Autosaving the message as %1 "
+                                          "failed.\n"
+                                          "Reason: %2" )
+                                     .arg( filename, strerror( status ) ),
+                                     i18n("Autosaving Failed") );
+      mLastAutoSaveErrno = status;
+    }
+  }
+
+  if ( autoSaveInterval() > 0 )
+    mAutoSaveTimer->start( autoSaveInterval() );
 }
 
-void KMComposeWin::slotContinueDeadLetter( bool )
+void KMComposeWin::slotContinueAutoSave( bool )
 {
   disconnect( this, SIGNAL( applyChangesDone( bool ) ),
-              this, SLOT( slotContinueDeadLetter( bool ) ) );
+              this, SLOT( slotContinueAutoSave( bool ) ) );
   qApp->exit_loop();
 }
 
@@ -861,7 +885,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     connect( mEdtFrom, SIGNAL( focusDown() ), mRecipientsEditor,
       SLOT( setFocusTop() ) );
     connect( mRecipientsEditor, SIGNAL( focusUp() ), mEdtFrom, SLOT( setFocus() ) );
-    
+
     connect( mRecipientsEditor, SIGNAL( focusDown() ), mEdtSubject,
       SLOT( setFocus() ) );
     connect( mEdtSubject, SIGNAL( focusUp() ), mRecipientsEditor,
@@ -1024,7 +1048,7 @@ void KMComposeWin::setupActions(void)
 		      "fileopen", 0,
 		      this,  SLOT(slotInsertRecentFile(const KURL&)),
 		      actionCollection(), "insert_file_recent");
-					
+
   mRecentAction->loadEntries( KMKernel::config() );
 
   (void) new KAction (i18n("&Address Book"), "contents",0,
@@ -1849,6 +1873,8 @@ bool KMComposeWin::queryClose ()
       slotSaveDraft();
       return false;
     }
+    else
+      cleanupAutoSave();
   }
   return true;
 }
@@ -1946,7 +1972,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
            this, SLOT( slotComposerDone( bool ) ) );
 
   // TODO: Add a cancel button for the following operations?
-  // Disable any input to the window, so that we have a snapshot of the 
+  // Disable any input to the window, so that we have a snapshot of the
   // composed stuff
   if ( !dontDisable ) setEnabled( false );
   // apply the current state to the composer and let it do it's thing
@@ -2039,7 +2065,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
     mTempDir = 0;
   }
 
-  connect( lvi, SIGNAL( compress( int ) ), 
+  connect( lvi, SIGNAL( compress( int ) ),
       this, SLOT( compressAttach( int ) ) );
   connect( lvi, SIGNAL( uncompress( int ) ),
       this, SLOT( uncompressAttach( int ) ) );
@@ -2808,10 +2834,10 @@ void KMComposeWin::compressAttach( int idx )
   for ( i = 0; i < mAtmItemList.count(); ++i )
       if ( mAtmItemList.at( i )->itemPos() == idx )
           break;
-          
+
   if ( i > mAtmItemList.count() )
       return;
-  
+
   KMMessagePart* msgPart;
   msgPart = mAtmList.at( i );
   QByteArray array;
@@ -2823,7 +2849,7 @@ void KMComposeWin::compressAttach( int idx )
     static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
     return;
   }
-      
+
   zip.setCompression( KZip::DeflateCompression );
   if ( ! zip.writeFile( msgPart->name(), "", "", decoded.size(),
            decoded.data() ) ) {
@@ -2840,13 +2866,13 @@ void KMComposeWin::compressAttach( int idx )
       return;
     }
   }
-  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedCodec( 
-      msgPart->cteStr() ); 
-  
+  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedCodec(
+      msgPart->cteStr() );
+
   msgPart->setCteStr( "base64" );
   msgPart->setBodyEncodedBinary( array );
   QString name = msgPart->name() + ".zip";
-  
+
   msgPart->setName( name );
 
   QCString cDisp = "attachment;";
@@ -2868,11 +2894,11 @@ void KMComposeWin::compressAttach( int idx )
     cDisp += "=\"" + encName + '"';
   msgPart->setContentDisposition( cDisp );
 
-  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedMimeType( 
+  static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setUncompressedMimeType(
       msgPart->typeStr(), msgPart->subtypeStr() );
   msgPart->setTypeStr( "application" );
   msgPart->setSubtypeStr( "x-zip" );
-  
+
   KMAtmListViewItem* listItem = static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) );
   msgPartToItem( msgPart, listItem, false );
 }
@@ -2887,17 +2913,17 @@ void KMComposeWin::uncompressAttach( int idx )
   for ( i = 0; i < mAtmItemList.count(); ++i )
       if ( mAtmItemList.at( i )->itemPos() == idx )
           break;
-          
+
   if ( i > mAtmItemList.count() )
       return;
-  
-  KMMessagePart* msgPart;  
+
+  KMMessagePart* msgPart;
   msgPart = mAtmList.at( i );
-  
+
   QBuffer dev( msgPart->bodyDecodedBinary() );
   KZip zip( &dev );
   QByteArray decoded;
-  
+
   decoded = msgPart->bodyDecodedBinary();
   if ( ! zip.open( IO_ReadOnly ) ) {
     KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
@@ -2905,7 +2931,7 @@ void KMComposeWin::uncompressAttach( int idx )
     return;
   }
   const KArchiveDirectory *dir = zip.directory();
-  
+
   KZipFileEntry *entry;
   if ( dir->entries().count() != 1 ) {
     KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
@@ -2913,16 +2939,16 @@ void KMComposeWin::uncompressAttach( int idx )
     return;
   }
   entry = (KZipFileEntry*)dir->entry( dir->entries()[0] );
-  
-  msgPart->setCteStr( 
+
+  msgPart->setCteStr(
       static_cast<KMAtmListViewItem*>( mAtmItemList.at(i) )->uncompressedCodec() );
 
   msgPart->setBodyEncodedBinary( entry->data() );
   QString name = entry->name();
   msgPart->setName( name );
-  
+
   zip.close();
-  
+
   QCString cDisp = "attachment;";
   QCString encoding = KMMsgBase::autoDetectCharset( msgPart->charset(),
     KMMessage::preferredCharsets(), name );
@@ -2947,7 +2973,7 @@ void KMComposeWin::uncompressAttach( int idx )
 
   msgPart->setTypeStr( type );
   msgPart->setSubtypeStr( subtype );
-  
+
   KMAtmListViewItem* listItem = static_cast<KMAtmListViewItem*>(mAtmItemList.at( i ));
   msgPartToItem( msgPart, listItem, false );
 }
@@ -3676,6 +3702,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   setModified( false );
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
+  cleanupAutoSave();
   close();
   return;
 }
@@ -4100,6 +4127,59 @@ void KMComposeWin::setFocusToSubject()
   mEdtSubject->setFocus();
 }
 
+int KMComposeWin::autoSaveInterval() const
+{
+  return GlobalSettings::autosaveInterval() * 1000 * 60;
+}
+
+void KMComposeWin::initAutoSave()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  // make sure the autosave folder exists
+  KMFolderMaildir::createMaildirFolders( KMKernel::localDataPath() + "autosave" );
+  if ( mAutoSaveFilename.isEmpty() ) {
+    mAutoSaveFilename = KMFolderMaildir::constructValidFileName();
+  }
+
+  updateAutoSave();
+}
+
+void KMComposeWin::updateAutoSave()
+{
+  if ( autoSaveInterval() == 0 ) {
+    delete mAutoSaveTimer; mAutoSaveTimer = 0;
+  }
+  else {
+    if ( !mAutoSaveTimer ) {
+      mAutoSaveTimer = new QTimer( this );
+      connect( mAutoSaveTimer, SIGNAL( timeout() ),
+               this, SLOT( autoSaveMessage() ) );
+    }
+    mAutoSaveTimer->start( autoSaveInterval() );
+  }
+}
+
+void KMComposeWin::setAutoSaveFilename( const QString & filename )
+{
+  if ( !mAutoSaveFilename.isEmpty() )
+    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
+                                 mAutoSaveFilename );
+  mAutoSaveFilename = filename;
+}
+
+void KMComposeWin::cleanupAutoSave()
+{
+  kdDebug(5006) << k_funcinfo << endl;
+  delete mAutoSaveTimer; mAutoSaveTimer = 0;
+  if ( !mAutoSaveFilename.isEmpty() ) {
+    kdDebug(5006) << k_funcinfo << "deleting autosave file "
+                  << mAutoSaveFilename << endl;
+    KMFolderMaildir::removeFile( KMKernel::localDataPath() + "autosave",
+                                 mAutoSaveFilename );
+    mAutoSaveFilename = QString();
+  }
+}
+
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 {
   GlobalSettings::setCompletionMode( (int) mode );
@@ -4117,6 +4197,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 void KMComposeWin::slotConfigChanged()
 {
   readConfig();
+  updateAutoSave();
   rethinkFields();
 }
 
@@ -4565,14 +4646,14 @@ void KMAtmListViewItem::slotCompress()
         emit uncompress( itemPos() );
 }
 
-void KMAtmListViewItem::setUncompressedMimeType( QCString type, 
+void KMAtmListViewItem::setUncompressedMimeType( QCString type,
     QCString subtype )
 {
     mType = type;
     mSubtype = subtype;
 }
 
-void KMAtmListViewItem::uncompressedMimeType( QCString &type, 
+void KMAtmListViewItem::uncompressedMimeType( QCString &type,
     QCString &subtype )
 {
     type = mType;
@@ -4610,7 +4691,7 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
       !completionBox()->isVisible())
   {
     emit focusDown();
-    AddresseeLineEdit::keyPressEvent(e);    
+    AddresseeLineEdit::keyPressEvent(e);
     return;
   }
   if (e->key() == Key_Up)
@@ -4638,10 +4719,10 @@ void KMLineEdit::insertEmails( QStringList emails )
     // only one address, don't need kpopup to choose
     if ( emails.count() == 1 ) {
       contents.append( *it );
-    } else { 
+    } else {
       //multiple emails, let the user choose one
       KPopupMenu *menu = new KPopupMenu( this,"Addresschooser" );
-      for ( it = emails.begin(); it != emails.end(); ++it ) 
+      for ( it = emails.begin(); it != emails.end(); ++it )
         menu->insertItem( *it );
       int result = menu->exec( QCursor::pos() );
       contents.append( menu->text( result) );
@@ -4664,7 +4745,7 @@ void KMLineEdit::dropEvent(QDropEvent *event)
   } else {
     KURL::List urls;
     if ( KURLDrag::decode( event, urls) ) {
-      //kdDebug(5006) << "urlList" << endl; 
+      //kdDebug(5006) << "urlList" << endl;
       KURL::List::Iterator it = urls.begin();
       KABC::VCardConverter converter;
       KABC::Addressee::List list;
@@ -4908,7 +4989,7 @@ QString KMEdit::brokenText()
 unsigned int KMEdit::lineBreakColumn() const
 {
   unsigned int lineBreakColumn = 0;
-  unsigned int numlines = numLines(); 
+  unsigned int numlines = numLines();
   while ( numlines-- ) {
     lineBreakColumn = QMAX( lineBreakColumn, textLine( numlines ).length() );
   }

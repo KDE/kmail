@@ -151,7 +151,7 @@ public:
   void readConfig();
   void cleanupImapFolders();
   void testDir(const char *_name);
-  void recoverDeadLetters(void);
+  void recoverDeadLetters();
   void initFolders(KConfig* cfg);
   void closeAllKMailWindows();
   void cleanup(void);
@@ -220,6 +220,11 @@ public:
   bool shuttingDown() { return the_shuttingDown; }
   void setShuttingDown(bool flag) { the_shuttingDown = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
+
+  /** Returns the full path of the user's local data directory for KMail.
+      The path ends with '/'.
+  */
+  static QString localDataPath();
 
   /** Returns true if we have a system tray applet. This is needed in order
    *  to know whether the application should be allowed to exit in case the
@@ -364,8 +369,7 @@ private:
   QTextCodec *netCodec;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
-  QTimer *mDeadLetterTimer;
-  int mDeadLetterInterval;
+
   QTimer *mBackgroundTasksTimer;
   KMailICalIfaceImpl* mICalIface;
   JobScheduler* mJobScheduler;

@@ -244,11 +244,11 @@ public:
   void uncompressedMimeType( QCString &type, QCString &subtype );
   void setUncompressedCodec( QCString codec );
   QCString uncompressedCodec();
-  
+
 signals:
   void compress( int );
   void uncompress( int );
-                            
+
 protected:
   void enableCryptoCBs(bool on);
   void setEncrypt(bool on);
@@ -260,7 +260,7 @@ protected:
 
 private slots:
   void slotCompress();
-  
+
 private:
   QListView* mListview;
   QCheckBox* mCBEncrypt;
@@ -332,6 +332,11 @@ public:
    * message, call applyChanges() first.
    */
    KMMessage* msg(void) const { return mMsg; }
+
+  /**
+   * Set the filename which is used for autosaving.
+   */
+  void setAutoSaveFilename( const QString & filename );
 
   /**
    * Returns true if the message was modified by the user.
@@ -567,10 +572,7 @@ public slots:
   void slotSpellcheckDone(int result);
   void slotSpellcheckDoneClearStatus();
 
-  /**
-   * Append current message to ~/dead.letter
-   */
-  void deadLetter(void);
+  void autoSaveMessage();
 
   void updateCursorPosition();
 
@@ -773,6 +775,27 @@ private:
    */
   void doSend(int sendNow=-1, bool saveInDrafts = false);
 
+  /**
+   * Returns the autosave interval in milliseconds (as needed for QTimer).
+   */
+  int autoSaveInterval() const;
+
+  /**
+   * Initialize autosaving (timer and filename).
+   */
+  void initAutoSave();
+
+  /**
+   * Enables/disables autosaving depending on the value of the autosave
+   * interval.
+   */
+  void updateAutoSave();
+
+  /**
+   * Stop autosaving and delete the autosaved message.
+   */
+  void cleanupAutoSave();
+
 protected slots:
    /**
     * Compress an attachemnt with the given index
@@ -880,7 +903,7 @@ private slots:
 
   void slotContinueDoSend( bool );
   void slotContinuePrint( bool );
-  void slotContinueDeadLetter( bool );
+  void slotContinueAutoSave( bool );
 
   /**
    * Helper method (you could call is a bottom-half :) for
@@ -927,6 +950,10 @@ private:
 
   RecipientsEditor *mRecipientsEditor;
   int mLabelWidth;
+
+  QTimer *mAutoSaveTimer;
+  QString mAutoSaveFilename;
+  int mLastAutoSaveErrno; // holds the errno of the last try to autosave
 };
 
 #endif

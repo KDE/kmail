@@ -129,9 +129,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
 
   mXmlGuiInstance = 0;
-  mDeadLetterTimer = new QTimer( this );
-  connect( mDeadLetterTimer, SIGNAL(timeout()), SLOT(dumpDeadLetters()) );
-  mDeadLetterInterval = 1000*120; // 2 minutes
 
   new Kpgp::Module();
 
@@ -469,7 +466,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMComposeWin *cWin = new KMComposeWin();
   cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
-  cWin->setSigningAndEncryptionDisabled( isICalInvitation 
+  cWin->setSigningAndEncryptionDisabled( isICalInvitation
      && options.readBoolEntry( "LegacyBodyInvites", false ) );
   cWin->setAutoDelete( true );
   if( noWordWrap )
@@ -874,48 +871,36 @@ void KMKernel::testDir(const char *_name)
 
 
 //-----------------------------------------------------------------------------
-// Open a composer for each message found in ~/dead.letter
-//to control
-void KMKernel::recoverDeadLetters(void)
+// Open a composer for each message found in the dead.letter folder
+void KMKernel::recoverDeadLetters()
 {
-  KMComposeWin* win;
-  KMMessage* msg;
-  QDir dir = QDir::home();
-  QString fname = dir.path();
-  int i, rc, num;
+  const QString pathName = localDataPath();
+  QDir dir( pathName );
+  if ( !dir.exists( "autosave" ) )
+    return;
 
-  if (!dir.exists("dead.letter")) {
+  KMFolder folder( 0, pathName + "autosave", KMFolderTypeMaildir );
+  folder.setAutoCreateIndex( false );
+  const int rc = folder.open();
+  if ( rc ) {
+    perror( "cannot open autosave folder" );
     return;
   }
 
-  fname += "/dead.letter";
-  KMFolder folder(0, fname, KMFolderTypeMbox);
-
-  folder.setAutoCreateIndex(FALSE);
-  rc = folder.open();
-  if (rc)
-  {
-    perror(QString("cannot open file "+fname).latin1());
-    return;
-  }
-
-  //folder.open(); //again?
-
-  num = folder.count();
-  for (i=0; i<num; i++)
-  {
-    msg = folder.take(0);
-    if (msg)
-    {
-      win = new KMComposeWin();
-      win->setMsg(msg, false, false, true);
+  const int num = folder.count();
+  for ( int i = 0; i < num; i++ ) {
+    KMMessage *msg = folder.getMsg( i );
+    if ( msg ) {
+      KMComposeWin *win = new KMComposeWin();
+      win->setMsg( msg, false, false, true );
+      win->setAutoSaveFilename( msg->fileName() );
       win->show();
     }
   }
   folder.close();
-  QFile::remove(fname);
 }
 
+//-----------------------------------------------------------------------------
 void KMKernel::initFolders(KConfig* cfg)
 {
   QString name;
@@ -1086,14 +1071,6 @@ void KMKernel::init()
 
 void KMKernel::readConfig()
 {
-  KConfigGroup composer( config(), "Composer" );
-  // default to 2 minutes, convert to ms
-  mDeadLetterInterval = 1000 * 60 * composer.readNumEntry( "autosave", 2 );
-  kdDebug() << k_funcinfo << mDeadLetterInterval << endl;
-  if ( mDeadLetterInterval )
-    mDeadLetterTimer->start( mDeadLetterInterval );
-  else
-    mDeadLetterTimer->stop();
 }
 
 void KMKernel::cleanupImapFolders()
@@ -1207,7 +1184,6 @@ void KMKernel::closeAllKMailWindows()
 void KMKernel::cleanup(void)
 {
   dumpDeadLetters();
-  mDeadLetterTimer->stop();
   the_shuttingDown = true;
   closeAllKMailWindows();
 
@@ -1356,28 +1332,22 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
   recurse--;
 }
+
+
 void KMKernel::dumpDeadLetters()
 {
-  if (shuttingDown())
+  if ( shuttingDown() )
     return; //All documents should be saved before shutting down is set!
-  mDeadLetterTimer->stop();
-  QWidget *win;
-  QDir dir = QDir::home();
-  QString fname = dir.path();
-  QFile::remove(fname + "/dead.letter.tmp");
-  if (KMainWindow::memberList) {
-    QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
 
-    while ((win = it.current()) != 0) {
-      ++it;
-      if (::qt_cast<KMComposeWin*>(win)) ((KMComposeWin*)win)->deadLetter();
-      //    delete win; // WABA: Don't delete, we might crash in there!
+  // make all composer windows autosave their contents
+  if ( KMainWindow::memberList ) {
+    QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+    for ( ; it.current() != 0; ++it ) {
+      KMComposeWin *win = ::qt_cast<KMComposeWin*>( it.current() );
+      if ( win )
+        win->autoSaveMessage();
     }
   }
-  QFile::remove(fname + "/dead.letter");
-  dir.rename("dead.letter.tmp","dead.letter");
-  if ( mDeadLetterInterval )
-    mDeadLetterTimer->start(mDeadLetterInterval);
 }
 
 
@@ -1479,6 +1449,15 @@ void KMKernel::slotConfigChanged()
   readConfig();
   emit configChanged();
 }
+
+//-------------------------------------------------------------------------------
+//static
+QString KMKernel::localDataPath()
+{
+  return locateLocal( "data", "kmail/" );
+}
+
+//-------------------------------------------------------------------------------
 
 bool KMKernel::haveSystemTrayApplet()
 {
@@ -1848,7 +1827,7 @@ QValueList< QGuardedPtr<KMFolder> > KMKernel::allFolders()
   imapFolderMgr()->createFolderList(&names, &folders);
   dimapFolderMgr()->createFolderList(&names, &folders);
   searchFolderMgr()->createFolderList(&names, &folders);
-  
+
   return folders;
 }
 
