@@ -1048,7 +1048,7 @@ void KMMainWidget::slotOverrideThread()
 {
   mFolderThreadPref = !mFolderThreadPref;
   mHeaders->setNestedOverride(mFolderThreadPref);
-  threadBySubjectAction->setEnabled(!mFolderThreadPref);
+  threadBySubjectAction->setEnabled(threadMessagesAction->isChecked());
 }
 
 //-----------------------------------------------------------------------------
@@ -2778,7 +2778,7 @@ void KMMainWidget::updateFolderMenu()
   threadMessagesAction->setChecked(
       mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
   threadBySubjectAction->setEnabled(
-      mFolder ? (mThreadPref ? !mFolderThreadPref : mFolderThreadPref) : false );
+      mFolder ? (threadMessagesAction->isChecked()) : false );
   threadBySubjectAction->setChecked( mFolderThreadSubjPref );
 }
 
