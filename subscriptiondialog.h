@@ -56,7 +56,7 @@ namespace KMail {
        * get the listing from the imap-server
        */ 
       void slotListDirectory(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &);
+          QStringList, QStringList, const ImapAccountBase::jobData &);
 
       /** 
        * called by Ok-button, saves the changes
@@ -81,7 +81,8 @@ namespace KMail {
 
     private:
       QString mDelimiter;
-      QStringList mFolderNames, mFolderPaths, mFolderMimeTypes;
+      QStringList mFolderNames, mFolderPaths, 
+                  mFolderMimeTypes, mFolderAttributes;
       ImapAccountBase::jobData mJobData;
       uint mCount;
       bool mCheckForExisting;

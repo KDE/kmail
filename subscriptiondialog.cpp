@@ -53,9 +53,9 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
   // connect to folderlisting
   ImapAccountBase* iaccount = static_cast<ImapAccountBase*>(acct);
   connect(iaccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &)),
+          QStringList, QStringList, const ImapAccountBase::jobData &)),
       this, SLOT(slotListDirectory(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &)));
+          QStringList, QStringList, const ImapAccountBase::jobData &)));
 
   // ok-button
   connect(this, SIGNAL(okClicked()), SLOT(slotSave()));
@@ -71,11 +71,13 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 void SubscriptionDialog::slotListDirectory( QStringList subfolderNames,
                                             QStringList subfolderPaths,
                                             QStringList subfolderMimeTypes,
+                                            QStringList subfolderAttributes,
                                             const ImapAccountBase::jobData & jobData )
 {
   mFolderNames = subfolderNames;
   mFolderPaths = subfolderPaths;
   mFolderMimeTypes = subfolderMimeTypes;
+  mFolderAttributes = subfolderAttributes;
   mJobData = jobData;
 
   mCount = 0;

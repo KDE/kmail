@@ -1201,9 +1201,9 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
 
   // connect to folderlisting
   connect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &)),
+          QStringList, QStringList, const ImapAccountBase::jobData &)),
       this, SLOT(slotListResult(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &)));
+          QStringList, QStringList, const ImapAccountBase::jobData &)));
 
   // start a new listing for the root-folder
   bool reset = ( mImapPath == mAccount->prefix() &&
@@ -1221,12 +1221,14 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
 void KMFolderCachedImap::slotListResult( QStringList folderNames,
                                          QStringList folderPaths,
                                          QStringList folderMimeTypes,
+                                         QStringList folderAttributes,
                                          const ImapAccountBase::jobData & jobData )
 {
   //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" << folderPaths << " mimeTypes=" << folderMimeTypes << endl;
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
+  mSubfolderAttributes = folderAttributes;
   if (jobData.parent) {
     // the account is connected to several folders, so we
     // have to sort out if this result is for us
@@ -1234,12 +1236,14 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
   }
   // disconnect to avoid recursions
   disconnect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &)),
+          QStringList, QStringList, const ImapAccountBase::jobData &)),
       this, SLOT(slotListResult(QStringList, QStringList,
-          QStringList, const ImapAccountBase::jobData &)));
+          QStringList, QStringList, const ImapAccountBase::jobData &)));
 
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
+  // pass it to listDirectory2
+  mCreateInbox = jobData.createInbox;
 
   if (it_inboxOnly) {
     // list again only for the INBOX
@@ -1251,7 +1255,7 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
        && mAccount->prefix() == "/INBOX/" )
   {
     // do not create folders under INBOX
-    mAccount->setCreateInbox(FALSE);
+    mCreateInbox = false;
     mSubfolderNames.clear();
   }
   folder()->createChildFolder();
@@ -1262,7 +1266,7 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
     if (!node->isDir() ) {
       KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
       if ( mSubfolderNames.findIndex(node->name()) == -1 &&
-          (node->name().upper() != "INBOX" || !mAccount->createInbox()) )
+          (node->name().upper() != "INBOX" || !mCreateInbox) )
       {
         // This subfolder isn't present on the server
         if( !f->imapPath().isEmpty()  ) {
@@ -1296,7 +1300,7 @@ void KMFolderCachedImap::listDirectory2() {
   KMFolderCachedImap *f = 0;
   kmkernel->dimapFolderMgr()->quiet(true);
 
-  if (mAccount->createInbox())
+  if (mCreateInbox)
   {
     KMFolderNode *node;
     // create the INBOX
@@ -1317,7 +1321,6 @@ void KMFolderCachedImap::listDirectory2() {
       kmkernel->dimapFolderMgr()->contentsChanged();
     }
     // so we have an INBOX
-    mAccount->setCreateInbox( false );
     mAccount->setHasInbox( true );
   }
 

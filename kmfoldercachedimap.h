@@ -216,7 +216,7 @@ protected slots:
    * creates/removes folders
    */
   void slotListResult(QStringList, QStringList,
-      QStringList, const ImapAccountBase::jobData &);
+      QStringList, QStringList, const ImapAccountBase::jobData &);
 
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
@@ -326,7 +326,8 @@ private:
   QString mUidValidity;
   QString     mImapPath;
   imapState   mContentState, mSubfolderState;
-  QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
+  QStringList mSubfolderNames, mSubfolderPaths, 
+              mSubfolderMimeTypes, mSubfolderAttributes;
 
   bool        mHasInbox;
   bool        mIsSelected;
@@ -359,6 +360,7 @@ private:
   bool mResync;
   //bool mHoldSyncs;
   bool mRecurse;
+  bool mCreateInbox;
 };
 
 #endif /*kmfoldercachedimap_h*/

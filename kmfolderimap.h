@@ -351,7 +351,7 @@ protected slots:
    * creates/removes folders
    */
   void slotListResult(QStringList, QStringList,
-      QStringList, const ImapAccountBase::jobData &);
+      QStringList, QStringList, const ImapAccountBase::jobData &);
 
   /**
    * Retrieve the whole folder or only the changes

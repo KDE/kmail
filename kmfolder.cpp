@@ -16,6 +16,7 @@
 #include <libkdepim/identity.h>
 #include "kmailicalifaceimpl.h"
 #include "expirejob.h"
+#include "kmfoldertree.h"
 
 #include <errno.h>
 
@@ -34,7 +35,8 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
     mExpireAction( ExpireDelete ),
-    mUseCustomIcons( false ), mMailingListEnabled( false ), mContentsType( 0 )
+    mUseCustomIcons( false ), mMailingListEnabled( false ), 
+    mContentsType( 0 )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
@@ -87,6 +89,9 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 
   //FIXME: Centralize all the readConfig calls somehow - Zack
   mStorage->readConfig();
+
+  if ( mId == 0 )
+    mId = aParent->manager()->createId();
 }
 
 KMFolder::~KMFolder()
@@ -209,6 +214,12 @@ KMFolderDir* KMFolder::createChildFolder()
   mChild->reload();
   parent()->append( mChild );
   return mChild;
+}
+
+void KMFolder::setChild( KMFolderDir* aChild )
+{
+  mChild = aChild;
+  mStorage->updateChildrenState();
 }
 
 bool KMFolder::noContent() const

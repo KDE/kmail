@@ -89,6 +89,10 @@ namespace KMail {
     bool loadOnDemand() const { return mLoadOnDemand; }
     virtual void setLoadOnDemand( bool load );
 
+    /** @return whether to list only open folders */
+    bool listOnlyOpenFolders() const { return mListOnlyOpenFolders; }
+    virtual void setListOnlyOpenFolders( bool only );
+
     /** Configure the slave by adding to the meta data map */
     virtual KIO::MetaData slaveConfig() const;
 
@@ -111,15 +115,16 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0),
-          progressItem(0), inboxOnly(false), quiet(false), cancellable(false)
-      {}
+      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), progressItem(0),
+                  inboxOnly(false), quiet(false), cancellable(false), createInbox(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
-          int _total = 1, int _done = 0, bool _quiet = false, bool _inboxOnly = false )
+          int _total = 1, int _done = 0, bool _quiet = false, 
+          bool _inboxOnly = false, bool _cancelable = false, bool _createInbox = false )
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
-          progressItem(0), inboxOnly(_inboxOnly), quiet(_quiet), cancellable(false)
-      {}
+          progressItem(0), inboxOnly(_inboxOnly), quiet(_quiet), cancellable(_cancelable), 
+          createInbox(_createInbox) {}
+
       // Return "url" in a form that can be displayed in HTML (w/o password)
       QString htmlURL() const;
 
@@ -132,7 +137,8 @@ namespace KMail {
       QPtrList<KMMessage> msgList;
       int total, done, offset;
       ProgressItem *progressItem;
-      bool inboxOnly, quiet, onlySubscribed, cancellable;
+      bool inboxOnly, onlySubscribed, quiet,
+           cancellable, createInbox;
     };
 
     typedef QMap<KIO::Job *, jobData>::Iterator JobIterator;
@@ -232,12 +238,6 @@ namespace KMail {
     bool checkingMail( KMFolder *folder );
 
     bool checkingMail() { return NetworkAccount::checkingMail(); }
-
-    /**
-     * Set whether the current listDirectory should create an INBOX
-     */
-    bool createInbox() { return mCreateInbox; }
-    void setCreateInbox( bool create ) { mCreateInbox = create; }
 
     /**
      * Handles the result from a BODYSTRUCTURE fetch
@@ -351,7 +351,7 @@ namespace KMail {
   protected:
     QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
     QStringList mSubfolderNames, mSubfolderPaths,
-        mSubfolderMimeTypes;
+        mSubfolderMimeTypes, mSubfolderAttributes;
     QMap<KIO::Job *, jobData> mapJobData;
     QTimer mIdleTimer;
     QString mPrefix;
@@ -361,6 +361,7 @@ namespace KMail {
     bool mHiddenFolders : 1;
     bool mOnlySubscribedFolders : 1;
     bool mLoadOnDemand : 1;
+    bool mListOnlyOpenFolders : 1;
     bool mProgressEnabled : 1;
 
     bool mIdle : 1;
@@ -372,7 +373,6 @@ namespace KMail {
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
         // folders that should be checked after the current check is done
 	QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
-    bool mCreateInbox;
     // holds messageparts from the bodystructure
     QPtrList<KMMessagePart> mBodyPartList;
     // the current message for the bodystructure
@@ -393,7 +393,7 @@ namespace KMail {
      * Emitted when new folders have been received
      */
     void receivedFolders(QStringList, QStringList,
-        QStringList, const ImapAccountBase::jobData &);
+        QStringList, QStringList, const ImapAccountBase::jobData &);
 
     /**
      * Emitted when the subscription has changed,

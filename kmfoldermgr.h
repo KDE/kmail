@@ -36,15 +36,19 @@ public:
   virtual KMFolder* find(const QString& folderName, bool foldersOnly=TRUE);
 
   /** Searches for a folder with the given id, recurses into directories */
-  virtual KMFolder* findIdString(const QString& folderId, KMFolderDir *dir=0);
+  virtual KMFolder* findIdString(const QString& folderId,
+     const uint id = 0, KMFolderDir *dir = 0);
 
   /** Uses find() to find given folder. If not found the folder is
-    created. Directories are skipped. */
-  virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE);
+   * created. Directories are skipped. 
+   * If an id is passed this searches for it
+   */
+  virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE,
+      const uint id = 0);
 
   /** Searches folder by id and returns it. Skips directories
-    (objects of type KMFolderDir) if foldersOnly is TRUE. */
-  virtual KMFolder* findById(const uint id, bool foldersOnly=TRUE);
+    (objects of type KMFolderDir) */
+  virtual KMFolder* findById(const uint id);
 
   virtual void        getFolderURLS( QStringList& flist,
                                      const QString& prefix=QString::null,
@@ -113,6 +117,9 @@ public:
   /** Try closing @p folder if possible, something is attempting an exclusive access to it.
       Currently used for KMFolderSearch and the background tasks like expiry */
   void tryReleasingFolder(KMFolder* folder, KMFolderDir *Dir=0);
+
+  /** Create a new unique ID */
+  uint createId();
 
 public slots:
   /** Compacts all folders (they know is it needed) */

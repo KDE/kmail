@@ -1009,7 +1009,7 @@ void KMKernel::cleanupImapFolders()
 
     if (acct->type() != "imap") continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
-      ->findOrCreate(QString::number(acct->id()), false)->storage());
+      ->findOrCreate(QString::number(acct->id()), false, acct->id())->storage());
     fld->setNoContent(true);
     fld->folder()->setLabel(acct->name());
     imapAcct = static_cast<KMAcctImap*>(acct);

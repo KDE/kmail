@@ -156,6 +156,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *progressDialogCheck;  // only used by Disconnected IMAP
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
+      QCheckBox    *listOnlyOpenCheck;
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
       QButtonGroup *encryptionGroup;
@@ -170,7 +171,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authDigestMd5;
       QRadioButton *authAnonymous;
       QPushButton  *checkCapabilities;
-			KMFolderComboBox  *trashCombo;
+      KMFolderComboBox  *trashCombo;
     };
 
   private slots:

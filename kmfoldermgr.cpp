@@ -22,6 +22,7 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kapplication.h>
 
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
@@ -208,32 +209,28 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 }
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::findById(const uint id, bool foldersOnly)
+KMFolder* KMFolderMgr::findById(const uint id)
 {
-  KMFolderNode* node;
-
-  for (node=mDir.first(); node; node=mDir.next())
-  {
-    if (node->isDir() && foldersOnly) continue;
-    if (node->id()==id) return (KMFolder*)node;
-  }
-  return 0;
+  return findIdString( QString::null, id );
 }
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
+KMFolder* KMFolderMgr::findIdString( const QString& folderId,
+                                     const uint id, 
+                                     KMFolderDir *dir )
 {
   if (!dir)
-    dir = static_cast<KMFolderDir*>(&mDir);
+    dir = &mDir;
 
   DO_FOR_ALL(
         {
-          KMFolder *folder = findIdString( folderId, child);
-          if (folder)
+          KMFolder *folder = findIdString( folderId, id, child );
+          if ( folder )
              return folder;
         },
         {
-          if (folder->idString() == folderId)
+          if ( ( !folderId.isEmpty() && folder->idString() == folderId ) ||
+               ( id != 0 && folder->id() == id ) )
              return folder;
         }
   )
@@ -278,9 +275,14 @@ KMFolder* KMFolderMgr::getFolderByURL( const QString& vpath,
 }
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
+KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr,
+                                    const uint id)
 {
-  KMFolder* folder = find(aFolderName);
+  KMFolder* folder = 0;
+  if ( id == 0 )
+    folder = find(aFolderName);
+  else
+    folder = findById(id);
 
   if (!folder)
   {
@@ -304,6 +306,8 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
       KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
       exit(-1);
     }
+    if ( id > 0 )
+      folder->setId( id );
   }
   return folder;
 }
@@ -355,6 +359,18 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
     }
   }
   aFolder->parent()->remove(aFolder);
+  // find the parent folder by stripping "." and ".directory" from the name
+  QString parentName = fdir->name();
+  parentName = parentName.mid( 1, parentName.length()-11 );
+  KMFolderNode* parent = fdir->hasNamedFolder( parentName );
+  if ( !parent && fdir->parent() ) // dimap obviously has a different structure
+    parent = fdir->parent()->hasNamedFolder( parentName );
+  // update the children state
+  if ( parent )
+    static_cast<KMFolder*>(parent)->storage()->updateChildrenState();
+  else
+    kdWarning(5006) << "Can not find parent folder" << endl;
+
   if (aFolder == mRemoveOrig) {
     // call only if we're removing the original parent folder
     contentsChanged();
@@ -552,6 +568,18 @@ void KMFolderMgr::tryReleasingFolder(KMFolder* f, KMFolderDir* adir)
 	         folder->storage()->tryReleasingFolder(f);
              }
   )
+}
+
+//-----------------------------------------------------------------------------
+uint KMFolderMgr::createId()
+{
+  int newId;
+  do
+  {
+    newId = kapp->random();
+  } while ( findById( newId ) != 0 );
+
+  return newId;
 }
 
 #include "kmfoldermgr.moc"

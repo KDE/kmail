@@ -552,6 +552,13 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 
       // create new child
       fti = new KMFolderTreeItem( parent, folder->label(), folder );
+      // set folders explicitely to exandable even with unknown child state
+      // this way we can do a listing for IMAP folders when they're expanded
+      if ( folder->storage()->hasChildren() != FolderStorage::HasNoChildren )
+        fti->setExpandable( true );
+      else
+        fti->setExpandable( false );
+
       connect (fti, SIGNAL(iconChanged(KMFolderTreeItem*)),
                this, SIGNAL(iconChanged(KMFolderTreeItem*)));
       connect (fti, SIGNAL(nameChanged(KMFolderTreeItem*)),
@@ -561,18 +568,10 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     fti->setOpen( readIsListViewItemOpen(fti) );
 
     // add child-folders
-    if (folder && folder->child())
+    if (folder && folder->child()) {
       addDirectory( folder->child(), fti );
-    // make sure that the folder-settings are correctly read on startup by calling listDirectory
-   if (readIsListViewItemOpen(fti) &&
-        fti->folder() && fti->folder()->folderType() == KMFolderTypeImap) {
-      disconnect( this, SIGNAL( expanded( QListViewItem* ) ),
-           this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
-      slotFolderExpanded(fti);
-      connect( this, SIGNAL( expanded( QListViewItem* ) ),
-           this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
-   }
-  } // for-end
+    }
+   } // for-end
 }
 
 //-----------------------------------------------------------------------------
@@ -620,7 +619,7 @@ void KMFolderTree::doFolderListChanged()
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotAccountRemoved(KMAccount *)
 {
-    doFolderSelected( firstChild() );
+  doFolderSelected( firstChild() );
 }
 
 //-----------------------------------------------------------------------------
@@ -783,6 +782,8 @@ KMFolder *KMFolderTree::currentFolder() const
 void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
   if (!qlvi) return;
+  if ( mLastItem && mLastItem == qlvi )
+    return;
 
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = 0;
@@ -795,11 +796,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     imapFolder->setSelected(FALSE);
     KMAcctImap *act = imapFolder->account();
     if (act)
-    {
-      // Can't we do without this? -till
-      //act->killAllJobs();
       act->setIdle(TRUE);
-    }
   }
   mLastItem = fti;
 
@@ -1069,7 +1066,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   }
   KConfigGroupSaver saver(config, name);
 
-  return config->readBoolEntry("isOpen", true);
+  return config->readBoolEntry("isOpen", false);
 }
 
 //-----------------------------------------------------------------------------
@@ -1094,7 +1091,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
     return;
   }
   KConfigGroupSaver saver(config, name);
-  config->writeEntry("isOpen", fti->isOpen());
+  config->writeEntry("isOpen", fti->isOpen() );
 }
 
 
@@ -1352,15 +1349,30 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder() && fti->folder()->folderType() == KMFolderTypeImap &&
-      !fti->parent())
+
+  if ( fti && fti->folder() &&
+       fti->folder()->folderType() == KMFolderTypeImap )
   {
-    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder()->storage());
-    if (folder->getSubfolderState() == KMFolderImap::imapNoInformation)
+    KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
+    // if we should list all folders we limit this to the root folder
+    if ( !folder->account()->listOnlyOpenFolders() &&
+         fti->parent() )
+      return;
+    if ( folder->getSubfolderState() == KMFolderImap::imapNoInformation )
     {
+      // check if all parents are expanded
+      QListViewItem *parent = item->parent();
+      while ( parent )
+      {
+        if ( !parent->isOpen() )
+          return;
+        parent = parent->parent();
+      }
       // the tree will be reloaded after that
       bool success = folder->listDirectory();
       if (!success) fti->setOpen( false );
+      if ( fti->childCount() == 0 )
+        fti->setExpandable( false );
     }
   }
 }
@@ -1369,12 +1381,33 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
-  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->parent() == firstChild() && fti->folder()
-    && fti->folder()->folderType() == KMFolderTypeImap)
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
+  if ( fti && fti->folder() &&
+       fti->folder()->folderType() == KMFolderTypeImap )
   {
-    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder()->storage());
-    folder->setSubfolderState(KMFolderImap::imapNoInformation);
+    KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
+    if ( !fti->parent() ||
+         folder->account()->listOnlyOpenFolders() )
+    {
+      folder->setSubfolderState( KMFolderImap::imapNoInformation );
+    }
+    if ( !fti->parent() &&
+         folder->account()->listOnlyOpenFolders() )
+    {
+      // set all childs to noInformation so that it's possible to start
+      // a new listing
+      QListViewItemIterator it( item );
+      while ( it.current() )
+      {
+        KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( it.current() );
+        if ( fti && fti->folder() && fti->folder()->storage() )
+        {
+          KMFolderImap *folder = static_cast<KMFolderImap*>( fti->folder()->storage() );
+          folder->setSubfolderState( KMFolderImap::imapNoInformation );
+        }
+        ++it;
+      }
+    }
   }
 }
 

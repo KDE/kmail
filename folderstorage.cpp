@@ -78,6 +78,7 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
+  mHasChildren = HasNoChildren;
 }
 
 
@@ -950,6 +951,26 @@ size_t FolderStorage::crlf2lf( char* str, const size_t strLen )
   }
   *target = '\0'; // terminate result
   return target - str;
+}
+
+//-----------------------------------------------------------------------------
+void FolderStorage::updateChildrenState()
+{
+  if ( folder() && folder()->child() )
+  {
+    if ( kmkernel->folderMgr()->folderCount( folder()->child() ) > 0 )
+      setHasChildren( HasChildren );
+    else
+      setHasChildren( HasNoChildren );
+  }
+}
+
+//-----------------------------------------------------------------------------
+void FolderStorage::setNoChildren( bool aNoChildren )
+{
+  mNoChildren = aNoChildren;
+  if ( aNoChildren )
+    setHasChildren( HasNoChildren );
 }
 
 #include "folderstorage.moc"

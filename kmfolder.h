@@ -33,6 +33,7 @@ class KMMsgDict;
 class KMMsgDictREntry;
 class QTimer;
 class FolderStorage;
+class KMFolderTreeItem;
 
 namespace KMail {
    class AttachmentStrategy;
@@ -97,8 +98,7 @@ public:
   KMFolderDir* createChildFolder();
 
   /** Set the folder directory associated with this node */
-  void setChild( KMFolderDir* aChild )
-    { mChild = aChild; }
+  void setChild( KMFolderDir* aChild );
 
   /** Returns, if the folder can't contain mails, but only subfolder */
   bool noContent() const;

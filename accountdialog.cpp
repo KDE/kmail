@@ -859,6 +859,14 @@ void AccountDialog::makeImapAccountPage( bool connected )
     grid->addMultiCellWidget( mImap.loadOnDemandCheck, row, row, 0, 1 );
   }
 
+  if ( !connected ) {
+    // not implemented for disconnected yet
+    ++row;
+    mImap.listOnlyOpenCheck = new QCheckBox(
+        i18n("List only open folders"), page1);
+    grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
+  }
+
   ++row;
 #if 0
   QHBox* resourceHB = new QHBox( page1 );
@@ -1070,6 +1078,7 @@ void AccountDialog::setupSettings()
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.loadOnDemandCheck->setChecked( ai.loadOnDemand() );
+    mImap.listOnlyOpenCheck->setChecked( ai.listOnlyOpenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
@@ -1614,6 +1623,7 @@ void AccountDialog::saveSettings()
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setLoadOnDemand( mImap.loadOnDemandCheck->isChecked() );
+    epa.setListOnlyOpenFolders( mImap.listOnlyOpenCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     KMFolder *t = mImap.trashCombo->getFolder();

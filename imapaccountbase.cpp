@@ -85,12 +85,12 @@ namespace KMail {
       mHiddenFolders( false ),
       mOnlySubscribedFolders( false ),
       mLoadOnDemand( true ),
+      mListOnlyOpenFolders( false ),
       mProgressEnabled( false ),
       mIdle( true ),
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
-      mCreateInbox( false ),
       mProgressItem( 0 )
   {
     mPort = imapDefaultPort;
@@ -113,6 +113,7 @@ namespace KMail {
     mHiddenFolders = false;
     mOnlySubscribedFolders = false;
     mLoadOnDemand = true;
+    mListOnlyOpenFolders = false;
     mProgressEnabled = false;
   }
 
@@ -127,6 +128,7 @@ namespace KMail {
     setHiddenFolders( i->hiddenFolders() );
     setOnlySubscribedFolders( i->onlySubscribedFolders() );
     setLoadOnDemand( i->loadOnDemand() );
+    setListOnlyOpenFolders( i->listOnlyOpenFolders() );
   }
 
   unsigned short int ImapAccountBase::defaultPort() const {
@@ -173,6 +175,10 @@ namespace KMail {
     mLoadOnDemand = load;
   }
 
+  void ImapAccountBase::setListOnlyOpenFolders( bool only ) {
+    mListOnlyOpenFolders = only;
+  }
+
   //
   //
   // read/write config
@@ -187,6 +193,7 @@ namespace KMail {
     setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
     setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
     setLoadOnDemand( config.readBoolEntry( "loadondemand", false ) );
+    setListOnlyOpenFolders( config.readBoolEntry( "listOnlyOpenFolders", false ) );
   }
 
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
@@ -197,6 +204,7 @@ namespace KMail {
     config.writeEntry( "hidden-folders", hiddenFolders() );
     config.writeEntry( "subscribed-folders", onlySubscribedFolders() );
     config.writeEntry( "loadondemand", loadOnDemand() );
+    config.writeEntry( "listOnlyOpenFolders", listOnlyOpenFolders() );
   }
 
   //
@@ -290,6 +298,7 @@ namespace KMail {
     jd.total = 1; jd.done = 0;
     jd.path = path;
     jd.cancellable = true;
+    jd.createInbox = ( secondStep && !mHasInbox ) ? true : false;
     // reset for a new listing
     if (reset)
       mHasInbox = false;
@@ -299,7 +308,6 @@ namespace KMail {
       && path == prefix() && !mHasInbox;
     jd.onlySubscribed = (subscription != List);
     if (parent) jd.parent = parent;
-    if (!secondStep) mCreateInbox = FALSE;
     // make the URL
     QString type = "LIST";
     if (subscription == ListSubscribed)
@@ -313,6 +321,7 @@ namespace KMail {
     mSubfolderNames.clear();
     mSubfolderPaths.clear();
     mSubfolderMimeTypes.clear();
+    mSubfolderAttributes.clear();
     // and go
     KIO::SimpleJob *job = KIO::listDir(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
@@ -331,10 +340,12 @@ namespace KMail {
     QString name;
     KURL url;
     QString mimeType;
+    QString attributes;
     for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
         udsIt != uds.end(); udsIt++)
     {
       mimeType = QString::null;
+      attributes = QString::null;
       for (KIO::UDSEntry::ConstIterator eIt = (*udsIt).begin();
           eIt != (*udsIt).end(); eIt++)
       {
@@ -345,6 +356,8 @@ namespace KMail {
           url = KURL((*eIt).m_str, 106); // utf-8
         else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
           mimeType = (*eIt).m_str;
+        else if ((*eIt).m_uds == KIO::UDS_EXTRA)
+          attributes = (*eIt).m_str;
       }
       if ((mimeType == "inode/directory" || mimeType == "message/digest"
             || mimeType == "message/directory")
@@ -356,7 +369,7 @@ namespace KMail {
             !mHasInbox)
         {
           // our INBOX
-          mCreateInbox = TRUE;
+          (*it).createInbox = true;
         }
 
         // Some servers send _lots_ of duplicates
@@ -367,6 +380,7 @@ namespace KMail {
           mSubfolderNames.append(name);
           mSubfolderPaths.append(url.path());
           mSubfolderMimeTypes.append(mimeType);
+          mSubfolderAttributes.append(attributes);
         }
       }
     }
@@ -387,12 +401,13 @@ namespace KMail {
     {
       // transport the information, include the jobData
       emit receivedFolders(mSubfolderNames, mSubfolderPaths,
-          mSubfolderMimeTypes, *it);
+          mSubfolderMimeTypes, mSubfolderAttributes, *it);
       removeJob(it);
     }
     mSubfolderNames.clear();
     mSubfolderPaths.clear();
     mSubfolderMimeTypes.clear();
+    mSubfolderAttributes.clear();
   }
 
   //-----------------------------------------------------------------------------

@@ -115,8 +115,23 @@ public:
   virtual bool noChildren() const { return mNoChildren; }
 
   /** Specify, that the folder can't have children */
-  virtual void setNoChildren(bool aNoChildren)
-    { mNoChildren = aNoChildren; }
+  virtual void setNoChildren( bool aNoChildren );
+
+  enum ChildrenState {
+    HasChildren,
+    HasNoChildren,
+    ChildrenUnknown
+  };
+  /** Returns if the folder has children,
+   *  has no children or we don't know */
+  virtual ChildrenState hasChildren() const { return mHasChildren; }
+
+  /** Specify if the folder has children */
+  virtual void setHasChildren( ChildrenState state )
+    { mHasChildren = state; }
+
+  /** Updates the hasChildren() state */
+  virtual void updateChildrenState();
 
   /** Read message at given index. Indexing starts at zero */
   virtual KMMessage* getMsg(int idx);
@@ -507,6 +522,8 @@ protected:
 
   QTimer *mDirtyTimer;
   enum { mDirtyTimerInterval = 600000 }; // 10 minutes
+
+  ChildrenState mHasChildren;
 
   KMFolder* mFolder;
 };
