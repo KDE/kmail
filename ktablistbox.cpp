@@ -135,7 +135,7 @@ void KTabListBoxColumn::paintCell(QPainter* paint, int row,
   {
   case KTabListBox::PixmapColumn:
     if (string) pix = parent->dict().find(string);
-    if (pix)
+    if (pix && !pix->isNull())
     {
       paint->drawPixmap(0, 0, *pix);
       break;
@@ -163,10 +163,9 @@ void KTabListBoxColumn::paintCell(QPainter* paint, int row,
 	if (!pix)
 	{
 	  warning("KTabListBox "+QString(name())+
-		  ":\nno pixmap with\ninternal name '"+pixName+
-		  "' registered.");
+		  ":\nno pixmap for\n`"+pixName+"' registered.");
 	} 
-	paint->drawPixmap(x, 0, *pix);
+	if (!pix->isNull()) paint->drawPixmap(x, 0, *pix);
 	x += pix->width()+1;
 	beg = end;
       }

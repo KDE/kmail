@@ -16,8 +16,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+extern "C" 
+{
 #include <regex.h>
-
+}
 
 #define MAX_LINE 4096
 #define INIT_MSGS 32
@@ -128,7 +130,8 @@ int KMFolder::create(void)
   }
   else
   {
-    debug("no path for folder "+name()+" -- turning autoCreateToc off");
+    debug("folder " + name() +
+	  " has no path specified -- turning autoCreateToc off");
     mAutoCreateToc = FALSE;
   }
 

@@ -11,12 +11,15 @@
 #include <drag.h>
 #include <qstrlist.h>
 #include <klocale.h>
+#include <kiconloader.h>
 
 
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name, 4)
 {
   QString kdir = app->kdedir();
+  KIconLoader* loader = app->getIconLoader();
+  static QPixmap pixNew, pixUns, pixDel, pixOld;
 
   folder = NULL;
   getMsgIndex = -1;
@@ -28,14 +31,15 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
   setColumn(3, nls->translate("Date"), 100);
   readConfig();
 
-  dict().insert(KMMessage::statusToStr(KMMessage::stNew),
-		new QPixmap(kdir+"/lib/pics/kmmsgnew.xpm"));
-  dict().insert(KMMessage::statusToStr(KMMessage::stUnread),
-		new QPixmap(kdir+"/lib/pics/kmmsgunseen.xpm"));
-  dict().insert(KMMessage::statusToStr(KMMessage::stDeleted),
-		new QPixmap(kdir+"/lib/pics/kmmsgdel.xpm"));
-  dict().insert(KMMessage::statusToStr(KMMessage::stOld),
-		new QPixmap(kdir+"/lib/pics/kmmsgold.xpm"));
+  pixNew = loader->loadIcon("kmmsgnew.xpm");
+  pixUns = loader->loadIcon("kmmsgunseen.xpm");
+  pixDel = loader->loadIcon("kmmsgdel.xpm");
+  pixOld = loader->loadIcon("kmmsgold.xpm");
+
+  dict().insert(KMMessage::statusToStr(KMMessage::stNew), &pixNew);
+  dict().insert(KMMessage::statusToStr(KMMessage::stUnread), &pixUns);
+  dict().insert(KMMessage::statusToStr(KMMessage::stDeleted), &pixDel);
+  dict().insert(KMMessage::statusToStr(KMMessage::stOld), &pixOld);
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
@@ -136,20 +140,29 @@ void KMHeaders::deleteMsg (int msgId)
   KMMessage* msg;
   int rc, num;
 
+  kbp->busy();
+
+  if (num > 3)
+  {
+    folder->quiet(TRUE);
+    setAutoUpdate(FALSE);
+  }
+
   for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
     msgList.append(msg);
   unmarkAll();
-
-  if (num > 3) setAutoUpdate(FALSE);
 
   for (msg=msgList.first(); msg; msg=msgList.next())
     rc = trashFolder->moveMsg(msg);
 
   if (num > 3)
   {
+    folder->quiet(FALSE);
     setAutoUpdate(TRUE);
     repaint();
   }
+
+  kbp->idle();
 }
 
 
