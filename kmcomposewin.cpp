@@ -1413,12 +1413,8 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  if (!kernel->useKAB()) {
-    KMAddrBookEditDlg dlg( kernel->addrBook(), this );
-    dlg.exec();
-  }
-  else
-    debug("KMComposeWin::slotAddrBook: not implemented.");
+  KMAddrBookEditDlg dlg( kernel->addrBook(), this );
+  dlg.exec();
 }
 
 
