@@ -686,6 +686,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       }
     }
 
+    if (mScoringManager)
+      mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
+
     updateMessageList();
 
     if (mFolder && !jumpToFirst)
@@ -761,6 +764,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       showingSize = false;
     }
 
+    mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
     if (mPaintInfo.showScore) {
       colText = i18n( "Score" );
       if (showingScore) {
@@ -778,6 +782,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       }
     }
   }
+   qDebug("end %d %s:%d", (QTime::currentTime().second()*1000)+QTime::currentTime().msec(), __FILE__,__LINE__);
 }
 
 // QListView::setContentsPos doesn't seem to work
@@ -865,7 +870,6 @@ void KMHeaders::msgRemoved(int id, QString msgId)
     mPrevCurrent = 0;
   KMHeaderItem *removedItem = mItems[id];
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
-    //    kdDebug() << QString("i = %1, id =%2").arg(i).arg(mItems[i+1]->msgId()) << endl;
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
   }
@@ -1431,11 +1435,21 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   item = static_cast<KMHeaderItem*>(curItem);
   if (item  && !item->isSelected())
     curMsg = mFolder->getMsgBase(item->msgId());
-
   contentX = contentsX();
   contentY = contentsY();
 
+  // The following is a rather delicate process. We can't allow getMsg
+  // to be called on messages in msgList as then we will try to operate on a
+  // dangling pointer below (assuming a KMMsgInfo* is deleted and a KMMessage*
+  // is created when getMsg is called).
+  //
+  // But KMMainWin was modified recently so that exactly that happened
+  // (a slot was connected to the selectionChanged signal.
+  //
+  // So we block all signals for awhile to avoid this.
+
   msgList = selectedMsgs(msgId);
+  blockSignals( true ); // don't emit signals when the current message is
 
   int index;
   for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
@@ -1460,12 +1474,13 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     }
   }
 
+  blockSignals( false );
+
   emit selected( 0 );
   if (curMsg) {
     kdDebug() << "new message should be current!" << endl;
     setSelected( currentItem(), TRUE );
     setCurrentMsg( mFolder->find( curMsg ) );
-    // sanders QListView isn't emitting a currentChanged signal?
     highlightMessage( currentItem(), true);
   }
   else
