@@ -119,6 +119,10 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const = 0;
 
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const = 0;
+
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns TRUE if a change was made.  */
@@ -175,7 +179,12 @@ public:
   /** Return extra arguments as string. Must not contain newlines. We
       return @see QString::null, because we have no parameter. */
   virtual const QString argsAsString() const { return QString::null; }
+
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
 };
+
 
 //=========================================================
 //
@@ -233,6 +242,10 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
+
 protected:
   QString mParameter;
 };
@@ -275,6 +288,10 @@ public:
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
+
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
 
 protected:
   uint mParameter;
@@ -395,6 +412,10 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
+
   /** Called from the filter when a folder is removed.  Tests if the
       folder @p aFolder is used and changes to @p aNewFolder in this
       case. Returns TRUE if a change was made.  */
@@ -513,6 +534,10 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
+
 protected:
   QString mParameter;
 };
@@ -589,6 +614,10 @@ public:
 
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
+
+  /** Returns a translated string describing this filter for visualization 
+      purposes, e.g. in the filter log. */
+  virtual const QString displayString() const;
 
 protected:
   QString mParameter;

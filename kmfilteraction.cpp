@@ -43,6 +43,7 @@ using KMail::ActionScheduler;
 #include <qtextcodec.h>
 #include <qtimer.h>
 #include <qobject.h>
+#include <qstylesheet.h>
 #include <assert.h>
 
 
@@ -129,6 +130,11 @@ KMFilterActionWithNone::KMFilterActionWithNone( const char* aName, const QString
 {
 }
 
+const QString KMFilterActionWithNone::displayString() const
+{
+  return label();
+}
+
 
 //=============================================================================
 //
@@ -150,6 +156,14 @@ const QString KMFilterActionWithUOID::argsAsString() const
 {
   return QString::number( mParameter );
 }
+
+const QString KMFilterActionWithUOID::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+}
+
 
 //=============================================================================
 //
@@ -192,6 +206,13 @@ void KMFilterActionWithString::argsFromString( const QString argsStr )
 const QString KMFilterActionWithString::argsAsString() const
 {
   return mParameter;
+}
+
+const QString KMFilterActionWithString::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
 }
 
 //=============================================================================
@@ -254,7 +275,7 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  FolderRequester *req = new FolderRequester( parent, 
+  FolderRequester *req = new FolderRequester( parent,
       kmkernel->getKMMainWidget()->folderTree() );
   req->setShowImapFolders( false );
   setParamWidgetValue( req );
@@ -306,6 +327,16 @@ const QString KMFilterActionWithFolder::argsAsString() const
   else
     result = mFolderName;
   return result;
+}
+
+const QString KMFilterActionWithFolder::displayString() const
+{
+  QString result;
+  if ( mFolder )
+    result = mFolder->prettyURL();
+  else
+    result = mFolderName;
+  return label() + " \"" + QStyleSheet::escape( result ) + "\"";
 }
 
 bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
@@ -710,6 +741,7 @@ public:
 
   virtual void argsFromString( const QString argsStr );
   virtual const QString argsAsString() const;
+  virtual const QString displayString() const;
 };
 
 
@@ -791,6 +823,12 @@ const QString KMFilterActionSetStatus::argsAsString() const
   return KMMsgBase::statusToStr(status);
 }
 
+const QString KMFilterActionSetStatus::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+}
 
 //=============================================================================
 // KMFilterActionFakeDisposition - send fake MDN
@@ -809,6 +847,7 @@ public:
 
   virtual void argsFromString( const QString argsStr );
   virtual const QString argsAsString() const;
+  virtual const QString displayString() const;
 };
 
 
@@ -879,6 +918,12 @@ const QString KMFilterActionFakeDisposition::argsAsString() const
   return QString( QChar( idx < 2 ? 'I' : char(mdns[idx-2]) ) );
 }
 
+const QString KMFilterActionFakeDisposition::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+}
 
 //=============================================================================
 // KMFilterActionRemoveHeader - remove header
@@ -962,6 +1007,8 @@ public:
 
   virtual const QString argsAsString() const;
   virtual void argsFromString( const QString argsStr );
+
+  virtual const QString displayString() const;
 
   static KMFilterAction* newAction()
   {
@@ -1056,6 +1103,13 @@ const QString KMFilterActionAddHeader::argsAsString() const
   return result;
 }
 
+const QString KMFilterActionAddHeader::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+}
+
 void KMFilterActionAddHeader::argsFromString( const QString argsStr )
 {
   QStringList l = QStringList::split( '\t', argsStr, TRUE /*allow empty entries*/ );
@@ -1093,6 +1147,8 @@ public:
 
   virtual const QString argsAsString() const;
   virtual void argsFromString( const QString argsStr );
+
+  virtual const QString displayString() const;
 
   static KMFilterAction* newAction()
   {
@@ -1223,6 +1279,13 @@ const QString KMFilterActionRewriteHeader::argsAsString() const
   return result;
 }
 
+const QString KMFilterActionRewriteHeader::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+}
+
 void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
 {
   QStringList l = QStringList::split( '\t', argsStr, TRUE /*allow empty entries*/ );
@@ -1310,7 +1373,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   // copy the message 1:1
   KMMessage* msgCopy = new KMMessage;
   msgCopy->fromDwString(msg->asDwString());
-  
+
   // TODO opening and closing the folder is a trade off.
   // Perhaps Copy is a seldomly used action for now,
   // but I gonna look at improvements ASAP.
@@ -1320,7 +1383,7 @@ KMFilterAction::ReturnCode KMFilterActionCopy::process(KMMessage* msg) const
   if (rc == 0 && index != -1)
     mFolder->unGetMsg( mFolder->count() - 1 );
   mFolder->close();
-  
+
   return GoOn;
 }
 
@@ -1675,6 +1738,13 @@ const QString KMFilterActionWithTest::argsAsString() const
   return mParameter;
 }
 
+const QString KMFilterActionWithTest::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
+}
+
 
 KMFilterActionExecSound::KMFilterActionExecSound()
   : KMFilterActionWithTest( "play sound", i18n("Play Sound") )
@@ -1743,6 +1813,13 @@ void KMFilterActionWithUrl::argsFromString( const QString argsStr )
 const QString KMFilterActionWithUrl::argsAsString() const
 {
   return mParameter;
+}
+
+const QString KMFilterActionWithUrl::displayString() const
+{
+  // FIXME after string freeze:
+  // return i18n("").arg( );
+  return label() + " \"" + QStyleSheet::escape( argsAsString() ) + "\"";
 }
 
 
