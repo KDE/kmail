@@ -318,9 +318,9 @@ bool KabBridge::replace(QString address, KabKey kabKey)
 void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 1);
+  int ab = config->readNumEntry("addressbook", 3);
   if (ab == 3) {
-    KRun::runCommand( "abbrowser -a \"" + addr.replace(QRegExp("\""), "")
+    KRun::runCommand( "kaddressbook -a \"" + addr.replace(QRegExp("\""), "")
       + "\"" );
     return;
   }
@@ -338,7 +338,7 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
 void KMAddrBookExternal::launch(QWidget *parent) {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 1);
+  int ab = config->readNumEntry("addressbook", 3);
   switch (ab)
   {
   case -1:
@@ -353,7 +353,7 @@ void KMAddrBookExternal::launch(QWidget *parent) {
     KRun::runCommand("kab");
     break;
   case 3:
-    KRun::runCommand("abbrowser");
+    KRun::runCommand("kaddressbook");
     break;
   default:
     kdDebug() << "Unknown address book type" << endl;
@@ -364,7 +364,7 @@ bool KMAddrBookExternal::useKAB()
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 1);
+  int ab = config->readNumEntry("addressbook", 3);
   if (ab <= 0)
     return false;
   return true;

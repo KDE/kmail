@@ -995,7 +995,7 @@ void ConfigureDialog::makeAppearancePage( void )
   abStringList.append( i18n("Traditional KMail") );
   abStringList.append( i18n("Traditional KMail interface using KAB database") );
   abStringList.append( i18n("KAB") );
-  abStringList.append( i18n("Abbrowser") );
+  abStringList.append( i18n("KAddressbook") );
   mAppearance.addressbookCombo->insertStringList( abStringList );
   vlay->addWidget( mAppearance.addressbookCombo );
   vlay->addSpacing( spacingHint() );
@@ -1015,12 +1015,12 @@ void ConfigureDialog::makeAppearancePage( void )
     "interface using the\ntraditional KMail specific address book database") );
   mAppearance.addressbookStrings.append( i18n("The traditional KMail graphical "
     "interface using the\nstandard KDE Address Book (KAB) database"));
-  mAppearance.addressbookStrings.append( i18n("The standard KDE Address Book "
-    "graphical interface\nusing the standard KDE Address Book (KAB) database\n\n"
+  mAppearance.addressbookStrings.append( i18n("The KDE Address Book "
+    "graphical interface (KAB)\nusing the standard KDE Address Book (KAB) "
+    "database\n\n"
     "Requires the kdeutils package to be installed."));
-  mAppearance.addressbookStrings.append( i18n("An alternative addressbook "
-    "graphical interface\nusing the standard KDE Address Book (KAB) database\n\n"
-    "Requires the kdepim package to be installed."));
+  mAppearance.addressbookStrings.append( i18n("The standard KDE Address Book "
+    "(KAddressbook)\nusing the standard KDE Address Book (KAB) database."));
 
   mAppearance.addressbookLabel = new QLabel( descrbox );
 
@@ -1756,8 +1756,8 @@ void ConfigureDialog::setupAppearancePage( void )
     KConfigGroupSaver saver(config, "General");
     state = config->readBoolEntry( "showMessageSize", false );
     mAppearance.messageSizeCheck->setChecked( state );
-    mAppearance.addressbookCombo->setCurrentItem( config->readNumEntry( "addressbook", 1 )) ;
-    mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config->readNumEntry( "addressbook", 1 )) );
+    mAppearance.addressbookCombo->setCurrentItem( config->readNumEntry( "addressbook", 3 )) ;
+    mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config->readNumEntry( "addressbook", 3 )) );
 
     QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
     if ( dateDisplay == "ctime" )
