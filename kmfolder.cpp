@@ -601,7 +601,7 @@ void KMFolder::expireOldMessages()
 
 KMFolder* KMFolder::trashFolder() const
 {
-  return mStorage->trashFolder();
+  return mStorage ? mStorage->trashFolder() : 0;
 }
 
 int KMFolder::writeIndex( bool createEmptyIndex )
