@@ -39,7 +39,7 @@ enum MsgStatus
 typedef uint KMMsgStatus;
 
 /** The old status format, only one at a time possible. Needed 
-    for upgrade path purposees. */
+    for upgrade path purposes. */
   
 typedef enum
 {
@@ -92,7 +92,7 @@ typedef enum
     KMMsgMDNFailed = 'E'
 } KMMsgMDNSentState;
 
-/** Flags for the signature state. */
+/** Flags for the drag and drop action. */
 typedef enum
 {
     KMMsgDnDActionMOVE=0,
