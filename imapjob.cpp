@@ -87,7 +87,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   } else { 
     account = static_cast<KMFolderImap*>(msg_parent)->account();
   }
-  if (!account) {
+  if ( !account ||
+       account->makeConnection() == ImapAccountBase::Error ) {
     deleteLater();
     return;
   }
@@ -121,12 +122,6 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       i++;
     }
     jd.data = mData;
-    if ( account->makeConnection() != ImapAccountBase::Connected )
-    {
-      account->mJobList.remove( this );
-      deleteLater();
-      return;
-    }
     KIO::SimpleJob *simpleJob = KIO::put( url, 0, FALSE, FALSE, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -155,12 +150,6 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
 
     stream << (int) 'C' << url << destUrl;
 
-    if ( account->makeConnection() != ImapAccountBase::Connected )
-    {
-      account->mJobList.remove( this );
-      deleteLater();
-      return;
-    }
     KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -251,12 +240,6 @@ void ImapJob::slotGetNextMessage()
   ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.total = 1; jd.done = 0;
-  if ( account->makeConnection() != ImapAccountBase::Connected )
-  {
-    account->mJobList.remove( this );
-    deleteLater();
-    return;
-  }
   // protect the message, otherwise we'll get crashes afterwards
   msg->setTransferInProgress( true );
   KIO::SimpleJob *simpleJob = KIO::get( url, FALSE, FALSE );

@@ -807,8 +807,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     return;
 
   // (de)register as observer
-  if (mMessage)
-    mMessage->detach( this );
+  if (aMsg && message())
+    message()->detach( this );
   if (aMsg)
     aMsg->attach( this );
   mAtmUpdate = false;
