@@ -430,7 +430,7 @@ int KMFolderMbox::unlock()
   {
     case FCNTL:
       if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
-      fcntl(fileno(mStream), F_SETLK, F_UNLCK);
+      fcntl(fileno(mStream), F_SETLK, &fl);
       rc = errno;
       break;
 
