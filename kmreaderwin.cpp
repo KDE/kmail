@@ -860,7 +860,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       else
          sig = i18n("Warning: Bad signature from");
 
-      /* HTMLize signedBy data */ 
+      /* HTMLize signedBy data */
       QString sdata=pgp->signedBy();
       sdata.replace(QRegExp("\""), "&quot;");
       sdata.replace(QRegExp("<"), "&lt;");
@@ -902,7 +902,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
   int prevQuoteLevel = -1;
   int newlineCount = 0;
   tmpStr = "<div>"; //work around KHTML slowness
-  
+
   // skip leading empty lines
   for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
   beg = pos;
@@ -1282,7 +1282,11 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 
     slotAtmOpen();
   }
-  else emit urlClicked(aUrl,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
+  else {
+      if (aUrl.protocol().isEmpty() || (aUrl.protocol() == "file"))
+	  return;
+      emit urlClicked(aUrl,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
+  }
 }
 
 
