@@ -559,7 +559,7 @@ void ConfigureDialog::makeIdentityPage( void )
   label->setBuddy(mIdentity.replytoEdit);
   glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );
 
-  label = new QLabel( i18n("Sen&t-mail Folder"), page );
+  label = new QLabel( i18n("Sen&t-mail Folder:"), page );
   glay->addWidget( label, 6, 0 );
   mIdentity.fccCombo = new QComboBox( page );
   mIdentity.fccCombo->setEditable( FALSE );
