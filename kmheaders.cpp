@@ -283,6 +283,7 @@ public:
     QColor *color;
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+    if (!mMsgBase) return;
     switch (mMsgBase->status())
     {
       case KMMsgStatusNew:
