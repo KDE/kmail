@@ -992,7 +992,11 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
 
   msg->setCharset("utf-8");
 
-  if (replyToList && parent() && parent()->isMailingList())
+  if (replyToList && !headerField("Mail-Followup-To").isEmpty())
+  {
+    toStr = headerField("Mail-Followup-To");
+  }
+  else if (replyToList && parent() && parent()->isMailingList())
   {
     // Reply to mailing-list posting address
     toStr = parent()->mailingListPostAddress();
