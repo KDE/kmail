@@ -457,8 +457,8 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
 
   if (mField.isEmpty() || !aMsg) return true;
   if( mField == i18n("<complete message>") ) {
-    value = aMsg->headerField(mField);
-    value =+ aMsg->bodyDecoded();
+    value = aMsg->headerAsString();
+    value += aMsg->bodyDecoded();
   } else {
     value = aMsg->headerField(mField);
   }
