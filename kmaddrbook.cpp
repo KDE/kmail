@@ -117,7 +117,7 @@ QString KabcBridge::expandDistributionList( const QString& listName )
   for ( QStringList::Iterator it = listNames.begin();
         it != listNames.end(); ++it) {
     if ( (*it).lower() == lowerListName ) {
-      QStringList addressList = manager.list( listName )->emails();
+      QStringList addressList = manager.list( *it )->emails();
       return addressList.join( ", " );
     }
   }
