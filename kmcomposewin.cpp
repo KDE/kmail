@@ -3519,7 +3519,7 @@ KMComposeWin::getEncryptionCertificate( const QString& recipient )
           if( (bAlwaysShowDialog || (c == '\1')) && !useDialog ) {
             // set up selection dialog
             useDialog = true;
-            dialog.setCaption( i18n( "Select certificate for encryption [%1]" )
+            dialog.setCaption( i18n( "Select Certificate for Encryption [%1]" )
                               .arg( recipient ) );
             dialog.setLabelAbove(
               i18n( "&Select certificate for recipient %1:" )

@@ -1212,9 +1212,9 @@ QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
   {
     int menuId;
     if (move)
-      menuId = menu->insertItem(i18n("Move to this Folder"));
+      menuId = menu->insertItem(i18n("Move to This Folder"));
     else
-      menuId = menu->insertItem(i18n("Copy to this Folder"));
+      menuId = menu->insertItem(i18n("Copy to This Folder"));
     aMenuToFolder->insert( menuId, folder );
     menu->insertSeparator();
   }
