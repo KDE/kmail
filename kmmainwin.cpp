@@ -329,6 +329,8 @@ void KMMainWin::createWidgets(void)
     pnrMsgList = mHorizPanner;
     pnrFldList = mHorizPanner;
   }
+  mVertPanner->setOpaqueResize(true);
+  mHorizPanner->setOpaqueResize(true);
 
   // BUG -sanders these accelerators stop working after switching
   // between long/short folder layout
