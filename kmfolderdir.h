@@ -42,6 +42,8 @@ public:
   /** Returns the folder manager that manages this folder */
   virtual KMFolderMgr* manager() const;
 
+  virtual KMFolderDirType type() { return mDirType; }
+
 protected:
   KMFolderDirType mDirType;
 };
