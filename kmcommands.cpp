@@ -1670,8 +1670,6 @@ KMCommand::Result KMCopyCommand::execute()
         job->setCancellable( false );
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
                 mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
-        // msg musn't be deleted
-        newMsg->setTransferInProgress(true);
         job->start();
       } else {
         int rc, index;

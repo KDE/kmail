@@ -165,7 +165,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
   {
     ImapJob *job = it.current();
     ++it;
-    if ( job->msgList().findRef( msg ) != -1 )
+    if ( job->msgList().first() == msg )
     {
       job->kill();
     }
