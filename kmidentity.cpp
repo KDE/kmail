@@ -220,9 +220,10 @@ QDataStream & operator<<( QDataStream & stream, const Signature & sig ) {
 }
 
 QDataStream & operator>>( QDataStream & stream, Signature & sig ) {
-  return stream >> static_cast<Q_UINT8>(sig.mType)
-		>> sig.mUrl
-		>> sig.mText;
+  Q_UINT8 t;
+  stream >> t >> sig.mUrl >> sig.mText;
+  sig.mType = t;
+  return stream;
 }
 
 KMIdentity KMIdentity::null;
