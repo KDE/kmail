@@ -103,8 +103,10 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
     if (mFolder) mFolder->listDirectory();
     return;
   }
+  // killAllJobs needs to disconnect the slave explicitely if the connection
+  // went down.
+  killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
   // check if we still display an error
-  killAllJobs();
   if ( !mErrorDialogIsActive )
   {
     mErrorDialogIsActive = true;
@@ -242,9 +244,16 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
   }
   if (job->error())
   {
-    if (!quiet) slotSlaveError(mSlave, job->error(),
-        job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
+    if (!quiet)
+      slotSlaveError(mSlave, job->error(), job->errorText() );
+    else if ( job->error() == KIO::ERR_CONNECTION_BROKEN && slave() ) {
+      // make sure ERR_CONNECTION_BROKEN is properly handled and the slave 
+      // disconnected even when quiet()
+      KIO::Scheduler::disconnectSlave( slave() );
+      mSlave = 0;
+    }
+    if (job->error() == KIO::ERR_SLAVE_DIED)
+      slaveDied();
   }
   displayProgress();
 }
