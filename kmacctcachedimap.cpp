@@ -369,6 +369,13 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 }
 
 //-----------------------------------------------------------------------------
+void KMAcctCachedImap::listDirectory(QString path, ListType subscription,
+    bool secondStep, KMFolder* parent, bool reset)
+{
+  ImapAccountBase::listDirectory( path, subscription, secondStep, parent, reset );
+}
+
+//-----------------------------------------------------------------------------
 void KMAcctCachedImap::listDirectory()
 {
   mFolder->listDirectory();

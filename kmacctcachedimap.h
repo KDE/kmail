@@ -117,6 +117,15 @@ public:
   virtual void invalidateIMAPFolders( KMFolderCachedImap* );
 
   /**
+   * Lists the directory starting from @p path
+   * All parameters (onlySubscribed, secondStep, parent) are included
+   * in the jobData
+   * connects to slotListResult and slotListEntries
+   */
+  void listDirectory(QString path, ListType subscription,
+      bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false);
+
+  /**
    * Starts the folderlisting for the root folder
    */
   virtual void listDirectory();
