@@ -540,6 +540,8 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
 
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
+//  kdDebug(5006) << name() << ": " << mSubfolderNames.join(",") << "; inboxOnly:" << it_inboxOnly
+//    << ", createinbox:" << mAccount->createInbox() << ", hasinbox:" << mAccount->hasInbox() << endl;
   // don't react on changes
   kmkernel->imapFolderMgr()->quiet(TRUE);
   if (it_inboxOnly) {
@@ -588,6 +590,9 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     for (uint i = 0; i < mSubfolderNames.count(); i++)
     {
       // create folders if necessary
+      if (mSubfolderNames[i].upper() == "INBOX" &&
+          mAccount->hasInbox()) // do not create an additional inbox
+        continue;
       for (node = mChild->first(); node; node = mChild->next())
         if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
       if (node) folder = static_cast<KMFolderImap*>(node);
