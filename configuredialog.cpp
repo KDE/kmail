@@ -317,9 +317,8 @@ void IdentityPage::load()
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
-  // Don't use ConstIterator here - it iterates over the wrong list!
   QListViewItem * item = 0;
-  for ( KPIM::IdentityManager::Iterator it = im->begin() ; it != im->end() ; ++it )
+  for ( KPIM::IdentityManager::Iterator it = im->modifyBegin() ; it != im->modifyEnd() ; ++it )
     item = new IdentityListViewItem( mIdentityList, item, *it  );
   mIdentityList->setSelected( mIdentityList->currentItem(), true );
 }
@@ -365,7 +364,7 @@ void IdentityPage::slotNewIdentity()
     switch ( dialog.duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-	KPIM::Identity & dupThis = im->identityForName( dialog.duplicateIdentity() );
+	KPIM::Identity & dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
 	im->newFromExisting( dupThis, identityName );
 	break;
       }
@@ -380,7 +379,7 @@ void IdentityPage::slotNewIdentity()
     //
     // Insert into listview:
     //
-    KPIM::Identity & newIdent = im->identityForName( identityName );
+    KPIM::Identity & newIdent = im->modifyIdentityForName( identityName );
     QListViewItem * item = mIdentityList->selectedItem();
     if ( item )
       item = item->itemAbove();
