@@ -592,7 +592,9 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
     if( idsOfMsgs.count() > 0 ) {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(indexOfCurrentMsg).arg(numBytesRead/1024));
+      int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
+        indexOfCurrentMsg : idsOfMsgs.count();
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(numMessages).arg(numBytesRead/1024));
     } else {
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed..." ));
     }
