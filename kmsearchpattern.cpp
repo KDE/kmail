@@ -456,8 +456,8 @@ bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
   return rc;
 }
 
-bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue,
-    unsigned long numericalMsgContents, const QString & msgContents ) const
+bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
+    long numericalMsgContents, const QString & msgContents ) const
 {
   switch ( function() ) {
   case KMSearchRule::FuncEquals:

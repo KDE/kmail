@@ -198,8 +198,7 @@ public:
   virtual bool matches( const KMMessage * msg ) const;
 
   /** Helper for the main matches() method. Does the actual comparing. */
-  bool matchesInternal( unsigned long numericalValue,
-                        unsigned long numericalMsgContents,
+  bool matchesInternal( long numericalValue, long numericalMsgContents,
                         const QString & msgContents ) const;
 };
 
