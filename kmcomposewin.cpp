@@ -1505,8 +1505,6 @@ bool KMComposeWin::applyChanges(void)
                           signCertFingerprint ) == Kpgp::Ok);
 
   if( bOk ) {
-    bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
-                                        : true;
     bool saveMessagesEncrypted = cryptPlug ? cryptPlug->saveMessagesEncrypted()
                                         : true;
 
@@ -1525,36 +1523,18 @@ bool KMComposeWin::applyChanges(void)
     // choose to obey the rules or to ignore them explicitely.
     if(    cryptPlug
         && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
-        && (    ( doEncrypt && saveMessagesEncrypted )
-            || ( doSign    && ! saveSentSignatures    ) ) ){
+        && ( doEncrypt && saveMessagesEncrypted ) ){
 
-      QString headTxt =
-        i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
-      QString sigTxt =
-        i18n("Signatures should be stored with the message, leaving them out is not allowed.");
-      QString encrTxt =
-        i18n("Encrypted messages should be stored in *unencrypted* form, local saving in encrypted form is not allowed.");
-      QString footTxt =
-        i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
-      QString question =
-        i18n("Store message in the recommended way?");
+      if( doEncrypt && saveMessagesEncrypted ) {
+        QString headTxt =
+          i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
+        QString encrTxt =
+          i18n("Encrypted messages should be stored in unencrypted form, local saving in encrypted form is not allowed.");
+        QString footTxt =
+          i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
+        QString question =
+          i18n("Store message in the recommended way?");
 
-
-
-
-
-            saveSentSignatures    = true;
-      /*
-      if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
-        if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt + "<br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
-            saveSentSignatures    = true;
-            saveMessagesEncrypted = false;
-        }
-      } else if( doSign && !saveSentSignatures ) {
-        if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt  + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
-            saveSentSignatures = true;
-        }
-      } else */if( doEncrypt && saveMessagesEncrypted ) {
         if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
             saveMessagesEncrypted = false;
         }
@@ -1563,20 +1543,17 @@ bool KMComposeWin::applyChanges(void)
     kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
 #endif
 
-    if(    ( doEncrypt && ! saveMessagesEncrypted )
-        || ( doSign    && ! saveSentSignatures    ) ){
+    if( doEncrypt && ! saveMessagesEncrypted ){
       if( cryptPlug ){
         for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
              entry;
-             entry = (KMAtmListViewItem*)mAtmItemList.next() ){
-          entry->setEncrypt( saveMessagesEncrypted );
-          entry->setSign(    saveSentSignatures );
-        }
+             entry = (KMAtmListViewItem*)mAtmItemList.next() )
+          entry->setEncrypt( false );
       }
       bOk = (composeMessage( cryptPlug, pgpUserId,
                             *extraMessage,
-                            doSign    && saveSentSignatures,
-                            doEncrypt && saveMessagesEncrypted,
+                            doSign,
+                            false,
                             true,
                              signCertFingerprint ) == Kpgp::Ok);
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
