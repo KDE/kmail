@@ -897,7 +897,9 @@ void KMComposeWin::setupActions(void)
   ident.readConfig();
   pgpUserId = ident.pgpIdentity();
 
-  if(!Kpgp::Module::getKpgp()->usePGP())
+  mLastEncryptActionState = false;
+  mLastSignActionState = mAutoPgpSign;
+  if (!Kpgp::Module::getKpgp()->usePGP())
   {
     attachPK->setEnabled(false);
     attachMPK->setEnabled(false);
@@ -906,13 +908,19 @@ void KMComposeWin::setupActions(void)
     signAction->setEnabled(false);
     signAction->setChecked(false);
   }
-  else if (pgpUserId.isEmpty()) {
+  else if (pgpUserId.isEmpty())
+  {
     attachMPK->setEnabled(false);
+    encryptAction->setEnabled(false);
+    encryptAction->setChecked(false);
     signAction->setEnabled(false);
     signAction->setChecked(false);
   }
   else
-    signAction->setChecked(mAutoPgpSign);
+  {
+    encryptAction->setChecked(mLastEncryptActionState);
+    signAction->setChecked(mLastSignActionState);
+  }
 
   createGUI("kmcomposerui.rc");
 
@@ -1049,16 +1057,23 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // get PGP user id for the currently selected identity
   QString pgpUserId = ident.pgpIdentity();
 
-  if(Kpgp::Module::getKpgp()->usePGP()) {
-    if (pgpUserId.isEmpty()) {
+  if (Kpgp::Module::getKpgp()->usePGP())
+  {
+    if (pgpUserId.isEmpty())
+    {
       attachMPK->setEnabled(false);
+      encryptAction->setEnabled(false);
+      encryptAction->setChecked(false);
       signAction->setEnabled(false);
       signAction->setChecked(false);
     }
-    else {
+    else
+    {
       attachMPK->setEnabled(true);
+      encryptAction->setEnabled(true);
+      encryptAction->setChecked(mLastEncryptActionState);
       signAction->setEnabled(true);
-      signAction->setChecked(mAutoPgpSign);
+      signAction->setChecked(mLastSignActionState);
     }
   }
 
@@ -2560,18 +2575,28 @@ void KMComposeWin::slotIdentityActivated(int)
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
-  if (ident.pgpIdentity().isEmpty()) {
+  if (ident.pgpIdentity().isEmpty())
+  {
     attachMPK->setEnabled(false);
-    signAction->setEnabled(false);
-    signAction->setChecked(false);
+    if (signAction->isEnabled())
+    { // save the state of the sign and encrypt button
+      mLastEncryptActionState = encryptAction->isChecked();
+      encryptAction->setEnabled(false);
+      encryptAction->setChecked(false);
+      mLastSignActionState = signAction->isChecked();
+      signAction->setEnabled(false);
+      signAction->setChecked(false);
+    }
   }
-  else {
+  else
+  {
     attachMPK->setEnabled(true);
-    // don't change the state of the sign button if the button
-    // was already enabled for the former identity
-    if (!signAction->isEnabled()) {
+    if (!signAction->isEnabled())
+    { // restore the last state of the sign and encrypt button
+      encryptAction->setEnabled(true);
+      encryptAction->setChecked(mLastEncryptActionState);
       signAction->setEnabled(true);
-      signAction->setChecked(mAutoPgpSign);
+      signAction->setChecked(mLastSignActionState);
     }
   }
 

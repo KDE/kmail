@@ -502,6 +502,7 @@ protected:
   KMMsgPartList mAtmList;
   QPopupMenu *mAttachMenu;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
+  bool mLastSignActionState, mLastEncryptActionState;
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
