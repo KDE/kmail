@@ -72,7 +72,7 @@ using KMail::ListJob;
 
 DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
                                                   const char* name )
-  : KDialogBase( Plain, i18n( "Troubleshooting the IMAP cache" ),
+  : KDialogBase( Plain, i18n( "Troubleshooting IMAP Cache" ),
                  Cancel | User1 | User2, Cancel, parent, name, true ),
     rc( Cancel )
 {

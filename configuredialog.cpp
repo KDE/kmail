@@ -3203,7 +3203,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
 
   // "HTML Messages" group box:
-  group = new QVGroupBox( i18n( "Reading HTML messages" ), this );
+  group = new QVGroupBox( i18n( "Reading HTML Messages" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
@@ -3780,7 +3780,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   connect( mFolderCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mHideGroupwareFolders = new QCheckBox( i18n( "&Hide Groupware Folders" ),
+  mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
   grid->addMultiCellWidget( mHideGroupwareFolders, 2, 2, 0, 1 );
   QToolTip::add( mHideGroupwareFolders,
@@ -3792,7 +3792,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality compatibility setup
-  b1 = new QVGroupBox( i18n("Groupware Compatibility and Legacy Options"), this );
+  b1 = new QVGroupBox( i18n("Groupware Compatibility & Legacy Options"), this );
 
   gBox = new QVBox( b1 );
 #if 0

@@ -940,9 +940,9 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
     if (!fti->folder()->noContent())
     {
-      folderMenu->insertItem(SmallIcon("reload"), i18n("Check Mail in this Folder"), mMainWidget,
+      folderMenu->insertItem(SmallIcon("reload"), i18n("Check Mail in This Folder"), mMainWidget,
           SLOT(slotRefreshFolder()));
-      folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh folder list"), this,
+      folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
           SLOT(slotResetFolderList()));
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {

@@ -326,9 +326,9 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
 	   SLOT(slotSelectionChanged(QListViewItem*)) );
 
   QVBox* buttonBox = new QVBox( mACLWidget );
-  mAddACL = new KPushButton( i18n( "Add entry" ), buttonBox );
-  mEditACL = new KPushButton( i18n( "Modify entry" ), buttonBox );
-  mRemoveACL = new KPushButton( i18n( "Remove entry" ), buttonBox );
+  mAddACL = new KPushButton( i18n( "Add Entry" ), buttonBox );
+  mEditACL = new KPushButton( i18n( "Modify Entry" ), buttonBox );
+  mRemoveACL = new KPushButton( i18n( "Remove Entry" ), buttonBox );
   QSpacerItem* spacer = new QSpacerItem( 0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding );
   static_cast<QBoxLayout *>( buttonBox->layout() )->addItem( spacer );
 
