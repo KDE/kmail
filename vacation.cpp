@@ -169,7 +169,7 @@ namespace KMail {
     kdDebug(5006) << "Vacation: found url \"" << mUrl.prettyURL() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
-    mUrl.setFileName( "kmail-vacation.siv" );
+    mUrl.setFileName( "kolab-vacation.siv" );
     mSieveJob = SieveJob::get( mUrl );
     connect( mSieveJob, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
 	     SLOT(slotGetResult(KMail::SieveJob*,bool,const QString&,bool)) );
