@@ -5,7 +5,7 @@
 // keep this in sync with the define in configuredialog.h
 #define DEFAULT_EDITOR_STR "kate %f"
 
-#define STRICT_RULES_OF_GERMAN_GOVERNMENT_01
+//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_01
 
 #undef GrayScale
 #undef Color
