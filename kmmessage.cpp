@@ -4435,3 +4435,19 @@ QString KMMessage::bodyToUnicode(const QTextCodec* codec) const {
   return codec->toUnicode( bodyDecoded() );
 }
 
+//-----------------------------------------------------------------------------
+QCString KMMessage::mboxMessageSeparator()
+{
+  QCString str( fromEmail() );
+  if ( str.isEmpty() )
+    str = "unknown@unknown.invalid";
+  QCString dateStr( dateShortStr() );
+  if ( dateStr.isEmpty() ) {
+    time_t t = ::time( 0 );
+    dateStr = ctime( &t );
+    const int len = dateStr.length();
+    if ( dateStr[len-1] == '\n' )
+      dateStr.truncate( len - 1 );
+  }
+  return "From " + str + " " + dateStr + "\n";
+}

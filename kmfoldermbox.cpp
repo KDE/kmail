@@ -1008,11 +1008,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
     return error;
   }
 
-  QCString address( aMsg->fromEmail() );
-  if ( address.isEmpty() )
-    address = "unknown@unknown.invalid";
-  fprintf(mStream, "From %s %s\n", address.data(),
-          (const char *)aMsg->dateShortStr());
+  QCString messageSeparator( aMsg->mboxMessageSeparator() );
+  fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
   off_t offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
   if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);

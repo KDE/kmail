@@ -757,10 +757,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
 
 void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
 {
-  QCString str( msg->fromEmail() );
-  if ( str.isEmpty() )
-    str = "unknown@unknown.invalid";
-  str = "From " + str + " " + msg->dateShortStr() + "\n";
+  QCString str( msg->mboxMessageSeparator() );
   str += KMFolderMbox::escapeFrom( msg->asString() );
   str += "\n";
   msg->setTransferInProgress(false);
@@ -1349,7 +1346,7 @@ KMCommand::Result KMSetStatusCommand::execute()
      f->setStatus( (*it2), mStatus, mToggle );
      ++it2;
   }
-  kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
+  //kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
 
   return OK;
 }
