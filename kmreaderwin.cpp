@@ -1579,7 +1579,6 @@ KMReaderWin::KMReaderWin(KMMimePartTree* mimePartTree,
   initHtmlWidget();
   readConfig();
   mHtmlOverride = false;
-  mUseFixedFont = false;
 
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
@@ -1784,6 +1783,7 @@ void KMReaderWin::readConfig(void)
 
   {
   KConfigGroupSaver saver(config, "Reader");
+  mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
@@ -1814,14 +1814,12 @@ void KMReaderWin::readConfig(void)
     mBodyFont = config->readFontEntry((mPrinting) ? "print-font" : "body-font",
       &mBodyFont);
     mFixedFont = config->readFontEntry("fixed-font", &mFixedFont);
-    fntSize = mBodyFont.pointSize();
-    mBodyFamily = mBodyFont.family();
   }
   else {
     setFont(KGlobalSettings::generalFont());
-    fntSize = KGlobalSettings::generalFont().pointSize();
-    mBodyFamily = KGlobalSettings::generalFont().family();
   }
+  mBodyFamily = (mUseFixedFont) ? mFixedFont.family() : mBodyFont.family();
+  fntSize = (mUseFixedFont) ? mFixedFont.pointSize() : mBodyFont.pointSize();
   mViewer->setStandardFont(mBodyFamily);
   }
 
@@ -1845,6 +1843,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "Reader");
+  config->writeEntry( "useFixedFont", mUseFixedFont );
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
   config->writeEntry("attmnt-style",(int)mAttachmentStyle);
