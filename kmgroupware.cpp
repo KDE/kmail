@@ -28,6 +28,7 @@
 #include "kmmimeparttree.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
+#include "kmgroupwarewizard.h"
 #include "kmacctmgr.h"
 #include "kmgroupwarefuncs.h"
 #include "kmcommands.h"
@@ -82,12 +83,52 @@ KMGroupware::KMGroupware( QObject* parent, const char* name ) :
     mContacts(0),
     mCalendar(0),
     mNotes(0),
-    mTasks(0)
+    mTasks(0),
+    mWizardRunning(false)
 {
+}
+
+void KMGroupware::readConfigStartup()
+{
+  readConfigInternal();
+
+  if( !checkFolders() ) {
+    mWizardRunning = true;
+    KMGroupwareWizard wiz(0, "groupware wizard", TRUE );
+    int rc = wiz.exec();
+    mWizardRunning = false;
+
+    if( rc == QDialog::Accepted ) {
+      mUseGroupware = wiz.groupwareEnabled();
+      KConfigGroup options( KMKernel::config(), "Groupware" );
+      options.writeEntry( "Enabled", isEnabled() );
+      if( isEnabled() ) {
+	mFolderParent = wiz.folder()->child();
+	mFolderType = wiz.folder()->folderType();
+	mFolderLanguage = wiz.language();
+	options.writeEntry( "FolderLanguage", mFolderLanguage );
+	options.writeEntry( "GroupwareFolder", wiz.folder()->idString() );
+      } else
+	return;
+
+      readConfigInternal();
+    } else {
+      // Just disable everything if the user cancels/closes the dialog
+      KConfigGroup options( KMKernel::config(), "Groupware" );
+      options.writeEntry( "Enabled", false );
+      return;
+    }
+  }
+
+  initFolders();
 }
 
 void KMGroupware::readConfig()
 {
+  if (mWizardRunning)
+    // This was called by the configuration dialog. But the wizard takes care of all config stuff, so don't do it now
+    return;
+
   readConfigInternal();
   if( !checkFolders() ) {
     assert( mFolderParent );

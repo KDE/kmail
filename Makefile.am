@@ -31,7 +31,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp kbusyptr.cpp kmmsgdict.cpp \
-		kmgroupware.cpp kmgroupwarefuncs.cpp \
+		kmgroupware.cpp kmgroupwarefuncs.cpp kmgroupwarewizard.cpp \
 		klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
@@ -79,6 +79,7 @@ METASOURCES = AUTO
 noinst_HEADERS = adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmmainwin.h certificatehandlingdialogimpl.h \
 		 certificatewizardimpl.h partNode.h \
+		 kmgroupwarefuncs.h kmgroupwarewizard.h \
 		 signatureconfigurationdialogimpl.h \
 		 encryptionconfigurationdialogimpl.h \
 		 signatureconfigurationdialogimpl.h
