@@ -72,7 +72,8 @@ KMMainWin::KMMainWin(QWidget *)
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
 
-  AccountWizard::start( kmkernel, this );
+  if ( kmkernel->firstStart() )
+    AccountWizard::start( kmkernel, this );
 }
 
 KMMainWin::~KMMainWin()
