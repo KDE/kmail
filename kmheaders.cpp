@@ -1892,8 +1892,12 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
     item = mItems[aStartAt];
   else {
     item = currentHeaderItem();
-    if (!item)
-      item = static_cast<KMHeaderItem*>(firstChild());
+    if (!item) {
+      if (aDirNext)
+	item = static_cast<KMHeaderItem*>(firstChild());
+      else
+	item = static_cast<KMHeaderItem*>(lastChild());
+    }
     if (!item)
       return -1;
 
