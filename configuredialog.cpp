@@ -450,7 +450,7 @@ void IdentityPage::slotNewIdentity()
       im->newFromScratch( identityName );
     default: ;
     }
-    
+
     //
     // Insert into listview:
     //
@@ -488,15 +488,15 @@ void IdentityPage::slotModifyIdentity() {
 void IdentityPage::slotRemoveIdentity()
 {
   assert( !mIdentityDialog );
-  
+
   IdentityManager * im = kernel->identityManager();
   kdFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
-  
+
   IdentityListViewItem * item =
     dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
   if ( !item ) return;
-  
+
   QString msg = i18n("<qt>Do you really want to remove the identity named "
 		     "<b>%1</b>?</qt>").arg( item->identity().identityName() );
   if( KMessageBox::warningYesNo( this, msg ) == KMessageBox::Yes )
@@ -522,7 +522,7 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
   }
   item->redisplay();
 }
-  
+
 void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
 				    const QPoint & pos ) {
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
@@ -543,11 +543,11 @@ void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
 
 void IdentityPage::slotSetAsDefault() {
   assert( !mIdentityDialog );
-  
+
   IdentityListViewItem * item =
     dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
   if ( !item ) return;
-  
+
   IdentityManager * im = kernel->identityManager();
   im->setAsDefault( item->identity().identityName() );
   refreshList();
@@ -4544,6 +4544,7 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
   activateCryptPlugButton  = new QPushButton( i18n("Ac&tivate"),       this );
   connect( addCryptPlugButton,       SIGNAL(clicked()),
                                           this, SLOT(  slotNewPlugIn()) );
+  addCryptPlugButton->setEnabled( false );
   connect( removeCryptPlugButton,    SIGNAL(clicked()),
                                           this, SLOT(  slotDeletePlugIn()) );
   connect( activateCryptPlugButton,  SIGNAL(clicked()),
@@ -4723,6 +4724,8 @@ void GeneralPage::slotPlugNameChanged( const QString &text )
     currentPlugItem = plugList->lastItem();
   if( currentPlugItem )
     currentPlugItem->setText(0, text );
+
+  addCryptPlugButton->setEnabled( !text.isEmpty() );
 }
 
 void GeneralPage::slotPlugLocationChanged( const QString &text )
@@ -4731,6 +4734,8 @@ void GeneralPage::slotPlugLocationChanged( const QString &text )
     currentPlugItem = plugList->lastItem();
   if( currentPlugItem )
     currentPlugItem->setText(1, text );
+
+  addCryptPlugButton->setEnabled( !text.isEmpty() );
 }
 
 void GeneralPage::slotPlugUpdateURLChanged( const QString &text )
