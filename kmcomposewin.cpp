@@ -2833,7 +2833,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
               dialog.setCaption( caption );
             }
             certificates[iZ] = '\0';
-            QString s = &certificates[iA];
+            QString s = QString::fromUtf8( &certificates[iA] );
             certificates[iZ] = c;
             if( useDialog )
               dialog.entriesLB->insertItem( s );
