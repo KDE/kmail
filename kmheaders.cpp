@@ -245,8 +245,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mOwner  = aOwner;
   mFolder = NULL;
   getMsgIndex = -1;
-  mSortCol = KMMsgList::sfDate;
-  mSortDescending = FALSE;
   mTopItem = 0;
   setMultiSelection( TRUE );
   setAllColumnsShowFocus( TRUE );
@@ -257,6 +255,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.senderCol = mPaintInfo.flagCol + 1;
   mPaintInfo.subCol = mPaintInfo.senderCol + 1;
   mPaintInfo.dateCol = mPaintInfo.subCol + 1;
+  mSortCol = KMMsgList::sfDate;
+  mSortDescending = FALSE;
   addColumn( i18n("Sender"), 200 );
   addColumn( i18n("Subject"), 270 );
   addColumn( i18n("Date"), 300 );
@@ -410,7 +410,7 @@ void KMHeaders::readFolderConfig (void)
   mCurrentItem = config->readNumEntry("Current", 0);
 
   mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", TRUE );
-  mPaintInfo.status = config->readBoolEntry( "Status", TRUE );
+  mPaintInfo.status = config->readBoolEntry( "Status", FALSE );
 
   config->setGroup("Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
@@ -540,11 +540,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   if (mFolder)
   {
-    if (stricmp(mFolder->whoField(), "To")==0)
-      setColumnText( mPaintInfo.senderCol, i18n("Receiver") );
-    else
-      setColumnText( mPaintInfo.senderCol, i18n("Sender") );
-
     str = i18n("%1 Messages, %2 unread.")
       .arg(mFolder->count())
       .arg(mFolder->countUnread());
@@ -556,10 +551,15 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   if (mPaintInfo.orderOfArrival)
     colText = i18n( "Date (Order of Arrival)" );
   setColumnText( mPaintInfo.dateCol, colText);
+
   colText = i18n( "Sender" );
+  if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
+    colText = i18n("Receiver");
+
   if (mPaintInfo.status)
-    colText = i18n( "Sender (Status)" );
+    colText = colText + i18n( " (Status)" );
   setColumnText( mPaintInfo.senderCol, colText);
+
   if (!mSortDescending)
     setColumnText( mSortCol, *up, columnText( mSortCol ));
   else
@@ -1808,9 +1808,12 @@ void KMHeaders::setSorting( int column, bool ascending )
     if (mPaintInfo.orderOfArrival)
       colText = i18n( "Date (Order of Arrival)" );
     setColumnText( mPaintInfo.dateCol, colText);
+
     colText = i18n( "Sender" );
+    if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
+      colText = i18n("Receiver");
     if (mPaintInfo.status)
-      colText = i18n( "Sender (Status)" );
+      colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.senderCol, colText);
     
     if (ascending)
