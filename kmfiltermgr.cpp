@@ -81,8 +81,10 @@ bool KMFilterMgr::process(KMMessage* msg)
   for (filter=first(); !stopIt && filter; filter=next())
   {
     if (!filter->matches(msg)) continue;
+#ifdef DEBUG
     debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
 	  msg->subject().data());
+#endif
     if (!filter->execActions(msg, stopIt)) stillOwner = FALSE;
   }
   return stillOwner;
@@ -94,14 +96,10 @@ void KMFilterMgr::cleanup(void)
 {
   KMFolder* fld;
 
-  debug("closing temp. opened folders:");
+  debug("closing temporary opened folders");
 
   for (fld=mOpenFolders.first(); fld; fld=mOpenFolders.next())
-    if (fld) 
-    {
-      debug(" ... %s", (const char*)fld->name());
-      fld->close();
-    }
+    if (fld) fld->close();
 
   mOpenFolders.clear();
 }

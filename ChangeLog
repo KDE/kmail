@@ -1,3 +1,14 @@
+1998-06-16  Stefan Taferner  <taferner@kde.org> (KMail-0.7.3)
+
+	* Filters: removed some debug statements that slowed
+	down filtering a lot.
+
+	* kmmsgbase.cpp: added isUnread() method.
+
+	* Headers: improved next/prev_unread_message methods.
+	Improved code that ensures that current item is visible
+	and added it to several places in the headers code.
+
 1998-06-15  Stefan Taferner  <taferner@kde.org>
 
 	* kmfilteraction.cpp (process): Removed patch for kmfilter

@@ -282,7 +282,7 @@ void KMHeaders::headerClicked(int column)
   if (cur) idx = mFolder->find(cur);
   else idx = 0;
 
-  setCurrentItem(idx);
+  setCurrentMsg(idx);
   idx -= 3;
   if (idx < 0) idx = 0;
   setTopItem(idx);
@@ -310,7 +310,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     filterMgr->process(msg);
 
   if (cur > (int)count()) cur = count()-1;
-  setCurrentItem(cur);
+  setCurrentMsg(cur);
 }
 
 
@@ -512,6 +512,7 @@ void KMHeaders::setCurrentMsg(int cur)
 {
   if (cur >= mFolder->count()) cur = mFolder->count() - 1;
   setCurrentItem(cur, -1);
+  makeHeaderVisible();
 }
 
 
@@ -592,10 +593,7 @@ void KMHeaders::nextMessage()
 {
   int idx = currentItem();
 
-  if (idx < mFolder->count()) {
-    setCurrentItem(idx+1);
-    makeHeaderVisible();
-  }
+  if (idx < mFolder->count()) setCurrentMsg(idx+1);
 }
 
 
@@ -604,65 +602,54 @@ void KMHeaders::prevMessage()
 {
   int idx = currentItem();
 
-  if (idx > 0) {
-    setCurrentItem(idx-1); 
-    makeHeaderVisible();
-  }
+  if (idx > 0) setCurrentMsg(idx-1); 
 }  
-
-
-//-----------------------------------------------------------------------------
-bool KMHeaders::isUnread(KMMsgStatus status) {
-  return FALSE;
-}
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage()
 {
-  int idx = currentItem();
+  KMMsgBase* msgBase = NULL;
+  int i, idx, cnt;
 
-  if (idx < mFolder->count()) {
-    // find the next unread message
-    KMMessage *msg;
-    for(int i = idx+1; i < mFolder->count(); i++) {
-      msg = getMsg(i);
-      if(msg->status() == 'N' || msg->status() == 'U') {
-	setCurrentItem(i);
-	makeHeaderVisible();
-	return;
-      }
-    }
+  idx = currentItem();
+  cnt = mFolder->count();
+  for (i=idx+1; i<cnt; i++)
+  {
+    msgBase = mFolder->getMsgBase(i);
+    if (msgBase && msgBase->isUnread()) break;
   }
+
+  if (i<cnt && msgBase) setCurrentMsg(i);
+  else mOwner->statusMsg(i18n("No next unread message."));    
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::prevUnreadMessage()
 {
-  int idx = currentItem();
+  KMMsgBase* msgBase = NULL;
+  int i, idx;
 
-  if (idx > 0) {
-    // find the previous unread message
-    KMMessage *msg;
-    for(int i = idx-1; i >= 0; i--) {
-      msg = getMsg(i);
-      if(msg->status() == 'N' || msg->status() == 'U') {
-	setCurrentItem(i);
-	makeHeaderVisible();
-	return;
-      }
-    }
+  idx = currentItem();
+  for (i=idx-1; i>=0; i--)
+  {
+    msgBase = mFolder->getMsgBase(i);
+    if (msgBase && msgBase->isUnread()) break;
   }
+
+  if (i>=0 && msgBase) setCurrentMsg(i);
+  else mOwner->statusMsg(i18n("No previous unread message."));    
 }  
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::makeHeaderVisible() {
-    if(currentItem() > lastRowVisible())
-      setTopItem(topItem() + currentItem() - lastRowVisible());
-    else if(currentItem() < topItem())
-      setTopItem(currentItem());  
+void KMHeaders::makeHeaderVisible()
+{
+  if(currentItem() >= lastRowVisible())
+    setTopItem(topItem() + currentItem() - lastRowVisible() + 1);
+  else if(currentItem() < topItem())
+    setTopItem(currentItem());
 }
 
 

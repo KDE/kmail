@@ -91,7 +91,6 @@ public slots:
 protected:
   
   void makeHeaderVisible();
-  bool isUnread(KMMsgStatus status);
 
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
 			       int* type);

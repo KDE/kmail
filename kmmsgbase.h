@@ -45,6 +45,9 @@ public:
   /** Status of the message. */
   virtual KMMsgStatus status(void) const;
 
+  /** Returns TRUE if status is new or unread. */
+  virtual bool isUnread(void) const;
+
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);

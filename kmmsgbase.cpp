@@ -117,6 +117,14 @@ KMMsgStatus KMMsgBase::status(void) const
 
 
 //-----------------------------------------------------------------------------
+bool KMMsgBase::isUnread(void) const
+{
+  KMMsgStatus st = status();
+  return (st==KMMsgStatusNew || st==KMMsgStatusUnread);
+}
+
+
+//-----------------------------------------------------------------------------
 const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
 {
   static char sstr[2];
