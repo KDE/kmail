@@ -1,6 +1,7 @@
 // kmmsgpartdlg.cpp
 
 #include "kmmsgpartdlg.h"
+#include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
 
@@ -201,7 +202,10 @@ void KMMsgPartDlg::applyChanges(void)
   if (!str.isEmpty() || !mMsgPart->name().isEmpty())
   {
     mMsgPart->setName(str);
-    QCString encName = KMMsgBase::encodeRFC2231String(str, mMsgPart->charset());
+    QCString encoding = KMMessage::autoDetectCharset(mMsgPart->charset(),
+      KMMessage::preferredCharsets(), str);
+    if (encoding.isEmpty()) encoding = "utf-8";
+    QCString encName = KMMsgBase::encodeRFC2231String(str, encoding);
     mMsgPart->setContentDisposition(QCString("attachment; filename")
       + ((str != QString(encName)) ? "*" : "") +  "=\"" + encName + "\"");
   }

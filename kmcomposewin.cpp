@@ -1633,7 +1633,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   kernel->kbp()->busy();
   i = urlStr.findRev('/');
   name = (i>=0 ? urlStr.mid(i+1, 256) : urlStr);
-  QCString encName = KMMsgBase::encodeRFC2231String(name, mCharset);
+
+  QCString encoding = KMMessage::autoDetectCharset(mCharset,
+    KMMessage::preferredCharsets(), name);
+  if (encoding.isEmpty()) encoding = "utf-8";
+  QCString encName = KMMsgBase::encodeRFC2231String(name, encoding);
   bool RFC2231encoded = name != QString(encName);
 
   // create message part

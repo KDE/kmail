@@ -2015,7 +2015,9 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QCString cte      = aPart->cteStr();
   QCString contDesc = aPart->contentDescriptionEncoded();
   QCString contDisp = aPart->contentDisposition();
-  QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), charset);
+  QCString encoding = autoDetectCharset(charset, sPrefCharsets, aPart->name());
+  if (encoding.isEmpty()) encoding = "utf-8";
+  QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), encoding);
   bool RFC2231encoded = aPart->name() != QString(name);
   QCString paramAttr  = aPart->parameterAttribute();
 
@@ -2047,9 +2049,12 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 
   if (!paramAttr.isEmpty())
   {
+    QCString encoding = autoDetectCharset(charset, sPrefCharsets,
+      aPart->parameterValue());
+    if (encoding.isEmpty()) encoding = "utf-8";
     QCString paramValue;
     paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
-                                                charset);
+                                                encoding);
     DwParameter *param = new DwParameter;
     if (aPart->parameterValue() != QString(paramValue))
     {

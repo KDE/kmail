@@ -343,7 +343,10 @@ QString KMMessagePart::contentDescription(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDescription(const QString &aStr)
 {
-  mContentDescription = KMMsgBase::encodeRFC2047String(aStr, charset());
+  QCString encoding = KMMessage::autoDetectCharset(charset(),
+    KMMessage::preferredCharsets(), aStr);
+  if (encoding.isEmpty()) encoding = "utf-8";
+  mContentDescription = KMMsgBase::encodeRFC2047String(aStr, encoding);
 }
 
 
