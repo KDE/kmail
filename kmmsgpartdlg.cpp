@@ -177,6 +177,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
   QString mimeType = mMsgPart->typeStr() + "/" + mMsgPart->subtypeStr();
   mEdtMimetype->setEditText(mimeType);
   mEdtMimetype->insertItem(mimeType, 0);
+  mimetypeChanged(mimeType);
 
   len = mMsgPart->size();
   if (len > 9999) lenStr.sprintf("%u KB", (len>>10));
