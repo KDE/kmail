@@ -950,7 +950,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr)
 
 QString KMReaderWin::quotedHTML(const QString& s)
 {
-  QString htmlStr, line, tmpStr;
+  QString htmlStr, line, tmpStr, normalStartTag, normalEndTag;
   QChar ch;
 
   bool atStartOfLine;
@@ -959,7 +959,9 @@ QString KMReaderWin::quotedHTML(const QString& s)
   int currQuoteLevel = -1;
   int prevQuoteLevel = -1;
   int newlineCount = 0;
-  tmpStr = "<div>"; //work around KHTML slowness
+  if (mBodyFont.bold()) { normalStartTag += "<b>"; normalEndTag += "</b>"; }
+  if (mBodyFont.italic()) { normalStartTag += "<i>"; normalEndTag += "</i>"; }
+  tmpStr = "<div>" + normalStartTag; //work around KHTML slowness
 
   // skip leading empty lines
   for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
@@ -983,12 +985,13 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	  if( prevQuoteLevel >= 0 )
 	  {
 	    line.prepend( "</font>" );
-	  }
+	  } else line.prepend( normalEndTag );
 	}
 	prevQuoteLevel = currQuoteLevel;
       }
       else if( prevQuoteLevel >= 0 )
       {
+        line.prepend( normalStartTag );
 	line.prepend( "</font><br>" ); // Added extra BR to work around bug
 	prevQuoteLevel = -1;
       }
@@ -999,9 +1002,11 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	htmlStr += tmpStr;
 	if (currQuoteLevel >= 0)
 	  htmlStr += "</font>";
+        else htmlStr += normalEndTag;
 	htmlStr += "</div><div>"; //work around KHTML slowness
 	if (currQuoteLevel >= 0)
 	  htmlStr += mQuoteFontTag[currQuoteLevel%3];
+        else htmlStr += normalStartTag;
 	tmpStr.truncate(0);
       }
 
