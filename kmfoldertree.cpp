@@ -1360,7 +1360,7 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
       // the tree will be reloaded after that
       bool success = folder->listDirectory();
       if (!success) fti->setOpen( false );
-      if ( fti->childCount() == 0 )
+      if ( fti->childCount() == 0 && fti->parent() )
         fti->setExpandable( false );
     }
   }
