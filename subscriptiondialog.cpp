@@ -54,6 +54,7 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
   bool onlySubscribed = jobData.onlySubscribed;
   GroupItem *parent = 0;
   mLoading = true;
+  ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
 
   if (!onlySubscribed)
   {
@@ -85,18 +86,20 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
     if (!onlySubscribed)
     {
       bool create = true;
-      if (parent)
+      QListViewItem *start = folderTree()->firstChild();
+      if ( parent )
+        start = parent->firstChild();
+      if ( start )
       {
-        for ( QListViewItem *it = parent->firstChild() ;
-            it ; it = it->nextSibling() )
+        for ( QListViewItem *it = start; it; it = it->nextSibling() )
         {
           // check if this item already exists in this hierarchy
           item = static_cast<GroupItem*>(it);
-          if (item->info().path == mSubfolderPaths[i])
+          if ( item->info().path == mSubfolderPaths[i] )
             create = false;
         }
       }
-      if (create)
+      if ( create )
       {
         KGroupInfo info(mSubfolderNames[i]);
         if (mSubfolderNames[i].upper() == "INBOX")
@@ -109,12 +112,11 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
         else
           item = new GroupItem(folderTree(), info, this, true);
       }
-      if (item)
-      {
-        // reset
+      if ( item ) // reset
         item->setOn(false);
-      }
-    } else {
+
+    } else 
+    {
       // find the item
       QListViewItemIterator it( groupView );
       while ( it.current() != 0 )
@@ -128,20 +130,19 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
         ++it;
       }
     }
-    if (mSubfolderMimeTypes[i] == "message/directory" ||
-        mSubfolderMimeTypes[i] == "inode/directory")
+    if ( mSubfolderMimeTypes[i] == "message/directory" ||
+         mSubfolderMimeTypes[i] == "inode/directory" )
     {
       // descend
-      static_cast<ImapAccountBase*>(mAcct)->listDirectory(mSubfolderPaths[i],
-          onlySubscribed);
+      bool secondStep = (mSubfolderPaths[i] == ai->prefix()) ? true : false;
+      static_cast<ImapAccountBase*>(mAcct)->listDirectory( mSubfolderPaths[i],
+          onlySubscribed, secondStep );
     }
   }
-  if (jobData.inboxOnly)
-  {
-    ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
-    ai->listDirectory(ai->prefix(), false, true);
-    ai->listDirectory(ai->prefix(), true, true);
-  }
+  if ( jobData.inboxOnly )
+    ai->listDirectory( ai->prefix(), onlySubscribed, true );
+  
+  // active buttons and stuff
   slotLoadingComplete();
 }
 
@@ -170,13 +171,16 @@ void SubscriptionDialog::slotSave()
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotLoadFolders()
 {
+  // clear the views
   KSubscription::slotLoadFolders();
-  if ( !account())
+  if ( !account() )
     return;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
+  if ( ai->prefix().isEmpty() )
+    return;
   // get folders
-  ai->listDirectory(ai->prefix(), false);
-  ai->listDirectory(ai->prefix(), true);
+  ai->listDirectory( ai->prefix(), false );
+  ai->listDirectory( ai->prefix(), true );
 }
 
 }
