@@ -86,9 +86,12 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   tab = new FolderDiaGeneralTab( this, aParent, aName, box );
   addTab( tab );
 
-  box = addVBoxPage( i18n("Mailing List") );
-  tab = new FolderDiaMailingListTab( this, box );
-  addTab( tab );
+  if ( !mFolder->noContent() )
+  {
+    box = addVBoxPage( i18n("Mailing List") );
+    tab = new FolderDiaMailingListTab( this, box );
+    addTab( tab );
+  }
 
   if ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap )
   {
@@ -814,10 +817,6 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
                                                   QWidget* parent, const char* name )
   : FolderDiaTab( parent, name ), mDlg( dlg )
 {
-  if ( mDlg->folder() && mDlg->folder()->noContent() ) {
-    return;
-  }
-
   QLabel* label;
   mLastItem = 0;
 
