@@ -1,5 +1,5 @@
 // kmheaders.cpp
-//#define sanders 
+// #define sanders 
 
 #include <qstrlist.h>
 #include <qpalette.h>
@@ -487,10 +487,10 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 {
   int id;
   QString str;
-  bool autoUpd = isUpdatesEnabled();
-  setUpdatesEnabled(FALSE);
-  header()->setUpdatesEnabled(FALSE);
-  viewport()->setUpdatesEnabled(FALSE);
+  //  bool autoUpd = isUpdatesEnabled();
+  //  setUpdatesEnabled(FALSE);
+  //  header()->setUpdatesEnabled(FALSE);
+  //  viewport()->setUpdatesEnabled(FALSE);
 
   setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
   if (mFolder && mFolder==aFolder)
@@ -639,12 +639,12 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     }
   }
 
-  setUpdatesEnabled(autoUpd);
-  viewport()->setUpdatesEnabled(autoUpd);
-  header()->setUpdatesEnabled(autoUpd);
-  if (autoUpd) repaint();
-  if (autoUpd) viewport()->repaint();
-  if (autoUpd) header()->repaint();
+  //  setUpdatesEnabled(autoUpd);
+  //  viewport()->setUpdatesEnabled(autoUpd);
+  //  header()->setUpdatesEnabled(autoUpd);
+  //  if (autoUpd) repaint();
+  //  if (autoUpd) viewport()->repaint();
+  //  if (autoUpd) header()->repaint();
 }
 
 // QListView::setContentsPos doesn't seem to work
@@ -1611,8 +1611,8 @@ void KMHeaders::updateMessageList(void)
   //
 
   //  kernel->kbp()->busy();
-  autoUpd = isUpdatesEnabled();
-  setUpdatesEnabled(FALSE);
+  //x autoUpd = isUpdatesEnabled();
+  //x setUpdatesEnabled(FALSE);
 
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
@@ -1777,8 +1777,8 @@ void KMHeaders::updateMessageList(void)
   //   ensureItemVisible(firstChild());
   //  updateContents(); // -sanders Started causing flicker in QT 2.1cvs :-(
 
-  setUpdatesEnabled(autoUpd);
-  if (autoUpd) repaint();
+  //x  setUpdatesEnabled(autoUpd);
+  //x if (autoUpd) repaint();
   // WABA: The following line is somehow necassery
   // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+) 
   // highlightMessage(currentItem());
