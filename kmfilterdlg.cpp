@@ -72,8 +72,8 @@ const char * _wt_filterdlg_showLater =
 I18N_NOOP( "<qt><p>Check this button to force the confirmation dialog to show "
 	   "up.</p><p>This is useful if you have defined a ruleset that tags "
            "messages to be downloaded later. Without the possibility to force "
-           "the dialog popup these messages could never be downloaded if no "
-           "other big messages would be waiting on the server or you would "
+           "the dialog popup, these messages could never be downloaded if no "
+           "other big messages were waiting on the server, or if you wanted to "
            "change the ruleset to tag the messages differently.</p></qt>" );
 
 // The anchor of the filter dialog's help.
