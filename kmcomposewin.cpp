@@ -163,7 +163,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
-
   mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mMainWidget);
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox(mMainWidget);
@@ -1746,6 +1745,9 @@ void KMComposeWin::addAttach(const KURL aUrl)
   ld.url = aUrl;
   ld.data = QByteArray();
   ld.insert = false;
+  if( !aUrl.fileEncoding().isEmpty() )
+    ld.encoding = aUrl.fileEncoding().latin1();
+  
   mMapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
@@ -2035,7 +2037,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     return;
   }
   QString name;
-  QString urlStr = (*it).url.prettyURL();
+  const QString urlStr = (*it).url.prettyURL();
+  const QCString partCharset = (*it).url.fileEncoding().isEmpty()
+                             ? mCharset
+                             : QCString((*it).url.fileEncoding().latin1());
+
   KMMessagePart* msgPart;
   int i;
 
@@ -2070,7 +2076,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     }
   }
 
-  QCString encoding = KMMsgBase::autoDetectCharset(mCharset,
+  QCString encoding = KMMsgBase::autoDetectCharset(partCharset,
     KMMessage::preferredCharsets(), name);
   if (encoding.isEmpty()) encoding = "utf-8";
 
@@ -2100,7 +2106,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   mMapAtmLoadData.remove(it);
 
-  msgPart->setCharset(mCharset);
+  msgPart->setCharset(partCharset);
 
   // show message part dialog, if not configured away (default):
   KConfigGroup composer(KMKernel::config(), "Composer");

@@ -31,7 +31,12 @@ k_dcop:
                            const QString &bcc, const QString &subject,
                            const QString &body, int hidden,
                            const KURL &messageFile,
-			   const KURL &attachURL) = 0;
+                           const KURL &attachURL) = 0;
+  virtual int openComposer(const QString &to, const QString &cc,
+                           const QString &bcc, const QString &subject,
+                           const QString &body, int hidden,
+                           const KURL &messageFile,
+                           const KURL::List &attachURLs) = 0;
   virtual int openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,

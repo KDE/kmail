@@ -341,7 +341,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const KURL &messageFile,
-			    const KURL::List &attachURLs)
+                            const KURL::List &attachURLs)
 {
   kdDebug(5006) << "KMKernel::openComposer called" << endl;
 
