@@ -1,5 +1,5 @@
 [General]
-tools=3
+tools=5
 
 [Spamtool #1]
 Ident=spamassassin
