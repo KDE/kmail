@@ -1378,12 +1378,14 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
-  mMsgView->setMsg(msg);
   if (msg && msg->parent() && (msg->parent()->protocol() == "imap"))
   {
+    mMsgView->setMsg(NULL);
     KMImapJob *job = new KMImapJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
+  } else {
+    mMsgView->setMsg(msg);
   }
 }
 
