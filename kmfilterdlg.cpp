@@ -626,14 +626,21 @@ void KMFilterDlg::slotBtnOk()
     kernel->filterMgr()->writeConfig();
   }
 
-  accept();
+  KMFilterDlgInherited::close();
 }
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnCancel()
 {
   kernel->filterMgr()->readConfig();
-  reject();
+  KMFilterDlgInherited::close();
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::closeEvent( QCloseEvent *e )
+{
+  kernel->filterMgr()->readConfig();
+  KMFilterDlgInherited::closeEvent(e);
 }
 
 //-----------------------------------------------------------------------------

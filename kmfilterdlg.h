@@ -84,6 +84,9 @@ protected:
   // Update the position of the filter action field widgets
   void resizeEvent(QResizeEvent *qre);
 
+  // Undo any changes that have been applied
+  virtual void closeEvent( QCloseEvent * );
+    
   KMFilter* mFilter;
   QGridLayout *mGrid;
   int mGridRow, mCbxHeight, mCbxWidth;

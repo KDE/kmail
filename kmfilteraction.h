@@ -88,7 +88,7 @@ class KMGFilterDlg: public QDialog
 
 public:
   KMGFilterDlg(QWidget* parent=NULL, const char* name=NULL,
-	       bool modal=FALSE, WFlags f=0);
+	       bool modal=FALSE, WFlags f=WDestructiveClose);
   virtual ~KMGFilterDlg();
 
   /** Creates a details button "..." for the current filter action. */
