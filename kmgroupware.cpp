@@ -3,7 +3,7 @@
 
     This file is part of KMail.
 
-    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@sonofthor.dk>
     Copyright (c) 2002 Karl-Heinz Zimmer <khz@klaralvdalens-datakonsult.se>
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
 
