@@ -205,7 +205,10 @@ void KMReaderMainWin::setupAccel()
   mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
                                     actionCollection() );
 
-  KStdAction::close( this, SLOT( close() ), actionCollection() );
+  KAction *closeAction = KStdAction::close( this, SLOT( close() ), actionCollection() );
+  KShortcut closeShortcut = closeAction->shortcut();
+  closeShortcut.append( KKey(Key_Escape));
+  closeAction->setShortcut(closeShortcut);
 
   //----- View Menu
   mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
