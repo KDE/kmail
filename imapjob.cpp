@@ -349,9 +349,9 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   if (job->error())
   {
     QString errorStr = i18n( "Error while retrieving messages from the server." );
-    account->handleJobError( job, errorStr );
     if ( (*it).progressItem )
       (*it).progressItem->setStatus( errorStr );
+    account->handleJobError( job, errorStr );
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -491,9 +491,9 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
   if ( it == account->jobsEnd() ) return;
   if (job->error())
   {
-    account->handlePutError( job, *it, mDestFolder );
     if ( (*it).progressItem )
       (*it).progressItem->setStatus("Uploading message data failed.");
+    account->handlePutError( job, *it, mDestFolder );
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )
