@@ -292,7 +292,6 @@ KMMessage * KMComposeView::prepareMessage()
 
   QString str;
   QString temp;
-  int pos;
   KMMessage *msg;
 
   msg = new KMMessage();
@@ -353,13 +352,14 @@ KMMessage * KMComposeView::prepareMessage()
   return msg;
 }
 
-KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, QString s)
+KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, 
+					       QString fileName)
 {
   printf("Creating MessagePart\n");
   DwString DwSrc;
   DwString DwDest;
   int pos;
-  QFile *file = new QFile(s);
+  QFile *file = new QFile(fileName);
   QString str;
   QString temp;
   QString type;
@@ -394,6 +394,7 @@ KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, QString s)
   // Set Content Type
   p->setTypeStr(type);
   p->setSubtypeStr(subType);
+  p->setName(fileName);
 
   // Encode data and set ContentTransferEncoding
   if(((KMComposeWin *)parentWidget())->encoding.find("base64",0,0) > -1)

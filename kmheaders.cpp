@@ -405,8 +405,8 @@ void KMHeaders::updateMessageList(void)
   long i;
   char hdr[256];
   KMMessage::Status flag;
-  KMMessage* msg;
-
+  //  KMMessage* msg; // I hate compiler warnings ;-)
+ 
   clear();
   if (!folder) return;
 
@@ -416,7 +416,7 @@ void KMHeaders::updateMessageList(void)
   for (i = 1; i <= folder->numMsgs(); i++)
   {
     flag = folder->msgStatus(i);
-    sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, folder->msgFrom(i),
+    sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, folder->msgFrom(i),
 	    folder->msgSubject(i), folder->msgDate(i));
     insertItem(hdr);
 

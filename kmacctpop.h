@@ -5,7 +5,7 @@
 #define kmacctpop_h
 
 #include <qobject.h>
-#include <qwidget.h>
+#include <qdialog.h>
 #include <qpushbt.h>
 #include <qlined.h>
 #include <qlabel.h>
@@ -49,26 +49,11 @@ public:
   virtual void writeConfig(void);
   virtual bool processNewMail(void);
 
-private:
-  /** This function is called when either username or the passwd
-      was incorrect. It pops up a dialog asking for a new username
-      and passwd */
-  void passwdError();
-  QWidget *newWidget;
-  QLineEdit *usernameLEdit;
-  QLineEdit *passwdLEdit;
-  QPushButton *ok;
-  QPushButton *cancel;
-  jmp_buf jmpbuffer;
-
-private slots:
-  void slotOkPressed();
-  void slotCancelPressed(); 
   
 protected:
   KMAcctPop(KMAcctMgr* owner, const char* accountName);
   friend class KMAcctMgr;
-
+  friend class KMPasswdDialog;
 
   QString mLogin, mPasswd;
   QString mHost;
@@ -77,4 +62,21 @@ protected:
   bool    mStorePasswd;
 };
 
+class KMPasswdDialog : public QDialog
+{
+Q_OBJECT
+public:
+  KMPasswdDialog(QWidget *p=0, const char *n=0, const char *m="");
+private:
+  QLineEdit *usernameLEdit;
+  QLineEdit *passwdLEdit;
+  QPushButton *ok;
+  QPushButton *cancel;
+
+private slots:
+  void slotOkPressed();
+  void slotCancelPressed();
+ 
+
+};
 #endif /*kmacctpop_h*/

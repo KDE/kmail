@@ -128,16 +128,9 @@ main(int argc, char *argv[])
 
   init(argc, argv);
 
-  if(argc ==1)
-    {mainWin = new KMMainWin;
+    mainWin = new KMMainWin;
     mainWin->show();
-    }
-  else
-    {QString address = argv[1];
-     KMComposeWin *win = new KMComposeWin(0,0,address,0,actNoOp);
-     win->show();
-    }
-
+    
   app->exec();
 
   cleanup();

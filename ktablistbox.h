@@ -10,6 +10,7 @@
 #include <qcolor.h>
 #include <qpixmap.h>
 #include <drag.h>
+#include <stdlib.h>
 
 #define MAX_SEP_CHARS 16
 

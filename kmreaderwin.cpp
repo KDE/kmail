@@ -262,16 +262,22 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	else
 	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
 	file->close();
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
-	  + "><P>" + comment + "</A></TD></TR></TABLE>";
+
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
+	  + "\"><IMG SRC=" + icon + "><P>" + comment 
+	  + "</A></TD></TR></TABLE>";
+
 	text += "<br><hr><br>";
 	return text;
 	}
      else
        {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	printf("Not a registered mimetype\n");
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
-	  + "><P>" + comment + "</A></TD></TR></TABLE>";
+
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
+	  + "\"><IMG SRC=" + icon + "><P>" + comment 
+	  + "</A></TD></TR></TABLE>";
+
 	text += "<br><hr><br>";
 	return text;	
        }
@@ -337,16 +343,20 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 	else
 	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
 	file->close();
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
-	  + ">" + comment + "</A></TD></TR></TABLE>";
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
+	  + "\"><IMG SRC=" + icon + "><P>" + comment 
+	  + "</A></TD></TR></TABLE>";
+
 	text += "<br><hr><br>";
 	return text;
 	}
      else
        {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
 	printf("Not a registered mimetype\n");
-	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring +"\"><IMG SRC=" + icon 
-	  + ">" + comment + "</A></TD></TR></TABLE>";
+	text = "<TABLE><TR><TD><A HREF=\"" + pnumstring 
+	  + "\"><IMG SRC=" + icon + "><P>" + comment 
+	  + "</A></TD></TR></TABLE>";
+
 	text += "<br><hr><br>";
 	return text;
        }
