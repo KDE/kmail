@@ -385,7 +385,9 @@ void KMFldSearch::slotSearch()
     // create one.
     if (!mFolder) {
       KMFolderMgr *mgr = kmkernel->searchFolderMgr();
-      QString baseName = "search";
+      if (mSearchFolderEdt->text().isEmpty())
+	  mSearchFolderEdt->setText("search");
+      QString baseName = mSearchFolderEdt->text();
       QString fullName = baseName;
       int count = 0;
       KMFolder *folder;
@@ -535,22 +537,29 @@ void KMFldSearch::updateCreateButton( const QString &s)
 //-----------------------------------------------------------------------------
 void KMFldSearch::renameSearchFolder()
 {
-    KMFolderDialog *props;
-    if (mFolder) {
-	mFolder->rename(mSearchFolderEdt->text());
-	props = new KMFolderDialog( mFolder.operator->(), mFolder->parent(), 0,
-				    i18n("Properties of Folder %1").arg( mFolder->label() ),
-				    mSearchFolderEdt->text() );
-	props->exec();
-	kmkernel->searchFolderMgr()->contentsChanged();
+    if (mFolder && (mFolder->name() !=mSearchFolderEdt->text())) {
+	int i = 1;
+	QString name =  mSearchFolderEdt->text();
+	while (i < 100) {
+	    if (!kmkernel->searchFolderMgr()->find( name )) {
+		mFolder->rename( name );
+		kmkernel->searchFolderMgr()->contentsChanged();
+		break;
+	    }
+	    name.setNum( i );
+	    name = mSearchFolderEdt->text() + " " + name;
+	    ++i;
+	}
     }
 }
 
 void KMFldSearch::openSearchFolder()
 {
+    renameSearchFolder();
     KMFolderTree *folderTree = mKMMainWidget->folderTree();
     QListViewItem *index = folderTree->indexOfFolder((KMFolder*)mFolder);
     if (index) {
+	folderTree->ensureItemVisible(index);
 	folderTree->doFolderSelected(index);
 	slotClose();
     }
