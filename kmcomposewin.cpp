@@ -727,7 +727,7 @@ void KMComposeWin::setupActions(void)
 #endif
 
   //----- Message-Encoding Submenu
-  encodingAction = new KSelectAction( i18n( "Set &Encoding.." ), 0, this, SLOT(slotSetCharset() ), actionCollection(), "charsets" );
+  encodingAction = new KSelectAction( i18n( "Set &Encoding" ), 0, this, SLOT(slotSetCharset() ), actionCollection(), "charsets" );
   // availableCharsetNames seems more reasonable than availableEncodingNames
   QStringList encodings = KGlobal::charsets()->availableCharsetNames();
   encodings.remove(QString("*-*"));  //this doesn't make sense

@@ -1375,7 +1375,7 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
   //----- Message-Encoding Submenu
-  mEncoding = new KSelectAction( i18n( "Set &Encoding.." ), 0, this, SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
+  mEncoding = new KSelectAction( i18n( "Set &Encoding" ), 0, this, SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
   QStringList encodings = KGlobal::charsets()->availableEncodingNames();
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
