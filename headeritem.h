@@ -43,15 +43,6 @@ namespace KMail
 class HeaderItem; // forward declaration
 
 class KMSortCacheItem {
-    HeaderItem *mItem;
-    KMSortCacheItem *mParent;
-    int mId, mSortOffset;
-    QString mKey;
-
-    QPtrList<KMSortCacheItem> mSortedChildren;
-    int mUnsortedCount, mUnsortedSize;
-    KMSortCacheItem **mUnsortedChildren;
-    bool mImperfectlyThreaded;
 
 public:
     KMSortCacheItem() : mItem(0), mParent(0), mId(-1), mSortOffset(-1),
@@ -103,6 +94,16 @@ public:
     void updateSortFile( FILE *sortStream, KMFolder *folder,
                          bool waiting_for_parent = false,
                          bool update_discovered_count = false);
+private:
+    HeaderItem *mItem;
+    KMSortCacheItem *mParent;
+    int mId, mSortOffset;
+    QString mKey;
+
+    QPtrList<KMSortCacheItem> mSortedChildren;
+    int mUnsortedCount, mUnsortedSize;
+    KMSortCacheItem **mUnsortedChildren;
+    bool mImperfectlyThreaded;
 };
 
 class HeaderItem : public KListViewItem
