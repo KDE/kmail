@@ -701,8 +701,14 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       f = f.right(f.length() + 1 -i );
     if((i = toStr.find(f)) != -1)
     {
-      int pos1, pos2;
+      int pos1, pos2, quot;
+      quot = toStr.findRev("\"", i);
       pos1 = toStr.findRev(", ", i);
+      if (pos1 < quot)
+      { 
+        quot = toStr.findRev("\"", quot - 1);
+        pos1 = toStr.findRev(", ", quot);
+      }
       if( pos1 == -1 ) pos1 = 0;
       pos2 = toStr.find(", ", i);
       toStr = toStr.left(pos1) + toStr.right(toStr.length() - pos2);
@@ -713,8 +719,14 @@ KMMessage* KMMessage::createReply(bool replyToAll)
     QString ccStr = cc().simplifyWhiteSpace() + ", ";
     if((i = ccStr.find(f)) != -1)
     {
-      int pos1, pos2;
+      int pos1, pos2, quot;
+      quot = ccStr.findRev("\"", i);
       pos1 = ccStr.findRev(", ", i);
+      if (pos1 < quot)
+      {
+        quot = ccStr.findRev("\"", quot - 1);
+        pos1 = ccStr.findRev(", ", quot);
+      }
       if( pos1 == -1 ) pos1 = 0;
       pos2 = ccStr.find(", ", i);
       ccStr = ccStr.left(pos1) + ccStr.right(ccStr.length() - pos2 - 1); //Daniel
