@@ -876,7 +876,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   for( it = attendees.begin(); it != attendees.end(); ++it ) {
     sAttendee += (*it)->name();
     Attendee::List::ConstIterator it2 = it;
-    if ( ++it2 == attendees.end() ) sAttendee += ",";
+    if ( ++it2 != attendees.end() ) sAttendee += ",";
   }
 
   QString sSummary = event->summary();
