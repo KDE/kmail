@@ -232,6 +232,7 @@ void KMAcctImap::slotListResult(KIO::Job * job)
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
   } else if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
   (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+  if (!(*it).parent->childCount()) (*it).parent->setExpandable( FALSE );
   mapJobData.remove(it);
   displayProgress();
 }
