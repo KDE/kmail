@@ -3,7 +3,7 @@ KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS =  . about pics profiles
 
-INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib -I$(top_srcdir) $(all_includes)
+INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib -I$(top_srcdir)/ktnef -I$(top_srcdir) $(all_includes)
 
 bin_PROGRAMS = kmail
 
