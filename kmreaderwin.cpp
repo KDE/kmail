@@ -1521,7 +1521,7 @@ void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoin
   KPopupMenu *menu = new KPopupMenu();
   menu->insertItem(SmallIcon("fileopen"),i18n("Open"), 1);
   menu->insertItem(i18n("Open With..."), 2);
-  menu->insertItem(i18n("View"), 3);
+  menu->insertItem(i18n("to view something", "View"), 3);
   menu->insertItem(SmallIcon("filesaveas"),i18n("Save As..."), 4);
   menu->insertItem(i18n("Properties"), 5);
   connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
