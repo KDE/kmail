@@ -33,6 +33,7 @@
 #define kmfoldercachedimap_h
 
 #include <kdialogbase.h>
+#include <kstandarddirs.h>
 #include <qvaluelist.h>
 #include <qptrlist.h>
 #include <qdialog.h>
@@ -71,7 +72,11 @@ private:
 class KMFolderCachedImap : public KMFolderMaildir
 {
   Q_OBJECT
+
 public:
+  static QString cacheLocation() { 
+     return locateLocal("data", "kmail/dimap" ); 
+  } 
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */

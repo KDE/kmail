@@ -854,8 +854,8 @@ void KMKernel::init()
   }
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
-  the_imapFolderMgr = new KMFolderMgr(locateLocal("data","kmail/imap"), KMImapDir);
-  the_dimapFolderMgr = new KMFolderMgr(locateLocal("data","kmail/dimap"), KMDImapDir);
+  the_imapFolderMgr = new KMFolderMgr( KMFolderImap::cacheLocation(), KMImapDir);
+  the_dimapFolderMgr = new KMFolderMgr( KMFolderCachedImap::cacheLocation(), KMDImapDir);
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
   the_acctMgr       = new KMAcctMgr();
   the_filterMgr     = new KMFilterMgr();

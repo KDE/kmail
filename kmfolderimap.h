@@ -36,6 +36,7 @@ using KMail::ImapAccountBase;
 #include <qintdict.h>
 #include <qdict.h>
 #include <qvaluelist.h>
+#include <kstandarddirs.h>
 
 class KMFolderTreeItem;
 class KMFolderImap;
@@ -69,8 +70,12 @@ class KMFolderImap : public KMFolderMbox
 {
   Q_OBJECT
   friend class ImapJob;
-
 public:
+
+  static QString cacheLocation() { 
+     return locateLocal("data", "kmail/imap" ); 
+  } 
+
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
 
   virtual imapState getContentState() { return mContentState; }
