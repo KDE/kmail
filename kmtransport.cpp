@@ -124,8 +124,8 @@ void KMTransportInfo::writeConfig(int id)
     Wallet *wallet = kmkernel->wallet();
     if ( !wallet || wallet->writePassword( "transport-" + QString::number(mId), passwd() ) ) {
       KMessageBox::information(0, i18n("KWallet is not running. It is strongly recommended to use "
-          "KWallet for managing your passwords"),
-          i18n("KWallet is Not Running."), "KWalletWarning" );
+          "KWallet for managing your passwords."),
+          i18n("KWallet is Not Running"), "KWalletWarning" );
       config->writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
     } else
       mPasswdDirty = false;
@@ -572,8 +572,8 @@ void KMTransportDialog::saveSettings()
 
     mTransportInfo->authType = (mSmtp.authLogin->isChecked()) ? "LOGIN" :
     (mSmtp.authCramMd5->isChecked()) ? "CRAM-MD5" :
-    (mSmtp.authDigestMd5->isChecked()) ? "DIGEST-MD5" : 
-    (mSmtp.authNTLM->isChecked()) ? "NTLM" : 
+    (mSmtp.authDigestMd5->isChecked()) ? "DIGEST-MD5" :
+    (mSmtp.authNTLM->isChecked()) ? "NTLM" :
     (mSmtp.authGSSAPI->isChecked()) ? "GSSAPI" : "PLAIN";
   }
 }
