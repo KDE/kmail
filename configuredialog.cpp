@@ -1846,7 +1846,7 @@ void AppearancePage::ColorsTab::setup() {
     QColor( 0x00, 0x7F, 0x00 ), // important msg
     QColor( 0x00, 0x80, 0xFF ), // light blue // pgp encrypted
     QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok, trusted key
-    QColor( 0xA0, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
+    QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
     Qt::red, // pgp bad
     QColor( 0xFF, 0x40, 0x40 ), // warning text color: light red
