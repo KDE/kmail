@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     aboutdata.cpp
 
     This file is part of KMail, the KDE mail client.
@@ -151,8 +151,13 @@ namespace KMail {
   };
 
   static const about_data credits[] = {
+    { "Severin Greimel", 0, 0, 0 }, // several patches
+    { "Shaheed Haque", 0, 0, 0 }, // fix for bug:69744 (Resource folders: "Journals" should be "Journal")
     { "Heiko Hund", I18N_NOOP("POP filters"),
       "heiko@ist.eigentlich.net", 0 },
+    { "Torsten Kasch", 0, 0, 0 }, // crash fix for Solaris (cf. bug:68801)
+    { "Volker Krause", 0, 0, 0 }, // fix for bug:67017 (new mail notification in Kontact)
+    { "Jeffrey McGee", 0, 0, 0 }, // fix for bug:64251
     { "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "bernhard@intevation.de", 0 },
     { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
@@ -170,7 +175,7 @@ namespace KMail {
   AboutData::AboutData()
     : KAboutData( "kmail", I18N_NOOP("KMail"),KMAIL_VERSION,
 		  I18N_NOOP("KDE Email Client"), License_GPL,
-		  I18N_NOOP("(c) 1997-2003, The KMail developers"), 0,
+		  I18N_NOOP("(c) 1997-2004, The KMail developers"), 0,
 		  "http://kmail.kde.org" )
   {
     using KMail::authors;
