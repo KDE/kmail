@@ -741,11 +741,10 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
       break;
     n++;
 
-    KMFolder *folder;
-    int index;
+    KMFolder *folder = 0;
+    int index = -1;
     kmkernel->msgDict()->getLocation(msn, &folder, &index);
-
-    if (folder) {
+    if (folder && index != -1) {
       folder->open();
       if ( status == KMMsgStatusDeleted ) {
         // Move the message to the trash folder
@@ -756,6 +755,8 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
         folder->setStatus(index, status);
       }
       folder->close();
+    } else {
+      kdWarning(5006) << k_funcinfo << "Cannot update linked message, it could not be found!" << endl;
     }
   }
 }
