@@ -1,6 +1,8 @@
 /* Authors: Don Sanders <sanders@kde.org>
 
    Copyright (C) 2000 Don Sanders <sanders@kde.org>
+   Includes KMLittleProgressDlg which is based on KIOLittleProgressDlg 
+   by Matt Koss <koss@miesto.sk>
 
    License GPL
 */
@@ -75,7 +77,6 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   //  int h = fm.height() + 3;
 
   m_pButton = new QPushButton( "X", this );
-  //  m_pButton->setGeometry( 0, 1, w_offset, h - 1);
   m_pButton->setGeometry( 0, 0, w_offset, h + 2 );
   QToolTip::add( m_pButton, i18n("Cancel job") );
   
@@ -95,7 +96,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   mode = None;
   setMode();
 
-  resize( w + w_offset, h );
+  resize( w + w_offset + 5, h );
 
   connect( m_pButton, SIGNAL( clicked() ),
 	   KMBroadcastStatus::instance(), SLOT( requestAbort() ));
