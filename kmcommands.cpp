@@ -1710,7 +1710,6 @@ void KMSaveAttachmentsCommand::execute()
     saveAll( mAttachments );
     return;
   }
-  KMMessage *msg = 0;
   QPtrList<KMMessage> lst = retrievedMsgs();
   for ( QPtrListIterator<KMMessage> itr( lst ) ; itr.current() ; ++itr ) {
     partNode *rootNode = partNode::fromMessage( itr.current() );
