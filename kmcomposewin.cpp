@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <mimelib/string.h>
+#include <kiconloader.h>
 
 //-----------------------------------------------------------------------------
 KMComposeView::KMComposeView(QWidget *parent, const char *name, 
@@ -528,42 +529,47 @@ void KMComposeWin::setupMenuBar()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupToolBar()
 {
-  QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
-  char *kdedir = getenv("KDEDIR");
-  if (kdedir) pixdir.append(kdedir);
-  else pixdir.append("/usr/local/kde");
-  pixdir.append("/lib/pics/toolbar/");
+  KIconLoader* loader = kapp->getIconLoader();
 
   toolBar = new KToolBar(this);
 
-  QPixmap pixmap;
-
-  pixmap.load(pixdir+"kmnew.xpm");
-  toolBar->insertButton(pixmap,0,SIGNAL(clicked()),composeView,SLOT(newComposer()),TRUE,"New Composer");
+  toolBar->insertButton(loader->loadIcon("toolbar/filenew.xpm"),0,
+			SIGNAL(clicked()),composeView,
+			SLOT(newComposer()),TRUE,"Compose new message");
   toolBar->insertSeparator();
-  pixmap.load(pixdir+"kmsend.xpm");
-  toolBar->insertButton(pixmap,0,SIGNAL(clicked()),composeView,SLOT(sendIt()),TRUE,"Send");
+  toolBar->insertButton(loader->loadIcon("toolbar/send.xpm"),0,
+			SIGNAL(clicked()),composeView,
+			SLOT(sendIt()),TRUE,"Send message");
   toolBar->insertSeparator();
-  pixmap.load(pixdir+"reload.xpm");
-  toolBar->insertButton(pixmap,2,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Undo");
-  pixmap.load(pixdir+"editcopy.xpm");
-  toolBar->insertButton(pixmap,3,SIGNAL(clicked()),composeView,SLOT(copyText()),TRUE,"Copy");
-  pixmap.load(pixdir+"editcut.xpm");
-  toolBar->insertButton(pixmap,4,SIGNAL(clicked()),composeView,SLOT(cutText()),TRUE,"Cut");
-  pixmap.load(pixdir+"editpaste.xpm");
-  toolBar->insertButton(pixmap,5,SIGNAL(clicked()),composeView,SLOT(pasteText()),TRUE,"Paste");
+  toolBar->insertButton(loader->loadIcon("toolbar/reload.xpm"),2,
+			SIGNAL(clicked()),composeView,
+			SLOT(copyText()),TRUE,"Undo last change");
+  toolBar->insertButton(loader->loadIcon("toolbar/editcopy.xpm"),3,
+			SIGNAL(clicked()),composeView,
+			SLOT(copyText()),TRUE,"Copy selection");
+  toolBar->insertButton(loader->loadIcon("toolbar/editcut.xpm"),4,
+			SIGNAL(clicked()),composeView,
+			SLOT(cutText()),TRUE,"Cut selection");
+  toolBar->insertButton(loader->loadIcon("toolbar/editpaste.xpm"),5,
+			SIGNAL(clicked()),composeView,
+			SLOT(pasteText()),TRUE,"Paste selection");
   toolBar->insertSeparator();
-  pixmap.load(pixdir+"thumb_up.xpm");
-  toolBar->insertButton(pixmap,6,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Recipients");
-  pixmap.load(pixdir+"kmaddressbook.xpm");
-  toolBar->insertButton(pixmap,7,SIGNAL(clicked()),composeView,SLOT(toDo()),TRUE,"Addressbook");
-  pixmap.load(pixdir+"kmattach.xpm");
-  toolBar->insertButton(pixmap,8,SIGNAL(clicked()),composeView,SLOT(attachFile()),TRUE,"Attach");
+  toolBar->insertButton(loader->loadIcon("toolbar/thumb_up.xpm"),6,
+			SIGNAL(clicked()),composeView,
+			SLOT(toDo()),TRUE,"Recipients");
+  toolBar->insertButton(loader->loadIcon("toolbar/OpenBook.xpm"),7,
+			SIGNAL(clicked()),composeView,
+			SLOT(toDo()),TRUE,"Open addressbook");
+  toolBar->insertButton(loader->loadIcon("toolbar/attach.xpm"),8,
+			SIGNAL(clicked()),composeView,
+			SLOT(attachFile()),TRUE,"Attach file");
   toolBar->insertSeparator();
-  pixmap.load(pixdir+"kmprint.xpm");
-  toolBar->insertButton(pixmap,12,SIGNAL(clicked()),composeView,SLOT(printIt()),TRUE,"Print");
-  pixmap.load(pixdir+"help.xpm");
-  toolBar->insertButton(pixmap,13,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
+  toolBar->insertButton(loader->loadIcon("toolbar/fileprint.xpm"),12,
+			SIGNAL(clicked()),composeView,
+			SLOT(printIt()),TRUE,"Print message");
+  toolBar->insertButton(loader->loadIcon("toolbar/help.xpm"),13,
+			SIGNAL(clicked()),this,
+			SLOT(invokeHelp()),TRUE,"Help");
 
   addToolBar(toolBar);
 }
