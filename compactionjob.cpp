@@ -76,6 +76,19 @@ void MboxCompactionJob::kill()
   FolderJob::kill();
 }
 
+QString MboxCompactionJob::realLocation() const
+{
+  QString location = mSrcFolder->location();
+  QFileInfo inf( location );
+  if (inf.isSymLink()) {
+    KURL u; u.setPath( location );
+    // follow (and resolve) symlinks so that the final ::rename() always works
+    // KURL gives us support for absolute and relative links transparently.
+    return KURL( u, inf.readLink() ).path();
+  }
+  return location;
+}
+
 int MboxCompactionJob::executeNow()
 {
   FolderStorage* storage = mSrcFolder->storage();
@@ -92,12 +105,15 @@ int MboxCompactionJob::executeNow()
       //      exit(1); backed out due to broken nfs
   }
 
-  mTempName = mSrcFolder->path() + "/." + mSrcFolder->name() + ".compacted";
+  mTempName = realLocation() + ".compacted";
+
   mode_t old_umask = umask(077);
   mTmpFile = fopen(QFile::encodeName(mTempName), "w");
   umask(old_umask);
   if (!mTmpFile) {
-    kdWarning(5006) << "Couldn't start compacting " << mSrcFolder->label() << " : " << strerror( errno ) << endl;
+    kdWarning(5006) << "Couldn't start compacting " << mSrcFolder->label()
+                    << " : " << strerror( errno )
+                    << " while creating " << mTempName << endl;
     return errno;
   }
   storage->open();
@@ -140,12 +156,7 @@ void MboxCompactionJob::done( int rc )
   QString str;
   if (!rc) {
     bool autoCreate = mbox->autoCreateIndex();
-    QFileInfo inf(mbox->location());
-    QString box;
-    if (inf.isSymLink())
-      box = inf.readLink();
-    if (!box)
-      box = mbox->location();
+    QString box( realLocation() );
     ::rename(QFile::encodeName(mTempName), QFile::encodeName(box));
     mbox->writeIndex();
     mbox->writeConfig();

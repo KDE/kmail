@@ -53,6 +53,8 @@ private slots:
   void slotDoWork();
 
 private:
+  // Real folder location, != location in case of symlinks
+  QString realLocation() const;
   void done( int rc );
 
 private:
