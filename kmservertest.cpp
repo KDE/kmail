@@ -81,7 +81,6 @@ void KMServerTest::startOffSlave( int port ) {
     url.setPort( port );
 
   mSlave = KIO::Scheduler::getConnectedSlave( url, slaveConfig() );
-  kdDebug() << "slave=" << mSlave << endl;
   if ( !mSlave ) {
     slotSlaveResult( 0, 1 );
     return;
@@ -143,17 +142,21 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   if (aSlave != mSlave) return;
   if (error != KIO::ERR_SLAVE_DIED && mSlave)
   {
+    // disconnect slave after every connect
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
-  if ( error > 0 )
+  if ( error )
   {
-    KMessageBox::error( kapp->activeWindow(), KIO::buildErrorString( error, errorText ),
-        i18n("Error") );
     mJob = 0;
-    mListNormal.clear();
-    mListSSL.clear();
+    if ( error != KIO::ERR_COULD_NOT_CONNECT && !mSSL )
+    {
+      // if host does not support SSL, don't display an error
+      KMessageBox::error( kapp->activeWindow(), KIO::buildErrorString( error, errorText ),
+          i18n("Error") );
+    }
     emit capabilities( mListNormal, mListSSL );
+    emit capabilities( mListNormal, mListSSL, mAuthNone, mAuthSSL, mAuthTLS );
     return;
   }
   if (!mSSL) {
