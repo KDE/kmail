@@ -684,21 +684,36 @@ void IdentityPage::setIdentityInformation( const QString &identity )
   mTransportCombo->setEnabled( !ident.transport().isEmpty() );
   if ( ident.fcc().isEmpty() )
     mFccCombo->setFolder( kernel->sentFolder() );
-  else
-  {
-    // check if the sent-folder still exists
+  else {
+    // check if the sent-mail folder still exists
     KMFolder *folder = kernel->folderMgr()->findIdString( ident.fcc() );
     if ( !folder )
       folder = kernel->imapFolderMgr()->findIdString( ident.fcc() );
     if ( folder )
       mFccCombo->setFolder( ident.fcc() );
-    else
+    else {
+      KMessageBox::sorry( this, i18n("The sent-mail folder of this identity "
+                                     "doesn't exist. Therefore the default "
+                                     "sent-mail folder will be used.") );
       mFccCombo->setFolder( kernel->sentFolder() );
+    }
   }
   if ( ident.drafts().isEmpty() )
     mDraftsCombo->setFolder( kernel->draftsFolder() );
-  else
-    mDraftsCombo->setFolder( ident.drafts() );
+  else {
+    // check if the drafts folder still exists
+    KMFolder *folder = kernel->folderMgr()->findIdString( ident.drafts() );
+    if ( !folder )
+      folder = kernel->imapFolderMgr()->findIdString( ident.drafts() );
+    if ( folder )
+      mDraftsCombo->setFolder( ident.drafts() );
+    else {
+      KMessageBox::sorry( this, i18n("The drafts folder of this identity "
+                                     "doesn't exist. Therefore the default "
+                                     "drafts folder will be used.") );
+      mDraftsCombo->setFolder( kernel->draftsFolder() );
+    }
+  }
   // "Signature" tab:
   Signature & sig = ident.signature();
   mSignatureEnabled->setChecked( sig.type() != Signature::Disabled );
