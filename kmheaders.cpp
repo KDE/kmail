@@ -711,14 +711,24 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
       next = next->itemAbove();
   }
 
-  for (idx=cur, msg=msgList->first(); msg; msg=msgList->next())
-    if (kernel->filterMgr()->process(msg) == 2) {
+  for (idx=cur, msg=msgList->first(); msg; msg=msgList->next()) {
+    int filterResult;
+    KMFolder *parent = msg->parent();
+    if (parent)
+      parent->removeMsg( msg );
+    msg->setParent(0);
+    filterResult = kernel->filterMgr()->process(msg);
+    if (filterResult == 2) {
       // something went horribly wrong (out of space?)
       perror("Critical error: Unable to process messages (out of space?)");
       KMessageBox::information(0,
 	i18n("Critical error: Unable to process messages (out of space?)"));
       break;
     }
+    if (!msg->parent()) {
+      parent->addMsg( msg );
+    }
+  }
   
   if (cur > (int)mItems.size()) cur = mItems.size()-1;
   clearSelection();

@@ -109,6 +109,8 @@ int KMFilterActionMove::process(KMMessage* msg, bool&stopIt)
 {
   if (!mDest) return TRUE;
   KMFilterAction::tempOpenFolder(mDest);
+  if (msg->parent())
+    return;
   if (mDest->moveMsg(msg) == 0) 
     return 0; // ok, added
   else
