@@ -1036,7 +1036,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   mLastStatus = (aMsg) ? aMsg->status() : KMMsgStatusUnknown;
   if (aMsg)
   {
-    aMsg->setCodec(mCodec);
+    aMsg->setCodec(mCodec, mAutoDetectEncoding);
     aMsg->setDecodeHTML(htmlMail());
   }
 
@@ -1253,7 +1253,7 @@ void KMReaderWin::parseMsg(void)
 
   if (!mCodec)
     mCodec = QTextCodec::codecForName("iso8859-1");
-  msg->setCodec(mCodec);
+  msg->setCodec(mCodec, mAutoDetectEncoding);
 
 
 //      QString( "table.rfc822 { width: 100%; "

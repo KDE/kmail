@@ -231,6 +231,7 @@ public:
   virtual void parseTextStringFromDwPart( DwBodyPart * mainBody,
 					  DwBodyPart * firstBodyPart,
                                           QCString& parsedString,
+                                          const QTextCodec*& codec,
                                           bool& isHTML ) const;
 
   /** Returns message body with quoting header and indented by the
@@ -657,8 +658,8 @@ public:
   { return mCodec; }
 
   /** Set the charset the user selected for the message to display */
-  virtual void setCodec(const QTextCodec* aCodec)
-  { mCodec = aCodec; }
+  virtual void setCodec( const QTextCodec* aCodec, bool autoDetect )
+  { mCodec = aCodec; mAutoDetectCodec = autoDetect; }
 
   /** Allow decoding of HTML for quoting */
   void setDecodeHTML(bool aDecodeHTML)
@@ -752,6 +753,7 @@ protected:
   static const KMail::HeaderStrategy * sHeaderStrategy;
   static QString sForwardStr;
   const QTextCodec* mCodec;
+  bool mAutoDetectCodec;
 
   QString mFileName;
   off_t mFolderOffset;

@@ -632,7 +632,7 @@ KMMessage* KMFldSearch::message()
     codec = KMMsgBase::codecForName(encoding);
     if (!codec)
 	codec = QTextCodec::codecForName("iso8859-1");
-    message->setCodec(codec);
+    message->setCodec(codec, true);
 
     return message;
 }

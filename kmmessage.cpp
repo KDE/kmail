@@ -82,6 +82,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mDecodeHTML(false),
     mTransferInProgress(0),
     mCodec(0),
+    mAutoDetectCodec(true),
     mUnencryptedMsg(0)
 {
 }
@@ -102,6 +103,7 @@ void KMMessage::assign( const KMMessage& other )
   if( other.mMsg )
     mMsg = new DwMessage( *(other.mMsg) );
   mCodec = other.mCodec;
+  mAutoDetectCodec = other.mAutoDetectCodec;
   mDecodeHTML = other.mDecodeHTML;
   mIsComplete = false;//other.mIsComplete;
   mTransferInProgress = other.mTransferInProgress;
@@ -168,6 +170,7 @@ KMMessage::KMMessage(KMFolderIndex* parent): KMMessageInherited(parent)
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
   mCodec = 0;
+  mAutoDetectCodec = true;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = 0;
@@ -191,6 +194,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
   mCodec = 0;
+  mAutoDetectCodec = true;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = 0;
@@ -742,6 +746,7 @@ static void smartQuote( QString &msg, int maxLength )
 void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
 					   DwBodyPart * firstBodyPart,
                                            QCString& parsedString,
+                                           const QTextCodec*& codec,
                                            bool& isHTML ) const
 {
   // get a valid CryptPlugList
@@ -774,11 +779,12 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    "
                 << QString( curNode ? "text part found!\n" : "sorry, no text node!\n" ) << endl;
   if( curNode ) {
-    isHTML = DwMime::kSubtypeHtml == curNode->type();
+    isHTML = DwMime::kSubtypeHtml == curNode->subType();
     // now parse the TEXT message part we want to quote
     ObjectTreeParser otp( 0, 0, true, false, true );
     otp.parseObjectTree( curNode );
     parsedString = otp.resultString();
+    codec = curNode->msgPart().codec();
   }
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    parsed string:\n\""
                 << QString( parsedString + "\"\n\n" ) << endl;
@@ -793,174 +799,120 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
 {
   QString result;
   QString headerStr;
-  QRegExp reNL("\\n");
   QString indentStr;
-  int i;
-  bool clearSigned = false;
-
-  const QTextCodec *codec = mCodec;
-  if (!codec)
-  {
-    QCString cset = charset();
-    if (!cset.isEmpty())
-      codec = KMMsgBase::codecForName(cset);
-    if (!codec) codec = kernel->networkCodec();
-  }
 
   indentStr = formatString(aIndentStr);
   headerStr = formatString(aHeaderStr);
 
-
-  QCString parsedString;
-  bool isHTML = false;
-
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
-  if (numBodyParts() == 0 || !selection.isEmpty() ) {
-    if( !selection.isEmpty() ) {
-      result = selection;
-    } else {
+  if( !selection.isEmpty() ) {
+    result = selection;
+  }
+  else {
+    QCString parsedString;
+    bool isHTML = false;
+    bool clearSigned = false;
+    const QTextCodec* codec = 0;
 
+    if( numBodyParts() == 0 ) {
       DwBodyPart * mainBody = 0;
       DwBodyPart * firstBodyPart = getFirstDwBodyPart();
       if( !firstBodyPart ) {
         mainBody = new DwBodyPart(((KMMessage*)this)->asDwString(), 0);
 	mainBody->Parse();
       }
-      parseTextStringFromDwPart( mainBody, firstBodyPart, parsedString, isHTML );
-
-      if( !parsedString.isEmpty() ) {
-
-        Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-        assert(pgp != 0);
-
-        QPtrList<Kpgp::Block> pgpBlocks;
-        QStrList nonPgpBlocks;
-        if( allowDecryption &&
-            Kpgp::Module::prepareMessageForDecryption( parsedString,
-                                                       pgpBlocks, nonPgpBlocks ) )
-        {
-          // Only decrypt/strip off the signature if there is only one OpenPGP
-          // block in the message
-          if( pgpBlocks.count() == 1 )
-          {
-            Kpgp::Block* block = pgpBlocks.first();
-            if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-                ( block->type() == Kpgp::ClearsignedBlock ) )
-            {
-                if( block->type() == Kpgp::PgpMessageBlock )
-                // try to decrypt this OpenPGP block
-                block->decrypt();
-                else
-                {
-                // strip off the signature
-                block->verify();
-                clearSigned = true;
-                }
-
-                result = codec->toUnicode( nonPgpBlocks.first() )
-                    + codec->toUnicode( block->text() )
-                    + codec->toUnicode( nonPgpBlocks.last() );
-            }
-          }
-        }
-      }
-      if( result.isEmpty() )
-        result = codec->toUnicode( parsedString );
-      if( mDecodeHTML && isHTML )
-      {
-        KHTMLPart htmlPart;
-        htmlPart.setOnlyLocalReferences(true);
-        htmlPart.setMetaRefreshEnabled(false);
-        htmlPart.setPluginsEnabled(false);
-        htmlPart.setJScriptEnabled(false);
-        htmlPart.setJavaEnabled(false);
-        htmlPart.begin();
-        htmlPart.write(result);
-        htmlPart.end();
-        htmlPart.selectAll();
-        result = htmlPart.selectedText();
-      }
+      parseTextStringFromDwPart( mainBody, firstBodyPart, parsedString, codec,
+                                 isHTML );
+    }
+    else {
+      DwBodyPart *dwPart = getFirstDwBodyPart();
+      if( dwPart )
+        parseTextStringFromDwPart( 0, dwPart, parsedString, codec, isHTML );
     }
 
-    // Remove blank lines at the beginning
-    for( i = 0; i < (int)result.length() && result[i] <= ' '; i++ );
-    while (i > 0 && result[i-1] == ' ') i--;
-    result.remove(0,i);
+    if( !mAutoDetectCodec )
+      codec = mCodec;
+    if( !codec ) {
+      QCString cset = charset();
+      if( !cset.isEmpty() )
+        codec = KMMsgBase::codecForName( cset );
+      if( !codec )
+        codec = kernel->networkCodec();
+    }
 
-    if (aStripSignature)
-        stripSignature(result, clearSigned);
-
-    result.replace(reNL, '\n' + indentStr);
-    result = indentStr + result + '\n';
-
-    if (sSmartQuote)
-      smartQuote(result, sWrapCol);
-
-  } else {
-    result = "";
-
-    DwBodyPart *dwPart = getFirstDwBodyPart();
-    if( dwPart )
-      parseTextStringFromDwPart( 0, dwPart, parsedString, isHTML );
-
-    if( !parsedString.isEmpty() )
-    {
+    if( !parsedString.isEmpty() ) {
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
       assert(pgp != 0);
-      QString part;
 
       QPtrList<Kpgp::Block> pgpBlocks;
       QStrList nonPgpBlocks;
       if( allowDecryption &&
           Kpgp::Module::prepareMessageForDecryption( parsedString,
-                                                     pgpBlocks, nonPgpBlocks ) )
+                                                     pgpBlocks,
+                                                     nonPgpBlocks ) )
       {
         // Only decrypt/strip off the signature if there is only one OpenPGP
-        // block in this message part
+        // block in the message
         if( pgpBlocks.count() == 1 )
         {
           Kpgp::Block* block = pgpBlocks.first();
           if( ( block->type() == Kpgp::PgpMessageBlock ) ||
               ( block->type() == Kpgp::ClearsignedBlock ) )
           {
-            if( block->type() == Kpgp::PgpMessageBlock )
+            if( block->type() == Kpgp::PgpMessageBlock ) {
               // try to decrypt this OpenPGP block
               block->decrypt();
-            else
-            {
+            }
+            else {
               // strip off the signature
               block->verify();
               clearSigned = true;
             }
 
-            part = codec->toUnicode( nonPgpBlocks.first() )
-                 + codec->toUnicode( block->text() )
-                 + codec->toUnicode( nonPgpBlocks.last() );
+            result = codec->toUnicode( nonPgpBlocks.first() )
+                   + codec->toUnicode( block->text() )
+                   + codec->toUnicode( nonPgpBlocks.last() );
           }
         }
       }
-      if( part.isEmpty() )
-      {
-        // part = codec->toUnicode( msgPart.bodyDecoded() );
-        //	    debug ("part\n" + part ); inexplicably crashes -sanders
-        part = codec->toUnicode( parsedString );
-      }
-
-      if (aStripSignature)
-        stripSignature(part, clearSigned);
-
-      part.replace(reNL, '\n' + indentStr);
-      part = indentStr + part + '\n';
-      if (sSmartQuote)
-        smartQuote(part, sWrapCol);
-      result += part;
+      if( result.isEmpty() )
+        result = codec->toUnicode( parsedString );
     }
+
+    if( !result.isEmpty() && mDecodeHTML && isHTML ) {
+      KHTMLPart htmlPart;
+      htmlPart.setOnlyLocalReferences( true );
+      htmlPart.setMetaRefreshEnabled( false );
+      htmlPart.setPluginsEnabled( false );
+      htmlPart.setJScriptEnabled( false );
+      htmlPart.setJavaEnabled( false );
+      htmlPart.begin();
+      htmlPart.write( result );
+      htmlPart.end();
+      htmlPart.selectAll();
+      result = htmlPart.selectedText();
+    }
+
+    if( aStripSignature )
+      stripSignature( result, clearSigned );
   }
 
-  QCString c = QString(headerStr + result).utf8();
+  // Remove blank lines at the beginning:
+  // 1. find first non space, non linebreak character
+  int i = result.find( QRegExp( "[^\\s]" ) );
+  // 2. find the start of the current line
+  i = result.findRev( "\n", i );
+  if( i >= 0 )
+    result.remove( 0, (uint)i );
 
-  return c;
+  result.replace( "\n", '\n' + indentStr );
+  result = indentStr + result + '\n';
+
+  if( sSmartQuote )
+    smartQuote( result, sWrapCol );
+
+  return QString( headerStr + result ).utf8();
 }
 
 //-----------------------------------------------------------------------------
