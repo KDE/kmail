@@ -10,6 +10,7 @@
 #include "kalarmtimer.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
+#include "kmacctfolder.h"
 
 //-----------------------------------------------------------------------------
 KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
@@ -53,6 +54,8 @@ void KMAcctPop::init(void)
 //-----------------------------------------------------------------------------
 bool KMAcctPop::processNewMail(void)
 {
+  // This functions has been rewritten by Markus.
+
   // Before we do anything else let's ignore the friggin' SIGALRM signal
   // This signal somehow interrupts the network functions and messed up
   // DwPopClient::Open().
@@ -61,36 +64,46 @@ bool KMAcctPop::processNewMail(void)
   debug("processNewMail");
   DwPopClient client;
   client.SetReceiveTimeout(20);
-  int replyCode;
-  int num, size;
+
+  int replyCode; // the reply Code the server responds
+  int num, size; // number of all msgs / size of all msgs
   QString status, response;
+  int no;  // Msg number List(i)
+  long size_msg; // Size of single msg
+  QString status_msg; // Status of List(i)
 
   cout << "Host: " << mHost << endl;
   cout << "Port: " << mPort << endl;
   cout << "Login: " << mLogin << endl;
   cout << "Passwd: " << mPasswd << endl;
 
-  if(mLogin.isEmpty())
-    {KMPasswdDialog d(0,0,"Login name is missing!");
+
+  if(mLogin.isEmpty()) // If the login name is not set call modal Dialog
+    {KMPasswdDialog d(0,0,"Login name is missing!",login(),passwd());
     if(!d.exec())
       return false;
     }
-  if(mPasswd.isEmpty())
-    {KMPasswdDialog d(0,0,"Password is missing!");
+  if(mPasswd.isEmpty()) // If the Password is not set call modal Dialog
+    {KMPasswdDialog d(0,0,"Password is missing!",login(),passwd());
     if(!d.exec())
       return false;
     }
 
-  replyCode = client.Open(mHost,mPort);
+  replyCode = client.Open(mHost,mPort); // Open connection
   printf("replyCode for Open: %i\n",replyCode);
-  if(!replyCode)
-	{status.sprintf("%s", client.LastFailureStr());
-	KMsgBox::message(0,"Network Error" , status);
-        // Reinstall old sighandler
-        signal (SIGALRM, KAlarmTimeoutHandler);
-	return false;
-	}
-
+  if(replyCode != 43 && replyCode != 0)
+    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
+    // Reinstall old sighandler
+    signal (SIGALRM, KAlarmTimeoutHandler);
+    return false;
+    }
+  else if(replyCode == 0)
+    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
+    signal (SIGALRM, KAlarmTimeoutHandler);
+    return false;
+    }
+  else
+    cout << client.SingleLineResponse().c_str();
 
   replyCode = client.User(mLogin); // Send USER command
   printf("replyCode for User: %i\n",replyCode);
@@ -140,35 +153,51 @@ bool KMAcctPop::processNewMail(void)
 
   cout << response;  
   QTextStream str(response, IO_ReadOnly);
-  str >> status >> num >> size;
+  str >> status >> num >> size; // ReplyCode , number of msgs, size in octets
   debug("GOT POP %s %d %d",status.data(), num, size);
-  if(num == 0)
+
+  if(num == 0) // If there are no new msgs.
     {KMsgBox::message(0,"checking Mail...","No new messages on " + mHost);
     signal (SIGALRM, KAlarmTimeoutHandler);
     return false;
     }
-  for (int i=1; i<=num; i++)
+
+
+  int i = 1; // Start with msg 1
+  while(i<=num)
   {
     debug("processing message %d", i);
     
     // I need the size of the msg for buffer
 
-    replyCode = client.List(i);
-    response = client.SingleLineResponse().c_str();
-    QTextStream size_str(response,IO_ReadOnly);
-    int no;
-    long size_msg;
-    QString status_msg;
-    size_str >> status_msg >> no >> size_msg;
-    printf("msg size : %ld\n",size_msg);
-    // Shit! How do you convert octets to decs.
-
-    replyCode = client.Retr(i); // Retrieve message
-    if(replyCode != 43 && replyCode != 0); // If no such msg num get next.
-
+    replyCode = client.List(i); //List (i) to get size for buffer
+                                //and check if exists
+    if(replyCode != 43 && replyCode != 0) // If no such msg (i) get next.
+      {i++;
+      break;
+      }
     else if(replyCode == 0) // Some network error.
       {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-      signal (SIGALRM, KAlarmTimeoutHandler);
+      signal (SIGALRM, KAlarmTimeoutHandler); // Reinstall handler
+      return false;
+      }
+    else
+      {response = client.SingleLineResponse().c_str();
+      QTextStream size_str(response,IO_ReadOnly);
+      size_str >> status_msg >> no >> size_msg; // Same as above
+      printf("msg size : %ld\n",size_msg); // Size for buffer in octets
+    // Shit! How do I convert octets to decs.
+      }
+
+
+    replyCode = client.Retr(i); // Retrieve message
+    if(replyCode != 43 && replyCode != 0) // If no such msg (i) get next.
+      {i++;
+      break;
+      }
+    else if(replyCode == 0) // Some network error.
+      {KMsgBox::message(0,"Network Error",client.LastFailureStr());
+      signal (SIGALRM, KAlarmTimeoutHandler); // Reinstall handler
       return false;
       }
     else // Ok let's get the msg
@@ -183,12 +212,18 @@ bool KMAcctPop::processNewMail(void)
       debug("GOT %s", buffer);
       DwMessage *dmsg = new DwMessage(client.MultiLineResponse());
       dmsg->Parse();
-      /*
-        KMMessage *msg = new KMMessage((KMFolder*)mFolder, dmsg);
-        mFolder->addMsg(msg);
-        Stephan: Und nun?
-      */
 
+      /*
+      int error;
+      QString err_str;
+      KMMessage *msg = new KMMessage((KMFolder*)mFolder, dmsg);
+      if((error = mFolder->addMsg(msg)) != 0)
+	{err_str = "Adding message to folder failed\n";
+	err_str.append(strerror(error));
+	KMsgBox::message(0,"Folder error!", err_str);
+	}*/   
+
+      i++;   // Next msg;
     }
   }
   // Now let's reinstall the old signal handler for SIGALRM
@@ -199,7 +234,8 @@ bool KMAcctPop::processNewMail(void)
 }
 
 KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
-			       const char *caption )
+			       const char *caption, const char *login,
+			       const char *passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you 
@@ -216,7 +252,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
 
   label->move(20,30);
   usernameLEdit = new QLineEdit(this,"NULL");
-  //  usernameLEdit->setText(mLogin);
+  usernameLEdit->setText(login);
   usernameLEdit->setGeometry(100,27,150,25);
   
   QLabel *label1 = new QLabel(this);
@@ -226,7 +262,9 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
 
   passwdLEdit = new QLineEdit(this,"NULL");
   passwdLEdit->setEchoMode(QLineEdit::Password);
+  passwdLEdit->setText(passwd);
   passwdLEdit->setGeometry(100,76,150,25);
+  connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
 
   ok = new QPushButton("Ok" ,this,"NULL");
   ok->setGeometry(55,130,70,25);
@@ -249,7 +287,6 @@ void KMPasswdDialog::slotCancelPressed()
   kbp->busy();
   done(0);
 }
-
 
 //-----------------------------------------------------------------------------
 void KMAcctPop::readConfig(void)

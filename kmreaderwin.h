@@ -1,3 +1,6 @@
+// Header for kmreaderwin the kmail reader
+// written by Markus Wuebben <markus.wuebben@kde.org>
+
 #ifndef KMREADERWIN_H
 #define KMREADERWIN_H
 
@@ -11,7 +14,6 @@
 #include <qmlined.h>
 #include <qregexp.h>
 #include <qtabdlg.h>
-#undef write
 #include <html.h>
 #include <kapp.h>
 #include <ktopwidget.h>
@@ -31,8 +33,8 @@ Q_OBJECT
 public:
 	KMReaderView(QWidget *p=0,const char *n=0, int n=0, KMFolder *f=0);
         KHTMLWidget *messageCanvas;
-        QString selectedText;
-	bool showInline;
+	bool isInline();
+	void setInline(bool);
 
 private:
 	KMMessage *currentMessage;
@@ -48,11 +50,12 @@ private:
 	void initKMimeMagic();                                              
 	void parseConfiguration();
 	KMimeMagic *magic;
-	int MAX_LINES;
-	
+	u_int MAX_LINES;
+	bool showInline;
+        QString selectedText;	
+
 public slots:
 	void clearCanvas();
-	void updateDisplay();
 	void parseMessage(KMMessage*);
 	void saveMail();
 	void printMail();
@@ -81,6 +84,7 @@ private slots:
         void popupHeaderMenu(const char *, const QPoint &);
         void popupMenu(const char *, const QPoint &);
         void saveURL(int);
+	void updateDisplay();
 	QString parseEAddress(QString);
 	QString parseBodyPart(KMMessagePart *,int);
 	QString decodeString(KMMessagePart*, QString); 

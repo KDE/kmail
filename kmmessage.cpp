@@ -241,8 +241,10 @@ const char* KMMessage::subject(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubject(const char* aStr)
 {
-  if (!aStr) return;
+  if (!aStr) 
+      return;
   mMsg->Headers().Subject().FromString(aStr);
+
 }
 
 

@@ -61,7 +61,7 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
 	  SLOT(slotUpdateHeading(const char *)));
 
   if (emailAddress) 
-    toLEdit->setText(emailAddress);
+    setTo(emailAddress);
   ccLEdit->setMinimumSize(sz);
   grid->addWidget(ccLEdit,1,1);
 
@@ -119,6 +119,74 @@ void KMComposeView::initKMimeMagic()
 KMComposeView::~KMComposeView()
 {}
 
+
+
+const char * KMComposeView::to()
+{
+  return(toLEdit->text());
+}
+
+
+void KMComposeView::setTo(const char * _str)
+{
+  toLEdit->setText(_str);
+}
+
+const char * KMComposeView::cc()
+{
+  return(ccLEdit->text());
+}
+
+void KMComposeView::setCc(const char * _str)
+{
+  ccLEdit->setText(_str);
+}
+
+const char * KMComposeView::subject()
+{
+  return(subjLEdit->text());
+}
+
+void KMComposeView::setSubject(const char * _str)
+{
+  subjLEdit->setText(_str);
+}
+
+
+const char * KMComposeView::text()
+{
+  return(editor->text());
+}
+
+void KMComposeView::setText(const char * _str)
+{
+  editor->setText(_str);
+}
+
+void KMComposeView::appendText(const char * _str)
+{
+  editor->append(_str);
+}
+
+void KMComposeView::insertText(const char * _str)
+{
+  int line,col;
+  editor->getCursorPosition(&line,&col);
+  editor->insertAt(_str,line,col);
+  editor->update();
+  editor->repaint();  
+}
+
+void KMComposeView::insertTextAt(const char *_str, int line, int col)
+{
+  editor->insertAt(_str,line,col);
+}
+
+int KMComposeView::textLines()
+{
+  return(editor->numLines());
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeView::slotPrintIt()
 {
@@ -130,19 +198,19 @@ void KMComposeView::slotPrintIt()
   if ( printer->setup(this) ) {
     QPainter paint;
     paint.begin( printer );
-    QString text;
-    text += nls->translate("To:");
-    text += " \n";
-    text += toLEdit->text();
-    text += "\n";
-    text += nls->translate("Subject:");
-    text += " \n";
-    text += subjLEdit->text();
-    text += nls->translate("Date:");
-    text += " \n\n";
-    text += editor->text();
-    text.replace(QRegExp("\n"),"\n");
-    paint.drawText(30,30,text);
+    QString text_str;
+    text_str += nls->translate("To:");
+    text_str += " \n";
+    text_str += to();
+    text_str += "\n";
+    text_str += nls->translate("Subject:");
+    text_str += " \n";
+    text_str += subject();
+    text_str += nls->translate("Date:");
+    text_str += " \n\n";
+    text_str += text();
+    text_str.replace(QRegExp("\n"),"\n");
+    paint.drawText(30,30,text_str);
     paint.end();
   }
   delete printer;
@@ -297,24 +365,23 @@ KMMessage * KMComposeView::prepareMessage()
   msg = new KMMessage();
   msg = currentMessage; //msg 
 
-  temp=toLEdit->text();
-  if (temp.isEmpty()) {
-    warning(nls->translate("No recipients defined."));
+  temp=to();
+  if (temp.isEmpty()) 
+    {warning(nls->translate("No recipients defined."));
     msg = 0;
-    return msg;}
+    return msg;
+    }
 
-  temp = editor->text(); // temp is now the editor's text.
-	
+  temp = text(); // temp is now the editor's text.
+
   // The the necessary Message() stuff
-
-  msg->setFrom(EMailAddress);
-  msg->setReplyTo(ReplyToAddress);
-
+  msg->setFrom(emailAddress());
+  msg->setReplyTo(replyToAddress());
   // I hate string parsing! Mutiple recipients on toLEdit && ccLEdit
-  msg->setTo(toLEdit->text());
+  msg->setTo(to());
+  msg->setCc(cc());
+  msg->setSubject(subject());
 
-  msg->setCc(ccLEdit->text());
-  msg->setSubject(subjLEdit->text());
 
   if(urlList->count() == 0)// If there are no elements in the list waiting it is
     msg->setBody(temp); // a simple text message.
@@ -468,15 +535,9 @@ void KMComposeView::parseConfiguration()
   if( !o.isEmpty() && o.find("auto",0,false) ==0)
     slotAppendSignature();
 
-  config->setGroup("Network");
-  SMTPServer = config->readEntry("SMTP Server");
-  cout << SMTPServer << "\n";
-
   config->setGroup("Identity");
   EMailAddress = config->readEntry("Email Address");
-  cout << EMailAddress << "\n";
   ReplyToAddress = config->readEntry("Reply-To Address");
-  cout << ReplyToAddress << "\n";
   
 
 }
@@ -486,19 +547,19 @@ void KMComposeView::forwardMessage()
 {
   QString temp, spc;
   temp.sprintf(nls->translate("Fwd: %s"),currentMessage->subject());
-  subjLEdit->setText(temp);
+  setSubject(temp);
 
   spc = " ";
 
-  editor->append(QString("\n\n---------")+nls->translate("Forwarded message")
+  appendText(QString("\n\n---------")+nls->translate("Forwarded message")
 		 +"-----------");
-  editor->append(nls->translate("Date:") + spc + currentMessage->dateStr());
-  editor->append(nls->translate("From:") + spc + currentMessage->from());
-  editor->append(nls->translate("To:") + spc + currentMessage->to());
-  editor->append(nls->translate("Cc:") + spc + currentMessage->cc());
-  editor->append(nls->translate("Subject:") + spc + currentMessage->subject());
+  appendText(nls->translate("Date:") + spc + currentMessage->dateStr());
+  appendText(nls->translate("From:") + spc + currentMessage->from());
+  appendText(nls->translate("To:") + spc + currentMessage->to());
+  appendText(nls->translate("Cc:") + spc + currentMessage->cc());
+  appendText(nls->translate("Subject:") + spc + currentMessage->subject());
 
-  editor->append(temp);
+  appendText(temp);
   if ((currentMessage->numBodyParts()) == 0) 
     temp = currentMessage->body();
   else
@@ -506,11 +567,8 @@ void KMComposeView::forwardMessage()
     currentMessage->bodyPart(0,p);
     temp = p->body();
     delete p;}
-  editor->append(temp);
+  appendText(temp);
 
-  editor->update();
-  editor->repaint();
-	
 }
 
 //-----------------------------------------------------------------------------
@@ -519,13 +577,13 @@ void KMComposeView::replyAll()
   QString temp;
   int lines;
   temp.sprintf(nls->translate("Re: %s"),currentMessage->subject());
-  toLEdit->setText(currentMessage->from());
-  ccLEdit->setText(currentMessage->cc());
-  subjLEdit->setText(temp);
+  setTo(currentMessage->from());
+  setCc(currentMessage->cc());
+  setSubject(temp);
 
   temp.sprintf(nls->translate("\nOn %s %s wrote:\n"), 
 	       currentMessage->dateStr(), currentMessage->from());
-  editor->append(temp);
+  appendText(temp);
 
   //If there are no bodyparts take body.
   if ((currentMessage->numBodyParts()) == 0) 
@@ -536,13 +594,12 @@ void KMComposeView::replyAll()
     temp = p->body();
     delete p;}  
 
-  editor->append(temp);
+  appendText(temp);
 
-  lines = editor->numLines();
+  lines = textLines();
   for(int x=2;x < lines;x++)
-    editor->insertAt("> ",x,0);
+    insertTextAt("> ",x,0);
 
-  editor->update();
 	  
   currentMessage = currentMessage->reply();
 }
@@ -554,12 +611,12 @@ void KMComposeView::replyMessage()
   int lines;
 
   temp.sprintf(nls->translate("Re: %s"),currentMessage->subject());
-  toLEdit->setText(currentMessage->from());
-  subjLEdit->setText(temp);
+  setTo(currentMessage->from());
+  setSubject(temp);
 
   temp.sprintf(nls->translate("\nOn %s %s wrote:\n"), 
 	       currentMessage->dateStr(), currentMessage->from());
-  editor->append(temp);
+  appendText(temp);
 
   if ((currentMessage->numBodyParts()) == 0) 
     temp = currentMessage->body();
@@ -570,13 +627,12 @@ void KMComposeView::replyMessage()
     delete p;}
    
     
-  editor->append(temp);
+  appendText(temp);
 
-  lines = editor->numLines();
+  lines = textLines();
   for(int x=2;x < lines;x++)
-    {editor->insertAt("> ",x,0);
-    }
-  editor->update();
+    insertTextAt("> ",x,0);
+
   currentMessage = currentMessage->reply();
 }
 
@@ -628,7 +684,6 @@ void KMComposeView::slotInsertFile()
   QString textString;
   QFile *iFileName;
   char buf[255];
-  int col, line;
   QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
   d->setCaption("Insert File");
   if (d->exec()) 
@@ -639,10 +694,7 @@ void KMComposeView::slotInsertFile()
     while(iFileName->readLine(buf,254) != 0)
       textString.append(buf);			
     iFileName->close();
-    editor->getCursorPosition(&line,&col);
-    editor->insertAt(textString,line,col);
-    editor->update();
-    editor->repaint(); 
+    insertText(textString);
     }
 }	
 
@@ -668,10 +720,7 @@ void KMComposeView::slotAppendSignature()
   QString sigFile;
   QString text;
   char temp[255];
-  int col; 
-  int line;
 
-  editor->getCursorPosition(&line,&col); // Get position where to append
   configFile = KApplication::getKApplication()->getConfig();
   configFile->setGroup("Identity");
   sigFile = configFile->readEntry("Signature File");
@@ -682,9 +731,7 @@ void KMComposeView::slotAppendSignature()
   while((contFile->readLine(temp,100)) != 0)
     text.append(temp);
   contFile->close();
-  editor->insertAt(text,line,col);
-  editor->update();
-  editor->repaint();
+  insertText(text);
 
 }
 

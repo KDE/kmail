@@ -1,0 +1,13 @@
+- KMComposer cannot set the subject. Seems to be a problem in kmmessage.cpp
+  cause KMMessage::setSubject(const char *aStr) gets the subject string 
+  without any problem but does use it correctly.
+- Pop does not append downloaded msgs to according folder
+- Set your pop passwd manually in kmacctpop.cpp
+- Config stuff missing. Copy this kmailrc to your ~/.kde/config/
+- Saving of octet-streams does not work ( something goes wrong decoding)
+- mimemagic stuff does not look at the extension yet only scans file content.
+  Result is that some files are not recognized correctly
+- Attaching bodyParts is not yet possible. Something must be wrong with
+  addBodyPart() or I am just too stupid.
+
+

@@ -22,10 +22,11 @@ class KMMainView : public QWidget
 public:
   KMMainView(QWidget *parent=0, const char *name=0);
   KMFolderTree *folderTree;
+  bool isInline();
+
 
 public slots:
   void slotViewChange(); 
-  bool isInline();
  
 private slots:
   void doAddFolder();

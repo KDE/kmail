@@ -97,9 +97,9 @@ void KMMainView::initIntegrated()
   messageView = new KMReaderView(horzPanner->child1());
 
   if(((KMMainWin*)parentWidget())->showInline == true)
-    messageView->showInline = true;
+    messageView->setInline(true);
   else
-    messageView->showInline = false;
+    messageView->setInline(false);
 
   Integrated = TRUE;
 }
@@ -313,17 +313,14 @@ void KMMainView::resizeEvent(QResizeEvent *e)
 
 void KMMainView::slotViewChange()
 {
-  if(messageView->showInline)
-    messageView->showInline = false;
+  if(messageView->isInline())
+    messageView->setInline(false);
   else
-    messageView->showInline = true;
-  messageView->updateDisplay();  
+    messageView->setInline(true);
+
 }
 
 bool KMMainView::isInline()
 {
-  if(messageView->showInline)
-    return true;
-  else
-    return false;
+  return messageView->isInline();
 }

@@ -115,7 +115,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
   KMMessage::Status flag;
 
   flag = folder->msgStatus(msgId);
-  sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, folder->msgFrom(msgId), 
+  sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, folder->msgFrom(msgId), 
 	  folder->msgSubject(msgId), folder->msgDate(msgId));
   changeItem(hdr, msgId-1);
 

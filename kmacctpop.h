@@ -66,7 +66,8 @@ class KMPasswdDialog : public QDialog
 {
 Q_OBJECT
 public:
-  KMPasswdDialog(QWidget *p=0, const char *n=0, const char *m="");
+  KMPasswdDialog(QWidget *p=0, const char *n=0, const char *m="",
+		 const char *login="", const char *pass = "");
 private:
   QLineEdit *usernameLEdit;
   QLineEdit *passwdLEdit;
@@ -76,7 +77,8 @@ private:
 private slots:
   void slotOkPressed();
   void slotCancelPressed();
- 
+
+protected:
 
 };
 #endif /*kmacctpop_h*/

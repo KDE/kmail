@@ -1,0 +1,31 @@
+# KDE Config File
+[sending mail]
+method=1
+mailer=/usr/sbin/sendmail
+smtpport=25
+smtphost=localhost
+[Settings]
+Reader=integrated
+Encoding=BASE64
+Inline=true
+Reader ShowToolBar=yes
+ShowToolBar=yes
+Signature=auto
+Send Button=later
+Lines=5
+[Network]
+SMTP Host=
+Sendmail Location=/usr/sbin/sendmail
+Outgoing Type=1
+SMTP Port=25
+[Geometry]
+Main=160,246,775,541
+foldertree-integrated=231
+foldertree-seperated=237
+[General]
+[Identity]
+Signature File=/home/mason/.signature
+EMail Address=
+Organization=
+Name=
+Reply-To Address=

@@ -245,8 +245,8 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
 
   // ************* MimeMagic stuff end *****************//
 
-  printf("Debug :%i\n",showInline);
-  if(showInline == false) // If we do not want 
+  printf("Debug :%i\n",isInline());
+  if(isInline() == false) // If we do not want 
                           //the attachments to be displayed inline
     {QString icon;
      QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
@@ -580,15 +580,14 @@ void KMReaderView::slotDocumentDone()
 
 void KMReaderView::slotOpenAtmnt()
 {
-  if(!currentMessage)
+  /*  if(!currentMessage)
     return;
-  printf("CurrentAtmnt :%i\n",currentAtmnt);
-
+  printf("CurrentAtmnt :%i\n",currentAtmnt);*/
+  ((KMReaderWin*)parentWidget())->toDo();
 }
 
 void KMReaderView::slotSaveAtmnt()
 {
-  //((KMReaderWin*)parentWidget())->toDo();
   QString fileName;
   QString text;
   fileName = QFileDialog::getSaveFileName();
@@ -732,6 +731,21 @@ void KMReaderView::viewSource()
 	p->resize(p->size());
 }
 
+
+bool KMReaderView::isInline()
+{
+  if(showInline == true)
+    return true;
+  else
+      return false;
+}
+
+
+void KMReaderView::setInline(bool b)
+{
+  showInline=b;
+  updateDisplay();
+}
 
 /***************************************************************************/
 /***************************************************************************/

@@ -47,17 +47,37 @@ public:
   KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0,
 		KMMessage *message=0, Action ac = actNoOp);
   ~KMComposeView();
-  KEdit *editor;
 
+  const char * to();
+  void setTo(const char * _str);
+
+  const char * cc();
+  void setCc(const char * _str);
+
+  const char * subject();
+  void setSubject(const char * _str);
+
+  const char * text();
+  void setText(const char * _str);
+  void appendText(const char * _str);
+  void insertText(const char * _str);
+  void insertTextAt(const char * _str, int line, int col);
+  int textLines();
+
+  const char * emailAddress() 
+    {return EMailAddress;}
+    
+  const char * replyToAddress()
+    {return ReplyToAddress;}
 
 private:
+  KEdit *editor;
   QLineEdit *fromLEdit;
   QLineEdit *toLEdit;
   QLineEdit *subjLEdit;
   QLineEdit *ccLEdit;
   KMMessage *currentMessage;
   KTabListBox *attWidget;
-  QString SMTPServer;
   QString EMailAddress;
   QString ReplyToAddress;
   QStrList *urlList;

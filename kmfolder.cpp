@@ -288,7 +288,8 @@ int KMFolder::createTocFromContents(void)
 //-----------------------------------------------------------------------------
 int KMFolder::writeToc(void)
 {
-  int rc, i;
+  int rc = 0 ;
+  int i =0 ;
   //  int tocRecSize = KMMsgInfo::recSize();
 
   if (mTocStream) fclose(mTocStream);
