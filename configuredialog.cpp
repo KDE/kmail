@@ -3882,7 +3882,7 @@ void SecurityPage::CryptPlugTab::apply() {
 
   CryptPlugWrapperList * cpl = kernel->cryptPlugList();
 
-  int cryptPlugCount = 0;
+  uint cryptPlugCount = 0;
   for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it ) {
     if ( it.current()->text( 0 ).isEmpty() )
       continue;
