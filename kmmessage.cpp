@@ -580,7 +580,9 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         isInline = (qstricmp(msgPart.contentDisposition(), "inline") == 0);
 
       if (isInline) {
-        if (qstricmp(msgPart.typeStr(),"text") == 0) {
+        if (qstricmp(msgPart.typeStr(),"text") == 0 || 
+          msgPart.typeStr().isEmpty())
+        {
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
           QString part;
