@@ -94,6 +94,9 @@ protected slots:
   /** initialization sequence has finised */
   virtual void sendProcStarted(bool success);
 
+  /** note when a msg gets added to outbox during sending */
+  void outboxMsgAdded();
+
 protected:
   /** handle sending of messages */
   virtual void doSendMsg();

@@ -180,6 +180,12 @@ bool KMSender::sendSingleMail( KMMessage*)
 
 }
 
+//-----------------------------------------------------------------------------
+void KMSender::outboxMsgAdded()
+{
+    ++mTotalMessages;
+}
+
 
 //-----------------------------------------------------------------------------
 bool KMSender::sendQueued(void)
@@ -195,6 +201,8 @@ bool KMSender::sendQueued(void)
   // open necessary folders
   kernel->outboxFolder()->open();
   mTotalMessages = kernel->outboxFolder()->count();
+  connect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
+          this, SLOT(outboxMsgAdded()));
   mCurrentMsg = NULL;
 
   kernel->sentFolder()->open();
@@ -248,8 +256,6 @@ void KMSender::doSendMsg()
         return;
       }
     }
-
-
 
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
     int processResult = kernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
@@ -425,6 +431,8 @@ void KMSender::cleanup(void)
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg = NULL;
   }
+  disconnect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
+             this, SLOT(outboxMsgAdded()));
   kernel->sentFolder()->close();
   kernel->outboxFolder()->close();
   if (kernel->outboxFolder()->count()<0)
