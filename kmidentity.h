@@ -93,6 +93,10 @@ public:
   /** used for comparison */
   bool operator==( const KMIdentity & other ) const;
 
+  bool operator!=( const KMIdentity & other ) const {
+    return !operator==( other );
+  }
+
   /** used for sorting */
   bool operator<( const KMIdentity & other ) const {
     if ( isDefault() ) return true;

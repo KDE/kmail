@@ -70,10 +70,13 @@ void IdentityManager::commit()
 	it != mShadowIdentities.end() ; ++it ) {
     QValueList<uint>::Iterator uoid = seenUOIDs.find( (*it).uoid() );
     if ( uoid != seenUOIDs.end() ) {
-      // changed identity
-      kdDebug( 5006 ) << "emitting changed() for identity " << *uoid << endl;
-      emit changed( *it );
-      emit changed( *uoid );
+      const KMIdentity & orig = identityForUoid( *uoid );
+      if ( *it != orig ) {
+	// changed identity
+	kdDebug( 5006 ) << "emitting changed() for identity " << *uoid << endl;
+	emit changed( *it );
+	emit changed( *uoid );
+      }
       seenUOIDs.remove( uoid );
     } else {
       // new identity
