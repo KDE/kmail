@@ -100,6 +100,10 @@ namespace KMail {
     /** Internal. Copies the context of @p other, but not it's @ref
 	rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
+
+    void setIsFirstTextPart( bool isFirst ) {
+      mIsFirstTextPart = isFirst;
+    }
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
 		      bool showOneMimePart=false, bool keepEncryptions=false,
@@ -110,6 +114,12 @@ namespace KMail {
     virtual ~ObjectTreeParser();
 
     QCString rawReplyString() const { return mRawReplyString; }
+
+    /*! @return the text of the message, ie. what would appear in the
+        composer's text editor if this was edited. */
+    QString textualContent() const { return mTextualContent; }
+
+    QCString textualContentCharset() const { return mTextualContentCharset; }
 
     void setCryptPlugWrapper( CryptPlugWrapper * wrapper ) {
       mCryptPlugWrapper = wrapper;
@@ -269,6 +279,8 @@ namespace KMail {
   private:
     KMReaderWin * mReader;
     QCString mRawReplyString;
+    QCString mTextualContentCharset;
+    QString mTextualContent;
     CryptPlugWrapper * mCryptPlugWrapper;
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;

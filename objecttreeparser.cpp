@@ -206,8 +206,12 @@ namespace KMail {
     }
     kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
     ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+    otp.setIsFirstTextPart( mIsFirstTextPart );
     otp.parseObjectTree( newNode );
     mRawReplyString += otp.rawReplyString();
+    mTextualContent += otp.textualContent();
+    if ( !otp.textualContentCharset().isEmpty() )
+      mTextualContentCharset = otp.textualContentCharset();
     kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
   }
 
@@ -587,8 +591,12 @@ namespace KMail {
       }
 
       ObjectTreeParser otp( mReader, cryptPlug, true );
+      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( data );
       mRawReplyString += otp.rawReplyString();
+      mTextualContent += otp.textualContent();
+      if ( !otp.textualContentCharset().isEmpty() )
+	mTextualContentCharset = otp.textualContentCharset();
 
       if ( mReader )
         htmlWriter()->queue( writeSigstatFooter( messagePart ) );
@@ -782,6 +790,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     QCString cstr( curNode->msgPart().bodyDecoded() );
 
     mRawReplyString = cstr;
+    if ( mIsFirstTextPart ) {
+      mIsFirstTextPart = false;
+      mTextualContent += curNode->msgPart().bodyToUnicode();
+      mTextualContentCharset = curNode->msgPart().charset();
+    }
+
     if ( !mReader )
       return true;
 
@@ -964,6 +978,11 @@ namespace KMail {
     const QCString cstr = curNode->msgPart().bodyDecoded();
     if ( !mReader ) {
       mRawReplyString = cstr;
+      if ( mIsFirstTextPart ) {
+	mIsFirstTextPart = false;
+	mTextualContent += curNode->msgPart().bodyToUnicode();
+	mTextualContentCharset = curNode->msgPart().charset();
+      }
       return true;
     }
 
@@ -974,6 +993,10 @@ namespace KMail {
       return false;
 
     mRawReplyString = cstr;
+    if ( mIsFirstTextPart ) {
+      mTextualContent += curNode->msgPart().bodyToUnicode();
+      mTextualContentCharset = curNode->msgPart().charset();
+    }
 
     QString label = curNode->msgPart().fileName().stripWhiteSpace();
     if ( label.isEmpty() )
@@ -1030,6 +1053,9 @@ namespace KMail {
     otp.setShowOnlyOneMimePart( false );
     otp.parseObjectTree( child );
     mRawReplyString += otp.rawReplyString();
+    mTextualContent += otp.textualContent();
+    if ( !otp.textualContentCharset().isEmpty() )
+      mTextualContentCharset = otp.textualContentCharset();
   }
 
   bool ObjectTreeParser::processMultiPartMixedSubtype( partNode * node, ProcessResult & ) {
@@ -1289,8 +1315,12 @@ namespace KMail {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
+      mTextualContent += otp.textualContent();
+      if ( !otp.textualContentCharset().isEmpty() )
+	mTextualContentCharset = otp.textualContentCharset();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1340,8 +1370,12 @@ namespace KMail {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
+      mTextualContent += otp.textualContent();
+      if ( !otp.textualContentCharset().isEmpty() )
+	mTextualContentCharset = otp.textualContentCharset();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1417,8 +1451,12 @@ namespace KMail {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
+      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
+      mTextualContent += otp.textualContent();
+      if ( !otp.textualContentCharset().isEmpty() )
+	mTextualContentCharset = otp.textualContentCharset();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
