@@ -536,8 +536,9 @@ void KMFolderTree::reload(bool openFolders)
       if ( static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
       {
         mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
-        setSelected( it.current() );
-        setCurrent( it.current() );
+        setSelected( it.current(), true );
+        setCurrentItem( it.current() );
+        break;
       }
   }
   mReloading = false;
