@@ -1271,7 +1271,11 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
     if (folder->getSubfolderState() == KMFolderImap::imapNoInformation)
+    {
+      writeIsListViewItemOpen( fti );
+      // the tree will be reloaded after that
       folder->listDirectory( fti );
+    }
   }
 }
 
