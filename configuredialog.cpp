@@ -1432,27 +1432,32 @@ void ConfigureDialog::makeComposerPage( void )
   //list of charsets
   QGroupBox *charsetsGroup = new QGroupBox( i18n("Preferred charsets"),
     charsetPage );
-  QGridLayout *charsetsGridLay = new QGridLayout( charsetsGroup, 7, 2,
+  QGridLayout *charsetsGridLay = new QGridLayout( charsetsGroup, 8, 2,
     spacingHint() );
   charsetsGridLay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   charsetsGridLay->setRowStretch( 1, 10 );
+  label = new QLabel( charsetsGroup );
+  label->setAlignment( WordBreak);
+  label->setText( i18n("This list is checked for every outgoing mail from the "
+    "top to the bottom for a charset that contains all required characters.") );
+  charsetsGridLay->addWidget( label, 1, 0 );
   mComposer.charsetListBox = new QListBox( charsetsGroup );
-  charsetsGridLay->addMultiCellWidget( mComposer.charsetListBox, 1, 5, 0, 0 );
+  charsetsGridLay->addMultiCellWidget( mComposer.charsetListBox, 2, 6, 0, 0 );
   mComposer.addCharsetButton = new QPushButton( i18n("&Add..."), charsetsGroup );
-  charsetsGridLay->addWidget( mComposer.addCharsetButton, 2, 1 );
+  charsetsGridLay->addWidget( mComposer.addCharsetButton, 3, 1 );
   mComposer.removeCharsetButton = new QPushButton( i18n("&Remove"),
     charsetsGroup );
-  charsetsGridLay->addWidget( mComposer.removeCharsetButton, 3, 1 );
+  charsetsGridLay->addWidget( mComposer.removeCharsetButton, 4, 1 );
   mComposer.charsetUpButton = new QPushButton( i18n("&Up"), charsetsGroup );
   mComposer.charsetUpButton->setAutoRepeat( TRUE );
-  charsetsGridLay->addWidget( mComposer.charsetUpButton, 4, 1 );
+  charsetsGridLay->addWidget( mComposer.charsetUpButton, 5, 1 );
   mComposer.charsetDownButton = new QPushButton( i18n("&Down"), charsetsGroup );
   mComposer.charsetDownButton->setAutoRepeat( TRUE );
-  charsetsGridLay->addWidget( mComposer.charsetDownButton, 5, 1 );
+  charsetsGridLay->addWidget( mComposer.charsetDownButton, 6, 1 );
   mComposer.forceReplyCharsetCheck =
     new QCheckBox( i18n("&Keep original charset when replying or forwarding (if possible)."),
     charsetsGroup );
-  charsetsGridLay->addMultiCellWidget( mComposer.forceReplyCharsetCheck, 6,6, 0, 1 );
+  charsetsGridLay->addMultiCellWidget( mComposer.forceReplyCharsetCheck, 7, 7, 0, 1 );
   topLevel3->addWidget( charsetsGroup );
   connect( mComposer.addCharsetButton, SIGNAL(clicked()),
   	   this, SLOT(slotAddCharset()) );
