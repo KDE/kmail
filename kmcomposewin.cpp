@@ -646,6 +646,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     mGrid->addWidget(aCbx, aRow, 1);
     mGrid->addWidget(aChk, aRow, 2);
     aChk->setFixedSize(aChk->sizeHint().width(), aLbl->height());
+    aChk->show();
     aRow++;
   }
   else
