@@ -123,19 +123,16 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   if ( list )
       object = list->first();
   delete list;
-  if (!searchFolder && object && object->inherits( "QComboBox" )) {
-      QComboBox *combo = (QComboBox*)object;
-      combo->setCurrentText("Subject");
-  }
+  if (!searchFolder && object && ::qt_cast<QComboBox*>(object))
+      static_cast<QComboBox*>(object)->setCurrentText("Subject");
+
   list = mPatternEdit->queryList( 0, "mRuleValue" );
   object = 0;
   if ( list )
       object = list->first();
   delete list;
-  if (object && object->inherits( "QWidget" )) {
-      QWidget *widget = (QComboBox*)object;
-      widget->setFocus();
-  }
+  if (object && object->isWidgetType())
+      static_cast<QWidget*>(object)->setFocus();
 
   vbl->addWidget( mPatternEdit );
 
