@@ -407,8 +407,8 @@ KMMessage * KMComposeView::prepareMessage()
   QString temp;
   KMMessage *msg;
 
-  msg = new KMMessage();
-  msg = currentMessage; //msg 
+  //msg = new KMMessage(); //.. this is nonsense here (Stefan)
+  msg = currentMessage;
 
   temp=to();
   if (temp.isEmpty()) 
@@ -536,7 +536,7 @@ KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p,
 
 void KMComposeView::slotSendNow()
 {
-  KMMessage *msg = new KMMessage();
+  KMMessage *msg;
   if((msg = prepareMessage()) == 0)
     return;
   if(msgSender->send(msg))
@@ -546,7 +546,7 @@ void KMComposeView::slotSendNow()
 //----------------------------------------------------------------------------
 void KMComposeView::slotSendLater()
 {
-  KMMessage *msg = new KMMessage();
+  KMMessage *msg;
   if((msg =prepareMessage()) == 0)
     return;
   if(msgSender->send(msg,FALSE))
@@ -573,8 +573,7 @@ void KMComposeView::slotPopupMenu(int index, int)
 void KMComposeView::parseConfiguration()
 {
   // Obvious
-  KConfig *config = new KConfig();
-  config = KApplication::getKApplication()->getConfig();
+  KConfig *config = KApplication::getKApplication()->getConfig();
   config->setGroup("Settings");
   QString o = config->readEntry("Signature");
   if( !o.isEmpty() && o.find("auto",0,false) ==0)
@@ -761,7 +760,7 @@ void KMComposeView::slotToDo()
 void KMComposeView::slotAppendSignature()
 {
   // Appends Signature file's text to editor's text.
-  KConfig *configFile = new KConfig();
+  KConfig *configFile;
   QString sigFile;
   QString text;
   char temp[255];

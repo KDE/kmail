@@ -296,13 +296,20 @@ void KMHeaders::replyAllToMsg (int msgId)
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
   KMMessage *msg = new KMMessage();
+  int cur = currentItem();
+  bool curMoved = (cur>=0 ? isMarked(cur) : FALSE);
 
   assert(destFolder != NULL);
 
   kbp->busy();
   for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
     destFolder->moveMsg(msg);
+
+  // display proper message if current message was deleted.
+  if (curMoved)
+  {
+    if (cur >= mFolder->numMsgs()) cur = mFolder->numMsgs() - 1;
+    setCurrentItem(cur, -1);
   }
   kbp->idle(); 
 }
@@ -413,14 +420,6 @@ void KMHeaders::highlightMessage(int idx, int/*colId*/)
 //-----------------------------------------------------------------------------
 void KMHeaders::selectMessage(int idx, int/*colId*/)
 {
-  KMMessage* msg;
-
-  if (idx >= 0)
-  {
-    msg = getMsg(idx);
-    if (msg->status()==KMMessage::stDeleted) undeleteMsg(idx);
-    else deleteMsg(idx);
-  }
 }
 
 

@@ -27,6 +27,7 @@
 #include "kmmessage.h"
 #include "kmcomposewin.h"
 #include "kmglobal.h"
+#include "kmfolderseldlg.h"
 
 #include "kmmainwin.moc"
 
@@ -349,6 +350,19 @@ void KMMainWin::doDeleteMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::doMoveMsg()
+{ 
+  KMFolderSelDlg dlg(nls->translate("Select Folder"));
+  KMFolder* dest;
+
+  if (!dlg.exec()) return;
+  if (!(dest = dlg.folder())) return;
+
+  mHeaders->moveMsgToFolder(dest);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::doViewChange()
 {
   if(bodyParts->isItemChecked(bodyParts->idAt(0)))
@@ -448,7 +462,7 @@ void KMMainWin::setupMenuBar()
 			  SLOT(doForwardMsg()), Key_F);
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("&Move..."), this, 
-			  SLOT(doUnimplemented()), Key_M);
+			  SLOT(doMoveMsg()), Key_M);
   messageMenu->insertItem(nls->translate("&Copy..."), this, 
 			  SLOT(doUnimplemented()), Key_S);
   messageMenu->insertItem(nls->translate("&Delete"), this, 

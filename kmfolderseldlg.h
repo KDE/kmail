@@ -8,8 +8,9 @@
 #include <qdialog.h>
 
 class QListBox;
+class KMFolder;
 
-#define KMFolderSelDlgInherited KMFolderSelDlg
+#define KMFolderSelDlgInherited QDialog
 class KMFolderSelDlg: public QDialog
 {
   Q_OBJECT
@@ -19,15 +20,14 @@ public:
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */
-  KMFolder* folder(void) const { return mFolder; }
+  virtual KMFolder* folder(void);
 
 protected slots:
   void slotOkPressed();
   void slotCancelPressed();
 
 protected:
-  KMFolder mFolder;
-  QList* mListBox;
+  QListBox* mListBox;
 };
 
 #endif /*kmfolderseldlg_h*/

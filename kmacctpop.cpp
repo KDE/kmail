@@ -12,7 +12,7 @@
 #include <qtstream.h>
 #include <kconfig.h>
 #include <qlined.h>
-#include <qbutton.h>
+#include <qpushbt.h>
 
 #include "kmacctpop.h"
 #include "kalarmtimer.h"
