@@ -181,6 +181,7 @@ int main(int argc, char *argv[])
 		   I18N_NOOP("A KDE E-Mail client."),
 		   KAboutData::License_GPL,
                    "(c) 1997-2000, The KMail developers",
+		   0,
 		   "http://kmail.kde.org");
   about->addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "don@sanders.org" );
   about->addAuthor( "Waldo Bastian", QString::null, "bastian@kde.org" );
