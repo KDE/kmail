@@ -19,7 +19,7 @@
 #include "kmcomposewin.h"
 #include "cryptplugwrapperlist.h"
 #include <qpopupmenu.h>
-
+#include <X11/Xlib.h>
 QPixmap* KMFolderTree::pixDir = 0;
 QPixmap* KMFolderTree::pixNode = 0;
 QPixmap* KMFolderTree::pixPlain = 0;
@@ -761,7 +761,6 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   KMFolderTreeInherited::resizeEvent(e);
   setColumnWidth( 0, visibleWidth() - 1 );
 }
-
 //-----------------------------------------------------------------------------
 QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
 {
@@ -1146,33 +1145,47 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 	KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
 	if (fti && (fti != oldSelected) && (fti->folder))
         {
-	  KPopupMenu *menu = new KPopupMenu( this );
-	  menu->insertItem( i18n("Copy"), DRAG_COPY, 0 );
-	  menu->insertItem( i18n("Move"), DRAG_MOVE, 1 );
-	  menu->insertSeparator();
-	  menu->insertItem( i18n("Cancel"), DRAG_CANCEL, 3 );
-	  int id = menu->exec( QCursor::pos(), 0 );
-	  switch(id) {
-	  case DRAG_COPY:
-	    emit folderDropCopy(fti->folder);
-	    break;
-	  case DRAG_MOVE:
-	    emit folderDrop(fti->folder);
-	    break;
-	  case DRAG_CANCEL:
-	    //just chill, doing nothing
-	    break;
-	  default:
-	    kdDebug(5006)<<"## This should never happen! ##"<<endl;
-	  }
+            int root_x, root_y, win_x, win_y;
+            uint keybstate;
+            Window rootw;
+            Window childw;
+            XQueryPointer( qt_xdisplay(), qt_xrootwin(), &rootw, &childw,
+                           &root_x, &root_y, &win_x, &win_y, &keybstate );
+
+            if ( keybstate&ControlMask ) {
+                emit folderDropCopy(fti->folder); 
+            } else if ( keybstate&ShiftMask ) {
+                emit folderDrop(fti->folder);
+            } else {
+                  KPopupMenu *menu = new KPopupMenu( this );
+                  menu->insertItem( i18n("Copy"), DRAG_COPY, 0 );
+                  menu->insertItem( i18n("Move"), DRAG_MOVE, 1 );
+                  menu->insertSeparator();
+                  menu->insertItem( i18n("Cancel"), DRAG_CANCEL, 3 );
+                  int id = menu->exec( QCursor::pos(), 0 );
+                  switch(id) {
+                  case DRAG_COPY:
+                      emit folderDropCopy(fti->folder);
+                      break;
+                  case DRAG_MOVE:
+                      emit folderDrop(fti->folder);
+                      break;
+                  case DRAG_CANCEL:
+                      //just chill, doing nothing
+                      break;
+                  default:
+                      kdDebug(5006)<<"## This should never happen! ##"<<endl;
+                  }
+            }            
+      
         }
 	e->accept();
     } else
-      e->ignore();
-
+        e->ignore();
+    
     // Begin this wasn't necessary in QT 2.0.2
     dropItem = 0L;
-
+    
     clearSelection();
     setCurrentItem( oldCurrent );
     if ( oldSelected )
@@ -1188,7 +1201,7 @@ void KMFolderTree::keyPressEvent( QKeyEvent * e )
 {
     bool cntrl = (e->state() & ControlButton );
     QListViewItem *cur = currentItem();
-
+ 
     if (!e || !firstChild())
       return;
 
