@@ -1,5 +1,7 @@
 // kmheaders.cpp
-// #define sanders 
+// #define fixedfont
+
+#include <stdlib.h>
 
 #include <qstrlist.h>
 #include <qpalette.h>
@@ -210,7 +212,7 @@ public:
 
     _cg.setColor( QColorGroup::Text, *mColor );
     
-#ifdef sanders
+#ifdef fixedfont
     if( column == mPaintInfo->dateCol ) {
       QFont f = p->font();
       f.setFamily("Courier");
@@ -1600,7 +1602,6 @@ void KMHeaders::updateMessageList(void)
 {
   int i;
   KMMsgBase* mb;
-  bool autoUpd;
 
   mPrevCurrent = 0;
   KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
@@ -1656,7 +1657,7 @@ void KMHeaders::updateMessageList(void)
     clear();
     mIdTree.clear();
     mTree.setAutoDelete( true );
-    if (mTree.size() < 2*mFolder->count()) {
+    if (mTree.size() < 2*(unsigned)mFolder->count()) {
       mTree.resize( 2*mFolder->count() );
       mTreeSeen.resize( 2*mFolder->count() );
       mTreeToplevel.resize( 2*mFolder->count() );
