@@ -108,6 +108,7 @@ private:
     QCheckBox    *storePasswordCheck;
     QCheckBox    *specifyHostnameCheck;
     QLineEdit    *localHostnameEdit;
+    QLabel       *localHostnameLabel;
   };
 
   void makeSendmailPage();

@@ -364,16 +364,18 @@ void KMTransportDialog::makeSmtpPage()
                        "may not be set correctly or to mask your "
                        "system's true hostname."));
 
-  label = new QLabel( i18n("H&ostname:"), page1 );
-  grid->addWidget( label, 13, 0);
+  mSmtp.localHostnameLabel = new QLabel( i18n("H&ostname:"), page1 );
+  grid->addWidget( mSmtp.localHostnameLabel, 13, 0);
   mSmtp.localHostnameEdit = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.localHostnameEdit,
                   i18n("Enter the hostname KMail should use when "
                        "identifying itself to the server."));
-  label->setBuddy( mSmtp.localHostnameEdit );
+  mSmtp.localHostnameLabel->setBuddy( mSmtp.localHostnameEdit );
   grid->addWidget( mSmtp.localHostnameEdit, 13, 1 );
   connect( mSmtp.specifyHostnameCheck, SIGNAL(toggled(bool)),
            mSmtp.localHostnameEdit, SLOT(setEnabled(bool)));
+  connect( mSmtp.specifyHostnameCheck, SIGNAL(toggled(bool)),
+           mSmtp.localHostnameLabel, SLOT(setEnabled(bool)));
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -448,6 +450,7 @@ void KMTransportDialog::setupSettings()
 
     slotRequiresAuthClicked();
     mSmtp.localHostnameEdit->setEnabled(mTransportInfo->specifyHostname);
+    mSmtp.localHostnameLabel->setEnabled(mTransportInfo->specifyHostname);
   }
 }
 
