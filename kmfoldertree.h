@@ -53,12 +53,6 @@ public:
  
   virtual ~KMFolderTreeItem();
 
-  void paintBranches( QPainter * p, const QColorGroup & cg,
-                      int w, int y, int h)
-  {
-    QListViewItem::paintBranches( p, cg, w, y, h);
-  }
-
   void paintCell( QPainter * p, const QColorGroup & cg,
                   int column, int width, int align ); 
   virtual QString key( int, bool ) const;
