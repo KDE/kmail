@@ -902,7 +902,7 @@ void KMMainWin::slotCopyText()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMarkAll() {
   QListViewItem *item;
-  for (item = mHeaders->firstChild(); item; item = item->nextSibling())
+  for (item = mHeaders->firstChild(); item; item = item->itemBelow())
     mHeaders->setSelected( item, TRUE );
 }
 
