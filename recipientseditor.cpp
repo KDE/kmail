@@ -345,7 +345,12 @@ RecipientLine *RecipientsView::addLine()
   connect( line, SIGNAL( countChanged() ), SLOT( calculateTotal() ) );
 
   if ( mLines.last() ) {
-    line->setRecipientType( mLines.last()->recipientType() );
+    if ( mLines.count() == 1 &&
+         mLines.last()->recipientType() == Recipient::To ) {
+      line->setRecipientType( Recipient::Cc );
+    } else {
+      line->setRecipientType( mLines.last()->recipientType() );
+    }
     line->fixTabOrder( mLines.last()->tabOut() );
   }
 
