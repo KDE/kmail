@@ -141,9 +141,9 @@ KMMainWin::~KMMainWin()
   saveMainWindowSettings(kapp->config(), "Main Window");
   kapp->config()->sync();
 
-  if (mHeaders)    delete mHeaders;
-  if (mStatusBar)  delete mStatusBar;
-  if (mFolderTree) delete mFolderTree;
+  delete mHeaders;
+  delete mStatusBar;
+  delete mFolderTree;
 }
 
 
@@ -1751,10 +1751,10 @@ void KMMainWin::setupMenuBar()
   statusMenu->insert( flagAction );
 
   moveActionMenu = new KActionMenu( i18n("&Move to" ),
-					     actionCollection(), "move_to" );
+                                    actionCollection(), "move_to" );
 
   copyActionMenu = new KActionMenu( i18n("&Copy to" ),
-					     actionCollection(), "copy_to" );
+                                    actionCollection(), "copy_to" );
 
   (void) new KAction( i18n("Apply filters"), CTRL+Key_J, this,
 		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
@@ -1924,9 +1924,12 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 					 KMMenuToFolder *aMenuToFolder,
 					 QPopupMenu *menu )
 {
-  int menuId;
-  QString label;
-  menu->clear();
+    while ( menu->count() ) {
+        delete menu->findItem( menu->idAt( 0 ) )->popup();
+        menu->removeItemAt( 0 );
+    }
+
+    menu->clear();
 
   if (!fti) fti = static_cast<KMFolderTreeItem*>(mFolderTree->firstChild());
   if (move)
@@ -1944,17 +1947,20 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 
   if (fti->folder && !fti->folder->isDir())
   {
-    if (move) menuId = menu->insertItem(i18n("Move to this folder"));
-    else menuId = menu->insertItem(i18n("Copy to this folder"));
-    aMenuToFolder->insert( menuId, fti->folder );
-    menu->insertSeparator();
+      int menuId;
+      if (move)
+          menuId = menu->insertItem(i18n("Move to this folder"));
+      else
+          menuId = menu->insertItem(i18n("Copy to this folder"));
+      aMenuToFolder->insert( menuId, fti->folder );
+      menu->insertSeparator();
   }
   fti = static_cast<KMFolderTreeItem*>(fti->firstChild());
   while (fti)
   {
     if (fti->folder)
     {
-      label = fti->text(0);
+      QString label = fti->text(0);
       label.replace(QRegExp("&"),QString("&&"));
       if (fti->firstChild())
       {
@@ -1965,7 +1971,7 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
       } else
       if (!fti->folder->isDir())
       {
-        menuId = menu->insertItem(label);
+        int menuId = menu->insertItem(label);
         aMenuToFolder->insert( menuId, fti->folder );
       }
     }
