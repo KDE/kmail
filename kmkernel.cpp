@@ -569,6 +569,7 @@ void KMKernel::cleanupImapFolders()
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
+    fld->close();
   }
   the_imapFolderMgr->quiet(FALSE);
 }
