@@ -2917,7 +2917,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     // ---sven's Arrow key navigation end ---
     }
   }
-  return FALSE;
+  return KMEditInherited::eventFilter(o, e);
 }
 
 
