@@ -30,9 +30,9 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
 
   //setNumCols(4);
   setColumn(0, nls->translate("F"), 16, KMHeadersInherited::PixmapColumn);
-  setColumn(1, nls->translate("Sender"), 200);
-  setColumn(2, nls->translate("Subject"), 250);
-  setColumn(3, nls->translate("Date"), 100);
+  setColumn(1, nls->translate("Sender"), 220);
+  setColumn(2, nls->translate("Subject"), 270);
+  setColumn(3, nls->translate("Date"), 250);
   readConfig();
 
   pixNew = loader->loadIcon("kmmsgnew.xpm");
@@ -175,47 +175,7 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-  QList<KMMessage> msgList;
-  KMMessage* msg;
-  int rc, num;
-  int cur = currentItem();
-  bool curDeleted = (cur>=0 ? isMarked(cur) : FALSE);
-
-  kbp->busy();
-
-  // getMsg gets confused when messages are removed while calling
-  // it repeatedly. To avoid this we create a temporary list of
-  // the messages that will be moved.
-  for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
-    msgList.append(msg);
-
-  if (num > 3)
-  {
-    mFolder->quiet(TRUE);
-    setAutoUpdate(FALSE);
-  }
-
-  unmarkAll();
-
-  // now it is safe to move the messages.
-  for (msg=msgList.first(); msg; msg=msgList.next())
-    rc = trashFolder->moveMsg(msg);
-
-  if (num > 3)
-  {
-    setAutoUpdate(TRUE);
-    mFolder->quiet(FALSE);
-    // repaint();
-  }
-
-  // display proper message if current message was deleted.
-  if (curDeleted)
-  {
-    if (cur >= mFolder->numMsgs()) cur = mFolder->numMsgs() - 1;
-    setCurrentItem(cur, -1);
-  }
-
-  kbp->idle();
+  moveMsgToFolder(trashFolder, msgId);
 }
 
 
@@ -295,23 +255,39 @@ void KMHeaders::replyAllToMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
-  KMMessage *msg = new KMMessage();
+  QList<KMMessage> msgList;
+  KMMessage* msg;
+  int rc, num;
   int cur = currentItem();
   bool curMoved = (cur>=0 ? isMarked(cur) : FALSE);
 
   assert(destFolder != NULL);
 
   kbp->busy();
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-    destFolder->moveMsg(msg);
+  // getMsg gets confused when messages are removed while calling
+  // it repeatedly. To avoid this we create a temporary list of
+  // the messages that will be moved.
+  for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
+    msgList.append(msg);
 
-  // display proper message if current message was deleted.
+  mFolder->quiet(TRUE);
+  setAutoUpdate(FALSE);
+  unmarkAll();
+
+  // now it is safe to move the messages.
+  for (msg=msgList.first(); msg; msg=msgList.next())
+    rc = destFolder->moveMsg(msg);
+
+  setAutoUpdate(TRUE);
+  mFolder->quiet(FALSE);
+
+  // display proper message if current message was moved.
   if (curMoved)
   {
     if (cur >= mFolder->numMsgs()) cur = mFolder->numMsgs() - 1;
     setCurrentItem(cur, -1);
   }
-  kbp->idle(); 
+  kbp->idle();
 }
 
 
