@@ -47,6 +47,7 @@ KMSender::KMSender()
   mSendAborted = false;
   mSentMessages = 0;
   mTotalMessages = 0;
+  mFailedMessages = 0;
   mSentBytes = 0;
   mTotalBytes = 0;
 }
@@ -327,19 +328,25 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
   }
 
   // See if there is another queued message
-  mCurrentMsg = kernel->outboxFolder()->getMsg(0);
+  mCurrentMsg = kernel->outboxFolder()->getMsg(mFailedMessages);
   if (!mCurrentMsg || mCurrentMsg->transferInProgress())
   {
     // a message is locked finish the send
     if (mCurrentMsg && mCurrentMsg->transferInProgress())
-	mCurrentMsg = 0;
+    	mCurrentMsg = 0;
     // no more message: cleanup and done
     if ( ( sentFolder != kernel->sentFolder() ) && ( sentFolder != 0 ) )
         sentFolder->close();
-    if (someSent)
-      setStatusMsg(i18n("%n queued message successfully sent.",
-			"%n queued messages successfully sent.",
-			mSentMessages));
+    if (someSent) {
+      if ( mSentMessages == mTotalMessages ) {
+        setStatusMsg(i18n("%n queued message successfully sent.",
+		       	  "%n queued messages successfully sent.",
+			  mSentMessages));
+      } else {
+        setStatusMsg(i18n("%1 of %2 queued messages successfully sent.")
+            .arg(mSentMessages).arg( mTotalMessages )); 
+      }
+    }
     cleanup();
     return;
   }
@@ -431,7 +438,7 @@ void KMSender::doSendMsgAux()
 
   mSendProc->preSendInit();
   setStatusMsg(i18n("%3: subject of message","Sending message %1 of %2: %3")
-	       .arg(mSentMessages+1).arg(mTotalMessages)
+	       .arg(mSentMessages+mFailedMessages+1).arg(mTotalMessages)
 	       .arg(mCurrentMsg->subject()));
   if (!mSendProc->send(mCurrentMsg))
   {
@@ -467,6 +474,7 @@ void KMSender::cleanup(void)
 
   mSendAborted = false;
   mSentMessages = 0;
+  mFailedMessages = 0;
   mSentBytes = 0;
   disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
     this, SLOT(slotAbortSend()));
@@ -490,31 +498,66 @@ void KMSender::slotIdle()
 {
   assert(mSendProc != 0);
 
-  if (!mSendAborted) {
-      if (mSendProc->sendOk()) {
-	  // sending succeeded
-	  doSendMsg();
-	  return;
-      }
-  }
-
-  // sending of message failed
   QString msg;
   QString errString;
   if (mSendProc)
       errString = mSendProc->message();
 
-  msg = i18n("Sending failed:\n%1\n"
+  if (mSendAborted) {
+    // sending of message aborted 
+    msg = i18n("Sending aborted:\n%1\n"
         "The message will stay in the 'outbox' folder until you either "
         "fix the problem (e.g. a broken address) or remove the message "
-	"from the 'outbox' folder.\n"
-	"Note: Other messages will also be blocked by this message, as "
-	"long as it is in the 'outbox' folder\n"
-	"The following transport protocol was used:\n  %2")
-    .arg(errString)
-    .arg(mMethodStr);
-  if (!errString.isEmpty()) KMessageBox::error(0,msg);
-
+        "from the 'outbox' folder.\n"
+        "The following transport protocol was used:\n  %2")
+      .arg(errString)
+      .arg(mMethodStr);
+    if (!errString.isEmpty()) KMessageBox::error(0,msg);
+  } else {
+    if (!mSendProc->sendOk()) {
+      mCurrentMsg->setTransferInProgress( false );
+      mCurrentMsg = 0;
+      mFailedMessages++;
+      // Sending of message failed.
+      if (!errString.isEmpty()) {
+        int res = KMessageBox::Yes;
+        if (mSentMessages+mFailedMessages != mTotalMessages) {
+          msg = i18n("<p>Sending failed:</p>"
+            "<p>%1</p>"
+            "<p>The message will stay in the 'outbox' folder until you either "
+            "fix the problem (e.g. a broken address) or remove the message "
+            "from the 'outbox' folder.</p>"
+            "<p>The following transport protocol was used:  %2</p>"
+            "<p>Do you want me to continue sending the remaining messages?</p>")
+            .arg(errString)
+            .arg(mMethodStr);
+          res = KMessageBox::warningYesNo( 0 , msg ,
+                  i18n( "Continue sending" ), i18n( "&Continue sending" ), 
+                  i18n("&Abort sending") );
+        } else {
+          msg = i18n("Sending failed:\n%1\n"  
+            "The message will stay in the 'outbox' folder until you either "
+            "fix the problem (e.g. a broken address) or remove the message "
+            "from the 'outbox' folder.\n"
+            "The following transport protocol was used:\n %2")
+            .arg(errString)
+            .arg(mMethodStr);
+          KMessageBox::error(0,msg);
+        }
+        if (res == KMessageBox::Yes) {
+          // Try the next one.
+          doSendMsg();
+          return;
+        } else {
+          setStatusMsg( i18n( "Sending aborted." ) ); 
+        }
+      }
+    } else {
+      // Sending suceeded.
+      doSendMsg();
+      return;
+    }
+  }
   mSendProc->finish(true);
   mSendProc = 0;
   mSendProcStarted = false;

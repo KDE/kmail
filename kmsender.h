@@ -134,6 +134,7 @@ private:
   KMMessage * mCurrentMsg;
   int mSentMessages, mTotalMessages;
   int mSentBytes, mTotalBytes;
+  int mFailedMessages;
 };
 
 
