@@ -112,7 +112,7 @@ void AddToKabDialog::addToEntry()
       if(api->addressbook()->getEntry(key, entry)
 	 ==AddressBook::NoError)
 	{ // everything works fine:
-	  address=url.mid(7, 255);
+	  address=url.mid(7, 255);	// chop the "mailto:"
 	  address=address.stripWhiteSpace();
 	  entry.emails.append(address);
 	  if(api->addressbook()->change(key, entry)
@@ -191,7 +191,7 @@ void AddToKabDialog::newEntry()
       layout.addWidget(lineedits[count], row, 1);
       ++row;
     }
-  lineedits[2]->setText(url.mid(7, 255));
+  lineedits[2]->setText(url.mid(0, 255));	// "mailto:" is already chopped
   dialog.setMainWidget(mainwidget);
   dialog.adjustSize();
   if(dialog.exec())
