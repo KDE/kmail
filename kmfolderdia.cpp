@@ -527,9 +527,10 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   KMFolder* parentFolder = mDlg->parentFolder();
 
   if ( parentFolder ) {
-    mBelongsTo->setFolder( parentFolder );
     slotUpdateItems( parentFolder );
   }
+  // can cope with parentFolder == 0
+  mBelongsTo->setFolder( parentFolder );
 
   if ( mDlg->folder() ) {
     // existing folder

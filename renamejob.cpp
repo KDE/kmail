@@ -93,8 +93,19 @@ void RenameJob::execute()
       folderMgr = kmkernel->dimapFolderMgr();
     }
 
-    mNewFolder = folderMgr->createFolder( 
-        mNewName, false, mNewParent->owner()->folderType(), mNewParent );
+    // get the default mailbox type
+    KConfig *config = KMKernel::config();
+    KConfigGroupSaver saver(config, "General");
+    int deftype = config->readNumEntry("default-mailbox-format", 1);
+    if ( deftype < 0 || deftype > 1 ) deftype = 1;
+
+    // the type of the new folder
+    KMFolderType typenew = 
+      ( deftype == 0 ) ? KMFolderTypeMbox : KMFolderTypeMaildir;
+    if ( mNewParent->owner() )
+      typenew = mNewParent->owner()->folderType();
+
+    mNewFolder = folderMgr->createFolder( mNewName, false, typenew, mNewParent );
     if ( !mNewFolder )
     {
       kdWarning(5006) << k_funcinfo << "could not create folder" << endl;

@@ -139,12 +139,15 @@ void SimpleFolderTree::reload( bool mustBeReadWrite, bool showOutbox,
 
     item->setText( mFolderColumn, fti->text( 0 ) );
     // Make items without folders and readonly items unselectable
-    if ( !fti->folder() || ( mustBeReadWrite && fti->folder()->isReadOnly() ) ) {
+    // if we're told so
+    if ( mustBeReadWrite && ( !fti->folder() || fti->folder()->isReadOnly() ) ) {
       item->setSelectable( false );
     } else {
-      item->setFolder( fti->folder() );
-      if ( selected == item->folder()->idString() )
-        selectedItem = item;
+      if ( fti->folder() ) {
+        item->setFolder( fti->folder() );
+        if ( selected == item->folder()->idString() )
+          selectedItem = item;
+      }
     }
     lastItem = item;
     lastDepth = depth;

@@ -63,7 +63,11 @@ namespace KMail {
       void setFolder( KMFolder* );
       void setFolder( const QString& idString );
 
-      /** Set if readonly folders should be disabled */
+      /** 
+       * Set if readonly folders should be disabled
+       * Be aware that if you disable this the user can also select the 
+       * 'Local Folders' folder which has no valid folder associated
+       */
       void setMustBeReadWrite( bool readwrite ) 
       { mMustBeReadWrite = readwrite; }
 

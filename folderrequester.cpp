@@ -67,11 +67,9 @@ void FolderRequester::slotOpenDialog()
       mMustBeReadWrite, false );
   dlg.setFlags( mMustBeReadWrite, mShowOutbox, mShowImapFolders );
   dlg.setFolder( mFolder );
-  KMFolder* dest;
 
   if (!dlg.exec()) return;
-  if (!(dest = dlg.folder())) return;
-  setFolder( dest );
+  setFolder( dlg.folder() );
 }
 
 //-----------------------------------------------------------------------------
@@ -91,6 +89,8 @@ void FolderRequester::setFolder( KMFolder *folder )
   mFolder = folder;
   if ( mFolder )
     edit->setText( mFolder->prettyURL() );
+  else if ( !mMustBeReadWrite ) // the Local Folders root node was selected
+    edit->setText( i18n("Local Folders") );
   emit folderChanged( folder );
 }
 
