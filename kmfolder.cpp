@@ -561,7 +561,7 @@ int KMFolder::createIndexFromContents()
       {
 	if (numStatus <= 0)
 	{
-	  msgStr = i18n("Creating index file: %1 messages done").arg(num);
+	  msgStr = i18n("Creating index file: %n message done", "Creating index file: %n messages done", num);
 	  emit statusMsg(msgStr);
 	  numStatus = 10;
 	}
