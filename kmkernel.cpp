@@ -512,25 +512,48 @@ void KMKernel::initFolders(KConfig* cfg)
   if (name.isEmpty()) name = "inbox";
 
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
+
+  if (the_inboxFolder->canAccess() != 0) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your inbox folder.") );
+    exit(1);
+  }
+
   the_inboxFolder->setSystemFolder(TRUE);
   // inboxFolder->open();
 
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
+  if (the_outboxFolder->canAccess() != 0) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your outbox folder.") );
+    exit(1);
+  }
+
   the_outboxFolder->setType("Out");
   the_outboxFolder->setSystemFolder(TRUE);
   the_outboxFolder->open();
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
+  if (the_sentFolder->canAccess() != 0) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your sent-mail folder.") );
+    exit(1);
+  }
   the_sentFolder->setType("St");
   the_sentFolder->setSystemFolder(TRUE);
   the_sentFolder->open();
 
   the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
+  if (the_trashFolder->canAccess() != 0) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your trash folder.") );
+    exit(1);
+  }
   the_trashFolder->setType("Tr");
   the_trashFolder->setSystemFolder(TRUE);
   the_trashFolder->open();
 
   the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
+  if (the_draftsFolder->canAccess() != 0) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your drafts folder.") );
+    exit(1);
+  }
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
   the_draftsFolder->open();

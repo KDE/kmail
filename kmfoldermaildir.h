@@ -45,6 +45,8 @@ public:
     fopen call otherwise (errno). */
   virtual int open();
 
+  virtual int canAccess();
+
   /** fsync buffers to disk */
   virtual void sync();
 

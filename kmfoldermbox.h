@@ -55,6 +55,8 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
+  virtual int canAccess();
+
   /** fsync buffers to disk */
   virtual void sync();
 

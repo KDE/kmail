@@ -210,6 +210,7 @@ void KMSender::doSendMsg()
 {
   KMFolder *sentFolder = 0, *imapSentFolder = 0;
   bool someSent = mCurrentMsg;
+  int rc;
   if (someSent) mSentMessages++;
   int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
   if (percent > 100) percent = 100;
@@ -240,8 +241,14 @@ void KMSender::doSendMsg()
 
     if ( sentFolder == 0 )
       sentFolder = kernel->sentFolder();
-    else
-      sentFolder->open();
+    else {
+      rc = sentFolder->open();
+      if (rc != 0) {
+	cleanup();
+        return;
+      }
+    }
+
 
 
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
@@ -261,7 +268,17 @@ void KMSender::doSendMsg()
       return;
     case 1:
       sentFolder->quiet(TRUE);
-      sentFolder->moveMsg(mCurrentMsg);
+      if (sentFolder->moveMsg(mCurrentMsg) != 0)
+      {
+        KMessageBox::error(0, i18n("Moving the sent message \"%1\" from the "
+          "\"outbox\" to the \"sent-mail\" folder failed.\n"
+          "Possible reasons are lack of disk space or write permission. "
+          "Please try to fix the problem and move the message manually.")
+          .arg(mCurrentMsg->subject()));
+        cleanup();
+        sentFolder->quiet(FALSE);
+        return;
+      }
       if (imapSentFolder) imapSentFolder->moveMsg(mCurrentMsg);
       sentFolder->quiet(FALSE);
     default:

@@ -122,6 +122,19 @@ int KMFolderMbox::open()
   return rc;
 }
 
+//----------------------------------------------------------------------------
+int KMFolderMbox::canAccess()
+{
+  int rc;
+
+  assert(name() != "");
+
+  if (access(location().local8Bit(), R_OK | W_OK) != 0) {
+    kdDebug(5006) << "KMFolderMbox::access call to access function failed" << endl;
+      return 1;
+  }
+  return 0;
+} 
 
 //-----------------------------------------------------------------------------
 int KMFolderMbox::create(bool imap)

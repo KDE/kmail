@@ -181,6 +181,10 @@ public:
     fopen call otherwise (errno). */
   virtual int open() = 0;
 
+  /** Check folder for permissions
+    Returns zero if readable and writable. */
+  virtual int canAccess() = 0;
+
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE) = 0;

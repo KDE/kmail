@@ -12,6 +12,7 @@
 #include "kmfoldermaildir.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
+#include "kbusyptr.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -54,6 +55,27 @@ KMFolderMaildir::~KMFolderMaildir()
 }
 
 //-----------------------------------------------------------------------------
+int KMFolderMaildir::canAccess()
+{
+  
+  assert(name() != "");
+
+  if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
+    return 1;
+
+  if (access(QFile::encodeName(location() + "/new"), R_OK | W_OK | X_OK) != 0)
+    return 1;
+
+  if (access(QFile::encodeName(location() + "/cur"), R_OK | W_OK | X_OK) != 0)
+    return 1;
+  
+  if (access(QFile::encodeName(location() + "/tmp"), R_OK | W_OK | X_OK) != 0)
+    return 1;
+
+  return 0;
+}
+  
+//-----------------------------------------------------------------------------
 int KMFolderMaildir::open()
 {
   int rc = 0;
@@ -62,6 +84,16 @@ int KMFolderMaildir::open()
   if (mOpenCount > 1) return 0;  // already open
 
   assert(name() != "");
+
+  if (canAccess() != 0) {
+    bool busy = kernel->kbp()->isBusy();
+    if (busy) kernel->kbp()->idle();
+    KMessageBox::sorry(0, i18n("Error opening %1. Either this is not a valid "
+      "maildir folder or you don't have sufficiant access permissions.")
+      .arg(name()));
+    if (busy) kernel->kbp()->busy();
+    return EPERM;
+  }
 
   if (!path().isEmpty())
   {
@@ -312,7 +344,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   tmp_file += filename;
 
   if (!kCStringToFile(msgText, tmp_file, false, false, false))
-    return 0;
+    return -1;
 
   QFile file(tmp_file);
   size = msgText.length();
@@ -332,7 +364,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   {
     file.remove();
     if (opened) close();
-    return 0;
+    return -1;
   }
 
   if (msgParent)
