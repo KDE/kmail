@@ -360,8 +360,8 @@ void KMReaderWin::updateReaderWin()
   if (mMsgBuf == mMsg)
     return;
 
-    updateReaderWinTimer.start( delay, TRUE );
-    //  updateReaderWinTimer.changeInterval( delay );
+  mMsgBuf = mMsg;
+  updateReaderWinTimer.start( delay, TRUE );
 
   if (mMsg) parseMsg();
   else
@@ -376,7 +376,6 @@ void KMReaderWin::updateReaderWin()
     mViewer->end();
   }
 
-  mMsgBuf = mMsg;
 }
 
 QString KMReaderWin::colorToString(const QColor& c)
