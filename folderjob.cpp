@@ -39,9 +39,9 @@
 namespace KMail {
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder, 
+FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
                           QString partSpecifier )
-  : mType( jt ), mDestFolder( folder ), mPartSpecifier( partSpecifier ),
+  : mType( jt ), mSrcFolder( 0 ), mDestFolder( folder ), mPartSpecifier( partSpecifier ),
     mPassiveDestructor( false ), mStarted( false )
 {
   if ( msg ) {
@@ -54,7 +54,8 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
 FolderJob::FolderJob( const QPtrList<KMMessage>& msgList, const QString& sets,
                           JobType jt, KMFolder *folder )
   : mMsgList( msgList ),mType( jt ),
-    mSets( sets ), mDestFolder( folder ), mPassiveDestructor( false ), mStarted( false ) 
+    mSets( sets ), mSrcFolder( 0 ), mDestFolder( folder ),
+    mPassiveDestructor( false ), mStarted( false )
 {
 }
 
