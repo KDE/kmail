@@ -540,6 +540,7 @@ void KMFolderCachedImap::serverSyncInternal()
       mProgress += 10;
       //emit syncState( SYNC_STATE_SYNC_SUBFOLDERS, mSubfoldersForSync.count() );
       emit newState( name(), mProgress, i18n("Synchronization done"));
+      mAccount->displayProgress();
 
       if( mSubfoldersForSync.isEmpty() ) {
 	mSyncState = SYNC_STATE_INITIAL;
