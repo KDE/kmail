@@ -324,7 +324,6 @@ static void init(int& argc, char *argv[])
 static void cleanup(void)
 {
   KConfig* config =  kapp->getConfig();
-
   shuttingDown = TRUE;
 
   if (trashFolder)

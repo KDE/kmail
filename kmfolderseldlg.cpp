@@ -12,15 +12,18 @@
 #include <qlayout.h>
 #include <unistd.h>
 #include <kapp.h>
+#include <qaccel.h>
+#include <kbuttonbox.h>
 
+QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg(const char* caption): 
   KMFolderSelDlgInherited(NULL, caption, TRUE)
 {
-  QButton *btnCancel, *btnOk;
-  QBoxLayout* box = new QVBoxLayout(this);
-  QBoxLayout* bbox = new QHBoxLayout;
+  QPushButton *btnCancel, *btnOk;
+  QBoxLayout* box = new QVBoxLayout(this, 2, 0);
+  QBoxLayout* bbox = new QHBoxLayout(0);
   KMFolderDir* fdir = &folderMgr->dir();
   KMFolder* cur;
 
@@ -34,15 +37,20 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
 
   box->addLayout(bbox, 1);
 
-  btnOk = new QPushButton(i18n("Ok"), this);
-  btnOk->setMinimumSize(btnOk->size());
+  KButtonBox *butbox = new KButtonBox(this);
+  btnOk = butbox->addButton(i18n("Ok"));
+  btnOk->setDefault(TRUE);
   connect(btnOk, SIGNAL(clicked()), this, SLOT(accept()));
-  bbox->addWidget(btnOk, 1);
 
-  btnCancel = new QPushButton(i18n("Cancel"), this);
-  btnCancel->setMinimumSize(btnCancel->size());
+  btnCancel = butbox->addButton(i18n("Cancel"));
   connect(btnCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
-  bbox->addWidget(btnCancel, 1);
+  butbox->layout();
+  box->addWidget(butbox);
+
+  QAccel *acc = new QAccel(this);
+  acc->connectItem(acc->insertItem(Key_Escape),
+		   this,
+		   SLOT(slotCancel()));
 
   resize(100, 300);
   box->activate();
@@ -50,6 +58,15 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   for (cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next())
   {
     mListBox->insertItem(cur->label());
+    if(!oldSelection.isNull() && oldSelection == cur->label())
+      mListBox->setCurrentItem(mListBox->count() - 1);
+  }
+  
+  // make sure item is visible
+  if(mListBox->currentItem() != -1) {
+    unsigned idx = 0;
+    while(mListBox->numItemsVisible()-2 + mListBox->topItem() < mListBox->currentItem() && idx < mListBox->count())
+	  mListBox->setTopItem(idx++);
   }
 
   mListBox->setFocus();
@@ -77,6 +94,8 @@ KMFolder* KMFolderSelDlg::folder(void)
 void KMFolderSelDlg::slotSelect(int)
 {
   app->processEvents(200);
+  if(mListBox->currentItem() != -1)
+    oldSelection = mListBox->text(mListBox->currentItem());
   accept();
 }
 
@@ -85,7 +104,9 @@ void KMFolderSelDlg::slotSelect(int)
 void KMFolderSelDlg::slotCancel()
 {
   app->processEvents(200);
-  disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));
+  disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));  
+  if(mListBox->currentItem() != -1)
+    oldSelection = mListBox->text(mListBox->currentItem());
   reject();
 }
 

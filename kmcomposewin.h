@@ -107,8 +107,8 @@ public:
   /** Read settings from app's config file. */
   virtual void readConfig(void);
 
-  /** Write settings to app's config file. Calls sync() if withSync is TRUE. */
-  virtual void writeConfig(bool withSync=TRUE);
+  /** Write settings to app's config file. */
+  virtual void writeConfig(void);
 
   /** Set the message the composer shall work with. This discards
     previous messages without calling applyChanges() on them before. */

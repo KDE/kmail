@@ -28,6 +28,8 @@ protected slots:
 
 protected:
   QListBox* mListBox;
+
+  static QString oldSelection;
 };
 
 #endif /*kmfolderseldlg_h*/

@@ -181,7 +181,6 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 {
   mHeaderStyle = aHeaderStyle;
   update();
-  writeConfig(FALSE);
 }
 
 
@@ -190,7 +189,6 @@ void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 {  
   mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
   update();
-  writeConfig(FALSE);
 }
 
 //-----------------------------------------------------------------------------
@@ -198,7 +196,6 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 {
   mAtmInline = aAtmInline;
   update();
-  writeConfig(FALSE);
 }
 
 
@@ -462,7 +459,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     }
     else if (ch > ' ' && atStart)
     {
-      if (ch=='>' || ch==':' || ch=='|') quoted = TRUE;
+      if (ch=='>' || /*ch==':' ||*/ ch=='|') quoted = TRUE;
       atStart = FALSE;
     }
     if (!ch) break;

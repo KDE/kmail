@@ -28,10 +28,10 @@ public:
   virtual ~KMMainWin();
 
   /** Read configuration options. */
-  virtual void readConfig();
+  virtual void readConfig(void);
 
   /** Write configuration options. */
-  virtual void writeConfig(bool withSync=TRUE);
+  virtual void writeConfig(void);
 
   /** Insert a text field to the status bar and return ID of this field. */
   virtual int statusBarAddItem(const char* text);

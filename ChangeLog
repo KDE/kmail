@@ -1,3 +1,20 @@
+1998-06-18  Stefan Taferner  <taferner@kde.org> (KMail-0.7.5)
+
+	* Reader: removed ':' from the characters that mark
+	quoted text to catch smileys at the beginning of the
+	line ;-)
+
+	* Main window configuration (geometry, etc.) is now
+	stored again.
+
+	* Composer: changed completion key from Ctrl-. to Ctrl-T
+	as kfile has.
+
+1998-06-18  Mario Weilguni   <mweilguni@kde.org>
+
+	* Dialog for folder selection: Escape now closes dialog,
+	remembers last folder, has a default pushbutton
+
 1998-06-17  Stefan Taferner  <taferner@kde.org> (KMail-0.7.4)
 
 	* Message-list: now the first unread/new message is

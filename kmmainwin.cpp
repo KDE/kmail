@@ -127,7 +127,7 @@ KMMainWin::~KMMainWin()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readConfig()
+void KMMainWin::readConfig(void)
 {
   KConfig *config = app->getConfig();
   int w, h;
@@ -152,13 +152,13 @@ void KMMainWin::readConfig()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::writeConfig(bool aWithSync)
+void KMMainWin::writeConfig(void)
 {
   QString s(32);
   KConfig *config = app->getConfig();
   QRect r = geometry();
 
-  mMsgView->writeConfig(FALSE);
+  mMsgView->writeConfig();
 
   config->setGroup("Geometry");
 
@@ -168,8 +168,6 @@ void KMMainWin::writeConfig(bool aWithSync)
   s.sprintf("%i,%i", mVertPanner->separatorPos(), 
 	    mHorizPanner->separatorPos());
   config->writeEntry("Panners", s);
-
-  if (aWithSync) config->sync();
 }
 
 
