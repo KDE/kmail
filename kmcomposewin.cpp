@@ -1533,8 +1533,6 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   if ((mCharset=="") || (mCharset == "default"))
      mCharset = mDefCharset;
 
-  mMsg->setCharset(mCharset);
-
   if (bAutoCharset)
   {
     encodingAction->setCurrentItem( 0 );
@@ -1744,7 +1742,6 @@ void KMComposeWin::slotSetCharset()
 
   mCharset = KGlobal::charsets()->encodingForName( encodingAction->
     currentText() ).latin1();
-  mMsg->setCharset(mCharset);
 }
 
 
