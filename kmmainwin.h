@@ -43,12 +43,6 @@ public:
   /** Write configuration options. */
   virtual void writeConfig(void);
 
-  /** Insert a text field to the status bar and return ID of this field. */
-  //virtual int statusBarAddItem(const char* text);
-
-  /** Change contents of a text field. */
-  //virtual void statusBarChangeItem(int id, const char* text);
-
   /** Easy access to main components of the window. */
   KMReaderWin* messageView(void) const { return mMsgView; }
   KToolBar* toolBar(void) const     { return mToolBar; }
@@ -74,7 +68,7 @@ public slots:
   void slotAtmMsg(KMMessage *msg); //sven: called from reader
 
   /** Output given message in the statusbar message field. */
-  inline void statusMsg(const QString& text) {mStatusBar->message(text);}
+  void statusMsg(const QString& text);
 
 protected:
   void setupMenuBar();
@@ -167,6 +161,7 @@ protected:
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
   QString       mNewMailCmd;
+  int		mMessageStatusId;
   QValueList<int> *mHorizPannerSep, *mVertPannerSep;
   QString       mUrlCurrent;
   QPopupMenu	*actMenu;
