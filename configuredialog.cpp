@@ -1412,9 +1412,23 @@ void ConfigureDialog::makeAppearancePage( void )
     new QCheckBox( i18n("Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
 
+  QButtonGroup *group = new QButtonGroup( i18n("HTML"), page3 );
+  vlay->addWidget( group );
+  QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
+  vlay2->addSpacing( fontMetrics().lineSpacing() );
+  mAppearance.htmlMailCheck = 
+    new QCheckBox( i18n("Prefer plain text to HTML rendering"), group );
+  vlay2->addWidget( mAppearance.htmlMailCheck );
+  QLabel *label = new QLabel( group );
+  label->setAlignment( WordBreak);
+  label->setText(i18n("Note that HTML rendering introduces security implications."));
+  vlay2->addWidget( label );
+
+  /*
   mAppearance.htmlMailCheck = 
     new QCheckBox( i18n("Prefer plain text to HTML rendering"), page3 );
   vlay->addWidget( mAppearance.htmlMailCheck );
+  */
 
   vlay->addStretch(10); // Eat unused space a bottom
 
@@ -1423,7 +1437,7 @@ void ConfigureDialog::makeAppearancePage( void )
   tabWidget->addTab( page4, i18n("Profiles") );
   vlay = new QVBoxLayout( page4, spacingHint() );
   
-  QLabel *label = new QLabel( page4 );
+  label = new QLabel( page4 );
   label->setText(i18n("Define or use a GUI profile"));
   vlay->addWidget( label );
 
