@@ -215,9 +215,9 @@ void KMReaderWin::initHtmlWidget(void)
   	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
 	  SLOT(slotUrlOn(const QString &)));
+    connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
+	    SLOT(slotUrlPopup(const QString &, const QPoint &)));
   // ### FIXME
-  //  connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
-  //	  SLOT(slotUrlPopup(const QString &, const QPoint &)));
   //  connect(mViewer,SIGNAL(textSelected(bool)),
   //          SLOT(slotTextSelected(bool)));
 
@@ -1215,11 +1215,11 @@ void KMReaderWin::slotDocumentChanged()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTextSelected(bool)
 {
- 
+
 /*  ### FIXME
   QString temp = mViewer->selectedText();
   kapp->clipboard()->setText(temp);
-*/  
+*/
 }
 
 
@@ -1230,7 +1230,7 @@ QString KMReaderWin::copyText()
   QString temp = mViewer->selectedText();
   return temp;
 */
-  return QString(); 
+  return QString();
 }
 
 
