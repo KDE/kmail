@@ -2786,7 +2786,7 @@ void KMMainWin::setupMenuBar()
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
-  KStdAction::tipofDay( this, SLOT( slotShowTip() ), actionCollection() );
+  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
