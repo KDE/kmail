@@ -146,7 +146,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
     checking = false;
-    emit checkedMail(newMailArrived, FALSE);
+    emit checkedMail(newMailArrived, interactive);
     return;
   }
 
