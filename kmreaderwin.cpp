@@ -415,6 +415,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     return;
 
   mMsg = aMsg;
+  if (mMsg) mMsg->setCodec(mCodec);
 
   // Avoid flicker, somewhat of a cludge
   if (force) {

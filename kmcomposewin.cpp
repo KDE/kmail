@@ -1195,7 +1195,7 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
   } else
       cText = codec->fromUnicode(text);
 
-  if (codec && mCharset != "utf-8" && codec->toUnicode(cText) != text)
+  if (!text.isEmpty() && codec && mCharset != "utf-8" && codec->toUnicode(cText) != text)
   {
     QString oldText = mEditor->text();
     mEditor->setText(codec->toUnicode(cText));

@@ -1334,7 +1334,8 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
-  int top, rc;
+  int top, rc, idx;
+  bool isMessage;
 
   if (!destFolder) return;
 
@@ -1345,9 +1346,14 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   msgList = selectedMsgs(msgId);
   for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
   {
-    int idx = mFolder->find(msgBase);
-    assert(idx != -1);
-    msg = mFolder->getMsg(idx);
+    if (isMessage = msgBase->isMessage())
+    {
+      msg = static_cast<KMMessage*>(msgBase);
+    } else {
+      idx = mFolder->find(msgBase);
+      assert(idx != -1);
+      msg = mFolder->getMsg(idx);
+    }
 
     newMsg = new KMMessage;
     newMsg->fromString(msg->asString());
@@ -1355,7 +1361,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 
     rc = destFolder->addMsg(newMsg);
     destFolder->unGetMsg( destFolder->count() - 1 );
-    mFolder->unGetMsg( idx );
+    if (!isMessage) mFolder->unGetMsg( idx );
   }
   destFolder->close();
   kernel->kbp()->idle();
