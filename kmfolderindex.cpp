@@ -30,6 +30,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <utime.h>
+#include <fcntl.h>
 
 #ifdef HAVE_BYTESWAP_H
 #include <byteswap.h>
