@@ -39,7 +39,8 @@
 
 #include "globalsettings.h"
 #include "kcursorsaver.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
 #include "kmacctmgr.h"
@@ -153,7 +154,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
-  connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
+  connect( BroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
       this, SLOT(statusMsg( const QString& )));
 
   if ( kmkernel->firstInstance() )
@@ -1055,9 +1056,9 @@ void KMMainWidget::slotCompactFolder()
     KCursorSaver busy(KBusyPtr::busy());
     mFolder->compact( KMFolder::CompactNow );
     // setCurrentItemByIndex will override the statusbar message, so save/restore it
-    QString statusMsg = KMBroadcastStatus::instance()->statusMsg();
+    QString statusMsg = BroadcastStatus::instance()->statusMsg();
     mHeaders->setCurrentItemByIndex(idx);
-    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
+    BroadcastStatus::instance()->setStatusMsg( statusMsg );
   }
 }
 
@@ -3280,7 +3281,7 @@ void KMMainWidget::removeDuplicates()
                "Removed %n duplicate messages.", numDuplicates );
     else
       msg = i18n("No duplicate messages found.");
-  KMBroadcastStatus::instance()->setStatusMsg( msg );
+  BroadcastStatus::instance()->setStatusMsg( msg );
 }
 
 

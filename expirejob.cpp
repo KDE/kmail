@@ -30,7 +30,8 @@
 #include "kmfolder.h"
 #include "globalsettings.h"
 #include "folderstorage.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmcommands.h"
 
 #include <kdebug.h>
@@ -189,7 +190,7 @@ void ExpireJob::done()
     }
   }
   if ( !str.isEmpty() )
-    KMBroadcastStatus::instance()->setStatusMsg( str );
+    BroadcastStatus::instance()->setStatusMsg( str );
 
   KConfigGroup group( KMKernel::config(), "Folder-" + mSrcFolder->idString() );
   group.writeEntry( "Current", -1 ); // i.e. make it invalid, the serial number will be used
@@ -243,7 +244,7 @@ void ExpireJob::slotMessagesMoved( KMCommand *command )
     }
   default: ;
   }
-  KMBroadcastStatus::instance()->setStatusMsg( msg );
+  BroadcastStatus::instance()->setStatusMsg( msg );
 
   deleteLater();
 }

@@ -16,7 +16,8 @@
 #include "kmkernel.h"
 #include "kmdebug.h"
 using KMail::FolderJob;
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include <maillistdrag.h>
@@ -1528,7 +1529,7 @@ void KMHeaders::setFolderInfoStatus ()
         .arg( str );
   if ( mFolder->isReadOnly() )
     str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.").arg( str );
-  KMBroadcastStatus::instance()->setStatusMsg(str);
+  BroadcastStatus::instance()->setStatusMsg(str);
 }
 
 //-----------------------------------------------------------------------------
@@ -1644,7 +1645,7 @@ void KMHeaders::deleteMsg ()
            this, SLOT( slotMoveCompleted( KMCommand * ) ) );
   command->start();
 
-  KMBroadcastStatus::instance()->setStatusMsg("");
+  BroadcastStatus::instance()->setStatusMsg("");
   //  triggerUpdate();
 }
 
@@ -1736,10 +1737,10 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
   bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
   if ( command->result() == KMCommand::OK ) {
 #if 0 // enable after the message-freeze
-    KMBroadcastStatus::instance()->setStatusMsg(
+    BroadcastStatus::instance()->setStatusMsg(
        deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
 #else
-    if ( !deleted ) KMBroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved successfully" ) );
+    if ( !deleted ) BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved successfully" ) );
 #endif
   } else {
     /* The move failed or the user canceled it; reset the state of all
@@ -1763,17 +1764,17 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
     triggerUpdate();
 #if 0 // enable after the message-freeze
     if ( command->result() == KMCommand::Failed )
-      KMBroadcastStatus::instance()->setStatusMsg(
+      BroadcastStatus::instance()->setStatusMsg(
            deleted ? i18nTODO("Deleting messages failed.") : i18nTODO("Moving messages failed.") );
     else
-      KMBroadcastStatus::instance()->setStatusMsg(
+      BroadcastStatus::instance()->setStatusMsg(
            deleted ? i18nTODO("Deleting messages canceled.") : i18nTODO("Moving messages canceled.") );
 #else
     if ( !deleted ) {
       if ( command->result() == KMCommand::Failed )
-        KMBroadcastStatus::instance()->setStatusMsg( i18n("Moving messages failed.") );
+        BroadcastStatus::instance()->setStatusMsg( i18n("Moving messages failed.") );
       else
-        KMBroadcastStatus::instance()->setStatusMsg( i18n("Moving messages canceled.") );
+        BroadcastStatus::instance()->setStatusMsg( i18n("Moving messages canceled.") );
     }
 #endif
   }
@@ -2209,7 +2210,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
     }
   }
 
-  KMBroadcastStatus::instance()->setStatusMsg("");
+  BroadcastStatus::instance()->setStatusMsg("");
   if (markitread && idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();

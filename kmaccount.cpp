@@ -9,7 +9,8 @@
 #include "kmfiltermgr.h"
 #include "kmsender.h"
 #include "kmkernel.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldercachedimap.h"
 
 #include "progressmanager.h"
@@ -39,7 +40,7 @@ using KMail::FolderJob;
 KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   : QObject(parent), mPrecommand(precommand)
 {
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
   mPrecommandProcess.setUseShell(true);
@@ -352,7 +353,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
 
   KMPrecommand precommandProcess(precommand, this);
 
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
   connect(&precommandProcess, SIGNAL(finished(bool)),

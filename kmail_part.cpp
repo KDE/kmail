@@ -34,7 +34,6 @@
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmstartup.h"
-#include "kmbroadcaststatus.h"
 #include "aboutdata.h"
 #include "kmkernel.h"
 #include "kmfolder.h"

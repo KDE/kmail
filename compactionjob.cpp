@@ -27,7 +27,8 @@
  */
 #include "compactionjob.h"
 #include "kmfolder.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldermbox.h"
 #include "kmfoldermaildir.h"
 
@@ -96,7 +97,7 @@ int MboxCompactionJob::executeNow( bool silent )
     kdDebug(5006) << storage->location() << " compaction skipped." << endl;
     if ( !mSilent ) {
       QString str = i18n( "For safety reasons, compaction has been disabled for %1" ).arg( mbox->label() );
-      KMBroadcastStatus::instance()->setStatusMsg( str );
+      BroadcastStatus::instance()->setStatusMsg( str );
     }
     return 0;
   }
@@ -180,7 +181,7 @@ void MboxCompactionJob::done( int rc )
   mErrorCode = rc;
 
   if ( !mSilent )
-    KMBroadcastStatus::instance()->setStatusMsg( str );
+    BroadcastStatus::instance()->setStatusMsg( str );
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"
@@ -261,7 +262,7 @@ void MaildirCompactionJob::done( int rc )
   if ( storage->isOpened() )
     storage->updateIndex();
   if ( !mSilent )
-    KMBroadcastStatus::instance()->setStatusMsg( str );
+    BroadcastStatus::instance()->setStatusMsg( str );
 
   mFolderOpen = false;
   deleteLater(); // later, because of the "return mErrorCode"

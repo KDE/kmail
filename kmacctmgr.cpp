@@ -13,7 +13,7 @@
 #include "networkaccount.h"
 using KMail::NetworkAccount;
 #include "kmacctcachedimap.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
 #include "kmfiltermgr.h"
 
 #include <klocale.h>
@@ -24,6 +24,8 @@ using KMail::NetworkAccount;
 
 #include <qregexp.h>
 #include <qvaluelist.h>
+
+using KPIM::BroadcastStatus;
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(): QObject()
@@ -158,7 +160,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   {
     // all checks finished, display summary
     if ( mDisplaySummary )
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
           mTotalNewMailsArrived );
     emit checkedMail( newMailArrived, interactive, mTotalNewInFolder );
     mTotalNewMailsArrived = 0;
@@ -206,7 +208,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   connect( curAccount, SIGNAL( finishedCheck( bool, CheckStatus ) ),
 	   this, SLOT( processNextCheck( bool ) ) );
 
-  KMBroadcastStatus::instance()->setStatusMsg(
+  BroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
 
   kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;

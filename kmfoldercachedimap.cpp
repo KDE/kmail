@@ -46,7 +46,8 @@
 #include "kmfolder.h"
 #include "kmdict.h"
 #include "acljobs.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 
 using KMail::CachedImapJob;

@@ -7,7 +7,9 @@
 #include "kmacctlocal.h"
 #include "kmfoldermbox.h"
 #include "kmacctfolder.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
+
 #include "kmfoldermgr.h"
 
 #include <kapplication.h>
@@ -104,7 +106,7 @@ bool KMAcctLocal::preProcess()
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( fi.size() == 0 ) {
-      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
+      BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
       checkDone( mHasNewMail, CheckOK );
       return false;
     }
@@ -119,12 +121,12 @@ bool KMAcctLocal::preProcess()
 
   if (!mFolder) {
     checkDone( mHasNewMail, CheckError );
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return false;
   }
 
-  //KMBroadcastStatus::instance()->reset();
-  KMBroadcastStatus::instance()->setStatusMsg(
+  //BroadcastStatus::instance()->reset();
+  BroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
 
   // run the precommand
@@ -145,7 +147,7 @@ bool KMAcctLocal::preProcess()
     kdDebug(5006) << "cannot open file " << mMailFolder->path() << "/"
       << mMailFolder->name() << endl;
     checkDone( mHasNewMail, CheckError );
-    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return false;
   }
 
@@ -155,7 +157,7 @@ bool KMAcctLocal::preProcess()
     checkDone( mHasNewMail, CheckError );
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mMailFolder->location() );
-    KMBroadcastStatus::instance()->setStatusMsg( errMsg );
+    BroadcastStatus::instance()->setStatusMsg( errMsg );
     return false;
   }
 
@@ -167,7 +169,7 @@ bool KMAcctLocal::preProcess()
   mStatusMsgStub = i18n("Moving message %3 of %2 from %1.")
     .arg(mMailFolder->location()).arg( mNumMsgs );
 
-  //KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
+  //BroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, true );
   return true;
 }
 
@@ -181,8 +183,8 @@ bool KMAcctLocal::fetchMsg()
   if (kmkernel->mailCheckAborted()) break; */
 
   const QString statusMsg = mStatusMsgStub.arg( mMsgsFetched );
-  KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
-  //KMBroadcastStatus::instance()->setStatusProgressPercent( "L" + mName, (mMsgsFetched*100) / mNumMsgs );
+  BroadcastStatus::instance()->setStatusMsg( statusMsg );
+  //BroadcastStatus::instance()->setStatusProgressPercent( "L" + mName, (mMsgsFetched*100) / mNumMsgs );
 
   msg = mMailFolder->take(0);
   if (msg)
@@ -221,8 +223,8 @@ bool KMAcctLocal::fetchMsg()
 //-----------------------------------------------------------------------------
 void KMAcctLocal::postProcess()
 {
-  //KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, false );
-  //KMBroadcastStatus::instance()->reset();
+  //BroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, false );
+  //BroadcastStatus::instance()->reset();
 
   if (mAddedOk)
   {
@@ -235,7 +237,7 @@ void KMAcctLocal::postProcess()
                                      .arg( mMailFolder->location() )
                                      .arg( strerror( rc ) ) );
     }
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
+    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
   }
   // else warning is written already
 

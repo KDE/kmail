@@ -30,7 +30,8 @@ using KMail::SieveConfig;
 
 #include "kmacctmgr.h"
 #include "kmfolder.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
@@ -296,7 +297,7 @@ namespace KMail {
       mCountUnread = 0;
       checkDone( false, CheckOK );
     }
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+    BroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         name(), newMails);
   }
 

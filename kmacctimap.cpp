@@ -26,7 +26,8 @@
 #include "kmacctimap.h"
 using KMail::SieveConfig;
 
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"

@@ -34,7 +34,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 
 #ifndef MAX_LINE
 #define MAX_LINE 4096
@@ -1230,9 +1231,9 @@ int KMFolderMbox::compact( bool silent )
   }
   // If this is the current folder, the changed signal will ultimately call
   // KMHeaders::setFolderInfoStatus which will override the message, so save/restore it
-  QString statusMsg = KMBroadcastStatus::instance()->statusMsg();
+  QString statusMsg = BroadcastStatus::instance()->statusMsg();
   emit changed();
-  KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
+  BroadcastStatus::instance()->setStatusMsg( statusMsg );
   return rc;
 }
 
