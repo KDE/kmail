@@ -1069,7 +1069,6 @@ void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 //-----------------------------------------------------------------------------
 void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 {
-  Kpgp::Module* pgp = Kpgp::Module::getKpgp();
   assert(pgp != NULL);
 
   QPtrList<Kpgp::Block> pgpBlocks;
