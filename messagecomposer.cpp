@@ -611,7 +611,7 @@ bool MessageComposer::determineWhetherToSign( bool doSignCompletely ) {
       const QString buttonText = sign && !doSignCompletely
 	? i18n("&Sign All Parts") : i18n("&Sign") ;
       switch ( KMessageBox::warningYesNoCancel( mComposeWin, msg,
-						i18n("Unsigned Message Warning"),
+						i18n("Unsigned-Message Warning"),
 						buttonText,
 						i18n("Send &As Is") ) ) {
       case KMessageBox::Cancel:
@@ -664,7 +664,7 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 						 : i18n("&Encrypt"),
 						 mDoSign
 						 ? i18n("&Sign Only")
-						 : i18n("&Send As Is") ) ) {
+						 : i18n("&Send As-Is") ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -738,7 +738,7 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 						buttonText,
 						mDoSign
 						? i18n("&Sign Only")
-						: i18n("&Send As Is") ) ) {
+						: i18n("&Send As-Is") ) ) {
       case KMessageBox::Cancel:
 	mRc = false;
 	return false;
@@ -1830,8 +1830,8 @@ void MessageComposer::pgpSignedMsg( const QCString & cText, Kleo::CryptoMessageF
   if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
 			i18n("This message could not be signed, "
-			     "since the chosen backend doesn't seem to support "
-			     "signing. This should actually never happen, "
+			     "since the chosen backend does not seem to support "
+			     "signing; this should actually never happen, "
 			     "please report this bug.") );
     return;
   }
@@ -1872,8 +1872,8 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
   if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
 			i18n("This message could not be encrypted, "
-			     "since the chosen backend doesn't seem to support "
-			     "encryption. This should actually never happen, "
+			     "since the chosen backend does not seem to support "
+			     "encryption; this should actually never happen, "
 			     "please report this bug.") );
     return Kpgp::Failure;
   }
@@ -1913,8 +1913,8 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
   if ( !job.get() ) {
     KMessageBox::sorry( mComposeWin,
 			i18n("This message could not be signed and encrypted, "
-			     "since the chosen backend doesn't seem to support "
-			     "combined signing and encryption. This should actually never happen,"
+			     "since the chosen backend does not seem to support "
+			     "combined signing and encryption; this should actually never happen,"
 			     "please report this bug.") );
     return Kpgp::Failure;
   }

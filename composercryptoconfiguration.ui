@@ -35,7 +35,7 @@
                         <string>&amp;Automatically sign messages</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>When this option is enabled, all messages you send will be signed by default. Of course it's still possible to disable signing for each message individually.</string>
+                        <string>When this option is enabled, all messages you send will be signed by default; of course, it is still possible to disable signing for each message individually.</string>
                     </property>
                 </widget>
             </vbox>
@@ -114,7 +114,7 @@ However, there may be local rules that require you to turn this option on. When 
                         <string>Automatically encrypt &amp;messages whenever possible</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>When this option is enabled, every message you send will be encrypted whenever encryption is possible and desired. Of course it's still possible to disable the automatic encryption for each message individually.</string>
+                        <string>When this option is enabled, every message you send will be encrypted whenever encryption is possible and desired; of course, it is still possible to disable the automatic encryption for each message individually.</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">

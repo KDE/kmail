@@ -1430,8 +1430,8 @@ void KMMainWidget::slotStartCertManager()
   certManagerProc << "kleopatra";
 
   if( !certManagerProc.start( KProcess::DontCare ) )
-    KMessageBox::error( this, i18n( "Could not start certificate manager. "
-                                    "Please check your installation!" ),
+    KMessageBox::error( this, i18n( "Could not start certificate manager; "
+                                    "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
     kdDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;
@@ -1447,8 +1447,8 @@ void KMMainWidget::slotStartWatchGnuPG()
   certManagerProc << "kwatchgnupg";
 
   if( !certManagerProc.start( KProcess::DontCare ) )
-    KMessageBox::error( this, i18n( "Could not start GnuPG LogViewer (kwatchgnupg). "
-                                    "Please check your installation!" ),
+    KMessageBox::error( this, i18n( "Could not start GnuPG LogViewer (kwatchgnupg); "
+                                    "please check your installation." ),
                                     i18n( "KMail Error" ) );
 }
 
