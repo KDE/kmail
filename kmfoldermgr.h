@@ -92,6 +92,9 @@ public:
   /** Enable, disable changed() signals */
   void quiet(bool);
 
+  /** Number of folders for purpose of progres report */
+  int folderCount(KMFolderDir *dir=0);
+
 public slots:
   /** Compacts all folders (they know is it needed) */
   void compactAll();
@@ -107,6 +110,9 @@ signals:
   /** Emitted, when a folder has been deleted. */
   void removed(KMFolder*);
 
+  /** Emitted once for each folder during compactAll() and expireAll() */
+  void progress();
+ 
 protected:
 
   /** Auxillary function to faciliate compaction of folders */

@@ -72,22 +72,51 @@ void KMFolderMgr::expireAll() {
     
 }
 
+#define DO_FOR_ALL(function, folder_code) \
+  KMFolderNode* node; \
+  if (dir == 0) return; \
+  QPtrListIterator<KMFolderNode> it(*dir); \
+  for ( ; (node = it.current()); ) { \
+    ++it; \
+    if (node->isDir()) continue; \
+    KMFolder *folder = static_cast<KMFolder*>(node); \
+    folder_code \
+    KMFolderDir *child = folder->child(); \
+    if (child) \
+       function \
+  }
+
+int KMFolderMgr::folderCount(KMFolderDir *dir)
+{
+  int count = 0;
+  if (dir == 0)
+    dir = &mDir;
+  DO_FOR_ALL(
+        {
+          count += folderCount( child );
+        },
+        {
+          count++;
+        }
+  )
+
+  return count;
+}
+
+
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::compactAllAux(KMFolderDir* dir)
 {
-  KMFolderNode* node;
-  if (dir == 0)
-    return;
-  for (node = dir->first(); node; node = dir->next())
-  {
-    if (node->isDir()) {
-      KMFolderDir *child = static_cast<KMFolderDir*>(node);
-      compactAllAux( child );
-    }
-    else
-      ((KMFolder*)node)->compact(); // compact now if it's needed
-  }
+  DO_FOR_ALL(
+        {
+          compactAllAux(child);
+        },
+        {
+          folder->compact(); // compact now if it's needed
+          emit progress();
+        }
+  )
 }
 
 
@@ -162,24 +191,21 @@ KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
 {
-  KMFolderNode* node;
-  KMFolder* folder;
   if (!dir)
     dir = static_cast<KMFolderDir*>(&mDir);
 
-  for (node=dir->first(); node; node=dir->next())
-  {
-    if (node->isDir()) {
-      folder = findIdString( folderId, static_cast<KMFolderDir*>(node) );
-      if (folder)
-	return folder;
-    }
-    else {
-      folder = static_cast<KMFolder*>(node);
-      if (folder->idString()==folderId)
-	return folder;
-    }
-  }
+  DO_FOR_ALL(
+        {
+          KMFolder *folder = findIdString( folderId, child);
+          if (folder)
+             return folder;
+        },
+        {
+          if (folder->idString() == folderId)
+             return folder;
+        }
+  )
+
   return 0;
 }
 
@@ -299,41 +325,36 @@ void KMFolderMgr::createFolderList(QStringList *str,
 				   const QString& prefix,
 				   bool i18nized)
 {
-  KMFolderNode* cur;
-  KMFolderDir* fdir = adir ? adir : &mDir;
+  KMFolderDir* dir = adir ? adir : &mDir;
 
-  for (cur=fdir->first(); cur; cur=fdir->next()) {
-    if (cur->isDir())
-      continue;
-
-    QGuardedPtr<KMFolder> folder = static_cast<KMFolder*>(cur);
-    if (i18nized)
-      str->append(prefix + folder->label());
-    else
-      str->append(prefix + folder->name());
-    folders->append( folder );
-    if (folder->child())
-      createFolderList( str, folders, folder->child(), "  " + prefix,
-        i18nized );
-  }
+  DO_FOR_ALL(
+        {
+          createFolderList(str, folders, child, "  " + prefix, i18nized );
+        },
+        {
+          if (i18nized)
+            str->append(prefix + folder->label());
+          else
+            str->append(prefix + folder->name());
+          folders->append( folder );
+        }
+  )
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
 {
-  KMFolderNode* cur;
-  KMFolderDir* fdir = adir ? adir : &mDir;
+  KMFolderDir* dir = adir ? adir : &mDir;
 
-  for (cur=fdir->first(); cur; cur=fdir->next()) {
-    if (cur->isDir())
-      continue;
-
-    KMFolder *folder = static_cast<KMFolder*>(cur);  
-    if (folder->isOpened())
-	folder->sync();
-    if (folder->child())
-      syncAllFolders( folder->child() );
-  }
+  DO_FOR_ALL(
+             {
+               syncAllFolders(child);
+             },
+             {
+               if (folder->isOpened())
+	         folder->sync();
+             }
+  )
 }
 
 
@@ -345,23 +366,19 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
  * Should be called with NULL first time around.
  */
 void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
-  KMFolderNode  *cur = NULL;
-  KMFolderDir   *fdir = adir ? adir : &mDir;
-  QPtrListIterator<KMFolderNode> it(*fdir);
+  KMFolderDir   *dir = adir ? adir : &mDir;
 
-  for (; (cur = it.current()); ++it) {
-    if (cur->isDir()) {
-	  continue;
-    }
-
-    KMFolder *folder = static_cast<KMFolder*>(cur);
-    if (folder->isAutoExpire()) {
-      folder->expireOldMessages();
-    }
-    if (folder->child()) {
-      expireAllFolders( folder->child() );
-    }
-  }
+  DO_FOR_ALL(
+             {
+               expireAllFolders(child);
+             },
+             {
+               if (folder->isAutoExpire()) {
+                 folder->expireOldMessages();
+               }
+               emit progress();
+             }
+  ) 
 }
 
 //-----------------------------------------------------------------------------
@@ -372,27 +389,23 @@ void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
     dir = &mDir;
     atTop = true;
   }
-  
-  KMFolderNode* cur;
-  for (QPtrListIterator<KMFolderNode> it(*dir); it; ++it) {
-    cur = it.current();
-    if (cur->isDir())
-      continue;
-    KMFolder *folder = static_cast<KMFolder*>(cur);
-    
-    if (pass == 1)
-      dict->readFolderIds(folder);
-    else if (pass == 2) {
-      if (!dict->hasFolderIds(folder)) {
-        folder->fillMsgDict(dict);
-        dict->writeFolderIds(folder);
-      }
-    }
-    
-    if (folder->child())
-      readMsgDict(dict, folder->child(), pass);
-  }
-  
+
+  DO_FOR_ALL(
+             {
+               readMsgDict(dict, child, pass);
+             },
+             {
+               if (pass == 1)
+                 dict->readFolderIds(folder);
+               else if (pass == 2) {
+                 if (!dict->hasFolderIds(folder)) {
+                   folder->fillMsgDict(dict);
+                   dict->writeFolderIds(folder);
+                 }
+               }
+             }
+  ) 
+
   if (pass == 1 && atTop)
     readMsgDict(dict, dir, pass + 1);
 }
@@ -403,15 +416,14 @@ void KMFolderMgr::writeMsgDict(KMMsgDict *dict, KMFolderDir *dir)
   if (!dir)
     dir = &mDir;
 
-  KMFolderNode* cur;
-  for (cur=dir->first(); cur; cur=dir->next()) {
-    if (cur->isDir())
-      continue;
-    KMFolder *folder = static_cast<KMFolder*>(cur);
-    folder->writeMsgDict(dict);
-    if (folder->child())
-      writeMsgDict(dict, folder->child());
-  }
+  DO_FOR_ALL(
+             {
+               writeMsgDict(dict, child);
+             },
+             {
+               folder->writeMsgDict(dict);
+             }
+  ) 
 }
 
 //-----------------------------------------------------------------------------
