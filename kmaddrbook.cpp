@@ -163,11 +163,9 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
-  QString address = addr;
-  address.replace( QRegExp("\""), "" );
   if (useKAddressbook()) {
     if ( checkForAddressBook() ) {
-      KRun::runCommand( "kaddressbook -a \"" + address + "\"" );
+      KRun::runCommand( "kaddressbook -a " + KProcess::quote(addr) );
     }
     return;
   }
