@@ -250,10 +250,6 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
 
 int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 {
-  kdDebug(5006) << "KMKernel::sendCertificate called" << endl;
-
-  kdDebug(5006) << "data size = " << certData.count() << endl;
-  
   KMMessage *msg = new KMMessage;
   msg->initHeader();
   msg->setCharset("utf-8");
@@ -271,7 +267,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
     msgPart->setBodyEncodedBinary(certData);
     msgPart->setTypeStr("application");
     msgPart->setSubtypeStr("pkcs10");
-    msgPart->setContentDisposition("attachment");
+    msgPart->setContentDisposition("attachment; filename=smime.p10");
     cWin->addAttach(msgPart);
   }
 
