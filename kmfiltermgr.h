@@ -114,6 +114,8 @@ public:
   bool showLaterMsgs() const {
     return mShowLater;
   }
+public slots:
+  void slotFolderRemoved( KMFolder *aFolder );
 
 signals:
   void filterListUpdated();

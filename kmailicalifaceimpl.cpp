@@ -86,7 +86,7 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
 }
 
 /*
-  This interface have three parts to it - libkcal interface;
+  This interface has three parts to it - libkcal interface;
   kmail interface; and helper functions.
 
   The libkcal interface and the kmail interface have the same three
@@ -102,6 +102,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
 {
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
+  connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
+           this, SLOT( slotFolderRemoved( KMFolder* ) ) );
 
   mExtraFolders.setAutoDelete( true );
   mAccumulators.setAutoDelete( true );
@@ -364,6 +366,14 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
     rc = false;
   }
   return rc;
+}
+
+
+void KMailICalIfaceImpl::slotFolderRemoved( KMFolder* folder )
+{
+  // pretend the folder just changed back to the mail type, which
+  // does the right thing, namely remove resource
+  folderContentsTypeChanged( folder, KMail::ContentsTypeMail );
 }
 
 // KMail added a file to one of the groupware folders
