@@ -529,6 +529,13 @@ void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
 {
   if ( !item ) return;
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  // Same logic as in slotSelectionChanged, but this is also needed for double-click IIRC
+  if ( canAdmin && mImapAccount && item ) {
+    // Don't allow users to remove their own admin permissions - there's no way back
+    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+    if ( mImapAccount->login() == ACLitem->userId() && ACLitem->permissions() == ACLJobs::All )
+      canAdmin = false;
+  }
   if ( !canAdmin ) return;
 
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
@@ -577,10 +584,18 @@ void KMail::FolderDiaACLTab::slotAddACL()
 void KMail::FolderDiaACLTab::slotSelectionChanged(QListViewItem* item)
 {
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  bool canAdminThisItem = canAdmin;
+  if ( canAdmin && mImapAccount && item ) {
+    // Don't allow users to remove their own admin permissions - there's no way back
+    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+    if ( mImapAccount->login() == ACLitem->userId() && ACLitem->permissions() == ACLJobs::All )
+      canAdminThisItem = false;
+  }
+
   bool lvVisible = mStack->visibleWidget() == mACLWidget;
   mAddACL->setEnabled( lvVisible && canAdmin && !mSaving );
-  mEditACL->setEnabled( item && lvVisible && canAdmin && !mSaving );
-  mRemoveACL->setEnabled( item && lvVisible && canAdmin && !mSaving );
+  mEditACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
+  mRemoveACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
 }
 
 void KMail::FolderDiaACLTab::slotRemoveACL()
