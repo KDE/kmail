@@ -2691,7 +2691,6 @@ void KMLineEdit::mouseReleaseEvent( QMouseEvent * e )
    if (m_useCompletion && (e->button() == MidButton))
    {
       m_smartPaste = true;
-      cursorAtEnd();
       KMLineEditInherited::mouseReleaseEvent(e);
       m_smartPaste = false;
       return;
