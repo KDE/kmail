@@ -576,7 +576,7 @@ It is recommended to leave this option turned on for maximum integrity.
                         <cstring>warnCACertificateExpiresCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn if CA certificate e&amp;xpires in less than</string>
+                        <string>Warn if CA certificate e&amp;xpires in less than:</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -623,7 +623,7 @@ The recommended SPHINX setting is 14 days.
                         <cstring>warnSignatureCertificateExpiresCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn if s&amp;ignature certificate expires in less than</string>
+                        <string>Warn if s&amp;ignature certificate expires in less than:</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -645,7 +645,7 @@ It is recommended to keep this option turned on to avoid using certificates that
                         <cstring>warnRootCertificateExpiresCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn if root certificate expires in &amp;less than</string>
+                        <string>Warn if root certificate expires in &amp;less than:</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>

@@ -2215,7 +2215,7 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" )
               .arg( curUrl.fileName() ),
-              i18n( "File Already Exists" ), i18n("Overwrite") ) == KMessageBox::Cancel) {
+              i18n( "File Already Exists" ), i18n("&Overwrite") ) == KMessageBox::Cancel) {
           continue;
         }
       }

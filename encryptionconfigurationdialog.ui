@@ -327,7 +327,7 @@ It is recommended to use CRLs for maximum security. In the configuration dialog 
                                 <cstring>warnCRLExpireCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn if CRL e&amp;xpires in less than</string>
+                                <string>Warn if CRL e&amp;xpires in less than:</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -496,7 +496,7 @@ The recommended SPHINX setting is 14 days.
                         <cstring>warnChainCertificateExpiresCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn if a certificate in &amp;the chain expires in less than</string>
+                        <string>Warn if a certificate in &amp;the chain expires in less than:</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -543,7 +543,7 @@ The recommended SPHINX setting is 14 days.
                         <cstring>warnReceiverCertificateExpiresCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn if &amp;receiver certificate expires in less than</string>
+                        <string>Warn if &amp;receiver certificate expires in less than:</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>

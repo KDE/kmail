@@ -385,7 +385,7 @@ The recommended SPHINX setting is 14 days.
                         <cstring>enableAllWarningsPB</cstring>
                     </property>
                     <property name="text">
-                        <string>Re-Enable All "Don't Ask Again" Warnings</string>
+                        <string>Reenable All "Don't Ask Again" Warnings</string>
                     </property>
                 </widget>
             </hbox>
