@@ -366,7 +366,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
   } else {
     kdDebug(5006) << "stage == Retr" << endl;
     kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
-
+    msg->setMsgLength( curMsgData.size() );
     msgsAwaitingProcessing.append(msg);
     msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
     msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
