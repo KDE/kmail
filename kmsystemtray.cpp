@@ -457,6 +457,12 @@ void KMSystemTray::selectedAccount(int id)
   showKMail();
 
   KMMainWidget * mainWidget = getKMMainWidget();
+  if (!mainWidget)
+  {
+    kernel->openReader();
+    mainWidget = getKMMainWidget();
+  }
+
   assert(mainWidget);
 
   /** Select folder */
