@@ -21,12 +21,12 @@
 #define SYNTAXHIGHLIGHTER_H
 
 #include <qtextedit.h>
-#include <qtimer.h>
 #include <qsyntaxhighlighter.h>
 #include <qcolor.h>
 #include <qstringlist.h>
 
 class QAccel;
+class QTimer;
 class KSpell;
 
 namespace KMail {
@@ -102,7 +102,7 @@ private:
     QDict<int> mAutoIgnoreDict;
     static QObject *sDictionaryMonitor;
     KSpell *mSpell;
-    bool mRehighlightRequested;
+    QTimer *rehighlightRequest;
     QString mSpellKey;
     int mWordCount, mErrorCount;
     bool mActive, mAutomatic, mAutoReady;

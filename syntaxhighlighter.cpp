@@ -121,7 +121,6 @@ int SpellChecker::highlightParagraph( const QString& text,
 		    (i < index)) {
 		    flushCurrentWord();
 		} else {
-		    qDebug( "ignoring word %s, len %d, index %d, i %d", currentWord.latin1(), currentWord.length(), index, i );
 		    currentWord = "";
 		}
 		currentPos = i + 1;
@@ -185,7 +184,9 @@ DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
     mAutomatic = true;
     textEdit->installEventFilter( this );
     textEdit->viewport()->installEventFilter( this );
-    mRehighlightRequested = false;
+    rehighlightRequest = new QTimer();
+    connect(rehighlightRequest,SIGNAL(timeout()),
+	    this,SLOT(slotRehighlight()));
     mSpell = 0;
     mSpellKey = spellKey();
     if (!sDictionaryMonitor)
@@ -210,10 +211,7 @@ void DictSpellChecker::slotSpellReady( KSpell *spell )
     }
     connect( spell, SIGNAL( misspelling (const QString &, const QStringList &, unsigned int) ),
 	     this, SLOT( slotMisspelling (const QString &, const QStringList &, unsigned int)));
-    if (!mRehighlightRequested) {
-	mRehighlightRequested = true;
-	QTimer::singleShot(0, this, SLOT(slotRehighlight()));
-    }
+    rehighlightRequest->start(0, true);
 }
 
 bool DictSpellChecker::isMisspelled( const QString& word )
@@ -262,10 +260,7 @@ void DictSpellChecker::slotMisspelling (const QString & originalword, const QStr
     dict.replace( originalword, NotOkay );
 
     // this is slow but since kspell is async this will have to do for now
-    if (!mRehighlightRequested) {
-	mRehighlightRequested = true;
-	QTimer::singleShot(0, this, SLOT(slotRehighlight()));
-    }
+    rehighlightRequest->start(0, true);
 }
 
 void DictSpellChecker::dictionaryChanged()
@@ -278,7 +273,6 @@ void DictSpellChecker::dictionaryChanged()
 
 void DictSpellChecker::slotRehighlight()
 {
-    mRehighlightRequested = false;
     rehighlight();
     QTimer::singleShot(0, this, SLOT(slotAutoDetection()));
 }
@@ -335,10 +329,9 @@ void DictSpellChecker::slotAutoDetection()
 	else if (!mActive && (mErrorCount * 3 < mWordCount))
 	    mActive = true;
     }
-    if (mActive != savedActive && !mRehighlightRequested) {
+    if (mActive != savedActive) {
 	emit activeChanged( mActive );
-	mRehighlightRequested = true;
-	QTimer::singleShot(100, this, SLOT(slotRehighlight()));
+	rehighlightRequest->start(100, true);
     }
 }
 
@@ -365,10 +358,7 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	    k->key() == Key_Home) {
 	    if (intraWordEditing()) {
 		setIntraWordEditing(false);
-		if (!mRehighlightRequested) {
-		    mRehighlightRequested = true;
-		    QTimer::singleShot(0, this, SLOT(slotRehighlight()));
-		}
+		rehighlightRequest->start(0, true);
 	    }
 	} else {
 	    setIntraWordEditing(true);
@@ -383,10 +373,7 @@ bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 	(e->type() == QEvent::MouseButtonPress)) {
 	if (intraWordEditing()) {
 	    setIntraWordEditing(false);
-	    if (!mRehighlightRequested) {
-		mRehighlightRequested = true;
-		QTimer::singleShot(0, this, SLOT(slotRehighlight()));
-	    }
+	    rehighlightRequest->start(0, true);
 	}
     }
 
