@@ -32,7 +32,7 @@
 #ifndef __KMAIL_KHTMLPARTHTMLWRITER_H__
 #define __KMAIL_KHTMLPARTHTMLWRITER_H__
 
-#include <interfaces/htmlwriter.h>
+#include "interfaces/htmlwriter.h"
 #include <qobject.h>
 
 #include <qstringlist.h>

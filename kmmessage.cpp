@@ -54,7 +54,7 @@ using KMail::HeaderStrategy;
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
-#include <kmtextbrowser.h>
+#include "kmtextbrowser.h"
 #endif
 
 // needed temporarily until KMime is replacing the partNode helper class:

@@ -1,5 +1,5 @@
-#include <kmmessage.h>
-#include <mailinglist-magic.h>
+#include "kmmessage.h"
+#include "mailinglist-magic.h"
 
 typedef QString (*MagicDetectorFunc) (const KMMessage *, QCString &, QString &);
 

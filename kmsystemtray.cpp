@@ -19,7 +19,7 @@
   #include <config.h>
 #endif
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <kpopupmenu.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -40,7 +40,6 @@
 #include <math.h>
 
 #include "kaction.h"
-#include "kmmainwidget.h"
 #include "kmsystemtray.h"
 #include "kmfolder.h"
 #include "kmfoldertree.h"
@@ -87,7 +86,7 @@ void KMSystemTray::buildPopupMenu()
   // Delete any previously created popup menu
   delete mPopupMenu;
   mPopupMenu = 0;
-  
+
   mPopupMenu = new KPopupMenu();
   if (!getKMMainWidget())
     return;
@@ -227,7 +226,7 @@ void KMSystemTray::foldersChanged()
 }
 
 /**
- * On left mouse click, switch focus to the first KMMainWidget.  On right 
+ * On left mouse click, switch focus to the first KMMainWidget.  On right
  * click, bring up a list of all folders with a count of unread messages.
  */
 void KMSystemTray::mousePressEvent(QMouseEvent *e)
@@ -349,14 +348,14 @@ KMMainWidget * KMSystemTray::getKMMainWidget()
 {
   QWidgetList *l = kapp->topLevelWidgets();
   QWidgetListIt it( *l );
-  QWidget *wid;	
+  QWidget *wid;
 
   while ( (wid = it.current()) != 0 ) {
     ++it;
     QObjectList *l2 = wid->topLevelWidget()->queryList("KMMainWidget");
     if (l2->first())
       return dynamic_cast<KMMainWidget *>(l2->first());
-  }	
+  }
   return 0;
 }
 

@@ -50,7 +50,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <klineedit.h>
 #include <kstatusbar.h>
 #include <kstdaction.h>
 #include <kwin.h>
@@ -140,7 +139,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
       QWidget *widget = (QComboBox*)object;
       widget->setFocus();
   }
-  
+
   vbl->addWidget( mPatternEdit );
 
   // enable/disable widgets depending on radio buttons:

@@ -54,7 +54,6 @@
 #include <qtabwidget.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <klineedit.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
 #include <qstring.h>

@@ -97,7 +97,6 @@ using KMime::DateFormatter;
 #include <qlayout.h>
 #include <qtextcodec.h>
 #include <qheader.h>
-#include <klineedit.h>
 #include <qpopupmenu.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>

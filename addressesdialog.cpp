@@ -33,7 +33,7 @@
 #include <kpushbutton.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <kbusyptr.h>
+#include "kbusyptr.h"
 #include <kdebug.h>
 #include <qlayout.h>
 #include <qvbox.h>

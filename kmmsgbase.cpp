@@ -11,9 +11,9 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 #include <qstringlist.h>
-#include <kmfolderindex.h>
-#include <kmheaders.h>
-#include <kmmsgdict.h>
+#include "kmfolderindex.h"
+#include "kmheaders.h"
+#include "kmmsgdict.h"
 #include <krfcdate.h>
 
 #include <ctype.h>

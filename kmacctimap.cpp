@@ -34,7 +34,7 @@ using KMail::SieveConfig;
 #include "imapjob.h"
 using KMail::ImapJob;
 
-#include <kmfolderimap.h>
+#include "kmfolderimap.h"
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
@@ -54,7 +54,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
   connect(kernel->imapFolderMgr(), SIGNAL(changed()),
-      this, SLOT(slotUpdateFolderList()));	
+      this, SLOT(slotUpdateFolderList()));
 }
 
 
@@ -261,7 +261,7 @@ void KMAcctImap::processNewMail(bool interactive)
     return;
   }
   // if necessary then initialize the list of folders which should be checked
-  if( mMailCheckFolders.isEmpty() ) 
+  if( mMailCheckFolders.isEmpty() )
   {
     slotUpdateFolderList();
     // if no folders should be checked then the check is finished
@@ -320,7 +320,7 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
 void KMAcctImap::slotUpdateFolderList()
 {
   if (!mFolder || !mFolder->child() || !makeConnection())
-    return; 
+    return;
   QStringList strList;
   mMailCheckFolders.clear();
   kernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,

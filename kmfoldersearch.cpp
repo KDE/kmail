@@ -15,8 +15,8 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kmmsgdict.h>
-#include <kmmsgindex.h>
+#include "kmmsgdict.h"
+#include "kmmsgindex.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -264,7 +264,7 @@ void KMSearch::slotProcessNextBatch()
 	    if (!folder || (idx == -1) || (idx >= folder->count())) {
 		continue;
 	    }
-	
+
 	    DwString str = folder->getDwString(idx);
 	    //TODO: matches should try header rules first
 	    if (mSearchPattern && !mSearchPattern->matches(str))
@@ -979,11 +979,11 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
     mInvalid = true;
     if (mSearch)
 	mSearch->stop();
-    
+
     removeContents();
     if (!isOpened()) //give up, until the user manually opens the folder
 	return;
-    
+
     if (!mTempOpened) {
 	open();
 	mTempOpened = true;

@@ -27,7 +27,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kspell.h>
-#include <kmkernel.h>
+#include "kmkernel.h"
 #include <kapplication.h>
 
 static int dummy, dummy2, dummy3;
