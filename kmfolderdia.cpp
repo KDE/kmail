@@ -87,14 +87,14 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ml->addStretch( 1 );
 
   QStringList str;
-  if (!folder) kernel->imapFolderMgr()->createFolderList( &str, &mFolders );
+  if (!folder) kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
   kernel->folderMgr()->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
   QGuardedPtr<KMFolder> curFolder;
   int i = 1;
   while (mFolders.at(i - 1) != mFolders.end()) {
     curFolder = *mFolders.at(i - 1);
-    if (curFolder->isSystemFolder()) {
+    if (curFolder->isSystemFolder() && curFolder->protocol() != "imap") {
       mFolders.remove(mFolders.at(i-1));
       str.remove(str.at(i));
     } else
@@ -286,6 +286,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   if (aFolder && aFolder->protocol() == "imap") {
     expGroup->hide();
+    mtGroup->hide();
   }
   else if (folder && folder->isSystemFolder()) {
     fpGroup->hide();
