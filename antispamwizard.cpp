@@ -353,10 +353,10 @@ void AntiSpamWizard::accept()
 
     // add the classification filter actions to the toolbar
     QString filterNameSpam =
-        QString( "Filter Action %1" ).arg( classSpamFilterPattern->name() );
+        QString( "Filter %1" ).arg( classSpamFilterPattern->name() );
     filterNameSpam = filterNameSpam.replace( " ", "_" );
     QString filterNameHam =
-        QString( "Filter Action %1" ).arg( classHamFilterPattern->name() );
+        QString( "Filter %1" ).arg( classHamFilterPattern->name() );
     filterNameHam = filterNameHam.replace( " ", "_" );
 
     // FIXME post KDE 3.2
