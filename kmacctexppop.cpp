@@ -439,13 +439,11 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     // -sanders Update processNewMsg should no longer process events
 
     addedOk = processNewMsg(*cur); //added ok? Error displayed if not.
-    /*
     if ((*cur)->parent()) {
       int count = (*cur)->parent()->count();
-      if ((*cur)->parent()->operator[](count - 1) == *cur)
+      if (count != 1 && (*cur)->parent()->operator[](count - 1) == *cur)
 	(*cur)->parent()->unGetMsg(count - 1);
     }
-    */
 
     if (!addedOk) {
       idsOfMsgsPendingDownload.clear();
