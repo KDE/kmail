@@ -668,7 +668,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       if (f)
       {
         f->setAccount(mAccount);
-        if ( f->hasChildren() == FolderStorage::ChildrenUnknown ) 
+        if ( f->hasChildren() == FolderStorage::ChildrenUnknown )
         {
           // this is for new folders
           kmkernel->imapFolderMgr()->contentsChanged();
@@ -722,11 +722,18 @@ void KMFolderImap::checkValidity()
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
   kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
-  {
+
+  if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
     kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
     mContentState = imapNoInformation;
+    return;
+  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting ) {
+    // We'll wait for the connectionResult signal from the account. If it
+    // errors, the above will catch it.
+    kdDebug(5006) << "CheckValidity - waiting for connection" << endl;
+    connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+        this, SLOT( checkValidity() ) );
     return;
   }
   // Only check once at a time.
