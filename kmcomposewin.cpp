@@ -399,7 +399,33 @@ void KMComposeWin::addAttachment(const QString &name,
     addAttach(msgPart);
   }
 }
+//-----------------------------------------------------------------------------
+void KMComposeWin::addImageFromClipboard()
+{
+  bool ok;
+  QFile *tmpFile;
 
+  QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
+  if ( !ok )
+    return;
+
+  mTempDir = new KTempDir();
+  mTempDir->setAutoDelete( true );
+
+  if ( attName.lower().endsWith(".png") )
+    tmpFile = new QFile(mTempDir->name() + attName );
+  else
+    tmpFile = new QFile(mTempDir->name() + attName + ".png" );
+
+  if ( !QApplication::clipboard()->image().save( tmpFile->name(), "PNG" ) ) {
+    KMessageBox::error( this, i18n("Unknown error trying to save image"), i18n("Attaching image failed") );
+    delete mTempDir;
+    mTempDir = 0;
+    return;
+  }
+
+  addAttach( tmpFile->name() );
+}
 //-----------------------------------------------------------------------------
 void KMComposeWin::setBody(QString body)
 {
@@ -983,6 +1009,9 @@ void KMComposeWin::setupActions(void)
 
   (void) new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteAsQuotation()),
                       actionCollection(), "paste_quoted");
+
+  (void) new KAction (i18n("Paste as Attac&hment"),0,this,SLOT( slotPasteAsAttachment()),
+                      actionCollection(), "paste_att");
 
   (void) new KAction(i18n("Add &Quote Characters"), 0, this,
               SLOT(slotAddQuotes()), actionCollection(), "tools_quote");
@@ -2679,6 +2708,24 @@ void KMComposeWin::slotPasteAsQuotation()
     }
 }
 
+void KMComposeWin::slotPasteAsAttachment()
+{
+  if ( QApplication::clipboard()->image().isNull() )  {
+    bool ok;
+    QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
+    if ( !ok )
+      return;
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setName(attName);
+    QValueList<int> dummy;
+    msgPart->setBodyAndGuessCte(QCString(QApplication::clipboard()->text().latin1()), dummy,
+                                kmkernel->msgSender()->sendQuotedPrintable());
+    addAttach(msgPart);
+  }
+  else
+    addImageFromClipboard();
+
+}
 
 void KMComposeWin::slotAddQuotes()
 {
@@ -2788,29 +2835,7 @@ void KMComposeWin::slotPaste()
   if (!fw) return;
 
   if ( ! QApplication::clipboard()->image().isNull() )  {
-    bool ok;
-    QFile *tmpFile;
-
-    QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok );
-    if ( !ok )
-      return;
-
-    mTempDir = new KTempDir();
-    mTempDir->setAutoDelete( true );
-
-    if ( attName.lower().endsWith(".png") )
-      tmpFile = new QFile(mTempDir->name() + attName );
-    else
-      tmpFile = new QFile(mTempDir->name() + attName + ".png" );
-
-    if ( !QApplication::clipboard()->image().save( tmpFile->name(), "PNG" ) ) {
-      KMessageBox::error( this, i18n("Unknown error trying to save image"), i18n("Attaching image failed") );
-      delete mTempDir;
-      mTempDir = 0;
-      return;
-    }
-
-    addAttach( tmpFile->name() );
+    addImageFromClipboard();
   }
   else {
 

@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="22" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="23" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -17,6 +17,7 @@
   <Menu name="edit" >
    <text>&amp;Edit</text>
    <Action name="paste_quoted" append="edit_paste_merge"/>
+   <Action name="paste_att" append="edit_paste_merge"/>
    <Action name="clean_spaces" />
    <Separator/>
    <Action name="tools_quote"/>
