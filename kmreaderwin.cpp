@@ -73,6 +73,8 @@ using KMail::ObjectTreeParser;
 using KMail::PartMetaData;
 #include "attachmentstrategy.h"
 using KMail::AttachmentStrategy;
+#include "headerstrategy.h"
+using KMail::HeaderStrategy;
 #include "khtmlparthtmlwriter.h"
 using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
@@ -776,7 +778,7 @@ void KMReaderWin::readConfig(void)
   // action is initialized in the main window
   mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
-  mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
+  setHeaderStyle( (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy) );
   for (int ehs = HdrFancy-1; ehs < HdrAll;ehs++) {
     mShowAllHeaders[ehs] = config->readBoolEntry("showAllHeaders_"+QString::number(ehs+1), ehs+1 == HdrAll);
     mHeadersHide[ehs] = config->readListEntry("hideExtraHeaders_"+QString::number(ehs+1));
@@ -956,15 +958,30 @@ void KMReaderWin::initHtmlWidget(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 {
+  if ( aHeaderStyle == mHeaderStyle ) return;
   mHeaderStyle = aHeaderStyle;
-  update(true);
+
+  if ( aHeaderStyle == HdrBrief )
+    setHeaderStrategy( HeaderStrategy::brief() );
+  else if ( aHeaderStyle == HdrAll )
+    setHeaderStrategy( HeaderStrategy::all() );
+  else if ( aHeaderStyle == HdrLong )
+    setHeaderStrategy( HeaderStrategy::rich() );
+  else
+    setHeaderStrategy( HeaderStrategy::standard() );
+
   writeConfig(true);   // added this so we can forward w/ full headers
 }
 
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart() ;
-  update(true);
+  update( true );
+}
+
+void KMReaderWin::setHeaderStrategy( const HeaderStrategy * strategy ) {
+  mHeaderStrategy = strategy ? strategy : HeaderStrategy::standard() ;
+  update( true );
 }
 
 //-----------------------------------------------------------------------------
