@@ -721,6 +721,16 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
         break;
       }
     }
+
+    // Just for cosmetics: update subject
+    if ( msg->subject() != subject ) {
+        KMMessage* newMsg = new KMMessage( *msg );
+        newMsg->setSubject( subject );
+        deleteMsg( msg );
+        f->addMsg( newMsg );
+    }
+
+
   }else{
     // Message not found - store it newly
     rc = addIncidenceKolab( *f, subject, attachments, mimetypes );
