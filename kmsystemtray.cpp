@@ -479,7 +479,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 
     if(unread == 0)
     {
-      kdDebug(5006) << "Removing folder " << fldr->name() << endl;
+      kdDebug(5006) << "Removing folder from internal store " << fldr->name() << endl;
 
       /** Remove the folder from the internal store */
       mFoldersWithUnread.remove(fldr);
