@@ -335,7 +335,9 @@ void KMMainWin::slotRemoveFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCompactFolder()
 {
+  int idx = mHeaders->currentItem();
   if (mFolder) mFolder->compact();
+  mHeaders->setCurrentItem(idx);
 }
 
 
