@@ -252,6 +252,7 @@ namespace KMail {
           != QDialog::Accepted ) {
         mPasswordDialogIsActive = false;
         mAskAgain = false;
+        emit connectionResult( KIO::ERR_USER_CANCELED, QString::null );
         return Error;
       }
       mPasswordDialogIsActive = false;
