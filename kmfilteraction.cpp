@@ -19,6 +19,8 @@
 #include <libkdepim/identitymanager.h>
 #include <libkdepim/identitycombo.h>
 #include <libkdepim/kfileio.h>
+#include <libkdepim/collectingprocess.h>
+using KPIM::CollectingProcess;
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
 #include "kmmsgbase.h"
@@ -104,7 +106,7 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 }
 
 void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
-			      const QValueList<KMime::MDN::DispositionModifier> & m ) {
+                              const QValueList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
   if ( mdn && !kmkernel->msgSender()->send( mdn, FALSE ) ) {
@@ -408,10 +410,10 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
     if ( (*it) != lastSeen ) {
       KTempFile *tf = new KTempFile();
       if ( tf->status() != 0 ) {
-	tf->close();
-	delete tf;
-	kdDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
-	return QString::null;
+        tf->close();
+        delete tf;
+        kdDebug(5006) << "KMFilterActionWithCommand: Could not create temp file!" << endl;
+        return QString::null;
       }
       tf->setAutoDelete(TRUE);
       aTempFileList.append( tf );
@@ -423,7 +425,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
         KPIM::kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
                           false, false, false );
       else {
-	KMMessagePart msgPart;
+        KMMessagePart msgPart;
         aMsg->bodyPart( (*it), &msgPart );
         KPIM::kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
                           false, false, false );
@@ -483,33 +485,26 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // write message to file
   QString tempFileName = inFile->name();
   KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
-		  false, false, false );
+                  false, false, false );
   inFile->close();
 
-  KProcess shProc;
+  CollectingProcess shProc;
   shProc.setUseShell(true);
   shProc << commandLine;
 
-  // let the kernel collect the output for us:
-  if ( withOutput )
-    QObject::connect( &shProc, SIGNAL(receivedStdout(KProcess*,char*,int)),
-		      kmkernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
-
   // run process:
   if ( !shProc.start( KProcess::Block,
-		      withOutput ? KProcess::Stdout : KProcess::NoCommunication ) )
+                      withOutput ? KProcess::Stdout
+                                 : KProcess::NoCommunication ) )
     return ErrorButGoOn;
 
   if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
-    // eat the output to avoid acummulation for following processes
-    if ( withOutput )
-      kmkernel->getCollectedStdOut( &shProc );
     return ErrorButGoOn;
   }
 
   if ( withOutput ) {
     // read altered message:
-    QByteArray msgText = kmkernel->getCollectedStdOut( &shProc );
+    QByteArray msgText = shProc.collectedStdout();
 
     if ( !msgText.isEmpty() ) {
     /* If the pipe through alters the message, it could very well
@@ -812,8 +807,8 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
   if ( argsStr.length() == 1 ) {
     for ( int i = 0 ; i < StatiCount ; i++ )
       if ( KMMsgBase::statusToStr(stati[i])[0] == argsStr[0] ) {
-	mParameter = *mParameterList.at(i+1);
-	return;
+        mParameter = *mParameterList.at(i+1);
+        return;
       }
   }
   mParameter = *mParameterList.at(0);
@@ -901,8 +896,8 @@ void KMFilterActionFakeDisposition::argsFromString( const QString argsStr )
     }
     for ( int i = 0 ; i < numMDNs ; i++ )
       if ( char(mdns[i]) == argsStr[0] ) { // send
-	mParameter = *mParameterList.at(i+2);
-	return;
+        mParameter = *mParameterList.at(i+2);
+        return;
       }
   }
   mParameter = *mParameterList.at(0);
@@ -941,11 +936,11 @@ KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
   : KMFilterActionWithStringList( "remove header", i18n("remove header") )
 {
   mParameterList << ""
-		 << "Reply-To"
-		 << "Delivered-To"
-		 << "X-KDE-PR-Message"
-		 << "X-KDE-PR-Package"
-		 << "X-KDE-PR-Keywords";
+                 << "Reply-To"
+                 << "Delivered-To"
+                 << "X-KDE-PR-Message"
+                 << "X-KDE-PR-Package"
+                 << "X-KDE-PR-Keywords";
   mParameter = *mParameterList.at(0);
 }
 
@@ -1012,11 +1007,11 @@ KMFilterActionAddHeader::KMFilterActionAddHeader()
   : KMFilterActionWithStringList( "add header", i18n("add header") )
 {
   mParameterList << ""
-		 << "Reply-To"
-		 << "Delivered-To"
-		 << "X-KDE-PR-Message"
-		 << "X-KDE-PR-Package"
-		 << "X-KDE-PR-Keywords";
+                 << "Reply-To"
+                 << "Delivered-To"
+                 << "X-KDE-PR-Message"
+                 << "X-KDE-PR-Package"
+                 << "X-KDE-PR-Keywords";
   mParameter = *mParameterList.at(0);
 }
 
@@ -1144,12 +1139,12 @@ KMFilterActionRewriteHeader::KMFilterActionRewriteHeader()
   : KMFilterActionWithStringList( "rewrite header", i18n("rewrite header") )
 {
   mParameterList << ""
-		 << "Subject"
-		 << "Reply-To"
-		 << "Delivered-To"
-		 << "X-KDE-PR-Message"
-		 << "X-KDE-PR-Package"
-		 << "X-KDE-PR-Keywords";
+                 << "Subject"
+                 << "Reply-To"
+                 << "Delivered-To"
+                 << "X-KDE-PR-Message"
+                 << "X-KDE-PR-Package"
+                 << "X-KDE-PR-Keywords";
   mParameter = *mParameterList.at(0);
 }
 
@@ -1161,7 +1156,7 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
   KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
 
   QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
-				     mReplacementString );
+                                     mReplacementString );
 
   msg->setHeaderField( mParameter.latin1(), newValue );
   return GoOn;
@@ -1342,7 +1337,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
-  // avoid endless loops when this action is used in a filter 
+  // avoid endless loops when this action is used in a filter
   // which applies to sent messages
   if ( KMMessage::addressIsInAddressList( mParameter, aMsg->to() ) )
     return ErrorButGoOn;
