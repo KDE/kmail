@@ -659,10 +659,8 @@ void KMAcctExpPop::slotGetNextMsg()
   delete curMsgStrm;
   curMsgStrm = 0;
 
-  if (next == mMsgsPendingDownload.end()) {
-  kdDebug(5006) << "KMAcctExpPop::slotGetNextMsg was called too often" << endl;
-  }
-  else {
+  if ( next != mMsgsPendingDownload.end() ) {
+    // get the next message
     int nextLen = next.data();
     curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
     curMsgLen = nextLen;
