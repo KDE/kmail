@@ -647,8 +647,8 @@ void KMAcctExpPop::slotJobFinished() {
     // show the dialog
     headers = true;
     if (dlgPopup) {
-      KMPopFilterCnfrmDlg *dlg = new KMPopFilterCnfrmDlg(&headersOnServer, this->name(), kernel->popFilterMgr()->showLaterMsgs());
-      dlg->exec();
+      KMPopFilterCnfrmDlg dlg(&headersOnServer, this->name(), kernel->popFilterMgr()->showLaterMsgs());
+      dlg.exec();
     }
 	
     for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
