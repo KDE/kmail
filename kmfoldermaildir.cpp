@@ -905,7 +905,7 @@ int KMFolderMaildir::removeContents()
     /* The subdirs are removed now. Check if there is anything else in the dir
      * and only if not delete the dir itself. The user could have data stored 
      * that would otherwise be deleted. */
-    QDir dir = QDir(location());
+    QDir dir(location());
     if ( dir.count() == 2 ) { // only . and ..
         if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()), 0))
             return 1;
