@@ -196,10 +196,10 @@ class KpgpKey : public QDialog
 
 public:
   /** the passphrase dialog */
-  KpgpKey(QWidget *parent = 0, const char *name = 0, QStrList *keys);
+  KpgpKey(QWidget *parent = 0, const char *name = 0, QStrList *keys = NULL);
   virtual ~KpgpKey();
 
-  static QString getKeyName(QWidget *parent = 0, QStrList *keys);
+  static QString getKeyName(QWidget *parent = 0, QStrList *keys = NULL);
 
 private:
   QString getKey();
