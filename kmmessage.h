@@ -484,9 +484,18 @@ public:
    * returns the first address. */
   static QCString getEmailAddr(const QString& emailAddr);
 
-  /** Converts given email address to a nice HTML mailto: anchor.
+  /** Quotes the following characters which have a special meaning in HTML:
+   * '<'  '>'  '&'  '"'. Additionally '\n' is converted to "<br />" if
+   * @p removeLineBreaks is false. If @p removeLineBreaks is true, then
+   * '\n' is removed. Last but not least '\r' is removed.
+   */
+  static QString quoteHtmlChars( const QString& str,
+                                 bool removeLineBreaks = false );
+
+  /** Converts the email address(es) to (a) nice HTML mailto: anchor(s).
    * If stripped is TRUE then the visible part of the anchor contains
-   * only the name part and not the given emailAddr. */
+   * only the name part and not the given emailAddr.
+   */
   static QString emailAddrAsAnchor(const QString& emailAddr,
 					 bool stripped=TRUE);
 

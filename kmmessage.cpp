@@ -2850,49 +2850,92 @@ QCString KMMessage::getEmailAddr(const QString& aStr)
   return aStr.mid(i+1,len).latin1();
 }
 
+//-----------------------------------------------------------------------------
+QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
+{
+  QString result;
+  int resultLength = 0;
+  result.setLength( 6*str.length() ); // maximal possible length
+
+  QChar ch;
+
+  for( unsigned int i = 0; i < str.length(); ++i ) {
+    ch = str[i];
+    if( '<' == ch ) {
+      result[resultLength++] = '&';
+      result[resultLength++] = 'l';
+      result[resultLength++] = 't';
+      result[resultLength++] = ';';
+    }
+    else if ( '>' == ch ) {
+      result[resultLength++] = '&';
+      result[resultLength++] = 'g';
+      result[resultLength++] = 't';
+      result[resultLength++] = ';';
+    }
+    else if( '&' == ch ) {
+      result[resultLength++] = '&';
+      result[resultLength++] = 'a';
+      result[resultLength++] = 'm';
+      result[resultLength++] = 'p';
+      result[resultLength++] = ';';
+    }
+    else if( '"' == ch ) {
+      result[resultLength++] = '&';
+      result[resultLength++] = 'q';
+      result[resultLength++] = 'u';
+      result[resultLength++] = 'o';
+      result[resultLength++] = 't';
+      result[resultLength++] = ';';
+    }
+    else if( '\n' == ch ) {
+      if( !removeLineBreaks ) {
+        result[resultLength++] = '<';
+        result[resultLength++] = 'b';
+        result[resultLength++] = 'r';
+        result[resultLength++] = ' ';
+        result[resultLength++] = '/';
+        result[resultLength++] = '>';
+      }
+    }
+    else if( '\r' == ch ) {
+      // ignore CR
+    }
+    else {
+      result[resultLength++] = ch;
+    }
+  }
+  result.truncate( resultLength ); // get rid of the undefined junk
+  return result;
+}
 
 //-----------------------------------------------------------------------------
 QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 {
-  QString result, addr, tmp2;
-  QChar ch;
-  bool insideQuote = false;
+  if( aEmail.isEmpty() )
+    return aEmail;
 
-  QString email = aEmail;
+  QStringList addressList = KMMessage::splitEmailAddrList( aEmail );
 
-  if (email.isEmpty()) return email;
+  QString result;
 
-  result = "<a href='mailto:";
-  for (uint pos = 0; pos < email.length(); pos++)
-  {
-    ch = email[pos];
-    if (ch == '"') insideQuote = !insideQuote;
-    if (ch == '<') addr += "&lt;";
-    else if (ch == '>') addr += "&gt;";
-    else if (ch == '&') addr += "&amp;";
-    else if (ch == '\'') addr += "&#39;";
-    else if (ch != ',' || insideQuote) addr += ch;
-
-    if (ch != ',' || insideQuote)
-      tmp2 += ch;
-
-    if ((ch == ',' && !insideQuote) || pos + 1 >= email.length())
-    {
-      result += KMMessage::encodeMailtoUrl( tmp2 );
-      result += "'>";
-      if (stripped) result += KMMessage::stripEmailAddr(tmp2);
-      else result += addr;
-      tmp2 = "";
-      result += "</a>";
-      if (ch == ',')
-      {
-	result += ", <a href='mailto:";
-	while (email[pos+1] == ' ') pos++;
-      }
-      addr = "";
+  for( QStringList::ConstIterator it = addressList.begin();
+       ( it != addressList.end() );
+       ++it ) {
+    if( !(*it).isEmpty() ) {
+      QString address = *it;
+      result += "<a href=\"mailto:"
+              + KMMessage::encodeMailtoUrl( address )
+              + "\">";
+      if( stripped )
+        address = KMMessage::stripEmailAddr( address );
+      result += KMMessage::quoteHtmlChars( address, true );
+      result += "</a>, ";
     }
   }
-  result = result.replace(QRegExp("\n"),"");
+  // cut of the trailing ", "
+  result.truncate( result.length() - 2 );
+
   kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
                 << "') returns:\n-->" << result << "<--" << endl;
   return result;
