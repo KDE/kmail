@@ -3438,7 +3438,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
 {
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  mBackendConfig = Kleo::CryptPlugFactory::instance()->configWidget( this, "mBackendConfig" );
+  mBackendConfig = KMail::CryptPlugFactory::instance()->configWidget( this, "mBackendConfig" );
 
   vlay->addWidget( mBackendConfig );
 }
