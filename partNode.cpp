@@ -380,11 +380,24 @@ void partNode::adjustDefaultType( partNode* node )
 
 bool partNode::isAttachment() const
 {
-  if (!dwPart())
-	  return false;
+  if( !dwPart() )
+    return false;
   DwHeaders& headers = dwPart()->Headers();
   if( headers.HasContentDisposition() )
-    return (headers.ContentDisposition().DispositionType() == DwMime::kDispTypeAttachment);
+    return ( headers.ContentDisposition().DispositionType()
+             == DwMime::kDispTypeAttachment );
+  else
+    return false;
+}
+
+bool partNode::hasContentDispositionInline() const
+{
+  if( !dwPart() )
+    return false;
+  DwHeaders& headers = dwPart()->Headers();
+  if( headers.HasContentDisposition() )
+    return ( headers.ContentDisposition().DispositionType()
+             == DwMime::kDispTypeInline );
   else
     return false;
 }

@@ -296,6 +296,8 @@ public:
 
     bool isAttachment() const;
 
+    bool hasContentDispositionInline() const;
+
     const QString& trueFromAddress() const;
 
 public:
