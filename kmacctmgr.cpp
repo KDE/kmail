@@ -153,6 +153,8 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   }
 
   KMAccount *curAccount = mAcctChecking->take(0);
+  if (curAccount == lastAccountChecked) return;
+
   connect( curAccount, SIGNAL(finishedCheck(bool)),
 	   this, SLOT(processNextCheck(bool)) );
 
