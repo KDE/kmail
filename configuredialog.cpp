@@ -3520,8 +3520,8 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * n
 void SecurityPage::WarningTab::load() {
   const KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  mWidget->warnUnencryptedCB->setChecked( composer.readBoolEntry( "crypto-warning-unencrypted", true /*said marc*/ ) );
-  mWidget->mWarnUnsigned->setChecked( composer.readBoolEntry( "crypto-warning-unsigned", true ) );
+  mWidget->warnUnencryptedCB->setChecked( composer.readBoolEntry( "crypto-warning-unencrypted", false ) );
+  mWidget->mWarnUnsigned->setChecked( composer.readBoolEntry( "crypto-warning-unsigned", false ) );
   mWidget->warnReceiverNotInCertificateCB->setChecked( composer.readBoolEntry( "crypto-warn-recv-not-in-cert", true ) );
 
   mWidget->mWarnSignKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-key-near-expire-int", 14 ) );
