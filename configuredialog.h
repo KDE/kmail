@@ -22,7 +22,6 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
-#include <qptrlist.h>
 #include <qguardedptr.h>
 #include <kcmultidialog.h>
 
@@ -46,7 +45,6 @@ signals:
       included in the file.
   */
   void installProfile( KConfig *profile );
-  void configChanged( void );
 protected:
   void hideEvent( QHideEvent *i );
 protected slots:
