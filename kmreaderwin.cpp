@@ -3638,7 +3638,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         int frameColor = SIG_FRAME_COL_UNDEF;
         bool showKeyInfos;
         bool onlyShowKeyURL = false;
-        bool cannotCheckSignature;
+        bool cannotCheckSignature = true;
         QString statusStr = sigStatusToString( cryptPlug,
                                                block.status_code,
                                                block.sigStatusFlags,
