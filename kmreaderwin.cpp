@@ -1,10 +1,10 @@
 // kmreaderwin.cpp
 
-#include "kmreaderwin.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
+#include "kmreaderwin.h"
 #include "kmreaderwin.moc"
 
 #define FORWARD 0
