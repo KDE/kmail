@@ -1192,9 +1192,6 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   Kpgp *pgp = Kpgp::getKpgp();
   bool doSign = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
-  QString _to, receiver;
-  int index, lastindex;
-  QStrList persons;
   QString text;
   QCString cText;
 
@@ -1252,24 +1249,72 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   else
   {
     // encrypting
-      _to = to();
+
+// FIXME: Use QStringList instead of QStrList in order to support unicode
+    QStrList recipients;
+    QString _to = to();
+
     if(!cc().isEmpty()) _to += "," + cc();
     if(!bcc().isEmpty()) _to += "," + bcc();
-    lastindex = -1;
-    do
-    {
-      index = _to.find(",",lastindex+1);
-      receiver = _to.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
-      if (!receiver.isEmpty())
-      {
-// FIXME: Kpgp::encryptFor() has to support unicode
-	persons.append(receiver.latin1());
-      }
-      lastindex = index;
-    }
-    while (lastindex > 0);
+    // split the to, cc and bcc header into separate addresses
+    // important: always ignore quoted characters
+    //            ignore '(', ')' and ',' inside quoted strings
+    //            comments may be nested
+    //            ignore '"' and ',' inside comments
+    if (!_to.isEmpty()) {
+      QString recipient;
+      int addrstart = 0;
+      int commentlevel = 0;
+      bool insidequote = false;
 
-    if(pgp->encryptFor(persons, pgpUserId, doSign))
+      for (int index=0; index<_to.length(); index++) {
+        // the following conversion to latin1 is o.k. because
+        // we can safely ignore all non-latin1 characters
+        switch (_to[index].latin1()) {
+        case '"' : // start or end of quoted string
+          if (commentlevel == 0)
+            insidequote = !insidequote;
+          break;
+        case '(' : // start of comment
+          if (!insidequote)
+            commentlevel++;
+          break;
+        case ')' : // end of comment
+          if (!insidequote) {
+            if (commentlevel > 0)
+              commentlevel--;
+            else
+              kdDebug(5006) << "Error in address splitting: Unmatched ')'"
+                            << endl;
+          }
+          break;
+        case '\\' : // quoted character
+          index++; // ignore the quoted character
+          break;
+        case ',' : 
+          if (!insidequote && (commentlevel == 0)) {
+            recipient = _to.mid(addrstart, index-addrstart);
+            kdDebug(5006) << "Found recipient: " << recipient << endl;
+            if (!recipient.isEmpty())
+              recipients.append(recipient.simplifyWhiteSpace().latin1());
+            addrstart = index+1;
+          }
+          break;
+        }
+      }
+      // append the last address to the list of recipients
+      if (!insidequote && (commentlevel == 0)) {
+        recipient = _to.mid(addrstart, _to.length()-addrstart);
+        kdDebug(5006) << "Found recipient: " << recipient << endl;
+        if (!recipient.isEmpty())
+          recipients.append(recipient.simplifyWhiteSpace().latin1());
+      }
+      else
+        kdDebug(5006) << "Error in address splitting: "
+                      << "Unexpected end of address list";
+    }
+    
+    if(pgp->encryptFor(recipients, pgpUserId, doSign))
       return pgp->message();
   }
 
