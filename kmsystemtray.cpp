@@ -335,7 +335,7 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
   QString rvalue = fldr->label();
   if(fldr->folderType() == KMFolderTypeImap)
   {
-    KMFolderImap * imap = dynamic_cast<KMFolderImap*> (fldr);
+    KMFolderImap * imap = dynamic_cast<KMFolderImap*> (fldr->storage());
     assert(imap);
 
     if((imap->account() != 0) &&
