@@ -235,11 +235,10 @@ class KMShowMsgSrcCommand : public KMCommand
 
 public:
   KMShowMsgSrcCommand( QWidget *parent, KMMsgBase *msgBase,
-		       const QTextCodec *codec, bool fixedFont );
+		       bool fixedFont );
   virtual void execute();
 
 private:
-  const QTextCodec *mCodec;
   bool mFixedFont;
 };
 

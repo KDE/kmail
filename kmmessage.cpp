@@ -49,8 +49,6 @@ using namespace KMime::Types;
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
-#include "mailsourceviewer.h"
-using KMail::MailSourceViewer;
 #endif
 
 // needed temporarily until KMime is replacing the partNode helper class:
@@ -3079,39 +3077,6 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 {
   DwBodyPart* part = createDWBodyPart( aPart );
   addDwBodyPart( part );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMessage::viewSource(const QString& aCaption, const QTextCodec *codec,
-			   bool fixedfont)
-{
-  QString str = QString::fromLatin1( asString() );
-
-#if ALLOW_GUI
-  MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
-  if (!aCaption.isEmpty()) viewer->setCaption(aCaption);
-  viewer->setText(str);
-  if (fixedfont)
-    viewer->setFont(KGlobalSettings::fixedFont());
-
-  // Well, there is no widget to be seen here, so we have to use QCursor::pos()
-  // Update: (GS) I'm not going to make this code behave according to Xinerama
-  //         configuration because this is quite the hack.
-  if (QApplication::desktop()->isVirtualDesktop()) {
-    int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
-    viewer->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
-                  2*QApplication::desktop()->screenGeometry(scnum).height()/3);
-  } else {
-    viewer->resize(QApplication::desktop()->geometry().width()/2,
-                  2*QApplication::desktop()->geometry().height()/3);
-  }
-  viewer->show();
-
-#else //not ALLOW_GUI
-  kdDebug(5006) << "Message source: " << (aCaption.isEmpty() ? "" : (const char*)aCaption) << "\n" << str << "\n--- end of message ---" << endl;
-
-#endif
 }
 
 

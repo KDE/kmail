@@ -52,6 +52,8 @@
 #include "undostack.h"
 #include "kcursorsaver.h"
 using KMail::FolderJob;
+#include "mailsourceviewer.h"
+using KMail::MailSourceViewer;
 
 #include "kmcommands.h"
 #include "kmcommands.moc"
@@ -496,23 +498,34 @@ void KMEditMsgCommand::execute()
 
 
 KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-  KMMsgBase *msgBase, const QTextCodec *codec, bool fixedFont )
-  :KMCommand( parent, msgBase ), mCodec( codec ), mFixedFont( fixedFont )
+  KMMsgBase *msgBase, bool fixedFont )
+  :KMCommand( parent, msgBase ), mFixedFont( fixedFont )
 {
 }
 
 void KMShowMsgSrcCommand::execute()
 {
-  //TODO: move KMMessage::viewSource to here
   KMMessage *msg = retrievedMessage();
-  if (!mCodec) //this is Auto setting
-  {
-    QCString cset = msg->charset();
-    if (!cset.isEmpty())
-      mCodec = KMMsgBase::codecForName( cset );
+  QString str = QString::fromLatin1( msg->asString() );
+
+  MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
+  viewer->setCaption( i18n("Message as Plain Text") );
+  viewer->setText(str);
+  if( mFixedFont )
+    viewer->setFont(KGlobalSettings::fixedFont());
+
+  // Well, there is no widget to be seen here, so we have to use QCursor::pos()
+  // Update: (GS) I'm not going to make this code behave according to Xinerama
+  //         configuration because this is quite the hack.
+  if (QApplication::desktop()->isVirtualDesktop()) {
+    int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
+    viewer->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
+                  2*QApplication::desktop()->screenGeometry(scnum).height()/3);
+  } else {
+    viewer->resize(QApplication::desktop()->geometry().width()/2,
+                  2*QApplication::desktop()->geometry().height()/3);
   }
-  msg->viewSource( i18n("Message as Plain Text"), mCodec,
-		   mFixedFont );
+  viewer->show();
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,

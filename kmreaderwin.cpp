@@ -3622,7 +3622,7 @@ void KMReaderWin::slotMailtoReply()
 void KMReaderWin::slotShowMsgSrc()
 {
   KMCommand *command = new KMShowMsgSrcCommand( mMainWindow, message(),
-    mCodec, isfixedFont() );
+                                                isfixedFont() );
   command->start();
 }
 

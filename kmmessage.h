@@ -581,10 +581,6 @@ public:
   /** Delete all body parts. */
   void deleteBodyParts(void);
 
-  /** Open a window containing the complete, unparsed, message. */
-  void viewSource(const QString& windowCaption, const QTextCodec *codec,
-					bool fixedfont);
-
   /** Set "Status" and "X-Status" fields of the message from the
    * internal message status. */
   void setStatusFields(void);
