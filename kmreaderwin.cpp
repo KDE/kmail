@@ -3679,8 +3679,10 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         // note: Once we can start PGP key manager programs
         //       from within KMail we could change this and
         //       allways show the URL.    (khz, 2002/06/27)
-        QString startKeyHREF
-            = QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
+        QString startKeyHREF;
+        if( isSMIME )
+            startKeyHREF =
+                QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">")
                 .arg( cryptPlug->displayName() )
                 .arg( cryptPlug->libName() )
                 .arg( block.keyId );
