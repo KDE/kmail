@@ -1458,7 +1458,9 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
   if( !mAttachments.empty()
       && ( !mEarlyAddAttachments || !mAllAttachmentsAreInBody ) ) {
     // set the content type header
-    msg->headers().ContentType().FromString( "Multipart/Mixed" );
+    msg->headers().ContentType().SetType( DwMime::kTypeMultipart );
+    msg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
+    msg->headers().ContentType().CreateBoundary( 0 );
     kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to Multipart/Mixed" << endl;
     //      msg->setBody( "This message is in MIME format.\n"
     //                    "Since your mail reader does not understand this format,\n"
@@ -1467,7 +1469,8 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     DwBodyPart* tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
     DwHeaders& headers = tmpDwPart->Headers();
     DwMediaType& ct = headers.ContentType();
-    ct.SetBoundary(mSaveBoundary);
+    if ( !mSaveBoundary.empty() )
+      ct.SetBoundary(mSaveBoundary);
     tmpDwPart->Assemble();
 
     //KMMessagePart newPart;
