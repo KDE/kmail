@@ -185,7 +185,8 @@ void KMFolderCachedImap::remove()
   KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
 
   // Tell the account (see listDirectory2)
-  mAccount->addDeletedFolder( imapPath() );
+  if (mAccount)
+    mAccount->addDeletedFolder( imapPath() );
 
   FolderStorage::remove();
 }
