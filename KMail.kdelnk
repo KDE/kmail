@@ -1,6 +1,7 @@
 # KDE Config File
 [KDE Desktop Entry]
 Name=Mail client
+Name[is_IS]=Póstforrit
 Name[es]=Cliente de correo
 Name[de]=Email Programm
 Name[no]=Epostprogram
@@ -21,6 +22,7 @@ Exec=kmail -caption "%c" %i %m
 Icon=kmail.xpm
 DocPath=kmail.html
 Comment=Mail Client
+Comment[is_IS]=kmail:  Póstforrit KDE
 Comment[es]=Envío y recepción de correo electrónico
 Comment[fr]=Emission et réception de messages électroniques
 Comment[de]=Programm zum Lesen und Verschicken von Emails
