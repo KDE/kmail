@@ -1,12 +1,21 @@
 // kmmsgpart.cpp
 
+#include <qdir.h>
+
 #include "kmmsgpart.h"
 #include "kmmessage.h"
+#include "kmimemagic.h"
+#include <kapp.h>
+#include <kconfig.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/utility.h>
+
+
+static KMimeMagic* sMagic = NULL;
+
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart() : 
@@ -23,22 +32,25 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::bodyEncoded(void) const
+void KMMessagePart::setEncodedBody(const QString aStr)
 {
   DwString dwResult, dwSrc;
   QString result;
   int encoding = contentTransferEncoding();
+  int len = aStr.size();
 
   switch (encoding)
   {
   case DwMime::kCteQuotedPrintable:
-    dwSrc = mBody;
+    dwSrc.resize(len);
+    memcpy((void*)dwSrc.data(), (void*)aStr.data(), len);
     DwEncodeQuotedPrintable(dwSrc, dwResult);
     result = dwResult.c_str();
     result.detach();
     break;
   case DwMime::kCteBase64:
-    dwSrc = mBody;
+    dwSrc.resize(len);
+    memcpy((void*)dwSrc.data(), (void*)aStr.data(), len);
     DwEncodeBase64(dwSrc, dwResult);
     result = dwResult.c_str();
     result.detach();
@@ -46,14 +58,14 @@ const QString KMMessagePart::bodyEncoded(void) const
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    result = mBody;
+    result = aStr;
     break;
   default:
     debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
 	  (const char*)cteStr());
-    result = mBody;
+    result = aStr;
   }
-  return result;
+  mBody = result;
 }
 
 
@@ -89,6 +101,56 @@ const QString KMMessagePart::bodyDecoded(void) const
     result = mBody;
   }
   return result;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessagePart::magicSetType(bool aAutoDecode)
+{
+  QString mimetype, bod;
+  int sep;
+
+  if (!sMagic)
+  {
+    // initialize mime magic
+    sMagic = new KMimeMagic(kapp->kdedir() + "/share/magic");
+    sMagic->setFollowLinks(TRUE);
+  }
+
+  if (aAutoDecode) bod = bodyDecoded();
+  else bod = mBody;
+
+  mimetype = sMagic->findBufferType(bod, bod.size()-1)->getContent();
+  sep = mimetype.find('/');
+  mType = mimetype.left(sep);
+  mSubtype = mimetype.mid(sep+1, 64);
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessagePart::iconName(void) const
+{
+  QString fileName, icon;
+  QDir dir;
+
+  fileName = KApplication::kdedir() + "/share/mimelnk/" + mType + "/" + 
+             mSubtype + ".kdelnk";
+
+  if (dir.exists(fileName))
+  {
+    KConfig config(fileName);
+    config.setGroup("KDE Desktop Entry");
+    icon = config.readEntry("Icon");
+    if(icon.isEmpty()) // If no icon specified.
+      icon = "unknown.xpm";
+  }
+  else
+  {
+    // not found, use default
+    icon = "unknown.xpm";
+  }
+
+  return KApplication::kdedir() + "/share/icons/" + icon;
 }
 
 

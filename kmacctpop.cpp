@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <mimelib/mimepp.h>
 #include <kmfolder.h>
+#include <kmmessage.h>
 #include <qtstream.h>
 #include <kconfig.h>
 #include <qlined.h>
@@ -30,6 +31,7 @@ KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
   initMetaObject();
 
   mStorePasswd = FALSE;
+  mLeaveOnServer = TRUE;
   mProtocol = 3;
   mPort = 110;
 }
@@ -63,184 +65,101 @@ void KMAcctPop::init(void)
 //-----------------------------------------------------------------------------
 bool KMAcctPop::processNewMail(void)
 {
-  // This functions has been rewritten by Markus.
+  void (*oldHandler)(int);
+  bool result;
+
+  warning("POP support is still experimental\nand may not work.");
 
   // Before we do anything else let's ignore the friggin' SIGALRM signal
   // This signal somehow interrupts the network functions and messed up
   // DwPopClient::Open().
-  signal(SIGALRM,SIG_IGN);
+  oldHandler = signal(SIGALRM, SIG_IGN);
+  result = doProcessNewMail();
+  signal(SIGALRM, oldHandler);
 
-  warning("POP support is still experimental\nand not functional.");
+  return result;
+}
 
+
+//-----------------------------------------------------------------------------
+bool KMAcctPop::doProcessNewMail(void)
+{
   DwPopClient client;
-  client.SetReceiveTimeout(20);
+  QString passwd;
+  QString response, status;
+  int num, size;	// number of all msgs / size of all msgs
+  int id;		// id of message to read
+  int dummy;
+  char dummyStr[32];
+  KMMessage* msg;
+  bool gotMsgs = FALSE;
 
-  int replyCode; // the reply Code the server responds
-  int num, size; // number of all msgs / size of all msgs
-  QString status, response;
-  int no;  // Msg number List(i)
-  long size_msg; // Size of single msg
-  QString status_msg; // Status of List(i)
-
-  cout << "Host: " << mHost << endl;
-  cout << "Port: " << mPort << endl;
-  cout << "Login: " << mLogin << endl;
-  cout << "Passwd: " << mPasswd << endl;
-
-
-  if(mLogin.isEmpty()) // If the login name is not set call modal Dialog
-    {KMPasswdDialog d(0,0,"Login name is missing!",login(),passwd());
-    if(!d.exec())
-      return false;
-    }
-  if(mPasswd.isEmpty()) // If the Password is not set call modal Dialog
-    {KMPasswdDialog d(0,0,"Password is missing!",login(),passwd());
-    if(!d.exec())
-      return false;
-    }
-
-  replyCode = client.Open(mHost,mPort); // Open connection
-  printf("replyCode for Open: %i\n",replyCode);
-  if(replyCode != 43 && replyCode != 0)
-    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
-    // Reinstall old sighandler
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else if(replyCode == 0)
-    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else
-    cout << client.SingleLineResponse().c_str();
-
-  replyCode = client.User(mLogin); // Send USER command
-  printf("replyCode for User: %i\n",replyCode);
-  if(replyCode != 43 && replyCode != 0)
-    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
-    // Reinstall old sighandler
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else if(replyCode == 0)
-    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else
-    cout << client.SingleLineResponse().c_str();
-
-  replyCode = client.Pass(mPasswd); // Send PASS command
-  printf("replyCode for Pass: %i\n",replyCode);
-    if(replyCode != 43 && replyCode != 0)
-    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else if(replyCode == 0)
-    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else
-    cout << client.SingleLineResponse().c_str();
-
-  replyCode = client.Stat();// Send STAT command
-  printf("reply Code1 for stat: %i\n",replyCode);
-    if(replyCode != 43 && replyCode != 0)
-    {KMsgBox::message(0,"Error",client.SingleLineResponse().c_str());
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else if(replyCode == 0)
-    {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-  else
-    response = client.SingleLineResponse().c_str();
-
-  cout << response;  
-  QTextStream str(response, IO_ReadOnly);
-  str >> status >> num >> size; // ReplyCode , number of msgs, size in octets
-  debug("GOT POP %s %d %d",status.data(), num, size);
-
-  if(num == 0) // If there are no new msgs.
-    {KMsgBox::message(0,"checking Mail...","No new messages on " + mHost);
-    signal (SIGALRM, KAlarmTimeoutHandler);
-    return false;
-    }
-
-
-  int i = 1; // Start with msg 1
-  while(i<=num)
+  // is everything specified ?
+  if (mHost.isEmpty() || mPort<=0 || mLogin.isEmpty())
   {
-    debug("processing message %d", i);
-    
-    // I need the size of the msg for buffer
-
-    replyCode = client.List(i); //List (i) to get size for buffer
-                                //and check if exists
-    if(replyCode != 43 && replyCode != 0) // If no such msg (i) get next.
-      {i++;
-      break;
-      }
-    else if(replyCode == 0) // Some network error.
-      {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-      signal (SIGALRM, KAlarmTimeoutHandler); // Reinstall handler
-      return false;
-      }
-    else
-      {response = client.SingleLineResponse().c_str();
-      QTextStream size_str(response,IO_ReadOnly);
-      size_str >> status_msg >> no >> size_msg; // Same as above
-      printf("msg size : %ld\n",size_msg); // Size for buffer in octets
-    // Shit! How do I convert octets to decs.
-      }
-
-
-    replyCode = client.Retr(i); // Retrieve message
-    if(replyCode != 43 && replyCode != 0) // If no such msg (i) get next.
-      {i++;
-      break;
-      }
-    else if(replyCode == 0) // Some network error.
-      {KMsgBox::message(0,"Network Error",client.LastFailureStr());
-      signal (SIGALRM, KAlarmTimeoutHandler); // Reinstall handler
-      return false;
-      }
-    else // Ok let's get the msg
-    {
-      cout << client.SingleLineResponse().c_str() << endl;
-
-      char buffer[300];
-      strncpy(buffer, client.MultiLineResponse().c_str(), 299);
-
-      buffer[299]='\0';
-
-      debug("GOT %s", buffer);
-      DwMessage *dmsg = new DwMessage(client.MultiLineResponse());
-      dmsg->Parse();
-
-      /*
-      int error;
-      QString err_str;
-      KMMessage *msg = new KMMessage((KMFolder*)mFolder, dmsg);
-      if((error = mFolder->addMsg(msg)) != 0)
-	{err_str = "Adding message to folder failed\n";
-	err_str.append(strerror(error));
-	KMsgBox::message(0,"Folder error!", err_str);
-	}*/   
-
-      i++;   // Next msg;
-    }
+    warning(nls->translate("Please specify Host, Port, Login, and\n"
+			   "destination folder in the settings\n"
+			   "and try again."));
+    return FALSE;
   }
-  // Now let's reinstall the old signal handler for SIGALRM
 
-  signal (SIGALRM, KAlarmTimeoutHandler);
-  return (num > 0);
+  client.SetReceiveTimeout(20);
+  passwd = decryptStr(mPasswd);
 
+  if (client.Open(mHost,mPort) != '+')
+    return popError("OPEN", client);
+  if (client.User(mLogin) != '+')
+    return popError("USER", client);
+  if (client.Pass(decryptStr(passwd)) != '+')
+    return popError("PASS", client);
+
+  if (client.Stat() != '+') return popError("STAT", client);
+  response = client.SingleLineResponse().c_str();
+  sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
+
+#ifdef DWPOPCLIENT_HAS_NO_LAST
+  if (client.Last() != '+') return popError("LAST", client);
+  response = client.SingleLineResponse().c_str();
+  response >> status >> id;
+  id++;
+#else
+  id = 1;
+#endif
+
+  while (id <= num)
+  {
+    debug("processing message %d", id);
+
+    if (client.List(id) != '+')
+      return popError("LIST", client);
+    response = client.SingleLineResponse().c_str();
+    sscanf(response.data(), "%3s %d %o", dummyStr, &dummy, &size);
+
+    if (client.Retr(id) != '+')
+      return popError("RETR", client);
+    response = client.MultiLineResponse().c_str();
+
+    msg = new KMMessage;
+    msg->fromString(response);
+    mFolder->addMsg(msg);
+
+    if (!mLeaveOnServer && client.Dele(id) != '+')
+      return popError("DELE", client);
+
+    gotMsgs = TRUE;
+    id++;
+  }
+
+  return gotMsgs;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
+{
+  KMsgBox::message(0, "Pop-Mail Error", nls->translate("In ")+aStage+":\n"+
+		   aClient.MultiLineResponse().c_str());
+  return FALSE;
 }
 
 

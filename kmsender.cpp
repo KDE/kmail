@@ -94,7 +94,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   }
   if (!aMsg->to() || aMsg->to()[0]=='\0') return FALSE;
 
-  aMsg->viewSource("KMSender::send()");
+  //aMsg->viewSource("KMSender::send()");
 
   if (sendNow==-1) sendNow = mSendImmediate;
   if (!sendNow) return (queuedFolder->addMsg(aMsg)==0);

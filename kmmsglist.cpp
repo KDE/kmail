@@ -203,13 +203,13 @@ int KMMsgList::msgSortCompFunc(const void* a, const void* b)
   if (sortCriteria==sfStatus)
     res = mbA->compareByStatus(mbB);
 
-  else   if (res==0 || sortCriteria==sfSubject)
-    res = mbA->compareBySubject(mbB);
-
-  else if (res==0 || sortCriteria==sfFrom)
+  else if (sortCriteria==sfFrom)
     res = mbA->compareByFrom(mbB);
 
-  else   if (res==0 || sortCriteria==sfDate)
+  if (res==0 || sortCriteria==sfSubject)
+    res = mbA->compareBySubject(mbB);
+
+  if (res==0 || sortCriteria==sfDate)
     res = mbA->compareByDate(mbB);
 
   return res;

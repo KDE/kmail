@@ -543,7 +543,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   len = msgText.length();
 
   assert(mStream != NULL);
-  assert(len > 0);
+  if (len <= 0)
+  {
+    debug("Message added to folder `%s' contains no data. Ignoring it.",
+	  (const char*)name());
+    return 0;
+  }
 
   // write message to folder file
   fseek(mStream, 0, SEEK_END);

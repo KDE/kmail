@@ -7,25 +7,26 @@ bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(LDFLAGS) $(KDE_RPATH)
 kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
-		kmcomposewin.cpp kmfolder.cpp \
+		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp main.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kmimemagic.cpp kmfiltermgr.cpp \
-		knewpanner.cpp kmfilteraction.cpp kmidentity.cpp \
+		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp kmflock.c
+		kmmsgbase.cpp kmmsglist.cpp kmflock.c \
+		kfileio.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
 		kmcomposewin.moc kbusyptr.moc kmfoldermgr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
-		kmfoldernode.moc kmacctseldlg.moc \
+		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
-		knewpanner.moc kmfolderseldlg.moc kmfilterdlg.moc
+		kmfolderseldlg.moc kmfilterdlg.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -114,10 +115,6 @@ kmaccount.cpp: kmaccount.moc
 kmaccount.moc: kmaccount.h
 	$(MOC) kmaccount.h -o kmaccount.moc
 
-knewpanner.cpp: knewpanner.moc
-knewpanner.moc: knewpanner.h
-	$(MOC) knewpanner.h -o knewpanner.moc
-
 kmfilterdlg.cpp: kmfilterdlg.moc
 kmfilterdlg.moc: kmfilterdlg.h
 	$(MOC) kmfilterdlg.h -o kmfilterdlg.moc
@@ -133,3 +130,7 @@ kmsglist.moc: kmsglist.h
 kmfoldermgr.cpp:kmfoldermgr.moc
 kmfoldermgr.moc: kmfoldermgr.h
 	$(MOC) kmfoldermgr.h -o kmfoldermgr.moc
+
+kmmsgpartdlg.cpp:kmmsgpartdlg.moc
+kmmsgpartdlg.moc: kmmsgpartdlg.h
+	$(MOC) kmmsgpartdlg.h -o kmmsgpartdlg.moc

@@ -7,6 +7,7 @@
 #include <mimelib/string.h>
 #include <qstring.h>
 
+
 class KMMessagePart
 {
 public:
@@ -21,8 +22,8 @@ public:
     contains the correct encoding. */
   virtual const QString bodyDecoded(void) const;
 
-  /** Returns body, encoded according to the content-transfer-encoding. */
-  virtual const QString bodyEncoded(void) const;
+  /** Sets body, encoded according to the content-transfer-encoding. */
+  virtual void setEncodedBody(const QString aStr);
 
   /** Get or set name parameter */
   const QString name(void) const;
@@ -40,6 +41,16 @@ public:
   int subtype(void) const;
   void setSubtypeStr(const QString aStr);
   void setSubtype(int aSubtype);
+
+  /** Set the 'Content-Type' by mime-magic from the contents of the body.
+    If autoDecode is TRUE the decoded body will be used for mime type
+    determination (this does not change the body itself). */
+  void magicSetType(bool autoDecode=TRUE);
+
+  /** Tries to find a good icon for the 'Content-Type' by scanning
+    the installed mimelnk files. Returns the found icon. If no matching
+    icon is found, "unknown.xpm" is returned. */
+  const QString iconName(void) const;
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)

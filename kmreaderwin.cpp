@@ -1,7 +1,6 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-#include "kmcomposewin.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
@@ -10,6 +9,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
+#include "kmcomposewin.h"
 
 #include <html.h>
 #include <kapp.h>
@@ -386,24 +386,21 @@ QString KMReaderView::parseEAddress(QString old)
 
 void KMReaderView::replyMessage()
 {
-  KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
-				     currentMessage,actReply);
+  KMComposeWin *c = new KMComposeWin(currentMessage->createReply(FALSE));
   c->show();
   c->resize(c->size());
 }
 
 void KMReaderView::replyAll()
 {
-  KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
-				     currentMessage,actReplyAll);
+  KMComposeWin *c = new KMComposeWin(currentMessage->createReply(TRUE));
   c->show();
   c->resize(c->size());
   
 }
 void KMReaderView::forwardMessage()
 {
-  KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
-				     currentMessage,actForward);
+  KMComposeWin *c = new KMComposeWin(currentMessage->createForward());
   c->show();
   c->resize(c->size());
 }
@@ -621,11 +618,14 @@ void KMReaderView::openURL(const char *url, int)
       system( cmd );
     }
   else if ( fullURL.find( "mailto:" ) >= 0 )
-    {       fullURL.remove(0,7);
-    KMComposeWin *w = new KMComposeWin(0,0,fullURL);
+  {
+    KMMessage* msg;
+    fullURL.remove(0,7);
+    msg->initHeader();
+    msg->setTo(fullURL);
+    KMComposeWin *w = new KMComposeWin(msg);
     w->show();
-    w->resize(w->size());
-    }
+  }
 
 }
 void KMReaderView::popupHeaderMenu(const char *_url, const QPoint &cords)

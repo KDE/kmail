@@ -11,6 +11,11 @@
 #include "kmidentity.h"
 #include "kmversion.h"
 
+// we need access to the protected member DwBody::DeleteBodyParts()...
+#define protected public
+#include <mimelib/body.h>
+#undef protected
+
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
 #include <assert.h>
@@ -734,6 +739,13 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
 
   part->Body().FromString(bodyStr); 
   mNeedsAssembly = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::deleteBodyParts(void)
+{
+  mMsg->Body().DeleteBodyParts();
 }
 
 

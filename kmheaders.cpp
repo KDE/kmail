@@ -2,12 +2,12 @@
 
 #include "kmfolder.h"
 #include "kmheaders.h"
-#include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kbusyptr.h"
 #include "kmdragdata.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
+#include "kmcomposewin.h"
 
 #include <drag.h>
 #include <qstrlist.h>
@@ -117,6 +117,7 @@ void KMHeaders::msgChanged()
 //-----------------------------------------------------------------------------
 void KMHeaders::msgAdded(int id)
 {
+  if (!autoUpdate()) return;
   debug("msgAdded(%d) called", id);
   insertItem("", id);
   msgHeaderChanged(id);
@@ -127,11 +128,13 @@ void KMHeaders::msgAdded(int id)
 void KMHeaders::msgRemoved(int id)
 {
   debug("msgRemoved(%d) called", id);
-  //removeItem(id);
+  removeItem(id);
 
+#if 0
   int i = topItem();
   updateMessageList();
   setTopItem(i);
+#endif
 }
 
 
@@ -143,7 +146,6 @@ void KMHeaders::msgHeaderChanged(int msgId)
   KMMsgBase* mb;
 
   if (!autoUpdate()) return;
-
   debug("msgHeaderChanged() called");
 
   mb = mFolder->getMsgBase(msgId);
@@ -224,7 +226,7 @@ void KMHeaders::forwardMsg (int msgId)
   if (!msg) return;
 
   kbp->busy();
-  win = new KMComposeWin(NULL, NULL, NULL, msg->createForward());
+  win = new KMComposeWin(msg->createForward());
   win->show();
   kbp->idle(); 
 }
@@ -240,7 +242,7 @@ void KMHeaders::replyToMsg (int msgId)
   if (!msg) return;
 
   kbp->busy();
-  win = new KMComposeWin(NULL, NULL, NULL, msg->createReply(FALSE));
+  win = new KMComposeWin(msg->createReply(FALSE));
   win->show();
   kbp->idle(); 
 }
@@ -256,7 +258,7 @@ void KMHeaders::replyAllToMsg (int msgId)
   if (!msg) return;
 
   kbp->busy();
-  win = new KMComposeWin(NULL, NULL, NULL, msg->createReply(TRUE));
+  win = new KMComposeWin(msg->createReply(TRUE));
   win->show();
   kbp->idle(); 
 }
@@ -423,6 +425,8 @@ void KMHeaders::updateMessageList(void)
   KMMsgStatus flag;
   KMMsgBase* mb;
  
+  debug("updateMessageList() called");
+
   clear();
   if (!mFolder) return;
 

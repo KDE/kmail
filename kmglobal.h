@@ -57,4 +57,7 @@ extern KMFolder* sentFolder;
 extern KMFolder* queuedFolder;
 extern KMFolder* trashFolder;
 
+/** The "about KMail" text. */
+extern const char* aboutText;
+
 #endif /*kmglobal_h*/

@@ -165,6 +165,9 @@ public:
   /** Append a body part to the message. */
   virtual void addBodyPart(const KMMessagePart* aPart);
 
+  /** Delete all body parts. */
+  virtual void deleteBodyParts(void);
+
   /** Open a window containing the complete, unparsed, message. */
   virtual void viewSource(const QString windowCaption) const;
 
@@ -179,7 +182,7 @@ public:
   static const QString emailAddrAsAnchor(const QString emailAddr, 
 					 bool stripped=TRUE);
 
-private:
+protected:
   DwMessage* mMsg;
   bool       mNeedsAssembly;
 };

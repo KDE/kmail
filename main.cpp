@@ -10,8 +10,8 @@
 #include "kmfolder.h"
 #include "kmsender.h"
 #include "kbusyptr.h"
-#include "kmcomposewin.h"
 #include "kmfiltermgr.h"
+#include "kmversion.h"
 #include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +37,15 @@ KMFolder* trashFolder = NULL;
 KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
 bool shuttingDown = FALSE;
+const char* aboutText = 
+    "KMail [" KMAIL_VERSION "] by\n\n"
+    "Stefan Taferner <taferner@kde.org>,\n"
+    "Markus Wübben <markus.wuebben@kde.org>\n\n" 
+    "based on the work of:\n"
+    "Lynx <lynx@topaz.hknet.com>,\n"
+    "Stephan Meyer <Stephan.Meyer@pobox.com>,\n"
+    "and the above authors.\n\n"
+    "This program is covered by the GPL.";
 
 static msg_handler oldMsgHandler = NULL;
 
@@ -54,6 +63,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
     break;
 
   case QtWarningMsg:
+    fprintf(stderr, "%s: %s\n", (const char*)app->appName(), aMsg);
     KMsgBox::message(NULL, appName+" "+nls->translate("warning"), aMsg, 
 		     KMsgBox::EXCLAMATION);
     break;

@@ -173,7 +173,7 @@ int KMMsgBase::compareBySubject(const KMMsgBase* other) const
 
   // If both are equal return the one with a keyword (Re: / Fwd: /...)
   // at the beginning as the larger one.
-  return (otherHasKeywd - hasKeywd);
+  return (hasKeywd - otherHasKeywd);
 }
 
 

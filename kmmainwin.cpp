@@ -12,7 +12,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kstdaccel.h>
-#include "knewpanner.h"
+#include <knewpanner.h>
 #include "kmfoldermgr.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
@@ -43,11 +43,15 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mIntegrated = TRUE;
   mFolder     = NULL;
 
-  mVertPanner  = new KNewPanner(this, "vertPanner",
-				KNewPanner::Horizontal, KNewPanner::Absolute);
+  setMinimumSize(400, 300);
 
-  mHorizPanner = new KNewPanner(mVertPanner,"horizPanner",
-				KNewPanner::Vertical, KNewPanner::Absolute);
+  mVertPanner  = new KNewPanner(this, "vertPanner", KNewPanner::Horizontal,
+				KNewPanner::Absolute);
+  mVertPanner->resize(size());
+  setView(mVertPanner);
+
+  mHorizPanner = new KNewPanner(mVertPanner,"horizPanner",KNewPanner::Vertical,
+				KNewPanner::Absolute);
 
   mFolderTree  = new KMFolderTree(mHorizPanner, "folderTree");
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
@@ -59,14 +63,13 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   mMsgView = new KMReaderView(mVertPanner);
 
-  setMinimumSize(400, 300);
-  resize(400,300);
+  parseConfiguration();
+
+  mVertPanner->setAbsSeperatorPos(mVertPannerSep);
+  mHorizPanner->setAbsSeperatorPos(mHorizPannerSep);
 
   mVertPanner->activate(mHorizPanner, mMsgView);
   mHorizPanner->activate(mFolderTree, mHeaders);
-
-  parseConfiguration();
-  setView(mVertPanner);
 
   setupMenuBar();
   setupToolBar();
@@ -141,8 +144,6 @@ void KMMainWin::show(void)
 {
   KMMainWinInherited::show();
   resize(size());
-  mVertPanner->setSeperatorPos(mVertPannerSep);
-  mHorizPanner->setSeperatorPos(mHorizPannerSep);
 }
 
 
@@ -170,20 +171,6 @@ void KMMainWin::closeEvent(QCloseEvent *e)
   config->sync();
   e->accept();
   if (!(--windowCount)) qApp->quit();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::doAbout()
-{
-  KMsgBox::message(this, nls->translate("About"),
-		   "KMail [" KMAIL_VERSION "] by\n\n"
-		   "Stefan Taferner <taferner@kde.org>,\n"
-		   "Markus Wübben <markus.wuebben@kde.org>\n"
-		   "\nbased on the work of\n"
-		   "Stephan Meyer <Stephan.Meyer@pobox.com>,\n"
-		   "Lynx <lynx@topaz.hknet.com>.\n"
-		   "\nThis program is covered by the GPL.", 1);
 }
 
 
@@ -256,9 +243,12 @@ void KMMainWin::doCheckMail()
 //-----------------------------------------------------------------------------
 void KMMainWin::doCompose()
 {
-  KMComposeWin *d;
-  d = new KMComposeWin;
-  d->show();
+  KMComposeWin *win;
+  KMMessage* msg = new KMMessage;
+  msg->initHeader();
+
+  win = new KMComposeWin(msg);
+  win->show();
 }
 
 
@@ -528,11 +518,7 @@ void KMMainWin::setupMenuBar()
 			 SLOT(doCompactFolder()));
 
   //----- Help Menu
-  QPopupMenu *helpMenu = new QPopupMenu();
-  helpMenu->insertItem(nls->translate("&Help"), this, SLOT(doHelp()), 
-		       keys->help());
-  helpMenu->insertSeparator();
-  helpMenu->insertItem(nls->translate("&About"), this, SLOT(doAbout()));
+  QPopupMenu *helpMenu = kapp->getHelpMenu(TRUE, aboutText);
 
   //----- Menubar
   mMenuBar  = new KMenuBar(this);

@@ -8,6 +8,7 @@
 
 class QLineEdit;
 class QPushButton;
+class DwPopClient;
 
 #define KMAcctPopInherited KMAccount
 
@@ -58,11 +59,19 @@ protected:
   const QString encryptStr(const QString inStr);
   const QString decryptStr(const QString inStr);
 
+  /** Mail processing main worker method. */
+  virtual bool doProcessNewMail(void);
+
+  /** Display POP error message. Always returns FALSE to simplify the
+    code in doProcessNewMail(). */
+  virtual bool popError(const QString stage, DwPopClient&) const;
+
   QString mLogin, mPasswd;
   QString mHost;
   int     mPort;
   short   mProtocol;
   bool    mStorePasswd;
+  bool    mLeaveOnServer;
 };
 
 

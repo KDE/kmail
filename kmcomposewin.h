@@ -6,156 +6,154 @@
 
 #include <ktopwidget.h>
 #include <qstring.h>
+#include <qlined.h>
+#include <qlabel.h>
+#include <qlist.h>
+#include "kmmsgpart.h"
 
 class QLineEdit;
 class QGridLayout;
-class QStrList;
 class QFrame;
 class QPopupMenu;
 class KEdit;
 class KTabListBox;
 class KMMessage;
-class KMMessagePart;
-class KMimeMagic;
 class KDNDDropZone;
 class KToolBar;
 class KStatusBar;
+class QPushButton;
+class QCloseEvent;
 
-enum Action { actNoOp =0, actForward=1, actReply=2, actReplyAll=3 };
-
-
-//-----------------------------------------------------------------------------
-class KMComposeView : public QWidget
-{
-  Q_OBJECT
-public:
-  KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0,
-		KMMessage *message=0, Action ac = actNoOp);
-  virtual ~KMComposeView();
-
-  virtual const QString to(void) const;
-  virtual void setTo(const QString _str);
-
-  virtual const QString cc(void) const;
-  virtual void setCc(const QString _str);
-
-  virtual const QString subject(void) const;
-  virtual void setSubject(const QString _str);
-
-  virtual const QString text(void) const;
-  virtual void setText(const QString _str);
-  virtual void appendText(const QString _str);
-  virtual void insertText(const QString _str);
-  virtual void insertTextAt(const QString _str, int line, int col);
-  virtual int textLines(void) const;
-
-  const QString emailAddress(void) const
-    {return EMailAddress;}
-    
-  const QString replyToAddress(void) const
-    {return ReplyToAddress;}
-
-  KEdit * getEditor(void);
-
-private:
-  KEdit *editor;
-  QLineEdit *fromLEdit;
-  QLineEdit *toLEdit;
-  QLineEdit *subjLEdit;
-  QLineEdit *ccLEdit;
-  KMMessage *currentMessage;
-  KTabListBox *attWidget;
-  QString EMailAddress;
-  QString ReplyToAddress;
-  QStrList *urlList;
-  KTabListBox *attachmentListBox;
-  QFrame *frame;
-  KMimeMagic *magic;
-
-  void parseConfiguration();
-
-  // fill composer from contents of given message
-  void fromMsg(KMMessage* msg);
-
-  void forwardMessage();
-  void replyMessage();
-  void replyAll();
-  void insertNewAttachment(QString );
-  void createAttachmentWidget();
-  void initKMimeMagic();
-  bool loadMsgPart(KMMessagePart* msgPart, const QString fileName);
-  KMMessage * prepareMessage();
-
-public slots:
-  void slotPrintIt();
-  void slotFind();
-  void slotAttachFile();
-  void slotSendNow();
-  void slotSendLater();
-
-private slots:
-  void slotUndoEvent();
-  void slotCopyText();
-  void slotCutText();
-  void slotPasteText();
-  void slotMarkAll();
-  void slotSelectFont();
-  void slotToDo();
-  void slotNewComposer();
-  void slotAppendSignature();
-  void slotInsertFile();
-  void slotGetDNDObject();
-  void slotUpdateHeading(const char *);
-  void slotPopupMenu(int, int);
-  void slotOpenAttachment();
-  void slotRemoveAttachment();
-  void slotShowProperties();
-  
-
-protected:
-  QGridLayout* grid;
-  KDNDDropZone *zone;
-  virtual void resizeEvent(QResizeEvent*);
-};
-
+typedef QList<KMMessagePart> KMMsgPartList;
 
 //-----------------------------------------------------------------------------
+#define KMComposeWinInherited KTopLevelWidget
 class KMComposeWin : public KTopLevelWidget
 {
   Q_OBJECT
 
 public:
-  KMComposeWin(QWidget *parent = 0, const char *name = 0, 
-	       QString emailAddress=0, KMMessage *message=0,
-	       Action action = actNoOp);
+  KMComposeWin(KMMessage* msg=NULL);
+  virtual ~KMComposeWin();
+
+  /** Read settings from app's config file. */
+  virtual void readConfig(void);
+
+  /** Write settings to app's config file. Calls sync() if withSync is TRUE. */
+  virtual void writeConfig(bool withSync=TRUE);
+
+  /** Set the message the composer shall work with. This discards
+    previous messages without calling applyChanges() on them before. */
+  virtual void setMsg(KMMessage* newMsg);
+
+  /** Returns message of the composer. To apply the user changes to the
+    message, call applyChanges() first. */
+  virtual KMMessage* msg(void) const { return mMsg; }
+
+  /** Applies the user changes to the message object of the composer. */
+  virtual void applyChanges(void);
+
   virtual void show();
-  QString encoding;
-  friend class KMComposeView;  
+
+
+public slots:
+  void slotPrint();
+  void slotAttachFile();
+  void slotSend();
+  void slotSendLater();
+  void slotDropAction();
+  void slotNewComposer();
+  void slotClose();
+
+  /** Do cut/copy/paste on the active line-edit */
+  void slotCut();
+  void slotCopy();
+  void slotPaste();
+  void slotHelp();
+
+  /** Change window title to given string. */
+  void slotUpdWinTitle(const char *);
+
+  /** Append signature file to the end of the text in the editor. */
+  void slotAppendSignature();
+
+  /** Popup a nice "not implemented" message. */
+  void slotToDo();
+
+  /** Show/hide toolbar. */
+  void slotToggleToolBar();
+
+  /** Open a popup-menu in the attachments-listbox. */
+  void slotAttachPopupMenu(int, int);
+
+  /** Attachment operations. */
+  void slotAttachView();
+  void slotAttachRemove();
+  void slotAttachSave();
+  void slotAttachProperties();
+
+  /** Change visibility of a header field. */
+  void slotMenuViewActivated(int id);
+
 protected:
-  virtual void closeEvent(QCloseEvent *);
-private slots:
-  void abort();
-  void aboutQt(); 
-  void about();
-  void invokeHelp();
-  void toDo();
-  void parseConfiguration();
-  void doNewMailReader();
-  void toggleToolBar();
-  void send();
-  void slotEncodingChanged();
-private:
-  void setupMenuBar();
-  void setupToolBar();
-  void setupStatusBar();
+  /** Install grid management and header fields. If fields exist that
+    should not be there they are removed. Those that are needed are
+    created if necessary. */
+  virtual void rethinkFields(void);
 
-  KToolBar *toolBar;
-  KMenuBar *menuBar;
-  KStatusBar *statusBar;
-  KMComposeView *composeView;
-  bool toolBarStatus, sigStatus, sendButton;
-  QPopupMenu *menu;
+  /** Show or hide header lines */
+  virtual void rethinkHeaderLine(int value, int mask, int& row, 
+				 const QString labelStr, QLabel* lbl,
+				 QLineEdit* edt, QPushButton* btn=NULL);
+  /** Initialization methods */
+  virtual void setupMenuBar(void);
+  virtual void setupToolBar(void);
+  virtual void setupStatusBar(void);
+  virtual void setupEditor(void);
 
+  /** Header fields. */
+  virtual const QString subject(void) const { return mEdtSubject.text(); }
+  virtual const QString to(void) const { return mEdtTo.text(); }
+  virtual const QString cc(void) const { return mEdtCc.text(); }
+  virtual const QString bcc(void) const { return mEdtBcc.text(); }
+  virtual const QString from(void) const { return mEdtFrom.text(); }
+  virtual const QString replyTo(void) const { return mEdtReplyTo.text(); }
+
+  /** Save settings upon close. */
+  virtual void closeEvent(QCloseEvent*);
+
+  /** Add an attachment to the list. */
+  virtual void addAttach(QString url);
+  virtual void addAttach(KMMessagePart* msgPart);
+
+  /** Remove an attachment from the list. */
+  virtual void removeAttach(QString url);
+  virtual void removeAttach(int idx);
+
+  /** Returns a string suitable for the attachment listbox that describes
+    the given message part. */
+  virtual const QString msgPartLbxString(KMMessagePart* msgPart) const;
+
+protected:
+  QWidget   mMainWidget;
+  QLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
+  QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
+
+  QPopupMenu* mMnuView;
+  KEdit* mEditor;
+  QGridLayout* mGrid;
+  KDNDDropZone *mDropZone;
+  KMMessage *mMsg;
+  KToolBar *mToolBar;
+  KMenuBar *mMenuBar;
+  KStatusBar *mStatusBar;
+  KTabListBox *mAtmListBox;
+  KMMsgPartList mAtmList;
+  bool mAutoSign, mShowToolBar;
+  int  mSendImmediate;
+  long mShowHeaders;
+  QString mDefEncoding;
+  int mNumHeaders;
 };
 #endif
 

@@ -56,7 +56,6 @@ protected:
   void setupStatusBar();
 
 protected slots:
-  void doAbout();
   void doClose();
   void doHelp();
   void doNewMailReader();

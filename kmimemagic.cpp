@@ -1974,7 +1974,7 @@ from_oct(int digs, char *where)
  * Don't know if we really need this within KDE?!
  * ... well i've to look into original file code.
  */
-KMimeMagicResult *
+const KMimeMagicResult *
 KMimeMagic::revision_suffix(const char * fn)
 {
 	int suffix_pos;
@@ -2085,7 +2085,7 @@ KMimeMagic::setFollowLinks( bool _enable )
 	followLinks = _enable;
 }
 
-KMimeMagicResult *
+const KMimeMagicResult *
 KMimeMagic::findBufferType(const char * buffer, int nbytes)
 {
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
@@ -2131,11 +2131,11 @@ refineResult(KMimeMagicResult *r, const char * _filename)
 	}
 }
 
-KMimeMagicResult *
+const KMimeMagicResult *
 KMimeMagic::findBufferFileType( const char * buffer, int nbytes,
 				const char * fn)
 {
-	KMimeMagicResult * r = findBufferType( buffer, nbytes );
+	KMimeMagicResult * r = (KMimeMagicResult *)findBufferType( buffer, nbytes );
 	refineResult(r, fn);
         return r;
 }
@@ -2143,7 +2143,7 @@ KMimeMagic::findBufferFileType( const char * buffer, int nbytes,
 /*
  * Find the content-type of the given file.
  */
-KMimeMagicResult *
+const KMimeMagicResult *
 KMimeMagic::findFileType(const char *fn)
 {
         resultBuf.resize(0);

@@ -23,9 +23,9 @@ public:
 	void setContent(QString _content) {Content = _content;}
 	void setEncoding(QString _encoding) {Encoding = _encoding;}
 	void setAccuracy(int _accuracy) {Accuracy = _accuracy;}
-	QString getContent() {return Content;}
-	QString getEncoding() {return Encoding;}
-	int getAccuracy() {return Accuracy;}
+	QString getContent() const {return Content;}
+	QString getEncoding() const {return Encoding;}
+	int getAccuracy() const {return Accuracy;}
 
 private:
 
@@ -78,7 +78,7 @@ public:
 	 * MimeType is found, the default MimeType is returned.
 	 * This function looks at the content of the file.
 	 */
-	KMimeMagicResult * findFileType( const char * );
+	const KMimeMagicResult * findFileType( const char * );
 
 	/**
 	 * Same functionality as above, except data is not
@@ -86,14 +86,14 @@ public:
 	 * is examined. The integer parameter supplies the lenght of
 	 * the buffer.
 	 */
-	KMimeMagicResult * findBufferType( const char *, int );
+	const KMimeMagicResult * findBufferType( const char *, int );
 
 	/**
 	 * Same functionality as @ref findBufferType but with
 	 * additional capability of distinguishing between
          * C-headers and C-Source.
 	 */
-	KMimeMagicResult * findBufferFileType( const char *, int , const char *);
+	const KMimeMagicResult * findBufferFileType( const char *, int , const char *);
 
 protected:
 
@@ -123,7 +123,7 @@ private:
 	void mprint(union VALUETYPE *, struct magic *);
 	int ascmagic(unsigned char *, int);
 	int softmagic(unsigned char *, int);
-	KMimeMagicResult * revision_suffix(const char *);
+	const KMimeMagicResult * revision_suffix(const char *);
 };
 
 #endif
