@@ -21,6 +21,8 @@
 #include <qlayout.h>
 #include <qpushbt.h>
 #include <qlistbox.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
 
 #include <kdialogbase.h>
 
@@ -47,9 +49,9 @@ public:
   virtual void writeConfig(bool sync);
   virtual void init();
 
-  /** sets the message to en- or decrypt 
+  /** sets the message to en- or decrypt
     returns TRUE if the message contains any pgp encoded or signed
-    parts 
+    parts
     The format is then:
     frontmatter()
     ----- BEGIN PGP ...
@@ -87,7 +89,7 @@ public:
   QString getPublicKey(QString _person);
   /** try to ascii output of the public key of this person */
   QString getAsciiPublicKey(QString _person);
-     
+
   /** is the message encrypted ? */
   bool isEncrypted(void) const;
   /** the persons who can decrypt the message */
@@ -122,7 +124,7 @@ public:
   bool encryptToSelf(void) const;
 
   /** store passphrase in pgp object
-    Problem: passphrase stays in memory. 
+    Problem: passphrase stays in memory.
     Advantage: you can call en-/decrypt without always passing the
     passphrase */
   void setStorePassPhrase(bool);
@@ -134,7 +136,10 @@ public:
   /** returns the last error that occured */
   const QString lastErrorMsg(void) const;
 
-  /// did we find a pgp executable?
+  // what version of PGP/GPG should we use
+  enum PGPType { tAuto, tGPG, tPGP2, tPGP5, tPGP6 } pgpType;
+
+  // did we find a pgp executable?
   bool havePGP(void) const;
 
   // FIXME: key management
@@ -150,7 +155,7 @@ public:
   /** pops up a modal window which asks for the passphrase 
    puts the window on top of the parent, or in the middle of the screen,
    if parent = 0 */
-  static const QString askForPass(QWidget *parent = 0);
+  static const QString askForPass(QString &keyID=QString::null, QWidget *parent = 0);
 
 private:
   // test if the PGP executable is found and if there is a passphrase
@@ -168,6 +173,7 @@ private:
   QString SelectPublicKey(QStrList pbkeys, const char *caption);
 
   bool checkForPGP(void);
+  void assignPGPBase(void);
 
   static Kpgp *kpgpObject;
   KSimpleConfig *config;
@@ -194,16 +200,17 @@ class KpgpPass : public KDialogBase
   Q_OBJECT
 
   public:
-    KpgpPass(QWidget *parent=0, const QString &name=QString::null, bool modal=true );
+    KpgpPass( QWidget *parent=0, const QString &name=QString::null, bool modal=true,
+              QString &keyID=QString::null);
     virtual ~KpgpPass();
 
-    static QString getPassphrase(QWidget *parent = 0);
+    static QString getPassphrase(QWidget *parent = 0, QString &keyID=QString::null);
 
   private:
     QString getPhrase();
 
   private:
-    QLineEdit *lineedit; 
+    QLineEdit *lineedit;
 };
 
 // -------------------------------------------------------------------------
@@ -242,15 +249,21 @@ class KpgpConfig : public QWidget
 
     virtual void setValues();
     virtual void applySettings();
-       
+
   protected:
     Kpgp *pgp;
     QLineEdit *pgpUserEdit;
     QCheckBox *storePass;
     QCheckBox *encToSelf;
+    QButtonGroup *radioGroup;
+    QRadioButton *autoDetect;
+    QRadioButton *useGPG;
+    QRadioButton *usePGP2x;
+    QRadioButton *usePGP5x;
+    QRadioButton *usePGP6x;
 
 };
- 
+
 // -------------------------------------------------------------------------
 class KpgpSelDlg: public KDialogBase
 {

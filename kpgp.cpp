@@ -18,7 +18,7 @@
 
 #include <qregexp.h>
 #include <qcursor.h>
-#include <qhbox.h> 
+#include <qhbox.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
@@ -40,6 +40,7 @@ Kpgp::Kpgp()
   : publicKeys()
 {
   kpgpObject=this;
+  pgp = NULL;
 
   config = new KSimpleConfig("kpgprc" );
 
@@ -60,35 +61,12 @@ Kpgp::init()
   havePassPhrase = FALSE;
   passphrase = QString::null;
 
-  // do we have a pgp executable
-  checkForPGP();
-
-  if(havePgp)
-  {
-    if(havePGP5)
-      pgp = new KpgpBase5();
-    else if (haveGpg)
-      pgp = new KpgpBaseG();
-    else 
-    {
-      KpgpBase6 *pgp_v6 = new KpgpBase6();
-      if (!pgp_v6->isVersion6())
-      {
-        delete pgp_v6;
-        pgp = new KpgpBase2();
-      }
-      else pgp = pgp_v6;
-    }
-  }
-  else
-  {
-    // dummy handler
-    pgp = new KpgpBase();
-    return;
-  }
-
   // read kpgp config file entries
   readConfig();
+
+  // do we have a pgp executable
+  checkForPGP();
+  assignPGPBase();
 
   // get public keys
   // No! This takes time since pgp takes some ridicules
@@ -104,17 +82,21 @@ void
 Kpgp::readConfig()
 {
   storePass = config->readBoolEntry("storePass");
+  pgpType = ( Kpgp::PGPType) config->readNumEntry("pgpType",tAuto);
 }
 
 void
 Kpgp::writeConfig(bool sync)
 {
   config->writeEntry("storePass",storePass);
+  config->writeEntry("pgpType",(int) pgpType);
 
   pgp->writeConfig();
 
   if(sync)
     config->sync();
+
+  assignPGPBase();
 }
 
 void
@@ -221,7 +203,10 @@ Kpgp::prepare(bool needPassPhrase)
   if(needPassPhrase)
   {
     if(!havePassPhrase)
-      setPassPhrase(askForPass());
+    {
+      QString ID = pgp->encryptedFor();
+      setPassPhrase(askForPass(ID));
+    }
     if(!havePassPhrase)
     {
       errMsg = i18n("The pass phrase is missing.");
@@ -332,8 +317,8 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 
       int n = 0;
       while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
-      int ret = KMessageBox::warningContinueCancel(0, aStr, 
-                               i18n("PGP Warning"), 
+      int ret = KMessageBox::warningContinueCancel(0, aStr,
+                               i18n("PGP Warning"),
 			       i18n("C&ontinue"));
       for (int j = 0; j < n; j++) kernel->kbp()->busy();
       if(ret == KMessageBox::Cancel) return false;
@@ -646,11 +631,11 @@ Kpgp::getConfig()
 
 
 const QString
-Kpgp::askForPass(QWidget *parent)
+Kpgp::askForPass(QString &keyID, QWidget *parent)
 {
   int n = 0;
   while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
-  QString result = KpgpPass::getPassphrase(parent);
+  QString result = KpgpPass::getPassphrase(parent, keyID );
   for (int j = 0; j < n; j++) kernel->kbp()->busy();
   return result;
 }
@@ -682,16 +667,17 @@ Kpgp::checkForPGP(void)
   QStrListIterator it(pSearchPaths);
 
   // first search for pgp5.0
+  havePGP5=FALSE;
   while ( it.current() )
   {
     path = it.current();
     path += "/pgpe";
     if ( !access( path, X_OK ) )
     {
+      kdDebug() << "Kpgp: pgp 5 found" << endl;
       havePgp=TRUE;
       havePGP5=TRUE;
-      haveGpg=FALSE;
-      return TRUE;
+      break;
     }
     ++it;
   }
@@ -704,10 +690,10 @@ Kpgp::checkForPGP(void)
     path += "/gpg";
     if ( !access( path, X_OK ) )
     {
+      kdDebug() << "Kpgp: gpg found" << endl;
       havePgp=TRUE;
-      havePGP5=FALSE;
       haveGpg=TRUE;
-      return TRUE;
+      break;
     }
     ++it;
   }
@@ -720,16 +706,90 @@ Kpgp::checkForPGP(void)
        path += "/pgp";
        if ( !access( path, X_OK ) )
        {
+            kdDebug() << "Kpgp: pgp 2 or 6 found" << endl;
 	    havePgp=TRUE;
 	    havePGP5=FALSE;
 	    haveGpg=FALSE;
-	    return TRUE;
+            break;
        }
        ++it;
   }
 
-  kdDebug() << "Kpgp: no pgp found" << endl;
-  return FALSE;
+  if (!havePgp)
+  {
+    kdDebug() << "Kpgp: no pgp found" << endl;
+  }
+
+  return havePgp;
+}
+
+void
+Kpgp::assignPGPBase(void)
+{
+  if (pgp)
+    delete pgp;
+
+  if(havePgp)
+  {
+    switch (pgpType)
+    {
+      case tGPG:
+        kdDebug() << "Kpgp: assign pgp - gpg" << endl;
+        pgp = new KpgpBaseG();
+        break;
+
+      case tPGP2:
+        kdDebug() << "Kpgp: assign pgp - pgp 2" << endl;
+        pgp = new KpgpBase2();
+        break;
+
+      case tPGP5:
+        kdDebug() << "Kpgp: assign pgp - pgp 5" << endl;
+        pgp = new KpgpBase5();
+        break;
+
+      case tPGP6:
+        kdDebug() << "Kpgp: assign pgp - pgp 6" << endl;
+        pgp = new KpgpBase6();
+        break;
+
+      case tAuto:
+        kdDebug() << "Kpgp: assign pgp - auto" << endl;
+      default:
+        kdDebug() << "Kpgp: assign pgp - default" << endl;
+        if(havePGP5)
+        {
+          kdDebug() << "Kpgp: pgpBase is pgp 5" << endl;
+          pgp = new KpgpBase5();
+        }
+        else if (haveGpg)
+        {
+          kdDebug() << "Kpgp: pgpBase is gpg " << endl;
+          pgp = new KpgpBaseG();
+        }
+        else
+        {
+          KpgpBase6 *pgp_v6 = new KpgpBase6();
+          if (!pgp_v6->isVersion6())
+          {
+            kdDebug() << "Kpgp: pgpBase is pgp 2 " << endl;
+            delete pgp_v6;
+            pgp = new KpgpBase2();
+          }
+          else
+          {
+            kdDebug() << "Kpgp: pgpBase is pgp 6 " << endl;
+            pgp = pgp_v6;
+          }
+        }
+    } // switch
+  }
+  else
+  {
+    // dummy handler
+    kdDebug() << "Kpgp: pgpBase is dummy " << endl;
+    pgp = new KpgpBase();
+  }
 }
 
 QString
@@ -794,8 +854,8 @@ Kpgp::SelectPublicKey(QStrList pbkeys, const char *caption)
 //  widgets needed by kpgp
 //----------------------------------------------------------------------
 
-KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal )
-  :KDialogBase( parent, name, modal, i18n("OpenPGP Security Check"), 
+KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal, QString &keyID )
+  :KDialogBase( parent, name, modal, i18n("OpenPGP Security Check"),
                 Ok|Cancel )
 {
   QHBox *hbox = makeHBoxMainWidget();
@@ -807,8 +867,12 @@ KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal )
 
   QWidget *rightArea = new QWidget( hbox );
   QVBoxLayout *vlay = new QVBoxLayout( rightArea, 0, spacingHint() );
-  
-  label = new QLabel(i18n("Please enter your OpenPGP passphrase"),rightArea);
+
+  if (keyID == QString::null)
+    label = new QLabel(i18n("Please enter your OpenPGP passphrase"),rightArea);
+  else
+    label = new QLabel(i18n("Please enter the OpenPGP passphrase for\n\"")+keyID+"\"",
+                       rightArea);
   lineedit = new QLineEdit( rightArea );
   lineedit->setEchoMode(QLineEdit::Password);
   lineedit->setMinimumWidth( fontMetrics().maxWidth()*20 );
@@ -827,9 +891,9 @@ KpgpPass::~KpgpPass()
 }
 
 QString
-KpgpPass::getPassphrase(QWidget *parent)
+KpgpPass::getPassphrase(QWidget *parent, QString &keyID)
 {
-  KpgpPass kpgppass(parent, i18n("OpenPGP Security Check"));
+  KpgpPass kpgppass(parent, i18n("OpenPGP Security Check"), true, keyID);
   if (kpgppass.exec())
     return kpgppass.getPhrase().copy();
   else
@@ -860,7 +924,7 @@ KpgpKey::KpgpKey( QStrList *keys, QWidget *parent, const char *name,
 
   QWidget *rightArea = new QWidget( hbox );
   QVBoxLayout *vlay = new QVBoxLayout( rightArea, 0, spacingHint() );
-  
+
   label = new QLabel(i18n("Please select the public key to insert"),rightArea);
   combobox = new QComboBox( FALSE, rightArea, "combo" );
   combobox->setFocus();
@@ -915,7 +979,7 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
   QGroupBox *group = new QGroupBox( i18n("Identity"), this );
   topLayout->addWidget( group );
   QGridLayout *glay = new QGridLayout( group, 2, 2,  KDialog::spacingHint() );
-  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );  
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
 
   QLabel *label = new QLabel( i18n("PGP User Identity:"), group );
   pgpUserEdit = new QLineEdit( group );
@@ -926,12 +990,38 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
   group = new QGroupBox( i18n("Options"), this );
   topLayout->addWidget( group );
   QVBoxLayout *vlay = new QVBoxLayout( group, KDialog::spacingHint() );
-  vlay->addSpacing( fontMetrics().lineSpacing() );  
+  vlay->addSpacing( fontMetrics().lineSpacing() );
 
   storePass = new QCheckBox( i18n("Keep passphrase in memory"), group );
   encToSelf = new QCheckBox( i18n("Always encrypt to self"), group );
   vlay->addWidget( storePass );
   vlay->addWidget( encToSelf );
+
+  // Group for selecting the program for encryption/decryption
+  radioGroup = new QButtonGroup( i18n("Encryption tool"), this );
+  topLayout->addWidget( radioGroup );
+  QVBoxLayout *vrlay = new QVBoxLayout( radioGroup, KDialog::spacingHint() );
+  vrlay->addSpacing( fontMetrics().lineSpacing() );
+
+  autoDetect = new QRadioButton(  i18n("Auto-detect"), radioGroup );
+  radioGroup->insert( autoDetect );
+  vrlay->addWidget( autoDetect );
+
+  useGPG = new QRadioButton( i18n("GPG - Gnu Privacy Guard"), radioGroup );
+  radioGroup->insert( useGPG );
+  vrlay->addWidget( useGPG );
+
+  usePGP2x = new QRadioButton( i18n("PGP Version 2.x"), radioGroup );
+  radioGroup->insert( usePGP2x );
+  vrlay->addWidget( usePGP2x );
+
+  usePGP5x = new QRadioButton( i18n("PGP Version 5.x"), radioGroup );
+  radioGroup->insert( usePGP5x );
+  vrlay->addWidget( usePGP5x );
+
+  usePGP6x = new QRadioButton( i18n("PGP Version 6.x"), radioGroup );
+  radioGroup->insert( usePGP6x );
+  vrlay->addWidget( usePGP6x );
 
   setValues();
 }
@@ -948,6 +1038,25 @@ KpgpConfig::setValues()
   pgpUserEdit->setText( pgp->user() );
   storePass->setChecked( pgp->storePassPhrase() );
   encToSelf->setChecked( pgp->encryptToSelf() );
+
+  switch (pgp->pgpType)
+  {
+    case Kpgp::tGPG:
+      useGPG->setChecked(1);
+      break;
+    case Kpgp::tPGP2:
+      usePGP2x->setChecked(1);
+      break;
+    case Kpgp::tPGP5:
+      usePGP5x->setChecked(1);
+      break;
+    case Kpgp::tPGP6:
+      usePGP6x->setChecked(1);
+      break;
+    case Kpgp::tAuto:
+    default:
+      autoDetect->setChecked(1);
+  }
 }
 
 void
@@ -956,6 +1065,17 @@ KpgpConfig::applySettings()
   pgp->setUser(pgpUserEdit->text());
   pgp->setStorePassPhrase(storePass->isChecked());
   pgp->setEncryptToSelf(encToSelf->isChecked());
+
+  if (autoDetect->isChecked())
+    pgp->pgpType = Kpgp::tAuto;
+  else if (useGPG->isChecked())
+    pgp->pgpType = Kpgp::tGPG;
+  else if (usePGP2x->isChecked())
+    pgp->pgpType = Kpgp::tPGP2;
+  else if (usePGP5x->isChecked())
+    pgp->pgpType = Kpgp::tPGP5;
+  else if (usePGP6x->isChecked())
+    pgp->pgpType = Kpgp::tPGP6;
 
   pgp->writeConfig(true);
 }
@@ -969,7 +1089,7 @@ KpgpSelDlg::KpgpSelDlg( const QStrList &aKeyList, const QString &recipent,
 {
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
-  
+
   QLabel *label = new QLabel( page );
   label->setText(i18n("Select public key for recipient \"%1\"").arg(recipent));
   topLayout->addWidget( label );
