@@ -60,7 +60,15 @@ void ListJob::execute()
 {
   if ( mAccount->makeConnection() == ImapAccountBase::Error )
   {
+    kdWarning(5006) << "ListJob - got no connection" << endl;
     delete this;
+    return;
+  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
+  {
+    // We'll wait for the connectionResult signal from the account.
+    kdDebug(5006) << "ListJob - waiting for connection" << endl;
+    connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+        this, SLOT( slotConnectionResult(int, const QString&) ) );
     return;
   }
   // this is needed until we have a common base class for d(imap)
@@ -98,12 +106,6 @@ void ListJob::execute()
   url.setPath( ( jd.inboxOnly ? QString("/") : mPath )
       + ";TYPE=" + ltype
       + ( mComplete ? ";SECTION=COMPLETE" : QString::null) );
-  // at least here we have to be connected
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
-  {
-    delete this;
-    return;
-  }
   // go
   KIO::SimpleJob *job = KIO::listDir( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
@@ -112,6 +114,15 @@ void ListJob::execute()
       this, SLOT(slotListResult(KIO::Job *)) );
   connect( job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
       this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)) );
+}
+
+void ListJob::slotConnectionResult( int errorCode, const QString& errorMsg )
+{
+  Q_UNUSED( errorMsg );
+  if ( !errorCode )
+    execute();
+  else
+    delete this;
 }
 
 void ListJob::slotListResult( KIO::Job* job )

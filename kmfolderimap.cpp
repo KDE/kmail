@@ -545,6 +545,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
   if ( this == mAccount->rootFolder() )
   {
     mAccount->setHasInbox( false );
+    // recursive
     setSubfolderState( imapNoInformation );
   }
   mSubfolderState = imapInProgress;
@@ -1525,6 +1526,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotProcessNewMail( int errorCode, const QString &errorMsg )
 {
+  Q_UNUSED( errorMsg );
   disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
       this, SLOT( slotProcessNewMail(int, const QString&) ) );
   if ( !errorCode )

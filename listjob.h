@@ -88,6 +88,11 @@ protected slots:
    */
   void slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds );
 
+  /**
+   * Called from the account when a connection was established
+   */
+  void slotConnectionResult( int errorCode, const QString& errorMsg );
+
 signals:
   /**
    * Emitted when new folders have been received
