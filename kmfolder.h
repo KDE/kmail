@@ -167,6 +167,9 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
+  /* sync buffers to disk */
+  virtual void sync();
+
   /** Test if folder is opened. */
   bool isOpened() const { return (mOpenCount>0); }
 
@@ -338,7 +341,7 @@ protected:
   virtual KMMessage* readMsg(int idx);
 
   /** Read index file and fill the message-info list mMsgList. */
-  virtual void readIndex();
+  virtual bool readIndex();
 
   /** Read index header. Called from within readIndex(). */
     virtual bool readIndexHeader(int *gv=NULL);

@@ -229,7 +229,8 @@ int KMFolder::open()
     if (!mIndexStream)
       rc = createIndexFromContents();
     else
-      readIndex();
+      if (!readIndex())
+	rc = createIndexFromContents();
   }
   else
   {
@@ -331,6 +332,18 @@ void KMFolder::close(bool aForced)
   mMsgList.reset(INIT_MSGS);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMFolder::sync()
+{
+  if (mOpenCount > 0)
+    if (!mStream || !fsync(fileno(mStream)) ||
+	!mIndexStream || !fsync(fileno(mIndexStream))) {
+	kdDebug(5006) << "Error: Could not sync folder" << endl;
+	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
+	exit(1);
+    }
+}
 
 //-----------------------------------------------------------------------------
 int KMFolder::lock()
@@ -839,7 +852,7 @@ bool KMFolder::readIndexHeader(int *gv)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::readIndex()
+bool KMFolder::readIndex()
 {
   int len, offs;
   KMMsgInfo* mi;
@@ -848,7 +861,7 @@ void KMFolder::readIndex()
 
   mMsgList.clear();
   int version;
-  if (!readIndexHeader(&version)) return;
+  if (!readIndexHeader(&version)) return false;
 
   mUnreadMsgs = 0;
   mDirty = FALSE;
@@ -869,7 +882,12 @@ void KMFolder::readIndex()
       QCString line(MAX_LINE);
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
-
+      if (*line.data() == '\0') {
+	  fclose(mIndexStream);
+	  mIndexStream = NULL;
+	  mMsgList.clear();
+	  return false;
+      }
       mi = new KMMsgInfo(this);
       mi->compat_fromOldIndexString(line, mConvertToUtf8);
     }	
@@ -904,6 +922,7 @@ void KMFolder::readIndex()
     mDirty = TRUE;
     writeIndex();
   }
+  return true;
 }
 
 
