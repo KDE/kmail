@@ -274,7 +274,7 @@ void KMMainWin::readConfig(void)
         (*mPanner2Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
         break;
     }
-    
+
     // workaround to support the old buggy way of saving the dimensions of the panes
     if ((*mPanner1Sep)[0] == 0) {
       defaultSize = QSize(300,130);
@@ -311,7 +311,7 @@ void KMMainWin::readConfig(void)
   if (mStartupDone)
   {
 
-    if (oldWindowLayout != mWindowLayout)
+    if (oldWindowLayout != mWindowLayout || oldShowMIME != mShowMIME )
       activatePanners();
 
     //    kernel->kbp()->busy(); //Crashes KMail
@@ -413,7 +413,7 @@ void KMMainWin::createWidgets(void)
   KConfigGroupSaver saver(config, "Geometry");
 
   // Create the splitters according to the layout settings
-  QWidget *headerParent = 0, *folderParent = 0, 
+  QWidget *headerParent = 0, *folderParent = 0,
             *mimeParent = 0, *messageParent = 0;
   switch( mWindowLayout ) {
   case 0:
@@ -467,7 +467,7 @@ void KMMainWin::createWidgets(void)
   if( mPanner1 ) mPanner1->dumpObjectTree();
   if( mPanner2 ) mPanner2->dumpObjectTree();
   if( mPanner3 ) mPanner3->dumpObjectTree();
-  
+
 
   // BUG -sanders these accelerators stop working after switching
   // between long/short folder layout
@@ -663,7 +663,7 @@ void KMMainWin::activatePanners(void)
         mMimePartTree->show();
     else
         mMimePartTree->hide();
-    
+
     setCentralWidget( mPanner1 );
 }
 

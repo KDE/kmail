@@ -2839,7 +2839,7 @@ void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
 void KMMessage::setEncryptionState( const KMMsgEncryptionState aStatus,
                                     int idx )
 {
-    if( mEncryptionState = aStatus )
+    if( mEncryptionState == aStatus )
         return;
     KMMsgBase::setEncryptionState( aStatus, idx );
     mEncryptionState = aStatus;
@@ -2851,7 +2851,7 @@ void KMMessage::setEncryptionState( const KMMsgEncryptionState aStatus,
 void KMMessage::setSignatureState( const KMMsgSignatureState aStatus,
                                    int idx )
 {
-    if( mSignatureState = aStatus )
+    if( mSignatureState == aStatus )
         return;
     KMMsgBase::setSignatureState( aStatus, idx );
     mSignatureState = aStatus;
