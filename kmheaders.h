@@ -39,8 +39,11 @@ public:
   virtual void forwardMsg(int msgId=-1);
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
-  virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
   virtual void saveMsg(int msgId=-1);
+
+  /** If destination==NULL the messages are deleted, otherwise
+    they are moved to this folder. */
+  virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
 
   /** Returns list of selected messages or a list with the message with
     the given Id if msgId >= 0. Do not delete the returned list. */

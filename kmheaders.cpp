@@ -187,10 +187,6 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-  KMMessage* msg;
-  KMMessageList* msgList;
-  int cur = currentItem();
-
   if (mFolder != trashFolder)
   {
     // move messages into trash folder
@@ -199,18 +195,7 @@ void KMHeaders::deleteMsg (int msgId)
   else
   {
     // We are in the trash folder -> really delete messages
-    kbp->busy();
-    setAutoUpdate(FALSE);
-    msgList = selectedMsgs();
-    for (msg=msgList->first(); msg; msg=msgList->next())
-    {
-      mFolder->removeMsg(msg);
-      delete msg;
-    }
-    setAutoUpdate(TRUE);
-    updateMessageList();
-    setCurrentMsg(cur);
-    kbp->idle();
+    moveMsgToFolder(NULL, msgId);
   }
 }
 
@@ -292,22 +277,33 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMessage* msg;
   int top, rc, cur = currentItem();
-
-  assert(destFolder != NULL);
+  bool doUpd;
 
   kbp->busy();
-  setAutoUpdate(FALSE);
   top = topItem();
 
   destFolder->open();
   msgList = selectedMsgs(msgId);
+  doUpd = (msgList->count() > 1);
+  if (doUpd) setAutoUpdate(FALSE);
   for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
-    rc = destFolder->moveMsg(msg);
+  {
+    if (destFolder) rc = destFolder->moveMsg(msg);
+    else
+    {
+      if (!doUpd) removeItem(cur);
+      mFolder->removeMsg(msg);
+      delete msg;
+    }
+  }
 
-  setAutoUpdate(TRUE);
-  updateMessageList();
-  setTopItem(top);
+  if (doUpd)
+  {
+    setAutoUpdate(TRUE);
+    updateMessageList();
+  }
   setCurrentMsg(cur);
+  setTopItem(top);
 
   destFolder->close();
   kbp->idle();
