@@ -370,26 +370,26 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   // row 0: "Name" line edit and label:
   mNameEdit = new QLineEdit( tab );
   glay->addWidget( mNameEdit, 0, 1 );
-  glay->addWidget( new QLabel( mNameEdit, i18n("&Name:"), tab ), 0, 0 );
+  glay->addWidget( new QLabel( mNameEdit, i18n("Nam&e:"), tab ), 0, 0 );
 
   // row 1: "Organization" line edit and label:
   mOrganizationEdit = new QLineEdit( tab );
   glay->addWidget( mOrganizationEdit, 1, 1 );
   glay->addWidget( new QLabel( mOrganizationEdit,
-			       i18n("&Organization:"), tab ), 1, 0 );
+			       i18n("Organi&zation:"), tab ), 1, 0 );
 
   // row 2: "Email Address" line edit and label:
   // (row 3: spacer)
   mEmailEdit = new QLineEdit( tab );
   glay->addWidget( mEmailEdit, 2, 1 );
-  glay->addWidget( new QLabel( mEmailEdit, i18n("&Email Address:"), tab ),
+  glay->addWidget( new QLabel( mEmailEdit, i18n("Email A&ddress:"), tab ),
 		   2, 0 );
 
   //
   // Tab Widget: Advanced
   //
   tab = new QWidget( tabWidget );
-  tabWidget->addTab( tab, i18n("&Advanced") );
+  tabWidget->addTab( tab, i18n("Ad&vanced") );
   glay = new QGridLayout( tab, 6, 3, KDialog::spacingHint() );
   glay->setMargin( KDialog::marginHint() );
   glay->setRowStretch( 5, 1 );
@@ -399,10 +399,10 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mReplyToEdit = new QLineEdit( tab );
   glay->addMultiCellWidget( mReplyToEdit, 0, 0, 1, 2 );
   glay->addWidget( new QLabel( mReplyToEdit,
-			       i18n("&Reply-To Address:"), tab ), 0, 0 );
+			       i18n("Re&ply-To Address:"), tab ), 0, 0 );
 
   // row 1: "PGP KeyID" requester and label:
-  button = new QPushButton( i18n("Change..."), tab );
+  button = new QPushButton( i18n("Chang&e..."), tab );
   button->setAutoDefault( false );
   glay->addWidget( button, 1, 2 );
   glay->addWidget( new QLabel( button, i18n("OpenPGP &Key:"), tab ), 1, 0 );
@@ -420,7 +420,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mFccCombo = new KMFolderComboBox( tab );
   mFccCombo->showOutboxFolder( false );
   glay->addMultiCellWidget( mFccCombo, 2, 2, 1, 2 );
-  glay->addWidget( new QLabel( mFccCombo, i18n("Sen&t-mail Folder:"), tab ),
+  glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &Folder:"), tab ),
 		   2, 0 );
 
   // row 3: "Drafts Folder" combo box and label:
@@ -432,7 +432,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
   // row 4: "Special transport" combobox and label:
   // (row 5: spacer)
-  mTransportCheck = new QCheckBox( i18n("Spe&cial transport:"), tab );
+  mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
   glay->addWidget( mTransportCheck, 4, 0 );
   mTransportCombo = new QComboBox( true, tab );
   mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
@@ -463,7 +463,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 		   << i18n("continuation of \"obtain signature text from\"",
 			   "input field below") );
   QLabel* label = new QLabel( mSignatureSourceCombo,
-			      i18n("&Obtain signature text from"), tab );
+			      i18n("Obtain signature &text from"), tab );
   label->setEnabled( false ); // since !mSignatureEnabled->isChecked()
   hlay->addWidget( label );
   hlay->addWidget( mSignatureSourceCombo, 1 );
@@ -490,12 +490,12 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mSignatureFileRequester = new KURLRequester( page );
   hlay->addWidget( new QLabel( mSignatureFileRequester,
-			       i18n("&Specify file:"), page ) );
+			       i18n("S&pecify file:"), page ) );
   hlay->addWidget( mSignatureFileRequester, 1 );
   mSignatureFileRequester->button()->setAutoDefault( false );
   connect( mSignatureFileRequester, SIGNAL(textChanged(const QString &)),
 	   this, SLOT(slotEnableSignatureEditButton(const QString &)) );
-  mSignatureEditButton = new QPushButton( i18n("Ed&it File"), page );
+  mSignatureEditButton = new QPushButton( i18n("Edit &File"), page );
   connect( mSignatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mSignatureEditButton->setAutoDefault( false );
@@ -509,7 +509,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mSignatureCommandRequester = new KURLRequester( page );
   hlay->addWidget( new QLabel( mSignatureCommandRequester,
-			       i18n("&Specify command:"), page ) );
+			       i18n("S&pecify command:"), page ) );
   hlay->addWidget( mSignatureCommandRequester, 1 );
   mSignatureCommandRequester->button()->setAutoDefault( false );
   vlay->addStretch( 1 ); // spacer
@@ -992,7 +992,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   btn_vlay = new QVBoxLayout( hlay );
 
   // "add..." button: stretch 0
-  button = new QPushButton( i18n("&Add..."), this );
+  button = new QPushButton( i18n("A&dd..."), this );
   button->setAutoDefault( false );
   connect( button, SIGNAL(clicked()),
 	   this, SLOT(slotAddTransport()) );
@@ -1007,7 +1007,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   btn_vlay->addWidget( mModifyTransportButton );
 
   // "remove" button: stretch 0
-  mRemoveTransportButton = new QPushButton( i18n("&Remove"), this );
+  mRemoveTransportButton = new QPushButton( i18n("R&emove"), this );
   mRemoveTransportButton->setAutoDefault( false );
   mRemoveTransportButton->setEnabled( false ); // b/c no item is selected yet
   connect( mRemoveTransportButton, SIGNAL(clicked()),
@@ -1047,12 +1047,12 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   glay->setColStretch( 2, 10 );
 
   // "confirm before send" check box:
-  mConfirmSendCheck = new QCheckBox( i18n("&Confirm before send"), group );
+  mConfirmSendCheck = new QCheckBox( i18n("Confirm &before send"), group );
   glay->addMultiCellWidget( mConfirmSendCheck, 0, 0, 0, 1 );
 
   // "send mail in outbox on check" check box:
   mSendOutboxCheck =
-    new QCheckBox(i18n("&Send mail in Outbox folder on check"), group );
+    new QCheckBox(i18n("Send mail in Outbox &folder on check"), group );
   glay->addMultiCellWidget( mSendOutboxCheck, 1, 1, 0, 1 );
 
   // "default send method" combo:
@@ -1072,9 +1072,9 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 
   // labels:
   glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
-			       i18n("&Default send method:"), group ), 2, 0 );
+			       i18n("Defa&ult send method:"), group ), 2, 0 );
   glay->addWidget( new QLabel( mMessagePropertyCombo, /*buddy*/
-			       i18n("Message &Property:"), group ), 3, 0 );
+			       i18n("Message &property:"), group ), 3, 0 );
 };
 
 
@@ -1368,7 +1368,7 @@ void NetworkPage::SendingTab::apply() {
 
 
 QString NetworkPage::ReceivingTab::title() {
-  return i18n("R&eceiving");
+  return i18n("&Receiving");
 }
 
 QString NetworkPage::ReceivingTab::helpAnchor() {
@@ -1412,7 +1412,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   btn_vlay = new QVBoxLayout( hlay );
 
   // "add..." button: stretch 0
-  button = new QPushButton( i18n("&Add..."), this );
+  button = new QPushButton( i18n("A&dd..."), this );
   button->setAutoDefault( false );
   connect( button, SIGNAL(clicked()),
 	   this, SLOT(slotAddAccount()) );
@@ -1427,7 +1427,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   btn_vlay->addWidget( mModifyAccountButton );
 
   // "remove..." button: stretch 0
-  mRemoveAccountButton = new QPushButton( i18n("&Remove..."), this );
+  mRemoveAccountButton = new QPushButton( i18n("R&emove..."), this );
   mRemoveAccountButton->setAutoDefault( false );
   mRemoveAccountButton->setEnabled( false ); // b/c no item is selected yet
   connect( mRemoveAccountButton, SIGNAL(clicked()),
@@ -1436,7 +1436,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   btn_vlay->addStretch( 1 ); // spacer
 
   // "New Mail Notification" group box: stretch 0
-  group = new QVGroupBox( i18n("&New Mail Notification"), this );
+  group = new QVGroupBox( i18n("New Mail Notification"), this );
   vlay->addWidget( group );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
@@ -1445,7 +1445,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
 
   // "display message box" check box:
   mShowMessageBoxCheck =
-    new QCheckBox(i18n("&Display message box on new mail"), group );
+    new QCheckBox(i18n("Display message box on &new mail"), group );
 
   // "Execute command" check box:
   mMailCommandCheck =
@@ -1455,7 +1455,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   QHBox *hbox = new QHBox( group );
 
   // command line requester (stretch 1) and label (stretch 0):
-  QLabel *label = new QLabel( i18n("Specify command:"), hbox );
+  QLabel *label = new QLabel( i18n("S&pecify command:"), hbox );
   mMailCommandRequester = new KURLRequester( hbox );
   label->setBuddy( mMailCommandRequester );
   mMailCommandRequester->setEnabled( false );
@@ -1877,7 +1877,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * n
     fontDescriptions << i18n( fontNames[i].displayName );
   mFontLocationCombo->insertStringList( fontDescriptions );
 
-  label = new QLabel( mFontLocationCombo, i18n("Apply to:"), this );
+  label = new QLabel( mFontLocationCombo, i18n("Apply &to:"), this );
   label->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   hlay->addWidget( label );
 
@@ -1983,7 +1983,7 @@ void AppearancePage::FontsTab::apply() {
 
 
 QString AppearancePage::ColorsTab::title() {
-  return i18n("&Colors");
+  return i18n("Colo&rs");
 }
 
 QString AppearancePage::ColorsTab::helpAnchor() {
@@ -2035,7 +2035,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
 
   // "recycle colors" check box:
   mRecycleColorCheck =
-    new QCheckBox( i18n("&Recycle colors on deep quoting"), this );
+    new QCheckBox( i18n("Recycle colors on deep &quoting"), this );
   mRecycleColorCheck->setEnabled( false );
   vlay->addWidget( mRecycleColorCheck );
 
@@ -2116,11 +2116,11 @@ QString AppearancePage::LayoutTab::helpAnchor() {
 const AppearancePage::LayoutTab::dateDisplayConfigType
 AppearancePage::LayoutTab::dateDisplayConfig[] = {
   { "ctime", i18n( "Date format. %1: example date string",
-		   "&Standard format (%1)" ), CTime },
+		   "Sta&ndard format (%1)" ), CTime },
   { "localized", i18n( "Date format. %1: example date string",
-		       "&Localized format (%1)" ), Localized },
+		       "Locali&zed format (%1)" ), Localized },
   { "fancyDate", i18n( "Date format. %1: example date string",
-		       "&Fancy format (%1)" ), FancyDate },
+		       "Fanc&y format (%1)" ), FancyDate },
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
@@ -2131,7 +2131,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  mLongFolderCheck = new QCheckBox( i18n("&Show long folder list"), this );
+  mLongFolderCheck = new QCheckBox( i18n("Sho&w long folder list"), this );
   vlay->addWidget( mLongFolderCheck );
 
   mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), this );
@@ -2150,13 +2150,13 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
 
   mNestingPolicy->insert(
-    new QRadioButton( i18n("&Always keep threads open"),
+    new QRadioButton( i18n("Always &keep threads open"),
 		      mNestingPolicy ), 0 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Threads default to &open"),
+    new QRadioButton( i18n("Threads default to op&en"),
 		      mNestingPolicy ), 1 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Threads default to &closed"),
+    new QRadioButton( i18n("Threads default to clo&sed"),
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain new or "
@@ -2446,24 +2446,24 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   // some check buttons...
   mAutoAppSignFileCheck =
-    new QCheckBox( i18n("&Automatically append signature"), this );
+    new QCheckBox( i18n("A&utomatically append signature"), this );
   vlay->addWidget( mAutoAppSignFileCheck );
 
-  mSmartQuoteCheck = new QCheckBox( i18n("&Use smart quoting"), this );
+  mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
   vlay->addWidget( mSmartQuoteCheck );
 
   mPgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically &sign messages using PGP"), this );
+    new QCheckBox( i18n("Automatically sig&n messages using PGP"), this );
   vlay->addWidget( mPgpAutoSignatureCheck );
 
   mPgpAutoEncryptCheck =
-    new QCheckBox( i18n("Automatically encrypt messages if possible"), this );
+    new QCheckBox( i18n("Automatically encr&ypt messages if possible"), this );
   vlay->addWidget( mPgpAutoEncryptCheck );
 
   // a checkbutton for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mWordWrapCheck = new QCheckBox( i18n("&Word wrap at column:"), this );
+  mWordWrapCheck = new QCheckBox( i18n("Word &wrap at column:"), this );
   hlay->addWidget( mWordWrapCheck );
   mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 100/*max*/, 1/*step*/,
 				     72/*init*/, 10 /*base*/, this );
@@ -2479,10 +2479,10 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mExternalEditorCheck =
-    new QCheckBox( i18n("&Use external editor instead of composer"), group );
+    new QCheckBox( i18n("Use e&xternal editor instead of composer"), group );
 
   hbox = new QHBox( group );
-  label = new QLabel( i18n("&Specify editor:"), hbox );
+  label = new QLabel( i18n("Specify e&ditor:"), hbox );
   mEditorRequester = new KURLRequester( hbox );
   hbox->setStretchFactor( mEditorRequester, 1 );
   label->setBuddy( mEditorRequester );
@@ -2610,10 +2610,10 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
            this, SLOT(slotLanguageChanged(const QString&)) );
 
   // row 2: "add..." and "remove" push buttons:
-  button = new QPushButton( i18n("&Add..."), this );
+  button = new QPushButton( i18n("A&dd..."), this );
   button->setAutoDefault( false );
   glay->addWidget( button, 2, 1 );
-  mRemoveButton = new QPushButton( i18n("&Remove"), this );
+  mRemoveButton = new QPushButton( i18n("Re&move"), this );
   mRemoveButton->setAutoDefault( false );
   mRemoveButton->setEnabled( false ); // combo doesn't contain anything...
   glay->addWidget( mRemoveButton, 2, 2 );
@@ -2625,13 +2625,13 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   // row 3: "reply to sender" line edit and label:
   mPhraseReplyEdit = new QLineEdit( this );
   glay->addWidget( new QLabel( mPhraseReplyEdit,
-			       i18n("&Reply to sender:"), this ), 3, 0 );
+			       i18n("Repl&y to sender:"), this ), 3, 0 );
   glay->addMultiCellWidget( mPhraseReplyEdit, 3, 3, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
   mPhraseReplyAllEdit = new QLineEdit( this );
   glay->addWidget( new QLabel( mPhraseReplyAllEdit,
-			       i18n("Reply to &all:"), this ), 4, 0 );
+			       i18n("Reply &to all:"), this ), 4, 0 );
   glay->addMultiCellWidget( mPhraseReplyAllEdit, 4, 4, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
@@ -2799,7 +2799,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   // ### OK, let's try to set them side-by-side:
   hlay = new QHBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  group = new QVGroupBox( i18n("Reply subject prefixes"), this );
+  group = new QVGroupBox( i18n("Repl&y subject prefixes"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
@@ -2811,18 +2811,18 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
     static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add|SimpleStringListEditor::Remove );
   mReplyListEditor =
     new SimpleStringListEditor( group, 0, buttonCode,
-				i18n("&Add..."), i18n("&Remove"),
+				i18n("A&dd..."), i18n("Re&move"),
 				QString::null,
 				i18n("Enter new reply prefix:") );
   
   // row 2: "replace [...]" check box:
   mReplaceReplyPrefixCheck =
-     new QCheckBox( i18n("Re&place recognized prefix with Re:"), group );
+     new QCheckBox( i18n("Replace recognized prefi&x with Re:"), group );
 
   hlay->addWidget( group );
 
 
-  group = new QVGroupBox( i18n("Forward subject prefixes"), this );
+  group = new QVGroupBox( i18n("&Forward subject prefixes"), this );
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
@@ -2838,7 +2838,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   // row 3: "replace [...]" check box:
   mReplaceForwardPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefix with &Fwd:"), group );
+     new QCheckBox( i18n("Replace recognized prefi&x with Fwd:"), group );
 
   hlay->addWidget( group );
 }
@@ -2876,7 +2876,7 @@ void ComposerPage::SubjectTab::apply() {
 
 
 QString ComposerPage::CharsetTab::title() {
-  return i18n("&Charset");
+  return i18n("Cha&rset");
 }
 
 QString ComposerPage::CharsetTab::helpAnchor() {
@@ -2900,7 +2900,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
 
   mCharsetListEditor =
     new SimpleStringListEditor( this, 0, SimpleStringListEditor::All,
-				i18n("A&dd..."), i18n("&Remove"),
+				i18n("A&dd..."), i18n("Remo&ve"),
 				i18n("&Modify"), i18n("Enter charset:") );
   vlay->addWidget( mCharsetListEditor, 1 );
 
@@ -2983,7 +2983,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 
   // "create own message id"
   mCreateOwnMessageIdCheck =
-    new QCheckBox( i18n("&Create own Message-Id headers "
+    new QCheckBox( i18n("Create own Message-&ID headers "
 			"(see \"What's This\" (Shift-F1) help!)"), this );
   vlay->addWidget( mCreateOwnMessageIdCheck );
   QWhatsThis::add( mCreateOwnMessageIdCheck,
@@ -3008,7 +3008,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mMessageIdSuffixEdit = new QLineEdit( this );
   label = new QLabel( mMessageIdSuffixEdit,
-		      i18n("&Use this Message-Id suffix:"), this );
+		      i18n("&Use this Message-ID suffix:"), this );
   label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()
   mMessageIdSuffixEdit->setEnabled( false );
   hlay->addWidget( label );
@@ -3037,11 +3037,11 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   glay->addMultiCellWidget( mTagList, 0, 2, 0, 1 );
 
   // "new" and "remove" buttons:
-  button = new QPushButton( i18n("&New"), this );
+  button = new QPushButton( i18n("Ne&w"), this );
   connect( button, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
   button->setAutoDefault( false );
   glay->addWidget( button, 0, 2 );
-  mRemoveHeaderButton = new QPushButton( i18n("&Remove"), this );
+  mRemoveHeaderButton = new QPushButton( i18n("Re&move"), this );
   connect( mRemoveHeaderButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveMimeHeader()) );
   button->setAutoDefault( false );
@@ -3050,7 +3050,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   // "name" and "value" line edits and labels:
   mTagNameEdit = new QLineEdit( this );
   mTagNameEdit->setEnabled( false );
-  mTagNameLabel = new QLabel( mTagNameEdit, i18n("Nam&e:"), this );
+  mTagNameLabel = new QLabel( mTagNameEdit, i18n("&Name:"), this );
   mTagNameLabel->setEnabled( false );
   glay->addWidget( mTagNameLabel, 3, 0 );
   glay->addWidget( mTagNameEdit, 3, 1 );
@@ -3261,8 +3261,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   group = new QVGroupBox( i18n( "HTML Mails" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
-  mHtmlMailCheck = new QCheckBox( i18n("P&refer HTML to plain text"), group );
-  mExternalReferences = new QCheckBox( i18n("Allow mails to &load external "
+  mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
+  mExternalReferences = new QCheckBox( i18n("Allow mails to load e&xternal "
 					    "references from the net" ), group );
   label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in EMail may "
 			   "increase the risk that your system will be "
@@ -3467,7 +3467,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   group = new QVGroupBox( i18n("On program exit, "
 			       "perform the following tasks"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
-  mCompactOnExitCheck = new QCheckBox( i18n("Compact all &folders"), group );
+  mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
   mExpireAtExit = new QCheckBox( i18n("&Expire old messages"), group );
 
