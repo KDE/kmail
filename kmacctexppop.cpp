@@ -664,6 +664,7 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
 				       ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
+  config.sync(); 
 }
 
 void KMAcctExpPop::slotGetNextMsg()
