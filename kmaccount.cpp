@@ -74,6 +74,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
   mInterval = 0;
   mExclude = false;
   mCheckingMail = FALSE;
+  mPrecommandSuccess = TRUE;
   connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
 
@@ -260,59 +261,34 @@ void KMAccount::deinstallTimer()
   }
 }
 
+//-----------------------------------------------------------------------------
 bool KMAccount::runPrecommand(const QString &precommand)
 {
-  KProcess precommandProcess;
-
   // Run the pre command if there is one
   if ( precommand.isEmpty() )
     return true;
 
+  KMPrecommand precommandProcess(precommand, this);
+
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Executing precommand %1").arg(precommand ));
 
-  QStringList args;
-  // Tokenize on space
-  int left = 0;
-  QString parseString = precommand;
-  left = parseString.find(' ', 0, false);
-  while ((left <= (int)parseString.length()) && (left != -1))
-  {
-    args << parseString.left(left);
-    parseString = parseString.right(parseString.length() - (left+1));
-    left = parseString.find(' ', 0, false);
-  }
-  args << parseString;
-
-  for (unsigned int i = 0; i < args.count(); i++)
-    {
-      //kdDebug(5006) << "KMAccount::runPrecommand: arg " << i << " = " << args[i] << endl;
-      precommandProcess << args[i];
-    }
-
-  KMAccountPrivate priv;
-
-  connect(&precommandProcess, SIGNAL(processExited(KProcess *)),
-          &priv, SLOT(precommandExited(KProcess *)));
+  connect(&precommandProcess, SIGNAL(finished(bool)),
+          SLOT(precommandExited(bool)));
 
   kdDebug(5006) << "Running precommand " << precommand << endl;
-  precommandProcess.start( KProcess::NotifyOnExit );
+  if (!precommandProcess.start()) return false;
 
   kapp->enter_loop();
 
-  if (!precommandProcess.normalExit() || precommandProcess.exitStatus() != 0)
-      return false;
-
-  return true;
+  return mPrecommandSuccess;
 }
 
-KMAccountPrivate::KMAccountPrivate( QObject *p ) :
-    QObject( p ) {}
-
-void  KMAccountPrivate::precommandExited(KProcess *p)
+//-----------------------------------------------------------------------------
+void KMAccount::precommandExited(bool success)
 {
-    kdDebug(5006) << "precommand exited " << p->exitStatus() << endl;
-    kapp->exit_loop();
+  mPrecommandSuccess = success;
+  kapp->exit_loop();
 }
 
 //-----------------------------------------------------------------------------

@@ -135,7 +135,7 @@ public:
    *
    * @return True if successful, false otherwise
    */
-  static bool runPrecommand(const QString &precommand);
+  bool runPrecommand(const QString &precommand);
 
   /**
    * Very primitive en/de-cryption so that the password is not
@@ -150,6 +150,7 @@ signals:
 protected slots:
   virtual void mailCheck();
   virtual void sendReceipts();
+  virtual void precommandExited(bool);
 
 protected:
   KMAccount(KMAcctMgr* owner, const QString& accountName);
@@ -184,6 +185,7 @@ protected:
   int mInterval;
   bool mExclude;
   bool mCheckingMail;
+  bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
 
 private:
@@ -200,17 +202,6 @@ public:
   virtual ~KMAcctList() {}
   /** some compilers fail otherwise */
   short _dummy;
-};
-
-class KMAccountPrivate : public QObject
-{
-    Q_OBJECT
-
-public:
-    KMAccountPrivate( QObject *parent = 0);
-
-public slots:
-    void precommandExited(KProcess *);
 };
 
 #endif /*kmaccount_h*/
