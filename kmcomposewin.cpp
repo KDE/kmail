@@ -2874,7 +2874,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     bSign = false;
             }
 
-            if( bSign ) {
+            if( bSign && ( 0 <= mSelectedCryptPlug->libName().find( "smime", 0, false ) ) ) {
                 int rootDaysLeft = mSelectedCryptPlug->rootCertificateDaysLeftToExpiry( signCertFingerprint );
                 if( mSelectedCryptPlug->rootCertificateExpiryNearWarning() &&
                     rootDaysLeft <
@@ -2900,7 +2900,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
             }
 
 
-            if( bSign ) {
+            if( bSign && ( 0 <= mSelectedCryptPlug->libName().find( "smime", 0, false ) ) ) {
                 int caDaysLeft = mSelectedCryptPlug->caCertificateDaysLeftToExpiry( signCertFingerprint );
                 if( mSelectedCryptPlug->caCertificateExpiryNearWarning() &&
                     caDaysLeft <
