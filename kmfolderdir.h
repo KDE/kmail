@@ -17,8 +17,8 @@ class KMFolderDir: public KMFolderNode, public KMFolderNodeList
   Q_OBJECT
 
 public:
-  KMFolderDir( KMFolder * owner, KMFolderDir * parent = 0, 
-               const QString& path = QString::null, 
+  KMFolderDir( KMFolder * owner, KMFolderDir * parent = 0,
+               const QString& path = QString::null,
 	       KMFolderDirType = KMStandardDir );
   virtual ~KMFolderDir();
 
@@ -49,6 +49,9 @@ public:
   /** Returns the folder manager that manages this folder */
   virtual KMFolderMgr* manager() const;
 
+  /** Returns the folder whose children we are holding */
+  KMFolder* owner() const { return mOwner; }
+
   virtual KMFolderDirType type() { return mDirType; }
 
 protected:
@@ -65,7 +68,7 @@ class KMFolderRootDir: public KMFolderDir
 
 public:
   KMFolderRootDir(KMFolderMgr* manager,
-		  const QString& path=QString::null, 
+		  const QString& path=QString::null,
 		  KMFolderDirType dirType = KMStandardDir);
   virtual ~KMFolderRootDir();
   virtual QString path() const;
