@@ -196,7 +196,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( label );
 
   mRecipientList = new KListView( this );
-  mRecipientList->setSelectionMode( QListView::Multi );
+  mRecipientList->setSelectionMode( QListView::Extended );
   mRecipientList->setAllColumnsShowFocus( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
