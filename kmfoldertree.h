@@ -200,6 +200,7 @@ protected:
   //Drag and drop variables
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
+  KMFolderTreeItem *mLastItem;
   QTimer autoopen_timer;
   KMPaintInfo mPaintInfo;
 

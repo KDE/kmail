@@ -826,6 +826,7 @@ void KMAcctImap::killAllJobs()
   mJobList.setAutoDelete(true);
   mJobList.clear();
   mJobList.setAutoDelete(false);
+  displayProgress();
 }
 
 
@@ -939,7 +940,6 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 void KMAcctImap::slotAbortRequested()
 {
   killAllJobs();
-  displayProgress();
 }
 
 //-----------------------------------------------------------------------------

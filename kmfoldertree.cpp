@@ -182,6 +182,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   static bool pixmapsLoaded = FALSE;
   oldSelected = 0;
   oldCurrent = 0;
+  mLastItem = NULL;
 
   initMetaObject();
 
@@ -403,7 +404,11 @@ void KMFolderTree::reload(void)
   writeConfig();
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
-  if (fti && fti->folder && fti->folder->account()) emit folderSelected(0);
+  if (fti && fti->folder && fti->folder->account())
+  {
+    fti->folder->account()->killAllJobs();
+    emit folderSelected(0);
+  }
   QListViewItemIterator it( this );
   while (it.current()) {
     fti = static_cast<KMFolderTreeItem*>(it.current());
@@ -660,8 +665,11 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = 0;
-  if (fti)
-    folder = fti->folder;
+  if (fti) folder = fti->folder;
+
+  if (mLastItem && mLastItem != fti && mLastItem->folder && mLastItem->folder->account())
+    mLastItem->folder->account()->killAllJobs();
+  mLastItem = fti;
 
   clearSelection();
   setCurrentItem( qlvi );
