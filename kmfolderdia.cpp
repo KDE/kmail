@@ -431,7 +431,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
        ( mContentsComboBox ||
          ( mDlg->folder() && ( mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeCalendar
                                || mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeTask ) ) ) ) {
-    mIncidencesForGroup = new QGroupBox( i18n("Relevance of Events and Tasks" ), this );
+    mIncidencesForGroup = new QGroupBox( i18n("Relevance of Events && Tasks" ), this );
     mIncidencesForGroup->setColumnLayout( 0, Qt::Vertical );
     QHBoxLayout *relevanceLayout = new QHBoxLayout( mIncidencesForGroup->layout() );
     relevanceLayout->setSpacing( 6 );

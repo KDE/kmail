@@ -1830,7 +1830,7 @@ static const BoolConfigEntry showColorbarMode = {
 };
 
 static const BoolConfigEntry showSpamStatusMode = {
-  "Reader", "showSpamStatus", I18N_NOOP("Show S&pam status in fancy headers"), true
+  "Reader", "showSpamStatus", I18N_NOOP("Show s&pam status in fancy headers"), true
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )

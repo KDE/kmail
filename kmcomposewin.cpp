@@ -479,7 +479,7 @@ void KMComposeWin::addImageFromClipboard()
     tmpFile = new QFile(mTempDir->name() + attName + ".png" );
 
   if ( !QApplication::clipboard()->image().save( tmpFile->name(), "PNG" ) ) {
-    KMessageBox::error( this, i18n("Unknown error trying to save image"), i18n("Attaching image failed") );
+    KMessageBox::error( this, i18n("Unknown error trying to save image."), i18n("Attaching Image Failed") );
     delete mTempDir;
     mTempDir = 0;
     return;

@@ -1,7 +1,7 @@
 /*
     This file is part of KMail.
 
-    Copyright (c) 2004 Jakob Schröter <js@camaya.net>
+    Copyright (c) 2004 Jakob Schrï¿½er <js@camaya.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -153,7 +153,7 @@ namespace KMail {
     page_vlay->addWidget( mFromFileBtn, 1 );
     connect( mFromFileBtn, SIGNAL(released()),
              this, SLOT(slotSelectFile()) );
-    mFromAddrbkBtn = new QPushButton( i18n("Set from Addressbook"), page );
+    mFromAddrbkBtn = new QPushButton( i18n("Set From Addressbook"), page );
     QWhatsThis::add( mFromAddrbkBtn,
                      i18n( "You can use a scaled-down version of the picture "
                          "you have set in your address book entry." ) );
@@ -245,7 +245,7 @@ namespace KMail {
           mTextEdit->setText( xf.fromImage( photo ) );
         }
         else
-          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No picture") );
+          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No Picture") );
 
       }
       else
@@ -254,11 +254,11 @@ namespace KMail {
         if( !url.isEmpty() )
           setXfaceFromFile( url );
         else
-          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No picture") );
+          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No Picture") );
       }
     }
     else
-      KMessageBox::information( this, i18n("You don't have your own contact defined in the address book."), i18n("No picture") );
+      KMessageBox::information( this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture") );
   }
 
   void XFaceConfigurator::slotUpdateXFace()
