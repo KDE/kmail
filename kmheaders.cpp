@@ -10,6 +10,7 @@
 #include <qptrqueue.h>
 #include <qpainter.h>
 #include <qtextcodec.h>
+#include <qregexp.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -1298,7 +1299,7 @@ void KMHeaders::saveMsg (int msgId)
   if (msgList->count() == 1) subject = msgList->first()->subject();
   while (subject.find(':') != -1)
     subject = subject.mid(subject.find(':') + 1).stripWhiteSpace();
-  subject.replace("/", "_");
+  subject.replace(QRegExp("/"), "_");
   KURL url = KFileDialog::getSaveURL(subject, QString::null);
 
   if( url.isEmpty() )
