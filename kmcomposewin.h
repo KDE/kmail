@@ -229,8 +229,14 @@ private:
   /** Converts message text for sending. */
   QString convertToSend(const QString str);
  
+  /** Converts message text for sending. */
+  void transcodeMessageTo(const QString newCharset);
+ 
   /** Test if string has any 8-bit characters */
   bool is8Bit(const QString str);
+ 
+  /** Set edit widget charset */
+  void setEditCharset();
 #endif  
 
 protected:
@@ -274,6 +280,7 @@ protected:
   QString mDefComposeCharset; 
   QString mComposeCharset; 
   int mQuoteUnknownCharacters;
+  QFont mSavedEditorFont;
 #endif  
 
 private:

@@ -212,6 +212,7 @@ void KMReaderWin::parseMsg(void)
   mViewer->begin(mPicsDir);
   mViewer->write("<HTML><BODY>");
 #ifdef CHARSETS  
+  printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
   mViewer->setCharset(mMsg->charset());
 #endif  
 

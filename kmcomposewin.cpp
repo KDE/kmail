@@ -157,6 +157,11 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 
   windowList->append(this);
 
+#ifdef CHARSETS  
+  // As family may change with charset, we must save original settings
+  mSavedEditorFont=mEditor->font();
+#endif
+
   mMsg = NULL;
   if (aMsg) setMsg(aMsg);
 
@@ -735,15 +740,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
 
   if (mAutoSign && mayAutoSign) slotAppendSignature();
   mEditor->toggleModified(FALSE);
-  
+ 
  #ifdef CHARSETS 
-  // Jacek: We must set proper font for displaing message in known charset
-  QFont fnt=mEditor->font();
-  KCharset kcharset;
-  if (mComposeCharset=="default") kcharset=klocale->charset();
-  else kcharset=mComposeCharset;
-  cout<<"Setting font to: "<<kcharset.name()<<"\n";
-  mEditor->setFont(kcharset.setQFont(fnt));
+  setEditCharset();
 #endif  
 }
 
@@ -1634,22 +1633,17 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
 {
 #ifdef CHARSETS
   mCharset=message;
-  mComposeCharset=composer;
   m7BitAscii=ascii;
+  if (composer!=mComposeCharset && quote)
+     transcodeMessageTo(composer);
+  mComposeCharset=composer;
   mQuoteUnknownCharacters=quote;
   if (def)
   {
     mDefaultCharset=message;
     mDefComposeCharset=composer;
   }  
-  
-  // Jacek: We must set proper font for displaing message in known charset
-  QFont fnt=mEditor->font();
-  KCharset kcharset;
-  if (mComposeCharset=="default") kcharset=klocale->charset();
-  else kcharset=mComposeCharset;
-  cout<<"Setting font to: "<<kcharset.name()<<"\n";
-  mEditor->setFont(kcharset.setQFont(fnt));
+  setEditCharset();  
 #endif
 }
 
@@ -1719,9 +1713,37 @@ QString KMComposeWin::convertToSend(const QString str)
   KCharsetConversionResult result=conv.convert(str);
   return result.copy();			  
 }
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::transcodeMessageTo(const QString charset)
+{
+
+  cout<<"Transcoding message...\n";
+  QString inputStr=mEditor->text();
+  KCharset srcCharset;
+  KCharset destCharset(charset);
+  if (mComposeCharset=="default") srcCharset=klocale->charset();
+  else srcCharset=mComposeCharset;
+  cout<<"srcCharset: "<<srcCharset<<"\n";
+  if (srcCharset==destCharset) return;
+  int flags=mQuoteUnknownCharacters?KCharsetConverter::AMP_SEQUENCES:0;
+  KCharsetConverter conv(srcCharset,destCharset,flags);
+  KCharsetConversionResult result=conv.convert(inputStr);
+  mComposeCharset=charset;
+  mEditor->setText(result.copy());			  
+}
+
+void KMComposeWin::setEditCharset(){
+
+  QFont fnt=mSavedEditorFont;
+  KCharset kcharset;
+  if (mComposeCharset=="default") kcharset=klocale->charset();
+  else if (mComposeCharset!="") kcharset=mComposeCharset;
+  cout<<"Setting font to: "<<kcharset.name()<<"\n";
+  mEditor->setFont(kcharset.setQFont(fnt));
+}
+
 #endif //CHARSETS
-
-
 
 
 //=============================================================================
