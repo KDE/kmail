@@ -637,10 +637,10 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	if ((type == "") || (stricmp(type, "text")==0))
 	{
 	  str = msgPart.bodyDecoded();
+	  str.resize( str.count() + 1 );
+	  str.at( str.count() - 1 ) = '\0';
 	  QCString cstr;
-	  cstr.duplicate( str.data(), str.count() );
-	  cstr += '\0';
-	  
+	  cstr.assign(str);
 	  if (i>0)
 	      mViewer->write("<br><hr><br>");
 
@@ -649,19 +649,19 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
             // We must fo this, or else we will see only 1st inlined html attachment
             // It is IMHO enough to search only for </BODY> and put \0 there.
-	    int i;
+            int i;
             i = cstr.findRev("</body>", -1, false); //case insensitive
             if (i>0)
-              str.truncate(i);
+              cstr.truncate(i);
             else // just in case - search for </html>
             {
               i = cstr.findRev("</html>", -1, false); //case insensitive
-              if (i>0) str.truncate(i);
+              if (i>0) cstr.truncate(i);
             }
             // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-            mViewer->write(str.data());
+            mViewer->write(cstr.data());
 	  }
-          else writeBodyStr(str);
+          else writeBodyStr(cstr);
 	}
         // ---Sven's view smart or inline image attachments in kmail start---
         else if (stricmp(type, "image")==0)
