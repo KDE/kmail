@@ -26,6 +26,11 @@ class KMSearchPattern;
 class KMFolderImap;
 class QTimer;
 
+namespace KMail {
+   class AttachmentStrategy;
+}
+using KMail::AttachmentStrategy;
+
 class KMSearch: public QObject
 {
   Q_OBJECT
@@ -156,7 +161,8 @@ public:
 
 protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
-                                 KMFolder *folder, QString partSpecifier ) const;
+                                 KMFolder *folder, QString partSpecifier, 
+                                 const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob(QPtrList<KMMessage>& msgList, const QString& sets,
                                  FolderJob::JobType jt, KMFolder *folder) const;
   virtual KMMessage* readMsg(int idx);

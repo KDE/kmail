@@ -1340,7 +1340,7 @@ QStringList KMFolderCachedImap::makeSets(QValueList<ulong>& uids, bool sort)
 
 FolderJob*
 KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                 QString ) const
+                                 QString, const AttachmentStrategy* ) const
 {
   QPtrList<KMMessage> msgList;
   msgList.append( msg );

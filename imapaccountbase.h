@@ -43,6 +43,8 @@ namespace KIO {
 
 namespace KMail {
 
+class AttachmentStrategy;
+
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT
   protected:
@@ -191,7 +193,8 @@ namespace KMail {
     /**
      * Handles the result from a BODYSTRUCTURE fetch
      */ 
-    void handleBodyStructure( QDataStream & stream, KMMessage * msg );
+    void handleBodyStructure( QDataStream & stream, KMMessage * msg,
+                              const AttachmentStrategy *as );
 
   public slots:
     /**

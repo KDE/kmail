@@ -522,7 +522,8 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg )
+  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg, 
+                                             const AttachmentStrategy *as )
   {
     mBodyPartList.clear();
     mCurrentMsg = msg;
@@ -531,16 +532,14 @@ namespace KMail {
     if ( mBodyPartList.count() == 1 ) // we directly set the body later
       msg->deleteBodyParts();
 
-    // get the currently active reader window
-    if ( !kmkernel->activeReaderWin() )
+    if ( !as )
     {
-      kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no readerwin!" << endl;
+      kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no attachment strategy!" << endl;
       return;
     }
 
     // download parts according to attachmentstrategy
-    BodyVisitor *visitor = BodyVisitorFactory::getVisitor(
-        kmkernel->activeReaderWin()->attachmentStrategy() );
+    BodyVisitor *visitor = BodyVisitorFactory::getVisitor( as );
     visitor->visit( mBodyPartList );
     QPtrList<KMMessagePart> parts = visitor->partsToLoad();
     QPtrListIterator<KMMessagePart> it( parts );

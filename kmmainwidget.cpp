@@ -1574,7 +1574,8 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
     mMsgView->clear();
     if ( mJob )
       disconnect( mJob, 0, this, 0 );
-    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "STRUCTURE");
+    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, 
+          "STRUCTURE", mMsgView->attachmentStrategy() );
     connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
     mJob->start();

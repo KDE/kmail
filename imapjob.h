@@ -46,6 +46,8 @@ class KMFolderImap;
 
 namespace KMail {
 
+class AttachmentStrategy;
+
 class ImapJob : public FolderJob
 {
   Q_OBJECT
@@ -53,7 +55,7 @@ class ImapJob : public FolderJob
 
 public:
   ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
-           QString partSpecifier = QString::null );
+           QString partSpecifier = QString::null, const AttachmentStrategy *as = 0 );
   ImapJob( QPtrList<KMMessage>& msgList, QString sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
@@ -76,9 +78,8 @@ private:
              QPtrList<KMMessage>& msgList );
   KIO::Job *mJob;
   QByteArray mData;
-  QCString mStrData;
-  KMFolderTreeItem *mFti;
   int mTotal, mDone, mOffset;
+  const AttachmentStrategy *mAttachmentStrategy;
 };
 
 }

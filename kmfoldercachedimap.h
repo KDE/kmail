@@ -36,6 +36,11 @@
 using KMail::FolderJob;
 class KMAcctCachedImap;
 
+namespace KMail {
+   class AttachmentStrategy;
+}
+using KMail::AttachmentStrategy;
+
 class DImapTroubleShootDialog : public KDialogBase
 {
   Q_OBJECT
@@ -213,7 +218,7 @@ protected:
 
     /** Reimplemented from KMFolder */
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
-                                  QString partSpecifier ) const;
+                                  QString partSpecifier, const AttachmentStrategy *as ) const;
   virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
 

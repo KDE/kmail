@@ -1505,38 +1505,6 @@ KMainWindow* KMKernel::mainWin()
   return mWin;
 }
 
-KMReaderWin* KMKernel::activeReaderWin()
-{
-  KMainWindow *window = 0;
-  bool startupMode = false;
-  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
-  while ( (window = it.current()) != 0 )
-  {
-    ++it;
-    // this is probably only a temporary solution to get the active reader
-    if ( window->inherits("KMTopLevelWidget") &&
-         window->isA("KMMainWin") &&
-         window->isActiveWindow() )
-    {
-      return static_cast<KMMainWin*>(window)->mainKMWidget()->messageView();
-    }
-    else if ( window->inherits("KMTopLevelWidget") &&
-              window->isA("KMMainWin") )
-    {
-      // this window would be ok but has no focus yet
-      startupMode = true;
-    }
-  }
-  if ( startupMode ) // return the first window which will probably get focus shortly
-  {
-    KMMainWin *win = static_cast<KMMainWin*>(KMainWindow::memberList->first());
-    if ( win && win->inherits("KMTopLevelWidget") && win->isA("KMMainWin") )
-    {
-      return win->mainKMWidget()->messageView();
-    }
-  }
-  return 0;
-}
 
 /**
  * Emptyies al the trash folders

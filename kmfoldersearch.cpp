@@ -655,7 +655,7 @@ bool KMFolderSearch::isReadOnly() const
 }
 
 FolderJob* KMFolderSearch::doCreateJob(KMMessage*, FolderJob::JobType,
-                                     KMFolder*, QString) const
+                                     KMFolder*, QString, const AttachmentStrategy* ) const
 {
     // Should never be called
     assert(0);

@@ -44,15 +44,17 @@ namespace KMail {
 
 //-----------------------------------------------------------------------------
 ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
-    QString partSpecifier )
-  : FolderJob( msg, jt, folder, partSpecifier )
+    QString partSpecifier, const AttachmentStrategy *as )
+  : FolderJob( msg, jt, folder, partSpecifier ),
+    mAttachmentStrategy( as )
 {
 }
 
 //-----------------------------------------------------------------------------
 ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt,
                   KMFolderImap* folder )
-  : FolderJob( msgList, sets, jt, folder )
+  : FolderJob( msgList, sets, jt, folder ),
+    mAttachmentStrategy ( 0 )
 {
 }
 
@@ -372,7 +374,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
     if ((*it).data.size() > 0)
     {
       QDataStream stream( (*it).data, IO_ReadOnly );
-      account->handleBodyStructure(stream, msg);
+      account->handleBodyStructure(stream, msg, mAttachmentStrategy);
     }
   }
   if (account->slave()) {
