@@ -24,6 +24,7 @@
 typedef QValueList<Q_UINT32> SerNumList;
 class KMSearchPattern;
 class KMFolderImap;
+class QTimer;
 
 class KMSearch: public QObject
 {
@@ -76,6 +77,7 @@ private:
   SerNumList mSerNums;
   QString mLastFolder;
   int mSearchedCount, mFoundCount;
+  QTimer *mProcessNextBatchTimer;
 };
 
 #define KMFolderSearchInherited KMFolder
@@ -178,6 +180,7 @@ private:
   KMSearch *mSearch;
   bool mInvalid, mUnlinked;
   bool mTempOpened;
+  QTimer *mExecuteSearchTimer;
 };
 #endif /*kmfoldersearch_h*/
 

@@ -6,6 +6,8 @@
 
 #include "kmsearchpattern.h"
 #include "kmmessage.h"
+#include "kmmsgindex.h"
+#include "kmmsgdict.h"
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -56,8 +58,8 @@ const KMSearchRule & KMSearchRule::operator=( const KMSearchRule & other ) {
   return *this;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const QCString & field, 
-                                             Function func, 
+KMSearchRule * KMSearchRule::createInstance( const QCString & field,
+                                             Function func,
                                              const QString & contents )
 {
   KMSearchRule *ret;
@@ -65,13 +67,13 @@ KMSearchRule * KMSearchRule::createInstance( const QCString & field,
     ret = new KMSearchRuleStatus( field, func, contents );
   else if ( field == "<age in days>" || field == "<size>" )
     ret = new KMSearchRuleNumerical( field, func, contents );
-  else 
+  else
     ret = new KMSearchRuleString( field, func, contents );
 
-  return ret; 
+  return ret;
 }
 
-KMSearchRule * KMSearchRule::createInstance( const QCString & field, 
+KMSearchRule * KMSearchRule::createInstance( const QCString & field,
                                      const char *func,
                                      const QString & contents )
 {
@@ -91,7 +93,7 @@ KMSearchRule * KMSearchRule::createInstanceFromConfig( const KConfig * config, i
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const QCString &field2 = config->readEntry( field + cIdx ).latin1();  
+  const QCString &field2 = config->readEntry( field + cIdx ).latin1();
   Function func2 = configValueToFunc( config->readEntry( func + cIdx ).latin1() );
   const QString & contents2 = config->readEntry( contents + cIdx );
 
@@ -121,6 +123,15 @@ void KMSearchRule::writeConfig( KConfig * config, int aIdx ) const {
   config->writeEntry( contents + cIdx, mContents );
 }
 
+bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
+                       const DwBoyerMoore *, int ) const
+{
+  if ( !msg.isComplete() ) {
+    msg.fromDwString( aStr );
+    msg.setComplete( true );
+  }
+  return matches( &msg );
+}
 
 #ifndef NDEBUG
 const QString KMSearchRule::asString() const
@@ -141,12 +152,14 @@ const QString KMSearchRule::asString() const
 //
 //==================================================
 
-KMSearchRuleString::KMSearchRuleString( const QCString & field, 
+KMSearchRuleString::KMSearchRuleString( const QCString & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
-   //TODO handle the unrealistic case of the message starting with mField
-   mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data()); 	
+  if ( field.isEmpty() || field[0] == '<' )
+    mBmHeaderField = 0;
+  else //TODO handle the unrealistic case of the message starting with mField
+    mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data()); 	
 }
 
 KMSearchRuleString::KMSearchRuleString( const KMSearchRuleString & other )
@@ -157,7 +170,7 @@ KMSearchRuleString::KMSearchRuleString( const KMSearchRuleString & other )
     mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
 }
 
-const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleString & other ) 
+const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleString & other )
 {
   if ( this == &other )
     return *this;
@@ -167,25 +180,31 @@ const KMSearchRuleString & KMSearchRuleString::operator=( const KMSearchRuleStri
   setFunction( other.function() );
   setContents( other.contents() );
   delete mBmHeaderField; mBmHeaderField = 0;
-  if ( other.mBmHeaderField ) 
+  if ( other.mBmHeaderField )
     mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
 
   return *this;
 }
 
-KMSearchRuleString::~KMSearchRuleString() 
+KMSearchRuleString::~KMSearchRuleString()
 {
-  delete mBmHeaderField; 
+  delete mBmHeaderField;
   mBmHeaderField = 0;
 }
 
-bool KMSearchRuleString::isEmpty() const 
+bool KMSearchRuleString::isEmpty() const
 {
-  return field().stripWhiteSpace().isEmpty() || contents().isEmpty(); 
+  return field().stripWhiteSpace().isEmpty() || contents().isEmpty();
 }
 
+bool KMSearchRuleString::requiresBody() const
+{
+  if (mBmHeaderField || (field() == "<recipients>" ))
+    return false;
+  return true;
+}
 
-bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg, 
+bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
                        const DwBoyerMoore * aHeaderField, int aHeaderLen ) const
 {
   if ( isEmpty() )
@@ -229,11 +248,7 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
     }
     return res;
   } else {
-    if ( !msg.isComplete() ) {
-      msg.fromDwString( aStr );
-      msg.setComplete( true );
-    }
-    return matches( &msg );
+    return KMSearchRule::matches( aStr, msg, aHeaderField, aHeaderLen );
   }
 }
 
@@ -272,7 +287,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
 }
 
 // helper, does the actual comparing
-bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const 
+bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 {
   switch ( function() ) {
   case KMSearchRule::FuncEquals:
@@ -322,13 +337,13 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 //
 //==================================================
 
-KMSearchRuleNumerical::KMSearchRuleNumerical( const QCString & field, 
+KMSearchRuleNumerical::KMSearchRuleNumerical( const QCString & field,
                                         Function func, const QString & contents )
           : KMSearchRule(field, func, contents)
 {
 }
 
-bool KMSearchRuleNumerical::isEmpty() const 
+bool KMSearchRuleNumerical::isEmpty() const
 {
   bool ok = false;
   contents().toInt( &ok );
@@ -339,26 +354,26 @@ bool KMSearchRuleNumerical::isEmpty() const
 
 bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
 {
-  
+
   QString msgContents;
   int numericalMsgContents = 0;
   int numericalValue = 0;
 
   if ( field() == "<size>" ) {
     numericalMsgContents = int( msg->msgLength() );
-    numericalValue = contents().toInt(); 
+    numericalValue = contents().toInt();
     msgContents.setNum( numericalMsgContents );
   } else if ( field() == "<age in days>" ) {
     QDateTime msgDateTime;
     msgDateTime.setTime_t( msg->date() );
     numericalMsgContents = msgDateTime.daysTo( QDateTime::currentDateTime() );
-    numericalValue = contents().toInt(); 
+    numericalValue = contents().toInt();
     msgContents.setNum( numericalMsgContents );
   }
   return matchesInternal( numericalValue, numericalMsgContents, msgContents );
 }
- 
-bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue, 
+
+bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue,
     unsigned long numericalMsgContents, const QString & msgContents ) const
 {
   switch ( function() ) {
@@ -402,7 +417,7 @@ bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue,
   return false;
 }
 
- 
+
 
 //==================================================
 //
@@ -410,11 +425,11 @@ bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue,
 //
 //==================================================
 
-KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field, 
+KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
                                         Function func, const QString & aContents )
           : KMSearchRule(field, func, aContents)
 {
-  // FIXME do this more elegantly once we have a drop down for selecting stati in 
+  // FIXME do this more elegantly once we have a drop down for selecting stati in
   // the gui.
   if ( ! aContents.compare("new") )
     mStatus = KMMsgStatusNew;
@@ -444,35 +459,40 @@ KMSearchRuleStatus::KMSearchRuleStatus( const QCString & field,
     mStatus = KMMsgStatusTodo;
 }
 
-bool KMSearchRuleStatus::isEmpty() const 
+bool KMSearchRuleStatus::isEmpty() const
 {
   return field().stripWhiteSpace().isEmpty() || contents().isEmpty();
 }
 
+bool KMSearchRuleStatus::matches( const DwString &, KMMessage &,
+				  const DwBoyerMoore *, int ) const
+{
+  assert( 0 );
+}
 
 bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 {
- 
+
   KMMsgStatus msgStatus = msg->status();
 
   switch ( function() ) {
     case FuncContains:
-      if (msgStatus & mStatus) 
+      if (msgStatus & mStatus)
         return true;
       break;
     case FuncContainsNot:
       if (! (msgStatus & mStatus) )
         return true;
       break;
-    // FIXME what about the remaining funcs, how can they make sense for 
+    // FIXME what about the remaining funcs, how can they make sense for
     // stati?
     default:
       break;
   }
 
-  return false; 
+  return false;
 }
-  
+
 // ----------------------------------------------------------------------------
 
 //==================================================
@@ -491,8 +511,12 @@ KMSearchPattern::KMSearchPattern( const KConfig * config )
     init();
 }
 
+KMSearchPattern::~KMSearchPattern()
+{
+}
 
 bool KMSearchPattern::matches( const KMMessage * msg ) const {
+
   if ( isEmpty() )
     return false;
   QPtrListIterator<KMSearchRule> it( *this );
@@ -517,9 +541,54 @@ bool KMSearchPattern::matches( const DwString & aStr ) const
   if ( isEmpty() )
     return false;
   KMMessage msg;
-  msg.fromDwString( aStr );
-  msg.setComplete( true );
-  return matches( &msg );
+  QPtrListIterator<KMSearchRule> it( *this );
+  switch ( mOperator ) {
+  case OpAnd: // all rules must match
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( !(*it)->matches( aStr, msg ) )
+	return false;
+    return true;
+  case OpOr:  // at least one rule must match
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( (*it)->matches( aStr, msg ) )
+	return true;
+    // fall through
+  default:
+    return false;
+  }
+}
+
+bool KMSearchPattern::matches( Q_UINT32 serNum ) const
+{
+  bool res;
+  int idx = -1;
+  KMFolder *folder = 0;
+  kernel->msgDict()->getLocation(serNum, &folder, &idx);
+  if (!folder || (idx == -1) || (idx >= folder->count())) {
+    return false;
+  }
+
+  folder->open();
+  KMMsgBase *msgBase = folder->getMsgBase(idx);
+  if (requiresBody()) {
+    bool unGet = !msgBase->isMessage();
+    KMMessage *msg = folder->getMsg(idx);
+    res = matches( msg );
+    if (unGet)
+      folder->unGetMsg(idx);
+  } else {
+    res = matches( folder->getDwString(idx) );
+  }
+  folder->close();
+  return res;
+}
+
+bool KMSearchPattern::requiresBody() const {
+  QPtrListIterator<KMSearchRule> it( *this );
+    for ( it.toFirst() ; it.current() ; ++it )
+      if ( (*it)->requiresBody() )
+	return true;
+  return false;
 }
 
 void KMSearchPattern::purify() {
@@ -603,7 +672,7 @@ void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
 }
 
 void KMSearchPattern::writeConfig( KConfig * config ) const {
-  config->writeEntry("name", mName );
+  config->writeEntry("name", mName);
   config->writeEntry("operator", (mOperator == KMSearchPattern::OpOr) ? "or" : "and" );
 
   int i = 0;
@@ -644,7 +713,7 @@ const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & othe
 
   clear(); // ###
   for ( QPtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it )
-    append( KMSearchRule::createInstance( **it ) ); // deep copy 
+    append( KMSearchRule::createInstance( **it ) ); // deep copy
 
   return *this;
 }

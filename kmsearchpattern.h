@@ -41,24 +41,24 @@ public:
 		  FuncRegExp, FuncNotRegExp,
 		  FuncIsGreater, FuncIsLessOrEqual,
 		  FuncIsLess, FuncIsGreaterOrEqual };
-  KMSearchRule ( const QCString & field=0, Function=FuncContains, 
+  KMSearchRule ( const QCString & field=0, Function=FuncContains,
                  const QString &contents=QString::null );
   KMSearchRule ( const KMSearchRule &other );
-                  
+
   const KMSearchRule & operator=( const KMSearchRule & other );
 
   /** Create a search rule of a certain type by instantiating the appro-
       priate subclass depending on the @p field. */
-  static KMSearchRule* createInstance( const QCString & field=0, 
+  static KMSearchRule* createInstance( const QCString & field=0,
                                       Function function=FuncContains,
 		                      const QString & contents=QString::null );
-                  
-  static KMSearchRule* createInstance( const QCString & field, 
-                                       const char * function, 
+
+  static KMSearchRule* createInstance( const QCString & field,
+                                       const char * function,
                                        const QString & contents );
 
   static KMSearchRule * createInstance( const KMSearchRule & other );
-  
+
   /** Initialize the object from a given config file. The group must
       be preset. @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
@@ -74,15 +74,23 @@ public:
   */
   virtual bool matches( const KMMessage * msg ) const = 0;
 
+   /** Optimized version tries to match the rule against the given 
+       @ref DwString.
+       @return TRUE if the rule matched, FALSE otherwise.
+   */
+   virtual bool matches( const DwString & str, KMMessage & msg,
+                         const DwBoyerMoore * headerField=0,
+                         int headerLen=-1 ) const;
+
   /** Determine whether the rule is worth considering. It isn't if
       either the field is not set or the contents is empty.
       @ref KFilter should make sure that it's rule list contains
       only non-empty rules, as @ref matches doesn't check this. */
   virtual bool isEmpty() const = 0;
 
-  /** Returns true if the rule only depends on fields stored in
-      a KMFolder index, otherwise returns false. */
-  virtual bool requiresBody() const = 0; 
+  /** Returns true if the rule depends on a complete message,
+      otherwise returns false. */
+  virtual bool requiresBody() const { return true; }
 
 
   /** Save the object into a given config file. The group must be
@@ -152,19 +160,20 @@ public:
 
   virtual ~KMSearchRuleString();
   virtual bool isEmpty() const ;
-  virtual bool requiresBody() const { return true; }
+  virtual bool requiresBody() const;
 
   virtual bool matches( const KMMessage * msg ) const;
+
   /** Optimized version tries to match the rule against the given @ref DwString.
       @return TRUE if the rule matched, FALSE otherwise.
   */
-  virtual bool matches( const DwString & str, KMMessage & msg, 
-                        const DwBoyerMoore * headerField=0, 
+  virtual bool matches( const DwString & str, KMMessage & msg,
+                        const DwBoyerMoore * headerField=0,
                         int headerLen=-1 ) const;
 
   /** Helper for the main matches() method. Does the actual comparing. */
   bool matchesInternal( const QString & msgContents ) const;
- 
+
 private:
   const DwBoyerMoore *mBmHeaderField;
 };
@@ -185,18 +194,16 @@ public:
 
   virtual bool matches( const KMMessage * msg ) const;
 
-  virtual bool requiresBody() const { return false; }
-
   /** Helper for the main matches() method. Does the actual comparing. */
-  bool matchesInternal( unsigned long numericalValue, 
-                        unsigned long numericalMsgContents, 
+  bool matchesInternal( unsigned long numericalValue,
+                        unsigned long numericalMsgContents,
                         const QString & msgContents ) const;
 };
 
 
 /** This class represents a search to be performed against the status of a
  *  messsage. The status is represented by a bitfield.
-    @short This class represents a search pattern rule operating on message 
+    @short This class represents a search pattern rule operating on message
     status.
 */
 
@@ -207,7 +214,10 @@ public:
 		       const QString & contents=QString::null );
   virtual bool isEmpty() const ;
   virtual bool matches( const KMMessage * msg ) const;
-  virtual bool requiresBody() const { return false; }
+  //Not possible to implement this form for status searching
+  virtual bool matches( const DwString &, KMMessage &,
+                        const DwBoyerMoore *,
+			int ) const;
 private:
   KMMsgStatus mStatus;
 };
@@ -253,7 +263,7 @@ public:
   KMSearchPattern( const KConfig * config=0 );
 
   /** Destructor. Deletes all stored rules! */
-  ~KMSearchPattern() {}
+  ~KMSearchPattern();
 
   /** The central function of this class. Tries to match the set of
       rules against a @ref KMMessage. It's virtual to allow derived
@@ -266,6 +276,11 @@ public:
   */
   bool matches( const KMMessage * msg ) const;
   bool matches( const DwString & str ) const;
+  bool matches( Q_UINT32 sernum ) const;
+
+  /** Returns true if the pattern only depends the DwString that backs
+      a message */
+  bool requiresBody() const;
 
   /** Removes all empty rules from the list. You should call this
       method whenever the user had had control of the rules outside of

@@ -61,10 +61,14 @@ KMSearch::KMSearch(QObject * parent, const char * name)
   mSearchPattern = 0;
   mSearchedCount = 0;
   mFoundCount = 0;
+  mProcessNextBatchTimer = new QTimer();
+  connect(mProcessNextBatchTimer, SIGNAL(timeout()),
+	  this, SLOT(slotProcessNextBatch()));
 }
 
 KMSearch::~KMSearch()
 {
+  delete mProcessNextBatchTimer;
   delete mSearchPattern;
 }
 
@@ -202,7 +206,7 @@ void KMSearch::start()
 	}
     }
 
-    QTimer::singleShot(0, this, SLOT(slotProcessNextBatch()));
+    mProcessNextBatchTimer->start(0, true);
 }
 
 void KMSearch::stop()
@@ -260,22 +264,14 @@ void KMSearch::slotProcessNextBatch()
 	    --mRemainingMessages;
 	    ++mSearchedCount;
 
-	    int idx = -1;
-	    KMFolder *folder = 0;
-	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
-	    if (!folder || (idx == -1) || (idx >= folder->count())) {
-		continue;
-	    }
-
-	    //TODO: matches should try header rules first and check 
+	    //TODO: matches should try header rules first and check
             // rule->needsBody() and download imap message if needed
-            KMMessage *msg = folder->getMsg(idx);
-	    if (mSearchPattern && !mSearchPattern->matches(msg))
+ 	    if (mSearchPattern && !mSearchPattern->matches(serNum))
 		continue;
 	    emit found(serNum);
 	    ++mFoundCount;
 	}
-	QTimer::singleShot(0, this, SLOT(slotProcessNextBatch()));
+	mProcessNextBatchTimer->start(0, true);
 	return;
     }
 
@@ -296,7 +292,7 @@ void KMSearch::slotProcessNextBatch()
 		mSerNums.append(serNum);
 	    }
 	}
-	QTimer::singleShot(0, this, SLOT(slotProcessNextBatch()));
+	mProcessNextBatchTimer->start(0, true);
 	return;
     }
     if (mRemainingFolders == 0) {
@@ -331,7 +327,7 @@ void KMSearch::slotFolderComplete(KMFolderImap *folder, bool success)
       //else
       //  get all the bodies of messages in the folder, need kroupware body caching
       if (mIdle)
-	  QTimer::singleShot(0, this, SLOT(slotProcessNextBatch()));
+	  mProcessNextBatchTimer->start(0, true);
   } else {
       stop();
   }
@@ -379,10 +375,15 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
 	    this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
 	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
+
+  mExecuteSearchTimer = new QTimer();
+  connect(mExecuteSearchTimer, SIGNAL(timeout()),
+	  this, SLOT(executeSearch()));
 }
 
 KMFolderSearch::~KMFolderSearch()
 {
+    delete mExecuteSearchTimer;
     delete mSearch;
     mSearch = 0;
     if (mOpenCount > 0)
@@ -762,7 +763,7 @@ int KMFolderSearch::writeIndex()
     umask(old_umask);
 
     if (!tmpIndexStream) {
-	kdDebug(5006) << "Cannot write '" << filename 
+	kdDebug(5006) << "Cannot write '" << filename
 		      << strerror(errno) << " (" << errno << ")" << endl;
 	truncate(QFile::encodeName(filename), 0);
 	return -1;
@@ -978,11 +979,10 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
 	           this, SLOT (examineCompletedFolder(KMFolderImap*, bool)));
 	}
     } else {
-        KMMessage *msg = folder->getMsg(idx);
-        if (search()->searchPattern()->matches(msg))
+        if (search()->searchPattern()->matches(serNum))
             if (mSearch->running()) {
                 mSearch->stop();
-                QTimer::singleShot(0, this, SLOT(executeSearch()));
+		mExecuteSearchTimer->start(0, true);
             } else {
                 addSerNum(serNum);
             }
@@ -997,18 +997,8 @@ void KMFolderSearch::examineCompletedFolder(KMFolderImap *aFolder, bool success)
     Q_UINT32 serNum;
     while (!mUnexaminedMessages.isEmpty()) {
         serNum = mUnexaminedMessages.pop();
-        int idx = -1;
-        KMFolder *folder = 0;
-        kernel->msgDict()->getLocation(serNum, &folder, &idx);
-        assert(folder && (idx != -1));
-        // Could it be another folder?
-        assert(folder == aFolder);
-        // FIXME separate headers and body matching
-        folder->open();
-        KMMessage *msg = folder->getMsg(idx);
-        if (search()->searchPattern()->matches(msg))
+        if (search()->searchPattern()->matches(serNum))
             addSerNum(serNum);
-        folder->close();
     }
 }
 
@@ -1025,7 +1015,7 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
 
     if (mSearch->running()) {
 	mSearch->stop();
-	QTimer::singleShot(0, this, SLOT(executeSearch()));
+	mExecuteSearchTimer->start(0, true);
     } else {
 	removeSerNum(serNum);
     }
@@ -1073,7 +1063,7 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
 	open();
 	mTempOpened = true;
     }
-    QTimer::singleShot(0, this, SLOT(executeSearch()));
+    mExecuteSearchTimer->start(0, true);
 }
 
 void KMFolderSearch::examineRemovedFolder(KMFolder *folder)

@@ -144,15 +144,15 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
 	   mChkSubFolders, SLOT(setEnabled(bool)) );
 
   mLbxMatches = new KListView(searchWidget, "Search in Folders");
-  
-  /* 
+
+  /*
      Default is to sort by date. TODO: Unfortunately this sorts *while*
      inserting, which looks rather strange - the user cannot read
      the results so far as they are constantly re-sorted --dnaber
 
-     Sorting is now disabled when a search is started and reenabled 
-     when it stops. Items are appended to the list. This not only 
-     solves the above problem, but speeds searches with many hits 
+     Sorting is now disabled when a search is started and reenabled
+     when it stops. Items are appended to the list. This not only
+     solves the above problem, but speeds searches with many hits
      up considerably. - till
 
      TODO: subclass KListViewItem and do proper (and performant)
@@ -422,7 +422,7 @@ void KMFldSearch::slotSearch()
 
     mPatternEdit->updateSearchPattern();
     KMSearchPattern *searchPattern = new KMSearchPattern();
-    ( *searchPattern ) = *mSearchPattern; //deep copy
+    *searchPattern = *mSearchPattern; //deep copy
     searchPattern->purify();
     search->setSearchPattern(searchPattern);
     mFolder->setSearch(search);
