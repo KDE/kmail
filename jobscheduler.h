@@ -54,7 +54,10 @@ class ScheduledJob;
 class ScheduledTask {
 public:
   /// Create a scheduled task for a given folder
-  ScheduledTask( KMFolder* folder ) : mCurrentFolder( folder ) {}
+  /// If @p immediate is true, the scheduler will run this task as soon
+  /// as possible (but won't interrupt a currently running job for it)
+  ScheduledTask( KMFolder* folder, bool immediate )
+    : mCurrentFolder( folder ), mImmediate( immediate ) {}
   virtual ~ScheduledTask() {}
 
   /// Run this task, i.e. create a job for it.
@@ -75,8 +78,11 @@ public:
   /// The folder which this task is about, 0 if it was deleted meanwhile.
   KMFolder* folder() const { return mCurrentFolder; }
 
+  bool isImmediate() const { return mImmediate; }
+
 private:
   QGuardedPtr<KMFolder> mCurrentFolder;
+  bool mImmediate;
 };
 
 /**
@@ -98,11 +104,6 @@ public:
   /// The ownership of the task is transferred to the JobScheduler
   void registerTask( ScheduledTask* task );
 
-  /// Run an urgent task immediately. This allows to reuse the task/job code,
-  /// even for user-requested operations that must be run immediately (e.g. "expire all folders")
-  /// The ownership of the task is transferred to the JobScheduler
-  void runTaskNow( ScheduledTask* task );
-
   /// Called by [implementations of] FolderStorage::open()
   /// Interrupt any running job for this folder and re-schedule it for later
   void notifyOpeningFolder( KMFolder* folder );
@@ -117,11 +118,13 @@ private slots:
 private:
   void restartTimer();
   void interruptCurrentTask();
+  void runTaskNow( ScheduledTask* task );
 private:
   typedef QValueList<ScheduledTask *> TaskList;
   TaskList mTaskList; // FIFO of tasks to be run
 
   QTimer mTimer;
+  int mPendingImmediateTasks;
 
   /// Information about the currently running job, if any
   ScheduledTask* mCurrentTask;

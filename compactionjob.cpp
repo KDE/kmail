@@ -275,10 +275,10 @@ ScheduledJob* ScheduledCompactionTask::run()
     return 0;
   switch( folder()->storage()->folderType() ) {
   case KMFolderTypeMbox:
-    return new MboxCompactionJob( folder(), mImmediate );
+    return new MboxCompactionJob( folder(), isImmediate() );
   case KMFolderTypeCachedImap:
   case KMFolderTypeMaildir:
-    return new MaildirCompactionJob( folder(), mImmediate );
+    return new MaildirCompactionJob( folder(), isImmediate() );
   default: // imap, search, unknown...
     return 0;
   }

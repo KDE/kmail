@@ -67,14 +67,12 @@ public:
   /// If immediate is set, the job will execute synchronously. This is used when
   /// the user requests explicitely that the operation should happen immediately.
   ScheduledExpireTask( KMFolder* folder, bool immediate )
-    : ScheduledTask( folder ), mImmediate( immediate ) {}
+    : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledExpireTask() {}
   virtual ScheduledJob* run() {
-    return folder() ? new ExpireJob( folder(), mImmediate ) : 0;
+    return folder() ? new ExpireJob( folder(), isImmediate() ) : 0;
   }
   virtual int taskTypeId() const { return 1; }
-private:
-  bool mImmediate;
 };
 
 } // namespace

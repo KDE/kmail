@@ -102,12 +102,10 @@ public:
   /// If immediate is set, the job will execute synchronously. This is used when
   /// the user requests explicitely that the operation should happen immediately.
   ScheduledCompactionTask( KMFolder* folder, bool immediate )
-    : ScheduledTask( folder ), mImmediate( immediate ) {}
+    : ScheduledTask( folder, immediate ) {}
   virtual ~ScheduledCompactionTask() {}
   virtual ScheduledJob* run();
   virtual int taskTypeId() const { return 2; }
-private:
-  bool mImmediate;
 };
 
 } // namespace
