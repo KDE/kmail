@@ -367,6 +367,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
   // check if we still display an error
+  killAllJobs();
   if ( !errorDialogIsActive )
   {
     errorDialogIsActive = true;
@@ -377,8 +378,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
       errorDialogIsActive = false;
     }
   } else
-    kdDebug() << "suppressing error:" << errorMsg << endl;
-  killAllJobs();
+    kdDebug(5006) << "suppressing error:" << errorMsg << endl;
 }
 
 

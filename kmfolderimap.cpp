@@ -124,11 +124,11 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
+  } else {
+    if (mAccount->slave()) mAccount->mapJobData.remove(it);
+    mAccount->displayProgress();
+    kernel->imapFolderMgr()->remove(this);
   }
-  if (mAccount->slave()) mAccount->mapJobData.remove(it);
-  mAccount->displayProgress();
-  if (!job->error()) kernel->imapFolderMgr()->remove(this);
 }
 
 //-----------------------------------------------------------------------------
@@ -399,7 +399,6 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
   mSubfolderState = imapFinished;
   bool it_inboxOnly = (*it).inboxOnly;
@@ -578,9 +577,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     emit folderComplete(this, FALSE);
-    if (mAccount->slave()) mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
@@ -681,9 +678,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     emit folderComplete(this, FALSE);
-    if (mAccount->slave()) mAccount->mapJobData.remove(it);
     return;
   }
   mCheckFlags = FALSE;
@@ -881,7 +876,6 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else if (lastSet) mContentState = imapFinished;
@@ -935,7 +929,6 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   } else {
     listDirectory();
   }
@@ -1133,11 +1126,7 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
   {
     account->slotSlaveError( account->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED)
-    {
-       account->slaveDied(); // This deletes us.
-       return;
-    }
+    return;
   } else {
     if ((*it).data.size() > 0)
     {
@@ -1192,11 +1181,7 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
   {
     account->slotSlaveError( account->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED)
-    {
-      account->slaveDied(); // This deletes us
-      return;
-    }
+    return;
   } else {
     if ( !(*it).msgList.isEmpty() )
     {
@@ -1226,11 +1211,7 @@ void KMImapJob::slotCopyMessageResult(KIO::Job *job)
   {
     account->slotSlaveError( account->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED)
-    {
-      account->slaveDied(); // This deletes us
-      return;
-    }
+    return;
   } else {
     if ( !(*it).msgList.isEmpty() )
     {
@@ -1498,7 +1479,6 @@ void KMFolderImap::slotSetStatusResult(KIO::Job * job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
   mAccount->displayProgress();
 }
@@ -1535,7 +1515,6 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   } else {
     KIO::UDSEntry uds = static_cast<KIO::StatJob*>(job)->statResult();
     for (KIO::UDSEntry::ConstIterator it = uds.begin(); it != uds.end(); it++)
