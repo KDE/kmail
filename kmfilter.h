@@ -82,8 +82,9 @@ public:
   /** Execute the filter action(s) on the given message. stopIt contains
    * TRUE if the caller may apply other filters and FALSE if he shall
    * stop the filtering of this message. 
-   * Returns TRUE if the caller is still the owner of the message. */
-  virtual bool execActions(KMMessage* msg, bool& stopIt);
+   * Returns 2 if a critical error occurred, 1 if the caller is still 
+   * the owner of the message, 0 if processed successfully */
+  virtual int execActions(KMMessage* msg, bool& stopIt);
 
   /**
    * Write contents to given config file. The config group is preset. 

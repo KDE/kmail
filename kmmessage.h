@@ -268,6 +268,11 @@ public:
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig(void);
 
+  /** Creates rference string for reply to messages.
+   *  reference = original first reference + original last reference + original msg-id
+   */
+  const QString getRefStr();
+
 protected:
   /** Convert wildcards into normal string */
   const QString formatString(const QString) const;

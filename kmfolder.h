@@ -51,14 +51,29 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolder(KMFolderDir* parent=NULL, const QCString& name=0);
+  KMFolder(KMFolderDir* parent=NULL, const QString& name=NULL);
   virtual ~KMFolder();
 
   /** Returns full path to folder file */
-  const QCString location(void) const;
+  const QString location() const;
 
   /** Returns full path to index file */
-  const QCString indexLocation(void) const;
+  const QString indexLocation() const;
+
+  /** Returns full path to sub directory file */
+  const QString subdirLocation() const;
+
+  /** Returns the folder directory associated with this node or
+      0 if no such directory exists */
+  virtual KMFolderDir* child() const
+    { return mChild; }
+
+  /* Create a child folder directory and associates it with this folder */
+  virtual KMFolderDir* createChildFolder();
+
+  /** Set the folder directory associated with this node */
+  virtual void setChild( KMFolderDir* aChild )
+    { mChild = aChild; }
 
   /** Read message at given index. Indexing starts at one to stay
     compatible with imap-lib */
@@ -102,11 +117,12 @@ public:
   virtual int find(const KMMsgBasePtr msg) const { return mMsgList.find(msg); }
 
   /** Number of messages in this folder. */
-  virtual long count(void) const { return mMsgList.count(); }
+  virtual long count() const { return mMsgList.count(); }
 
   /** Number of new or unread messages in this folder. 
     Rather slow (count loop) */
-  virtual long countUnread(void);
+  virtual int countUnread();
+
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
   virtual void msgStatusChanged( const KMMsgStatus oldStatus,
@@ -117,47 +133,47 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  virtual int open(void);
+  virtual int open();
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
   /** Test if folder is opened. */
-  bool isOpened(void) const { return (mOpenCount>0); }
+  bool isOpened() const { return (mOpenCount>0); }
 
   /** Mark all new messages as unread. */
-  virtual void markNewAsUnread(void);
+  virtual void markNewAsUnread();
 
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the 
       c-library fopen call otherwise. */
-  virtual int create(void);
+  virtual int create();
 
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
     process, whether there are others using it or not. */
-  virtual int remove(void);
+  virtual int remove();
 
   /** Delete contents of folder. Forces a close *but* opens the
     folder again afterwards. Returns errno(3) error code or zero on 
     success. */
-  virtual int expunge(void);
+  virtual int expunge();
 
   /** Sync all Index-changes to file. Returns zero on success and an errno
     on failure. */
-  virtual int sync(void);
+  virtual int sync();
 
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */
-  virtual int compact(void);
+  virtual int compact();
 
   /** Physically rename the folder. Returns zero on success and an errno 
     on failure. */
-  virtual int rename(const QCString& newName);
+  virtual int rename(const QString& newName, KMFolderDir *aParent = 0);
 
   /** Returns TRUE if a table of contents file is automatically created. */
-  bool autoCreateIndex(void) const { return mAutoCreateIndex; }
+  bool autoCreateIndex() const { return mAutoCreateIndex; }
 
   /** Allow/disallow automatic creation of a table of contents file.
     Default is TRUE. */
@@ -166,7 +182,7 @@ public:
   /** Returns TRUE if the table of contents is dirty. This happens when
     a message is deleted from the folder. The toc will then be re-created
     when the folder is closed. */
-  bool dirty(void) const { return mDirty; }
+  bool dirty() const { return mDirty; }
 
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
@@ -175,24 +191,24 @@ public:
   virtual void sort(KMMsgList::SortField field=KMMsgList::sfDate, bool descending=FALSE);
 
   /** Is the folder read-only? */
-  virtual bool isReadOnly(void) const { return !mFilesLocked; }
+  virtual bool isReadOnly() const { return !mFilesLocked; }
 
   /** Returns TRUE if the folder is a kmail system folder. These are
     the folders 'outbox', 'sent', 'trash'. The name of these
     folders is nationalized in the folder display and they cannot have
     accounts associated. Deletion is also forbidden. Etc. */
-  bool isSystemFolder(void) const { return mIsSystemFolder; }
+  bool isSystemFolder() const { return mIsSystemFolder; }
   void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
 
   /** Returns the label of the folder for visualization. */
-  virtual const QString label(void) const;
+  virtual const QString label() const;
   void setLabel(const QString lbl) { mLabel = lbl; }
 
   /** Type of the folder. Inherited. */
-  virtual const char* type(void) const;
+  virtual const char* type() const;
 
   /** Returns TRUE if accounts are associated with this folder. */
-  bool hasAccounts(void) const { return (mAcctList != NULL); }
+  bool hasAccounts() const { return (mAcctList != NULL); }
 
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message. 
@@ -201,10 +217,16 @@ public:
 
   /** Name of the field that is used for the "From" column in index
     and listbox. */
-  const char* whoField(void) const;
+  const char* whoField() const;
 
   /** Set contents of whoField. */
   void setWhoField(const QString&);
+
+  /** A cludge to help make sure the count of unread messges is kept in sync */
+  virtual void correctUnreadMsgsCount();
+
+  /* Returns a string that can be used to identify this folder */
+  virtual QString idString();
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -232,44 +254,48 @@ protected:
   virtual KMMessage* readMsg(int idx);
 
   /** Read index file and fill the message-info list mMsgList. */
-  virtual void readIndex(void);
+  virtual void readIndex();
 
   /** Read index header. Called from within readIndex(). */
-  virtual bool readIndexHeader(void);
+  virtual bool readIndexHeader();
 
   /** Create index file from messages file and fill the message-info list 
       mMsgList. Returns 0 on success and an errno value (see fopen) on 
       failure. */
-  virtual int createIndexFromContents(void);
+  virtual int createIndexFromContents();
 
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */
-  virtual int writeIndex(void);
+  virtual int writeIndex();
 
   /** Change the dirty flag. */
   void setDirty(bool f) { mDirty=f; }
 
   /** Lock mail folder files. Called by ::open(). Returns 0 on success and
     an errno error code on failure. */
-  virtual int lock(void);
+  virtual int lock();
 
   /** Unlock mail folder files. Called by ::close().  Returns 0 on success
     and an errno error code on failure. */
-  virtual int unlock(void);
+  virtual int unlock();
 
   /** Tests whether the contents (file) is newer than the index. Returns
     TRUE if the contents has changed (and the index should be recreated),
     and FALSE otherwise. Returns TRUE if there is no index file, and
     TRUE if there is no contents (file). */
-  virtual bool isIndexOutdated(void);
+  virtual bool isIndexOutdated();
 
-  /** Emits signals */
-  virtual void unreadChanged(void);
-
+  /* Write the config file */
+  virtual void writeConfig();
+  
+  /* Read the config file */
+  virtual void readConfig();
+      
   FILE* mStream; // file with the messages
   FILE* mIndexStream; // table of contents file
   KMMsgList mMsgList; // list of index entries or messages
   int mOpenCount, mQuiet;
+  bool mChanged;
   unsigned long mHeaderOffset; // offset of header of index file
   bool mAutoCreateIndex;  // is the automatic creation of a index file allowed ?
   bool mDirty; // if the index is dirty it will be recreated upon close()
@@ -279,6 +305,8 @@ protected:
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
   long unreadMsgs; // number of unread messages, -1 if not yet set
+  bool needsCompact; //sven: true if on destruct folder needs to be compacted.
+  KMFolderDir* mChild;
 };
 
 #endif /*kmfolder_h*/

@@ -7,11 +7,13 @@
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmfolderdir.h"
-#include "kmfoldermgr.h"
+#include "kbusyptr.h"
 
 #include <kapp.h>
+#include <kconfig.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
+#include <qmessagebox.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -48,6 +50,7 @@
 #define MSG_SEPERATOR_REGEX "^From .*..:...*$"
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
+extern KBusyPtr *kbp;
 
 static int _rename(const char* oldname, const char* newname)
 {
@@ -56,7 +59,7 @@ static int _rename(const char* oldname, const char* newname)
 
 
 //-----------------------------------------------------------------------------
-KMFolder :: KMFolder(KMFolderDir* aParent, const QCString& aName) : 
+KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) : 
   KMFolderInherited(aParent, aName), mMsgList(INIT_MSGS)
 {
   //-- in case that the compiler has problems with the static version above:
@@ -68,6 +71,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QCString& aName) :
   mIndexStream    = NULL;
   mOpenCount      = 0;
   mQuiet          = 0;
+  mChanged        = FALSE;
   mHeaderOffset   = 0;
   mAutoCreateIndex= TRUE;
   mFilesLocked    = FALSE;
@@ -75,8 +79,9 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QCString& aName) :
   mType           = "plain";
   mAcctList       = NULL;
   mDirty          = FALSE;
-  // mWhoField       = QString::null; // default constructor value anyway (David)
   unreadMsgs      = -1;
+  needsCompact    = FALSE;
+  mChild          = 0;
 }
 
 
@@ -93,9 +98,9 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
-const QCString KMFolder::location(void) const
+const QString KMFolder::location() const
 {
-  QCString sLocation;
+  QString sLocation;
 
   sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
@@ -106,9 +111,9 @@ const QCString KMFolder::location(void) const
 
 
 //-----------------------------------------------------------------------------
-const QCString KMFolder::indexLocation(void) const
+const QString KMFolder::indexLocation() const
 {
-  QCString sLocation;
+  QString sLocation;
 
   sLocation = path().copy();
   if (!sLocation.isEmpty()) sLocation += '/';
@@ -119,9 +124,53 @@ const QCString KMFolder::indexLocation(void) const
   return sLocation;
 }
 
+//-----------------------------------------------------------------------------
+const QString KMFolder::subdirLocation() const
+{
+  QString sLocation;
+
+  sLocation = path().copy();
+  if (!sLocation.isEmpty()) sLocation += '/';
+  sLocation += '.';
+  sLocation += name();
+  sLocation += ".directory";
+
+  return sLocation;  
+}
 
 //-----------------------------------------------------------------------------
-int KMFolder::open(void)
+KMFolderDir* KMFolder::createChildFolder()
+{
+  QString childName = "." + name() + ".directory";
+  QString childDir = path() + "/" + childName;
+  bool ok = true;
+
+  if (mChild)
+    return mChild;
+
+  if (access(childDir, W_OK) != 0) // Not there or not writable
+  {
+    if (mkdir(childDir, S_IRWXU) != 0 && chmod(childDir, S_IRWXU) != 0)
+      ok=false; //failed create new or chmod existing tmp/
+  }
+
+  if (!ok) {
+    warning(i18n("Failed to create directory '%s': %s"), 
+	    (const char*)childDir, strerror(errno));
+    return 0;
+  }
+
+  KMFolderDir* folderDir = new KMFolderDir(parent(), childName);
+  if (!folderDir)
+    return 0;
+  folderDir->reload();
+  parent()->append(folderDir);
+  mChild = folderDir;
+  return folderDir;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolder::open()
 {
   int rc = 0;
 
@@ -157,21 +206,20 @@ int KMFolder::open(void)
   }
   else
   {
-    debug("No path specified for folder `" + name() +
-	  "' -- Turning autoCreateIndex off");
     mAutoCreateIndex = FALSE;
     rc = createIndexFromContents();
   }
 
   if (!rc) lock();
   mQuiet = 0;
+  mChanged = FALSE;
 
   return rc;
 }
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::create(void)
+int KMFolder::create()
 {
   int rc;
   int old_umask;
@@ -179,8 +227,10 @@ int KMFolder::create(void)
   assert(name() != "");
   assert(mOpenCount == 0);
 
+  if (access(location(), F_OK) == 0) return EEXIST;
+
   old_umask = umask(077);
-  mStream = fopen(location(), "w");
+  mStream = fopen(location(), "w+"); //sven; open RW
   umask(old_umask);
 
   if (!mStream) return errno;
@@ -188,20 +238,19 @@ int KMFolder::create(void)
   if (!path().isEmpty())
   {
     old_umask = umask(077);
-    mIndexStream = fopen(indexLocation(), "w");
+    mIndexStream = fopen(indexLocation(), "w+"); //sven; open RW
     umask(old_umask);
 
     if (!mIndexStream) return errno;
   }
   else
   {
-    debug("Folder `" + name() +
-	  "' has no path specified -- turning autoCreateIndex off");
     mAutoCreateIndex = FALSE;
   }
 
   mOpenCount++;
   mQuiet = 0;
+  mChanged = FALSE;
 
   rc = writeIndex();
   if (!rc) lock();
@@ -215,10 +264,12 @@ void KMFolder::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
+
   if (mAutoCreateIndex) 
   {
     if (mDirty) writeIndex();
     else sync();
+    writeConfig();
   }
 
   unlock();
@@ -237,7 +288,7 @@ void KMFolder::close(bool aForced)
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::lock(void)
+int KMFolder::lock()
 {
   int rc;
 #if !HAVE_FLOCK
@@ -293,7 +344,7 @@ int KMFolder::lock(void)
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::unlock(void)
+int KMFolder::unlock()
 {
   int rc;
 #if !HAVE_FLOCK
@@ -320,7 +371,7 @@ int KMFolder::unlock(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMFolder::isIndexOutdated(void)
+bool KMFolder::isIndexOutdated()
 {
   QFileInfo contInfo(location());
   QFileInfo indInfo(indexLocation());
@@ -333,7 +384,7 @@ bool KMFolder::isIndexOutdated(void)
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::createIndexFromContents(void)
+int KMFolder::createIndexFromContents()
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
@@ -481,12 +532,13 @@ int KMFolder::createIndexFromContents(void)
   }
   else mHeaderOffset = 0;
 
+  correctUnreadMsgsCount();
   return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::writeIndex(void)
+int KMFolder::writeIndex()
 {
   KMMsgBase* msgBase;
   int old_umask;
@@ -521,7 +573,7 @@ void KMFolder::setAutoCreateIndex(bool autoIndex)
 
 
 //-----------------------------------------------------------------------------
-bool KMFolder::readIndexHeader(void)
+bool KMFolder::readIndexHeader()
 {
   int indexVersion;
 
@@ -541,7 +593,7 @@ bool KMFolder::readIndexHeader(void)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::readIndex(void)
+void KMFolder::readIndex()
 {
   char line[MAX_LINE];
   KMMsgInfo* mi;
@@ -567,6 +619,7 @@ void KMFolder::readIndex(void)
     {
       delete mi;  // skip messages that are marked as deleted
       mDirty = TRUE;
+      needsCompact = true;  //We have deleted messages - needs to be compacted
       continue;
     }
 #ifdef OBSOLETE
@@ -582,7 +635,7 @@ void KMFolder::readIndex(void)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::markNewAsUnread(void)
+void KMFolder::markNewAsUnread()
 {
   KMMsgBase* msgBase;
   int i;
@@ -602,14 +655,16 @@ void KMFolder::markNewAsUnread(void)
 //-----------------------------------------------------------------------------
 void KMFolder::quiet(bool beQuiet)
 {
-  if (beQuiet) mQuiet++;
-  else 
-  {
+  if (beQuiet)
+    mQuiet++;
+  else {
     mQuiet--;
     if (mQuiet <= 0)
     {
       mQuiet = 0;
-      emit changed();
+      if (mChanged)
+	emit changed();
+      mChanged = FALSE;
     }
   }
 }
@@ -633,7 +688,10 @@ void KMFolder::removeMsg(int idx)
     }
   mMsgList.take(idx);
   mDirty = TRUE;
-  if (!mQuiet) emit msgRemoved(idx);
+  if (!mQuiet) 
+    emit msgRemoved(idx);
+  else
+    mChanged = TRUE;
 }
 
 
@@ -654,11 +712,15 @@ KMMessage* KMFolder::take(int idx)
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew) {
     --unreadMsgs;
-    unreadChanged();
+    emit numUnreadMsgsChanged( this );
   }
   msg->setParent(NULL);
   mDirty = TRUE;
-  if (!mQuiet) emit msgRemoved(idx);
+  needsCompact=true; // message is taken from here - needs to be compacted
+  if (!mQuiet)
+    emit msgRemoved(idx);
+  else
+    mChanged = TRUE;
 
   return msg;
 }
@@ -712,23 +774,21 @@ KMMessage* KMFolder::readMsg(int idx)
 int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   KMFolder* msgParent;
-  int rc;
+  int rc, idx = 0;
 
   assert(aMsg != NULL);
   msgParent = aMsg->parent();
 
   if (msgParent)
-  {
     msgParent->open();
-    aMsg = msgParent->take(msgParent->find(aMsg));
-    msgParent->close();
-  }
 
   open();
   rc = addMsg(aMsg, aIndex_ret);
   close();
 
-  // debug("KMFolder::moveMsg() rc=%i",rc);
+  if (msgParent)
+    msgParent->close();
+
   return rc;
 }
 
@@ -736,12 +796,13 @@ int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 //-----------------------------------------------------------------------------
 int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
-  long offs, size, len;
+  long offs, size, len, revert;
   bool opened = FALSE;
   QString msgText;
   char endStr[3];
-  int idx, rc;
+  int idx = -1, rc;
   KMFolder* msgParent;
+  bool editing = false;
 
   if (!mStream)
   {
@@ -755,22 +816,27 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   msgParent = aMsg->parent();
   if (msgParent)
   {
-    if (msgParent==this) return 0;
+    if (msgParent==this)
+      {
+	if (name() == "outbox") //special case for Edit message.
+	  {    
+	    // debug ("Editing message in outbox");
+	    editing = true;
+	  }
+	else
+	  return 0;
+      }
+
     idx = msgParent->find(aMsg);
-    if (idx >= 0) msgParent->take(idx);
+    msgParent->getMsg( idx );
   }
 
   aMsg->setStatusFields();
   msgText = aMsg->asString();
   len = msgText.length();
 
-  if (aMsg->status()==KMMsgStatusUnread ||
-      aMsg->status()==KMMsgStatusNew) {
-    ++unreadMsgs;
-    unreadChanged();
-  }
-
   assert(mStream != NULL);
+  clearerr(mStream);
   if (len <= 0)
   {
     debug("Message added to folder `%s' contains no data. Ignoring it.",
@@ -792,12 +858,46 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     else fwrite("\n", 1, 1, mStream);
   }
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
+  revert = ftell(mStream);
+  int error = ferror(mStream);
+  if (error) {
+    if (opened) close();
+    return error;
+  }
+	     
   fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
   if (msgText[(int)len-1]!=QChar('\n')) fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
   size = ftell(mStream) - offs;
+
+  error = ferror(mStream);
+  if (error) {
+    debug( "Error: Could not add message to folder (No space left on device?)" );
+    if (ftell(mStream) > revert) {
+      debug("Undoing changes");
+      truncate( location(), revert );
+    }
+    kbp->idle();
+    QMessageBox::information(0,i18n("KMail error"),
+	  i18n("Unable to add message to folder.\n"
+	       "(No space left on device or insufficient quota?)\n\n"
+	       "Free space and sufficient quota are required to continue safely."));
+    kbp->busy();
+    if (opened) close();
+    return error;
+  }
+
+  if (msgParent) {
+    if (idx >= 0) msgParent->take(idx);
+  }
+
+  if (aMsg->status()==KMMsgStatusUnread ||
+      aMsg->status()==KMMsgStatusNew) {
+    ++unreadMsgs;
+    emit numUnreadMsgsChanged( this );
+  }
 
   // store information about the position in the folder file in the message
   aMsg->setParent(this);
@@ -809,59 +909,109 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   if (mAutoCreateIndex)
   {
     assert(mIndexStream != NULL);
+    clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
+    revert = ftell(mIndexStream);
     fprintf(mIndexStream, "%s\n", (const char*)aMsg->asIndexString()); 
     fflush(mIndexStream);
+    error = ferror(mIndexStream);
+    if (error) {
+      debug( "Error: Could not add message to folder (No space left on device?)" );
+      if (ftell(mIndexStream) > revert) {
+	debug("Undoing changes");
+	truncate( indexLocation(), revert );
+      }
+      kbp->idle();
+      QMessageBox::information(0,i18n("KMail error"),
+        i18n("Unable to add message to folder.\n"
+	     "(No space left on device or insufficient quota?)\n\n"
+	     "Free space and sufficient quota are required to continue safely."));
+      kbp->busy();
+      if (opened) close();
+      return error;
+    }
   }
 
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
-  if (!mQuiet) emit msgAdded(idx);
+  if (!mQuiet) 
+    emit msgAdded(idx);
+  else
+    mChanged = TRUE;
   if (opened) close();
 
-  return 0;
+  return ferror(mStream);
 } 
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::rename(const QCString& aName)
+int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 {
-  QCString oldLoc, oldIndexLoc, newLoc, newIndexLoc, oldName;
+  QString oldLoc, oldIndexLoc, newLoc, newIndexLoc, oldName;
+  QString oldSubDirLoc, newSubDirLoc;
   int rc=0, openCount=mOpenCount;
+  KMFolderDir *oldParent;
 
   assert(!aName.isEmpty());
 
   oldLoc = location().copy();
   oldIndexLoc = indexLocation().copy();
+  oldSubDirLoc = subdirLocation().copy();
 
   close(TRUE);
 
   oldName = name();
-  setName(aName);
+  oldParent = parent();
+  if (aParent)
+    setParent( aParent );    
 
+  setName(aName);
   newLoc = location();
   newIndexLoc = indexLocation();
+  newSubDirLoc = subdirLocation();
 
-  if (_rename(oldLoc, newLoc)) 
-  {
+  if (_rename(oldLoc, newLoc)) {
     setName(oldName);
+    setParent(oldParent);
     rc = errno;
   }
-  else if (!oldIndexLoc.isEmpty()) _rename(oldIndexLoc, newIndexLoc);
+  else if (!oldIndexLoc.isEmpty()) {
+    _rename(oldIndexLoc, newIndexLoc);
+    if (!_rename(oldSubDirLoc, newSubDirLoc )) {
+      KMFolderDir* fdir = parent();
+      KMFolderNode* fN;
 
+      for (fN = fdir->first(); fN != 0; fN = fdir->next())
+	if (fN->name() == "." + oldName + ".directory" ) {
+	  fN->setName( "." + name() + ".directory" );
+	  break;
+	}
+    }
+  }
+  
+  if (aParent) {
+    if (oldParent->findRef( this ) != -1)
+      oldParent->take();
+    aParent->inSort( this );
+    if (mChild) {
+      if (mChild->parent()->findRef( mChild ) != -1)
+	mChild->parent()->take();
+      aParent->inSort( mChild );
+    }
+  }
+  
   if (openCount > 0)
   {
     open();
     mOpenCount = openCount;
   }
 
-  if (!rc) folderMgr->unreadChanged(this);
   return rc;
 }
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::remove(void)
+int KMFolder::remove()
 {
   int rc;
 
@@ -873,12 +1023,13 @@ int KMFolder::remove(void)
   if (rc) return rc;
 
   mMsgList.reset(INIT_MSGS);
+  needsCompact = false; //we are dead - no need to compact us
   return 0;
 }
 	
 
 //-----------------------------------------------------------------------------
-int KMFolder::expunge(void)
+int KMFolder::expunge()
 {
   int openCount = mOpenCount;
 
@@ -893,6 +1044,7 @@ int KMFolder::expunge(void)
   mDirty = FALSE;
 
   mMsgList.reset(INIT_MSGS);
+  needsCompact = false; //we're cleared and truncated no need to compact
 
   if (openCount > 0)
   {
@@ -901,29 +1053,38 @@ int KMFolder::expunge(void)
   }
 
   unreadMsgs = 0;
-  unreadChanged();
-  if (!mQuiet) emit changed();
+  emit numUnreadMsgsChanged( this );
+  if (!mQuiet) 
+    emit changed();
+  else
+    mChanged = TRUE;
   return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::compact(void)
+int KMFolder::compact()
 {
   KMFolder* tempFolder;
   KMMessage* msg;
-  QCString tempName;
+  QString tempName;
   QString msgStr;
   int openCount = mOpenCount;
   int num, numStatus;
+  int rc = 0;
+
+  if (!needsCompact)
+    return 0;
+  debug ("Compacting %s ", name().data());
 
   tempName = "." + name();
   
   tempName += ".compacted";
   unlink(tempName);
-  tempFolder = parent()->createFolder(tempName);
-  if(!tempFolder) {
+  tempFolder = new KMFolder(parent(), tempName);   //sven: we create it
+  if(tempFolder->create()) {
     debug("KMFolder::compact() Creating tempFolder failed!\n");
+    delete tempFolder;                             //sven: and we delete it
     return 0;
   }
 
@@ -942,18 +1103,27 @@ int KMFolder::compact(void)
 
     msg = getMsg(0);
     if(msg)
-      tempFolder->moveMsg(msg);
+      rc = tempFolder->moveMsg(msg);
+    if (rc)
+      break;
   }
   tempName = tempFolder->location();
   tempFolder->close(TRUE);
   close(TRUE);
   mMsgList.clear(TRUE);
 
-  _rename(tempName, location());
-  _rename(tempFolder->indexLocation(), indexLocation());
+  if (!rc) { 
+    _rename(tempName, location());
+    _rename(tempFolder->indexLocation(), indexLocation());
+  }
+  else
+  {
+    debug( "Error occurred while compacting" );
+    debug( "Compaction aborted." );
+  }
 
   // Now really free all memory
-  parent()->remove(tempFolder);
+  delete tempFolder;                //sven: we delete it, not the manager
 
   if (openCount > 0)
   {
@@ -962,13 +1132,17 @@ int KMFolder::compact(void)
   }
   quiet(FALSE);
 
-  if (!mQuiet) emit changed();
+  if (!mQuiet) 
+    emit changed();
+  else
+    mChanged = TRUE;
+  needsCompact = false;             // We are clean now
   return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::sync(void)
+int KMFolder::sync()
 {
   KMMsgBasePtr mb;
   unsigned long offset = mHeaderOffset;
@@ -991,25 +1165,28 @@ int KMFolder::sync(void)
     offset += recSize;
   }
   fflush(mIndexStream);
-  mDirty = FALSE;
 
+  mDirty = FALSE;
   return rc;
 }
 
 
 //-----------------------------------------------------------------------------
+// This method is now obsolete (QListView is used for sorting) -sanders
 void KMFolder::sort(KMMsgList::SortField aField, bool aDesc)
 {
-  debug("KMFolder::sort()");
+  debug( "KMFolder::sort redundant call" );
   mMsgList.sort(aField, aDesc);
-  debug("KMFolder::sort() after");
-  if (!mQuiet) emit changed();
+  if (!mQuiet) 
+    emit changed();
+  else
+    mChanged = TRUE;
   mDirty = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-const char* KMFolder::type(void) const
+const char* KMFolder::type() const
 {
   if (mAcctList) return "In";
   return KMFolderInherited::type();
@@ -1017,49 +1194,37 @@ const char* KMFolder::type(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::label(void) const
+const QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-#if 1
   return name();
-#else
-  if (unreadMsgs > 0)
-  {
-    QCString num;
-    num.setNum(unreadMsgs);
-    return (name() + " (" + num + ")");
-  }
-  else return name();
-#endif
 }
 
 
 //-----------------------------------------------------------------------------
-long KMFolder::countUnread(void)
+int KMFolder::countUnread()
 {
-  int  i;
+  register int  i;
 
   if (unreadMsgs != -1)
     return unreadMsgs;
-  
+
+  readConfig();
+
+  if (unreadMsgs != -1)
+    return unreadMsgs;
+
+  open();
   for (i=0, unreadMsgs=0; i<mMsgList.high(); i++)
   {
     if (mMsgList[i]->status()==KMMsgStatusUnread ||
 	mMsgList[i]->status()==KMMsgStatusNew)
       unreadMsgs++;
   }
+  close();
 
   return unreadMsgs;
 }
-
-
-//-----------------------------------------------------------------------------
-void KMFolder::unreadChanged(void)
-{
-  emit numUnreadMsgsChanged(this);
-  emit folderMgr->unreadChanged(this);
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
@@ -1076,7 +1241,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 
   if (deltaUnread != 0) {
      unreadMsgs += deltaUnread;
-     unreadChanged();
+     emit numUnreadMsgsChanged( this );
   }
 }
 
@@ -1085,12 +1250,15 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
 {
   int idx = mMsgList.find((KMMsgBasePtr)aMsg);
-  if (idx >= 0 && !mQuiet) emit msgHeaderChanged(idx);
+  if (idx >= 0 && !mQuiet) 
+    emit msgHeaderChanged(idx);
+  else
+    mChanged = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-const char* KMFolder::whoField(void) const
+const char* KMFolder::whoField() const
 {
   return (mWhoField.isEmpty() ? "From" : (const char*)mWhoField);
 }
@@ -1102,6 +1270,52 @@ void KMFolder::setWhoField(const QString& aWhoField)
   mWhoField = aWhoField.copy();
 }
 
+//-----------------------------------------------------------------------------
+QString KMFolder::idString()
+{
+  KMFolderNode* folderNode = parent();
+  if (!folderNode)
+    return "";
+  while (folderNode->parent())
+    folderNode = folderNode->parent();
+  int pathLen = path().length() - folderNode->path().length();
+  QString relativePath = path().right( pathLen );
+  if (!relativePath.isEmpty())
+    relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
+  return relativePath + QString(name());
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::readConfig()
+{
+  KConfig* config = app->config();
+  config->setGroup("Folder-" + idString());
+  unreadMsgs = config->readNumEntry("UnreadMsgs", -1);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::writeConfig()
+{
+  KConfig* config = app->config();
+  config->setGroup("Folder-" + idString());
+  config->writeEntry("UnreadMsgs", countUnread());
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::correctUnreadMsgsCount()
+{
+  int i;
+
+  open();
+  for (i=0, unreadMsgs=0; i<mMsgList.high(); i++)
+  {
+    if (mMsgList[i]->status()==KMMsgStatusUnread ||
+	mMsgList[i]->status()==KMMsgStatusNew)
+      unreadMsgs++;
+  }
+  close();
+  emit numUnreadMsgsChanged( this );
+}
 
 //-----------------------------------------------------------------------------
 #include "kmfolder.moc"

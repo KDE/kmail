@@ -72,20 +72,28 @@ void KMFilterMgr::writeConfig(bool withSync)
 
 
 //-----------------------------------------------------------------------------
-bool KMFilterMgr::process(KMMessage* msg)
+int KMFilterMgr::process(KMMessage* msg)
 {
   KMFilter* filter;
   bool stopIt = FALSE;
-  bool stillOwner = TRUE;
+  int status = 0;
+  int result;
 
   for (filter=first(); !stopIt && filter; filter=next())
   {
     if (!filter->matches(msg)) continue;
     //    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
     //	  msg->subject().data());
-    if (!filter->execActions(msg, stopIt)) stillOwner = FALSE;
+    result = filter->execActions(msg, stopIt);
+    if (result == 2) { // Critical error
+      status = 2;
+      break;
+    }
+    else if (result == 1) // Small problem encountered, keep copy of message
+      status = 1;
   }
-  return stillOwner;
+
+  return status;
 }
 
 
@@ -137,6 +145,7 @@ void KMFilterMgr::openDialog(void)
   {*/
     mEditDialog = new KMFilterDlg;
     mEditDialog->show();
+    debug( "openDialog" );
   //}
 }
 

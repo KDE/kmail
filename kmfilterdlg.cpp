@@ -174,15 +174,22 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   grid->setRowStretch(3, 100);
   grid->activate();
 
+  /*
   enableControls();
   resize(buttonBox->sizeHint().width()*1.2, sizeHint().height());
   show();
+  */
 
   reloadFilterList();
 
   mCurFilterIdx = -1;
   if(mFilterList->count() > 0)
     mFilterList->setCurrentItem(0);
+
+  enableControls();
+  resize(buttonBox->sizeHint().width()*1.2, sizeHint().height());
+  show();
+
 }
 
 
@@ -307,6 +314,8 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
 //-----------------------------------------------------------------------------
 void KMFilterDlg::resizeEvent(QResizeEvent *qre)
 {
+  debug( "KMFilterDlg::resizeEvent" );
+  debug( QString( "width %1" ).arg( qre->size().width() ));
   int i, w;
   QWidget* pwidg;
   QSize sz;
@@ -322,6 +331,7 @@ void KMFilterDlg::resizeEvent(QResizeEvent *qre)
       sz.setHeight(pwidg->height());
       pwidg->resize(sz);
       pwidg->move(pos);
+      debug( QString( "posx %1" ).arg( pos.x() ));
     }
 }
 
@@ -390,24 +400,23 @@ QLineEdit* KMFilterDlg::createEdit(const QString aTxt)
 }
 
 //-----------------------------------------------------------------------------
-QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
+QComboBox* KMFilterDlg::createFolderCombo( QStringList *str, 
+					  QList<KMFolder> *folders,
+					  KMFolder *curFolder )
 {
   QComboBox* cbx = new QComboBox(false, this);
-  KMCStringList& folderList = folderMgr->folderList();
-  KMCStringList::Iterator it;
-  QCString name, curName;
-  int i, idx=-1;
+  int i=0,idx=-1;
 
   cbx->setFixedHeight(mCbxHeight);
-  curName = QCString(curFolder);
 
-  for (i=0,it=folderList.begin(); it!=folderList.end(); it++,i++)
-  {
-    name = *it;
-    cbx->insertItem(QString(name));
-    if (name == curName) idx = i;
-  }
+  QStringList::Iterator st;
+  for( st = str->begin(); st != str->end(); ++st)
+    cbx->insertItem(*st);
 
+  KMFolder *folder;
+  for( folder = folders->first(); folder; folder = folders->next(), ++i )
+    if (folder == curFolder)
+      idx = i;
   if (idx>=0) cbx->setCurrentItem(idx);
   return cbx;
 }
@@ -587,7 +596,6 @@ void KMFilterDlg::slotBtnOk()
   accept();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnCancel()
 {
@@ -595,13 +603,11 @@ void KMFilterDlg::slotBtnCancel()
   reject();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
   app->invokeHTMLHelp( QString( app->name() )+"/index-3.html", "ss3.5" );
 }
-
 
 //-----------------------------------------------------------------------------
 int KMFilterDlg::indexOfRuleField(const QString aName) const
@@ -614,7 +620,6 @@ int KMFilterDlg::indexOfRuleField(const QString aName) const
   }
   return i;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::initLists()

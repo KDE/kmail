@@ -14,6 +14,7 @@
 #include <qpushbutton.h>
 #include <qclipboard.h>
 #include <qpalette.h>
+#include <qfont.h>
 #include <keditcl.h>
 
 #include "kmmsgpart.h"
@@ -59,6 +60,9 @@ public:
    * Start the spell checker.
    **/
   void spellcheck();
+
+  // Text with lines breaks inserted after every row
+  QString brokenText() const;
 
 signals:
   void spellcheck_done();
@@ -328,10 +332,10 @@ protected:
   int mWordWrap;
   short mBtnIdSign, mBtnIdEncrypt;
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
-  QString mForeColor, mBackColor, mBodyFont;
+  QFont mBodyFont;
   QList<QLineEdit> mEdtList;
   static QString mPathAttach;
-
+  QPalette mPalette;
 
 #if defined CHARSETS
   int m7BitAscii;

@@ -13,9 +13,10 @@ class QBoxLayout;
 class QListBox;
 class QWidget;
 class QPushButton;
-class KMFaComboBox;
 class QLineEdit;
 class QGridLayout;
+class KMFaComboBox;
+class KMFolderDir;
 
 #define KMFilterDlgInherited KMGFilterDlg
 class KMFilterDlg: public KMGFilterDlg
@@ -37,7 +38,14 @@ public:
 
   /** Methods for filter options, @see KMGFilterDlg in kmfilteraction.h */
   virtual QPushButton* createDetailsButton(void);
-  virtual QComboBox* createFolderCombo(const QString curFolder=QString::null);
+
+  /* Creates a combo box of all folder labels with folders indented
+     with white space according to their position in the folder
+     hierarchy */
+  virtual QComboBox* createFolderCombo( QStringList *str, 
+					QList<KMFolder> *folders,
+					KMFolder *curFolder );
+
   virtual QLineEdit* createEdit(const QString txt=0);
 
 protected slots:

@@ -264,6 +264,7 @@ const QString KMMessage::formatString(const QString aStr) const
   const char* pos;
   char ch, cstr[64];
   QDateTime datetime;
+  time_t tm;
   int i;
 
   if (aStr.isEmpty()) return aStr;
@@ -277,8 +278,16 @@ const QString KMMessage::formatString(const QString aStr) const
       switch (ch)
       {
       case 'D':
+	/* I'm not too sure about this change. Is it not possible
+	   to have a long form of the date used? I don't
+	   like this change to a short XX/XX/YY date format.
+	   At least not for the default. -sanders
 	datetime.setTime_t(date());
-	result += KGlobal::locale()->formatDate(datetime.date());
+        result += KGlobal::locale()->formatDate(datetime.date());
+	*/
+	tm = date();
+	strftime(cstr, 63, "%a, %d %b %Y", localtime(&tm));
+	result += cstr;
 	break;
       case 'F':
 	result += stripEmailAddr(from());
@@ -377,6 +386,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
           else
 	  {
 	    part = QString(msgPart.bodyDecoded());
+	    debug ("part\n" + part );
 	    part = part.replace(reNL,nlIndentStr);
 	  }
 	  result += part + '\n';
@@ -406,11 +416,11 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 KMMessage* KMMessage::createReply(bool replyToAll)
 {
   KMMessage* msg = new KMMessage;
-  QString str, replyStr, loopToStr, replyToStr, toStr;
+  QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
 
   msg->initHeader();
 
-  loopToStr = headerField("X-Loop");
+  mailingListStr = headerField("X-Mailing-List");
   replyToStr = replyTo();
 
   if (replyToAll)
@@ -442,10 +452,21 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       pos1 = ccStr.findRev(", ", i);
       if( pos1 == -1 ) pos1 = 0;
       pos2 = ccStr.find(", ", i);
-      ccStr = ccStr.left(pos1) + toStr.right(toStr.length() - pos2);
+      ccStr = ccStr.left(pos1) + toStr.right(ccStr.length() - pos2 - 1); //Daniel
     }
     ccStr.truncate(ccStr.length()-2);
-    msg->setCc(ccStr);
+
+    // remove leading or trailing "," and spaces - might confuse some MTAs
+    if (!ccStr.isEmpty())
+      {
+        ccStr = ccStr.stripWhiteSpace(); //from start and end
+        if (ccStr[0] == ',')  ccStr[0] = ' ';
+        ccStr = ccStr.simplifyWhiteSpace(); //mAybe it was ",  "
+        if (ccStr[ccStr.length()-1] == ',')
+          ccStr.truncate(ccStr.length()-1);
+	msg->setCc(ccStr);
+      }
+
   }
   else
   {
@@ -453,13 +474,26 @@ KMMessage* KMMessage::createReply(bool replyToAll)
     else if (!from().isEmpty()) toStr = from();
   }
 
-  if (!toStr.isEmpty()) msg->setTo(toStr);
+  // remove leading or trailing "," and spaces - might confuse some MTAs
+  if (!toStr.isEmpty())
+    {
+      toStr = toStr.stripWhiteSpace(); //from start and end
+      if (toStr[0] == ',')  toStr[0] = ' ';
+      toStr = toStr.simplifyWhiteSpace(); //maybe it was ",  "
+      if (toStr[toStr.length()-1] == ',')
+	toStr.truncate(toStr.length()-1);
+      msg->setTo(toStr);
+    }
+  
+  refStr = getRefStr();
+  if (!refStr.isEmpty())
+    msg->setReferences(refStr);
+  //In-Reply-To = original msg-id
+  msg->setHeaderField("In-Reply-To", headerField("Message-Id"));
 
-  if (replyToAll || !loopToStr.isEmpty()) replyStr = sReplyAllStr;
+  if (replyToAll || !mailingListStr.isEmpty()) replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
 
-  debug("msg-id: %s", headerField("Message-Id").data());
-  msg->setReferences(headerField("Message-Id"));
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr));
 
   if (strnicmp(subject(), "Re:", 3)!=0)
@@ -472,6 +506,35 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   setStatus(KMMsgStatusReplied);
 
   return msg;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessage::getRefStr()
+{
+  QString firstRef, lastRef, refStr, retRefStr;
+  int i, j;
+
+  refStr = headerField("References").stripWhiteSpace ();
+
+  if (refStr.isEmpty())
+    return headerField("Message-Id");
+
+  i = refStr.find("<");
+  j = refStr.find(">");
+  firstRef = refStr.mid(i, j-i+1);
+  if (!firstRef.isEmpty())
+    retRefStr = firstRef + " ";
+
+  i = refStr.findRev("<");
+  j = refStr.findRev(">");
+
+  lastRef = refStr.mid(i, j-i+1);
+  if (!lastRef.isEmpty() && lastRef != firstRef)
+    retRefStr += lastRef + " ";
+
+  retRefStr += headerField("Message-Id");
+  return retRefStr;
 }
 
 
@@ -491,6 +554,7 @@ KMMessage* KMMessage::createForward(void)
   str += "From: " + from() + "\n";
   str += "\n";
   str = asQuotedString(str, "", FALSE);
+  str += "\n-------------------------------------------------------\n";
 
   if (numBodyParts() <= 0)
   {
@@ -1012,7 +1076,7 @@ const QString KMMessage::bodyDecoded(void) const
     break;
   }
   // Should probably be returning a QByteArray, if it may contain NUL
-  QCString ba(dwstr.c_str(), dwstr.size());
+  QCString ba(dwstr.c_str(), dwstr.size() + 1);
   return QString((const QByteArray&)ba);
 }
 

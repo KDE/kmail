@@ -7,8 +7,10 @@
 
 #include "kmtopwidget.h"
 #include "qvaluelist.h"
+#include <qmap.h>
 
 class KMFolder;
+class KMFolderDir;
 class KMFolderTree;
 class KMHeaders;
 class KMReaderWin;
@@ -21,6 +23,7 @@ class KMFolder;
 class KMAccount;
 
 #define KMMainWinInherited KMTopLevelWidget
+typedef QMap<int,KMFolder*> KMMenuToFolder;
 
 class KMMainWin : public KMTopLevelWidget
 {
@@ -31,13 +34,13 @@ public:
   virtual ~KMMainWin();
 
   /** Read configuration options before widgets are created. */
-  virtual void readPreConfig();
+  virtual void readPreConfig(void);
 
   /** Read configuration options after widgets are created. */
-  virtual void readConfig();
+  virtual void readConfig(void);
 
   /** Write configuration options. */
-  virtual void writeConfig();
+  virtual void writeConfig(void);
 
   /** Insert a text field to the status bar and return ID of this field. */
   virtual int statusBarAddItem(const char* text);
@@ -46,18 +49,28 @@ public:
   virtual void statusBarChangeItem(int id, const char* text);
 
   /** Easy access to main components of the window. */
-  KMReaderWin* messageView() const { return mMsgView; }
-  KToolBar* toolBar() const     { return mToolBar; }
-  KStatusBar* statusBar() const   { return mStatusBar; }
-  KMFolderTree* folderTree() const  { return mFolderTree; }
+  KMReaderWin* messageView(void) const { return mMsgView; }
+  KToolBar* toolBar(void) const     { return mToolBar; }
+  KStatusBar* statusBar(void) const   { return mStatusBar; }
+  KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
-  /** Returns folder popup menu. */
-  QPopupMenu* folderMenu();
+  // Returns a popupmenu containing a hierarchy of folder names
+  // starting at the given (aFolderDir) folder directory
+  // Each item in the popupmenu is connected to a slot, if
+  // move is TRUE this slot will cause all selected messages to
+  // be moved into the given folder, otherwise messages will be
+  // copied.
+  // Am empty KMMenuToFolder must be passed in.
+  virtual QPopupMenu* folderToPopupMenu(KMFolderDir* aFolderDir, 
+					bool move,
+					QObject *receiver,
+					KMMenuToFolder *aMenuToFolder);
 
 public slots:
   virtual void show();
   virtual void hide();
   void slotCheckMail(); // sven moved here as public
+  void slotAtmMsg(KMMessage *msg); //sven: called from reader
 
   /** Output given message in the statusbar message field. */
   void statusMsg(const QString& text);
@@ -68,6 +81,7 @@ protected:
   void setupStatusBar();
   void createWidgets();
   void activatePanners();
+  void showMsg(KMReaderWin *win, KMMessage *msg);
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -82,11 +96,9 @@ protected slots:
   void slotAddrBook();
   void slotUnimplemented();
   void slotViewChange();
-  void slotCreateFolder();
-  void slotCreateDirectory();
-  //void slotCheckMail(); sven - moved to public slots
+  void slotAddFolder();
   void slotCompose();
-  void slotRename();
+  void slotModifyFolder();
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
@@ -98,6 +110,7 @@ protected slots:
   void slotSaveMsg();
   void slotPrintMsg();
   void slotMoveMsg();
+  void slotMoveMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
   void slotApplyFilters();
@@ -115,10 +128,6 @@ protected slots:
   void slotMsgSelected(KMMessage*);
   void slotMsgActivated(KMMessage*);
   void quit();
-  //void pannerHasChanged();
-  //void resizeEvent(QResizeEvent*);
-  //void initIntegrated();
-  //void initSeparated();
 
   /** Operations on mailto: URLs. */
   void slotMailtoCompose();
@@ -133,6 +142,13 @@ protected slots:
       beginning of URL before copying. */
   void slotUrlCopy();
 
+  // Move selected messages to folder with corresponding to given menuid
+  virtual void moveSelectedToFolder( int menuId );
+  // Copy selected messages to folder with corresponding to given menuid
+  virtual void copySelectedToFolder( int menuId );
+  // Update the "Move to" and "Copy to" popoutmenus in the Messages menu.
+  virtual void updateMessageMenu();
+  
 protected:
   KMenuBar     *mMenuBar;
   KToolBar     *mToolBar;
@@ -150,9 +166,11 @@ protected:
   QString       mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
-  QPopupMenu	*mFolderMenu;
   bool		mLongFolderList;
   bool		mStartupDone;
+  KMMenuToFolder mMenuToFolder;
+  int copyId, moveId;
+  QPopupMenu *messageMenu;
 };
 
 #endif

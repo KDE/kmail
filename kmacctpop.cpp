@@ -178,7 +178,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   bool doFetchMsg;
   bool addedOk;   //Flag if msg was delivered succesfully
 
-  wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
+  if (wid)
+    wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
 
   // is everything specified ?
   app->processEvents();
@@ -200,6 +201,17 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   response = client.SingleLineResponse().c_str();
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
 
+//#warning "*** If client.Last() cannot be found then install the latest kdesupport"
+  /* Kurt deleted this have to ask why
+  if (client.Last() == '+' && !mRetrieveAll)
+  {
+    response = client.SingleLineResponse().c_str();
+    sscanf(response.data(), "%3s %d", dummyStr, &id);
+    id++;
+  }
+  else id = 1;
+  */
+
   // workaround but still is no good. If msgs are too big in size
   // we will get a timeout.
   client.SetReceiveTimeout(40);
@@ -211,11 +223,12 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   {
     client.SetReceiveTimeout(40);
 
-    if(wid->abortRequested()) {
+    if(wid && wid->abortRequested()) {
       client.Quit();
       return gotMsgs;
     }
-    wid->updateProgressBar(id,num);
+    if (wid)
+      wid->updateProgressBar(id,num);
     app->processEvents();
     if (client.List(id) != '+')
       return popError("LIST", client);
@@ -277,7 +290,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     gotMsgs = TRUE;
     id++;
   }
-  wid->transmissionCompleted();
+  if (wid)
+    wid->transmissionCompleted();
   client.Quit();
   return gotMsgs;
 }

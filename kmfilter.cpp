@@ -96,16 +96,24 @@ bool KMFilter::matches(const KMMessage* msg)
 
 
 //-----------------------------------------------------------------------------
-bool KMFilter::execActions(KMMessage* msg, bool& stopIt)
+int KMFilter::execActions(KMMessage* msg, bool& stopIt)
 {
   int  i;
-  bool stillOwner = TRUE;
+  int status = 0;
+  int result;
   stopIt = FALSE;
 
-  for (i=0; !stopIt && mAction[i] && i<=FILTER_MAX_ACTIONS; i++)
-    if (!mAction[i]->process(msg,stopIt)) stillOwner = FALSE;
+  for (i=0; !stopIt && mAction[i] && i<=FILTER_MAX_ACTIONS; i++) {
+    result = mAction[i]->process(msg,stopIt);
+    if (result == 2) { // Critical error
+      status = 2;
+      break;
+    }
+    else if (result == 1) // Small problem, keep of a copy
+      status = 1;
+  }
 
-  return stillOwner;
+  return status;
 }
 
 

@@ -61,7 +61,7 @@ public:
 
   /** Processes all accounts looking for new mail. Returns TRUE if there
    is new mail in at least one account. */
-  virtual bool checkMail(void);
+  virtual bool checkMail(bool interactive = TRUE);
 
   QStrList getAccounts();
   
@@ -69,9 +69,9 @@ public:
 
 
 public slots:
-  virtual bool singleCheckMail(KMAccount *);
+  virtual bool singleCheckMail(KMAccount *, bool interactive = TRUE);
 
- virtual bool intCheckMail(int);
+ virtual bool intCheckMail(int, bool interactive = TRUE);
 
 signals:
   /** emitted if new mail arrived in the account */

@@ -33,6 +33,7 @@
 #include <qcheckbox.h>
 #include <klocale.h>
 #include <kconfig.h>
+#include <kcolorbtn.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -319,17 +320,25 @@ void KMSettings::createTabAppearance(QWidget* parent)
   //----- group: fonts
   grp = new QGroupBox(i18n("Fonts"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 5, 4, 20, 4);
+  grid = new QGridLayout(grp, 7, 4, 20, 4);
+
+  defaultFonts = new QCheckBox( i18n( "Default Fonts" ), grp );
+  grid->addMultiCellWidget(defaultFonts, 2, 2, 0, 2);
 
   bodyFontLabel = new QLabel(grp);
   addLabeledWidget(grp, grid, i18n("Message Body Font:"), bodyFontLabel, 
-		   2, 0, &btn);
+		   3, 0, &btn);
   connect(btn,SIGNAL(clicked()),this,SLOT(slotBodyFontSelect()));
 
   listFontLabel = new QLabel(grp);
   addLabeledWidget(grp, grid, i18n("Message List Font:"), listFontLabel,
-		   3, 0, &btn);
+		   4, 0, &btn);
   connect(btn,SIGNAL(clicked()),this,SLOT(slotListFontSelect()));
+
+  folderListFontLabel = new QLabel(grp);
+  addLabeledWidget(grp, grid, i18n("Folder List Font:"), folderListFontLabel,
+		   5, 0, &btn);
+  connect(btn,SIGNAL(clicked()),this,SLOT(slotFolderlistFontSelect()));
 
   grid->setColStretch(0,1);
   grid->setColStretch(1,10);
@@ -338,6 +347,8 @@ void KMSettings::createTabAppearance(QWidget* parent)
 
   // set values
   config->setGroup("Fonts");
+
+  defaultFonts->setChecked( config->readBoolEntry("defaultFonts",TRUE) );
 
   fnt = kstrToFont(config->readEntry("body-font", "helvetica-medium-r-12"));
   bodyFontLabel->setAutoResize(TRUE);
@@ -348,6 +359,54 @@ void KMSettings::createTabAppearance(QWidget* parent)
   listFontLabel->setAutoResize(TRUE);
   listFontLabel->setText(kfontToStr(fnt));
   listFontLabel->setFont(fnt);
+
+  fnt = kstrToFont(config->readEntry("folder-font", "helvetica-medium-r-12"));
+  folderListFontLabel->setAutoResize(TRUE);
+  folderListFontLabel->setText(kfontToStr(fnt));
+  folderListFontLabel->setFont(fnt);
+
+  //----- group: colors
+  config->setGroup("Reader");
+
+  QColor c1=QColor(app->palette().normal().text());
+  QColor c2=QColor("blue");
+  QColor c3=QColor("red");
+  QColor c4=QColor(app->palette().normal().base());
+
+  QColor cFore = config->readColorEntry("ForegroundColor",&c1);
+  QColor cBack = config->readColorEntry("BackgroundColor",&c4);
+  QColor cNew = config->readColorEntry("LinkColor",&c3);
+  QColor cUnread = config->readColorEntry("FollowedColor",&c2);
+
+  grp = new QGroupBox(i18n("Colors"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 7, 2, 20, 10);
+
+  defaultColors = new QCheckBox( i18n( "Default Colors" ), grp );
+  defaultColors->setChecked( config->readBoolEntry("defaultColors",TRUE) );
+  grid->addMultiCellWidget(defaultColors, 2, 2, 0, 1);
+
+  QLabel *lbl;
+  backgroundColorBtn = new KColorButton( cBack, grp );
+  backgroundColorBtn->setMinimumSize( backgroundColorBtn->sizeHint() );
+  foregroundColorBtn = new KColorButton( cFore, grp );
+  newColorBtn = new KColorButton( cNew, grp );
+  unreadColorBtn = new KColorButton( cUnread, grp );
+
+  lbl = new QLabel( i18n( "Background Color" ), grp );
+  grid->addWidget(lbl, 3, 0);
+  grid->addWidget(backgroundColorBtn, 3, 1);
+  lbl =  new QLabel( i18n( "Normal Text Color" ), grp );
+  grid->addWidget(lbl, 4, 0);
+  grid->addWidget(foregroundColorBtn, 4, 1);
+  lbl =  new QLabel( i18n( "URL Link/New Color" ), grp );
+  grid->addWidget(lbl, 5, 0);
+  grid->addWidget(newColorBtn, 5, 1);
+  lbl = new QLabel( i18n( "Followed Link/Unread Color" ), grp );
+  grid->addWidget(lbl, 6, 0);
+  grid->addWidget(unreadColorBtn, 6, 1);
+  grid->setColStretch( 0, 0 );
+  grid->setColStretch( 1, 1 );
 
   //----- group: layout
   grp = new QGroupBox(i18n("Layout"), tab);
@@ -388,9 +447,12 @@ void KMSettings::createTabComposer(QWidget *parent)
   box->addWidget(grp);
   grid = new QGridLayout(grp, 7, 3, 20, 4);
 
-  lbl = new QLabel(i18n(
-        "The following placeholders are supported in the reply phrases:\n"
-        "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space"), grp);
+  QString t = i18n(
+     "The following placeholders are supported in the reply phrases:\n"
+     "%D=date, %S=subject, %F=sender, %%=percent sign");
+
+  t.append (i18n(", %_=space"));
+  lbl = new QLabel(t, grp);
   lbl->adjustSize();
   lbl->setMinimumSize(100,lbl->size().height());
   grid->setRowStretch(0,10);
@@ -538,7 +600,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   //---------- group: folders
   grp = new QGroupBox(i18n("Folders"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 3, 3, 20, 4);
+  grid = new QGridLayout(grp, 4, 3, 20, 4);
 
   emptyTrashOnExit=new QCheckBox(i18n("empty trash on exit"),grp);
   emptyTrashOnExit->setMinimumSize(emptyTrashOnExit->sizeHint());
@@ -552,11 +614,16 @@ void KMSettings::createTabMisc(QWidget *parent)
   sendReceipts->setMinimumSize(sendReceipts->sizeHint());
   grid->addMultiCellWidget(sendReceipts, 2, 2, 0, 2);
 
+  compactOnExit = new QCheckBox(i18n("Compact all folders on exit"),grp);
+  compactOnExit->setMinimumSize(compactOnExit->sizeHint());
+  grid->addMultiCellWidget(compactOnExit, 3, 3, 0, 2);
+
   grid->activate();
 
   //---------- set values
   config->setGroup("General");
   emptyTrashOnExit->setChecked(config->readBoolEntry("empty-trash-on-exit",false));
+  compactOnExit->setChecked(config->readNumEntry("compact-all-on-exit", 0));
   sendOnCheck->setChecked(config->readBoolEntry("sendOnCheck",false));
   sendReceipts->setChecked(config->readBoolEntry("send-receipts", true));
 
@@ -615,6 +682,20 @@ void KMSettings::slotListFontSelect()
   listFontLabel->setFont(font);
   listFontLabel->setText(kfontToStr(font));
   listFontLabel->adjustSize();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotFolderlistFontSelect()
+{
+  QFont font;
+  KFontDialog dlg(this, i18n("Folder List Font"), TRUE);
+
+  font = kstrToFont(folderListFontLabel->text());
+  dlg.getFont(font);
+  folderListFontLabel->setFont(font);
+  folderListFontLabel->setText(kfontToStr(font));
+  folderListFontLabel->adjustSize();
 }
 
 
@@ -811,8 +892,22 @@ void KMSettings::doApply()
 
   //----- fonts
   config->setGroup("Fonts");
+  config->writeEntry("defaultFonts", defaultFonts->isChecked());
   config->writeEntry("body-font", bodyFontLabel->text());
   config->writeEntry("list-font", listFontLabel->text());
+  config->writeEntry("folder-font", folderListFontLabel->text());
+
+  //----- colors
+  config->setGroup("Reader");
+  config->writeEntry("defaultColors", defaultColors->isChecked());
+  config->writeEntry("BackgroundColor", backgroundColorBtn->color() );
+  config->writeEntry("ForegroundColor", foregroundColorBtn->color() );
+  config->writeEntry("LinkColor", newColorBtn->color() );
+  config->writeEntry("FollowedColor", unreadColorBtn->color() );
+
+  config->writeEntry("body-font", bodyFontLabel->text());
+  config->writeEntry("list-font", listFontLabel->text());
+  config->writeEntry("folder-font", folderListFontLabel->text());
 
   //----- layout
   config->setGroup("Geometry");
@@ -836,6 +931,7 @@ void KMSettings::doApply()
   //----- misc
   config->setGroup("General");
   config->writeEntry("empty-trash-on-exit", emptyTrashOnExit->isChecked());
+  config->writeEntry("compact-all-on-exit", compactOnExit->isChecked());
   config->writeEntry("first-start", false);
   config->writeEntry("sendOnCheck",sendOnCheck->isChecked());
   config->writeEntry("send-receipts", sendReceipts->isChecked());
@@ -971,7 +1067,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
             folder=(KMFolder*)fdir->next())
   {
     if (folder->isDir() || folder->isSystemFolder()) continue;
-    mFolders->insertItem(QString(folder->name()));
+    mFolders->insertItem(folder->name());
     if (folder == acctFolder) mFolders->setCurrentItem(i);
     i++;
   }

@@ -1,30 +1,37 @@
-/* Dialog for creating/modifying a folder or a directory name
+/* Dialog for handling the properties of a mail folder
  */
 #ifndef __KMFOLDERDIA
 #define __KMFOLDERDIA
 
 #include <kdialogbase.h>
-#include <qcstring.h>
+#include <qlist.h>
 
+class KMAcctFolder;
 class QPushButton;
 class QLineEdit;
 class QListBox;
+class QComboBox;
 class KMFolder;
 
 #define KMFolderDialogInherited KDialogBase
+
 class KMFolderDialog : public KDialogBase
 {
   Q_OBJECT
 
 public:
-  KMFolderDialog(const QCString& path, const QCString& name,
+  KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 		 QWidget *parent, const QString& caption);
 
-  QCString folderName() const;
+protected slots:
+  virtual void slotOk( void );
 
 protected:
-  QLineEdit *mNameEdit;
-  QCString mPath;
+  QComboBox *fileInFolder;
+  QLineEdit *nameEdit;
+  KMAcctFolder* folder;
+  KMFolderDir* mFolderDir;
+  QList<KMFolder> mFolders;
 };
 
 #endif /*__KMFOLDERDIA*/

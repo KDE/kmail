@@ -19,6 +19,9 @@
 QString kFileToString(const char* fileName, bool ensureNewline=TRUE,
 		      bool withDialogs=TRUE);
 
+QByteArray kFileToBytes(const char* fileName, bool withDialogs=TRUE);
+
+
 /** Save a file. If withDialogs is FALSE no warning dialogs are opened if 
  * there are problems. Returns TRUE on success and FALSE on failure.
  * Replaces existing files without warning if askIfExists==FALSE.

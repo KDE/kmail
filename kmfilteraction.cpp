@@ -69,7 +69,7 @@ class KMFilterActionMove: public KMFilterAction
 public:
   KMFilterActionMove();
   virtual const QString label(void) const;
-  virtual bool process(KMMessage* msg, bool& stopIt);
+  virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
   virtual void argsFromString(const QString argsStr);
@@ -78,6 +78,7 @@ public:
   static KMFilterAction* newAction(void);
 protected:
   KMFolder* mDest;
+  QList<KMFolder> folders;
 };
 
 bool KMFilterActionMove::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
@@ -104,45 +105,49 @@ KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
   mDest = NULL;
 }
 
-bool KMFilterActionMove::process(KMMessage* msg, bool&stop)
+int KMFilterActionMove::process(KMMessage* msg, bool&stopIt)
 {
   if (!mDest) return TRUE;
   KMFilterAction::tempOpenFolder(mDest);
-  if (mDest->moveMsg(msg) == 0) return false; // ok, added
+  if (mDest->moveMsg(msg) == 0) 
+    return 0; // ok, added
   else
   {
     debug ("KMfilteraction - couldn't move msg");
-    return true; // error: couldn't add
+    stopIt = TRUE;
+    return 2; // critical error: couldn't add
   }
-  //stop = TRUE;  //Stefan: no, we do not want to stop here!
-
-  return FALSE;
 }
 
 QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
 {
   QString name;
   QComboBox* cbx;
+  QStringList str;
 
-  if (mDest) name = mDest->name();
-  cbx = aParent->createFolderCombo(name);
+  folders.clear();
+  folderMgr->createFolderList( &str, &folders );
+  cbx = aParent->createFolderCombo( &str, &folders, mDest );
   return cbx;
 }
 
 void KMFilterActionMove::applyParamWidgetValue(QWidget* aParamWidget)
 {
   QComboBox* cbx = (QComboBox*)aParamWidget;
-  mDest = folderMgr->find(cbx->currentText());
+  if ((cbx->currentItem() >= 0) && (cbx->currentItem() < (int)folders.count()))
+    mDest = folders.at(cbx->currentItem());
+  else
+    mDest = 0;
 }
 
 void KMFilterActionMove::argsFromString(const QString argsStr)
 {
-  mDest = (KMFolder*)folderMgr->find(argsStr);
+  mDest = (KMFolder*)folderMgr->findIdString(argsStr);
 }
 
 const QString KMFilterActionMove::argsAsString(void) const
 {
-  if (mDest) resultStr = mDest->name();
+  if (mDest) resultStr = mDest->idString();
   else resultStr = "";
   return resultStr;
 }
@@ -155,7 +160,7 @@ class KMFilterActionForward: public KMFilterAction
 public:
   KMFilterActionForward();
   virtual const QString label(void) const;
-  virtual bool process(KMMessage* msg, bool& stopIt);
+  virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
   virtual void argsFromString(const QString argsStr);
@@ -179,7 +184,7 @@ KMFilterActionForward::KMFilterActionForward(): KMFilterAction("forward")
 {
 }
  
-bool KMFilterActionForward::process(KMMessage* aMsg, bool&stop)
+int KMFilterActionForward::process(KMMessage* aMsg, bool&stop)
 {
   KMMessage* msg;
   if (mTo.isEmpty()) return TRUE;
@@ -188,9 +193,9 @@ bool KMFilterActionForward::process(KMMessage* aMsg, bool&stop)
   if (!msgSender->send(msg))
   {
     debug("KMFilterActionForward: could not forward message (sending failed)");
-    return true; // error: couldn't send
+    return 1; // error: couldn't send
   }
-  return FALSE;
+  return 0;
 }
  
 QWidget* KMFilterActionForward::createParamWidget(KMGFilterDlg* aParent)
@@ -224,7 +229,7 @@ class KMFilterActionExec:public KMFilterAction
 public:
   KMFilterActionExec();
   virtual const QString label(void) const;
-  virtual bool process(KMMessage* msg, bool& stopIt);
+  virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
   virtual void argsFromString(const QString argsStr);
@@ -253,7 +258,7 @@ void KMFilterActionExec::dummySigHandler(int)
 {
 }
  
-bool KMFilterActionExec::process(KMMessage* aMsg, bool&stop)
+int KMFilterActionExec::process(KMMessage* aMsg, bool&stop)
 {
   void (*oldSigHandler)(int);
   int rc;
@@ -263,7 +268,10 @@ bool KMFilterActionExec::process(KMMessage* aMsg, bool&stop)
   rc = system(mCmd);
   alarm(0);
   signal(SIGALRM, oldSigHandler);
-  return !(rc & 255);
+  if (rc & 255) // sanders: I don't get this it seems to be the wrong way
+    return 0;   //          around to me.
+  else
+    return 1;
 }
 
 QWidget* KMFilterActionExec::createParamWidget(KMGFilterDlg* aParent)
@@ -297,7 +305,7 @@ class KMFilterActionSkip: public KMFilterAction
 public:
   KMFilterActionSkip();
   virtual const QString label(void) const;
-  virtual bool process(KMMessage* msg, bool& stopIt);
+  virtual int process(KMMessage* msg, bool& stopIt);
   virtual void argsFromString(const QString argsStr);
   virtual const QString argsAsString(void) const;
   static KMFilterAction* newAction(void);
@@ -317,10 +325,10 @@ KMFilterAction* KMFilterActionSkip::newAction(void)
   return (new KMFilterActionSkip);
 }
 
-bool KMFilterActionSkip::process(KMMessage*, bool& stopIt)
+int KMFilterActionSkip::process(KMMessage*, bool& stopIt)
 {
   stopIt = TRUE;
-  return TRUE;
+  return 1;
 }
 
 void KMFilterActionSkip::argsFromString(const QString)

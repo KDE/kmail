@@ -153,9 +153,6 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
   recurse--;
 }
-
-
-//-----------------------------------------------------------------------------
 //--- Sven's pseudo IPC&locking start ---
 void serverReady(bool flag)
 {
@@ -164,13 +161,12 @@ void serverReady(bool flag)
     checkMessage(); //check for any pending mesages
 }
 
-
-//-----------------------------------------------------------------------------
 static void writePid (bool ready)
 {
   FILE* lck;
   char nlck[80];
   sprintf (nlck, "%s.kmail%d.lck", _PATH_TMP, getuid());
+  unlink (nlck); // Security - in case it was a socket, link, device...
   lck = fopen (nlck, "w");
   if (!ready)
     fprintf (lck, "%d", 0-getpid());
@@ -179,8 +175,6 @@ static void writePid (bool ready)
   fclose (lck);
 }
 
-
-//-----------------------------------------------------------------------------
 static void checkMessage()
 {
   char lf[80];
@@ -197,22 +191,10 @@ static void checkMessage()
   delcmd.sprintf("%s.kmail%d.msg", _PATH_TMP, getuid());
   unlink (delcmd.data()); // unlink
   //system (delcmd.data()); // delete message if any
-
   // find a KMMainWin
   KMMainWin *kmmWin = 0;
-  if (KTMainWindow::memberList)
-  {
-     for(  KTMainWindow *ktmWin = KTMainWindow::memberList->first();
-           ktmWin;
-           ktmWin = KTMainWindow::memberList->next())
-     {
-        if (ktmWin && ktmWin->isA("KMMainWin"))
-        {
-           kmmWin = (KMMainWin *) ktmWin;
-           break;
-        }
-     }
-  }
+  if (kapp->mainWidget() && kapp->mainWidget()->isA("KMMainWin"))
+    kmmWin = (KMMainWin *) kapp->mainWidget();
 
   if (cmd.find ("show") == 0)
   {
@@ -224,17 +206,16 @@ static void checkMessage()
     }
     else
       KWM::activate(kmmWin->winId());
-    //kmmWin->show();
-    //kmmWin->raise();
   }
   else if (cmd.find ("check") == 0)
   {
     //printf ("check();\n");
-    if (!kmmWin)
+    if (!kmmWin) {
       kmmWin = new KMMainWin;
-    KWM::activate(kmmWin->winId());
-    //kmmWin->show();
-    //kmmWin->raise();
+      kmmWin->show(); // thanks, jbb!
+    }
+    else
+      KWM::activate(kmmWin->winId());
     kmmWin->slotCheckMail();
   }
   else
@@ -366,7 +347,7 @@ static void recoverDeadLetters(void)
   KMComposeWin* win;
   KMMessage* msg;
   QDir dir = QDir::home();
-  QCString fname = QCString(dir.path());
+  QString fname = dir.path();
   int i, rc, num;
 
   if (!dir.exists("dead.letter")) return;
@@ -463,6 +444,7 @@ static void initFolders(KConfig* cfg)
   trashFolder->setType("Tr");
   trashFolder->setSystemFolder(TRUE);
   trashFolder->open();
+
 }
 
 
@@ -533,13 +515,20 @@ static void cleanup(void)
   KConfig* config =  kapp->config();
   shuttingDown = TRUE;
 
-  if (trashFolder)
-  {
+  serverReady(false);      // Knock again, but you won't come in!
+
+  if (trashFolder) {
     trashFolder->close(TRUE);
     config->setGroup("General");
     if (config->readNumEntry("empty-trash-on-exit", 0))
       trashFolder->expunge();
   }
+
+  if (folderMgr) {
+    if (config->readNumEntry("compact-all-on-exit", 0))
+      folderMgr->compactAll(); // I can compact for ages in peace now!
+  }
+
   if (inboxFolder) inboxFolder->close(TRUE);
   if (outboxFolder) outboxFolder->close(TRUE);
   if (sentFolder) sentFolder->close(TRUE);
@@ -573,6 +562,7 @@ static void cleanup(void)
 }
 
 //-----------------------------------------------------------------------------
+
 // Sven: new from Jens Kristian Soegard:
 static void processArgs(int argc, char *argv[])
 {
@@ -646,6 +636,13 @@ static void processArgs(int argc, char *argv[])
 
 
 //-----------------------------------------------------------------------------
+void version() 
+{
+  printf("%s\n",aboutText);
+}
+
+
+//-----------------------------------------------------------------------------
 main(int argc, char *argv[])
 {
   //--- Sven's pseudo IPC&locking start ---
@@ -674,12 +671,13 @@ main(int argc, char *argv[])
         exit (0);
       }
       sprintf (lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
+      unlink (lf); // In case of socket, link...
       msg = fopen (lf, "w");
       int i;
+      app = new KApplication(argc, argv, "kmail"); // clear arg list
       KGlobal::dirs()->
 	addResourceType("kmail_pic", 
 			KStandardDirs::kde_default("data") + "kmail/pics/");
-      app = new KApplication(argc, argv, "kmail"); // clear arg list
       argc--;
       argv++;
 
@@ -693,6 +691,11 @@ main(int argc, char *argv[])
           if (i<argc-1) subj = argv[++i];
           mailto = TRUE;
         }
+	else if (strcmp(argv[i],"-v")==0)
+        {
+	  version();
+	  exit(0);
+	}
         else if (strcmp(argv[i],"-c")==0)
         {
           if (i<argc-1) cc = argv[++i];
@@ -738,11 +741,10 @@ main(int argc, char *argv[])
         if (kill(0-pId, 0) != 0)      // try if it lives at all
         {
           debug ("Server died while busy");
-          writePid(true);             // he diedd and left his pid uncleaned
+          writePid(true);             // he died and left his pid uncleaned
         }
         else
         {
-          debug ("Server is busy - message pending");
           exit (0);                   // ok he lives but is busy
         }
       }
@@ -750,17 +752,14 @@ main(int argc, char *argv[])
       {
         if (kill (pId, SIGUSR1) != 0) // Dead?
         {
-          debug ("Server died while ready");
           writePid(true);             // then we are server
         }
         else
         {
-          debug ("Server is ready - message sent");
           exit (0);
         }
       }
     }
-    debug ("We are starting normaly");
     sprintf(lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
     unlink(lf); // clear old mesage
   }

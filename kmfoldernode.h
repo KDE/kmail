@@ -8,7 +8,6 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include <qcstring.h>
 #include <qlist.h>
 
 class KMFolderDir;
@@ -20,7 +19,7 @@ class KMFolderNode: public QObject
   Q_OBJECT
 
 public:
-  KMFolderNode(KMFolderDir* parent, const QCString& name=0);
+  KMFolderNode(KMFolderDir* parent, const QString& name);
   virtual ~KMFolderNode();
 
   /** Is it a directory where mail folders are stored or is it a folder that
@@ -31,14 +30,15 @@ public:
 
   /** Returns ptr to owning directory object or NULL if none. This
     is just a wrapper for convenient access. */
-  KMFolderDir* parent(void) const 
-	{ return (KMFolderDir*)KMFolderNodeInherited::parent(); }
+  KMFolderDir* parent(void) const ;
+  void setParent( KMFolderDir* aParent );
+  //	{ return (KMFolderDir*)KMFolderNodeInherited::parent(); }
 
   /** Returns full path to the directory where this node is stored or NULL
    if the node has no parent. Example: if this object represents a folder
    ~joe/Mail/inbox then path() returns "/home/joe/Mail" and name() returns 
    "inbox". */
-  virtual const QCString path(void) const;
+  virtual const QString path() const;
 
   /** Returns type of the folder (or folder node/dir). This type can be e.g.:
     "in" for folders that have at least one account associated
@@ -52,16 +52,17 @@ public:
   virtual void setType(const char*);
 
   /** Name of the node. Also used as file name. */
-  const QCString name(void) const { return mName; }
-  void setName(const QCString& aName) { mName = aName; }
+  const QString name() const { return mName; }
+  void setName(const QString& aName) { mName = aName; }
 
   /** Label of the node for visualzation purposes. Default the same as
    the name. */
   virtual const QString label(void) const;
 
 protected:
-  QCString mName;
+  QString mName;
   const char* mType;
+  KMFolderDir *mParent;
 };
 
 typedef QList<KMFolderNode> KMFolderNodeList;

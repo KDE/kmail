@@ -6,6 +6,7 @@
 
 #include <qwidget.h>
 #include <qdialog.h>
+#include <qtimer.h>
 
 class KHTMLWidget;
 class KMFolder;
@@ -49,7 +50,7 @@ public:
   AttachmentStyle attachmentStyle(void) const { return mAttachmentStyle;}
   virtual void setAttachmentStyle(int style);
 
-  /** Set the message that shall be shown. If NULL, an empty page is
+  /** Set the message that shall be shown. If NULL, an empty page is 
     displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
 
@@ -64,7 +65,7 @@ public:
 
   /** Print current message. */
   virtual void printMsg(void);
-
+  
   /** Return selected text */
   QString copyText();
 
@@ -86,11 +87,18 @@ signals:
 
   /** The user presses the right mouse button. 'url' may be NULL. */
   void popupMenu(const char* url, const QPoint& mousePos);
-
+                         
   /** The user has clicked onto an URL that is no attachment. */
   void urlClicked(const char* url, int button);
 
+  /** The user wants to see the attachment which is message */
+  void showAtmMsg (KMMessage *msg);
+                         
 public slots:
+    
+  /* Refresh the reader window */
+  void updateReaderWin();
+
   /** HTML Widget scrollbar and layout handling. */
   void slotScrollUp();
   void slotScrollDown();
@@ -118,7 +126,7 @@ protected slots:
   void slotAtmProperties();
 
 protected:
-  /** Feeds the HTML viewer with the contents of the given message.
+  /** Feeds the HTML viewer with the contents of the given message. 
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
@@ -141,7 +149,7 @@ protected:
   /** Convert given string to HTML. Converts blanks and tabs at
     beginning of line to non-breakable spaces if preserveLeadingBlanks
     is TRUE. */
-  virtual const QString strToHtml(const QString str,
+  virtual const QString strToHtml(const QString str, 
 				  bool decodeQuotedPrintable=TRUE,
 				  bool preserveLeadingBlanks=FALSE) const;
 
@@ -168,7 +176,7 @@ protected:
 protected:
   int mAtmInline;
   int mAtmCurrent;
-  KMMessage *mMsg;
+  KMMessage *mMsg, *mMsgBuf;
   KHTMLWidget *mViewer;
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
@@ -176,6 +184,9 @@ protected:
   QString mBodyFont;
   bool inlineImage;
   static QString mAttachDir;
+  bool mBackingPixmapOn;
+  QString mBackingPixmapStr;
+  QTimer updateReaderWinTimer;
 };
 
 

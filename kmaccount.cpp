@@ -138,7 +138,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
 bool KMAccount::processNewMsg(KMMessage* aMsg)
 {
   QString receiptTo;
-  int rc;
+  int rc, processResult;
 
   assert(aMsg != NULL);
 
@@ -151,13 +151,22 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
     aMsg->setStatus(KMMsgStatusRead);
   else aMsg->setStatus(KMMsgStatusNew);
 
-  if (filterMgr->process(aMsg))
+  // 0==processed ok, 1==processing failed, 2==critical error, abort!
+  processResult = filterMgr->process(aMsg);
+  if (processResult == 2) {
+    perror("Critical error: Unable to collect mail (out of space?)");
+    warning(i18n("Critical error: Unable to collect mail (out of space?)"));
+    return false;
+  }
+  else if (processResult == 1)
   {
     rc = mFolder->addMsg(aMsg);
-    if (rc) perror("failed to add message");
-    if (rc) warning(i18n("Failed to add message:")+
-		    '\n' + QString(strerror(rc)));
-    if (rc) return false;
+    if (rc) {
+      perror("failed to add message");
+      warning(i18n("Failed to add message:")+
+	      '\n' + QString(strerror(rc)));
+      return false;
+    }
     else return true;
   }
   // What now -  are we owner or not?
@@ -201,7 +210,6 @@ void KMAccount::installTimer()
 //-----------------------------------------------------------------------------
 void KMAccount::deinstallTimer()
 {
-  debug("Calling deinstallTimer()");
   if(mTimer) {
     mTimer->stop();
     disconnect(mTimer);

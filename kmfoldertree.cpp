@@ -1,250 +1,401 @@
 // kmfoldertree.cpp
-
-#include <stdlib.h>
-#include <qfileinfo.h>
-#include <qpixmap.h>
+#include <qfiledefs.h>
+#include <qdragobject.h>
+#include <qmessagebox.h>
+#include <qheader.h>
+#include <qbitmap.h>
+#include <unistd.h>
+#include <assert.h>
 #include <kapp.h>
 #include <kconfig.h>
+#include <qpixmap.h>
 #include <kiconloader.h>
 #include <qtimer.h>
 #include <qpopupmenu.h>
-#include <qpixmap.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include "kfontutils.h"
 
 #include "kmglobal.h"
 #include "kmdragdata.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
 #include "kmfolder.h"
-#include "kmmainwin.h"
+#include "kmfoldertree.h"
+#include "kmfolderdia.h"
 
-#include <assert.h>
-
-#include "kmfoldertree.moc"
+QPixmap* KMFolderTree::pixDir = 0;
+QPixmap* KMFolderTree::pixNode = 0;
+QPixmap* KMFolderTree::pixPlain = 0;
+QPixmap* KMFolderTree::pixFld = 0;
+QPixmap* KMFolderTree::pixFull = 0;
+QPixmap* KMFolderTree::pixIn = 0;
+QPixmap* KMFolderTree::pixOut = 0;
+QPixmap* KMFolderTree::pixTr = 0;
+QPixmap* KMFolderTree::pixSent = 0;
 
 //-----------------------------------------------------------------------------
-KMFolderTree::KMFolderTree(QWidget *parent,const char *name):
-  KMFolderTreeInherited(parent, name)
+// KMFolderTreeItem methods
+// Begin this code may be relicensed by Troll Tech
+static QBitmap * verticalLine = 0;
+static QBitmap * horizontalLine = 0;
+
+static void cleanupBitmapLines()
 {
-  initMetaObject();
-  mUpdateTimer = NULL;
+    delete verticalLine;
+    delete horizontalLine;
+    verticalLine = 0;
+    horizontalLine = 0;
+}
+// End this code may be relicensed by Troll Tech
 
-  setAcceptDrops(true);
+class KMFolderTreeItem : public QListViewItem
+{
 
-  connect(this, SIGNAL(selectionChanged(QListViewItem*)),
-	  this, SLOT(doClicked(QListViewItem*)));
-  connect(folderMgr, SIGNAL(changed()),
-	  this, SLOT(doFolderListChanged()));
-  connect(this, SIGNAL(rightButtonPressed(QListViewItem*,const QPoint&,int)),
-          this, SLOT(slotRightButtonPressed(QListViewItem*,const QPoint&,int)));
-  connect(folderMgr, SIGNAL(unreadChanged(KMFolder*)),
-	  this, SLOT(refresh(KMFolder*)));
+public:
+  KMFolder* folder;
+  QString unread;
+  KMPaintInfo *mPaintInfo;
 
-  addColumn(i18n("Folders"));
-  addColumn(i18n("Unread"));
-  readConfig();
+  /* Construct the root item */
+  KMFolderTreeItem( QListView *parent, 
+		    KMPaintInfo *aPaintInfo )
+    : QListViewItem( parent, i18n("Mail") ), 
+      folder( 0 ),
+      unread( 0 ),
+      mPaintInfo( aPaintInfo )
+    {}
 
-  // setAutoUpdate(TRUE);
-  reload();
+  /* Construct a child item */
+  KMFolderTreeItem( QListViewItem* parent, 
+		    KMFolder* folder, 
+		    KMPaintInfo *aPaintInfo )
+    : QListViewItem( parent, folder->label() ), 
+      folder( folder ),
+      unread( 0 ),
+      mPaintInfo( aPaintInfo )
+    {}
+
+// Begin this code may be relicensed by Troll Tech
+  void paintBranches( QPainter * p, const QColorGroup & cg,
+		      int w, int y, int h, GUIStyle s )
+{
+  /******************************************************
+   This code has been replaced due to licensing problems
+   -sanders
+  *******************************************************/
+  QListViewItem::paintBranches( p, cg, w, y, h, s);
 }
 
 
+void paintCell( QPainter * p, const QColorGroup & cg,
+		  int column, int width, int align )
+{
+  if ( !p )
+    return;
+
+  QListView *lv = listView();
+  int r = lv ? lv->itemMargin() : 1;
+  const QPixmap *icon = pixmap( column );
+  int marg = lv ? lv->itemMargin() : 1;
+
+  if (!mPaintInfo->pixmapOn)
+    p->fillRect( 0, 0, width, height(), cg.base() );
+
+  if ( isSelected() &&
+       (column==0 || listView()->allColumnsShowFocus()) ) {
+    p->fillRect( r - marg, 0, width - r + marg, height(),
+		 cg.brush( QColorGroup::Highlight ) );
+    p->setPen( cg.highlightedText() );
+  } else {
+    p->setPen( mPaintInfo->colFore );
+  }
+  
+  if ( icon ) {
+    p->drawPixmap( r, (height()-icon->height())/2, *icon );
+    r += icon->width() + listView()->itemMargin();
+  }
+  
+  QString t = text( column );
+  if ( !t.isEmpty() ) {
+    QRect br;
+    p->drawText( r, 0, width-marg-r, height(),
+		 align | AlignVCenter, t, -1, &br );
+    if (!isSelected())
+      p->setPen( mPaintInfo->colUnread );
+    if (column == 0)
+      p->drawText( br.right(), 0, width-marg-br.right(), height(),
+		   align | AlignVCenter, unread);
+    
+  }
+}
+// End this code may be relicensed by Troll Tech
+
+  // May sure system folders come first when sorting
+  // (or last when sorting in descending order)
+  virtual QString key( int column, bool ascending ) const {
+    if (folder->label() == i18n("inbox"))
+      return "\t0";
+    else if (folder->label() == i18n("outbox"))
+      return "\t1";
+    else if (folder->label() == i18n("sent-mail"))
+      return "\t2";
+    else if (folder->label() == i18n("trash"))
+      return "\t3";
+    return text(0).lower();
+  }
+};
+
+void KMFolderTree::drawContentsOffset( QPainter * p, int ox, int oy,
+				       int cx, int cy, int cw, int ch ) {
+    int c = 0;
+    if (mPaintInfo.pixmapOn)
+      paintEmptyArea( p, QRect( c - ox, cy - oy, cx + cw - c, ch ) );
+
+    QListView::drawContentsOffset( p, ox, oy, cx, cy, cw, ch );
+  }
+
+
 //-----------------------------------------------------------------------------
-QPixmap KMFolderTree::folderTypePixmap(const QString aType)
+KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
+  : QListView( parent, name ), mList()
 {
   KIconLoader* loader = KGlobal::iconLoader();
-  const char* fname = 0;
+  static bool pixmapsLoaded = FALSE;
 
-  if (aType == "dir") fname = "kmflddir";
-  else if (aType == "In") fname = "kmfldin";
-  else if (aType == "Out") fname = "kmfldout";
-  else if (aType == "St") fname = "kmfldsent";
-  else if (aType == "Tr") fname = "kmtrash";
-  else fname = "kmfolder";
+  initMetaObject();
 
-  return loader->loadIcon(fname);
+  mUpdateTimer = NULL;
+
+  connect(this, SIGNAL(currentChanged(QListViewItem*)),
+	  this, SLOT(doFolderSelected(QListViewItem*)));
+  connect(folderMgr, SIGNAL(changed()),
+	  this, SLOT(doFolderListChanged()));
+
+  readConfig();
+
+  addColumn( i18n("Folders"), 400 );
+
+  if (!pixmapsLoaded)
+  {
+    pixmapsLoaded = TRUE;
+
+    pixDir   = new QPixmap( loader->loadIcon("closed"));
+    pixNode  = new QPixmap( loader->loadIcon("green-bullet"));
+    pixPlain = new QPixmap( loader->loadIcon("kmfolder"));
+    pixFld   = new QPixmap( loader->loadIcon("kmfolder"));
+    pixFull  = new QPixmap( loader->loadIcon("kmfolderfull"));
+    pixIn    = new QPixmap( loader->loadIcon("kmfldin"));
+    pixOut   = new QPixmap( loader->loadIcon("kmfldout"));
+    pixSent  = new QPixmap( loader->loadIcon("kmfldsent"));
+    pixTr    = new QPixmap( loader->loadIcon("kmtrash"));
+  }
+  setUpdatesEnabled(TRUE);
+  reload();
+
+  setAcceptDrops( TRUE );
+  viewport()->setAcceptDrops( TRUE );
+
+  // Drag and drop hover opening and autoscrolling support
+  connect( &autoopen_timer, SIGNAL( timeout() ),
+	   this, SLOT( openFolder() ) );
+
+  connect( &autoscroll_timer, SIGNAL( timeout() ),
+	   this, SLOT( autoScroll() ) );
 }
 
-
 //-----------------------------------------------------------------------------
-void KMFolderTree::updateUnreadAll()
+void KMFolderTree::readConfig (void)
 {
-  KMFolderDir* fdir;
-  KMFolder* folder;
-  debug( "KMFolderTree::updateUnreadAll" );
-  //  bool upd = autoUpdate();
-  //  setAutoUpdate(FALSE);
+  KConfig* conf = app->config();
+  QString fntStr;
+  int width;
 
-  fdir = &folderMgr->dir();
-  for (folder = (KMFolder*)fdir->first();
-    folder != NULL;
-    folder = (KMFolder*)fdir->next())
-  {
-    folder->open();
-    folder->countUnread();
-    folder->close();
+  // Backing pixmap support
+  conf->setGroup("Pixmaps");
+  QString pixmapFile = conf->readEntry("FolderTree","");
+  mPaintInfo.pixmapOn = FALSE;
+  if (pixmapFile != "") {
+    mPaintInfo.pixmapOn = TRUE;
+    mPaintInfo.pixmap = QPixmap( pixmapFile );
   }
-  //  setAutoUpdate(upd);
+
+  // Custom/System color support
+  conf->setGroup("Reader");
+  QColor c1=QColor(app->palette().normal().text());
+  QColor c2=QColor("blue");
+  QColor c4=QColor(app->palette().normal().base());
+
+  if (!conf->readBoolEntry("defaultColors",TRUE)) {
+    mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
+    mPaintInfo.colBack = conf->readColorEntry("BackgroundColor",&c4);
+    QPalette newPal = palette();
+    newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
+    setPalette( newPal );
+    mPaintInfo.colUnread = conf->readColorEntry("FollowedColor",&c2);
+  }
+  else {
+    mPaintInfo.colFore = c1;
+    mPaintInfo.colUnread = c2;
+    QPalette newPal = palette();
+    newPal.setColor( QColorGroup::Base, c4 );
+    setPalette( newPal );
+  }
+
+  // Custom/Ssystem font support
+  conf->setGroup("Fonts");
+  if (!conf->readBoolEntry("defaultFonts",TRUE)) {
+    fntStr = conf->readEntry("folder-font", "helvetica-medium-r-12");
+    setFont(kstrToFont(fntStr));
+  }
+  else
+    setFont(KGlobal::generalFont());
 }
 
 //-----------------------------------------------------------------------------
 KMFolderTree::~KMFolderTree()
 {
-  disconnect(folderMgr, SIGNAL(changed()),
-	     this, SLOT(doFolderListChanged()));
-  disconnect(folderMgr, SIGNAL(unreadChanged(KMFolder*)),
-	     this, SLOT(refresh(KMFolder*)));
+  disconnect(folderMgr, SIGNAL(changed()), this, SLOT(doFolderListChanged()));
   delete mUpdateTimer;
 }
 
-
 //-----------------------------------------------------------------------------
-void KMFolderTree::readConfig()
+// Updates the count of unread messages (count of unread messages
+// is now cached in KMails config file)
+void KMFolderTree::updateUnreadAll()
 {
-  KConfig* conf = app->config();
-  QCString key;
-  int i, w, h;
-
-  conf->setGroup("Geometry");
-  key.sprintf("%s-width", name());
-  w = conf->readNumEntry(key, 80);
-  key.sprintf("%s-height", name());
-  h = conf->readNumEntry(key, 120);
-  resize(w, h);
-
-  for (i=0; i<2; i++)
-  {
-    key.sprintf("Column-%d", i);
-    w = conf->readNumEntry(key, -1);
-    if (w >= 0) setColumnWidth(i, w);
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::writeConfig()
-{
-  KConfig* conf = app->config();
-  QCString key;
-  int i;
-
-  conf->setGroup("Geometry");
-  key.sprintf("%s-width", name());
-  conf->writeEntry(key, size().width());
-  key.sprintf("%s-height", name());
-  conf->writeEntry(key, size().height());
-
-  for (i=0; i<2; i++)
-  {
-    key.sprintf("Column-%d", i);
-    conf->writeEntry(key, columnWidth(i));
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::setCurrentFolder(const KMFolder* aFolder)
-{
-  KMFolderTreeItem* it = findItem(aFolder);
-  if (it)
-  {
-    setCurrentItem(it);
-    setSelected(it, true);
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-KMFolder* KMFolderTree::currentFolder() const
-{
-  KMFolderTreeItem* cur = (KMFolderTreeItem*)currentItem();
-  if (!cur) return NULL;
-  return cur->folder();
-}
-
-
-//-----------------------------------------------------------------------------
-KMFolderTreeItem* KMFolderTree::appendItem(const QCString& aPath,
-					   KMFolderTreeItem* aParent,
-					   bool aBold, char sepChar)
-{
-  KMFolderTreeItem *item=NULL, *parentItem;
-  const char *pos, *beg;
-  QCString name;
-
-  assert(aParent!=NULL);
-
-  parentItem = aParent;
-  beg = aPath;
-  while (beg)
-  {
-    pos = strchr(beg, sepChar);
-    if (pos) name = QCString(beg, pos-beg+1);
-    else name = QCString(beg);
-
-    item = (KMFolderTreeItem*)parentItem->firstChild();
-    while (item)
-    {
-      if (QCString(item->text(0)) == name) break;
-      item = (KMFolderTreeItem*)item->nextSibling();
-    }
-    if (!item)
-    {
-      item = new KMFolderTreeItem(parentItem, name);
-      item->setPixmap(0, folderTypePixmap("dir"));
-      item->setOpen(true);
-      // if (aBold) item->setBold(true);
-    }
-    parentItem = item;
-
-    if (!pos) break;
-    beg = pos+1;
-  }
-
-  //  if (item== firstChild()) return NULL;
-  return item;  
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::reload(void)
-{
-  KMFolderTreeItem* rootItem;
-  KMFolderTreeItem* item;
+  bool upd = isUpdatesEnabled();
+  setUpdatesEnabled(FALSE);
+  
   KMFolderDir* fdir;
-  KMFolder* fld;
-  QString str;
-  long numUnread;
-
-  clear();
-  rootItem = (KMFolderTreeItem*)new KMFolderTreeItem(this, i18n("Local Folders"));
-  if (rootItem) rootItem->setOpen(true);
+  KMFolderNode* folderNode;
+  KMFolder* folder;
 
   fdir = &folderMgr->dir();
-  for (fld = (KMFolder*)fdir->first(); fld; fld = (KMFolder*)fdir->next())
+  for (folderNode = fdir->first();
+    folderNode != NULL;
+    folderNode =fdir->next())
   {
-    if (!fld->isDir())
-    {
-      fld->open();
-      numUnread = fld->countUnread();
-      fld->close();
-    }
-
-    item = appendItem(fld->name(), rootItem, numUnread>0);
-    item->setFolder(fld);
-    item->setPixmap(0, folderTypePixmap(fld->type()));
-    if (!fld->isDir())
-    {
-      str.sprintf("%ld", numUnread);
-      item->setText(1, str);
+    if (!folderNode->isDir()) {
+      folder = static_cast<KMFolder*>(folderNode);
+      
+      folder->open();
+      folder->countUnread();
+      folder->close();
     }
   }
+  
+  setUpdatesEnabled(upd);
+}
+
+//-----------------------------------------------------------------------------
+// Draw empty area of list view with support for a backing pixmap
+void KMFolderTree::paintEmptyArea( QPainter * p, const QRect & rect )
+{
+  if (mPaintInfo.pixmapOn)
+    p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(), 
+			mPaintInfo.pixmap, 
+			rect.left() + contentsX(), 
+			rect.top() + contentsY() );
+  else 
+    p->fillRect( rect, colorGroup().base() );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::refresh(KMFolder*)
+// Save the configuration file
+void KMFolderTree::writeConfig()
+{
+  QListViewItemIterator it( this );
+  while (it.current()) {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    writeIsListViewItemOpen(fti);
+    ++it;
+  }
+}
+
+//-----------------------------------------------------------------------------
+// Reload the tree of items in the list view
+void KMFolderTree::reload(void)
+{
+  KMFolderDir* fdir;
+  QString str;
+  bool upd = isUpdatesEnabled();
+
+  setUpdatesEnabled(FALSE);
+  writeConfig();
+
+  QListViewItemIterator it( this );
+  while (it.current()) {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (fti->folder)
+      disconnect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+		 this,SLOT(refresh(KMFolder*)));
+    ++it;
+  }
+  clear();
+
+  // We need our own root so that we can make it a KMFolderTreeItem
+  // and use our custom paintBranches
+  root = new KMFolderTreeItem( this, &mPaintInfo );
+  root->setOpen( TRUE );
+  fdir = &folderMgr->dir();
+  addDirectory(fdir, root);
+  
+  QListViewItemIterator jt( this );
+  while (jt.current()) {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(jt.current());
+    if (fti->folder)
+      connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+	      this,SLOT(refresh(KMFolder*)));
+    ++jt;
+  }
+
+  setUpdatesEnabled(upd);
+  if (upd) repaint();
+  refresh(0);
+}
+
+//-----------------------------------------------------------------------------
+// Recursively add a directory of folders to the tree of folders
+void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
+{ 
+  KMFolderNode *folderNode;
+  KMFolder* folder;
+  KMFolderDir* folderDir = 0;
+  KMFolderTreeItem* fti;
+
+  for (folderNode = fdir->first();
+       folderNode != NULL;
+       folderNode = fdir->next())
+    if (!folderNode->isDir()) {
+      folder = static_cast<KMFolder*>(folderNode);
+      if (parent)
+	fti = new KMFolderTreeItem( parent, folder, &mPaintInfo );
+
+      if (folder->label() == i18n("inbox"))
+	fti->setPixmap( 0, *pixIn );
+      else if (folder->label() == i18n("outbox"))
+	fti->setPixmap( 0, *pixOut );
+      else if (folder->label() == i18n("sent-mail"))
+	fti->setPixmap( 0, *pixSent );
+      else if (folder->label() == i18n("trash"))
+	fti->setPixmap( 0, *pixTr );
+      else
+	fti->setPixmap( 0, *pixPlain );
+
+      if (fti->folder && fti->folder->child())
+	addDirectory( fti->folder->child(), fti );
+      fti->setOpen( readIsListViewItemOpen(fti));
+    }
+}
+
+//-----------------------------------------------------------------------------
+// Initiate a delayed refresh of the count of unread messages
+// Not really need anymore as count is cached in config file. But causes
+// a nice blink in the foldertree, that indicates kmail did something
+// when the user manually checks for mail and none was found.
+void KMFolderTree::refresh(KMFolder* )
 {
   if (!mUpdateTimer)
   {
@@ -253,181 +404,372 @@ void KMFolderTree::refresh(KMFolder*)
   }
   mUpdateTimer->changeInterval(200);
 }
-
-
+                                                               
 //-----------------------------------------------------------------------------
-KMFolderTreeItem* KMFolderTree::findItemRecursive(const KMFolder* aFolder,
-						  KMFolderTreeItem* aItem) const 
-{
-  KMFolderTreeItem* item;
-  KMFolderTreeItem* child;
-  KMFolderTreeItem* found;
-
-  for (item = (KMFolderTreeItem*)aItem; item;
-       item = (KMFolderTreeItem*)item->nextSibling())
-  {
-    if (item->folder() == aFolder) return item;
-    child = (KMFolderTreeItem*)item->firstChild();
-    if (child)
-    {
-      found = findItemRecursive(aFolder, child);
-      if (found) return found;
-    }
-  }
-  return NULL;
-}
-
-
-//-----------------------------------------------------------------------------
-KMFolderTreeItem* KMFolderTree::findItem(const KMFolder* aFolder) const 
-{
-  return findItemRecursive(aFolder, (KMFolderTreeItem*)firstChild());
-}
-
-
-//-----------------------------------------------------------------------------
+// Updates the pixmap and extendedLabel information for items
 void KMFolderTree::delayedUpdate()
 {
-  delayedUpdateRecursive((KMFolderTreeItem*)firstChild());
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::delayedUpdateRecursive(KMFolderTreeItem* aItem)
-{
-  KMFolder* folder;
-  KMFolderTreeItem* item;
   QString str;
-  long unread;
+  bool upd = isUpdatesEnabled();
+  setUpdatesEnabled(FALSE);
 
-  for (item = (KMFolderTreeItem*)aItem; item;
-       item = (KMFolderTreeItem*)item->nextSibling())
-  {
-    folder = item->folder();
-    if (folder)
-    {
-      folder->open();
-      str.setNum(folder->countUnread());
-      folder->close();
-      item->setText(1, str);
+  QListViewItemIterator it( this );
+  while (it.current()) {
+    bool repaintRequired = false;
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (!fti->folder) {
+      ++it;
+      continue;
     }
-    else delayedUpdateRecursive((KMFolderTreeItem*)item->firstChild());
-  }
 
+    QString extendedName;
+    if (fti->folder->countUnread() > 0) {
+      QString num;
+	num.setNum(fti->folder->countUnread());
+      extendedName = " (" + num + ")";
+      if (!fti->folder->isSystemFolder() &&
+	  !(fti->folder->label() == "inbox"))
+	fti->setPixmap( 0, *pixFull );
+    }
+    else {
+      extendedName = "";
+      if (!fti->folder->isSystemFolder() &&
+	  !(fti->folder->label() == "inbox"))
+	fti->setPixmap( 0, *pixPlain );
+    }
+
+    if (extendedName != fti->unread) {
+      repaintRequired = true;
+      fti->unread = extendedName;
+    }
+
+    if (upd && repaintRequired) 
+      fti->repaint();
+    ++it;
+  }
+  setUpdatesEnabled(upd);
   mUpdateTimer->stop();
 }
 
 //-----------------------------------------------------------------------------
+// Folders have been added/deleted update the tree of folders
 void KMFolderTree::doFolderListChanged()
 {
-  //  QListViewItem* it = currentItem();
-  debug("doFolderListChanged()");
+  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
+  KMFolder* folder = fti->folder;
   reload();
-  //  if (idx >= 0 && idx < count()) setCurrentItem(idx);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::dropEvent(QDropEvent * event)
-{
-#if 0
-  KMFolder *toFld, *fromFld;
-  KMDragData* dd;
-  KMMessage* msg;
-  QPoint pos;
-  int i;
-
-  if (aDropZone!=mDropZone) return;
-  if (aDropZone->getDataType() != DndRawData) return; //sven
-
-  dd = (KMDragData*)aDropZone->getData().ascii();
-  if (!dd || sizeof(*dd)!=sizeof(KMDragData)) return;
-  fromFld = dd->folder();
-
-  pos.setY(aDropZone->getMouseY());
-  pos = mapFromGlobal(pos);
-
-  toFld = (KMFolder*)mList.at(findItem(pos.y()));
-  if (!fromFld || !toFld || toFld->isDir()) return;
-
-  fromFld->open();
-  toFld->open();
-
-  for (i=dd->to(); i>=dd->from(); i--)
-  {
-    msg = fromFld->take(i);
-    if (msg) toFld->addMsg(msg);
+  QListViewItem *qlvi = indexOfFolder(folder);
+  if (qlvi) {
+    setCurrentItem( qlvi );
+    setSelected( qlvi, TRUE );
   }
-
-  fromFld->close();
-  toFld->close();
-#endif
 }
-
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::doClicked(QListViewItem* aItem)
+// When not dragging and dropping a change in the selected item
+// indicates the user has changed the active folder emit a signal
+// so that the header list and reader window can be udpated.
+void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
-  KMFolderTreeItem* it = (KMFolderTreeItem*)aItem;
-  KMFolder* fld = NULL;
+  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
+  KMFolder* folder = fti->folder;
 
-  if (!it) return;
-  if (!(fld = it->folder())) return;
-
-  debug("doClicked: %s\n", fld ? (const char*)fld->label() : "(none)");
-  emit folderSelected(fld);
+  setCurrentItem( qlvi );
+  setSelected( qlvi, TRUE );
+  if (!folder || folder->isDir()) {
+    emit folderSelected(NULL); // Root has been selected
+  }
+  else emit folderSelected(folder);
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
   KConfig* conf = app->config();
-  int i;
-  QCString key;
 
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
 
-  for (i=0; i<2; i++)
-  {
-    key.sprintf("Column-%d", i);
-    conf->writeEntry(key, columnWidth(i));
-  }
-
+  setColumnWidth( 0, size().width() );
   KMFolderTreeInherited::resizeEvent(e);
 }
 
+//-----------------------------------------------------------------------------
+QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
+{
+  QListViewItemIterator it( this );
+  while (it.current()) {
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (fti->folder == folder) {
+      return it.current();
+    }
+    ++it;
+  }
+  return 0;
+}
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotRightButtonPressed(QListViewItem* aItem,
-					  const QPoint& aPos, int)
+// Handle RMB press, show pop up menu
+void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* event)
 {
-  KMFolderTreeItem* it = (KMFolderTreeItem*)aItem;
-  if (!it) return;
-
-  setCurrentItem(it);
-  setSelected(it, true);
+  if (!(event->button() & RightButton))
+    return;
+  QListViewItem *lvi = itemAt( contentsToViewport( event->pos()));
+  if (!lvi)
+    return;
+  setCurrentItem( lvi );
+  setSelected( lvi, TRUE );
 
   if (!topLevelWidget()) return; // safe bet
-  QPopupMenu *folderMenu = ((KMMainWin*)topLevelWidget())->folderMenu();
-  folderMenu->exec(aPos, 0);
+
+  QPopupMenu *folderMenu = new QPopupMenu;
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
+  if (!fti->folder)
+    return;
+
+  if (fti->folder && !fti->folder->isSystemFolder()) {
+    folderMenu->insertItem(i18n("&Create Child Folder..."), this,
+			   SLOT(addChildFolder()));
+    folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
+			   SLOT(slotModifyFolder()));
+  }
+  folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
+			 SLOT(slotCompactFolder()));
+  folderMenu->insertSeparator();
+  folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
+			 SLOT(slotEmptyFolder()));
+  if (fti->folder && !fti->folder->isSystemFolder()) {
+  folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
+			 SLOT(slotRemoveFolder()));
+  }
+  folderMenu->exec (QCursor::pos(), 0);
+  delete folderMenu;
 }
 
-
-//=============================================================================
-//=============================================================================
-KMFolderTreeItem::KMFolderTreeItem(KMFolderTreeItem* i, const QString& str):
-  QListViewItem(i, str)
+//-----------------------------------------------------------------------------
+// Create a child folder.
+// Requires creating the appropriate subdirectory and show a dialog
+void KMFolderTree::addChildFolder()
 {
-  mFolder = NULL;
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(currentItem());
+  KMFolder *aFolder = fti->folder;
+  if (fti->folder)
+    if (!fti->folder->createChildFolder())
+      return;
+
+  KMFolderDir *dir = &(folderMgr->dir());
+  if (fti->folder)
+    dir = fti->folder->child();
+
+  KMFolderDialog *d;
+  d = new KMFolderDialog(0, dir, 
+			 app->mainWidget(), i18n( "New Child Folder" ));
+
+  if (d->exec()) {
+    QListViewItem *qlvi = indexOfFolder( aFolder );
+    if (qlvi) {
+      qlvi->setOpen(TRUE);
+      setCurrentItem( qlvi );
+    }
+  }
 }
+
+//-----------------------------------------------------------------------------
+// Returns whether a folder directory should be open as specified in the
+// config file. The root is always open
+bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
+{
+  KConfig* config = app->config();
+  KMFolder *folder = fti->folder;
+  if (folder)
+    return TRUE;
+  int pathLen = folder->path().length() - folderMgr->basePath().length();
+  QString path = folder->path().right( pathLen );
+
+  if (!path.isEmpty())
+    path = path.right( path.length() - 1 ) + "/";
+  config->setGroup("Folder-" + path + folder->name());
+  return config->readBoolEntry("isOpen", false);
+} 
+
+//-----------------------------------------------------------------------------
+// Saves open/closed state of a folder directory into the config file
+void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
+{
+  KConfig* config = app->config();
+  KMFolder *folder = fti->folder;
+  if (!folder)
+    return;
+  int pathLen = folder->path().length() - folderMgr->basePath().length();
+  QString path = folder->path().right( pathLen );
+
+  if (!path.isEmpty())
+    path = path.right( path.length() - 1 ) + "/";
+  config->setGroup("Folder-" + path + folder->name());
+  config->writeEntry("isOpen", fti->isOpen());
+} 
 
 
 //-----------------------------------------------------------------------------
-KMFolderTreeItem::KMFolderTreeItem(KMFolderTree* t, const QString& str):
-  QListViewItem(t, str)
+// Drag and Drop handling -- based on the Troll Tech dirview example
+
+void KMFolderTree::openFolder()
 {
-  mFolder = NULL;
+    autoopen_timer.stop();
+    if ( dropItem && !dropItem->isOpen() ) {
+        dropItem->setOpen( TRUE );
+        dropItem->repaint();
+    }
 }
+
+static const int autoopenTime = 750;
+
+void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
+{
+  if ( !KMHeaderToFolderDrag::canDecode(e) ) {
+        e->ignore();
+        return;
+  }
+  
+  oldCurrent = currentItem();
+  
+  QListViewItem *i = itemAt( contentsToViewport(e->pos()) );
+  if ( i ) {
+    dropItem = i;
+    autoopen_timer.start( autoopenTime );
+  }
+  disconnect(this, SIGNAL(currentChanged(QListViewItem*)),
+	     this, SLOT(doFolderSelected(QListViewItem*)));
+}
+
+static const int autoscroll_margin = 16;
+static const int initialScrollTime = 30;
+static const int initialScrollAccel = 5;
+
+void KMFolderTree::startAutoScroll()
+{
+    if ( !autoscroll_timer.isActive() ) {
+        autoscroll_time = initialScrollTime;
+        autoscroll_accel = initialScrollAccel;
+        autoscroll_timer.start( autoscroll_time );
+    }
+}
+
+void KMFolderTree::stopAutoScroll()
+{
+    autoscroll_timer.stop();
+}
+
+void KMFolderTree::autoScroll()
+{
+    QPoint p = viewport()->mapFromGlobal( QCursor::pos() );
+
+    if ( autoscroll_accel-- <= 0 && autoscroll_time ) {
+        autoscroll_accel = initialScrollAccel;
+        autoscroll_time--;
+        autoscroll_timer.start( autoscroll_time );
+    }
+    int l = QMAX(1,(initialScrollTime-autoscroll_time));
+
+    int dx=0,dy=0;
+    if ( p.y() < autoscroll_margin ) {
+        dy = -l;
+    } else if ( p.y() > visibleHeight()-autoscroll_margin ) {
+        dy = +l;
+    }
+    if ( p.x() < autoscroll_margin ) {
+        dx = -l;
+    } else if ( p.x() > visibleWidth()-autoscroll_margin ) {
+        dx = +l;
+    }
+    if ( dx || dy ) {
+        scrollBy(dx,dy);
+    } else {
+        stopAutoScroll();
+    }
+}
+
+void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
+{
+    if ( !KMHeaderToFolderDrag::canDecode(e) ) {
+        e->ignore();
+        return;
+    }
+
+    QPoint vp = contentsToViewport(e->pos());
+    QRect inside_margin(autoscroll_margin, autoscroll_margin,
+                        visibleWidth()-autoscroll_margin*2,
+                        visibleHeight()-autoscroll_margin*2);
+    QListViewItem *i = itemAt( vp );
+    if ( i ) {
+        setSelected( i, TRUE );
+        if ( !inside_margin.contains(vp) ) {
+            startAutoScroll();
+            e->accept(QRect(0,0,0,0)); // Keep sending move events
+            autoopen_timer.stop();
+        } else {
+            e->accept();
+            if ( i != dropItem ) {
+                autoopen_timer.stop();
+                dropItem = i;
+                autoopen_timer.start( autoopenTime );
+            }
+        }
+        switch ( e->action() ) {
+	    case QDropEvent::Copy:
+            break;
+	    case QDropEvent::Move:
+            e->acceptAction();
+            break;
+	    case QDropEvent::Link:
+            e->acceptAction();
+            break;
+	    default:
+            ;
+        }
+    } else {
+        e->ignore();
+        autoopen_timer.stop();
+        dropItem = 0L;
+    }
+}
+
+void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
+{
+    autoopen_timer.stop();
+    stopAutoScroll();
+    dropItem = 0L;
+
+    setCurrentItem( oldCurrent );
+    setSelected( oldCurrent, TRUE );
+    connect(this, SIGNAL(currentChanged(QListViewItem*)),
+	    this, SLOT(doFolderSelected(QListViewItem*)));
+}
+
+void KMFolderTree::contentsDropEvent( QDropEvent *e )
+{
+    autoopen_timer.stop();
+    stopAutoScroll();
+
+    QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
+    if ( item ) {
+        QString str;
+	KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
+	if ((fti != oldCurrent) && (fti->folder))
+	  emit folderDrop(fti->folder);
+	e->accept();
+    } else
+      e->ignore();
+
+    // Begin this wasn't necessary in QT 2.0.2
+    dropItem = 0L;
+
+    setCurrentItem( oldCurrent );
+    setSelected( oldCurrent, TRUE );
+    connect(this, SIGNAL(currentChanged(QListViewItem*)),
+	    this, SLOT(doFolderSelected(QListViewItem*)));
+    // End this wasn't necessary in QT 2.0.2
+}
+
+#include "kmfoldertree.moc"
 

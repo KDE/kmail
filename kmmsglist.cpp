@@ -240,7 +240,6 @@ void KMMsgList::sort(SortField aField, bool aDescending)
 #ifndef SLOW_SORT
   qsort(0, mHigh-1, aField, aDescending);
 #else /*SLOW_SORT*/
-  debug("KMMsgList::sort()");
 
   KMMsgBasePtr sortList[mHigh];
   int i;

@@ -3,30 +3,59 @@
 
 #include <qwidget.h>
 #include <qstrlist.h>
-#include <ktablistbox.h>
+#define private public
+#include <qlistview.h>
+#include <qarray.h>
+#include <qmap.h>
+#include <qdragobject.h>
 #include "kmmessage.h"
 
 class KMFolder;
 class KMMessage;
 class KMMainWin;
 class QPalette;
+class KMHeaderItem;
+class QPixmap;
+class QIconSet;
 
 typedef QList<KMMessage> KMMessageList;
+typedef QMap<int,KMFolder*> KMMenuToFolder;
 
-#define KMHeadersInherited KTabListBox
-class KMHeaders : public KTabListBox
+// A special drag class for header list to folder tree DnD operations
+class KMHeaderToFolderDrag: public QStoredDrag {
+public:
+    KMHeaderToFolderDrag( QWidget * parent = 0, const char * name = 0 );
+    ~KMHeaderToFolderDrag() {};
+
+    static bool canDecode( QDragMoveEvent* e );
+};
+
+// Information shared by all items in a list view
+struct KMPaintInfo {
+  bool pixmapOn;
+  QPixmap pixmap; 
+  QColor colFore;
+  QColor colBack;
+  QColor colNew;
+  QColor colUnread;
+  bool orderOfArrival;
+};
+
+#define KMHeadersInherited QListView
+class KMHeaders : public QListView
 {
   Q_OBJECT
+    friend KMHeaderItem; // For easy access to the pixmaps
 
 public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
   virtual ~KMHeaders();
 
+  // A new folder has been selected update the list of headers shown
   virtual void setFolder(KMFolder *);
-  KMFolder* folder(void) { return mFolder; }
 
-  /** Change part of the contents of a line */
-  virtual void changeItemPart (char c, int itemIndex, int column);
+  // Return the folder whose message headers are being displayed
+  KMFolder* folder(void) { return mFolder; }
 
   /** Set current message. If id<0 then the first message is shown,
     if id>count() the last message is shown. */
@@ -70,36 +99,68 @@ public:
 
   /** Read config options. */
   virtual void readConfig(void);
+  
+  // Refresh the list of message headers shown
+  virtual void reset(void);
 
-  virtual void setPalette(const QPalette&);
+  // Scroll to show new mail
+  void showNewMail();
+
+  // Return the current list view item
+  virtual KMHeaderItem* currentHeaderItem();
+  // Return the index of the message corresponding to the current item
+  virtual int currentItemIndex();
+  // Set the current item to the one corresponding to the given msg id
+  virtual void setCurrentItemByIndex( int msgIdx );
+  // Return the message id of the top most visible item
+  virtual int topItemIndex();
+  // Make the item corresponding to the message with the given id the
+  // top most visible item.
+  virtual void setTopItemByIndex( int aMsgIdx );
 
 signals:
+  // emitted when the list view item corresponding to this message
+  // has been selected
   virtual void selected(KMMessage *);
+  // emitted when the list view item corresponding to this message
+  // has been double clicked
   virtual void activated(KMMessage *);
 
-
 public slots:
-  void selectMessage(int msgId, int colId);
-  void highlightMessage(int msgId, int colId);
-  void slotRMB(int idx, int colId);
+  void workAroundQListViewLimitation();
+
+  // For when a list view item has been double clicked
+  void selectMessage(QListViewItem*);
+  // For when a list view item has been selected 
+  void highlightMessage(QListViewItem*);
+  // For when righ mouse button is pressed
+  void slotRMB();
+  // Refresh list view item corresponding to the messae with the given id
   void msgHeaderChanged(int msgId);
+  // For when the list of messages in a folder has changed
   void msgChanged();
+  // For when the message with the given message id has been added to a folder
   void msgAdded(int);
+  // For when the message with the given id has been removed for a folder
   void msgRemoved(int);
-  void headerClicked(int);
-  void sortAndShow();
+  // Make the next header visible scrolling if necessary
   void nextMessage();
+  // Make the previous header visible scrolling if necessary
   void prevMessage();
-  void nextMessageMark();
-  void prevMessageMark();
+  // Make the nextUnread message header visible scrolling if necessary
   void nextUnreadMessage();
+  // Make the previous message header visible scrolling if necessary
   void prevUnreadMessage();
-
+  
 protected:
-  void makeHeaderVisible();
+  static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent, 
+    *pixQueued, *pixFwd;
 
-  virtual bool prepareForDrag (int col, int row, char** data, int* size,
-			       int* type);
+  // Overrided to support backing pixmap
+  virtual void paintEmptyArea( QPainter * p, const QRect & rect );
+
+  // Ensure the current item is visible
+  void makeHeaderVisible();
 
   /** Find next/prev unread message. Starts at currentItem() if startAt
     is unset. */
@@ -117,25 +178,65 @@ protected:
   /** Write per-folder config options. */
   virtual void writeFolderConfig(void);
 
-  virtual void mouseReleaseEvent(QMouseEvent*);
+  /* Handle shift and control selection */
+  virtual void contentsMousePressEvent(QMouseEvent*);
+  virtual void contentsMouseReleaseEvent(QMouseEvent* e);
 
-  /** Sort message list by current sort settings. */
-  virtual void sort(void);
+  /* Unselect all items except one */
+  virtual void clearSelectionExcept( QListViewItem *exception );
 
-  /** Returns string for listbox from given message. */
-  virtual QString msgAsLbxString(KMMsgBase*) const;
+  /* Select all items in list from begin to end, return FALSE
+     if end occurs before begin in the list */
+  virtual bool shiftSelection( QListViewItem *begin, QListViewItem *end );  
+
+  /** Called when a header is clicked */
+  virtual void setSorting( int column, bool ascending = TRUE);
+
+  // To initiate a drag operation
+  void contentsMouseMoveEvent( QMouseEvent *e );
+
+protected slots:
+  // Move messages corresponding to the selected items to the folder
+  // corresponding to the given menuId
+  virtual void moveSelectedToFolder( int menuId );
+  // Same thing but copy 
+  virtual void copySelectedToFolder( int menuId );
 
 private:
+  // Is equivalent to clearing the list and inserting an item for
+  // each message in the current folder
   virtual void updateMessageList(void);
-  KMFolder* mFolder;
-  KMMainWin* mOwner;
-  int mTopItem;
-  int mCurrentItem;
-  int getMsgIndex;
-  bool getMsgMulti;
-  KMMessageList mSelMsgList;
+
+  KMFolder* mFolder;            // Currently associated folder
+  KMMainWin* mOwner;            // The KMMainWin for status bar updates
+
+  int mTopItem;                 // Top most visible item
+  int mCurrentItem;             // Current item
+  QArray<KMHeaderItem*> mItems; // Map messages ids into KMHeaderItems
+
+  int getMsgIndex;              // Updated as side effect of KMHeaders::getMsg
+  bool getMsgMulti;             // ditto
+  KMHeaderItem* getMsgItem;     // ditto
+  KMMessageList mSelMsgList;    // KMHeaders::selectedMsgs isn't reentrant
+
+  QListViewItem *beginSelection, *endSelection; // For shift selection
+
+  KMPaintInfo mPaintInfo;       // Current colours and backing pixmap
+
+  int mSortCol;
   bool mSortDescending;
+  static QIconSet *up, *down;   // Icons shown in header
+  KMMenuToFolder mMenuToFolder; // Map menu id into a folder
+
+  int mousePressed;             // Drag and drop support
+  QPoint presspos;              // ditto
 };
 
 #endif
+
+
+
+
+
+
 

@@ -1,16 +1,23 @@
 // kmfolderdia.cpp
 
 #include <qstring.h>
-#include <qcstring.h>
 #include <qlabel.h>
+#include <qdir.h>
+#include <qfile.h>
+#include <qtextstream.h>
 #include <kapp.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qlistbox.h>
+#include <qmessagebox.h>
 #include <qlayout.h>
+#include <qhbox.h>
 
 #include "kmmainwin.h"
 #include "kmglobal.h"
+#include "kmaccount.h"
+#include "kmacctmgr.h"
+#include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 
 #include <assert.h>
@@ -20,51 +27,123 @@
 
 
 //-----------------------------------------------------------------------------
-KMFolderDialog::KMFolderDialog(const QCString& aPath, const QCString& aName,
+KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 			       QWidget *aParent, const QString& aCap):
-  KMFolderDialogInherited(KDialogBase::Plain, aCap, 
-			  KDialogBase::Ok|KDialogBase::Cancel,
-			  KDialogBase::Ok, aParent, 0, true)
+  KMFolderDialogInherited( aParent, "KMFolderDialog", TRUE,
+			   aCap,  KDialogBase::Ok|KDialogBase::Cancel ),
+  mFolderDir( aFolderDir )
 {
+  KMAccount* acct;
   QLabel *label;
-  QGridLayout* grid;
-  QString str;
-  int ulx, uly, lrx, lry; 
+  QString type;
 
-  mPath = aPath;
+  folder = (KMAcctFolder*)aFolder;
 
-  grid = new QGridLayout(this, 3, 2, 20, 6, "grid");
+  QHBox *hb = new QHBox(this );
+  hb->setSpacing( 10 );
+  hb->setMargin( 10 );
 
-  label = new QLabel(i18n("Path:"), this);
-  label->setMinimumSize(label->sizeHint());
-  grid->addWidget(label, 0, 0);
+  label = new QLabel(hb);
+  label->setText(i18n("Name:"));
+  
+  nameEdit = new QLineEdit(hb);  
+  nameEdit->setFocus();
+  nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
+  nameEdit->setMinimumSize(nameEdit->sizeHint());
 
-  label = new QLabel(aPath, this);
-  label->setMinimumSize(label->sizeHint());
-  grid->addWidget(label, 0, 1);
+  new QFrame( hb ); // Filler
 
-  mNameEdit = new QLineEdit(this);
-  mNameEdit->setMinimumSize(mNameEdit->sizeHint());
-  mNameEdit->setFocus();
-  if (aName.isEmpty()) str = i18n("Unnamed");
-  else str = aName;
-  mNameEdit->setText(str);
-  grid->addWidget(mNameEdit, 1, 1);
+  label = new QLabel(hb);
+  label->setText( i18n("File under:" ));
 
-  label = new QLabel(i18n("Name:"), this);
-  label->setMinimumSize(label->sizeHint().width(),mNameEdit->sizeHint().height());
-  grid->addWidget(label, 1, 0);
+  fileInFolder = new QComboBox(hb);
+  QStringList str;
+  folderMgr->createFolderList( &str, &mFolders  );
+  str.prepend( i18n( "Top Level" ));
+  KMFolder *curFolder;
+  int i = 1;
+  fileInFolder->insertStringList( str );
+  for (curFolder = mFolders.first(); curFolder; curFolder = mFolders.next()) {
+    if (curFolder->child() == aFolderDir)
+      fileInFolder->setCurrentItem( i  );
+    ++i;
+  }
 
-  getBorderWidths(ulx, uly, lrx, lry);
-  grid->addRowSpacing(2, lry);
+  setMainWidget( hb );
+  hb->setMinimumSize( hb->sizeHint() );
 
-  grid->activate();
+  setResizeMode( KDialogBase::ResizeMinimum );
+
 }
 
 
 //-----------------------------------------------------------------------------
-QCString KMFolderDialog::folderName() const
+void KMFolderDialog::slotOk()
 {
-  return QCString(mNameEdit->text());
-}
+  QString acctName;
+  KMAccount* acct;
+  unsigned int i;
+  QString fldName, oldFldName;
+  KMFolderDir *selectedFolderDir = &(folderMgr->dir());
+  int curFolder = fileInFolder->currentItem();
 
+  if (folder) oldFldName = folder->name();
+  if (*nameEdit->text()) fldName = nameEdit->text();
+  else fldName = oldFldName;
+  if (fldName.isEmpty()) fldName = i18n("unnamed");
+  if (curFolder != 0)
+    selectedFolderDir = mFolders.at(curFolder - 1)->createChildFolder();
+
+  QString message = i18n( "Failed to create folder '" ) + 
+    (const char*)fldName + 
+    i18n( "', folder already exists." );
+  if ((selectedFolderDir->hasNamedFolder(fldName)) &&
+      (!((folder) && 
+	 (selectedFolderDir == folder->parent()) &&
+	 (folder->name() == fldName)))) {
+    QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+    return;
+  }
+
+  message = i18n( "Cannot move a parent folder into a child folder." );
+  KMFolderDir* folderDir = selectedFolderDir;
+
+
+  // Buggy?
+  if (folder && folder->child())
+    while ((folderDir != &folderMgr->dir()) &&
+	   (folderDir != folder->parent())){
+      if (folderDir->findRef( folder ) != -1) {
+	QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+	return;
+      }
+      folderDir = folderDir->parent();
+    }
+  // End buggy?
+
+
+  if (folder && folder->child() && (selectedFolderDir) &&
+      (selectedFolderDir->path().find( folder->child()->path() + "/" ) == 0)) {
+    QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+    return;
+  }
+
+  if (folder && folder->child() && (selectedFolderDir == folder->child())) {
+    QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+    return;
+  }
+
+  if (!folder) {
+    folder = (KMAcctFolder*)folderMgr->createFolder(fldName, FALSE, mFolderDir );
+  }
+  else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
+    {
+      if (folder->parent() != selectedFolderDir)
+	folder->rename(fldName, selectedFolderDir );
+      else
+	folder->rename(fldName);
+      folderMgr->contentsChanged();
+    }
+
+  KMFolderDialogInherited::slotOk();
+}

@@ -21,7 +21,6 @@ class KConfig;
 class KMFolder;
 class KMMessage;
 
-
 #define KMFilterActionInherited QObject
 class KMFilterAction: public QObject
 {
@@ -34,11 +33,12 @@ public:
   /** Returns nationalized label */
   virtual const QString label(void) const = 0;
 
-  /** Execute action on given message. Returns TRUE if the message
-   * shall be processed by further filters and FALSE otherwise. 
+  /** Execute action on given message. Returns 2 if a critical error
+   *  has occurred (eg disk full), 1 if the message
+   * shall be processed by further filters and 0 otherwise. 
    * Sets stopIt to TRUE to stop applying filters to this msg and
    * do not change it otherwise. */
-  virtual bool process(KMMessage* msg, bool& stopIt) = 0;
+  virtual int process(KMMessage* msg, bool& stopIt) = 0;
 
   /** Creates a widget for setting the filter action parameter. Also
    * sets the value of the widget. */
@@ -93,12 +93,11 @@ public:
   /** Creates a details button "..." for the current filter action. */
   virtual QPushButton* createDetailsButton(void) = 0;
 
-  /** Sets the label for the current fiter action parameter. */
-  //virtual void setLabel(const QString label) = 0;
-
   /** Creates a combobox with a list of folders for the current filter 
     action, with curFolder as the current entry (if given). */
-  virtual QComboBox* createFolderCombo(const QString curFolder=QString::null) = 0;
+  virtual QComboBox* createFolderCombo( QStringList *str, 
+					QList<KMFolder> *folders,
+					KMFolder *curFolder ) = 0;
 
   /** Creates a line-edit field with txt in it. */
   virtual QLineEdit* createEdit(const QString txt=0) = 0;

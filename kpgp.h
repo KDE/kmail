@@ -170,6 +170,7 @@ private:
   bool havePGP5;
   bool haveGpg;
   bool havePassPhrase;
+  bool needPublicKeys;
 };
 
 // -------------------------------------------------------------------------

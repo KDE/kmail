@@ -21,6 +21,7 @@
 #include "kmsender.h"
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
+#include "kwm.h"
 
 #include <qclipboard.h>
 #include <qaccel.h>
@@ -37,6 +38,7 @@
 #include <qsplitter.h>
 #include <krun.h>
 #include <kmenubar.h>
+#include <qtimer.h>
 
 #include <errno.h>
 #include <stdlib.h>
@@ -50,19 +52,16 @@
 KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
 {
-  int idx;
-
   // must be the first line of the constructor:
   mStartupDone = FALSE;
-
-  mFolderMenu = NULL;
+  QListViewItem* idx;
   mIntegrated  = TRUE;
   mFolder = NULL;
   mHorizPannerSep = new QValueList<int>;
   mVertPannerSep = new QValueList<int>;
   *mHorizPannerSep << 1 << 1;
   *mVertPannerSep << 1 << 1;
-
+  
   setMinimumSize(400, 300);
 
   readPreConfig();
@@ -75,8 +74,20 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupStatusBar();
 
   // set active folder to `inbox' folder
-  mFolderTree->setCurrentFolder(inboxFolder);
+  //  mHeaders->setFolder(0);
+  idx = mFolderTree->indexOfFolder(inboxFolder);
+  if (idx!=0) {
+    mFolderTree->setCurrentItem(idx);
+    mFolderTree->setSelected(idx,TRUE);
 
+    // I can't set the contents position until after the list
+    // view has been shown at least once :-(
+    QTimer *timer = new QTimer( this );
+    connect( timer, SIGNAL(timeout()),
+	     mHeaders, SLOT(workAroundQListViewLimitation()) );
+    timer->start( 0, TRUE );  
+  }
+  
   connect(msgSender, SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
   connect(acctMgr, SIGNAL( newMail(KMAccount *)),
@@ -90,19 +101,18 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
-  debug("~KMMainWin()");
-
   writeConfig();
-
-  if (mHeaders)   delete mHeaders;
-  if (mToolBar)   delete mToolBar;
-  if (mMenuBar)   delete mMenuBar;
-  if (mStatusBar) delete mStatusBar;
+  
+  if (mHeaders)    delete mHeaders;
+  if (mToolBar)    delete mToolBar;
+  if (mMenuBar)    delete mMenuBar;
+  if (mStatusBar)  delete mStatusBar;
+  if (mFolderTree) delete mFolderTree;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readPreConfig()
+void KMMainWin::readPreConfig(void)
 {
   KConfig *config = app->config();
   QString str;
@@ -113,7 +123,7 @@ void KMMainWin::readPreConfig()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readConfig()
+void KMMainWin::readConfig(void)
 {
   KConfig *config = app->config();
   bool oldLongFolderList=false;
@@ -152,14 +162,21 @@ void KMMainWin::readConfig()
 
   mMsgView->readConfig();
   mHeaders->readConfig();
+  mFolderTree->readConfig();
 
   // Re-activate panners
-  if (mStartupDone && oldLongFolderList != mLongFolderList)
+  if (mStartupDone)
   {
-    activatePanners();
+    if (oldLongFolderList != mLongFolderList)
+      activatePanners();
     kbp->busy();
-    // mFolderTree->setCurrentItem(mFolderTree->currentItem());
-    mMsgView->clear();
+    mFolderTree->reload();
+    QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
+    if (qlvi!=0) {
+      mFolderTree->setCurrentItem(qlvi);
+      mFolderTree->setSelected(qlvi,TRUE);
+    }
+    mMsgView->setMsg( mMsgView->msg(), TRUE );
     mHeaders->setFolder(mFolder);
     kbp->idle();
     show();
@@ -168,26 +185,33 @@ void KMMainWin::readConfig()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::writeConfig()
+void KMMainWin::writeConfig(void)
 {
   QString s;
   KConfig *config = app->config();
   QRect r = geometry();
 
   mMsgView->writeConfig();
+  mFolderTree->writeConfig();
 
   config->setGroup("Geometry");
 
   s.sprintf("%i,%i", r.width(), r.height());
   config->writeEntry("MainWin", s);
 
-  s.sprintf("%i,%i", mHeaders->height(), mFolderTree->width());
+  // Get those panner sizes right!
+  s.sprintf("%i,%i", 
+	    (mHorizPanner->sizes()[0] * r.height() ) / 
+	    (mHorizPanner->sizes()[0] + mHorizPanner->sizes()[1]), 
+	    ( mVertPanner->sizes()[0] * r.width() ) /
+	    (mVertPanner->sizes()[0] + mVertPanner->sizes()[1])
+	    ); 
   config->writeEntry("Panners", s);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::createWidgets()
+void KMMainWin::createWidgets(void)
 {
   QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
   QAccel *accel = new QAccel(this);
@@ -218,12 +242,8 @@ void KMMainWin::createWidgets()
 	  this, SLOT(slotMsgActivated(KMMessage*)));
   accel->connectItem(accel->insertItem(Key_Left),
 		     mHeaders, SLOT(prevMessage()));
-  accel->connectItem(accel->insertItem(Key_Right),
+  accel->connectItem(accel->insertItem(Key_Right), 
 		     mHeaders, SLOT(nextMessage()));
-  accel->connectItem(accel->insertItem(Key_Left+SHIFT),
-                     mHeaders, SLOT(prevMessageMark()));
-  accel->connectItem(accel->insertItem(Key_Right+SHIFT),
-                     mHeaders, SLOT(nextMessageMark()));
 
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
@@ -233,13 +253,15 @@ void KMMainWin::createWidgets()
 	  this, SLOT(slotMsgPopup(const char*,const QPoint&)));
   connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
 	  this, SLOT(slotUrlClicked(const char*,int)));
+  connect(mMsgView, SIGNAL(showAtmMsg(KMMessage *)),
+	  this, SLOT(slotAtmMsg(KMMessage *)));
   accel->connectItem(accel->insertItem(Key_Up),
 		     mMsgView, SLOT(slotScrollUp()));
-  accel->connectItem(accel->insertItem(Key_Down),
+  accel->connectItem(accel->insertItem(Key_Down), 
 		     mMsgView, SLOT(slotScrollDown()));
   accel->connectItem(accel->insertItem(Key_Prior),
 		     mMsgView, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Key_Next),
+  accel->connectItem(accel->insertItem(Key_Next), 
 		     mMsgView, SLOT(slotScrollNext()));
   accel->connectItem(accel->insertItem(Key_Delete),
 		     this, SLOT(slotDeleteMsg()));
@@ -248,11 +270,13 @@ void KMMainWin::createWidgets()
   mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
+  connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
+	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::activatePanners()
+void KMMainWin::activatePanners(void)
 {
   // glue everything together
   if (mLongFolderList)
@@ -264,7 +288,7 @@ void KMMainWin::activatePanners()
     setView(mVertPanner);
   }
   else
-  {
+  {    
     mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
     mHeaders->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
     mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
@@ -291,8 +315,10 @@ void KMMainWin::statusBarChangeItem(int aId, const char* aText)
 void KMMainWin::statusMsg(const QString& aText)
 {
   mStatusBar->changeItem(aText, mMessageStatusId);
+  /* Just causes to much trouble with event driven repainting.
   kapp->flushX();
   kapp->processEvents(100);
+  */
 }
 
 
@@ -313,7 +339,7 @@ void KMMainWin::show()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotClose()
+void KMMainWin::slotClose() 
 {
   close(TRUE);
 }
@@ -372,93 +398,44 @@ void KMMainWin::slotUnimplemented()
   warning(i18n("Sorry, but this feature\nis still missing"));
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCreateFolder()
+void KMMainWin::slotAddFolder() 
 {
-  KMFolder* fld = mFolderTree->currentFolder();
-  QCString path;
-  if (fld) path = fld->path();
+  KMFolderDialog *d;
 
-  KMFolderDialog dlg(path, 0, this, i18n("Create Folder"));
-  while (dlg.exec())
-    if (folderMgr->createFolder(dlg.folderName())) break;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotCreateDirectory()
-{
-  KMFolder* fld = mFolderTree->currentFolder();
-  QCString path;
-  if (fld) path = fld->path();
-
-  KMFolderDialog dlg(path, 0, this, i18n("Create Directory"));
-  while (dlg.exec())
-    if (folderMgr->createDirectory(dlg.folderName())) break;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotRename()
-{
-  KMFolder* fld = mFolderTree->currentFolder();
-  QCString path, fname;
-  int rc;
-
-  if (fld) path = fld->path();
-  else return;
-
-  if (fld->isDir())
-  {
-    KMFolderDir* fdir = (KMFolderDir*)fld;
-    KMFolderDialog dlg(path, fdir->name(), this, i18n("Rename Directory"));
-    while (dlg.exec())
-    {
-      fname = dlg.folderName();
-      rc = fdir->rename(fname);
-      if (!rc) break;
-      warning(i18n("Cannot rename directory to '%s':\n%s"),
-	      (const char*)fname, strerror(rc));
-    }
-  }
-  else
-  {
-    KMFolderDialog dlg(path, fld->name(), this, i18n("Rename Folder"));
-
-    while (dlg.exec())
-    {
-      fname = dlg.folderName();
-      rc = fld->rename(fname);
-      if (!rc) break;
-      warning(i18n("Cannot rename folder to '%s':\n%s"),
-	      (const char*)fname, strerror(rc));
+  d = new KMFolderDialog(0, &(folderMgr->dir()), 
+			 this, i18n("Create Folder"));
+  if (d->exec()) {
+    mFolderTree->reload();
+    QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
+    if (qlvi) {
+      qlvi->setOpen(TRUE);
+      mFolderTree->setCurrentItem( qlvi );
     }
   }
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCheckMail()
+void KMMainWin::slotCheckMail() 
 {
   bool rc;
 
 
- if(checkingMail)
+ if(checkingMail) 
  {
     QMessageBox::information(0,i18n("KMail error"),
 		     i18n("Already checking for mail!"));
     return;
   }
-
+    
  checkingMail = TRUE;
-
+ 
  kbp->busy();
- rc = acctMgr->checkMail();
+ rc = acctMgr->checkMail(FALSE);
  kbp->idle();
-
+ 
  if (!rc) statusMsg(i18n("No new mail available"));
-
+ 
  if(mSendOnCheck) slotSendQueued();
  checkingMail = FALSE;
 }
@@ -484,26 +461,26 @@ void KMMainWin::slotCheckOneAccount(int item)
 		     i18n("Already checking for mail!"));
     return;
   }
-
+    
   checkingMail = TRUE;
-
+   
   kbp->busy();
   rc = acctMgr->intCheckMail(item);
   kbp->idle();
-
+  
   if (!rc) warning(i18n("No new mail available"));
   if(mSendOnCheck)
     slotSendQueued();
 
-  checkingMail = FALSE;
+  checkingMail = FALSE; 
 
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotNewMail(KMAccount *)
-{
-  mHeaders->sortAndShow();
+void KMMainWin::slotNewMail(KMAccount *) {
+  // Todo:
+  // scroll mHeaders to show new items if current item would
+  // still be visible
+  //  mHeaders->showNewMail();
 }
 
 
@@ -520,6 +497,25 @@ void KMMainWin::slotCompose()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotModifyFolder()
+{
+  KMFolderDialog *d;
+
+  if (!mFolder) return;
+  d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(), 
+			 this, i18n("Modify Folder") );
+  if (d->exec()) {
+    mFolderTree->reload();
+    QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
+    if (qlvi) {
+      qlvi->setOpen(TRUE);
+      mFolderTree->setCurrentItem( qlvi );
+    }
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotEmptyFolder()
 {
   QString str;
@@ -528,18 +524,28 @@ void KMMainWin::slotEmptyFolder()
   if (!mFolder) return;
 
   kbp->busy();
+
+  // begin of critical part
+  // from here to "end..." no signal may change to another mFolder, otherwise
+  // the wrong folder will be truncated in expunge (dnaber, 1999-08-29)
   mFolder->open();
   mHeaders->setFolder(NULL);
   mMsgView->clear();
 
   if (mFolder != trashFolder)
   {
+    // FIXME: If we run out of disk space mail may be lost rather
+    // than moved into the trash -sanders
     while ((msg = mFolder->take(0)) != NULL)
       trashFolder->addMsg(msg);
-    statusMsg(i18n("Moved all messages into trash"));
   }
+
   mFolder->close();
   mFolder->expunge();
+  // end of critical
+  if (mFolder != trashFolder)
+    statusMsg(i18n("Moved all messages into trash"));
+
   mHeaders->setFolder(mFolder);
   kbp->idle();
 }
@@ -552,7 +558,6 @@ void KMMainWin::slotRemoveFolder()
   QDir dir;
 
   if (!mFolder) return;
-  debug("TYPE: %s", (const char*)mFolder->type());
   if (mFolder->isSystemFolder() || strcmp(mFolder->type(),"plain")!=0)
   {
     warning(i18n("Cannot remove a\nsystem folder."));
@@ -562,11 +567,20 @@ void KMMainWin::slotRemoveFolder()
   str = i18n("Are you sure you want to remove the folder\n"
 			     "\"%1\", discarding it's contents ?")
 			     .arg(mFolder->label());
-  if ((QMessageBox::information(this,i18n("Confirmation"),str, i18n( "Yes" ), i18n( "No" ), 0, 0, 1))==0)
+  if ((QMessageBox::information(this,i18n("Confirmation"),str, 
+				i18n( "Yes" ), i18n( "No" ), 0, 0, 1))==0)
   {
-    mHeaders->setFolder(NULL);
+    KMFolder *folderToDelete = mFolder;
+    QListViewItem *qlviCur = mFolderTree->currentItem();
+    QListViewItem *qlvi = qlviCur->itemAbove();
+    if (!qlvi)
+      qlvi = mFolderTree->currentItem()->itemBelow();
+    mHeaders->setFolder(0);
     mMsgView->clear();
-    folderMgr->remove(mFolder);
+    mFolderTree->setCurrentItem( qlvi );
+    mFolderTree->setSelected( qlvi, TRUE );
+    delete qlviCur;
+    folderMgr->remove(folderToDelete);
   }
 }
 
@@ -574,89 +588,89 @@ void KMMainWin::slotRemoveFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCompactFolder()
 {
-  int idx = mHeaders->currentItem();
+  int idx = mHeaders->currentItemIndex();
   if (mFolder)
   {
     kbp->busy();
     mFolder->compact();
     kbp->idle();
   }
-  mHeaders->setCurrentItem(idx);
+  mHeaders->setCurrentItemByIndex(idx);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotPrintMsg()
-{
-  if(mHeaders->currentItem() >= 0)
+{ 
+  if(mHeaders->currentItemIndex() >= 0)
     mMsgView->printMsg();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyToMsg()
-{
+{ 
   mHeaders->replyToMsg();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyAllToMsg()
-{
+{ 
   mHeaders->replyAllToMsg();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardMsg()
-{
+{ 
   mHeaders->forwardMsg();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotEditMsg()
+void KMMainWin::slotEditMsg() 
 {
   KMMessage *msg;
   int aIdx;
-
-  if(mFolder != outboxFolder)
+  
+  if(mFolder != outboxFolder) 
     {
       QMessageBox::information(0,i18n("KMail notification!"),
 		       i18n("Only messages in the outbox folder can be edited!"));
       return;
     }
-
-
-  if((aIdx = mHeaders->currentItem()) <= -1)
+    
+  
+  if((aIdx = mHeaders->currentItemIndex()) <= -1)
     return;
   if(!(msg = mHeaders->getMsg(aIdx)))
     return;
-
+  
   KMComposeWin *win = new KMComposeWin;
   win->setMsg(msg,FALSE);
   win->show();
 }
-
+  
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotResendMsg()
-{
+{ 
   mHeaders->resendMsg();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotDeleteMsg()
-{
+{ 
   mHeaders->deleteMsg();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotShowMsgSrc()
-{
+{ 
   KMMessage* msg = mHeaders->getMsg(-1);
   if (msg) msg->viewSource(i18n("Message as Plain Text"));
 }
@@ -664,7 +678,7 @@ void KMMainWin::slotShowMsgSrc()
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMoveMsg()
-{
+{ 
   KMFolderSelDlg dlg(i18n("Select Folder"));
   KMFolder* dest;
 
@@ -674,17 +688,22 @@ void KMMainWin::slotMoveMsg()
   mHeaders->moveMsgToFolder(dest);
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMoveMsgToFolder( KMFolder *dest)
+{ 
+  mHeaders->moveMsgToFolder(dest);
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotApplyFilters()
-{
+{ 
   mHeaders->applyFiltersOnMsg();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCopyMsg()
-{
+{ 
   KMFolderSelDlg dlg(i18n("Select Folder"));
   KMFolder* dest;
 
@@ -698,7 +717,7 @@ void KMMainWin::slotCopyMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSaveMsg()
 {
-  if(mHeaders->currentItem() == -1)
+  if(mHeaders->currentItemIndex() == -1)
     return;
   mHeaders->saveMsg(-1);
 }
@@ -735,7 +754,6 @@ void KMMainWin::slotViewChange()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetHeaderStyle(int id)
 {
-  if (!mMsgView) return;
   if(id <= 5)
   {
     mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
@@ -754,28 +772,13 @@ void KMMainWin::slotSetHeaderStyle(int id)
 //-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder)
 {
-  debug ("Entering folderSelected\n");
-  if(!aFolder)
-  {
-    debug("KMMainWin::folderSelected(): aFolder == NULL");
+  if (mFolder == aFolder)
     return;
-  }
-
-  if (mFolder == aFolder) return;
 
   kbp->busy();
-  if (aFolder->isDir())
-  {
-    mMsgView->clear();
-    mHeaders->setFolder(NULL);
-    mFolder = NULL;
-  }
-  else
-  {
-    mFolder = (KMFolder*)aFolder;
-    mMsgView->clear();
-    mHeaders->setFolder(mFolder);
-  }
+  mFolder = (KMFolder*)aFolder;
+  mMsgView->clear();
+  mHeaders->setFolder(mFolder);
   kbp->idle();
 }
 
@@ -783,9 +786,6 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
-  //assert(msg != NULL);
-  if(msg == NULL)
-    return;
   mMsgView->setMsg(msg);
 }
 
@@ -798,18 +798,57 @@ void KMMainWin::slotSetMsgStatus(int id)
 
 
 //-----------------------------------------------------------------------------
+//called from heders. Message must not be deleted on close
 void KMMainWin::slotMsgActivated(KMMessage *msg)
+{
+  KMReaderWin *win;
+  assert(msg != NULL);
+
+  win = new KMReaderWin;
+  showMsg(win, msg);
+}
+
+
+//called from reader win. message must be deleted on close
+void KMMainWin::slotAtmMsg(KMMessage *msg)
 {
   KMReaderWin *win;
 
   assert(msg != NULL);
 
   win = new KMReaderWin;
+  win->setAutoDelete(true); //delete on end
+  showMsg(win, msg);
+}
+
+
+void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
+{
+  KWM::setMiniIcon(win->winId(), kapp->miniIcon());
   win->setCaption(msg->subject());
-  win->resize(550,600);
+
   win->setMsg(msg);
+  win->resize(550,600);
+
+  connect(win, SIGNAL(statusMsg(const char*)),
+          this, SLOT(statusMsg(const char*)));
+  connect(win, SIGNAL(popupMenu(const char*,const QPoint&)),
+          this, SLOT(slotMsgPopup(const char*,const QPoint&)));
+  connect(win, SIGNAL(urlClicked(const char*,int)),
+          this, SLOT(slotUrlClicked(const char*,int)));
+
+  QAccel *accel = new QAccel(win);
+  accel->connectItem(accel->insertItem(Key_Up),
+                     win, SLOT(slotScrollUp()));
+  accel->connectItem(accel->insertItem(Key_Down),
+                     win, SLOT(slotScrollDown()));
+  accel->connectItem(accel->insertItem(Key_Prior),
+                     win, SLOT(slotScrollPrior()));
+  accel->connectItem(accel->insertItem(Key_Next),
+                     win, SLOT(slotScrollNext()));
   win->show();
 }
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCopyText()
@@ -823,9 +862,9 @@ void KMMainWin::slotCopyText()
 void KMMainWin::slotMarkAll() {
 
   int i;
-  for(i = 0; i < mHeaders->numRows(); i++)
-    mHeaders->markItem(i);
-
+  QListViewItem *item;
+  for (item = mHeaders->firstChild(); item; item = item->nextSibling())
+    mHeaders->setSelected( item, TRUE );
 }
 
 
@@ -917,7 +956,7 @@ void KMMainWin::slotUrlCopy()
     clip->setText(mUrlCurrent.mid(7,255));
     statusMsg(i18n("Address copied to clipboard."));
   }
-  else
+  else 
   {
     clip->setText(mUrlCurrent);
     statusMsg(i18n("URL copied to clipboard."));
@@ -939,7 +978,7 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
   QPopupMenu* menu = new QPopupMenu;
 
   mUrlCurrent = aUrl;
-
+  
 
   if (aUrl)
   {
@@ -973,18 +1012,18 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
   else
   {
     // popup somewhere else on the document
-    menu->insertItem(i18n("&Reply..."), this,
+    menu->insertItem(i18n("&Reply..."), this, 
 		     SLOT(slotReplyToMsg()));
-    menu->insertItem(i18n("Reply &All..."), this,
+    menu->insertItem(i18n("Reply &All..."), this, 
 		     SLOT(slotReplyAllToMsg()));
-    menu->insertItem(i18n("&Forward..."), this,
+    menu->insertItem(i18n("&Forward..."), this, 
 		     SLOT(slotForwardMsg()), Key_F);
     menu->insertSeparator();
-    menu->insertItem(i18n("&Move..."), this,
+    menu->insertItem(i18n("&Move..."), this, 
 		     SLOT(slotMoveMsg()), Key_M);
-    menu->insertItem(i18n("&Copy..."), this,
+    menu->insertItem(i18n("&Copy..."), this, 
 		     SLOT(slotCopyText()), Key_S);
-    menu->insertItem(i18n("&Delete"), this,
+    menu->insertItem(i18n("&Delete"), this, 
 		     SLOT(slotDeleteMsg()), Key_D);
     menu->popup(aPoint, 0);
   }
@@ -1005,43 +1044,22 @@ void KMMainWin::getAccountMenu()
 
 
 //-----------------------------------------------------------------------------
-QPopupMenu* KMMainWin::folderMenu()
-{
-  if (!mFolderMenu)
-  {
-    mFolderMenu = new QPopupMenu();
-    mFolderMenu->insertItem(i18n("&Create..."), this,
-			    SLOT(slotCreateFolder()));
-    mFolderMenu->insertItem(i18n("&Create Directory..."), this,
-			    SLOT(slotCreateDirectory()));
-    mFolderMenu->insertItem(i18n("&Rename..."), this,
-			    SLOT(slotRename()));
-    mFolderMenu->insertItem(i18n("C&ompact"), this,
-			    SLOT(slotCompactFolder()));
-    mFolderMenu->insertSeparator();
-    mFolderMenu->insertItem(i18n("&Empty"), this,
-			    SLOT(slotEmptyFolder()));
-    mFolderMenu->insertItem(i18n("&Remove"), this,
-			    SLOT(slotRemoveFolder()));
-  }
-  return mFolderMenu;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
   fileMenu = new QPopupMenu();
-  fileMenu->insertItem(i18n("New Composer"), this,
+  fileMenu->insertItem(i18n("New Composer"), this, 
 		       SLOT(slotCompose()), keys->openNew());
-  fileMenu->insertItem(i18n("New Mailreader"), this,
+  fileMenu->insertItem(i18n("New Mailreader"), this, 
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Save As..."), this,
 		       SLOT(slotSaveMsg()), keys->save());
   fileMenu->insertItem(i18n("Print..."), this,
 		       SLOT(slotPrintMsg()), keys->print());
+  fileMenu->insertSeparator();
+  fileMenu->insertItem(i18n("Compact all folders"), folderMgr,
+                        SLOT(compactAll()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Check Mail..."), this,
 		       SLOT(slotCheckMail()), CTRL+Key_L);
@@ -1057,14 +1075,14 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(i18n("Send Queued"), this,
 		       SLOT(slotSendQueued()));
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("&Settings..."), this,
+  fileMenu->insertItem(i18n("&Settings..."), this, 
 		       SLOT(slotSettings()));
-  fileMenu->insertItem(i18n("&Addressbook..."), this,
+  fileMenu->insertItem(i18n("&Addressbook..."), this, 
 		       SLOT(slotAddrBook()));
-  fileMenu->insertItem(i18n("&Filter..."), this,
+  fileMenu->insertItem(i18n("&Filter..."), this, 
 		       SLOT(slotFilter()));
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("&Close"), this,
+  fileMenu->insertItem(i18n("&Close"), this, 
 		       SLOT(slotClose()), keys->close());
   fileMenu->insertItem(i18n("&Quit"), this,
 		       SLOT(quit()), keys->quit());
@@ -1075,12 +1093,26 @@ void KMMainWin::setupMenuBar()
 		       keys->copy());
   editMenu->insertSeparator();
 #ifdef BROKEN
-  editMenu->insertItem(i18n("&Find..."), this,
+  editMenu->insertItem(i18n("&Find..."), this, 
 		       SLOT(slotUnimplemented()), keys->find());
 #endif
+  //----- Folder Menu
+  QPopupMenu *folderMenu = new QPopupMenu();
+  folderMenu->insertItem(i18n("&Create..."), this, 
+			 SLOT(slotAddFolder()));
+  folderMenu->insertItem(i18n("&Modify..."), this, 
+			 SLOT(slotModifyFolder()));
+  folderMenu->insertItem(i18n("C&ompact"), this, 
+			 SLOT(slotCompactFolder()));
+  folderMenu->insertSeparator();
+  folderMenu->insertItem(i18n("&Empty"), this, 
+			 SLOT(slotEmptyFolder()));
+  folderMenu->insertItem(i18n("&Remove"), this, 
+			 SLOT(slotRemoveFolder()));
+
   //----- Message-Status Submenu
   QPopupMenu *msgStatusMenu = new QPopupMenu;
-  connect(msgStatusMenu, SIGNAL(activated(int)), this,
+  connect(msgStatusMenu, SIGNAL(activated(int)), this, 
 	  SLOT(slotSetMsgStatus(int)));
   msgStatusMenu->insertItem(i18n("New"), (int)KMMsgStatusNew);
   msgStatusMenu->insertItem(i18n("Unread"), (int)KMMsgStatusUnread);
@@ -1090,21 +1122,24 @@ void KMMainWin::setupMenuBar()
   msgStatusMenu->insertItem(i18n("Sent"), (int)KMMsgStatusSent);
 
   //----- Message Menu
-  QPopupMenu *messageMenu = new QPopupMenu;
-  messageMenu->insertItem(i18n("&Next"), mHeaders,
+  messageMenu = new QPopupMenu;
+  QObject::connect( messageMenu, SIGNAL( aboutToShow() ), 
+		    this, SLOT( updateMessageMenu() ));
+
+  messageMenu->insertItem(i18n("&Next"), mHeaders, 
 			  SLOT(nextMessage()), Key_N);
-  messageMenu->insertItem(i18n("Next unread"), mHeaders,
+  messageMenu->insertItem(i18n("Next unread"), mHeaders, 
 			  SLOT(nextUnreadMessage()), Key_Plus);
-  messageMenu->insertItem(i18n("&Previous"), mHeaders,
+  messageMenu->insertItem(i18n("&Previous"), mHeaders, 
 			  SLOT(prevMessage()), Key_P);
-  messageMenu->insertItem(i18n("Previous unread"), mHeaders,
+  messageMenu->insertItem(i18n("Previous unread"), mHeaders, 
 			  SLOT(prevUnreadMessage()), Key_Minus);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Reply..."), this,
 			  SLOT(slotReplyToMsg()), Key_R);
   messageMenu->insertItem(i18n("Reply &All..."), this,
 			  SLOT(slotReplyAllToMsg()), Key_A);
-  messageMenu->insertItem(i18n("&Forward..."), this,
+  messageMenu->insertItem(i18n("&Forward..."), this, 
 			  SLOT(slotForwardMsg()), Key_F);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Edi&t..."),this,
@@ -1112,18 +1147,18 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
   messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("Mar&k all"), this,
+  messageMenu->insertItem(i18n("Mar&k all"), this, 
 			  SLOT(slotMarkAll()), Key_K);
-  messageMenu->insertItem(i18n("&Move..."), this,
+  moveId = messageMenu->insertItem(i18n("&Move..."), this, 
 			  SLOT(slotMoveMsg()), Key_M);
-  messageMenu->insertItem(i18n("&Copy..."), this,
+  copyId = messageMenu->insertItem(i18n("&Copy..."), this, 
 			  SLOT(slotCopyMsg()), Key_S);
-  messageMenu->insertItem(i18n("&Delete"), this,
+  messageMenu->insertItem(i18n("&Delete"), this, 
 			  SLOT(slotDeleteMsg()), Key_D);
   messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("Send again..."), this,
+  messageMenu->insertItem(i18n("Send again..."), this, 
 			  SLOT(slotResendMsg()));
-  messageMenu->insertItem(i18n("Apply filters"), this,
+  messageMenu->insertItem(i18n("Apply filters"), this, 
 			  SLOT(slotApplyFilters()), CTRL+Key_J);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("View Source..."), this,
@@ -1160,7 +1195,7 @@ void KMMainWin::setupMenuBar()
   mMenuBar  = new KMenuBar(this);
   mMenuBar->insertItem(i18n("&File"), fileMenu);
   mMenuBar->insertItem(i18n("&Edit"), editMenu);
-  mMenuBar->insertItem(i18n("F&older"), folderMenu());
+  mMenuBar->insertItem(i18n("F&older"), folderMenu);
   mMenuBar->insertItem(i18n("&Message"), messageMenu);
   mMenuBar->insertItem(i18n("&View"), mViewMenu);
   mMenuBar->insertSeparator();
@@ -1177,51 +1212,51 @@ void KMMainWin::setupToolBar()
 
   mToolBar = new KToolBar(this);
 
-  mToolBar->insertButton(loader->loadIcon("filenew"), 0,
+  mToolBar->insertButton(loader->loadIcon("filenew"), 0, 
 			SIGNAL(clicked()), this,
-			SLOT(slotCompose()), TRUE,
+			SLOT(slotCompose()), TRUE, 
 			i18n("Compose new message"));
 
-  mToolBar->insertButton(loader->loadIcon("filefloppy"), 0,
+  mToolBar->insertButton(loader->loadIcon("filefloppy"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotSaveMsg()), TRUE,
 			i18n("Save message to file"));
 
-  mToolBar->insertButton(loader->loadIcon("fileprint"), 0,
+  mToolBar->insertButton(loader->loadIcon("fileprint"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotPrintMsg()), TRUE,
 			i18n("Print message"));
 
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("checkmail"), 0,
+  mToolBar->insertButton(loader->loadIcon("checkmail"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
 			i18n("Get new mail"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("filereply"), 0,
-			SIGNAL(clicked()), this,
+  mToolBar->insertButton(loader->loadIcon("filereply"), 0, 
+			SIGNAL(clicked()), this, 
 			SLOT(slotReplyToMsg()), TRUE,
 			i18n("Reply to author"));
 
-  mToolBar->insertButton(loader->loadIcon("filereplyall"), 0,
+  mToolBar->insertButton(loader->loadIcon("filereplyall"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyAllToMsg()), TRUE,
 			i18n("Reply to all recipients"));
 
-  mToolBar->insertButton(loader->loadIcon("fileforward"), 0,
+  mToolBar->insertButton(loader->loadIcon("fileforward"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotForwardMsg()), TRUE,
 			i18n("Forward message"));
 
-  mToolBar->insertButton(loader->loadIcon("filedel2"), 0,
+  mToolBar->insertButton(loader->loadIcon("filedel2"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			i18n("Delete message"));
 
   mToolBar->insertSeparator();
-  mToolBar->insertButton(loader->loadIcon("openbook"), 0,
+  mToolBar->insertButton(loader->loadIcon("openbook"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotAddrBook()), TRUE,
 			i18n("Open addressbook..."));
@@ -1243,8 +1278,81 @@ void KMMainWin::setupStatusBar()
 
 void KMMainWin::quit()
 {
-  //if((KMsgBox::yesNo(0,"KMail Confirm","Do you really want to quit?") ==2))
-  //  return;
   qApp->quit();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::moveSelectedToFolder( int menuId )
+{
+  if (mMenuToFolder[menuId])
+    mHeaders->moveMsgToFolder( mMenuToFolder[menuId] );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::copySelectedToFolder(int menuId ) 
+{
+  if (mMenuToFolder[menuId])
+    mHeaders->copyMsgToFolder( mMenuToFolder[menuId] );
+}
+
+
+//-----------------------------------------------------------------------------
+QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderDir* aFolderDir, 
+					 bool move,
+					 QObject *receiver,
+					 KMMenuToFolder *aMenuToFolder)
+{
+  KMFolderNode *folderNode;
+  KMFolder* folder;
+  KMFolderDir* folderDir = 0;
+
+  QPopupMenu *msgMoveMenu = new QPopupMenu;
+  if (move)
+    connect(msgMoveMenu, SIGNAL(activated(int)), receiver, 
+	    SLOT(moveSelectedToFolder(int)));
+  else
+    connect(msgMoveMenu, SIGNAL(activated(int)), receiver, 
+	    SLOT(copySelectedToFolder(int)));
+  for (folderNode = aFolderDir->first();
+       folderNode != NULL;
+       folderNode = aFolderDir->next())
+    if (!folderNode->isDir()) {
+      folder = static_cast<KMFolder*>(folderNode);
+
+      int menuId = msgMoveMenu->insertItem(folder->label());
+      aMenuToFolder->insert( menuId, folder );
+
+      KMFolderDir *child = folder->child();
+      if (child && child->first()) {
+	QPopupMenu *subMenu = folderToPopupMenu( child, move, receiver, 
+						 aMenuToFolder );
+	// add an item to the top of the submenu somehow subMenu
+	msgMoveMenu->insertItem(i18n(folder->label() + " child"), subMenu);
+      }
+    }
+  return msgMoveMenu;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::updateMessageMenu()
+{
+  int moveIndex = messageMenu->indexOf( moveId );
+  int copyIndex = messageMenu->indexOf( copyId );
+  messageMenu->removeItem( moveId );
+  messageMenu->removeItem( copyId );
+  
+  KMFolderDir *dir = &folderMgr->dir();
+  mMenuToFolder.clear();
+  QPopupMenu *msgMoveMenu;
+  msgMoveMenu =  folderToPopupMenu( dir, TRUE, this, &mMenuToFolder );
+  QPopupMenu *msgCopyMenu;
+  msgCopyMenu = folderToPopupMenu( dir, FALSE, this, &mMenuToFolder );
+  moveId = messageMenu->insertItem(i18n("&Move to"), msgMoveMenu, -1, 
+				   moveIndex );
+  copyId = messageMenu->insertItem(i18n("&Copy to"), msgCopyMenu, -1, 
+				   copyIndex );
 }
 

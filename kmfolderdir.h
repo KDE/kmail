@@ -8,14 +8,13 @@
 #include "kmfoldernode.h"
 
 class KMFolder;
-class QCString;
 
 class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 {
   Q_OBJECT
 
 public:
-  KMFolderDir(KMFolderDir* parent=NULL, const QCString& path=0);
+  KMFolderDir(KMFolderDir* parent=NULL, const QString& path=0);
   virtual ~KMFolderDir();
 
   virtual bool isDir() const { return TRUE; }
@@ -24,45 +23,36 @@ public:
   virtual bool reload();
 
   /** Return full pathname of this directory. */
-  virtual const QCString path() const;
-
-  /** Rename directory. Returns 0 on success and errno on failure. */
-  virtual int rename(const QCString&);
+  virtual const QString path() const;
 
   /** Create a mail folder in this directory with given name. If sysFldr==TRUE
    the folder is marked as a (KMail) system folder. 
    Returns Folder on success. */
-  virtual KMFolder* createFolder(const QCString& folderName,
-				     bool sysFldr=FALSE);
+  virtual KMFolder* createFolder(const QString& folderName,
+				 bool sysFldr=FALSE);
 
-  /** Create a directory in this directory with given name. If sysFldr==TRUE
-      the folder is marked as a (KMail) system folder.
-      Returns TRUE on success. */
-  virtual bool createDirectory(const QCString& folderName);
-
-protected:
-  /** Recursively loads all folders. Loads from mPath if path
-    is not given. Stops when directory depth reaches 10. */
-  virtual bool loadFolders(const QCString path=0, int depth=0);
+  /** Returns folder with given name or zero if it does not exist */
+  virtual KMFolderNode* hasNamedFolder(const QString& name);
 
 };
 
 
 //-----------------------------------------------------------------------------
+
 class KMFolderRootDir: public KMFolderDir
 {
   Q_OBJECT
 
 public:
-  KMFolderRootDir(const QCString& path=0);
+  KMFolderRootDir(const QString& path=0);
   virtual ~KMFolderRootDir();
-  virtual const QCString path() const;
+  virtual const QString path() const;
 
   // set the absolute path
-  virtual void setPath(const QCString&);
+  virtual void setPath(const QString&);
 
 protected:
-  QCString mPath;
+  QString mPath;
 };
 
 #endif /*kmfolderdir_h*/

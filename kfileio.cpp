@@ -98,7 +98,77 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     return QString::null;
   }
 
-  debug("kFileToString: %d bytes read", readLen);
+  return result;
+}
+
+//-----------------------------------------------------------------------------
+QByteArray kFileToBytes(const char* aFileName, bool aVerbose)
+{
+  QByteArray result;
+  QFileInfo info(aFileName);
+  unsigned int readLen;
+  unsigned int len = info.size();
+  QFile file(aFileName);
+
+  //assert(aFileName!=NULL);
+  if( aFileName == NULL)
+    return result;
+
+  if (!info.exists())
+  {
+    if (aVerbose)
+      msgDialog(i18n("The specified file does not exist:\n%s"),
+		aFileName);
+    return result;
+  }
+  if (info.isDir())
+  {
+    if (aVerbose)
+      msgDialog(i18n("This is a directory and not a file:\n%s"),
+		aFileName);
+    return result;
+  }
+  if (!info.isReadable())
+  {
+    if (aVerbose)
+      msgDialog(i18n("You do not have read permissions "
+				   "to the file:\n%s"), aFileName);
+    return result;
+  }
+  if (len <= 0) return result;
+
+  if (!file.open(IO_Raw|IO_ReadOnly))
+  {
+    if (aVerbose) switch(file.status())
+    {
+    case IO_ReadError:
+      msgDialog(i18n("Could not read file:\n%s"), aFileName);
+      break;
+    case IO_OpenError:
+      msgDialog(i18n("Could not open file:\n%s"), aFileName);
+      break;
+    default:
+      msgDialog(i18n("Error while reading file:\n%s"),aFileName);
+    }
+    return result;
+  }
+
+  result.resize(len);
+  readLen = file.readBlock(result.data(), len);
+  debug( QString( "len %1" ).arg(len));
+
+  result.resize(len + 1);
+  result[len] = '\0';
+
+  if (readLen < len)
+  {
+    QString msg;
+    msg = i18n("Could only read %1 bytes of %2.")
+		.arg(readLen).arg(len);
+    msgDialog(msg);
+    return result;
+  }
+
   return result;
 }
 

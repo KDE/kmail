@@ -4,64 +4,65 @@
 #ifndef kmfoldermgr_h
 #define kmfoldermgr_h
 
-#include <qcstring.h>
+#include <qstring.h>
 #include <qlist.h>
 #include <qobject.h>
-#include <qvaluelist.h>
 
 #include "kmfolderdir.h"
 
 class KMFolder;
-typedef QValueList<QCString> KMCStringList;
-
 
 #define KMFolderMgrInherited QObject
 class KMFolderMgr: public QObject
 {
   Q_OBJECT
 
-  friend class KMFolder;
-
 public:
-  KMFolderMgr(const QCString& basePath);
+  KMFolderMgr(const QString& basePath);
   virtual ~KMFolderMgr();
 
   /** Returns path to directory where all the folders live. */
-  const QCString& basePath() const { return mBasePath; }
+  const QString basePath() const { return mBasePath; }
 
   /** Set base path. Also calls reload() on the base directory. */
-  virtual void setBasePath(const QCString&);
+  virtual void setBasePath(const QString&);
 
   /** Provides access to base directory */
   KMFolderRootDir& dir();
 
   /** Searches folder and returns it. Skips directories 
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
-  virtual KMFolder* find(const char* folderName, bool foldersOnly=TRUE);
+  virtual KMFolder* find(const QString& folderName, bool foldersOnly=TRUE);
+
+  /** Searches for a folder with the given id, recurses into directories */
+  virtual KMFolder* findIdString(const QString& folderId, KMFolderDir *dir=0);
 
   /** Uses find() to find given folder. If not found the folder is
     created. Directories are skipped. */
-  virtual KMFolder* findOrCreate(const char* folderName);
+  virtual KMFolder* findOrCreate(const QString& folderName);
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
-  virtual KMFolder* createFolder(const char* fName, bool sysFldr=FALSE);
-
-  /** Create a directory in the root folder directory dir()
-    with given name. Returns true on success. */
-  virtual bool createDirectory(const char* fName);
-
+  virtual KMFolder* createFolder(const QString& fName, bool sysFldr=FALSE,
+				 KMFolderDir *aFolderDir = 0);
+  
   /** Physically remove given folder and delete the given folder object. */
   virtual void remove(KMFolder* obsoleteFolder);
 
   /** emits changed() signal */
-  virtual void contentsChanged();
+  virtual void contentsChanged(void);
 
   /** Reloads all folders, discarding the existing ones. */
-  virtual void reload();
+  virtual void reload(void);
 
-  /** Returns a list of all folder paths, relative to the base path. */
-  virtual KMCStringList& folderList();
+  /** Create a list of formatted formatted folder labels and corresponding
+   folders*/
+  virtual void createFolderList( QStringList *str, 
+				 QList<KMFolder> *folders );
+
+public slots:
+  /** Compacts all folders (they know is it needed) */
+  void compactAll();
 
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook
@@ -70,15 +71,22 @@ signals:
     changed things. */
   void changed();
 
-  /** Emitted when the number of unread messages of a folder has changed. */
-  void unreadChanged(KMFolder*);
-
-private:
-  /** Recursively collects all folders. Called by folderList(). */
-  void folderListRecursive(KMCStringList*, KMFolderDir*, const QCString& path);
-
 protected:
-  QCString mBasePath;
+
+  /* Auxillary function to facilitate removal of a folder */
+  void removeFolderAux(KMFolder* aFolder);
+
+  /* Auxillary function to facilitate removal of a folder directory */
+  void removeDirAux(KMFolderDir* aFolderDir);
+
+  /* Auxillary function to facilitate creating a list of formatted
+     folder names, suitable for showing in QComboBox */
+  virtual void createFolderList( QStringList *str, 
+ 				 QList<KMFolder> *folders,
+  				 KMFolderDir *adir,
+  				 const QString& prefix);
+
+  QString mBasePath;
   KMFolderRootDir mDir;
 };
 

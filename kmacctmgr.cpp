@@ -102,14 +102,17 @@ void KMAcctMgr::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::singleCheckMail(KMAccount *account)
+bool KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
 {
   debug ("checking mail, server busy");
   serverReady(false);
   bool hasNewMail = FALSE;
   //kbp->busy();
-  KMIOStatusWdg *wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
-  wid->show();
+  KMIOStatusWdg *wid = 0;
+  if (interactive) {
+    new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
+    wid->show();
+  }
 
   if (account->folder() == 0)
   {
@@ -120,10 +123,12 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
 		.arg(account->name());
     warning(tmp);
   }
-  else if (account->processNewMail(wid))
-  {
-    hasNewMail = TRUE;
-    emit newMail(account);
+  else {
+    if (account->processNewMail(wid))
+      {
+	hasNewMail = TRUE;
+	emit newMail(account);
+      }
   }
   delete wid;
   filterMgr->cleanup();
@@ -199,7 +204,7 @@ bool KMAcctMgr::remove(KMAccount* acct)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::checkMail(void)
+bool KMAcctMgr::checkMail(bool interactive)
 {
   KMAccount* cur;
   bool hasNewMail = FALSE;
@@ -212,10 +217,12 @@ bool KMAcctMgr::checkMail(void)
     return FALSE;
   }
 
-  debug ("checking mail, server busy");
   serverReady(false);
-  KMIOStatusWdg *wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
-  wid->show();
+  KMIOStatusWdg *wid = 0;
+  if (interactive) {
+    new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
+    wid->show();
+  }
   
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
@@ -229,13 +236,14 @@ bool KMAcctMgr::checkMail(void)
       warning(tmp);
       break;
     }
-    else   if (cur->processNewMail(wid))
+  else   if (cur->processNewMail(wid))
     {
       hasNewMail = TRUE;
       emit newMail(cur);
     }
   }
-  delete wid;
+  if (wid)
+    delete wid;
   filterMgr->cleanup();
   debug ("checked mail, server ready");
   serverReady(true);
@@ -257,7 +265,7 @@ QStrList  KMAcctMgr::getAccounts() {
 }
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::intCheckMail(int item) {
+bool KMAcctMgr::intCheckMail(int item, bool interactive) {
 
   KMAccount* cur;
   bool hasNewMail = FALSE;
@@ -272,8 +280,11 @@ bool KMAcctMgr::intCheckMail(int item) {
   debug ("checking mail, server busy");
   serverReady(false);
   
-  KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
-  wid->show();
+  KMIOStatusWdg *wid = 0;
+  if (interactive) {
+    wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
+    wid->show();
+  }
   
   int x = 0;
   cur = mAcctList.first();
@@ -297,7 +308,8 @@ bool KMAcctMgr::intCheckMail(int item) {
     emit newMail(cur);
   }
 
-  delete wid;
+  if (wid)
+    delete wid;
   debug ("checked mail, server ready");
   serverReady(true);
   return hasNewMail;

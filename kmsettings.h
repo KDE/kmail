@@ -7,9 +7,10 @@
 
 class KMAccount;
 class KMAccountSettings;
+class KTabListBox;
+class KColorButton;
 class QGridLayout;
 class QBoxLayout;
-class KTabListBox;
 class QLineEdit;
 class QButtonGroup;
 class QRadioButton;
@@ -62,6 +63,7 @@ private slots:
   void slotQuotedPrintable();
   void slotBodyFontSelect();
   void slotListFontSelect();
+  void slotFolderlistFontSelect();
 
 private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
@@ -69,13 +71,18 @@ private:
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
   QLineEdit *indentPrefixEdit, *wrapColumnEdit;
   QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign;
-  QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList, *sendReceipts;
+  QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList, *sendReceipts,
+    *compactOnExit;
   QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;
   QRadioButton *allow8Bit, *quotedPrintable;
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;
   QPushButton *addButton,*modifyButton,*removeButton;
-  QLabel *bodyFontLabel, *listFontLabel;
+  QCheckBox *defaultFonts, *defaultColors;
+  QLabel *bodyFontLabel, *listFontLabel, *folderListFontLabel;
+  QColor cFore, cBack, cNew, cUnread;
+  KColorButton *foregroundColorBtn, *backgroundColorBtn, *newColorBtn, 
+    *unreadColorBtn;
   KpgpConfig *pgpConfig;
 };
 

@@ -63,7 +63,7 @@ void KMAcctLocal::init(void)
 //-----------------------------------------------------------------------------
 bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 {
-  KMFolder mailFolder(NULL, QCString(location()));
+  KMFolder mailFolder(NULL, location());
   long num = 0;
   long i;
   int rc;
@@ -72,11 +72,11 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 
   if (mFolder==NULL) return FALSE;
 
-  debug("processNewMail: %s", (const char*)location());
-
-  statusWdg->prepareTransmission(location(), KMIOStatus::RETRIEVE);
+  if (statusWdg)
+    statusWdg->prepareTransmission(location(), KMIOStatus::RETRIEVE);
   app->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);
+
   rc = mailFolder.open();
   if (rc)
   {
@@ -103,15 +103,17 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 
     //if(statusWdg->abortRequested())
     //break;
-    statusWdg->updateProgressBar(i,num);
+    if (statusWdg)
+      statusWdg->updateProgressBar(i,num);
     msg = mailFolder.take(0);
     if (msg)
     {
       msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
       addedOk = processNewMsg(msg);
     }
-    app->processEvents();
+    //    app->processEvents();
   }
+
 
   if (addedOk)
   {
@@ -125,7 +127,8 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   mailFolder.close();
   mFolder->close();
   mFolder->quiet(FALSE);
-  statusWdg->transmissionCompleted();
+  if (statusWdg)
+    statusWdg->transmissionCompleted();
 
   return (num > 0);
 }

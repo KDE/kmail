@@ -29,10 +29,11 @@ public:
   virtual void openDialog(void);
 
   /** Process given message by applying the filter rules one by one.
-    Returns TRUE if the caller is still owner of the message and
-    FALSE otherwise. If the caller does not any longer own the message
+    Returns 2 if a critical error occurred (eg out of disk space) 
+    1 if the caller is still owner of the message and
+    0 otherwise. If the caller does not any longer own the message
     he *must* not delete the message or do similar stupid things. ;-) */
-  virtual bool process(KMMessage* msg);
+  virtual int process(KMMessage* msg);
 
   /** Call this method after processing messages with process(). 
     Shall be called after all messages are processed. This method

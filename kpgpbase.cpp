@@ -216,8 +216,7 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
       snprintf(gpgcmd, 1023, "gpg %s",cmd);
     }
 
-
-    QApplication::flushX();
+  QApplication::flushX();
   if(!(child_pid = fork()))
   {
     /*We're the child.*/
@@ -1029,6 +1028,14 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
     if(flagEncryptToSelf)
       cmd += " +EncryptToSelf";
   }
+
+  if (signonly)
+  {
+    input.append("\n");
+    input.replace(QRegExp("[ \t]+\n"), "\n");   //strip trailing whitespace
+  }                                                                        
+  //We have to do this otherwise it's all in vain
+
 
   status = run(cmd, passphrase);
   if(status == RUN_ERR) return status;

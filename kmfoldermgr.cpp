@@ -31,10 +31,11 @@
 
 
 //-----------------------------------------------------------------------------
-KMFolderMgr::KMFolderMgr(const QCString& aBasePath):
+KMFolderMgr::KMFolderMgr(const QString& aBasePath):
   KMFolderMgrInherited(), mDir()
 {
   initMetaObject();
+
   setBasePath(aBasePath);
 }
 
@@ -42,29 +43,41 @@ KMFolderMgr::KMFolderMgr(const QCString& aBasePath):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  mBasePath = 0;
+  mBasePath = QString::null;;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::setBasePath(const QCString& aBasePath)
+void KMFolderMgr::compactAll()
+{
+  KMFolderNode* node;
+  for (node=mDir.first(); node; node=mDir.next())
+  {
+    if (node->isDir()) continue;
+    ((KMFolder*)node)->compact(); // compact know if it's needed
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::setBasePath(const QString& aBasePath)
 {
   QDir dir;
 
-  assert(!aBasePath.isEmpty());
+  assert(aBasePath != NULL);
 
   if (aBasePath[0] == '~')
   {
     mBasePath = QDir::homeDirPath();
     mBasePath.append("/");
-    mBasePath.append(((const char *)aBasePath)+1);
+    mBasePath.append(aBasePath+1);
   }
   else
   {
     mBasePath = "";
     mBasePath.append(aBasePath);
   }
-
+  
 
   dir.setPath(mBasePath);
   if (!dir.exists())
@@ -75,7 +88,7 @@ void KMFolderMgr::setBasePath(const QCString& aBasePath)
 	    "KMail will create it now.");
     // dir.mkdir(mBasePath, TRUE);
     mkdir(mBasePath.data(), 0700);
-    mDir.setPath(mBasePath);
+    mDir.setPath(mBasePath.local8Bit());
 
     fld.setName("inbox");
     fld.create();
@@ -94,18 +107,22 @@ void KMFolderMgr::setBasePath(const QCString& aBasePath)
     fld.close();
   }
 
-  mDir.setPath(mBasePath);
+  mDir.setPath(mBasePath.local8Bit());
   mDir.reload();
   emit changed();
 }
 
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
+KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
+				    KMFolderDir *aFolderDir)
 {
   KMFolder* fld;
-
-  fld = mDir.createFolder(fName, sysFldr);
+  KMFolderDir *fldDir = aFolderDir;  
+ 
+  if (!aFolderDir)
+    fldDir = &mDir;
+  fld = fldDir->createFolder(fName, sysFldr);
   if (fld) emit changed();
 
   return fld;
@@ -113,16 +130,7 @@ KMFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
 
 
 //-----------------------------------------------------------------------------
-bool KMFolderMgr::createDirectory(const char* fName)
-{
-  bool rc = mDir.createDirectory(fName);
-  if (rc) emit changed();
-  return rc;
-}
-
-
-//-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
+KMFolder* KMFolderMgr::find(const QString& folderName, bool foldersOnly)
 {
   KMFolderNode* node;
 
@@ -134,51 +142,46 @@ KMFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
   return NULL;
 }
 
+//-----------------------------------------------------------------------------
+KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
+{
+  KMFolderNode* node;
+  KMFolder* folder;
+  if (!dir)
+    dir = static_cast<KMFolderDir*>(&mDir);
+
+  for (node=dir->first(); node; node=dir->next())
+  {
+    if (node->isDir()) {
+      folder = findIdString( folderId, static_cast<KMFolderDir*>(node) );
+      if (folder)
+	return folder;
+    }
+    else {
+      folder = static_cast<KMFolder*>(node);
+      if (folder->idString()==folderId) 
+	return folder;
+    } 
+  }
+  return 0;
+}
+
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
+KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
 {
   KMFolder* folder = find(aFolderName);
 
   if (!folder)
   {
-    warning(i18n("Creating missing folder\n`%s'"), aFolderName);
+    // Are these const char* casts really necessary? -sanders
+    warning(i18n("Creating missing folder\n`%s'"), (const char*)aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
     if (!folder) fatal(i18n("Cannot create folder `%s'\nin %s"),
-		       aFolderName, (const char*)mBasePath);
+		       (const char*)aFolderName, (const char*)mBasePath);
   }
   return folder;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderMgr::folderListRecursive(KMCStringList* aList, KMFolderDir* aDir,
-				      const QCString& aPath)
-{
-  KMFolderNode* node;
-  QCString path;
-
-  assert(aList!=NULL);
-  assert(aDir!=NULL);
-
-  for (node=aDir->first(); node; node=aDir->next())
-  {
-    if (aPath.isEmpty()) path = node->name();
-    else path = aPath + '/' + node->name();
-    if (!node->isDir()) aList->append(path);
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-KMCStringList& KMFolderMgr::folderList()
-{
-  static KMCStringList lst;
-
-  lst.clear();
-  folderListRecursive(&lst, &mDir, 0);
-  return lst;
 }
 
 
@@ -187,14 +190,40 @@ void KMFolderMgr::remove(KMFolder* aFolder)
 {
   assert(aFolder != NULL);
 
-  aFolder->remove();
-  mDir.remove(aFolder);
-  //mDir.reload();
-  if (filterMgr) filterMgr->folderRemoved(aFolder,NULL);
+  removeFolderAux(aFolder);
 
   emit changed();
 }
 
+void KMFolderMgr::removeFolderAux(KMFolder* aFolder)
+{
+  KMFolderDir* fdir = aFolder->parent();
+  KMFolderNode* fN;
+  for (fN = fdir->first(); fN != 0; fN = fdir->next())
+    if (fN->isDir() && (fN->name() == "." + aFolder->name() + ".directory")) {
+      removeDirAux(static_cast<KMFolderDir*>(fN));
+      break;
+    }
+  aFolder->remove();
+  aFolder->parent()->remove(aFolder);
+  //  mDir.remove(aFolder);
+  if (filterMgr) filterMgr->folderRemoved(aFolder,NULL);
+}
+
+void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
+{
+  QString folderDirLocation = aFolderDir->path();
+  KMFolderNode* fN;
+  for (fN = aFolderDir->first(); fN != 0; fN = aFolderDir->next()) {
+    if (fN->isDir())
+      removeDirAux(static_cast<KMFolderDir*>(fN));
+    else
+      removeFolderAux(static_cast<KMFolder*>(fN));
+  }
+  aFolderDir->clear();
+  aFolderDir->parent()->remove(aFolderDir);
+  unlink(folderDirLocation);
+}
 
 //-----------------------------------------------------------------------------
 KMFolderRootDir& KMFolderMgr::dir(void)
@@ -215,6 +244,33 @@ void KMFolderMgr::reload(void)
 {
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderMgr::createFolderList( QStringList *str, 
+				    QList<KMFolder> *folders )
+{
+  createFolderList( str, folders, 0, "" );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::createFolderList( QStringList *str, 
+				    QList<KMFolder> *folders,
+				    KMFolderDir *adir, 
+				    const QString& prefix)
+{
+  KMFolderNode* cur;
+  KMFolderDir* fdir = adir ? adir : &(folderMgr->dir());
+
+  for (cur=fdir->first(); cur; cur=fdir->next()) {
+    if (cur->isDir())
+      continue;
+
+    KMFolder* folder = static_cast<KMFolder*>(cur);
+    str->append(prefix + folder->name());
+    folders->append( folder );
+    if (folder->child())
+      createFolderList( str, folders, folder->child(), "  " + prefix );
+  }
+}
 
 //-----------------------------------------------------------------------------
 #include "kmfoldermgr.moc"

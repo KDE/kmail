@@ -3,101 +3,116 @@
 
 #include <qwidget.h>
 #include <qlistview.h>
+//#include <ktablistbox.h>
+#include "kmfolder.h"
+
+// Fixme! A temporary dependency
+#include "kmheaders.h" // For KMHeaderToFolderDrag & KMPaintInfo
 
 class QDropEvent;
 class QTimer;
+class QPixmap;
 class KMFolderTreeItem;
-class KMFolder;
-class QPoint;
 
 #define KMFolderTreeInherited QListView
 class KMFolderTree : public QListView
 {
   Q_OBJECT
+
+protected:
+  virtual void drawContentsOffset( QPainter * p, int ox, int oy,
+				   int cx, int cy, int cw, int ch );
+
 public:
   KMFolderTree(QWidget *parent=0, const char *name=0);
   virtual ~KMFolderTree();
+  
+  // Save config options
+  void writeConfig();
 
   // Get/refresh the folder tree
   virtual void reload(void);
 
-  /** Set current (selected) folder-node */
-  virtual void setCurrentFolder(const KMFolder*);
+  // Recusively add folders in a folder directory to a listview item.
+  virtual void addDirectory( KMFolderDir *fdir, QListViewItem* parent );
 
-  /** Returns folder-node of current item or NULL if none. */
-  virtual KMFolder* currentFolder() const;
+  // Find index of given folder. Returns -1 if not found
+  virtual QListViewItem* indexOfFolder(const KMFolder*);
 
-  /** Search for folder-node in list-view */
-  virtual KMFolderTreeItem* findItem(const KMFolder*) const;
+  /** Read config options. */
+  virtual void readConfig(void);
 
 signals:
+  /* The selected folder has changed */
   void folderSelected(KMFolder*);
 
+  /* Messages have been dropped onto a folder */
+  void folderDrop(KMFolder*);
+
 protected slots:
-  void doClicked(QListViewItem*);
+  void doFolderSelected(QListViewItem*);
 
-  /** called when right mouse button is pressed */
-  void slotRightButtonPressed(QListViewItem*, const QPoint&, int);
-
+  //  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
   void doFolderListChanged();
 
-  /** called when a drop occurs. */
-  void dropEvent(QDropEvent*);
-
-  /** Updates the folder tree only if some folder label has changed */
+  /** Updates the folder tree only if some folder lable has changed */
   void refresh(KMFolder*);
 
   /** Executes delayed update of folder tree */
   void delayedUpdate();
 
+  /* Create a child folder */
+  void addChildFolder();
+
+  /* Open a folder */
+  void openFolder();
+
 protected:
+  virtual void paintEmptyArea( QPainter * p, const QRect & rect );
+  virtual void contentsMouseReleaseEvent( QMouseEvent* );
+
   // Updates the number of unread messages for all folders
   virtual void updateUnreadAll( );
 
   virtual void resizeEvent(QResizeEvent*);
 
-  /** Returns pixmap for given folder type */
-  virtual QPixmap folderTypePixmap(const QString folderType);
+  // Read/Save open/close state indicator for an item in folderTree list view
+  bool readIsListViewItemOpen(KMFolderTreeItem *fti);
+  void writeIsListViewItemOpen(KMFolderTreeItem *fti);
 
-  /** Search for folder-node in list-view -- recursive worker method. */
-  virtual KMFolderTreeItem* findItemRecursive(const KMFolder*,
-					      KMFolderTreeItem*) const;
-
-  /** Append a new item to the list. Position in the list is searched
-      according to the path given. If needed, directory nodes are
-      created during the process. */
-  virtual KMFolderTreeItem* appendItem(const QCString& path,
-				       KMFolderTreeItem* aRoot,
-				       bool bold=FALSE, char sepChar='/');
-
-  /** Read config file and set geometry from it */
-  virtual void writeConfig();
-
-  /** Write geometry to config file */
-  virtual void readConfig();
-
-  void delayedUpdateRecursive(KMFolderTreeItem*);
-
-protected:
+  KMFolderNodeList mList;
   QTimer* mUpdateTimer;
+  static QPixmap *pixDir, *pixNode, *pixPlain, *pixFld, *pixFull, *pixIn, 
+    *pixOut, *pixTr, *pixSent;
+
+  // We need out own root, otherwise the QListView will create its own
+  // root of type QListViewItem, hence no overriding paintBranches
+  // and no backing pixmap
+  QListViewItem *root;
+
+  //Drag and drop methods
+  void contentsDragEnterEvent( QDragEnterEvent *e );
+  void contentsDragMoveEvent( QDragMoveEvent *e );
+  void contentsDragLeaveEvent( QDragLeaveEvent *e );
+  void contentsDropEvent( QDropEvent *e );
+
+  //Drag and drop variables
+  QListViewItem *oldCurrent;
+  QListViewItem *dropItem;
+  QTimer autoopen_timer;
+  KMPaintInfo mPaintInfo;
+  
+  // ########### The Trolls may move this Drag and drop stuff to QScrollView
+private:
+    QTimer autoscroll_timer;
+    int autoscroll_time;
+    int autoscroll_accel;
+public slots:
+    void startAutoScroll();
+    void stopAutoScroll();
+protected slots:
+    void autoScroll();
 };
-
-
-//-----------------------------------------------------------------------------
-class KMFolderTreeItem: public QListViewItem
-{
-public:
-  KMFolderTreeItem(KMFolderTreeItem* i, const QString& str);
-  KMFolderTreeItem(KMFolderTree* t, const QString& str);
-
-  // Get/set folder node pointer
-  KMFolder* folder(void) const { return mFolder; }
-  void setFolder(KMFolder* f) { mFolder=f; }
-
-protected:
-  KMFolder* mFolder;
-};
-
 
 #endif

@@ -160,12 +160,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   connect(&mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(&mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
 
-#if 0
-  mDropZone = new KDNDDropZone(mEditor, DndURL);
-  connect(mDropZone, SIGNAL(dropAction(KDNDDropZone *)),
-	  SLOT(slotDropAction()));
-#endif
-  
   mMainWidget.resize(480,510);
   setView(&mMainWidget, FALSE);
   rethinkFields();
@@ -176,8 +170,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 #endif
 
   mMsg = NULL;
-  if (aMsg) setMsg(aMsg);
-
+  if (aMsg)
+    setMsg(aMsg);
 
   if (mEdtTo.isVisible())
     mEdtTo.setFocus();
@@ -208,19 +202,53 @@ void KMComposeWin::readConfig(void)
   int w, h;
 
   config->setGroup("Composer");
-  mAutoSign = (stricmp(config->readEntry("signature","manual"),"manual")==0);
+  mAutoSign = config->readEntry("signature","manual") == "auto";
   mShowToolBar = config->readNumEntry("show-toolbar", 1);
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 80);
-  mBackColor = config->readEntry( "Back-Color","#ffffff");
-  mForeColor = config->readEntry( "Fore-Color","#000000");
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
 
+  config->setGroup("Reader");
+  QColor c1=QColor(app->palette().normal().text());
+  QColor c4=QColor(app->palette().normal().base());
+
+  if (!config->readBoolEntry("defaultColors",TRUE)) {
+    foreColor = config->readColorEntry("ForegroundColor",&c1);
+    backColor = config->readColorEntry("BackgroundColor",&c4);
+  }
+  else {
+    foreColor = c1;
+    backColor = c4;
+  }
+
+  // Color setup
+  mPalette = palette().copy();
+  QColorGroup cgrp  = mPalette.normal();
+  QColorGroup ncgrp(foreColor,cgrp.background(),
+		    cgrp.light(),cgrp.dark(), cgrp.mid(), foreColor,
+		    backColor);
+  mPalette.setNormal(ncgrp);
+  mPalette.setDisabled(ncgrp);
+  mPalette.setActive(ncgrp);
+
+  mEdtFrom.setPalette(mPalette);
+  mEdtReplyTo.setPalette(mPalette);
+  mEdtTo.setPalette(mPalette);
+  mEdtCc.setPalette(mPalette);
+  mEdtBcc.setPalette(mPalette);
+  mEdtSubject.setPalette(mPalette);
+
   config->setGroup("Fonts");
-  mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
-  if (mEditor) mEditor->setFont(kstrToFont(mBodyFont));
+  if (!config->readBoolEntry("defaultFonts",TRUE)) {
+    QString mBodyFontStr;
+    mBodyFontStr = config->readEntry("body-font", "helvetica-medium-r-12");
+    mBodyFont = kstrToFont(mBodyFontStr);
+  }
+  else
+    mBodyFont = KGlobal::generalFont();
+  if (mEditor) mEditor->setFont(mBodyFont);
 
 #if defined CHARSETS
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
@@ -269,9 +297,6 @@ void KMComposeWin::writeConfig(void)
   config->writeEntry("default-charset",mDefaultCharset);
   config->writeEntry("composer-charset",mDefComposeCharset);
 #endif
-
-  config->writeEntry("Fore-Color",mForeColor);
-  config->writeEntry("Back-Color",mBackColor);
 
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
@@ -393,6 +418,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aLbl->setBuddy(aEdt);
     mGrid->addWidget(aLbl, aRow, 0);
 
+    aEdt->setBackgroundColor( backColor );
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
     aEdt->setMaximumSize(1000, aLbl->height()+2);
@@ -573,12 +599,11 @@ void KMComposeWin::setupToolBar(void)
 			SLOT(slotNewComposer()), TRUE,
 			i18n("Compose new message"));
 
-#ifdef BROKEN
+  if (msgSender->sendImmediate())
   mToolBar->insertButton(loader->loadIcon("filefloppy"), 0,
 			SIGNAL(clicked()), this,
-			SLOT(slotToDo()), TRUE,
-			i18n("Save message to file"));
-#endif
+			 SLOT(slotSendLater()), TRUE,
+			 i18n("send later")); //grr translations!!!
 
   mToolBar->insertButton(loader->loadIcon("fileprint"), 0,
 			SIGNAL(clicked()), this,
@@ -662,37 +687,27 @@ void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
   mEditor = new KMEdit(kapp, &mMainWidget, this);
+  //  QMultiLineEdit *mEditor = new QMultiLineEdit(&mMainWidget);
   mEditor->toggleModified(FALSE);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
+  mEditor->setWordWrap( QMultiLineEdit::FixedColumnWrap );
+  mEditor->setWrapColumnOrWidth(80);
+
+  /*
   // Word wrapping setup
   mEditor->setWordWrap(mWordWrap);
   if (mWordWrap && (mLineBreak > 0))
     mEditor->setFillColumnMode(mLineBreak,TRUE);
   else mEditor->setFillColumnMode(0,FALSE);
+  */
 
   // Font setup
-  mEditor->setFont(kstrToFont(mBodyFont));
+  mEditor->setFont(mBodyFont);
 
   // Color setup
-  if (mForeColor.isEmpty()) mForeColor = "black";
-  if (mBackColor.isEmpty()) mBackColor = "white";
-
-  foreColor.setNamedColor(mForeColor);
-  backColor.setNamedColor(mBackColor);
-
-  QPalette myPalette = (mEditor->palette()).copy();
-  QColorGroup cgrp  = myPalette.normal();
-  QColorGroup ncgrp(foreColor,cgrp.background(),
-		    cgrp.light(),cgrp.dark(), cgrp.mid(), foreColor,
-		    backColor);
-  myPalette.setNormal(ncgrp);
-  myPalette.setDisabled(ncgrp);
-  myPalette.setActive(ncgrp);
-
-  mEditor->setPalette(myPalette);
+  mEditor->setPalette(mPalette);
   mEditor->setBackgroundColor(backColor);
-
 
   menu = new QPopupMenu();
 #ifdef BROKEN
@@ -784,7 +799,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
     // FIXME: QTextCodec needed?
-    mEditor->setText(QString(mMsg->bodyDecoded()));
+    Editor->setText(QString(mMsg->bodyDecoded()));
   }
 #else
   else mEditor->setText(QString(mMsg->bodyDecoded()));
@@ -943,9 +958,9 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   int index, lastindex;
   QStrList persons;
 
-  if (!doSign && !doEncrypt) return mEditor->text();
+  if (!doSign && !doEncrypt) return mEditor->brokenText();
 
-  pgp->setMessage(mEditor->text());
+  pgp->setMessage(mEditor->brokenText());
 
   if (!doEncrypt)
   {
@@ -985,14 +1000,15 @@ const QString KMComposeWin::pgpProcessedMsg(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const QString aUrl)
 {
-  QString str, name;
+  QString name;
+  QByteArray str;
   KMMessagePart* msgPart;
   KMMsgPartDlg dlg;
   int i;
 
   // load the file
   kbp->busy();
-  str = kFileToString(aUrl,FALSE);
+  str = kFileToBytes(aUrl,FALSE);
   if (str.isNull())
   {
     kbp->idle();
@@ -1005,7 +1021,8 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
-  msgPart->setBodyEncoded(QCString(str.ascii()));
+  msgPart->setBodyEncoded(str);
+  //  msgPart->setBodyEncoded(QCString(str.ascii()));
   msgPart->magicSetType();
   msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
 
@@ -1229,7 +1246,7 @@ void KMComposeWin::slotInsertFile()
   if (str.isEmpty()) return;
 
   mEditor->getCursorPosition(&line, &col);
-  mEditor->insertAt(str, line, col);
+  mEditor->insertAt(QCString(str), line, col);
 }
 
 //-----------------------------------------------------------------------------
@@ -1557,7 +1574,7 @@ void KMComposeWin::slotPrint()
     str += subject();
     str += i18n("Date:");
     str += " \n\n";
-    str += mEditor->text();
+    str += mEditor->brokenText();
     str += "\n";
     //str.replace(QRegExp("\n"),"\n");
     paint.drawText(30,30,str);
@@ -1680,6 +1697,7 @@ void KMComposeWin::slotSpellcheck()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone()
 {
+  debug( "spell check complete" );
   mSpellCheckInProgress=FALSE;
   mStatusBar->changeItem(i18n("Spellcheck complete."),0);
 
@@ -1870,14 +1888,7 @@ bool KMLineEdit::eventFilter(QObject*, QEvent* e)
   else if (e->type() == QEvent::MouseButtonPress)
   {
     QMouseEvent* me = (QMouseEvent*)e;
-    if (me->button() == MidButton)
-    {
-      setFocus();
-      QKeyEvent ev(QEvent::KeyPress, Key_V, 0 , ControlButton);
-      keyPressEvent(&ev);
-      return TRUE;
-    }
-    else if (me->button() == RightButton)
+    if (me->button() == RightButton)
     {
       QPopupMenu* p = new QPopupMenu;
       p->insertItem(i18n("Cut"),this,SLOT(cut()));
@@ -2047,6 +2058,20 @@ KMEdit::~KMEdit()
 
 
 //-----------------------------------------------------------------------------
+QString KMEdit::brokenText() const
+{
+    QString temp;
+
+    for (int i = 0; i < numLines(); ++i) {
+      temp += *getString(i);
+      if (i + 1 < numLines())
+	temp += '\n';
+    }
+
+    return temp;
+}
+
+//-----------------------------------------------------------------------------
 bool KMEdit::eventFilter(QObject*, QEvent* e)
 {
   if (e->type() == QEvent::KeyPress)
@@ -2058,6 +2083,7 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
       int col, row;
       getCursorPosition(&row, &col);
       insertAt("	", row, col); // insert tab character '\t'
+      emit CursorPositionChanged();
       return TRUE;
     }
     // ---sven's Arrow key navigation start ---
@@ -2071,6 +2097,7 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
   }
   return FALSE;
 }
+
 //-----------------------------------------------------------------------------
 void KMEdit::spellcheck()
 {

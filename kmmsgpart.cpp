@@ -173,12 +173,12 @@ const QString KMMessagePart::iconName(void) const
     config.setDesktopGroup();
     icon = config.readEntry("Icon");
     if(icon.isEmpty()) // If no icon specified.
-      icon = "unknown.xpm";
+      icon = "unknown";
   }
   else
   {
     // not found, use default
-    icon = "unknown.xpm";
+    icon = "unknown";
   }
 
 //  return KApplication::kde_icondir() + "/" + icon;
