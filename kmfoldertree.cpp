@@ -355,21 +355,10 @@ void KMFolderTree::readConfig (void)
 {
   KConfig* conf = KMKernel::config();
 
-  // Backing pixmap support
-  { //area for config group "Pixmaps"
-    KConfigGroupSaver saver(conf, "Pixmaps");
-    QString pixmapFile = conf->readPathEntry("FolderTree");
-    mPaintInfo.pixmapOn = FALSE;
-    if (!pixmapFile.isEmpty()) {
-      mPaintInfo.pixmapOn = TRUE;
-      mPaintInfo.pixmap = QPixmap( pixmapFile );
-    }
-  }
-
   readColorConfig();
 
   // Custom/Ssystem font support
-  { //area for config group "Pixmaps"
+  {
     KConfigGroupSaver saver(conf, "Fonts");
     if (!conf->readBoolEntry("defaultFonts",TRUE)) {
       QFont folderFont( KGlobalSettings::generalFont() );
