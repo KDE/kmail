@@ -14,6 +14,7 @@
 #include "kmfiltermgr.h"
 #include "kmversion.h"
 #include "kmmessage.h"
+#include "kmcomposewin.h"
 
 #include <kapp.h>
 #include <stdio.h>
@@ -210,11 +211,23 @@ static void cleanup(void)
 main(int argc, char *argv[])
 {
   KMMainWin* mainWin;
+  KMComposeWin* comp;
 
   init(argc, argv);
 
   mainWin = new KMMainWin;
   mainWin->show();
+
+  if (argc > 1)
+  {
+    KMComposeWin *win;
+    KMMessage* msg = new KMMessage;
+    msg->initHeader();
+    msg->setTo(argv[1]);
+
+    win = new KMComposeWin(msg);
+    win->show();
+  }
     
   app->exec();
 
