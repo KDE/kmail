@@ -125,7 +125,9 @@ void KMLittleProgressDlg::setMode() {
     if ( m_bShowButton ) {
       m_pButton->hide();
     }
-    stack->hide();
+    // show the empty label in order to make the status bar look better
+    stack->show();
+    stack->raiseWidget( m_pLabel );
     break;
 
   case Label:
