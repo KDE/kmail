@@ -169,9 +169,6 @@ void ListJob::slotListResult( KIO::Job* job )
     kdDebug() << "\tSubfolderPaths: " << mSubfolderPaths << endl;
     kdDebug() << "\tSubfolderMimeTypes: " << mSubfolderMimeTypes << endl;
     kdDebug() << "\tSubfolderAttributes: " << mSubfolderAttributes << endl;
-    if ((*it).path == "/" && mSubfolderNames.isEmpty()) {
-      ::exit(-1);
-    }
     // transport the information, include the jobData
     emit receivedFolders( mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes, *it );
