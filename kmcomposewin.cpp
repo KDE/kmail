@@ -1589,7 +1589,7 @@ bool KMComposeWin::applyChanges(void)
              entry;
              entry = (KMAtmListViewItem*)mAtmItemList.next() ){
           entry->setEncrypt( saveMessagesEncrypted );
-          entry->setEncrypt( saveSentSignatures );
+          entry->setSign(    saveSentSignatures );
         }
       }
       bOk = composeMessage( cryptPlug, pgpUserId,
