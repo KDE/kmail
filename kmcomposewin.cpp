@@ -2147,7 +2147,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      {
         mEdtSubject->setFocus();
         int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
-    		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"));
+    		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"), "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
            return;
