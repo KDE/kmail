@@ -26,6 +26,7 @@
 
 class QCheckBox;
 class QComboBox;
+class QPushButton;
 class QLabel;
 class QLineEdit;
 class QRadioButton;
@@ -59,6 +60,9 @@ class AccountDialog : public KDialogBase
       QRadioButton *lockFcntl;
       QRadioButton *lockNone;
       QLineEdit    *precommand;
+      QCheckBox    *resourceCheck;
+      QPushButton  *resourceClearButton;
+      QPushButton  *resourceClearPastButton;
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -73,6 +77,9 @@ class AccountDialog : public KDialogBase
       QLineEdit    *nameEdit;
       QComboBox    *locationEdit;
       QLineEdit    *precommand;
+      QCheckBox    *resourceCheck;
+      QPushButton  *resourceClearButton;
+      QPushButton  *resourceClearPastButton;
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -106,6 +113,9 @@ class AccountDialog : public KDialogBase
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
       QCheckBox    *retriveAllCheck;
+      QCheckBox    *resourceCheck;
+      QPushButton  *resourceClearButton;
+      QPushButton  *resourceClearPastButton;
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QCheckBox    *filterOnServerCheck;
@@ -125,6 +135,9 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *prefixEdit;
+      QCheckBox    *resourceCheck;
+      QPushButton  *resourceClearButton;
+      QPushButton  *resourceClearPastButton;
       QCheckBox    *autoExpungeCheck;     // only used by normal (online) IMAP
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
@@ -165,6 +178,8 @@ class AccountDialog : public KDialogBase
     void slotCheckImapCapabilities();
     void slotPopCapabilities(const QStringList &);
     void slotImapCapabilities(const QStringList &);
+    void slotClearResourceAllocations();
+    void slotClearPastResourceAllocations();
     
   private:
     void makeLocalAccountPage();

@@ -281,9 +281,9 @@ void AccountDialog::makeLocalAccountPage()
   ProcmailRCParser procmailrcParser;
 
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 12, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  topLayout->setRowStretch( 10, 10 );
+  topLayout->setRowStretch( 11, 10 );
   topLayout->setColStretch( 1, 10 );
 
   mLocal.titleLabel = new QLabel( i18n("Account type: Local account"), page );
@@ -350,29 +350,53 @@ void AccountDialog::makeLocalAccountPage()
 
   topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
 
+  QHBox* resourceHB = new QHBox( page );
+  resourceHB->setSpacing( 11 );
+  mLocal.resourceCheck =
+      new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
+  mLocal.resourceClearButton =
+      new QPushButton( i18n( "Clear" ), resourceHB );
+  QWhatsThis::add( mLocal.resourceClearButton,
+                   i18n( "Delete all allocations for the resource represented by this account." ) );
+  mLocal.resourceClearButton->setEnabled( false );
+  connect( mLocal.resourceCheck, SIGNAL( toggled(bool) ),
+           mLocal.resourceClearButton, SLOT( setEnabled(bool) ) );
+  connect( mLocal.resourceClearButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearResourceAllocations() ) );
+  mLocal.resourceClearPastButton =
+      new QPushButton( i18n( "Clear Past" ), resourceHB );
+  mLocal.resourceClearPastButton->setEnabled( false );
+  connect( mLocal.resourceCheck, SIGNAL( toggled(bool) ),
+           mLocal.resourceClearPastButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mLocal.resourceClearPastButton,
+                   i18n( "Delete all outdated allocations for the resource represented by this account." ) );
+  connect( mLocal.resourceClearPastButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearPastResourceAllocations() ) );
+  topLayout->addMultiCellWidget( resourceHB, 5, 5, 0, 2 );
+
   mLocal.excludeCheck =
     new QCheckBox( i18n("E&xclude from \"Check Mail\""), page );
-  topLayout->addMultiCellWidget( mLocal.excludeCheck, 5, 5, 0, 2 );
+  topLayout->addMultiCellWidget( mLocal.excludeCheck, 6, 6, 0, 2 );
 
   mLocal.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page );
-  topLayout->addMultiCellWidget( mLocal.intervalCheck, 6, 6, 0, 2 );
+  topLayout->addMultiCellWidget( mLocal.intervalCheck, 7, 7, 0, 2 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableLocalInterval(bool)) );
   mLocal.intervalLabel = new QLabel( i18n("Check inter&val:"), page );
-  topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
+  topLayout->addWidget( mLocal.intervalLabel, 8, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalLabel->setBuddy( mLocal.intervalSpin );
   mLocal.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mLocal.intervalSpin->setSuffix( i18n(" min") );
   mLocal.intervalSpin->setValue( 1 );
-  topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
+  topLayout->addWidget( mLocal.intervalSpin, 8, 1 );
 
   label = new QLabel( i18n("&Destination folder:"), page );
-  topLayout->addWidget( label, 8, 0 );
+  topLayout->addWidget( label, 9, 0 );
   mLocal.folderCombo = new QComboBox( false, page );
   label->setBuddy( mLocal.folderCombo );
-  topLayout->addWidget( mLocal.folderCombo, 8, 1 );
+  topLayout->addWidget( mLocal.folderCombo, 9, 1 );
 
   /* -sanders Probably won't support this way, use filters insteada
   label = new QLabel( i18n("Default identity:"), page );
@@ -387,10 +411,10 @@ void AccountDialog::makeLocalAccountPage()
   //mLocal.identityCombo->setEnabled(false);
 
   label = new QLabel( i18n("&Pre-Command:"), page );
-  topLayout->addWidget( label, 9, 0 );
+  topLayout->addWidget( label, 10, 0 );
   mLocal.precommand = new QLineEdit( page );
   label->setBuddy( mLocal.precommand );
-  topLayout->addWidget( mLocal.precommand, 9, 1 );
+  topLayout->addWidget( mLocal.precommand, 10, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -402,7 +426,7 @@ void AccountDialog::makeMaildirAccountPage()
   QFrame *page = makeMainWidget();
   QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  topLayout->setRowStretch( 10, 10 );
+  topLayout->setRowStretch( 11, 10 );
   topLayout->setColStretch( 1, 10 );
 
   mMaildir.titleLabel = new QLabel( i18n("Account type: Maildir account"), page );
@@ -429,6 +453,30 @@ void AccountDialog::makeMaildirAccountPage()
   choose->setAutoDefault( false );
   connect( choose, SIGNAL(clicked()), this, SLOT(slotMaildirChooser()) );
   topLayout->addWidget( choose, 3, 2 );
+
+  QHBox* resourceHB = new QHBox( page );
+  resourceHB->setSpacing( 11 );
+  mMaildir.resourceCheck =
+      new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
+  mMaildir.resourceClearButton =
+      new QPushButton( i18n( "Clear" ), resourceHB );
+  mMaildir.resourceClearButton->setEnabled( false );
+  connect( mMaildir.resourceCheck, SIGNAL( toggled(bool) ),
+           mMaildir.resourceClearButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mMaildir.resourceClearButton,
+                   i18n( "Delete all allocations for the resource represented by this account." ) );
+  connect( mMaildir.resourceClearButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearResourceAllocations() ) );
+  mMaildir.resourceClearPastButton =
+      new QPushButton( i18n( "Clear Past" ), resourceHB );
+  mMaildir.resourceClearPastButton->setEnabled( false );
+  connect( mMaildir.resourceCheck, SIGNAL( toggled(bool) ),
+           mMaildir.resourceClearPastButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mMaildir.resourceClearPastButton,
+                   i18n( "Delete all outdated allocations for the resource represented by this account." ) );
+  connect( mMaildir.resourceClearPastButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearPastResourceAllocations() ) );
+  topLayout->addMultiCellWidget( resourceHB, 4, 4, 0, 2 );
 
   mMaildir.excludeCheck =
     new QCheckBox( i18n("E&xclude from \"Check Mail\""), page );
@@ -483,9 +531,9 @@ void AccountDialog::makePopAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 15, 2, marginHint(), spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 16, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 14, 10 );
+  grid->setRowStretch( 15, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -527,11 +575,35 @@ void AccountDialog::makePopAccountPage()
 
   mPop.storePasswordCheck =
     new QCheckBox( i18n("Sto&re POP password in configuration file"), page1 );
-  grid->addMultiCellWidget( mPop.storePasswordCheck, 6, 6, 0, 1 );
+  grid->addMultiCellWidget( mPop.storePasswordCheck, 5, 5, 0, 1 );
 
   mPop.deleteMailCheck =
     new QCheckBox( i18n("&Delete message from server after fetching"), page1 );
-  grid->addMultiCellWidget( mPop.deleteMailCheck, 7, 7, 0, 1 );
+  grid->addMultiCellWidget( mPop.deleteMailCheck, 6, 6, 0, 1 );
+
+  QHBox* resourceHB = new QHBox( page1 );
+  resourceHB->setSpacing( 11 );
+  mPop.resourceCheck =
+      new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
+  mPop.resourceClearButton =
+      new QPushButton( i18n( "Clear" ), resourceHB );
+  mPop.resourceClearButton->setEnabled( false );
+  connect( mPop.resourceCheck, SIGNAL( toggled(bool) ),
+           mPop.resourceClearButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mPop.resourceClearButton,
+                   i18n( "Delete all allocations for the resource represented by this account." ) );
+  connect( mPop.resourceClearButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearResourceAllocations() ) );
+  mPop.resourceClearPastButton =
+      new QPushButton( i18n( "Clear Past" ), resourceHB );
+  mPop.resourceClearPastButton->setEnabled( false );
+  connect( mPop.resourceCheck, SIGNAL( toggled(bool) ),
+           mPop.resourceClearPastButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mPop.resourceClearPastButton,
+                   i18n( "Delete all outdated allocations for the resource represented by this account." ) );
+  connect( mPop.resourceClearPastButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearPastResourceAllocations() ) );
+  grid->addMultiCellWidget( resourceHB, 7, 7, 0, 2 );
 
   mPop.excludeCheck =
     new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
@@ -658,9 +730,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
   tabWidget->addTab( page1, i18n("&General") );
 
   int row = -1;
-  QGridLayout *grid = new QGridLayout( page1, 14, 2, marginHint(), spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 15, 2, marginHint(), spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 14, 10 );
+  grid->setRowStretch( 15, 10 );
   grid->setColStretch( 1, 10 );
 
   ++row;
@@ -739,6 +811,30 @@ void AccountDialog::makeImapAccountPage( bool connected )
     i18n("Show only s&ubscribed folders"), page1);
   grid->addMultiCellWidget( mImap.subscribedFoldersCheck, row, row, 0, 1 );
 
+  ++row;
+  QHBox* resourceHB = new QHBox( page1 );
+  resourceHB->setSpacing( 11 );
+  mImap.resourceCheck =
+      new QCheckBox( i18n( "Account for semiautomatic resource handling" ), resourceHB );
+  mImap.resourceClearButton =
+      new QPushButton( i18n( "Clear" ), resourceHB );
+  mImap.resourceClearButton->setEnabled( false );
+  connect( mImap.resourceCheck, SIGNAL( toggled(bool) ),
+           mImap.resourceClearButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mImap.resourceClearButton,
+                   i18n( "Delete all allocations for the resource represented by this account." ) );
+  connect( mImap.resourceClearButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearResourceAllocations() ) );
+  mImap.resourceClearPastButton =
+      new QPushButton( i18n( "Clear Past" ), resourceHB );
+  mImap.resourceClearPastButton->setEnabled( false );
+  connect( mImap.resourceCheck, SIGNAL( toggled(bool) ),
+           mImap.resourceClearPastButton, SLOT( setEnabled(bool) ) );
+  QWhatsThis::add( mImap.resourceClearPastButton,
+                   i18n( "Delete all outdated allocations for the resource represented by this account." ) );
+  connect( mImap.resourceClearPastButton, SIGNAL( clicked() ),
+           this, SLOT( slotClearPastResourceAllocations() ) );
+  grid->addMultiCellWidget( resourceHB, row, row, 0, 2 );
 
   ++row;
   mImap.excludeCheck =
@@ -844,6 +940,7 @@ void AccountDialog::setupSettings()
 
     mLocal.intervalSpin->setValue( QMAX(1, interval) );
     mLocal.intervalCheck->setChecked( interval >= 1 );
+    mLocal.resourceCheck->setChecked( mAccount->resource() );
     mLocal.excludeCheck->setChecked( mAccount->checkExclude() );
     mLocal.precommand->setText( mAccount->precommand() );
 
@@ -866,6 +963,7 @@ void AccountDialog::setupSettings()
     mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
     mPop.intervalCheck->setChecked( interval >= 1 );
     mPop.intervalSpin->setValue( QMAX(1, interval) );
+    mPop.resourceCheck->setChecked( mAccount->resource() );
     mPop.excludeCheck->setChecked( mAccount->checkExclude() );
     mPop.precommand->setText( ap.precommand() );
     if (ap.useSSL())
@@ -903,11 +1001,13 @@ void AccountDialog::setupSettings()
       prefix = prefix.left(prefix.length() - 1);
     mImap.prefixEdit->setText( prefix );
     mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
+    mImap.resourceCheck->setChecked( ai.resource() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
+    mImap.resourceCheck->setChecked( ai.resource() );
     mImap.excludeCheck->setChecked( ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
@@ -950,6 +1050,7 @@ void AccountDialog::setupSettings()
       prefix = prefix.left(prefix.length() - 1);
     mImap.prefixEdit->setText( prefix );
     mImap.progressDialogCheck->setChecked( ai.isProgressDialogEnabled() );
+    mImap.resourceCheck->setChecked( ai.resource() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
@@ -992,6 +1093,7 @@ void AccountDialog::setupSettings()
 
     mMaildir.intervalSpin->setValue( QMAX(1, interval) );
     mMaildir.intervalCheck->setChecked( interval >= 1 );
+    mMaildir.resourceCheck->setChecked( mAccount->resource() );
     mMaildir.excludeCheck->setChecked( mAccount->checkExclude() );
     mMaildir.precommand->setText( mAccount->precommand() );
 
@@ -1182,6 +1284,7 @@ void AccountDialog::saveSettings()
 
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ?
 			     mLocal.intervalSpin->value() : 0 );
+    mAccount->setResource( mLocal.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
 
     mAccount->setPrecommand( mLocal.precommand->text() );
@@ -1194,6 +1297,7 @@ void AccountDialog::saveSettings()
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ?
 			     mPop.intervalSpin->value() : 0 );
+    mAccount->setResource( mPop.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
 
     mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
@@ -1231,6 +1335,7 @@ void AccountDialog::saveSettings()
     mAccount->setName( mImap.nameEdit->text() );
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
+    mAccount->setResource( mImap.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
     mAccount->setFolder( 0 );
 
@@ -1247,6 +1352,7 @@ void AccountDialog::saveSettings()
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+    epa.setResource( mImap.resourceCheck->isChecked() );
     epa.setCheckExclude( mImap.excludeCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );
@@ -1269,6 +1375,7 @@ void AccountDialog::saveSettings()
     mAccount->setName( mImap.nameEdit->text() );
     mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
                                 mImap.intervalSpin->value() : 0 );
+    mAccount->setResource( mImap.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kernel->imapFolderMgr()->find(mAccount->name() ) );
@@ -1288,6 +1395,7 @@ void AccountDialog::saveSettings()
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
     epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+    epa.setResource( mImap.resourceCheck->isChecked() );
     epa.setCheckExclude( mImap.excludeCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );
@@ -1315,6 +1423,7 @@ void AccountDialog::saveSettings()
     }
     mAccount->setCheckInterval( mMaildir.intervalCheck->isChecked() ?
 			     mMaildir.intervalSpin->value() : 0 );
+    mAccount->setResource( mMaildir.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mMaildir.excludeCheck->isChecked() );
 
     mAccount->setPrecommand( mMaildir.precommand->text() );
@@ -1430,3 +1539,15 @@ void AccountDialog::slotFontChanged( void )
 }
 
 
+
+
+void AccountDialog::slotClearResourceAllocations()
+{
+    mAccount->clearIntervals();
+}
+
+
+void AccountDialog::slotClearPastResourceAllocations()
+{
+    mAccount->clearOldIntervals();
+}
