@@ -17,6 +17,7 @@ protected:
 
 public:
   virtual ~KMAcctPop();
+  virtual void init(void);
 
   /** Pop user login name */
   const QString& login(void) const { return mLogin; }

@@ -4,18 +4,30 @@
 #include <qpushbt.h>
 #include <qfiledlg.h>
 #include <qframe.h>
-#include <kmsgbox.h>
+#include <qbttngrp.h>
 #include <qlayout.h>
 #include <qgrpbox.h>
+#include <klocale.h>
+#include <kapp.h>
+#include <kmsgbox.h>
+#include <qpushbt.h>
+#include <qradiobt.h>
+#include <qbttngrp.h>
+#include <qradiobt.h>
+#include <klocale.h>
+#include <qlayout.h>
+
 #include "util.h"
 #include "kmmainwin.h"
-#include "kmaccount.h"
+#include "kmacctlocal.h"
+#include "kmacctpop.h"
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmglobal.h"
 #include "kmsender.h"
 #include "ktablistbox.h"
-#include <klocale.h>
+#include "kmacctseldlg.h"
+
 //------
 #include "kmsettings.moc"
 
@@ -40,22 +52,26 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 //-----------------------------------------------------------------------------
 KMSettings::~KMSettings()
 {
-  delete acctMgr;
 }
 
 
 //-----------------------------------------------------------------------------
-QLineEdit* KMSettings::createLabeledEntry(QWidget* parent, QGridLayout* grid,
-					  const char* aLabel,
-					  const char* aText, 
-					  int gridy, int gridx,
-					  QPushButton** detail_return)
+// Create an input field with a label and optional detail button ("...")
+// The detail button is not created if detail_return is NULL.
+// The argument 'label' is the label that will be left of the entry field.
+// The argument 'text' is the text that will show up in the entry field.
+// The whole thing is placed in the grid from row/col to the right.
+static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
+				     const char* aLabel,
+				     const char* aText, 
+				     int gridy, int gridx,
+				     QPushButton** detail_return=NULL)
 {
   QLabel* label = new QLabel(parent);
   QLineEdit* edit = new QLineEdit(parent);
   QPushButton* sel;
 
-  label->setText(nls->translate(aLabel));
+  label->setText(aLabel);
   label->adjustSize();
   label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
   label->setMinimumSize(label->size());
@@ -100,13 +116,18 @@ void KMSettings::createTabIdentity(QWidget* parent)
   QGridLayout* grid = new QGridLayout(tab, 8, 3, 20, 6);
   QPushButton* button;
 
-  nameEdit = createLabeledEntry(tab, grid, "Name", NULL, 0, 0);
-  orgEdit = createLabeledEntry(tab, grid, "Organization", NULL, 1, 0);
-  emailEdit = createLabeledEntry(tab, grid, "Email Address", NULL, 2, 0);
-  replytoEdit = createLabeledEntry(tab, grid, "Reply-To Address", NULL, 3, 0);
+  nameEdit = createLabeledEntry(tab, grid, nls->translate("Name:"), 
+				NULL, 0, 0);
+  orgEdit = createLabeledEntry(tab, grid, nls->translate("Organization:"), 
+			       NULL, 1, 0);
+  emailEdit = createLabeledEntry(tab, grid, nls->translate("Email Address:"),
+				 NULL, 2, 0);
+  replytoEdit = createLabeledEntry(tab, grid, 
+				   nls->translate("Reply-To Address:"),
+				   NULL, 3, 0);
 
-  sigEdit = createLabeledEntry(tab, grid, "Signature File", NULL, 4, 0, 
-			       &button);
+  sigEdit = createLabeledEntry(tab, grid, nls->translate("Signature File:"),
+			       NULL, 4, 0, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
 
   config->setGroup("Identity");
@@ -152,8 +173,9 @@ void KMSettings::createTabNetwork(QWidget* parent)
   bgrp->insert(sendmailRadio);
   grid->addMultiCellWidget(sendmailRadio, 0, 0, 0, 3);
 
-  sendmailLocationEdit = createLabeledEntry(bgrp, grid, "Location", NULL, 
-					    1, 1, &button);
+  sendmailLocationEdit = createLabeledEntry(bgrp, grid, 
+					    nls->translate("Location:"),
+					    NULL, 1, 1, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSendmailLocation()));
 
   smtpRadio = new QRadioButton(bgrp);
@@ -162,8 +184,10 @@ void KMSettings::createTabNetwork(QWidget* parent)
   bgrp->insert(smtpRadio);
   grid->addMultiCellWidget(smtpRadio, 2, 2, 0, 3);
 
-  smtpServerEdit = createLabeledEntry(bgrp, grid, "Server", NULL, 3, 1);
-  smtpPortEdit = createLabeledEntry(bgrp, grid, "Port", NULL, 4, 1);
+  smtpServerEdit = createLabeledEntry(bgrp, grid, nls->translate("Server:"),
+				      NULL, 3, 1);
+  smtpPortEdit = createLabeledEntry(bgrp, grid, nls->translate("Port:"),
+				    NULL, 4, 1);
   grid->setColStretch(0,4);
   grid->setColStretch(1,1);
   grid->setColStretch(2,10);
@@ -192,7 +216,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
   grid->addMultiCellWidget(label, 0, 0, 0, 1);
 
   accountList = new KTabListBox(grp, "LstAccounts", 3);
-  accountList->setColumn(0, nls->translate("Name"), 80);
+  accountList->setColumn(0, nls->translate("Name"), 150);
   accountList->setColumn(1, nls->translate("Type"), 60);
   accountList->setColumn(2, nls->translate("Folder"), 80);
   accountList->setMinimumSize(50, 50);
@@ -207,13 +231,17 @@ void KMSettings::createTabNetwork(QWidget* parent)
 
   modifyButton = createPushButton(grp, grid, nls->translate("Modify..."),2,1);
   connect(modifyButton,SIGNAL(clicked()),this,SLOT(modifyAccount2()));
+  modifyButton->setEnabled(FALSE);
 
   removeButton = createPushButton(grp, grid, nls->translate("Delete"), 3, 1);
   connect(removeButton,SIGNAL(clicked()),this,SLOT(removeAccount()));
+  removeButton->setEnabled(FALSE);
 
   grid->setColStretch(0, 10);
   grid->setColStretch(1, 0);
-  grid->setRowStretch(4, 10);
+
+  grid->setRowStretch(1, 2);
+  grid->setRowStretch(4, 2);
   grid->activate();
   grp->adjustSize();
 
@@ -255,32 +283,47 @@ void KMSettings::accountSelected(int,int)
 //-----------------------------------------------------------------------------
 void KMSettings::addAccount()
 {
-#ifdef BROKEN
-  KMAccount act = acctMgr->
+  KMAcctSelDlg acctSel(this, nls->translate("Select Account"));
+  KMAccount* acct;
+  KMAccountSettings* acctSettings;
+  const char* acctType;
 
-  KMAccount *a=acctMgr->createAccount(".temp");
-  KMAccountSettings *d=new KMAccountSettings(this,NULL,a);
-  d->setCaption("Create Account");
-  if (d->exec())
+  if (!acctSel.exec()) return;
+
+  switch(acctSel.selected())
   {
-    QString s=a->name;
-    acctMgr->renameAccount(QString(".temp"),s);
-    // `a' is not longer valid here !!!
-    accountList->inSort(s);
+  case 0:
+    acctType = "local";
+    break;
+  case 1:
+    acctType = "pop";
+    break;
+  default:
+    fatal("KMSettings: unsupported account type selected");
   }
-  else acctMgr->removeAccount(QString(".temp"));
 
-  delete d;
-#endif
+  acct = acctMgr->create(acctType, nls->translate("unnamed"));
+  assert(acct != NULL);
+
+  acct->init(); // fill the account fields with good default values
+
+  acctSettings = new KMAccountSettings(this, NULL, acct);
+
+  if (acctSettings->exec())
+    tabNetworkAddAcct(accountList, acct);
+  else
+    acctMgr->remove(acct);
+
+  delete acctSettings;
 }
 
 //-----------------------------------------------------------------------------
 void KMSettings::chooseSendmailLocation()
 {
-  QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
-  d->setCaption(nls->translate("Choose Sendmail Location"));
-  if (d->exec()) sendmailLocationEdit->setText(d->selectedFile());
-  delete d;
+  QFileDialog dlg("/", "*", this, NULL, TRUE);
+  dlg.setCaption(nls->translate("Choose Sendmail Location"));
+
+  if (dlg.exec()) sendmailLocationEdit->setText(dlg.selectedFile());
 }
 
 //-----------------------------------------------------------------------------
@@ -295,34 +338,44 @@ void KMSettings::chooseSigFile()
 //-----------------------------------------------------------------------------
 void KMSettings::modifyAccount(int index,int)
 {
-  KMAccount* act = acctMgr->find(accountList->text(index,0));
+  KMAccount* acct;
   KMAccountSettings* d;
 
-  assert(act != NULL);
+  if (index < 0) return;
 
-  d = new KMAccountSettings(this, NULL, act);
+  acct = acctMgr->find(accountList->text(index,0));
+  assert(acct != NULL);
+
+  d = new KMAccountSettings(this, NULL, acct);
   d->exec();
   delete d;
 
   accountList->removeItem(index);
-  tabNetworkAddAcct(accountList, act, index);
+  tabNetworkAddAcct(accountList, acct, index);
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::modifyAccount2() {
+void KMSettings::modifyAccount2()
+{
   modifyAccount(accountList->currentItem(),-1);
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::removeAccount() {
+void KMSettings::removeAccount()
+{
   QString s,t;
   s=accountList->text(accountList->currentItem());
-  t="Are you sure you want to remove the account \"";
-  t+=s; t+="\" ?";
-  if ((KMsgBox::yesNo(this,"Confirmation",t))==1) {
+  t = nls->translate("Are you sure you want to remove the account");
+  t.detach();
+  t += '\n';
+  t += s;
+
+  if ((KMsgBox::yesNo(this,nls->translate("Confirmation"),t))==1)
+  {
     acctMgr->remove(acctMgr->find(s));
     accountList->removeItem(accountList->currentItem());
-    if (!accountList->count()) {
+    if (!accountList->count())
+    {
       modifyButton->setEnabled(FALSE);
       removeButton->setEnabled(FALSE);
     }
@@ -352,9 +405,12 @@ void KMSettings::done(int r)
     config->writeEntry("Email Address",emailEdit->text());
     config->writeEntry("Reply-To Address",replytoEdit->text());
     config->writeEntry("Signature File",sigEdit->text());
+
     config->setGroup("Network");
-    if (sendmailRadio->isChecked()) config->writeEntry("Outgoing Type","Sendmail");
-    else if (smtpRadio->isChecked()) config->writeEntry("Outgoing Type","SMTP");
+    if (sendmailRadio->isChecked()) 
+      config->writeEntry("Outgoing Type","Sendmail");
+    else if (smtpRadio->isChecked()) 
+      config->writeEntry("Outgoing Type","SMTP");
     config->writeEntry("Sendmail Location",sendmailLocationEdit->text());
     config->writeEntry("SMTP Server",smtpServerEdit->text());
     config->writeEntry("SMTP Port",smtpPortEdit->text());
@@ -365,217 +421,134 @@ void KMSettings::done(int r)
 //=============================================================================
 //=============================================================================
 KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
-				     KMAccount *a):
+				     KMAccount *aAcct):
   QDialog(parent,name,TRUE)
 {
-  QString s;
-  int i;
+  QGridLayout *grid;
+  QPushButton *btnDetail, *ok, *cancel;
+  QString acctType;
+  QWidget *btnBox;
+  QLabel *lbl;
 
   initMetaObject();
 
-  account=a;
+  assert(aAcct != NULL);
 
-  setCaption(nls->translate("Modify Account"));
+  mAcct=aAcct;
+  setCaption(name);
 
-  QLabel *label;
-  label = new QLabel(this);
-  label->setGeometry(25,20,75,25);
-  label->setText("Name");
-  label->setAlignment(290);
+  acctType = mAcct->type();
 
-  nameEdit = new QLineEdit(this);
-  nameEdit->setGeometry(110,20,220,25);
-  nameEdit->setFocus();
-  if (a->name()!=".temp") nameEdit->setText(a->name());
+  grid = new QGridLayout(this, 8, 3, 8, 4);
+  grid->setColStretch(1, 5);
 
-  label = new QLabel(this);
-  label->setGeometry(20,55,80,25);
-  label->setText("Access via");
-  label->setAlignment(290);
+  lbl = new QLabel(nls->translate("Type:"), this);
+  lbl->adjustSize();
+  lbl->setMinimumSize(lbl->sizeHint());
+  grid->addWidget(lbl, 0, 0);
 
-  typeList = new QComboBox(FALSE,this);
-  typeList->setGeometry(110,55,100,25);
-  typeList->insertItem("Local Inbox");
-  typeList->insertItem("IMAP");
-  typeList->insertItem("POP3");
-  connect(typeList,SIGNAL(activated(int)),this,SLOT(typeSelected(int)));
+  lbl = new QLabel(this);
+  grid->addWidget(lbl, 0, 1);
 
-  QFrame *frame;
-  frame = new QFrame(this);
-  frame->setGeometry(425,0,15,305);
-  frame->setFrameStyle(QFrame::VLine | QFrame::Sunken);
+  mEdtName = createLabeledEntry(this, grid, nls->translate("Name:"),
+				mAcct->name(), 1, 0);
 
-  QPushButton *button;
-  button = new QPushButton(this);
-  button->setGeometry(445,15,100,30);
-  button->setText("OK");
-  connect(button,SIGNAL(clicked()),this,SLOT(accept()));
+  if (acctType == "local")
+  {
+    lbl->setText(nls->translate("Local Account"));
 
-  button = new QPushButton(this);
-  button->setGeometry(445,60,100,30);
-  button->setText("Cancel");
-  connect(button,SIGNAL(clicked()),this,SLOT(reject()));
-
-  local = new QWidget(this);
-  local->setGeometry(0,90,430,215);
-
-  label = new QLabel(local);
-  label->setGeometry(10,20,50,25);
-  label->setText("Location");
-  label->setAlignment(290);
-
-  locationEdit = new QLineEdit(local);
-  locationEdit->setGeometry(70,20,315,25);
-  locationEdit->setFocus();
-  locationEdit->setText(a->config()->readEntry("location"));
-
-  button=new QPushButton(local);
-  button->setGeometry(390,20,30,25);
-  button->setText("...");
-  connect(button,SIGNAL(clicked()),this,SLOT(chooseLocation()));
-
-  remote = new QWidget(this);
-  remote->setGeometry(0,90,430,215);
-
-  label = new QLabel(remote);
-  label->setGeometry(10,15,60,25);
-  label->setText("Host");
-  label->setAlignment(290);
-
-  hostEdit = new QLineEdit(remote);
-  hostEdit->setGeometry(80,15,335,25);
-  hostEdit->setFocus();
-  hostEdit->setText(account->config()->readEntry("host"));
-
-  label = new QLabel(remote);
-  label->setGeometry(10,50,60,25);
-  label->setText("Port");
-  label->setAlignment(290);
-
-  portEdit = new QLineEdit(remote);
-  portEdit->setGeometry(80,50,70,25);
-  portEdit->setText(account->config()->readEntry("port"));
-
-  label = new QLabel(remote);
-  label->setGeometry(20,95,50,25);
-  label->setText("Mailbox");
-  label->setAlignment(290);
-
-  mailboxEdit = new QLineEdit(remote);
-  mailboxEdit->setGeometry(80,95,165,25);
-  mailboxEdit->setText(account->config()->readEntry("mailbox"));
-
-  label = new QLabel(remote);
-  label->setGeometry(10,140,60,25);
-  label->setText("Login");
-  label->setAlignment(290);
-
-  loginEdit = new QLineEdit(remote);
-  loginEdit->setGeometry(80,140,165,25);
-  loginEdit->setText(account->config()->readEntry("login"));
-
-  label = new QLabel(remote);
-  label->setGeometry(10,175,60,25);
-  label->setText("Password");
-  label->setAlignment(290);
-
-  passEdit = new QLineEdit(remote);
-  passEdit->setGeometry(80,175,165,25);
-  passEdit->setEchoMode(QLineEdit::Password);
-  passEdit->setText(account->config()->readEntry("password"));
-
-  QButtonGroup *buttonGroup = new QButtonGroup(remote);
-  buttonGroup->setGeometry(265,90,150,105);
-  buttonGroup->setTitle("access method");
-
-  accessMethod1 = new QRadioButton(remote);
-  accessMethod1->setGeometry(275,110,120,25);
-  accessMethod1->setText("maintain remotely");
-  buttonGroup->insert(accessMethod1);
-
-  accessMethod2 = new QRadioButton(remote);
-  accessMethod2->setGeometry(275,135,120,25);
-  accessMethod2->setText("move messages");
-  buttonGroup->insert(accessMethod2);
-
-  accessMethod3 = new QRadioButton(remote);
-  accessMethod3->setGeometry(275,160,120,25);
-  accessMethod3->setText("copy messages");
-  buttonGroup->insert(accessMethod3);
-
-  if (account->config()->readEntry("access method")=="maintain remotely")
-    accessMethod1->setChecked(TRUE); else
-      if (account->config()->readEntry("access method")=="move messages")
-	accessMethod2->setChecked(TRUE); else
-	  if (account->config()->readEntry("access method")=="copy messages")
-	    accessMethod3->setChecked(TRUE); else
-	      accessMethod2->setChecked(TRUE);
-
-  resize(555,305);
-
-  s=a->config()->readEntry("type");
-  if (s=="inbox") i=0; else
-    if (s=="imap") i=1; else
-      if (s=="pop3") i=2; else i=0;
-  typeList->setCurrentItem(i);
-  changeType(i);
-}
-
-//-----------------------------------------------------------------------------
-void KMAccountSettings::changeType(int index) {
-  switch (index) {
-  case 0 :	remote->hide();
-    local->show();
-    break;
-  case 1 :	local->hide();
-    remote->show();
-    mailboxEdit->setEnabled(TRUE);
-    if (strcmp(portEdit->text(),"")==0) portEdit->setText("143");
-    break;
-  case 2 :	local->hide();
-    remote->show();
-    mailboxEdit->setEnabled(FALSE);
-    if (strcmp(portEdit->text(),"")==0) portEdit->setText("110");
-    break;
+    mEdtLocation = createLabeledEntry(this, grid, nls->translate("Location:"),
+				      ((KMAcctLocal*)mAcct)->location(),
+				      2, 0, &btnDetail);
+    connect(btnDetail,SIGNAL(clicked()), SLOT(chooseLocation()));
   }
-}
 
-//-----------------------------------------------------------------------------
-void KMAccountSettings::chooseLocation() {
-  QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
-  d->setCaption("Choose Location");
-  if (d->exec()) locationEdit->setText(d->selectedFile());
-  delete d;
-}
+  else if (acctType == "pop")
+  {
+    lbl->setText(nls->translate("Pop Account"));
 
-//-----------------------------------------------------------------------------
-void KMAccountSettings::typeSelected(int index) {
-  changeType(index);
-}
+    mEdtLogin = createLabeledEntry(this, grid, nls->translate("Login:"),
+				   ((KMAcctPop*)mAcct)->login(), 2, 0);
 
-//-----------------------------------------------------------------------------
-void KMAccountSettings::accept() {
-  account->setName(nameEdit->text());
-  switch (typeList->currentItem()) {
-  case 0 :	account->config()->writeEntry("type","inbox");
-    break;
-  case 1 :	account->config()->writeEntry("type","imap");
-    break;
-  case 2 :	account->config()->writeEntry("type","pop3");
-    break;
+    mEdtPasswd = createLabeledEntry(this, grid, nls->translate("Password:"),
+				    ((KMAcctPop*)mAcct)->passwd(), 3, 0);
+
+    mEdtHost = createLabeledEntry(this, grid, nls->translate("Host:"),
+				  ((KMAcctPop*)mAcct)->host(), 4, 0);
+
+    QString tmpStr(10);
+    tmpStr = ((KMAcctPop*)mAcct)->port();
+    mEdtPort = createLabeledEntry(this, grid, nls->translate("Port:"),
+				  tmpStr, 3, 0);
+
   }
-  account->config()->writeEntry("location",locationEdit->text());
-  account->config()->writeEntry("host",hostEdit->text());
-  account->config()->writeEntry("port",portEdit->text());
-  account->config()->writeEntry("mailbox",mailboxEdit->text());
-  account->config()->writeEntry("login",loginEdit->text());
-  account->config()->writeEntry("password",passEdit->text());
-  if (accessMethod1->isChecked())
-    account->config()->writeEntry("access method","maintain remotely"); else
-      if (accessMethod2->isChecked())
-	account->config()->writeEntry("access method","move messages"); else
-	  if (accessMethod3->isChecked())
-	    account->config()->writeEntry("access method","copy messages");
+
+  else fatal("KMAccountSettings: unsupported account type");
+
+  lbl->adjustSize();
+  lbl->setMinimumSize(lbl->sizeHint());
+
+  btnBox = new QWidget(this);
+  ok = new QPushButton(nls->translate("Ok"), btnBox);
+  ok->adjustSize();
+  ok->setMinimumSize(ok->sizeHint());
+  ok->resize(100, ok->size().height());
+  ok->move(10, 5);
+  connect(ok, SIGNAL(clicked()), SLOT(accept()));
+
+  cancel = new QPushButton(nls->translate("Cancel"), btnBox);
+  cancel->adjustSize();
+  cancel->setMinimumSize(cancel->sizeHint());
+  cancel->resize(100, cancel->size().height());
+  cancel->move(120, 5);
+  connect(cancel, SIGNAL(clicked()), SLOT(reject()));
+
+  btnBox->setMinimumSize(230, ok->size().height()+10);
+  btnBox->setMaximumSize(2048, ok->size().height()+10);
+  grid->addMultiCellWidget(btnBox, 7, 7, 0, 2);
+
+  resize(350,300);
+  grid->activate();
+  adjustSize();
+  setMinimumSize(size());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAccountSettings::chooseLocation()
+{
+  static QString sSelLocation("/");
+  QFileDialog fdlg(sSelLocation,"*",this,NULL,TRUE);
+  fdlg.setCaption(nls->translate("Choose Location"));
+
+  if (fdlg.exec()) mEdtLocation->setText(fdlg.selectedFile());
+  sSelLocation = fdlg.selectedFile().copy();
+}
+
+//-----------------------------------------------------------------------------
+void KMAccountSettings::accept()
+{
+  QString acctType = mAcct->type();
+
+  if (mEdtName->text() != mAcct->name())
+  {
+    mAcct->setName(mEdtName->text());
+  }
+
+  if (acctType == "local")
+  {
+    ((KMAcctLocal*)mAcct)->setLocation(mEdtLocation->text());
+  }
+
+  else if (acctType == "pop")
+  {
+    ((KMAcctPop*)mAcct)->setHost(mEdtHost->text());
+    ((KMAcctPop*)mAcct)->setPort(atoi(mEdtHost->text()));
+    ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
+    ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text());
+  }
+
+  mAcct->writeConfig();
 
   QDialog::accept();
 }

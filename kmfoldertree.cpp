@@ -36,6 +36,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   dict().insert("fld", new QPixmap("pics/flag.xpm"));
   dict().insert("in", new QPixmap("pics/bottom.xpm"));
 
+  setAutoUpdate(TRUE);
   reload();
 }
 
@@ -57,6 +58,9 @@ void KMFolderTree::reload(void)
   KMAcctFolder* folder;
   QString str;
   QString indent = "";
+  bool upd = autoUpdate();
+
+  setAutoUpdate(FALSE);
 
   clear();
   mList.clear();
@@ -74,6 +78,8 @@ void KMFolderTree::reload(void)
 
     mList.append(folder);
   }
+  setAutoUpdate(upd);
+  if (upd) repaint();
 }
 
 

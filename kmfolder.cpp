@@ -52,6 +52,13 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
+const char* KMFolder::type(void) const
+{
+  return "plain";
+}
+
+
+//-----------------------------------------------------------------------------
 const QString& KMFolder::location(void) const
 {
   static QString sLocation;

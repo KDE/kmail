@@ -7,6 +7,7 @@
 #include "kmmainwin.h"
 #include "kmacctmgr.h"
 #include "kmfoldermgr.h"
+#include "kmacctfolder.h"
 #include "kmsender.h"
 #include "kbusyptr.h"
 #include <kapp.h>
@@ -57,6 +58,7 @@ static void init(int argc, char *argv[])
 {
   QString  fname, trashName;
   KConfig* cfg;
+  KMAcctFolder* fld;
 
   app = new KApplication(argc, argv, "kmail");
   nls = new KLocale;
@@ -77,20 +79,22 @@ static void init(int argc, char *argv[])
   folderMgr = new KMFolderMgr(fname);
 
   trashName   = cfg->readEntry("trashFolder", &QString("trash"));
-  trashFolder = folderMgr->find(trashName);
+  fld = folderMgr->find(trashName);
 
-  if (!trashFolder)
+  if (!fld)
   {
-    warning("The folder `"+trashName+"' does not exist in the\n"
-	    "mail folder directory and therefore will now be created.");
+    warning(nls->translate("The folder `%s'\ndoes not exist in the\n"
+			   "mail folder directory\nbut will be created now."),
+	    (const char*)trashName);
 
-    trashFolder = folderMgr->createFolder(trashName);
-    if (!trashFolder) fatal("Cannot create trash folder '"+trashName+"'");
+    fld = folderMgr->createFolder(trashName, TRUE);
+    if (!fld) fatal(nls->translate("Cannot create trash folder '%s'"),
+		    (const char*)trashName);
   }
+  fld->setLabel(nls->translate("trash"));
+  trashFolder = (KMFolder*)fld;
 
   msgSender = new KMSender(folderMgr);
-
-  debug("init done");
 }
 
 

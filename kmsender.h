@@ -8,7 +8,7 @@
 #include <qstring.h>
 
 class KMMessage;
-class KMFolder;
+class KMAcctFolder;
 class KMFolderMgr;
 class KConfig;
 class KProcess;
@@ -35,7 +35,7 @@ public:
 
   /** Provides direct access to the folder where the messages
     are queued. */
-  KMFolder* messageQueue(void) const { return mQueue; }
+  KMAcctFolder* messageQueue(void) const { return mQueue; }
 
   /** Method the sender shall use: either SMTP or local mail program */
   Method method(void) const { return mMethod; }
@@ -72,7 +72,7 @@ private:
   bool mSendImmediate;
   KConfig* mCfg;
   KMFolderMgr* mFolderMgr;
-  KMFolder* mQueue;
+  KMAcctFolder* mQueue;
   KProcess* mMailerProc;
   QString mMailer;
   QString mSmtpHost;

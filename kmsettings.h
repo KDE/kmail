@@ -2,20 +2,19 @@
 #define __KMSETTINGS
 
 #include <qtabdlg.h>
-#include <qwidget.h>
-#include <qlined.h>
-#include <qbttngrp.h>
-#include <qradiobt.h>
-#include <qlistbox.h>
-#include <qcombo.h>
-#include <qpushbt.h>
-#include <kapp.h>
+#include <qstring.h>
 
 class KMAccount;
 class KMAccountSettings;
 class QGridLayout;
 class QBoxLayout;
 class KTabListBox;
+class QLineEdit;
+class QButtonGroup;
+class QRadioButton;
+class QPushButton;
+class QComboBox;
+class QFileDialog;
 
 class KMSettings : public QTabDialog
 {
@@ -28,17 +27,6 @@ public:
 protected:
   virtual void createTabIdentity(QWidget*);
   virtual void createTabNetwork(QWidget*);
-
-  // Create an input field with a label and optional detail button ("...")
-  // The detail button is not created if detail_return is NULL.
-  // The argument 'label' is the label that will be translated via NLS.
-  // The argument 'text' is the text that will show up in the entry field.
-  // The whole thing is placed in the grid from row/col to the right.
-  virtual QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
-					const char* label, 
-					const char* text,
-					int row, int col, 
-					QPushButton** detail_return=NULL);
 
   // Create a button in given grid. The name is internationalized.
   virtual QPushButton* createPushButton(QWidget* parent, QGridLayout* grid,
@@ -73,6 +61,7 @@ private:
   KConfig *config;
 };
 
+
 //-----------------------------------------------------------------------------
 class KMAccountSettings : public QDialog
 {
@@ -86,17 +75,11 @@ protected slots:
 
 private slots:
   void chooseLocation();
-  void typeSelected(int);
 
 private:
-  void changeType(int);
-
-  QWidget *local,*remote;
-  QLineEdit *nameEdit,*locationEdit,*hostEdit,*portEdit,*mailboxEdit;
-  QLineEdit *loginEdit,*passEdit;
-  QComboBox *typeList;
-  QRadioButton *accessMethod1,*accessMethod2,*accessMethod3;
-  KMAccount *account;
+  QLineEdit *mEdtName, *mEdtLocation, *mEdtLogin, *mEdtPasswd, *mEdtHost;
+  QLineEdit *mEdtPort;
+  KMAccount *mAcct;
 };
 
 #endif

@@ -15,6 +15,7 @@ class KMAcctFolder: public KMFolder
 public:
   KMAcctFolder(KMFolderDir* parent=NULL, const char* name=NULL);
   virtual ~KMAcctFolder();
+  virtual const char* type(void) const;
 
   /** Returns first account or NULL if no account is associated with this
       folder */
@@ -32,11 +33,23 @@ public:
   /** Clear list of accounts */
   virtual void clearAccountList(void);
 
+  /** Returns TRUE if the folder is a kmail system folder. These are
+    the folders 'inbox', 'outbox', 'sent', 'trash'. The name of these
+    folders is also nationalized in the folder display. */
+  bool isSystemFolder(void) const { return mIsSystemFolder; }
+  void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
+
+  /** Returns the label of the folder for visualization. */
+  virtual const QString label(void) const;
+  void setLabel(const QString lbl) { mLabel = lbl; }
+
 protected:
   virtual void readTocHeader(void);
   virtual int createTocHeader(void);
 
   KMAcctList mAcctList;
+  bool mIsSystemFolder;
+  QString mLabel;
 };
 
 

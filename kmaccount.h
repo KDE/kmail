@@ -28,13 +28,8 @@ public:
   const QString& name(void) const { return mName; }
   virtual void setName(const QString&);
 
-#ifdef DO_WE_NEED_THAT
-  enum { amRemote=1, amMove=2, amCopy=3 } AccessMethod;
-
-  /** New messages can be either  */
-  AccessMethod accessMethod(void) const { return mAccessMethod; }
-  virtual void setAccessMethod(AccessMethod);
-#endif
+  /** Set intelligent default values to the fields of the account. */
+  virtual void init(void) = 0;
 
   /** There can be exactly one folder that is fed by messages from an
     account. */
@@ -60,6 +55,9 @@ public:
 
 protected:
   KMAccount(KMAcctMgr* owner, const char* accountName);
+
+  /** Create Config object and open config file for writing. */
+  virtual void openConfig(void);
 
   /** Takes ownership of given, already opened, config object and calls
     readConfig() which sets the field necessary for the specific type of

@@ -4,6 +4,7 @@
 #include "kmaccount.h"
 #include "kmacctmgr.h"
 #include "kmglobal.h"
+#include <stdlib.h>
 
 #define MAX_ACCOUNTS 16
 
@@ -17,6 +18,21 @@ KMAcctFolder::KMAcctFolder(KMFolderDir* aParent, const char* aName):
 //-----------------------------------------------------------------------------
 KMAcctFolder::~KMAcctFolder()
 {
+}
+
+
+//-----------------------------------------------------------------------------
+const char* KMAcctFolder::type(void) const
+{
+  return "account";
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMAcctFolder::label(void) const
+{
+  if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
+  return name();
 }
 
 
@@ -71,7 +87,7 @@ int KMAcctFolder::createTocHeader(void)
 
   if (!mAutoCreateToc) return 0;
 
-  fprintf(mTocStream, "%d\n", MAX_ACCOUNTS);
+  fprintf(mTocStream, "%d %c\n", MAX_ACCOUNTS, mIsSystemFolder ? 'S' : 'U');
   for (i=0,act=account(); act && i<MAX_ACCOUNTS; act=nextAccount(), i++)
   {
     fprintf(mTocStream, "%.64s\n", (const char*)act->name());
@@ -90,12 +106,21 @@ int KMAcctFolder::createTocHeader(void)
 void KMAcctFolder::readTocHeader(void)
 {
   char line[256];
+  char fldType;
   int  numAcct, i;
   KMAccount* act;
 
   clearAccountList();
 
   fgets(line, 255, mTocStream);
+
+  if (strlen(line) > 3 && line[3]=='S')
+  {
+    mIsSystemFolder = TRUE;
+  }
+  else mIsSystemFolder = FALSE;
+
+  line[2] = '\0';
   numAcct = atoi(line);
 
   for (; numAcct > 0; numAcct--)

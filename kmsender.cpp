@@ -1,12 +1,16 @@
 // kmsender.cpp
 
 #include "kmsender.h"
-#include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "kmmessage.h"
+#include "kmglobal.h"
+#include "kmacctfolder.h"
+
 #include <Kconfig.h>
 #include <kapp.h>
 #include <kprocess.h>
+#include <klocale.h>
+
 #include <assert.h>
 #include <stdio.h>
 
@@ -35,9 +39,10 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
 	    "on this folder and will not work without it.\n"
 	    "Therefore the folder will now be created.");
 
-    mQueue = mFolderMgr->createFolder("outbox");
+    mQueue = mFolderMgr->createFolder("outbox", TRUE);
     if (!mQueue) fatal("Cannot create the folder `outbox'.");
   }
+  mQueue->setLabel(nls->translate("outbox"));
 }
 
 

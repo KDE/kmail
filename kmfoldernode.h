@@ -39,8 +39,13 @@ public:
    "inbox". */
   virtual const QString& path(void) const;
 
+  /** Name of the node. Also used as file name. */
   const QString& name(void) const { return mName; }
   void setName(const QString& aName) { mName = aName; }
+
+  /** Label of the node for visualzation purposes. Default the same as
+   the name. */
+  virtual const QString label(void) const;
 
 protected:
   QString mName;

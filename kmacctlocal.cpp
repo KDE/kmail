@@ -33,6 +33,15 @@ const char* KMAcctLocal::type(void) const
 
 
 //-----------------------------------------------------------------------------
+void KMAcctLocal::init(void)
+{
+  mLocation = "/var/spool/mail/";
+  mLocation.detach();
+  mLocation += getenv("USER");
+}
+
+
+//-----------------------------------------------------------------------------
 bool KMAcctLocal::processNewMail(void)
 {
   KMFolder mailFolder(NULL, location());
@@ -98,6 +107,7 @@ void KMAcctLocal::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::writeConfig(void)
 {
+  mConfig->writeEntry("type", "local");
   mConfig->writeEntry("location", mLocation);
   mConfig->sync();
 }

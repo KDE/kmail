@@ -2,6 +2,7 @@
 
 #include "kmacctpop.h"
 #include <assert.h>
+#include <stdlib.h>
 
 
 //-----------------------------------------------------------------------------
@@ -9,7 +10,8 @@ KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctPopInherited(aOwner, aAccountName)
 {
   mStorePasswd = FALSE;
-  mPort = 0;
+  mProtocol = 3;
+  mPort = 110;
 }
 
 
@@ -24,6 +26,21 @@ KMAcctPop::~KMAcctPop()
 const char* KMAcctPop::type(void) const
 {
   return "pop";
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctPop::init(void)
+{
+  mStorePasswd = FALSE;
+  mPort = 110;
+  mHost = "";
+  mHost.detach();
+  mLogin = getenv("USER");
+  mLogin.detach();
+  mProtocol = 3;
+  mPasswd = "";
+  mPasswd.detach();
 }
 
 
@@ -50,6 +67,7 @@ void KMAcctPop::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctPop::writeConfig(void)
 {
+  mConfig->writeEntry("type", "pop");
   mConfig->writeEntry("login", mLogin);
   if (mStorePasswd) mConfig->writeEntry("password", mPasswd);
   else mConfig->writeEntry("passwd", "");

@@ -17,6 +17,7 @@ protected:
 
 public:
   virtual ~KMAcctLocal();
+  virtual void init(void);
 
   /** Access to location of local mail file (usually something like
    "/var/spool/mail/joe"). */

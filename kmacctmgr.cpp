@@ -3,13 +3,14 @@
 #include "kmacctmgr.h"
 #include "kmacctlocal.h"
 #include "kmacctpop.h"
+#include "kmglobal.h"
 
 #include <assert.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qmsgbox.h>
 #include <Kconfig.h>
-
+#include <klocale.h>
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
@@ -120,7 +121,11 @@ KMAccount* KMAcctMgr::create(const QString& aType, const QString& aName)
     warning("cannot access account '" + aName + 
 	    "' which is of unknown type '" + aType + "'.");
 
-  if (act) mAcctList.append(act);
+  if (act) 
+  {
+    act->openConfig();
+    mAcctList.append(act);
+  }
   return act;
 }
 
@@ -165,14 +170,14 @@ bool KMAcctMgr::rename(const KMAccount* acct, const char* newName)
 
   if (!dir.cd(mBasePath))
   {
-    warning("Cannot enter directory '" + mBasePath + "'.\n");
+    warning("Cannot enter directory\n" + mBasePath);
     return FALSE;
   }
 
   if (!dir.rename(acct->name(), newName, FALSE))
   {
-    warning("Cannot rename file '" + mBasePath + acct->name() +
-	    "' to '" + mBasePath + newName + "'.\n");
+    warning("Cannot rename\n" + mBasePath + "/" + acct->name() +
+	    "\nto\n" + mBasePath + "/" + newName + "'.\n");
     return FALSE;
   }
 
@@ -184,22 +189,20 @@ bool KMAcctMgr::rename(const KMAccount* acct, const char* newName)
 bool KMAcctMgr::remove(KMAccount* acct)
 {
   QDir dir;
+  QString acctName = acct->name();
 
   assert(acct != NULL);
 
   if (!dir.cd(mBasePath))
   {
-    warning("Cannot enter directory '" + mBasePath + "'.\n");
+    warning(QString(nls->translate("Cannot enter directory")) + QString("\n")
+	                   + mBasePath);
     return FALSE;
   }
-  if (!dir.remove(acct->name()))
-  {
-    warning("Cannot delete account setup file '" + 
-	    mBasePath + acct->name() + "'.\n");
-    return FALSE;
-  }
+
   mAcctList.remove(acct);
   delete acct;
+  dir.remove(acctName);
 
   return TRUE;
 }

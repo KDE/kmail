@@ -23,6 +23,7 @@
 #include "kmfoldertree.h"
 #include "kmheaders.h"
 #include "kmreaderwin.h"
+#include "kmacctfolder.h"
 
 #include "kmmainview.moc"
 
@@ -42,7 +43,7 @@ KMMainView::KMMainView(QWidget *parent, const char *name):
   else
     initIntegrated();
 
-  currentFolder = new KMFolder();
+  currentFolder = NULL;
 }
 
 
@@ -101,18 +102,12 @@ void KMMainView::initIntegrated()
 //-----------------------------------------------------------------------------
 void KMMainView::doAddFolder() 
 {
-#ifdef BROKEN
-  KMFolderDialog *d=new KMFolderDialog(this);
-  d->setCaption("Create Folder");
-  if (d->exec()) 
-  {
-    QDir dir;
-    folderTree->cdFolder(&dir);
-    dir.mkdir(d->nameEdit->text());
-    folderTree->getList();
-  }
+  KMFolderDialog *d;
+
+  d = new KMFolderDialog(NULL, this);
+  d->setCaption(nls->translate("New Folder"));
+  if (d->exec()) folderTree->reload();
   delete d;
-#endif
 }
 
 
@@ -135,26 +130,19 @@ void KMMainView::doCompose()
 //-----------------------------------------------------------------------------
 void KMMainView::doModifyFolder()
 {
-#ifdef BROKEN
   KMFolderDialog *d;
 
-  if ((folderTree->currentItem())<1) 
-    return; // make sure something is selected and it's not "/"
-
-  d = new KMFolderDialog(this, currentFolder);
-  d->setCaption("Modify Folder");
-  d->nameEdit->setText(folderTree->getCurrentItem()->getText());
-
-  if (d->exec())
+  if (!currentFolder) return;
+  if (currentFolder->isSystemFolder())
   {
-    QDir dir;
-    folderTree->cdFolder(&dir);
-    dir.cdUp();
-    dir.rename(folderTree->getCurrentItem()->getText(),d->nameEdit->text());
-    folderTree->getList();
+    warning(nls->translate("Cannot modify a\nsystem folder."));
+    return;
   }
+
+  d = new KMFolderDialog((KMAcctFolder*)currentFolder, this);
+  d->setCaption(nls->translate("Modify Folder"));
+  d->exec();
   delete d;
-#endif
 }
 
 
@@ -170,21 +158,31 @@ void KMMainView::doEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainView::doRemoveFolder()
 {
-#ifdef BROKEN
-  if ((folderTree->currentItem())<1) return;
-
-  QString s;
+  QString str;
   QDir dir;
-  s.sprintf("Are you sure you want to remove the folder \"%s\"\n and all of its child folders?",
-	    folderTree->getCurrentItem()->getText());
-  if ((KMsgBox::yesNo(this,"Confirmation",s))==1) {
+
+  if (!currentFolder) return;
+  if (currentFolder->isSystemFolder())
+  {
+    warning(nls->translate("Cannot remove a\nsystem folder."));
+    return;
+  }
+
+  str.sprintf(nls->translate("Are you sure you want to remove the folder \""
+			     "%s\"\nand all of its child folders?"),
+			     currentFolder->label());
+  if ((KMsgBox::yesNo(this,nls->translate("Confirmation"),str))==1)
+  {
+#ifdef BROKEN
     headers->clear();
     if ( horzPanner) messageView->clearCanvas();
     folderTree->cdFolder(&dir);
     removeDirectory(dir.path());
     folderTree->getList();
-  }
+#else
+    warning("Removing of folders is\nstill under construction");
 #endif
+  }
 }
 
 
@@ -192,7 +190,7 @@ void KMMainView::doRemoveFolder()
 void KMMainView::folderSelected(KMFolder* aFolder)
 {
   if (currentFolder) currentFolder->close();
-  currentFolder = aFolder;
+  currentFolder = (KMAcctFolder*)aFolder;
   if (currentFolder) currentFolder->open();
 
   headers->setFolder(currentFolder);

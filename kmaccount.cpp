@@ -41,8 +41,8 @@ KMAccount::~KMAccount()
 //-----------------------------------------------------------------------------
 void KMAccount::setName(const QString& aName)
 {
-  mName = aName;
   mOwner->rename(this, aName);
+  mName = aName;
 }
 
 
@@ -50,6 +50,21 @@ void KMAccount::setName(const QString& aName)
 void KMAccount::setFolder(KMAcctFolder* aFolder)
 {
   mFolder = aFolder;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAccount::openConfig(void)
+{
+  QString acctPath;
+
+  if (mCFile) return;
+
+  acctPath = mOwner->basePath() + "/" + mName;
+  mCFile   = new QFile(acctPath);
+  mCFile->open(IO_ReadWrite);
+  mCStream = new QTextStream(mCFile);
+  mConfig  = new KConfig(mCStream);
 }
 
 
@@ -66,35 +81,3 @@ void KMAccount::takeConfig(KConfig* aConfig, QFile* aCFile,
   mCStream = aCStream;
   readConfig();
 }
-
-
-#ifdef BROKEN
-//-----------------------------------------------------------------------------
-void KMAccount::getLocation(QString *s)
-{
-  QString t=mConfig->readEntry("type");
-  if (t=="inbox") {
-    *s=config->readEntry("location");
-  } else if (t=="pop3") {
-    s->sprintf("{%s:%s/user=%s/service=pop3}",
-	       (const char *)config->readEntry("host"),
-	       (const char *)config->readEntry("port"),
-	       (const char *)config->readEntry("login"));
-  } else {
-    s->sprintf("{%s:%s/user=%s/service=imap}%s",
-	       (const char *)config->readEntry("host"),
-	       (const char *)config->readEntry("port"),
-	       (const char *)config->readEntry("mailbox"),
-	       (const char *)config->readEntry("login"));
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAccount::init(const QString& aLogin,const QString& aPasswd)
-{
-  config->writeEntry("login",aLogin);
-  config->writeEntry("password",aPasswd);
-}
-#endif
-

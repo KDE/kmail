@@ -28,6 +28,9 @@ public:
   KMFolder(KMFolderDir* parent=NULL, const char* name=NULL);
   virtual ~KMFolder();
 
+  /** Type of the folder: "plain" or "account" (maybe others later). */
+  virtual const char* type(void) const;
+
   /** Returns full path to folder file */
   const QString& location(void) const;
 

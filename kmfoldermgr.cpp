@@ -3,7 +3,7 @@
 #include <qdir.h>
 #include <assert.h>
 #include "kmfoldermgr.h"
-#include "kmfolder.h"
+#include "kmacctfolder.h"
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const char* aBasePath)
@@ -69,14 +69,14 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
 
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
+KMAcctFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
 {
   KMFolderNode* node;
 
   for (node=mDir.first(); node; node=mDir.next())
   {
     if (node->isDir() && foldersOnly) continue;
-    if (node->name()==folderName) return (KMFolder*)node;
+    if (node->name()==folderName) return (KMAcctFolder*)node;
   }
   return NULL;
 }

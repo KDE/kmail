@@ -37,4 +37,11 @@ const QString& KMFolderNode::path(void) const
   return sEmpty;
 }
 
+
+//-----------------------------------------------------------------------------
+const QString KMFolderNode::label(void) const
+{
+  return name();
+}
+
 #include "kmfoldernode.moc"

@@ -7,7 +7,7 @@
 #include <qstring.h>
 #include "kmfoldernode.h"
 
-class KMFolder;
+class KMAcctFolder;
 
 class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 {
@@ -25,9 +25,11 @@ public:
   /** Return full pathname of this directory. */
   virtual const QString& path(void) const;
 
-  /** Create a mail folder in this directory with given name. 
+  /** Create a mail folder in this directory with given name. If sysFldr==TRUE
+   the folder is marked as a (KMail) system folder. 
    Returns Folder on success. */
-  virtual KMFolder* createFolder(const char* folderName);
+  virtual KMAcctFolder* createFolder(const char* folderName,
+				     bool sysFldr=FALSE);
 };
 
 
