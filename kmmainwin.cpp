@@ -1456,6 +1456,12 @@ void KMMainWin::slotEditMsg(KMMessage* msg)
 {
   if (!kernel->folderIsDraftOrOutbox(mFolder))
     return;
+  if (mFolder == kernel->outboxFolder() && kernel->msgSender()->sending())
+  {
+    KMessageBox::sorry(this, i18n("You can't edit messages that are already in "
+      "progress of being sent."));
+    return;
+  }
 
   if ( !msg->isComplete() && mFolder->protocol() == "imap" )
   {
