@@ -43,6 +43,7 @@
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
 #include <qvbox.h>
+#include <qtooltip.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -165,6 +166,7 @@ TransactionItem::TransactionItem( QWidget* parent,
 
   if ( item->canBeCanceled() ) {
     mCancelButton = new QPushButton( SmallIcon( "cancel" ), QString::null, h );
+    QToolTip::add( mCancelButton, i18n("Cancel this operation.") );
     connect ( mCancelButton, SIGNAL( clicked() ),
               this, SLOT( slotItemCanceled() ));
   }
