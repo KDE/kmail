@@ -192,6 +192,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QString tip = i18n("Select email address(es)");
   QToolTip::add( mBtnTo, tip );
   QToolTip::add( mBtnCc, tip );
+  QToolTip::add( mBtnBcc, tip );
   QToolTip::add( mBtnReplyTo, tip );
 
   QWhatsThis::add( mBtnIdentity, i18n("Remember this identity, so that it "
