@@ -359,7 +359,7 @@ bool KMFolder::readIndex()
 #endif
     if ((mi->status() == KMMsgStatusNew) ||
 	(mi->status() == KMMsgStatusUnread) ||
-        ((mi->status() == KMMsgStatusQueued) && (this == kernel->outboxFolder())))
+        (this == kernel->outboxFolder()))
     {
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
@@ -683,7 +683,7 @@ void KMFolder::removeMsg(int idx, bool)
 
   if (mb->status()==KMMsgStatusUnread ||
       mb->status()==KMMsgStatusNew || 
-      ((mb->status()==KMMsgStatusQueued) && (this == kernel->outboxFolder()))) {
+      (this == kernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
@@ -711,7 +711,7 @@ KMMessage* KMFolder::take(int idx)
   msg = (KMMessage*)mMsgList.take(idx);
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew || 
-      ((msg->status()==KMMsgStatusQueued) && (this == kernel->outboxFolder()))) {
+      (this == kernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
@@ -1021,10 +1021,10 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   int newUnread = 0;
 
   if (oldStatus==KMMsgStatusUnread || oldStatus==KMMsgStatusNew ||
-      ((oldStatus==KMMsgStatusQueued) && (this == kernel->outboxFolder())))
+      (this == kernel->outboxFolder()))
     oldUnread = 1;
   if (newStatus==KMMsgStatusUnread || newStatus==KMMsgStatusNew ||
-      ((newStatus==KMMsgStatusQueued) && (this == kernel->outboxFolder())))
+      (this == kernel->outboxFolder()))
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;
 

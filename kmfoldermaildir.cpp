@@ -343,8 +343,8 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);
 
-  if ((aMsg->status()==KMMsgStatusUnread) || 
-      ((aMsg->status()==KMMsgStatusQueued) && (this == kernel->outboxFolder())))
+  if (aMsg->status() == KMMsgStatusUnread || 
+      this == kernel->outboxFolder())
   {
     if (mUnreadMsgs == -1)
       mUnreadMsgs = 1;
@@ -612,7 +612,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   }
 
   if (status == KMMsgStatusNew || status == KMMsgStatusUnread ||
-      ((status == KMMsgStatusQueued) && (this == kernel->outboxFolder())))
+      (this == kernel->outboxFolder()))
   {
     mUnreadMsgs++;
    if (mUnreadMsgs == 0) ++mUnreadMsgs;

@@ -807,7 +807,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (aMsg->status()==KMMsgStatusUnread ||
       aMsg->status()==KMMsgStatusNew ||
-      ((aMsg->status()==KMMsgStatusQueued) && (this == kernel->outboxFolder()))) {
+      (this == kernel->outboxFolder())) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
