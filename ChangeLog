@@ -1,5 +1,8 @@
 1998-06-16  Stefan Taferner  <taferner@kde.org> (KMail-0.7.3)
 
+	* Headers: Improved switching between folders to do
+	less paints to avoid flickering where possible.
+
 	* Warnings: changed warning messages of QPixmap and
 	QPainter to debug messages to avoid lots of message
 	boxes from broken KToolbar code when changing color 

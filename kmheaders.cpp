@@ -36,10 +36,10 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
 
-  setColumn(0, i18n("F"), 17, KMHeadersInherited::PixmapColumn);
-  setColumn(1, i18n("Sender"), 200);
-  setColumn(2, i18n("Subject"), 270);
-  setColumn(3, i18n("Date"), 300);
+  setColumn(0, i18n("F"), 17, KTabListBox::PixmapColumn);
+  setColumn(1, i18n("Sender"), 200, KTabListBox::TextColumn);
+  setColumn(2, i18n("Subject"), 270, KTabListBox::TextColumn);
+  setColumn(3, i18n("Date"), 300, KTabListBox::TextColumn);
   readConfig();
 
   pixNew   = loader->loadIcon("kmmsgnew.xpm");
@@ -130,6 +130,9 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *aFolder)
 {
+  bool autoUpd = autoUpdate();
+  setAutoUpdate(FALSE);
+
   if (mFolder) 
   {
     mFolder->close();
@@ -160,11 +163,14 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	    this, SLOT(msgChanged()));
     connect(mFolder, SIGNAL(statusMsg(const char*)),
 	    mOwner, SLOT(statusMsg(const char*)));
-    mFolder->open();
     readFolderConfig();
+    mFolder->open();
   }
 
   updateMessageList();
+
+  setAutoUpdate(autoUpd);
+  if (autoUpd) repaint();
 }
 
 
@@ -698,7 +704,8 @@ void KMHeaders::updateMessageList(void)
   QString str(256);
   KMMsgStatus flag;
   KMMsgBase* mb;
- 
+  bool autoUpd;
+
   clear();
   if (!mFolder) 
   {
@@ -707,6 +714,7 @@ void KMHeaders::updateMessageList(void)
   }
 
   kbp->busy();
+  autoUpd = autoUpdate();
   setAutoUpdate(FALSE);
 
   for (i=0; i<mFolder->count(); i++)
@@ -721,8 +729,8 @@ void KMHeaders::updateMessageList(void)
     else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue);
   }
 
-  setAutoUpdate(TRUE);
-  repaint();
+  setAutoUpdate(autoUpd);
+  if (autoUpd) repaint();
 
   str.sprintf(i18n("%d Messages, %d unread."),
 	      mFolder->count(), mFolder->countUnread());
