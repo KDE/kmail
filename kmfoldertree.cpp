@@ -80,7 +80,7 @@ static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
   }
 }
 
-QPixmap KMFolderTreeItem::normalIcon(KIcon::StdSizes size) const 
+QPixmap KMFolderTreeItem::normalIcon(int size) const 
 {
   QString icon;
   icon = "folder";
@@ -118,7 +118,7 @@ QPixmap KMFolderTreeItem::normalIcon(KIcon::StdSizes size) const
   return pm;
 }
 
-QPixmap KMFolderTreeItem::unreadIcon(KIcon::StdSizes size) const 
+QPixmap KMFolderTreeItem::unreadIcon(int size) const 
 {
   QPixmap pm;
 

@@ -63,7 +63,7 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     virtual void save() { /*TODO*/ }
     virtual void exit();
     virtual void updateEditMenu() {};
-	void exportFolder( KMFolder* folder );
+    void exportFolder( KMFolder* folder );
 
   signals:
     void textChanged( const QString& );

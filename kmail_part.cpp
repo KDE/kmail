@@ -186,7 +186,7 @@ void KMailPart::exportFolder( KMFolder *folder )
     emit textChanged( folder->label() );
 
   if ( fti )
-    emit iconChanged( fti->normalIcon( KIcon::SizeSmall ) );
+    emit iconChanged( fti->normalIcon( 22 ) );
 }
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
