@@ -995,8 +995,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                              SLOT(properties()));
     }
   }
-  if (fti->folder() && 
-      fti->folder()->protocol() == "imap" || fti->folder()->protocol() == "cachedimap" ) 
+  if (fti->folder() &&
+      (fti->folder()->protocol() == "imap" || fti->folder()->protocol() == "cachedimap" ))
   {
     folderMenu->insertItem(SmallIcon("configure"),
         i18n("Subscription"), mMainWidget,
