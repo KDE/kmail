@@ -794,7 +794,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
-  if (msgText[len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
+  if (msgText[(int)len-1]!=QChar('\n')) fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
   size = ftell(mStream) - offs;
 
