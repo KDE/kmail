@@ -483,10 +483,12 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
   KMMsgStatus msgStatus = msg->status();
 
   switch ( function() ) {
+    case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
       if (msgStatus & mStatus)
         return true;
       break;
+    case FuncNotEqual: // fallthrough. So that "<status> 'is not' 'read'" works
     case FuncContainsNot:
       if (! (msgStatus & mStatus) )
         return true;
