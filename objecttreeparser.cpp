@@ -38,7 +38,6 @@
 // other KMail headers
 #include "kmreaderwin.h"
 #include "partNode.h"
-#include "kmgroupware.h"
 #include "kmkernel.h"
 #include <libkdepim/kfileio.h>
 #include <libkdepim/email.h>
@@ -746,44 +745,6 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   return bDecryptionOk;
 }
 
-QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
-                                               const QString& dirExt,
-                                               const QString& orgName,
-                                               const QByteArray& theBody )
-{
-  KTempFile *tempFile = new KTempFile( QString::null, "." + dirExt );
-  tempFile->setAutoDelete(true);
-  QString fname = tempFile->name();
-  delete tempFile;
-
-  bool bOk = true;
-
-  if (access(QFile::encodeName(fname), W_OK) != 0) // Not there or not writable
-    if (mkdir(QFile::encodeName(fname), 0) != 0
-      || chmod (QFile::encodeName(fname), S_IRWXU) != 0)
-        bOk = false; //failed create
-
-  if ( bOk )
-  {
-    QString fileName( orgName );
-    if ( reader )
-      reader->mTempDirs.append(fname);
-    //fileName.replace(QRegExp("[/\"\']"),"");
-    // strip of a leading path
-    int slashPos = fileName.findRev( '/' );
-    if ( -1 != slashPos )
-      fileName = fileName.mid( slashPos + 1 );
-    if (fileName.isEmpty()) fileName = "unnamed";
-    fname += "/" + fileName;
-
-    if (!KPIM::kByteArrayToFile(theBody, fname, false, false, false))
-      bOk = false;
-    if ( reader )
-      reader->mTempFiles.append(fname);
-  }
-  return bOk ? fname : QString::null;
-}
-
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     QCString cstr( curNode->msgPart().bodyDecoded() );
 
@@ -830,25 +791,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     }
     return false;
   }
-
-  bool ObjectTreeParser::processTextVCalSubtype( partNode * curNode,
-                                                 ProcessResult & result ) {
-    // It doesn't make sense to display raw vCals inline
-    result.setNeverDisplayInline( true );
-
-    // For special treatment of invitations etc. we need a reader window
-    if ( !mReader )
-      return false;
-
-    QString iCal = curNode->msgPart().bodyToUnicode();
-    QString html = kmkernel->groupware().vPartToHTML( iCal );
-    if( !html.isEmpty() )
-      htmlWriter()->queue( html );
-    htmlWriter()->queue( quotedHTML( iCal ) );
-
-    return true;
-  }
-
 } // namespace KMail
 
 static bool isMailmanMessage( partNode * curNode ) {
@@ -1055,43 +997,6 @@ namespace KMail {
     partNode * child = node->firstChild();
     if ( !child )
       return false;
-
-#if 0
-    // Might be a Kroupware message,
-    // let's look for the parts contained in the mixture:
-    partNode * dataPlain = child->findType( DwMime::kTypeText,
-                                            DwMime::kSubtypePlain, false, true );
-
-    // special treatment of vCal attachment (might be invitation or similar)
-    partNode * dataCal = child->findType( DwMime::kTypeText,
-                                          DwMime::kSubtypeVCal, false, true );
-    if ( dataCal ) {
-      ProcessResult dummy;
-      if ( processTextVCalSubtype( dataCal, dummy ) ) {
-        // Kroupware message found,
-        // we can ignore the plain text part
-        if ( dataPlain )
-          dataPlain->setProcessed( true, false );
-        return true;
-      }
-    }
-#endif
-
-#if 0
-    // special treatment of TNEF attachment (might be invitation or similar)
-    partNode * dataTNEF = child->findType( DwMime::kTypeApplication,
-                                           DwMime::kSubtypeMsTNEF, false, true );
-    if ( dataTNEF ) {
-      ProcessResult dummy;
-      if ( processApplicationMsTnefSubtype( dataTNEF, dummy ) ) {
-        // encoded Kroupware message found,
-        // we can ignore the plain text part
-        if ( dataPlain )
-          dataPlain->setProcessed( true, false );
-        return true;
-      }
-    }
-#endif
 
     // normal treatment of the parts in the mp/mixed container
     stdChildHandling( child );
@@ -1636,24 +1541,6 @@ namespace KMail {
 
     return isSigned || isEncrypted;
   }
-
-  bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode * curNode,
-                                                          ProcessResult & )
-  {
-    // For special treatment of invitations etc. we need a reader window
-    if ( !mReader )
-      return false;
-
-    QByteArray theBody = curNode->msgPart().bodyDecodedBinary();
-    QString html = kmkernel->groupware().msTNEFToHTML( theBody );
-    if( !html.isEmpty() && theBody.size() > 0 )
-      htmlWriter()->queue( html );
-    else
-      return false;
-
-    return true;
-  }
-
 
   void ObjectTreeParser::writeBodyString( const QCString & bodyString,
                                           const QString & fromAddress,

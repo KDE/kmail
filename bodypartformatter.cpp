@@ -107,12 +107,10 @@ namespace {
 
   CREATE_BODY_PART_FORMATTER(TextPlain)
   CREATE_BODY_PART_FORMATTER(TextHtml)
-  CREATE_BODY_PART_FORMATTER(TextVCal)
   //CREATE_BODY_PART_FORMATTER(TextEnriched)
 
   CREATE_BODY_PART_FORMATTER(ApplicationOctetStream)
   CREATE_BODY_PART_FORMATTER(ApplicationPkcs7Mime)
-  //CREATE_BODY_PART_FORMATTER(ApplicationMsTnef)
   //CREATE_BODY_PART_FORMATTER(ApplicationPgp)
 
   CREATE_BODY_PART_FORMATTER(MessageRfc822)
@@ -145,14 +143,12 @@ static const SubtypeBuiltin applicationSubtypeBuiltins[] = {
   { "octet-stream", &ApplicationOctetStreamBodyPartFormatter::create },
   { "pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
   { "x-pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
-  //{ "ms-tnef", &ApplicationMsTnefBodyPartFormatter::create },
   { "pgp", &ApplicationPgpBodyPartFormatter::create },
 };
 
 static const SubtypeBuiltin textSubtypeBuiltins[] = {
   { "html", &TextHtmlBodyPartFormatter::create },
   //{ "enriched", &TextEnrichedBodyPartFormatter::create },
-  { "calendar", &TextVCalBodyPartFormatter::create },
   { "x-vcard", &AnyTypeBodyPartFormatter::create },
   { "vcard", &AnyTypeBodyPartFormatter::create },
   { "rtf", &AnyTypeBodyPartFormatter::create },
@@ -219,11 +215,6 @@ static const KMail::BodyPartFormatter * createForText( const char * subtype ) {
     case 'H':
       if ( qstricmp( subtype, "html" ) == 0 )
 	return TextHtmlBodyPartFormatter::create();
-      break;
-    case 'c':
-    case 'C':
-      if ( qstricmp( subtype, "calendar" ) == 0 )
-	return TextVCalBodyPartFormatter::create();
       break;
     case 'r':
     case 'R':
