@@ -221,6 +221,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
 
 void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
 {
+  if ( msgList.isEmpty() ) return;
   if (!quiet)
     deleteMessage(msgList);
 
