@@ -117,6 +117,7 @@ void KMMessage::assign( const KMMessage& other )
     mUnencryptedMsg = 0;
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //mMsgSerNum = other.mMsgSerNum; // what about serial number ?
+  mMsgSerNum = 0;
   //KMMsgBase::assign( &other );
 }
 
