@@ -75,8 +75,6 @@ static QStringList sPrefCharsets;
 QString KMMessage::sForwardStr = "";
 int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
-using namespace KMime;
-
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
   : mMsg(aMsg),
