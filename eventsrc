@@ -1,14 +1,14 @@
 [!Global!]
 IconName=kmail
 Comment=KMail
-Comment[af]=kpos
+Comment[af]=Kpos
 Comment[sv]=Kmail
 Comment[zu]=I-KMeyili
 
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
-Comment[af]=nuwe pos gearriveer
+Comment[af]=Nuwe Pos gearriveer
 Comment[bs]=Stigla vam je nova pošta.
 Comment[ca]=Teniu correu nou
 Comment[cs]=Přišla nová pošta
