@@ -5765,6 +5765,25 @@ void KMEdit::spellcheck()
           this, SLOT (slotSpellResult (const QString&)));
 }
 
+void KMEdit::cut()
+{
+    KEdit::cut();
+    mSpellChecker->restartBackgroundSpellCheck();
+}
+
+void KMEdit::clear()
+{
+    KEdit::clear();
+    mSpellChecker->restartBackgroundSpellCheck();
+}
+
+void KMEdit::del()
+{
+    KEdit::del();
+    mSpellChecker->restartBackgroundSpellCheck();
+}
+
+
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {

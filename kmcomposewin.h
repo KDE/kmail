@@ -117,7 +117,9 @@ public slots:
   void slotExternalEditorDone(KProcess*);
     void slotMisspelling(const QString &, const QStringList &, unsigned int);
     void slotCorrected (const QString &, const QString &, unsigned int);
-
+    virtual void cut();
+    virtual void clear();
+    virtual void del();
 protected:
   /**
    * Event filter that does Tab-key handling.
