@@ -1,3 +1,5 @@
+#include <kdebug.h>
+
 #include "certificatewizardimpl.h"
 
 /* 

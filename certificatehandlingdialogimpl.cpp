@@ -5,6 +5,7 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 
+#include <kdebug.h>
 #include <klocale.h>
 
 /*
