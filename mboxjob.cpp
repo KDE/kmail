@@ -90,8 +90,8 @@ MboxJob::expireMessages()
     maxUnreadTime = time(0) - unreadDays * 3600 * 24;
   }
   if (readDays > 0) {
-    kdDebug(5006) << "deleting read older than "<< unreadDays << " days" << endl;
-    maxReadTime = time(0) - unreadDays * 3600 * 24;
+    kdDebug(5006) << "deleting read older than "<< readDays << " days" << endl;
+    maxReadTime = time(0) - readDays * 3600 * 24;
   }
 
   if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
