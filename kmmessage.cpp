@@ -685,7 +685,6 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   return c;
 }
 
-
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   QString selection, bool noQuote, bool allowDecryption)
@@ -696,6 +695,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   QString id;
 
   id = headerField("X-KMail-Identity");
+  if ( id.isEmpty() )
+    id = KMIdentity::matchIdentity(to() + " " + cc());
   if ( id.isEmpty() )
     id = parent()->identity();
   msg->initHeader(id);

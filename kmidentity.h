@@ -19,6 +19,9 @@ public:
   /** Save a list of identity ids in the config file */
   static void saveIdentities( QStringList ids, bool aWithSync = TRUE );
 
+  /** Returns an identity whose address matches with any in addressList **/
+  static QString matchIdentity( const QString &addressList );
+
   /** Constructor loads config file */
   KMIdentity( QString id );
 

@@ -46,6 +46,24 @@ void KMIdentity::saveIdentities( QStringList ids, bool aWithSync )
   if (aWithSync) config->sync();
 }
 
+//-----------------------------------------------------------------------------
+QString KMIdentity::matchIdentity( const QString &addressList )
+{
+  QStringList ids = identities();
+  KConfig* config = kapp->config();
+  for(QStringList::ConstIterator it = ids.begin(); it != ids.end(); ++it)
+  {
+     const QString &id = (*it);
+     KConfigGroupSaver saver( config, (id == i18n( "Default" )) ? 
+		     QString("Identity") : "Identity-" + id );
+     QString email = config->readEntry("Email Address");
+     if (addressList.find(email, 0, false)!= -1)
+        return id;
+  }
+  return QString::null;
+}
+
+
 
 //-----------------------------------------------------------------------------
 KMIdentity::KMIdentity( QString id )
