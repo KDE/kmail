@@ -1251,7 +1251,7 @@ void KMMainWin::slotReplyToMsg()
           this, SLOT(slotReallyReplyToMsg(bool)));
     transferSelectedMsgs();
   } else {
-    mHeaders->replyToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
+    mHeaders->replyToMsg(mMsgView->copyText());
   }
 }
 
@@ -1260,7 +1260,7 @@ void KMMainWin::slotReallyReplyToMsg(bool success)
   disconnect(this, SIGNAL(messagesTransfered(bool)),
       this, SLOT(slotReallyReplyToMsg(bool)));
   replyAction->setEnabled(true);
-  if (success) mHeaders->replyToMsg(mMsgView->copyText());
+  if (success) mHeaders->replyToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
 }
 
 //-----------------------------------------------------------------------------
