@@ -44,7 +44,6 @@
 
 
 static DwString emptyString("");
-static QCString result;
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyStr, sReplyAllStr, sIndentPrefixStr;
@@ -207,8 +206,7 @@ const QString KMMessage::asString(void)
     mNeedsAssembly = FALSE;
     mMsg->Assemble();
   }
-  result = mMsg->AsString().c_str();
-  return result;
+  return mMsg->AsString().c_str();
 }
 
 //-----------------------------------------------------------------------------
@@ -239,6 +237,7 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
   const char* strPos;
   char* resultPos;
   char ch;
+  QCString result;
 
   if (mMsg) delete mMsg;
   mMsg = new DwMessage;
@@ -987,7 +986,7 @@ const QString KMMessage::dateShortStr(void) const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
   
-  result = ctime(&unixTime);
+  QCString result = ctime(&unixTime);
   
   if (result[result.length()-1]=='\n')
     result.truncate(result.length()-1);
@@ -1282,6 +1281,7 @@ const QString KMMessage::headerField(const QString& aName) const
 {
   DwHeaders& header = mMsg->Headers();
   DwField* field;
+  QCString result;
 
   if (aName.isEmpty() || !(field = header.FindField((const char*)aName)))
     result = "";
