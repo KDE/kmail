@@ -859,7 +859,7 @@ public:
   QString helpAnchor() const;
 private slots:
   void slotStorageFormatChanged( int );
-  void slotLegaceBodyInvitesToggled( bool on );
+  void slotLegacyBodyInvitesToggled( bool on );
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
@@ -882,6 +882,7 @@ private:
 
   QCheckBox* mLegacyMangleFromTo;
   QCheckBox* mLegacyBodyInvites;
+  QCheckBox* mAutomaticSending;
 };
 
 class MiscPage : public ConfigModuleWithTabs {
