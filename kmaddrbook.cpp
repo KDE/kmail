@@ -16,6 +16,7 @@
 #include <kmessagebox.h>
 
 #include "kmkernel.h" // for KabcBridge
+#include "kbusyptr.h"
 #include "kmmessage.h" // for KabcBridge
 #include "kmaddrbookdlg.h" // for kmaddrbookexternal
 #include <krun.h> // for kmaddrbookexternal
@@ -23,10 +24,10 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
-
 void KabcBridge::addresses(QStringList* result) // includes lists
 {
-  QString addr, email;
+  kernel->kbp()->busy(); // loading might take a while
+    
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::AddressBook::Iterator it;
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
@@ -37,24 +38,32 @@ void KabcBridge::addresses(QStringList* result) // includes lists
 	        (*it).familyName() + " " +
 		(*it).suffix();
     n = n.simplifyWhiteSpace();
-    for( unsigned int i = 0; i < emails.count(); ++i ) {
-      if (!emails[i].isEmpty()) {
-	if (n.isEmpty() || (emails[i].find( "<" ) != -1))
-	  addr = "";
+    
+    QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
+    QString endQuote = "\" ";
+    QString empty = "";
+    QStringList::ConstIterator mit;
+    QString addr, email;
+    
+    for ( mit = emails.begin(); mit != emails.end(); ++mit ) {
+      email = *mit;
+      if (!email.isEmpty()) {
+	if (n.isEmpty() || (email.find( '<' ) != -1))
+	  addr = empty;
 	else { /* do we really need quotes around this name ? */
-	  if (n.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
-	    addr = "\"" + n + "\" ";
+          if (n.find(needQuotes) != -1)
+	    addr = '"' + n + endQuote;
 	  else
-	    addr = n + " ";
+	    addr = n + ' ';
 	}
-	email = emails[i];
-	if (!addr.isEmpty() && (email.find( "<" ) == -1)
-	    && (email.find( ">" ) == -1)
-	    && (email.find( "," ) == -1))
-	  addr += "<" + email + ">";
+
+	if (!addr.isEmpty() && (email.find( '<' ) == -1)
+	    && (email.find( '>' ) == -1)
+	    && (email.find( ',' ) == -1))
+	  addr += '<' + email + '>';
 	else
 	  addr += email;
-	addr.stripWhiteSpace();
+	addr = addr.stripWhiteSpace();
 	result->append( addr );
       }
     }
@@ -67,6 +76,8 @@ void KabcBridge::addresses(QStringList* result) // includes lists
   for ( jt = names.begin(); jt != names.end(); ++jt)
     result->append( *jt );
   result->sort();
+  
+  kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------
@@ -123,7 +134,7 @@ QString KabcBridge::expandDistributionLists(QString recipients)
           QString username = receiver;
           receiver += "@";
           receiver += QCString(hostname, 100);
-  
+
           passwd *pw;
           setpwent();
           while ((pw = getpwent()))
@@ -158,7 +169,7 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *) {
       + "\"" );
     return;
   }
-  
+
   // TODO: Start a simple add-to-addressbook-dialog, or just add the address
   // silently to kabc.
 }
@@ -169,7 +180,7 @@ void KMAddrBookExternal::launch(QWidget *) {
 // file directly, as they aren't used anywhere else.
 // It might also be better to write a string for identifying the addressbook
 // instead of a number as it is done now.
-    KRun::runCommand("kaddressbook");  
+    KRun::runCommand("kaddressbook");
 #if 0
   if ( useKab() ) {
     KRun::runCommand("kab");
