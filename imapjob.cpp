@@ -413,10 +413,13 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     {
       /* we got an answer but not data
        * this means that the msg is not on the server anymore so delete it */
+      emit messageRetrieved( 0 );
       parent->ignoreJobsForMessage( msg );
       int idx = parent->find( msg );
       if (idx != -1) parent->removeMsg( idx, true );
-      emit messageRetrieved( 0 );
+      // the removeMsg will unGet the message, which will delete all 
+      // jobs, including this one
+      return;
     }
   } else {
     emit messageUpdated(msg, mPartSpecifier);
