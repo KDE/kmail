@@ -720,7 +720,7 @@ namespace KMail {
 
       "div.fancy.header table {\n"
       "  padding: 2px;\n" // ### khtml bug: this is ignored
-      "  align: left\n"
+      "  text-align: left\n"
       "}\n\n"
 
       "div.fancy.header table th {\n"
@@ -735,7 +735,7 @@ namespace KMail {
       "  padding: 0px;\n"
       "  border-spacing: 0px;\n"
       "  text-align: left;\n"
-      "  text-valign: top;\n"
+      "  vertical-align: top;\n"
       "  width: 100%;\n"
       "}\n\n"
       ;
