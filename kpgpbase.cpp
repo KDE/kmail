@@ -214,9 +214,9 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
 
 
     if(passphrase) {
-      snprintf(gpgcmd, 1023, "gpg --passphrase-fd %d %s",ppass[0],cmd);
+      snprintf(gpgcmd, 1023, "LANG=C; gpg --passphrase-fd %d %s",ppass[0],cmd);
     } else {
-      snprintf(gpgcmd, 1023, "gpg %s",cmd);
+      snprintf(gpgcmd, 1023, "LANG=C; gpg %s",cmd);
     }
 
   QApplication::flushX();
@@ -238,9 +238,9 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     //#warning FIXME: there has to be a better way to do this
      /* this is nasty nasty nasty (but it works) */
     if(passphrase) {
-      snprintf(gpgcmd, 1023, "gpg --passphrase-fd %d %s",ppass[0],cmd);
+      snprintf(gpgcmd, 1023, "LANG=C; gpg --passphrase-fd %d %s",ppass[0],cmd);
     } else {
-      snprintf(gpgcmd, 1023, "gpg %s",cmd);
+      snprintf(gpgcmd, 1023, "LANG=C; gpg %s",cmd);
     }
 
     execl("/bin/sh", "sh", "-c", gpgcmd,  NULL);
@@ -685,11 +685,11 @@ KpgpBase2::encsign(const QStrList *_recipients, const char *passphrase,
       _recipients = 0;
 
   if(_recipients != 0 && passphrase != 0)
-    cmd = "pgp +batchmode -seat ";
+    cmd = "pgp +batchmode +language=C -seat ";
   else if( _recipients != 0 )
-    cmd = "pgp +batchmode -eat";
+    cmd = "pgp +batchmode +language=C -eat";
   else if(passphrase != 0 )
-    cmd = "pgp +batchmode -sat ";
+    cmd = "pgp +batchmode +language=C -sat ";
   else 
   {
     debug("kpgpbase: Neither recipients nor passphrase specified.");
@@ -820,7 +820,7 @@ KpgpBase2::decrypt(const char *passphrase)
   output = "";
 
 
-  cmd = "pgp +batchmode -f";
+  cmd = "pgp +batchmode +language=C -f";
 
   status = run(cmd, passphrase);
 
@@ -938,7 +938,7 @@ KpgpBase2::pubKeys()
   QString cmd;
   int index, index2;
 
-  cmd = "pgp +batchmode -kv -f";
+  cmd = "pgp +batchmode +language=C -kv -f";
   status = run(cmd);
   if(status == RUN_ERR) return 0;
 
@@ -986,7 +986,7 @@ KpgpBase2::signKey(const char *key, const char *passphrase)
 {
   QString cmd;
 
-  cmd = "pgp +batchmode -ks -f";
+  cmd = "pgp +batchmode +language=C -ks -f";
   cmd += addUserId();
   if(passphrase != 0)
   {
@@ -1003,7 +1003,7 @@ KpgpBase2::signKey(const char *key, const char *passphrase)
 QString KpgpBase2::getAsciiPublicKey(QString _person) {
 
   QString toexec;
-  toexec.sprintf("pgp -kxaf \"%s\"", _person.data());
+  toexec.sprintf("pgp +language=C -kxaf \"%s\"", _person.data());
 
   status = run(toexec.data());
   if(status == RUN_ERR) return QString::null;
@@ -1339,7 +1339,7 @@ KpgpBase6::decrypt(const char *passphrase)
   int index, index2;
   output = "";
 
-  cmd = "pgp +batchmode -f";
+  cmd = "pgp +batchmode +language=C -f";
 
   status = run(cmd, passphrase);
 
@@ -1430,7 +1430,7 @@ KpgpBase6::pubKeys()
   int index, index2;
   int compatibleMode = 1;
 
-  cmd = "pgp +batchmode -kv -f";
+  cmd = "pgp +batchmode +language=C -kv -f";
   status = run(cmd);
   if(status != OK) return 0;
 
