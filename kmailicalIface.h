@@ -114,6 +114,9 @@ k_dcop:
   /// This enum matches the one defined in kmail.kcfg
   enum StorageFormat { StorageIcalVcard, StorageXML };
 
+  /// This bitfield indicates which changes have been made in a folder, at syncing time.
+  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
+
 k_dcop_signals:
   // For vcard/ical type storage (imap resource)
   void incidenceAdded( const QString& type, const QString& folder,
@@ -135,10 +138,9 @@ k_dcop_signals:
                          const QString& label );
   void subresourceDeleted( const QString& type, const QString& resource );
 
-  /// This bitfield indicates which changes have been made in a folder, at syncing time.
-  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
   /// Emitted when a folder has been successfully synced to the server.
-  void signalFolderSynced( const QString& folder, FolderChanges changes );
+  /// @param changes is in fact using the FolderChanges enum (bitfield)
+  void signalFolderSynced( const QString& folder, int changes );
 };
 
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResource& subResource )
