@@ -144,6 +144,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mCryptoModuleAction( 0 ),
     mComposer( 0 )
 {
+  // Set this to be the group leader for all subdialogs - this means
+  // modal subdialogs will only affect this dialog, not the other windows
+  setWFlags( getWFlags() | WGroupLeader );
+
   mSubjectTextWasSpellChecked = false;
   if (kmkernel->xmlGuiInstance())
     setInstance( kmkernel->xmlGuiInstance() );
@@ -197,7 +201,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
   mSplitter->moveToFirst( mEditor );
   mSplitter->setOpaqueResize( true );
-  
+
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
 
@@ -207,9 +211,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QToolTip::add( mBtnBcc, tip );
   QToolTip::add( mBtnReplyTo, tip );
 
-  QWhatsThis::add( mBtnIdentity, 
+  QWhatsThis::add( mBtnIdentity,
     GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
-  QWhatsThis::add( mBtnFcc, 
+  QWhatsThis::add( mBtnFcc,
     GlobalSettings::self()->stickyFccItem()->whatsThis() );
   QWhatsThis::add( mBtnTransport,
     GlobalSettings::self()->stickyTransportItem()->whatsThis() );
@@ -489,7 +493,7 @@ void KMComposeWin::readConfig(void)
   mBtnIdentity->setChecked( GlobalSettings::stickyIdentity() );
   if (mBtnIdentity->isChecked()) {
     mId = (GlobalSettings::previousIdentity()!=0) ?
-           GlobalSettings::previousIdentity() : mId; 
+           GlobalSettings::previousIdentity() : mId;
   }
   mBtnFcc->setChecked( GlobalSettings::stickyFcc() );
   mBtnTransport->setChecked( GlobalSettings::stickyTransport() );
@@ -2517,10 +2521,10 @@ void KMComposeWin::openAttach( int index )
   mAtmTempList.append( atmTempFile );
   const bool autoDelete = true;
   atmTempFile->setAutoDelete( autoDelete );
-  
+
   KURL url;
   url.setPath( atmTempFile->name() );
-  
+
   KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false );
   if ( ::chmod( QFile::encodeName( atmTempFile->name() ), S_IRUSR ) != 0) {
@@ -3516,7 +3520,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mOldSigText = ident.signatureText();
   if( appendNewSig )
   {
-    if( (!mOldSigText.isEmpty()) && 
+    if( (!mOldSigText.isEmpty()) &&
                    (GlobalSettings::autoTextSignature()=="auto") )
       edtText.append( mOldSigText );
     mEditor->setText( edtText );
