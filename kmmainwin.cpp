@@ -2793,11 +2793,17 @@ void KMMainWin::setupMenuBar()
 
   createGUI( "kmmainwin.rc", false );
 
-  QObject::connect( guiFactory()->container("folder", this),
-		    SIGNAL( aboutToShow() ), this, SLOT( updateFolderMenu() ));
+  connect( guiFactory()->container("folder", this),
+	   SIGNAL( aboutToShow() ), this, SLOT( updateFolderMenu() ));
 
-  QObject::connect( guiFactory()->container("message", this),
-		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
+  connect( guiFactory()->container("message", this),
+	   SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
+  // contains "Create Filter" actions.
+  connect( guiFactory()->container("tools", this),
+	   SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
+  // contains "View source" action.
+  connect( guiFactory()->container("view", this),
+	   SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
 
 
   conserveMemory();
