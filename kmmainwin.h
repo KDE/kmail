@@ -33,10 +33,14 @@ class KRadioAction;
 class KProgressDialog;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
+template <typename T> class QGuardedPtr;
 
-namespace KIO
-{
+namespace KIO {
   class Job;
+};
+
+namespace KMail {
+  class Vacation;
 }
 
 #define KMMainWinInherited KMTopLevelWidget
@@ -200,6 +204,7 @@ protected slots:
   void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
+  void slotEditVacation();
   void slotApplyFilters();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -380,6 +385,8 @@ protected:
   int mCountJobs, mCountMsgs;
 
   QPtrList<KMMessage> mSelectedMsgs;
+
+  QGuardedPtr<KMail::Vacation> mVacation;
 
 signals:
   void messagesTransfered(bool);

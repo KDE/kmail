@@ -15,6 +15,7 @@
 #include <qvaluelist.h>
 #include <qtextcodec.h>
 #include <qheader.h>
+#include <qguardedptr.h>
 
 #include <kopenwith.h>
 
@@ -62,6 +63,8 @@
 #include "kmacctfolder.h"
 #include "kmmimeparttree.h"
 #include "kmundostack.h"
+#include "vacation.h"
+using KMail::Vacation;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1417,6 +1420,24 @@ void KMMainWin::slotApplyFilters()
   mHeaders->applyFiltersOnMsg();
 }
 
+void KMMainWin::slotEditVacation() {
+  if ( mVacation )
+    return;
+
+  mVacation = new Vacation( this );
+  if ( mVacation->isUsable() )
+    connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
+  else {
+    QString msg = i18n("KMail's Out of Office Reply functionality relies on "
+		       "server-side filtering. You have not yet configured an "
+		       "IMAP server for this.\n"
+		       "You can do this on the \"Filtering\" tab of the IMAP "
+		       "account configuration.");
+    KMessageBox::sorry( this, msg, i18n("No Server-Side Filtering Configured") );
+			
+    delete mVacation; // QGuardedPtr sets itself to 0!
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCopyMsg()
@@ -2230,6 +2251,10 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("&Import..."), "fileopen", 0, this,
 		      SLOT(slotImport()), actionCollection(), "import" );
+
+  (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
+		      "configure", 0, this, SLOT(slotEditVacation()),
+		      actionCollection(), "tools_edit_vacation" );
 
   //----- Edit Menu
   KStdAction::undo( this, SLOT(slotUndo()), actionCollection(), "edit_undo");

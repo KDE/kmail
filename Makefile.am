@@ -37,6 +37,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
+		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		directoryservicesconfigurationdialogimpl.cpp \
 		adddirectoryservicedialog.ui adddirectoryservicedialogimpl.cpp kmmimeparttree.cpp \
