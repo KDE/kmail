@@ -1271,7 +1271,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
   KURL url(aUrl);
 
   int id = msgPartFromUrl(url);
-  if (id <= 0)
+  if (id < 0)
   {
     emit statusMsg(aUrl);
   }
@@ -1296,7 +1296,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     return;
   }
   int id = msgPartFromUrl(aUrl);
-  if (id > 0)
+  if (id >= 0)
   {
     // clicked onto an attachment
     mAtmCurrent = id;
@@ -1317,7 +1317,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   KURL url( aUrl );
 
   int id = msgPartFromUrl(url);
-  if (id <= 0)
+  if (id < 0)
   {
     emit popupMenu(url, aPos);
   }

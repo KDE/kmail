@@ -333,7 +333,8 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   bool OK = FALSE;
   
   // search for '%n'
-  while ( ( start = r.match( result, start + 1, &len ) ) > 0 ) {
+  while ( ( start = r.search( result, start + 1 ) ) > 0 ) {
+    len = r.matchedLength();
     // and save the encountered 'n' in a list.
     int n = result.mid( start + 1, len - 1 ).toInt( &OK );
     if ( OK )
