@@ -409,8 +409,8 @@ void KMMainWidget::writeConfig(void)
   geometry.writeEntry( "FolderPaneWidth", widths[0] );
   geometry.writeEntry( "HeaderPaneWidth", widths[1] );
 
-  // Do not save a wrong size when the widget is hidden
-  if ( mSearchAndHeaders && !mSearchAndHeaders->isHidden() ) {
+  // Only save when the widget is shown (to avoid saving a wrong value)
+  if ( mSearchAndHeaders && mSearchAndHeaders->isShown() ) {
     geometry.writeEntry( "HeaderPaneHeight", heights[0] );
     geometry.writeEntry( "ReaderPaneHeight", heights[1] );
   }
