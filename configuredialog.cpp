@@ -2253,6 +2253,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mAutoSave->setSpecialValueText( i18n("No autosave") );
   mAutoSave->setSuffix( i18n(" min") );
   hlay->addStretch( 1 );
+  connect( mAutoSave, SIGNAL( valueChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   msg = i18n("A backup copy of the text in the composer window can be created "
 	     "regularly. The interval used to create the backups is set here. "
@@ -2266,6 +2268,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   mExternalEditorCheck =
     new QCheckBox( i18n("Use e&xternal editor instead of composer"), group );
+  connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   hbox = new QHBox( group );
   label = new QLabel( i18n("Specify e&ditor:"), hbox );
