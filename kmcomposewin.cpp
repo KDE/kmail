@@ -945,24 +945,13 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   mEdtReplyTo.setText(mMsg->replyTo());
   mEdtBcc.setText(mMsg->bcc());
 
-  QString identity;
-  if (mBtnIdentity.isChecked())
-    identity = mId;
-  else 
-    identity = newMsg->headerField("X-KMail-Identity");
-
-  if ( !identity.isEmpty() ) {
-    mId = identity;
-    KMIdentity ident( mId );
-    ident.readConfig();
-
-    mEdtFrom.setText( ident.fullEmailAddr() );
-    mEdtReplyTo.setText( ident.replyToAddr() );
-  }
+  if (!mBtnIdentity.isChecked())
+    mId = newMsg->headerField("X-KMail-Identity");
 
   for (int i=0; i < mIdentity.count(); ++i)
     if (mIdentity.text(i) == mId) {
       mIdentity.setCurrentItem(i);
+      if (mBtnIdentity.isChecked()) slotIdentityActivated(i);
       break;
     }
 

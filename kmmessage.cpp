@@ -1091,6 +1091,10 @@ void KMMessage::initHeader( QString id )
   else
     setHeaderField("Organization", ident.organization());
 
+  if (ident.transport().isEmpty())
+    removeHeaderField("X-KMail-Transport");
+  else
+    setHeaderField("X-KMail-Transport", ident.transport());
 
   if (    !sCreateOwnMessageIdHeaders
        || sMessageIdSuffix.isEmpty()

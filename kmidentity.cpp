@@ -104,7 +104,10 @@ void KMIdentity::readConfig(void)
   mSignatureFile = config->readEntry("Signature File");
   mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
   mSignatureInlineText = config->readEntry("Inline Signature");
-  mTransport = config->readEntry("Transport");
+  if (mIdentity == i18n( "Default" ))
+    mTransport = QString::null;
+  else
+    mTransport = config->readEntry("Transport");
 }
 
 
