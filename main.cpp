@@ -460,7 +460,7 @@ static void init(int& argc, char *argv[])
   kbp = new KBusyPtr;
   cfg = app->config();
 
-  keys = new KStdAccel(cfg);
+  keys = new KStdAccel();
 
   // Stefan: Yes, we really want this message handler. Without it,
   // kmail does not show vital warning() dialogs.

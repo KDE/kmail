@@ -70,7 +70,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   {
     mBasePath = QDir::homeDirPath();
     mBasePath.append("/");
-    mBasePath.append(aBasePath+1);
+    mBasePath.append(aBasePath.mid(1));
   }
   else
   {
