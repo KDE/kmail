@@ -331,13 +331,13 @@ void AccountDialog::makeLocalAccountPage()
   KSeparator *hline = new KSeparator( KSeparator::HLine, page);
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
-  QLabel *label = new QLabel( i18n("&Name:"), page );
+  QLabel *label = new QLabel( i18n("Account &name:"), page );
   topLayout->addWidget( label, 2, 0 );
   mLocal.nameEdit = new KLineEdit( page );
   label->setBuddy( mLocal.nameEdit );
   topLayout->addWidget( mLocal.nameEdit, 2, 1 );
 
-  label = new QLabel( i18n("&Location:"), page );
+  label = new QLabel( i18n("File &location:"), page );
   topLayout->addWidget( label, 3, 0 );
   mLocal.locationEdit = new QComboBox( true, page );
   label->setBuddy( mLocal.locationEdit );
@@ -413,9 +413,10 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addMultiCellWidget( resourceHB, 5, 5, 0, 2 );
 #endif
 
-  mLocal.excludeCheck =
-    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page );
-  topLayout->addMultiCellWidget( mLocal.excludeCheck, 5, 5, 0, 2 );
+  mLocal.includeInCheck =
+    new QCheckBox( i18n("Include in m&anual mail check"),
+                   page );
+  topLayout->addMultiCellWidget( mLocal.includeInCheck, 5, 5, 0, 2 );
 
   mLocal.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page );
@@ -436,18 +437,6 @@ void AccountDialog::makeLocalAccountPage()
   mLocal.folderCombo = new QComboBox( false, page );
   label->setBuddy( mLocal.folderCombo );
   topLayout->addWidget( mLocal.folderCombo, 8, 1 );
-
-  /* -sanders Probably won't support this way, use filters insteada
-  label = new QLabel( i18n("Default identity:"), page );
-  topLayout->addWidget( label, 9, 0 );
-  mLocal.identityCombo = new QComboBox( false, page );
-  topLayout->addWidget( mLocal.identityCombo, 9, 1 );
-  // GS - this was moved inside the commented block 9/30/2000
-  //      (I think Don missed it?)
-  label->setEnabled(false);
-  */
-
-  //mLocal.identityCombo->setEnabled(false);
 
   label = new QLabel( i18n("&Pre-command:"), page );
   topLayout->addWidget( label, 9, 0 );
@@ -479,13 +468,13 @@ void AccountDialog::makeMaildirAccountPage()
 
   mMaildir.nameEdit = new KLineEdit( page );
   topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
-  QLabel *label = new QLabel( mMaildir.nameEdit, i18n("&Name:"), page );
+  QLabel *label = new QLabel( mMaildir.nameEdit, i18n("Account &name:"), page );
   topLayout->addWidget( label, 2, 0 );
 
   mMaildir.locationEdit = new QComboBox( true, page );
   topLayout->addWidget( mMaildir.locationEdit, 3, 1 );
   mMaildir.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
-  label = new QLabel( mMaildir.locationEdit, i18n("&Location:"), page );
+  label = new QLabel( mMaildir.locationEdit, i18n("Folder &location:"), page );
   topLayout->addWidget( label, 3, 0 );
 
   QPushButton *choose = new QPushButton( i18n("Choo&se..."), page );
@@ -519,9 +508,9 @@ void AccountDialog::makeMaildirAccountPage()
   topLayout->addMultiCellWidget( resourceHB, 4, 4, 0, 2 );
 #endif
 
-  mMaildir.excludeCheck =
-    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page );
-  topLayout->addMultiCellWidget( mMaildir.excludeCheck, 4, 4, 0, 2 );
+  mMaildir.includeInCheck =
+    new QCheckBox( i18n("Include in &manual mail check"), page );
+  topLayout->addMultiCellWidget( mMaildir.includeInCheck, 4, 4, 0, 2 );
 
   mMaildir.intervalCheck =
     new QCheckBox( i18n("Enable &interval mail checking"), page );
@@ -577,7 +566,7 @@ void AccountDialog::makePopAccountPage()
   grid->setRowStretch( 15, 10 );
   grid->setColStretch( 1, 10 );
 
-  QLabel *label = new QLabel( i18n("&Name:"), page1 );
+  QLabel *label = new QLabel( i18n("Account &name:"), page1 );
   grid->addWidget( label, 0, 0 );
   mPop.nameEdit = new KLineEdit( page1 );
   label->setBuddy( mPop.nameEdit );
@@ -659,9 +648,9 @@ void AccountDialog::makePopAccountPage()
   grid->addMultiCellWidget( resourceHB, 7, 7, 0, 2 );
 #endif
 
-  mPop.excludeCheck =
-    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
-  grid->addMultiCellWidget( mPop.excludeCheck, 7, 7, 0, 1 );
+  mPop.includeInCheck =
+    new QCheckBox( i18n("Include in man&ual mail check"), page1 );
+  grid->addMultiCellWidget( mPop.includeInCheck, 7, 7, 0, 1 );
 
   QHBox * hbox = new QHBox( page1 );
   hbox->setSpacing( KDialog::spacingHint() );
@@ -704,7 +693,7 @@ void AccountDialog::makePopAccountPage()
   label->setBuddy( mPop.folderCombo );
   grid->addWidget( mPop.folderCombo, 11, 1 );
 
-  label = new QLabel( i18n("Precom&mand:"), page1 );
+  label = new QLabel( i18n("Pre-com&mand:"), page1 );
   grid->addWidget( label, 12, 0 );
   mPop.precommand = new KLineEdit( page1 );
   label->setBuddy(mPop.precommand);
@@ -714,11 +703,18 @@ void AccountDialog::makePopAccountPage()
   tabWidget->addTab( page2, i18n("&Extras") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, marginHint(), spacingHint() );
 
-  mPop.usePipeliningCheck =
-    new QCheckBox( i18n("&Use pipelining for faster mail download"), page2 );
-  connect(mPop.usePipeliningCheck, SIGNAL(clicked()),
-    SLOT(slotPipeliningClicked()));
-  vlay->addWidget( mPop.usePipeliningCheck );
+  vlay->addSpacing( KDialog::spacingHint() );
+
+  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
+  mPop.checkCapabilities =
+    new QPushButton( i18n("Check &What the Server Supports"), page2 );
+  connect(mPop.checkCapabilities, SIGNAL(clicked()),
+    SLOT(slotCheckPopCapabilities()));
+  buttonLay->addStretch();
+  buttonLay->addWidget( mPop.checkCapabilities );
+  buttonLay->addStretch();
+
+  vlay->addSpacing( KDialog::spacingHint() );
 
   mPop.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
@@ -757,15 +753,13 @@ void AccountDialog::makePopAccountPage()
 
   vlay->addWidget( mPop.authGroup );
 
-  vlay->addStretch();
+  mPop.usePipeliningCheck =
+    new QCheckBox( i18n("&Use pipelining for faster mail download"), page2 );
+  connect(mPop.usePipeliningCheck, SIGNAL(clicked()),
+    SLOT(slotPipeliningClicked()));
+  vlay->addWidget( mPop.usePipeliningCheck );
 
-  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
-  mPop.checkCapabilities =
-    new QPushButton( i18n("Check &What the Server Supports"), page2 );
-  connect(mPop.checkCapabilities, SIGNAL(clicked()),
-    SLOT(slotCheckPopCapabilities()));
-  buttonLay->addStretch();
-  buttonLay->addWidget( mPop.checkCapabilities );
+  vlay->addStretch();
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -801,7 +795,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
 //  grid->setColStretch( 1, 10 );
 
   ++row;
-  QLabel *label = new QLabel( i18n("&Name:"), page1 );
+  QLabel *label = new QLabel( i18n("Account &name:"), page1 );
   grid->addWidget( label, row, 0 );
   mImap.nameEdit = new KLineEdit( page1 );
   label->setBuddy( mImap.nameEdit );
@@ -928,9 +922,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
 #endif
 
   ++row;
-  mImap.excludeCheck =
-    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page1 );
-  grid->addMultiCellWidget( mImap.excludeCheck, row, row, 0, 1 );
+  mImap.includeInCheck =
+    new QCheckBox( i18n("Include in manual mail chec&k"), page1 );
+  grid->addMultiCellWidget( mImap.includeInCheck, row, row, 0, 1 );
 
   ++row;
   mImap.intervalCheck =
@@ -951,7 +945,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   label = new QLabel( i18n("&Trash folder:"), page1 );
   grid->addWidget( label, row, 0 );
-  mImap.trashCombo = new FolderRequester( page1, 
+  mImap.trashCombo = new FolderRequester( page1,
       kmkernel->getKMMainWidget()->folderTree() );
   mImap.trashCombo->setShowOutbox( false );
   label->setBuddy( mImap.trashCombo );
@@ -960,6 +954,19 @@ void AccountDialog::makeImapAccountPage( bool connected )
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, marginHint(), spacingHint() );
+
+  vlay->addSpacing( KDialog::spacingHint() );
+
+  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
+  mImap.checkCapabilities =
+    new QPushButton( i18n("Check &What the Server Supports"), page2 );
+  connect(mImap.checkCapabilities, SIGNAL(clicked()),
+    SLOT(slotCheckImapCapabilities()));
+  buttonLay->addStretch();
+  buttonLay->addWidget( mImap.checkCapabilities );
+  buttonLay->addStretch();
+
+  vlay->addSpacing( KDialog::spacingHint() );
 
   mImap.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
@@ -992,14 +999,6 @@ void AccountDialog::makeImapAccountPage( bool connected )
   vlay->addWidget( mImap.authGroup );
 
   vlay->addStretch();
-
-  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
-  mImap.checkCapabilities =
-    new QPushButton( i18n("Check &What the Server Supports"), page2 );
-  connect(mImap.checkCapabilities, SIGNAL(clicked()),
-    SLOT(slotCheckImapCapabilities()));
-  buttonLay->addStretch();
-  buttonLay->addWidget( mImap.checkCapabilities );
 
   // TODO (marc/bo): Test this
   mSieveConfigEditor = new SieveConfigEditor( tabWidget );
@@ -1051,7 +1050,7 @@ void AccountDialog::setupSettings()
 #if 0
     mLocal.resourceCheck->setChecked( mAccount->resource() );
 #endif
-    mLocal.excludeCheck->setChecked( mAccount->checkExclude() );
+    mLocal.includeInCheck->setChecked( !mAccount->checkExclude() );
     mLocal.precommand->setText( mAccount->precommand() );
 
     slotEnableLocalInterval( interval >= 1 );
@@ -1076,7 +1075,7 @@ void AccountDialog::setupSettings()
 #if 0
     mPop.resourceCheck->setChecked( mAccount->resource() );
 #endif
-    mPop.excludeCheck->setChecked( mAccount->checkExclude() );
+    mPop.includeInCheck->setChecked( !mAccount->checkExclude() );
     mPop.precommand->setText( ap.precommand() );
     if (ap.useSSL())
       mPop.encryptionSSL->setChecked( TRUE );
@@ -1127,7 +1126,7 @@ void AccountDialog::setupSettings()
 #if 0
     mImap.resourceCheck->setChecked( ai.resource() );
 #endif
-    mImap.excludeCheck->setChecked( ai.checkExclude() );
+    mImap.includeInCheck->setChecked( !ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
     QString trashfolder = ai.trash();
@@ -1180,7 +1179,7 @@ void AccountDialog::setupSettings()
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
-    mImap.excludeCheck->setChecked( ai.checkExclude() );
+    mImap.includeInCheck->setChecked( !ai.checkExclude() );
     mImap.intervalCheck->setChecked( interval >= 1 );
     mImap.intervalSpin->setValue( QMAX(1, interval) );
     QString trashfolder = ai.trash();
@@ -1224,7 +1223,7 @@ void AccountDialog::setupSettings()
 #if 0
     mMaildir.resourceCheck->setChecked( mAccount->resource() );
 #endif
-    mMaildir.excludeCheck->setChecked( mAccount->checkExclude() );
+    mMaildir.includeInCheck->setChecked( !mAccount->checkExclude() );
     mMaildir.precommand->setText( mAccount->precommand() );
 
     slotEnableMaildirInterval( interval >= 1 );
@@ -1399,7 +1398,7 @@ void AccountDialog::slotCheckImapCapabilities()
 unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l )
 {
   unsigned int capa = 0;
-  kdDebug( 5006 ) << l << endl;
+  kdDebug( 5006 ) << k_funcinfo << l << endl;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
     QString cur = (*it).upper();
     if ( cur == "PLAIN" )
@@ -1618,7 +1617,7 @@ void AccountDialog::saveSettings()
 #if 0
     mAccount->setResource( mLocal.resourceCheck->isChecked() );
 #endif
-    mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
+    mAccount->setCheckExclude( !mLocal.includeInCheck->isChecked() );
 
     mAccount->setPrecommand( mLocal.precommand->text() );
 
@@ -1633,7 +1632,7 @@ void AccountDialog::saveSettings()
 #if 0
     mAccount->setResource( mPop.resourceCheck->isChecked() );
 #endif
-    mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
+    mAccount->setCheckExclude( !mPop.includeInCheck->isChecked() );
 
     mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
 
@@ -1677,7 +1676,7 @@ void AccountDialog::saveSettings()
 #if 0
     mAccount->setResource( mImap.resourceCheck->isChecked() );
 #endif
-    mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
+    mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
     mAccount->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()) );
 
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
@@ -1702,7 +1701,7 @@ void AccountDialog::saveSettings()
 #if 0
     epa.setResource( mImap.resourceCheck->isChecked() );
 #endif
-    epa.setCheckExclude( mImap.excludeCheck->isChecked() );
+    epa.setCheckExclude( !mImap.includeInCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );
     if (mImap.authCramMd5->isChecked())
@@ -1731,7 +1730,7 @@ void AccountDialog::saveSettings()
 #if 0
     mAccount->setResource( mImap.resourceCheck->isChecked() );
 #endif
-    mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
+    mAccount->setCheckExclude( !mImap.includeInCheck->isChecked() );
     //mAccount->setFolder( NULL );
     mAccount->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()) );
     kdDebug(5006) << mAccount->name() << endl;
@@ -1756,7 +1755,7 @@ void AccountDialog::saveSettings()
 #if 0
     epa.setResource( mImap.resourceCheck->isChecked() );
 #endif
-    epa.setCheckExclude( mImap.excludeCheck->isChecked() );
+    epa.setCheckExclude( !mImap.includeInCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
     epa.setUseTLS( mImap.encryptionTLS->isChecked() );
     if (mImap.authCramMd5->isChecked())
@@ -1801,7 +1800,7 @@ void AccountDialog::saveSettings()
 #if 0
     mAccount->setResource( mMaildir.resourceCheck->isChecked() );
 #endif
-    mAccount->setCheckExclude( mMaildir.excludeCheck->isChecked() );
+    mAccount->setCheckExclude( !mMaildir.includeInCheck->isChecked() );
 
     mAccount->setPrecommand( mMaildir.precommand->text() );
   }
