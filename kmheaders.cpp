@@ -201,50 +201,15 @@ public:
   void paintCell( QPainter * p, const QColorGroup & cg,
 				int column, int width, int align )
   {
-    // Change width() if you change this.
+    QColorGroup _cg( cg );
+    QColor c = _cg.text();
 
-    if ( !p )
-        return;
-
-    QListView *lv = listView();
-    int r = lv ? lv->itemMargin() : 1;
-    const QPixmap * icon = pixmap( column );
-    int marg = lv ? lv->itemMargin() : 1;
-
-    if (!mPaintInfo->pixmapOn)
-      p->fillRect( 0, 0, width, height(), cg.base() );
-    else {
-      QRect rect = lv->itemRect( this );
-      int cw = 0;
-      cw = lv->header()->cellPos( column );
-      
-      p->drawTiledPixmap( 0, 0, width, height(), 
-			  mPaintInfo->pixmap,
-			  rect.left() + cw + lv->contentsX(), 
-			  rect.top() + lv->contentsY() );
-    }
+    _cg.setColor( QColorGroup::Text, *mColor );
     
-    if ( isSelected() &&
-         (column==0 || listView()->allColumnsShowFocus()) ) {
-      p->fillRect( r - marg, 0, width - r + marg, height(),
-		   cg.brush( QColorGroup::Highlight ) );
-      p->setPen( cg.highlightedText() );
-    } else {
-      p->setPen( *mColor );
-    }
+    QListViewItem::paintCell( p, _cg, column, width, align );
     
-    if ( icon ) {
-        p->drawPixmap( r, (height()-icon->height())/2, *icon );
-        r += icon->width() + listView()->itemMargin();
-    }
-
-    QString t = text( column );
-    if ( !t.isEmpty() ) {
-        p->drawText( r, 0, width-marg-r, height(),
-                     align | AlignVCenter, t );
-    }
+    _cg.setColor( QColorGroup::Text, c );
   }
-  // End this code may be relicensed by Troll Tech  
 
   virtual QString key( int column, bool /*ascending*/ ) const {
     if (column == mPaintInfo->dateCol) {
