@@ -116,7 +116,7 @@ int KMFilterActionMove::process(KMMessage* msg, bool&stopIt)
   KMFilterAction::tempOpenFolder(mDest);
   if (msg->parent())
     return 0;
-  if (mDest->moveMsg(msg) == 0) 
+  if (mDest->moveMsg(msg) == 0)
     return 0; // ok, added
   else
   {
@@ -156,7 +156,10 @@ void KMFilterActionMove::argsFromString(const QString argsStr)
 
 const QString KMFilterActionMove::argsAsString(void) const
 {
-  if (mDest) resultStr = mDest->idString();
+  if (mDest) {
+    KMFolder *mDestFolder = &(*mDest);
+    resultStr = mDestFolder->idString();
+  }
   else resultStr = "";
   return resultStr;
 }
