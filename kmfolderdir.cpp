@@ -74,7 +74,7 @@ KMFolder* KMFolderDir::createFolder(const char* aFolderName, bool aSysFldr)
   if (rc)
   {
     debug("Error while creating folder %s: %s", aFolderName,
-	  sys_errlist[rc]);
+	  strerror(rc));
     delete fld;
     return NULL;
   }
