@@ -354,13 +354,13 @@ static QString splitLine( QString &line)
        i++;
     }
 
-    if ( i == 0 )
+    if ( j <= 0 )
     {
        return "";
     }
     if ( i == l )
     {
-       QString result = line;
+       QString result = line.left(j);
        line = QString::null;
        return result;
     }
@@ -464,14 +464,18 @@ static bool flushPart(QString &msg, QStringList &part,
 }
 
 
-static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
+static void smartQuote( QString &msg, const QString &ownIndent, 
+                        int maxLength, bool aStripSignature )
 {
   QStringList part;
   QString startOfSig1;
   QString startOfSig2 = ownIndent+"--";
   QString oldIndent;
+  bool firstPart = true;
   int i = 0;
   int l = 0;
+
+//printf("Smart Quoting.\n");
 
   while( startOfSig2.left(1) == "\n") 
      startOfSig2 = startOfSig2.mid(1);
@@ -495,22 +499,26 @@ static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
   {
      QString line = *it;
 
-     if (line == startOfSig1) break; // Start of signature 
-     if (line == startOfSig2) break; // Start of malformed signature 
+     if (aStripSignature)
+     {
+        if (line == startOfSig1) break; // Start of signature 
+        if (line == startOfSig2) break; // Start of malformed signature 
+     }
 
      QString indent = splitLine( line );
 
 //     printf("Quoted Line = \"%s\" \"%s\"\n", line.ascii(), indent.ascii());
      if ( line.isEmpty()) 
      {
-        if (!oldIndent.isEmpty())
+        if (!firstPart)
            part.append(QString::null);
         continue;
      };
  
-     if (oldIndent.isNull())
+     if (firstPart)
      {
         oldIndent = indent;
+        firstPart = false;
      }
 
      if (oldIndent != indent)
@@ -552,7 +560,8 @@ static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
 //-----------------------------------------------------------------------------
 const QString KMMessage::asQuotedString(const QString aHeaderStr,
 					const QString aIndentStr,
-					bool aIncludeAttach) const
+					bool aIncludeAttach,
+                                        bool aStripSignature) const
 {
   QString result;
   QString headerStr;
@@ -583,7 +592,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
      result.replace(reNL,nlIndentStr);
      result = formatString(aIndentStr) + result + '\n';
      if (sSmartQuote)
-        smartQuote(result, nlIndentStr, sWrapCol);
+        smartQuote(result, nlIndentStr, sWrapCol, aStripSignature);
   }
   else
   {
@@ -618,7 +627,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
           part.replace(reNL,nlIndentStr);
           part = formatString(aIndentStr) + part + '\n';
           if (sSmartQuote)
-             smartQuote(part, nlIndentStr, sWrapCol);
+             smartQuote(part, nlIndentStr, sWrapCol, aStripSignature);
           result += part;
 	}
 	else isInline = FALSE;
@@ -784,7 +793,7 @@ KMMessage* KMMessage::createForward(void)
   str += "From: " + from() + "\n";
   str += "To: " + to() + "\n";
   str += "\n";
-  str = asQuotedString(str, "", FALSE);
+  str = asQuotedString(str, "", FALSE, false);
   str += "\n-------------------------------------------------------\n";
 
   if (numBodyParts() <= 0)

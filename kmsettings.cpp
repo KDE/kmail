@@ -979,7 +979,6 @@ void KMSettings::doApply()
   config->writeEntry("phrase-reply-all", phraseReplyAllEdit->text());
   config->writeEntry("phrase-forward", phraseForwardEdit->text());
   config->writeEntry("indent-prefix", indentPrefixEdit->text());
-  config->writeEntry("smart-quote", smartQuote->isChecked());
 
   //----- composer appearance
   config->setGroup("Composer");
@@ -988,6 +987,7 @@ void KMSettings::doApply()
   config->writeEntry("break-at", atoi(wrapColumnEdit->text()));
   config->writeEntry("font", monospFont->isChecked()?"fixed":"variable");
   config->writeEntry("pgp-auto-sign", pgpAutoSign->isChecked());
+  config->writeEntry("smart-quote", smartQuote->isChecked());
 
   //----- misc
   config->setGroup("General");

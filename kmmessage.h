@@ -70,10 +70,13 @@ public:
 	%S: subject of this message
 	%F: sender (from) of this message
 	%%: a single percent sign  
-    No attachments are handled if includeAttach is false. */
+    No attachments are handled if includeAttach is false.
+    The signature is stripped if aStripSignature is true and
+    smart quoting is turned on. */
   virtual const QString asQuotedString(const QString headerStr, 
 				       const QString indentStr,
-				       bool includeAttach=TRUE) const;
+				       bool includeAttach=true,
+				       bool aStripSignature=true) const;
 
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
