@@ -9,6 +9,7 @@
 #include "kmmsginfo.h"
 #include "kmreaderwin.h"
 #include "kpgp.h"
+
 #ifndef KRN
 #include "kmfolder.h"
 #include "kmundostack.h"
@@ -33,6 +34,7 @@
 #include <time.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kcharsets.h>
 #include <kwin.h>
 
 #include "kmmsgpart.h" // for encodeBase64
@@ -269,21 +271,17 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
 const QString KMMessage::formatString(const QString& aStr) const
 {
   QString result, str;
-  const char* pos;
-  char ch, cstr[64];
-  time_t tm;
-  int i;
+  QChar ch;
+  uint j;
 
-  if (aStr.isEmpty()) return aStr;
+  if (aStr.isEmpty())
+    return aStr;
 
-  for (pos=aStr.data(); *pos; )
-  {
-    ch = *pos++;
-    if (ch=='%')
-    {
-      ch = *pos++;
-      switch (ch)
-      {
+  for (uint i=0; i<aStr.length();) {
+    ch = aStr[i++];
+    if (ch == '%') {
+      ch = aStr[i++];
+      switch ((char)ch) {
       case 'D':
 	/* I'm not too sure about this change. Is it not possible
 	   to have a long form of the date used? I don't
@@ -293,39 +291,42 @@ const QString KMMessage::formatString(const QString& aStr) const
 	datetime.setTime_t(date());
         result += KGlobal::locale()->formatDate(datetime.date());
 	*/
-	tm = date();
-	strftime(cstr, 63, "%a, %d %b %Y", localtime(&tm));
-	result += cstr;
-	break;
+        // dyp: Use our own procs
+        result += KGlobal::locale()->formatDateTime(QDateTime::currentDateTime(), false);
+        break;
       case 'F':
-	result += stripEmailAddr(from());
-	break;
+        result += stripEmailAddr(from());
+        break;
       case 'f':
-	str = stripEmailAddr(from());
-	for (i=0; str[i]>' '; i++)
-	  ;
-	for (; i < (int)str.length() && str[i] <= ' '; i++)
-	  ;
-	result += str[0];
-	if (str[i]>' ') result += str[i];
-	else if (str[1]>' ') result += str[1];
-	break;
+        str = stripEmailAddr(from());
+
+        for (j=0; str[j]>' '; j++)
+          ;
+        for (; j < str.length() && str[j] <= ' '; j++)
+          ;
+        result += str[0];
+        if (str[j]>' ')
+          result += str[j];
+        else
+          if (str[1]>' ')
+            result += str[1];
+        break;
       case 'S':
-	result += subject();
-	break;
+        result += subject();
+        break;
       case '_':
-	result += ' ';
-	break;
+        result += ' ';
+        break;
       case '%':
-	result += '%';
-	break;
+        result += '%';
+        break;
       default:
-	result += '%';
-	result += ch;
-	break;
+        result += '%';
+        result += ch;
+        break;
       }
-    }
-    else result += ch;
+    } else
+      result += ch;
   }
   return result;
 }
@@ -488,13 +489,13 @@ static void smartQuote( QString &msg, const QString &ownIndent,
   while ((i = msg.find('\n', l)) != -1)
   {
      if (i == l)
-        lines.append( QString::null);
+        lines.append(QString::null);
      else
-        lines.append( msg.mid(l, i-l));
+        lines.append(msg.mid(l, i-l));
      l = i+1;
   }
-  if (l <= (int) msg.length());
-     lines.append( msg.mid(l));
+  if (l <= (int)msg.length())
+    lines.append(msg.mid(l));
   msg = QString::null;
   for(QStringList::Iterator it = lines.begin();
       it != lines.end();
@@ -561,7 +562,7 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::asQuotedString(const QString& aHeaderStr,
+const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 					const QString& aIndentStr,
 					bool aIncludeAttach,
                                         bool aStripSignature) const
@@ -570,87 +571,94 @@ const QString KMMessage::asQuotedString(const QString& aHeaderStr,
   QString headerStr;
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
-  QString nlIndentStr;
+  QString indentStr;
   bool isInline;
   int i;
 
-  nlIndentStr = "\n" + formatString(aIndentStr);
+  QString cset = charset();
+  QTextCodec* codec;
+  if (!cset.isEmpty() && !cset.isNull())
+    codec = KGlobal::charsets()->codecForName(charset());
+  else
+    codec = QTextCodec::codecForLocale();
+
+  indentStr = formatString(aIndentStr);
   headerStr = formatString(aHeaderStr);
+
 
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
-  if (numBodyParts() == 0)
-  {
-     Kpgp* pgp = Kpgp::getKpgp();
-     assert(pgp != NULL);
-     result = bodyDecoded();
-     pgp->setMessage(result);
-     if(pgp->isEncrypted())
-     {
-       pgp->decrypt();
-       result = QString(pgp->message()).stripWhiteSpace();
-     } else {
-       result = result.stripWhiteSpace();
-     }
-     result.replace(reNL,nlIndentStr);
-     result = formatString(aIndentStr) + result + '\n';
-     if (sSmartQuote)
-        smartQuote(result, nlIndentStr, sWrapCol, aStripSignature);
-  }
-  else
-  {
+  if (numBodyParts() == 0) {
+    Kpgp* pgp = Kpgp::getKpgp();
+    assert(pgp != NULL);
+    result = codec->toUnicode(bodyDecoded());
+
+    pgp->setMessage(result);
+    if(pgp->isEncrypted()) {
+      pgp->decrypt();
+      result = pgp->message().stripWhiteSpace();
+    } else
+      result = result.stripWhiteSpace();
+
+    result.replace(reNL, '\n' + indentStr);
+    result = indentStr + result + '\n';
+
+    if (sSmartQuote)
+      smartQuote(result, '\n' + indentStr, sWrapCol, aStripSignature);
+  } else {
     result = "";
-    for (i = 0; i < numBodyParts(); i++)
-    {
+    for (i = 0; i < numBodyParts(); i++) {
       bodyPart(i, &msgPart);
 
-      if (i==0) isInline = TRUE;
-      else isInline = (stricmp(msgPart.contentDisposition(),"inline")==0);
+      if (i==0)
+        isInline = TRUE;
+      else
+        isInline = (stricmp(msgPart.contentDisposition(), "inline") == 0);
 
-      if (isInline)
-      {
-	if (stricmp(msgPart.typeStr(),"text")==0 ||
-	    stricmp(msgPart.typeStr(),"message")==0)
-	{
-	  result += nlIndentStr;
+      if (isInline) {
+        if (stricmp(msgPart.typeStr(),"text") == 0 ||
+            stricmp(msgPart.typeStr(),"message") == 0) {
+          result += '\n';
+          result += indentStr;
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
-	  QString part;
-          if ((pgp->setMessage(msgPart.bodyDecoded())) &&
+          QString part;
+          if ((pgp->setMessage(codec->toUnicode(msgPart.bodyDecoded()))) &&
               (pgp->isEncrypted()) &&
-              (pgp->decrypt()))
-	  {
-	    part = QString(pgp->message());
-	  }
-          else
-	  {
-	    part = QString(msgPart.bodyDecoded());
-	    //	    debug ("part\n" + part ); inexplicably crashes -sanders
-	  }
-          part.replace(reNL,nlIndentStr);
-          part = formatString(aIndentStr) + part + '\n';
+              (pgp->decrypt())) {
+            part = pgp->message();
+          } else {
+            part = codec->toUnicode(msgPart.bodyDecoded());
+            //	    debug ("part\n" + part ); inexplicably crashes -sanders
+          }
+          part.replace(reNL, '\n' + indentStr);
+          part = indentStr + part + '\n';
           if (sSmartQuote)
-             smartQuote(part, nlIndentStr, sWrapCol, aStripSignature);
+            smartQuote(part, '\n' + indentStr, sWrapCol, aStripSignature);
           result += part;
-	}
-	else isInline = FALSE;
+        } else
+          isInline = FALSE;
       }
-      if (!isInline && aIncludeAttach)
-      {
-	result += QString("\n----------------------------------------") +
-	  "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
-	if (!msgPart.name().isEmpty())
-	  result += "; name=\"" + msgPart.name() + '"';
+      if (!isInline && aIncludeAttach) {
+        result += QString("\n----------------------------------------") +
+                  "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
+        if (!msgPart.charset().isEmpty())
+          result += "; charset=\"" + msgPart.charset() + '"';
 
-	result += QString("\nContent-Transfer-Encoding: ")+
-	  msgPart.cteStr() + "\nContent-Description: " +
-	  msgPart.contentDescription() +
-	  "\n----------------------------------------\n";
+        if (!msgPart.name().isEmpty())
+          result += "; name=\"" + msgPart.name() + '"';
+
+        result += QString("\nContent-Transfer-Encoding: ")+
+                  msgPart.cteStr() + "\nContent-Description: " +
+                  msgPart.contentDescription() +
+                  "\n----------------------------------------\n";
       }
     }
   }
 
-  return headerStr + "\n" + result;
+  QCString c = codec->fromUnicode(headerStr + "\n" + result);
+
+  return c;
 }
 
 
@@ -720,7 +728,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
         ccStr = ccStr.simplifyWhiteSpace(); //mAybe it was ",  "
         if (ccStr[ccStr.length()-1] == ',')
           ccStr.truncate(ccStr.length()-1);
-	msg->setCc(ccStr);
+        msg->setCc(ccStr);
       }
 
   }
@@ -776,10 +784,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   }
   if (!recognized)
     msg->setSubject("Re: " + subject());
-#if defined CHARSETS
-  printf("Setting reply charset: %s\n",(const char *)charset());
+
   msg->setCharset(charset());
-#endif
   setStatus(KMMsgStatusReplied);
 
   return msg;
@@ -823,10 +829,11 @@ KMMessage* KMMessage::createRedirect(void)
   int i;
 
   str = asQuotedString(str, "", FALSE, false);
-  msg->setBody(str);
+
+  msg->setBody(str.latin1());
   if (numBodyParts() > 0)
   {
-    msgPart.setBody(str);
+    msgPart.setBody(str.latin1());
     msgPart.setTypeStr("text");
     msgPart.setSubtypeStr("plain");
     msg->addBodyPart(&msgPart);
@@ -847,9 +854,7 @@ KMMessage* KMMessage::createRedirect(void)
   msg->setHeaderField("X-KMail-Redirect-From", from());
   msg->setSubject(subject());
   msg->setFrom(from());
-#if defined CHARSETS
   msg->setCharset(charset());
-#endif
   setStatus(KMMsgStatusForwarded);
 
   return msg;
@@ -861,28 +866,32 @@ KMMessage* KMMessage::createForward(void)
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
-  QString str;
+  QCString str;
+  QString s;
   int i;
 
   msg->initHeader(headerField("X-KMail-Identity"));
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
-    str = "\n\n----------  " + sForwardStr + "  ----------\n";
-    str += asString();
-    str = asQuotedString(str, "", FALSE, false);
+    s = "\n\n----------  " + sForwardStr + "  ----------\n";
+    s += asString();
+    str = asQuotedString(s, "", FALSE, false);
     str += "\n-------------------------------------------------------\n";
   } else {
-    str = "\n\n----------  " + sForwardStr + "  ----------\n";
-    str += "Subject: " + subject() + "\n";
-    str += "Date: " + dateStr() + "\n";
-    str += "From: " + from() + "\n";
-    str += "To: " + to() + "\n";
-    str += "\n";
-    str = asQuotedString(str, "", FALSE, false);
+    s = "\n\n----------  " + sForwardStr + "  ----------\n";
+    s += "Subject: " + subject() + "\n";
+    s += "Date: " + dateStr() + "\n";
+    s += "From: " + from() + "\n";
+    s += "To: " + to() + "\n";
+    s += "\n";
+    str = asQuotedString(s, "", FALSE, false);
     str += "\n-------------------------------------------------------\n";
   }
 
-  msg->setBody(str);
+  QTextCodec *codec = KGlobal::charsets()->codecForName(charset());
+  s = codec->toUnicode(str);
+  msg->setBody(asQuotedString(s, sIndentPrefixStr));
+
   if (numBodyParts() > 0)
   {
     msgPart.setBody(str);
@@ -897,7 +906,7 @@ KMMessage* KMMessage::createForward(void)
 	  (stricmp(msgPart.typeStr(),"text")!=0 &&
 	   stricmp(msgPart.typeStr(),"message")!=0))
       {
-	msg->addBodyPart(&msgPart);
+        msg->addBodyPart(&msgPart);
       }
     }
   }
@@ -905,9 +914,7 @@ KMMessage* KMMessage::createForward(void)
   if (strnicmp(subject(), "Fwd:", 4)!=0)
     msg->setSubject("Fwd: " + subject());
   else msg->setSubject(subject());
-#if defined CHARSETS
   msg->setCharset(charset());
-#endif
   setStatus(KMMsgStatusForwarded);
 
   return msg;
@@ -1364,6 +1371,7 @@ void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
     aValue = encodeRFC2047String(bValue);
 
   if (aName.isEmpty()) return;
+  if (aValue.isEmpty()) return;
 
   str = aName;
   if (str[str.length()-1] != ':') str += ": ";
@@ -1488,16 +1496,16 @@ void KMMessage::setContentTransferEncoding(int aCte)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::body(void) const
+QCString KMMessage::body(void) const
 {
-  QString str;
+  QCString str;
   str = mMsg->Body().AsString().c_str();
   return str;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::bodyDecoded(void) const
+QCString KMMessage::bodyDecoded(void) const
 {
   DwString dwsrc, dwstr;
   QString result;
@@ -1516,15 +1524,17 @@ const QString KMMessage::bodyDecoded(void) const
     break;
   }
   // Should probably be returning a QByteArray, if it may contain NUL
+
   QCString ba(dwstr.c_str(), dwstr.size() + 1);
-  return QString((const QByteArray&)ba);
+
+  return ba;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBodyEncoded(const QString& aStr)
+void KMMessage::setBodyEncoded(const QCString& aStr)
 {
-  QString bStr = aStr;
+  QCString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
   int len = bStr.length();
@@ -1550,9 +1560,9 @@ void KMMessage::setBodyEncoded(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setBody(const QString& aStr)
+void KMMessage::setBody(const QCString& aStr)
 {
-  mMsg->Body().FromString((const char*)aStr);
+  mMsg->Body().FromString(aStr.data());
   mNeedsAssembly = TRUE;
 }
 
@@ -1645,13 +1655,11 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     {
       aPart->setTypeStr(headers->ContentType().TypeStr().c_str());
       aPart->setSubtypeStr(headers->ContentType().SubtypeStr().c_str());
-#if defined CHARSETS
       DwParameter *param=headers->ContentType().FirstParameter();
       while(param)
           if (param->Attribute()=="charset") break;
           else param=param->Next();
       if (param) aPart->setCharset(param->Value().c_str());
-#endif
     }
     else
     {
@@ -1738,15 +1746,12 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
   const DwString contDesc = (const char*)aPart->contentDescription();
   const DwString contDisp = (const char*)aPart->contentDisposition();
   const DwString bodyStr  = (const char*)aPart->body();
-#if defined CHARSETS
   const DwString charset  = (const char*)aPart->charset();
-#endif
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
   {
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
-#if defined CHARSETS
     if (!charset.empty())
     {
       DwParameter *param=headers.ContentType().FirstParameter();
@@ -1763,7 +1768,6 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
       }
       param->SetValue(charset);
     }
-#endif
   }
   if (cte != "")
     headers.Cte().FromString(cte);
@@ -1799,16 +1803,13 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QString contDisp = aPart->contentDisposition();
   QString name     = KMMsgBase::encodeRFC2231String(aPart->name());
   bool RFC2231encoded = aPart->name() != name;
-#if defined CHARSETS
-   QString charset  = aPart->charset();
-#endif
+  QString charset  = aPart->charset();
 
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
   {
     headers.ContentType().SetTypeStr((const char*)type);
     headers.ContentType().SetSubtypeStr((const char*)subtype);
-#if defined CHARSETS
     if (!charset.isEmpty()){
          DwParameter *param;
          param=new DwParameter;
@@ -1816,7 +1817,6 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
          param->SetValue((const char *)charset);
          headers.ContentType().AddParameter(param);
     }
-#endif
   }
 
   if (RFC2231encoded)
@@ -2015,12 +2015,10 @@ void KMMessage::readConfig(void)
 //-----------------------------------------------------------------------------
 const QString KMMessage::charset(void) const
 {
-   printf("Checking charset...\n");
    DwMediaType &mType=mMsg->Headers().ContentType();
    mType.Parse();
    DwParameter *param=mType.FirstParameter();
    while(param){
-      printf("%s=%s\n",param->Attribute().c_str(),param->Value().c_str());
       if (param->Attribute()=="charset")
         return QString(param->Value().c_str());
       else param=param->Next();
@@ -2034,10 +2032,8 @@ void KMMessage::setCharset(const QString& bStr)
    QString aStr = bStr;
    if (aStr.isNull())
        aStr = "";
-   printf("Setting charset to: %s\n",(const char *)aStr);
    DwMediaType &mType=mMsg->Headers().ContentType();
    mType.Parse();
-   printf("mType: %s\n",mType.AsString().c_str());
    DwParameter *param=mType.FirstParameter();
    while(param)
       if (param->Attribute()=="charset") break;
@@ -2049,5 +2045,4 @@ void KMMessage::setCharset(const QString& bStr)
    }
    param->SetValue((const char *)aStr);
    mType.Assemble();
-   printf("mType: %s\n",mType.AsString().c_str());
-}		
+}

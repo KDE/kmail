@@ -1003,7 +1003,8 @@ void KMHeaders::bounceMsg ()
   str += "\n|------------------------- Message text follows: ------------------------|\n";
   str += bounceMsg.asString();
 
-  newMsg->setBody(str);
+  //FIXME Maybe we should use a charset from the original message???
+  newMsg->setBody(str.latin1());
 
   // Queue the message for sending, so the user can still intercept
   // it. This is currently for testing
@@ -1053,9 +1054,7 @@ void KMHeaders::forwardMsg ()
         msgPartText += "--";
         msgPartText += fwdMsg->mMsg->Headers().ContentType().Boundary().c_str();
         msgPartText += "\nContent-Type: MESSAGE/RFC822";
-        #ifdef CHARSETS
-          msgPartText += QString("; CHARSET=%1").arg(charset());
-        #endif
+        msgPartText += QString("; CHARSET=%1").arg(thisMsg->charset());
         msgPartText += "\n";
         kdDebug() << "Adding message ID " << thisMsg->id() << "\n" << endl;
         DwHeaders dwh;
@@ -1120,7 +1119,8 @@ void KMHeaders::forwardMsg ()
       KMMessage *fwdMsg = new KMMessage;
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
-      fwdMsg->setBody(msgText);
+      //FIXME Should use forwarded message charset
+      fwdMsg->setBody(msgText.latin1());
       kernel->kbp()->busy();
       win = new KMComposeWin(fwdMsg, id);
       win->show();

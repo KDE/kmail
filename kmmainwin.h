@@ -68,7 +68,7 @@ public:
   // be moved into the given folder, otherwise messages will be
   // copied.
   // Am empty KMMenuToFolder must be passed in.
-  virtual QPopupMenu* folderToPopupMenu(KMFolderDir* aFolderDir, 
+  virtual QPopupMenu* folderToPopupMenu(KMFolderDir* aFolderDir,
 					bool move,
 					QObject *receiver,
 					KMMenuToFolder *aMenuToFolder,
@@ -88,11 +88,11 @@ public slots:
   void statusMsg(const QString& text);
   void folderSelected(KMFolder*);
   void slotMsgSelected(KMMessage*);
-  
+
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
-  
+
 protected:
   void setupMenuBar();
   void setupStatusBar();
@@ -103,7 +103,7 @@ protected:
 protected slots:
   void slotCheckOneAccount(int);
   void slotMailChecked(bool newMail);
-  void getAccountMenu(); 
+  void getAccountMenu();
   void slotClose();
   void slotHelp();
   void slotNewMailReader();
@@ -163,7 +163,7 @@ protected slots:
   /** Open URL in mUrlCurrent using Kfm. */
   void slotUrlOpen();
 
-  /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at 
+  /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
       beginning of URL before copying. */
   void slotUrlCopy();
 

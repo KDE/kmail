@@ -69,7 +69,7 @@
 #include <kurl.h>
 #include <kmimemagic.h>
 #include <kmimetype.h>
-		    		
+
 // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
 
@@ -371,14 +371,16 @@ void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 //-----------------------------------------------------------------------------
 void KMReaderWin::setCodec(QTextCodec *codec)
 {
-     mCodec = codec;
-     if( !codec ) {
-	 mAutoDetectEncoding = true;
-	 return;
-     }
-     mAutoDetectEncoding = false;
-     if(mViewer) mViewer->setCharset(codec->name(), true);
-     update(true);
+  mCodec = codec;
+  if(!codec) {
+    mAutoDetectEncoding = true;
+    update(true);
+    return;
+  }
+  mAutoDetectEncoding = false;
+  if(mViewer)
+    mViewer->setCharset(codec->name(), true);
+  update(true);
 }
 
 //-----------------------------------------------------------------------------
@@ -480,6 +482,30 @@ void KMReaderWin::parseMsg(void)
 
   mViewer->closeURL();
   mViewer->begin( KURL( "file:/" ) );
+
+  QString type = mMsg->typeStr().lower();
+
+  if (mAutoDetectEncoding) {
+    QString encoding;
+    if (type.find("text/") != -1)
+      encoding = mMsg->charset();
+    else if (type.find("multipart/") != -1) {
+      if (mMsg->numBodyParts() > 0) {
+        KMMessagePart msgPart;
+        mMsg->bodyPart(0, &msgPart);
+        encoding = msgPart.charset();
+      }
+      if (encoding.isEmpty())
+        encoding = "iso8859-1";
+      mCodec = QTextCodec::codecForName(encoding);
+    }
+  }
+
+  if (!mCodec)
+    mCodec = QTextCodec::codecForName("iso8859-1");
+  if (mViewer)
+    mViewer->setCharset(mCodec->name(), true);
+
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("a { color: #%1;").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
@@ -489,19 +515,8 @@ void KMReaderWin::parseMsg(void)
   		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) +
                  bkgrdStr + ">" );
 
-  if( mAutoDetectEncoding ) {
-  //  printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
-      QString encoding = mMsg->charset();
-      if( encoding.isEmpty() )
-	  encoding = "iso8859-1";
-      mCodec = KGlobal::charsets()->codecForName( encoding );
-  }
-  if( !mCodec )
-      mCodec = KGlobal::charsets()->codecForName( "iso8859-1" );
-  if(mViewer) mViewer->setCharset( mCodec->name(), true );
-
-  if( !parent() )
-      setCaption( mCodec->toUnicode( mMsg->subject() ) );
+  if (!parent())
+    setCaption(mCodec->toUnicode(mMsg->subject()));
 
   parseMsg(mMsg);
 
@@ -515,7 +530,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
   KMMessagePart msgPart;
   int i, numParts;
-  QString type, subtype, str, contDisp;
+  QString type, subtype, contDisp;
+  QCString str;
   bool asIcon = false;
   inlineImage = false;
   VCard *vc;
@@ -561,15 +577,15 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
         subtype = msgPart.subtypeStr();     // get subtype...
         if (htmlMail() && stricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
-          str = QString(msgPart.bodyDecoded());      // decode it...
-          mViewer->write(str);              // write it...
+          str = msgPart.bodyDecoded();      // decode it...
+          mViewer->write(str.data());              // write it...
           return;                           // return, finshed.
         }
 	else if (!htmlMail() && (stricmp(subtype, "plain")==0))
 	                                    // wasn't html show only if
 	{                                   // support for html is turned off
-          str = QString(msgPart.bodyDecoded());      // decode it...
-          writeBodyStr(str);
+          str = msgPart.bodyDecoded();      // decode it...
+          writeBodyStr(str.data());
           return;
 	}
       }
@@ -609,8 +625,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 //	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 	if ((type == "") || (stricmp(type, "text")==0))
 	{
-	  str = QString(msgPart.bodyDecoded());
-	  if (i>0) mViewer->write("<br><hr><br>");
+	  str = msgPart.bodyDecoded();
+	  if (i>0)
+      mViewer->write("<br><hr><br>");
 
 	  if (htmlMail() && (stricmp(subtype, "html")==0))
           {
@@ -627,7 +644,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
               if (i>0) str.truncate(i);
             }
             // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-            mViewer->write(str);
+            mViewer->write(str.data());
 	  }
           else writeBodyStr(str);
 	}
@@ -650,7 +667,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   else // if numBodyParts <= 0
   {
     if (htmlMail() && ((type == "text/html") || (type.find("text/html") != -1)))
-      mViewer->write(aMsg->bodyDecoded());
+      mViewer->write(aMsg->bodyDecoded().data());
     else
       writeBodyStr(aMsg->bodyDecoded());
   }
@@ -1381,7 +1398,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
         QImage img = iio->image();
 	if( img.width() > 50 && img.width() > 50	// avoid super small windows
 	    && img.width() < KApplication::desktop()->width()	// avoid super large windows
-	    && img.height() < KApplication::desktop()->height() ) {	
+	    && img.height() < KApplication::desktop()->height() ) {
 	  win->resize(img.width()+10, img.height()+10);
 	}
       }
@@ -1600,28 +1617,28 @@ void KMReaderWin::slotAtmProperties()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, -10);	
+  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, -10);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollDown()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, 10);	
+  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, 10);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, -(int)(height()*0.8));	
+  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, -(int)(height()*0.8));
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollNext()
 {
-  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, (int)(height()*0.8));	
+  static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, (int)(height()*0.8));
 }
 
 

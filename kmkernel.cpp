@@ -105,9 +105,9 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
 
   if (!messageFile.isEmpty() && messageFile.isLocalFile())
-    msg->setBody( kFileToString( messageFile.path(), true, false ) );
+    msg->setBody( kFileToString( messageFile.path(), true, false ).local8Bit() );
 
-  if (!body.isEmpty()) msg->setBody(body);
+  if (!body.isEmpty()) msg->setBody(body.local8Bit() );
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   if (hidden == 0)

@@ -234,7 +234,7 @@ protected:
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
   QTextCodec *mCodec;
-    bool mAutoDetectEncoding;
+  bool mAutoDetectEncoding;
 
   int fntSize;
   QString mBodyFamily;

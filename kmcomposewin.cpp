@@ -28,6 +28,7 @@
 #include <kfontutils.h>
 
 #include <kaction.h>
+#include <kcharsets.h>
 #include <kcursor.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
@@ -77,10 +78,10 @@
 #include <ktempfile.h>
 #include <fcntl.h>
 
-#if defined CHARSETS
-#include <kcharsets.h>
-#include "charsetsDlg.h"
-#endif
+//#if defined CHARSETS
+//#include <kcharsets.h>
+//#include "charsetsDlg.h"
+//#endif
 
 #ifdef KRN
 /* start added for KRN */
@@ -203,10 +204,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   }
 #endif
 
-#if defined CHARSETS
   // As family may change with charset, we must save original settings
   mSavedEditorFont=mEditor->font();
-#endif
 
   mMsg = NULL;
   if (aMsg)
@@ -281,6 +280,15 @@ void KMComposeWin::readConfig(void)
   int w, h, maxTransportItems;
 
   config->setGroup("Composer");
+
+  str = config->readEntry("charset", "");
+  if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
+      mDefCharset = "default";
+  else
+      mDefCharset = str;
+
+  kdDebug() << "Default charset: " << (const char*)mDefCharset << endl;
+
   mAutoSign = config->readEntry("signature","auto") == "auto";
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
@@ -337,27 +345,6 @@ void KMComposeWin::readConfig(void)
     mBodyFont = KGlobalSettings::generalFont();
   if (mEditor) mEditor->setFont(mBodyFont);
 
-#if defined CHARSETS
-  m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
-  mQuoteUnknownCharacters = config->readNumEntry("quote-unknown",0);
-
-  str = config->readEntry("default-charset", "");
-  if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
-      mDefaultCharset="default";
-  else
-      mDefaultCharset=str;
-
-  kdDebug() << "Default charset: " << (const char*)mDefaultCharset << endl;
-
-  str = config->readEntry("composer-charset", "");
-  if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
-      mDefComposeCharset="default";
-  else
-      mDefComposeCharset=str;
-
-  kdDebug() << "Default composer charset: " << (const char*)mDefComposeCharset << endl;
-#endif
-
   config->setGroup("Geometry");
   str = config->readEntry("composer", "480 510");
   sscanf(str.data(), "%d %d", &w, &h);
@@ -400,12 +387,9 @@ void KMComposeWin::writeConfig(void)
   mTransportHistory.remove(mTransport.currentText());
   mTransportHistory.prepend(mTransport.currentText());
   config->writeEntry("transport-history", mTransportHistory );
-#if defined CHARSETS
-  config->writeEntry("7bit-is-ascii",m7BitAscii);
-  config->writeEntry("quote-unknown",mQuoteUnknownCharacters);
-  config->writeEntry("default-charset",mDefaultCharset);
-  config->writeEntry("composer-charset",mDefComposeCharset);
-#endif
+
+  config->writeEntry("charset",mDefCharset);
+
 
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
@@ -708,11 +692,7 @@ void KMComposeWin::setupActions(void)
                       KStdAccel::key(KStdAccel::New),
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
-#ifndef KRN
-  (void) new KAction (i18n("&Open Mailreader"), /*QIconSet(BarIcon("kmail")),*/
-                      0, this, SLOT(slotNewMailReader()),
-                      actionCollection(), "open_mailreader");
-#endif
+
   //KStdAction::save(this, SLOT(), actionCollection(), "save_message");
   KStdAction::print (this, SLOT(slotPrint()), actionCollection());
   KStdAction::close (this, SLOT(slotClose()), actionCollection());
@@ -740,10 +720,31 @@ void KMComposeWin::setupActions(void)
                                               "confirm_delivery");
   confirmReadAction = new KToggleAction (i18n("Confirm &read"), 0,
                                          actionCollection(), "confirm_read");
+//this is obsolete now, we use a pulldown menu
 #if defined CHARSETS
   (void) new KAction (i18n("&Charsets..."), 0, this, SLOT(slotConfigureCharsets()),
                       actionCollection(), "charsets");
 #endif
+
+  //----- Message-Encoding Submenu
+  encodingAction = new KSelectAction( i18n( "Set &Encoding.." ), 0, this, SLOT(slotSetCharset() ), actionCollection(), "charsets" );
+  // availableCharsetNames seems more reasonable than availableEncodingNames
+  QStringList encodings = KGlobal::charsets()->availableCharsetNames();
+  encodings.remove(QString("*-*"));  //this doesn't make sense
+  encodings.prepend( "us-ascii" );
+  encodingAction->setItems( encodings );
+  //guess default from font charset
+  int i = 0;
+  bool found = false;
+  for ( QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it, i++ )
+    if ((*it) == KGlobal::charsets()->xCharsetName(mBodyFont.charSet()))
+    {
+      encodingAction->setCurrentItem(i);
+      found = true;
+      break;
+    }
+  if (!found)
+    encodingAction->setCurrentItem(0);
 
   //these are checkable!!!
   allFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
@@ -960,28 +961,20 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     mTransport.insertItem( transport, 0 );
 
   num = mMsg->numBodyParts();
+
   if (num > 0)
   {
-    QString bodyDecoded;
+    QCString bodyDecoded;
     mMsg->bodyPart(0, &bodyPart);
 
-#if defined CHARSETS
-    mCharset=bodyPart.charset();
-    cout<<"Charset: "<<mCharset<<"\n";
-    if (mCharset==""){
-      mComposeCharset=mDefComposeCharset;
-      if (mComposeCharset=="default"
-                        && KGlobal::charsets()->isAvailable(mDefaultCharset))
-        mComposeCharset=mDefaultCharset;
-    }	
-    else if (KGlobal::charsets()->isAvailable(mCharset))
-      mComposeCharset=mCharset;
-    else mComposeCharset=mDefComposeCharset;
-    cout<<"Compose charset: "<<mComposeCharset<<"\n";
+    mCharset = bodyPart.charset();
+    if (mCharset=="")
+      mCharset = mDefCharset;
+    if ((mCharset=="") || (mCharset == "default"))
+      mCharset = defaultCharset();
 
-    // FIXME: We might need a QTextCodec here
-#endif
-    bodyDecoded = QString(bodyPart.bodyDecoded());
+    bodyDecoded = bodyPart.bodyDecoded();
+
     verifyWordWrapLengthIsAdequate(bodyDecoded);
     mEditor->setText(bodyDecoded);
     mEditor->insertLine("\n", -1);
@@ -992,31 +985,29 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
       mMsg->bodyPart(i, msgPart);
       addAttach(msgPart);
     }
-  }
-#if defined CHARSETS
-  else{
+  } else{
     mCharset=mMsg->charset();
-    cout<<"mCharset: "<<mCharset<<"\n";
-    if (mCharset==""){
-      mComposeCharset=mDefComposeCharset;
-      if (mComposeCharset=="default"
-                        && KGlobal::charsets()->isAvailable(mDefaultCharset))
-        mComposeCharset=mDefaultCharset;
-    }	
-    else if (KGlobal::charsets()->isAvailable(mCharset))
-      mComposeCharset=mCharset;
-    else mComposeCharset=mDefComposeCharset;
-    cout<<"Compose charset: "<<mComposeCharset<<"\n";
-    // FIXME: QTextCodec needed?
-    Editor->setText(QString(mMsg->bodyDecoded()));
+    if (mCharset=="")
+      mCharset=mDefCharset;
+    if ((mCharset=="") || (mCharset == "default"))
+      mCharset = defaultCharset();
+
+    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+    mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
   }
-#else
-  else {
-    QString bodyDecoded = QString(mMsg->bodyDecoded());
-    verifyWordWrapLengthIsAdequate(bodyDecoded);
-    mEditor->setText(bodyDecoded);
-  }
-#endif
+
+  setEditCharset();
+
+  QStringList encodings = encodingAction->items();
+  i = 0;
+  for ( QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it, i++ )
+  // it's safer to compare QFont::CharSet rather that strings directly
+    if (KGlobal::charsets()->nameToID(*it) == KGlobal::charsets()->nameToID(mCharset))
+    {
+      encodingAction->setCurrentItem( i );
+      break;
+    }
+
 
   if( mAutoSign && mayAutoSign )
   {
@@ -1030,18 +1021,18 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   }
   mEditor->setModified(FALSE);
 
-#if defined CHARSETS
-  setEditCharset();
-#endif
+  //put font charset as default charset: jstolarz@kde.org
+//  QString defCharset = mMsg->charset();
+//  if ((mAtmList.count() <= 0) && defCharset.isEmpty() &&
+//        KGlobal::charsets()->isAvailable(mBodyFont.charSet()))
+//      mMsg->setCharset(KGlobal::charsets()->name(mBodyFont.charSet()));
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMComposeWin::applyChanges(void)
 {
   QString str, atmntStr;
   QString temp, replyAddr;
-  KMMessagePart bodyPart, *msgPart;
 
   //assert(mMsg!=NULL);
   if(!mMsg)
@@ -1086,43 +1077,41 @@ bool KMComposeWin::applyChanges(void)
 
 #endif
 
-  if(mAtmList.count() <= 0)
-  {
-    mMsg->setAutomaticFields(FALSE);
-
+  bool isQP = kernel->msgSender()->sendQuotedPrintable();
+  if(mAtmList.count() <= 0) {
     // If there are no attachments in the list waiting it is a simple
     // text message.
-    if (kernel->msgSender()->sendQuotedPrintable())
-    {
-      mMsg->setTypeStr("text");
-      mMsg->setSubtypeStr("plain");
-      mMsg->setCteStr("quoted-printable");
-      str = pgpProcessedMsg();
-      if (str.isNull()) return FALSE;
-#if defined CHARSETS
-      convertToSend(str);
-      cout<<"Setting charset to: "<<mCharset<<"\n";
-      mMsg->setCharset(mCharset);
-#endif
-      mMsg->setBodyEncoded(str);
-    }
+    mMsg->setAutomaticFields(TRUE);
+    mMsg->setTypeStr("text");
+    mMsg->setSubtypeStr("plain");
+
+    mMsg->setCteStr(isQP ? "quoted-printable": "8bit");
+
+    QString str = pgpProcessedMsg();
+    QCString body;
+    if (str.isNull()) return FALSE;
+
+    if (mCharset == "default")
+      mCharset = defaultCharset();
+    mMsg->setCharset(mCharset);
+    str.truncate(str.length()); // to ensure str.size()==str.length()+1
+    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+
+    if (codec == NULL) {
+      kdDebug() << "Something is wrong and I can not get a codec." << endl;
+      body = str.latin1();
+    } else
+      body = codec->fromUnicode(str);
+
+    if (isQP)
+      mMsg->setBodyEncoded(body);
     else
-    {
-      mMsg->setTypeStr("text");
-      mMsg->setSubtypeStr("plain");
-      mMsg->setCteStr("8bit");
-      str = pgpProcessedMsg();
-      if (str.isNull()) return FALSE;
-#if defined CHARSETS
-      convertToSend(str);
-      cout<<"Setting charset to: "<<mCharset<<"\n";
-      mMsg->setCharset(mCharset);
-#endif
-      mMsg->setBody(str);
-    }
+      mMsg->setBody(body);
   }
   else
   {
+    KMMessagePart bodyPart, *msgPart;
+
     mMsg->deleteBodyParts();
     mMsg->setAutomaticFields(TRUE);
 
@@ -1131,25 +1120,34 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setBody("This message is in MIME format.\n\n");
 
     // create bodyPart for editor text.
-    if (kernel->msgSender()->sendQuotedPrintable())
-         bodyPart.setCteStr("quoted-printable");
-    else bodyPart.setCteStr("8bit");
     bodyPart.setTypeStr("text");
     bodyPart.setSubtypeStr("plain");
-    str = pgpProcessedMsg();
+
+    bodyPart.setCteStr(isQP ? "quoted-printable": "8bit");
+
+    QString str = pgpProcessedMsg();
+    QCString body;
     if (str.isNull()) return FALSE;
-#if defined CHARSETS
-    convertToSend(str);
-    cout<<"Setting charset to: "<<mCharset<<"\n";
-    mMsg->setCharset(mCharset);
-#endif
+
+    if (mCharset == "default")
+      mCharset = defaultCharset();
+    bodyPart.setCharset(mCharset);
     str.truncate(str.length()); // to ensure str.size()==str.length()+1
-    bodyPart.setBodyEncoded(QCString(str.ascii()));
+    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+
+    if (codec == NULL) {
+      kdDebug() << "Something is wrong and I can not get a codec." << endl;
+      body = str.latin1();
+    } else
+      body = codec->fromUnicode(str);
+
+    bodyPart.setBodyEncoded(body);
+
     mMsg->addBodyPart(&bodyPart);
 
     // Since there is at least one more attachment create another bodypart
     for (msgPart=mAtmList.first(); msgPart; msgPart=mAtmList.next())
-	mMsg->addBodyPart(msgPart);
+      mMsg->addBodyPart(msgPart);
   }
   if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
   mEdtFrom.setEdited(FALSE);
@@ -1505,6 +1503,22 @@ void KMComposeWin::slotInsertFile()
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
 }
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotSetCharset()
+{
+  mCharset = encodingAction->currentText();
+  if (encodingAction->currentItem() != 0)  //i.e. <none>
+  {
+    QFont::CharSet c = KGlobal::charsets()->nameToID(mCharset);
+    mCharset = KGlobal::charsets()->name(c);
+  }
+  if (mAtmList.count() <= 0)
+    mMsg->setCharset(mCharset);
+  writeConfig();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertMyPublicKey()
@@ -2016,48 +2030,7 @@ void KMComposeWin::slotSpellcheckDone()
 
 }
 
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotConfigureCharsets()
-{
-#if defined CHARSETS
-   CharsetsDlg *dlg=new CharsetsDlg((const char*)mCharset,
-				    (const char*)mComposeCharset,
-                                    m7BitAscii,mQuoteUnknownCharacters);
-   connect(dlg,SIGNAL( setCharsets(const char *,const char *,bool,bool,bool) )
-           ,this,SLOT(slotSetCharsets(const char *,const char    dlg->show();
-*,bool,bool,bool)));
-   delete dlg;	
-#endif
-}
 
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
-                                   bool ascii,bool quote,bool def)
-{
-  // prevent warning
-  (void)message;
-  (void)composer;
-  (void)ascii;
-  (void)quote;
-  (void)def;
-
-#if defined CHARSETS
-  mCharset=message;
-  m7BitAscii=ascii;
-  mComposeCharset=composer;
-  mQuoteUnknownCharacters=quote;
-  if (def)
-  {
-    mDefaultCharset=message;
-    mDefComposeCharset=composer;
-  }
-  setEditCharset();
-#endif
-}
-
-
-#if defined CHARSETS
 //-----------------------------------------------------------------------------
 bool KMComposeWin::is8Bit(const QString str)
 {
@@ -2076,35 +2049,31 @@ bool KMComposeWin::is8Bit(const QString str)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::convertToSend(const QString str)
-{
-  cout<<"Converting to send...\n";
-  if (m7BitAscii && !is8Bit(str))
-  {
-    mCharset="us-ascii";
-    return;
-  }
-  if (mCharset=="")
-  {
-     if (mDefaultCharset=="default")
-          mCharset=KGlobal::charsets()->charsetForLocale();
-     else mCharset=mDefaultCharset;
-  }
-  cout<<"mCharset: "<<mCharset<<"\n";
-}
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::setEditCharset()
 {
   QFont fnt=mSavedEditorFont;
-  if (mComposeCharset=="default")
-    mComposeCharset=KGlobal::charsets()->charsetForLocale();
-  cout<<"Setting font to: "<<mComposeCharset<<"\n";
-  KGlobal::charsets()->setQFont(fnt, mComposeCharset);
-  mEditor->setFont(fnt);
+  if (mCharset == "default" || mCharset.isEmpty())
+    mCharset = defaultCharset();
+  //set font only if it is really available
+  if (KGlobal::charsets()->isAvailable(mCharset))
+  {
+    KGlobal::charsets()->setQFont(fnt, KGlobal::charsets()->nameToID(mCharset));
+    mEditor->setFont(fnt);
+  }
 }
-#endif //CHARSETS
 
+//-----------------------------------------------------------------------------
+const QString KMComposeWin::defaultCharset(void)
+{
+  QString aStr = QTextCodec::codecForLocale()->name();
+  // codecForLocale returns ISO 8859-1, we need iso-8859-1
+  QString bStr = "";
+  QChar spaceChar(' ');
+  for (int i = 0; i < (int)aStr.length(); i++)
+     if (aStr[i] != spaceChar)
+       bStr += aStr[i].lower();
+  return KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr));
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)

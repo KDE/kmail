@@ -137,7 +137,9 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo)
   str += "\n\n---------- Message header follows ----------\n";
   str += aMsg->headerAsString();
   str += "--------------------------------------------\n";
-  newMsg->setBody(str);
+  // Conversion to latin1 is correct here as Mail headers should contain
+  // ascii only
+  newMsg->setBody(str.latin1());
   newMsg->setAutomaticFields();
 
   mReceipts.append(newMsg);

@@ -84,7 +84,7 @@ public:
     No attachments are handled if includeAttach is false.
     The signature is stripped if aStripSignature is true and
     smart quoting is turned on. */
-  virtual const QString asQuotedString(const QString& headerStr, 
+  virtual const QCString asQuotedString(const QString& headerStr, 
 				       const QString& indentStr,
 				       bool includeAttach=true,
 				       bool aStripSignature=true) const;
@@ -226,18 +226,18 @@ public:
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
   /** Get the message body. Does not decode the body. */
-  virtual const QString body(void) const;
+  virtual QCString body(void) const;
 
   /** Set the message body. Does not encode the body. */
-  virtual void setBody(const QString& aStr);
+  virtual void setBody(const QCString& aStr);
 
   /** Set the message body, encoding it according to the current content
     transfer encoding. */
-  virtual void setBodyEncoded(const QString& aStr);
+  virtual void setBodyEncoded(const QCString& aStr);
 
   /** Returns a decoded version of the body from the current content transfer
     encoding. */
-  virtual const QString bodyDecoded(void) const;
+  virtual QCString bodyDecoded(void) const;
 
   /** Number of body parts the message has. This is one for plain messages
       without any attachment. */

@@ -109,12 +109,12 @@ void KMAcctPop::processNewMail(bool interactive)
   // This signal somehow interrupts the network functions and messed up
   // DwPopClient::Open().
   oldHandler = signal(SIGALRM, SIG_IGN);
-  // Another one of those nice little SIGNALS which default action is to 
+  // Another one of those nice little SIGNALS which default action is to
   // abort the app when received. SIGPIPE is send when e.g the client attempts
   // to write to a TCP socket when the connection was shutdown by the server.
   pipeHandler = signal(SIGPIPE, SIG_IGN);
   KMBroadcastStatus::instance()->reset();
-  KMBroadcastStatus::instance()->setStatusMsg( 
+  KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from %1...").arg(mHost));
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   hasNewMail = doProcessNewMail(interactive);
@@ -141,7 +141,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     msg = i18n("Please set Password and Username");
 
   passwd = decryptStr(mPasswd);
-  
+
 
   while (1)
   {
@@ -164,10 +164,10 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     }
 
     // Run the pre command if there is one
-    // Not sure if this should be outside the while loop or not - mpilone 
+    // Not sure if this should be outside the while loop or not - mpilone
     if (!runPrecommand(precommand()))
       return popError(QString("Couldn't execute precommand:\n") + precommand(), client);
-    
+
     // Open connection to server
     if (client.Open(mHost,mPort) != '+')
       return popError("OPEN", client);
@@ -187,7 +187,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
 
     // Send password
     passwd = decryptStr(mPasswd);
-    
+
     replyCode = client.Pass((const char*)passwd);
     if (replyCode == '-')
     {
@@ -201,7 +201,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     break;
   }
 
-  KMBroadcastStatus::instance()->setStatusMsg( 
+  KMBroadcastStatus::instance()->setStatusMsg(
 		     i18n( "Transmission completed..." ));
   return TRUE;
 }
@@ -258,7 +258,7 @@ bool KMAcctPop::doProcessNewMail(bool /* interactive */)
   client.SetReceiveTimeout(40);
 
   addedOk = true;
- 
+
   // do while there are mesages to take and last msg wass added succesfully
   while (id <= num && addedOk)
   {
@@ -327,8 +327,8 @@ bool KMAcctPop::doProcessNewMail(bool /* interactive */)
     {
       if(client.Dele(id) != '+')
 	return popError("DELE",client);
-      else 
-	cout << client.SingleLineResponse().c_str();
+      else
+	kdDebug() << client.SingleLineResponse().c_str() << endl;
     }
 
     gotMsgs = TRUE;
@@ -360,7 +360,7 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
   {
     msg = aClient.LastErrorStr();
   }
-  
+
   // Not all commands return multiLineResponses. If they do not
   // they return singleLineResponses and the multiLR command return NULL
   else
@@ -524,12 +524,12 @@ bool KMAcctPop::setProtocol(short aProtocol)
 //
 //=============================================================================
 
-KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name, 
+KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
 			       KMAcctPop *account , const QString caption,
 			       const char *login, QString passwd)
   :QDialog(parent,name,true)
 {
-  // This function pops up a little dialog which asks you 
+  // This function pops up a little dialog which asks you
   // for a new username and password if one of them was wrong or not set.
   QLabel *l;
 
@@ -550,11 +550,11 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   }
 
   l = new QLabel(i18n("You need to supply a username and a\n"
-		      "password to access this mailbox."), 
+		      "password to access this mailbox."),
 		 this);
   l->setFixedSize(l->sizeHint());
   gl->addWidget(l, 0, 1);
-  
+
   l = new QLabel(i18n("Login Name:"), this);
   l->setMinimumSize(l->sizeHint());
   gl->addWidget(l, 1, 0);
@@ -566,7 +566,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
 
   l = new QLabel(i18n("Password:"), this);
   l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 2, 0);  
+  gl->addWidget(l, 2, 0);
 
   passwdLEdit = new QLineEdit(this,"NULL");
   passwdLEdit->setEchoMode(QLineEdit::Password);

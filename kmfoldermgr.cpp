@@ -191,7 +191,8 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       welcomeMessage->setReplyTo(i18n("kmail@kde.org"));
       welcomeMessage->setFrom(i18n("KMail"));
       welcomeMessage->setSubject(i18n("Welcome to KMail!"));
-      welcomeMessage->setBody(i18n(KM_WelcomeMsg));
+      //FIXME should also set a charset for the message
+      welcomeMessage->setBody(i18n(KM_WelcomeMsg).local8Bit());
       welcomeMessage->setStatus(KMMsgStatusNew);
 
       switch(kernel->filterMgr()->process(welcomeMessage)) {

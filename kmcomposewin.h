@@ -6,12 +6,7 @@
 
 #include "kmtopwidget.h"
 
-//#include <qstring.h>
 #include <qlabel.h>
-
-//#include <qlist.h>
-//#include <qevent.h>
-//#include <qwidget.h>
 
 #include <qcheckbox.h>
 #include <qpushbutton.h>
@@ -24,12 +19,8 @@
 #include <kio/job.h>
 #include <kurl.h>
 
-
 #include "kmmsgpart.h"
-
-
-
-
+#include "kmmsgbase.h"
 
 #ifndef KRN
 class _StringPair {
@@ -59,6 +50,7 @@ class KSpell;
 class KSpellConfig;
 class KMComposeWin;
 class KToggleAction;
+class KSelectAction;
 
 typedef QList<KMMessagePart> KMMsgPartList;
 
@@ -206,6 +198,8 @@ public slots:
   void slotAddrBook(); // Open addressbook editor dialog.
   void slotInsertFile(); // Insert a file to the end of the text in the editor.
 
+  void slotSetCharset();
+
   void slotSpellcheck(); // Check spelling of text.
   void slotSpellcheckConfig();
 
@@ -267,9 +261,6 @@ public slots:
 
   void updateCursorPosition();
 
-  void slotConfigureCharsets();
-  void slotSetCharsets(const char *message,const char *composer,
-		       bool ascii,bool quote,bool def);
   void slotView();
 
   /** Move focus to next/prev edit widget */
@@ -336,21 +327,19 @@ protected:
 
 private:
   /** Get message including signing and encrypting it */
-   const QString pgpProcessedMsg(void);
-
-#if defined CHARSETS
-  /** Converts message text for sending. */
-  void convertToSend(const QString str);
+  const QString pgpProcessedMsg(void);
 
   /** Test if string has any 8-bit characters */
   bool is8Bit(const QString str);
 
   /** Set edit widget charset */
   void setEditCharset();
-#endif
 
   /** Send the message */
   void doSend(int sendNow=-1);
+
+  /** get default charset from locale settings */
+  const QString defaultCharset(void);
 
 protected:
   QWidget   mMainWidget;
@@ -402,15 +391,11 @@ protected:
   KToggleAction *identityAction, *transportAction;
   KToggleAction *toolbarAction, *statusbarAction;
 
-#if defined CHARSETS
-  int m7BitAscii;
-  QString mDefaultCharset;
+  KSelectAction *encodingAction;
+
   QString mCharset;
-  QString mDefComposeCharset;
-  QString mComposeCharset;
-  int mQuoteUnknownCharacters;
+  QString mDefCharset;
   QFont mSavedEditorFont;
-#endif
 
 private:
   QColor foreColor,backColor;

@@ -1,4 +1,6 @@
 // kmfilteraction.cpp
+// The process methods really should use an enum instead of an int
+// -1 -> status unchanged, 0 -> success, 1 -> failure, 2-> critical failure
 
 #include "kmmessage.h"
 #include "kmfilteraction.h"
@@ -27,7 +29,7 @@ static QString resultStr;
 
 
 //-----------------------------------------------------------------------------
-KMFilterAction::KMFilterAction(const char* name): 
+KMFilterAction::KMFilterAction(const char* name):
   KMFilterActionInherited(NULL, name)
 {
 }
@@ -114,7 +116,7 @@ KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
 
 int KMFilterActionMove::process(KMMessage* msg, bool&stopIt)
 {
-  if (!mDest) return TRUE;
+  if (!mDest) return 1;
   KMFilterAction::tempOpenFolder(mDest);
   if (msg->parent())
     return 0;
@@ -185,7 +187,7 @@ KMFilterAction* KMFilterActionForward::newAction(void)
 {
   return (new KMFilterActionForward);
 }
- 
+
 const QString KMFilterActionForward::label(void) const
 {
   return i18n("forward to");
@@ -194,11 +196,11 @@ const QString KMFilterActionForward::label(void) const
 KMFilterActionForward::KMFilterActionForward(): KMFilterAction("forward")
 {
 }
- 
+
 int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
 {
   KMMessage* msg;
-  if (mTo.isEmpty()) return TRUE;
+  if (mTo.isEmpty()) return 1;
   msg = aMsg->createForward();
   msg->setTo(mTo);
   if (!kernel->msgSender()->send(msg))
@@ -208,30 +210,30 @@ int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
   }
   return -1;
 }
- 
+
 QWidget* KMFilterActionForward::createParamWidget(KMGFilterDlg* aParent)
 {
   QLineEdit* edt;
   edt = aParent->createEdit(mTo);
   return edt;
 }
- 
+
 void KMFilterActionForward::applyParamWidgetValue(QWidget* aParamWidget)
 {
   QLineEdit* w = (QLineEdit*)aParamWidget;
   mTo = w->text();
 }
- 
+
 void KMFilterActionForward::argsFromString(const QString argsStr)
 {
   mTo = argsStr;
 }
- 
+
 const QString KMFilterActionForward::argsAsString(void) const
 {
   return mTo;
 }
- 
+
 //=============================================================================
 // Execute a shell command
 //=============================================================================
@@ -250,38 +252,38 @@ public:
 protected:
   QString mCmd;
 };
- 
+
 KMFilterAction* KMFilterActionExec::newAction(void)
 {
   return (new KMFilterActionExec);
 }
- 
+
 const QString KMFilterActionExec::label(void) const
 {
   return i18n("execute");
 }
- 
+
 KMFilterActionExec::KMFilterActionExec(const char* aName)
   : KMFilterAction(aName)
 {
 }
- 
+
 void KMFilterActionExec::dummySigHandler(int)
 {
 }
- 
+
 int KMFilterActionExec::process(KMMessage* /*aMsg*/, bool& /*stop*/)
 {
   void (*oldSigHandler)(int);
   int rc;
-  if (mCmd.isEmpty()) return TRUE;
+  if (mCmd.isEmpty()) return 1;
   oldSigHandler = signal(SIGALRM, &KMFilterActionExec::dummySigHandler);
   alarm(30);
   rc = system(mCmd);
   alarm(0);
   signal(SIGALRM, oldSigHandler);
   if (rc & 255)
-    return 1; 
+    return 1;
   else
     return -1;
 }
@@ -292,18 +294,18 @@ QWidget* KMFilterActionExec::createParamWidget(KMGFilterDlg* aParent)
   edt = aParent->createEdit(mCmd);
   return edt;
 }
- 
+
 void KMFilterActionExec::applyParamWidgetValue(QWidget* aParamWidget)
 {
   QLineEdit* w = (QLineEdit*)aParamWidget;
   mCmd = w->text();
 }
- 
+
 void KMFilterActionExec::argsFromString(const QString argsStr)
 {
   mCmd = argsStr;
 }
- 
+
 const QString KMFilterActionExec::argsAsString(void) const
 {
   return mCmd;
@@ -321,22 +323,22 @@ public:
   static KMFilterAction* newAction(void);
   virtual int process(KMMessage* msg, bool& stopIt);
 };
- 
+
 KMFilterAction* KMFilterActionExtFilter::newAction(void)
 {
   return (new KMFilterActionExtFilter);
 }
- 
+
 const QString KMFilterActionExtFilter::label(void) const
 {
   return i18n("filter app");
 }
- 
+
 KMFilterActionExtFilter::KMFilterActionExtFilter(const char* aName)
   : KMFilterActionExec(aName)
 {
 }
- 
+
 int KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop)
 {
   int rc=0, len;
@@ -508,7 +510,7 @@ QWidget* KMFilterActionTransport::createParamWidget(KMGFilterDlg* aParent)
   edt = aParent->createEdit(mTransport);
   return edt;
 }
- 
+
 void KMFilterActionTransport::applyParamWidgetValue(QWidget* aParamWidget)
 {
   QLineEdit* w = (QLineEdit*)aParamWidget;

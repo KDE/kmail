@@ -40,11 +40,11 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   topLayout->addSpacing( spacingHint()*2 );
   topLayout->addLayout( hl );
   topLayout->addSpacing( spacingHint()*2 );
-  
+
   QLabel *label = new QLabel( i18n("Name:"), page );
   hl->addWidget( label );
-  
-  nameEdit = new QLineEdit( page );  
+
+  nameEdit = new QLineEdit( page );
   nameEdit->setFocus();
   nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
   nameEdit->setMinimumSize(nameEdit->sizeHint());
@@ -98,7 +98,7 @@ void KMFolderDialog::slotOk()
 
   QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
   if ((selectedFolderDir->hasNamedFolder(fldName)) &&
-      (!((folder) && 
+      (!((folder) &&
 	 (selectedFolderDir == folder->parent()) &&
 	 (folder->name() == fldName)))) {
     KMessageBox::error( this, message );

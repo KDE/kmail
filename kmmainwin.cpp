@@ -414,7 +414,10 @@ void KMMainWin::activatePanners(void)
 void KMMainWin::slotSetEncoding()
 {
      QString enc = mEncoding->currentText();
-     mCodec = KGlobal::charsets()->codecForName( enc );
+     if (mEncoding->currentItem() == 0) // Auto
+       mCodec = 0;
+     else
+       mCodec = KGlobal::charsets()->codecForName( enc );
      mMsgView->setCodec(mCodec);
      return;
 }
@@ -1086,7 +1089,9 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
       if (queryPart.left(9) == "?subject=")
 	msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
       else if (queryPart.left(6) == "?body=")
-	msg->setBody( KURL::decode_string(queryPart.mid(6)) );
+	// It is correct to convert to latin1() as URL should not contain
+	// anything except ascii.
+	msg->setBody( KURL::decode_string(queryPart.mid(6)).latin1() );
       else if (queryPart.left(6) == "?cc=")
 	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
