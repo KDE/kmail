@@ -167,7 +167,7 @@ bool readFolderMsgIds=false;
 
   if (foldername!=lastFolder) {
     fprintf(stderr,"foldername!=lastfolder\n");
-    if (msgIds==NULL) { delete msgIds; }
+    if (msgIds!=NULL) { delete msgIds; }
     msgIds=new QStringList;
     readFolderMsgIds=true;
     lastFolder=foldername;
