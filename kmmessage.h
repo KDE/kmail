@@ -177,6 +177,10 @@ public:
   virtual QString fcc(void) const;
   virtual void setFcc(const QString& aStr);
 
+  /** Get or set the 'Drafts' folder */
+  virtual QString drafts(void) const { return mDrafts; }
+  virtual void setDrafts(const QString& aStr);
+
   /** Get or set the 'From' header field */
   virtual QString from(void) const;
   virtual void setFrom(const QString& aStr);
@@ -392,6 +396,8 @@ protected:
 
     /** Contains the name of the Fcc folder */
     QString mFcc;
+    
+		QString mDrafts;
 
 protected:
     DwMessage* mMsg;

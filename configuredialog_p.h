@@ -78,6 +78,7 @@ public:
   bool    isDefault() const { return mIsDefault; }
   QString transport() const { return mTransport; }
   QString fcc() const { return mFcc; }
+  QString drafts() const { return mDrafts; }
   
   void setIdentityName( const QString & i ) { mIdentityName = i; }
   void setFullName( const QString & f ) { mFullName = f; }
@@ -92,6 +93,7 @@ public:
   void setIsDefault( bool b ) { mIsDefault = b; }
   void setTransport( const QString & t ) { mTransport = t; }
   void setFcc( const QString & f ) { mFcc = f; }
+  void setDrafts( const QString & f ) { mDrafts = f; }
 
 private:
   // only add members that have an operator= defined or where the
@@ -106,6 +108,7 @@ private:
   QString mSignatureInlineText;
   QString mTransport;
   QString mFcc;
+  QString mDrafts;
   bool    mSignatureFileIsAProgram;
   bool    mUseSignatureFile;
   bool    mIsDefault;

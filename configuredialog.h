@@ -150,6 +150,7 @@ private:
       QCheckBox      *transportCheck;
       QComboBox      *transportCombo;
       KMFolderComboBox  *fccCombo;
+      KMFolderComboBox  *draftsCombo;
       // "Signature" tab:
       QCheckBox      *signatureEnabled;
       QComboBox      *signatureSourceCombo;

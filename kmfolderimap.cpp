@@ -162,9 +162,16 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
     {
       if (static_cast<KMFolderImap*>(msgParent)->account() == account())
       {
-        KMImapJob *imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);        connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
+				KMImapJob *imapJob = NULL;
+				if (this == msgParent) {
+        	imapJob = new KMImapJob(aMsg, KMImapJob::tPutMessage, this);
+				} else {	
+        	imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);
+				}	
+				connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
           SLOT(addMsgQuiet(KMMessage*)));
         aMsg->setTransferInProgress(TRUE);
+				if (this == msgParent) this->getFolder();
         if (aIndex_ret) *aIndex_ret = -1;
         return 0;
       }
@@ -394,7 +401,9 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
     int  b = cstr.find("\r\n", a);
-    if (uidValidity() != QString(cstr.mid(a + 15, b - a - 15)))
+		QString uidv;
+		if ( (b - a - 15) >= 0 ) uidv = cstr.mid(a + 15, b - a - 15);
+    if (uidValidity() != uidv)
     {
       expunge();
       startUid = "";
@@ -402,8 +411,8 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
       int p = cstr.find("\r\nX-UidNext:");
       if (p != -1) setUidNext(cstr
         .mid(p + 13, cstr.find("\r\n", p+1) - p - 13));
-kdDebug(5006) << "uidnext = " << uidNext() << endl;
-    }
+			kdDebug(5006) << "uidnext = " << uidNext() << endl;
+   	}
     mAccount->mapJobData.remove(it);
     if (startUid.isEmpty() || startUid != uidNext())
       reallyGetFolder(startUid);

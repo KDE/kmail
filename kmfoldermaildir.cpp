@@ -309,7 +309,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   msgParent = aMsg->parent();
   if (msgParent)
   {
-    if (msgParent==this && name() != "outbox" && name() != "drafts")
+    if (msgParent==this && !kernel->folderIsDraftOrOutbox(this))
         return 0;
 
     idx = msgParent->find(aMsg);

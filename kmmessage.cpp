@@ -1141,6 +1141,11 @@ void KMMessage::initHeader( const QString & id )
   else
     setFcc( ident.fcc() );
 
+  if (ident.drafts().isEmpty())
+    setDrafts( QString::null );
+  else
+    setDrafts( ident.drafts() );
+
   if ( !sCreateOwnMessageIdHeaders
        || sMessageIdSuffix.isEmpty()
        || sMessageIdSuffix.isNull() )
@@ -1416,6 +1421,13 @@ void KMMessage::setFcc(const QString& aStr)
   // filter, this header will disappear so we must have a variable.
   mFcc = aStr;
   setHeaderField( "X-KMail-Fcc", mFcc );
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::setDrafts(const QString& aStr)
+{
+  mDrafts = aStr;
+  kdDebug(5006) << "KMMessage::setDrafts " << aStr << endl;
 }
 
 //-----------------------------------------------------------------------------

@@ -707,11 +707,11 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   if (msgParent)
   {
     if (msgParent==this)
-      {
-	if (name() == "outbox" || name() == "drafts")
+    {
+	if (kernel->folderIsDraftOrOutbox(this))
           //special case for Edit message.
 	  {
-	    // debug ("Editing message in outbox");
+	    kdDebug(5006) << "Editing message in outbox or drafts" << endl;
 	    editing = true;
 	  }
 	else

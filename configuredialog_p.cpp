@@ -22,6 +22,7 @@
 #include <qframe.h>
 #include <qwidget.h>
 #include <qlayout.h>
+#include <assert.h>
 
 // Other headers:
 #include <assert.h>
@@ -108,6 +109,7 @@ void IdentityList::importData()
     entry.setUseSignatureFile( ident.useSignatureFile() );
     entry.setTransport(ident.transport());
     entry.setFcc(ident.fcc());
+    entry.setDrafts(ident.drafts());
 
     append( entry );
   }
@@ -138,6 +140,7 @@ void IdentityList::exportData() const
     ident.setSignatureInlineText( (*it).signatureInlineText() );
     ident.setTransport( (*it).transport() );
     ident.setFcc( (*it).fcc() );
+    ident.setDrafts( (*it).drafts() );
 
     ident.writeConfig( false ); // saves the identity data
 

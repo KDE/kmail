@@ -157,6 +157,7 @@ protected slots:
   void slotBounceMsg();
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
+  void slotEditMsg(KMMessage*);
   void slotDeleteMsg();
   void slotUndo();
   void slotReadOn();

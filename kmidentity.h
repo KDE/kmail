@@ -98,9 +98,15 @@ public:
   QString fcc(void) { return mFcc; }
   virtual void setFcc(const QString&);
 
+  /** The folder where draft messages from this identity will be
+      stored by default. */
+  QString drafts(void) { return mDrafts; }
+  virtual void setDrafts(const QString&);
+
 protected:
   QString mIdentity, mFullName, mOrganization, mEmailAddr;
   QString mFcc;
+  QString mDrafts;
   QCString mPgpIdentity;
   QString mReplyToAddr, mSignatureFile;
   QString mSignatureInlineText, mTransport;

@@ -1025,16 +1025,15 @@ void KMMainWin::slotBounceMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMessageQueuedOrDrafted()
 {
-  if((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
+  if (!kernel->folderIsDraftOrOutbox(mFolder))
       return;
   mMsgView->update(true);
 }
 
+
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEditMsg()
 {
-  if (mFolder != kernel->outboxFolder() && mFolder != kernel->draftsFolder())
-    return;
   KMMessage *msg;
   int aIdx;
 
@@ -1042,6 +1041,29 @@ void KMMainWin::slotEditMsg()
     return;
   if(!(msg = mHeaders->getMsg(aIdx)))
     return;
+
+	slotEditMsg(msg);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotEditMsg(KMMessage* msg)
+{
+  if (!kernel->folderIsDraftOrOutbox(mFolder))
+    return;
+
+	if ( !msg->isComplete()	&& mFolder->protocol() == "imap" )
+	{
+		// transfer the message first
+		kdDebug(5006) << "slotEditMsg: transfer message" << endl;
+		if (msg->transferInProgress()) return;
+		msg->setTransferInProgress(TRUE);		
+    KMImapJob *job = new KMImapJob(msg);
+    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(slotEditMsg(KMMessage*)));
+		return;				
+	}
+		
   mFolder->removeMsg(msg);
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
   mHeaders->highlightMessage(mHeaders->currentItem(), true);
@@ -1403,12 +1425,13 @@ void KMMainWin::slotPrevMessage()       { mHeaders->prevMessage(); }
 void KMMainWin::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
 
 //-----------------------------------------------------------------------------
-//called from heders. Message must not be deleted on close
+//called from headers. Message must not be deleted on close
 void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
-  if (mFolder == kernel->outboxFolder() || mFolder == kernel->draftsFolder())
+  if (kernel->folderIsDraftOrOutbox(mFolder))
   {
-    slotEditMsg(); return;
+    slotEditMsg(); 
+		return;
   }
 
   assert(msg != NULL);
@@ -1691,8 +1714,7 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
          return;
      }
 
-     bool out_folder = (mFolder == kernel->outboxFolder()) ||
-                       (mFolder == kernel->draftsFolder());
+     bool out_folder = kernel->folderIsDraftOrOutbox(mFolder);
      if ( out_folder )
          editAction->plug(menu);
      else {
@@ -2241,8 +2263,8 @@ void KMMainWin::updateMessageActions()
 
     bool single_actions = count == 1;
     filterMenu->setEnabled( single_actions );
-    editAction->setEnabled( single_actions &&
-      (mFolder == kernel->outboxFolder() || mFolder == kernel->draftsFolder()));
+    editAction->setEnabled( single_actions && 
+      kernel->folderIsDraftOrOutbox(mFolder));
     bounceAction->setEnabled( single_actions );
     replyAction->setEnabled( single_actions );
     noQuoteReplyAction->setEnabled( single_actions );

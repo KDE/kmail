@@ -180,8 +180,7 @@ public:
 
     } else if(col == headers->paintInfo()->senderCol) {
       KMFolder *folder = headers->folder();
-      if (folder == kernel->outboxFolder() || folder == kernel->sentFolder()
-          || folder == kernel->draftsFolder())
+      if (kernel->folderIsDraftOrOutbox(folder))
         tmp = mMsgBase->toStrip();
       else
         tmp = mMsgBase->fromStrip();
@@ -334,8 +333,7 @@ public:
     } else if (column == paintInfo->senderCol) {
       QString tmp;
       KMFolder *folder = msg->parent();
-      if (folder == kernel->outboxFolder() || folder == kernel->sentFolder()
-          || folder == kernel->draftsFolder())
+      if (kernel->folderIsDraftOrOutbox(folder))
         tmp = msg->toStrip();
       else
         tmp = msg->fromStrip();
@@ -741,9 +739,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = TRUE;
-    mOwner->editAction->setEnabled(mFolder ?  ( (mFolder ==
-						 kernel->draftsFolder()) ||
-						(mFolder == kernel->outboxFolder()) ): false );
+    mOwner->editAction->setEnabled(mFolder ?  (kernel->folderIsDraftOrOutbox(mFolder)): false );
     mOwner->replyListAction->setEnabled(mFolder ? mFolder->isMailingList() :
       false);
 
@@ -1798,7 +1794,6 @@ int KMHeaders::firstSelectedMsg() const
 //-----------------------------------------------------------------------------
 KMMessage* KMHeaders::getMsg (int msgId)
 {
-
   if (!mFolder || msgId < -2)
   {
     getMsgIndex = -1;
@@ -2155,8 +2150,8 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
     if (idx >= 0) setMsgRead(idx);
   }
 
-  if (mFolder != kernel->outboxFolder() && mFolder != kernel->draftsFolder())
-    setOpen(lvi, !lvi->isOpen());
+//  if (kernel->folderIsDraftOrOutbox(mFolder))
+//    setOpen(lvi, !lvi->isOpen());
 }
 
 
@@ -2454,7 +2449,7 @@ void KMHeaders::slotRMB()
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
   mOwner->folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, msgCopyMenu );
 
-  bool out_folder = (mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder());
+  bool out_folder = kernel->folderIsDraftOrOutbox(mFolder); 
   if ( out_folder )
      mOwner->editAction->plug(menu);
   else {
@@ -2573,8 +2568,8 @@ void KMHeaders::setNestedOverride( bool override )
 //-----------------------------------------------------------------------------
 void KMHeaders::setOpen( QListViewItem *item, bool open )
 {
-  if( (nestingPolicy) || open )
-  KMHeadersInherited::setOpen( item, open );
+  if( nestingPolicy || open)
+  	KMHeadersInherited::setOpen( item, open );
 }
 
 //-----------------------------------------------------------------------------

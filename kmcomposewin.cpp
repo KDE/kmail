@@ -19,6 +19,7 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmfolder.h"
+#include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
@@ -173,6 +174,10 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
   connect(mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
+	connect(kernel->folderMgr(),SIGNAL(removed(KMFolder*)),
+					SLOT(slotFolderRemoved(KMFolder*)));
+	connect(kernel->imapFolderMgr(),SIGNAL(removed(KMFolder*)),
+					SLOT(slotFolderRemoved(KMFolder*)));
 
   mMainWidget->resize(480,510);
   setCentralWidget(mMainWidget);
@@ -1174,6 +1179,9 @@ bool KMComposeWin::applyChanges(void)
   else
     mMsg->setFcc( f->idString() );
 
+	// set the correct drafts folder
+	mMsg->setDrafts( id.drafts() );	
+
   if (mIdentity->currentText() == i18n("Default"))
     mMsg->removeHeaderField("X-KMail-Identity");
   else mMsg->setHeaderField("X-KMail-Identity", mIdentity->currentText());
@@ -2173,9 +2181,36 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   }
 
   if (saveInDrafts)
-     sentOk = !(kernel->draftsFolder()->addMsg(mMsg));
-  else
+	{
+		KMFolder* draftsFolder = 0, *imapDraftsFolder = 0;
+		// get the draftsFolder
+		if ( !mMsg->drafts().isEmpty() )
+		{
+			draftsFolder = kernel->folderMgr()->findIdString( mMsg->drafts() );
+			if ( draftsFolder == 0 )
+				imapDraftsFolder = kernel->imapFolderMgr()->findIdString( mMsg->drafts() );
+		}
+		if (imapDraftsFolder && imapDraftsFolder->noContent()) imapDraftsFolder = NULL;
+
+		if ( draftsFolder == 0 ) {
+			draftsFolder = kernel->draftsFolder();
+		} else {
+			draftsFolder->open();
+		}	
+		kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
+		if (imapDraftsFolder) kdDebug(5006) << "saveindrafts: imapdrafts=" << imapDraftsFolder->name() << endl;
+		
+    sentOk = !(draftsFolder->addMsg(mMsg));
+		if (imapDraftsFolder) 
+		{
+			// move the message to the imap-folder and highlight it
+			imapDraftsFolder->moveMsg(mMsg);
+			(static_cast<KMFolderImap*>(imapDraftsFolder))->getFolder(); 
+		}
+
+  } else {
      sentOk = kernel->msgSender()->send(mMsg, aSendNow);
+	}	 
 
   kernel->kbp()->idle();
 
@@ -2516,6 +2551,20 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
     mEdtTo->setCompletionMode( mode );
     mEdtCc->setCompletionMode( mode );
     mEdtBcc->setCompletionMode( mode );
+}
+
+/* 
+* checks if the drafts-folder has been deleted
+* that is not nice so we set the system-drafts-folder
+*/
+void KMComposeWin::slotFolderRemoved(KMFolder* folder)
+{
+	if ( (mFolder) && (folder->idString() == mFolder->idString()) )
+	{
+		mFolder = kernel->draftsFolder();
+		kdDebug(5006) << "restoring drafts to " << mFolder->idString() << endl;
+	}
+	if (mMsg) mMsg->setParent(NULL);
 }
 
 //=============================================================================

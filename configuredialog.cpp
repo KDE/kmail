@@ -396,8 +396,8 @@ void ConfigureDialog::makeIdentityPage( void )
   //
   page = new QWidget( tabWidget );
   tabWidget->addTab( page, i18n("&Advanced") );
-  glay = new QGridLayout( page, 5, 3, spacingHint() );
-  glay->setRowStretch( 4, 1 );
+  glay = new QGridLayout( page, 6, 3, spacingHint() );
+  glay->setRowStretch( 5, 1 );
   glay->setColStretch( 1, 1 );
 
   // row 0: "Reply-To Address" line edit and label:
@@ -428,13 +428,20 @@ void ConfigureDialog::makeIdentityPage( void )
   glay->addWidget( new QLabel( mIdentity.fccCombo,
 			       i18n("Sen&t-mail Folder:"), page ), 2, 0 );
 
-  // row 3: "Special transport" combobox and label:
-  // (row 4: spacer)
+  // row 3: "Drafts Folder" combo box and label:
+  mIdentity.draftsCombo = new KMFolderComboBox( page );
+  mIdentity.draftsCombo->showOutboxFolder( FALSE );
+  glay->addMultiCellWidget( mIdentity.draftsCombo, 3, 3, 1, 2 );
+  glay->addWidget( new QLabel( mIdentity.draftsCombo,
+			       i18n("Drafts Folder:"), page ), 3, 0 );
+
+  // row 4: "Special transport" combobox and label:
+  // (row 5: spacer)
   mIdentity.transportCheck = new QCheckBox( i18n("Spe&cial transport:"), page );
-  glay->addWidget( mIdentity.transportCheck, 3, 0 );
+  glay->addWidget( mIdentity.transportCheck, 4, 0 );
   mIdentity.transportCombo = new QComboBox( true, page );
   mIdentity.transportCombo->setEnabled( false );
-  glay->addMultiCellWidget( mIdentity.transportCombo, 3, 3, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.transportCombo, 4, 4, 1, 2 );
   connect( mIdentity.transportCheck, SIGNAL(toggled(bool)),
 	   mIdentity.transportCombo, SLOT(setEnabled(bool)) );
 
@@ -2509,6 +2516,7 @@ void ConfigureDialog::saveActiveIdentity()
   entry.setTransport( ( mIdentity.transportCheck->isChecked() ) ?
 	        mIdentity.transportCombo->currentText() : QString::null );
   entry.setFcc( mIdentity.fccCombo->getFolder()->idString() );
+  entry.setDrafts( mIdentity.draftsCombo->getFolder()->idString() );
   // "Signature" tab:
   if ( mIdentity.signatureEnabled->isChecked() ) {
     switch ( mIdentity.signatureSourceCombo->currentItem() ) {
@@ -2567,6 +2575,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.transportCheck->setChecked( false );
     mIdentity.transportCombo->clearEdit();
     mIdentity.fccCombo->setFolder( kernel->sentFolder() );
+    mIdentity.draftsCombo->setFolder( kernel->draftsFolder() );
     // "Signature" tab:
     mIdentity.signatureEnabled->setChecked( false );
     mIdentity.signatureSourceCombo->setCurrentItem( 0 );
@@ -2591,6 +2600,10 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
       mIdentity.fccCombo->setFolder( kernel->sentFolder() );
     else
       mIdentity.fccCombo->setFolder( entry.fcc() );
+    if ( entry.drafts().isEmpty() )
+      mIdentity.draftsCombo->setFolder( kernel->draftsFolder() );
+    else
+      mIdentity.draftsCombo->setFolder( entry.drafts() );
     // "Signature" tab:
     if ( entry.useSignatureFile() ) {
       if ( entry.signatureFileName().stripWhiteSpace().isEmpty() ) {

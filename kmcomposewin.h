@@ -262,6 +262,8 @@ public slots:
   void slotPaste();
   void slotMarkAll();
   
+	void slotFolderRemoved(KMFolder*);
+
   /**
    * toggle fixed width font.
    */

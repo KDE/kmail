@@ -123,6 +123,7 @@ void KMIdentity::readConfig(void)
   mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
   mSignatureInlineText = config->readEntry("Inline Signature");
   mFcc = config->readEntry("Fcc");
+  mDrafts = config->readEntry("Drafts");
   if (mIdentity == i18n( "Default" ))
     mTransport = QString::null;
   else
@@ -150,6 +151,7 @@ void KMIdentity::writeConfig(bool aWithSync)
   config->writeEntry("VCardFile", mVCardFile);
   config->writeEntry("Transport", mTransport);
   config->writeEntry("Fcc", mFcc);
+  config->writeEntry("Drafts", mDrafts);
 
   if (aWithSync) config->sync();
 }
@@ -266,6 +268,12 @@ void KMIdentity::setTransport(const QString &str)
 void KMIdentity::setFcc(const QString &str)
 {
   mFcc = str;
+}
+
+//-----------------------------------------------------------------------------
+void KMIdentity::setDrafts(const QString &str)
+{
+  mDrafts = str;
 }
 
 

@@ -28,6 +28,7 @@
 #include "kmversion.h"
 #include "kmrecentaddr.h"
 #include "kmmsgdict.h"
+#include "kmidentity.h"
 #include <kwin.h>
 
 #include <X11/Xlib.h>
@@ -838,6 +839,33 @@ KMKernel::setCanExpire(bool expire) {
 bool
 KMKernel::canExpire() {
   return allowedToExpire;
+}
+
+/**
+ * Returns true if the folder is either the outbox or one of the drafts-folders
+ */
+bool KMKernel::folderIsDraftOrOutbox(KMFolder * folder)
+{
+	bool test = false;
+	
+	if (folder == the_outboxFolder || folder == the_draftsFolder) 
+	{
+		test = true;
+		return test;
+	}	
+
+	// search the identities if the folder matches the drafts-folder
+	QStringList identities = KMIdentity::identities();
+	QStringList::Iterator it = identities.begin();
+	for( ; it != identities.end(); ++it )
+	{
+		KMIdentity ident( *it );
+		ident.readConfig();
+		if (!ident.drafts().isEmpty() &&
+			ident.drafts() == folder->idString()) test = true;
+	}
+
+	return test;
 }
 
 #include "kmkernel.moc"

@@ -221,6 +221,7 @@ void KMSender::doSendMsg()
     mCurrentMsg->setParent(0);
 
     QString msgIdentity = mCurrentMsg->headerField( "X-KMail-Identity" );
+		if (msgIdentity.isEmpty()) msgIdentity = i18n("Default");
     kdDebug(5006) << "KMSender::doSendMsg: msgIdentity = " << msgIdentity << endl;
     KMIdentity id( msgIdentity );
     id.readConfig();

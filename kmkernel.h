@@ -92,6 +92,7 @@ public:
                const KURL &messageFile);
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
     bool overwrite = FALSE);
+	bool folderIsDraftOrOutbox(KMFolder *);	
 
   inline KMFolder *inboxFolder() { return the_inboxFolder; }
   inline KMFolder *outboxFolder() { return the_outboxFolder; }
