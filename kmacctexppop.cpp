@@ -898,7 +898,7 @@ void KMAcctExpPop::slotResult( KIO::Job* )
       if (headers) { // nothing to be done for headers
         idsOfMsgs.clear();
       }
-      if (stage = Head && job->error() == KIO::ERR_COULD_NOT_READ)
+      if (stage == Head && job->error() == KIO::ERR_COULD_NOT_READ)
       {
         KMessageBox::error(0, i18n("Sorry, your server doesn't support the "
           "TOP command. Therefore it is not possible to fetch from big "
