@@ -2789,7 +2789,7 @@ void KMMainWin::setupMenuBar()
 #if KDE_VERSION >= 305 // KDE 3.1
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 #else
-  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), 0,
+  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), "idea",
 				i18n("Show \"Tip of the Day\"") ),
 		      0, this, SLOT(slotShowTip()),
 		      actionCollection(), "help_show_tip" );
