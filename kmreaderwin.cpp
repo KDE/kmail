@@ -377,7 +377,8 @@ void KMReaderWin::updateReaderWin()
   else
     mMsgBufMD5 = "";
 
-  updateReaderWinTimer.start( delay, TRUE );
+  if (mMsg)
+    updateReaderWinTimer.start( delay, TRUE );
 
   if (mMsg) parseMsg();
   else

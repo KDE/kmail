@@ -1138,7 +1138,8 @@ void KMHeaders::undo()
   {
     curFolder->open();
     int idx = curFolder->find(msgIdMD5);
-    assert(idx != -1);
+    if (idx == -1) // message moved to folder that has been emptied
+      return;
     msg = curFolder->getMsg( idx );
     folder->moveMsg( msg );     
     folder->unGetMsg( folder->count() - 1 );
