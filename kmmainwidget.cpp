@@ -14,6 +14,7 @@
 
 #undef Unsorted // X headers...
 #include <qaccel.h>
+#include <qlayout.h>
 
 #include <kopenwith.h>
 

@@ -51,7 +51,7 @@ using KMail::FolderIface;
 #include <kpassivepopup.h>
 #include <dcopclient.h>
 #include <ksystemtray.h>
-
+#include <kpgp.h>
 #include <kdebug.h>
 
 #include <qutf7codec.h>
