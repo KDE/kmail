@@ -9,11 +9,13 @@
 #include "kmmsgpart.h"
 #include "kmmessage.h"
 
+#include <kmime_charfreq.h>
 #include <mimelib/enum.h>
-#include <mimelib/body.h>
-#include <mimelib/bodypart.h>
 #include <mimelib/utility.h>
+#include <mimelib/string.h>
 #include <kiconloader.h>
+
+using namespace KMime;
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart()
@@ -98,6 +100,72 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
     mBody.duplicate( aStr.data(), mBodyDecodedSize );
     break;
   }
+}
+
+void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
+				       QValueList<int> & allowedCte,
+				       bool allow8Bit )
+{
+  allowedCte.clear();
+
+  mBodyDecodedSize = aBuf.size();
+
+  CharFreq cf( aBuf ); // save to pass NULL arrays...
+
+  switch ( cf.type() ) {
+  case CharFreq::SevenBitText:
+    allowedCte << DwMime::kCte7bit;
+    if ( allow8Bit )
+      allowedCte << DwMime::kCte8bit;
+  case CharFreq::SevenBitData:
+    allowedCte << DwMime::kCteQp;
+    allowedCte << DwMime::kCteBase64;
+    break;
+  case CharFreq::EightBitText:
+    if ( allow8Bit ) 
+      allowedCte << DwMime::kCte8bit;
+    allowedCte << DwMime::kCteQp;
+  case CharFreq::EightBitData:
+    allowedCte << DwMime::kCteBase64;
+    break;
+  }
+
+  kdDebug() << "CharFreq returned " << cf.type() << " and I chose "
+	    << allowedCte[0] << endl;
+  setCte( allowedCte[0] ); // choose best fitting
+  setBodyEncodedBinary( aBuf );
+}
+
+void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
+				       QValueList<int> & allowedCte,
+				       bool allow8Bit )
+{
+  allowedCte.clear();
+
+  mBodyDecodedSize = aBuf.length();
+
+  CharFreq cf( aBuf.data(), mBodyDecodedSize ); // save to pass NULL strings
+
+  switch ( cf.type() ) {
+  case CharFreq::SevenBitText:
+    allowedCte << DwMime::kCte7bit;
+    if ( allow8Bit )
+      allowedCte << DwMime::kCte8bit;
+  case CharFreq::SevenBitData:
+    allowedCte << DwMime::kCteQp;
+    allowedCte << DwMime::kCteBase64;
+    break;
+  case CharFreq::EightBitText:
+    if ( allow8Bit ) 
+      allowedCte << DwMime::kCte8bit;
+    allowedCte << DwMime::kCteQp;
+  case CharFreq::EightBitData:
+    allowedCte << DwMime::kCteBase64;
+    break;
+  }
+
+  setCte( allowedCte[0] ); // choose best fitting
+  setBodyEncoded( aBuf );
 }
 
 //-----------------------------------------------------------------------------

@@ -4,9 +4,11 @@
 #ifndef kmmsgpart_h
 #define kmmsgpart_h
 
-#include <mimelib/string.h>
 #include <qstring.h>
+#include <qcstring.h>
 
+template <typename T>
+class QValueList;
 
 class KMMessagePart
 {
@@ -28,6 +30,22 @@ public:
   /** Returns body as decoded string. Assumes that content-transfer-encoding
       contains the correct encoding. This routine is meant for text strings! */
   virtual QCString bodyDecoded(void) const;
+
+  /** Sets body, encoded in the best fitting
+      content-transfer-encoding, which is determined by character
+      frequency count.
+      
+      @param aBuf       input buffer
+      @param allowedCte return: list of allowed cte's
+      @param allow8Bit  whether "8bit" is allowed as cte.
+  */
+  virtual void setBodyAndGuessCte(const QByteArray& aBuf,
+				  QValueList<int>& allowedCte,
+				  bool allow8Bit=false);
+  /* Same for text */
+  virtual void setBodyAndGuessCte(const QCString& aBuf,
+				  QValueList<int>& allowedCte,
+				  bool allow8Bit=false);
 
   /** Sets body, encoded according to the content-transfer-encoding.
       BEWARE: The entire aStr is used including trailing 0 of text strings! */
