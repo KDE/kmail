@@ -37,6 +37,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kurl.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kio/job.h>
@@ -45,17 +46,18 @@
 //-----------------------------------------------------------------------------
 KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   const QString &aPort)
-  : mSSL( false )
+  : mProtocol( aProtocol ), mHost( aHost ), mSSL( false ),
+    mJob( 0 ), mSlave( 0 )
 {
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveResult(KIO::Slave *, int, const QString &)));
-  mUrl.setProtocol(aProtocol);
-  mUrl.setHost(aHost);
-  if (aPort != "993" && aPort != "995" && aPort != "465")
-    mUrl.setPort(aPort.toInt());
 
-  startOffSlave();
+  int port = 0;
+  if (aPort != "993" && aPort != "995" && aPort != "465")
+    port = aPort.toInt();
+
+  startOffSlave( port );
 }
 
 //-----------------------------------------------------------------------------
@@ -71,8 +73,13 @@ KIO::MetaData KMServerTest::slaveConfig() const {
   return md;
 }
 
-void KMServerTest::startOffSlave() {
-  mSlave = KIO::Scheduler::getConnectedSlave( mUrl, slaveConfig() );
+void KMServerTest::startOffSlave( int port ) {
+  KURL url;
+  url.setProtocol( mSSL ? mProtocol + 's' : mProtocol );
+  url.setHost( mHost );
+  url.setPort( port );
+
+  mSlave = KIO::Scheduler::getConnectedSlave( url, slaveConfig() );
   if ( !mSlave ) {
     slotSlaveResult( 0, 1 );
     return;
@@ -85,7 +92,7 @@ void KMServerTest::startOffSlave() {
 
   stream << (int) 'c';
 
-  mJob = KIO::special( mUrl, packedArgs, false );
+  mJob = KIO::special( url, packedArgs, false );
   KIO::Scheduler::assignJobToSlave( mSlave, mJob );
   connect( mJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
   connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
@@ -137,15 +144,13 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
       mList.clear();
     else
       mList.append("NORMAL-CONNECTION");
-    mUrl.setProtocol(mUrl.protocol() + 's');
-    mUrl.setPort(0);
     startOffSlave();
   } else {
     mJob = 0;
     if (!error) mList.append("SSL");
     if (mList.isEmpty())
       KMessageBox::error(0, i18n("<qt>Could not connect to server <b>%1</b>.</qt>")
-      .arg(mUrl.host()));
+      .arg(mHost));
     emit capabilities(mList);
     emit capabilities(mList, mAuthNone, mAuthSSL, mAuthTLS);
   }

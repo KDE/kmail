@@ -33,8 +33,6 @@
 #ifndef kmservertest_h
 #define kmservertest_h
 
-#include <kurl.h>
-
 #include <qobject.h>
 #include <qstring.h>
 #include <qstringlist.h>
@@ -69,11 +67,12 @@ protected slots:
 
 protected:
   KIO::MetaData slaveConfig() const;
-  void startOffSlave();
+  void startOffSlave( int port=0 );
 
 protected:
+  const QString  mProtocol;
+  const QString  mHost;
   bool           mSSL;
-  KURL           mUrl;
   QStringList    mList;
   QString        mAuthNone;
   QString        mAuthSSL;
