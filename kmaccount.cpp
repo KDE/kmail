@@ -20,7 +20,9 @@
 #include "kmfiltermgr.h"
 #include "kmsender.h"
 #include "kmmessage.h"
+#include "kmbroadcaststatus.h"
 #include <klocale.h>
+#include <kprocess.h>
 #include <kmessagebox.h>
 
 //----------------------
@@ -230,6 +232,48 @@ void KMAccount::deinstallTimer()
   }
 }
 
+bool KMAccount::runPrecommand(const QString &precommand)
+{
+  KProcess precommandProcess;
+
+  // Run the pre command if there is one
+  if (precommand.length() == 0)
+    return true;
+  
+  KMBroadcastStatus::instance()->setStatusMsg( 
+	 i18n( QString("Executing precommand ") + precommand ));
+
+  QStringList args;
+  // Tokenize on space
+  int left = 0;
+  QString parseString = precommand;
+  while ((left <= (int)parseString.length()) && (left != -1))
+    {
+      left = parseString.find(' ', 0, false);
+      if (left == -1)
+	  args << parseString;
+      else
+	{
+	  //qDebug("Adding arg: %s", parseString.left(left).latin1());
+	  args << parseString.left(left);
+	  parseString = parseString.right(parseString.length() - (left+1));
+	  //qDebug("ParseString: %s", parseString.latin1());
+	}
+    }
+
+  for (unsigned int i = 0; i < args.count(); i++)
+    {
+      //qDebug("KMAccount::runPrecommand: arg %d = %s", i, args[i].latin1());
+      precommandProcess << args[i];
+    }
+
+  kapp->processEvents();
+  qDebug("Running precommand %s", precommand.latin1());
+  if (!precommandProcess.start(KProcess::Block))
+    return false;
+
+  return true;
+}
 
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()

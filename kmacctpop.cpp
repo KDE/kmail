@@ -142,19 +142,9 @@ bool KMAcctPop::authenticate(DwPopClient& client)
 
     // Run the pre command if there is one
     // Not sure if this should be outside the while loop or not - mpilone 
-    if (mPrecommand.length() != 0)
-    {
-       KMBroadcastStatus::instance()->setStatusMsg( 
-	  i18n( QString("Executing precommand ") + mPrecommand ));
-       kapp->processEvents();
-       qDebug("Running precommand %s", mPrecommand.ascii());
-       precommandProcess << mPrecommand;
-       if (!precommandProcess.start(KProcess::Block))
-       {
-	  return popError(QString("Couldn't execute precommand:\n") + mPrecommand, client);
-       }
-    }
-      
+    if (!runPrecommand(mPrecommand))
+      return popError(QString("Couldn't execute precommand:\n") + mPrecommand, client);
+    
     // Open connection to server
     if (client.Open(mHost,mPort) != '+')
       return popError("OPEN", client);

@@ -25,6 +25,7 @@
 #include "kbusyptr.h"
 #include "kmacctfolder.h"
 #include "kmfiltermgr.h"
+#include <kprocess.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <qmessagebox.h> // just for kioslave testing
@@ -97,6 +98,7 @@ void KMAcctExpPop::init(void)
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
   mRetrieveAll = TRUE;
+  mPrecommand = "";
 }
 
 
@@ -153,6 +155,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
   mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
+  mPrecommand = config.readEntry("precommand");
 }
 
 
@@ -172,6 +175,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
   config.writeEntry("retrieve-all", mRetrieveAll);
+  config.writeEntry("precommand", mPrecommand);
 }
 
 
@@ -439,6 +443,16 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 void KMAcctExpPop::startJob() {
   QString text;
 
+  // Run the precommand
+  if (!runPrecommand(mPrecommand))
+    {
+      QMessageBox::warning(0, i18n("Kmail Error Message"), 
+			    i18n(QString("Couldn't execute precommand:") + mPrecommand) );  
+      emit finishedCheck(idsOfMsgs.count() > 0);
+      return;
+    }
+  // end precommand code
+  
   if (mUseSSL) {
     text = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
             mHost + ":" + QString("%1").arg(mPort) + "/index";

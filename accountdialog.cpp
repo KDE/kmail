@@ -404,7 +404,9 @@ void AccountDialog::saveSettings()
       epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
       epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
       epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
-      epa.setRetrieveAll( mPop.retriveAllCheck->isChecked() );
+      epa.setRetrieveAll( mPop.retriveAllCheck->isChecked() ); 
+      epa.setPrecommand( mPop.precommand->text() );
+
     }
   }
   kernel->acctMgr()->writeConfig(TRUE);

@@ -90,6 +90,12 @@ protected:
   virtual void installTimer();
   virtual void deinstallTimer();
 
+  /** Runs the precommand. If the precommand is empty, the method
+   * will just return success and not actually do anything
+   *
+   * @return True if successful, false otherwise*/
+  bool runPrecommand(const QString &precommand);
+
 protected:
   QString       mName;
   KMAcctMgr*    mOwner;
