@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>792</width>
-            <height>435</height>
+            <width>1018</width>
+            <height>519</height>
         </rect>
     </property>
     <property name="caption">
@@ -343,7 +343,7 @@ When this option is selected, both the signature and the signed data will be enc
                                 <cstring>TextLabel4</cstring>
                             </property>
                             <property name="text">
-                                <string>Compound Mode:</string>
+                                <string>Compound mode:</string>
                             </property>
                         </widget>
                         <spacer row="1" column="0">

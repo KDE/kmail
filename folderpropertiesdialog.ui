@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>377</width>
-            <height>475</height>
+            <width>423</width>
+            <height>532</height>
         </rect>
     </property>
     <property name="caption">
@@ -501,7 +501,7 @@
                         <cstring>TextLabel1_3</cstring>
                     </property>
                     <property name="text">
-                        <string>Show Sender/Receiver:</string>
+                        <string>Show sender/receiver:</string>
                     </property>
                 </widget>
             </grid>
@@ -608,4 +608,15 @@
     <slot access="protected">slotChangeIcon( QString icon )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kiconbutton.h</includehint>
+    <includehint>kiconbutton.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>kcombobox.h</includehint>
+</includehints>
 </UI>
