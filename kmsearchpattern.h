@@ -213,26 +213,32 @@ public:
 */
 namespace KMail {
 // The below are used in several places and here so they are accessible.
-  static const char * const StatusValues[] = {
-    I18N_NOOP( "important" ),
-    I18N_NOOP( "new" ),
-    I18N_NOOP( "unread" ),
-    I18N_NOOP( "read" ),
-    I18N_NOOP( "old" ),
-    I18N_NOOP( "deleted" ),
-    I18N_NOOP( "replied" ),
-    I18N_NOOP( "forwarded" ),
-    I18N_NOOP( "queued" ),
-    I18N_NOOP( "sent" ),
-    I18N_NOOP( "watched" ),
-    I18N_NOOP( "ignored" ),
-    I18N_NOOP( "spam" ),
-    I18N_NOOP( "ham" ),
-    I18N_NOOP( "has an attachment"),
-    I18N_NOOP( "todo" )
+  struct MessageStatus {
+    const char * const text;
+    const char * const icon;
   };
+
+  static const MessageStatus StatusValues[] = {
+    { I18N_NOOP( "Important" ),        "kmmsgflag"      },
+    { I18N_NOOP( "New" ),              "kmmsgnew"       },
+    { I18N_NOOP( "Unread" ),           "kmmsgunseen"    },
+    { I18N_NOOP( "Read" ),             "kmmsgread"      },
+    { I18N_NOOP( "Old" ),              0                },
+    { I18N_NOOP( "Deleted" ),          "edittrash"      },
+    { I18N_NOOP( "Replied" ),          "kmmsgreplied"   },
+    { I18N_NOOP( "Forwarded" ),        "kmmsgforwarded" },
+    { I18N_NOOP( "Queued" ),           "kmmsgqueued"    },
+    { I18N_NOOP( "Sent" ),             "kmmsgsent"      },
+    { I18N_NOOP( "Watched" ),          "kmmsgwatched"   },
+    { I18N_NOOP( "Ignored" ),          "kmmsgignored"   },
+    { I18N_NOOP( "Spam" ),             "mark_as_spam"   },
+    { I18N_NOOP( "Ham" ),              "mark_as_ham"    },
+    { I18N_NOOP( "Has an Attachment"), "attach"         },
+    { I18N_NOOP( "To Do" ),            "kontact_todo"   }
+  };
+
   static const int StatusValueCount =
-    sizeof( StatusValues ) / sizeof( *StatusValues ) -1 ;
+    sizeof( StatusValues ) / sizeof( MessageStatus );
   // we want to show all status entries in the quick search bar, but only the
   // ones up to attachment in the search/filter dialog, because there the
   // attachment case is handled separately.

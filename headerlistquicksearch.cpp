@@ -35,6 +35,7 @@
 #include <qtimer.h>
 
 #include <kaction.h>
+#include <kiconloader.h>
 #include <klistview.h>
 #include <klocale.h>
 
@@ -65,9 +66,9 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   QLabel *label = new QLabel( i18n("Stat&us:"), parent, "kde toolbar widget" );
 
   mStatusCombo = new QComboBox( parent, "quick search status combo box" );
-  mStatusCombo->insertItem( i18n("Any Status") );
+  mStatusCombo->insertItem( SmallIcon( "run" ), i18n("Any Status") );
   for ( int i = 0; i < KMail::StatusValueCount; i++ )
-    mStatusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
+    mStatusCombo->insertItem( SmallIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
   mStatusCombo->setCurrentItem( 0 );
   connect( mStatusCombo, SIGNAL ( activated( int ) ),
            this, SLOT( slotStatusChanged( int ) ) );
@@ -105,7 +106,7 @@ void HeaderListQuickSearch::slotStatusChanged( int index )
     mStatus = 0;
   else
     mStatus =
-      KMSearchRuleStatus::statusFromEnglishName( KMail::StatusValues[index-1] );
+      KMSearchRuleStatus::statusFromEnglishName( KMail::StatusValues[ index - 1 ].text );
   updateSearch();
 }
 

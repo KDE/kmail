@@ -39,6 +39,7 @@
 #include "interfaces/rulewidgethandler.h"
 
 #include <kdebug.h>
+#include <kiconloader.h>
 
 #include <qwidgetstack.h>
 #include <qstring.h>
@@ -1058,7 +1059,7 @@ namespace {
     QComboBox *statusCombo = new QComboBox( valueStack,
                                             "statusRuleValueCombo" );
     for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
-      statusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
+      statusCombo->insertItem( SmallIcon( KMail::StatusValues[ i ].icon ), i18n( KMail::StatusValues[ i ].text ) );
     }
     statusCombo->adjustSize();
     QObject::connect( statusCombo, SIGNAL( activated( int ) ),
@@ -1126,7 +1127,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return QString::fromLatin1( KMail::StatusValues[status] );
+      return QString::fromLatin1( KMail::StatusValues[ status ].text );
     else
       return QString::null;
   }
@@ -1142,7 +1143,7 @@ namespace {
 
     const int status = currentStatusValue( valueStack );
     if ( status != -1 )
-      return i18n( KMail::StatusValues[status] );
+      return i18n( KMail::StatusValues[ status ].text );
     else
       return QString::null;
   }
@@ -1219,7 +1220,7 @@ namespace {
     int valueIndex = 0;
     for ( ; valueIndex < KMail::StatusValueCountWithoutHidden; ++valueIndex )
       if ( value == QString::fromLatin1(
-               KMail::StatusValues[valueIndex] ) )
+               KMail::StatusValues[ valueIndex ].text ) )
         break;
     QComboBox *statusCombo =
       dynamic_cast<QComboBox*>( valueStack->child( "statusRuleValueCombo",

@@ -581,37 +581,37 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
       const QString & aStatusString )
 {
   KMMsgStatus status = 0;
-  if ( ! aStatusString.compare("important") )
+  if ( ! aStatusString.compare("Important") )
     status = KMMsgStatusFlag;
-  if ( ! aStatusString.compare("new") )
+  if ( ! aStatusString.compare("New") )
     status = KMMsgStatusNew;
-  if ( ! aStatusString.compare("unread") )
+  if ( ! aStatusString.compare("Unread") )
     status = KMMsgStatusUnread | KMMsgStatusNew;
-  if ( ! aStatusString.compare("read") )
+  if ( ! aStatusString.compare("Read") )
     status = KMMsgStatusRead;
-  if ( ! aStatusString.compare("old") )
+  if ( ! aStatusString.compare("Old") )
     status = KMMsgStatusOld;
-  if ( ! aStatusString.compare("deleted") )
+  if ( ! aStatusString.compare("Deleted") )
     status = KMMsgStatusDeleted;
-  if ( ! aStatusString.compare("replied") )
+  if ( ! aStatusString.compare("Replied") )
     status = KMMsgStatusReplied;
-  if ( ! aStatusString.compare("forwarded") )
+  if ( ! aStatusString.compare("Forwarded") )
     status = KMMsgStatusForwarded;
-  if ( ! aStatusString.compare("queued") )
+  if ( ! aStatusString.compare("Queued") )
     status = KMMsgStatusQueued;
-  if ( ! aStatusString.compare("sent") )
+  if ( ! aStatusString.compare("Sent") )
     status = KMMsgStatusSent;
-  if ( ! aStatusString.compare("watched") )
+  if ( ! aStatusString.compare("Watched") )
     status = KMMsgStatusWatched;
-  if ( ! aStatusString.compare("ignored") )
+  if ( ! aStatusString.compare("Ignored") )
     status = KMMsgStatusIgnored;
-  if ( ! aStatusString.compare("todo") )
+  if ( ! aStatusString.compare("To Do") )
     status = KMMsgStatusTodo;
-  if ( ! aStatusString.compare("spam") )
+  if ( ! aStatusString.compare("Spam") )
     status = KMMsgStatusSpam;
-  if ( ! aStatusString.compare("ham") )
+  if ( ! aStatusString.compare("Ham") )
      status = KMMsgStatusHam;
-  if ( ! aStatusString.compare("has an attachment") )
+  if ( ! aStatusString.compare("Has an Attachment") )
      status = KMMsgStatusHasAttach;
 
   return status;
