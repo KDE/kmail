@@ -3804,6 +3804,12 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
   connect( mWidget->ignoreLDAPDPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->disableLDAPCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
   connect( mWidget->customLDAPProxy, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
+
+  // Button-group for exclusive radiobuttons
+  QButtonGroup* bgHTTPProxy = new QButtonGroup( mWidget );
+  bgHTTPProxy->hide();
+  bgHTTPProxy->insert( mWidget->honorHTTPProxyRB );
+  bgHTTPProxy->insert( mWidget->useCustomHTTPProxyRB );
 }
 
 static void disableDirmngrWidget( QWidget* w ) {
