@@ -94,7 +94,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   }
   if (!aMsg->to() || aMsg->to()[0]=='\0') return FALSE;
 
-  //aMsg->
+  aMsg->viewSource("KMSender::send()");
 
   if (sendNow==-1) sendNow = mSendImmediate;
   if (!sendNow) return (queuedFolder->addMsg(aMsg)==0);
@@ -206,7 +206,7 @@ void KMSender::smtpClose(DwSmtpClient& client)
 //-----------------------------------------------------------------------------
 bool KMSender::sendMail(KMMessage* aMsg)
 {
-  QString msgstr = prepareStr(aMsg->asString());
+  QString msgstr;
 
   if (mMailer.isEmpty())
   {
@@ -214,6 +214,8 @@ bool KMSender::sendMail(KMMessage* aMsg)
 			   "in the settings."));
     return FALSE;
   }
+
+  msgstr = prepareStr(aMsg->asString());
 
   if (!mMailerProc) mMailerProc = new KProcess;
   assert(mMailerProc != NULL);
@@ -231,16 +233,15 @@ bool KMSender::sendMail(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-const QString KMSender::prepareStr(QString src, bool toCRLF)
+const QString KMSender::prepareStr(const QString aStr, bool toCRLF)
 {
-  QString msgstr;
+  QString str = aStr.copy();
 
-  msgstr = src.copy();
-  msgstr.replace(QRegExp("\\n\\."), "\n ."); 
-  msgstr.replace(QRegExp("\\nFrom "), "\n>From "); 
-  if (toCRLF) msgstr.replace(QRegExp("\\n"), "\r\n");
+  str.replace(QRegExp("\\n\\."), "\n ."); 
+  str.replace(QRegExp("\\nFrom "), "\n>From "); 
+  if (toCRLF) str.replace(QRegExp("\\n"), "\r\n");
 
-  return msgstr;
+  return str;
 }
 
 

@@ -10,6 +10,7 @@
 #include <klocale.h>
 #include <kmsgbox.h>
 #include <ktablistbox.h>
+#include <kbuttonbox.h>
 #include <qbttngrp.h>
 #include <qframe.h>
 #include <qgrpbox.h>
@@ -24,24 +25,43 @@
 KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   KMFilterDlgInherited(parent, name, FALSE)
 {
-  QBoxLayout* hbox = new QHBoxLayout(this);
+  QBoxLayout* box;
+  KButtonBox* buttonBox;
+  QPushButton* btnHelp;
 
   initMetaObject();
+
+  box  = new QVBoxLayout(this);;
+  mBox = new QHBoxLayout;
 
   setCaption(nls->translate("Filter Rules"));
   //setOKButton(nls->translate("Ok"));
   //setCancelButton(nls->translate("Cancel"));
 
-  mFilterList = new QListBox(this, "list");
-  hbox->addWidget(mFilterList);
+  mFilterList = new QListBox(this);
+  mBox->addWidget(mFilterList);
 
-  mBox = new QVBoxLayout;
+  mFilterArea = new QWidget(this);
+  mBox->addWidget(mFilterArea);
 
-  
+  box->addLayout(mBox);
 
-  //hbox->addLayout(mBox);
+  buttonBox = new KButtonBox(this);
+  box->addWidget(buttonBox);
 
-  hbox->activate();
+  mBtnUp = buttonBox->addButton(nls->translate("Up"));
+  mBtnDown  = buttonBox->addButton(nls->translate("Down"));
+  mBtnNew = buttonBox->addButton(nls->translate("New"));
+  mBtnDelete = buttonBox->addButton(nls->translate("Delete"));
+  buttonBox->addStretch();
+  mBtnOk = buttonBox->addButton(nls->translate("Ok"));
+  mBtnCancel = buttonBox->addButton(nls->translate("Cancel"));
+  buttonBox->addStretch();
+  btnHelp = buttonBox->addButton(nls->translate("Help"));
+
+  box->activate();
+
+  reloadFilterList();
 }
 
 
@@ -64,6 +84,43 @@ void KMFilterDlg::reloadFilterList(void)
   }
 }
 
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnUp()
+{
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnDown()
+{
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnNew()
+{
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnDelete()
+{
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnOk()
+{
+  accept();
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnCancel()
+{
+  reject();
+}
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::doBtnHelp()
+{
+}
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::addLabel(const QString aLabel)

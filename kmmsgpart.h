@@ -13,8 +13,22 @@ public:
   KMMessagePart();
   virtual ~KMMessagePart();
 
-  /** 
-   Get or set the 'Content-Type' header field
+  /** Get or set the message body */
+  const QString body(void) const;
+  void setBody(const QString aStr);
+
+  /** Returns body as decoded string. Assumes that content-transfer-encoding
+    contains the correct encoding. */
+  virtual const QString bodyDecoded(void) const;
+
+  /** Returns body, encoded according to the content-transfer-encoding. */
+  virtual const QString bodyEncoded(void) const;
+
+  /** Get or set name parameter */
+  const QString name(void) const;
+  void setName(const QString aStr);
+
+  /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
   const QString typeStr(void) const;
@@ -51,22 +65,14 @@ public:
   const QString contentDisposition() const;
   void setContentDisposition(const QString aStr);
  
-  /** Get or set the message body */
-  const QString body(long* length_return=0L) const;
-  void setBody(const QString aStr);
-
-  /** Get or set name parameter */
-  const QString name(void) const;
-  void setName(const QString aStr);
-
 protected:
-  DwString mType;
-  DwString mSubtype;
-  DwString mCte;
-  DwString mContentDescription;
-  DwString mContentDisposition;
-  DwString mBody;
-  DwString mName;
+  QString mType;
+  QString mSubtype;
+  QString mCte;
+  QString mContentDescription;
+  QString mContentDisposition;
+  QString mBody;
+  QString mName;
 };
 
 

@@ -110,7 +110,7 @@ void  KMReaderView::parseConfiguration()
   config->setGroup("Settings");
   // For text bodyParts you can set the max lines to be displayed
   // if text.lines > MAX_LINES it displays the according icon.
-  MAX_LINES = config->readNumEntry("Lines");
+  MAX_LINES = config->readNumEntry("Lines", 100);
 }
 
 
@@ -160,35 +160,18 @@ void KMReaderView::parseMessage(KMMessage *message)
   QString fromStr;
   QString toStr;
   QString ccStr;
-  long length;
-  int multi=0;
-  int pos=0;
-  int numParts=0;
+  int i, numParts=0;
+  KMMessagePart msgPart;
 
   currentMessage = message; // To make sure currentMessage is set.
 
 
-  dateStr = "Date: "+message->dateStr()+"<BR>";
-
-  strTemp = message->from();
-  if((pos=strTemp.find("<",0,0)) != -1)
-    {strTemp.remove(0,pos+1);
-    strTemp.replace(QRegExp(">",0,0),"");
-    }
-  fromStr = "From: <A HREF=\"mailto:" + strTemp + "\">";
-  fromStr.append(strTemp + "\">");
-  if(pos != -1)
-    {strTemp = message->from();
-    strTemp.truncate(pos);
-    }
-  strTemp = strTemp.stripWhiteSpace();
-  fromStr.append(strTemp + "</A>"+"<br>");
+  dateStr = "Date: " + message->dateStr() + "<BR>";
+  fromStr = "From: " + KMMessage::emailAddrAsAnchor(message->from()) + "<BR>";
 
   ccStr = message->cc();
-  if(ccStr.isEmpty())
-    ccStr = "";
-  else
-    ccStr= "Cc: " + message->cc();
+  if(!ccStr.isEmpty())
+    ccStr= "Cc: " + KMMessage::emailAddrAsAnchor(message->cc()) + "<BR>";
 			 
   subjStr = "<FONT SIZE=+1> Subject: " + message->subject() + "</FONT><P>";
   toStr = "To: " + message->to() + "<BR>";
@@ -207,21 +190,22 @@ void KMReaderView::parseMessage(KMMessage *message)
   messageCanvas->write("</B></TD></TR></TABLE><br><br>");	
 
   numParts = message->numBodyParts();
-  text = message->body(&length);
-  text += "\n";
-  if (numParts > 0)
-    {KMMessagePart *part = new KMMessagePart();
-    for(multi=0;multi < numParts;multi++)
-      {printf("in body part loop\n");
-      message->bodyPart(multi,part);
-      text += parseBodyPart(part,multi);
-      delete part;
-      part= new KMMessagePart();
-      }
+  if (numParts <= 0)
+  {
+    text = message->body().stripWhiteSpace();
+    text += "\n";
+  }
+  else
+  {
+    for(i=0; i<numParts; i++)
+    {
+      debug("processing body part %d of %d", i, numParts);
+      message->bodyPart(i, &msgPart);
+      text += parseBodyPart(&msgPart, i);
     }			
+  }
 
   // Convert text to html
-
   text.replace(QRegExp("\n"),"<BR>");
   text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
   
@@ -232,7 +216,7 @@ void KMReaderView::parseMessage(KMMessage *message)
 
   // Okay! Let's write it to the canvas
   messageCanvas->write(text);
-  messageCanvas->write("</BODY></HTML>");
+  messageCanvas->write("<BR></BODY></HTML>");
   messageCanvas->end();
   messageCanvas->parse();
 }
@@ -249,32 +233,30 @@ QString KMReaderView::parseBodyPart(KMMessagePart *p, int pnumber)
   QString comment;
   int pos;
 
-  printf("Hallo!");
-  fflush(stdout);
-  cout << "Part name: " << p->name() << endl;
+  assert(p != NULL);
+
+  debug("parsing part #%d: ``%s''", pnumber, (const char*)p->name());
   comment = p->name();
   pnumstring.sprintf("file:/%i",pnumber);
-  text = decodeString(p,p->cteStr()); // Decode bodyPart
+  text = p->bodyDecoded(); // Decode bodyPart
 
   // ************* MimeMagic stuff ****************// 
   // This has to be improved vastly. For gz files (e.g) mimemagic still
   // says it is an octet-stream and not a gzip file
 
-
   KMimeMagicResult *result = new KMimeMagicResult();
   result = magic->findBufferType(text,text.length()-1); // Removed -1	
   if(result->getAccuracy() <= 50)
-    {debug("The Accuracy is <= 50 looking at filename ending\n");
-    }
+  {
+    debug("  the accuracy is <= 50 ... should look at filename ending\n");
+  }
   temp =  result->getContent(); // Determine Content Type
   pos = temp.find("/",0,0);
   type = temp.copy();
   subType = temp.copy();
   type.truncate(pos);
   subType = subType.remove(0,pos+1); 
-  cout << "Type:" << type << endl << "SubType:" << subType <<endl;
-
-
+  debug("  type: %s\n  subtype: %s", (const char*)type, (const char*)subType);
   // ************* MimeMagic stuff end *****************//
 
   QString fileName;
@@ -357,36 +339,12 @@ void KMReaderView::initKMimeMagic()
 }
 
 
-QString KMReaderView::decodeString(KMMessagePart *part, QString type)
-{
-  DwString dwDest;
-  
-  type=type.lower();
-  debug("decoding %s",type.data());
-  if(type=="base64") 
-    {printf("->base64\n");
-    DwDecodeBase64((const char*)part->body(),dwDest);}
-  else if(type=="quoted-printable")
-    {printf("->quotedp\n");
-    DwDecodeQuotedPrintable((const char*)part->body(),dwDest);}
-  else if(type=="8bit") 
-    {printf("Raw 8 bit data read. Things may look strange");
-    dwDest = part->body();
-    }
-  else if(type == "7bit")
-    dwDest = part->body();
-  else if(type != "7bit")
-    dwDest="Encoding of this attachment is currently not supported!";
-
-  printf("decoded data: %s",dwDest.c_str());
-  return dwDest.c_str();
-}
-
 //---------------------------------------------------------------------------
-// This method is my nightmare!
-
 QString KMReaderView::scanURL(QString text)
 {
+  return KMMessage::emailAddrAsAnchor(text, TRUE);
+
+#ifdef OBSOLETE_AS_FAR_AS_I_KNOW
   // scan for @. Cut out the url than pre-append necessary HREF stuff.
   int pos = 0; // Position where @ is found in the tex. Init to position 0
   int startPos; // Beginnig of url
@@ -410,6 +368,7 @@ QString KMReaderView::scanURL(QString text)
     }
   
   return text;
+#endif /*OBSOLETE*/
 }
     
 
@@ -584,15 +543,14 @@ bool KMReaderView::slotSaveAtmnt()
 
   KMMessagePart *p = new KMMessagePart();
   currentMessage->bodyPart(currentAtmnt,p);
-  printf("before save decoding\n");
-  text = decodeString(p,p->cteStr());
-  printf("after save decoding\n");
+  debug("KMReaderView::slotSaveAtmnt(): before save-decoding");
+  text = p->bodyDecoded();
+  debug("KMReaderView::slotSaveAtmnt(): after save-decoding");
   fileName = p->name();
 
   // QFileDialog can't take p->name() as default savefilename yet.
-  fileName = QFileDialog::getSaveFileName(); 
-  if(fileName.isEmpty())
-    return false;
+  fileName = QFileDialog::getSaveFileName(NULL, "*", NULL, (const char*)fileName);
+  if(fileName.isEmpty()) return false;
 
   QFile *file = new QFile(fileName);
   if(file->exists()) 
@@ -630,7 +588,7 @@ bool KMReaderView::slotPrintAtmnt()
   KMMessagePart *p = new KMMessagePart();
   currentMessage->bodyPart(currentAtmnt,p);
   printf("before print decoding\n");
-  text = decodeString(p,p->cteStr());
+  text = p->bodyDecoded();
   printf("after print decoding\n");
 
   // Some work to do.

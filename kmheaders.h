@@ -28,14 +28,10 @@ public:
     messages are processed. */
   virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
-  virtual void undeleteMsg(int msgId=-1);
   virtual void forwardMsg(int msgId=-1);
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
-  /** Delete/undelete message(s) depending on the flag of
-    the first selected message. */
-  virtual void toggleDeleteMsg(int msgId=-1);
   /** Returns next message in the current Folder. */
   virtual void nextMsg();
   /** Returns previous message in the current Folder. */ 

@@ -34,8 +34,10 @@
 
 
 //-----------------------------------------------------------------------------
-KMFolderMgr::KMFolderMgr(const char* aBasePath)
+KMFolderMgr::KMFolderMgr(const char* aBasePath):
+  KMFolderMgrInherited()
 {
+  initMetaObject();
   assert(aBasePath != NULL);
   setBasePath(aBasePath);
 }
@@ -133,3 +135,21 @@ KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
   }
   return folder;
 }
+
+
+//-----------------------------------------------------------------------------
+KMFolderRootDir& KMFolderMgr::dir(void)
+{
+  return mDir;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::contentsChanged(void)
+{
+  emit changed();
+}
+
+
+//-----------------------------------------------------------------------------
+#include "kmfoldermgr.moc"

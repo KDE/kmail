@@ -70,15 +70,13 @@ bool KMAcctLocal::processNewMail(void)
   mFolder->quiet(TRUE);
   mFolder->open();
 
-  num = mailFolder.numMsgs();
+  num = mailFolder.count();
   debug("%ld messages in %s", num, (const char*)location());
 
-  for (i=num; i>=1; i--)
+  for (i=0; i<num; i++)
   {
     debug("processing message %ld", i);
-    msg = mailFolder.getMsg(i);
-    //msg->viewSource("KMAcctLocal::processNewMail: from getMsg()");
-    mailFolder.detachMsg(i);
+    msg = mailFolder.take(0);
     if (msg) 
     {
       if (filterMgr->process(msg))

@@ -5,70 +5,67 @@
 #define kmmessage_h
 
 #include <mimelib/string.h>
-#include <time.h>
-#include <qstring.h>
+#include "kmmsgbase.h"
 
 class KMFolder;
 class DwMessage;
 class KMMessagePart;
+class KMMsgInfo;
 
-class KMMessage
+#define KMMessageInherited KMMsgBase
+class KMMessage: public KMMsgBase
 {
  friend class KMFolder;
 
-protected:
-  KMMessage(KMFolder*, DwMessage* = NULL);
-
 public:
-  typedef enum {
-    stUnknown=' ', stNew='N', stUnread='U', stOld='O', stDeleted='D',
-    stReplied='A'
-  } Status; // see below for a conversion function to strings
+  /** Straight forward initialization. */
+  KMMessage(KMFolder* parent=NULL);
 
-  KMMessage();
+  /** Copy constructor. Does *not* automatically load the message. */
+  KMMessage(const KMMsgInfo& msgInfo);
+
+  /** Destructor. */
   virtual ~KMMessage();
 
-  /** Returns the status of the message */
-  Status status(void) const { return mStatus; }
-
-  /** Set the status. Ensures that index in the folder is also updated. */
-  virtual void setStatus(Status);
-
-  /** Convert the given message status to a string. */
-  static const QString statusToStr(Status);
+  /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
+  virtual bool isMessage(void) const;
 
   /** Mark the message as deleted */
-  void del(void) { setStatus(stDeleted); }
+  void del(void) { setStatus(KMMsgStatusDeleted); }
 
   /** Undelete the message. Same as touch */
-  void undel(void) { setStatus(stOld); }
+  void undel(void) { setStatus(KMMsgStatusOld); }
 
   /** Touch the message - mark it as read */
-  void touch(void) { setStatus(stOld); }
+  void touch(void) { setStatus(KMMsgStatusOld); }
 
-  /** Create a reply to this message, filling all required header fields
-   with the proper values. The returned message is not associated with
-   any folder. */
-  virtual KMMessage* reply(bool replyToAll=FALSE) const;
+  /** Create a new message that is a reply to this message, filling all 
+    required header fields with the proper values. The returned message
+    is not stored in any folder. */
+  virtual KMMessage* createReply(bool replyToAll=FALSE) const;
 
-  /** Return the entire message contents as a string. */
-  virtual const QString asString(void);
+  /** Create a new message that is a forward of this message, filling all 
+    required header fields with the proper values. The returned message
+    is not stored in any folder. */
+  virtual KMMessage* createForward(void) const;
 
   /** Parse the string and create this message from it. */
   virtual void fromString(const QString str);
 
-  /** Returns message with quoting header and indented by the given
-   indentation string. This is suitable for including the message
-   in another message of for replies, forwards. The header string
-   is a template where the following fields are replaced with the
-   corresponding values:
-	%d: date of this message
-	%s: subject of this message
-	%f: sender (from) of this message
-	%%: a single percent sign
-  */
+  /** Return the entire message contents as a string. */
+  virtual const QString asString(void);
+
+  /** Returns message body with quoting header and indented by the 
+    given indentation string. This is suitable for including the message
+    in another message of for replies, forwards. The header string is 
+    a template where the following fields are replaced with the 
+    corresponding values:
+	%D: date of this message
+	%S: subject of this message
+	%F: sender (from) of this message
+	%%: a single percent sign  */
   virtual const QString asQuotedString(const QString headerStr, 
-				       const QString indentStr);
+				       const QString indentStr) const;
 
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
@@ -146,7 +143,7 @@ public:
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
   /** Get or set the message body */
-  virtual const QString body(long* length_return=NULL) const;
+  virtual const QString body(void) const;
   virtual void setBody(const QString aStr);
 
   /** Number of body parts the message has. This is one for plain messages
@@ -156,7 +153,7 @@ public:
   /** Get the body part at position in aIdx.  Indexing starts at 0.
     If there is no body part at that index, aPart will have its
     attributes set to empty values. */
-  virtual void bodyPart(int aIdx, KMMessagePart* aPart);
+  virtual void bodyPart(int aIdx, KMMessagePart* aPart) const;
     
   /** Set the body part at position in aIdx.  Indexing starts at 0.
     If you have aIdx = 10 and there are only 2 body parts, 7 empty
@@ -167,9 +164,6 @@ public:
     
   /** Append a body part to the message. */
   virtual void addBodyPart(const KMMessagePart* aPart);
-
-  /** Owning folder or NULL if none. */
-  KMFolder* owner(void) const { return mOwner; }
 
   /** Open a window containing the complete, unparsed, message. */
   virtual void viewSource(const QString windowCaption) const;
@@ -185,17 +179,11 @@ public:
   static const QString emailAddrAsAnchor(const QString emailAddr, 
 					 bool stripped=TRUE);
 
-protected:
-  void setOwner(KMFolder*);
-  virtual void takeMessage(DwMessage* aMsg);
-
 private:
   DwMessage* mMsg;
-  DwString   mMsgStr;
-  KMFolder*  mOwner;
-  Status     mStatus;
   bool       mNeedsAssembly;
 };
 
+typedef KMMessage* KMMessagePtr;
 
 #endif /*kmmessage_h*/

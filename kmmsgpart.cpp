@@ -9,7 +9,9 @@
 #include <mimelib/utility.h>
 
 //-----------------------------------------------------------------------------
-KMMessagePart::KMMessagePart() : mType("Text"), mSubtype("Plain"), mCte("7bit")
+KMMessagePart::KMMessagePart() : 
+  mType("text"), mSubtype("plain"), mCte("7bit"), mContentDescription(),
+  mContentDisposition(), mBody(), mName()
 {
 }
 
@@ -21,16 +23,86 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
+const QString KMMessagePart::bodyEncoded(void) const
+{
+  DwString dwResult, dwSrc;
+  QString result;
+  int encoding = contentTransferEncoding();
+
+  switch (encoding)
+  {
+  case DwMime::kCteQuotedPrintable:
+    dwSrc = mBody;
+    DwEncodeQuotedPrintable(dwSrc, dwResult);
+    result = dwResult.c_str();
+    result.detach();
+    break;
+  case DwMime::kCteBase64:
+    dwSrc = mBody;
+    DwEncodeBase64(dwSrc, dwResult);
+    result = dwResult.c_str();
+    result.detach();
+    break;
+  case DwMime::kCte7bit:
+  case DwMime::kCte8bit:
+  case DwMime::kCteBinary:
+    result = mBody;
+    break;
+  default:
+    debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
+	  (const char*)cteStr());
+    result = mBody;
+  }
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessagePart::bodyDecoded(void) const
+{
+  DwString dwResult, dwSrc;
+  QString result;
+  int encoding = contentTransferEncoding();
+
+  switch (encoding)
+  {
+  case DwMime::kCteQuotedPrintable:
+    dwSrc = mBody;
+    DwDecodeQuotedPrintable(dwSrc, dwResult);
+    result = dwResult.c_str();
+    result.detach();
+    break;
+  case DwMime::kCteBase64:
+    dwSrc = mBody;
+    DwDecodeBase64(dwSrc, dwResult);
+    result = dwResult.c_str();
+    result.detach();
+    break;
+  case DwMime::kCte7bit:
+  case DwMime::kCte8bit:
+  case DwMime::kCteBinary:
+    result = mBody;
+    break;
+  default:
+    debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 
+	  (const char*)cteStr());
+    result = mBody;
+  }
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
 const QString KMMessagePart::typeStr(void) const
 {
-  return mType.c_str();
+  return mType;
 }
 
 
 //-----------------------------------------------------------------------------
 int KMMessagePart::type(void) const
 {
-  int type = DwTypeStrToEnum(mType);
+  int type = DwTypeStrToEnum(DwString(mType));
   return type;
 }
 
@@ -38,14 +110,17 @@ int KMMessagePart::type(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setTypeStr(const QString aStr)
 {
-  mType = aStr;
+  mType = aStr.copy();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setType(int aType)
 {
-  DwTypeEnumToStr(aType, mType);
+  DwString dwType;
+  DwTypeEnumToStr(aType, dwType);
+  mType = dwType.c_str();
+  mType.detach();
 }
 
 
@@ -53,14 +128,14 @@ void KMMessagePart::setType(int aType)
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::subtypeStr(void) const
 {
-  return mSubtype.c_str();
+  return mSubtype;
 }
 
 
 //-----------------------------------------------------------------------------
 int KMMessagePart::subtype(void) const
 {
-  int subtype = DwSubtypeStrToEnum(mSubtype);
+  int subtype = DwSubtypeStrToEnum(DwString(mSubtype));
   return subtype;
 }
 
@@ -75,21 +150,24 @@ void KMMessagePart::setSubtypeStr(const QString aStr)
 //-----------------------------------------------------------------------------
 void KMMessagePart::setSubtype(int aSubtype)
 {
-  DwSubtypeEnumToStr(aSubtype, mSubtype);
+  DwString dwSubtype;
+  DwSubtypeEnumToStr(aSubtype, dwSubtype);
+  mSubtype = dwSubtype.c_str();
+  mSubtype.detach();
 }
 
 
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::contentTransferEncodingStr(void) const
 {
-  return mCte.c_str();
+  return mCte;
 }
 
 
 //-----------------------------------------------------------------------------
 int KMMessagePart::contentTransferEncoding(void) const
 {
-  int cte = DwCteStrToEnum(mCte);
+  int cte = DwCteStrToEnum(DwString(mCte));
   return cte;
 }
 
@@ -97,71 +175,74 @@ int KMMessagePart::contentTransferEncoding(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentTransferEncodingStr(const QString aStr)
 {
-  mCte = aStr;
+  mCte = aStr.copy();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentTransferEncoding(int aCte)
 {
-  DwCteEnumToStr(aCte, mCte);
+  DwString dwCte;
+  DwCteEnumToStr(aCte, dwCte);
+  mCte = dwCte.c_str();
+  mCte.detach();
 }
 
 
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::contentDescription(void) const
 {
-  return mContentDescription.c_str();
+  return mContentDescription;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDescription(const QString aStr)
 {
-  mContentDescription = aStr;
+  mContentDescription = aStr.copy();
 }
 
 
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::contentDisposition(void) const
 {
-  return mContentDisposition.c_str();
+  return mContentDisposition;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setContentDisposition(const QString aStr)
 {
-  mContentDisposition = aStr;
+  mContentDisposition = aStr.copy();
 }
 
  
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::body(long* len_ret) const
+const QString KMMessagePart::body(void) const
 {
-  if (len_ret) *len_ret = mBody.length();
-  return mBody.data();
+  return mBody;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBody(const QString aStr)
 {
-  mBody.assign(aStr);
+  mBody = aStr.copy();
+  debug("body part: %s\n", (const char*)mBody);
 }
 
 
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::name(void) const
 {
-  return mName.c_str();
+  return mName;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setName(const QString aStr)
 {
-  mName = aStr;
+  mName = aStr.copy();
 }
 
 

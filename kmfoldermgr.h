@@ -6,13 +6,17 @@
 
 #include <qstring.h>
 #include <qlist.h>
+#include <qobject.h>
 
 #include "kmfolderdir.h"
 
 class KMFolder;
 
-class KMFolderMgr
+#define KMFolderMgrInherited QObject
+class KMFolderMgr: public QObject
 {
+  Q_OBJECT
+
 public:
   KMFolderMgr(const char* basePath);
   virtual ~KMFolderMgr();
@@ -24,19 +28,29 @@ public:
   virtual void setBasePath(const char*);
 
   /** Provides access to base directory */
-  KMFolderRootDir& dir(void) { return mDir; }
+  KMFolderRootDir& dir(void);
 
   /** Searches folder and returns it. Skips directories 
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
-  KMFolder* find(const char* folderName, bool foldersOnly=TRUE);
+  virtual KMFolder* find(const char* folderName, bool foldersOnly=TRUE);
 
   /** Uses find() to find given folder. If not found the folder is
     created. Directories are skipped. */
-  KMFolder* findOrCreate(const char* folderName);
+  virtual KMFolder* findOrCreate(const char* folderName);
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
-  KMFolder* createFolder(const char* fName, bool sysFldr=FALSE);
+  virtual KMFolder* createFolder(const char* fName, bool sysFldr=FALSE);
+
+  /* emits changed() signal */
+  virtual void contentsChanged(void);
+
+signals:
+  /** Emitted when the list of folders has changed. This signal is a hook
+    where clients like the KMFolderTree tree-view can connect. The signal
+    is meant to be emitted whenever the code using the folder-manager
+    changed things. */
+  void changed();
 
 protected:
   QString mBasePath;

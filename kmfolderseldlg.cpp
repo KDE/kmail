@@ -10,6 +10,8 @@
 #include <qpushbt.h>
 #include <qlistbox.h>
 #include <qlayout.h>
+#include <unistd.h>
+#include <kapp.h>
 
 
 //-----------------------------------------------------------------------------
@@ -62,8 +64,8 @@ KMFolder* KMFolderSelDlg::folder(void)
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotSelect(int)
 {
+  app->processEvents(200);
   done(1);
-  sleep(1); // dumb method to catch the button-up event X-)
 }
 
 

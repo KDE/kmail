@@ -31,31 +31,31 @@ class KMComposeView : public QWidget
 public:
   KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0,
 		KMMessage *message=0, Action ac = actNoOp);
-  ~KMComposeView();
+  virtual ~KMComposeView();
 
-  const char * to();
-  void setTo(const char * _str);
+  virtual const QString to(void) const;
+  virtual void setTo(const QString _str);
 
-  const char * cc();
-  void setCc(const char * _str);
+  virtual const QString cc(void) const;
+  virtual void setCc(const QString _str);
 
-  const char * subject();
-  void setSubject(const char * _str);
+  virtual const QString subject(void) const;
+  virtual void setSubject(const QString _str);
 
-  const char * text();
-  void setText(const char * _str);
-  void appendText(const char * _str);
-  void insertText(const char * _str);
-  void insertTextAt(const char * _str, int line, int col);
-  int textLines();
+  virtual const QString text(void) const;
+  virtual void setText(const QString _str);
+  virtual void appendText(const QString _str);
+  virtual void insertText(const QString _str);
+  virtual void insertTextAt(const QString _str, int line, int col);
+  virtual int textLines(void) const;
 
-  const char * emailAddress() 
+  const QString emailAddress(void) const
     {return EMailAddress;}
     
-  const char * replyToAddress()
+  const QString replyToAddress(void) const
     {return ReplyToAddress;}
 
-  KEdit * getEditor();
+  KEdit * getEditor(void);
 
 private:
   KEdit *editor;
@@ -73,13 +73,17 @@ private:
   KMimeMagic *magic;
 
   void parseConfiguration();
+
+  // fill composer from contents of given message
+  void fromMsg(KMMessage* msg);
+
   void forwardMessage();
   void replyMessage();
   void replyAll();
   void insertNewAttachment(QString );
   void createAttachmentWidget();
   void initKMimeMagic();
-  KMMessagePart * createKMMsgPart(KMMessagePart *, QString);
+  bool loadMsgPart(KMMessagePart* msgPart, const QString fileName);
   KMMessage * prepareMessage();
 
 public slots:

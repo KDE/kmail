@@ -39,7 +39,8 @@ protected:
   void tabNetworkAddAcct(KTabListBox*, KMAccount*, int idx=-1);
 
 protected slots:
-  virtual void done(int r);
+  void doApply();
+  void doCancel();
 
 private slots:
   void accountSelected(int,int);

@@ -68,7 +68,7 @@ public:
 
 protected:
   // Prepare message for sending.
-  virtual const QString prepareStr(const QString msgText, bool toCRLF=FALSE);
+  virtual const QString prepareStr(const QString str, bool toCRLF=FALSE);
 
   // Send given message via SMTP.
   virtual bool sendSMTP(KMMessage*);

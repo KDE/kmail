@@ -15,11 +15,12 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kmimemagic.cpp kmfiltermgr.cpp \
 		knewpanner.cpp kmfilteraction.cpp kmidentity.cpp \
-		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp
+		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
+		kmmsgbase.cpp kmmsglist.cpp kmflock.c
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
-		kmcomposewin.moc kbusyptr.moc \
+		kmcomposewin.moc kbusyptr.moc kmfoldermgr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
 		kmfoldernode.moc kmacctseldlg.moc \
@@ -77,10 +78,6 @@ kmreaderwin.cpp:kmreaderwin.moc
 kmreaderwin.moc: kmreaderwin.h
 	$(MOC) kmreaderwin.h -o kmreaderwin.moc
 
-kmmessage.cpp:kmmessage.moc
-kmmessage.moc: kmmessage.h
-	$(MOC) kmmessage.h -o kmmessage.moc
-
 kmmainwin.cpp:kmmainwin.moc
 kmmainwin.moc: kmmainwin.h
 	$(MOC) kmmainwin.h -o kmmainwin.moc
@@ -129,6 +126,10 @@ kmfilteraction.cpp: kmfilteraction.moc
 kmfilteraction.moc: kmfilteraction.h
 	$(MOC) kmfilteraction.h -o kmfilteraction.moc
 
-#ktablistbox.cpp: ktablistbox.moc
-#ktablistbox.moc: ktablistbox.h
-#	$(MOC) ktablistbox.h -o ktablistbox.moc
+kmsglist.cpp:kmsglist.moc
+kmsglist.moc: kmsglist.h
+	$(MOC) kmsglist.h -o kmsglist.moc
+
+kmfoldermgr.cpp:kmfoldermgr.moc
+kmfoldermgr.moc: kmfoldermgr.h
+	$(MOC) kmfoldermgr.h -o kmfoldermgr.moc

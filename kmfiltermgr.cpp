@@ -58,7 +58,7 @@ void KMFilterMgr::writeConfig(bool withSync)
   config->setGroup("General");
   config->writeEntry("filters", count());
 
-  for (filter=first(); filter; filter=next())
+  for (i=0, filter=first(); filter; filter=next(), i++)
   {
     grpName.sprintf("Filter #%d", i);
     config->setGroup(grpName);

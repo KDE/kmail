@@ -427,7 +427,7 @@ void KMMainWin::messageSelected(KMMessage *msg)
   if(mIntegrated) mMsgView->parseMessage(msg);
   else
   {
-    win = new KMReaderWin(0,0,mHeaders->currentItem()+1,mFolder);
+    win = new KMReaderWin(0,0,mHeaders->currentItem(),mFolder);
     win->show();
   }
 }
@@ -573,7 +573,7 @@ void KMMainWin::setupToolBar()
 
   mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0, 
 			SIGNAL(clicked()), this,
-			SLOT(doUnimplemented()), TRUE,
+			SLOT(doPrintMsg()), TRUE,
 			nls->translate("Print message"));
 
   mToolBar->insertSeparator();

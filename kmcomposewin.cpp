@@ -148,6 +148,7 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   if(message && action==actForward) forwardMessage();	
   else if(message && action==actReply) replyMessage();
   else if(message && action ==actReplyAll) replyAll();
+  else fromMsg(message);
 
   grid->activate();
   
@@ -171,54 +172,54 @@ KMComposeView::~KMComposeView()
 
 
 
-const char * KMComposeView::to()
+const QString KMComposeView::to(void) const
 {
   return(toLEdit->text());
 }
 
 
-void KMComposeView::setTo(const char * _str)
+void KMComposeView::setTo(const QString _str)
 {
   toLEdit->setText(_str);
 }
 
-const char * KMComposeView::cc()
+const QString KMComposeView::cc(void) const
 {
   return(ccLEdit->text());
 }
 
-void KMComposeView::setCc(const char * _str)
+void KMComposeView::setCc(const QString _str)
 {
   ccLEdit->setText(_str);
 }
 
-const char * KMComposeView::subject()
+const QString KMComposeView::subject(void) const
 {
   return(subjLEdit->text());
 }
 
-void KMComposeView::setSubject(const char * _str)
+void KMComposeView::setSubject(const QString _str)
 {
   subjLEdit->setText(_str);
 }
 
 
-const char * KMComposeView::text()
+const QString KMComposeView::text(void) const
 {
   return(editor->text());
 }
 
-void KMComposeView::setText(const char * _str)
+void KMComposeView::setText(const QString _str)
 {
   editor->setText(_str);
 }
 
-void KMComposeView::appendText(const char * _str)
+void KMComposeView::appendText(const QString _str)
 {
   editor->append(_str);
 }
 
-void KMComposeView::insertText(const char * _str)
+void KMComposeView::insertText(const QString _str)
 {
   int line,col;
   editor->getCursorPosition(&line,&col);
@@ -227,15 +228,16 @@ void KMComposeView::insertText(const char * _str)
   editor->repaint();  
 }
 
-void KMComposeView::insertTextAt(const char *_str, int line, int col)
+void KMComposeView::insertTextAt(const QString _str, int line, int col)
 {
   editor->insertAt(_str,line,col);
 }
 
-int KMComposeView::textLines()
+int KMComposeView::textLines(void) const
 {
   return(editor->numLines());
 }
+
 
 //-----------------------------------------------------------------------------
 void KMComposeView::slotPrintIt()
@@ -404,9 +406,10 @@ KMMessage * KMComposeView::prepareMessage()
   // and adds them to msg.
   // 3. setAutomaticFields is called.
 
-  QString str;
+  QString str, atmntStr;
   QString temp;
   KMMessage *msg;
+  KMMessagePart msgPart;
 
   //msg = new KMMessage(); //.. this is nonsense here (Stefan)
   msg = currentMessage;
@@ -429,79 +432,69 @@ KMMessage * KMComposeView::prepareMessage()
   msg->setSubject(subject());
 
 
-  if(urlList->count() == 0)// If there are no elements in the list waiting it is
-    msg->setBody(text()); // a simple text message.
+  if(urlList->count() == 0)
+  {
+    // If there are no attachments in the list waiting it is a simple 
+    // text message.
+    msg->setBody(text());
+  }
   else 
-    {//	create bodyPart for editor text.
-      KMMessagePart *part = new KMMessagePart();
-      part->setCteStr("7-bit"); 
-      part->setTypeStr("Text");
-      part->setSubtypeStr("Plain");
-      part->setBody(temp);
-      msg->addBodyPart(part);
+  { 
+    // create informative header for those that have no mime-capable
+    // email client
+    msg->setBody("This message is in MIME format.\n\n");
 
-     // Since there is at least one more attachment create another bodypart
-     QString atmntStr;
-     atmntStr = urlList->first();
-     part = new KMMessagePart();
-     if((part = createKMMsgPart(part, atmntStr)) !=0)
-       msg->addBodyPart(part);
-	
-     // As long as there are more attachments in the queue let's add bodyParts
-     while((atmntStr = urlList->next()) != 0)
-       {part = new KMMessagePart;
-       if((part = createKMMsgPart(part,atmntStr)) != 0)
-	 {msg->addBodyPart(part);
-	 part = new KMMessagePart;
-	 }
-       else
-	 {printf("no msgPart\n"); // Probably could not open file
-	 part = new KMMessagePart;
-	 }
-       }
+    // create bodyPart for editor text.
+    msgPart.setCteStr("7-bit"); 
+    msgPart.setTypeStr("text");
+    msgPart.setSubtypeStr("plain");
+    msgPart.setBody(text());
+    msg->addBodyPart(&msgPart);
+
+    // Since there is at least one more attachment create another bodypart
+    for (atmntStr=urlList->first(); !atmntStr.isEmpty(); atmntStr=urlList->next())
+    {
+      if (loadMsgPart(&msgPart, atmntStr))
+	msg->addBodyPart(&msgPart);
     }
+  }
 
   msg->setAutomaticFields();
   return msg;
 }
 
-KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, 
-					       QString fileName)
+bool KMComposeView::loadMsgPart(KMMessagePart *p, const QString fileName)
 {
   printf("Creating MessagePart\n");
-  DwString DwSrc;
-  DwString DwDest;
+  DwString dwSrc;
+  DwString dwDest;
   int pos;
   QFile *file = new QFile(fileName);
   QString str;
   QString temp;
   QString type;
   QString subType;
-  char buf[255];
+  char buf[1024];
 
   p->setCteStr(((KMComposeWin*)parentWidget())->encoding); // Set Encoding
 
   if(!file->open(IO_ReadOnly))
-    {KMsgBox::message(0,"Error","Can't open attachment file");
-    p=0;
-    return p;} // If we cannot open file set 'p = 0' and return p.
-  // parseMessage then checks for the return value and if p=0 it performs
-  // no action for that bodyPart
+  {
+    warning(nls->translate("Cannot open file %s."), (const char*)fileName);
+    return FALSE;
+  }
 
-  file->at(0);
-  while(file->readLine(buf,255) != 0)
+  while(file->readLine(buf,1024) != 0)
     str.append(buf);
   file->close();
 
   KMimeMagicResult *result = new KMimeMagicResult();
-  result = magic->findBufferType(str,str.length()-1);	
+  result = magic->findBufferType(str,str.length()-1);
   temp =  result->getContent(); // Determine Content Type
 
-  pos = temp.find("/",0,0); //Parse Content
-  type = temp.copy();
-  subType = temp.copy();
-  type.truncate(pos);
-  subType = subType.remove(0,pos+1); 
+  pos = temp.find("/"); //Parse Content
+  type = temp.left(pos);
+  subType = temp.mid(pos+1, 256);
   cout << "Type:" << type << endl << "SubType:" << subType <<endl;
 
   // Set Content Type
@@ -511,24 +504,23 @@ KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p,
 
   // Encode data and set ContentTransferEncoding
   if(((KMComposeWin *)parentWidget())->encoding.find("base64",0,0) > -1)
-    {debug("found base64\n");
-    DwSrc.append(str);
-     DwEncodeBase64(DwSrc,DwDest);
-     str = DwDest.c_str();
-     p->setCteStr("base64");
-    }
+  {
+    debug("found base64\n");
+    DwEncodeBase64((const char*)str,dwDest);
+    str = dwDest.c_str();
+    p->setCteStr("base64");
+  }
   else
-    {debug("encoding qtp\n");
-    DwSrc.append(str);
-    DwEncodeQuotedPrintable(DwSrc,DwDest);
-    str = DwDest.c_str();
+  {
+    debug("encoding quoted-printable\n");
+    DwEncodeQuotedPrintable((const char*)str,dwDest);
+    str = dwDest.c_str();
     p->setCteStr("quoted-printable");
-    }
+  }
     
   p->setBody(str); // Set body.
-  printf("Leaving MessagePart....\n");
-  return p;
-  
+  debug("Leaving MessagePart....\n");
+  return TRUE;
 }
 
 
@@ -588,9 +580,38 @@ void KMComposeView::parseConfiguration()
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeView::fromMsg(KMMessage* msg)
+{
+  KMMessagePart msgPart;
+
+  if (!msg)
+  {
+    toLEdit->setText("");
+    ccLEdit->setText("");
+    subjLEdit->setText("");
+    setText("");
+    return;
+  }
+
+  toLEdit->setText(msg->to());
+  ccLEdit->setText(msg->cc());
+  subjLEdit->setText(msg->subject());
+
+  if (msg->numBodyParts() == 0)
+  {
+    setText(msg->body());
+  }
+  else
+  {
+    msg->bodyPart(0, &msgPart);
+    setText(msgPart.body());
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeView::forwardMessage()
 {
-  setSubject(nls->translate("Fwd: %s") + currentMessage->subject());
+  setSubject(nls->translate("Fwd:") + currentMessage->subject());
 
   appendText(nls->translate("Date:"));
   appendText(" ");
@@ -652,7 +673,7 @@ void KMComposeView::replyAll()
     insertTextAt("> ",x,0);
 
 	  
-  currentMessage = currentMessage->reply();
+  currentMessage = currentMessage->createReply();
 }
 
 //-----------------------------------------------------------------------------
@@ -685,7 +706,7 @@ void KMComposeView::replyMessage()
   for(int x=2;x < lines;x++)
     insertTextAt("> ",x,0);
 
-  currentMessage = currentMessage->reply();
+  currentMessage = currentMessage->createReply();
 }
 
 //-----------------------------------------------------------------------------
@@ -1066,11 +1087,12 @@ void KMComposeWin::abort()
   const char* str;
   int result;
 
- 
-  if(!composeView->getEditor()->isModified())
-    {close();
+  debug("KMComposeWin::abort(): closing without commit-dialog ;-)");
+  if(1 /*!composeView->getEditor()->isModified()*/)
+  {
+    close();
     return;
-    }
+  }
   else
   {
     str = nls->translate("The composed message will be discarded.\n"

@@ -9,6 +9,8 @@
 
 class QBoxLayout;
 class QListBox;
+class QWidget;
+class QPushButton;
 
 #define KMFilterDlgInherited KMGFilterDlg
 class KMFilterDlg: public KMGFilterDlg
@@ -28,12 +30,23 @@ public:
   virtual void addFolderList(const QString label, KMFolder** folderPtr);
   virtual void addWidget(const QString label, QWidget* widget);
 
+protected slots:
+  void doBtnUp();
+  void doBtnDown();
+  void doBtnNew();
+  void doBtnDelete();
+  void doBtnOk();
+  void doBtnCancel();
+  void doBtnHelp();
+
 protected:
   // fill listbox with filter list
   virtual void reloadFilterList(void);
 
   QBoxLayout* mBox;
   QListBox* mFilterList;
+  QWidget* mFilterArea;
+  QPushButton *mBtnUp, *mBtnDown, *mBtnNew, *mBtnDelete, *mBtnOk, *mBtnCancel;
 };
 
 #endif /*kmfilterdlg_h*/

@@ -28,12 +28,14 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   initMetaObject();
 
+  connect(this, SIGNAL(highlighted(int,int)),
+	  this, SLOT(doFolderSelected(int,int)));
+  connect(folderMgr, SIGNAL(changed()),
+	  this, SLOT(doFolderListChanged()));
+
   conf->setGroup("Geometry");
   width = conf->readNumEntry(name, 80);
   resize(width, size().height());
-
-  connect(this, SIGNAL(highlighted(int,int)),
-	  this, SLOT(doFolderSelected(int,int)));
 
   clearTableFlags();
   setTableFlags (Tbl_smoothVScrolling | Tbl_autoVScrollBar);
@@ -75,6 +77,8 @@ KMFolderTree::~KMFolderTree()
 
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
+
+  disconnect(folderMgr, SIGNAL(changed()), this, SLOT(doFolderListChanged()));
 }
 
 
@@ -105,6 +109,13 @@ void KMFolderTree::reload(void)
   }
   setAutoUpdate(upd);
   if (upd) repaint();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::doFolderListChanged()
+{
+  reload();
 }
 
 

@@ -42,10 +42,8 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   setOKButton(nls->translate("Ok"));
   setCancelButton(nls->translate("Cancel"));
 
-#ifdef NEEDS_LOTS_OF_WORK
-  setDefaultButton(nls->translate("Default"));
-  connect(this,SIGNAL(defaultButtonPressed()),this,SLOT(setDefaults()));
-#endif
+  connect(this, SIGNAL(applyButtonPressed()), this, SLOT(doApply()));
+  connect(this, SIGNAL(cancelButtonPressed()), this, SLOT(doCancel()));
 
   createTabIdentity(this);
   createTabNetwork(this);
@@ -371,30 +369,23 @@ void KMSettings::modifyAccount2()
 //-----------------------------------------------------------------------------
 void KMSettings::removeAccount()
 {
-  QString acctName, txt;
+  QString acctName;
   KMAccount* acct;
+  int idx = accountList->currentItem();
 
-  acctName = accountList->text(accountList->currentItem(),0);
+  acctName = accountList->text(idx, 0);
+  acct = acctMgr->find(acctName);
+  if (!acct) return;
 
-  txt = nls->translate("Are you sure you want to remove the account");
-  txt.detach();
-  txt += '\n';
-  txt += acctName;
-
-  if ((KMsgBox::yesNo(this,nls->translate("Confirmation"), txt))==1)
+  acctMgr->remove(acct);
+  accountList->removeItem(idx);
+  if (!accountList->count())
   {
-    acct = acctMgr->find(acctName);
-    if (acct != NULL) return;
-    acctMgr->remove(acct);
-    delete acct;
-    accountList->removeItem(accountList->currentItem());
-    if (!accountList->count())
-    {
-      modifyButton->setEnabled(FALSE);
-      removeButton->setEnabled(FALSE);
-    }
+    modifyButton->setEnabled(FALSE);
+    removeButton->setEnabled(FALSE);
   }
-  accountList->setCurrentItem(-1);
+  if (idx >= (int)accountList->count()) idx--;
+  accountList->setCurrentItem(idx);
 }
 
 //-----------------------------------------------------------------------------
@@ -408,34 +399,41 @@ void KMSettings::setDefaults()
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::done(int ok)
+void KMSettings::doCancel()
 {
-  QTabDialog::done(ok);
+  identity->readConfig();
+  msgSender->readConfig();
+  acctMgr->readConfig();
+}
 
-  if (ok)
-  {
-    //----- identity
-    identity->setFullName(nameEdit->text());
-    identity->setOrganization(orgEdit->text());
-    identity->setEmailAddr(emailEdit->text());
-    identity->setReplyToAddr(replytoEdit->text());
-    identity->setSignatureFile(sigEdit->text());
-    identity->writeConfig(FALSE);
+//-----------------------------------------------------------------------------
+void KMSettings::doApply()
+{
+  //----- identity
+  identity->setFullName(nameEdit->text());
+  identity->setOrganization(orgEdit->text());
+  identity->setEmailAddr(emailEdit->text());
+  identity->setReplyToAddr(replytoEdit->text());
+  identity->setSignatureFile(sigEdit->text());
+  identity->writeConfig(FALSE);
+  
+  //----- sending mail
+  if (sendmailRadio->isChecked())
+    msgSender->setMethod(KMSender::smMail);
+  else
+    msgSender->setMethod(KMSender::smSMTP);
+  
+  msgSender->setMailer(sendmailLocationEdit->text());
+  msgSender->setSmtpHost(smtpServerEdit->text());
+  msgSender->setSmtpPort(atoi(smtpPortEdit->text()));
+  msgSender->writeConfig(FALSE);
+  
+  //----- incoming mail
+  acctMgr->writeConfig(FALSE);
 
-    //----- sending mail
-    if (sendmailRadio->isChecked())
-      msgSender->setMethod(KMSender::smMail);
-    else
-      msgSender->setMethod(KMSender::smSMTP);
-
-    msgSender->setMailer(sendmailLocationEdit->text());
-    msgSender->setSmtpHost(smtpServerEdit->text());
-    msgSender->setSmtpPort(atoi(smtpPortEdit->text()));
-    msgSender->writeConfig(FALSE);
-
-    //-----
-    config->sync();
-  }
+  //-----
+  config->sync();
+  folderMgr->contentsChanged();
 }
 
 

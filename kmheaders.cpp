@@ -41,11 +41,11 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
   pixOld = loader->loadIcon("kmmsgold.xpm");
   pixRep = loader->loadIcon("kmmsgreplied.xpm");
 
-  dict().insert(KMMessage::statusToStr(KMMessage::stNew), &pixNew);
-  dict().insert(KMMessage::statusToStr(KMMessage::stUnread), &pixUns);
-  dict().insert(KMMessage::statusToStr(KMMessage::stDeleted), &pixDel);
-  dict().insert(KMMessage::statusToStr(KMMessage::stOld), &pixOld);
-  dict().insert(KMMessage::statusToStr(KMMessage::stReplied), &pixRep);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusNew), &pixNew);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusUnread), &pixUns);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusDeleted), &pixDel);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusOld), &pixOld);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusReplied), &pixRep);
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
@@ -106,10 +106,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
-  int i;
   debug("msgChanged() called");
 
-  i = topItem();
+  int i = topItem();
   updateMessageList();
   setTopItem(i);
 }
@@ -118,8 +117,8 @@ void KMHeaders::msgChanged()
 //-----------------------------------------------------------------------------
 void KMHeaders::msgAdded(int id)
 {
-  debug("msgAdded() called");
-  insertItem("", id-1);
+  debug("msgAdded(%d) called", id);
+  insertItem("", id);
   msgHeaderChanged(id);
 }
 
@@ -127,8 +126,12 @@ void KMHeaders::msgAdded(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgRemoved(int id)
 {
-  debug("msgRemoved() called");
-  removeItem(id-1);
+  debug("msgRemoved(%d) called", id);
+  //removeItem(id);
+
+  int i = topItem();
+  updateMessageList();
+  setTopItem(i);
 }
 
 
@@ -136,30 +139,35 @@ void KMHeaders::msgRemoved(int id)
 void KMHeaders::msgHeaderChanged(int msgId)
 {
   char hdr[256];
-  KMMessage::Status flag;
+  KMMsgStatus flag;
+  KMMsgBase* mb;
 
   if (!autoUpdate()) return;
 
   debug("msgHeaderChanged() called");
 
-  flag = mFolder->msgStatus(msgId);
-  sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(msgId), 
-	  mFolder->msgSubject(msgId), mFolder->msgDate(msgId));
-  changeItem(hdr, msgId-1);
+  mb = mFolder->getMsgBase(msgId);
+  assert(mb != NULL);
 
-  if (flag==KMMessage::stNew) changeItemColor(darkRed, msgId-1);
-  else if(flag==KMMessage::stUnread) changeItemColor(darkBlue, msgId-1);
+  flag = mb->status();
+  sprintf(hdr, "%c\n%s\n %s\n%s", (char)flag, (const char*)mb->from(), 
+	  (const char*)mb->subject(), (const char*)mb->dateStr());
+  changeItem(hdr, msgId);
+
+  if (flag==KMMsgStatusNew) changeItemColor(darkRed, msgId);
+  else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue, msgId);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::headerClicked(int column)
 {
-  KMFolder::SortField sortField;
+  KMMsgList::SortField sortField;
 
-  if (column==1)      sortField = KMFolder::sfFrom;
-  else if (column==2) sortField = KMFolder::sfSubject;
-  else if (column==3) sortField = KMFolder::sfDate;
+  if (column==0)      sortField = KMMsgList::sfStatus;
+  else if (column==1) sortField = KMMsgList::sfFrom;
+  else if (column==2) sortField = KMMsgList::sfSubject;
+  else if (column==3) sortField = KMMsgList::sfDate;
   else return;
 
   kbp->busy();
@@ -186,47 +194,38 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-  moveMsgToFolder(trashFolder, msgId);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMHeaders::undeleteMsg (int msgId)
-{
   KMMessage* msg;
 
-  for (msg=getMsg(msgId); msg; msg=getMsg())
+  if (mFolder != trashFolder)
   {
-    msg->undel();
-    //changeItemPart(msg->status(), getMsgIndex, 0);
+    // move messages into trash folder
+    moveMsgToFolder(trashFolder, msgId);
   }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMHeaders::toggleDeleteMsg (int msgId)
-{
-  KMMessage* msg;
-
-  if (!(msg=getMsg(msgId))) return;
-
-  if (msg->status()==KMMessage::stDeleted) undeleteMsg(msgId);
-  else deleteMsg(msgId);
+  else
+  {
+    // We are in the trash folder -> really delete messages
+    kbp->busy();
+    setAutoUpdate(FALSE);
+    for (msg=getMsg(msgId); msg; msg=getMsg())
+      delete msg;
+    setAutoUpdate(TRUE);
+    kbp->idle();
+  }
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::forwardMsg (int msgId)
 {
-  KMComposeWin *w;
-  KMMessage *msg = new KMMessage();
+  KMComposeWin *win;
+  KMMessage *msg;
+
+  msg = getMsg(msgId);
+  if (!msg) return;
 
   kbp->busy();
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
-    w = new KMComposeWin(0, 0, 0, msg, actForward);
-    w->show();
-  }
+  win = new KMComposeWin(NULL, NULL, NULL, msg->createForward());
+  win->show();
   kbp->idle(); 
 }
 
@@ -234,15 +233,15 @@ void KMHeaders::forwardMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::replyToMsg (int msgId)
 {
-  KMComposeWin *w;
-  KMMessage *msg = new KMMessage();
+  KMComposeWin *win;
+  KMMessage *msg;
+
+  msg = getMsg(msgId);
+  if (!msg) return;
 
   kbp->busy();
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
-    w = new KMComposeWin(0, 0, 0, msg, actReply);
-    w->show();
-  }
+  win = new KMComposeWin(NULL, NULL, NULL, msg->createReply(FALSE));
+  win->show();
   kbp->idle(); 
 }
 
@@ -250,15 +249,15 @@ void KMHeaders::replyToMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::replyAllToMsg (int msgId)
 {
-  KMComposeWin *w;
-  KMMessage *msg = new KMMessage();
+  KMComposeWin *win;
+  KMMessage *msg;
+
+  msg = getMsg(msgId);
+  if (!msg) return;
 
   kbp->busy();
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
-    w = new KMComposeWin(0, 0, 0, msg, actReplyAll);
-    w->show();
-  }
+  win = new KMComposeWin(NULL, NULL, NULL, msg->createReply(TRUE));
+  win->show();
   kbp->idle(); 
 }
 
@@ -297,7 +296,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   // display proper message if current message was moved.
   if (curMoved)
   {
-    if (cur >= mFolder->numMsgs()) cur = mFolder->numMsgs() - 1;
+    if (cur >= mFolder->count()) cur = mFolder->count() - 1;
     setCurrentItem(cur, -1);
   }
   destFolder->close();
@@ -319,7 +318,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
   {
     getMsgIndex = msgId;
     getMsgMulti = FALSE;
-    return mFolder->getMsg(msgId+1);
+    return mFolder->getMsg(msgId);
   }
 
   if (msgId == -1)
@@ -335,15 +334,18 @@ KMMessage* KMHeaders::getMsg (int msgId)
       }
     }
  
-    return (getMsgIndex>=0 ? mFolder->getMsg(getMsgIndex+1) : (KMMessage*)NULL);
+    return (getMsgIndex>=0 ? mFolder->getMsg(getMsgIndex) : (KMMessage*)NULL);
   }
 
   if (getMsgIndex < 0) return NULL;
 
-  if (getMsgMulti) for (getMsgIndex++; getMsgIndex < numRows(); getMsgIndex++)
+  if (getMsgMulti)
   {
-    if (itemList[getMsgIndex]->isMarked()) 
-      return mFolder->getMsg(getMsgIndex+1);
+    for (getMsgIndex++; getMsgIndex<numRows(); getMsgIndex++)
+    {
+      if (itemList[getMsgIndex]->isMarked()) 
+	return mFolder->getMsg(getMsgIndex);
+    }
   }
 
   getMsgIndex = -1;
@@ -358,9 +360,9 @@ void KMHeaders::nextMsg()
 
   kbp->busy();
   idx = indexOfGetMsg();
-  if(idx < mFolder->numMsgs()-1)
+  if(idx < mFolder->count()-1)
   {
-    emit messageSelected(mFolder->getMsg(idx+2));
+    emit messageSelected(mFolder->getMsg(idx+1));
     if (idx >= 0) setMsgRead(idx+1);
   }
   kbp->idle();
@@ -401,7 +403,7 @@ void KMHeaders::highlightMessage(int idx, int/*colId*/)
 
   kbp->busy();
   mOwner->statusMsg("");
-  emit messageSelected(mFolder->getMsg(idx+1));
+  emit messageSelected(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }
@@ -418,7 +420,8 @@ void KMHeaders::updateMessageList(void)
 {
   long i;
   QString hdr;
-  KMMessage::Status flag;
+  KMMsgStatus flag;
+  KMMsgBase* mb;
  
   clear();
   if (!mFolder) return;
@@ -426,22 +429,25 @@ void KMHeaders::updateMessageList(void)
   kbp->busy();
   setAutoUpdate(FALSE);
 
-  for (i=1; i<=mFolder->numMsgs(); i++)
+  for (i=0; i<mFolder->count(); i++)
   {
-    flag = mFolder->msgStatus(i);
-    hdr.sprintf("%c\n%s\n %s\n%s", (char)flag, mFolder->msgFrom(i),
-	    mFolder->msgSubject(i), mFolder->msgDate(i));
+    mb = mFolder->getMsgBase(i);
+    assert(mb != NULL); // otherwise using count() above is wrong
+
+    flag = mb->status();
+    hdr.sprintf("%c\n%s\n %s\n%s", (char)flag, (const char*)mb->from(),
+		(const char*)mb->subject(), (const char*)mb->dateStr());
     insertItem(hdr);
 
-    if (flag==KMMessage::stNew) changeItemColor(darkRed);
-    else if(flag==KMMessage::stUnread) changeItemColor(darkBlue);
+    if (flag==KMMsgStatusNew) changeItemColor(darkRed);
+    else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue);
   }
 
   setAutoUpdate(TRUE);
   repaint();
 
   hdr.sprintf(nls->translate("%d Messages, %d unread."),
-	      mFolder->numMsgs(), mFolder->numUnreadMsgs());
+	      mFolder->count(), mFolder->countUnread());
   if (mFolder->isReadOnly()) hdr += nls->translate("Folder is read-only.");
 
   mOwner->statusMsg(hdr);

@@ -83,7 +83,6 @@ private slots:
 	QString parseBodyPart(KMMessagePart *,int);
 	QString bodyPartIcon(QString type, QString subType,
 			     QString pnumstring, QString comment);
-	QString decodeString(KMMessagePart*, QString); 
 	QString scanURL(QString);
                                                 
 protected:

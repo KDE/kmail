@@ -23,8 +23,11 @@ public:
 signals:
   void folderSelected(KMFolder*);
 
-private slots:
+protected slots:
  void doFolderSelected(int,int);
+
+ /** called by the folder-manager when the list of folders changed */
+ void doFolderListChanged();
 
 protected:
   virtual void resizeEvent(QResizeEvent*);

@@ -6,6 +6,7 @@
 
 #include "kmmessage.h"
 #include "kmmsgpart.h"
+#include "kmmsginfo.h"
 #include "kmfolder.h"
 #include "kmidentity.h"
 #include "kmversion.h"
@@ -15,6 +16,7 @@
 #include <assert.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <time.h>
 
 #if ALLOW_GUI
 #include <qmlined.h>
@@ -29,24 +31,22 @@ static DwString emptyString("");
 static QString resultStr;
 
 
+
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage()
+KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
 {
-  mOwner = NULL;
-  mStatus = stUnknown;
-  mMsg = DwMessage::NewMessage(mMsgStr, 0);
   mNeedsAssembly = FALSE;
+  mMsg = new DwMessage;
 }
 
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMFolder* aOwner, DwMessage* aMsg)
+KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
 {
-  mOwner = aOwner;
   mNeedsAssembly = FALSE;
-  if (!aMsg) mMsg = DwMessage::NewMessage(mMsgStr, 0);
-  else mMsg->Parse();
-  mNeedsAssembly = FALSE;
+  mMsg = new DwMessage;
+
+  assign(&msgInfo);
 }
 
 
@@ -58,72 +58,70 @@ KMMessage::~KMMessage()
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setOwner(KMFolder* aFolder)
+bool KMMessage::isMessage(void) const
 {
-  mOwner = aFolder;
+  return TRUE;
 }
-
-
-//-----------------------------------------------------------------------------
-void KMMessage::takeMessage(DwMessage* aMsg)
-{
-  if (mMsg) delete mMsg;
-  mMsg = aMsg;
-  mMsg->Parse();
-  mNeedsAssembly = FALSE;
-}
-
+   
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::asString(void)
 {
   QString str;
-  DwString dwstr;
-  int len, num, i;
+  DwString dwsrc, dwstr;
 
   if (mNeedsAssembly)
   {
     mNeedsAssembly = FALSE;
     mMsg->Assemble();
   }
+  dwsrc = mMsg->AsString();
 
-  // We have to work around a nasty bug in mimelib that causes a 
-  // misplaced '\r' around the end of the header section where a '\n' should 
-  // be. This seems to happen when mMsg->Parse() is called.
-  str = mMsg->AsString().c_str();
-  len = mMsg->Headers().AsString().length();
-  for (num=0, i=len; i>0 && str[i]<=' '; i--)
+  switch (cte())
   {
-    if (str[i]=='\r') str[i]='\n';
-    num++;
+  case DwMime::kCteBase64:
+    DwDecodeBase64(dwsrc, dwstr);
+    str = dwstr.c_str();
+    break;
+  case DwMime::kCteQuotedPrintable:
+    DwDecodeQuotedPrintable(dwsrc, dwstr);
+    str = dwstr.c_str();
+    break;
+  default:
+    str = dwsrc.c_str();
+    break;
   }
-  if (num>=3) str[len-1]='\r';
 
-  mMsgStr = mMsg->AsString();
-  return str;
+  resultStr = str.replace(QRegExp("\\r"),"");
+  return resultStr;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QString aStr)
 {
+  if (mMsg) delete mMsg;
+  mMsg = new DwMessage;
+
+  resultStr = aStr;
   mMsg->FromString((const char*)aStr);
   mMsg->Parse();
-  mMsgStr = mMsg->AsString();
   mNeedsAssembly = FALSE;
 }
 
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::asQuotedString(const QString aHeaderStr,
-					const QString aIndentStr)
+					const QString aIndentStr) const
 {
   QString headerStr(256);
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
   QString nlIndentStr;
+  char   cstr[64];
   char ch;
   int i;
+  time_t tm;
 
   nlIndentStr = "\n" + aIndentStr;
 
@@ -137,13 +135,15 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
       ch = aHeaderStr[i];
       switch (ch)
       {
-      case 'd':
-	headerStr += dateStr();
+      case 'D':
+	tm = date();
+	strftime(cstr, 63, "%a, %d %b %Y", localtime(&tm));
+	headerStr += cstr;
 	break;
-      case 'f':
+      case 'F':
 	headerStr += stripEmailAddr(from());
 	break;
-      case 's':
+      case 'S':
 	headerStr += subject();
 	break;
       case '%':
@@ -162,7 +162,8 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   // type than "text".
   if (numBodyParts() == 0)
   {
-    resultStr = QString(body()).replace(reNL,nlIndentStr) + aIndentStr;
+    resultStr = QString(body()).stripWhiteSpace().replace(reNL,nlIndentStr) +
+                aIndentStr;
   }
   else
   {
@@ -190,30 +191,52 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setStatus(Status aStatus)
-{
-  mStatus = aStatus;
-  if (mOwner) mOwner->setMsgStatus(this, mStatus);
-  mNeedsAssembly = TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
-const QString KMMessage::statusToStr(Status aSt)
-{
-  static char str[2] = " ";
-  str[0] = (char)aSt;
-  return str;
-}
-
-
-//-----------------------------------------------------------------------------
-KMMessage* KMMessage::reply(bool /*replyToAll*/) const
+KMMessage* KMMessage::createReply(bool replyToAll) const
 {
   KMMessage* msg = new KMMessage;
+  QString str;
 
   msg->initHeader();
-  debug("KMMessage::reply() needs implementation !");
+  if (!replyTo().isEmpty()) 
+  {
+    str = replyTo().copy();
+    if (replyToAll)
+    {
+      str += ", ";
+      str += from();
+    }
+    msg->setTo(str);
+  }
+  else msg->setTo(from());
+  msg->setCc(cc());
+  msg->setBody(asQuotedString("On %D, %F wrote:", "> "));
+
+  if (strnicmp(subject(), "Re:", 3)!=0)
+    msg->setSubject("Re: " + str);
+  else msg->setSubject(subject());
+
+  return msg;
+}
+
+
+//-----------------------------------------------------------------------------
+KMMessage* KMMessage::createForward(void) const
+{
+  KMMessage* msg = new KMMessage;
+  QString str;
+
+  msg->initHeader();
+
+  str = "\n\n----------  Forwarded message  ----------\n";
+  str += "Subject: " + subject() + "\n";
+  str += "Date: " + dateStr() + "\n";
+  str += "From: " + from() + "\n";
+  str += "\n";
+  msg->setBody(asQuotedString(str, ""));
+
+  if (strnicmp(subject(), "Fwd:", 4)!=0)
+    msg->setSubject("Fwd: " + subject());
+  else msg->setSubject(subject());
 
   return msg;
 }
@@ -223,7 +246,6 @@ KMMessage* KMMessage::reply(bool /*replyToAll*/) const
 void KMMessage::initHeader(void)
 {
   struct timeval tval;
-  time_t timet;
 
   assert(identity != NULL);
   setFrom(identity->fullEmailAddr());
@@ -233,8 +255,7 @@ void KMMessage::initHeader(void)
   setHeaderField("X-Mailer", "KMail [version " KMAIL_VERSION "]");
 
   gettimeofday(&tval, NULL);
-  timet = tval.tv_sec;
-  setDate(ctime(&timet));
+  setDate((time_t)tval.tv_sec);
 }
 
 
@@ -263,8 +284,6 @@ void KMMessage::setAutomaticFields(void)
 //-----------------------------------------------------------------------------
 const QString KMMessage::dateStr(void) const
 {
-  // Access the 'Date' header field and return its contents as a string
-  
   DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsString().c_str();
   return "";
@@ -274,8 +293,6 @@ const QString KMMessage::dateStr(void) const
 //-----------------------------------------------------------------------------
 time_t KMMessage::date(void) const
 {
-  // Access the 'Date' header field and return its contents as a string
-  
   DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsUnixTime();
   return (time_t)-1;
@@ -285,17 +302,25 @@ time_t KMMessage::date(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setDate(time_t aDate)
 {
+  KMMessageInherited::setDate(aDate);
   mMsg->Headers().Date().FromUnixTime(aDate);
   mNeedsAssembly = TRUE;
+  mDirty = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setDate(const QString aStr)
 {
-  mMsg->Headers().Date().FromString(aStr);
-  mMsg->Headers().Date().Parse();
+  DwHeaders& header = mMsg->Headers();
+
+  header.Date().FromString(aStr);
+  header.Date().Parse();
   mNeedsAssembly = TRUE;
+  mDirty = TRUE;
+
+  if (header.HasDate())
+    KMMessageInherited::setDate(header.Date().AsUnixTime());
 }
 
 
@@ -394,6 +419,7 @@ void KMMessage::setFrom(const QString aStr)
 {
   mMsg->Headers().From().FromString(aStr);
   mNeedsAssembly = TRUE;
+  mDirty = TRUE;
 }
 
 
@@ -412,6 +438,7 @@ void KMMessage::setSubject(const QString aStr)
   if (!aStr) return;
   mMsg->Headers().Subject().FromString(aStr);
   mNeedsAssembly = TRUE;
+  mDirty = TRUE;
 }
 
 
@@ -438,6 +465,7 @@ void KMMessage::setHeaderField(const QString aName, const QString aValue)
   if (str[str.length()-1] != ':') str += ": ";
   else str += " ";
   str += aValue;
+  if (aValue.right(1)!="\n") str += "\n";
 
   field = new DwField(str, mMsg);
   field->Parse();
@@ -553,12 +581,10 @@ void KMMessage::setContentTransferEncoding(int aCte)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::body(long* len_ret) const
+const QString KMMessage::body(void) const
 {
   QString str;
-
   str = mMsg->Body().AsString().c_str();
-  if (len_ret) *len_ret = str.length();
   return str;
 }
 
@@ -585,7 +611,7 @@ int KMMessage::numBodyParts(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart)
+void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
 {
   DwBodyPart* part;
   DwHeaders* headers;
@@ -721,7 +747,6 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QString cte      = aPart->cteStr();
   QString contDesc = aPart->contentDescription();
   QString contDisp = aPart->contentDisposition();
-  QString bodyStr  = aPart->body();
   QString name     = aPart->name();
 
   DwHeaders& headers = part->Headers();
@@ -731,19 +756,21 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     headers.ContentType().SetSubtypeStr((const char*)subtype);
   }
 
-  if(name != "")
+  if(!name.isEmpty())
     headers.ContentType().SetName((const char*)name);
 
-  if (cte != "")
+  if (!cte.isEmpty())
     headers.Cte().FromString(cte);
 
-  if (contDesc != "")
+  if (!contDesc.isEmpty())
     headers.ContentDescription().FromString(contDesc);
 
-  if (contDisp != "")
+  if (!contDisp.isEmpty())
     headers.ContentDisposition().FromString(contDisp);
 
-  part->Body().FromString(bodyStr); 
+  part->Body().FromString(aPart->body());
+  mMsg->Body().AddBodyPart(part);
+
   mNeedsAssembly = TRUE;
 }
 
@@ -772,19 +799,26 @@ void KMMessage::viewSource(const QString aCaption) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::stripEmailAddr(const QString str)
+const QString KMMessage::stripEmailAddr(const QString aStr)
 {
-  int i;
-  QString result = str.copy();
+  int i, j;
+  QString partA, partB;
+  char endCh = '>';
 
-  i = result.find('<');
-  if (i>0 && i<result.find('>'))
+  i = aStr.find('<');
+  if (i<0)
   {
-    while (i>0 && result[i-1]==' ')
-      i--;
-    result.truncate(i);
+    i = aStr.find('(');
+    endCh = ')';
   }
-  return result;
+  if (i<0) return aStr;
+  partA = aStr.left(i);
+  j = aStr.find(endCh,i);
+  if (j<0) return aStr;
+  partB = aStr.mid(i+1, j-i-1);
+
+  if (partA.find('@') >= 0) return partB.stripWhiteSpace();
+  return partA.stripWhiteSpace();
 }
 
 
@@ -795,6 +829,8 @@ const QString KMMessage::emailAddrAsAnchor(const QString email, bool stripped)
 
   result = email.copy();
   result.replace(QRegExp("\""), "`");
+  result.replace(QRegExp("<"), "&lt:");
+  result.replace(QRegExp(">"), "&gt:");
   result.prepend("<A HREF=\"mailto:");
   result.append("\">");
   if (stripped) result += KMMessage::stripEmailAddr(email);

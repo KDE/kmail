@@ -1,7 +1,7 @@
 // kmfilteraction.cpp
 
-#include "kmfilteraction.h"
 #include "kmmessage.h"
+#include "kmfilteraction.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmglobal.h"

@@ -50,8 +50,6 @@ void KMAccount::setName(const QString& aName)
 void KMAccount::setFolder(KMFolder* aFolder)
 {
   mFolder = (KMAcctFolder*)aFolder;
-  debug("setFolder of %s to %s", (const char*)name(),
-	aFolder ? (const char*)aFolder->name() : "(null)");
 }
 
 

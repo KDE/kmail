@@ -28,11 +28,8 @@ KMAccount* KMAcctFolder::nextAccount(void)
 void KMAcctFolder::addAccount(KMAccount* aAcct)
 {
   if (!aAcct) return;
-  if (!mAcctList) 
-  {
-    mAcctList = new KMAcctList;
-    mAcctList->setAutoDelete(TRUE);
-  }
+  if (!mAcctList) mAcctList = new KMAcctList;
+
   mAcctList->append(aAcct);
   aAcct->setFolder(this);
 }
@@ -52,6 +49,11 @@ void KMAcctFolder::removeAccount(KMAccount* aAcct)
 
   mAcctList->remove(aAcct);
   aAcct->setFolder(NULL);
+  if (mAcctList->count() <= 0)
+  {
+    delete mAcctList;
+    mAcctList = NULL;
+  }
 }
 
 
