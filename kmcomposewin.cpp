@@ -194,7 +194,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   connect(&mIdentity,SIGNAL(activated(int)),SLOT(slotIdentityActivated(int)));
 
   mMainWidget.resize(480,510);
-  setView(&mMainWidget, FALSE);
+  setCentralWidget(&mMainWidget);
   rethinkFields();
 
 #ifndef KRN
@@ -831,7 +831,6 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->addWidget( new QLabel( statusBar(), "" ), 1 );
   statusBar()->insertItem(QString(i18n(" Column"))+":     ",2,0,true);
   statusBar()->insertItem(QString(i18n(" Line"))+":     ",1,0,true);
-  setStatusBar(statusBar());
 }
 
 
@@ -1646,16 +1645,6 @@ void KMComposeWin::slotAttachRemove()
     mEditor->setModified(TRUE);
   }
 }
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleToolBar()
-{
-  enableToolBar(KToolBar::Toggle);
-  mShowToolBar = !mShowToolBar;
-  repaint();
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotFind()

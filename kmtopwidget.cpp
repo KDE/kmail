@@ -23,7 +23,7 @@
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::KMTopLevelWidget(const char* aName):
-  KMTopLevelWidgetInherited(aName)
+  KMTopLevelWidgetInherited(0, aName)
 {}
 
 
@@ -35,7 +35,7 @@ KMTopLevelWidget::~KMTopLevelWidget()
 //-----------------------------------------------------------------------------
 void KMTopLevelWidget::closeEvent(QCloseEvent* e)
 {
-  // Almost verbatim from KTMainWindow
+  // Almost verbatim from KMainWindow
   writeConfig();
   if (queryClose())
   {

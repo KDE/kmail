@@ -378,14 +378,14 @@ void KMMainWin::activatePanners(void)
     mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
     mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
     mVertPanner->moveToFirst( mFolderTree );
-    setView(mVertPanner);
+    setCentralWidget(mVertPanner);
   }
   else
   {
     mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
     mHeaders->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
     mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
-    setView(mHorizPanner);
+    setCentralWidget(mHorizPanner);
   }
   mHorizPanner->setSizes( *mHorizPannerSep );
   mVertPanner->setSizes( *mVertPannerSep );

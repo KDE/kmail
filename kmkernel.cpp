@@ -361,9 +361,9 @@ bool KMKernel::doSessionManagement()
   // Do session management
   if (kapp->isRestored()){
     int n = 1;
-    while (KTMainWindow::canBeRestored(n)){
+    while (KMMainWin::canBeRestored(n)){
       //only restore main windows! (Matthias);
-      if (KTMainWindow::classNameOfToplevel(n) == "KMMainWin")
+      if (KMMainWin::classNameOfToplevel(n) == "KMMainWin")
         (new KMMainWin)->restore(n);
       n++;
     }
@@ -448,8 +448,8 @@ void KMKernel::transferMail(void)
 
 void KMKernel::ungrabPtrKb(void)
 {
-  if(!KTMainWindow::memberList) return;
-  QWidget* widg = KTMainWindow::memberList->first();
+  if(!KMainWindow::memberList) return;
+  QWidget* widg = KMainWindow::memberList->first();
   Display* dpy;
 
   if (!widg) return;
@@ -492,9 +492,9 @@ void KMKernel::dumpDeadLetters()
 {
   QWidget *win;
 
-  while (KTMainWindow::memberList->first() != 0)
+  while (KMainWindow::memberList->first() != 0)
   {
-    win = KTMainWindow::memberList->take();
+    win = KMainWindow::memberList->take();
     if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
 //    delete win; // WABA: Don't delete, we might crash in there!
   }

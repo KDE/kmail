@@ -219,9 +219,6 @@ public slots:
   /** Popup a nice "not implemented" message. */
   void slotToDo();
 
-  /** Show/hide toolbar. */
-  void slotToggleToolBar();
-
   /** Open a popup-menu in the attachments-listbox. */
   void slotAttachPopupMenu(QListViewItem *, const QPoint &, int);
 
