@@ -37,60 +37,123 @@
 
 namespace KMail {
 
-  /// One entry in the annotation list: attribute name and attribute value
-  struct AnnotationAttribute {
-    AnnotationAttribute() {} // for QValueVector
-    AnnotationAttribute( const QString& n, const QString& v )
-      : name( n ), value( v ) {}
-    QString name;
-    QString value;
-  };
+/// One entry in the annotation list: attribute name and attribute value
+struct AnnotationAttribute {
+  AnnotationAttribute() {} // for QValueVector
+  AnnotationAttribute( const QString& e, const QString& n, const QString& v )
+    : entry( e ), name( n ), value( v ) {}
+  QString entry; // e.g. /comment
+  QString name;  // e.g. value.shared
+  QString value;
+};
 
-  typedef QValueVector<AnnotationAttribute> AnnotationList;
+typedef QValueVector<AnnotationAttribute> AnnotationList;
 
 /**
  * This namespace contains functions that return jobs for annotation operations.
  *
  * The current implementation is tied to IMAP.
- * If someone wants to extend this to other protocols, turn the class into a namespace
+ * If someone wants to extend this to other protocols, turn the namespace into a class
  * and use virtual methods.
  */
 namespace AnnotationJobs {
 
-  /**
-   * Set an annotation entry (note that it can have multiple attributes)
-   * @param entry the name of the annotation entry
-   * @param attributes attribute name+value pairs
-   */
-  KIO::SimpleJob* setAnnotation( KIO::Slave* slave, const KURL& url, const QString& entry,
-                                 const QMap<QString,QString>& attributes );
+/**
+ * Set an annotation entry (note that it can have multiple attributes)
+ * @param entry the name of the annotation entry
+ * @param attributes attribute name+value pairs
+ */
+KIO::SimpleJob* setAnnotation( KIO::Slave* slave, const KURL& url, const QString& entry,
+                               const QMap<QString,QString>& attributes );
 
-  class GetAnnotationJob;
-  /** Get an annotation entry
-   * @param entry the name of the annotation entry
-   * @param attributes attribute names
-   */
-  GetAnnotationJob* getAnnotation( KIO::Slave* slave, const KURL& url, const QString& entry,
-                                   const QStringList& attributes );
+class MultiSetAnnotationJob;
+/**
+ * Set multiple annotation entries
+ */
+MultiSetAnnotationJob* multiSetAnnotation( KIO::Slave* slave, const KURL& url, const AnnotationList& annotations );
 
-  class GetAnnotationJob : public KIO::SimpleJob
-  {
-    Q_OBJECT
-  public:
-    GetAnnotationJob( const KURL& url, const QByteArray &packedArgs,
-                      bool showProgressInfo );
+class GetAnnotationJob;
+/**
+ * Get an annotation entry
+ * @param entry the name of the annotation entry
+ * @param attributes attribute names
+ */
+GetAnnotationJob* getAnnotation( KIO::Slave* slave, const KURL& url, const QString& entry,
+                                 const QStringList& attributes );
 
-    const AnnotationList& annotations() const { return m_entries; }
+class MultiGetAnnotationJob;
+/**
+ * Get multiple annotation entries
+ * Currently we assume we want to get the "value" for each, to simplify the data structure.
+ */
+MultiGetAnnotationJob* multiGetAnnotation( KIO::Slave* slave, const KURL& url, const QStringList& entries );
 
-  protected slots:
-    void slotInfoMessage( KIO::Job*, const QString& );
-  private:
-    AnnotationList m_entries;
-  };
+/// for getAnnotation()
+class GetAnnotationJob : public KIO::SimpleJob
+{
+  Q_OBJECT
+public:
+  GetAnnotationJob( const KURL& url, const QString& entry, const QByteArray &packedArgs,
+                    bool showProgressInfo );
 
-}
+  const AnnotationList& annotations() const { return mAnnotations; }
 
-} // namespace
+protected slots:
+  void slotInfoMessage( KIO::Job*, const QString& );
+private:
+  AnnotationList mAnnotations;
+  QString mEntry;
+};
+
+/// for multiGetAnnotation
+class MultiGetAnnotationJob : public KIO::Job
+{
+  Q_OBJECT
+
+public:
+  MultiGetAnnotationJob( KIO::Slave* slave, const KURL& url, const QStringList& entries, bool showProgressInfo );
+
+signals:
+  // Emitted when a given annotation was found - or not found
+  void annotationResult( const QString& entry, const QString& value, bool found );
+
+protected slots:
+  virtual void slotStart();
+  virtual void slotResult( KIO::Job *job );
+
+private:
+  KIO::Slave* mSlave;
+  const KURL mUrl;
+  const QStringList mEntryList;
+  QStringList::const_iterator mEntryListIterator;
+};
+
+/// for multiSetAnnotation
+class MultiSetAnnotationJob : public KIO::Job
+{
+  Q_OBJECT
+
+public:
+  MultiSetAnnotationJob( KIO::Slave* slave, const KURL& url, const AnnotationList& annotations, bool showProgressInfo );
+
+signals:
+  // Emitted when a given annotation was successfully changed
+  void annotationChanged( const QString& entry, const QString& attribute, const QString& value );
+
+protected slots:
+  virtual void slotStart();
+  virtual void slotResult( KIO::Job *job );
+
+private:
+  KIO::Slave* mSlave;
+  const KURL mUrl;
+  const AnnotationList mAnnotationList;
+  AnnotationList::const_iterator mAnnotationListIterator;
+};
+
+} // AnnotationJobs namespace
+
+} // KMail namespace
 
 #endif /* ANNOTATIONJOBS_H */
 

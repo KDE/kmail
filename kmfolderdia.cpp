@@ -438,8 +438,46 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
       mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
     connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
               this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
-  } else
+  } else {
     mContentsComboBox = 0;
+  }
+
+  // Kolab incidences-for annotation.
+  // Show incidences-for combobox if the contents type can be changed (new folder),
+  // or if it's set to calendar or task (existing folder)
+  if ( ( GlobalSettings::theIMAPResourceStorageFormat() ==
+         GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ) &&
+       ( mContentsComboBox ||
+         ( mDlg->folder() && ( mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeCalendar
+                               || mDlg->folder()->storage()->contentsType() == KMail::ContentsTypeTask ) ) ) ) {
+    mIncidencesForGroup = new QGroupBox( i18n("Relevance of Events and Tasks" ), this );
+    mIncidencesForGroup->setColumnLayout( 0, Qt::Vertical );
+    QHBoxLayout *relevanceLayout = new QHBoxLayout( mIncidencesForGroup->layout() );
+    relevanceLayout->setSpacing( 6 );
+    topLayout->addWidget( mIncidencesForGroup );
+
+    QLabel* label = new QLabel( i18n( "Generate free/busy and activate alarms for:" ), mIncidencesForGroup );
+    relevanceLayout->addWidget( label );
+    mIncidencesForComboBox = new QComboBox( mIncidencesForGroup );
+    label->setBuddy( mIncidencesForComboBox );
+    relevanceLayout->addWidget( mIncidencesForComboBox, 3 );
+
+    mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
+    mIncidencesForComboBox->insertItem( i18n( "Owner of this folder" ) );
+    mIncidencesForComboBox->insertItem( i18n( "All readers of this folder" ) );
+
+    //connect ( mIncidencesForComboBox, SIGNAL ( activated( int ) ),
+    //          this, SLOT( slotIncidencesForChanged( int ) ) );
+    if ( mContentsComboBox && mDlg->folder()&& mIncidencesForGroup ) {
+      KMail::FolderContentsType type = mDlg->folder()->storage()->contentsType();
+      mIncidencesForGroup->setEnabled( type == KMail::ContentsTypeCalendar ||
+                                       type == KMail::ContentsTypeTask );
+    }
+
+  } else {
+    mIncidencesForComboBox = 0;
+    mIncidencesForGroup = 0;
+  }
 
   // should this folder be included in new-mail-checks?
   QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), this, "newmailGroup" );
@@ -611,6 +649,16 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
     bool checked = imapFolder->includeInMailCheck();
     mNewMailCheckBox->setChecked(checked);
   }
+
+  bool isImap = /*folder->folderType() == KMFolderTypeImap ||*/ folder->folderType() == KMFolderTypeCachedImap;
+  if ( mIncidencesForGroup ) {
+    if ( !isImap )
+      mIncidencesForGroup->hide();
+    else {
+      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+      mIncidencesForComboBox->setCurrentItem( dimap->incidencesFor() );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -649,6 +697,10 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
         "to temporarily disable hiding of groupware folders to be able to see it.");
     KMessageBox::information( this, message );
   }
+
+  if ( mIncidencesForGroup )
+    mIncidencesForGroup->setEnabled( type == KMail::ContentsTypeCalendar ||
+                                     type == KMail::ContentsTypeTask );
 }
 
 //-----------------------------------------------------------------------------
@@ -793,6 +845,16 @@ bool FolderDiaGeneralTab::save()
       // make sure everything is on disk, connected slots will call readConfig()
       // when creating a new folder.
       folder->storage()->writeConfig();
+    }
+
+    if ( mIncidencesForComboBox && folder->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap::IncidencesFor incfor =
+        static_cast<KMFolderCachedImap::IncidencesFor>( mIncidencesForComboBox->currentItem() );
+      KMFolderCachedImap* dimap = static_cast<KMFolderCachedImap *>( mDlg->folder()->storage() );
+      if ( dimap->incidencesFor() != incfor ) {
+        dimap->setIncidencesFor( incfor );
+        dimap->writeConfig();
+      }
     }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
