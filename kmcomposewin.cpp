@@ -3,6 +3,7 @@
 // This code is published under the GPL.
 
 #include <qprinter.h>
+#include <qcombobox.h>
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
@@ -524,12 +525,19 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotAppendSignature()));
   menu->insertItem(i18n("&Insert File"), this,
 		   SLOT(slotInsertFile()));
-  int id=menu->insertItem(i18n("Insert My &Public Key"), this,
-		    SLOT(slotInsertMyPublicKey()));
-  if(!Kpgp::getKpgp()->havePGP())
-   menu->setItemEnabled(id, false);
-
   menu->insertItem(i18n("&Attach..."), this, SLOT(slotAttachFile()));
+  menu->insertSeparator();
+  int id= menu->insertItem(i18n("Insert &Public Key"), this,
+		    SLOT(slotInsertPublicKey()));
+  int id1=menu->insertItem(i18n("Insert My &Public Key"), this,
+		    SLOT(slotInsertMyPublicKey()));
+
+  if(!Kpgp::getKpgp()->havePGP())
+   {
+   menu->setItemEnabled(id, false);
+   menu->setItemEnabled(id1, false);
+   }
+
   menu->insertSeparator();
   menu->insertItem(i18n("&Remove"), this, SLOT(slotAttachRemove()));
   menu->insertItem(i18n("&Save..."), this, SLOT(slotAttachSave()));
@@ -1227,6 +1235,20 @@ void KMComposeWin::slotInsertMyPublicKey()
   mEditor->getCursorPosition(&line, &col);
   mEditor->insertAt(str, line, col);
 }  
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotInsertPublicKey()
+{
+  QString str;
+  int col, line;
+  
+  str=Kpgp::getKpgp()->getAsciiPublicKey(
+         KpgpKey::getKeyName(this, Kpgp::getKpgp()->keys);
+
+  mEditor->getCursorPosition(&line, &col);
+  mEditor->insertAt(str, line, col);
+}
+
 
 
 //-----------------------------------------------------------------------------

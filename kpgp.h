@@ -190,6 +190,26 @@ private:
 };
 
 // -------------------------------------------------------------------------
+class KpgpKey : public QDialog
+{
+  Q_OBJECT
+
+public:
+  /** the passphrase dialog */
+  KpgpKey(QWidget *parent = 0, const char *name = 0, QStrList *keys);
+  virtual ~KpgpKey();
+
+  static QString getKeyName(QWidget *parent = 0, QStrList *keys);
+
+private:
+  QString getKey();
+
+  QComboBox *combobox; 
+  QButton *button;
+  QCursor *cursor;
+};
+
+// -------------------------------------------------------------------------
 class KpgpConfig : public QWidget
 {
   Q_OBJECT

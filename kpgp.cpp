@@ -752,6 +752,58 @@ KpgpPass::getPhrase()
   return lineedit->text();
 }
 
+// ------------------------------------------------------------------------
+
+KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
+  : QDialog(parent, 0, TRUE)
+{
+  KIconLoader* loader = kapp->getIconLoader();
+  QPixmap pixm;
+
+  setCaption(name);
+  setFixedSize(350,120);
+  cursor = kapp->overrideCursor();
+  if(cursor != 0)
+    kapp->setOverrideCursor(QCursor(ibeamCursor));
+  this->setCursor(QCursor(ibeamCursor));
+  QLabel *text = new QLabel(i18n("Please select the public key to insert"),this);
+  text->move(56,4);
+  text->setAutoResize(TRUE);
+  QLabel *icon = new QLabel(this);
+  pixm = loader->loadIcon("pgp-keys.xpm");
+  icon->setPixmap(pixm);
+  icon->move(4,8);
+  icon->resize(48,48);
+
+  combobox = new QComboBox(FALSE, this, "combo");
+  combobox->insertStrList(keys);
+  combobox->setFocus();
+
+  button = new QButton(i18n("&Insert"),this);
+
+  connect(button,SIGNAL(clicked()),this,SLOT(accept()) );  
+}
+
+KpgpKey::~KpgpKey()
+{
+  if(cursor != 0)
+    kapp->restoreOverrideCursor();
+}
+
+QString 
+KpgpKey::getKeyName(QWidget *parent, QStrList *keys)
+{
+  KpgpKey pgpkey(parent, i18n("Select key"));
+  kpgppass.exec();
+  return kpgppass.getKey().copy();
+}
+
+QString
+KpgpPass::getKey()
+{
+  return combobox->currentText();
+}
+
 
 // ------------------------------------------------------------------------
 

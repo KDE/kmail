@@ -179,6 +179,9 @@ public slots:
   /** Insert sender's public key block in the editor. */
   void slotInsertMyPublicKey();
 
+  /** Insert arbitary public key from public keyring in the editor. */
+  void slotInsertPublicKey();
+
   /** Popup a nice "not implemented" message. */
   void slotToDo();
 
