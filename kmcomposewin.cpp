@@ -2791,11 +2791,20 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
       QCString addressee = (*it).utf8();
       addressee.replace(QRegExp("\\x0001"), " ");
       certificates[0] = '\0';
-      kdDebug() << "\n\nRetrieving keys for: " << *it << endl;
-      bool findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates );
-      kdDebug() << "    keys retrieved successfully: " << findCertsOk << "\n" << endl;
-      if( findCertsOk && strlen( certificates ) ) {
-          qDebug( "findCertificates() returned %s", certificates );
+      kdDebug() << "\n\n1st try: Retrieving keys for: " << *it << endl;
+      bool findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates )
+                         && strlen( certificates );
+      kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
+      qDebug( "findCertificates() 1st try returned %s", certificates );
+      if( !findCertsOk ) {
+        kdDebug() << "\n\n2nd try: Retrieving *all* keys" << endl;
+        addressee = "*";
+        findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates )
+                      && strlen( certificates );
+        kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
+        qDebug( "findCertificates() 2nd try returned %s", certificates );
+      }
+      if( findCertsOk ) {
           // fill selection dialog listbox
         useDialog = false;
         dialog.entriesLB->clear();
