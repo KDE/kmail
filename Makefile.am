@@ -22,7 +22,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
 		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp \
-		kmundostack.cpp
+		kmundostack.cpp ktablistbox.cpp
 
 METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -34,7 +34,7 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
 		kmaddrbookdlg.moc kmiostatusdlg.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
-		charsetsDlg.moc kmtopwidget.moc
+		charsetsDlg.moc kmtopwidget.moc ktablistbox.moc
 
 appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop
