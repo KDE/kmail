@@ -1500,7 +1500,7 @@ void ConfigureDialog::makeSecurityPage( void )
     page = new QWidget( tabWidget );
     tabWidget->addTab( page, i18n("&PGP") );
     vlay = new QVBoxLayout( page, spacingHint() );
-    
+
     mSecurity.pgpConfig = new KpgpConfig(page);
     vlay->addWidget( mSecurity.pgpConfig );
     vlay->addStretch(10);
@@ -1539,6 +1539,7 @@ void ConfigureDialog::makeMiscPage( void )
     new QCheckBox(i18n("&Keep trash size below "), tgroup );
   stlay->addWidget( mMisc.keepSmallTrashCheck );
   mMisc.smallTrashSizeSpin = new KIntNumInput( tgroup );
+  mMisc.smallTrashSizeSpin->setRange(1, 500, 1, false);
   //mFolder.smallTrashSizeSpin->setMinValue(1);
   stlay->addWidget( mMisc.smallTrashSizeSpin );
   stlay->addWidget( new QLabel( "MB", tgroup ) );
@@ -1552,7 +1553,7 @@ void ConfigureDialog::makeMiscPage( void )
   rmvlay->addWidget( mMisc.removeOldMailCheck );
   mMisc.oldMailAgeSpin = new KIntNumInput( tgroup );
   mMisc.oldMailAgeSpin->setValue(1);
-  //mFolder.oldMailAgeSpin->setMinValue(1);
+  mMisc.oldMailAgeSpin->setRange(1, 500, 1, false);
   rmvlay->addWidget( mMisc.oldMailAgeSpin );
   mMisc.timeUnitCombo = new QComboBox( tgroup );
   mMisc.timeUnitCombo->insertItem(i18n("month(s)"));
