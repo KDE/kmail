@@ -87,6 +87,12 @@ void KMAcctExpPop::init(void)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctExpPop::setPrecommand(const QString& cmd)
+{
+   mPrecommand = cmd;
+}
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::processNewMail(bool _interactive)
 {
   if (stage == Idle) {

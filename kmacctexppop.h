@@ -36,6 +36,10 @@ public:
   const QString& login(void) const { return mLogin; }
   virtual void setLogin(const QString&);
 
+  /** Pre command */
+  const QString& precommand(void) const { return mPrecommand; }
+  virtual void setPrecommand(const QString&);
+
   /** Pop user password */
   const QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
@@ -94,7 +98,7 @@ protected:
   void processRemainingQueuedMessagesAndSaveUidList();
 
   QString mLogin, mPasswd;
-  QString mHost;
+  QString mHost, mPrecommand;
   unsigned short int mPort;
   short   mProtocol;
   bool    mStorePasswd;
