@@ -1,6 +1,6 @@
 KDE_CXXFLAGS = $(USE_RTTI) -DQT_NO_COMPAT
 
-SUBDIRS = . about pics
+SUBDIRS = . about pics profiles
 INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
 LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell ../mimelib/libmimelib.la $(LIB_KAB) -lkabc
 
