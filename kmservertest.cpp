@@ -148,9 +148,6 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   } else {
     if (!error) mList.append("SSL");
 
-    if (mList.isEmpty())
-      mJob->showErrorDialog( 0L );
-
     mJob = 0;
 
     emit capabilities(mList);
