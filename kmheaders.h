@@ -259,9 +259,6 @@ protected:
   virtual void contentsMouseReleaseEvent(QMouseEvent* e);
   virtual void keyPressEvent( QKeyEvent * e );
 
-  /** Unselect all items except one */
-  virtual void clearSelectionExcept( QListViewItem *exception );
-
   /** Called when a header is clicked */
   virtual void setSorting( int column, bool ascending = true);
 

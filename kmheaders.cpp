@@ -2338,14 +2338,6 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
-  QListViewItem *currentItem = itemAt( contentsToViewport( e->pos() ));
-
-  if ((e->button() == LeftButton)
-      && !(e->state() & ControlButton)
-      && !(e->state() & ShiftButton)) {
-    clearSelectionExcept( currentItem );
-  }
-
   if (e->button() != RightButton)
     KListView::contentsMouseReleaseEvent(e);
 
@@ -2394,13 +2386,6 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 void KMHeaders::highlightMessage(QListViewItem* i)
 {
     highlightMessage( i, false );
-}
-
-//-----------------------------------------------------------------------------
-void KMHeaders::clearSelectionExcept( QListViewItem *exception )
-{
-    selectAll( false );
-    setSelected( exception, true );
 }
 
 //-----------------------------------------------------------------------------
