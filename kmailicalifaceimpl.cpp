@@ -370,6 +370,8 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->initHeader();
   msg->setType( DwMime::kTypeMultipart );
   msg->setSubtype( DwMime::kSubtypeMixed );
+  msg->headers().ContentType().CreateBoundary( 0 );
+  msg->headers().ContentType().Assemble();
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
   // add a first body part to be displayed by all mailer
