@@ -422,8 +422,8 @@ void KMComposeWin::deadLetter(void)
   int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
   if (fd != -1)
   {
-    const char* startStr = "From ???@??? Mon Jan 01 00:00:00 1997\n";
-    write(fd, startStr, strlen(startStr));
+    QString startStr = "From " + mMsg->from() + " " + mMsg->dateShortStr() + "\n";
+    write(fd, startStr.latin1(), startStr.length());
     write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
     write(fd, "\n", 1);
     close(fd);

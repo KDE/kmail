@@ -867,7 +867,7 @@ void KMHeaders::deleteMsg (int msgId)
 void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
-  QCString str;
+  QString str;
   KURL url = KFileDialog::getSaveURL(QString::null, "*");
 
   if( url.isEmpty() )
@@ -883,12 +883,12 @@ void KMHeaders::saveMsg (int msgId)
  
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    str += "From ???@??? 00:00:00 1997 +0000\n";
+    str += "From " + msg->from() + " " + msg->dateShortStr() + "\n";
     str += msg->asString();
     str += "\n";
   }
 
-  if (kCStringToFile(str, fileName, TRUE))
+  if (kCStringToFile(str.local8Bit(), fileName, TRUE))
     mOwner->statusMsg(i18n("Message(s) saved."));
   else
     mOwner->statusMsg(i18n("Failed to save message(s)."));
