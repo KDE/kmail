@@ -179,7 +179,7 @@ public:
   /** Returns TRUE if status is spam. */
   virtual bool isSpam(void) const;
 
-  /** Returns TRUE if status is spam. */
+  /** Returns TRUE if status is not spam. */
   virtual bool isHam(void) const;
 
 
