@@ -417,7 +417,7 @@ public:
   int appendtoMsgDict(int idx = -1);
   
   /** Sets the reverse-dictionary for this folder. */
-  void setRDict(KMMsgDictREntry *rentry) { mRDict = rentry; }
+  void setRDict(KMMsgDictREntry *rentry);
   
   /** Returns the reverse-dictionary for this folder. */
   KMMsgDictREntry *rDict() const { return mRDict; }

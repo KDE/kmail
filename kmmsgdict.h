@@ -70,7 +70,10 @@ public:
   
   /** Removes the .folder.index.ids file. */
   bool removeFolderIds(KMFolder *folder);
-  
+
+  // delete an entry that has been assigned to a folder
+  static void deleteRentry(KMMsgDictREntry *entry);
+
 protected:
   /** Returns the next message serial number for use. */
   unsigned long getNextMsgSerNum();

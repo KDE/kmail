@@ -115,6 +115,8 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
 //-----------------------------------------------------------------------------
 KMFolder :: ~KMFolder()
 {
+  delete mAcctList;
+  KMMsgDict::deleteRentry(mRDict);
 }
 
 
@@ -1359,6 +1361,11 @@ void KMFolder::setStatus(int idx, KMMsgStatus status)
 {
   KMMsgBase *msg = getMsgBase(idx);
   msg->setStatus(status, idx);
+}
+
+void KMFolder::setRDict(KMMsgDictREntry *rentry) {
+  assert(!mRDict);
+  mRDict = rentry; 
 }
 
 //-----------------------------------------------------------------------------

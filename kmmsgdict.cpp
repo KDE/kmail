@@ -156,6 +156,11 @@ unsigned long KMMsgDict::getNextMsgSerNum() {
   return msn;
 }
 
+void KMMsgDict::deleteRentry(KMMsgDictREntry *entry)
+{
+  delete entry;
+}
+
 //-----------------------------------------------------------------------------
 
 unsigned long KMMsgDict::insert(unsigned long msgSerNum,

@@ -58,6 +58,7 @@ KMAcctExpPop::~KMAcctExpPop()
     lensOfMsgsPendingDownload.clear();
     processRemainingQueuedMessagesAndSaveUidList();
   }
+  delete ss;
 }
 
 

@@ -130,6 +130,8 @@ KMMainWin::~KMMainWin()
   delete mHeaders;
   delete mStatusBar;
   delete mFolderTree;
+  delete mHorizPannerSep;
+  delete mVertPannerSep;
 }
 
 

@@ -620,12 +620,18 @@ void KMKernel::cleanup(void)
   KConfig* config =  kapp->config();
   KConfigGroupSaver saver(config, "General");
 
-  if (the_acctMgr) delete the_acctMgr;
+  delete the_acctMgr;
   the_acctMgr = 0;
-  if (the_filterMgr) delete the_filterMgr;
+  delete the_filterMgr;
   the_filterMgr = 0;
-  if (the_msgSender) delete the_msgSender;
+  delete the_msgSender;
   the_msgSender = 0;
+  delete the_filterActionDict;
+  the_filterActionDict = 0;
+  delete the_undoStack;
+  the_undoStack = 0;
+  delete the_popFilterMgr;
+  the_popFilterMgr = 0;
 
   if (!closed_by_user) {
       if (the_trashFolder)
@@ -666,11 +672,11 @@ void KMKernel::cleanup(void)
   
   delete the_msgDict;
   
-  if (the_folderMgr) delete the_folderMgr;
+  delete the_folderMgr;
   the_folderMgr = 0;
-  if (the_imapFolderMgr) delete the_imapFolderMgr;
+  delete the_imapFolderMgr;
   the_imapFolderMgr = 0;
-  if (the_kbp) delete the_kbp;
+  delete the_kbp;
   the_kbp = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
