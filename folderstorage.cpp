@@ -761,8 +761,10 @@ void FolderStorage::msgStatusChanged(const KMMsgStatus oldStatus,
   if (deltaUnread != 0) {
     if (mUnreadMsgs < 0) mUnreadMsgs = 0;
     mUnreadMsgs += deltaUnread;
-    emit numUnreadMsgsChanged( folder() );
-
+    if ( !mQuiet )
+      emit numUnreadMsgsChanged( folder() );
+    else
+      mChanged = true;
     Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(folder(), idx);
     emit msgChanged( folder(), serNum, deltaUnread );
   }
@@ -775,8 +777,8 @@ void FolderStorage::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
     idx = aMsg->parent()->find( aMsg );
   if (idx >= 0 && !mQuiet)
     emit msgHeaderChanged(folder(), idx);
-   else
-     mChanged = TRUE;
+  else
+    mChanged = true;
 }
 
 //-----------------------------------------------------------------------------
