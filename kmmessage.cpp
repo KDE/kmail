@@ -217,7 +217,7 @@ KMMessage* KMMessage::createReply(bool replyToAll) const
   msg->setBody(asQuotedString("On %D, %F wrote:", "> "));
 
   if (strnicmp(subject(), "Re:", 3)!=0)
-    msg->setSubject("Re: " + str);
+    msg->setSubject("Re: " + subject());
   else msg->setSubject(subject());
 
   return msg;

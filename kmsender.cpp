@@ -74,8 +74,18 @@ void KMSender::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 bool KMSender::sendQueued(void)
 {
-  warning("sending of queued mails is not implemented!");
-  return FALSE;
+  KMMessage* msg;
+  bool rc = TRUE;
+
+  queuedFolder->open();
+  while(queuedFolder->count() > 0)
+  {
+    msg = queuedFolder->getMsg(0);
+    rc = send(msg, TRUE);
+    if (!rc) break;
+  }
+  queuedFolder->close();
+  return rc;
 }
 
 
@@ -103,8 +113,8 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   else if (mMethod == smMail) sendOk = sendMail(aMsg);
   else warning(nls->translate("Please specify a send\nmethod in the settings\n"
 			      "and try again."));
-
   if (sendOk) sentFolder->addMsg(aMsg);
+
   return sendOk;
 }
 

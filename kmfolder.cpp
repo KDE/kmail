@@ -532,11 +532,20 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   bool opened = FALSE;
   QString msgText;
   int idx;
+  KMFolder* msgParent;
 
   if (!mStream)
   {
     opened = TRUE;
     open();
+  }
+
+  // take message out of the folder it is currently in, if any
+  msgParent = aMsg->parent();
+  if (msgParent)
+  {
+    if (msgParent==this) return 0;
+    msgParent->take(msgParent->find(aMsg));
   }
 
   msgText = aMsg->asString();
