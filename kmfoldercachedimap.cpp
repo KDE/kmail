@@ -1080,8 +1080,11 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
                               job->errorText() );
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
-  } else if (lastSet) mContentState = imapFinished;
-  mAccount->removeJob(it);
+  } else {
+    if (lastSet) 
+      mContentState = imapFinished;
+    mAccount->removeJob(it);
+  }
   if( lastSet )
     emit listMessagesComplete();
 }
