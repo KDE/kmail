@@ -167,14 +167,14 @@ public:
       break;
     };
 
-    const int dateLength = 100;
+    mSortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
+
+    const int dateLength = 30;
     char cDate[dateLength + 1];
     strftime( cDate, dateLength, "%Y:%j:%T", gmtime( &mDate ));
-    mSortDate = cDate;
-
-    mSortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
-    mSortSender = text(mPaintInfo->senderCol).lower() + " " + mSortDate;
-    mSortSubject = KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) + " " + mSortDate;
+    mSortDate = cDate + mSortArrival;
+    mSortSender = text(mPaintInfo->senderCol).lower() + " " + mSortArrival;
+    mSortSubject = KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) + " " + mSortArrival;
   }
 
   // Retrun the msgId of the message associated with this item
@@ -788,6 +788,7 @@ void KMHeaders::deleteMsg (int msgId)
     // We are in the trash folder -> really delete messages
     moveMsgToFolder(NULL, msgId);
   }
+  triggerUpdate();
 }
 
 //-----------------------------------------------------------------------------
