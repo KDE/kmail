@@ -818,7 +818,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                              SLOT(slotCompactFolder()));
       folderMenu->insertSeparator();
       if (fti->folder->countUnread() > 0)
-        folderMenu->insertItem(i18n("&Mark All Mail As Read"), topLevelWidget(),
+        folderMenu->insertItem(i18n("&Mark All Mail as Read"), topLevelWidget(),
                                SLOT(slotMarkAllAsRead()));
       folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
                              SLOT(slotEmptyFolder()));
