@@ -311,7 +311,7 @@ void KMMainWin::writeConfig(void)
 void KMMainWin::createWidgets(void)
 {
   QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
-  QAccel *accel = new QAccel(this);
+  QAccel *accel = new QAccel(this, "createWidgets()");
 
   // create panners
   if (mLongFolderList)
@@ -416,56 +416,46 @@ void KMMainWin::createWidgets(void)
   KAction *nextUnreadFolderAction = new KAction(
     i18n("Next folder with unread messages"), CTRL+Key_Plus, mFolderTree,
     SLOT(nextUnreadFolder()), actionCollection(), "next_unread_folder");
-  nextUnreadFolderAction->plugAccel( this->accel() );
 
   KAction *prevUnreadFolderAction = new KAction(
    i18n("Previous folder with unread messages"), CTRL+Key_Minus, mFolderTree,
    SLOT(prevUnreadFolder()), actionCollection(), "prev_unread_folder");
-  prevUnreadFolderAction->plugAccel( this->accel() );
 
   KAction *nextFolderAction = new KAction(
    i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
-  nextFolderAction->plugAccel( this->accel() );
 
   KAction *prevFolderAction = new KAction(
    i18n("Focus on previous folder"), CTRL+Key_Left, mFolderTree,
    SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
-  prevFolderAction->plugAccel( this->accel() );
 
   KAction *selectCurrentFolderAction = new KAction(
    i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
-  selectCurrentFolderAction->plugAccel( this->accel() );
 
   KAction *expandCurrentThread
     = new KAction( i18n("Expand Thread"), Key_Period, this,
 		   SLOT(slotExpandThread()),
 		   actionCollection(), "expand_thread" );
-  expandCurrentThread->plugAccel( this->accel() );
 
   KAction *collapseCurrentThread
     = new KAction( i18n("Collapse Thread"), Key_Comma, this,
 		   SLOT(slotCollapseThread()),
 		   actionCollection(), "collapse_thread" );
-  collapseCurrentThread->plugAccel( this->accel() );
 
   KAction *expandAllThreads
     = new KAction( i18n("Expand All Threads"), CTRL+Key_Period, this,
 		   SLOT(slotExpandAllThreads()),
 		   actionCollection(), "expand_all_threads" );
-  expandAllThreads->plugAccel( this->accel() );
 
   KAction *collapseAllThreads
     = new KAction( i18n("Collapse All Threads"), CTRL+Key_Comma, this,
 		   SLOT(slotCollapseAllThreads()),
 		   actionCollection(), "collapse_all_threads" );
-  collapseAllThreads->plugAccel( this->accel() );
 
   KAction *readOnAction = new KAction( i18n( "Move to the next unread text" ),
                                        Key_Space, this,  SLOT( slotReadOn() ),
                                        actionCollection(), "read_on" );
-  readOnAction->plugAccel( this->accel() );
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kernel->outboxFolder(), SIGNAL( msgAdded(int) ),
@@ -1603,7 +1593,7 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
   connect(win, SIGNAL(showAtmMsg(KMMessage *)),
 	  this, SLOT(slotAtmMsg(KMMessage *)));
 
-  QAccel *accel = new QAccel(win);
+  QAccel *accel = new QAccel(win, "showMsg()");
   accel->connectItem(accel->insertItem(Key_Up),
                      win, SLOT(slotScrollUp()));
   accel->connectItem(accel->insertItem(Key_Down),
