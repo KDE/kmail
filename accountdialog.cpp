@@ -515,7 +515,7 @@ void AccountDialog::makeImapAccountPage()
 
   QGridLayout *grid = new QGridLayout( page1, 10, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 10, 10 );
+  grid->setRowStretch( 9, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -565,7 +565,7 @@ void AccountDialog::makeImapAccountPage()
 
   mImap.storePasswordCheck =
     new QCheckBox( i18n("Sto&re IMAP password in configuration file"), page1 );
-  grid->addMultiCellWidget( mImap.storePasswordCheck, 7, 7, 0, 1 );
+  grid->addMultiCellWidget( mImap.storePasswordCheck, 8, 8, 0, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
