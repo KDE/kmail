@@ -53,7 +53,7 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   vlay->addStretch( 10 );
 
   radioButton3->setChecked(true); // Advanced Pop is most common ?
-  buttonClicked(1);
+  buttonClicked(2);
 }
 
 
