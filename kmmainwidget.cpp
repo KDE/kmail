@@ -1569,9 +1569,22 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   if ( mFolder ) {
      disconnect( mFolder, SIGNAL( changed() ),
            this, SLOT( updateMarkAsReadAction() ) );
+     disconnect( mFolder, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
+           this, SLOT( updateMarkAsReadAction() ) );
+     disconnect( mFolder, SIGNAL( msgAdded( int ) ),
+           this, SLOT( updateMarkAsReadAction() ) );
+     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
+           this, SLOT( updateMarkAsReadAction() ) );
+
   }
   mFolder = (KMFolder*)aFolder;
   connect( mFolder, SIGNAL( changed() ),
+           this, SLOT( updateMarkAsReadAction() ) );
+  connect( mFolder, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
+           this, SLOT( updateMarkAsReadAction() ) );
+  connect( mFolder, SIGNAL( msgAdded( int ) ),
+           this, SLOT( updateMarkAsReadAction() ) );
+  connect( mFolder, SIGNAL( msgRemoved(KMFolder *) ),
            this, SLOT( updateMarkAsReadAction() ) );
 
   readFolderConfig();
