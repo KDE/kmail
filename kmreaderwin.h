@@ -143,16 +143,84 @@ public:
   /** View message part of type message/RFC822 in extra viewer window. */
   void atmViewMsg(KMMessagePart* msgPart);
 
-  /** Display an attachment */
-  static void atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
-    bool aHTML, const QString& aFileName, const QString& pname, QTextCodec *codec);
-
   bool atBottom() const;
 
   bool isfixedFont() { return mUseFixedFont; }
 
   /** Queue HTML code to be sent later in chunks to khtml */
   void queueHtml(const QString &aStr);
+
+
+// static functions:
+
+    /** Display an attachment */
+    static void atmView(KMReaderWin* aReaderWin,
+                        KMMessagePart* aMsgPart,
+                        bool aHTML,
+                        const QString& aFileName,
+                        const QString& pname,
+                        QTextCodec *codec);
+
+    /** find a plugin matching a given libName */
+    static bool foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
+                                        QString libName,
+                                        CryptPlugWrapper** useThisCryptPlug_ref,
+                                        QWidget* parent = 0,
+                                        QString verboseName = "" );
+
+    /** 1. Create a new partNode using 'content' data and Content-Description
+            found in 'cntDesc'.
+        2. Make this node the child of 'node'.
+        3. Insert the respective entries in the Mime Tree Viewer.
+        3. Parse the 'node' to display the content. */
+    //  Function will be replaced once KMime is alive.
+    static void insertAndParseNewChildNode( KMReaderWin* reader,
+                                            QCString* resultString,
+                                            CryptPlugWrapperList* cryptPlugList,
+                                            CryptPlugWrapper*     useThisCryptPlug,
+                                            partNode& node,
+                                            const char* content,
+                                            const char* cntDesc );
+    /** Parse beginning at a given node and recursively parsing
+        the children of that node and it's next sibling. */
+    //  Function is called internally by "parseMsg(KMMessage* msg)"
+    //  and it will be replaced once KMime is alive.
+    static void parseObjectTree( KMReaderWin* reader,
+                                 QCString* resultString,
+                                 CryptPlugWrapperList* cryptPlugList,
+                                 CryptPlugWrapper*     useThisCryptPlug,
+                                 partNode* node,
+                                 bool showOneMimePart=false,
+                                 bool keepEncryptions=false,
+                                 bool includeSignatures=true );
+
+    /** if data is 0:
+            Feeds the HTML widget with the contents of the opaque signed
+            data found in partNode 'sign'.
+        if data is set:
+            Feeds the HTML widget with the contents of the given
+            multipart/signed object.
+        Signature is tested.  May contain body parts.
+
+        Returns whether a signature was found or not: use this to
+        find out if opaque data is signed or not. */
+    static bool writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
+                                                  QCString* resultString,
+                                                  CryptPlugWrapperList* cryptPlugList,
+                                                  CryptPlugWrapper*     useThisCryptPlug,
+                                                  partNode* data,
+                                                  partNode& sign );
+
+    /** Returns the contents of the given multipart/encrypted
+        object. Data is decypted.  May contain body parts. */
+    static bool okDecryptMIME( KMReaderWin* reader,
+                               CryptPlugWrapperList* cryptPlugList,
+                               CryptPlugWrapper*     useThisCryptPlug,
+                               partNode& data,
+                               QCString& decryptedData,
+                               bool showWarning = true );
+
+
 
 signals:
   /** Emitted to show a text on the status line. */
@@ -227,22 +295,6 @@ protected:
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
-  /** 1. Create a new partNode using 'content' data and Content-Description
-         found in 'cntDesc'.
-      2. Make this node the child of 'node'.
-      3. Insert the respective entries in the Mime Tree Viewer.
-      3. Parse the 'node' to display the content. */
-  //  Function will be replaced once KMime is alive.
-  void insertAndParseNewChildNode( partNode& node,
-                                   const char* content,
-                                   const char* cntDesc );
-  /** Parse beginning at a given node and recursively parsing
-      the children of that node and it's next sibling. */
-  //  Function is called internally by "parseMsg(KMMessage* msg)"
-  //  and it will be replaced once KMime is alive.
-  virtual void parseObjectTree( partNode* node, bool showOneMimePart=false,
-                                                bool keepEncryptions=false,
-                                                bool includeSignatures=true );
 
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg(KMMessage* msg);
@@ -262,25 +314,6 @@ protected:
                                       const QString& txt2a,
                                       const QString& txt2b,
                                       QCString& data );
-
-  /** if data is 0:
-          Feeds the HTML widget with the contents of the opaque signed
-          data found in partNode 'sign'.
-      if data is set:
-          Feeds the HTML widget with the contents of the given
-          multipart/signed object.
-      Signature is tested.  May contain body parts.
-      
-      Returns whether a signature was found or not: use this to
-      find out if opaque data is signed or not. */
-  virtual bool writeOpaqueOrMultipartSignedData( partNode* data,
-                                                 partNode& sign );
-
-  /** Returns the contents of the given multipart/encrypted
-    object. Data is decypted.  May contain body parts. */
-  virtual bool okDecryptMIME( partNode& data,
-                              QCString& decryptedData,
-                              bool showWarning = true );
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
@@ -343,7 +376,7 @@ protected:
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
-  bool inlineImage;
+  bool mInlineImage;
   static QString mAttachDir;
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;

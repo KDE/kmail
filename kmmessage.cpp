@@ -12,6 +12,8 @@
 #include <kpgpblock.h>
 #include <kdebug.h>
 
+#include <cryptplugwrapperlist.h>
+
 #include "kmfolder.h"
 #include "kmundostack.h"
 #include "kmversion.h"
@@ -50,6 +52,10 @@
 #include <ktextbrowser.h>
 #include <qmultilineedit.h>
 #endif
+
+// needed temporarily until KMime is replacing the partNode helper class:
+#include "partNode.h"
+
 
 static DwString emptyString("");
 
@@ -641,6 +647,58 @@ static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
 
 
 //-----------------------------------------------------------------------------
+void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
+                                           QCString& parsedString,
+                                           bool& isHTML ) const
+{
+  // get a valid CryptPlugList
+  CryptPlugWrapperList cryptPlugList;
+  KConfig *config = KGlobal::config();
+  cryptPlugList.loadFromConfig( config );
+
+  isHTML = false;
+  int mainType    = type();
+  int mainSubType = subtype();
+  if(    (DwMime::kTypeNull    == mainType)
+      || (DwMime::kTypeUnknown == mainType) ){
+      mainType    = DwMime::kTypeText;
+      mainSubType = DwMime::kSubtypePlain;
+  }
+  partNode rootNode(0, mainType, mainSubType);
+  partNode* curNode = rootNode.setFirstChild( new partNode( &dwPart ) );
+  curNode->buildObjectTree( false );
+  // initialy parse the complete message to decrypt any encrypted parts
+  KMReaderWin::parseObjectTree( 0,
+                                0,
+                                &cryptPlugList,
+                                0,
+                                &rootNode,
+                                true,
+                                false,
+                                true );
+  curNode = curNode->findType( DwMime::kTypeText,
+                               DwMime::kSubtypeUnknown,
+                               true,
+                               false );
+  kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    "
+                << QString( curNode ? "text part found" : "sorry, no text node" ) << "!\n" << endl;
+  if( curNode ) {
+    isHTML = DwMime::kSubtypeHtml == curNode->type();
+    // now parse the TEXT message part we want to quote
+    KMReaderWin::parseObjectTree( 0,
+                                  &parsedString,
+                                  &cryptPlugList,
+                                  0,
+                                  curNode,
+                                  true,
+                                  false,
+                                  true );
+  }
+  kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    parsed string:\n\""
+                << QString( parsedString + "\"\n\n" ) << endl;
+}
+
+//-----------------------------------------------------------------------------
 QCString KMMessage::asQuotedString(const QString& aHeaderStr,
                                    const QString& aIndentStr,
                                    const QString& selection,
@@ -648,9 +706,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
                                    bool allowDecryption) const
 {
   QString result;
-  QCString cStr;
   QString headerStr;
-  KMMessagePart msgPart;
   QRegExp reNL("\\n");
   QString indentStr;
   int i;
@@ -669,49 +725,61 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   headerStr = formatString(aHeaderStr);
 
 
+  QCString parsedString;
+  bool isHTML = false;
+
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
   if (numBodyParts() == 0 || !selection.isEmpty() ) {
     if( !selection.isEmpty() ) {
       result = selection;
     } else {
-      cStr = bodyDecoded();
-      Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-      assert(pgp != NULL);
 
-      QPtrList<Kpgp::Block> pgpBlocks;
-      QStrList nonPgpBlocks;
-      if( allowDecryption &&
-          Kpgp::Module::prepareMessageForDecryption( cStr,
-                                                     pgpBlocks, nonPgpBlocks ) )
-      {
-        // Only decrypt/strip off the signature if there is only one OpenPGP
-        // block in the message
-        if( pgpBlocks.count() == 1 )
+      DwBodyPart *dwPart = getFirstDwBodyPart();
+      if( !dwPart )
+        dwPart = new DwBodyPart(((KMMessage*)this)->asDwString(), 0);
+      dwPart->Parse();
+      parseTextStringFromDwPart( *dwPart, parsedString, isHTML );
+
+      if( !parsedString.isEmpty() ) {
+
+        Kpgp::Module* pgp = Kpgp::Module::getKpgp();
+        assert(pgp != NULL);
+
+        QPtrList<Kpgp::Block> pgpBlocks;
+        QStrList nonPgpBlocks;
+        if( allowDecryption &&
+            Kpgp::Module::prepareMessageForDecryption( parsedString,
+                                                       pgpBlocks, nonPgpBlocks ) )
         {
-          Kpgp::Block* block = pgpBlocks.first();
-          if( ( block->type() == Kpgp::PgpMessageBlock ) ||
-              ( block->type() == Kpgp::ClearsignedBlock ) )
+          // Only decrypt/strip off the signature if there is only one OpenPGP
+          // block in the message
+          if( pgpBlocks.count() == 1 )
           {
-            if( block->type() == Kpgp::PgpMessageBlock )
-              // try to decrypt this OpenPGP block
-              block->decrypt();
-            else
+            Kpgp::Block* block = pgpBlocks.first();
+            if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+                ( block->type() == Kpgp::ClearsignedBlock ) )
             {
-              // strip off the signature
-              block->verify();
-              clearSigned = true;
-            }
+                if( block->type() == Kpgp::PgpMessageBlock )
+                // try to decrypt this OpenPGP block
+                block->decrypt();
+                else
+                {
+                // strip off the signature
+                block->verify();
+                clearSigned = true;
+                }
 
-            result = codec->toUnicode( nonPgpBlocks.first() )
-                   + codec->toUnicode( block->text() )
-                   + codec->toUnicode( nonPgpBlocks.last() );
+                result = codec->toUnicode( nonPgpBlocks.first() )
+                    + codec->toUnicode( block->text() )
+                    + codec->toUnicode( nonPgpBlocks.last() );
+            }
           }
         }
       }
       if( result.isEmpty() )
-        result = codec->toUnicode( cStr );
-      if (mDecodeHTML && qstrnicmp(typeStr(),"text/html",9) == 0)
+        result = codec->toUnicode( parsedString );
+      if( mDecodeHTML && isHTML )
       {
         KHTMLPart htmlPart;
         htmlPart.setOnlyLocalReferences(true);
@@ -742,10 +810,12 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       smartQuote(result, indentStr, sWrapCol);
   } else {
     result = "";
-    bodyPart(0, &msgPart);
 
-    if (qstricmp(msgPart.typeStr(),"text") == 0 ||
-      msgPart.typeStr().isEmpty())
+    DwBodyPart *dwPart = getFirstDwBodyPart();
+    if( dwPart )
+      parseTextStringFromDwPart( *dwPart, parsedString, isHTML );
+
+    if( !parsedString.isEmpty() )
     {
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
       assert(pgp != NULL);
@@ -754,11 +824,11 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       QPtrList<Kpgp::Block> pgpBlocks;
       QStrList nonPgpBlocks;
       if( allowDecryption &&
-          Kpgp::Module::prepareMessageForDecryption( msgPart.bodyDecoded(),
+          Kpgp::Module::prepareMessageForDecryption( parsedString,
                                                      pgpBlocks, nonPgpBlocks ) )
       {
         // Only decrypt/strip off the signature if there is only one OpenPGP
-        // block in the message
+        // block in this message part
         if( pgpBlocks.count() == 1 )
         {
           Kpgp::Block* block = pgpBlocks.first();
@@ -783,8 +853,9 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       }
       if( part.isEmpty() )
       {
-        part = codec->toUnicode( msgPart.bodyDecoded() );
+        // part = codec->toUnicode( msgPart.bodyDecoded() );
         //	    debug ("part\n" + part ); inexplicably crashes -sanders
+        part = codec->toUnicode( parsedString );
       }
 
       if (aStripSignature)
@@ -2264,6 +2335,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     // If the DwBodyPart was found get the header fields and body
     DwBodyPart *part = dwBodyPart( aIdx );
     if( part )
+
     {
       KMMessage::bodyPart(part, aPart);
       if( aPart->name().isEmpty() )

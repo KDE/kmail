@@ -133,6 +133,14 @@ public:
   /** Return header as string. */
   virtual QString headerAsString(void) const;
 
+  /** Returns a decoded body part string to be further processed
+    by function asQuotedString().
+    THIS FUNCTION WILL BE REPLACED ONCE KMime IS FULLY INTEGRATED
+    (khz, June 05 2002)*/
+  virtual void parseTextStringFromDwPart( DwBodyPart& dwPart,
+                                          QCString& parsedString,
+                                          bool& isHTML ) const;
+
   /** Returns message body with quoting header and indented by the
     given indentation string. This is suitable for including the message
     in another message of for replies, forwards. The header string is
