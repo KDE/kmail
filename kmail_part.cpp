@@ -121,7 +121,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
-  mReaderWin->show();
   kernel->inboxFolder()->close();
 #else
   mainWidget = new KMMainWidget( canvas, "mainWidget", actionCollection());
@@ -139,9 +138,9 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   KParts::InfoExtension *ie = new KParts::InfoExtension( this, "KMailInfo" );
   connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
-  connect( mainWidget->folderTree(), SIGNAL(iconChanged(KMFolderTreeItem*)), 
+  connect( mainWidget->folderTree(), SIGNAL(iconChanged(KMFolderTreeItem*)),
            this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
-  connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)), 
+  connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
@@ -149,7 +148,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 #endif
   KGlobal::iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmmainwin.rc" );
-  mainWidget->show();
 #endif
 }
 
