@@ -1715,13 +1715,13 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("New Message..."), "filenew", KStdAccel::key(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
-  (void) new KAction( i18n("&Next"), Key_N, this,
+  (void) new KAction( i18n("next message","&Next"), Key_N, this,
 		      SLOT(slotNextMessage()), actionCollection(), "next" );
 
   (void) new KAction( i18n("Next unread"), "next", Key_Plus, this,
 		      SLOT(slotNextUnreadMessage()), actionCollection(), "next_unread" );
 
-  (void) new KAction( i18n("&Previous"), Key_P, this,
+  (void) new KAction( i18n("previous message","&Previous"), Key_P, this,
 		      SLOT(slotPrevMessage()), actionCollection(), "previous" );
 
   (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, this,
