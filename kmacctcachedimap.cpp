@@ -335,6 +335,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
   mSyncActive = false;
+  setCheckingMail( false );
   emit finishedCheck(false);
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
       this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
