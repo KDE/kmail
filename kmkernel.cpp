@@ -584,8 +584,14 @@ QStringList KMKernel::folderList() const
 
 DCOPRef KMKernel::getFolder( const QString& vpath )
 {
-  if ( the_folderMgr->getFolderByURL( vpath ) )
-    return DCOPRef( new FolderIface( vpath ) );
+  QString localPrefix = i18n( "/Local" );
+  // Strip the Local prefix off, when asking the folder manager
+  if ( vpath.startsWith( localPrefix ) ) {
+    QString localPath = QString( vpath );
+    localPath = localPath.remove( 0, localPrefix.length() );
+    if ( the_folderMgr->getFolderByURL( localPath ) )
+      return DCOPRef( new FolderIface( localPath ) );
+  }
   else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   else if ( the_dimapFolderMgr->getFolderByURL( vpath ) )
