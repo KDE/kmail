@@ -4186,6 +4186,9 @@ void KMLineEdit::insert(const QString &t)
     if (newText.isEmpty())
        return;
 
+    // remove newlines in the to-be-pasted string:
+    newText.replace( QRegExp("\r?\n"), " " );
+
     QString contents = text();
     int start_sel = 0;
     int end_sel = 0;
