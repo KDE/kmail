@@ -56,6 +56,8 @@ using KMail::FolderRequester;
 #include <ui/keyrequester.h>
 #include <kleo/cryptobackendfactory.h>
 
+#include <libemailfunctions/email.h>
+
 // other KDE headers:
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -435,8 +437,25 @@ namespace KMail {
 
   void IdentityDialog::slotOk() {
     const QString email = mEmailEdit->text().stripWhiteSpace();
-    if ( email.isEmpty() )
-      return KDialogBase::slotOk();
+    int atCount = email.contains('@');
+    if (  KPIM::getEmailAddr( email ).isEmpty() || atCount == 0 ) {
+      KMessageBox::sorry( this, "<qt>"+
+          i18n("Your email address is not valid because it "
+            "does not contain a <emph>@</emph>: "
+            "you will not create valid messages if you do not "
+            "change your address.") + "</qt>",
+          i18n("Invalid Email Address") );
+      return;
+    } else if ( atCount > 1 ) {
+      KMessageBox::sorry( this, "<qt>" +
+                          i18n("Your email address is not valid because it "
+                               "contains more than one <emph>@</emph>: "
+                               "you will not create valid messages if you do not "
+                               "change your address.") + "</qt>",
+                          i18n("Invalid Email Address") );
+      return;
+    }
+
     const std::vector<GpgME::Key> & pgpSigningKeys = mPGPSigningKeyRequester->keys();
     const std::vector<GpgME::Key> & pgpEncryptionKeys = mPGPEncryptionKeyRequester->keys();
     const std::vector<GpgME::Key> & smimeSigningKeys = mSMIMESigningKeyRequester->keys();
@@ -564,22 +583,6 @@ namespace KMail {
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
     QString email = mEmailEdit->text();
-    int atCount = email.contains('@');
-    if ( email.isEmpty() || atCount == 0 )
-      KMessageBox::sorry( this, "<qt>"+
-                          i18n("Your email address is not valid because it "
-                               "does not contain a <emph>@</emph>: "
-                               "you will not create valid messages if you do not "
-                               "change your address.") + "</qt>",
-                          i18n("Invalid Email Address") );
-    else if ( atCount > 1 ) {
-      KMessageBox::sorry( this, "<qt>" +
-                          i18n("Your email address is not valid because it "
-                               "contains more than one <emph>@</emph>: "
-                               "you will not create valid messages if you do not "
-                               "change your address.") + "</qt>",
-                          i18n("Invalid Email Address") );
-    }
     ident.setEmailAddr( email );
     // "Cryptography" tab:
     ident.setPGPSigningKey( mPGPSigningKeyRequester->fingerprint().latin1() );
