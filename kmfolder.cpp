@@ -37,6 +37,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) :
   mMsgs       = 0;
   mUnreadMsgs = 0;
   mOpenCount  = 0;
+  mQuiet      = 0;
   mAutoCreateToc = TRUE;
 }
 
@@ -328,10 +329,50 @@ void KMFolder::readToc(void)
 
 
 //-----------------------------------------------------------------------------
+void KMFolder::quiet(bool beQuiet)
+{
+  if (beQuiet) mQuiet++;
+  else 
+  {
+    mQuiet--;
+    if (mQuiet < 0) mQuiet = 0;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 long KMFolder::status(long) 
 {
   // return mail_status(mStream, MBOX(mStream), ops);
   return 0;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::setMsgStatus(KMMessage* aMsg, KMMessage::Status aStatus)
+{
+  int i = indexOfMsg(aMsg);
+  if (i < 0) 
+  {
+    debug("KMFolder::setMsgStatus() called for a message that is not in"
+	  "this folder !");
+    return;
+  }
+
+  mMsgInfo[i].setStatus(aStatus);
+  if (!mQuiet) emit msgHeaderChanged(i);
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFolder::indexOfMsg(const KMMessage* aMsg) const
+{
+  int i;
+
+  for (i=0; i<mMsgs; i++)
+    if (mMsgInfo[i].msg() == aMsg) return i+1;
+
+  return -1;
 }
 
 
@@ -389,12 +430,11 @@ void KMFolder::readMsg(int msgno)
   fread((char*)msg->msgStr().data(), msgSize, 1, mStream);
   ((char*)msg->msgStr().data())[msgSize] = '\0';
 
+  mMsgInfo[msgno].setMsg(msg);
   msg->setStatus(mMsgInfo[msgno].status());
   dwmsg = DwMessage::NewMessage(msg->msgStr(), 0);
   dwmsg->Parse();
   msg->takeMessage(dwmsg);
-
-  mMsgInfo[msgno].setMsg(msg);
 }
 
 
@@ -438,7 +478,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   }
 
   if (aIndex_ret) *aIndex_ret = mMsgs;
-  emit msgAdded(mMsgs);
+  if (!mQuiet) emit msgAdded(mMsgs);
 
   mMsgs++;
 
@@ -493,6 +533,20 @@ void KMFolder::ping()
 //-----------------------------------------------------------------------------
 void KMFolder::expunge()
 {
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFolder::lock(bool sharedLock)
+{
+  assert(mStream != NULL);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::unlock(void)
+{
+  assert(mStream != NULL);  
 }
 
 

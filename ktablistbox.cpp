@@ -382,7 +382,7 @@ void KTabListBox :: changeItem (const char* aStr, int row)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: changeItem (const char* aStr, int row, int col)
+void KTabListBox :: changeItemPart (const char* aStr, int row, int col)
 {
   if (row < 0 || row >= numRows()) return;
   if (col < 0 || col >= numCols()) return;

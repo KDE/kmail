@@ -11,7 +11,7 @@
 #include <kapp.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <qmsgbox.h>
+#include <kmsgbox.h>
 
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
@@ -32,13 +32,13 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
     break;
 
   case QtWarningMsg:
-    QMessageBox::message("KMail Warning", aMsg, " Ok ");
+    KMsgBox::message(NULL, "KMail Warning", aMsg, KMsgBox::EXCLAMATION);
     break;
 
   case QtFatalMsg:
     fprintf(stderr, "kmail fatal error: %s\n", aMsg);
-    if (QMessageBox::query("KMail Fatal Error", aMsg, "Ignore", "Abort"))
-      abort(); // coredump
+    KMsgBox::message(NULL, "KMail Fatal Error", aMsg, KMsgBox::STOP);
+    //abort(); // coredump
     break;
   }
 }

@@ -13,7 +13,6 @@
 typedef QArray<KMMessage> KMMessageList;
 
 class KMMessage;
-class BasicMessage;
 class KMFolderDir;
 
 #define KMFolderInherited KMFolderNode
@@ -48,6 +47,9 @@ public:
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index = NULL);
 
+  /** Returns the index of the given message or -1 if not found. */
+  virtual int indexOfMsg(const KMMessage*) const;
+
   /** total number of messages in this folder (may include already deleted
    messages) */
   virtual long numMsgs(void) const { return mMsgs; }
@@ -64,11 +66,19 @@ public:
     Does nothing if the folder is already opened. To reopen a folder
     call close() first.
     Returns zero on success and an error code equal to the c-library
-    fopen call otherwise. */
+    fopen call otherwise (errno). */
   virtual int open(void);
 
   /** Close folder. */
   virtual void close(void);
+
+  /** Try to lock the folder. The folder has to be open. Returns 0 
+    on success or an errno error code on failure. The toc file is
+    not locked. */
+  virtual int lock(bool sharedLock=FALSE);
+
+  /** Unlock a previously locked folder. */
+  virtual void unlock(void);
 
   /** Read the toc header only such that possible header information 
     (e.g. information about the associated accounts for KMAcctFolder)
@@ -94,8 +104,10 @@ public:
     Default is TRUE. */
   virtual void setAutoCreateToc(bool);
 
+  /** If set to quiet the folder will not emit signals. */
+  virtual void quiet(bool beQuiet);
 
-  //---| yet not implemented are: |--------------------------------------
+  //---| yet not implemented (and maybe not needed) are: |-------------------
   virtual int rename(const char* fileName);
   virtual long status(long/* = SA_MESSAGES | SA_RECENT | SA_UNSEEN*/);
   virtual void ping();
@@ -107,15 +119,20 @@ signals:
   void changed();
 
   /** Emitted when a message is removed from the folder. */
-  void msgRemoved(int id);
+  void msgRemoved(int);
 
   /** Emitted when a message is added from the folder. */
-  void msgAdded(int id);
+  void msgAdded(int);
 
   /** Emitted when a field of the header of a specific message changed. */
-  void msgHeaderChanged(int id);
+  void msgHeaderChanged(int);
 
 protected:
+  friend class KMMessage;
+
+  // Called from KMMessage::setStatus(). Do not use directly. */
+  virtual void setMsgStatus(KMMessage*, KMMessage::Status);
+
   // read message from file
   virtual void readMsg(int msgNo);
 
@@ -139,7 +156,7 @@ protected:
   FILE* mTocStream;	// table of contents file
   int mMsgs, mUnreadMsgs, mActiveMsgs;
   KMMsgInfoList mMsgInfo;
-  int mOpenCount;
+  int mOpenCount, mQuiet;
   bool mAutoCreateToc;  // is the automatic creation of a toc file allowed ?
 };
 

@@ -9,10 +9,7 @@
 #include <mimelib/utility.h>
 
 //-----------------------------------------------------------------------------
-KMMessagePart::KMMessagePart() : 
-  mType("Text"),
-  mSubtype("Plain"),
-  mCte("7bit")
+KMMessagePart::KMMessagePart() : mType("Text"), mSubtype("Plain"), mCte("7bit")
 {
 }
 
@@ -26,7 +23,7 @@ KMMessagePart::~KMMessagePart()
 //-----------------------------------------------------------------------------
 const char* KMMessagePart::typeStr(void) const
 {
-  return mType.data();
+  return mType.c_str();
 }
 
 
@@ -56,7 +53,7 @@ void KMMessagePart::setType(int aType)
 //-----------------------------------------------------------------------------
 const char* KMMessagePart::subtypeStr(void) const
 {
-  return mSubtype.data();
+  return mSubtype.c_str();
 }
 
 
@@ -85,7 +82,7 @@ void KMMessagePart::setSubtype(int aSubtype)
 //-----------------------------------------------------------------------------
 const char* KMMessagePart::contentTransferEncodingStr(void) const
 {
-  return mCte.data();
+  return mCte.c_str();
 }
 
 
@@ -111,6 +108,34 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 }
 
 
+//-----------------------------------------------------------------------------
+const char* KMMessagePart::contentDescription(void) const
+{
+  return mContentDescription.c_str();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessagePart::setContentDescription(const char* aStr)
+{
+  mContentDescription = aStr;
+}
+
+
+//-----------------------------------------------------------------------------
+const char* KMMessagePart::contentDisposition(void) const
+{
+  return mContentDisposition.c_str();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessagePart::setContentDisposition(const char* aStr)
+{
+  mContentDisposition = aStr;
+}
+
+ 
 //-----------------------------------------------------------------------------
 const char* KMMessagePart::body(long* len_ret) const
 {

@@ -16,12 +16,7 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 {
 	printf("Entering view:  msgno = %i \n",msgno);
 
-	kdeDir = getenv("KDEDIR");
-	if(!kdeDir)
-		{KMsgBox::message(0,"Ouuch","$KDEDIR not set.\nPlease do so");
-		qApp->quit();
-		}
-	picsDir.append(kdeDir);
+	picsDir = kapp->kdedir();
 	picsDir +="/lib/pics";
 
 	currentFolder = new KMFolder();
@@ -525,16 +520,8 @@ void KMReaderWin::setupMenuBar()
 
 void KMReaderWin::setupToolBar()
 {
-	QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
-	char *kdedir = getenv("KDEDIR");
-	if (kdedir) pixdir.append(kdedir);
-	 else 
-		{KMsgBox::message(0,"Oucch","$KDEDIR not set. Please do so");
-		qApp->quit();
-		}
+	QString pixdir = kapp->kdedir();
 	pixdir += "/lib/pics/toolbar/";
-
-
 
 	toolBar = new KToolBar(this);
 

@@ -12,50 +12,64 @@
 #include <kapp.h>
 
 class KMAccount;
+class KMAccountSettings;
 
-class KMAccountSettings : public QDialog {
-		Q_OBJECT
-	public:
-		KMAccountSettings(QWidget *parent=0,const char *name=0,KMAccount *a=NULL);
-	private:
-		QWidget *local,*remote;
-		QLineEdit *nameEdit,*locationEdit,*hostEdit,*portEdit,*mailboxEdit,*loginEdit,*passEdit;
-		QComboBox *typeList;
-		QRadioButton *accessMethod1,*accessMethod2,*accessMethod3;
-		KMAccount *account;
-		void changeType(int);
-	private slots:
-		void chooseLocation();
-		void typeSelected(int);
-	protected slots:
-		void accept();
+class KMSettings : public QTabDialog
+{
+  Q_OBJECT
+
+public:
+  KMSettings(QWidget *parent=0,const char *name=0);
+  ~KMSettings();
+
+protected slots:
+  virtual void done(int r);
+
+private slots:
+  void accountSelected(int);
+  void addAccount();
+  void chooseSendmailLocation();
+  void chooseSigFile();
+  void modifyAccount(int);
+  void modifyAccount2();
+  void removeAccount();
+  void setDefaults();
+
+private:
+  QWidget *identityTab,*networkTab;
+  QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
+  QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
+  QRadioButton *smtpRadio,*sendmailRadio;
+  QButtonGroup *incomingGroup,*outgoingGroup;
+  QListBox *accountList;
+  QPushButton *addButton,*modifyButton,*removeButton;
+  KConfig *config;
 };
 
-class KMSettings : public QTabDialog {
-		Q_OBJECT
-	public:
-		KMSettings(QWidget *parent=0,const char *name=0);
-		~KMSettings();
-	private:
-		QWidget *identityTab,*networkTab;
-		QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
-		QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
-		QRadioButton *smtpRadio,*sendmailRadio;
-		QButtonGroup *incomingGroup,*outgoingGroup;
-		QListBox *accountList;
-		QPushButton *addButton,*modifyButton,*removeButton;
-		KConfig *config;
-	private slots:
-		void accountSelected(int);
-		void addAccount();
-		void chooseSendmailLocation();
-		void chooseSigFile();
-		void modifyAccount(int);
-		void modifyAccount2();
-		void removeAccount();
-		void setDefaults();
-	protected slots:
-		virtual void done(int r);
+//-----------------------------------------------------------------------------
+class KMAccountSettings : public QDialog
+{
+  Q_OBJECT
+
+public:
+  KMAccountSettings(QWidget *parent=0,const char *name=0,KMAccount *a=NULL);
+
+protected slots:
+ void accept();
+
+private slots:
+  void chooseLocation();
+  void typeSelected(int);
+
+private:
+  void changeType(int);
+
+  QWidget *local,*remote;
+  QLineEdit *nameEdit,*locationEdit,*hostEdit,*portEdit,*mailboxEdit;
+  QLineEdit *loginEdit,*passEdit;
+  QComboBox *typeList;
+  QRadioButton *accessMethod1,*accessMethod2,*accessMethod3;
+  KMAccount *account;
 };
 
 #endif

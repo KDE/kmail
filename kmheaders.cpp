@@ -6,14 +6,9 @@
 #include "kmmessage.h"
 #include "kbusyptr.h"
 #include "kmdragdata.h"
+#include "kmglobal.h"
 #include <drag.h>
 #include <qstrlist.h>
-
-#define MFL_DEL 'D'
-#define MFL_NEW 'N'
-#define MFL_UNREAD 'U'
-
-extern KBusyPtr* kbp;
 
 
 //-----------------------------------------------------------------------------
@@ -34,6 +29,8 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
 		new QPixmap("pics/kmmsgunseen.xpm"));
   dict().insert(KMMessage::statusToStr(KMMessage::stDeleted),
 		new QPixmap("pics/kmmsgdel.xpm"));
+  dict().insert(KMMessage::statusToStr(KMMessage::stOld),
+		new QPixmap("pics/kmmsgold.xpm"));
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
@@ -45,22 +42,40 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *f)
 {
+  if (folder) 
+  {
+    disconnect(folder, SIGNAL(msgHeaderChanged(int)),
+	       this, SLOT(msgHeaderChanged(int)));
+  }
+
   folder=f;
+
+  if (folder)
+  {
+    connect(folder, SIGNAL(msgHeaderChanged(int)),
+	    this, SLOT(msgHeaderChanged(int)));
+  }
+
   updateMessageList();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setMsgUnread (int msgId)
+void KMHeaders::msgHeaderChanged(int msgId)
 {
-  KMMessage* msg;
+  char hdr[256];
+  KMMessage* msg = folder->getMsg(msgId);
+  KMMessage::Status flag;
 
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
-    //msg->clearStatus(F_SEEN);
-    changeItem(msg->status(), getMsgIndex, 0);
-    changeItemColor(darkBlue, getMsgIndex);
-  }
+  if (!msg) return;
+
+  flag = msg->status();
+  sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, msg->from(), msg->subject(), 
+	  msg->dateStr());
+  changeItem(hdr, msgId-1);
+
+  if (flag==KMMessage::stNew) changeItemColor(darkRed, msgId-1);
+  else if(flag==KMMessage::stUnread) changeItemColor(darkBlue, msgId-1);
 }
 
 
@@ -71,9 +86,9 @@ void KMHeaders::setMsgRead (int msgId)
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    //msg->setStatus(F_SEEN);
-    changeItem(msg->status(), getMsgIndex, 0);
-    changeItemColor(black, getMsgIndex);
+    msg->touch();
+    //changeItemPart(msg->status(), getMsgIndex, 0);
+    //changeItemColor(black, getMsgIndex);
   }
 }
 
@@ -85,8 +100,8 @@ void KMHeaders::deleteMsg (int msgId)
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {    
-    //msg->del();
-    changeItem(msg->status(), getMsgIndex, 0);
+    msg->del();
+    //changeItemPart(msg->status(), getMsgIndex, 0);
   }
 }
 
@@ -98,8 +113,8 @@ void KMHeaders::undeleteMsg (int msgId)
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    //msg->undel();
-    changeItem(msg->status(), getMsgIndex, 0);
+    msg->undel();
+    //changeItemPart(msg->status(), getMsgIndex, 0);
   }
 }
 
@@ -111,8 +126,8 @@ void KMHeaders::toggleDeleteMsg (int msgId)
 
   if (!(msg=getMsg(msgId))) return;
 
-  if (msg->status() != MFL_DEL) deleteMsg(msgId);
-  else undeleteMsg(msgId);
+  if (msg->status()==KMMessage::stDeleted) undeleteMsg(msgId);
+  else deleteMsg(msgId);
 }
 
 
@@ -217,14 +232,14 @@ KMMessage* KMHeaders::getMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::changeItem (char c, int itemIndex, int column)
+void KMHeaders::changeItemPart (char c, int itemIndex, int column)
 {
   char str[2];
 
   str[0] = c;
   str[1] = '\0';
 
-  KTabListBox::changeItem((const char*)str, itemIndex, column);
+  KTabListBox::changeItemPart((const char*)str, itemIndex, column);
 }
 
 
@@ -247,7 +262,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
   if (idx >= 0)
   {
     msg = getMsg(idx);
-    if (msg->status()=='D') undeleteMsg(idx);
+    if (msg->status()==KMMessage::stDeleted) undeleteMsg(idx);
     else deleteMsg(idx);
   }
 }
@@ -258,7 +273,7 @@ void KMHeaders::updateMessageList(void)
 {
   long i;
   char hdr[256];
-  char flag;
+  KMMessage::Status flag;
   KMMessage* msg;
 
   clear();
@@ -266,17 +281,21 @@ void KMHeaders::updateMessageList(void)
 
   kbp->busy();
   setAutoUpdate(FALSE);
+  folder->quiet(TRUE);
+
   for (i = 1; i <= folder->numMsgs(); i++)
   {
     msg  = folder->getMsg(i);
     flag = msg->status();
-    sprintf(hdr, "%c\n%s\n%s\n%s", flag, msg->from(), msg->subject(), 
+    sprintf(hdr, "%c\n%s\n%s\n%s", (char)flag, msg->from(), msg->subject(), 
     	    msg->dateStr());
     insertItem(hdr);
 
-    if (flag=='N') changeItemColor(darkRed);
-    else if(flag=='U') changeItemColor(darkBlue);
+    if (flag==KMMessage::stNew) changeItemColor(darkRed);
+    else if(flag==KMMessage::stUnread) changeItemColor(darkBlue);
   }
+
+  folder->quiet(FALSE);
   setAutoUpdate(TRUE);
   repaint();
   kbp->idle();

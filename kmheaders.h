@@ -16,13 +16,12 @@ public:
   virtual void setFolder(KMFolder *);
   KMFolder* currentFolder(void) { return folder; }
 
-  virtual void changeItem (char c, int itemIndex, int column);
-	// Change part of the contents of a line
+  /** Change part of the contents of a line */
+  virtual void changeItemPart (char c, int itemIndex, int column);
 
-  // The following methods process the message in the folder with
-  // the given msgId, or if no msgId is given all selected
-  // messages are processed.
-  virtual void setMsgUnread(int msgId=-1);
+  /** The following methods process the message in the folder with
+    the given msgId, or if no msgId is given all selected
+    messages are processed. */
   virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
   virtual void undeleteMsg(int msgId=-1);
@@ -30,18 +29,19 @@ public:
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
+  /** Delete/undelete message(s) depending on the flag of
+    the first selected message. */
   virtual void toggleDeleteMsg(int msgId=-1);
-	// Delete/undelete message(s) depending on the flag of
-	// the first selected message.
 
+
+  /** Returns message with given id or current message if no
+    id is given. First call with msgId==-1 returns first
+    selected message, subsequent calls with no argument
+    return the following selected messages. */
   KMMessage* getMsg (int msgId=-2);
-	// Returns message with given id or current message if no
-	// id is given. First call with msgId==-1 returns first
-	// selected message, subsequent calls with no argument
-	// return the following selected messages.
 
+  /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
-	// Returns index of message returned by last getMsg() call
 
 signals:
   virtual void messageSelected(KMMessage *);
@@ -50,6 +50,7 @@ signals:
 protected slots:
   void selectMessage(int msgId, int colId);
   void highlightMessage(int msgId, int colId);
+  void msgHeaderChanged(int msgId);
 
 protected:
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 

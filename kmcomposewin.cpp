@@ -5,6 +5,7 @@
 #include "kmcomposewin.moc"
 #include "kmmainwin.h"
 #include "kmmessage.h"
+#include "kmglobal.h"
 #include <iostream.h>
 #include <qwidget.h>
 #include <sys/stat.h>
@@ -708,9 +709,7 @@ void KMComposeWin::setupMenuBar()
 void KMComposeWin::setupToolBar()
 {
 	QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
-	char *kdedir = getenv("KDEDIR");
-	if (kdedir) pixdir.append(kdedir);
-	 else pixdir.append("/usr/local/kde");
+	pixdir = kapp->kdedir();
 	pixdir.append("/lib/pics/toolbar/");
 
 	toolBar = new KToolBar(this);

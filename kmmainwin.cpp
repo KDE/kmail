@@ -17,6 +17,7 @@
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmfolder.h"
+#include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmmainview.h"
 
@@ -104,10 +105,7 @@ void KMMainWin::setupMenuBar()
 
 void KMMainWin::setupToolBar()
 {
-	QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
-	char *kdedir = getenv("KDEDIR");
-	if (kdedir) pixdir.append(kdedir);
-	 else pixdir.append("/usr/local/kde");
+	QString pixdir = kapp->kdedir();
 	pixdir.append("/lib/pics/toolbar/");
 
 	toolBar = new KToolBar(this);

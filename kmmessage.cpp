@@ -1,10 +1,12 @@
 // kmmessage.cpp
 
 #include "kmmessage.h"
+#include "kmmsgpart.h"
 #include "kmfolder.h"
 
 #include <mimelib/mimepp.h>
 
+static DwString emptyString("");
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage()
@@ -57,8 +59,7 @@ const char* KMMessage::asString(void)
 void KMMessage::setStatus(Status aStatus)
 {
   mStatus = aStatus;
-
-  //if (mOwner) mOwner->setMsgStatus(this, mStatus);
+  if (mOwner) mOwner->setMsgStatus(this, mStatus);
 }
 
 
@@ -68,6 +69,17 @@ const char* KMMessage::statusToStr(Status aSt)
   static char str[2] = " ";
   str[0] = (char)aSt;
   return str;
+}
+
+
+//-----------------------------------------------------------------------------
+KMMessage* KMMessage::reply(void)
+{
+  KMMessage* msg = new KMMessage;
+
+  warning("KMMessage::reply()\nneeds implementation !");
+
+  return msg;
 }
 
 
@@ -351,4 +363,155 @@ int KMMessage::numBodyParts(void) const
     part = part->Next();
 
   return count;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart)
+{
+  DwBodyPart* part;
+  DwHeaders* headers;
+  int curIdx;
+
+  // Get the DwBodyPart for this index
+  part = mMsg->Body().FirstBodyPart();
+  for (curIdx=0; curIdx < aIdx && part; ++curIdx)
+    part = part->Next();
+
+  // If the DwBodyPart was found get the header fields and body
+  if (part)
+  {
+    headers = &part->Headers();
+
+    // Content-type
+    if (headers->HasContentType())
+    {
+      aPart->setTypeStr(headers->ContentType().TypeStr().c_str());
+      aPart->setSubtypeStr(headers->ContentType().SubtypeStr().c_str());
+    }
+    else
+    {
+      aPart->setTypeStr("Text");      // Set to defaults
+      aPart->setSubtypeStr("Plain");
+    }
+
+    // Content-transfer-encoding
+    if (headers->HasContentTransferEncoding())
+      aPart->setCteStr(headers->ContentTransferEncoding().AsString().c_str());
+    else 
+      aPart->setCteStr("7bit");
+
+    // Content-description
+    if (headers->HasContentDescription())
+      aPart->setContentDescription(headers->ContentDescription().AsString().c_str());
+    else 
+      aPart->setContentDescription("");
+
+    // Content-disposition
+    if (headers->HasContentDisposition())
+      aPart->setContentDisposition(headers->ContentDisposition().AsString().c_str());
+    else 
+      aPart->setContentDisposition("");
+
+    // Body
+    aPart->setBody(part->Body().AsString().c_str());
+  }
+
+  // If the body part was not found, set all MultipartBodyPart attributes
+  // to empty values.  This only happens if you don't pay attention to
+  // the value returned from NumberOfParts().
+  else
+  {
+    aPart->setTypeStr("");
+    aPart->setSubtypeStr("");
+    aPart->setCteStr("");
+    aPart->setContentDescription("");
+    aPart->setContentDisposition("");
+    aPart->setBody("");
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
+{
+  DwBody&     body = mMsg->Body();
+  DwBodyPart* part = 0;
+  int         numParts = numBodyParts();
+
+  assert(aIdx >= 0);
+  assert(aPart != NULL);
+
+  // If indexed part exists already, just replace its values
+  if (aIdx < numParts)
+  {
+    part = body.FirstBodyPart();
+    for (int curIdx=0; curIdx < aIdx; ++curIdx)
+      part = part->Next();
+  }
+  // Otherwise, add as many new parts as necessary.
+  else if (numParts <= aIdx)
+  {
+    while (numParts <= aIdx)
+    {
+      part = DwBodyPart::NewBodyPart(emptyString, 0);
+      body.AddBodyPart(part);
+      ++numParts;
+    }
+  }
+
+  const DwString type     = aPart->typeStr();
+  const DwString subtype  = aPart->subtypeStr();
+  const DwString cte      = aPart->cteStr();
+  const DwString contDesc = aPart->contentDescription();
+  const DwString contDisp = aPart->contentDisposition();
+  const DwString bodyStr  = aPart->body();
+
+  DwHeaders& headers = part->Headers();
+  if (type != "" && subtype != "")
+  {
+    headers.ContentType().SetTypeStr(type);
+    headers.ContentType().SetSubtypeStr(subtype);
+  }
+  if (cte != "")
+    headers.Cte().FromString(cte);
+
+  if (contDesc != "")
+    headers.ContentDescription().FromString(contDesc);
+
+  if (contDisp != "")
+    headers.ContentDisposition().FromString(contDisp);
+
+  part->Body().FromString(bodyStr); 
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::addBodyPart(const KMMessagePart* aPart)
+{
+  DwBodyPart* part = DwBodyPart::NewBodyPart(emptyString, 0);
+
+  const DwString type     = aPart->typeStr();
+  const DwString subtype  = aPart->subtypeStr();
+  const DwString cte      = aPart->cteStr();
+  const DwString contDesc = aPart->contentDescription();
+  const DwString contDisp = aPart->contentDisposition();
+  const DwString bodyStr  = aPart->body();
+
+  DwHeaders& headers = part->Headers();
+  if (type != "" && subtype != "")
+  {
+    headers.ContentType().SetTypeStr(type);
+    headers.ContentType().SetSubtypeStr(subtype);
+  }
+  if (cte != "")
+    headers.Cte().FromString(cte);
+
+  if (contDesc != "")
+    headers.ContentDescription().FromString(contDesc);
+
+  if (contDisp != "")
+    headers.ContentDisposition().FromString(contDisp);
+
+  part->Body().FromString(bodyStr); 
 }

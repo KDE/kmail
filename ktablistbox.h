@@ -76,7 +76,7 @@ public:
   virtual void changeItem (const char* string, int itemIndex);
 
   /** Change part of the contents of a line. */
-  virtual void changeItem (const char* string, int itemIndex, int column);
+  virtual void changeItemPart (const char* string, int itemIndex, int column);
 
   /** Change color of line. */
   virtual void changeItemColor (const QColor& color, int itemIndex=-1);
