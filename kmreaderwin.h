@@ -376,6 +376,9 @@ protected:
   virtual void writePartIcon(KMMessagePart* msgPart, int partNumber,
     bool quiet = FALSE);
 
+  /** show window containing infos about a vCard. */
+  virtual void showVCard(KMMessagePart *msgPart, const QTextCodec *codec);
+  
   /** Convert given string to HTML. Converts blanks and tabs at
     beginning of line to non-breakable spaces if preserveLeadingBlanks
     is TRUE. */

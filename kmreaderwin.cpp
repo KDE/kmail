@@ -26,8 +26,9 @@
 #include "kmsender.h"
 #include "kcursorsaver.h"
 #include "mailinglist-magic.h"
-#include "kmdisplayvcard.h"
 #include "kmkernel.h"
+#include "vcardviewer.h"
+using KMail::VCardViewer;
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #include "partmetadata.h"
@@ -68,6 +69,15 @@ using namespace KMime;
 #include <krun.h>
 #include <ktempfile.h>
 #include <kprocess.h>
+#include <kdialog.h>
+
+// libkdepim headers
+#include <addresseeview.h>
+using KPIM::AddresseeView;
+
+// KABC includes
+#include <kabc/addressee.h>
+#include <kabc/vcardconverter.h>
 
 // khtml headers
 #include <khtml_part.h>
@@ -79,6 +89,8 @@ using namespace KMime;
 #include <qhbox.h>
 #include <qtextcodec.h>
 #include <qpaintdevicemetrics.h>
+#include <qlayout.h>
+#include <qlabel.h>
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
@@ -1486,9 +1498,6 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
       mainCntTypeStr.truncate( scpos );
   }
 
-  VCard *vc = 0;
-  bool hasVCard = false;
-
   // store message body in mRootNode if *no* body parts found
   // (please read the comment below before crying about me)  :-)
   DwBodyPart* mainBody = 0;
@@ -1553,18 +1562,21 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   }
 
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
+  bool hasVCard = false;
   if( vCardNode ) {
-    int vcerr;
     const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
       KMMsgBase::codecForName(vCardNode->msgPart().charset()) : mCodec;
+
     if (!atmCodec) atmCodec = mCodec;
-    vc = VCard::parseVCard(atmCodec->toUnicode(
-            vCardNode->msgPart().bodyDecoded() ),
-            &vcerr);
-    if( vc ) {
-      delete vc;
-      kdDebug(5006) << "FOUND A VALID VCARD" << endl;
+    QString vcard = atmCodec->toUnicode(vCardNode->msgPart().bodyDecoded());
+    KABC::VCardConverter vc;
+	KABC::Addressee a;
+    bool isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v3_0);
+    if (!isOk)
+      isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v2_1);
+    if( isOk ) {
       hasVCard = true;
+      kdDebug(5006) << "FOUND A VALID VCARD" << endl;
       writePartIcon(&vCardNode->msgPart(), aMsg->partNumber(vCardNode->dwPart()), TRUE );
     }
   }
@@ -2662,6 +2674,17 @@ void KMReaderWin::writePartIcon( KMMessagePart* aMsgPart, int aPartNum,
 
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::showVCard(KMMessagePart *msgPart, const QTextCodec *codec)
+{
+  QString vCard = codec->toUnicode(msgPart->bodyDecoded());
+
+  VCardViewer *vcv = new VCardViewer(this, vCard, "vCardDialog");
+  vcv->show();
+
+  return;
+}
+
+//-----------------------------------------------------------------------------
 QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 {
   return LinkLocator::convertToHtml(aStr, aPreserveBlanks);
@@ -2998,22 +3021,8 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       setAutoDelete(true);
   } else if (qstricmp(aMsgPart->typeStr(), "text")==0) {
       if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
-	KMDisplayVCard *vcdlg;
-	int vcerr;
-	VCard *vc = VCard::parseVCard(aCodec->toUnicode(
- 	aMsgPart->bodyDecoded()), &vcerr);
-	if (!vc) {
-          QString errstring = i18n("Error reading in vCard:\n");
-	  errstring += VCard::getError(vcerr);
-          // force idling, not just restore
-          KCursorSaver idle(KBusyPtr::idle());
-	  KMessageBox::error(0, errstring, i18n("vCard error"));
-	  return;
-	}
-
-	vcdlg = new KMDisplayVCard(vc);
-	vcdlg->show();
-	return;
+        showVCard(aMsgPart, aCodec);
+		return;
       }
       if ( aCodec )
 	setCodec( aCodec );
@@ -3148,24 +3157,12 @@ void KMReaderWin::slotAtmOpen()
   if (qstricmp(msgPart.typeStr(), "text") == 0)
   {
     if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
-      KMDisplayVCard *vcdlg;
-      int vcerr;
       const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
-        KMMsgBase::codecForName(msgPart.charset()) : mCodec;
-      if (!atmCodec) atmCodec = mCodec;
-      VCard *vc = VCard::parseVCard(atmCodec->toUnicode(msgPart
-        .bodyDecoded()), &vcerr);
+          KMMsgBase::codecForName(msgPart.charset()) : mCodec;
+     if (!atmCodec) atmCodec = mCodec;
 
-      if (!vc) {
-        QString errstring = i18n("Error reading in vCard:\n");
-        errstring += VCard::getError(vcerr);
-        KMessageBox::error(this, errstring, i18n("vCard error"));
-        return;
-      }
-
-      vcdlg = new KMDisplayVCard(vc);
-      vcdlg->show();
-      return;
+     showVCard(&msgPart, atmCodec);
+     return;
     }
   }
 

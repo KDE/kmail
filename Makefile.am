@@ -50,8 +50,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailicalIface.skel \
-		accountdialog.cpp kmfldsearch.cpp \
-		kmdisplayvcard.cpp vcard.cpp \
+		accountdialog.cpp kmfldsearch.cpp vcardviewer.cpp \
 		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		directoryservicesconfigurationdialogimpl.cpp \
