@@ -42,17 +42,17 @@
 #include "transportmanager.h"
 #include "kmkernel.h"
 #include "dictionarycombobox.h"
-
+#include "kleo_util.h"
 
 // other kdepim headers:
 // libkdepim
 #include <libkpimidentities/identity.h>
+#include <libkdepim/addresseelineedit.h>
 // libkleopatra:
 #include <ui/keyrequester.h>
 #include <kleo/cryptobackendfactory.h>
 
 // other KDE headers:
-#include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
@@ -70,26 +70,6 @@
 #include <gpgmepp/key.h>
 #include <iterator>
 #include <algorithm>
-
-static const Kleo::CryptoMessageFormat cryptoMessageFormats[] = {
-  Kleo::AutoFormat,
-  Kleo::InlineOpenPGPFormat,
-  Kleo::OpenPGPMIMEFormat,
-  Kleo::SMIMEFormat,
-  Kleo::SMIMEOpaqueFormat,
-};
-static const int numCryptoMessageFormats = sizeof cryptoMessageFormats / sizeof *cryptoMessageFormats ;
-
-static inline Kleo::CryptoMessageFormat cb2format( int idx ) {
-  return cryptoMessageFormats[ idx >= 0 || idx < numCryptoMessageFormats ? idx : 0 ];
-}
-
-static inline int format2cb( Kleo::CryptoMessageFormat f ) {
-  for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
-    if ( f == cryptoMessageFormats[i] )
-      return i;
-  return 0;
-}
 
 namespace KMail {
 
@@ -302,7 +282,7 @@ namespace KMail {
 
     // "Reply-To Address" line edit and label:
     ++row;
-    mReplyToEdit = new KLineEdit( tab );
+    mReplyToEdit = new KPIM::AddresseeLineEdit( tab, true, "mReplyToEdit" );
     glay->addWidget( mReplyToEdit, row, 1 );
     label = new QLabel ( mReplyToEdit, i18n("&Reply-To address:"), tab);
     glay->addWidget( label , row, 0 );
@@ -321,7 +301,7 @@ namespace KMail {
 
     // "BCC addresses" line edit and label:
     ++row;
-    mBccEdit = new KLineEdit( tab );
+    mBccEdit = new KPIM::AddresseeLineEdit( tab, true, "mBccEdit" );
     glay->addWidget( mBccEdit, row, 1 );
     label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
     glay->addWidget( label, row, 0 );
@@ -331,6 +311,8 @@ namespace KMail {
                "be visible to other recipients.</p>"
                "<p>This is commonly used to send a copy of each sent message to "
                "another account of yours.</p>"
+               "<p>To specify more than one address, use commas to separate "
+               "the list of BCC recipients.</p>"
                "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mBccEdit, msg );
@@ -476,7 +458,7 @@ namespace KMail {
       return KDialogBase::slotOk();
 
     if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
-					     i18n("EMail Address Not Found in Key/Certificates"),
+					     i18n("Email Address Not Found in Key/Certificates"),
 					     KStdGuiItem::cont(), "warn_email_not_in_certificate" )
 	 == KMessageBox::Continue )
       return KDialogBase::slotOk();

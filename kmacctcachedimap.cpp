@@ -1,7 +1,7 @@
 /**
  *  kmacctcachedimap.cpp
  *
- *  Copyright (c) 2002-2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+ *  Copyright (c) 2002-2004 Bo Thorsen <bo@sonofthor.dk>
  *  Copyright (c) 2002-2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,6 @@ using KMail::SieveConfig;
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "progressmanager.h"
-#include "progressdialog.h"
 
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
@@ -70,7 +69,7 @@ KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 //-----------------------------------------------------------------------------
 KMAcctCachedImap::~KMAcctCachedImap()
 {
-  killAllJobs( true );
+  killAllJobsInternal( true );
 }
 
 
@@ -124,6 +123,20 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
   //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
+  QValueList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
+  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+    KMFolderCachedImap *fld = *it;
+    fld->resetSyncState();
+    fld->setContentState(KMFolderCachedImap::imapNoInformation);
+    fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
+    fld->sendFolderComplete(FALSE);
+  }
+}
+
+//-----------------------------------------------------------------------------
+// Common between killAllJobs and the destructor - which shouldn't call sendFolderComplete
+QValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnectSlave )
+{
   // Make list of folders to reset. This must be done last, since folderComplete
   // can trigger the next queued mail check already.
   QValueList<KMFolderCachedImap*> folderList;
@@ -144,17 +157,11 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     it.current()->setPassiveDestructor( true );
   KMAccount::deleteFolderJobs();
 
-  if ( disconnectSlave && slave() ) {
-    KIO::Scheduler::disconnectSlave( slave() );
+  if ( disconnectSlave && mSlave ) {
+    KIO::Scheduler::disconnectSlave( mSlave );
     mSlave = 0;
   }
-  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
-    KMFolderCachedImap *fld = *it;
-    fld->resetSyncState();
-    fld->setContentState(KMFolderCachedImap::imapNoInformation);
-    fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-    fld->sendFolderComplete(FALSE);
-  }
+  return folderList;
 }
 
 //-----------------------------------------------------------------------------
@@ -236,13 +243,8 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mNoopTimer.stop();
 
   if( interactive && isProgressDialogEnabled() ) {
-    // Show progress dialog in all kmail-mainwidgets.
-    QPtrList<KMMainWidget>* lst = KMMainWidget::mainWidgetList();
-    if ( lst ) {
-      for( QPtrListIterator<KMMainWidget> it( *lst ); *it; ++it ) {
-        (*it)->progressDialog()->setVisible( true );
-      }
-    }
+    // Show progress dialog in all listeners.
+    KPIM::ProgressManager::emitShowProgressDialog();
   }
 
   Q_ASSERT( !mMailCheckProgressItem );
@@ -410,10 +412,15 @@ void KMAcctCachedImap::removeRenamedFolder( const QString& subFolderPath )
 
 void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
 {
-  killAllJobs( false );
+  bool abortConnection = !mSlaveConnected;
+  killAllJobs( abortConnection );
+  if ( abortConnection ) {
+    // If we were trying to connect, tell kmfoldercachedimap so that it moves on
+    emit connectionResult( KIO::ERR_USER_CANCELED, QString::null );
+  }
 }
 
-FolderStorage* KMAcctCachedImap::rootFolder()
+FolderStorage* const KMAcctCachedImap::rootFolder() const
 {
   return mFolder;
 }

@@ -37,6 +37,7 @@
 #include "rulewidgethandlermanager.h"
 
 #include "interfaces/rulewidgethandler.h"
+#include "stl_util.h"
 
 #include <kdebug.h>
 
@@ -205,15 +206,9 @@ KMail::RuleWidgetHandlerManager::RuleWidgetHandlerManager()
   registerHandler( new TextRuleWidgetHandler() );
 }
 
-namespace {
-  template <typename T> struct Delete {
-    void operator()( const T * x ) { delete x; x = 0; }
-  };
-}
-
 KMail::RuleWidgetHandlerManager::~RuleWidgetHandlerManager()
 {
-  for_each( mHandlers.begin(), mHandlers.end(), Delete<RuleWidgetHandler>() );
+  for_each( mHandlers.begin(), mHandlers.end(), DeleteAndSetToZero<RuleWidgetHandler> );
 }
 
 void KMail::RuleWidgetHandlerManager::registerHandler( const RuleWidgetHandler * handler )
@@ -1057,7 +1052,7 @@ namespace {
 
     QComboBox *statusCombo = new QComboBox( valueStack,
                                             "statusRuleValueCombo" );
-    for ( int i = 0; i < KMail::StatusValueCount; ++i ) {
+    for ( int i = 0; i < KMail::StatusValueCountWithoutHidden; ++i ) {
       statusCombo->insertItem( i18n( KMail::StatusValues[i] ) );
     }
     statusCombo->adjustSize();
@@ -1217,7 +1212,7 @@ namespace {
     // set the value
     const QString value = rule->contents();
     int valueIndex = 0;
-    for ( ; valueIndex < KMail::StatusValueCount; ++valueIndex )
+    for ( ; valueIndex < KMail::StatusValueCountWithoutHidden; ++valueIndex )
       if ( value == QString::fromLatin1(
                KMail::StatusValues[valueIndex] ) )
         break;
@@ -1226,7 +1221,7 @@ namespace {
                                                    0, false ) );
     if ( statusCombo ) {
       statusCombo->blockSignals( true );
-      if ( valueIndex < KMail::StatusValueCount )
+      if ( valueIndex < KMail::StatusValueCountWithoutHidden )
         statusCombo->setCurrentItem( valueIndex );
       else {
         kdDebug(5006) << "StatusRuleWidgetHandler::setRule( "

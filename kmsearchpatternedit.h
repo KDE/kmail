@@ -44,6 +44,12 @@ public:
       be used to initialize the widget. */
   KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
 
+  enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
+
+  /** Set whether only header fields can be searched. If @p is true only
+      header fields can be searched otherwise <message> and <body> searches
+      are available also. */
+  void setHeadersOnly( bool headersOnly );
   /** Set the rule. The rule is accepted regardless of the return
       value of @ref KMSearchRule::isEmpty. This widget makes a shallow
       copy of @p aRule and operates directly on it. If @p aRule is
@@ -90,6 +96,7 @@ private:
   QComboBox *mRuleField;
   QWidgetStack *mFunctionStack;
   QWidgetStack *mValueStack;
+  bool mAbsoluteDates;
 };
 
 
@@ -105,6 +112,7 @@ public:
   virtual ~KMSearchRuleWidgetLister();
 
   void setRuleList( QPtrList<KMSearchRule> * aList );
+  void setHeadersOnly( bool headersOnly );
 
 public slots:
   void reset();
@@ -169,6 +177,10 @@ public:
       widget makes a shallow copy of @p aPattern and operates directly
       on it. */
   void setSearchPattern( KMSearchPattern* aPattern );
+  /** Set whether only header fields can be searched. If @p is true only
+      header fields can be searched otherwise <message> and <body> searches
+      are available also. */
+  void setHeadersOnly( bool headersOnly );
 
   /** Updates the search pattern according to the current widget values */
   void updateSearchPattern() { mRuleLister->regenerateRuleListFromWidgets(); }

@@ -61,7 +61,7 @@ namespace KMail {
 
 	 @return the result code (see above)
       */
-      virtual Result format( BodyPart * part, HtmlWriter * writer ) const = 0;
+      virtual Result format( BodyPart * part, KMail::HtmlWriter * writer ) const = 0;
     };
 
     /**

@@ -13,6 +13,7 @@
 class QPopupMenu;
 class QTextCodec;
 class KMainWindow;
+class KAction;
 class KProgressDialog;
 class KMComposeWin;
 class KMFilter;
@@ -47,6 +48,12 @@ public:
   KMCommand( QWidget *parent, KMMessage *message );
   virtual ~KMCommand();
 
+  /** These folders will be closed by the dtor, handy, if you need to keep
+      a folder open during the lifetime of the command, but don't want to
+      care about closing it again.
+   */
+  void keepFolderOpen( KMFolder *folder );
+
   /** Returns the result of the command. Only call this method from the slot
       connected to completed().
   */
@@ -55,6 +62,9 @@ public:
 public slots:
   // Retrieve messages then calls execute
   void start();
+
+  // advance the progressbar, emitted by the folderjob
+  void slotProgress( unsigned long done, unsigned long total );
 
 signals:
   void messagesTransfered( KMCommand::Result result );
@@ -502,12 +512,14 @@ class KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMMessage *msg, bool htmlOverride=false );
+  KMPrintCommand( QWidget *parent, KMMessage *msg, 
+                  bool htmlOverride=false, const QTextCodec *codec = 0 );
 
 private:
   virtual Result execute();
 
   bool mHtmlOverride;
+  const QTextCodec *mCodec;
 };
 
 class KMSetStatusCommand : public KMCommand
@@ -576,6 +588,27 @@ private:
   KMMainWidget *mMainWidget;
 };
 
+class FolderShortcutCommand : public QObject
+{
+  Q_OBJECT
+
+public:
+  FolderShortcutCommand( KMMainWidget* mainwidget, KMFolder *folder );
+  ~FolderShortcutCommand();
+
+public slots:
+  void start();
+  /** Assign a KActio to the command which is used to trigger it. This 
+   * action will be deleted along with the command, so you don't need to
+   * keep track of it separately. */
+  void setAction( KAction* );
+
+private:
+  KMMainWidget *mMainWidget;
+  KMFolder *mFolder;
+  KAction *mAction;
+};
+
 
 class KMMailingListFilterCommand : public KMCommand
 {
@@ -594,7 +627,7 @@ private:
       move is TRUE this slot will cause all selected messages to
       be moved into the given folder, otherwise messages will be
       copied.
-      Am empty @ref KMMenuToFolder must be passed in. */
+      Am empty @see KMMenuToFolder must be passed in. */
 
 class KMMenuCommand : public KMCommand
 {
@@ -635,11 +668,18 @@ public:
   KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList );
   KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
   KMMoveCommand( KMFolder* destFolder, KMMsgBase * msgBase );
+  KMFolder* destFolder() const { return mDestFolder; }
 
 public slots:
   void slotImapFolderCompleted(KMFolderImap *folder, bool success);
   void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
   void slotMoveCanceled();
+
+protected:
+  // Needed for KMDeleteCommand for "move to trash"
+  KMMoveCommand( Q_UINT32 sernum );
+  void setDestFolder( KMFolder* folder ) { mDestFolder = folder; }
+  void addMsg( KMMsgBase *msg ) { mMsgList.append( msg ); }
 
 private:
   virtual Result execute();
@@ -660,9 +700,11 @@ class KMDeleteMsgCommand : public KMMoveCommand
 public:
   KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList );
   KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg );
+  KMDeleteMsgCommand( Q_UINT32 sernum );
 
 private:
   static KMFolder * findTrashFolder( KMFolder * srcFolder );
+
 };
 
 class KMUrlClickedCommand : public KMCommand

@@ -25,9 +25,8 @@ using KMail::RuleWidgetHandlerManager;
 // Definition of special rule field strings
 // Note: Also see KMSearchRule::matches() and ruleFieldToEnglish() if
 //       you change the following i18n-ized strings!
-enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
 // Note: The index of the values in the following array has to correspond to
-//       the value of the entries in the previous enum.
+//       the value of the entries in the enum in KMSearchRuleWidget.
 static const struct {
   const char *internalName;
   const char *displayName;
@@ -55,7 +54,8 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
   : QWidget( parent, name ),
     mRuleField( 0 ),
     mFunctionStack( 0 ),
-    mValueStack( 0 )
+    mValueStack( 0 ),
+    mAbsoluteDates( absoluteDates )
 {
   initFieldList( headersOnly, absoluteDates );
   initWidget();
@@ -64,6 +64,23 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
     setRule( aRule );
   else
     reset();
+}
+
+void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
+{
+  QCString currentText = rule()->field();
+  initFieldList( headersOnly, mAbsoluteDates );
+  
+  mRuleField->clear();
+  mRuleField->insertStringList( mFilterFieldList );
+  mRuleField->setSizeLimit( mRuleField->count() );
+  mRuleField->adjustSize();
+
+  if ((currentText != "<message>") &&
+      (currentText != "<body>"))
+    mRuleField->changeItem( QString( currentText ), 0 );
+  else
+    mRuleField->changeItem( QString::null, 0 );
 }
 
 void KMSearchRuleWidget::initWidget()
@@ -202,6 +219,7 @@ int KMSearchRuleWidget::indexOfRuleField( const QCString & aName ) const
 
 void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
 {
+  mFilterFieldList.clear();
   mFilterFieldList.append(""); // empty entry for user input
   if( !headersOnly ) {
     mFilterFieldList.append( i18n( SpecialRuleFields[Message].displayName ) );
@@ -297,6 +315,14 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
 
   assert( mWidgetList.first() );
   mWidgetList.first()->blockSignals(FALSE);
+}
+
+void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
+{
+  QPtrListIterator<QWidget> wIt( mWidgetList );
+  for ( wIt.toFirst() ; wIt.current() ; ++wIt ) {
+    (static_cast<KMSearchRuleWidget*>(*wIt))->setHeadersOnly( headersOnly );
+  }
 }
 
 void KMSearchRuleWidgetLister::reset()
@@ -407,6 +433,11 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
   blockSignals(FALSE);
 
   setEnabled( TRUE );
+}
+
+void KMSearchPatternEdit::setHeadersOnly( bool headersOnly )
+{
+  mRuleLister->setHeadersOnly( headersOnly );
 }
 
 void KMSearchPatternEdit::reset()

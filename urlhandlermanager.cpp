@@ -43,6 +43,7 @@
 #include "kmreaderwin.h"
 #include "callback.h"
 #include "kimproxy.h"
+#include "stl_util.h"
 
 #include <kurl.h>
 
@@ -70,18 +71,6 @@ namespace {
   public:
     SMimeURLHandler() : KMail::URLHandler() {}
     ~SMimeURLHandler() {}
-
-    bool handleClick( const KURL &, KMReaderWin * ) const;
-    bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
-      return false;
-    }
-    QString statusBarMessage( const KURL &, KMReaderWin * ) const;
-  };
-
-  class GroupwareURLHandler : public KMail::URLHandler {
-  public:
-    GroupwareURLHandler() : KMail::URLHandler() {}
-    ~GroupwareURLHandler() {}
 
     bool handleClick( const KURL &, KMReaderWin * ) const;
     bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const {
@@ -139,12 +128,6 @@ namespace {
 } // anon namespace
 
 
-namespace {
-  template <typename T> struct Delete {
-    void operator()( const T * x ) { delete x; x = 0; }
-  };
-}
-
 //
 //
 // BodyPartURLHandlerManager
@@ -170,7 +153,7 @@ private:
 
 KMail::URLHandlerManager::BodyPartURLHandlerManager::~BodyPartURLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    Delete<Interface::BodyPartURLHandler>() );
+	    DeleteAndSetToZero<Interface::BodyPartURLHandler> );
 }
 
 void KMail::URLHandlerManager::BodyPartURLHandlerManager::registerHandler( const Interface::BodyPartURLHandler * handler ) {
@@ -214,8 +197,9 @@ bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KUR
   partNode * node = partNodeFromXKMailUrl( url, w, &path );
   if ( !node )
     return false;
-
-  Callback callback( w->message() );
+  KMMessage *msg = w->message();
+  if ( !msg ) return false;
+  Callback callback( msg );
   KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
   for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( &part, path, callback ) )
@@ -260,7 +244,6 @@ QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( c
 KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new ShowHtmlSwitchURLHandler() );
   registerHandler( new SMimeURLHandler() );
-//  registerHandler( new GroupwareURLHandler() );
   registerHandler( new MailToURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
@@ -270,7 +253,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
 
 KMail::URLHandlerManager::~URLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    Delete<URLHandler>() );
+	    DeleteAndSetToZero<URLHandler> );
 }
 
 void KMail::URLHandlerManager::registerHandler( const URLHandler * handler ) {
@@ -327,7 +310,6 @@ QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWi
 
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
-#include "kmgroupware.h"
 #include "kmmessage.h"
 #include "kmkernel.h"
 #include "kmreaderwin.h"
@@ -395,25 +377,6 @@ namespace {
     if ( !foundSMIMEData( url.path() + '#' + url.ref(), displayName, libName, keyId ) )
       return QString::null;
     return i18n("Show certificate 0x%1").arg( keyId );
-  }
-}
-
-namespace {
-  bool GroupwareURLHandler::handleClick( const KURL & url, KMReaderWin * w ) const {
-    if ( !kmkernel->groupware().isEnabled() )
-      return false;
-    return !w || kmkernel->groupware().handleLink( url, w->message() );
-  }
-
-  QString GroupwareURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
-    QString type, action, action2, dummy;
-    if ( url.url().find( "groupware_" ) == -1 ) return QString::null;
-    //if ( !KMGroupware::foundGroupwareLink( url.url(), type, action, action2, dummy ) )
-    //  return QString::null;
-    QString result = type + ' ' + action;
-    if ( !action2.isEmpty() )
-      result += ' ' + action2;
-    return i18n("Groupware: \"%1\"").arg( result );
   }
 }
 

@@ -22,68 +22,6 @@
 
 #include <qregexp.h>
 
-void KabcBridge::addresses(QStringList& result) // includes lists
-{
-  KCursorSaver busy(KBusyPtr::busy()); // loading might take a while
-
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-  KABC::AddressBook::ConstIterator it;
-  for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
-    const QStringList emails = (*it).emails();
-    QString n = (*it).prefix() + " " +
-		(*it).givenName() + " " +
-		(*it).additionalName() + " " +
-	        (*it).familyName() + " " +
-		(*it).suffix();
-    n = n.simplifyWhiteSpace();
-
-    QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
-    QString endQuote = "\" ";
-    QStringList::ConstIterator mit;
-    QString addr, email;
-
-    for ( mit = emails.begin(); mit != emails.end(); ++mit ) {
-      email = *mit;
-      if (!email.isEmpty()) {
-	if (n.isEmpty() || (email.find( '<' ) != -1))
-	  addr = QString::null;
-	else { // do we really need quotes around this name ?
-          if (n.find(needQuotes) != -1)
-	    addr = '"' + n + endQuote;
-	  else
-	    addr = n + ' ';
-	}
-
-	if (!addr.isEmpty() && (email.find( '<' ) == -1)
-	    && (email.find( '>' ) == -1)
-	    && (email.find( ',' ) == -1))
-	  addr += '<' + email + '>';
-	else
-	  addr += email;
-	addr = addr.stripWhiteSpace();
-	result.append( addr );
-      }
-    }
-  }
-  KABC::DistributionListManager manager( addressBook );
-  manager.load();
-  result += manager.listNames();
-
-  result.sort();
-}
-
-QStringList KabcBridge::addresses()
-{
-    QStringList entries;
-    KABC::AddressBook::ConstIterator it;
-
-    const KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-    for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
-        entries += (*it).fullEmail();
-    }
-    return entries;
-}
-
 //-----------------------------------------------------------------------------
 QString KabcBridge::expandNickName( const QString& nickName )
 {

@@ -9,6 +9,7 @@
 #define __KMMAINWIDGET
 
 #include <kurl.h>
+#include <kxmlguiclient.h>
 #include <qlistview.h>
 #include <qvbox.h>
 
@@ -35,12 +36,11 @@ class KMFolderTreeItem;
 class KMHeaders;
 class KMCommand;
 class KMMetaFilterActionCommand;
+class FolderShortcutCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMFldSearch;
-namespace KPIM { class StatusbarProgressWidget; }
-using KPIM::StatusbarProgressWidget;
 class KMSystemTray;
 
 template <typename T> class QValueList;
@@ -69,7 +69,8 @@ class KMMainWidget : public QWidget
 
 public:
   KMMainWidget(QWidget *parent, const char *name,
-	       KActionCollection *actionCollection,
+               KXMLGUIClient *aGUIClient,
+               KActionCollection *actionCollection,
          KConfig*config = KMKernel::config() );
   virtual ~KMMainWidget();
   void destruct();
@@ -105,7 +106,6 @@ public:
   KAction *forwardAction() const { return mForwardAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *redirectAction() const { return mRedirectAction; }
-  KAction *bounceAction() const { return mBounceAction; }
   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
@@ -118,6 +118,7 @@ public:
   KAction *findInMessageAction() const { return mFindInMessageAction; }
   KAction *saveAttachmentsAction() const { return mSaveAttachmentsAction; }
   KAction *openAction() const { return mOpenAction; }
+  KAction *viewSourceAction() { return mViewSourceAction; }
 
   KActionMenu *statusMenu()  const{ return mStatusMenu; }
   KActionMenu *threadStatusMenu() const { return mThreadStatusMenu; }
@@ -130,14 +131,9 @@ public:
 
   // Forwarded to the reader window.
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
-  KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
 
-  void folderSelected(KMFolder*, bool jumpToUnread);
   KMHeaders *headers() const { return mHeaders; }
-  StatusbarProgressWidget* progressWidget() const;
-  ProgressDialog* progressDialog() const { return mProgressDialog; }
-
-  void toggleSystray(bool enabled, int mode);
+  void toggleSystemTray();
 
   void updateListFilterAction();
 
@@ -145,6 +141,11 @@ public:
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
+  
+  /** Checks a shortcut against the actioncollection and returns whether it
+   * is already used and therefor not valid or not. */
+  bool shortcutIsValid( const KShortcut& ) const;
+
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -155,8 +156,16 @@ public slots:
   /** sven: moved here as public */
   void slotCheckMail();
 
-  /** Output given message in the statusbar message field. */
-  void folderSelected(KMFolder*);
+  /**
+   * Select the given folder
+   * If the folder is 0 the intro is shown
+   */
+  void folderSelected( KMFolder*, bool forceJumpToUnread = false );
+
+  /** Reselect current folder */
+  void folderSelected();
+
+  /** Select the folder and jump to the next unread msg */
   void folderSelectedUnread( KMFolder* );
 
   void slotMsgSelected(KMMessage*);
@@ -174,7 +183,6 @@ public slots:
   void startUpdateMessageActionsTimer();
   /** Update message actions */
   void updateMessageActions();
-  void statusMsg(const QString&);
 
   /** Launch subscription-dialog */
   void slotSubscriptionDialog();
@@ -182,20 +190,29 @@ public slots:
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
 
+  /** Clear and create actions for marked filters */
+  void clearFilterActions();
+  void initializeFilterActions();
+  
+  /** Create actions for the folder shortcuts. */
+  void initializeFolderShortcutActions();
+ 
+  /** Add, remove or adjust the folder's shortcut. */
+  void slotShortcutChanged( KMFolder *folder );
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
-  void modifiedToolBarConfig( void );
 
 protected:
   void setupActions();
-  void setupStatusBar();
   void createWidgets();
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
   void updateFileMenu();
+  void updateViewMenu();
 
-  KActionCollection * actionCollection() { return mActionCollection; }
+  KActionCollection * actionCollection() const { return mActionCollection; }
 
   KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
                                        const KMail::HeaderStrategy * );
@@ -256,6 +273,7 @@ protected slots:
   void slotExpandAllThreads();
   void slotCollapseThread();
   void slotCollapseAllThreads();
+  void slotShowMsgSrc();
   void slotSetMsgStatusNew();
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();
@@ -306,6 +324,7 @@ protected slots:
   /** Show tip-of-the-day, forced */
   void slotShowTip();
   void slotAntiSpamWizard();
+  void slotAntiVirusWizard();
   void slotFilterLogViewer();
 
   /** Message navigation */
@@ -319,6 +338,7 @@ protected slots:
   void slotPrevUnreadFolder();
 
   /** etc. */
+  void slotDisplayCurrentMessage();
   void slotMsgActivated(KMMessage*);
 
   /** Update the undo action */
@@ -344,10 +364,6 @@ protected slots:
   /** changes the caption and displays the foldername */
   void slotChangeCaption(QListViewItem*);
   void removeDuplicates();
-  /** Create actions for marked filters */
-  void initializeFilterActions();
-  /** Plug filter actions into a popup menu */
-  void plugFilterActions(QPopupMenu*);
 
   /** Slot to reply to a message */
   void slotReplyToMsg();
@@ -357,7 +373,6 @@ protected slots:
   void slotForwardMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
-  void slotBounceMsg();
   void slotNoQuoteReplyToMsg();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -366,17 +381,19 @@ protected slots:
   void slotPrintMsg();
 
   void slotConfigChanged();
+  /** Remove the shortcut actions associated with a folder. */
+  void slotFolderRemoved( KMFolder *folder );
 
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
     *mSendAgainAction, *mApplyFiltersAction, *mFindInMessageAction,
-    *mSaveAttachmentsAction, *mOpenAction;
+    *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
       *mReplyListAction,
       *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-      *mBounceAction, *mNoQuoteReplyAction;
+      *mNoQuoteReplyAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   // Filter actions
@@ -427,13 +444,11 @@ private:
   KAction       *mlistFilterAction;
   QCString	mEncodingStr;
   bool		mIntegrated;
-  bool          mBeepOnNew, mSystemTrayOnNew;
-  int           mSystemTrayMode;
+  bool          mBeepOnNew;
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;
   QValueList<int> mPanner1Sep, mPanner2Sep;
-  KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
   QPopupMenu	*mActMenu;
   QPopupMenu	*mFileMenu;
@@ -458,21 +473,21 @@ private:
 
   QTimer *menutimer;
 
-  StatusbarProgressWidget *mLittleProgress;
-  ProgressDialog *mProgressDialog;
-
-  QPtrList<KMMessage> mSelectedMsgs;
   QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
+  KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
-  bool mDestructed;
-  QPtrList<KAction> mFilterActions;
+  bool mDestructed, mForceJumpToUnread;
+  QPtrList<KAction> mFilterMenuActions;
+  QPtrList<KAction> mFilterTBarActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
+  QDict<FolderShortcutCommand> mFolderShortcutCommands;
   QGuardedPtr <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
-
+  KXMLGUIClient *mGUIClient;
+  
   static QPtrList<KMMainWidget>* s_mainWidgetList;
 };
 
