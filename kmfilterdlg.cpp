@@ -11,6 +11,8 @@
 #include "kmfiltermgr.h"
 
 // other KDE headers:
+#include <kdeversion.h>
+#include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <klineeditdlg.h>
@@ -455,6 +457,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   fm->beginUpdate();
   fm->clear();
 
+  QStringList emptyFilters;
   QPtrListIterator<KMFilter> it( mFilterList );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMFilter *f = new KMFilter( (*it) ); // deep copy
@@ -462,9 +465,11 @@ void KMFilterListBox::slotApplyFilterChanges()
     if ( !f->isEmpty() )
       // the filter is valid:
       fm->append( f );
-    else
+    else {
       // the filter is invalid:
+      emptyFilters << f->name();
       delete f;
+    }
   }
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
@@ -472,6 +477,22 @@ void KMFilterListBox::slotApplyFilterChanges()
   // allow usage of the filters again.
   fm->endUpdate();
   fm->writeConfig();
+
+  // report on invalid filters:
+  if ( !emptyFilters.empty() ) {
+#if KDE_VERSION < 306
+    QString msg = i18n("Some filters have not been saved since they were "
+		       "invalid (e.g. containing no actions or no search "
+		       "rules).");
+    KMessageBox::information( 0, msg, QString::null, "ShowInvalidFilterWarning" );
+#else
+    QString msg = i18n("The following filters have not been saved since they "
+		       "were invalid (e.g. containing no actions or no search "
+		       "rules).");
+    KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
+				  "ShowInvalidFilterWarning" );
+#endif
+  }
 
   if ( oIdxSelItem >= 0 ) {
     mIdxSelItem = oIdxSelItem;
