@@ -73,4 +73,10 @@ public:
   static bool replace(QString address, KabKey);
 };
 
+class KMAddrBookExternal {
+public:
+  static void addEntry(QString) {};
+  static void launch(QWidget *parent);
+};
+
 #endif /*KMAddrBook_h*/

@@ -1474,7 +1474,39 @@ void ConfigureDialog::makeAppearancePage( void )
     i18n("High Contrast - For the visually impaired user"));
   mAppearance.profileList->setSelected( mAppearance.mListItemDefault, true );
 
+  QWidget *page5 = new QWidget( tabWidget );
+  tabWidget->addTab( page5, i18n("Addressbook") );
+  vlay = new QVBoxLayout( page5, spacingHint() );
 
+  mAppearance.addressbookCombo = new QComboBox( page5 );
+  QStringList abStringList;
+  abStringList.append( i18n("Traditional KMail") );
+  abStringList.append( i18n("Traditional KMail interface using KAB database") );
+  abStringList.append( i18n("KAB") );
+  abStringList.append( i18n("Abbrowser") );
+  mAppearance.addressbookCombo->insertStringList(abStringList);
+  vlay->addWidget( mAppearance.addressbookCombo );
+  vlay->addSpacing( spacingHint() );
+
+  connect( mAppearance.addressbookCombo, SIGNAL(activated(int) ),
+	   this, SLOT(slotAddressbookSelectorChanged(int)) );
+
+  mAppearance.addressbookStrings.clear();
+  mAppearance.addressbookStrings.append( i18n("The traditional KMail graphical "
+    "interface using the\ntraditional KMail specific address book database") );
+  mAppearance.addressbookStrings.append( i18n("The traditional KMail graphical "
+    "interface using the\nstandard KDE Address Book (KAB) database"));
+  mAppearance.addressbookStrings.append( i18n("The standard KDE Address Book "
+    "graphical interface\nusing the standard KDE Address Book (KAB) database\n\n"
+    "Requires the kdeutils package to be installed."));
+  mAppearance.addressbookStrings.append( i18n("An alternative addressbook "
+    "graphical interface\nusing the standard KDE Address Book (KAB) database\n\n"
+    "Requires the kdepim package to be installed."));
+  
+  mAppearance.addressbookLabel = new QLabel( page5 );
+  mAppearance.addressbookLabel->setText(*mAppearance.addressbookStrings.at(0));
+  vlay->addWidget( mAppearance.addressbookLabel );
+  vlay->addStretch(10);
 }
 
 
@@ -2238,7 +2270,11 @@ void ConfigureDialog::slotApply( void )
     config.setGroup("General");
     bool messageSize = mAppearance.messageSizeCheck->isChecked();
     config.writeEntry( "showMessageSize", messageSize );
-
+    config.writeEntry( "addressbook", mAppearance.addressbookCombo->currentItem() );
+    if (mAppearance.addressbookCombo->currentItem() < 1)
+      kernel->setUseKAB( false );
+    else
+      kernel->setUseKAB( true );
   }
   else if( activePage == mComposer.pageIndex )
   {
@@ -2966,6 +3002,11 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
   bool enable = index != 3 && index != 4 && index != 5;
   mAppearance.fontChooser->enableColumn(
     KFontChooser::FamilyList|KFontChooser::SizeList, enable );
+}
+
+void ConfigureDialog::slotAddressbookSelectorChanged( int index )
+{
+  mAppearance.addressbookLabel->setText(*mAppearance.addressbookStrings.at(index));
 }
 
 void ConfigureDialog::slotCustomColorSelectionChanged( void )

@@ -262,6 +262,9 @@ class ConfigureDialog : public KDialogBase
       QListViewItem *mListItemNewFeature;
       QListViewItem *mListItemContrast;
       QPushButton  *profileDeleteButton;
+      QComboBox     *addressbookCombo;
+      QLabel        *addressbookLabel;
+      QStringList   addressbookStrings;
     };
     struct ComposerWidget
     {
@@ -382,6 +385,7 @@ class ConfigureDialog : public KDialogBase
     void slotRemoveSelectedAccount( void );
     void slotCustomFontSelectionChanged( void );
     void slotFontSelectorChanged( int index );
+    void slotAddressbookSelectorChanged( int index );
     void slotCustomColorSelectionChanged( void );
     void slotWordWrapSelectionChanged( void );
     void slotMimeHeaderSelectionChanged( void );
