@@ -3074,7 +3074,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
 	if ( draftsFolder == 0 )
 	  // This is *NOT* supposed to be "imapDraftsFolder", because a
 	  // dIMAP folder works like a normal folder
-	  draftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
+	  draftsFolder = kmkernel->dimapFolderMgr()->findIdString( (*it)->drafts() );
 	if ( draftsFolder == 0 )
 	  imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( (*it)->drafts() );
 	if ( !draftsFolder && !imapDraftsFolder ) {
