@@ -53,7 +53,7 @@ namespace KMail {
       "haeckel@kde.org", 0 },
 
     { "Till Adam", I18N_NOOP("Core developer"),
-      "till@adam-lilienthal.de", 0 },
+      "adam@kde.org", 0 },
     { "Carsten Burghardt", I18N_NOOP("Core developer"),
       "burghardt@kde.org", 0 },
     { "Marc Mutz", I18N_NOOP("Core developer"),
