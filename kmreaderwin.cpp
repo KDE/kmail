@@ -477,7 +477,6 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   kdDebug(5006) << "Not equal" << endl;
 
   // connect to the updates if we have hancy headers
-  disconnect(this, SLOT(updateHeader(int)));
   
   mMsg = aMsg;
   if (mMsg)
