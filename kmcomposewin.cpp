@@ -626,7 +626,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aCbx->show();
     aCbx->setMinimumSize(100, aLbl->height()+2);
     aCbx->setMaximumSize(1000, aLbl->height()+2);
-    mEdtList.append(aCbx);
 
     mGrid->addWidget(aCbx, aRow, 1);
     mGrid->addWidget(aChk, aRow, 2);
