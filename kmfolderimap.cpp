@@ -720,6 +720,7 @@ void KMFolderImap::checkValidity()
   {
     kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
+    mContentState = imapNoInformation;
     return;
   }
   // Only check once at a time.
@@ -779,6 +780,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error()) {
     mAccount->handleJobError( job, i18n("Error while querying the server status.") );
+    mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
@@ -791,6 +793,15 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     QString access;
     if ( (b - a - 10) >= 0 ) access = cstr.mid(a + 10, b - a - 10);
     mReadOnly = access == "Read only";
+    int c = (*it).cdata.find("\r\nX-Count:");
+    int exists = -1;
+    if ( c != -1 )
+    {
+      bool ok;
+      exists = (*it).cdata.mid( c+10,
+          (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
+      if ( !ok ) exists = -1;
+    }
     QString startUid;
     if (uidValidity() != uidv)
     {
@@ -806,7 +817,18 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
         startUid = QString::number(lastUid() + 1);
     }
     mAccount->removeJob(it);
-    if ( mMailCheckProgressItem ) mMailCheckProgressItem->setProgress( 50 );
+    if ( mMailCheckProgressItem )
+    {
+      if ( startUid.isEmpty() ) { 
+        // flags for all messages are loaded
+        mMailCheckProgressItem->setTotalItems( exists );
+      } else { 
+        // only an approximation but doesn't hurt
+        int remain = exists - count();
+        if ( remain < 0 ) remain = 1;
+        mMailCheckProgressItem->setTotalItems( remain );
+      }
+    }
     reallyGetFolder(startUid);
   }
 }
@@ -850,12 +872,15 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   KURL url = mAccount->getUrl();
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
+    mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
     return;
   }
   quiet(true);
   if (startUid.isEmpty())
   {
+    if ( mMailCheckProgressItem )
+      mMailCheckProgressItem->setStatus( i18n("Retrieving message status") );
     url.setPath(imapPath() + ";SECTION=UID FLAGS");
     KIO::SimpleJob *job = KIO::listDir(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -868,6 +893,8 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
             this, SLOT(slotListFolderEntries(KIO::Job *,
             const KIO::UDSEntryList &)));
   } else {
+    if ( mMailCheckProgressItem )
+      mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
     url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
@@ -894,6 +921,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     mAccount->handleJobError( job,
         i18n("Error while listing the contents of the folder %1.").arg( label() ) );
     quiet( false );
+    mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
     return;
@@ -940,6 +968,14 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     emit folderComplete(this, TRUE);
     mAccount->removeJob(it);
     return;
+  }
+  if ( mMailCheckProgressItem )
+  {
+    // next step for the progressitem
+    mMailCheckProgressItem->setProgress( 0 );
+    mMailCheckProgressItem->setTotalItems( (*it).items.count() );
+    mMailCheckProgressItem->updateProgress();
+    mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
   }
 
   QStringList sets;
@@ -992,6 +1028,8 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
         mimeType = (*eIt).m_str;
       else if ((*eIt).m_uds == KIO::UDS_ACCESS)
         flags = (*eIt).m_long;
+      if ( mMailCheckProgressItem )
+        mMailCheckProgressItem->incCompletedItems();
     }
     if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") &&
         !(flags & 8))
@@ -1088,6 +1126,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   int flags;
   while (pos >= 0)
   {
+    if ( mMailCheckProgressItem )
+      mMailCheckProgressItem->incCompletedItems();
     KMMessage *msg = new KMMessage;
     msg->setComplete(false);
     msg->setReadyToShow(false);
