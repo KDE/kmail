@@ -393,6 +393,24 @@ void KMFolder::markNewAsUnread()
   }
 }
 
+void KMFolder::markUnreadAsRead()
+{
+  KMMsgBase* msgBase;
+  QValueList<int> items;
+
+  for (int i=count()-1; i>=0; --i)
+  {
+    msgBase = getMsgBase(i);
+    assert(msgBase);
+    if (msgBase->status() == KMMsgStatusNew || msgBase->status() == KMMsgStatusUnread)
+    {
+      items += i;
+    }
+  }
+
+  if (items.count() > 0)
+    setStatus(items, KMMsgStatusRead);
+}
 
 //-----------------------------------------------------------------------------
 void KMFolder::quiet(bool beQuiet)

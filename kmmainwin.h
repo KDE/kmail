@@ -149,6 +149,7 @@ protected slots:
   void slotModifyFolder();
   void slotExpireFolder();
   void slotExpireAll();
+  void slotMarkAllAsRead();
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
@@ -280,7 +281,7 @@ protected:
   bool mbNewMBVisible;
 
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
-    *compactFolderAction, *emptyFolderAction;
+    *compactFolderAction, *emptyFolderAction, *markAllAsReadAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *toolbarAction, *statusbarAction;
 

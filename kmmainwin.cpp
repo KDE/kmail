@@ -885,6 +885,13 @@ void KMMainWin::slotRemoveFolder()
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMarkAllAsRead()
+{
+  if (!mFolder)
+    return;
+  mFolder->markUnreadAsRead();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCompactFolder()
@@ -1893,6 +1900,9 @@ void KMMainWin::setupMenuBar()
   modifyFolderAction = new KAction( i18n("&Properties..."), 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
+  markAllAsReadAction = new KAction( i18n("&Mark all Mails as read"), 0, this,
+		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
+
   expireFolderAction = new KAction(i18n("E&xpire"), 0, this, SLOT(slotExpireFolder()),
 				   actionCollection(), "expire");
 
@@ -2371,6 +2381,7 @@ void KMMainWin::updateFolderMenu()
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   expireFolderAction->setEnabled( mFolder && mFolder->protocol() != "imap"
     && mFolder->isAutoExpire() );
+  markAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( mFolder ? true : false );
 
