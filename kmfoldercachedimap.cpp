@@ -614,8 +614,8 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_DELETE_MESSAGES;
     mProgress += 10;
     if( !noContent() ) {
-      emit statusMsg( i18n("%1: Retrieving messagelist").arg(name()) );
-      emit newState( name(), mProgress, i18n("Retrieving messagelist"));
+      emit statusMsg( i18n("%1: Retrieving message list").arg(name()) );
+      emit newState( name(), mProgress, i18n("Retrieving message list"));
       // emit syncState( SYNC_STATE_LIST_MESSAGES, foldersForDeletionOnServer.count() );
       listMessages();
       break;
@@ -1082,7 +1082,7 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
 //-----------------------------------------------------------------------------
 void KMFolderCachedImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
-  if (flags & 4) 
+  if (flags & 4)
     msg->setStatus( KMMsgStatusFlag );
   if (flags & 2)
     msg->setStatus( KMMsgStatusReplied );

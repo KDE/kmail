@@ -1792,7 +1792,7 @@ void KMHeaders::slotMoveCompleted( bool success )
 {
    kdDebug(5006) <<  "KMHeaders::slotMoveCompleted: " << success << endl;
    if (success) {
-    KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved succesfully."));
+    KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
   } else {
     // FIXME dialog? Offer rollback?
     KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));

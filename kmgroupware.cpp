@@ -219,7 +219,7 @@ static void iCalRequest( const QString& receiver, const QString& iCal,
           if( fromAddress.isEmpty() ) {
               bool bOk;
               fromAddress = KInputDialog::getItem( i18n( "Select Address" ),
-                                                   i18n( "In order to let Outlook(tm) recognize you as the receiver, you need to indicate which one of the following addresses is your email address:" ),
+                                                   i18n( "In order to let Outlook recognize you as the receiver, you need to indicate which one of the following addresses is your email address:" ),
                                                    toAddresses, 0, false, &bOk,
                                                    kmkernel->mainWin() );
               if( !bOk )

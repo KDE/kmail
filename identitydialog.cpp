@@ -187,10 +187,10 @@ namespace KMail {
     msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
                "to sign messages and to encrypt messages to "
                "yourself. You can also use GnuPG keys.</p>"
-               "You can leave this blank, but KMail won't be able "
+               "<p>You can leave this blank, but KMail won't be able "
                "to cryptographically sign emails. Normal mail functions won't "
                "be affected.</p>"
-               "You can find out more about keys at <a>http://www.gnupg.org</a></qt>");
+               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
 
     label = new QLabel( mPgpKeyRequester, i18n("OpenPGP key:"), tab );
     QWhatsThis::add( mPgpKeyRequester, msg );

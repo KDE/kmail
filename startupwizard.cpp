@@ -332,7 +332,7 @@ QWidget* StartupWizard::createIntroPage()
 		    "You now have the choice between disabling the groupware functionality, "
 		    "or leaving it enabled and going through this wizard.<br>"
 		    "If you disable the groupware functionality for now, you can always enable it again from "
-		    "the KMail config dialog."));
+		    "the KMail configure dialog."));
   top->addWidget( text );
 
   QVBox* rightSide = new QVBox( page );
