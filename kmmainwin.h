@@ -235,6 +235,7 @@ protected slots:
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();
   void slotSetMsgStatusReplied();
+  void slotSetMsgStatusForwarded();
   void slotSetMsgStatusQueued();
   void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
@@ -242,6 +243,7 @@ protected slots:
   void slotSetThreadStatusUnread();
   void slotSetThreadStatusRead();
   void slotSetThreadStatusReplied();
+  void slotSetThreadStatusForwarded();
   void slotSetThreadStatusQueued();
   void slotSetThreadStatusSent();
   void slotSetThreadStatusFlag();

@@ -194,7 +194,7 @@ protected:
 
   QTimer mUpdateTimer;
   static QPixmap *pixDir, *pixNode, *pixPlain, *pixFld, *pixFull, *pixIn,
-    *pixOut, *pixTr, *pixSent;
+    *pixOut, *pixTr, *pixSent, *pixCopy, *pixCancel;
 
   /** We need out own root, otherwise the @ref QListView will create
       its own root of type @ref QListViewItem, hence no overriding

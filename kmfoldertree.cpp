@@ -28,6 +28,8 @@ QPixmap* KMFolderTree::pixIn = 0;
 QPixmap* KMFolderTree::pixOut = 0;
 QPixmap* KMFolderTree::pixTr = 0;
 QPixmap* KMFolderTree::pixSent = 0;
+QPixmap* KMFolderTree::pixCopy = 0;
+QPixmap* KMFolderTree::pixCancel = 0;
 
 //=============================================================================
 
@@ -133,6 +135,8 @@ KMFolderTree::KMFolderTree( QWidget *parent,
     pixOut   = new QPixmap( UserIcon("kmfldout"));
     pixSent  = new QPixmap( UserIcon("kmfldsent"));
     pixTr    = new QPixmap( SmallIcon("trashcan_empty"));
+    pixCopy  = new QPixmap( SmallIcon("editcopy"));
+    pixCancel= new QPixmap( SmallIcon("cancel"));
   }
   // connect
   connectSignals();
@@ -141,7 +145,7 @@ KMFolderTree::KMFolderTree( QWidget *parent,
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
   mPopup = new KPopupMenu;
-  mPopup->insertTitle(i18n("Select columns"));
+  mPopup->insertTitle(i18n("View columns"));
   mPopup->setCheckable(true);
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
   mTotalPop = mPopup->insertItem(i18n("Total Column"), this, SLOT(slotToggleTotalColumn()));
@@ -867,16 +871,16 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if ((!fti->folder() || (fti->folder()->noContent()
     && !fti->parent())))
   {
-    QString createChild = i18n("&Create Child Folder...");
-    if (!fti->folder()) createChild = i18n("&Create Folder...");
+    QString createChild = i18n("&New Subfolder...");
+    if (!fti->folder()) createChild = i18n("&New Folder...");
 
     folderMenu->insertItem(SmallIcon("folder_new"),
                            createChild, this,
                            SLOT(addChildFolder()));
     if (!fti->folder()) {
-      folderMenu->insertItem(i18n("Compact All &Folders"),
+      folderMenu->insertItem(i18n("&Compact All Folders"),
                      kernel->folderMgr(), SLOT(compactAll()));
-      folderMenu->insertItem(i18n("Expire All Folders"),
+      folderMenu->insertItem(i18n("&Expire All Folders"),
 			     kernel->folderMgr(), SLOT(expireAll()));
     } else if (fti->folder()->protocol() == "imap") {
       folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check &Mail"),
@@ -886,12 +890,12 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   } else {
     if ((fti->folder() == kernel->outboxFolder()) && (fti->folder()->count()) )
         folderMenu->insertItem(SmallIcon("mail_send"),
-                               i18n("Send Queued"), topLevelWidget(),
+                               i18n("&Send Queued Messages"), topLevelWidget(),
                                SLOT(slotSendQueued()));
     if (!fti->folder()->isSystemFolder() || fti->folder()->protocol() == "imap")
     {
       folderMenu->insertItem(SmallIcon("folder_new"),
-                             i18n("&Create Child Folder..."), this,
+                             i18n("&New Subfolder..."), this,
                              SLOT(addChildFolder()));
     }
 
@@ -900,32 +904,35 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     // -- smp.
     if (!fti->folder()->noContent())
     {
-      folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
-                         SLOT(slotModifyFolder()));
-
-      if (fti->folder()->protocol() != "imap" && fti->folder()->isAutoExpire())
-        folderMenu->insertItem(i18n("E&xpire"), topLevelWidget(),
-                               SLOT(slotExpireFolder()));
-
-      folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
-                             SLOT(slotCompactFolder()));
-      folderMenu->insertSeparator();
       if (fti->folder()->countUnread() > 0)
         folderMenu->insertItem(SmallIcon("goto"),
-                               i18n("&Mark All Messages as Read"), topLevelWidget(),
+                               i18n("Mark All Messages as &Read"), topLevelWidget(),
                                SLOT(slotMarkAllAsRead()));
-      folderMenu->insertItem(i18n("&Empty..."), topLevelWidget(),
+
+      folderMenu->insertItem(i18n("&Compact"), topLevelWidget(),
+                             SLOT(slotCompactFolder()));
+
+      if (fti->folder()->protocol() != "imap" && fti->folder()->isAutoExpire())
+        folderMenu->insertItem(i18n("&Expire"), topLevelWidget(),
+                               SLOT(slotExpireFolder()));
+
+      folderMenu->insertSeparator();
+
+      folderMenu->insertItem(SmallIcon("edittrash"),
+                             i18n("&Move All Messages to Trash"), topLevelWidget(),
                              SLOT(slotEmptyFolder()));
     }
     if ( !fti->folder()->isSystemFolder() )
-        folderMenu->insertItem(i18n("&Remove..."), topLevelWidget(),
-                               SLOT(slotRemoveFolder()));
+      folderMenu->insertItem(SmallIcon("editdelete"),
+                             i18n("&Delete Folder"), topLevelWidget(),
+                             SLOT(slotRemoveFolder()));
 
-    if (!fti->folder()->noContent() && fti->folder()->isMailingList())
+    if (!fti->folder()->noContent())
     {
       folderMenu->insertSeparator();
-      folderMenu->insertItem(i18n("Post to &Mailing-List"),
-                             topLevelWidget(), SLOT(slotPostToML()));
+      folderMenu->insertItem(SmallIcon("configure"),
+                             i18n("&Properties..."), topLevelWidget(),
+                             SLOT(slotModifyFolder()));
     }
   }
 
@@ -958,7 +965,7 @@ void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint 
 }
 
 //-----------------------------------------------------------------------------
-// Create a child folder.
+// Create a subfolder.
 // Requires creating the appropriate subdirectory and show a dialog
 void KMFolderTree::addChildFolder()
 {
@@ -975,7 +982,7 @@ void KMFolderTree::addChildFolder()
     dir = fti->folder()->child();
 
   KMFolderDialog *d =
-    new KMFolderDialog(0, dir, topLevelWidget(), i18n("Create Child Folder") );
+    new KMFolderDialog(0, dir, topLevelWidget(), i18n("Create Subfolder") );
 
   if (d->exec()) /* fti may be deleted here */ {
     QListViewItem *qlvi = indexOfFolder( aFolder );
@@ -1245,9 +1252,9 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         if ( mShowPopupAfterDnD ) {
           KPopupMenu *menu = new KPopupMenu( this );
           menu->insertItem( i18n("Move"), DRAG_MOVE, 0 );
-          menu->insertItem( i18n("Copy"), DRAG_COPY, 1 );
+          menu->insertItem( *pixCopy, i18n("Copy"), DRAG_COPY, 1 );
           menu->insertSeparator();
-          menu->insertItem( i18n("Cancel"), DRAG_CANCEL, 3 );
+          menu->insertItem( *pixCancel, i18n("Cancel"), DRAG_CANCEL, 3 );
           int id = menu->exec( QCursor::pos(), 0 );
           switch(id) {
             case DRAG_COPY:

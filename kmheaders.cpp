@@ -1,3 +1,4 @@
+
 // kmheaders.cpp
 
 #include <config.h>
@@ -494,7 +495,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
   mPopup = new KPopupMenu;
-  mPopup->insertTitle(i18n("Select columns"));
+  mPopup->insertTitle(i18n("View columns"));
   mPopup->setCheckable(true);
   mSizeColumn = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
 
@@ -2679,30 +2680,38 @@ void KMHeaders::slotRMB()
   if ( out_folder )
      mOwner->editAction->plug(menu);
   else {
+     // show most used actions
      mOwner->replyAction->plug(menu);
      mOwner->replyAllAction->plug(menu);
+     mOwner->replyListAction->plug(menu);
      mOwner->action("message_forward")->plug(menu);
      mOwner->bounceAction->plug(menu);
-       }
+     mOwner->sendAgainAction->plug(menu);
+  }
   menu->insertSeparator();
 
-  if ( !out_folder )
-      mOwner->filterMenu->plug( menu );
-
-  menu->insertItem(i18n("&Move To"), msgMoveMenu);
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
+  menu->insertItem(i18n("&Move To"), msgMoveMenu);
   if ( !out_folder ) {
-      mOwner->statusMenu->plug( menu );
-      if ( mOwner->threadStatusMenu->isEnabled() )
-	mOwner->threadStatusMenu->plug( menu );
+    mOwner->statusMenu->plug( menu ); // Mark Message menu
+    if ( mOwner->threadStatusMenu->isEnabled() )
+      mOwner->threadStatusMenu->plug( menu ); // Mark Thread menu
   }
 
   menu->insertSeparator();
-  mOwner->printAction->plug(menu);
-  mOwner->saveAsAction->plug(menu);
-  menu->insertSeparator();
   mOwner->trashAction->plug(menu);
   mOwner->deleteAction->plug(menu);
+
+  menu->insertSeparator();
+  mOwner->saveAsAction->plug(menu);
+  mOwner->printAction->plug(menu);
+
+  if ( !out_folder ) {
+    menu->insertSeparator();
+    mOwner->action("apply_filters")->plug(menu);
+    mOwner->filterMenu->plug( menu ); // Create Filter menu
+  }
+
   menu->exec (QCursor::pos(), 0);
   delete menu;
 }

@@ -474,7 +474,7 @@ void KMFolderDialog::slotOk()
       return;
     }
 
-    message = i18n( "Cannot move a parent folder into a child folder." );
+    message = i18n( "Cannot move folder \"%1\" into a subfolder below itself." ).arg(fldName);
     KMFolderDir* folderDir = selectedFolderDir;
 
 
