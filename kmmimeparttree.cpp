@@ -74,7 +74,7 @@ void KMMimePartTree::slotSaveAs()
         if( s.startsWith( "file: " ) )
             s = s.mid(6).stripWhiteSpace();
         else
-            s = "";
+            s = s.stripWhiteSpace();
         QString filename = KFileDialog::getSaveFileName( s,
                                                          QString::null,
                                                          this, QString::null );
@@ -133,7 +133,7 @@ void KMMimePartTree::slotSaveAsEncoded()
         if( s.startsWith( "file: " ) )
             s = s.mid(6).stripWhiteSpace();
         else
-            s = "";
+	    s = s.stripWhiteSpace();
         QString filename = KFileDialog::getSaveFileName( s,
                                                          QString::null,
                                                          this, QString::null );
