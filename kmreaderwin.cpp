@@ -968,7 +968,7 @@ kdDebug(5006) << "* message *" << endl;
           switch( curNode_replacedSubType ){
           case DwMime::kSubtypeRfc822: {
 kdDebug(5006) << "RfC 822" << endl;
-              if( reader->mAttachmentStyle != InlineAttmnt &&
+              if( reader && reader->mAttachmentStyle != InlineAttmnt &&
                   (reader->mAttachmentStyle != SmartAttmnt ||
                    curNode->isAttachment()) && !showOneMimePart)
                  break;
