@@ -37,6 +37,8 @@
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
+#include <kapplication.h>
+#include <dcopclient.h>
 
 #include <qtextcodec.h>
 
@@ -1252,6 +1254,7 @@ void KMSetStatusCommand::execute()
      f->setStatus( (*it2), mStatus, mToggle );
      ++it2;
   }
+  kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
 }
 
 
