@@ -383,12 +383,20 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   if ((stage != Idle) && (stage != Quit))
     KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024) );
 
-  QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
-    + ":" + QString("%1").arg(mPort);
+  QString prefix;
   bool addedOk;
   QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
+
+  if (mUseSSL) {
+    prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+    + ":" + QString("%1").arg(mPort);
+  } else {
+    prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+    + ":" + QString("%1").arg(mPort);
+  }
+
   while (cur != msgsAwaitingProcessing.end()) {
     addedOk = processNewMsg(*cur); //added ok? Error displayed if not.
     if (!addedOk) {
@@ -411,8 +419,15 @@ void KMAcctExpPop::slotProcessPendingMsgs()
 }
 
 void KMAcctExpPop::startJob() {
-  QString text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
-    mHost + ":" + QString("%1").arg(mPort) + "/index";
+  QString text;
+
+  if (mUseSSL) {
+    text = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+            mHost + ":" + QString("%1").arg(mPort) + "/index";
+  } else {
+    text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+            mHost + ":" + QString("%1").arg(mPort) + "/index";
+  }
   KURL url = text;
   if ( url.isMalformed() ) {
     QMessageBox::critical(0, i18n("Kioslave Error Message"), 
@@ -441,8 +456,14 @@ void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
     debug( "stage == List" );
-    QString command = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
-      + ":" + QString("%1/uidl").arg(mPort);
+    QString command;
+    if (mUseSSL) {
+      command = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+        + ":" + QString("%1/uidl").arg(mPort);
+    } else {
+      command = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+        + ":" + QString("%1/uidl").arg(mPort);
+    }
     job = KIO::get( command, false, false );
     connectJob();
     stage = Uidl;
@@ -468,8 +489,14 @@ void KMAcctExpPop::slotJobFinished() {
   }
   else if (stage == Dele) {
     debug( "stage == Dele" );
-    QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
-      mHost + ":" + QString("%1").arg(mPort);
+    QString prefix;
+    if (mUseSSL) {
+      prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+                mHost + ":" + QString("%1").arg(mPort);
+    } else {
+      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+                mHost + ":" + QString("%1").arg(mPort);
+    }
     job = KIO::get(  prefix + "/commit", false, false );
     connectJob();
     stage = Quit;
@@ -519,8 +546,14 @@ void KMAcctExpPop::slotGetNextMsg()
 
   if (next == idsOfMsgsPendingDownload.end()) {
     processRemainingQueuedMessagesAndSaveUidList();
-    QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
-      mHost + ":" + QString("%1").arg(mPort);
+    QString prefix;
+    if (mUseSSL) {
+      prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+                mHost + ":" + QString("%1").arg(mPort);
+    } else {
+      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+                mHost + ":" + QString("%1").arg(mPort);
+    }
 
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty())
       job = KIO::get(  prefix + "/commit", false, false );
@@ -561,8 +594,14 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   QString qdata = data;
   int spc = qdata.find( ' ' );
   if (spc > 0) {
-    QString text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
-      mHost + ":" + QString("%1/download/").arg(mPort);
+    QString text;
+    if (mUseSSL) {
+      text = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+              mHost + ":" + QString("%1/download/").arg(mPort);
+    } else {
+      text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+              mHost + ":" + QString("%1/download/").arg(mPort);
+    }
     if (stage == List) {
       QString length = qdata.mid(spc+1);
       numBytes += length.toInt();
