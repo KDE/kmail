@@ -1,5 +1,5 @@
 [General]
-tools=6
+tools=7
 
 [Spamtool #1]
 Ident=spamassassin
@@ -89,6 +89,22 @@ Executable=f-prot -verno
 URL=http://www.f-prot.com
 PipeFilterName=F-Prot Anti-Virus Check
 PipeCmdDetect=kmail_fprot.sh
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-Virus-Flag
+DetectionPattern=yes
+UseRegExp=0
+SupportsBayes=0
+Type=av
+
+[Spamtool #7]
+Ident=AntiVir
+Version=1
+VisibleName=H+BEDV AntiVir
+Executable= antivir --version
+URL=http://www.antivir.de
+PipeFilterName=AntiVir Anti-Virus Check
+PipeCmdDetect=kmail_antivir.sh
 ExecCmdSpam=
 ExecCmdHam=
 DetectionHeader=X-Virus-Flag
