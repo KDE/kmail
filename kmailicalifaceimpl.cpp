@@ -1192,7 +1192,9 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
                 << ", " << contentsType << ")\n";
 
-  if ( isResourceImapFolder( folder ) )
+  // The builtins can't change type
+  if ( folder == mCalendar || folder == mTasks || folder == mJournals ||
+       folder == mNotes || folder == mContacts )
     return;
 
   // Check if already know that 'extra folder'
