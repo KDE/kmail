@@ -274,6 +274,15 @@ public:
   virtual QString subject(void) const;
   virtual void setSubject(const QString& aStr);
 
+  /** Check for prefixes @p prefixRegExps in @ref #subject(). If none
+      is found, @p newPrefix + ' ' is prepended to the subject and the
+      resulting string is returned. If @p replace is true, any
+      sequence of whitespace-delimited prefixes at the beginning of
+      @ref #subject() is replaced by newPrefix
+  **/
+  QString cleanSubject(const QStringList& prefixRegExps, bool replace,
+		       const QString& newPrefix) const;
+
   /** Get or set the 'X-Mark' header field */
   virtual QString xmark(void) const;
   virtual void setXMark(const QString& aStr);

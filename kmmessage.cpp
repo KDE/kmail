@@ -900,6 +900,34 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   return c;
 }
 
+QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace, const QString & newPrefix ) const {
+  bool recognized = false;
+  // construct a big regexp that
+  // 1. is anchored to the beginning of the subject (sans whitespace)
+  // 2. matches at least one of the part regexps in prefixRegExps
+  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s+")
+    .arg( prefixRegExps.join(")|(?:") );
+  kdDebug(5006) << "KMMessage::cleanSubject(): bigRegExp = \"" << bigRegExp
+		<< "\"" << endl;
+  QRegExp rx( bigRegExp, false /*case insens.*/ );
+  if ( !rx.isValid() ) {
+    kdDebug(5006) << "prefix regexp is invalid!" << endl;
+    // try good ole Re/Fwd:
+    recognized = subject().startsWith( newPrefix );
+  } else { // valid rx
+    QString subj = subject();
+    if ( rx.search( subj ) == 0 ) {
+      recognized = true;
+      if ( replace )
+	return subj.replace( 0, rx.matchedLength(), newPrefix + ' ' );
+    }
+  }
+  if ( !recognized )
+    return newPrefix + ' ' + subject();
+  else
+    return subject();
+}
+
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   QString selection, bool noQuote, bool allowDecryption)
@@ -1006,33 +1034,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   if (!noQuote)
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, true, allowDecryption));
 
-  // replace arbitrary sequences of reply prefixes:
-  bool recognized = false;
-  // construct a big regexp that
-  // 1. is anchored to the beginning of the subject (sans whitespace)
-  // 2. matches at least one of the part regexps in sReplySubjPrefixes
-  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s+")
-    .arg( sReplySubjPrefixes.join(")|(?:") );
-  kdDebug(5006) << "KMMessage::createReply(): bigRegExp = \"" << bigRegExp
-		<< "\"" << endl;
-  QRegExp rx( bigRegExp, false /*case insens.*/ );
-  if ( !rx.isValid() )
-  {
-    kdDebug(5006) << "reply prefix regexp is " << "invalid!" << endl;
-    // try good ole Re:
-    recognized = subject().startsWith("Re:");
-  } else { // valid rx
-    QString subj = subject();
-    if ( rx.search( subj ) == 0 ) { // matches
-
-      recognized = true;
-      if ( sReplaceSubjPrefix )
-	msg->setSubject( subj.replace( 0, rx.matchedLength(), "Re: " ) );
-    } else
-      recognized = false;
-  }
-  if (!recognized)
-    msg->setSubject("Re: " + subject());
+  msg->setSubject(cleanSubject(sReplySubjPrefixes, sReplaceSubjPrefix, "Re:"));
 
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
@@ -1265,30 +1267,8 @@ KMMessage* KMMessage::createForward(void)
     }
   }
 
-  QStringList::Iterator it;
-  bool recognized = false;
-  for (it = sForwardSubjPrefixes.begin(); !recognized && (it != sForwardSubjPrefixes.end()); ++it)
-  {
-    QString prefix = subject().left((*it).length());
-    if (prefix.lower() == (*it).lower()) //recognized
-    {
-      if (!sReplaceForwSubjPrefix || (prefix == "Fwd:"))
-        msg->setSubject(subject());
-      else
-      {
-        //replace recognized prefix with "Fwd: "
-        //handle crappy subjects Fwd:  blah blah (note double space)
-        int subjStart = (*it).length();
-        while (subject()[subjStart].isSpace()) //strip only from beginning
-          subjStart++;
-        msg->setSubject("Fwd: " + subject().mid(subjStart,
-                                   subject().length() - subjStart));
-      }
-      recognized = true;
-    }
-  }
-  if (!recognized)
-    msg->setSubject("Fwd: " + subject());
+  msg->setSubject(cleanSubject(sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:"));
+
   msg->cleanupHeader();
 
   // setStatus(KMMsgStatusForwarded);
