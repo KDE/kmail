@@ -815,7 +815,7 @@ void KMFolderCachedImap::serverSyncInternal()
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
-    if ( !noContent() && mAccount->hasAnnotationSupport() ) {
+    if ( !noContent() && mAccount->hasAnnotationSupport() && kmkernel->iCalIface().isEnabled() ) {
       QStringList annotations; // list of annotations to be fetched
       if ( !mAnnotationFolderTypeChanged || mAnnotationFolderType.isEmpty() )
         annotations << KOLAB_FOLDERTYPE;
@@ -823,8 +823,6 @@ void KMFolderCachedImap::serverSyncInternal()
         annotations << KOLAB_INCIDENCESFOR;
       if ( !annotations.isEmpty() ) {
         newState( mProgress, i18n("Retrieving annotations"));
-        // If in the future we want to retrieve more annotations, we should then write
-        // a multiGetAnnotation job in annotationjobs.*
         KURL url = mAccount->getUrl();
         url.setPath( imapPath() );
         AnnotationJobs::MultiGetAnnotationJob* job =
