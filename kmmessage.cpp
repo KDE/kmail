@@ -601,7 +601,7 @@ static void stripSignature(QString& msg, bool clearSigned)
   }
 }
 
-static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
+static void smartQuote( QString &msg, int maxLength )
 {
   QStringList part;
   QString oldIndent;
@@ -830,7 +830,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     result = indentStr + result + '\n';
 
     if (sSmartQuote)
-      smartQuote(result, indentStr, sWrapCol);
+      smartQuote(result, sWrapCol);
 
   } else {
     result = "";
@@ -888,7 +888,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       part.replace(reNL, '\n' + indentStr);
       part = indentStr + part + '\n';
       if (sSmartQuote)
-        smartQuote(part, indentStr, sWrapCol);
+        smartQuote(part, sWrapCol);
       result += part;
     }
   }
