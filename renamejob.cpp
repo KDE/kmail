@@ -154,6 +154,10 @@ void RenameJob::execute()
       emit renameDone( mNewName, false );
       deleteLater();
       return;
+    } else if ( mOldName == mNewName ) {
+      emit renameDone( mNewName, true ); // noop
+      deleteLater();
+      return;
     }
     ImapAccountBase* account = static_cast<KMFolderImap*>(mStorage)->account();
     // first rename it on the server
