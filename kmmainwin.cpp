@@ -224,10 +224,13 @@ void KMMainWin::readConfig(void)
 
   }
 
-  { // area for config group "Reader"
-    KConfigGroupSaver saver(config, "Reader");
-    mHtmlPref = config->readBoolEntry( "htmlMail", false );
-  }
+  // read "Reader" config options
+  KConfigGroup readerConfig( config, "Reader" );
+  mHtmlPref = readerConfig.readBoolEntry( "htmlMail", false );
+  // restore the toggle action to the saved value; this is also read during
+  // the reader initialization
+  toggleFixFontAction->setChecked( readerConfig.readBoolEntry( "useFixedFont",
+                                                               false ) );
 
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");

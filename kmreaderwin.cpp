@@ -1919,6 +1919,8 @@ void KMReaderWin::readConfig(void)
 
   {
   KConfigGroupSaver saver(config, "Reader");
+  // initialize useFixedFont from the saved value; the corresponding toggle
+  // action is initialized in the main window
   mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
   mAtmInline = config->readNumEntry("attach-inline", 100);
