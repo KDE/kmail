@@ -118,6 +118,8 @@ public:
   const QString asString() const;
 
 protected:
+  /** Helper for the main matches() method */
+  bool matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, QString msgContents ) const;
   QCString  mField;
   Function mFunction;
   QString  mContents;

@@ -108,9 +108,8 @@ bool KMSearchRule::matches(const KMMessage* msg) const
   } else if( mField == "<any header>" ) {
     msgContents = msg->headerAsString();
   } else if( mField == "<To or Cc>" ) {
-    msgContents = msg->headerField("To");
-    msgContents += "\n";
-    msgContents += msg->headerField("Cc");
+    return matches( false, 0, 0, msg->headerField("To") )
+        || matches( false, 0, 0, msg->headerField("Cc") );
   } else if( mField == "<size>" ) {
     numerical = TRUE;
     numericalMsgContents = msg->msgSize();
@@ -127,6 +126,11 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     msgContents = msg->headerField(mField);
   }
 
+  return matches( numerical, numericalValue, numericalMsgContents, msgContents );
+}
+
+bool KMSearchRule::matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, QString msgContents ) const
+{
   // also see KMFldSearchRule::matches() for a similar function:
   switch (mFunction)
   {
