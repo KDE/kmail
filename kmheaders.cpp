@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <kiconloader.h>
 #include <qpopupmenu.h>
+#include <qcursor.h>
 
 #include <qheader.h>
 #include <qptrstack.h>
