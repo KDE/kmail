@@ -260,7 +260,9 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     return false;
 
   QString msgContents;
-  bool logContents = true;
+  // Show the value used to compare the rules against in the log.
+  // Overwrite the value for complete messages and all headers!
+  bool logContents = true;  
 
   if( field() == "<message>" ) {
     msgContents = msg->asString();
@@ -270,6 +272,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     logContents = false;
   } else if ( field() == "<any header>" ) {
     msgContents = msg->headerAsString();
+    logContents = false;
   } else if ( field() == "<recipients>" ) {
     // (mmutz 2001-11-05) hack to fix "<recipients> !contains foo" to
     // meet user's expectations. See FAQ entry in KDE 2.2.2's KMail
@@ -288,11 +291,12 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   }
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "1 = " : "0 = " );
-    msg += asString();
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>" 
+                       : "<font color=#FF0000>0 = </font>" );
+    msg += FilterLog::recode( asString() );
     // only log headers bcause messages and bodies can be pretty large
     if ( logContents )
-      msg += " (" + msgContents + ")";
+      msg += " (<i>" + FilterLog::recode( msgContents ) + "</i>)";
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
@@ -384,9 +388,10 @@ bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
   }
   bool rc = matchesInternal( numericalValue, numericalMsgContents, msgContents );
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "1 = " : "0 = " );
-    msg += asString() + " ( " + QString::number( numericalMsgContents );
-    msg += " / " + QString::number( numericalValue ) + " )";
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>" 
+                       : "<font color=#FF0000>0 = </font>" );
+    msg += FilterLog::recode( asString() );
+    msg += " ( <i>" + QString::number( numericalMsgContents ) + "</i> )";
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
@@ -520,8 +525,9 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
   }
 
   if ( FilterLog::instance()->isLogging() ) {
-    QString msg = ( rc ? "1 = " : "0 = " );
-    msg += asString();
+    QString msg = ( rc ? "<font color=#00FF00>1 = </font>" 
+                       : "<font color=#FF0000>0 = </font>" );
+    msg += FilterLog::recode( asString() );
     FilterLog::instance()->add( msg, FilterLog::ruleResult );
   }
   return rc;
@@ -733,7 +739,7 @@ QString KMSearchPattern::asString() const {
     result = i18n("(match all of the following)");
 
   for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
-    result += "\n\t" + (*it)->asString();
+    result += "\n\t" + FilterLog::recode( (*it)->asString() );
 
   return result;
 }

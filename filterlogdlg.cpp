@@ -36,6 +36,8 @@
 #include <kmessagebox.h>
 
 #include <qcheckbox.h>
+#include <qlabel.h>
+#include <qspinbox.h>
 #include <qstringlist.h>
 #include <qtextedit.h>
 #include <qvbox.h>
@@ -56,7 +58,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mTextEdit = new QTextEdit( page );
   mTextEdit->setReadOnly( true );
   mTextEdit->setWordWrap( QTextEdit::NoWrap );
-  mTextEdit->setTextFormat( QTextEdit::PlainText );
+  mTextEdit->setTextFormat( QTextEdit::LogText );
 
   QStringList logEntries = FilterLog::instance()->getLogEntries();
   for ( QStringList::Iterator it = logEntries.begin(); 
@@ -64,16 +66,29 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   {
     mTextEdit->append( *it );
   }
-  
-  mLineWrapBox = new QCheckBox( i18n("&Wrap lines in viewer"), page );
-  mLineWrapBox->setChecked( false );
-  connect( mLineWrapBox, SIGNAL(clicked()),
-            this, SLOT(slotSwitchLineWrap(void)) );
+
+  mLogRuleEvaluationBox = new QCheckBox( i18n("Log filter &rule evaluation"), page );
+  mLogRuleEvaluationBox->setChecked( 
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
+  connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
+            this, SLOT(slotSwitchLogRuleEvaluation(void)) );
 
   mLogActiveBox = new QCheckBox( i18n("&Log filter activities"), page );
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   connect( mLogActiveBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogState(void)) );
+            
+  QHBox * hbox = new QHBox( page );
+  new QLabel( i18n("Log size limit:"), hbox );
+  mLogMemLimitSpin = new QSpinBox( hbox );
+  mLogMemLimitSpin->setMinValue( 1 );
+  mLogMemLimitSpin->setMaxValue( 1024 * 256 ); // 256 MB
+  // value in the QSpinBox is in KB while it's in Byte in the FilterLog
+  mLogMemLimitSpin->setValue( FilterLog::instance()->getMaxLogSize() / 1024 );
+  mLogMemLimitSpin->setSuffix( " KB" );
+  mLogMemLimitSpin->setSpecialValueText( i18n("unlimited") );
+  connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
+            this, SLOT(slotChangeLogMemLimit(int)) );
 
   connect(FilterLog::instance(), SIGNAL(logEntryAdded(QString)), 
           this, SLOT(slotLogEntryAdded(QString)));
@@ -94,19 +109,31 @@ void FilterLogDialog::slotLogEntryAdded( QString logEntry )
 
 void FilterLogDialog::slotLogShrinked()
 {
-  mTextEdit->clear();
-  QStringList logEntries = FilterLog::instance()->getLogEntries();
-  for ( QStringList::Iterator it = logEntries.begin(); 
-        it != logEntries.end(); ++it ) 
-  {
-    mTextEdit->append( *it );
-  }
+  // limit the size of the shown log lines as soon as
+  // the log has reached it's memory limit
+  if ( mTextEdit->maxLogLines() == -1 )
+    mTextEdit->setMaxLogLines( mTextEdit->lines() );
 }
 
 
 void FilterLogDialog::slotLogStateChanged()
 {
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
+  mLogRuleEvaluationBox->setChecked( 
+      FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
+
+  int newLogSize = FilterLog::instance()->getMaxLogSize() / 1024;
+  if ( mLogMemLimitSpin->value() != newLogSize )
+    mLogMemLimitSpin->setValue( newLogSize );
+}
+
+
+void FilterLogDialog::slotSwitchLogRuleEvaluation()
+{
+  if ( mLogRuleEvaluationBox->isChecked() )
+    FilterLog::instance()->enableContentType( FilterLog::ruleResult );
+  else
+    FilterLog::instance()->disableContentType( FilterLog::ruleResult );
 }
 
 
@@ -116,12 +143,9 @@ void FilterLogDialog::slotSwitchLogState()
 }
 
 
-void FilterLogDialog::slotSwitchLineWrap()
+void FilterLogDialog::slotChangeLogMemLimit( int value )
 {
-  if ( mLineWrapBox->isChecked() )
-    mTextEdit->setWordWrap( QTextEdit::WidgetWidth );
-  else
-    mTextEdit->setWordWrap( QTextEdit::NoWrap );
+  FilterLog::instance()->setMaxLogSize( value * 1024 );
 }
 
 

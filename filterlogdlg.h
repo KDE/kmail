@@ -33,6 +33,7 @@
 
 class QTextEdit;
 class QCheckBox;
+class QSpinBox;
 
 namespace KMail {
 
@@ -55,16 +56,18 @@ namespace KMail {
       void slotLogEntryAdded( QString logEntry );
       void slotLogShrinked();
       void slotLogStateChanged();
+      void slotSwitchLogRuleEvaluation();
       void slotSwitchLogState();
-      void slotSwitchLineWrap();
+      void slotChangeLogMemLimit( int value );
       
     protected:
       virtual void slotUser1();
       virtual void slotUser2();
       
       QTextEdit * mTextEdit;
-      QCheckBox * mLineWrapBox;
+      QCheckBox * mLogRuleEvaluationBox;
       QCheckBox * mLogActiveBox;
+      QSpinBox  * mLogMemLimitSpin;
   };
 
 } // namespace KMail

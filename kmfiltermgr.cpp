@@ -210,14 +210,14 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
 	// filter is applicable
 
       if ( FilterLog::instance()->isLogging() ) {
-        QString logText( i18n( "Evaluating filter rules: " ) );
+        QString logText( i18n( "<b>Evaluating filter rules:</b> " ) );
         logText.append( (*it)->pattern()->asString() );
         FilterLog::instance()->add( logText, FilterLog::patternDesc );
       }
       if ( (*it)->pattern()->matches( msg ) ) {
 	// filter matches
         if ( FilterLog::instance()->isLogging() ) {
-          FilterLog::instance()->add( i18n( "Filter rules have matched." ), 
+          FilterLog::instance()->add( i18n( "<b>Filter rules have matched.</b>" ), 
                                       FilterLog::patternResult );
         }
 	// execute actions:

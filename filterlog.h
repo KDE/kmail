@@ -58,7 +58,14 @@ namespace KMail {
       static FilterLog * instance();
       
       /** log data types */
-      enum ContentType { meta = 1, patternDesc, ruleResult, patternResult, appliedAction };
+      enum ContentType 
+      { 
+        meta          = 1, 
+        patternDesc   = 2, 
+        ruleResult    = 4, 
+        patternResult = 8, 
+        appliedAction = 16
+      };
       
       
       /** check the logging state */
@@ -73,6 +80,7 @@ namespace KMail {
       
       /** control the size of the log */
       void setMaxLogSize( long size = -1 );
+      long getMaxLogSize() { return mMaxLogSize; };
       
       
       /** add a content type to the set of logged ones */
@@ -116,6 +124,8 @@ namespace KMail {
       
       /** destructor */
       virtual ~FilterLog();
+      
+      static QString & recode( QString s );
       
     signals:
       void logEntryAdded( QString );

@@ -93,6 +93,7 @@ void FilterLog::setMaxLogSize( long size )
   if ( size >= 0 && size < 1024 )
     size = 1024; 
   mMaxLogSize = size; 
+  emit logStateChanged();
   checkLogSize(); 
 };
 
@@ -158,6 +159,12 @@ bool FilterLog::saveToFile( QString fileName )
     } 
     else
       return false;
+}
+
+
+QString & FilterLog::recode( QString s )
+{
+  return s.replace( "<", "&lt;" ).replace( ">", "&gt;" );
 }
 
 

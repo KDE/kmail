@@ -82,10 +82,10 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   for ( it.toFirst() ; it.current() ; ++it ) {
 
     if ( FilterLog::instance()->isLogging() ) {
-      QString logText( i18n( "Applying filter action: " ) );
+      QString logText( i18n( "<b>Applying filter action:</b> " ) );
       logText.append( (*it)->label() );
       logText.append( " \"" );
-      logText.append( (*it)->argsAsString() );
+      logText.append( FilterLog::recode( (*it)->argsAsString() ) );
       logText.append( "\"" );
       FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
