@@ -1820,6 +1820,7 @@ void KMFolderImap::slotCompleteMailCheckProgress()
 {
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->setComplete();
+    mMailCheckProgressItem = 0;
   }
 }
 
