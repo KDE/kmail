@@ -3,23 +3,28 @@
 // This code is under GPL
 
 #include <config.h>
-#include "kmaddrbook.h"
-#include "kcursorsaver.h"
-#include "kmmessage.h"
-#include <kdebug.h>
+#include <assert.h>
 
 #include <qregexp.h>
-#include <assert.h>
+
+#include <kapplication.h>
+#include <kdebug.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
-
-#include "kmkernel.h" // for KabcBridge
-#include <krun.h> // for kmaddrbookexternal
 #include <kprocess.h>
+
+#include <dcopref.h>
+
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 #include <kabc/vcardconverter.h>
+
+#include "kmaddrbook.h"
+#include "kcursorsaver.h"
+#include "kmmessage.h"
+#include "kmkernel.h" // for KabcBridge
+
 void KabcBridge::addresses(QStringList& result) // includes lists
 {
   KCursorSaver busy(KBusyPtr::busy()); // loading might take a while
@@ -127,7 +132,18 @@ QString KabcBridge::expandDistributionList( const QString& listName )
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
   if (useKAddressbook()) {
     if ( checkForAddressBook() ) {
-      KRun::runCommand( "kaddressbook -a " + KProcess::quote(addr) );
+      QString email = KMMessage::getEmailAddr(addr);
+      KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+      KABC::Addressee::List addresseeList = addressBook->findByEmail(email);
+      if (!addresseeList.isEmpty())
+      {
+        QString error;
+        kapp->startServiceByDesktopName("kaddressbook", QString::null, &error);
+        sleep(2);
+
+        DCOPRef call("kaddressbook", "KAddressBookIface");
+        int succ = call.send("showContactEditor(QString)", addresseeList.first().uid() );
+      }
     }
     return;
   }
@@ -174,23 +190,13 @@ void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
 }
 
 void KMAddrBookExternal::launch(QWidget *) {
-// Reenable selection, when kab is ported to libkabc.
 // It might be better to remove the useK* functions and to check the config
 // file directly, as they aren't used anywhere else.
 // It might also be better to write a string for identifying the addressbook
 // instead of a number as it is done now.
   if ( checkForAddressBook() ) {
-    KRun::runCommand("kaddressbook");
+    kapp->startServiceByDesktopName("kaddressbook");
   }
-#if 0
-  if ( useKab() ) {
-    KRun::runCommand("kab");
-  } else if ( useKAddressbook() ) {
-    KRun::runCommand("kaddressbook");
-  } else {
-    // TODO: some default action, e.g. a simple address book dialog.
-  }
-#endif
 }
 
 bool KMAddrBookExternal::useKab()
@@ -225,7 +231,10 @@ void KMAddrBookExternal::addNewAddressee( QWidget* )
 {
   if (useKAddressbook()) {
     if ( checkForAddressBook() ) {
-      KRun::runCommand( "kaddressbook --editor-only --new-contact" );
+        kapp->startServiceByDesktopName("kaddressbook");
+        sleep(2);
+        DCOPRef call("kaddressbook", "KAddressBookIface");
+        call.send("newContact()");
     }
     return;
   }
