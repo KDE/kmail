@@ -250,7 +250,7 @@ void KMSearch::slotProcessNextBatch()
     mIdle = false;
 
     if (mSerNums.count() != 0) {
-	int i = 100;
+	int i = 10;
 	QValueListIterator<Q_UINT32> it;
 	for (it = mSerNums.begin(); it != mSerNums.end();) {
 	    if (--i == 0)
