@@ -406,7 +406,9 @@ namespace KMail {
     if ( it == jobsEnd() ) return;
     if (job->error())
     {
-       handleJobError( job, i18n( "Error while listing folder %1: " ).arg((*it).path) + '\n' );
+       handleJobError( job, i18n( "Error while listing folder %1: " ).arg((*it).path) + '\n',
+                       true ); // abort sync. We can't possibly continue with an empty list of folders, it would delete everything
+       // Although we could mark this folder as aborted and continue in the parent folder...
     }
     else
     {
