@@ -1065,11 +1065,11 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   if (next) {
     setCurrentItem( next );
     setSelected( next, TRUE );
-    highlightMessage( next, false);
+    highlightMessage( next, true);
   }
   else if (currentItem()) {
     setSelected( currentItem(), TRUE );
-    highlightMessage( currentItem(), false);
+    highlightMessage( currentItem(), true);
   }
   else
     emit selected( 0 );
