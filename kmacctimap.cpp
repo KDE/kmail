@@ -113,8 +113,14 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
     KMessageBox::error(kmkernel->mainWin(),
           KIO::buildErrorString(errorCode, errorMsg));
     mErrorDialogIsActive = false;
-  } else
+  } else {
     kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+  }
+  if ( errorCode == KIO::ERR_COULD_NOT_MKDIR ) {
+     // Creating a folder failed, remove it from the tree.
+     if ( mFolder )
+        mFolder->listDirectory( );
+  }
 }
 
 

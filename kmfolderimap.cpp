@@ -1362,6 +1362,8 @@ void KMFolderImap::slotSetStatusResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMFolderImap::processNewMail(bool)
 {
+   // a little safety
+  if ( !mAccount ) return;
   KURL url = mAccount->getUrl();
   if (mReadOnly)
     url.setPath(imapPath() + ";SECTION=UIDNEXT");
