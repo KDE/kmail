@@ -586,7 +586,7 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
   if ( ! aStatusString.compare("new") )
     status = KMMsgStatusNew;
   if ( ! aStatusString.compare("unread") )
-    status = KMMsgStatusUnread;
+    status = KMMsgStatusUnread | KMMsgStatusNew;
   if ( ! aStatusString.compare("read") )
     status = KMMsgStatusRead;
   if ( ! aStatusString.compare("old") )
