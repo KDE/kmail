@@ -11,7 +11,7 @@ while (<>) {
     # store all keys regarding Identities in the hash:
     if ( $currentGroup =~ /^Identity/ ) {
 	($key,$value) = split /=/;
-	chop $value;
+	chomp $value;
 	$data{$currentGroup}{$key} = $value;
     }
 }
