@@ -21,7 +21,8 @@ KMMainWin::KMMainWin(QWidget *)
   setCentralWidget(mKMMainWidget);
   setupStatusBar();
 
-  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
+				actionCollection(), "kmail_configure_toolbars" );
   mToolbarAction = KStdAction::showToolbar(this,
 					   SLOT(slotToggleToolBar()),
 					   actionCollection());
