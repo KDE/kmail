@@ -5008,7 +5008,8 @@ void PluginPage::slotPlugListBoxConfigurationChanged( int item )
 
 GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
     ConfigurationPage( parent, name ),
-    _pluginPage( parent )
+    _pluginPage( parent ),
+    currentPlugItem(0)
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(),
                                        KDialog::spacingHint() );
