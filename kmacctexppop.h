@@ -134,7 +134,6 @@ protected:
   int curMsgLen;
   int stage;
   QTimer processMsgsTimer;
-  QTimer *ss;
   int processingDelay;
   int numMsgs, numBytes, numBytesToRead, numBytesRead, numMsgBytesRead;
   bool interactive;

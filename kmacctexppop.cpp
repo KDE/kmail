@@ -47,8 +47,6 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName, uint 
 
   headersOnServer.setAutoDelete(true);
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
-  ss = new QTimer();
-  connect( ss, SIGNAL( timeout() ), this, SLOT( slotGetNextMsg() ));
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
@@ -67,7 +65,6 @@ KMAcctExpPop::~KMAcctExpPop()
     mMsgsPendingDownload.clear();
     processRemainingQueuedMessagesAndSaveUidList();
   }
-  delete ss;
 }
 
 
@@ -472,9 +469,10 @@ void KMAcctExpPop::slotJobFinished() {
       QMap<QString, int>::Iterator len;
       for ( len  = mMsgsPendingDownload.begin();
             len != mMsgsPendingDownload.end(); len++ )
-          numBytesToRead += len.data();
+        numBytesToRead += len.data();
+      idsOfMsgs = QStringList( mMsgsPendingDownload.keys() );
       KURL url = getUrl();
-      url.setPath("/download/" + QStringList( mMsgsPendingDownload.keys() ).join(","));
+      url.setPath( "/download/" + idsOfMsgs.join(",") );
       job = KIO::get( url, false, false );
       connectJob();
       slotGetNextMsg();
@@ -540,9 +538,7 @@ void KMAcctExpPop::slotJobFinished() {
         //remove entries from the lists when the mails should not be downloaded
         //(deleted or downloaded later)
         if ( mMsgsPendingDownload.contains( headersOnServer.current()->id() ) ) {
-          int idx = idsOfMsgs.findIndex( headersOnServer.current()->id() );
           mMsgsPendingDownload.remove( headersOnServer.current()->id() );
-          idsOfMsgs.remove(idsOfMsgs.at( idx ));
           mUidForIdMap.remove( headersOnServer.current()->id() );
         }
         if (headersOnServer.current()->action() == Delete) {
@@ -566,9 +562,10 @@ void KMAcctExpPop::slotJobFinished() {
     QMap<QString, int>::Iterator len;
     for (len = mMsgsPendingDownload.begin();
          len != mMsgsPendingDownload.end(); len++)
-        numBytesToRead += len.data();
+      numBytesToRead += len.data();
+    idsOfMsgs = QStringList( mMsgsPendingDownload.keys() );
     KURL url = getUrl();
-    url.setPath("/download/" + QStringList( mMsgsPendingDownload.keys() ).join(","));
+    url.setPath( "/download/" + idsOfMsgs.join(",") );
     job = KIO::get( url, false, false );
     connectJob();
     slotGetNextMsg();
@@ -655,8 +652,7 @@ void KMAcctExpPop::slotGetNextMsg()
   curMsgData.resize(0);
   numMsgBytesRead = 0;
   curMsgLen = 0;
-  if (curMsgStrm)
-    delete curMsgStrm;
+  delete curMsgStrm;
   curMsgStrm = 0;
 
   if (next == mMsgsPendingDownload.end()) {
@@ -746,7 +742,6 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
         if ( mMsgsPendingDownload.contains( id ) ) {
           mMsgsPendingDownload.remove( id );
-          idsOfMsgs.remove( id );
           bAppendUid = false;
         }
         else
