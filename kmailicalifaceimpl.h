@@ -163,12 +163,7 @@ public slots:
   void slotRefresh( const QString& type);
 
 private slots:
-  void slotRefreshCalendar();
-  void slotRefreshTasks();
-  void slotRefreshJournals();
-  void slotRefreshContacts();
-  void slotRefreshNotes();
-
+  void slotRefreshFolder( KMFolder* folder );
   void slotCheckDone();
   void slotMessageRetrieved( KMMessage* );
 

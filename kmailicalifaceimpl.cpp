@@ -463,6 +463,13 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
   }
 }
 
+void KMailICalIfaceImpl::slotRefreshFolder( KMFolder* folder )
+{
+  const QString type = icalFolderType( folder );
+  if ( !type.isEmpty() )
+    slotRefresh( type );
+}
+
 
 /****************************
  * The folder and message stuff code
@@ -657,12 +664,16 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
                 this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
     disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
                 this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
+                this, SLOT( slotRefreshFolder( KMFolder* ) ) );
 
     // And listen to changes from it
     connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
              this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
     connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
              this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    connect( folder, SIGNAL( expunged( KMFolder* ) ),
+             this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   }
 
   // Tell about the new resource
@@ -811,16 +822,6 @@ void KMailICalIfaceImpl::readConfig()
   mContacts = initFolder( KFolderTreeItem::Contacts, "GCo" );
   mNotes    = initFolder( KFolderTreeItem::Notes, "GNo" );
 
-  // Connect the expunged signal
-  connect( mCalendar, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshCalendar() ) );
-  connect( mTasks,    SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshTasks() ) );
-  connect( mJournals, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshJournals() ) );
-  connect( mContacts, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshContacts() ) );
-  connect( mNotes,    SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshNotes() ) );
-
-  // Bad hack
-  connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
-
   // Make KOrganizer re-read everything
   slotRefresh( "Calendar" );
   slotRefresh( "Task" );
@@ -844,12 +845,6 @@ void KMailICalIfaceImpl::slotCheckDone()
     readConfig();
   }
 }
-
-void KMailICalIfaceImpl::slotRefreshCalendar() { slotRefresh( "Calendar" ); }
-void KMailICalIfaceImpl::slotRefreshTasks() { slotRefresh( "Task" ); }
-void KMailICalIfaceImpl::slotRefreshJournals() { slotRefresh( "Journal" ); }
-void KMailICalIfaceImpl::slotRefreshContacts() { slotRefresh( "Contact" ); }
-void KMailICalIfaceImpl::slotRefreshNotes() { slotRefresh( "Notes" ); }
 
 KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
                                           const char* typeString )
@@ -886,11 +881,15 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
               this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
   disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
               this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+  disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
+              this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
   connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+  connect( folder, SIGNAL( expunged( KMFolder* ) ),
+           this, SLOT( slotRefreshFolder( KMFolder* ) ) );
 
   return folder;
 }
