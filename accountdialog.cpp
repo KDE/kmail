@@ -1088,8 +1088,8 @@ void AccountDialog::setupSettings()
     else if (ai.auth() == "LOGIN")
       mImap.authLogin->setChecked( TRUE );
     else mImap.authUser->setChecked( TRUE );
-    assert( mSieveConfigEditor );
-    mSieveConfigEditor->setConfig( ai.sieveConfig() );
+    if ( mSieveConfigEditor )
+      mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
   else if( accountType == "cachedimap" )
   {
@@ -1138,8 +1138,8 @@ void AccountDialog::setupSettings()
     else if (ai.auth() == "LOGIN")
       mImap.authLogin->setChecked( TRUE );
     else mImap.authUser->setChecked( TRUE );
-    assert( mSieveConfigEditor );
-    mSieveConfigEditor->setConfig( ai.sieveConfig() );
+    if ( mSieveConfigEditor )
+      mSieveConfigEditor->setConfig( ai.sieveConfig() );
   }
   else if( accountType == "maildir" )
   {
@@ -1440,8 +1440,8 @@ void AccountDialog::saveSettings()
     else if (mImap.authPlain->isChecked())
       epa.setAuth("PLAIN");
     else epa.setAuth("*");
-    assert( mSieveConfigEditor );
-    epa.setSieveConfig( mSieveConfigEditor->config() );
+    if ( mSieveConfigEditor )
+      epa.setSieveConfig( mSieveConfigEditor->config() );
   }
   else if( accountType == "cachedimap" )
   {
@@ -1487,8 +1487,8 @@ void AccountDialog::saveSettings()
     else if (mImap.authPlain->isChecked())
       epa.setAuth("PLAIN");
     else epa.setAuth("*");
-    assert( mSieveConfigEditor );
-    epa.setSieveConfig( mSieveConfigEditor->config() );
+    if ( mSieveConfigEditor )
+      epa.setSieveConfig( mSieveConfigEditor->config() );
   }
   else if( accountType == "maildir" )
   {
