@@ -189,16 +189,6 @@ QSize ConfigureDialog::ListView::sizeHint( void ) const
 }
 
 
-
-
-
-
-
-
-
-
-
-
 NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
 				      bool modal )
   :KDialogBase( parent, name, modal, i18n("New Identity"), Ok|Cancel|Help, Ok,
@@ -209,10 +199,11 @@ NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
   glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   glay->setRowStretch( 5, 10 );
 
-  QLabel *label = new QLabel( i18n("New Identity:"), page );
+  QLabel *label = new QLabel( i18n("&New Identity:"), page );
   glay->addWidget( label, 0, 0 );
 
   mLineEdit = new QLineEdit( page );
+  label->setBuddy(mLineEdit);
   mLineEdit->setFocus();
   glay->addWidget( mLineEdit, 0, 1 );
 
@@ -221,17 +212,17 @@ NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
   buttonGroup->hide();
 
   QRadioButton *radioEmpty =
-    new QRadioButton( i18n("With empty fields"), page );
+    new QRadioButton( i18n("&With empty fields"), page );
   buttonGroup->insert(radioEmpty, Empty );
   glay->addMultiCellWidget( radioEmpty, 1, 1, 0, 1 );
 
   QRadioButton *radioControlCenter =
-    new QRadioButton( i18n("Use Control Center settings"), page );
+    new QRadioButton( i18n("&Use Control Center settings"), page );
   buttonGroup->insert(radioControlCenter, ControlCenter );
   glay->addMultiCellWidget( radioControlCenter, 2, 2, 0, 1 );
 
   QRadioButton *radioDuplicate =
-    new QRadioButton( i18n("Duplicate existing identity"), page );
+    new QRadioButton( i18n("&Duplicate existing identity"), page );
   buttonGroup->insert(radioDuplicate, ExistingEntry );
   glay->addMultiCellWidget( radioDuplicate, 3, 3, 0, 1 );
 
@@ -326,10 +317,11 @@ RenameIdentityDialog::RenameIdentityDialog( QWidget *parent, const char *name,
 
   glay->addRowSpacing( 1, spacingHint() );
 
-  label = new QLabel( i18n("New Name:"), page );
+  label = new QLabel( i18n("&New Name:"), page );
   glay->addWidget( label, 2, 0 );
 
   mLineEdit = new QLineEdit( page );
+  label->setBuddy( mLineEdit );
   glay->addWidget( mLineEdit, 2, 1 );
 }
 
@@ -561,9 +553,9 @@ void ConfigureDialog::makeIdentityPage( void )
   QWidget *helper = new QWidget( page );
   glay->addMultiCellWidget( helper, 1, 1, 1, 2 );
   QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
-  QPushButton *newButton = new QPushButton( i18n("New..."), helper );
-  mIdentity.renameIdentityButton = new QPushButton( i18n("Rename..."), helper);
-  mIdentity.removeIdentityButton = new QPushButton( i18n("Remove"), helper );
+  QPushButton *newButton = new QPushButton( i18n("&New..."), helper );
+  mIdentity.renameIdentityButton = new QPushButton( i18n("&Rename..."), helper);
+  mIdentity.removeIdentityButton = new QPushButton( i18n("Re&move"), helper );
   newButton->setAutoDefault( false );
   mIdentity.renameIdentityButton->setAutoDefault( false );
   mIdentity.removeIdentityButton->setAutoDefault( false );
@@ -578,29 +570,34 @@ void ConfigureDialog::makeIdentityPage( void )
   hlay->addWidget( mIdentity.removeIdentityButton );
 
 
-  label = new QLabel( i18n("Name:"), page );
+  label = new QLabel( i18n("&Name:"), page );
   glay->addWidget( label, 2, 0 );
   mIdentity.nameEdit = new QLineEdit( page );
+  label->setBuddy(mIdentity.nameEdit);
   glay->addMultiCellWidget( mIdentity.nameEdit, 2, 2, 1, 2 );
 
-  label = new QLabel( i18n("Organization:"), page );
+  label = new QLabel( i18n("&Organization:"), page );
   glay->addWidget( label, 3, 0 );
   mIdentity.organizationEdit = new QLineEdit( page );
+  label->setBuddy(mIdentity.organizationEdit);
   glay->addMultiCellWidget( mIdentity.organizationEdit, 3, 3, 1, 2 );
 
-  label = new QLabel( i18n("Email Address:"), page );
+  label = new QLabel( i18n("&Email Address:"), page );
   glay->addWidget( label, 4, 0 );
   mIdentity.emailEdit = new QLineEdit( page );
+  label->setBuddy(mIdentity.emailEdit);
   glay->addMultiCellWidget( mIdentity.emailEdit, 4, 4, 1, 2 );
 
-  label = new QLabel( i18n("Reply-To Address:"), page );
+  label = new QLabel( i18n("&Reply-To Address:"), page );
   glay->addWidget( label, 5, 0 );
   mIdentity.replytoEdit = new QLineEdit( page );
+  label->setBuddy(mIdentity.replytoEdit);
   glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );
 
-  label = new QLabel( i18n("PGP User Identity:"),page );
+  label = new QLabel( i18n("PGP &User Identity:"),page );
   glay->addWidget( label, 6, 0 );
   mIdentity.pgpIdentityEdit = new QLineEdit( page );
+  label->setBuddy(mIdentity.pgpIdentityEdit);
   glay->addMultiCellWidget( mIdentity.pgpIdentityEdit, 6, 6, 1, 2 );
 
   QButtonGroup *buttonGroup = new QButtonGroup( page );
@@ -608,11 +605,11 @@ void ConfigureDialog::makeIdentityPage( void )
 	   this, SLOT(slotSignatureType(int)) );
   buttonGroup->hide();
   mIdentity.signatureFileRadio =
-    new QRadioButton( i18n("Use a signature from file"), page );
+    new QRadioButton( i18n("&Use a signature from file"), page );
   buttonGroup->insert( mIdentity.signatureFileRadio );
   glay->addMultiCellWidget( mIdentity.signatureFileRadio, 7, 7, 0, 1 );
 
-  mIdentity.transportButton = new QPushButton(i18n("Add Transport..."),
+  mIdentity.transportButton = new QPushButton(i18n("&Add Transport..."),
                                               page);
   connect(mIdentity.transportButton, SIGNAL(clicked()), this,
           SLOT(slotIdentityTransport()));
@@ -627,20 +624,21 @@ void ConfigureDialog::makeIdentityPage( void )
     mIdentity.transportButton->show();
   }
 
-  mIdentity.signatureFileLabel = new QLabel( i18n("Signature File:"), page );
+  mIdentity.signatureFileLabel = new QLabel( i18n("&Signature File:"), page );
   glay->addWidget( mIdentity.signatureFileLabel, 8, 0 );
   mIdentity.signatureFileEdit = new KURLRequester( page );
+  mIdentity.signatureFileLabel->setBuddy(mIdentity.signatureFileEdit);
   QPushButton *button = mIdentity.signatureFileEdit->button();
-  button->setText( i18n("Choose...") );
+  button->setText( i18n("&Choose...") );
   button->setAutoDefault( false );
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
   glay->addMultiCellWidget( mIdentity.signatureFileEdit, 8, 8, 1, 2 );
 
   mIdentity.signatureExecCheck =
-    new QCheckBox( i18n("The file is a program"), page );
+    new QCheckBox( i18n("&The file is a program"), page );
   glay->addWidget( mIdentity.signatureExecCheck, 9, 1 );
-  mIdentity.signatureEditButton = new QPushButton( i18n("Edit File"), page );
+  mIdentity.signatureEditButton = new QPushButton( i18n("Ed&it File"), page );
   connect( mIdentity.signatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
@@ -648,7 +646,7 @@ void ConfigureDialog::makeIdentityPage( void )
   button->setMinimumSize( mIdentity.signatureEditButton->sizeHint() );
 
   mIdentity.signatureTextRadio =
-    new QRadioButton( i18n("Specify signature below"), page );
+    new QRadioButton( i18n("&Specify signature below"), page );
   buttonGroup->insert( mIdentity.signatureTextRadio );
   glay->addMultiCellWidget( mIdentity.signatureTextRadio, 10, 10, 0, 2 );
 
@@ -662,7 +660,7 @@ void ConfigureDialog::makeIdentityPage( void )
 void ConfigureDialog::makeNetworkPage( void )
 {
   QFrame *page = addPage( i18n("Network"),
-			  i18n("Setup for sending and receiving messages"),
+			  i18n("&Setup for sending and receiving messages"),
     KGlobal::instance()->iconLoader()->loadIcon( "network", KIcon::NoGroup,
     KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
@@ -672,7 +670,7 @@ void ConfigureDialog::makeNetworkPage( void )
   topLevel->addWidget( tabWidget );
 
   QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("Sending Mail") );
+  tabWidget->addTab( page1, i18n("Se&nding Mail") );
 
   QButtonGroup *buttonGroup = new QButtonGroup( page1 );
   buttonGroup->hide();
@@ -682,35 +680,38 @@ void ConfigureDialog::makeNetworkPage( void )
   QGridLayout *glay = new QGridLayout( page1, 5, 4, spacingHint() );
   glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
 
-  mNetwork.sendmailRadio = new QRadioButton( i18n("Sendmail"), page1 );
+  mNetwork.sendmailRadio = new QRadioButton( i18n("&Sendmail"), page1 );
   buttonGroup->insert(mNetwork.sendmailRadio);
   glay->addMultiCellWidget(mNetwork.sendmailRadio, 0, 0, 0, 3);
-  QLabel *label = new QLabel( i18n("Location:"), page1 );
+  QLabel *label = new QLabel( i18n("&Location:"), page1 );
   glay->addWidget( label, 1, 1 );
   mNetwork.sendmailLocationEdit = new QLineEdit( page1 );
+  label->setBuddy(mNetwork.sendmailLocationEdit);
   glay->addWidget( mNetwork.sendmailLocationEdit, 1, 2 );
   mNetwork.sendmailChooseButton =
-    new QPushButton( i18n("Choose..."), page1 );
+    new QPushButton( i18n("&Choose..."), page1 );
   connect( mNetwork.sendmailChooseButton, SIGNAL(clicked()),
 	   this, SLOT(slotSendmailChooser()) );
   mNetwork.sendmailChooseButton->setAutoDefault( false );
   glay->addWidget( mNetwork.sendmailChooseButton, 1, 3 );
 
-  mNetwork.smtpRadio = new QRadioButton( i18n("SMTP"), page1 );
+  mNetwork.smtpRadio = new QRadioButton( i18n("SM&TP"), page1 );
   buttonGroup->insert(mNetwork.smtpRadio);
   glay->addMultiCellWidget(mNetwork.smtpRadio, 2, 2, 0, 3);
-  label = new QLabel( i18n("Server:"), page1 );
+  label = new QLabel( i18n("Ser&ver:"), page1 );
   glay->addWidget( label, 3, 1 );
   mNetwork.smtpServerEdit = new QLineEdit( page1 );
+  label->setBuddy(mNetwork.smtpServerEdit);
   glay->addWidget( mNetwork.smtpServerEdit, 3, 2 );
-  label = new QLabel( i18n("Port:"), page1 );
+  label = new QLabel( i18n("&Port:"), page1 );
   glay->addWidget( label, 4, 1 );
   mNetwork.smtpPortEdit = new QLineEdit( page1 );
+  label->setBuddy(mNetwork.smtpPortEdit);
   mNetwork.smtpPortEdit->setValidator( new QIntValidator(page1) );
   glay->addWidget( mNetwork.smtpPortEdit, 4, 2 );
 
   QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("Properties") );
+  tabWidget->addTab( page2, i18n("&Properties") );
 
   glay = new QGridLayout( page2, 4, 3, spacingHint() );
   glay->setColStretch( 2, 10 );
@@ -718,8 +719,8 @@ void ConfigureDialog::makeNetworkPage( void )
   label = new QLabel( i18n("Default send method:"), page2 );
   glay->addWidget( label, 0, 0 );
   mNetwork.sendMethodCombo = new QComboBox( page2 );
-  mNetwork.sendMethodCombo->insertItem(i18n("Send now"));
-  mNetwork.sendMethodCombo->insertItem(i18n("Send later"));
+  mNetwork.sendMethodCombo->insertItem(i18n("Send &now"));
+  mNetwork.sendMethodCombo->insertItem(i18n("Send &later"));
   glay->addWidget( mNetwork.sendMethodCombo, 0, 1 );
 
   label = new QLabel( i18n("Message Property:"), page2 );
@@ -730,18 +731,19 @@ void ConfigureDialog::makeNetworkPage( void )
     i18n("MIME Compliant (Quoted Printable)"));
   glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
 
- label = new QLabel( i18n("Precommand:"), page2 );
+ label = new QLabel( i18n("Precomman&d:"), page2 );
   glay->addWidget( label, 2, 0 );
   mNetwork.precommandEdit = new QLineEdit( page2 );
+  label->setBuddy(mNetwork.precommandEdit);
   glay->addWidget( mNetwork.precommandEdit, 2, 1 );
 
   mNetwork.confirmSendCheck =
-    new QCheckBox(i18n("Confirm before send"), page2 );
+    new QCheckBox(i18n("&Confirm before send"), page2 );
   glay->addMultiCellWidget( mNetwork.confirmSendCheck, 3, 3, 0, 1 );
 
 
 
-  buttonGroup = new QButtonGroup(i18n("&Incoming Mail"), page );
+  buttonGroup = new QButtonGroup(i18n("Incoming Mail"), page );
   topLevel->addWidget(buttonGroup, 10 );
 
   glay = new QGridLayout( buttonGroup, 6, 2, spacingHint() );
@@ -767,14 +769,14 @@ void ConfigureDialog::makeNetworkPage( void )
   glay->addMultiCellWidget( mNetwork.accountList, 2, 5, 0, 0 );
 
   mNetwork.addAccountButton =
-    new QPushButton( i18n("Add..."), buttonGroup );
+    new QPushButton( i18n("&Add..."), buttonGroup );
   mNetwork.addAccountButton->setAutoDefault( false );
   connect( mNetwork.addAccountButton, SIGNAL(clicked()),
 	   this, SLOT(slotAddAccount()) );
   glay->addWidget( mNetwork.addAccountButton, 2, 1 );
 
   mNetwork.modifyAccountButton =
-    new QPushButton( i18n("Modify..."), buttonGroup );
+    new QPushButton( i18n("&Modify..."), buttonGroup );
   mNetwork.modifyAccountButton->setAutoDefault( false );
   mNetwork.modifyAccountButton->setEnabled( false );
   connect( mNetwork.modifyAccountButton, SIGNAL(clicked()),
@@ -782,7 +784,7 @@ void ConfigureDialog::makeNetworkPage( void )
   glay->addWidget( mNetwork.modifyAccountButton, 3, 1 );
 
   mNetwork.removeAccountButton
-    = new QPushButton( i18n("Remove..."), buttonGroup );
+    = new QPushButton( i18n("&Remove..."), buttonGroup );
   mNetwork.removeAccountButton->setAutoDefault( false );
   mNetwork.removeAccountButton->setEnabled( false );
   connect( mNetwork.removeAccountButton, SIGNAL(clicked()),
@@ -802,15 +804,15 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.pageIndex = pageIndex(vbox);
 
   QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("Fonts") );
+  tabWidget->addTab( page1, i18n("&Fonts") );
   QVBoxLayout *vlay = new QVBoxLayout( page1, spacingHint() );
   mAppearance.customFontCheck =
-    new QCheckBox( i18n("Use custom fonts"), page1 );
+    new QCheckBox( i18n("&Use custom fonts"), page1 );
   connect( mAppearance.customFontCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotCustomFontSelectionChanged()) );
   vlay->addWidget( mAppearance.customFontCheck );
   mAppearance.unicodeFontCheck =
-    new QCheckBox( i18n("Use unicode font for messages"), page1 );
+    new QCheckBox( i18n("Use un&icode font for messages"), page1 );
   vlay->addWidget( mAppearance.unicodeFontCheck );
   QFrame *hline = new QFrame( page1 );
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
@@ -843,10 +845,10 @@ void ConfigureDialog::makeAppearancePage( void )
   vlay->addWidget( mAppearance.fontChooser );
 
   QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("Colors") );
+  tabWidget->addTab( page2, i18n("&Colors") );
   vlay = new QVBoxLayout( page2, spacingHint() );
   mAppearance.customColorCheck =
-    new QCheckBox( i18n("Use custom colors"), page2 );
+    new QCheckBox( i18n("&Use custom colors"), page2 );
   connect( mAppearance.customColorCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotCustomColorSelectionChanged()) );
   vlay->addWidget( mAppearance.customColorCheck );
@@ -875,37 +877,37 @@ void ConfigureDialog::makeAppearancePage( void )
   }
 
   mAppearance.recycleColorCheck =
-    new QCheckBox( i18n("Recycle colors on deep quoting"), page2 );
+    new QCheckBox( i18n("&Recycle colors on deep quoting"), page2 );
   vlay->addWidget( mAppearance.recycleColorCheck );
 
 
   QWidget *page3 = new QWidget( tabWidget );
-  tabWidget->addTab( page3, i18n("Layout") );
+  tabWidget->addTab( page3, i18n("&Layout") );
   vlay = new QVBoxLayout( page3, spacingHint() );
 
   mAppearance.longFolderCheck =
-    new QCheckBox( i18n("Show long folder list"), page3 );
+    new QCheckBox( i18n("&Show long folder list"), page3 );
   vlay->addWidget( mAppearance.longFolderCheck );
 
   mAppearance.messageSizeCheck =
-    new QCheckBox( i18n("Display message sizes"), page3 );
+    new QCheckBox( i18n("&Display message sizes"), page3 );
   vlay->addWidget( mAppearance.messageSizeCheck );
 
    mAppearance.nestedMessagesCheck =
-    new QCheckBox( i18n("Thread list of message headers"), page3 );
+    new QCheckBox( i18n("&Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
 
-  QButtonGroup *threadGroup = new QButtonGroup( i18n("Message header threading options"), page3 );
+  QButtonGroup *threadGroup = new QButtonGroup( i18n("&essage header threading options"), page3 );
   vlay->addWidget( threadGroup );
   QVBoxLayout * vthread = new QVBoxLayout( threadGroup, spacingHint() );
   vthread->addSpacing( fontMetrics().lineSpacing() );
-  mAppearance.rdAlwaysOpen = new QRadioButton( i18n("Always keep threads open"), threadGroup );
+  mAppearance.rdAlwaysOpen = new QRadioButton( i18n("&Always keep threads open"), threadGroup );
   vthread->addWidget( mAppearance.rdAlwaysOpen );
-  mAppearance.rdDefaultOpen = new QRadioButton( i18n("Threads default to open"), threadGroup );
+  mAppearance.rdDefaultOpen = new QRadioButton( i18n("Threads default to &open"), threadGroup );
   vthread->addWidget( mAppearance.rdDefaultOpen );
-  mAppearance.rdDefaultClosed = new QRadioButton( i18n("Threads default to closed"), threadGroup );
+  mAppearance.rdDefaultClosed = new QRadioButton( i18n("Threads default to &closed"), threadGroup );
   vthread->addWidget( mAppearance.rdDefaultClosed );
-  mAppearance.rdUnreadOpen = new QRadioButton( i18n("Open threads that contain new or unread messages"), threadGroup );
+  mAppearance.rdUnreadOpen = new QRadioButton( i18n("Open threads that contain new or &unread messages"), threadGroup );
   vthread->addWidget( mAppearance.rdUnreadOpen );
 
   QButtonGroup *dateGroup = new QButtonGroup( i18n( "Display of Date" ), page3 );
@@ -915,17 +917,17 @@ void ConfigureDialog::makeAppearancePage( void )
   time_t currentTime;
   time( &currentTime );
   mAppearance.rdDateCtime = new QRadioButton( i18n("untranslated format",
-                                                   "Standard C-Format (%1)").arg(
+                                                   "&Standard C-Format (%1)").arg(
                                                        KMHeaders::formatDate( currentTime,
                                                                               CTime ) ),
                                               dateGroup );
   vthread->addWidget( mAppearance.rdDateCtime );
-  mAppearance.rdDateLocalized = new QRadioButton( i18n("Localized Format (%1)")
+  mAppearance.rdDateLocalized = new QRadioButton( i18n("&Localized Format (%1)")
                                                   .arg( KMHeaders::formatDate( currentTime,
                                                                                Localized ) ),
                                                   dateGroup );
   vthread->addWidget( mAppearance.rdDateLocalized );
-  mAppearance.rdDateFancy = new QRadioButton( i18n("Fancy Format (%1)")
+  mAppearance.rdDateFancy = new QRadioButton( i18n("&Fancy Format (%1)")
                                               .arg( KMHeaders::formatDate( currentTime,
                                                                            FancyDate ) ),
                                               dateGroup );
@@ -935,7 +937,7 @@ void ConfigureDialog::makeAppearancePage( void )
 
 
   QWidget *page4 = new QWidget( tabWidget );
-  tabWidget->addTab( page4, i18n("Profiles") );
+  tabWidget->addTab( page4, i18n("&Profiles") );
   vlay = new QVBoxLayout( page4, spacingHint() );
 
   QLabel *label = new QLabel( page4 );
@@ -979,7 +981,7 @@ void ConfigureDialog::makeAppearancePage( void )
   */
 
   QWidget *page5 = new QWidget( tabWidget );
-  tabWidget->addTab( page5, i18n("Addressbook") );
+  tabWidget->addTab( page5, i18n("&Addressbook") );
   vlay = new QVBoxLayout( page5, spacingHint() );
 
   mAppearance.addressbookCombo = new QComboBox( page5 );
@@ -1014,7 +1016,7 @@ void ConfigureDialog::makeAppearancePage( void )
 
   // Score
   QWidget *page6 = new QWidget( tabWidget );
-  tabWidget->addTab( page6, i18n("Messages Scoring") );
+  tabWidget->addTab( page6, i18n("&Messages Scoring") );
   vlay = new QVBoxLayout( page6, spacingHint() );
 
   KScoringRulesConfig* ksc =
@@ -1037,9 +1039,9 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.pageIndex = pageIndex(vbox);
 
   QWidget *page = new QWidget( tabWidget );
-  tabWidget->addTab( page, i18n("General") );
+  tabWidget->addTab( page, i18n("&General") );
   QVBoxLayout *topLevel = new QVBoxLayout( page, spacingHint() );
-  QGroupBox *group = new QGroupBox(i18n("Phrases"), page );
+  QGroupBox *group = new QGroupBox(i18n("&Phrases"), page );
   topLevel->addWidget( group );
 
   QGridLayout *glay = new QGridLayout( group, 8, 2, spacingHint() );
@@ -1058,8 +1060,8 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.LanguageList = NULL;
   QHBoxLayout *languageHlay = new QHBoxLayout( 0, 0, spacingHint() );
   glay->addLayout( languageHlay, 3, 1 );
-  QPushButton *newButton = new QPushButton( i18n("Add..."), group );
-  mComposer.removeButton = new QPushButton( i18n("Remove"), group );
+  QPushButton *newButton = new QPushButton( i18n("&Add..."), group );
+  mComposer.removeButton = new QPushButton( i18n("&Remove"), group );
   newButton->setAutoDefault( false );
   mComposer.removeButton->setAutoDefault( false );
   languageHlay->addWidget( newButton );
@@ -1070,38 +1072,42 @@ void ConfigureDialog::makeComposerPage( void )
            this, SLOT(slotRemoveLanguage()) );
   connect( mComposer.phraseLanguageCombo, SIGNAL(activated( const QString& )),
            this, SLOT(slotLanguageChanged( const QString& )) );
-  label = new QLabel( i18n("Reply to sender:"), group );
+  label = new QLabel( i18n("&Reply to sender:"), group );
   glay->addWidget( label, 4, 0 );
   mComposer.phraseReplyEdit = new QLineEdit( group );
+  label->setBuddy(mComposer.phraseReplyEdit);
   glay->addWidget( mComposer.phraseReplyEdit, 4, 1 );
-  label = new QLabel( i18n("Reply to all:"), group );
+  label = new QLabel( i18n("Reply to &all:"), group );
   glay->addWidget( label, 5, 0 );
   mComposer.phraseReplyAllEdit = new QLineEdit( group );
+  label->setBuddy(mComposer.phraseReplyAllEdit);
   glay->addWidget( mComposer.phraseReplyAllEdit, 5, 1 );
-  label = new QLabel( i18n("Forward:"), group );
+  label = new QLabel( i18n("&Forward:"), group );
   glay->addWidget( label, 6, 0 );
   mComposer.phraseForwardEdit = new QLineEdit( group );
+  label->setBuddy(mComposer.phraseForwardEdit);
   glay->addWidget( mComposer.phraseForwardEdit, 6, 1 );
-  label = new QLabel( i18n("Indentation:"), group );
+  label = new QLabel( i18n("&Indentation:"), group );
   glay->addWidget( label, 7, 0 );
   mComposer.phraseindentPrefixEdit = new QLineEdit( group );
+  label->setBuddy(mComposer.phraseindentPrefixEdit);
   glay->addWidget( mComposer.phraseindentPrefixEdit, 7, 1 );
 
   mComposer.autoAppSignFileCheck =
-    new QCheckBox( i18n("Automatically append signature"), page );
+    new QCheckBox( i18n("&Automatically append signature"), page );
   topLevel->addWidget( mComposer.autoAppSignFileCheck );
 
   mComposer.smartQuoteCheck =
-    new QCheckBox( i18n("Use smart quoting"), page );
+    new QCheckBox( i18n("&Use smart quoting"), page );
   topLevel->addWidget( mComposer.smartQuoteCheck );
 
   mComposer.pgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically sign messages using PGP"), page );
+    new QCheckBox( i18n("Automatically &sign messages using PGP"), page );
   topLevel->addWidget( mComposer.pgpAutoSignatureCheck );
 
   QHBoxLayout *hlay = new QHBoxLayout( topLevel );
   mComposer.wordWrapCheck =
-    new QCheckBox( i18n("Word wrap at column:"), page );
+    new QCheckBox( i18n("&Word wrap at column:"), page );
   connect( mComposer.wordWrapCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotWordWrapSelectionChanged()) );
   hlay->addWidget( mComposer.wordWrapCheck );
@@ -1122,19 +1128,20 @@ void ConfigureDialog::makeComposerPage( void )
   QBoxLayout * vlay = new QVBoxLayout( editorGroup, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
   mComposer.externalEditorCheck =
-    new QCheckBox(i18n("Use external editor instead of composer"),
+    new QCheckBox(i18n("&Use external editor instead of composer"),
     editorGroup );
   connect( mComposer.externalEditorCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotExternalEditorSelectionChanged()) );
   vlay->addWidget( mComposer.externalEditorCheck );
   QHBoxLayout *edhlay = new QHBoxLayout( vlay );
-  mComposer.externalEditorLabel = new QLabel( i18n("Specify editor:"),
+  mComposer.externalEditorLabel = new QLabel( i18n("&Specify editor:"),
     editorGroup );
   edhlay->addWidget( mComposer.externalEditorLabel );
   mComposer.externalEditorEdit = new QLineEdit( editorGroup );
+  mComposer.externalEditorLabel->setBuddy( mComposer.externalEditorEdit );
   edhlay->addWidget( mComposer.externalEditorEdit );
   mComposer.externalEditorChooseButton =
-    new QPushButton( i18n("Choose..."), editorGroup );
+    new QPushButton( i18n("&Choose..."), editorGroup );
   connect( mComposer.externalEditorChooseButton, SIGNAL(clicked()),
 	   this, SLOT(slotExternalEditorChooser()) );
   mComposer.externalEditorChooseButton->setAutoDefault( false );
@@ -1146,7 +1153,7 @@ void ConfigureDialog::makeComposerPage( void )
 
   // ----- subject page
   QWidget *subjectPage = new QWidget( tabWidget );
-  tabWidget->addTab( subjectPage, i18n("Subject") );
+  tabWidget->addTab( subjectPage, i18n("&Subject") );
   QVBoxLayout *topLevel2 = new QVBoxLayout( subjectPage, spacingHint() );
 
   QGroupBox *replyGroup = new QGroupBox(i18n("Reply subject prefixes"), subjectPage );
@@ -1167,14 +1174,14 @@ void ConfigureDialog::makeComposerPage( void )
 	   this, SLOT(slotReplyPrefixSelected()) );
 
   mComposer.addReplyPrefixButton =
-     new QPushButton( i18n("Add..."), replyGroup );
+     new QPushButton( i18n("&Add..."), replyGroup );
   mComposer.addReplyPrefixButton->setAutoDefault( false );
   connect( mComposer.addReplyPrefixButton, SIGNAL(clicked()),
   	   this, SLOT(slotAddReplyPrefix()) );
   glay2->addWidget( mComposer.addReplyPrefixButton, 2, 1 );
 
   mComposer.removeReplyPrefixButton =
-     new QPushButton( i18n("Remove"), replyGroup );
+     new QPushButton( i18n("&Remove"), replyGroup );
   mComposer.removeReplyPrefixButton->setAutoDefault( false );
   mComposer.removeReplyPrefixButton->setEnabled( false );
   connect( mComposer.removeReplyPrefixButton, SIGNAL(clicked()),
@@ -1182,7 +1189,7 @@ void ConfigureDialog::makeComposerPage( void )
   glay2->addWidget( mComposer.removeReplyPrefixButton, 3, 1 );
 
   mComposer.replaceReplyPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefix with Re:"), replyGroup );
+     new QCheckBox( i18n("Re&place recognized prefix with Re:"), replyGroup );
   glay2->addMultiCellWidget( mComposer.replaceReplyPrefixCheck, 5, 5, 0, 2);
 
   //forward group
@@ -1204,14 +1211,14 @@ void ConfigureDialog::makeComposerPage( void )
 	   this, SLOT(slotForwardPrefixSelected()) );
 
   mComposer.addForwardPrefixButton =
-     new QPushButton( i18n("Add..."), forwardGroup );
+     new QPushButton( i18n("A&dd..."), forwardGroup );
   mComposer.addForwardPrefixButton->setAutoDefault( false );
   connect( mComposer.addForwardPrefixButton, SIGNAL(clicked()),
   	   this, SLOT(slotAddForwardPrefix()) );
   glay3->addWidget( mComposer.addForwardPrefixButton, 2, 1 );
 
   mComposer.removeForwardPrefixButton =
-     new QPushButton( i18n("Remove"), forwardGroup );
+     new QPushButton( i18n("Re&move"), forwardGroup );
   mComposer.removeForwardPrefixButton->setAutoDefault( false );
   mComposer.removeForwardPrefixButton->setEnabled( false );
   connect( mComposer.removeForwardPrefixButton, SIGNAL(clicked()),
@@ -1219,12 +1226,12 @@ void ConfigureDialog::makeComposerPage( void )
   glay3->addWidget( mComposer.removeForwardPrefixButton, 3, 1 );
 
   mComposer.replaceForwardPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefix with Fwd:"), forwardGroup );
+     new QCheckBox( i18n("&Replace recognized prefix with Fwd:"), forwardGroup );
   glay3->addMultiCellWidget( mComposer.replaceForwardPrefixCheck, 5, 5, 0, 2);
 
   // ----- charset page
   QWidget *charsetPage = new QWidget( tabWidget );
-  tabWidget->addTab( charsetPage, i18n("Charset") );
+  tabWidget->addTab( charsetPage, i18n("&Charset") );
   QVBoxLayout *topLevel3 = new QVBoxLayout( charsetPage, spacingHint() );
 
   //list of charsets
@@ -1236,15 +1243,15 @@ void ConfigureDialog::makeComposerPage( void )
   charsetsGridLay->setRowStretch( 1, 10 );
   mComposer.charsetListBox = new QListBox( charsetsGroup );
   charsetsGridLay->addMultiCellWidget( mComposer.charsetListBox, 1, 5, 0, 0 );
-  mComposer.addCharsetButton = new QPushButton( i18n("Add..."), charsetsGroup );
+  mComposer.addCharsetButton = new QPushButton( i18n("&Add..."), charsetsGroup );
   charsetsGridLay->addWidget( mComposer.addCharsetButton, 2, 1 );
-  mComposer.removeCharsetButton = new QPushButton( i18n("Remove"),
+  mComposer.removeCharsetButton = new QPushButton( i18n("&Remove"),
     charsetsGroup );
   charsetsGridLay->addWidget( mComposer.removeCharsetButton, 3, 1 );
-  mComposer.charsetUpButton = new QPushButton( i18n("Up"), charsetsGroup );
+  mComposer.charsetUpButton = new QPushButton( i18n("&Up"), charsetsGroup );
   mComposer.charsetUpButton->setAutoRepeat( TRUE );
   charsetsGridLay->addWidget( mComposer.charsetUpButton, 4, 1 );
-  mComposer.charsetDownButton = new QPushButton( i18n("Down"), charsetsGroup );
+  mComposer.charsetDownButton = new QPushButton( i18n("&Down"), charsetsGroup );
   mComposer.charsetDownButton->setAutoRepeat( TRUE );
   charsetsGridLay->addWidget( mComposer.charsetDownButton, 5, 1 );
   topLevel3->addWidget( charsetsGroup );
@@ -1268,7 +1275,7 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.defaultCharsetCombo = new QComboBox( defaultCharsetGroup );
   charsetVLay->addWidget( mComposer.defaultCharsetCombo );
   mComposer.forceReplyCharsetCheck =
-    new QCheckBox( i18n("Use own default charset when replying or forwarding"),
+    new QCheckBox( i18n("&Use own default charset when replying or forwarding"),
     defaultCharsetGroup );
   charsetVLay->addWidget( mComposer.forceReplyCharsetCheck );
   topLevel3->addWidget( defaultCharsetGroup );
@@ -1287,7 +1294,7 @@ void ConfigureDialog::makeMimePage( void )
   mMime.pageIndex = pageIndex(page);
 
   mMime.createOwnMessageIdCheck =
-    new QCheckBox( i18n("Create own Message-Id headers"), page );
+    new QCheckBox( i18n("&Create own Message-Id headers"), page );
   topLevel->addWidget( mMime.createOwnMessageIdCheck );
 
   QGridLayout *glay0 = new QGridLayout( topLevel, 1, 2 );
@@ -1333,19 +1340,21 @@ void ConfigureDialog::makeMimePage( void )
   QGridLayout *glay = new QGridLayout( topLevel, 3, 2 );
   glay->setColStretch( 1, 10 );
 
-  mMime.tagNameLabel = new QLabel(i18n("Name:"), page );
+  mMime.tagNameLabel = new QLabel(i18n("&Name:"), page );
   mMime.tagNameLabel->setEnabled(false);
   glay->addWidget( mMime.tagNameLabel, 0, 0 );
   mMime.tagNameEdit = new QLineEdit(page);
+  mMime.tagNameLabel->setBuddy(mMime.tagNameEdit);
   mMime.tagNameEdit->setEnabled(false);
   connect( mMime.tagNameEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotMimeHeaderNameChanged(const QString&)) );
   glay->addWidget( mMime.tagNameEdit, 0, 1 );
 
-  mMime.tagValueLabel = new QLabel(i18n("Value:"), page );
+  mMime.tagValueLabel = new QLabel(i18n("&Value:"), page );
   mMime.tagValueLabel->setEnabled(false);
   glay->addWidget( mMime.tagValueLabel, 1, 0 );
   mMime.tagValueEdit = new QLineEdit(page);
+  mMime.tagValueLabel->setBuddy(mMime.tagValueEdit);
   mMime.tagValueEdit->setEnabled(false);
   connect( mMime.tagValueEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotMimeHeaderValueChanged(const QString&)) );
@@ -1379,7 +1388,7 @@ void ConfigureDialog::makeSecurityPage( void )
 
     QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
     QWidget *page = new QWidget( tabWidget );
-    tabWidget->addTab( page, i18n("PGP") );
+    tabWidget->addTab( page, i18n("&PGP") );
     QVBoxLayout *vlay = new QVBoxLayout( page, spacingHint() );
 
     mSecurity.pgpConfig = new KpgpConfig(page);
@@ -1387,7 +1396,7 @@ void ConfigureDialog::makeSecurityPage( void )
     vlay->addStretch(10);
 
     page = new QWidget( tabWidget );
-    tabWidget->addTab( page, i18n("HTML") );
+    tabWidget->addTab( page, i18n("&HTML") );
     vlay = new QVBoxLayout( page, spacingHint() );
 
     QButtonGroup *group = new QButtonGroup( i18n("HTML"), page );
@@ -1395,7 +1404,7 @@ void ConfigureDialog::makeSecurityPage( void )
     QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
     vlay2->addSpacing( fontMetrics().lineSpacing() );
     mSecurity.htmlMailCheck =
-      new QCheckBox( i18n("Prefer HTML to plain text"), group );
+      new QCheckBox( i18n("&Prefer HTML to plain text"), group );
     vlay2->addWidget( mSecurity.htmlMailCheck );
     QLabel *label = new QLabel( group );
     label->setAlignment( WordBreak);
@@ -1411,7 +1420,7 @@ void ConfigureDialog::makeSecurityPage( void )
     QVBoxLayout *glay = new QVBoxLayout( gb, KDialog::spacingHint() );
     glay->addSpacing( fontMetrics().lineSpacing() );
 
-    mSecurity.externalReferences = new QCheckBox( i18n( "Load external references from the net" ), gb );
+    mSecurity.externalReferences = new QCheckBox( i18n( "&Load external references from the net" ), gb );
     glay->addWidget( mSecurity.externalReferences );
 
     vlay->addStretch(10);
@@ -1451,7 +1460,7 @@ void ConfigureDialog::makeMiscPage( void )
 
   tvlay->addSpacing( fontMetrics().lineSpacing() );
   mMisc.emptyTrashCheck =
-    new QCheckBox(i18n("Empty trash on exit"), tgroup );
+    new QCheckBox(i18n("&Empty trash on exit"), tgroup );
   connect( mMisc.emptyTrashCheck, SIGNAL(stateChanged(int)),
 		  this, SLOT(slotEmptyTrashState(int)) );
   tvlay->addWidget( mMisc.emptyTrashCheck );
@@ -1459,7 +1468,7 @@ void ConfigureDialog::makeMiscPage( void )
   stlay->setMargin(0);
   tvlay->addLayout( stlay );
   mMisc.keepSmallTrashCheck =
-    new QCheckBox(i18n("Keep trash size below "), tgroup );
+    new QCheckBox(i18n("&Keep trash size below "), tgroup );
   stlay->addWidget( mMisc.keepSmallTrashCheck );
   mMisc.smallTrashSizeSpin = new KIntNumInput( tgroup );
   //mFolder.smallTrashSizeSpin->setMinValue(1);
@@ -1471,7 +1480,7 @@ void ConfigureDialog::makeMiscPage( void )
   rmvlay->setMargin(0);
   tvlay->addLayout( rmvlay );
   mMisc.removeOldMailCheck =
-    new QCheckBox(i18n("In trash, on exit, remove messages older than"), tgroup );
+    new QCheckBox(i18n("&In trash, on exit, remove messages older than"), tgroup );
   rmvlay->addWidget( mMisc.removeOldMailCheck );
   mMisc.oldMailAgeSpin = new KIntNumInput( tgroup );
   mMisc.oldMailAgeSpin->setValue(1);
@@ -1492,16 +1501,16 @@ void ConfigureDialog::makeMiscPage( void )
   QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
   mMisc.sendOutboxCheck =
-    new QCheckBox(i18n("Send Mail in outbox Folder on Check"), group );
+    new QCheckBox(i18n("&Send Mail in outbox Folder on Check"), group );
   vlay->addWidget( mMisc.sendOutboxCheck );
   mMisc.sendReceiptCheck = new QCheckBox(
-    i18n("Automatically send receive- and read confirmations"), group );
+    i18n("&Automatically send receive- and read confirmations"), group );
   vlay->addWidget( mMisc.sendReceiptCheck );
   mMisc.compactOnExitCheck =
-    new QCheckBox(i18n("Compact all folders on exit"), group );
+    new QCheckBox(i18n("C&ompact all folders on exit"), group );
   vlay->addWidget( mMisc.compactOnExitCheck );
   mMisc.emptyFolderConfirmCheck =
-    new QCheckBox(i18n("Confirm before emptying folders"), group );
+    new QCheckBox(i18n("Conf&irm before emptying folders"), group );
   vlay->addWidget( mMisc.emptyFolderConfirmCheck );
 
   //---------- group: New Mail Notification
@@ -1510,13 +1519,13 @@ void ConfigureDialog::makeMiscPage( void )
   vlay = new QVBoxLayout( group, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
   mMisc.beepNewMailCheck =
-    new QCheckBox(i18n("Beep on new mail"), group );
+    new QCheckBox(i18n("&Beep on new mail"), group );
   vlay->addWidget( mMisc.beepNewMailCheck );
   mMisc.showMessageBoxCheck =
-    new QCheckBox(i18n("Display message box on new mail"), group );
+    new QCheckBox(i18n("&Display message box on new mail"), group );
   vlay->addWidget( mMisc.showMessageBoxCheck );
   mMisc.mailCommandCheck =
-    new QCheckBox( i18n("Execute command line on new mail"), group );
+    new QCheckBox( i18n("E&xecute command line on new mail"), group );
   vlay->addWidget( mMisc.mailCommandCheck );
   connect( mMisc.mailCommandCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotMailCommandSelectionChanged()) );
@@ -1524,9 +1533,10 @@ void ConfigureDialog::makeMiscPage( void )
   mMisc.mailCommandLabel = new QLabel( i18n("Specify command:"), group );
   hlay->addWidget( mMisc.mailCommandLabel );
   mMisc.mailCommandEdit = new QLineEdit( group );
+  mMisc.mailCommandLabel->setBuddy(mMisc.mailCommandEdit);
   hlay->addWidget( mMisc.mailCommandEdit );
   mMisc.mailCommandChooseButton =
-    new QPushButton( i18n("Choose..."), group );
+    new QPushButton( i18n("&Choose..."), group );
   connect( mMisc.mailCommandChooseButton, SIGNAL(clicked()),
 	   this, SLOT(slotMailCommandChooser()) );
   mMisc.mailCommandChooseButton->setAutoDefault( false );
@@ -2237,12 +2247,12 @@ void ConfigureDialog::slotDoApply( bool everything )
       bool recycleColors = mAppearance.recycleColorCheck->isChecked();
       config->writeEntry("RecycleQuoteColors", recycleColors );
     }
-    
+
     {
       KConfigGroupSaver saver(config, "Geometry");
       bool longFolderList = mAppearance.longFolderCheck->isChecked();
       config->writeEntry( "longFolderList", longFolderList );
-      
+
       bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
       config->writeEntry( "nestedMessages", nestedMessages );
 

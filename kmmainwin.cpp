@@ -1652,10 +1652,10 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Find in message..."), KStdAccel::key(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
-  (void) new KAction( i18n("Select all messages"), Key_K, this,
+  (void) new KAction( i18n("Sele&ct all messages"), Key_K, this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
-  (void) new KAction( i18n("Select message text"), KStdAccel::key(KStdAccel::SelectAll), this,
+  (void) new KAction( i18n("Select message &text"), KStdAccel::key(KStdAccel::SelectAll), this,
 		      SLOT(slotSelectText()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
@@ -1674,10 +1674,10 @@ void KMMainWin::setupMenuBar()
   removeFolderAction = new KAction( i18n("&Remove"), 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
-  preferHtmlAction = new KToggleAction( i18n("Prefer HTML to plain text"), 0, this,
+  preferHtmlAction = new KToggleAction( i18n("&Prefer HTML to plain text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
 
-  threadMessagesAction = new KToggleAction( i18n("Thread messages"), 0, this,
+  threadMessagesAction = new KToggleAction( i18n("&Thread messages"), 0, this,
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
   //----- Message Menu
@@ -1720,7 +1720,7 @@ void KMMainWin::setupMenuBar()
   bounceAction = new KAction( i18n("&Bounce..."), 0, this,
 		      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
-  sendAgainAction = new KAction( i18n("Send again..."), 0, this,
+  sendAgainAction = new KAction( i18n("Send a&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
   //----- Message-Encoding Submenu
@@ -1829,11 +1829,11 @@ void KMMainWin::setupMenuBar()
   mViewMenu->insertItem(i18n("&Long Headers"), KMReaderWin::HdrLong);
   mViewMenu->insertItem(i18n("&All Headers"), KMReaderWin::HdrAll);
   mViewMenu->insertSeparator();
-  mViewMenu->insertItem(i18n("Iconic Attachments"),
+  mViewMenu->insertItem(i18n("&Iconic Attachments"),
 		       KMReaderWin::HdrAll + KMReaderWin::IconicAttmnt);
-  mViewMenu->insertItem(i18n("Smart Attachments"),
+  mViewMenu->insertItem(i18n("Sma&rt Attachments"),
 		       KMReaderWin::HdrAll + KMReaderWin::SmartAttmnt);
-  mViewMenu->insertItem(i18n("Inlined Attachments"),
+  mViewMenu->insertItem(i18n("I&nlined Attachments"),
 		       KMReaderWin::HdrAll + KMReaderWin::InlineAttmnt);
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);

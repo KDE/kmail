@@ -31,7 +31,7 @@ KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, con
 {
   initLists(); // sFilter{Func,Field}List are local to KMSearchRuleWidget
   initWidget();
-  
+
   if ( aRule )
     setRule(aRule);
   else
@@ -45,13 +45,13 @@ void KMSearchRuleWidget::initWidget()
   mRuleField = new QComboBox( true, this, "mRuleField" );
   mRuleFunc = new QComboBox( false, this, "mRuleFunc" );
   mRuleValue = new QLineEdit( this, "mRuleValue" );
-  
+
   mRuleFunc->insertStringList(sFilterFuncList);
   mRuleFunc->adjustSize();
 
   mRuleField->insertStringList(sFilterFieldList);
   mRuleField->adjustSize();
-  
+
   connect( mRuleField, SIGNAL(textChanged(const QString &)),
 	   this, SIGNAL(fieldChanged(const QString &)) );
   connect( mRuleValue, SIGNAL(textChanged(const QString &)),
@@ -65,13 +65,13 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   blockSignals(TRUE);
   //--------------set the field
   int i = indexOfRuleField( aRule->field() );
-  
+
   if ( i<0 ) { // not found -> user defined field
     mRuleField->changeItem( aRule->field(), 0 );
     i=0;
   } else // found in the list of predefined fields
     mRuleField->changeItem( " ", 0 );
-  
+
   mRuleField->setCurrentItem( i );
 
   //--------------set function and contents
@@ -287,10 +287,10 @@ KMSearchPatternEdit::~KMSearchPatternEdit()
 
 void KMSearchPatternEdit::initLayout()
 {
-  //------------the radio buttons	
-  mAllRBtn = new QRadioButton( i18n("Match all of the following"), this, "mAllRBtn" );
-  mAnyRBtn = new QRadioButton( i18n("Match any of the following"), this, "mAnyRBtn" );
-  
+  //------------the radio buttons
+  mAllRBtn = new QRadioButton( i18n("Match a&ll of the following"), this, "mAllRBtn" );
+  mAnyRBtn = new QRadioButton( i18n("Match an&y of the following"), this, "mAnyRBtn" );
+
   mAllRBtn->setChecked(TRUE);
   mAnyRBtn->setChecked(FALSE);
 
@@ -322,7 +322,7 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
   assert( aPattern );
 
   mRuleLister->setRuleList( aPattern );
-  
+
   mPattern = aPattern;
 
   blockSignals(TRUE);
@@ -348,7 +348,7 @@ void KMSearchPatternEdit::reset()
 
 void KMSearchPatternEdit::slotRadioClicked(int aIdx)
 {
-  if ( mPattern ) 
+  if ( mPattern )
     mPattern->setOp( (KMSearchPattern::Operator)aIdx );
 }
 

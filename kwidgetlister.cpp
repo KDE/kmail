@@ -27,16 +27,16 @@ KWidgetLister::KWidgetLister( int minWidgets, int maxWidgets, QWidget *parent, c
   mButtonBox = new QHBox(this);
   mLayout->addWidget( mButtonBox );
 
-  mBtnMore = new QPushButton( i18n("more widgets","More"), mButtonBox );
+  mBtnMore = new QPushButton( i18n("more widgets","&More"), mButtonBox );
   mButtonBox->setStretchFactor( mBtnMore, 0 );
 
-  mBtnFewer = new QPushButton( i18n("fewer widgets","Fewer"), mButtonBox );
+  mBtnFewer = new QPushButton( i18n("fewer widgets","&Fewer"), mButtonBox );
   mButtonBox->setStretchFactor( mBtnFewer, 0 );
 
   QWidget *spacer = new QWidget( mButtonBox );
   mButtonBox->setStretchFactor( spacer, 1 );
 
-  mBtnClear = new QPushButton( i18n("clear widgets","Clear"), mButtonBox );
+  mBtnClear = new QPushButton( i18n("clear widgets","&Clear"), mButtonBox );
   mButtonBox->setStretchFactor( mBtnClear, 0 );
 
   //---------- connect everything

@@ -1,5 +1,5 @@
 /*
- *   kmail: KDE mail client
+ *   kmail: KDE mail client  
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -271,9 +271,10 @@ void AccountDialog::makeLocalAccountPage()
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
-  QLabel *label = new QLabel( i18n("Name:"), page );
+  QLabel *label = new QLabel( i18n("&Name:"), page );
   topLayout->addWidget( label, 2, 0 );
   mLocal.nameEdit = new QLineEdit( page );
+  label->setBuddy( mLocal.nameEdit );
   topLayout->addWidget( mLocal.nameEdit, 2, 1 );
 
   label = new QLabel( i18n("Location:"), page );
@@ -282,7 +283,7 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->addWidget( mLocal.locationEdit, 3, 1 );
   mLocal.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
 
-  QPushButton *choose = new QPushButton( i18n("Choose..."), page );
+  QPushButton *choose = new QPushButton( i18n("&Choose..."), page );
   choose->setAutoDefault( false );
   connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
   topLayout->addWidget( choose, 3, 2 );
@@ -313,25 +314,25 @@ void AccountDialog::makeLocalAccountPage()
   groupLayout->addWidget(mLocal.lockMutt, 1, 0);
 
   mLocal.lockMuttPriv = new QRadioButton(
-    i18n("Mutt dotlock privileged"), group);
+    i18n("&Mutt dotlock privileged"), group);
   groupLayout->addWidget(mLocal.lockMuttPriv, 2, 0);
 
   mLocal.lockFcntl = new QRadioButton(
-    i18n("FCNTL"), group);
+    i18n("&FCNTL"), group);
   groupLayout->addWidget(mLocal.lockFcntl, 3, 0);
 
   mLocal.lockNone = new QRadioButton(
-    i18n("none (use with care)"), group);
+    i18n("&none (use with care)"), group);
   groupLayout->addWidget(mLocal.lockNone, 4, 0);
 
   topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
 
   mLocal.excludeCheck =
-    new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
+    new QCheckBox( i18n("E&xclude from \"Check Mail\""), page );
   topLayout->addMultiCellWidget( mLocal.excludeCheck, 5, 5, 0, 2 );
 
   mLocal.intervalCheck =
-    new QCheckBox( i18n("Enable interval mail checking"), page );
+    new QCheckBox( i18n("&Enable interval mail checking"), page );
   topLayout->addMultiCellWidget( mLocal.intervalCheck, 6, 6, 0, 2 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableLocalInterval(bool)) );
@@ -359,9 +360,10 @@ void AccountDialog::makeLocalAccountPage()
 
   //mLocal.identityCombo->setEnabled(false);
 
-  label = new QLabel( i18n("Precommand:"), page );
+  label = new QLabel( i18n("&Precommand:"), page );
   topLayout->addWidget( label, 9, 0 );
   mLocal.precommand = new QLineEdit( page );
+  label->setBuddy( mLocal.precommand );
   topLayout->addWidget( mLocal.precommand, 9, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
@@ -394,40 +396,45 @@ void AccountDialog::makePopAccountPage()
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 1 );
 
-  QLabel *label = new QLabel( i18n("Name:"), page );
+  QLabel *label = new QLabel( i18n("&Name:"), page );
   topLayout->addWidget( label, 2, 0 );
   mPop.nameEdit = new QLineEdit( page );
+  label->setBuddy( mPop.nameEdit );
   topLayout->addWidget( mPop.nameEdit, 2, 1 );
 
-  label = new QLabel( i18n("Login:"), page );
+  label = new QLabel( i18n("&Login:"), page );
   topLayout->addWidget( label, 3, 0 );
   mPop.loginEdit = new QLineEdit( page );
+  label->setBuddy( mPop.loginEdit );
   topLayout->addWidget( mPop.loginEdit, 3, 1 );
 
-  label = new QLabel( i18n("Password:"), page );
+  label = new QLabel( i18n("P&assword:"), page );
   topLayout->addWidget( label, 4, 0 );
   mPop.passwordEdit = new QLineEdit( page );
   mPop.passwordEdit->setEchoMode( QLineEdit::Password );
+  label->setBuddy( mPop.passwordEdit );
   topLayout->addWidget( mPop.passwordEdit, 4, 1 );
 
-  label = new QLabel( i18n("Host:"), page );
+  label = new QLabel( i18n("&Host:"), page );
   topLayout->addWidget( label, 5, 0 );
   mPop.hostEdit = new QLineEdit( page );
+  label->setBuddy( mPop.hostEdit );
   topLayout->addWidget( mPop.hostEdit, 5, 1 );
 
-  label = new QLabel( i18n("Port:"), page );
+  label = new QLabel( i18n("&Port:"), page );
   topLayout->addWidget( label, 6, 0 );
   mPop.portEdit = new QLineEdit( page );
   mPop.portEdit->setValidator( new QIntValidator(this) );
+  label->setBuddy( mPop.portEdit );
   topLayout->addWidget( mPop.portEdit, 6, 1 );
 
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page );
   mPop.useSSLCheck =
-    new QCheckBox( i18n("Use SSL for secure mail download"), group );
+    new QCheckBox( i18n("Use &SSL for secure mail download"), group );
   connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
   mPop.useTLSCheck =
-    new QCheckBox( i18n("Use TLS for secure mail download"), group );
+    new QCheckBox( i18n("Use &TLS for secure mail download"), group );
   connect(mPop.useTLSCheck, SIGNAL(clicked()), this, SLOT(slotTLSChanged()));
   topLayout->addMultiCellWidget( group, 7, 7, 0, 1 );
 
@@ -477,9 +484,10 @@ void AccountDialog::makePopAccountPage()
   */
   //  mPop.identityCombo->setEnabled(false);
 
-  label = new QLabel( i18n("Precommand:"), page );
+  label = new QLabel( i18n("Pre&command:"), page );
   topLayout->addWidget( label, 15, 0 );
   mPop.precommand = new QLineEdit( page );
+  label->setBuddy(mPop.precommand);
   topLayout->addWidget( mPop.precommand, 15, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
@@ -504,66 +512,72 @@ void AccountDialog::makeImapAccountPage()
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 1 );
 
-  QLabel *label = new QLabel( i18n("Name:"), page );
+  QLabel *label = new QLabel( i18n("&Name:"), page );
   topLayout->addWidget( label, 2, 0 );
   mImap.nameEdit = new QLineEdit( page );
+  label->setBuddy( mImap.nameEdit );
   topLayout->addWidget( mImap.nameEdit, 2, 1 );
 
-  label = new QLabel( i18n("Login:"), page );
+  label = new QLabel( i18n("&Login:"), page );
   topLayout->addWidget( label, 3, 0 );
   mImap.loginEdit = new QLineEdit( page );
+  label->setBuddy( mImap.loginEdit );
   topLayout->addWidget( mImap.loginEdit, 3, 1 );
 
-  label = new QLabel( i18n("Password:"), page );
+  label = new QLabel( i18n("P&assword:"), page );
   topLayout->addWidget( label, 4, 0 );
   mImap.passwordEdit = new QLineEdit( page );
   mImap.passwordEdit->setEchoMode( QLineEdit::Password );
+  label->setBuddy( mImap.passwordEdit );
   topLayout->addWidget( mImap.passwordEdit, 4, 1 );
 
-  label = new QLabel( i18n("Host:"), page );
+  label = new QLabel( i18n("&Host:"), page );
   topLayout->addWidget( label, 5, 0 );
   mImap.hostEdit = new QLineEdit( page );
+  label->setBuddy( mImap.hostEdit );
   topLayout->addWidget( mImap.hostEdit, 5, 1 );
 
-  label = new QLabel( i18n("Port:"), page );
+  label = new QLabel( i18n("&Port:"), page );
   topLayout->addWidget( label, 6, 0 );
   mImap.portEdit = new QLineEdit( page );
   mImap.portEdit->setValidator( new QIntValidator(this) );
+  label->setBuddy( mImap.portEdit );
   topLayout->addWidget( mImap.portEdit, 6, 1 );
 
-  label = new QLabel( i18n("Prefix to folders:"), page );
+  label = new QLabel( i18n("Pre&fix to folders:"), page );
   topLayout->addWidget( label, 7, 0 );
   mImap.prefixEdit = new QLineEdit( page );
+  label->setBuddy( mImap.prefixEdit );
   topLayout->addWidget( mImap.prefixEdit, 7, 1 );
 
   mImap.autoExpungeCheck =
-    new QCheckBox( i18n("Automatically expunge deleted messages"), page);
+    new QCheckBox( i18n("&Automatically expunge deleted messages"), page);
   topLayout->addMultiCellWidget( mImap.autoExpungeCheck, 8, 8, 0, 1 );
 
-  mImap.hiddenFoldersCheck = new QCheckBox( i18n("Show hidden folders"), page);
+  mImap.hiddenFoldersCheck = new QCheckBox( i18n("&Show hidden folders"), page);
   topLayout->addMultiCellWidget( mImap.hiddenFoldersCheck, 9, 9, 0, 1 );
 
   mImap.storePasswordCheck =
-    new QCheckBox( i18n("Store IMAP password in configuration file"), page );
+    new QCheckBox( i18n("Sto&re IMAP password in configuration file"), page );
   topLayout->addMultiCellWidget( mImap.storePasswordCheck, 10, 10, 0, 1 );
 
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page );
   mImap.useSSLCheck =
-    new QCheckBox( i18n("Use SSL for secure mail download"), group );
+    new QCheckBox( i18n("Use &SSL for secure mail download"), group );
   connect(mImap.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotImapSSLChanged()));
   mImap.useTLSCheck =
-    new QCheckBox( i18n("Use TLS for secure mail download"), group );
+    new QCheckBox( i18n("Use &TLS for secure mail download"), group );
   connect(mImap.useTLSCheck, SIGNAL(clicked()), this, SLOT(slotImapTLSChanged()));
   topLayout->addMultiCellWidget( group, 11, 11, 0, 1 );
 
   group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page );
-  mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
+  mImap.authAuto = new QRadioButton( i18n("&Clear text"), group );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
-  "authentification method only, if you have a good reason", "LOGIN"), group );
-  mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), group );
-  mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), group );
+  "authentification method only, if you have a good reason", "&LOGIN"), group );
+  mImap.authCramMd5 = new QRadioButton( i18n("&CRAM-MD5"), group );
+  mImap.authAnonymous = new QRadioButton( i18n("&Anonymous"), group );
   topLayout->addMultiCellWidget( group, 12, 12, 0, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));

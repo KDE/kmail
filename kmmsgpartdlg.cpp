@@ -71,10 +71,11 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   mEdtName = new QLineEdit(this);
   mEdtName->setMinimumSize(100, h);
   mEdtName->setMaximumSize(1024, h);
+  label->setBuddy(mEdtName);
   grid->addMultiCellWidget(mEdtName, 2, 2, 1, 3);
 
   //-----
-  label = new QLabel(i18n("Description:"), this);
+  label = new QLabel(i18n("&Description:"), this);
   label->adjustSize();
   label->setMinimumSize(label->sizeHint().width(), h);
   grid->addWidget(label, 3, 0);
@@ -82,6 +83,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   mEdtComment = new QLineEdit(this);
   mEdtComment->setMinimumSize(100, h);
   mEdtComment->setMaximumSize(1024, h);
+  label->setBuddy(mEdtComment);
   grid->addMultiCellWidget(mEdtComment, 3, 3, 1, 3);
 
   label = new QLabel(i18n("Encoding:"), this);
@@ -103,16 +105,16 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
      mEdtComment->setEnabled(FALSE);
      mCbxEncoding->setEnabled(FALSE);
     }
-	
+
 
   //-----
-  btnOk = new QPushButton(i18n("OK"), this);
+  btnOk = new QPushButton(i18n("&OK"), this);
   btnOk->adjustSize();
   btnOk->setMinimumSize(btnOk->sizeHint());
   connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
   grid->addMultiCellWidget(btnOk, 5, 5, 1, 1);
 
-  btnCancel = new QPushButton(i18n("Cancel"), this);
+  btnCancel = new QPushButton(i18n("&Cancel"), this);
   btnCancel->adjustSize();
   btnCancel->setMinimumSize(btnCancel->sizeHint());
   connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
