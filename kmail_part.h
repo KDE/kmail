@@ -68,7 +68,6 @@ class KMailPart: public KPIM::Part, virtual public KMailPartIface
     void exportFolder( KMFolder* folder );
     void slotIconChanged( KMFolderTreeItem *fti );
     void slotNameChanged( KMFolderTreeItem *fti );
-    void slotToolbarChanged();
 
   signals:
     void textChanged( const QString& );

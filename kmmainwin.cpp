@@ -57,8 +57,6 @@ KMMainWin::KMMainWin(QWidget *)
 
   connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
 	  SLOT(setCaption(const QString&)) );
-  connect(mKMMainWidget, SIGNAL(modifiedToolBarConfig()),
-	   SLOT(slotUpdateToolbars()) );
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
