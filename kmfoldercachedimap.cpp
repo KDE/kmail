@@ -128,7 +128,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
     mUserRights( 0 ), mFolderRemoved( false ), mResync( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
-    mContentsTypeChanged( false ), mStatusChangedLocally( false )
+    mStatusChangedLocally( false )
 {
   setUidValidity("");
   readUidCache();
