@@ -322,6 +322,8 @@ protected slots:
    * often the the other updates and is therefor in its own method. */
   void updateMarkAsReadAction();
 
+  /** Settings menu */
+  void slotToggleShowQuickSearch();
 
   /** XML-GUI stuff */
   void slotEditNotifications();
@@ -397,12 +399,14 @@ private:
   KRadioAction* mUnreadTextToggle;
   KToggleAction* mTotalColumnToggle;
 
+  KToggleAction *mToggleShowQuickSearchAction;
 private:
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
   KMHeaders    *mHeaders;
   QVBox        *mSearchAndHeaders;
+  KToolBar     *mSearchToolBar;
   KMFolder     *mFolder;
   const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;

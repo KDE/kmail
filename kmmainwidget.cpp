@@ -467,22 +467,23 @@ void KMMainWidget::createWidgets(void)
   headerParent->dumpObjectTree();
 #endif
   mSearchAndHeaders = new QVBox( headerParent );
-  KToolBar *searchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
-  searchToolBar->boxLayout()->setSpacing(5);
-  new QLabel(i18n("Quick Search:"), searchToolBar, "kde toolbar widget");
+  mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
+  mSearchToolBar->boxLayout()->setSpacing(5);
+  new QLabel(i18n("Quick Search:"), mSearchToolBar, "kde toolbar widget");
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
   KPIM::KListViewSearchLine *quickSearchLine =
-    new KPIM::KListViewSearchLine(searchToolBar, mHeaders, "headers quick search line");
-  searchToolBar->setStretchableWidget(quickSearchLine);
+    new KPIM::KListViewSearchLine(mSearchToolBar, mHeaders, "headers quick search line");
+  mSearchToolBar->setStretchableWidget(quickSearchLine);
   connect( mHeaders, SIGNAL( messageListUpdated() ),
            quickSearchLine, SLOT( updateSearch() ) );
-  if ( !GlobalSettings::quickSearchLineEdit() ) searchToolBar->hide();
 
-  new QLabel(i18n("Show only mail with status:"), searchToolBar, "kde toolbar widget");
+  new QLabel(i18n("Show only mail with status:"), mSearchToolBar, "kde toolbar widget");
 
   // FIXME hook up to real status widget once that is back in
-  QComboBox *cb = new QComboBox(searchToolBar, "quick search status combo box");
+  QComboBox *cb = new QComboBox(mSearchToolBar, "quick search status combo box");
   cb->insertItem(i18n("any status"));
+  
+  if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
 
   mHeaders->setFullWidth(true);
   if (mReaderWindowActive) {
@@ -909,7 +910,6 @@ void KMMainWidget::slotEmptyFolder()
     if (KMessageBox::warningContinueCancel(this, text, title, title)
       != KMessageBox::Continue) return;
   }
-
   if (mFolder->folderType() == KMFolderTypeImap
       || mFolder->folderType() == KMFolderTypeCachedImap
       || mFolder->folderType() == KMFolderTypeSearch)
@@ -921,7 +921,6 @@ void KMMainWidget::slotEmptyFolder()
       slotTrashMsg();
     return;
   }
-
   if (mMsgView)
     mMsgView->clearCache();
 
@@ -1143,6 +1142,16 @@ void KMMainWidget::slotToggleSubjectThreading()
 {
   mFolderThreadSubjPref = !mFolderThreadSubjPref;
   mHeaders->setSubjectThreading(mFolderThreadSubjPref);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotToggleShowQuickSearch()
+{
+  GlobalSettings::setQuickSearchActive( !GlobalSettings::quickSearchActive() );
+  if ( GlobalSettings::quickSearchActive() )
+    mSearchToolBar->show();
+  else
+    mSearchToolBar->hide();
 }
 
 //-----------------------------------------------------------------------------
@@ -2707,6 +2716,11 @@ void KMMainWidget::setupActions()
                          actionCollection(), "go_next_unread_text" );
 
   //----- Settings Menu
+  mToggleShowQuickSearchAction = new KToggleAction(i18n("Show Quick Search"), QString::null,
+                                       0, this, SLOT(slotToggleShowQuickSearch()),
+                                       actionCollection(), "show_quick_search");
+  mToggleShowQuickSearchAction->setChecked( GlobalSettings::quickSearchActive() );
+
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );
   (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
