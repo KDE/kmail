@@ -182,6 +182,7 @@ void RecipientLine::keyPressEvent( QKeyEvent *ev )
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent )
 {
+  setHScrollBarMode( AlwaysOff );
   setLineWidth( 0 );
 
   addLine();
@@ -221,7 +222,6 @@ RecipientLine *RecipientsView::addLine()
   mLineHeight = line->minimumSizeHint().height();
 
   line->resize( viewport()->width(), mLineHeight );
-  ensureVisible( 0, mLines.count() * mLineHeight );
 
   resizeContents( viewport()->width(), mLines.count() * mLineHeight );
 
@@ -231,13 +231,17 @@ RecipientLine *RecipientsView::addLine()
 
   emit totalChanged( mLines.count() );
 
+  ensureVisible( 0, mLines.count() * mLineHeight );
+
   return line;
 }
 
 void RecipientsView::slotReturnPressed( RecipientLine *line )
 {
   if ( !line->recipient().isEmpty() ) {
-    addLine()->activate();
+    RecipientLine *empty = emptyLine();
+    if ( !empty ) empty = addLine();
+    activateLine( empty );
   }
 }
 
@@ -247,7 +251,7 @@ void RecipientsView::slotDownPressed( RecipientLine *line )
   if ( pos >= (int)mLines.count() - 1 ) {
     emit focusDown();
   } else if ( pos >= 0 ) {
-    mLines.at( pos + 1 )->activate();
+    activateLine( mLines.at( pos + 1 ) );
   }
 }
 
@@ -255,10 +259,16 @@ void RecipientsView::slotUpPressed( RecipientLine *line )
 {
   int pos = mLines.find( line );
   if ( pos > 0 ) {
-    mLines.at( pos - 1 )->activate();
+    activateLine( mLines.at( pos - 1 ) );
   } else {
     emit focusUp();
   }
+}
+
+void RecipientsView::activateLine( RecipientLine *line )
+{
+  line->activate();
+  ensureVisible( 0, childY( line ) );
 }
 
 void RecipientsView::viewportResizeEvent ( QResizeEvent *ev )

@@ -109,6 +109,8 @@ class RecipientsView : public QScrollView
 
     Recipient::List recipients() const;
 
+    void activateLine( RecipientLine * );
+
   public slots:
     RecipientLine *addLine();
 
