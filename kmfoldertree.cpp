@@ -100,7 +100,7 @@ void paintCell( QPainter * p, const QColorGroup & cg,
 
   QString t = text( column );
   if ( !t.isEmpty() ) {
-    if( folder && (folder->countUnread() > 0) ) {
+    if( folder && (folder->countUnreadRecursive() > 0) ) {
       QFont f = p->font();
       f.setWeight(QFont::Bold);
       p->setFont(f);

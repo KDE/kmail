@@ -48,8 +48,8 @@ class KMFolder: public KMFolderNode
   friend class KMMessage;
 
 public:
-  
-  
+
+
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
@@ -127,9 +127,12 @@ public:
   /** Number of messages in this folder. */
   virtual int count() const { return mMsgList.count(); }
 
-  /** Number of new or unread messages in this folder.
-    Rather slow (count loop) */
+  /** Number of new or unread messages in this folder. */
   virtual int countUnread();
+
+  /** Number of new or unread messages in this folder and all folders
+      contained by this folder */
+  virtual int countUnreadRecursive();
 
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
@@ -234,7 +237,7 @@ public:
   virtual QString idString();
 
   void setLockType( LockType ltype=FCNTL );
-  
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

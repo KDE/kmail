@@ -306,7 +306,7 @@ int KMFolder::lock()
   fl.l_start=0;
   fl.l_len=0;
   fl.l_pid=-1;
-  QString cmd_str; 
+  QString cmd_str;
   assert(mStream != NULL);
   mFilesLocked = FALSE;
 
@@ -1422,6 +1422,25 @@ int KMFolder::countUnread()
 }
 
 //-----------------------------------------------------------------------------
+int KMFolder::countUnreadRecursive()
+{
+  KMFolder *folder;
+  int count = countUnread();
+  KMFolderDir *dir = child();
+  if (!dir)
+      return count;
+  
+  QListIterator<KMFolderNode> it(*dir);
+  for ( ; it.current(); ++it )
+      if (!it.current()->isDir()) {
+	  folder = dynamic_cast<KMFolder*>(it.current());
+	  count += folder->countUnreadRecursive();
+      }
+	       
+  return count;
+}
+
+//-----------------------------------------------------------------------------
 void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   const KMMsgStatus newStatus)
 {
@@ -1440,7 +1459,6 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
     emit numUnreadMsgsChanged( this );
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
