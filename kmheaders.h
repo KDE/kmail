@@ -99,10 +99,13 @@ protected:
   /** Write per-folder config options. */
   virtual void writeFolderConfig(void);
 
-  virtual void mouseReleaseEvent (QMouseEvent*);
+  virtual void mouseReleaseEvent(QMouseEvent*);
 
   /** Sort message list by current sort settings. */
   virtual void sort(void);
+
+  /** Returns string for listbox from given message. */
+  virtual QString msgAsLbxString(KMMsgBase*) const;
 
 private:
   virtual void updateMessageList(void);

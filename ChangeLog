@@ -1,4 +1,10 @@
-1998-05-25  Stefan Taferner  <taferner@kde.org> (KMail-0.6.8)
+1998-06-07  Stefan Taferner  <taferner@kde.org> (KMail-0.6.8)
+
+	* Message/Headers: Email addresses like <joe@home.org>
+	(with the <> around the address) no longer lead to
+	an empty field in the message list.
+
+	* Headers: Removed extra space in header line(s).
 
 	* Headers: Empty Subject moved From and Date one column
 	left. Fixed (hopefully).

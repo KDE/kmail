@@ -179,24 +179,44 @@ void KMHeaders::msgRemoved(int id)
 
 
 //-----------------------------------------------------------------------------
+QString KMHeaders::msgAsLbxString(KMMsgBase* aMsg) const
+{
+  QString result(256);
+  KMMsgStatus flag;
+  QString fromStr, subjStr;
+
+  assert(aMsg!=NULL);
+
+  flag = aMsg->status();
+
+  fromStr = KMMessage::stripEmailAddr(aMsg->from());
+  if (fromStr.isEmpty()) fromStr = i18n("Unknown");
+
+  subjStr = aMsg->subject();
+  if (subjStr.isEmpty()) subjStr = i18n("No Subject");
+
+  result.sprintf("%c\n%.100s\n%.100s\n%.40s", (char)flag, 
+		 (const char*)fromStr, (const char*)subjStr,
+		 (const char*)aMsg->dateStr());
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::msgHeaderChanged(int msgId)
 {
-  QString hdr(256);
   KMMsgStatus flag;
   KMMsgBase* mb;
+  QString fromStr, subjStr;
 
   if (!autoUpdate()) return;
 
   mb = mFolder->getMsgBase(msgId);
   assert(mb != NULL);
 
-  flag = mb->status();
-  hdr.sprintf("%c\n%.100s \n%.100s \n%.40s ", (char)flag, 
-	      (const char*)KMMessage::stripEmailAddr(mb->from()),
-	      (const char*)mb->subject(),
-	      (const char*)mb->dateStr());
-  changeItem(hdr, msgId);
+  changeItem(msgAsLbxString(mb), msgId);
 
+  flag = mb->status();
   if (flag==KMMsgStatusNew) changeItemColor(darkRed, msgId);
   else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue, msgId);
 }
@@ -612,7 +632,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
 void KMHeaders::updateMessageList(void)
 {
   long i;
-  QString hdr(256);
+  QString str(256);
   KMMsgStatus flag;
   KMMsgBase* mb;
  
@@ -627,12 +647,9 @@ void KMHeaders::updateMessageList(void)
     mb = mFolder->getMsgBase(i);
     assert(mb != NULL); // otherwise using count() above is wrong
 
-    flag = mb->status();
-    hdr.sprintf("%c\n%s\n %s\n%s", (char)flag, 
-		(const char*)KMMessage::stripEmailAddr(mb->from()),
-		(const char*)mb->subject(), (const char*)mb->dateStr());
-    insertItem(hdr);
+    insertItem(msgAsLbxString(mb));
 
+    flag = mb->status();
     if (flag==KMMsgStatusNew) changeItemColor(darkRed);
     else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue);
   }
@@ -640,11 +657,11 @@ void KMHeaders::updateMessageList(void)
   setAutoUpdate(TRUE);
   repaint();
 
-  hdr.sprintf(i18n("%d Messages, %d unread."),
+  str.sprintf(i18n("%d Messages, %d unread."),
 	      mFolder->count(), mFolder->countUnread());
-  if (mFolder->isReadOnly()) hdr += i18n("Folder is read-only.");
+  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
 
-  mOwner->statusMsg(hdr);
+  mOwner->statusMsg(str);
   kbp->idle();
 }
 
