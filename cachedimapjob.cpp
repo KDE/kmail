@@ -307,7 +307,7 @@ void CachedImapJob::slotPutNextMessage()
   }
 
   KURL url = mAccount->getUrl();
-  QString flags = KMFolderImap::statusToFlags( mMsg->status() ); 
+  QString flags = KMFolderImap::statusToFlags( mMsg->status() );
   url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
@@ -541,22 +541,23 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
     // TODO: Tell the user that he has a problem
     kdDebug(5006) << "No uidvalidity available for folder "
                   << mFolder->name() << endl;
-    return;
   }
-  int b = cstr.find("\r\n", a);
-  if ( (b - a - 15) >= 0 ) {
-    QString uidv = cstr.mid(a + 15, b - a - 15);
-    // kdDebug(5006) << "New uidv = " << uidv << ", old uidv = "
-    //               << mFolder->uidValidity() << endl;
-    if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
-      // kdDebug(5006) << "Expunging the mailbox " << mFolder->name()
-      //               << "!" << endl;
-      mFolder->expunge();
-      mFolder->setLastUid( 0 );
-    }
-  } else
-    kdDebug(5006) << "No uidvalidity available for folder "
-                  << mFolder->name() << endl;
+  else {
+    int b = cstr.find("\r\n", a);
+    if ( (b - a - 15) >= 0 ) {
+      QString uidv = cstr.mid(a + 15, b - a - 15);
+      // kdDebug(5006) << "New uidv = " << uidv << ", old uidv = "
+      //               << mFolder->uidValidity() << endl;
+      if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
+        // kdDebug(5006) << "Expunging the mailbox " << mFolder->name()
+        //               << "!" << endl;
+        mFolder->expunge();
+        mFolder->setLastUid( 0 );
+      }
+    } else
+      kdDebug(5006) << "No uidvalidity available for folder "
+                    << mFolder->name() << endl;
+  }
 
   mAccount->removeJob(it);
   delete this;
