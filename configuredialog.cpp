@@ -3866,11 +3866,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   group = new QVGroupBox( i18n("On Program Exit, "
 			       "Perform Following Tasks"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
-  mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
 
-  connect( mCompactOnExitCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -3918,7 +3915,6 @@ void MiscPage::FolderTab::load() {
   mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
 						  kmkernel->inboxFolder()->idString() ) );
-  mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
 
@@ -3937,7 +3933,6 @@ void MiscPage::FolderTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
-  general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?

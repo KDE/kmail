@@ -825,7 +825,6 @@ protected:
   QComboBox    *mLoopOnGotoUnread;
   QCheckBox    *mJumpToUnread;
   QComboBox    *mMailboxPrefCombo;
-  QCheckBox    *mCompactOnExitCheck;
   QCheckBox    *mEmptyTrashCheck;
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
