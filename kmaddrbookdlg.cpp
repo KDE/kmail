@@ -47,7 +47,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
 
-  if (!kernel->useKAB())
+  if (!KMAddrBookExternal::useKAB())
     for (QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
       mListBox.insertItem(addr);
   else {
@@ -129,7 +129,7 @@ KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
   mAddresses = new QStringList();
   mKeys = new QValueList<KabKey>();
   
-  if (!kernel->useKAB())
+  if (!KMAddrBookExternal::useKAB())
     for (QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
       mListBox->insertItem(addr);
   else {
@@ -165,7 +165,7 @@ void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
   //  changeItem below changes the currentItem!
 
   if ((oldIndex>=0) && (mEdtAddress->text() != mListBox->text(oldIndex))) {
-    if (kernel->useKAB())
+    if (KMAddrBookExternal::useKAB())
       KabBridge::replace( mEdtAddress->text(), *(mKeys->at(oldIndex)) );
     mListBox->changeItem(mEdtAddress->text(), oldIndex);
   }
@@ -186,12 +186,12 @@ void KMAddrBookEditDlg::slotOk()
 	  this, SLOT(slotLbxHighlighted(const QString&)));
 
   if (mIndex>=0) {
-    if (kernel->useKAB())
+    if (KMAddrBookExternal::useKAB())
       KabBridge::replace( mEdtAddress->text(), *(mKeys->at(mIndex)) );
     mListBox->changeItem(addr, mIndex);
   }
   else if (!addr.isEmpty()) {
-    if (kernel->useKAB()) {
+    if (KMAddrBookExternal::useKAB()) {
       KabKey key;
       if (KabBridge::add( mEdtAddress->text(), key)) {
 	int cur = mListBox->currentItem();
@@ -204,7 +204,7 @@ void KMAddrBookEditDlg::slotOk()
       mListBox->insertItem(mEdtAddress->text(), mListBox->currentItem());
   }
 
-  if (!kernel->useKAB()) { // Update KMail address book
+  if (!KMAddrBookExternal::useKAB()) { // Update KMail address book
     mAddrBook->clear();
     num = mListBox->count();
     for(idx=0; idx<num; idx++)
@@ -249,7 +249,7 @@ void KMAddrBookEditDlg::slotAdd()
 
   mIndex = -1;
 
-  if (kernel->useKAB()) {
+  if (KMAddrBookExternal::useKAB()) {
     KabKey key;
     if (KabBridge::add( addr, key)) {
       mKeys->insert( mKeys->at(0), key );
@@ -282,7 +282,7 @@ void KMAddrBookEditDlg::slotRemove()
   mIndex = -1;
   if (idx >= 0) {
     mListBox->removeItem(idx);
-    if (kernel->useKAB()) {
+    if (KMAddrBookExternal::useKAB()) {
       KabBridge::remove( *(mKeys->at(idx)) );
       mKeys->remove( mKeys->at(idx) );
     }

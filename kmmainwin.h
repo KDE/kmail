@@ -108,7 +108,6 @@ protected slots:
   void slotSettings();
   void slotFilter();
   void slotAddrBook();
-  void slotUseKab();
   void slotUnimplemented();
   void slotViewChange();
   void slotAddFolder();
@@ -198,11 +197,9 @@ protected:
   QPopupMenu *messageMenu;
   KMLittleProgressDlg *littleProgress;
   KMFldSearch *searchWin;
-  bool mUseKab;
-  int mUseKabId;
   ConfigureDialog *mConfigureDialog;
 
-  KToggleAction *useKabAction, *preferHtmlAction, *threadMessagesAction;
+  KToggleAction *preferHtmlAction, *threadMessagesAction;
   QPopupMenu *copyMenu, *moveMenu;
 };
 

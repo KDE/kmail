@@ -226,8 +226,6 @@ void KMMainWin::readConfig(void)
   mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
   mExecOnNew = config->readBoolEntry("exec-on-mail", false);
   mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
-  mUseKab = config->readBoolEntry("use-kab", false);
-  kernel->setUseKAB( mUseKab );
 
   // Re-activate panners
   if (mStartupDone)
@@ -287,7 +285,6 @@ void KMMainWin::writeConfig(void)
   config->writeEntry("Panners", s);
 
   config->setGroup("General");
-  config->writeEntry("use-kab", mUseKab);
 }
 
 
@@ -402,10 +399,6 @@ void KMMainWin::activatePanners(void)
 void KMMainWin::statusMsg(const QString& aText)
 {
   mStatusBar->changeItem(" " + aText + " ", mMessageStatusId);
-  /* Just causes to much trouble with event driven repainting.
-  kapp->flushX();
-  kapp->processEvents(100);
-  */
 }
 
 
@@ -504,15 +497,6 @@ void KMMainWin::slotFilter()
 void KMMainWin::slotAddrBook()
 {
   KMAddrBookExternal::launch(this);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotUseKab()
-{
-  mUseKab = !mUseKab;
-  useKabAction->setChecked( mUseKab );
-  kernel->setUseKAB( mUseKab );
 }
 
 
@@ -1285,10 +1269,6 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("&AddressBook..."), "contents", 0, this, 
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
-
-  useKabAction = new KToggleAction( i18n("Use KAB"), 0, this, 
-		      SLOT(slotUseKab()), actionCollection(), "use_kab" );
-  useKabAction->setChecked( mUseKab );
 
   (void) new KAction( i18n("F&ilter Rules..."), 0, this, 
 		      SLOT(slotFilter()), actionCollection(), "filter" );

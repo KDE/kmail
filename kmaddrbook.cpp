@@ -306,7 +306,7 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
     KRun::run( "abbrowser -a \"" + addr + "\"", list );
     return;
   }
-  if (!kernel->useKAB()) {
+  if (!KMAddrBookExternal::useKAB()) {
     if (addr.isEmpty()) return;
     kernel->addrBook()->insert(addr);
     //    statusMsg(i18n("Address added to addressbook."));
@@ -341,5 +341,17 @@ void KMAddrBookExternal::launch(QWidget *parent) {
   default:
     debug( "Unknown address book type" );
   }
+}
+
+bool KMAddrBookExternal::useKAB() 
+{
+  KConfig *config = kapp->config();
+  config->setGroup("General");
+  int ab = config->readNumEntry("addressbook", -1);
+  KURL::List list;
+  if (ab <= 0)
+    return false;
+  else
+    return true;
 }
 

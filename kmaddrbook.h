@@ -77,6 +77,7 @@ class KMAddrBookExternal {
 public:
   static void addEmail(QString addr, QWidget *parent);
   static void launch(QWidget *parent);
+  static bool useKAB();
 };
 
 #endif /*KMAddrBook_h*/

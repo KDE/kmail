@@ -1908,6 +1908,7 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.messageSizeCheck->setChecked( state );
   
   mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 0 )) ;
+  mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config.readNumEntry( "addressbook", 0 )) );
 }
 
 
