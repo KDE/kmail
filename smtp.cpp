@@ -143,7 +143,7 @@ void Smtp::readyRead()
 	command = "DATA";
 	QString seperator = "";
 	if (message[message.length() - 1] != '\n')
-	    seperator = "\n";
+	    seperator = "\r\n";
 	*t << message << seperator << ".\r\n";
 	state = smtpSuccess;
     } else if ( state == smtpSuccess && responseLine[0] == '2' ) {
