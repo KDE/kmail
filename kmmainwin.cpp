@@ -437,7 +437,7 @@ void KMMainWin::activatePanners(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetEncoding()
 {
-     mEncodingStr = mEncoding->currentText();
+    mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText());
      if (mEncoding->currentItem() == 0) // Auto
        mCodec = 0;
      else
@@ -1505,12 +1505,19 @@ void KMMainWin::setupMenuBar()
 
   //----- Message-Encoding Submenu
   mEncoding = new KSelectAction( i18n( "Set &Encoding" ), 0, this, SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
-  QStringList encodings = KGlobal::charsets()->availableEncodingNames();
+  QStringList encodings = KGlobal::charsets()->descriptiveEncodingNames();
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
   mEncoding->setCurrentItem(0);
-  if (encodings.findIndex( mEncodingStr ) != -1)
-      mEncoding->setCurrentItem(encodings.findIndex( mEncodingStr ));
+  QStringList::Iterator it;
+  int i = 0;
+  for( it = encodings.begin(); it != encodings.end(); ++it) {
+      if ( (*it).contains( mEncodingStr ) ) {
+	  mEncoding->setCurrentItem( i );
+	  break;
+      }
+      i++;
+  }
 
   editAction = new KAction( i18n("Edi&t..."), Key_T, this,
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );

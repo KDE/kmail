@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
   about->addAuthor( "Waldo Bastian", QString::null, "bastian@kde.org" );
   about->addAuthor( "Andreas Gungl", QString::null, "a.gungl@gmx.de" );
   about->addAuthor( "Michael Haeckel", QString::null, "michael@haeckel.net" );
-  about->addAuthor( "Lars Knoll", QString::null, "knoll@mpi-hd.mpg.de" );
+  about->addAuthor( "Lars Knoll", QString::null, "knoll@kde.org" );
   about->addAuthor( "J. Nick Koston", QString::null, "bdraco@darkorb.net" );
   about->addAuthor( "Daniel Naber", QString::null, "daniel.naber@t-online.de" );
   about->addAuthor( "Sven Radej", QString::null, "radej@kde.org" );
