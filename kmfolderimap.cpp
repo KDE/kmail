@@ -597,7 +597,7 @@ void KMFolderImap::checkValidity()
 {
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
-  kdDebug(5006) << "KMFolderImap::checkValidity of: " << url.url() << endl;
+  kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
     kdWarning(5006) << "KMFolderImap::checkValidity - got no connection" << endl;

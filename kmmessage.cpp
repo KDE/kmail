@@ -4037,7 +4037,6 @@ DwBodyPart* KMMessage::findDwBodyPart( DwBodyPart* part, const QString & partSpe
 {
   if ( !part ) return 0;
   DwBodyPart* current;
-  kdDebug(5006) << "findDwBodyPart " << part->partId() << endl;
 
   if ( part->partId() == partSpecifier )
     return part;
@@ -4136,8 +4135,11 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     mMsg->Body().Parse();
   }
   mNeedsAssembly = true;
-  // notify observers
-  notify();
+  if (!( partSpecifier.endsWith(".HEADER") || partSpecifier.endsWith(".MIME") ))
+  {
+    // notify observers
+    notify();
+  }
 }
 
 void KMMessage::setBodyFromUnicode( const QString & str ) {
