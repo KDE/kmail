@@ -242,7 +242,7 @@ class ConfigureDialog : public KDialogBase
 {
   Q_OBJECT
 
-  private:
+public:
     class ApplicationLaunch
     {
       public:
@@ -273,6 +273,7 @@ class ConfigureDialog : public KDialogBase
 	int mVisibleItem;
     };
 
+private:
     struct IdentityWidget
     {
       int            pageIndex;

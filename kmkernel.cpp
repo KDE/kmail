@@ -81,7 +81,9 @@ void KMKernel::checkMail () //might create a new reader but won´t show!!
 
 void KMKernel::openReader()
 {
+#ifdef __GNUC__
 #warning Ugly hack! (sven)
+#endif
   KMMainWin *mWin = 0;
   KMainWindow *ktmw = 0;
   kdDebug() << "KMKernel::openReader called" << endl;

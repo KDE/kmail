@@ -60,12 +60,11 @@ static KCmdLineOptions kmoptions[] =
   { 0, 0, 0}
 };
 
-
-static void signalHandler(int sigId);
-static void setSignalHandler(void (*handler)(int));
-
 //-----------------------------------------------------------------------------
 
+extern "C" {
+
+static void setSignalHandler(void (*handler)(int));
 
 // Crash recovery signal handler
 static void signalHandler(int sigId)
@@ -95,6 +94,8 @@ static void setSignalHandler(void (*handler)(int))
   signal(SIGTERM, handler);
   signal(SIGHUP,  handler);
   KCrash::setEmergencySaveFunction(crashHandler);
+}
+
 }
 //-----------------------------------------------------------------------------
 
