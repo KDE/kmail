@@ -796,11 +796,13 @@ void IdentityPage::slotRenameIdentity()
 
 void IdentityPage::slotRemoveIdentity()
 {
+  IdentityManager * im = kernel->identityManager();
+  kdFatal( im->shadowIdentities().count() < 2 )
+    << "Attempted to remove the last identity!" << endl;
   QString msg = i18n("<qt>Do you really want to remove the identity named\n"
 		     "<b>%1</b>?</qt>").arg( mIdentityCombo->currentText() );
   if( KMessageBox::warningYesNo( this, msg ) == KMessageBox::Yes ) {
     // OK, permission to remove:
-    IdentityManager * im = kernel->identityManager();
     int currentItem = mIdentityCombo->currentItem();
     if ( im->removeIdentity( im->shadowIdentities()[currentItem] ) ) {
       // prevent attempt to save removed identity:
@@ -831,6 +833,8 @@ void IdentityPage::updateCombo( uint idx ) {
   mIdentityCombo->setCurrentItem( idx );
   // disable "set as default" for default identity:
   mSetAsDefaultButton->setEnabled( idx != 0 );
+  // disable "remove" when only one identity is left:
+  mRemoveButton->setEnabled( identities.count() > 1 );
   // do the same that slotIdentitySelectorChanged would do, but more
   // effiently:
   setIdentityInformation( newIdentityName );
