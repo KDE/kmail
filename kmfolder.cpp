@@ -9,6 +9,8 @@
 #include "kmmessage.h"
 #include "kmfolderdir.h"
 #include "kbusyptr.h"
+#include "kmfolderimap.h"
+#include "kmundostack.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -524,6 +526,44 @@ int KMFolder::expungeOldMsg(int days)
     }
   }
   return msgnb;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
+{
+  if (aIndex_ret) *aIndex_ret = -1;
+  KMFolder *msgParent = aMsg->parent();
+  if (msgParent && msgParent->protocol() == "imap" && !aMsg->isComplete())
+  {
+    KMImapJob *imapJob = new KMImapJob(aMsg);
+    connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+      SLOT(reallyAddMsg(KMMessage*)));
+    aMsg->setTransferInProgress(TRUE);
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::reallyAddMsg(KMMessage* aMsg)
+{
+  KMFolder *folder = aMsg->parent();
+  int index;
+  addMsg(aMsg, &index);
+  if (index < 0) return;
+  KMMsgBase *mb = unGetMsg(count() - 1);
+  kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
+{
+  aMsg->setParent( NULL );
+  addMsg( aMsg );
+  unGetMsg( count() - 1 );
 }
 
 

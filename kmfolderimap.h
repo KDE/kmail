@@ -163,16 +163,8 @@ signals:
   void deleted(KMFolderImap*);
 
 public slots:
-  /** Add the message to the folder after it has been retrieved from an IMAP
-      server */
-  virtual void reallyAddMsg(KMMessage *);
-
   /** Add a message to a folder after is has been added on an IMAP server */
   virtual void addMsgQuiet(KMMessage *);
-
-  /** Add a copy of the message to the folder after it has been retrieved
-      from an IMAP server */
-  virtual void reallyAddCopyOfMsg(KMMessage *);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and

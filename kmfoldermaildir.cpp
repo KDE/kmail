@@ -300,6 +300,8 @@ int KMFolderMaildir::compact()
 
 int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 {
+  if (!canAddMsgNow(aMsg, index_return)) return 0;
+
   long len;
   unsigned long size;
   KMFolder* msgParent;

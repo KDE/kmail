@@ -122,6 +122,10 @@ public:
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = NULL) = 0;
 
+  /** Returns FALSE, if the message has to be retrieved from an IMAP account
+   * first. In this case this function does this and cares for the rest */
+  virtual bool canAddMsgNow(KMMessage* aMsg, int* aIndex_ret);
+
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
   virtual void removeMsg(KMMsgBasePtr msg);
@@ -310,6 +314,15 @@ signals:
 
   /** Emitted when number of unread messages has changed. */
   void numUnreadMsgsChanged( KMFolder* );
+
+public slots:
+  /** Add the message to the folder after it has been retrieved from an IMAP
+      server */
+  virtual void reallyAddMsg(KMMessage* aMsg);
+
+  /** Add a copy of the message to the folder after it has been retrieved
+      from an IMAP server */
+  virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
 
 protected:
   /** Escape a leading dot */

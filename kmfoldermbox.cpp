@@ -672,6 +672,8 @@ QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
 //-----------------------------------------------------------------------------
 int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
+  if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
+
   long offs, size, len, revert;
   bool opened = FALSE;
   QCString msgText;

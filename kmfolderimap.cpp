@@ -118,24 +118,6 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
   KMFolderImapInherited::removeMsg(idx);
 }
 
-//-----------------------------------------------------------------------------
-void KMFolderImap::reallyAddMsg(KMMessage* aMsg)
-{
-  KMFolder *folder = aMsg->parent();
-  int index;
-  addMsg(aMsg, &index);
-  if (index < 0) return;
-  KMMsgBase *mb = unGetMsg(count() - 1);
-  kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderImap::reallyAddCopyOfMsg(KMMessage* aMsg)
-{
-  aMsg->setParent( NULL );
-  addMsg( aMsg );
-  unGetMsg( count() - 1 );
-}
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
@@ -164,15 +146,7 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
         if (aIndex_ret) *aIndex_ret = -1;
         return 0;
       }
-      else if (!aMsg->isComplete())
-      {
-        KMImapJob *imapJob = new KMImapJob(aMsg);
-        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-          SLOT(reallyAddMsg(KMMessage*)));
-        aMsg->setTransferInProgress(TRUE);
-        if (aIndex_ret) *aIndex_ret = -1;
-        return 0;
-      }
+      else if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
     }
   }
   aMsg->setTransferInProgress(TRUE);
