@@ -1339,7 +1339,7 @@ void KMReaderWin::slotTouchMessage()
                                                   true /* allow GUI */ );
       if ( receipt )
         if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-          KMessageBox::error( this, i18n("Couldn't send MDN!") );
+          KMessageBox::error( this, i18n("Could not send MDN.") );
     }
   }
 }

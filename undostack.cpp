@@ -110,7 +110,7 @@ void UndoStack::undo()
   else
   {
     // Sorry.. stack is empty..
-    KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo!"));
+    KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo."));
   }
 }
 

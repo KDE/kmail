@@ -57,7 +57,7 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const cha
       enableButton(User3, false);
   }
   else {
-    mAddresseeView->setText(i18n("Failed to parse vCard!"));
+    mAddresseeView->setText(i18n("Failed to parse vCard."));
     enableButton(User1, false);
   }
 

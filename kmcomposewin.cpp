@@ -1764,7 +1764,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
         int ret =
           KMessageBox::warningYesNoCancel( this,
                                            i18n("<qt><p>There are conflicting encryption "
-                                                "preferences!</p>"
+                                                "preferences.</p>"
                                                 "<p>Should this message be encrypted?</p></qt>"),
                                            i18n("Encrypt Message?"),
                                            KGuiItem( i18n("&Encrypt") ),
@@ -2407,7 +2407,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
             KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
         } else if ( Kpgp::Failure == result )
           KMessageBox::sorry(this,
-            i18n("<qt><p><b>This message could not be encrypted!</b></p>"
+            i18n("<qt><p><b>This message could not be encrypted.</b></p>"
                  "<p>The Crypto Plug-in '%1' did not return an encoded text "
                  "block.</p>"
                  "<p>Probably a recipient's public key was not found or is "
@@ -2432,7 +2432,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
         }
         else if( Kpgp::Failure == result ) {
           KMessageBox::sorry(this,
-            i18n("<qt><p>This message could not be encrypted!</p>%1</qt>")
+            i18n("<qt><p>This message could not be encrypted.</p>%1</qt>")
            .arg( mErrorNoCryptPlugAndNoBuildIn ));
         }
       }
@@ -3362,7 +3362,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 else
                   error += i18n("[unknown error]");
                 KMessageBox::sorry(this,
-                  i18n("<qt><p><b>This message could not be signed!</b></p>"
+                  i18n("<qt><p><b>This message could not be signed.</b></p>"
                        "<p>The Crypto Plug-In '%1' reported the following "
                        "details:</p>"
                        "<p><i>%2</i></p>"
@@ -3470,7 +3470,7 @@ Kpgp::Result KMComposeWin::pgpEncryptedMsg( QByteArray & encryptedBody,
       else
         error += i18n("[unknown error]");
       KMessageBox::sorry(this,
-                  i18n("<qt><p><b>This message could not be encrypted!</b></p>"
+                  i18n("<qt><p><b>This message could not be encrypted.</b></p>"
                        "<p>The Crypto Plug-In '%1' reported the following "
                        "details:</p>"
                        "<p><i>%2</i></p>"

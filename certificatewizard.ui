@@ -43,7 +43,7 @@
                     <cstring>TextLabel1</cstring>
                 </property>
                 <property name="text">
-                    <string>&lt;b&gt;Welcome to the Certificate Wizard!&lt;/b&gt;
+                    <string>&lt;b&gt;Welcome to the Certificate Wizard.&lt;/b&gt;
 &lt;br&gt;
 &lt;br&gt;
 In a few easy steps, this wizard will help you with the creation of a certificate. You use your certificates in order to sign messages, to encrypt messages and to decrypt messages that other people send to you in encrypted form.

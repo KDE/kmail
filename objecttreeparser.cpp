@@ -429,7 +429,7 @@ namespace KMail {
     messagePart.isEncrypted = false;
     messagePart.isDecryptable = false;
     messagePart.keyTrust = Kpgp::KPGP_VALIDITY_UNKNOWN;
-    messagePart.status = i18n("Wrong Crypto Plug-In!");
+    messagePart.status = i18n("Wrong Crypto Plug-In.");
 
     if ( !doCheck ||
         ( cryptPlug &&
@@ -546,7 +546,7 @@ namespace KMail {
       else if ( !hideErrors ) {
         QString txt;
         txt = "<hr><b><h2>";
-        txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
+        txt.append( i18n( "The crypto engine returned no cleartext data." ) );
         txt.append( "</h2></b>" );
         txt.append( "<br>&nbsp;<br>" );
         txt.append( i18n( "Status: " ) );
@@ -1732,7 +1732,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
             }
 
             if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
-                result = i18n("Good signature!");
+                result = i18n("Good signature.");
                 // Note:
                 // Here we are work differently than KMail did before!
                 //

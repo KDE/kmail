@@ -214,7 +214,7 @@ This is a default setting, you can still override it for each individual setting
                         <cstring>TextLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>The signature certificate is configured on the &lt;em&gt;Certificates&lt;/em&gt; page!</string>
+                        <string>The signature certificate is configured on the &lt;em&gt;Certificates&lt;/em&gt; page.</string>
                     </property>
                     <property name="alignment">
                         <set>AlignVCenter</set>

@@ -59,7 +59,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   ConfigReader reader( toolList );
   reader.readAndMergeConfig();
   toolList = reader.getToolList();
-  
+
 #ifndef NDEBUG
     kdDebug(5006) << endl << "Considered anti spam tools: " << endl;
 #endif
@@ -92,7 +92,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
 
   setCaption( i18n( "Anti Spam Wizard" ));
   infoPage = new ASWizInfoPage( 0, "" );
-  addPage( infoPage, i18n( "Welcome to the KMail Anti Spam Wizard!" ));
+  addPage( infoPage, i18n( "Welcome to the KMail Anti Spam Wizard." ));
   programsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
   addPage( programsPage, i18n( "Please select the tools to be used by KMail." ));
   rulesPage = new ASWizRulesPage( 0, "", mainFolderTree );
@@ -105,7 +105,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
 
   setNextEnabled( programsPage, false );
   setNextEnabled( rulesPage, false );
-  
+
   QTimer::singleShot( 1000, this, SLOT( checkToolAvailability( void ) ) );
 }
 
@@ -405,8 +405,8 @@ int AntiSpamWizard::checkForProgram( QString executable )
 
 
 //---------------------------------------------------------------------------
-AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId, 
-      int configVersion,QString name, QString exec, 
+AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId,
+      int configVersion,QString name, QString exec,
       QString url, QString filter, QString detection, QString spam, QString ham,
       QString header, QString pattern, bool regExp, bool bayesFilter)
   : id( toolId ), version( configVersion ),
@@ -437,7 +437,7 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
       QCString("Spamtool #") + QCString().setNum(i) );
     toolList.append( readToolConfig( toolConfig ) );
   }
-  
+
   // read the configuration from the user config file
   // and merge newer config data
   config.setReadDefaults( false );
@@ -456,7 +456,7 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
 }
 
 
-AntiSpamWizard::SpamToolConfig 
+AntiSpamWizard::SpamToolConfig
     AntiSpamWizard::ConfigReader::readToolConfig( KConfigGroup & configGroup )
 {
   QString id = configGroup.readEntry( "Ident" );
@@ -464,7 +464,7 @@ AntiSpamWizard::SpamToolConfig
 #ifndef NDEBUG
   kdDebug(5006) << "Found predefined tool: " << id << endl;
   kdDebug(5006) << "With config version  : " << version << endl;
-#endif  
+#endif
   QString name = configGroup.readEntry( "VisibleName" );
   QString executable = configGroup.readEntry( "Executable" );
   QString url = configGroup.readEntry( "URL" );
@@ -480,20 +480,20 @@ AntiSpamWizard::SpamToolConfig
                          filterName, detectCmd, spamCmd, hamCmd,
                          header, pattern, useRegExp, supportsBayes );
 }
-          
+
 
 AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
 {
-  return SpamToolConfig( "spamassassin", 0, 
+  return SpamToolConfig( "spamassassin", 0,
                         "&SpamAssassin", "spamassassin -V",
                         "http://spamassassin.org", "SpamAssassin Check",
-                        "spamassassin -L", 
+                        "spamassassin -L",
                         "sa-learn -L --spam --no-rebuild --single",
-                        "sa-learn -L --ham --no-rebuild --single", 
+                        "sa-learn -L --ham --no-rebuild --single",
                         "X-Spam-Flag", "yes",
                         false, true );
 }
-          
+
 
 void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConfig config )
 {
@@ -557,7 +557,7 @@ ASWizProgramsPage::ASWizProgramsPage( QWidget * parent, const char * name,
   int row = 0;
   QStringList::Iterator it1 = checkBoxTextList.begin();
   QStringList::Iterator it2 = checkBoxWhatsThisList.begin();
-  while ( it1 != checkBoxTextList.end() ) 
+  while ( it1 != checkBoxTextList.end() )
   {
     QCheckBox *box = new QCheckBox( *it1, this );
     if ( it2 != checkBoxWhatsThisList.end() )
