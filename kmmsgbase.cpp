@@ -114,13 +114,8 @@ bool KMMsgBase::isMessage(void) const
 void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 {
   mDirty = true;
-  if (mParent) {
-     if (idx < 0)
-       idx = mParent->find( this );
-     mParent->msgStatusChanged( status(), aStatus, idx );
-     mParent->headerOfMsgChanged(this, idx);
-  }
-  if ( status() & aStatus ) {
+  KMMsgStatus oldStatus = status();
+    if ( status() & aStatus ) {
     mStatus &= ~aStatus;
   } else {
     mStatus |= aStatus;
@@ -133,18 +128,20 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
       setStatus(KMMsgStatusRead, idx);
     }
   }
+  if (mParent) {
+     if (idx < 0)
+       idx = mParent->find( this );
+     mParent->msgStatusChanged( oldStatus, status(), idx );
+     mParent->headerOfMsgChanged(this, idx);
+  }
+
 }
  
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 { 
   mDirty = TRUE;
-  if (mParent) {
-     if (idx < 0)
-       idx = mParent->find( this );
-     mParent->msgStatusChanged( status(), aStatus, idx );
-     mParent->headerOfMsgChanged( this, idx );
-  }
+  KMMsgStatus oldStatus = status();
   switch (aStatus) {
     case KMMsgStatusRead:
       // Unset unread and new, set read
@@ -217,6 +214,13 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
     default:
       mStatus = aStatus;
       break;
+  }
+  
+  if (mParent) {
+    if (idx < 0)
+      idx = mParent->find( this );
+    mParent->msgStatusChanged( oldStatus, status(), idx );
+    mParent->headerOfMsgChanged( this, idx );
   }
 }
 
