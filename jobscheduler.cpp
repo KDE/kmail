@@ -173,6 +173,7 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   mCurrentJob = mCurrentTask->run();
 #ifdef DEBUG_SCHEDULER
   kdDebug(5006) << "JobScheduler: task " << mCurrentTask
+                << " (type " << mCurrentTask->taskTypeId() << ")"
                 << " for folder " << mCurrentTask->folder()->label()
                 << " returned job " << mCurrentJob << " "
                 << ( mCurrentJob?mCurrentJob->className():0 ) << endl;
