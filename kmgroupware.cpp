@@ -121,7 +121,9 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
       if ( !connectToKOrganizer() )
         kdError() << "DCOP error during KMGroupware::vPartFoundAndDecoded()\n";
       else {
+#ifdef MERGEFINISHED
         s = mKOrganizerIfaceStub->msTNEFToVPart( msgPart.bodyDecodedBinary() );
+#endif
         return !s.isEmpty();
       }
     } else {
@@ -154,7 +156,9 @@ QString KMGroupware::vPartToHTML( const QString& iCal )
     if ( !connectToKOrganizer() ) {
       kdError() << "DCOP error during KMGroupware::processVCalRequest()\n";
     } else {
+#ifdef MERGEFINISHED
       html = mKOrganizerIfaceStub->formatICal( iCal );
+#endif
       kdDebug(5006) << "KOrganizer call succeeded, html = " << html << endl;
     }
   }
@@ -171,7 +175,9 @@ QString KMGroupware::msTNEFToHTML( const QByteArray& tnef )
     if ( !connectToKOrganizer() ) {
       kdError() << "DCOP error during KMGroupware::processVCalRequest()\n";
     } else {
+#ifdef MERGEFINISHED
       html = mKOrganizerIfaceStub->formatTNEF( tnef );
+#endif
       kdDebug(5006) << "KOrganizer call succeeded, html = " << html << endl;
     }
   }
@@ -234,8 +240,10 @@ static void iCalRequest( const QString& receiver, const QString& iCal,
   if ( !connectToKOrganizer() )
     kdError() << "DCOP error during KMGroupware::processVCalRequest()\n";
   else {
+#ifdef MERGEFINISHED
     bool rc = mKOrganizerIfaceStub->eventRequest( choice, receiver, iCal );
     kdDebug(5006) << "KOrganizer call succeeded, rc = " << rc << endl;
+#endif
 
 #if 0
     // TODO(bo): We need to delete the msg somehow
@@ -282,8 +290,10 @@ static void iCalCancel( const QString& iCal )
   if ( !connectToKOrganizer() )
     kdError() << "DCOP error during KMGroupware::iCalCancel()\n";
   else {
+#ifdef MERGEFINISHED
     bool rc = mKOrganizerIfaceStub->cancelEvent( iCal );
     kdDebug(5006) << "KOrganizer call succeeded, rc = " << rc << endl;
+#endif
 
 #if 0
     // An answer was saved, so trash the message
