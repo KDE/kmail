@@ -100,7 +100,7 @@ class FolderDiaGeneralTab : public FolderDiaTab
   Q_OBJECT
 
 public:
-  FolderDiaGeneralTab( KMFolderDialog* dlg, KMFolderTree* aParent,
+  FolderDiaGeneralTab( KMFolderDialog* dlg,
                        const QString& aName,
                        QWidget* parent, const char* name = 0 );
 
@@ -205,8 +205,11 @@ public:
   KMFolderDir* folderDir() const { return mFolderDir; }
   typedef QValueList<QGuardedPtr<KMFolder> > FolderList;
 
-  FolderList& folders() { return mFolders; }
   const FolderList& folders() const { return mFolders; }
+  QStringList folderNameList() const { return mFolderNameList; }
+
+  KMFolder* parentFolder() const { return mParentFolder; }
+  int positionInParentFolder() const { return mPositionInParentFolder; }
 
 protected slots:
   void slotChanged( bool );
@@ -222,7 +225,10 @@ private:
 private:
   QGuardedPtr<KMFolder> mFolder;
   QGuardedPtr<KMFolderDir> mFolderDir;
+  QGuardedPtr<KMFolder> mParentFolder;
+  int mPositionInParentFolder;
   FolderList mFolders;
+  QStringList mFolderNameList;
 
   QValueVector<KMail::FolderDiaTab*> mTabs;
   int mDelayedSavingTabs; // this should go into a base class one day

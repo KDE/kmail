@@ -75,15 +75,54 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
                aCap, KDialogBase::Ok|KDialogBase::Cancel,
                KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
   mFolder( aFolder ),
-  mFolderDir( aFolderDir )
+  mFolderDir( aFolderDir ),
+  mParentFolder( 0 ),
+  mPositionInParentFolder( 0 )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
+
+  QStringList str;
+  if( !mFolder ) {
+    // new folder can be subfolder of any other folder
+    aParent->createFolderList(&mFolderNameList, &mFolders, true, true,
+                              true, false, true, false);
+  }
+  else if( mFolder->folderType() != KMFolderTypeImap
+           && mFolder->folderType() != KMFolderTypeCachedImap ) {
+    // already existant local folder can only be moved locally
+    aParent->createFolderList(&mFolderNameList, &mFolders, true, false,
+                              false, false, true, false);
+  }
+  else {
+    // already existant IMAP folder can't be moved, but we add all
+    // IMAP folders so that the correct parent folder can be shown
+    aParent->createFolderList(&mFolderNameList, &mFolders, false, true,
+                              true, false, true, false);
+  }
+
+  mFolderNameList.prepend( i18n( "Local Folders" ) );
+
+  if( mFolderDir ) {
+    // search the parent folder of the folder
+//    kdDebug(5006) << "search the parent folder of the folder" << endl;
+    QValueListConstIterator<QGuardedPtr<KMFolder> > it;
+    int i = 1;
+    for( it = mFolders.begin(); it != mFolders.end(); ++it, ++i ) {
+//      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
+      if( (*it)->child() == mFolderDir ) {
+        mParentFolder = *it;
+        mPositionInParentFolder = i;
+        break;
+      }
+    }
+  }
+
 
   FolderDiaTab* tab;
   QVBox* box;
 
   box = addVBoxPage( i18n("General") );
-  tab = new FolderDiaGeneralTab( this, aParent, aName, box );
+  tab = new FolderDiaGeneralTab( this, aName, box );
   addTab( tab );
 
   if ( !mFolder || !mFolder->noContent() )
@@ -173,7 +212,7 @@ void KMFolderDialog::setFolder( KMFolder* folder )
 }
 
 //----------------------------------------------------------------------------
-KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg, KMFolderTree* aParent,
+KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                                                  const QString& aName,
                                                  QWidget* parent, const char* name )
   : FolderDiaTab( parent, name ), mDlg( dlg )
@@ -295,28 +334,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg, KMFolderTr
   ml->addWidget( mMailboxTypeComboBox );
   ml->addStretch( 1 );
 
-  QStringList str;
-  if( !mDlg->folder() ) {
-    // new folder can be subfolder of any other folder
-    aParent->createFolderList(&str, &mDlg->folders(), true, true,
-                              true, false, true, false);
-  }
-  else if( mDlg->folder()->folderType() != KMFolderTypeImap
-           && mDlg->folder()->folderType() != KMFolderTypeCachedImap ) {
-    // already existant local folder can only be moved locally
-    aParent->createFolderList(&str, &mDlg->folders(), true, false,
-                              false, false, true, false);
-  }
-  else {
-    // already existant IMAP folder can't be moved, but we add all
-    // IMAP folders so that the correct parent folder can be shown
-    aParent->createFolderList(&str, &mDlg->folders(), false, true,
-                              true, false, true, false);
-  }
-
-  str.prepend( i18n( "Local Folders" ) );
-
-  mBelongsToComboBox->insertStringList( str );
+  mBelongsToComboBox->insertStringList( mDlg->folderNameList() );
   // we want to know if the activated changes
   connect( mBelongsToComboBox, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
 
@@ -437,22 +455,11 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg, KMFolderTr
   nml->addWidget( mNewMailCheckBox );
   nml->addStretch( 1 );
 
-  KMFolder* parentFolder = 0;
+  KMFolder* parentFolder = mDlg->parentFolder();
 
-  if( mDlg->folderDir() ) {
-    // search the parent folder of the folder
-//    kdDebug(5006) << "search the parent folder of the folder" << endl;
-    QValueListConstIterator<QGuardedPtr<KMFolder> > it;
-    int i = 1;
-    for( it = mDlg->folders().begin(); it != mDlg->folders().end(); ++it, ++i ) {
-//      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
-      if( (*it)->child() == mDlg->folderDir() ) {
-        parentFolder = *it;
-        mBelongsToComboBox->setCurrentItem( i );
-        slotUpdateItems( i );
-        break;
-      }
-    }
+  if ( parentFolder ) {
+    mBelongsToComboBox->setCurrentItem( mDlg->positionInParentFolder() );
+    slotUpdateItems( mDlg->positionInParentFolder() );
   }
 
   if ( mDlg->folder() ) {
