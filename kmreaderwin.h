@@ -33,14 +33,17 @@ class KURL;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
+namespace KMail {
+  class PartMetaData;
+  class ObjectTreeParser;
+};
 
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
 class NewByteArray; // providing operator+ on a QByteArray (khz, 21.06.2002)
 
-namespace KParts
-{
+namespace KParts {
   struct URLArgs;
 }
 
@@ -52,6 +55,8 @@ class KMReaderWin: public QWidget
   friend void KMMimePartTree::itemClicked( QListViewItem* item );
   friend void KMMimePartTree::itemRightClicked( QListViewItem* item, const QPoint & );
   friend void KMMimePartTree::slotSaveAs();
+
+  friend class KMail::ObjectTreeParser;
 
 public:
   KMReaderWin( QWidget *parent,
@@ -485,16 +490,15 @@ protected:
 
 private:
   /** extracted parts from writeBodyStr() */
-  class PartMetaData;
   QString sigStatusToString(CryptPlugWrapper* cryptPlug,
                             int status_code,
                             CryptPlugWrapper::SigStatusFlags statusFlags,
                             int& frameColor,
                             bool& showKeyInfos);
-  QString writeSigstatHeader(PartMetaData& part,
+  QString writeSigstatHeader(KMail::PartMetaData& part,
                              CryptPlugWrapper* cryptPlug,
                              const QString& fromAddress);
-  QString writeSigstatFooter(PartMetaData& part);
+  QString writeSigstatFooter(KMail::PartMetaData& part);
 
 protected:
   bool mUseGroupware;
