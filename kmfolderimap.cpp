@@ -96,10 +96,10 @@ void KMFolderImap::close(bool aForced)
 //-----------------------------------------------------------------------------
 KMMessage* KMFolderImap::getMsg(int idx)
 {
-    KMMessage* msg = KMFolder::getMsg( idx );
-    if ( msg )
-      msg->setComplete( false );
-    return msg;
+  KMMessage* msg = KMFolder::getMsg( idx );
+  if ( msg )
+    msg->setComplete( false );
+  return msg;
 }
 
 //-----------------------------------------------------------------------------
