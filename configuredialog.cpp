@@ -3934,7 +3934,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
            this, SLOT( slotEmitChanged( void ) ) );
 
   // "Empty &trash on program exit" option:
-  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash on program exit"),
+  mEmptyTrashCheck = new QCheckBox( i18n("Empty local &trash folder on program exit"),
                                     this );
   vlay->addWidget( mEmptyTrashCheck );
   connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
