@@ -2442,10 +2442,10 @@ void KMMessage::setCharset(const QCString& bStr)
 void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
 {
     if (mStatus == aStatus)
-	return;
-    KMMsgBase::setStatus(aStatus, idx);
+        return;
     mStatus = aStatus;
     mDirty = TRUE;
+    KMMsgBase::setStatus(aStatus, idx);
 }
 
 //-----------------------------------------------------------------------------

@@ -1564,17 +1564,17 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMessage *msg;
   KMMsgBase *msgBase, *curMsg = 0;
-  int top, rc;
+  int rc;
 
   emit maybeDeleting();
 
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
   kernel->kbp()->busy();
-  top = topItemIndex();
 
-  if (destFolder) {
-    if(destFolder->open() != 0)
+  if (destFolder && destFolder->open() != 0)
+  {
+      kernel->kbp()->idle();
       return;
   }
 
@@ -1715,14 +1715,13 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
-  int top, rc, index, idx = -1;
+  int rc, index, idx = -1;
   bool isMessage;
   QPtrList<KMMessage> list;
 
   if (!destFolder) return;
 
   kernel->kbp()->busy();
-  top = topItemIndex();
 
   destFolder->open();
   msgList = selectedMsgs(msgId);
@@ -2117,10 +2116,10 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   }
 
   mOwner->statusMsg("");
+  emit selected(mFolder->getMsg(idx));
   if (markitread && idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
-  emit selected(mFolder->getMsg(idx));
   setFolderInfoStatus();
 }
 

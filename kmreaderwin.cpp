@@ -11,31 +11,38 @@
 #include <qclipboard.h>
 //#include <qlayout.h>
 #include <qhbox.h>
-#include <kaction.h>
+#include <qstyle.h>
 
-#include <kfiledialog.h>
-#include <khtml_part.h>
-#include <khtmlview.h> // So that we can get rid of the frames
+#include <kaction.h>
+#include <kapplication.h>
 #include <kcharsets.h>
 #include <kcursor.h>
-#include <kopenwith.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
+#include <kfiledialog.h>
+#include <kmessagebox.h>
+#include <kopenwith.h>
+#include <kpgp.h>
 #include <ktempfile.h>
-#include <kapplication.h>
+
+// khtml headers
+#include <khtml_part.h>
+#include <khtmlview.h> // So that we can get rid of the frames
+#include <dom/html_element.h>
+#include <dom/html_block.h>
+
 
 #include <mimelib/mimepp.h>
 
 #include "kmversion.h"
 #include "kmglobal.h"
 
+#include "kbusyptr.h"
+#include "kfileio.h"
+#include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmreaderwin.h"
-#include "kfileio.h"
-#include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
-#include <kpgp.h>
+#include "kmreaderwin.h"
 
 // for selection
 #include <X11/X.h>
@@ -74,13 +81,14 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   :KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose)
 {
 
-  mAutoDelete = FALSE;
+  mAutoDelete = false;
   mMsg = 0;
   mMsgBuf = 0;
   mMsgBufMD5 = "";
   mMsgBufSize = -1;
-  mMsgDisplay = TRUE;
-  mPrinting = FALSE;
+  mVcnum = -1;
+  mMsgDisplay = true;
+  mPrinting = false;
 
   initHtmlWidget();
   readConfig();
@@ -393,6 +401,7 @@ void KMReaderWin::initHtmlWidget(void)
   if ( !mShowColorbar )
     mColorBar->hide();
 
+
   mViewer = new KHTMLPart(mBox, "khtml");
   mViewer->widget()->setFocusPolicy(WheelFocus);
   // Let's better be paranoid and disable plugins (it defaults to enabled):
@@ -400,20 +409,19 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setJScriptEnabled(false); // just make this explicit
   mViewer->setJavaEnabled(false);    // just make this explicit
   mViewer->setMetaRefreshEnabled(false);
-  mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
 
   connect(mViewer->browserExtension(),
-	  SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
-  	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
+          SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
+          SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
   connect(mViewer->browserExtension(),
-	  SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
-  	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
+          SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
+          SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
-	  SLOT(slotUrlOn(const QString &)));
+          SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
 }
@@ -468,11 +476,16 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   kdDebug(5006) << "Not equal" << endl;
 
+  // connect to the updates if we have hancy headers
+  disconnect(this, SLOT(updateHeader(int)));
+  
   mMsg = aMsg;
   if (mMsg)
   {
     mMsg->setCodec(mCodec);
     mMsg->setDecodeHTML(htmlMail());
+    connect(mMsg->parent(), SIGNAL(msgHeaderChanged(int)),
+            this, SLOT(updateHeader(int)));
   }
 
   // Avoid flicker, somewhat of a cludge
@@ -760,7 +773,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   // Hrm we have to iterate this twice with the current design.  This
   // should really be fixed.  (FIXME)
-  int vcnum = -1;
+  mVcnum = -1;
   for (int j = 0; j < aMsg->numBodyParts(); j++) {
     aMsg->bodyPart(j, &msgPart);
     if (!qstricmp(msgPart.typeStr(), "text")
@@ -775,14 +788,14 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
         if (vc) {
           delete vc;
           kdDebug(5006) << "FOUND A VALID VCARD" << endl;
-          vcnum = j;
+          mVcnum = j;
           writePartIcon(&msgPart, j, TRUE);
           break;
         }
     }
   }
-
-  writeMsgHeader(vcnum);
+  
+  mViewer->write("<div name=\"header\" style=\"margin-bottom: 1em;\">" + (writeMsgHeader()) + "</div>");
 
   if (numParts > 0)
   {
@@ -903,110 +916,258 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
 }
 
+//-----------------------------------------------------------------------------
+QString KMReaderWin::statusIconPath()
+{
+  if (!mMsg)
+  {
+    return locate("data", "kmail/pics/kmmsgold.png");
+  }
+  
+  switch (mMsg->status())
+  {
+    case KMMsgStatusNew:
+      return locate("data", "kmail/pics/kmmsgnew.png");
+      break;
+    case KMMsgStatusUnread:
+      return locate("data", "kmail/pics/kmmsgunseen.png");
+      break;
+    case KMMsgStatusDeleted:
+      return locate("data", "kmail/pics/kmmsgdel.png");
+      break;
+    case KMMsgStatusReplied:
+      return locate("data", "kmail/pics/kmmsgreplied.png");
+      break;
+    case KMMsgStatusForwarded:
+      return locate("data", "kmail/pics/kmmsgforwarded.png");
+      break;
+    case KMMsgStatusQueued:
+      return locate("data", "kmail/pics/kmmsgqueued.png");
+      break;
+    case KMMsgStatusSent:
+      return locate("data", "kmail/pics/kmmsgsent.png");
+      break;
+    case KMMsgStatusFlag:
+      return locate("data", "kmail/pics/kmmsgflag.png");
+      break;
+  }
+  
+  return locate("data", "kmail/pics/kmmsgold.png");
+}
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeMsgHeader(int vcpartnum)
+void KMReaderWin::updateHeader(int messageIndex)
 {
-  QString str;
+  /*
+   * TODO: mess around with KHTML DOM some more and figure out how to
+   * replace the entire header div w/out flickering to hell and back
+   *
+   * DOM::NodeList divs(mViewer->document().documentElement().getElementsByTagName("div"));
+   * static_cast<DOM::HTMLDivElement>(divs.item(0)).setInnerHTML(writeMsgHeader());
+   */
+  if (mMsg &&
+      mHeaderStyle == HdrFancy &&
+      mMsg->parent() && 
+      mMsg == mMsg->parent()->getMsg(messageIndex))
+  {
+    DOM::NodeList imgs(mViewer->document().documentElement().getElementsByTagName("img"));
+    int numImages = imgs.length();
+    for (int i = 0; i < numImages; ++i)
+    {
+      DOM::Element elem = static_cast<DOM::Element>(imgs.item(i));
+      if (elem.getAttribute("name") == "statusIcon")
+      {
+        elem.setAttribute("src", statusIconPath());
+        elem.applyChanges();
+        break;
+      }
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+QString KMReaderWin::writeMsgHeader()
+{
+  QString headerStr;
   QString vcname;
 
-  if (vcpartnum >= 0) vcname = mTempFiles.last();
+  if (mVcnum >= 0) vcname = mTempFiles.last();
 
   switch (mHeaderStyle)
   {
-    case HdrBrief:
-    mViewer->write("<b style=\"font-size:130%\">" + strToHtml(mMsg->subject()) +
-                   "</b>&nbsp; (" +
-                   KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
+  case HdrBrief:
+    headerStr.append("<b style=\"font-size:130%\">" + strToHtml(mMsg->subject()) +
+                     "</b>&nbsp; (" +
+                     KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
+    
     if (!mMsg->cc().isEmpty())
-      mViewer->write(i18n("Cc: ")+
-                     KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
-    mViewer->write("&nbsp;"+strToHtml(mMsg->dateShortStr()) + ")");
-    if (vcpartnum >= 0) {
-      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    {
+      headerStr.append(i18n("Cc: ")+
+                       KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
     }
-    mViewer->write("<br>\n");
+
+    headerStr.append("&nbsp;"+strToHtml(mMsg->dateShortStr()) + ")");
+
+    if (mVcnum >= 0)
+    {
+      headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    }
+
+    headerStr.append("<br>\n");
     break;
 
   case HdrStandard:
-    mViewer->write("<b style=\"font-size:130%\">" +
-                   strToHtml(mMsg->subject()) + "</b><br>\n");
-    mViewer->write(i18n("From: ") +
-                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
-    if (vcpartnum >= 0) {
-      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    headerStr.append("<b style=\"font-size:130%\">" +
+                     strToHtml(mMsg->subject()) + "</b><br>\n");
+    headerStr.append(i18n("From: ") +
+                     KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+    if (mVcnum >= 0) 
+    {
+      headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("<br>\n");
-    mViewer->write(i18n("To: ") +
-                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
+    headerStr.append("<br>\n");
+    headerStr.append(i18n("To: ") +
+                     KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
     if (!mMsg->cc().isEmpty())
-      mViewer->write(i18n("Cc: ")+
-                     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
+      headerStr.append(i18n("Cc: ")+
+                       KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
     break;
 
   case HdrFancy:
-    mViewer->write(QString("<table><tr><td><img src=") +
-		   locate("data", "kmail/pics/kdelogo.png") +
-                   "></td><td hspace=\"50\"><b style=\"font-size:160%\">");
-    mViewer->write(strToHtml(mMsg->subject()) + "</b><br>");
-    mViewer->write(i18n("From: ")+
-                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
-    if (vcpartnum >= 0) {
-      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
-    }
-    if (!mMsg->headerField("Organization").isEmpty())
-      mViewer->write("&nbsp;&nbsp;(" +
-      strToHtml(mMsg->headerField("Organization")) + ")");
-    mViewer->write("<br>\n");
-    mViewer->write(i18n("To: ")+
-                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
-    if (!mMsg->cc().isEmpty())
-      mViewer->write(i18n("Cc: ")+
-                     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
-    mViewer->write(i18n("Date: ")+
-                   strToHtml(mMsg->dateStr()) + "\n");
-    mViewer->write("</td></tr></table>");
-    break;
+  {
+    // prep our colours as rgb tripletts for use in the CSS
+    QColorGroup cg = kapp->palette().active();
+    QString foreground = QString("rgb(%1,%2,%3)")
+                                .arg(cg.foreground().red())
+                                .arg(cg.foreground().green())
+                                .arg(cg.foreground().blue());
+    QString highlight = QString("rgb(%1,%2,%3)")
+                                .arg(cg.highlight().red())
+                                .arg(cg.highlight().green())
+                                .arg(cg.highlight().blue());
+    QString highlightedText = QString("rgb(%1,%2,%3)")
+                                .arg(cg.highlightedText().red())
+                                .arg(cg.highlightedText().green())
+                                .arg(cg.highlightedText().blue());
+    QString background = QString("rgb(%1,%2,%3)")
+                                .arg(cg.background().red())
+                                .arg(cg.background().green())
+                                .arg(cg.background().blue());
 
-  case HdrLong:
-    mViewer->write("<b style=\"font-size:130%\">" +
-                   strToHtml(mMsg->subject()) + "</b><br>");
-    mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<br>");
-    mViewer->write(i18n("From: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
-    if (vcpartnum >= 0) {
-      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+
+    // the subject line and status icon
+    headerStr = QString("<div name=\"foo\" style=\"background: %1; "
+                        "color: %2; padding: 4px; "
+                        "border: solid %3 1px;\">"
+                        "<b><img name=\"statusIcon\" height=\"12\" width=\"12\" src=\"%6\"> %5</b></div>")
+                       .arg((mPrinting) ? background : highlight)
+                       .arg((mPrinting) ? foreground : highlightedText)
+                       .arg(foreground)
+                       .arg(strToHtml(mMsg->subject()))
+                       .arg(statusIconPath());
+
+    // the box with details below the subject
+    headerStr.append(QString("<div style=\"background: %1; color: %2; "
+                             "border-bottom: solid %3 1px; "
+                             "border-left: solid %4 1px; "
+                             "border-right: solid %5 1px; "
+		                         "margin-bottom: 1em; "
+                             "padding: 2px;\">"
+                             "<table cellspacing=\"0\" cellpadding=\"4\">" )
+                            .arg(background)
+                            .arg(foreground)
+                            .arg(foreground)
+                            .arg(foreground)
+                            .arg(foreground));
+
+    // from line
+    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2%3%4</td</tr>")
+                            .arg(i18n("From: "))
+                            .arg(KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE))
+                            .arg((mVcnum < 0) ?
+                                 ""
+                                 : "&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>")
+                            .arg((mMsg->headerField("Organization").isEmpty()) ?
+                                 ""
+                                 : "&nbsp;&nbsp;(" +
+                                   strToHtml(mMsg->headerField("Organization")) +
+                                   ")"));
+
+    // to line
+    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td</tr>")
+                            .arg(i18n("To: "))
+                            .arg(KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE)));
+
+    // cc line, if any
+    if (!mMsg->cc().isEmpty())
+    {
+      headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td</tr>")
+                              .arg(i18n("Cc: "))
+                              .arg(KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE)));
     }
+
+    // the date
+    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td</tr>")
+                            .arg(i18n("Date: "))
+                            .arg(strToHtml(mMsg->dateStr())));
+    headerStr.append("</table></div>");
+    break;
+  }
+  case HdrLong:
+    headerStr.append("<b style=\"font-size:130%\">" +
+                     strToHtml(mMsg->subject()) + "</b><br>");
+    headerStr.append(i18n("Date: ") + strToHtml(mMsg->dateStr())+"<br>");
+    headerStr.append(i18n("From: ") +
+                     KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+    if (mVcnum >= 0)
+    {
+      headerStr.append("&nbsp;&nbsp;<a href=\"" +
+                       vcname + 
+                       "\">"+i18n("[vCard]")+"</a>");
+    }
+
     if (!mMsg->headerField("Organization").isEmpty())
-      mViewer->write("&nbsp;&nbsp;(" +
-      strToHtml(mMsg->headerField("Organization")) + ")");
-    mViewer->write("<br>\n");
-    mViewer->write(i18n("To: ")+
+    {
+      headerStr.append("&nbsp;&nbsp;(" +
+                       strToHtml(mMsg->headerField("Organization")) + ")");
+    }
+
+    headerStr.append("<br>\n");
+    headerStr.append(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
     if (!mMsg->cc().isEmpty())
-      mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>");
+    {
+      headerStr.append(i18n("Cc: ")+
+                       KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>");
+    }
+
     if (!mMsg->bcc().isEmpty())
-      mViewer->write(i18n("Bcc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->bcc(),FALSE) + "<br>");
+    {
+      headerStr.append(i18n("Bcc: ")+
+                       KMMessage::emailAddrAsAnchor(mMsg->bcc(),FALSE) + "<br>");
+    }
+    
     if (!mMsg->replyTo().isEmpty())
-      mViewer->write(i18n("Reply to: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->replyTo(),FALSE) + "<br>");
+    {
+      headerStr.append(i18n("Reply to: ")+
+                     KMMessage::emailAddrAsAnchor(mMsg->replyTo(),FALSE) + "<br>");
+    }
     break;
 
   case HdrAll:
-    str = strToHtml(mMsg->headerAsString(), true);
-    mViewer->write(str);
-    mViewer->write("\n");
-    if (vcpartnum >= 0) {
-      mViewer->write("\n<br>\n<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    headerStr = strToHtml(mMsg->headerAsString(), true);
+    headerStr.append("\n");
+    if (mVcnum >= 0) 
+    {
+      headerStr.append("\n<br>\n<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
     break;
 
   default:
     kdDebug(5006) << "Unsupported header style " << mHeaderStyle << endl;
   }
-  mViewer->write("<br>\n");
+
+  return headerStr;
 }
 
 

@@ -1510,6 +1510,7 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
   win->setHtmlOverride(mFolderHtmlPref);
   KMMessage *newMessage = new KMMessage();
   newMessage->fromString(msg->asString());
+  newMessage->setStatus(msg->status());
   // the following line makes sure the message has a unique serial number
   // and that it is in the message dictionary
   newMessage->setMsgSerNum(msg->getMsgSerNum());
