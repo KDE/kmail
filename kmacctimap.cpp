@@ -103,6 +103,7 @@ void KMAcctImap::init(void)
   mPasswd = "";
   mAuth = "*";
   mStorePasswd = FALSE;
+  mAskAgain = FALSE;
   mProgressEnabled = FALSE;
   mPrefix = "/";
   mAutoExpunge = TRUE;
@@ -327,7 +328,7 @@ bool KMAcctImap::makeConnection()
 {
   if (mSlave) return TRUE;
 
-  if(mPasswd.isEmpty() || mLogin.isEmpty())
+  if(mAskAgain || mPasswd.isEmpty() || mLogin.isEmpty())
   {
     QString passwd = decryptStr(mPasswd);
     bool b = FALSE;
@@ -359,6 +360,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
 {
   if (aSlave != mSlave) return;
   if (errorCode == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+  if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
   KMessageBox::error(0, KIO::buildErrorString(errorCode, errorMsg));
   killAllJobs();
 }

@@ -151,6 +151,7 @@ protected:
   QString mAuth;
   bool    mUsePipelining;
   bool    mStorePasswd;
+  bool    mAskAgain;
   bool    mLeaveOnServer;
   bool    gotMsgs;
 

@@ -43,18 +43,7 @@
 KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):
   KMAcctExpPopInherited(aOwner, aAccountName)
 {
-  mUseSSL = FALSE;
-  mUseTLS = FALSE;
-  mStorePasswd = FALSE;
-  mUsePipelining = TRUE;
-  mLeaveOnServer = FALSE;
-  mProtocol = 3;
-  struct servent *serv = getservbyname("pop-3", "tcp");
-  if (serv) {
-    mPort = ntohs(serv->s_port);
-  } else {
-    mPort = 110;
-  }
+  init();
   job = 0L;
   slave = 0L;
   stage = Idle;
@@ -108,6 +97,7 @@ void KMAcctExpPop::init(void)
   mUseTLS = FALSE;
   mUsePipelining = TRUE;
   mStorePasswd = FALSE;
+  mAskAgain = FALSE;
   mLeaveOnServer = FALSE;
 }
 
@@ -154,7 +144,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 {
   if (stage == Idle) {
 
-    if(mPasswd.isEmpty() || mLogin.isEmpty()) {
+    if(mAskAgain || mPasswd.isEmpty() || mLogin.isEmpty()) {
       QString passwd = decryptStr(mPasswd);
       bool b = FALSE;
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
@@ -164,7 +154,10 @@ void KMAcctExpPop::processNewMail(bool _interactive)
       {
 	emit finishedCheck(false);
 	return;
-      } else mPasswd = encryptStr(passwd);
+      } else {
+        mPasswd = encryptStr(passwd);
+        mAskAgain = FALSE;
+      }
     }
 
     QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
@@ -715,6 +708,8 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   if (interactive)
     KMessageBox::error(0, KIO::buildErrorString(error, errorMsg));
   stage = Quit;
+  if (error == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd)
+    mAskAgain = TRUE;
   /* We need a timer, otherwise slotSlaveError of the next account is also
      executed, if it reuses the slave, because the slave member variable
      is changed too early */

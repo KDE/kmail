@@ -207,6 +207,7 @@ protected:
   QString mPrefix;
   unsigned short int mPort;
   bool    mStorePasswd;
+  bool    mAskAgain;
   bool    mAutoExpunge;
   bool    mUseSSL;
   bool    mUseTLS;
