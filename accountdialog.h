@@ -60,9 +60,11 @@ class AccountDialog : public KDialogBase
       QRadioButton *lockFcntl;
       QRadioButton *lockNone;
       QLineEdit    *precommand;
+#if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
+#endif
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -77,9 +79,11 @@ class AccountDialog : public KDialogBase
       QLineEdit    *nameEdit;
       QComboBox    *locationEdit;
       QLineEdit    *precommand;
+#if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
+#endif
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -113,9 +117,11 @@ class AccountDialog : public KDialogBase
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
       QCheckBox    *retriveAllCheck;
+#if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
+#endif
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QCheckBox    *filterOnServerCheck;
@@ -135,9 +141,11 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *prefixEdit;
+#if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
+#endif
       QCheckBox    *autoExpungeCheck;     // only used by normal (online) IMAP
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
@@ -179,9 +187,12 @@ class AccountDialog : public KDialogBase
     void slotCheckImapCapabilities();
     void slotPopCapabilities(const QStringList &);
     void slotImapCapabilities(const QStringList &);
-    void slotClearResourceAllocations();
-    void slotClearPastResourceAllocations();
-    
+#if 0
+    // Moc doesn't understand #if 0, so they are also commented out
+    // void slotClearResourceAllocations();
+    // void slotClearPastResourceAllocations();
+#endif
+
   private:
     void makeLocalAccountPage();
     void makeMaildirAccountPage();

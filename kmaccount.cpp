@@ -338,7 +338,11 @@ void KMAccount::setCheckExclude(bool aExclude)
 //-----------------------------------------------------------------------------
 void KMAccount::setResource(bool aResource)
 {
+   Q_UNUSED( aResource );
+#if 0
   mResource = aResource;
+#endif
+  mResource = false;
 }
 
 
