@@ -965,6 +965,13 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
                              SLOT(addChildFolder()));
     }
 
+    if ( fti->folder()->isMoveable() )
+    {
+      QPopupMenu *moveMenu = new QPopupMenu( folderMenu );
+      folderToPopupMenu( MoveFolder, this, &mMenuToFolder, moveMenu );
+      folderMenu->insertItem( i18n("&Move Folder To"), moveMenu );
+    }
+
     // Want to be able to display properties for ALL folders,
     // so we can edit expiry properties.
     // -- smp.
@@ -1650,7 +1657,7 @@ void KMFolderTree::showFolder( KMFolder* folder )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
+void KMFolderTree::folderToPopupMenu( MenuAction action, QObject *receiver,
     KMMenuToFolder *aMenuToFolder, QPopupMenu *menu, QListViewItem *item )
 {
   while ( menu->count() )
@@ -1662,7 +1669,7 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
       menu->removeItemAt( 0 );
   }
   // connect the signals
-  if ( move )
+  if ( action == MoveMessage || action == MoveFolder )
   {
     disconnect( menu, SIGNAL(activated(int)), receiver,
         SLOT(moveSelectedToFolder(int)) );
@@ -1679,14 +1686,14 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
 
     // avoid a popup menu with the single entry 'Local Folders' if there
     // are no IMAP accounts
-    if ( childCount() == 2 ) { // only 'Local Folders' and 'Searches'
+    if ( childCount() == 2 && action != MoveFolder ) { // only 'Local Folders' and 'Searches'
       KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>( item );
       if ( fti->protocol() == KFolderTreeItem::Search ) {
         // skip 'Searches'
         item = item->nextSibling();
         fti = static_cast<KMFolderTreeItem*>( item );
       }
-      folderToPopupMenu( move, receiver, aMenuToFolder, menu, fti->firstChild() );
+      folderToPopupMenu( action, receiver, aMenuToFolder, menu, fti->firstChild() );
       return;
     }
   }
@@ -1706,11 +1713,12 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
     {
       // new level
       QPopupMenu* popup = new QPopupMenu( menu, "subMenu" );
-      folderToPopupMenu( move, receiver, aMenuToFolder, popup, fti->firstChild() );
-      if ( fti->folder() && !fti->folder()->noContent() )
+      folderToPopupMenu( action, receiver, aMenuToFolder, popup, fti->firstChild() );
+      if ( ( fti->folder() && !fti->folder()->noContent() ) ||
+           ( !fti->folder() && action == MoveFolder ) )
       {
         int menuId;
-        if ( move )
+        if ( action == MoveMessage || action == MoveFolder )
           menuId = popup->insertItem( i18n("Move to This Folder"), -1, 0 );
         else
           menuId = popup->insertItem( i18n("Copy to This Folder"), -1, 0 );
@@ -1733,6 +1741,56 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
 
     item = item->nextSibling();
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::moveSelectedToFolder( int menuId )
+{
+  moveFolder( mMenuToFolder[menuId] );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::moveFolder( KMFolder* destination )
+{
+  KMFolder* folder = currentFolder();
+  KMFolderDir* parent = &(kmkernel->folderMgr()->dir());
+  if ( destination )
+    parent = destination->createChildFolder();
+  QString message = 
+    i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).
+        arg( folder->label() );
+
+  KMFolderDir* folderDir = parent;
+  // check that the folder can be moved
+  if ( folder && folder->child() )
+  {
+    while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
+        ( folderDir != folder->parent() ) )
+    {
+      if ( folderDir->findRef( folder ) != -1 )
+      {
+        KMessageBox::error( this, message );
+        return;
+      }
+      folderDir = folderDir->parent();
+    }
+  }
+
+  if( folder && folder->child() && parent &&
+      ( parent->path().find( folder->child()->path() + "/" ) == 0 ) ) {
+    KMessageBox::error( this, message );
+    return;
+  }
+
+  if( folder && folder->child()
+      && ( parent == folder->child() ) ) {
+    KMessageBox::error( this, message );
+    return;
+  }
+
+  kdDebug(5006) << "move folder " << currentFolder()->label() << " to " 
+    << ( destination ? destination->label() : "Local Folders" ) << endl;
+  kmkernel->folderMgr()->moveFolder( folder, parent );
 }
 
 #include "kmfoldertree.moc"

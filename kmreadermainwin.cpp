@@ -331,7 +331,8 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     QPopupMenu* copyMenu = new QPopupMenu(menu);
     KMMainWidget* mainwin = kmkernel->getKMMainWidget();
     if ( mainwin )
-      mainwin->folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, copyMenu );
+      mainwin->folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this, 
+          &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();
     mViewSourceAction->plug( menu );

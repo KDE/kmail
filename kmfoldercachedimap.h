@@ -238,6 +238,9 @@ public:
   /// For the folder properties dialog
   void setIncidencesFor( IncidencesFor incfor );
 
+  /** Returns true if this folder can be moved */
+  virtual bool isMoveable() const;
+
 protected slots:
   /**
    * Connected to ListJob::receivedFolders

@@ -2843,8 +2843,10 @@ void KMMainWidget::copySelectedToFolder(int menuId )
 void KMMainWidget::updateMessageMenu()
 {
   mMenuToFolder.clear();
-  folderTree()->folderToPopupMenu( true, this, &mMenuToFolder, mMoveActionMenu->popupMenu() );
-  folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, mCopyActionMenu->popupMenu() );
+  folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this, 
+      &mMenuToFolder, mMoveActionMenu->popupMenu() );
+  folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this, 
+      &mMenuToFolder, mCopyActionMenu->popupMenu() );
   updateMessageActions();
 }
 

@@ -124,6 +124,9 @@ public:
   /** Create a new unique ID */
   uint createId();
 
+  /** Move a folder */
+  void moveFolder( KMFolder* folder, KMFolderDir* newParent );
+
   /** Rename or move a folder */
   void renameFolder( KMFolder* folder, const QString& newName, 
       KMFolderDir* newParent = 0 );

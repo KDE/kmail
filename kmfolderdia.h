@@ -133,7 +133,6 @@ private:
   void initializeWithValuesFromFolder( KMFolder* folder );
 
 private:
-  FolderRequester *mBelongsTo;
   QComboBox *mMailboxTypeComboBox;
   QComboBox *mShowSenderReceiverComboBox;
   QComboBox *mContentsComboBox;

@@ -249,14 +249,6 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   connect( mNameEdit, SIGNAL( textChanged( const QString & ) ),
            this, SLOT( slotFolderNameChanged( const QString & ) ) );
 
-  QLabel* belongsToLabel = new QLabel( i18n("&Belongs to:" ), fpGroup );
-  hl->addWidget( belongsToLabel );
-
-  mBelongsTo = new FolderRequester( fpGroup, mDlg->folderTree() );
-  mBelongsTo->setMustBeReadWrite( false );
-  hl->addWidget( mBelongsTo );
-  belongsToLabel->setBuddy( mBelongsTo );
-
   //start icons group
   QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), this, "iconGroup" );
   iconGroup->setColumnLayout( 0,  Qt::Vertical );
@@ -340,10 +332,6 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mMailboxTypeComboBox->setEnabled( !mDlg->folder() );
   ml->addWidget( mMailboxTypeComboBox );
   ml->addStretch( 1 );
-
-  // we want to know if the activated changes
-  connect( mBelongsTo, SIGNAL(folderChanged(KMFolder*)),
-      SLOT(slotUpdateItems(KMFolder*)) );
 
   QGroupBox *idGroup = new QGroupBox(  i18n("Sender Identity" ), this );
   idGroup->setColumnLayout( 0, Qt::Vertical );
@@ -524,22 +512,15 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   if ( parentFolder ) {
     slotUpdateItems( parentFolder );
   }
-  // can cope with parentFolder == 0
-  mBelongsTo->setFolder( parentFolder );
 
   if ( mDlg->folder() ) {
     // existing folder
     initializeWithValuesFromFolder( mDlg->folder() );
 
-    bool hasChildren = ( mDlg->folder()->child() &&
-                         mDlg->folder()->child()->count() > 0 );
-
     // mailbox folder type
     switch ( mDlg->folder()->folderType() ) {
       case KMFolderTypeSearch:
         mMailboxTypeComboBox->setCurrentItem( 2 );
-        belongsToLabel->hide();
-        mBelongsTo->hide();
         newmailGroup->hide();
         break;
       case KMFolderTypeMaildir:
@@ -551,19 +532,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         newmailGroup->hide();
         break;
       case KMFolderTypeImap:
-        if ( hasChildren )
-        {
-          belongsToLabel->setEnabled( false );
-          mBelongsTo->setEnabled( false );
-        }
         mMailboxTypeGroupBox->hide();
         break;
       case KMFolderTypeCachedImap:
-        if ( hasChildren )
-        {
-          belongsToLabel->setEnabled( false );
-          mBelongsTo->setEnabled( false );
-        }
         mMailboxTypeGroupBox->hide();
         newmailGroup->hide();
         break;
@@ -579,8 +550,6 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     switch ( parentFolder->folderType() ) {
       case KMFolderTypeSearch:
         mMailboxTypeComboBox->setCurrentItem( 2 );
-        belongsToLabel->hide();
-        mBelongsTo->hide();
         newmailGroup->hide();
         break;
       case KMFolderTypeMaildir:
@@ -713,7 +682,7 @@ bool FolderDiaGeneralTab::save()
   {
     QString acctName;
     selectedFolderDir = &(kmkernel->folderMgr()->dir());
-    KMFolder *selectedFolder = mBelongsTo->folder();
+    KMFolder *selectedFolder = mDlg->folder();
 
     if ( !mDlg->isNewFolder() )
       oldFldName = mDlg->folder()->name();
@@ -735,7 +704,7 @@ bool FolderDiaGeneralTab::save()
     }
     else if (selectedFolder)
     {
-      selectedFolderDir = selectedFolder->createChildFolder();
+      selectedFolderDir = selectedFolder->parent();
     }
 
     QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
@@ -744,36 +713,6 @@ bool FolderDiaGeneralTab::save()
                 && ( selectedFolderDir == mDlg->folder()->parent() )
                 && ( mDlg->folder()->name() == fldName ) ) ) )
     {
-      KMessageBox::error( this, message );
-      return false;
-    }
-
-    message = i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).arg(fldName);
-    KMFolderDir* folderDir = selectedFolderDir;
-
-    // check that the folder can be moved
-    if ( mDlg->folder() && mDlg->folder()->child() )
-    {
-      while ( folderDir && ( folderDir != &kmkernel->folderMgr()->dir() ) &&
-              ( folderDir != mDlg->folder()->parent() ) )
-      {
-        if ( folderDir->findRef( mDlg->folder() ) != -1 )
-        {
-          KMessageBox::error( this, message );
-          return false;
-        }
-        folderDir = folderDir->parent();
-      }
-    }
-
-    if( mDlg->folder() && mDlg->folder()->child() && selectedFolderDir &&
-        ( selectedFolderDir->path().find( mDlg->folder()->child()->path() + "/" ) == 0 ) ) {
-      KMessageBox::error( this, message );
-      return false;
-    }
-
-    if( mDlg->folder() && mDlg->folder()->child()
-        && ( selectedFolderDir == mDlg->folder()->child() ) ) {
       KMessageBox::error( this, message );
       return false;
     }
@@ -899,14 +838,9 @@ bool FolderDiaGeneralTab::save()
     folder->storage()->writeConfig();
 
     if ( !mDlg->isNewFolder() && !oldFldName.isEmpty() &&
-         ( oldFldName != fldName || folder->parent() != selectedFolderDir ) )
+         ( oldFldName != fldName ) )
     {
-      if ( folder->parent() != selectedFolderDir ) {
-        kmkernel->folderMgr()->renameFolder( folder, fldName,
-            selectedFolderDir );
-      } else {
-        kmkernel->folderMgr()->renameFolder( folder, fldName );
-      }
+      kmkernel->folderMgr()->renameFolder( folder, fldName );
     } else {
       kmkernel->folderMgr()->contentsChanged();
     }

@@ -296,6 +296,9 @@ public:
   virtual void search( KMSearchPattern* );
   virtual void search( KMSearchPattern*, Q_UINT32 serNum );
 
+  /** Returns true if this folder can be moved */
+  virtual bool isMoveable() const;
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 

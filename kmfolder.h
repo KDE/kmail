@@ -507,6 +507,9 @@ public:
   const KShortcut &shortcut() const { return mShortcut; }
   void setShortcut( const KShortcut& );
 
+  /** Returns true if this folder can be moved */
+  bool isMoveable() const;
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

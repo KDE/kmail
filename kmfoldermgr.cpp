@@ -583,6 +583,12 @@ uint KMFolderMgr::createId()
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderMgr::moveFolder( KMFolder* folder, KMFolderDir *newParent )
+{
+  renameFolder( folder, folder->name(), newParent );
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderMgr::renameFolder( KMFolder* folder, const QString& newName, 
                                 KMFolderDir *newParent )
 {

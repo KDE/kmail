@@ -110,6 +110,9 @@ public:
 
   virtual void tryReleasingFolder(KMFolder* folder);
 
+  /** Returns true if this folder can be moved */
+  virtual bool isMoveable() const { return false; }
+
 protected slots:
   // Reads search definition for this folder and creates a KMSearch
   bool readSearch();

@@ -2004,4 +2004,10 @@ void KMFolderCachedImap::slotUpdateLastUid()
   mTentativeHighestUid = 0;
 }
 
+bool KMFolderCachedImap::isMoveable() const
+{
+  return ( hasChildren() == HasNoChildren && 
+      !folder()->isSystemFolder() ) ? true : false;
+}
+
 #include "kmfoldercachedimap.moc"

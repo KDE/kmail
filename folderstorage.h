@@ -428,6 +428,9 @@ public:
    */
   virtual void search( KMSearchPattern*, Q_UINT32 serNum );
 
+  /** Returns true if this folder can be moved */
+  virtual bool isMoveable() const;  
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

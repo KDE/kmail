@@ -1948,4 +1948,11 @@ void KMFolderImap::slotSearchDone( Q_UINT32 serNum, KMSearchPattern* pattern )
   emit searchDone( folder(), serNum, pattern );
 }
 
+//-----------------------------------------------------------------------------
+bool KMFolderImap::isMoveable() const
+{
+  return ( hasChildren() == HasNoChildren && 
+      !folder()->isSystemFolder() ) ? true : false;
+}
+
 #include "kmfolderimap.moc"

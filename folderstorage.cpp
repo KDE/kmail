@@ -1080,4 +1080,10 @@ int FolderStorage::addMsg( QPtrList<KMMessage>& msgList, QValueList<int>& index_
   return ret;
 }
 
+//-----------------------------------------------------------------------------
+bool FolderStorage::isMoveable() const
+{
+  return ( folder()->isSystemFolder() ) ? false : true;
+}
+
 #include "folderstorage.moc"

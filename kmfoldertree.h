@@ -174,8 +174,15 @@ public:
     mFolderToItem.remove( folder );
   }
 
+  /** Valid actions for the folderToPopup method */
+  enum MenuAction {
+    CopyMessage,
+    MoveMessage,
+    MoveFolder
+  };
+  
   /** Generate a popup menu that contains all folders that can have content */
-  void folderToPopupMenu( bool move, QObject *receiver, KMMenuToFolder *, 
+  void folderToPopupMenu( MenuAction action, QObject *receiver, KMMenuToFolder *, 
       QPopupMenu *menu, QListViewItem *start = 0 );
   
 signals:
@@ -274,6 +281,9 @@ protected slots:
 
   void slotNewMessageToMailingList();
 
+  /** For RMB move folder */
+  virtual void moveSelectedToFolder( int menuId );
+
 protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
@@ -312,6 +322,9 @@ protected:
   /** connect all signals */
   void connectSignals();
 
+  /** Move the current folder to destination */
+  void moveFolder( KMFolder* destination );
+
 private:
   /** total column */
   QListViewItemIterator mUpdateIterator;
@@ -326,6 +339,9 @@ private:
   KMMainWidget *mMainWidget;
   bool mReloading;
   QMap<const KMFolder*, KMFolderTreeItem*> mFolderToItem;
+
+  /** Map menu id into a folder */
+  KMMenuToFolder mMenuToFolder;
 };
 
 #endif

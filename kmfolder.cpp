@@ -829,4 +829,9 @@ void KMFolder::setShortcut( const KShortcut &sc )
   }
 }
 
+bool KMFolder::isMoveable() const
+{
+  return mStorage->isMoveable();
+}
+
 #include "kmfolder.moc"
