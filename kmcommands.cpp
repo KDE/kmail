@@ -1957,147 +1957,163 @@ KMCommand::Result KMUrlClickedCommand::execute()
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg )
-  : KMCommand( parent, msg ), mEncoded( false )
+  : KMCommand( parent, msg ), mImplicitAttachments( true ), mEncoded( false )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs )
-  : KMCommand( parent, msgs ), mEncoded( false )
+  : KMCommand( parent, msgs ), mImplicitAttachments( true ), mEncoded( false )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode>& attachments,
                                                     KMMessage *msg, bool encoded )
-  : KMCommand( parent, msg ), mAttachments( attachments ), mEncoded( encoded )
+  : KMCommand( parent, msg ), mImplicitAttachments( false ),
+    mEncoded( encoded )
 {
   // do not load the complete message but only parts
   msg->setComplete( true );
+  for ( QPtrListIterator<partNode> it( attachments ); it.current(); ++it ) {
+    mAttachmentMap.insert( it.current(), msg );
+  }
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
   setEmitsCompletedItself( true );
-  if ( mAttachments.count() > 0 )
-  {
-    saveAll( mAttachments );
-    return OK;
+  if ( mImplicitAttachments ) {
+    QPtrList<KMMessage> msgList = retrievedMsgs();
+    KMMessage *msg;
+    for ( QPtrListIterator<KMMessage> itr( msgList );
+          ( msg = itr.current() );
+          ++itr ) {
+      partNode *rootNode = partNode::fromMessage( msg );
+      for ( partNode *child = rootNode; child;
+            child = child->firstChild() ) {
+        for ( partNode *node = child; node; node = node->nextSibling() ) {
+          if ( node->type() != DwMime::kTypeMultipart )
+            mAttachmentMap.insert( node, msg );
+        }
+      }
+    }
   }
-  QPtrList<KMMessage> lst = retrievedMsgs();
-  for ( QPtrListIterator<KMMessage> itr( lst ) ; itr.current() ; ++itr ) {
-    partNode *rootNode = partNode::fromMessage( itr.current() );
-    parse( rootNode );
-    // FIXME: delete rootNode; too early?
-  }
+  setDeletesItself( true );
+  // load all parts
+  KMLoadPartsCommand *command = new KMLoadPartsCommand( mAttachmentMap );
+  connect( command, SIGNAL( partsRetrieved() ),
+           this, SLOT( slotSaveAll() ) );
+  command->start();
 
   return OK;
 }
 
-void KMSaveAttachmentsCommand::parse( partNode *rootNode )
-{
-  QPtrList<partNode> attachments;
-  for( partNode *child = rootNode; child; child = child->firstChild() ) {
-    for( partNode *tmp = child; tmp; tmp = tmp->nextSibling() ) {
-      attachments.append( tmp );
-    }
-  }
-  saveAll( attachments );
-}
-
-void KMSaveAttachmentsCommand::saveAll( const QPtrList<partNode>& attachments )
-{
-  if ( attachments.isEmpty() ) {
-    KMessageBox::information( 0, i18n("Found no attachments to save.") );
-    setResult( OK );
-    emit completed( this ); // The user has already been informed.
-    return;
-  }
-  mAttachments = attachments;
-  // load all parts
-  KMLoadPartsCommand *command =
-    new KMLoadPartsCommand( mAttachments, retrievedMessage() );
-  connect( command, SIGNAL( partsRetrieved() ),
-           this, SLOT( slotSaveAll() ) );
-  command->start();
-}
-
 void KMSaveAttachmentsCommand::slotSaveAll()
 {
-  QPtrListIterator<partNode> itr( mAttachments );
+  // now that all message parts have been retrieved, remove all parts which
+  // don't represent an attachment if they were not explicitely passed in the
+  // c'tor
+  if ( mImplicitAttachments ) {
+    for ( PartNodeMessageMap::iterator it = mAttachmentMap.begin();
+          it != mAttachmentMap.end(); ) {
+      // only body parts which have a filename or a name parameter (except for
+      // the root node for which name is set to the message's subject) are
+      // considered attachments
+      if ( it.key()->msgPart().fileName().stripWhiteSpace().isEmpty() &&
+           ( it.key()->msgPart().name().stripWhiteSpace().isEmpty() ||
+             !it.key()->parentNode() ) ) {
+        PartNodeMessageMap::iterator delIt = it;
+        ++it;
+        mAttachmentMap.remove( delIt );
+      }
+      else
+        ++it;
+    }
+    if ( mAttachmentMap.isEmpty() ) {
+      KMessageBox::information( 0, i18n("Found no attachments to save.") );
+      setResult( OK ); // The user has already been informed.
+      emit completed( this );
+      delete this;
+      return;
+    }
+  }
 
   KURL url, dirUrl;
-  if ( mAttachments.count() > 1 )
-  {
+  if ( mAttachmentMap.count() > 1 ) {
     // get the dir
-    KFileDialog fdlg( QString::null, QString::null, parentWidget(), 0, true );
+    KFileDialog fdlg( ":saveAttachments", QString::null, parentWidget(),
+                      "save attachments dialog", true );
+    fdlg.setCaption( i18n("Save Attachments To") );
+    fdlg.setOperationMode( KFileDialog::Saving );
     fdlg.setMode( (unsigned int) KFile::Directory );
-    if ( fdlg.exec() == QDialog::Rejected ) {
+    if ( fdlg.exec() == QDialog::Rejected || !fdlg.selectedURL().isValid() ) {
       setResult( Canceled );
       emit completed( this );
+      delete this;
       return;
     }
     dirUrl = fdlg.selectedURL();
   }
   else {
     // only one item, get the desired filename
+    partNode *node = mAttachmentMap.begin().key();
     // replace all ':' with '_' because ':' isn't allowed on FAT volumes
     QString s =
-      (*itr)->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
+      node->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
     if ( s.isEmpty() )
-      s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
+      s = node->msgPart().name().stripWhiteSpace().replace( ':', '_' );
     if ( s.isEmpty() )
-      s = "unnamed"; // ### this should probably be i18n'ed
+      s = i18n("filename for an unnamed attachment", "attachment.1");
     url = KFileDialog::getSaveURL( s, QString::null, parentWidget(),
                                    QString::null );
     if ( url.isEmpty() ) {
       setResult( Canceled );
       emit completed( this );
+      delete this;
       return;
     }
   }
 
   Result globalResult = OK;
-  while ( itr.current() ) {
-    QString s;
+  int unnamedAtmCount = 0;
+  for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
+        it != mAttachmentMap.end();
+        ++it ) {
     KURL curUrl;
     if ( !dirUrl.isEmpty() ) {
       curUrl = dirUrl;
-      s = (*itr)->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
+      QString s =
+        it.key()->msgPart().fileName().stripWhiteSpace().replace( ':', '_' );
       if ( s.isEmpty() )
-        s = (*itr)->msgPart().name().stripWhiteSpace().replace( ':', '_' );
-      // Check if it has the Content-Disposition... filename: header
-      // to make sure it's an actual attachment
-      // we can't do the check earlier as we first need to load the mimeheader
-      // for imap attachments to do this check
+        s = it.key()->msgPart().name().stripWhiteSpace().replace( ':', '_' );
       if ( s.isEmpty() ) {
-        ++itr;
-        continue;
+        ++unnamedAtmCount;
+        s = i18n("filename for the %1-th unnamed attachment",
+                 "attachment.%1")
+            .arg( unnamedAtmCount );
       }
       curUrl.setFileName( s );
-    } else
+    } else {
       curUrl = url;
+    }
 
-    if ( !curUrl.isEmpty() )
-    {
-      if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) )
-      {
+    if ( !curUrl.isEmpty() ) {
+      if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
         if ( KMessageBox::warningYesNo( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" )
               .arg( curUrl.fileName() ),
               i18n( "KMail Warning" ) ) == KMessageBox::No ) {
-           ++itr;
-           continue;
+          continue;
         }
       }
       // save
-      const Result result = saveItem( itr.current(), curUrl );
+      const Result result = saveItem( it.key(), curUrl );
       if ( result != OK )
         globalResult = result;
     }
-    ++itr;
   }
   setResult( globalResult );
   emit completed( this );
-//  delete this;
+  delete this;
 }
 
 KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
@@ -2225,31 +2241,38 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
 }
 
 KMLoadPartsCommand::KMLoadPartsCommand( QPtrList<partNode>& parts, KMMessage *msg )
-    : mParts( parts ), mNeedsRetrieval( 0 ), mMsg( msg )
+  : mNeedsRetrieval( 0 )
 {
+  for ( QPtrListIterator<partNode> it( parts ); it.current(); ++it ) {
+    mPartMap.insert( it.current(), msg );
+  }
 }
 
-KMLoadPartsCommand::KMLoadPartsCommand( partNode* node, KMMessage *msg )
-    : mNeedsRetrieval( 0 ), mMsg( msg )
+KMLoadPartsCommand::KMLoadPartsCommand( partNode *node, KMMessage *msg )
+  : mNeedsRetrieval( 0 )
 {
-  mParts.append( node );
+  mPartMap.insert( node, msg );
+}
+
+KMLoadPartsCommand::KMLoadPartsCommand( PartNodeMessageMap& partMap )
+  : mNeedsRetrieval( 0 ), mPartMap( partMap )
+{
 }
 
 void KMLoadPartsCommand::slotStart()
 {
-  QPtrListIterator<partNode> it( mParts );
-  while ( it.current() )
-  {
-    if ( !it.current()->msgPart().isComplete() &&
-         !it.current()->msgPart().partSpecifier().isEmpty() )
-    {
-      // incomplete part so retrieve it first
+  for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
+        it != mPartMap.end();
+        ++it ) {
+    if ( !it.key()->msgPart().isComplete() &&
+         !it.key()->msgPart().partSpecifier().isEmpty() ) {
+      // incomplete part, so retrieve it first
       ++mNeedsRetrieval;
-      KMFolder* curFolder = mMsg->parent();
-      if ( curFolder )
-      {
-        FolderJob *job = curFolder->createJob( mMsg, FolderJob::tGetMessage,
-            0, it.current()->msgPart().partSpecifier() );
+      KMFolder* curFolder = it.data()->parent();
+      if ( curFolder ) {
+        FolderJob *job =
+          curFolder->createJob( it.data(), FolderJob::tGetMessage,
+                                0, it.key()->msgPart().partSpecifier() );
         job->setCancellable( false );
         connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),
                  this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
@@ -2257,24 +2280,23 @@ void KMLoadPartsCommand::slotStart()
       } else
         kdWarning(5006) << "KMLoadPartsCommand - msg has no parent" << endl;
     }
-    ++it;
   }
   if ( mNeedsRetrieval == 0 )
     execute();
 }
 
-void KMLoadPartsCommand::slotPartRetrieved( KMMessage* msg, QString partSpecifier )
+void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
+                                            QString partSpecifier )
 {
-  DwBodyPart* part = msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );
-  if ( part )
-  {
+  DwBodyPart *part =
+    msg->findDwBodyPart( msg->getFirstDwBodyPart(), partSpecifier );
+  if ( part ) {
     // update the DwBodyPart in the partNode
-    QPtrListIterator<partNode> it( mParts );
-    while ( it.current() )
-    {
-      if ( it.current()->dwPart() == part )
-        it.current()->setDwPart( part );
-      ++it;
+    for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
+          it != mPartMap.end();
+          ++it ) {
+      if ( it.key()->dwPart() == part )
+        it.key()->setDwPart( part );
     }
   } else
     kdWarning(5006) << "KMLoadPartsCommand::slotPartRetrieved - could not find bodypart!" << endl;

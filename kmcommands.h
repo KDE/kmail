@@ -28,6 +28,7 @@ class partNode;
 namespace KIO { class Job; }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
+typedef QMap<partNode*, KMMessage*> PartNodeMessageMap;
 
 class KMCommand : public QObject
 {
@@ -335,22 +336,37 @@ class KMSaveAttachmentsCommand : public KMCommand
 {
   Q_OBJECT
 public:
+  /** Use this to save all attachments of the given message.
+      @param parent  The parent widget of the command used for message boxes.
+      @param msg     The message of which the attachments should be saved.
+   */
   KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg  );
+  /** Use this to save all attachments of the given messages.
+      @param parent  The parent widget of the command used for message boxes.
+      @param msgs    The messages of which the attachments should be saved.
+   */
   KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs );
+  /** Use this to save the specified attachments of the given message.
+      @param parent       The parent widget of the command used for message
+                          boxes.
+      @param attachments  The attachments that should be saved.
+      @param msg          The message that the attachments belong to.
+      @param encoded      True if the transport encoding should not be removed
+                          when the attachment is saved.
+   */
   KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode> &attachments,
-      KMMessage *msg, bool encoded = false  );
+                            KMMessage *msg, bool encoded = false  );
 
-protected slots:
+private slots:
   void slotSaveAll();
 
 private:
   virtual Result execute();
-private:
-  void parse( partNode *rootNode );
-  void saveAll( const QPtrList<partNode>& attachments );
   Result saveItem( partNode *node, const KURL& url );
+
 private:
-  QPtrList<partNode> mAttachments;
+  PartNodeMessageMap mAttachmentMap;
+  bool mImplicitAttachments;
   bool mEncoded;
 };
 
@@ -674,6 +690,7 @@ class KMLoadPartsCommand : public KMCommand
 public:
   KMLoadPartsCommand( QPtrList<partNode>& parts, KMMessage* msg );
   KMLoadPartsCommand( partNode* node, KMMessage* msg );
+  KMLoadPartsCommand( PartNodeMessageMap& partMap );
 
 public slots:
   void slotPartRetrieved( KMMessage* msg, QString partSpecifier );
@@ -687,9 +704,8 @@ private:
 
   virtual Result execute();
 
-  QPtrList<partNode> mParts;
   int mNeedsRetrieval;
-  KMMessage *mMsg;
+  PartNodeMessageMap mPartMap;
 };
 
 class KMResendMessageCommand : public KMCommand
