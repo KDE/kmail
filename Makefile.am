@@ -33,6 +33,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		mailinglist-magic.cpp kmrecentaddr.cpp kmacctmaildir.cpp \
+		linklocator.cpp \
                 mailcomposerIface.skel mailcomposerIface.stub
 
 check_PROGRAMS = dcoptest
