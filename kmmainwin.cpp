@@ -1403,7 +1403,7 @@ void KMMainWin::setupMenuBar()
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
   //----- Help Menu
-  QPopupMenu *mHelpMenu = helpMenu(aboutText);
+  QPopupMenu *mHelpMenu = helpMenu(aboutText, false);
 
   //----- Menubar
   mMenuBar  = new KMenuBar(this);
