@@ -3788,8 +3788,8 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
 
   KMessageBox::information( this, i18n( "This version of KMail was not compiled "
                                         "with support for Chiasmus. You might want "
-                                        "to recompile KMail with --enable-chiasmus." )
-                            i18n( "Missing Chiasmus Suppport" ) );
+                                        "to recompile KMail with --enable-chiasmus." ),
+                            i18n( "Missing Chiasmus Support" ) );
   return;
 
 #else
