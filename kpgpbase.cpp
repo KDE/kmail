@@ -1183,8 +1183,14 @@ KpgpBase5::encsign(const QStrList *_recipients, const char *passphrase,
     status |= MISSINGKEY;
   }
 
-  if(signonly)
+  if(signonly) {
+    // dash-escape the input
+    if (input[0] == '-')
+      input = "- " + input;
+    input.replace(QRegExp("\n-"), "\n- -");
+
     output = "-----BEGIN PGP SIGNED MESSAGE-----\n\n" + input + "\n" + output;
+  }
 
   return status;
 }
