@@ -43,11 +43,11 @@ I18N_NOOP( "<qt><p>This is the list of defined filters. "
 	   "of the dialog.</p></qt>" );
 const char * _wt_filterlist_new =
 I18N_NOOP( "<qt><p>Click this button to create a new filter.</p>"
-	   "<p>It will be inserted just before the currently "
+	   "<p>The filter will be inserted just before the currently "
 	   "selected one, but you can always change that "
 	   "later on.</p>"
-	   "<p>If you have hit this button accidentally, you can undo this "
-	   "by clicking on the <em>delete</em> button (to the right).</p></qt>" );
+	   "<p>If you have clicked this button accidentally, you can undo this "
+	   "by clicking on the <em>Delete</em> button (to the right).</p></qt>" );
 const char * _wt_filterlist_delete =
 I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently "
 	   "selected filter from the list above.</p>"

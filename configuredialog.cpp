@@ -2223,8 +2223,8 @@ AppearancePageProfileTab::AppearancePageProfileTab( QWidget * parent, const char
   mListView->setSorting( -1 );
 
   vlay->addWidget( new QLabel( mListView,
-			       i18n("&Select a profile and hit apply to take "
-				    "over its settings:"), this ) );
+			       i18n("&Select a profile and click Apply to take "
+				    "on its settings:"), this ) );
   vlay->addWidget( mListView, 1 );
 
   /* not implemented (yet?)
