@@ -193,6 +193,8 @@ int KMFolder::open()
     return errno;
   }
 
+  lock();
+
   if (!path().isEmpty())
   {
     if (isIndexOutdated()) // test if contents file has changed
@@ -214,7 +216,6 @@ int KMFolder::open()
     rc = createIndexFromContents();
   }
 
-  if (!rc) lock();
   mQuiet = 0;
   mChanged = FALSE;
 
