@@ -947,7 +947,7 @@ void AccountDialog::slotImapCapabilities(const QStringList &list)
 void AccountDialog::checkHighest(QButtonGroup *btnGroup)
 {
   QButton *btn;
-  for (int i = btnGroup->count() - 1; i > 0; i--)
+  for (int i = btnGroup->count() - 1; i >= 0; i--)
   {
     btn = btnGroup->find(i);
     if (btn && btn->isEnabled())
