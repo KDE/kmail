@@ -90,6 +90,8 @@ public:
 
   bool isWritableFolder( const QString& type, const QString& resource );
 
+  StorageFormat storageFormat( const QString &resource );
+
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
   bool update( const QString& type, const QString& folder,
@@ -197,6 +199,7 @@ public:
   /// Set the storage format of a given folder. Called when seeing the kolab annotation.
   void setStorageFormat( KMFolder* folder, StorageFormat format );
 
+
   static const char* annotationForContentsType( KMail::FolderContentsType type );
 
   // Called after a folder was synced with the server
@@ -234,6 +237,7 @@ private:
   KMFolder* findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType );
   KMFolder* findResourceFolder( const QString& resource );
 
+
   bool updateAttachment( KMMessage& msg,
                          const QString& attachmentURL,
                          const QString& attachmentName,
@@ -255,6 +259,8 @@ private:
                            const KURL& folderURL,
                            int _changes );
   void triggerKolabFreeBusy( const KURL& folderURL );
+
+  StorageFormat globalStorageFormat() const;
 
 private:
   QGuardedPtr<KMFolder> mContacts;
@@ -280,6 +286,9 @@ private:
   };
   // The storage format used for each folder that we care about
   typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;
+  // helper for reading the FolderInfo from the config file
+  FolderInfo readFolderInfo( const KMFolder * const folder ) const;
+  
   FolderInfoMap mFolderInfoMap;
 
   unsigned int mFolderLanguage;

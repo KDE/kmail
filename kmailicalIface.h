@@ -58,6 +58,16 @@ k_dcop:
     bool writable;
   };
 
+  /// The format of the mails containing other contents than actual mail
+  /// (like contacts, calendar etc.)
+  /// This is currently either ical/vcard, or XML.
+  /// For actual mail folders this simply to know which resource handles it
+  /// This enum matches the one defined in kmail.kcfg
+  enum StorageFormat { StorageIcalVcard, StorageXML };
+
+  /// This bitfield indicates which changes have been made in a folder, at syncing time.
+  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
+
   virtual bool addIncidence( const QString& type, const QString& folder,
                              const QString& uid, const QString& ical ) = 0;
   virtual bool deleteIncidence( const QString& type, const QString& folder,
@@ -72,6 +82,8 @@ k_dcop:
   virtual bool isWritableFolder( const QString& type,
                                  const QString& resource ) = 0;
 
+  virtual KMailICalIface::StorageFormat storageFormat( const QString& resource ) = 0;
+  
   virtual KURL getAttachment( const QString& resource,
                               Q_UINT32 sernum,
                               const QString& filename ) = 0;
@@ -115,19 +127,6 @@ k_dcop:
    */
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
-  /// The format of the mails containing other contents than actual mail
-  /// (like contacts, calendar etc.)
-  /// This is currently either ical/vcard, or XML.
-  /// The imap resource uses this folder if ical/vcard storage,
-  /// the kolab resource uses this folder if xml storage.
-  /// For actual mail folders this simply to know which resource handles it
-  /// This enum matches the one defined in kmail.kcfg
-  enum StorageFormat { StorageIcalVcard, StorageXML };
-
-
-  /// This bitfield indicates which changes have been made in a folder, at syncing time.
-  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
-
 k_dcop_signals:
   // For vcard/ical type storage (imap resource)
   void incidenceAdded( const QString& type, const QString& folder,
@@ -160,5 +159,21 @@ inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& s
   str >> subResource.location >> subResource.label >> subResource.writable;
   return str;
 }
+
+inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::StorageFormat& format  )
+{
+  Q_UINT32 foo = format;
+  str << foo; 
+  return str;
+}
+
+inline QDataStream& operator>>( QDataStream& str, KMailICalIface::StorageFormat& format  )
+{
+  Q_UINT32 foo;
+  str >> foo; 
+  format = ( KMailICalIface::StorageFormat )foo;
+  return str;
+}
+
 
 #endif
