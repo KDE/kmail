@@ -298,7 +298,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
   lastAccountChecked = cur;
   ++(*mAccountIt);
 
-  if (cur->folder() == 0)
+  if (cur->type() != "imap" && cur->folder() == 0)
     {
       QString tmp;
       tmp = i18n("Account %1 has no mailbox defined!\n"
@@ -323,7 +323,7 @@ QStringList  KMAcctMgr::getAccounts(bool noImap) {
   KMAccount *cur;
   QStringList strList;
   for (cur=mAcctList.first(); cur; cur=mAcctList.next()) {
-    if (!noImap || cur->type() != QString("imap")) strList.append(cur->name());
+    if (!noImap || cur->type() != "imap") strList.append(cur->name());
   }
 
   return strList;
@@ -353,7 +353,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
   cur = mAcctList.first();
   while (cur)
   {
-    if (cur->type() != QString("imap")) x++;
+    if (cur->type() != "imap") x++;
     if (x > item) break;
     cur=mAcctList.next();
   }
