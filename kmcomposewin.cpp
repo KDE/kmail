@@ -11,31 +11,50 @@
 #include <sys/types.h>
 #include <mimelib/string.h>
 
-KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, KMMessage *message, int action) : QWidget(parent,name)
+KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, KMMessage *message, int action) : QWidget(parent, name)
 {
 	printf("Entering composeView\n");
-	
+	grid = new QGridLayout(this,10,2,4,4);	
+
 	attWidget = NULL;
 	if (message) currentMessage = message;
 	else currentMessage = new KMMessage(); 
 	indexAttachment =0;
 
 	toLEdit = new QLineEdit(this);
+	toLEdit->setMinimumSize(toLEdit->sizeHint());
+	grid->addWidget(toLEdit,0,1);
+
 	if (emailAddress) 
 		toLEdit->setText(emailAddress);
 	ccLEdit = new QLineEdit(this);
+	ccLEdit->setMinimumSize(ccLEdit->sizeHint());
+	grid->addWidget(ccLEdit,1,1);
+
 	subjLEdit = new QLineEdit(this);
+	subjLEdit->setMinimumSize(subjLEdit->sizeHint());
+	grid->addWidget(subjLEdit,2,1);
 
 	QLabel *label = new QLabel(toLEdit, "&To:", this);
-	label->setGeometry(14,10,50,15);
+	label->adjustSize();
+	label->setMinimumSize(label->sizeHint());
+	grid->addWidget(label,0,0);
 
 	label = new QLabel(subjLEdit, "&Cc:", this);
-	label->setGeometry(14,45,50,20);
+	label->adjustSize();
+	label->setMinimumSize(label->sizeHint());
+	grid->addWidget(label,1,0);
 
 	label = new QLabel(ccLEdit, "&Subject:", this);
-	label->setGeometry(14,80,50,20);
+	label->adjustSize();
+	label->setMinimumSize(label->sizeHint());
+	grid->addWidget(label,2,0);
 
 	editor = new KEdit(0,this);
+	grid->addMultiCellWidget(editor,3,9,0,1);
+	grid->setRowStretch(3,100);
+
+	grid->setColStretch(1,100);
 
 	if(message && action==FORWARD)
 	  {printf("Message will be forwarded\n");
@@ -51,6 +70,8 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 		}
 	else
 		printf("Normal message\n");
+
+	grid->activate();
 
 	parseConfiguration();	
 
@@ -446,6 +467,7 @@ void KMComposeView::toDo()
 
 void KMComposeView::resizeEvent(QResizeEvent *)
 {
+#ifdef BROKEN
   toLEdit->setGeometry(70,10,width()-80,25);
   ccLEdit->setGeometry(70,45,width()-80,25);
   subjLEdit->setGeometry(70,80,width()-80,25);
@@ -459,6 +481,7 @@ void KMComposeView::resizeEvent(QResizeEvent *)
         attWidget->setColumn(2,"File Size",width()/4);	
 	attWidget->repaint();
 	}
+#endif
 }
 
 void KMComposeView::newComposer()

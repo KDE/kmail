@@ -21,6 +21,7 @@ KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
 KMSender* msgSender = NULL;
 KLocale* nls = NULL;
+KMFolder* trashFolder = NULL;
 
 static msg_handler oldMsgHandler = NULL;
 
@@ -54,7 +55,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 //-----------------------------------------------------------------------------
 static void init(int argc, char *argv[])
 {
-  QString  fname;
+  QString  fname, trashName;
   KConfig* cfg;
 
   app = new KApplication(argc, argv, "kmail");
@@ -74,6 +75,18 @@ static void init(int argc, char *argv[])
   fname = QDir::homeDirPath() + 
     cfg->readEntry("folders", &QString("/.kde/mail-folders"));
   folderMgr = new KMFolderMgr(fname);
+
+  trashName   = cfg->readEntry("trashFolder", &QString("trash"));
+  trashFolder = folderMgr->find(trashName);
+
+  if (!trashFolder)
+  {
+    warning("The folder `"+trashName+"' does not exist in the\n"
+	    "mail folder directory and therefore will now be created.");
+
+    trashFolder = folderMgr->createFolder(trashName);
+    if (!trashFolder) fatal("Cannot create trash folder '"+trashName+"'");
+  }
 
   msgSender = new KMSender(folderMgr);
 

@@ -29,6 +29,7 @@
 #define REPLYALL 2
 
 class KMMessage;
+class QGridLayout;
 
 class KMAttachmentItem  // for Attachment Widget
 {
@@ -81,6 +82,7 @@ private slots:
 	void insertFile();
 protected:
 	virtual void resizeEvent(QResizeEvent *);
+	QGridLayout* grid;
 };
 
 class KMComposeWin : public KTopLevelWidget

@@ -7,7 +7,6 @@
 #include <kmsgbox.h>
 #include <qlayout.h>
 #include <qgrpbox.h>
-#include <qlayout.h>
 #include "util.h"
 #include "kmmainwin.h"
 #include "kmaccount.h"

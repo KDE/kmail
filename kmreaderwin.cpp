@@ -2,6 +2,7 @@
 
 #include "kmfolder.h"
 #include "kmmessage.h"
+#include "kmmsgpart.h"
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
 #include "kmreaderwin.h"
@@ -38,17 +39,6 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 	printf("After getmsg\n");	
 
 	// Let's initialize the HTMLWidget
-
-
-	headerCanvas = new KHTMLWidget(this,0,0);
-	headerCanvas->resize(parent->width(),parent->height()-100);	
-	headerCanvas->setURLCursor(upArrowCursor);
-	connect(headerCanvas,SIGNAL(URLSelected(const char *,int)),this,SLOT(openURL(const char *,int)));
-	connect(headerCanvas,SIGNAL(popupMenu(const char *, const QPoint &)),SLOT(popupHeaderMenu(const char *, const QPoint &)));
-
-	separator = new QFrame(this);
-	separator->setFrameStyle(QFrame::HLine | QFrame::Raised);
-	separator->setLineWidth(4);
 
 	messageCanvas = new KHTMLWidget(this,0,picsDir);
 	messageCanvas->setURLCursor(upArrowCursor);
@@ -88,11 +78,6 @@ void KMReaderView::clearCanvas()
 {
 	// Produce a white canvas
 
-	headerCanvas->begin(picsDir);
-	headerCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
-	headerCanvas->end();
-	headerCanvas->parse();
-
 	messageCanvas->begin(picsDir);
 	messageCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
 	messageCanvas->end();
@@ -108,11 +93,9 @@ void KMReaderView::updateDisplay()
 
 void KMReaderView::resizeEvent(QResizeEvent *)
 {
-  headerCanvas->setGeometry(0,0,this->width(),75);
-  separator->setGeometry(0,76,this->width(),4);
-  messageCanvas->setGeometry(0,81,this->width()-16,this->height()-87); //16
+  messageCanvas->setGeometry(0,0,this->width()-16,this->height()); //16
   horz->setGeometry(0,height()-16,width()-16,16);
-  vert->setGeometry(width()-16,81,16,height()-87);
+  vert->setGeometry(width()-16,0,16,height());
 }
 
 
@@ -127,20 +110,18 @@ void KMReaderView::parseMessage(KMMessage *message)
 	QString text;
 	QString header;
 	QString dateStr;
+	QString toStr;
 	QString ccStr;
 	long length;
 	int pos=0;
+	int numParts = message->numBodyParts();
 
 	currentMessage = message; // To make sure currentMessage is set.
 
-	int noAttach = (message->numBodyParts() <= 1);
+	printf("Debug numBodyparts=%i\n", numParts);
 
 	text = message->body(&length);
-	if (noAttach) text.truncate(length);	
-
-	headerCanvas->begin(picsDir);
-	headerCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
-	headerCanvas->write("<BODY BGCOLOR=WHITE>");
+	if (numParts <= 1) text.truncate(length);	
 
 	dateStr.sprintf("Date: %s<br>",message->dateStr());
 
@@ -160,22 +141,25 @@ void KMReaderView::parseMessage(KMMessage *message)
 	strTemp.sprintf("%s",message->cc());
 	strTemp = strTemp.stripWhiteSpace();
 	if(strTemp.isEmpty())
-		ccStr = "Cc:<br>";
+		ccStr = "";
 	else
-		ccStr.sprintf("%s<br>",message->cc());
+		ccStr.sprintf("Cc: %s<br>",message->cc());
 			 
              subjStr.sprintf("Subject: %s<br><P>",message->subject());
-
-	headerCanvas->write(dateStr);
-	headerCanvas->write(fromStr);
-	headerCanvas->write(ccStr);
-	headerCanvas->write(subjStr);
-	headerCanvas->write("</BODY></HTML>");
-	headerCanvas->end();
-	headerCanvas->parse();
+	
+	toStr.sprintf("To: %s<br>", message->to());
 
 	// Init messageCanvas
         messageCanvas->begin(picsDir);
+	// header
+	messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
+	messageCanvas->write(subjStr);
+	messageCanvas->write(toStr);
+	messageCanvas->write(ccStr);
+	messageCanvas->write(dateStr);
+	messageCanvas->write("</B></TD></TR></TABLE><br><br>");	
+
+
 
 	// Prepare text
 
@@ -197,10 +181,15 @@ void KMReaderView::parseMessage(KMMessage *message)
 		}
 
 	// Okay! Let's write it to the canvas
-	messageCanvas->write(text);
+	 messageCanvas->write(text);
 		
-	// Now let's append the attachments
-
+	int x=0;
+	for(x=0;x == noAttach;noAttach++)
+		{KMMessagePart *part = new KMMessagePart;
+		 currentMessage->bodyPart(x,part);
+		cout << part->typeStr();
+		cout << part->subtypeStr();
+		}
 
 	messageCanvas->write("</BODY></HTML>");
 	messageCanvas->end();
@@ -742,5 +731,22 @@ KMSource::KMSource(QWidget *parent=0, const char *name=0,QString text=0)
 	edit->setText(text);
 	edit->setReadOnly(TRUE);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

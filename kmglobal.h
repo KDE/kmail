@@ -29,4 +29,7 @@ extern KMSender* msgSender;
 class KLocale;
 extern KLocale* nls;
 
+class KMFolder;
+extern KMFolder* trashFolder;
+
 #endif /*kmglobal_h*/

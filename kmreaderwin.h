@@ -31,7 +31,6 @@ Q_OBJECT
 public:
 	KMReaderView(QWidget *p=0,const char *n=0, int n=0, KMFolder *f=0);
         KHTMLWidget *messageCanvas;
-        KHTMLWidget *headerCanvas;
         QString selectedText;
 	                        
 private:

@@ -443,7 +443,20 @@ void KMFolder::readMsg(int msgno)
   msg->setStatus(mMsgInfo[msgno].status());
   dwmsg = DwMessage::NewMessage(msg->msgStr(), 0);
   dwmsg->Parse();
+
+  printf("Message #%d: contentType=%d\n", msgno, 
+	 dwmsg->Headers().ContentType().Type());
+
   msg->takeMessage(dwmsg);
+
+  DwBodyPart* part = dwmsg->Body().FirstBodyPart();
+  while (part)
+  {
+    printf("part\n");
+    part = part->Next();
+  }
+
+  printf("numBodyParts=%d\n", msg->numBodyParts());
 }
 
 
