@@ -904,26 +904,33 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     return 0;
   }
 
-  // write message to folder file
-  fseek(mStream, -2, SEEK_END);
-  fread(endStr, 1, 2, mStream); // ensure separating empty line
-  if (ftell(mStream) > 0 && endStr[0]!='\n') 
-  {
-    if (endStr[1]!='\n')
+  // Make sure the file is large enough to check for an end
+  // character
+  fseek(mStream, 0, SEEK_END);
+  if (ftell(mStream) >= 2)
     {
-      //printf ("****endStr[1]=%c\n", endStr[1]);
-      fwrite("\n\n", 1, 2, mStream);
+      // write message to folder file
+      fseek(mStream, -2, SEEK_END);
+      fread(endStr, 1, 2, mStream); // ensure separating empty line
+      if (ftell(mStream) > 0 && endStr[0]!='\n') 
+	{
+	  if (endStr[1]!='\n')
+	    {
+	      //printf ("****endStr[1]=%c\n", endStr[1]);
+	      fwrite("\n\n", 1, 2, mStream);
+	    }
+	  else fwrite("\n", 1, 1, mStream);
+	}
     }
-    else fwrite("\n", 1, 1, mStream);
-  }
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
   revert = ftell(mStream);
   int error = ferror(mStream);
-  if (error) {
-    if (opened) close();
-    return error;
-  }
-	     
+  if (error) 
+    {
+      if (opened) close();
+      return error;
+    }
+      
   fprintf(mStream, "From %s %s\n", (const char *)aMsg->from(),
           (const char *)aMsg->dateShortStr());
   offs = ftell(mStream);
