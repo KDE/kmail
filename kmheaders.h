@@ -148,6 +148,8 @@ signals:
   // emitted when the list view item corresponding to this message
   // has been double clicked
   virtual void activated(KMMessage *);
+  // emitted when we might be about to delete messages
+  virtual void maybeDeleting();
 
 public slots:
   void workAroundQListViewLimitation();

@@ -337,6 +337,8 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotUrlClicked(const KURL&,int)));
   connect(mMsgView, SIGNAL(showAtmMsg(KMMessage *)),
 	  this, SLOT(slotAtmMsg(KMMessage *)));
+  connect(mHeaders, SIGNAL(maybeDeleting()),
+	  mMsgView, SLOT(clearCache()));
   accel->connectItem(accel->insertItem(Key_Up),
 		     mMsgView, SLOT(slotScrollUp()));
   accel->connectItem(accel->insertItem(Key_Down),
@@ -626,6 +628,8 @@ void KMMainWin::slotEmptyFolder()
   KMMessage* msg;
 
   if (!mFolder) return;
+
+  mMsgView->clearCache();
 
   kernel->kbp()->busy();
 

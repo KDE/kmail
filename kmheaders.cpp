@@ -779,6 +779,9 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
 {
   KMMsgBase* msgBase;
   KMMessage* msg;
+
+  emit maybeDeleting();
+
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
   KMMessageList* msgList = selectedMsgs();
@@ -1196,6 +1199,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   KMMsgBase *msgBase, *curMsg = 0;
   int top, rc;
 
+  emit maybeDeleting();
+
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
   kernel->kbp()->busy();
@@ -1278,7 +1283,8 @@ void KMHeaders::undo()
       return;
     msg = curFolder->getMsg( idx );
     folder->moveMsg( msg );     
-    folder->unGetMsg( folder->count() - 1 );
+    if (folder->count() > 1)
+      folder->unGetMsg( folder->count() - 1 );
     curFolder->close();
   }
   else 

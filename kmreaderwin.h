@@ -114,6 +114,9 @@ signals:
 
 public slots:
 
+  /* Force update even if message is the same */
+  void clearCache();
+  
   /* Refresh the reader window */
   void updateReaderWin();
 

@@ -396,6 +396,12 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     updateReaderWinTimer.start( 0, TRUE );
 }
 
+//-----------------------------------------------------------------------------
+void KMReaderWin::clearCache()
+{
+  updateReaderWinTimer.stop();
+  mMsg = 0;
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
