@@ -54,7 +54,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
                  User1|User2|Cancel, ( immediate ? User1 : User2 ), false )
 {
   QVBox *vbox = makeVBoxMainWidget();
-  mLabelTo = new QLabel( i18n( "Select the recipient addresses "
+  mLabelTo = new QLabel( i18n( "Select the recipient &addresses "
                                "to redirect to:" ), vbox );
   
   QHBox *hbox = new QHBox( vbox );
@@ -76,7 +76,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   mEditTo->setFocus();
 
   setButtonGuiItem( User1, KGuiItem( i18n("&Send now"), "mail_send" ) );
-  setButtonGuiItem( User2, KGuiItem( i18n("&Queue"), "queue" ) );
+  setButtonGuiItem( User2, KGuiItem( i18n("Send &later"), "queue" ) );
 }
 
 

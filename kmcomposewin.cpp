@@ -797,10 +797,10 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row, i18n("&Dictionary:"),
                     mDictionaryLabel, mDictionaryCombo, 0 );
   if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Se&nt-Mail folder:"),
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("&Sent-Mail folder:"),
                     mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
-  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l transport:"),
+  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("&Mail transport:"),
                     mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
@@ -809,7 +809,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
                     mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
-  rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("To:"),
+  rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("&To:"),
                     mLblTo, mEdtTo, mBtnTo,
                     i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
@@ -947,17 +947,17 @@ void KMComposeWin::setupActions(void)
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    (void) new KAction (i18n("&Send"), "mail_send", CTRL+Key_Return,
+    (void) new KAction (i18n("&Send Now"), "mail_send", CTRL+Key_Return,
                         this, SLOT(slotSendNow()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("&Queue"), "queue", 0,
+    (void) new KAction (i18n("Send &Later"), "queue", 0,
                         this, SLOT(slotSendLater()),
                         actionCollection(), "send_alternative");
   }
   else //no, default = send later
   {
     //default = queue, alternative = send now
-    (void) new KAction (i18n("&Queue"), "queue",
+    (void) new KAction (i18n("Send &Later"), "queue",
                         CTRL+Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),
                         "send_default");
@@ -1066,7 +1066,7 @@ void KMComposeWin::setupActions(void)
   mDictionaryAction = new KToggleAction (i18n("&Dictionary"), 0, this,
                                          SLOT(slotView()),
                                          actionCollection(), "show_dictionary");
-  mFccAction = new KToggleAction (i18n("Sent-Mail F&older"), 0, this,
+  mFccAction = new KToggleAction (i18n("&Sent-Mail Folder"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_fcc");
   mTransportAction = new KToggleAction (i18n("&Mail Transport"), 0, this,
@@ -1087,7 +1087,7 @@ void KMComposeWin::setupActions(void)
   mBccAction = new KToggleAction (i18n("&BCC"), 0, this,
                                  SLOT(slotView()),
                                  actionCollection(), "show_bcc");
-  mSubjectAction = new KToggleAction (i18n("&Subject"), 0, this,
+  mSubjectAction = new KToggleAction (i18n("S&ubject"), 0, this,
                                      SLOT(slotView()),
                                      actionCollection(), "show_subject");
   //end of checkable
@@ -3228,8 +3228,8 @@ void KMComposeWin::slotSendNow() {
   if (mConfirmSend) {
     switch(KMessageBox::warningYesNoCancel(mMainWidget,
                                     i18n("About to send email..."),
-                                    i18n("Send Confirmation"),
-                                    i18n("Send &Now"),
+                                    i18n("Send &Confirmation"),
+                                    i18n("&Send Now"),
                                     i18n("Send &Later"))) {
     case KMessageBox::Yes:        // send now
         doSend(TRUE);
