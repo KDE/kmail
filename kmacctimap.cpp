@@ -60,10 +60,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   init();
   mSlave = NULL;
   mTotal = 0;
-  mFolder = static_cast<KMFolderImap*>(kernel->imapFolderMgr()
-    ->findOrCreate(aAccountName, FALSE));
-  mFolder->setNoContent(TRUE);
-  mFolder->setAccount(this);
+  mFolder = 0;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
@@ -83,7 +80,7 @@ KMAcctImap::~KMAcctImap()
 
 
 //-----------------------------------------------------------------------------
-const char* KMAcctImap::type(void) const
+QString KMAcctImap::type(void) const
 {
   return "imap";
 }
@@ -146,7 +143,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mAuth = config.readEntry("auth", "*");
   mPrefix = config.readEntry("prefix", "/");
-  mFolder->setImapPath(mPrefix);
+  if (mFolder) mFolder->setImapPath(mPrefix);
   mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
   mUseSSL = config.readBoolEntry("use-ssl", FALSE);
@@ -266,6 +263,14 @@ void KMAcctImap::setPrefix(const QString& aPrefix)
   mPrefix.replace(QRegExp("[%*\"]"), "");
   if (mPrefix.isEmpty() || mPrefix.at(0) != '/') mPrefix = '/' + mPrefix;
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
+  if (mFolder) mFolder->setImapPath(mPrefix);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
+{
+  mFolder = aFolder;
   mFolder->setImapPath(mPrefix);
 }
 

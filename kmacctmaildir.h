@@ -25,7 +25,7 @@ public:
   const QString& location(void) const { return mLocation; }
   virtual void setLocation(const QString&);
 
-  virtual const char* type(void) const;
+  virtual QString type(void) const;
   virtual void processNewMail(bool);
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);

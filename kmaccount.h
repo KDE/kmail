@@ -34,7 +34,7 @@ public:
   /**
    * Returns type of the account
    */
-  virtual const char* type(void) const = 0;
+  virtual QString type() const { return QString::null; }
 
   /**
    * Returns account name

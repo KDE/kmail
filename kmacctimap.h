@@ -119,7 +119,7 @@ public:
   /**
    * Inherited methods.
    */
-  virtual const char* type(void) const;
+  virtual QString type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool) { emit finishedCheck(false); }
@@ -171,6 +171,11 @@ public:
    */
   KIO::Slave * slave() { return mSlave; }
   void slaveDied() { mSlave = NULL; }
+
+  /**
+   * Set the top level pseudo folder
+   */
+  virtual void setImapFolder(KMFolderImap *);
 
 signals:
   /**

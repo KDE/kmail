@@ -49,7 +49,7 @@ KMAcctLocal::~KMAcctLocal()
 
 
 //-----------------------------------------------------------------------------
-const char* KMAcctLocal::type(void) const
+QString KMAcctLocal::type(void) const
 {
   return "local";
 }

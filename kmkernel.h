@@ -71,6 +71,7 @@ public:
   static KMKernel *self() { return mySelf; }
 
   void init ();
+  void cleanupImapFolders();
   void testDir(const char *_name);
   void recoverDeadLetters(void);
   void initFolders(KConfig* cfg);

@@ -2258,6 +2258,7 @@ void ConfigureDialog::slotDoApply( bool everything )
 
     // Incoming mail
     kernel->acctMgr()->writeConfig(FALSE);
+    kernel->cleanupImapFolders();
   }
   if( activePage == mAppearance.pageIndex || everything )
   {

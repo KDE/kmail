@@ -84,7 +84,7 @@ KMAcctExpPop::~KMAcctExpPop()
 
 
 //-----------------------------------------------------------------------------
-const char* KMAcctExpPop::type(void) const
+QString KMAcctExpPop::type(void) const
 {
   return "pop";
 }

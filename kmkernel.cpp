@@ -22,6 +22,7 @@
 #include "kmmessage.h"
 #include "kmfoldermgr.h"
 #include "kmfoldermbox.h"
+#include "kmfolderimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #include "kmreaderwin.h"
@@ -521,6 +522,8 @@ void KMKernel::init()
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
+  cleanupImapFolders();
+
   the_addrBook->readConfig();
   if(the_addrBook->load() == IO_FatalError)
   {
@@ -544,6 +547,35 @@ void KMKernel::init()
   }
   // filterMgr->dump();
   kdDebug(5006) << "exiting KMKernel::init()" << endl;
+}
+
+void KMKernel::cleanupImapFolders()
+{
+  KMAccount *acct;
+  KMFolderNode *node = the_imapFolderMgr->dir().first();
+  while (node)
+  {
+    if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
+        && acct->type() == "imap"))
+    {
+      node = the_imapFolderMgr->dir().next();
+    } else {
+      the_imapFolderMgr->remove(static_cast<KMFolder*>(node));
+      node = the_imapFolderMgr->dir().first();
+    }
+  }
+  KMFolderImap *fld;
+  KMAcctImap *imapAcct;
+  for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
+  {
+    if (acct->type() != "imap") continue;
+    fld = static_cast<KMFolderImap*>(the_imapFolderMgr
+      ->findOrCreate(acct->name(), FALSE));
+    fld->setNoContent(TRUE);
+    imapAcct = static_cast<KMAcctImap*>(acct);
+    fld->setAccount(imapAcct);
+    imapAcct->setImapFolder(fld);
+  }
 }
 
 bool KMKernel::doSessionManagement()

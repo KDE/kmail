@@ -44,7 +44,7 @@ KMAcctMaildir::~KMAcctMaildir()
 
 
 //-----------------------------------------------------------------------------
-const char* KMAcctMaildir::type(void) const
+QString KMAcctMaildir::type(void) const
 {
   return "maildir";
 }

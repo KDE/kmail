@@ -109,7 +109,7 @@ public:
   /**
    * Inherited methods.
    */
-  virtual const char* type(void) const;
+  virtual QString type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool _interactive);
