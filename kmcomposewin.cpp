@@ -1077,6 +1077,7 @@ bool KMComposeWin::applyChanges(void)
   if(mAtmList.count() <= 0) {
     // If there are no attachments in the list waiting it is a simple
     // text message.
+    mMsg->deleteBodyParts();
     mMsg->setAutomaticFields(TRUE);
     mMsg->setTypeStr("text");
     mMsg->setSubtypeStr("plain");
