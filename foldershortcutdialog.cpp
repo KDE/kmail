@@ -36,8 +36,11 @@
 **
 *******************************************************************************/
 
-#include <qvbox.h>
 #include <qlabel.h>
+#include <qvbox.h>
+#include <qvgroupbox.h>
+#include <qwhatsthis.h>
+
 #include <kkeybutton.h>
 #include <klocale.h>
 
@@ -55,13 +58,15 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
    mFolder( folder )
 {
   QVBox *box = makeVBoxMainWidget();
-  QString explanation( i18n( "To choose a key or a combination "
-        "of keys which select the current folder, "
-        "click the button below and then press the key(s) "
-        "you wish to associate with this folder." ) );
-  QLabel *label = new QLabel( explanation, box );
-  label->setAlignment( label->alignment() | Qt::WordBreak | Qt::AlignJustify );
-  mKeyButton = new KKeyButton( box, "FolderShortcutSelector" );
+  QVGroupBox *gb = new QVGroupBox( i18n("Select shortcut for folder"), box );
+  QWhatsThis::add( gb, i18n( "<qt>To choose a key or a combination "
+                             "of keys which select the current folder, "
+                             "click the button below and then press the key(s) "
+                             "you wish to associate with this folder.</qt>" ) );
+  QHBox *hb = new QHBox( gb );
+  new QWidget(hb);
+  mKeyButton = new KKeyButton( hb, "FolderShortcutSelector" );
+  new QWidget(hb);
 
   connect( mKeyButton, SIGNAL( capturedShortcut( const KShortcut& ) ),
            this, SLOT( slotCapturedShortcut( const KShortcut& ) ) );
