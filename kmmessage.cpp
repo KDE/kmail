@@ -160,6 +160,8 @@ void KMMessage::assign( const KMMessage& other )
   mNeedsAssembly = true;//other.mNeedsAssembly;
   if( other.mMsg )
     mMsg = new DwMessage( *(other.mMsg) );
+  else
+    mMsg = 0;
   mOverrideCodec = other.mOverrideCodec;
   mDecodeHTML = other.mDecodeHTML;
   mMsgSize = other.mMsgSize;
