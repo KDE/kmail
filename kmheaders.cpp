@@ -122,14 +122,14 @@ public:
       fromStr = mMsgBase->fromStrip();
 
     if (fromStr.isEmpty()) fromStr = i18n("Unknown");
-    setText( mPaintInfo->senderCol, fromStr.stripWhiteSpace() );
+    setText( mPaintInfo->senderCol, fromStr.simplifyWhiteSpace() );
 
     subjStr = mMsgBase->subject();
     if (subjStr.isEmpty()) subjStr = i18n("No Subject");
-    setText( mPaintInfo->subCol, subjStr.stripWhiteSpace() );
+    setText( mPaintInfo->subCol, subjStr.simplifyWhiteSpace() );
 
     time_t mDate = mMsgBase->date();
-    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
+    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).simplifyWhiteSpace() );
 
     if (mPaintInfo->showSize) {
       QString msz;
