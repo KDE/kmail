@@ -2636,6 +2636,12 @@ void KMHeaders::setSorting( int column, bool ascending )
   }
   KListView::setSorting( column, ascending );
   ensureCurrentItemVisible();
+  // Make sure the config and .sorted file are updated, otherwise stale info
+  // is read on new imap mail. ( folder->folderComplete() -> readSortOrder() ).
+  if ( mFolder ) {
+    writeFolderConfig();
+    writeSortOrder();
+  }
 }
 
 //Flatten the list and write it to disk

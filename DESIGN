@@ -729,6 +729,15 @@ What happens when a message arrives in the folder?
   messages are updated. An entry for the new message itself is appended to the
   .sorted file as well.
 
+  Note that as an optimization newly arriving mail as part of a mailcheck in
+  an imap folder is not added via msgAdded, but rather via complete reload of
+  the folder via readSortOrder(). That's because only the headers are gotten
+  for each mail on imap and that is so fast, that adding them individually to
+  the list view is very slow by comparison. Thus we need to make sure that
+  writeSortOrder() is called whenever something related to sorting changes, 
+  otherwise we read stale info from the .sorted file. The reload is triggered
+  by the folderComplete() signal of imap folders.
+
 What happens when a message is removed from the folder?
   In this case the msgRemoved slot kicks in and updates the headers list. First
   the sort cache item and header item representing our message are removed from
