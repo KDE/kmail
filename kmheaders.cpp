@@ -1871,18 +1871,33 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
 					bool aDirNext )
 {
   KMMsgBase* msgBase = 0;
+  KMHeaderItem *lastUnread = 0;
+  /* itemAbove() is _slow_ */
+  if (aDirNext)
+  {
+    while (item) {
+      msgBase = mFolder->getMsgBase(item->msgId());
+      if (msgBase && msgBase->isUnread())
+        foundUnreadMessage = true;
 
-  while (item) {
-    msgBase = mFolder->getMsgBase(item->msgId());
-    if (msgBase && msgBase->isUnread())
-      foundUnreadMessage = true;
-
-    if (!onlyNew && msgBase && msgBase->isUnread()) break;
-    if (onlyNew && msgBase && msgBase->isNew()) break;
-    if (aDirNext)
+      if (!onlyNew && msgBase && msgBase->isUnread()) break;
+      if (onlyNew && msgBase && msgBase->isNew()) break;
       item = static_cast<KMHeaderItem*>(item->itemBelow());
-    else
-      item = static_cast<KMHeaderItem*>(item->itemAbove());
+    }
+  } else {
+    KMHeaderItem *newItem = static_cast<KMHeaderItem*>(firstChild());
+    while (newItem)
+    {
+      msgBase = mFolder->getMsgBase(newItem->msgId());
+      if (msgBase && msgBase->isUnread())
+        foundUnreadMessage = true;
+      if (!onlyNew && msgBase && msgBase->isUnread()
+          || onlyNew && msgBase && msgBase->isNew())
+        lastUnread = newItem;
+      if (newItem == item) break;
+      newItem = static_cast<KMHeaderItem*>(newItem->itemBelow());
+    }
+    item = lastUnread;
   }
 }
 
