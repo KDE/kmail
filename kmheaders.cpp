@@ -507,6 +507,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortDescending = FALSE;
 
   readConfig();
+  restoreLayout(kapp->config(), "Header-Geometry");
   setShowSortIndicator(true);
   setFocusPolicy( WheelFocus );
 
@@ -712,8 +713,6 @@ void KMHeaders::readConfig (void)
     mLoopOnGotoUnread = config->readBoolEntry( "LoopOnGotoUnread", true );
     mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
   }
-
-  restoreLayout(config, "Header-Geometry");
 }
 
 
