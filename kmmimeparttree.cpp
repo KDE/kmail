@@ -119,6 +119,7 @@ void KMMimePartTree::itemRightClicked( QListViewItem* item,
         popup->insertItem( i18n( "Save All..." ), this,
                            SLOT( slotSaveAll() ) );
         popup->exec( point );
+        delete popup;
         //mReaderWin->parseObjectTree( mCurrentContextMenuItem->node(), true );
         mCurrentContextMenuItem = 0;
     }
