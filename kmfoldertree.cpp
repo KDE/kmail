@@ -473,6 +473,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = fti->folder;
 
+  clearSelection();
   setCurrentItem( qlvi );
   setSelected( qlvi, TRUE );
   if (!folder || folder->isDir()) {
@@ -762,6 +763,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     // Begin this wasn't necessary in QT 2.0.2
     dropItem = 0L;
 
+    clearSelection();
     setCurrentItem( oldCurrent );
     setSelected( oldCurrent, TRUE );
     connect(this, SIGNAL(currentChanged(QListViewItem*)),

@@ -88,6 +88,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete mMsg;
 }
 
@@ -138,8 +139,8 @@ void KMReaderWin::readConfig(void)
     c2 = config->readColorEntry("LinkColor",&c2);
     c3 = config->readColorEntry("FollowedColor",&c3);
     // ### FIXME: stylesheet
-    //    mViewer->setDefaultBGColor(c4);
-    //    mViewer->setDefaultTextColors(c1,c2,c3);
+    //        mViewer->setDefaultBGColor(c4);
+    //        mViewer->setDefaultTextColors(c1,c2,c3);
   }
   else {
   // ### FIXME: stylesheet
@@ -163,6 +164,17 @@ void KMReaderWin::readConfig(void)
     fntSize = KGlobal::generalFont().pointSize();
     mBodyFamily = KGlobal::generalFont().family();
   }
+
+  int fontsizes[7];
+  mViewer->resetFontSizes();
+  diff = fntSize - mViewer->fontSizes()[3];
+  if (mViewer->fontSizes()[0]+diff > 0) {
+    for (i=0;i<7; i++)
+      fontsizes[i] =  mViewer->fontSizes()[i] + diff;
+    mViewer->setFontSizes(fontsizes);
+  }
+
+
   /* ### FIXME
   int fontsizes[7];
   int fixedFontSizes[7];
