@@ -2082,6 +2082,13 @@ void KMHeaders::setNestedOverride( bool override )
 }
 
 //-----------------------------------------------------------------------------
+void KMHeaders::setOpen( QListViewItem *item, bool open )
+{
+  if (open)
+    KMHeadersInherited::setOpen( item, open );
+}
+
+//-----------------------------------------------------------------------------
 void KMHeaders::setSorting( int column, bool ascending )
 {
   if (column != -1) {

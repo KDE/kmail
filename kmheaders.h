@@ -135,6 +135,8 @@ public:
   // top most visible item.
   virtual void setTopItemByIndex( int aMsgIdx );
   virtual void setNestedOverride( bool override );
+  // Double force items to always be open
+  virtual void setOpen ( QListViewItem *, bool );
 
 signals:
   // emitted when the list view item corresponding to this message
@@ -171,7 +173,7 @@ public slots:
   void nextUnreadMessage();
   // Make the previous message header visible scrolling if necessary
   void prevUnreadMessage();
-  
+ 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent, 
     *pixQueued, *pixFwd;
