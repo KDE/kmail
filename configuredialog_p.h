@@ -85,7 +85,7 @@ private:
 
 struct LanguageItem
 {
-  LanguageItem() {};
+  LanguageItem() {}
   LanguageItem( const QString & language, const QString & reply=QString::null,
 		const QString & replyAll=QString::null,
 		const QString & forward=QString::null,
@@ -155,8 +155,8 @@ class ConfigModule : public KCModule {
 public:
   ConfigModule( QWidget * parent=0, const char * name=0 )
      : KCModule ( parent, name )
-     { };
-  ~ConfigModule() {};
+     {}
+  ~ConfigModule() {}
 
   virtual void load() = 0;
   virtual void save() = 0;
@@ -205,7 +205,7 @@ class ConfigModuleWithTabs : public ConfigModule {
   Q_OBJECT
 public:
   ConfigModuleWithTabs( QWidget * parent=0, const char * name=0 );
-   ~ConfigModuleWithTabs() {};
+   ~ConfigModuleWithTabs() {}
 
   virtual void load();
   virtual void save();
@@ -231,7 +231,7 @@ class IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
   IdentityPage( QWidget * parent=0, const char * name=0 );
-  ~IdentityPage() {};
+  ~IdentityPage() {}
 
   QString helpAnchor() const;
 
@@ -284,7 +284,7 @@ public:
   QString helpAnchor() const;
   void load();
   void save();
-  void defaults() {};
+  void defaults() {}
 
 signals:
   void transportListChanged( const QStringList & );
