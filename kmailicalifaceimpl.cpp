@@ -134,7 +134,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
   // Find the folder
   KMFolder* f = folderFromType( type, folder );
-  if( f ) {
+  if( f && storageFormat( f ) == StorageIcalVcard ) {
     // Make a new message for the incidence
     KMMessage* msg = new KMMessage();
     msg->initHeader();
@@ -211,8 +211,9 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
 
   // Find the folder
   KMFolder* f = folderFromType( type, folder );
-  if( f )
+  if( f && storageFormat( f ) == StorageIcalVcard ) {
     rc = deleteIncidence( folder, uid, 0 );
+  }
   else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 
@@ -235,7 +236,7 @@ bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
 
   // Find the folder
   KMFolder* f = kmkernel->findFolderById( resource );
-  if( f )
+  if( f && storageFormat( f ) == StorageXML )
     rc = deleteIncidence( *f, "", sernum );
   else
     kdError(5006) << resource << " not an IMAP resource folder" << endl;
@@ -256,7 +257,7 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   QStringList ilist;
 
   KMFolder* f = folderFromType( type, folder );
-  if ( f ) {
+  if( f && storageFormat( f ) == StorageIcalVcard ) {
     f->open();
     QString s;
     for( int i=0; i<f->count(); ++i ) {
@@ -285,14 +286,14 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
                 << resource << " )" << endl;
 
   KMFolder* f = kmkernel->findFolderById( resource );
-  if ( f ) {
+  if( f && storageFormat( f ) == StorageXML ) {
     f->open();
     QString s;
     for( int i=0; i<f->count(); ++i ) {
       bool unget = !f->isMessage(i);
       KMMessage* msg = f->getMsg( i );
       if( msg ){
-        const int iSlash = mimetype.contains('/');
+        const int iSlash = mimetype.find('/');
         const QCString sType    = mimetype.left( iSlash   ).latin1();
         const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
         if( sType.isEmpty() || sSubtype.isEmpty() ){
@@ -326,15 +327,18 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
 
   // Add the default one
   KMFolder* f = folderFromType( type, QString::null );
-  if ( f )
+  if ( f && storageFormat( f ) == StorageIcalVcard )
     lst << f->location();
 
   // Add the extra folders
   KMail::FolderContentsType t = folderContentsType( type );
   QDictIterator<ExtraFolder> it( mExtraFolders );
-  for ( ; it.current(); ++it )
-    if ( it.current()->folder->storage()->contentsType() == t )
-      lst << it.current()->folder->location();
+  for ( ; it.current(); ++it ) {
+    f = it.current()->folder;
+    if ( f->storage()->contentsType() == t
+         && storageFormat( f ) == StorageIcalVcard )
+      lst << f->location();
+  }
 
   return lst;
 }
@@ -345,7 +349,7 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
 
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
-  if ( f )
+  if ( f && storageFormat( f ) == StorageXML )
     map.insert( f->location(), !f->isReadOnly() );
 
   // get the extra ones
@@ -353,9 +357,8 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
     f = it.current()->folder;
-    if ( it.current()->folder->storage()->contentsType() == t
-         // && f->isXMLFolder()
-         )
+    if ( f->storage()->contentsType() == t
+         && storageFormat( f ) == StorageXML )
       map.insert( f->location(), !f->isReadOnly() );
   }
 
@@ -417,7 +420,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
-  if( f ) {
+  if( f && storageFormat( f ) == StorageIcalVcard ) {
     KMMessage* msg = findMessageByUID( uid, f );
     if( msg ) {
       // Message found - update it
