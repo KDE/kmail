@@ -582,6 +582,7 @@ void KMAcctExpPop::slotJobFinished() {
     processMsgsTimer.start(processingDelay);
   }
   else if (stage == Retr) {
+    mMailCheckProgressItem->setProgress( 100 );
     processRemainingQueuedMessages();
 
     mHeaderDeleteUids.clear();
@@ -593,12 +594,23 @@ void KMAcctExpPop::slotJobFinished() {
     KURL url = getUrl();
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
       stage = Quit;
+      mMailCheckProgressItem->setStatus(
+        i18n( "Fetched 1 message from %1. Terminating transmission...",
+              "Fetched %n messages from %1. Terminating transmission...",
+              numMsgs )
+        .arg( mHost ) );
       url.setPath(QString("/commit"));
       job = KIO::get(url, false, false );
     }
     else {
       stage = Dele;
+      mMailCheckProgressItem->setStatus(
+        i18n( "Fetched 1 message from %1. Deleting messages...",
+              "Fetched %n messages from %1. Deleting messages...",
+              numMsgs )
+        .arg( mHost ) );
       url.setPath("/remove/" + idsOfMsgsToDelete.join(","));
+      kdDebug(5006) << "url: " << url.prettyURL() << endl;
       job = KIO::get( url, false, false );
     }
     connectJob();
@@ -611,6 +623,11 @@ void KMAcctExpPop::slotJobFinished() {
       mUidsOfNextSeenMsgsDict.remove( mUidForIdMap[*it] );
     }
     idsOfMsgsToDelete.clear();
+    mMailCheckProgressItem->setStatus(
+      i18n( "Fetched 1 message from %1. Terminating transmission...",
+            "Fetched %n messages from %1. Terminating transmission...",
+            numMsgs )
+      .arg( mHost ) );
     KURL url = getUrl();
     url.setPath(QString("/commit"));
     job = KIO::get( url, false, false );
