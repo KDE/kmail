@@ -423,10 +423,10 @@ void KMComposeWin::deadLetter(void)
   if (fd != -1)
   {
     QString startStr = "From " + mMsg->from() + " " + mMsg->dateShortStr() + "\n";
-    write(fd, startStr.latin1(), startStr.length());
-    write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
-    write(fd, "\n", 1);
-    close(fd);
+    ::write(fd, startStr.latin1(), startStr.length());
+    ::write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
+    ::write(fd, "\n", 1);
+    ::close(fd);
     fprintf(stderr,"appending message to ~/dead.letter\n");
   }
   else perror("cannot open ~/dead.letter for saving the current message");
