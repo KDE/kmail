@@ -51,6 +51,7 @@ namespace Kpgp {
 namespace KMail {
   class IdentityDialog;
   class IdentityListView;
+  class AccountComboBox;
 }
 namespace Kleo {
   class BackendConfigWidget;
@@ -843,6 +844,7 @@ public:
 
 private slots:
   void slotStorageFormatChanged( int );
+
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
@@ -852,7 +854,12 @@ private:
 
   QComboBox* mStorageFormatCombo;
   QComboBox* mLanguageCombo;
-  KMFolderComboBox* mFolderCombo;
+
+  QLabel* mFolderComboLabel;
+  QWidgetStack* mFolderComboStack;
+  KMFolderComboBox* mFolderCombo; // in the widgetstack
+  KMail::AccountComboBox* mAccountCombo; // in the widgetstack
+
   QCheckBox* mHideGroupwareFolders;
   QCheckBox* mAutoResCB;
   QCheckBox* mAutoDeclConflCB;

@@ -45,6 +45,7 @@
 #include <composercryptoconfiguration.h>
 #include <warningconfiguration.h>
 #include <smimeconfiguration.h>
+#include "accountcombobox.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -93,6 +94,7 @@ using KMime::DateFormatter;
 #include <qradiobutton.h>
 #include <qlayout.h>
 #include <qcheckbox.h>
+#include <qwidgetstack.h>
 
 // other headers:
 #include <assert.h>
@@ -4026,20 +4028,34 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   connect( mLanguageCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QLabel* subfolderLA =
-    new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
+  mFolderComboLabel = new QLabel( mBox ); // text depends on storage format
   toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( GlobalSettings::self()->theIMAPResourceFolderParentItem()->whatsThis().utf8() );
-  grid->addWidget( subfolderLA, 2, 0 );
-  QToolTip::add( subfolderLA, toolTip );
-  QWhatsThis::add( subfolderLA, whatsThis );
+  QToolTip::add( mFolderComboLabel, toolTip );
+  QWhatsThis::add( mFolderComboLabel, whatsThis );
+  grid->addWidget( mFolderComboLabel, 2, 0 );
+
+  mFolderComboStack = new QWidgetStack( mBox );
+  grid->addWidget( mFolderComboStack, 2, 1 );
+
+  // First possibility in the widgetstack: a combo showing the list of all folders
+  // This is used with the ical/vcard storage
   mFolderCombo = new KMFolderComboBox( mBox );
-  subfolderLA->setBuddy( mFolderCombo );
-  grid->addWidget( mFolderCombo, 2, 1 );
+  mFolderComboStack->addWidget( mFolderCombo, 0 );
   QToolTip::add( mFolderCombo, toolTip );
   QWhatsThis::add( mFolderCombo, whatsThis );
   connect( mFolderCombo, SIGNAL( activated( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
+           this, SLOT( slotEmitChanged() ) );
+
+  // Second possibility in the widgetstack: a combo showing the list of accounts
+  // This is used with the kolab xml storage since the groupware folders
+  // are always under the inbox.
+  mAccountCombo = new KMail::AccountComboBox( mBox );
+  mFolderComboStack->addWidget( mAccountCombo, 1 );
+  QToolTip::add( mAccountCombo, toolTip );
+  QWhatsThis::add( mAccountCombo, whatsThis );
+  connect( mAccountCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   mHideGroupwareFolders = new QCheckBox( i18n( "&Hide groupware folders" ),
                                          mBox, "HideGroupwareFoldersBox" );
@@ -4094,6 +4110,7 @@ void MiscPage::GroupwareTab::load() {
   mLanguageCombo->setCurrentItem(i);
   i = GlobalSettings::theIMAPResourceStorageFormat();
   mStorageFormatCombo->setCurrentItem(i);
+  slotStorageFormatChanged( i );
 
   QString folderId( GlobalSettings::theIMAPResourceFolderParent() );
   if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
@@ -4102,6 +4119,28 @@ void MiscPage::GroupwareTab::load() {
     // Folder was deleted, we have to choose a new one
     mFolderCombo->setFolder( i18n( "<Choose a Folder>" ) );
   }
+
+  // Iterate over accounts to select folderId if found (as an inbox folder)
+  int selectedAccount = -1;
+  i = 0;
+  for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
+       a = kmkernel->acctMgr()->next(), ++i ) {
+    if( a->folder() ) {
+      // Look inside that folder for an INBOX
+      KMFolderNode *node;
+      for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
+        if (!node->isDir() && node->name() == "INBOX") break;
+
+      if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
+        selectedAccount = i;
+        break;
+      }
+    }
+  }
+  if ( selectedAccount > -1 )
+    mAccountCombo->setCurrentItem( selectedAccount );
+  else if ( GlobalSettings::theIMAPResourceStorageFormat() == 1 )
+    kdDebug(5006) << "Folder " << folderId << " not found as an account's inbox" << endl;
 }
 
 void MiscPage::GroupwareTab::save() {
@@ -4111,14 +4150,30 @@ void MiscPage::GroupwareTab::save() {
   GlobalSettings::setGroupwareLegacyMangleFromToHeaders(
         mLegacyMangleFromTo->isChecked() );
 
-  GlobalSettings::setTheIMAPResourceStorageFormat( mStorageFormatCombo->currentItem() );
+  int format = mStorageFormatCombo->currentItem();
+  GlobalSettings::setTheIMAPResourceStorageFormat( format );
 
   // Write the IMAP resource config
   GlobalSettings::setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
-  KMFolder *folder = mFolderCombo->getFolder();
+  KMFolder *folder = 0;
+  if ( format == 0 )
+    folder = mFolderCombo->getFolder();
+  else {
+    // Inbox folder of the selected account
+    KMAccount* acct = mAccountCombo->currentAccount();
+    if ( acct && acct->folder() ) {
+      // Look inside that folder for an INBOX
+      KMFolderNode *node;
+      for (node = acct->folder()->child()->first(); node; node = acct->folder()->child()->next())
+        if (!node->isDir() && node->name() == "INBOX")
+          folder = static_cast<KMFolder*>(node);
+    }
+  }
+  kdDebug() << k_funcinfo << folder->location() << endl;
+
   bool enabled = mEnableImapResCB->isChecked() && folder;
   GlobalSettings::setTheIMAPResourceEnabled( enabled );
   GlobalSettings::setTheIMAPResourceFolderLanguage( mLanguageCombo->currentItem() );
@@ -4128,6 +4183,14 @@ void MiscPage::GroupwareTab::save() {
 void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
 {
   mLanguageCombo->setEnabled( format == 0 ); // only ical/vcard needs the language hack
+  mFolderComboStack->raiseWidget( format );
+  if ( format == 0 ) {
+    mFolderComboLabel->setText( i18n("&Resource folders are subfolders of:") );
+    mFolderComboLabel->setBuddy( mFolderCombo );
+  } else {
+    mFolderComboLabel->setText( i18n("&Resource folders are in account:") );
+    mFolderComboLabel->setBuddy( mAccountCombo );
+  }
 }
 
 #undef DIM
