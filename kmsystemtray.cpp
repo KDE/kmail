@@ -65,8 +65,13 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
   setAlignment( AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
 
+#if KDE_IS_VERSION( 3, 1,92 )
   mDefaultIcon = loadIcon( "kmail" );
   mLightIconImage = loadIcon( "kmaillight" ).convertToImage();
+#else
+  mDefaultIcon = SmallIcon( "kmail" );
+  mLightIconImage = SmallIcon( "kmaillight" ).convertToImage();
+#endif
 
   setPixmap(mDefaultIcon);
 

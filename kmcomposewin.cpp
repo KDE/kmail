@@ -6014,6 +6014,7 @@ void KMEdit::spellcheck()
           this, SLOT (slotSpellResult (const QString&)));
 }
 
+#if KDE_IS_VERSION( 3, 1, 92 )
 void KMEdit::cut()
 {
     KEdit::cut();
@@ -6031,7 +6032,12 @@ void KMEdit::del()
     KEdit::del();
     mSpellChecker->restartBackgroundSpellCheck();
 }
-
+#else
+// can't #ifdef slots :-(
+void KMEdit::cut() { KEdit::cut(); }
+void KMEdit::clear() { KEdit::clear(); }
+void KMEdit::del() { KEdit::del(); }
+#endif
 
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
