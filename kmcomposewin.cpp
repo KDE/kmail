@@ -1806,6 +1806,7 @@ void KMComposeWin::slotDropAction(QDropEvent *e)
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow)
 {
+    QString hf = mMsg->headerField("X-KMail-Transport");
   bool sentOk;
 
   kernel->kbp()->busy();
@@ -1818,7 +1819,7 @@ void KMComposeWin::doSend(int aSendNow)
   // resending.
   // Hence this following conditional
   if ((mTransport.currentText() != kernel->msgSender()->transportString()) ||
-      (mMsg->headerField("X-KMail-Transport") != kernel->msgSender()->transportString()))
+      (!hf.isEmpty() && (hf != kernel->msgSender()->transportString())))
     mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
 
   sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));

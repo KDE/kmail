@@ -160,7 +160,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
       return false;
     }
   if (!settingsOk()) return FALSE;
-  
+
   if (aMsg->to().isEmpty())
   {
     kernel->kbp()->idle();
@@ -212,7 +212,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 }
 
 
-bool KMSender::sendSingleMail( KMMessage*) 
+bool KMSender::sendSingleMail( KMMessage*)
 {
 
   return true;
@@ -271,7 +271,7 @@ void KMSender::doSendMsg()
       kernel->sentFolder()->moveMsg(mCurrentMsg);
       mCurrentMsg = NULL;
     }
-  
+
   // If we have been using a message specific transport, lose it now.
   // Would be more efficient to only do this when the mail transport
   // (server or port) has changed
@@ -286,7 +286,7 @@ void KMSender::doSendMsg()
   // See if there is another queued message
   mCurrentMsg = kernel->outboxFolder()->getMsg(0);
   if (!mCurrentMsg)
-  {      
+  {
     // no more message: cleanup and done
     cleanup();
     if (someSent)
@@ -298,7 +298,7 @@ void KMSender::doSendMsg()
   if (!mSendProcStarted)
   {
     kernel->serverReady (false); //sven - stop IPC
-    
+
     label->setText(i18n("Initiating sender process..."));
     label->resize(400, label->sizeHint().height());
     labelDialog->show();
@@ -342,7 +342,7 @@ void KMSender::doSendMsg()
       return;
     }
     connect(mMsgSendProc,SIGNAL(idle()),SLOT(slotIdle()));
-  } 
+  }
   else if (!mSendProcStarted)
     if (!mSendProc->start())
     {
@@ -445,7 +445,7 @@ void KMSender::slotIdle()
     .arg(mSendProc->message())
     .arg(mMethodStr);
   KMessageBox::information(0,msg);
-  
+
   if (mMsgSendProc) {
     mMsgSendProc->finish();
     delete mMsgSendProc;
@@ -662,9 +662,9 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
         receiver.truncate(i);  // "radej@kde.org "
     }
     //printf ("Receiver = %s\n", receiver.data());
- 
-    receiver = receiver.stripWhiteSpace();   
-    if (!receiver.isEmpty()) 
+
+    receiver = receiver.stripWhiteSpace();
+    if (!receiver.isEmpty())
     {
       rc = addOneRecipient(receiver);
       if (!rc) return FALSE;
@@ -694,12 +694,21 @@ bool KMSendSendmail::start(void)
 {
   if (mSender->mailer().isEmpty())
   {
-    KMessageBox::information(0,i18n("Please specify a mailer program\n"
-				    "in the settings."));
+    QString str = i18n("Please specify a mailer program\n"
+				    "in the settings.");
+    QString msg;
+    msg = i18n("Sending failed:\n%1\n"
+	"The message will stay in the 'outbox' folder and will be resent.\n"
+        "Please remove it from there if you do not want the message to\n"
+		"be resent.\n\n"
+	"The following transport protocol was used:\n  %2")
+    .arg(str + "\n")
+    .arg("sendmail://");      
+    KMessageBox::information(0,msg);
     return FALSE;
   }
 
-  if (!mMailerProc) 
+  if (!mMailerProc)
   {
     mMailerProc = new KProcess;
     assert(mMailerProc != NULL);
@@ -837,11 +846,20 @@ bool KMSendSMTP::start(void)
   if(!mClient->IsOpen()) // Check if connection succeded
   {
     QString str;
+    QString msg;
     str = i18n("Cannot open SMTP connection to\n"
-			       "host %1 for sending:\n%2") 
+			       "host %1 for sending:\n%2")
 		.arg(mSender->smtpHost())
 		.arg((const char*)mClient->Response().c_str());
-    KMessageBox::information(0,str);
+    msg = i18n("Sending failed:\n%1\n"
+	"The message will stay in the 'outbox' folder and will be resent.\n"
+        "Please remove it from there if you do not want the message to\n"
+		"be resent.\n\n"
+	"The following transport protocol was used:\n  %2")
+    .arg(str)
+    .arg(QString("smtp://%1:%2").arg(mSender->smtpHost()).arg(mSender->smtpPort()));
+
+  KMessageBox::information(0,msg);
     return FALSE;
   }
   kapp->processEvents(50); // not sure this is safe -sanders
@@ -916,7 +934,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
   smtpInCmd("DATA");
   replyCode = mClient->Data(); // Send DATA command
   smtpDebug("DATA");
-  if(replyCode != 354) 
+  if(replyCode != 354)
     return smtpFailed("DATA", replyCode);
 
   statusMsg(i18n("transmitting message"));
@@ -960,7 +978,7 @@ bool KMSendSMTP::smtpFailed(const char* inCommand,
 
   str = i18n("a SMTP error occured.\n"
 			     "Command: %1\n"
-			     "Response: %2\n" 
+			     "Response: %2\n"
 			     "Return code: %3")
 		.arg(inCommand)
 		.arg(!errorStr.isEmpty() ? errorStr : i18n("(nothing)"))
