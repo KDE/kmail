@@ -779,7 +779,7 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys = NULL)
   combobox->insertStrList(keys);
   combobox->setFocus();
 
-  button = new QButton(i18n("&Insert"),this);
+  button = new QPushButton(i18n("&Insert"),this);
 
   connect(button,SIGNAL(clicked()),this,SLOT(accept()) );  
 }
@@ -794,12 +794,12 @@ QString
 KpgpKey::getKeyName(QWidget *parent, QStrList *keys = NULL)
 {
   KpgpKey pgpkey(parent, i18n("Select key"));
-  kpgppass.exec();
-  return kpgppass.getKey().copy();
+  pgpkey.exec();
+  return pgpkey.getKey().copy();
 }
 
 QString
-KpgpPass::getKey()
+KpgpKey::getKey()
 {
   return combobox->currentText();
 }
