@@ -1224,7 +1224,7 @@ void KMSettings::chooseSigFile()
 
     if( !url.isLocalFile() )
     {
-      KMessageBox::sorry( 0L, i18n( "Only local files sipported yet." ) );
+      KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
       return;
     }
     
