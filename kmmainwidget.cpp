@@ -910,47 +910,17 @@ void KMMainWidget::slotEmptyFolder()
     if (KMessageBox::warningContinueCancel(this, text, title, title)
       != KMessageBox::Continue) return;
   }
-  if (mFolder->folderType() == KMFolderTypeImap
-      || mFolder->folderType() == KMFolderTypeCachedImap
-      || mFolder->folderType() == KMFolderTypeSearch)
-  {
-    slotMarkAll();
-    if (isTrash)
-      slotDeleteMsg();
-    else
-      slotTrashMsg();
-    return;
-  }
-  if (mMsgView)
-    mMsgView->clearCache();
-
   KCursorSaver busy(KBusyPtr::busy());
+  slotMarkAll();
+  if (isTrash)
+   slotDeleteMsg();
+  else
+   slotTrashMsg();
 
-  // begin of critical part
-  // from here to "end..." no signal may change to another mFolder, otherwise
-  // the wrong folder will be truncated in expunge (dnaber, 1999-08-29)
-  mFolder->open();
-  mHeaders->setFolder(0);
-  if (mMsgView)
-    mMsgView->clear();
+  if (mMsgView) mMsgView->clearCache();
 
-  if (mFolder != kmkernel->trashFolder())
-  {
-    // FIXME: If we run out of disk space mail may be lost rather
-    // than moved into the trash -sanders
-    while ((msg = mFolder->take(0)) != 0) {
-      kmkernel->trashFolder()->addMsg(msg);
-      kmkernel->trashFolder()->unGetMsg(kmkernel->trashFolder()->count()-1);
-    }
-  }
+  if ( !isTrash ) statusMsg(i18n("Moved all messages to the trash"));
 
-  mFolder->close();
-  mFolder->expunge();
-  // end of critical
-  if (mFolder != kmkernel->trashFolder())
-    statusMsg(i18n("Moved all messages to the trash"));
-
-  mHeaders->setFolder(mFolder);
   updateMessageActions();
 }
 
