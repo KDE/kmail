@@ -27,7 +27,7 @@ PipeCmdDetect=bogofilter -p -e -u
 ExecCmdSpam=bogofilter -N -s
 ExecCmdHam=bogofilter -S -n
 DetectionHeader=X-Bogosity
-DetectionPattern=(yes)|(spam)
+DetectionPattern=(yes)|(\bspam\b)
 UseRegExp=1
 SupportsBayes=1
 
