@@ -205,7 +205,7 @@ void KMReaderWin::parseMsg(void)
   }
   else
   {
-    writeBodyStr(mMsg->body());
+    writeBodyStr(mMsg->bodyDecoded());
   }
 
   mViewer->write("<BR></BODY></HTML>");
