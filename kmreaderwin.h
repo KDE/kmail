@@ -132,6 +132,9 @@ public slots:
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const QString &, const QPoint& mousePos);
 
+  /** The user selected "Find" from the menu. */
+  void slotFind();
+
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();

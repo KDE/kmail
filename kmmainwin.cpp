@@ -432,7 +432,8 @@ void KMMainWin::slotClose()
 }
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotSearch() {
+void KMMainWin::slotSearch()
+{
   if(!searchWin) {
     QString curFolder = "";
     if( mFolder )
@@ -446,10 +447,18 @@ void KMMainWin::slotSearch() {
   KWin::setActiveWindow(searchWin->winId());
 }
 
+
 //-------------------------------------------------------------------------
 void KMMainWin::slotSearchClosed() {
   if(searchWin)
     searchWin = 0;
+}
+
+
+//-------------------------------------------------------------------------
+void KMMainWin::slotFind() {
+  if( mMsgView )
+    mMsgView->slotFind();
 }
 
 
@@ -1295,15 +1304,14 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotDeleteMsg()), Key_D);
   // GS - should we put menu items to copy, cut & paste emails?
   editMenu->insertSeparator();
-  editMenu->insertItem(i18n("&Search..."), this,
+  editMenu->insertItem(i18n("&Search messages..."), this,
                        SLOT(slotSearch()), Key_S);
+  editMenu->insertItem(i18n("&Find in message..."), this,
+		       SLOT(slotFind()), KStdAccel::key(KStdAccel::Find));
   editMenu->insertSeparator();
   editMenu->insertItem(i18n("Mar&k all messages"), this,
 	               SLOT(slotMarkAll()), Key_K);
-#ifdef BROKEN
-  editMenu->insertItem(i18n("&Find..."), this,
-		       SLOT(slotUnimplemented()), KStdAccel::key(KStdAccel::Find));
-#endif
+
   //----- Folder Menu
   mFolderMenu = new QPopupMenu();
   mFolderMenu->insertItem(i18n("&Create..."), this,

@@ -1164,6 +1164,15 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::slotFind()
+{
+  //dnaber:
+  KAction *act = mViewer->actionCollection()->action("find");
+  if( act )
+    act->activate();
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 {
   KMMessage* msg = new KMMessage;

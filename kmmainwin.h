@@ -143,6 +143,7 @@ protected slots:
   void slotMemInfo();
   void slotSearch();
   void slotSearchClosed();
+  void slotFind();
 
   /** etc. */
   void slotMsgActivated(KMMessage*);
