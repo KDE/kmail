@@ -1706,7 +1706,7 @@ void KMReaderWin::writeSignedMIME( partNode& data, partNode& sign )
               "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."));
     queueHtml(i18n("<hr><b><h2>Signature could *not* be verified !</h2></b><br>"
                    "reason:<br><i>&nbsp; &nbsp; No Crypto Plug-Ins found.</i><br>"
-                   "proposal:<br><i>&nbsp; &nbsp; Please specify a Plug-In by invocing<br>&nbsp; &nbsp; the "
+                   "proposal:<br><i>&nbsp; &nbsp; Please specify a Plug-In by invoking<br>&nbsp; &nbsp; the "
                    "'Settings/Configure KMail / Plug-In' dialog!</i>"));
   }
 }
@@ -1753,7 +1753,7 @@ bool KMReaderWin::okDecryptMIME( partNode& data, QCString& decryptedData )
     if( ! cryptPlug->hasFeature( Feature_DecryptMessages ) ) {
       showMessageAndSetData( errorContentCouldNotBeDecrypted,
         i18n("Crypto Plug-In %1 can not decrypt any messages.").arg(cryptPlug->libName()),
-        i18n("Please specify a *matching* Plug-In by invocing"),
+        i18n("Please specify a *matching* Plug-In by invoking"),
         i18n("the 'Settings/Configure KMail / Plug-In' dialog!"),
         decryptedData );
     } else {
@@ -1781,7 +1781,7 @@ bool KMReaderWin::okDecryptMIME( partNode& data, QCString& decryptedData )
   } else {
       showMessageAndSetData( errorContentCouldNotBeDecrypted,
         i18n("No Crypto Plug-In settings found.").utf8(),
-        i18n("Please specify a Plug-In by invocing").utf8(),
+        i18n("Please specify a Plug-In by invoking").utf8(),
         i18n("the 'Settings/Configure KMail / Plug-In' dialog!").utf8(),
         decryptedData );
   }
