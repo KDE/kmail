@@ -173,25 +173,21 @@ QByteArray& NewByteArray::qByteArray()
 // TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
 //
 // STATIC:
-bool KMReaderWin::foundMatchingCryptPlug( QString libName,
+bool KMReaderWin::foundMatchingCryptPlug( const QString & libName,
                                           CryptPlugWrapper** useThisCryptPlug_ref,
                                           QWidget* parent,
-                                          QString verboseName )
+                                          const QString & verboseName )
 {
-  CryptPlugWrapperList *plugins = kernel->cryptPlugList();
-  if( plugins && useThisCryptPlug_ref ) {
-    *useThisCryptPlug_ref = 0;
-    CryptPlugWrapper* current;
-    QPtrListIterator<CryptPlugWrapper> it( *plugins );
-    while( ( current = it.current() ) ) {
-        ++it;
-        if( 0 <= current->libName().find( libName, 0, false ) ) {
-        *useThisCryptPlug_ref = current;
-        return true;
-        }
-    }
+  if ( !useThisCryptPlug_ref ) {
+    kdWarning(5006) << "KMReaderWin::foundMatchingCryptPlug: useThisCryptPlug_ref is NULL!" << endl;
+    return false;
   }
-  if( parent )
+  CryptPlugWrapperList *plugins = kernel->cryptPlugList();
+  if ( plugins ) *useThisCryptPlug_ref = plugins->findForLibName( libName );
+  else *useThisCryptPlug_ref = 0;
+  // ### What's the semantics of kernel->cryptPlugList() == 0??
+  // This would lead to a better error message... (mm)
+  if( parent && !*useThisCryptPlug_ref )
     KMessageBox::information(parent,
       i18n("Problem: %1 plug-in was not specified.\n"
            "Use the 'Settings->Configure KMail->Security' dialog to specify the "
@@ -199,7 +195,7 @@ bool KMReaderWin::foundMatchingCryptPlug( QString libName,
            .arg(verboseName),
            QString::null,
            "cryptoPluginBox");
-  return false;
+  return *useThisCryptPlug_ref;
 }
 
 

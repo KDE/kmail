@@ -210,10 +210,10 @@ public:
 
  private:
     /** find a plugin matching a given libName */
-    static bool foundMatchingCryptPlug( QString libName,
+    static bool foundMatchingCryptPlug( const QString & libName,
                                         CryptPlugWrapper** useThisCryptPlug_ref,
-                                        QWidget* parent = 0,
-                                        QString verboseName = "" );
+                                        QWidget* parent=0,
+                                        const QString & verboseName=QString::null );
 
     /** 1. Create a new partNode using 'content' data and Content-Description
             found in 'cntDesc'.
