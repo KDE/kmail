@@ -87,7 +87,7 @@ void KMMessagePart::setBodyEncoded(const QByteArray& aStr)
     len = aStr.size()-1;
     dwSrc = DwString(aStr.data(), len);
     DwEncodeBase64(dwSrc, dwResult);
-    mBody = QString(dwResult.c_str(),dwResult.size());
+    mBody = QString(dwResult.c_str());
     break;
   default:
     debug("WARNING -- unknown encoding `%s'. Assuming 8bit.", 

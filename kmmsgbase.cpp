@@ -360,7 +360,7 @@ const QString KMMsgBase::decodeRFC1522String(const QString _str)
     {
       ch = *pos;
       *pos = '\0';
-      str = QString(mid, (int)(mid - pos - 1));
+      str = QString(mid).left((int)(mid - pos - 1));
       if (encoding == 'Q')
       {
 	// decode quoted printable text
