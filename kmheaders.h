@@ -118,6 +118,7 @@ public:
       top most visible item. */
   virtual void setTopItemByIndex( int aMsgIdx );
   virtual void setNestedOverride( bool override );
+  virtual void setSubjectThreading( bool subjThreading );
   /** Double force items to always be open */
   virtual void setOpen ( QListViewItem *, bool );
 
@@ -294,7 +295,7 @@ private:
   QDict< QValueList< int > > mTree;
   QDict< bool > mTreeSeen;
   QDict< bool > mTreeToplevel;
-  bool mNested, mNestedOverride;
+  bool mNested, mNestedOverride, mSubjThreading;
   NestingPolicy nestingPolicy;
   QPtrList<KMHeaderItem> mImperfectlyThreadedList;
 

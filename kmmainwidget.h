@@ -187,6 +187,7 @@ protected slots:
   void slotCompactAll();
   void slotOverrideHtml();
   void slotOverrideThread();
+  void slotToggleSubjectThreading();
   void slotMessageQueuedOrDrafted();
   void slotForwardMsg();
   void slotForwardAttachedMsg();
@@ -333,7 +334,7 @@ protected:
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId, htmlId, threadId;
-  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref;
+  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref, mFolderThreadSubjPref;
   QPopupMenu *messageMenu;
   KMFldSearch *searchWin;
 
@@ -341,6 +342,7 @@ protected:
       *compactFolderAction, *refreshFolderAction, *emptyFolderAction,
       *markAllAsReadAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
+  KToggleAction *threadBySubjectAction;
   KToggleAction *folderAction, *headerAction, *mimeAction;
 
   QTimer *menutimer;

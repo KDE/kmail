@@ -98,6 +98,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mIntegrated  = TRUE;
   mFolder = 0;
   mFolderThreadPref = false;
+  mFolderThreadSubjPref = true;
   mFolderHtmlPref = false;
   mCountJobs = 0;
   mDestructed = false;
@@ -195,6 +196,7 @@ void KMMainWidget::readFolderConfig(void)
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
+  mFolderThreadSubjPref = config->readBoolEntry( "threadMessagesBySubject", true );
   mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
 }
 
@@ -208,6 +210,7 @@ void KMMainWidget::writeFolderConfig(void)
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
+  config->writeEntry( "threadMessagesBySubject", mFolderThreadSubjPref );
   config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
 }
 
@@ -1190,6 +1193,13 @@ void KMMainWidget::slotOverrideThread()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotToggleSubjectThreading()
+{
+  mFolderThreadSubjPref = !mFolderThreadSubjPref;
+  mHeaders->setSubjectThreading(mFolderThreadSubjPref);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotMessageQueuedOrDrafted()
 {
   if (!kernel->folderIsDraftOrOutbox(mFolder))
@@ -2001,6 +2011,10 @@ void KMMainWidget::setupActions()
   threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
+  threadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
+		      SLOT(slotToggleSubjectThreading()), actionCollection(), "thread_messages_by_subject" );
+
+
   //----- Message Menu
   (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
@@ -2644,9 +2658,11 @@ void KMMainWidget::updateFolderMenu()
   markAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( mFolder ? true : false );
+  threadBySubjectAction->setEnabled( mFolder && mThreadPref ? !mFolderThreadPref : mFolderThreadPref ?  true : false );
 
   preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   threadMessagesAction->setChecked( mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
+  threadBySubjectAction->setChecked( mFolderThreadSubjPref );
 }
 
 

@@ -1023,7 +1023,7 @@ KMHeaderItem * KMHeaders::findParent(int id, bool *perfectParent)
         if (!replyToAuxId.isEmpty())
             parent = mIdTree[replyToAuxId];
     }
-    if (!parent && mFolder->getMsgBase(id)->subjectIsPrefixed()) {
+    if (!parent && mFolder->getMsgBase(id)->subjectIsPrefixed() && mSubjThreading) {
         // Still no parent, try by subject.
         QString subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
         if (!subjMD5.isEmpty())
@@ -1045,109 +1045,113 @@ void KMHeaders::msgAdded(int id)
   assert(mb != 0); // otherwise using count() above is wrong
 
   if (mNested != mNestedOverride) {
-      QString msgId = mFolder->getMsgBase(id)->msgIdMD5();
+    QString msgId = mFolder->getMsgBase(id)->msgIdMD5();
     if (msgId.isNull())
       msgId = "";
-      QString replyToId = mFolder->getMsgBase(id)->replyToIdMD5();
+    QString replyToId = mFolder->getMsgBase(id)->replyToIdMD5();
 
-      if(mIdTree.isEmpty())
-          buildIdTrees(mFolder->count()-1);
-      else {
-          mIdTree.resize(mFolder->count());
-          mMsgSubjects.resize(mFolder->count());
+    if(mIdTree.isEmpty()) {
+      buildIdTrees(mFolder->count()-1);
+    } else {
+      mIdTree.resize(mFolder->count());
+      if (mSubjThreading)
+        mMsgSubjects.resize(mFolder->count());
     }
 
-      bool perfectParent = false;
-      KMHeaderItem *parent = findParent(id, &perfectParent);
-      if (parent && !perfectParent) {
-          // The parent we found could be by subject, in which case it is
-          // possible, that it would be preferrable to thread it below us,
-          // not the other way around. Check that. This is not only
-          // cosmetic, as getting this wrong leads to circular threading.
-          if (msgId == mFolder->getMsgBase(parent->msgId())->replyToIdMD5()
-           || msgId == mFolder->getMsgBase(parent->msgId())->replyToAuxIdMD5())
-              parent = NULL;
-      }
-      if (parent)
-          hi = new KMHeaderItem( parent, id );
-      else
+    bool perfectParent = false;
+    KMHeaderItem *parent = findParent(id, &perfectParent);
+    if (parent && !perfectParent) {
+      // The parent we found could be by subject, in which case it is
+      // possible, that it would be preferrable to thread it below us,
+      // not the other way around. Check that. This is not only
+      // cosmetic, as getting this wrong leads to circular threading.
+      if (msgId == mFolder->getMsgBase(parent->msgId())->replyToIdMD5()
+          || msgId == mFolder->getMsgBase(parent->msgId())->replyToAuxIdMD5())
+        parent = NULL;
+    }
+    if (parent)
+      hi = new KMHeaderItem( parent, id );
+    else
       hi = new KMHeaderItem( this, id );
 
-      // Update and resize the id trees.
-      mItems.resize( mFolder->count() );
-      mItems[id] = hi;
+    // Update and resize the id trees.
+    mItems.resize( mFolder->count() );
+    mItems[id] = hi;
 
-      mIdTree.resize(mFolder->count());
-      mIdTree.replace( msgId, hi );
+    mIdTree.resize(mFolder->count());
+    mIdTree.replace( msgId, hi );
 
+    if (mSubjThreading) {
       mMsgSubjects.resize(mFolder->count());
       QString subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
       if (subjMD5.isEmpty()) {
-          mFolder->getMsgBase(id)->initStrippedSubjectMD5();
-          subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
+        mFolder->getMsgBase(id)->initStrippedSubjectMD5();
+        subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
       }
       if( !subjMD5.isEmpty() && !mMsgSubjects.find(subjMD5) ) {
-          QString replyToIdMD5 = mFolder->getMsgBase(id)->replyToIdMD5();
-          QString replyToAuxIdMD5 = mFolder->getMsgBase(id)->replyToAuxIdMD5();
-          if ( (replyToIdMD5.isEmpty() || !mIdTree.find(replyToIdMD5))
+        QString replyToIdMD5 = mFolder->getMsgBase(id)->replyToIdMD5();
+        QString replyToAuxIdMD5 = mFolder->getMsgBase(id)->replyToAuxIdMD5();
+        if ( (replyToIdMD5.isEmpty() || !mIdTree.find(replyToIdMD5))
             && (replyToAuxIdMD5.isEmpty() || !mIdTree.find(replyToAuxIdMD5)))
-              mMsgSubjects.replace(subjMD5, hi );
+          mMsgSubjects.replace(subjMD5, hi );
       }
-      // The message we just added might be a better parent for one of the as of
-      // yet imperfectly threaded messages. Let's find out.
-      for(QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList); it.current(); ++it) {
-          int tryMe = (*it)->msgId();
-          // Check, whether our message is the replyToId or replyToAuxId of
-          // this one. If so, thread it below our message, unless it is already
-          // correctly threaded by replyToId.
-          bool perfectParent = true;
-          QString otherId = mFolder->getMsgBase(tryMe)->replyToIdMD5();
-          if (msgId != otherId) {
-              if (msgId != mFolder->getMsgBase(tryMe)->replyToAuxIdMD5())
-                  continue;
-    else {
-                  if (!otherId.isEmpty() && mIdTree.find(otherId))
-                      continue;
-                  else
-                      // Thread below us by aux id, but keep on the list of
-                      // imperfectly threaded messages.
-                      perfectParent = false;
     }
-  }
-          QListViewItem *newParent = mItems[id];
-          QListViewItem *msg = mItems[tryMe];
-
-          if (msg->parent())
-              msg->parent()->takeItem(msg);
-  else
-              takeItem(msg);
-          newParent->insertItem(msg);
-	  // Check if this message was a potential parent for threading by
-	  // subject. If so, replace it in the dict, we are better.
-	  QString mySubjMD5 = mFolder->getMsgBase(tryMe)->strippedSubjectMD5();
-	  if (mMsgSubjects[mySubjMD5] == msg )
-	      mMsgSubjects.replace(mySubjMD5, hi);
-
-          makeHeaderVisible();
-
-          if (perfectParent)
-              mImperfectlyThreadedList.remove ((*it));
+    // The message we just added might be a better parent for one of the as of
+    // yet imperfectly threaded messages. Let's find out.
+    for(QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList); it.current(); ++it) {
+      int tryMe = (*it)->msgId();
+      // Check, whether our message is the replyToId or replyToAuxId of
+      // this one. If so, thread it below our message, unless it is already
+      // correctly threaded by replyToId.
+      bool perfectParent = true;
+      QString otherId = mFolder->getMsgBase(tryMe)->replyToIdMD5();
+      if (msgId != otherId) {
+        if (msgId != mFolder->getMsgBase(tryMe)->replyToAuxIdMD5())
+          continue;
+        else {
+          if (!otherId.isEmpty() && mIdTree.find(otherId))
+            continue;
+          else
+            // Thread below us by aux id, but keep on the list of
+            // imperfectly threaded messages.
+            perfectParent = false;
+        }
       }
-      // Add ourselves only now, to avoid circularity above.
-      if (hi && !perfectParent)
-          mImperfectlyThreadedList.append(hi);
+      QListViewItem *newParent = mItems[id];
+      QListViewItem *msg = mItems[tryMe];
+
+      if (msg->parent())
+        msg->parent()->takeItem(msg);
+      else
+        takeItem(msg);
+      newParent->insertItem(msg); 
+      if (mSubjThreading) {
+        // Check if this message was a potential parent for threading by
+        // subject. If so, replace it in the dict, we are better.
+        QString mySubjMD5 = mFolder->getMsgBase(tryMe)->strippedSubjectMD5();
+        if (mMsgSubjects[mySubjMD5] == msg )
+          mMsgSubjects.replace(mySubjMD5, hi);
+      }
+      makeHeaderVisible();
+
+      if (perfectParent)
+        mImperfectlyThreadedList.remove ((*it));
+    }
+    // Add ourselves only now, to avoid circularity above.
+    if (hi && !perfectParent)
+      mImperfectlyThreadedList.append(hi);
   } else {
-      // non-threaded case
-      hi = new KMHeaderItem( this, id );
-      mItems.resize( mFolder->count() );
-  mItems[id] = hi;
+    // non-threaded case
+    hi = new KMHeaderItem( this, id );
+    mItems.resize( mFolder->count() );
+    mItems[id] = hi;
   }
 
   appendUnsortedItem(hi); //inserted into sorted list
   if (mSortInfo.fakeSort) {
-      QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-      KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
-      mSortInfo.fakeSort = 0;
+    QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
+    KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
+    mSortInfo.fakeSort = 0;
   }
 
   msgHeaderChanged(mFolder,id);
@@ -1189,17 +1193,19 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       buildIdTrees(mFolder->count());
     else {
       mIdTree.remove(msgId);
-      // Remove the message from the list of potential parents for threading by
-      // subject. If we have a child, that one is the next best parent for
-      // threading by subject, so replace with that.
-      if (mMsgSubjects[strippedSubjMD5] == removedItem) {
-        mMsgSubjects.remove(strippedSubjMD5);
-        if (removedItem->firstChild())
-          mMsgSubjects.replace(strippedSubjMD5,
-              static_cast<KMHeaderItem*> (removedItem->firstChild()));
-      }
       mIdTree.resize(mFolder->count());
-      mMsgSubjects.resize(mFolder->count());
+      if (mSubjThreading) {
+        // Remove the message from the list of potential parents for threading by
+        // subject. If we have a child, that one is the next best parent for
+        // threading by subject, so replace with that.
+        if (mMsgSubjects[strippedSubjMD5] == removedItem) {
+          mMsgSubjects.remove(strippedSubjMD5);
+          if (removedItem->firstChild())
+            mMsgSubjects.replace(strippedSubjMD5,
+                static_cast<KMHeaderItem*> (removedItem->firstChild()));
+        }
+        mMsgSubjects.resize(mFolder->count());
+      }
     }
     // Reparent children of item.
     QListViewItem *myParent = removedItem;
@@ -2362,6 +2368,16 @@ void KMHeaders::setNestedOverride( bool override )
 }
 
 //-----------------------------------------------------------------------------
+void KMHeaders::setSubjectThreading( bool aSubjThreading )
+{
+  mSortInfo.dirty = TRUE;
+  mSubjThreading = aSubjThreading;
+  QString sortFile = mFolder->indexLocation() + ".sorted";
+  unlink(sortFile.local8Bit());
+  reset();
+}
+
+//-----------------------------------------------------------------------------
 void KMHeaders::setOpen( QListViewItem *item, bool open )
 {
   if ((nestingPolicy != AlwaysOpen)|| open)
@@ -2442,7 +2458,8 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
 void KMHeaders::folderCleared()
 {
     mIdTree.clear();
-    mMsgSubjects.clear();
+    if (mSubjThreading)
+        mMsgSubjects.clear();
     mImperfectlyThreadedList.clear();
 }
 
@@ -2452,7 +2469,8 @@ void KMHeaders::buildIdTrees (int count)
     START_TIMER(buildIdTrees);
 
     mIdTree.resize(count);
-    mMsgSubjects.resize(count);
+    if (mSubjThreading)
+        mMsgSubjects.resize(count);
 
     for(int x = 0; x < count; x++) {
         QString md5;
@@ -2461,22 +2479,24 @@ void KMHeaders::buildIdTrees (int count)
         md5 = mFolder->getMsgBase(x)->msgIdMD5();
         if (!md5.isEmpty() && !mIdTree[md5])
             mIdTree.insert(md5, mItems[x]);
-    }
-    for(int x = 0; x < count; x++) {
-        QString subjMD5;
-        if(!mItems[x])
-            continue;
-        subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
-        if (subjMD5.isEmpty()) {
-            mFolder->getMsgBase(x)->initStrippedSubjectMD5();
+    } 
+    if (mSubjThreading) {
+        for(int x = 0; x < count; x++) {
+            QString subjMD5;
+            if(!mItems[x])
+                continue;
             subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
-        }
-        if( !subjMD5.isEmpty() && !mMsgSubjects.find(subjMD5) ) {
-            QString replyToIdMD5 = mFolder->getMsgBase(x)->replyToIdMD5();
-            QString replyToAuxIdMD5 = mFolder->getMsgBase(x)->replyToAuxIdMD5();
-            if ( (replyToIdMD5.isEmpty() || !mIdTree.find(replyToIdMD5))
-              && (replyToAuxIdMD5.isEmpty() || !mIdTree.find(replyToAuxIdMD5)))
-                mMsgSubjects.replace(subjMD5, mItems[x]);
+            if (subjMD5.isEmpty()) {
+                mFolder->getMsgBase(x)->initStrippedSubjectMD5();
+                subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
+            }
+            if( !subjMD5.isEmpty() && !mMsgSubjects.find(subjMD5) ) {
+                QString replyToIdMD5 = mFolder->getMsgBase(x)->replyToIdMD5();
+                QString replyToAuxIdMD5 = mFolder->getMsgBase(x)->replyToAuxIdMD5();
+                if ( (replyToIdMD5.isEmpty() || !mIdTree.find(replyToIdMD5))
+                        && (replyToAuxIdMD5.isEmpty() || !mIdTree.find(replyToAuxIdMD5)))
+                    mMsgSubjects.replace(subjMD5, mItems[x]);
+            }
         }
     }
     END_TIMER(buildIdTrees);
@@ -2934,34 +2954,36 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	// Build two dictionaries, one with all messages and their ids, and
 	// one with the md5 hashes of the subject stripped of prefixes such as
 	// Re: or similar.
-	QDict<KMSortCacheItem> msgs(mFolder->count() * 2);
-	QDict<KMSortCacheItem> msgSubjects(mFolder->count() * 2);
+	QDict<KMSortCacheItem> msgs(mFolder->count() * 2);    
+        QDict<KMSortCacheItem> msgSubjects(mFolder->count() * 2);
 	for(int x = 0; x < mFolder->count(); x++) {
 	    KMMsgBase *mi = mFolder->getMsgBase(x);
 	    QString md5 = mi->msgIdMD5();
 	    if(!md5.isEmpty())
 	    msgs.insert(md5, sortCache[x]);
 	}
-	for(int x = 0; x < mFolder->count(); x++) {
-	    KMMsgBase *mi = mFolder->getMsgBase(x);
-	    QString subjMD5 = mi->strippedSubjectMD5();
-	    if (subjMD5.isEmpty()) {
-		mFolder->getMsgBase(x)->initStrippedSubjectMD5();
-		subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
-	    }
-	    // The first message with a certain subject is where we want to
-	    // thread the other messages with the same suject below. Only keep
-	    // that in the dict. Also only accept messages which would not
-	    // otherwise be threaded by IDs as top level messages to avoid 
-	    // circular threading.
-	    if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
-		QString replyToIdMD5 = mi->replyToIdMD5();
-		QString replyToAuxIdMD5 = mi->replyToAuxIdMD5();
-		if ( (replyToIdMD5.isEmpty() || !msgs.find(replyToIdMD5))
-		&& (replyToAuxIdMD5.isEmpty() || !msgs.find(replyToAuxIdMD5)) )
-		    msgSubjects.insert(subjMD5, sortCache[x]);
-	    }
-	}
+        if (mSubjThreading) {
+            for(int x = 0; x < mFolder->count(); x++) {
+                KMMsgBase *mi = mFolder->getMsgBase(x);
+                QString subjMD5 = mi->strippedSubjectMD5();
+                if (subjMD5.isEmpty()) {
+                    mFolder->getMsgBase(x)->initStrippedSubjectMD5();
+                    subjMD5 = mFolder->getMsgBase(x)->strippedSubjectMD5();
+                }
+                // The first message with a certain subject is where we want to
+                // thread the other messages with the same suject below. Only keep
+                // that in the dict. Also only accept messages which would not
+                // otherwise be threaded by IDs as top level messages to avoid 
+                // circular threading.
+                if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
+                    QString replyToIdMD5 = mi->replyToIdMD5();
+                    QString replyToAuxIdMD5 = mi->replyToAuxIdMD5();
+                    if ( (replyToIdMD5.isEmpty() || !msgs.find(replyToIdMD5))
+                            && (replyToAuxIdMD5.isEmpty() || !msgs.find(replyToAuxIdMD5)) )
+                        msgSubjects.insert(subjMD5, sortCache[x]);
+                }
+            }
+        }
 	for(QPtrListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
 	    KMSortCacheItem *parent=NULL;
 	    KMMsgBase *msg =  mFolder->getMsgBase((*it)->id());
@@ -2981,7 +3003,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
                    (*it)->setImperfectlyThreaded(true);
                }
 	    }
-	    if (!parent && msg->subjectIsPrefixed()) {
+	    if (!parent && msg->subjectIsPrefixed() && mSubjThreading) {
 	        // Still no parent. Let's try by subject, but only if the
                 // subject is prefixed. This is necessary to make for 
                 // example cvs commit mailing lists work as expected without 
