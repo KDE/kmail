@@ -25,7 +25,7 @@
 #include <kfiledialog.h>
 #include <kglobalsettings.h>
 
-#include "kmfolder.h"
+#include "kmfolderimap.h"
 #include "kmheaders.h"
 #include "kmmessage.h"
 #include "kbusyptr.h"
@@ -976,11 +976,14 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       msgBase->setStatus(status);
-      if (mFolder->account())
+      if (mFolder->protocol() == "imap")
       {
+        KMFolderImap *folder = static_cast<KMFolderImap*>(mFolder);
+        if (!folder)
+          return;
         unget = !mFolder->isMessage(item->msgId());
         KMMessage *msg = mFolder->getMsg(item->msgId());
-        mFolder->account()->setStatus(msg, status);
+        folder->setStatus(msg, status);
         if (unget) mFolder->unGetMsg(item->msgId());
       }
     }
@@ -1054,7 +1057,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     int idx = mFolder->find(msgBase);
     assert(idx != -1);
     msg = mFolder->getMsg(idx);
-    if (mFolder->account() && !msg->isComplete())
+    if ((mFolder->protocol() == "imap") && !msg->isComplete())
     {
       if (msg->transferInProgress()) continue;
       msg->setTransferInProgress(TRUE);
@@ -1099,8 +1102,12 @@ void KMHeaders::setMsgRead (int msgId)
 	  st==KMMsgStatusRead)
 	{
 	  msg->setStatus(KMMsgStatusOld);
-          if (mFolder->account())
-            mFolder->account()->setStatus(msg, KMMsgStatusOld);
+          if (mFolder->protocol() == "imap")
+          {
+            KMFolderImap *folder = static_cast<KMFolderImap*>(mFolder);
+            if (folder)
+              folder->setStatus(msg, KMMsgStatusOld);
+          }
 	}
     }
 }
@@ -1650,24 +1657,31 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
       msg = mFolder->getMsg(idx);
     }
 
-    if (mFolder->account() && mFolder->account() == destFolder->account())
+    if (mFolder->protocol() == "imap")
     {
-      new KMImapJob(msg, KMImapJob::tCopyMessage, destFolder);
-    } else {
-      newMsg = new KMMessage;
-      newMsg->fromString(msg->asString());
-      newMsg->setComplete(msg->isComplete());
-
-      if (mFolder->account() && !newMsg->isComplete())
+      KMFolderImap *folder = static_cast<KMFolderImap*>(mFolder);
+      if (destFolder->protocol() == "imap")
       {
-        newMsg->setParent(msg->parent());
-        KMImapJob *imapJob = new KMImapJob(newMsg);
-        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-          destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
-      } else {
-        rc = destFolder->addMsg(newMsg, &index);
-        if (rc == 0 && index != -1)
-          destFolder->unGetMsg( destFolder->count() - 1 );
+        KMFolderImap *dest_folder = static_cast<KMFolderImap*>(destFolder);
+        if (folder && folder == dest_folder)
+          new KMImapJob(msg, KMImapJob::tCopyMessage, dest_folder);
+        else {
+          newMsg = new KMMessage;
+          newMsg->fromString(msg->asString());
+          newMsg->setComplete(msg->isComplete());
+
+          if (!newMsg->isComplete())
+          {
+            newMsg->setParent(msg->parent());
+            KMImapJob *imapJob = new KMImapJob(newMsg);
+            connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+                destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+          } else {
+            rc = destFolder->addMsg(newMsg, &index);
+            if (rc == 0 && index != -1)
+              destFolder->unGetMsg( destFolder->count() - 1 );
+          }
+        }
       }
     }
     if (!isMessage)
@@ -1967,7 +1981,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
       KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
       if (prevMsg)
       {
-        if (mFolder->account()) KMImapJob::ignoreJobsForMessage(prevMsg);
+        if (mFolder->protocol() == "imap") KMImapJob::ignoreJobsForMessage(prevMsg);
         if (!prevMsg->transferInProgress())
           mFolder->unGetMsg(mPrevCurrent->msgId());
       }

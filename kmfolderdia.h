@@ -28,6 +28,7 @@ protected slots:
 
 protected:
   QComboBox *fileInFolder;
+  QComboBox *mailboxType;
   QLineEdit *nameEdit;
   KMAcctFolder* folder;
   KMFolder *mFolder;

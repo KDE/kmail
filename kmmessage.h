@@ -344,6 +344,10 @@ public:
     virtual unsigned long folderOffset(void) const { return mFolderOffset; }
     void setFolderOffset(unsigned long offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
 
+    /** Get/set filename in mail folder. */
+    virtual QString fileName(void) const { return mFileName; }
+    void setFileName(const QString& file) { if(mFileName != file) { mFileName=file; setDirty(TRUE); } }
+
     /** Get/set size of message including the whole header in bytes. */
     virtual unsigned long msgSize(void) const { return mMsgSize; }
     void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
@@ -365,6 +369,7 @@ protected:
     static QString sForwardStr;
     QTextCodec* mCodec;
 
+    QString mFileName;
     unsigned long mFolderOffset, mMsgSize;
     time_t mDate;
     KMMsgStatus mStatus;

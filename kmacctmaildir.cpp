@@ -1,4 +1,4 @@
-// kmacctlocal.cpp
+// kmacctmaildir.cpp
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -6,13 +6,12 @@
 
 #include <qdatetime.h>
 #include <qfileinfo.h>
-#include "kmacctlocal.h"
-#include "kmfoldermbox.h"
+#include "kmacctmaildir.h"
+#include "kmfoldermaildir.h"
 #include "kmmessage.h"
 #include "kmacctfolder.h"
 #include "kmglobal.h"
 #include "kmbroadcaststatus.h"
-#include "kmfoldermgr.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -28,79 +27,68 @@
 #include <paths.h>	/* defines _PATH_MAILDIR */
 #endif
 
-#ifndef _PATH_MAILDIR
-#define _PATH_MAILDIR "/var/spool/mail"
-#endif
 #undef None
 
 //-----------------------------------------------------------------------------
-KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
-  KMAcctLocalInherited(aOwner, aAccountName)
+KMAcctMaildir::KMAcctMaildir(KMAcctMgr* aOwner, const QString& aAccountName):
+  KMAcctMaildirInherited(aOwner, aAccountName)
 {
-  mLock = procmail_lockfile;
 }
 
 
 //-----------------------------------------------------------------------------
-KMAcctLocal::~KMAcctLocal()
+KMAcctMaildir::~KMAcctMaildir()
 {
   mLocation = "";
 }
 
 
 //-----------------------------------------------------------------------------
-const char* KMAcctLocal::type(void) const
+const char* KMAcctMaildir::type(void) const
 {
-  return "local";
+  return "maildir";
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::init(void)
+void KMAcctMaildir::init(void)
 {
   mLocation = getenv("MAIL");
   if (mLocation.isNull()) {
-    mLocation = _PATH_MAILDIR;
-    mLocation += "/";
-    mLocation += getenv("USER");
+    mLocation = getenv("HOME");
+    mLocation += "/Maildir/";
   }
-  setProcmailLockFileName("");
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::pseudoAssign(KMAccount *account)
+void KMAcctMaildir::pseudoAssign(KMAccount *account)
 {
-  assert(account->type() == "local");
-  KMAcctLocal *acct = static_cast<KMAcctLocal*>(account);
+  assert(account->type() == "maildir");
+  KMAcctMaildir *acct = static_cast<KMAcctMaildir*>(account);
   setName(acct->name());
   setLocation(acct->location());
   setCheckInterval(acct->checkInterval());
   setCheckExclude(acct->checkExclude());
-  setLockType(acct->lockType());
-  setProcmailLockFileName(acct->procmailLockFileName());
   setFolder(acct->folder());
   setPrecommand(acct->precommand());
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::processNewMail(bool)
+void KMAcctMaildir::processNewMail(bool)
 {
   QTime t;
   hasNewMail = false;
 
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
-    if ( fi.size() == 0 ) {
+    if ( !fi.exists() ) {
       emit finishedCheck(hasNewMail);
       return;
     }
   }
 
-  KMFolderMbox mailFolder(NULL, location());
-  mailFolder.setLockType( mLock );
-  if ( mLock == procmail_lockfile)
-    mailFolder.setProcmailLockFileName( mProcmailLockFileName );
+  KMFolderMaildir mailFolder(NULL, location());
 
   long num = 0;
   long i;
@@ -119,10 +107,10 @@ void KMAcctLocal::processNewMail(bool)
 
   // run the precommand
   if (!runPrecommand(precommand()))
-    {
-        kdDebug(5006) << "cannot run precommand " << precommand() << endl;
-	emit finishedCheck(hasNewMail);
-    }
+  {
+    kdDebug(5006) << "cannot run precommand " << precommand() << endl;
+    emit finishedCheck(hasNewMail);
+  }
 
   mailFolder.setAutoCreateIndex(FALSE);
 
@@ -130,7 +118,7 @@ void KMAcctLocal::processNewMail(bool)
   if (rc)
   {
     QString aStr;
-    aStr = i18n("Cannot open file:");
+    aStr = i18n("Cannot open folder:");
     aStr += mailFolder.path()+"/"+mailFolder.name();
     KMessageBox::sorry(0, aStr);
     kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
@@ -141,7 +129,6 @@ void KMAcctLocal::processNewMail(bool)
   }
 
   if (mailFolder.isReadOnly()) { // mailFolder is locked
-    kdDebug(5006) << "mailFolder could not be locked" << endl;
     mailFolder.close();
     emit finishedCheck(hasNewMail);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
@@ -150,6 +137,7 @@ void KMAcctLocal::processNewMail(bool)
 
   mFolder->quiet(TRUE);
   mFolder->open();
+
 
   num = mailFolder.count();
 
@@ -173,13 +161,6 @@ void KMAcctLocal::processNewMail(bool)
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
       addedOk = processNewMsg(msg);
-      /*
-      if (msg->parent()) {
-	  int count = msg->parent()->count();
-	  if (count != 1 && msg->parent()->operator[](count - 1) == msg)
-	      msg->parent()->unGetMsg(count - 1);
-      }
-      */
       if (addedOk)
         hasNewMail = true;
     }
@@ -195,7 +176,6 @@ void KMAcctLocal::processNewMail(bool)
 
   if (addedOk)
   {
-    kernel->folderMgr()->syncAllFolders();
     rc = mailFolder.expunge();
     if (rc)
       KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
@@ -214,59 +194,23 @@ void KMAcctLocal::processNewMail(bool)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::readConfig(KConfig& config)
+void KMAcctMaildir::readConfig(KConfig& config)
 {
-  KMAcctLocalInherited::readConfig(config);
+  KMAcctMaildirInherited::readConfig(config);
   mLocation = config.readEntry("Location", mLocation);
-  QString locktype = config.readEntry("LockType", "procmail_lockfile" );
-
-  if( locktype == "procmail_lockfile" ) {
-    mLock = procmail_lockfile;
-    mProcmailLockFileName = config.readEntry("ProcmailLockFile",
-      mLocation + ".lock");
-  } else if( locktype == "mutt_dotlock" )
-    mLock = mutt_dotlock;
-  else if( locktype == "mutt_dotlock_privileged" )
-    mLock = mutt_dotlock_privileged;
-  else if( locktype == "none" )
-    mLock = None;
-  else mLock = FCNTL;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::writeConfig(KConfig& config)
+void KMAcctMaildir::writeConfig(KConfig& config)
 {
-  KMAcctLocalInherited::writeConfig(config);
+  KMAcctMaildirInherited::writeConfig(config);
 
   config.writeEntry("Location", mLocation);
-
-  QString st = "fcntl";
-  if (mLock == procmail_lockfile) st = "procmail_lockfile";
-  else if (mLock == mutt_dotlock) st = "mutt_dotlock";
-  else if (mLock == mutt_dotlock_privileged) st = "mutt_dotlock_privileged";
-  else if (mLock == None) st = "none";
-  config.writeEntry("LockType", st);
-
-  if (mLock == procmail_lockfile) {
-    config.writeEntry("ProcmailLockFile", mProcmailLockFileName);
-  }
-
 }
 
-
 //-----------------------------------------------------------------------------
-void KMAcctLocal::setLocation(const QString& aLocation)
+void KMAcctMaildir::setLocation(const QString& aLocation)
 {
   mLocation = aLocation;
 }
-
-void
-KMAcctLocal::setProcmailLockFileName(QString s)
-{
-  if (!s.isEmpty())
-    mProcmailLockFileName = s;
-  else
-    mProcmailLockFileName = mLocation + ".lock";
-}
-

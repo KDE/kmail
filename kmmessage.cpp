@@ -102,10 +102,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mFolderOffset = 0;
   mStatus  = KMMsgStatusNew;
   mDate    = 0;
-  mMsgSize = 0;
-  mFolderOffset = 0;
-  mStatus  = KMMsgStatusNew;
-  mDate    = 0;
+  mFileName = "";
 }
 
 
@@ -122,6 +119,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
   mFolderOffset = msgInfo.folderOffset();
   mStatus = msgInfo.status();
   mDate = msgInfo.date();
+  mFileName = msgInfo.fileName();
   assign(&msgInfo);
 }
 

@@ -204,6 +204,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Steven Brown", 0, "swbrown@ucsd.edu" );
   about.addAuthor( "Cristi Dumitrescu", 0, "cristid@chip.ro" );
   about.addAuthor( "Philippe Fremy", 0, "pfremy@chez.com" );
+  about.addAuthor( "Kurt Granroth", 0, "granroth@kde.org" );
   about.addAuthor( "Igor Janssen", 0, "rm@linux.ru.net" );
   about.addAuthor( "Matt Johnston", 0, "matt@caifex.org" );
   about.addAuthor( "Christer Kaivo-oja", 0, "whizkid@telia.com" );

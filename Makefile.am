@@ -25,12 +25,12 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
 		kmtopwidget.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
-		kmscoring.cpp kmfawidgets.cpp \
-		kmacctexppop.cpp colorlistbox.cpp \
+		kmscoring.cpp kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
+		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
-		smtp.cpp mailinglist-magic.cpp kmrecentaddr.cpp \
+		smtp.cpp mailinglist-magic.cpp kmrecentaddr.cpp kmacctmaildir.cpp \
                 mailcomposerIface.skel mailcomposerIface.stub
 
 check_PROGRAMS = dcoptest

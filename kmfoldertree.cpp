@@ -23,7 +23,7 @@
 #include "kmdragdata.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
-#include "kmfolder.h"
+#include "kmfolderimap.h"
 #include "kmfoldertree.h"
 #include "kmfolderdia.h"
 #include "kmkernel.h"
@@ -46,11 +46,13 @@ QPixmap* KMFolderTree::pixSent = 0;
 
 KMFolderTreeItem::~KMFolderTreeItem()
 {
-  if (folder && folder->account())
+  if (folder && (folder->protocol() == "imap"))
   {
-    folder->account()->killJobsForItem(this);
+    KMFolderImap *imap = static_cast<KMFolderImap*>(folder);
+    imap->killJobsForItem(this);
     folder->close();
     delete folder;
+    imap = 0;
   }
 }
 
@@ -121,7 +123,7 @@ QString KMFolderTreeItem::key( int, bool ) const
     return "\t3";
   else if (folder->label() == i18n("drafts"))
     return "\t4";
-  else if (folder->account())
+  else if (folder->protocol() == "imap")
     return "\t5" + folder->label();
   return text(0).lower();
 }
@@ -132,8 +134,9 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
   const QString& name, const QString& url, const QString& mimeType,
   bool noPrefix)
 {
+  KMFolderImap *item_folder = static_cast<KMFolderImap*>(item->folder);
   QListViewItem *lvi = item->firstChild();
-  QString label = ((noPrefix || item->folder->imapPath() == "/")
+  QString label = ((noPrefix || item_folder->imapPath() == "/")
     && name == "INBOX") ? i18n("inbox") : name;
   while (lvi)
   {
@@ -141,11 +144,12 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
     lvi = lvi->nextSibling();
   }
   KMFolderTreeItem *fti = new KMFolderTreeItem( item,
-    new KMFolder(item->folder->createChildFolder(), name), &mPaintInfo );
+    new KMFolderImap(item->folder->createChildFolder(), name), &mPaintInfo );
   if (fti->folder->create(TRUE) == 0) fti->folder->close();
-  fti->folder->setAccount(item->folder->account());
-  fti->folder->setImapPath( url );
-  if ((noPrefix || item->folder->imapPath() == "/") && name == "INBOX")
+  KMFolderImap *fti_folder = static_cast<KMFolderImap*>(fti->folder);
+  fti_folder->setAccount(item_folder->account());
+  fti_folder->setImapPath( url );
+  if ((noPrefix || item_folder->imapPath() == "/") && name == "INBOX")
   {
     fti->folder->setLabel(i18n("inbox"));
     fti->folder->setSystemFolder( TRUE );
@@ -282,7 +286,7 @@ void KMFolderTree::createFolderList(QStringList *str,
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::createImapFolderList(KMAcctImap *account, QStringList *names,
+void KMFolderTree::createImapFolderList(KMFolderImap *aFolder, QStringList *names,
   QStringList *urls, QStringList *mimeTypes)
 {
   QListViewItemIterator it( this );
@@ -290,12 +294,16 @@ void KMFolderTree::createImapFolderList(KMAcctImap *account, QStringList *names,
   while (it.current())
   {
     fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (fti && fti->folder && fti->folder->account() == account)
+    if (fti && fti->folder)
     {
-      names->append(fti->text(0));
-      urls->append(fti->folder->imapPath());
-      mimeTypes->append((fti->folder->isDir()) ? "inode/directory" :
-        (fti->isExpandable()) ? "message/directory" : "message/digest");
+      KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
+      if (folder == aFolder)
+      {
+        names->append(fti->text(0));
+        urls->append(folder->imapPath());
+        mimeTypes->append((folder->isDir()) ? "inode/directory" :
+          (fti->isExpandable()) ? "message/directory" : "message/digest");
+      }
     }
     ++it;
   }
@@ -430,7 +438,7 @@ void KMFolderTree::reload(void)
   writeConfig();
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
-  if (fti && fti->folder && fti->folder->account())
+  if (fti && fti->folder && (fti->folder->protocol() == "imap"))
     doFolderSelected(0);
   mLastItem = NULL;
   QListViewItemIterator it( this );
@@ -456,21 +464,22 @@ void KMFolderTree::reload(void)
     if (a->type() == QString("imap"))
     {
       KMFolderTreeItem* fti = new KMFolderTreeItem( root,
-        new KMFolder(new KMFolderRootDir(locateLocal("appdata","")), a->name()
+        new KMFolderImap(new KMFolderRootDir(locateLocal("appdata","")), a->name()
         + ".imap"), &mPaintInfo );
       if (fti->folder->create() == 0) fti->folder->close();
       fti->setText(0,a->name());
       fti->setExpandable( TRUE );
-      fti->folder->setDir( TRUE );
-      fti->folder->setAccount( static_cast<KMAcctImap*>(a) );
-      fti->folder->setImapPath( static_cast<KMAcctImap*>(a)->prefix() );
+      KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
+      folder->setDir( TRUE );
+      folder->setAccount( static_cast<KMAcctImap*>(a) );
+      folder->setImapPath( static_cast<KMAcctImap*>(a)->prefix() );
       if (readIsListViewItemOpen( fti ))
       {
         setOpen( fti, TRUE );  // Does only emit a signal, when visible
         slotFolderExpanded( fti );
       }
-      connect(static_cast<KMAcctImap*>(a), SIGNAL(deleted(KMAcctImap*)),
-        SLOT(slotAccountDeleted(KMAcctImap*)));
+      connect(folder, SIGNAL(deleted(KMFolderImap*)),
+        SLOT(slotAccountDeleted(KMFolderImap*)));
     }
 
   QListViewItemIterator jt( this );
@@ -745,9 +754,9 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (fti) folder = fti->folder;
 
   if (mLastItem && mLastItem != fti && mLastItem->folder
-     && mLastItem->folder->account())
+     && (mLastItem->folder->protocol() == "imap"))
   {
-    KMAcctImap *act = mLastItem->folder->account();
+    KMFolderImap *act = static_cast<KMFolderImap*>(mLastItem->folder);
     act->killAllJobs();
     act->setIdle(TRUE);
   }
@@ -762,9 +771,12 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   else {
     QString extendedName;
     emit folderSelected(folder);
-    if (fti->folder->account() && fti->mImapState
+    if ((fti->folder->protocol() == "imap") && fti->mImapState
       != KMFolderTreeItem::imapInProgress)
-        fti->folder->account()->getFolder(fti);
+    {
+      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fti->folder);
+      imap_folder->getFolder(fti);
+    }
     if (folder && (folder->countUnread() > 0) ) {
       QString num;
       num.setNum(folder->countUnread());
@@ -820,7 +832,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if (!fti )
     return;
   // ignore IMAP root folders
-  if (fti && fti->folder && fti->folder->account() && fti->folder->isDir())
+  if (fti && fti->folder && (fti->folder->protocol() == "imap") && fti->folder->isDir())
      return;
   if ((!fti->folder || fti->folder->isDir()))
      {
@@ -833,9 +845,9 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
       folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),
                                    SLOT(slotSendQueued()));
-  if (!fti->folder->isSystemFolder() || fti->folder->account())
+  if (!fti->folder->isSystemFolder() || fti->folder->protocol() == "imap")
      {
-     if (!fti->folder->account())  // protect from imap folders
+     if (fti->folder->protocol() != "imap")  // protect from imap folders
          folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                                        SLOT(addChildFolder()));
          folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
@@ -847,7 +859,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
      folderMenu->insertSeparator();
      folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
                             SLOT(slotEmptyFolder()));
-  if ( (!fti->folder->isSystemFolder()) && (!fti->folder->account()))
+  if ( (!fti->folder->isSystemFolder()) && (fti->folder->protocol() != "imap"))
         folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
                                      SLOT(slotRemoveFolder()));
      }
@@ -1256,14 +1268,18 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
   if (fti && fti->mImapState == KMFolderTreeItem::imapNoInformation
-    && fti->folder && fti->folder->account())
-      fti->folder->account()->listDirectory( fti );
+    && fti->folder && (fti->folder->protocol() == "imap"))
+  {
+    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
+    if (folder)
+      folder->listDirectory( fti );
+  }
 }
 
 void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder && fti->folder->account()
+  if (fti && fti->folder && (fti->folder->protocol() == "imap")
     && fti->parent() && !fti->parent()->parent())
   {
     writeConfig();
@@ -1276,29 +1292,34 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
         (fti->firstChild());
       delete ftic;
     }
-    fti->folder->account()->displayProgress();
-    fti->folder->account()->setIdle(TRUE);
+    KMFolderImap *fti_folder = static_cast<KMFolderImap*>(fti->folder);
+    fti_folder->displayProgress();
+    fti_folder->setIdle(TRUE);
     fti->mImapState = KMFolderTreeItem::imapNoInformation;
   }
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotAccountDeleted(KMAcctImap *account)
+void KMFolderTree::slotAccountDeleted(KMFolderImap *aFolder)
 {
   writeConfig();
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
-  if (fti && fti->folder && fti->folder->account() == account)
+  if (fti && fti->folder && fti->folder == aFolder)
     doFolderSelected(0);
   QListViewItem *lvi = firstChild();
   if (lvi) lvi = lvi->firstChild();
   while (lvi)
   {
     fti = static_cast<KMFolderTreeItem*>(lvi);
-    if (fti && fti->folder && fti->folder->account() == account)
+    if (fti && fti->folder)
     {
-      delete fti;
-      break;
+      KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
+      if (folder == aFolder)
+      {
+        delete fti;
+        break;
+      }
     }
     lvi = lvi->nextSibling();
   }

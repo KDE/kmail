@@ -6,6 +6,12 @@
 
 class KMFolder;
 
+typedef enum
+{
+  KMFolderTypeMbox = 0,
+  KMFolderTypeMaildir
+} KMFolderType;
+
 /** KMail list that manages the contents of one directory that may
  * contain folders and/or other directories.
  */
@@ -29,7 +35,8 @@ public:
    the folder is marked as a (KMail) system folder.
    Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& folderName,
-				 bool sysFldr=FALSE);
+				 bool sysFldr=FALSE,
+                                 KMFolderType folderType=KMFolderTypeMbox);
 
   /** Returns folder with given name or zero if it does not exist */
   virtual KMFolderNode* hasNamedFolder(const QString& name);

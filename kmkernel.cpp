@@ -21,7 +21,7 @@
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmfoldermgr.h"
-#include "kmfolder.h"
+#include "kmfoldermbox.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #include "kmreaderwin.h"
@@ -409,7 +409,7 @@ void KMKernel::recoverDeadLetters(void)
 
   if (!dir.exists("dead.letter")) return;
   fname += "/dead.letter";
-  KMFolder folder(0, fname);
+  KMFolderMbox folder(0, fname);
 
   folder.setAutoCreateIndex(FALSE);
   rc = folder.open();

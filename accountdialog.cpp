@@ -41,6 +41,7 @@
 #include <netinet/in.h>
 
 #include "accountdialog.h"
+#include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
 #include "kmacctexppop.h"
@@ -237,6 +238,10 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
   {
     makeLocalAccountPage();
   }
+  else if( accountType == "maildir" )
+  {
+    makeMaildirAccountPage();
+  }
   else if( accountType == "pop" )
   {
     makePopAccountPage();
@@ -372,6 +377,69 @@ void AccountDialog::makeLocalAccountPage()
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
+void AccountDialog::makeMaildirAccountPage()
+{
+  ProcmailRCParser procmailrcParser;
+
+  QFrame *page = makeMainWidget();
+  QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
+  topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  topLayout->setRowStretch( 10, 10 );
+  topLayout->setColStretch( 1, 10 );
+
+  mMaildir.titleLabel = new QLabel( i18n("Account type: Maildir account"), page );
+  topLayout->addMultiCellWidget( mMaildir.titleLabel, 0, 0, 0, 2 );
+  QFont titleFont( mMaildir.titleLabel->font() );
+  titleFont.setBold( true );
+  mMaildir.titleLabel->setFont( titleFont );
+  QFrame *hline = new QFrame( page );
+  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
+
+  QLabel *label = new QLabel( i18n("Name:"), page );
+  topLayout->addWidget( label, 2, 0 );
+  mMaildir.nameEdit = new QLineEdit( page );
+  topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
+
+  label = new QLabel( i18n("Location:"), page );
+  topLayout->addWidget( label, 3, 0 );
+  mMaildir.locationEdit = new QComboBox( true, page );
+  topLayout->addWidget( mMaildir.locationEdit, 3, 1 );
+  mMaildir.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
+
+  QPushButton *choose = new QPushButton( i18n("Choose..."), page );
+  choose->setAutoDefault( false );
+  connect( choose, SIGNAL(clicked()), this, SLOT(slotMaildirChooser()) );
+  topLayout->addWidget( choose, 3, 2 );
+
+  mMaildir.excludeCheck =
+    new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
+  topLayout->addMultiCellWidget( mMaildir.excludeCheck, 5, 5, 0, 2 );
+
+  mMaildir.intervalCheck =
+    new QCheckBox( i18n("Enable interval mail checking"), page );
+  topLayout->addMultiCellWidget( mMaildir.intervalCheck, 6, 6, 0, 2 );
+  connect( mMaildir.intervalCheck, SIGNAL(toggled(bool)),
+	   this, SLOT(slotEnableMaildirInterval(bool)) );
+  mMaildir.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page );
+  topLayout->addWidget( mMaildir.intervalLabel, 7, 0 );
+  mMaildir.intervalSpin = new KIntNumInput( page );
+  mMaildir.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mMaildir.intervalSpin->setValue( 1 );
+  topLayout->addWidget( mMaildir.intervalSpin, 7, 1 );
+
+  label = new QLabel( i18n("Destination folder:"), page );
+  topLayout->addWidget( label, 8, 0 );
+  mMaildir.folderCombo = new QComboBox( false, page );
+  topLayout->addWidget( mMaildir.folderCombo, 8, 1 );
+
+  label = new QLabel( i18n("Precommand:"), page );
+  topLayout->addWidget( label, 9, 0 );
+  mMaildir.precommand = new QLineEdit( page );
+  topLayout->addWidget( mMaildir.precommand, 9, 1 );
+
+  connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+}
 
 
 void AccountDialog::makePopAccountPage()
@@ -693,6 +761,22 @@ void AccountDialog::setupSettings()
       mImap.authLogin->setChecked( TRUE );
     else mImap.authAuto->setChecked( TRUE );
   }
+  else if( accountType == "maildir" )
+  {
+    KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
+
+    mMaildir.nameEdit->setText( mAccount->name() );
+    mMaildir.nameEdit->setFocus();
+    mMaildir.locationEdit->setEditText( acctMaildir->location() );
+
+    mMaildir.intervalSpin->setValue( QMAX(1, interval) );
+    mMaildir.intervalCheck->setChecked( interval >= 1 );
+    mMaildir.excludeCheck->setChecked( mAccount->checkExclude() );
+    mMaildir.precommand->setText( mAccount->precommand() );
+
+    slotEnableMaildirInterval( interval >= 1 );
+    folderCombo = mMaildir.folderCombo;
+  }
   else // Unknown account type
     return;
 
@@ -901,6 +985,24 @@ void AccountDialog::saveSettings()
       epa.setAuth("LOGIN");
     else epa.setAuth("*");
   }
+  else if( accountType == "maildir" )
+  {
+    KMAcctMaildir *acctMaildir = dynamic_cast<KMAcctMaildir*>(mAccount);
+
+    if (acctMaildir) {
+      mAccount->setName( mMaildir.nameEdit->text() );
+      acctMaildir->setLocation( mMaildir.locationEdit->currentText() );
+    }
+    mAccount->setCheckInterval( mMaildir.intervalCheck->isChecked() ?
+			     mMaildir.intervalSpin->value() : 0 );
+    mAccount->setCheckExclude( mMaildir.excludeCheck->isChecked() );
+
+    mAccount->setPrecommand( mMaildir.precommand->text() );
+
+    mAccount->setFolder( *mFolderList.at(mMaildir.folderCombo->currentItem()) );
+
+  }
+
   kernel->acctMgr()->writeConfig(TRUE);
 }
 
@@ -933,6 +1035,18 @@ void AccountDialog::slotLocationChooser()
   directory = url.directory();
 }
 
+void AccountDialog::slotMaildirChooser()
+{
+  static QString directory( "/" );
+
+  QString dir = KFileDialog::getExistingDirectory(directory, this, i18n("Choose Location"));
+
+  if( dir.isEmpty() )
+    return;
+
+  mMaildir.locationEdit->setEditText( dir );
+  directory = dir;
+}
 
 
 void AccountDialog::slotEnablePopInterval( bool state )
@@ -948,6 +1062,11 @@ void AccountDialog::slotEnableLocalInterval( bool state )
   mLocal.intervalLabel->setEnabled( state );
 }
 
+void AccountDialog::slotEnableMaildirInterval( bool state )
+{
+  mMaildir.intervalSpin->setEnabled( state );
+  mMaildir.intervalLabel->setEnabled( state );
+}
 
 void AccountDialog::slotFontChanged( void )
 {

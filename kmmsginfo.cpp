@@ -16,12 +16,12 @@ public:
     enum {
 	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
 	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40,
-	XMARK_SET=0x100, FROM_SET=0x200,
+	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x300,
 
 	ALL_SET = 0xFFFF, NONE_SET = 0x0000
     };
     ushort modifiers;
-    QString subject, from, to, replyToIdMD5, msgIdMD5, xmark;
+    QString subject, from, to, replyToIdMD5, msgIdMD5, xmark, file;
     unsigned long folderOffset, msgSize;
     time_t date;
 
@@ -35,6 +35,10 @@ public:
 	if (other.modifiers & FROM_SET) {
 	    modifiers |= FROM_SET;
 	    from = other.from;
+	}
+	if (other.modifiers & FILE_SET) {
+	    modifiers |= FILE_SET;
+	    file = other.from;
 	}
 	if (other.modifiers & TO_SET) {
 	    modifiers |= TO_SET;
@@ -118,6 +122,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->folderOffset = msg.folderOffset();
     kd->msgSize = msg.msgSize();
     kd->date = msg.date();
+    kd->file = msg.fileName();
     return *this;
 }
 
@@ -144,7 +149,19 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     mStatus    = aStatus;
     kd->msgSize = aMsgSize;
     kd->date = aDate;
+    kd->file = "";
     mDirty     = FALSE;
+}
+
+void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
+                     const QCString& aTo, time_t aDate,
+		     KMMsgStatus aStatus, const QCString& aXMark,
+		     const QCString& replyToId, const QCString& msgId,
+		     const QCString& aFileName, unsigned long aMsgSize)
+{
+  // use the "normal" init for most stuff
+  init(aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, msgId, (unsigned long)0, aMsgSize);
+  kd->file = aFileName;
 }
 
 
@@ -163,6 +180,17 @@ QString KMMsgInfo::fromStrip(void) const
     if (kd && kd->modifiers & KMMsgInfoPrivate::FROM_SET)
 	return kd->from;
     return getStringPart(MsgFromPart);
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgInfo::fileName(void) const
+{
+    QString filename;
+    if (kd && kd->modifiers & KMMsgInfoPrivate::FILE_SET)
+	filename = kd->file;
+    else
+        filename = getStringPart(MsgFilePart);
+    return filename;
 }
 
 
@@ -311,6 +339,19 @@ void KMMsgInfo::setFolderOffset(unsigned long offs)
 	kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::OFFSET_SET;
     kd->folderOffset = offs;
+    mDirty = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setFileName(const QString& file)
+{
+    if (fileName() == file)
+	return;
+
+    if (!kd)
+	kd = new KMMsgInfoPrivate;
+    kd->modifiers |= KMMsgInfoPrivate::FILE_SET;
+    kd->file = file;
     mDirty = TRUE;
 }
 

@@ -29,7 +29,6 @@
 class KMMessage;
 class KMFolderDir;
 class KMAcctList;
-class KMAcctImap;
 
 #define KMFolderInherited KMFolderNode
 
@@ -90,7 +89,7 @@ public:
   virtual bool isMessage(int idx);
 
   /** Read a message and return a referece to a string */
-  virtual QCString& getMsgString(int idx, QCString& mDest);
+  virtual QCString& getMsgString(int idx, QCString& mDest) = 0;
 
   /** Provides access to the basic message fields that are also stored
     in the index. Whenever you only need subject, from, date, status
@@ -114,8 +113,7 @@ public:
     is stored in index_return if given.
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
-  virtual int addMsg(KMMessage* msg, int* index_return = NULL,
-    bool imapQuiet = FALSE);
+  virtual int addMsg(KMMessage* msg, int* index_return = NULL, bool quiet = FALSE) = 0;
 
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
@@ -161,14 +159,14 @@ public:
     call close() first.
     Returns zero on success and an error code equal to the c-library
     fopen call otherwise (errno). */
-  virtual int open();
+  virtual int open() = 0;
 
   /** Close folder. If force is TRUE the files are closed even if
     others still use it (e.g. other mail reader windows). */
-  virtual void close(bool force=FALSE);
+  virtual void close(bool force=FALSE) = 0;
 
   /** fsync buffers to disk */
-  virtual void sync();
+  virtual void sync() = 0;
 
   /** Test if folder is opened. */
   bool isOpened() const { return (mOpenCount>0); }
@@ -179,7 +177,7 @@ public:
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
-  virtual int create(bool imap = FALSE);
+  virtual int create(bool imap = FALSE) = 0;
 
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this
@@ -193,7 +191,7 @@ public:
 
   /** Remove deleted messages from the folder. Returns zero on success
     and an errno on failure. */
-  virtual int compact();
+  virtual int compact() = 0;
 
   /** Physically rename the folder. Returns zero on success and an errno
     on failure. */
@@ -225,7 +223,7 @@ public:
   virtual void quiet(bool beQuiet);
 
   /** Is the folder read-only? */
-  virtual bool isReadOnly() const { return !mFilesLocked; }
+  virtual bool isReadOnly() const = 0;
 
   /** Returns TRUE if the folder is a kmail system folder. These are
     the folders 'outbox', 'sent', 'trash'. The name of these
@@ -240,6 +238,8 @@ public:
 
   /** Type of the folder. Inherited. */
   virtual const char* type() const;
+
+  virtual QCString protocol() const = 0;
 
   /** Returns TRUE if accounts are associated with this folder. */
   bool hasAccounts() const { return (mAcctList != NULL); }
@@ -282,26 +282,6 @@ public:
   /** Returns a string that can be used to identify this folder */
   virtual QString idString();
 
-  void setLockType( LockType ltype=FCNTL );
-
-  /** The path to the imap folder on the server */
-  void setImapPath(const QString &path) { mImapPath = path; }
-  QString imapPath() { return mImapPath; }
-
-  /** The uidvalidity of the last update */
-  void setUidValidity(const QString &validity) { mUidValidity = validity; }
-  QString uidValidity() { return mUidValidity; }
-
-  /** The next predicted UID of the folder */
-  void setUidNext(const QString &uidNext) { mUidNext = uidNext; }
-  QString uidNext() { return mUidNext; }
-
-  /** The imap account the folder belongs to */
-  void setAccount(KMAcctImap *acct) { mAccount = acct; }
-  KMAcctImap* account() { return mAccount; }
-
-  void setProcmailLockFileName( const QString& );
-
     uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
 
 signals:
@@ -324,25 +304,13 @@ signals:
   /** Emitted when number of unread messages has changed. */
   void numUnreadMsgsChanged( KMFolder* );
 
-public slots:
-  /** Add the message to the folder after it has been retrieved from an IMAP
-      server */
-  virtual void reallyAddMsg(KMMessage *);
-
-  /** Add a message to a folder after is has been added on an IMAP server */
-  virtual void addMsgQuiet(KMMessage *);
-
-  /** Add a copy of the message to the folder after it has been retrieved
-      from an IMAP server */
-  virtual void reallyAddCopyOfMsg(KMMessage *);
-
 protected:
   /** Escape a leading dot */
   virtual QString dotEscape(const QString&) const;
 
   /** Load message from file and store it at given index. Returns NULL
     on failure. */
-  virtual KMMessage* readMsg(int idx);
+  virtual KMMessage* readMsg(int idx) = 0;
 
   /** Read index file and fill the message-info list mMsgList. */
   virtual bool readIndex();
@@ -353,26 +321,18 @@ protected:
   /** Create index file from messages file and fill the message-info list
       mMsgList. Returns 0 on success and an errno value (see fopen) on
       failure. */
-  virtual int createIndexFromContents();
+  virtual int createIndexFromContents() = 0;
 
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */
   virtual int writeIndex();
     bool updateIndexStreamPtr(bool just_close=FALSE);
 
-  /** Lock mail folder files. Called by ::open(). Returns 0 on success and
-    an errno error code on failure. */
-  virtual int lock();
-
-  /** Unlock mail folder files. Called by ::close().  Returns 0 on success
-    and an errno error code on failure. */
-  virtual int unlock();
-
   /** Tests whether the contents (file) is newer than the index. Returns
     TRUE if the contents has changed (and the index should be recreated),
     and FALSE otherwise. Returns TRUE if there is no index file, and
     TRUE if there is no contents (file). */
-  virtual bool isIndexOutdated();
+  virtual bool isIndexOutdated() = 0;
 
   /** Write the config file */
   virtual void writeConfig();
@@ -380,8 +340,6 @@ protected:
   /** Read the config file */
   virtual void readConfig();
 
-  /** file with the messages */
-  FILE* mStream; 
   /** table of contents file */
   FILE* mIndexStream;
   /** list of index entries or messages */
@@ -408,11 +366,6 @@ protected:
   QString mMailingListAdminAddress;
   QString mIdentity;
 
-  QString    mImapPath;
-  QString    mUidValidity;
-  QString    mUidNext;
-  KMAcctImap *mAccount;
-
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs;
   bool mWriteConfigEnabled;
@@ -421,8 +374,6 @@ protected:
   /** false if index file is out of sync with mbox file */
   bool mConsistent;
   KMFolderDir* mChild;
-  LockType mLockType;
-  QString mProcmailLockFileName;
   bool mConvertToUtf8;
   uchar *mIndexStreamPtr;
   int mIndexStreamPtrLength, mIndexId;

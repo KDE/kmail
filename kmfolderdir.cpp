@@ -3,7 +3,8 @@
 #include <qdir.h>
 
 #include "kmfolderdir.h"
-#include "kmfolder.h"
+#include "kmfoldermaildir.h"
+#include "kmfoldermbox.h"
 #include <kapp.h>
 
 #include <assert.h>
@@ -68,13 +69,16 @@ KMFolderDir::~KMFolderDir()
 
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr)
+KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, KMFolderType aFolderType)
 {
   KMFolder* fld;
   int rc;
 
   assert(!aFolderName.isEmpty());
-  fld = new KMFolder(this, aFolderName);
+  if (aFolderType == KMFolderTypeMaildir)
+    fld = new KMFolderMaildir(this, aFolderName);
+  else
+    fld = new KMFolderMbox(this, aFolderName);
   assert(fld != NULL);
 
   fld->setSystemFolder(aSysFldr);
@@ -165,11 +169,22 @@ bool KMFolderDir::reload(void)
     else if (fname == ".directory")
       continue;
     else if (fileInfo->isDir()) // a directory
-      diList.append(fname);
+    {
+      QString maildir(fname + "/new");
+      // see if this is a maildir before assuming a subdir
+      if (dir.exists(maildir))
+      {
+        folder = new KMFolderMaildir(this, fname);
+        append(folder);
+        folderList.append(folder);
+      }
+      else
+        diList.append(fname);
+    }
 
     else // all other files are folders (at the moment ;-)
     {
-      folder = new KMFolder(this, fname);
+      folder = new KMFolderMbox(this, fname);
       append(folder);
       folderList.append(folder);
     }

@@ -1,6 +1,7 @@
 // KMail Account Manager
 
 #include "kmacctmgr.h"
+#include "kmacctmaildir.h"
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
@@ -183,6 +184,9 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 
   if (aType == "local")
     act = new KMAcctLocal(this, aName);
+
+  if (aType == "maildir")
+    act = new KMAcctMaildir(this, aName);
 
   else if (aType == "pop")
     act = new KMAcctExpPop(this, aName);

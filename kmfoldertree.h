@@ -5,7 +5,7 @@
 #include <qlistview.h>
 #include <qtimer.h>
 #include <klocale.h>
-#include "kmfolder.h"
+#include "kmfolderimap.h"
 
 // Fixme! A temporary dependency
 #include "kmheaders.h" // For KMHeaderToFolderDrag & KMPaintInfo
@@ -100,7 +100,7 @@ public:
     QValueList<QGuardedPtr<KMFolder> > * folders);
 
   /** Create a list of all IMAP folders of a given account */
-  void createImapFolderList(KMAcctImap *account, QStringList *names,
+  void createImapFolderList(KMFolderImap *folder, QStringList *names,
     QStringList *urls, QStringList *mimeTypes);
 
   /** Read config options. */
@@ -154,7 +154,7 @@ public slots:
   /** Executes delayed update of folder tree */
   void delayedUpdate();
   /** Remove all items associated with the given IMAP account */
-  void slotAccountDeleted(KMAcctImap*);
+  void slotAccountDeleted(KMFolderImap*);
 
 protected slots:
   void doFolderSelected(QListViewItem*);

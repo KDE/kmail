@@ -45,6 +45,7 @@ public:
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& fName, bool sysFldr=FALSE,
+				 KMFolderType aFolderType=KMFolderTypeMbox,
 				 KMFolderDir *aFolderDir = 0);
 
   /** Physically remove given folder and delete the given folder object. */

@@ -73,6 +73,23 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   hl->addWidget( fileInFolder );
   label2->setBuddy( fileInFolder );
 
+  QGroupBox *mtGroup = new QGroupBox( i18n("Folder Type"), page, "mtGroup" );
+  mtGroup->setColumnLayout( 0,  Qt::Vertical );
+
+  topLayout->addWidget( mtGroup );
+
+  QHBoxLayout *ml = new QHBoxLayout( mtGroup->layout() );
+  ml->setSpacing( 6 );
+
+  QLabel *label_type = new QLabel( i18n("Mailbox Format:" ), mtGroup );
+  ml->addWidget( label_type );
+  mailboxType = new QComboBox(mtGroup);
+  mailboxType->insertItem("mbox (default)", 0);
+  mailboxType->insertItem("maildir", 1);
+  if (aFolder) mailboxType->setEnabled(false);
+  ml->addWidget( mailboxType );
+  ml->addStretch( 1 );
+
   QStringList str;
   kernel->folderMgr()->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
@@ -94,7 +111,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       fileInFolder->setCurrentItem( i );
   }
 
-  if (aFolder && aFolder->account()) {
+  if (aFolder && (aFolder->protocol() == "imap")) {
     label->setEnabled( false );
     nameEdit->setEnabled( false );
     label2->setEnabled( false );
@@ -164,6 +181,11 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     holdsMailingList->setChecked(folder->isMailingList());
     // markAnyMessage->setChecked( folder->isAnyMessageMarked() );
 
+    if (folder->protocol() == "maildir")
+      mailboxType->setCurrentItem(1);
+    else
+      mailboxType->setCurrentItem(0);
+
     for (int i=0; i < identity->count(); ++i)
       if (identity->text(i) == folder->identity()) {
          identity->setCurrentItem(i);
@@ -178,7 +200,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()
 {
-  if (!mFolder || !mFolder->account())
+  if (!mFolder || (mFolder->protocol() != "imap"))
   {
     QString acctName;
     QString fldName, oldFldName;
@@ -232,7 +254,10 @@ void KMFolderDialog::slotOk()
     }
 
     if (!folder) {
-      folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, selectedFolderDir );
+      if (mailboxType->currentItem() == 1)
+        folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
+      else
+        folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {

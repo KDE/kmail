@@ -28,6 +28,13 @@ public:
 		    const QCString& replyToId, const QCString& msgId,
 		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
+  /** Initialize with given values and set dirty flag to FALSE. */
+  virtual void init(const QCString& subject, const QCString& from,
+                    const QCString& to, time_t date,
+		    KMMsgStatus status, const QCString& xmark,
+		    const QCString& replyToId, const QCString& msgId,
+		    const QCString& fileName, unsigned long msgSize=0);
+
   /** Inherited methods (see @ref KMMsgBase for description): */
   virtual QString subject(void) const;
   virtual QString fromStrip(void) const;
@@ -35,12 +42,14 @@ public:
   virtual QString xmark(void) const;
   virtual QString replyToIdMD5(void) const;
   virtual QString msgIdMD5(void) const;
+  virtual QString fileName(void) const;
   virtual KMMsgStatus status(void) const;
   virtual unsigned long folderOffset(void) const;
   virtual unsigned long msgSize(void) const;
   virtual time_t date(void) const;
   void setMsgSize(unsigned long sz);
   void setFolderOffset(unsigned long offs);
+  void setFileName(const QString& file);
   virtual void setStatus(const KMMsgStatus status);
   virtual void setDate(time_t aUnixTime);
   virtual void setSubject(const QString&);

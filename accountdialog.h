@@ -59,7 +59,21 @@ class AccountDialog : public KDialogBase
       QComboBox    *folderCombo;
       QComboBox    *identityCombo;
     };
-  
+
+    struct MaildirWidgets
+    {
+      QLabel       *titleLabel;
+      QLineEdit    *nameEdit;
+      QComboBox    *locationEdit;
+      QLineEdit    *precommand;
+      QCheckBox    *excludeCheck;
+      QCheckBox    *intervalCheck;
+      QLabel       *intervalLabel;
+      KIntNumInput *intervalSpin;
+      QComboBox    *folderCombo;
+      QComboBox    *identityCombo;
+    };
+
     struct PopWidgets
     {
       QLabel       *titleLabel;
@@ -112,8 +126,10 @@ class AccountDialog : public KDialogBase
   private slots:
     virtual void slotOk();
     void slotLocationChooser();
+    void slotMaildirChooser();
     void slotEnablePopInterval( bool state );
     void slotEnableLocalInterval( bool state );
+    void slotEnableMaildirInterval( bool state );
     void slotFontChanged();
     void slotSSLChanged();
     void slotTLSChanged();
@@ -122,6 +138,7 @@ class AccountDialog : public KDialogBase
     
   private:
     void makeLocalAccountPage();
+    void makeMaildirAccountPage();
     void makePopAccountPage();
     void makeImapAccountPage();
     void setupSettings();
@@ -129,6 +146,7 @@ class AccountDialog : public KDialogBase
 
   private:
     LocalWidgets mLocal;
+    MaildirWidgets mMaildir;
     PopWidgets   mPop;
     ImapWidgets  mImap;
     KMAccount    *mAccount;

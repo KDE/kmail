@@ -720,6 +720,8 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = xmark().stripWhiteSpace();
   STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2);
+  tmp_str = fileName().stripWhiteSpace();
+  STORE_DATA_LEN(MsgFilePart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = msgSize();
   STORE_DATA(MsgSizePart, tmp);
   tmp = folderOffset();

@@ -50,13 +50,12 @@
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
 #include "kmaccount.h"
-#include "kmacctimap.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmfoldertree.h"
 #include "kmheaders.h"
 #include "kmreaderwin.h"
-#include "kmfolder.h"
+#include "kmfolderimap.h"
 #include "kmmessage.h"
 #include "kmcomposewin.h"
 #include "kmglobal.h"
@@ -741,7 +740,7 @@ void KMMainWin::slotModifyFolder()
   if (!mFolder) return;
   d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(),
 			 this, i18n("Properties of folder %1").arg( mFolder->label() ) );
-  if (d->exec() && !mFolder->account()) {
+  if (d->exec() && (mFolder->protocol() != "imap")) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
     if (qlvi) {
@@ -770,7 +769,7 @@ void KMMainWin::slotEmptyFolder()
        !=KMessageBox::Continue) return;
   }
 
-  if (mFolder->account())
+  if (mFolder->protocol() == "imap")
   {
     slotMarkAll();
     slotDeleteMsg();
@@ -853,8 +852,11 @@ void KMMainWin::slotCompactFolder()
   int idx = mHeaders->currentItemIndex();
   if (mFolder)
   {
-    if (mFolder->account())
-      mFolder->account()->expungeFolder(mFolder);
+    if (mFolder->protocol() == "imap")
+    {
+      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
+      imap->expungeFolder(imap);
+    }
     else
     {
       kernel->kbp()->busy();
@@ -878,8 +880,11 @@ void KMMainWin::slotCompactAll()
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    if (folder->account())
-      folder->account()->expungeFolder(folder);
+    if (folder->protocol() == "imap")
+    {
+      KMFolderImap *imap = static_cast<KMFolderImap*>(folder);
+      imap->expungeFolder(imap);
+    }
     else
       folder->compact();
   }
@@ -1183,9 +1188,12 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     mHeaders->show();
   }
   else mMsgView->setMsg(0,FALSE);
-  if (mFolder && mFolder->account() && mFolder->account()->autoExpunge()
-    && mFolder->needsCompacting())
-      mFolder->account()->expungeFolder(mFolder);
+  if (mFolder && mFolder->needsCompacting() && (mFolder->protocol() == "imap"))
+  {
+    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
+    if (imap->autoExpunge())
+      imap->expungeFolder(imap);
+  }
   writeFolderConfig();
   mFolder = (KMFolder*)aFolder;
   readFolderConfig();
@@ -1200,7 +1208,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
   mMsgView->setMsg(msg);
-  if (msg && msg->parent() && msg->parent()->account())
+  if (msg && msg->parent() && (msg->parent()->protocol() == "imap"))
   {
     KMImapJob *job = new KMImapJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
@@ -2172,7 +2180,7 @@ void KMMainWin::updateFolderMenu()
 {
   modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
     : false );
-  removeFolderAction->setEnabled( (mFolder && !mFolder->account()) 
+  removeFolderAction->setEnabled( (mFolder && mFolder->protocol() != "imap") 
     ? !mFolder->isSystemFolder() : false );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );

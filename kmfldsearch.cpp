@@ -10,7 +10,6 @@
 #include "kmmsgpart.h"
 #include "kmfoldertree.h"
 #include "kmmainwin.h"
-#include "kmacctimap.h"
 
 #include <qmessagebox.h>
 #include <qpushbutton.h>
@@ -229,7 +228,8 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotFolderComplete(KMFolderTreeItem *fti, bool success)
 {
-  disconnect(fti->folder->account(),
+  KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
+  disconnect(folder,
     SIGNAL(folderComplete(KMFolderTreeItem*, bool)),
     this, SLOT(slotFolderComplete(KMFolderTreeItem*, bool)));
   if (success) searchInFolder(fti->folder, mFolders.findIndex(fti->folder));
@@ -312,7 +312,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   updStatus();
 
   aFld->close();
-  if (aFld->account()) searchDone();
+  if (aFld->protocol() == "imap") searchDone();
 }
 
 
@@ -330,7 +330,7 @@ void KMFldSearch::searchInAllFolders(void)
     // Stop pressed?
     if(!mSearching)
       break;
-    if (folder && !folder->account()) searchInFolder(folder,i);
+    if (folder && (folder->protocol() != "imap")) searchInFolder(folder,i);
     ++i;
   }
 }
@@ -375,15 +375,16 @@ void KMFldSearch::slotSearch()
     if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
       KMFolder *folder = *folders.at(mCbxFolders->currentItem()-1);
       KMFolderTreeItem *fti;
-      if (folder->account() && (fti = static_cast<KMFolderTreeItem*>
+      if ((folder->protocol() == "imap") && (fti = static_cast<KMFolderTreeItem*>
         (mMainWin->folderTree()->indexOfFolder(folder)))
         ->mImapState == KMFolderTreeItem::imapNoInformation)
       {
-        folder->open();
-        connect(folder->account(),
+        KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
+        imap_folder->open();
+        connect(imap_folder,
           SIGNAL(folderComplete(KMFolderTreeItem *, bool)),
           SLOT(slotFolderComplete(KMFolderTreeItem *, bool)));
-        folder->account()->getFolder(fti);
+        imap_folder->getFolder(fti);
         return;
       }
       searchInFolder(folder, mCbxFolders->currentItem()-1);
@@ -543,7 +544,7 @@ void KMFldSearchRule::updateFunctions(QComboBox *cbx,
 {
   int cur = cbx->currentItem();
   insertFieldItems(!cur || (*folders.at(cur-1) &&
-    !(*folders.at(cur-1))->account()));
+    ((*folders.at(cur-1))->protocol() != "imap")));
 }
 
 

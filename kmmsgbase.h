@@ -89,6 +89,10 @@ public:
   virtual unsigned long folderOffset(void) const = 0;
   virtual void setFolderOffset(unsigned long offs) = 0;
 
+  /** Get/set msg filename */
+  virtual QString fileName(void) const = 0;
+  virtual void setFileName(const QString& filename) = 0;
+
   /** Get/set size of message including the whole header in bytes. */
   virtual unsigned long msgSize(void) const = 0;
   virtual void setMsgSize(unsigned long sz) = 0;
@@ -170,7 +174,8 @@ public:
 	MsgOffsetPart = 7,
 	MsgStatusPart = 8,
 	MsgSizePart = 9,
-	MsgDatePart = 10
+	MsgDatePart = 10,
+	MsgFilePart = 11
     };
     /** access to long msgparts */
     unsigned long getLongPart(MsgPartType) const; 

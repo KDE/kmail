@@ -2932,6 +2932,10 @@ void ConfigureDialog::slotAddAccount( void )
       accountType = "imap";
     break;
 
+    case 3:
+      accountType = "maildir";
+    break;
+
     default:
       KMessageBox::sorry( this, i18n("Unknown account type selected") );
       return;

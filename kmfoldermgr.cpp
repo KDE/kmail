@@ -108,6 +108,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
 
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
+				    KMFolderType aFolderType,
 				    KMFolderDir *aFolderDir)
 {
   KMFolder* fld;
@@ -115,7 +116,7 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 
   if (!aFolderDir)
     fldDir = &mDir;
-  fld = fldDir->createFolder(fName, sysFldr);
+  fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
     emit changed();
     if (kernel->filterMgr())
@@ -171,7 +172,23 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
 
   if (!folder)
   {
-    folder = createFolder(aFolderName, sysFldr);
+    static bool know_type = false;
+    static KMFolderType type = KMFolderTypeMbox;
+    if (know_type == false)
+    {
+      know_type = true;
+      QCString MAIL(getenv("MAIL"));
+      if (!MAIL.isEmpty() && !MAIL.isNull())
+      {
+        // if the contents of $MAIL is a directory, then we likely want
+        // Maildir as our default
+        QFileInfo info(MAIL);
+        if (info.isDir())
+          type = KMFolderTypeMaildir;
+      }
+    }
+
+    folder = createFolder(aFolderName, TRUE, type);
     if (!folder) {
       KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
       exit(-1);
