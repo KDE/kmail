@@ -19,7 +19,7 @@ sub process {
 	print "# DELETE [$section]Signature File\n";
     } else {
 	# type = file or command
-	if ( $data{'file'} =~ /|$/ ) {
+	if ( $data{'file'} =~ /\|$/ ) {
 	    # a trailing pipe means:
 	    # type = command
 	    chop $data{'file'};
@@ -50,6 +50,7 @@ while (<>) {
 	%data = ();
 	next;
     }
+    chomp;
     /^Inline Signature=(.*)$/ and $data{'inline'} = $1;
     /^Signature File=(.*)$/   and $data{'file'} = $1;
     /^UseSignatureFile=(.*)$/ and $data{'usefile'} = $1;
