@@ -1,6 +1,13 @@
 // kmheaders.cpp
 
-#include <qfiledlg.h>
+
+#include <qstrlist.h>
+#include "kmcomposewin.h"
+#include <kfiledialog.h>
+#include <drag.h>
+
+#include <kapp.h>
+#include <kiconloader.h>
 
 #include "kmfolder.h"
 #include "kmheaders.h"
@@ -9,15 +16,8 @@
 #include "kmdragdata.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
-#include "kmcomposewin.h"
 #include "kfileio.h"
 #include "kmfiltermgr.h"
-
-#include <drag.h>
-#include <qstrlist.h>
-#include <kapp.h>
-#include <kiconloader.h>
-#include <kapp.h>
 
 
 //-----------------------------------------------------------------------------
@@ -333,7 +333,7 @@ void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
   QString str;
-  QString fileName = QFileDialog::getSaveFileName(".", "*");
+  QString fileName = KFileDialog::getSaveFileName(".", "*");
 
   if (fileName.isEmpty()) return;
 

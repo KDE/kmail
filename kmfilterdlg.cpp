@@ -402,7 +402,7 @@ void KMFilterDlg::slotFilterSelected(int idx)
   debug("KMFilterDlg::slotFilterSelected()");
 
   if (mFilter) applyFilterChanges();
-  if (idx < (int)filterMgr->count())
+  if ((uint)idx < filterMgr->count())
   {
     filter = filterMgr->at(idx);
     if (filter) showFilter(filter);

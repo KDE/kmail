@@ -18,6 +18,7 @@
 #include <kapp.h>
 #include <kapp.h>
 #include <kmsgbox.h>
+#include <kfiledialog.h>
 #include <ktablistbox.h>
 #include <qbttngrp.h>
 #include <qfiledlg.h>
@@ -418,6 +419,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
   QGridLayout* grid;
   QGroupBox* grp;
+
   KConfig* config = app->getConfig();
   QString str;
 
@@ -538,7 +540,7 @@ void KMSettings::addAccount()
 //-----------------------------------------------------------------------------
 void KMSettings::chooseSendmailLocation()
 {
-  QFileDialog dlg("/", "*", this, NULL, TRUE);
+  KFileDialog dlg("/", "*", this, NULL, TRUE);
   dlg.setCaption(i18n("Choose Sendmail Location"));
 
   if (dlg.exec()) sendmailLocationEdit->setText(dlg.selectedFile());
@@ -547,7 +549,7 @@ void KMSettings::chooseSendmailLocation()
 //-----------------------------------------------------------------------------
 void KMSettings::chooseSigFile()
 {
-  QFileDialog *d=new QFileDialog(QDir::homeDirPath(),"*",this,NULL,TRUE);
+  KFileDialog *d=new KFileDialog(QDir::homeDirPath(),"*",this,NULL,TRUE);
   d->setCaption(i18n("Choose Signature File"));
   if (d->exec()) sigEdit->setText(d->selectedFile());
   delete d;
@@ -809,7 +811,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 void KMAccountSettings::chooseLocation()
 {
   static QString sSelLocation("/");
-  QFileDialog fdlg(sSelLocation,"*",this,NULL,TRUE);
+  KFileDialog fdlg(sSelLocation,"*",this,NULL,TRUE);
   fdlg.setCaption(i18n("Choose Location"));
 
   if (fdlg.exec()) mEdtLocation->setText(fdlg.selectedFile());

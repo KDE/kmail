@@ -461,6 +461,7 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString aStr)
 {
   static QString result;
   int start, beg, mid, end;
+  end = 0; // Remove compiler warning;
 
   start = 0;
   end = 0;
