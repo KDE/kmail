@@ -97,7 +97,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
 }
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMFolderIndex* parent): KMMsgBase(parent)
+KMMessage::KMMessage(KMFolder* parent): KMMsgBase(parent)
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
