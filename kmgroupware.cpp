@@ -42,7 +42,7 @@
 #include "kmcomposewin.h"
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include "kmkernel.h"
 
 #include <kurl.h>

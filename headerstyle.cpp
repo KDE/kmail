@@ -40,7 +40,7 @@
 #include "kmmessage.h"
 #include "kmkernel.h"
 
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 
 #include <mimelib/string.h>
 #include <mimelib/field.h>
@@ -97,7 +97,7 @@ namespace KMail {
   protected:
     BriefHeaderStyle() : HeaderStyle() {}
     virtual ~BriefHeaderStyle() {}
-    
+
   public:
     const char * name() const { return "brief"; }
     const HeaderStyle * next() const { return plain(); }
@@ -189,7 +189,7 @@ namespace KMail {
   protected:
     PlainHeaderStyle() : HeaderStyle() {}
     virtual ~PlainHeaderStyle() {}
-    
+
   public:
     const char * name() const { return "plain"; }
     const HeaderStyle * next() const { return fancy(); }
@@ -255,7 +255,7 @@ namespace KMail {
 
     if ( strategy->showHeader( "date" ) )
       headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
-    
+
     // Get Instant Messaging presence
     QString presence;
     QString kabcUid;
@@ -267,7 +267,7 @@ namespace KMail {
       kabcUid = addresses[0].uid();
       presence = imProxy->presenceString( kabcUid );
     }
- 
+
     if ( strategy->showHeader( "from" ) ) {
       headerStr.append(i18n("From: ") +
 		       KMMessage::emailAddrAsAnchor(message->from(),FALSE));
@@ -327,7 +327,7 @@ namespace KMail {
   protected:
     FancyHeaderStyle() : HeaderStyle() {}
     virtual ~FancyHeaderStyle() {}
-    
+
   public:
     const char * name() const { return "fancy"; }
     const HeaderStyle * next() const { return brief(); }
@@ -379,9 +379,9 @@ namespace KMail {
 
     QString userHTML;
     QString presence;
-    
+
     // IM presence and kabc photo
-    // Check first that KIMProxy has any IM presence data, to save hitting KABC 
+    // Check first that KIMProxy has any IM presence data, to save hitting KABC
     // unless really necessary
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
     QString kabcUid;
@@ -391,16 +391,16 @@ namespace KMail {
       {
         KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
         KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
-    
+
         if( addresses.count() == 1 )
         {
           // kabcUid is embedded in im: URIs to indicate which IM contact to message
           kabcUid = addresses[0].uid();
-          
+
           // im status
           presence = imProxy->presenceString( kabcUid );
           if ( !presence.isEmpty() )
-          {  
+          {
             QString presenceIcon = QString::fromLatin1( " <img src=\"%1\"/>" )
                 .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).convertToImage() ) );
             presence += presenceIcon;
@@ -431,7 +431,7 @@ namespace KMail {
               //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
               userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
               if ( presence.isEmpty() )
-              {  
+              {
                 userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
               }
               else
@@ -478,7 +478,7 @@ namespace KMail {
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
-                 + ( ( !presence.isEmpty() && strategy->showHeader( "status" ) ) 
+                 + ( ( !presence.isEmpty() && strategy->showHeader( "status" ) )
                               ? "&nbsp;&nbsp;(<span name=\"presence-" + kabcUid + "\">" + presence + "</span>)"
                               : QString("") )
                  + ( message->headerField("Organization").isEmpty()
@@ -526,7 +526,7 @@ namespace KMail {
     headerStr.append(
           QString("</table></td><td align=\"center\">%1</td></tr></table>\n").arg(userHTML)
                      );
-    
+
     headerStr += "</div>\n\n";
     return headerStr;
   }
@@ -538,7 +538,7 @@ QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
   buffer.open( IO_WriteOnly );
   image.save( &buffer, "PNG" );
   return QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
-}  
+}
   //
   // HeaderStyle abstract base:
   //

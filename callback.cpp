@@ -33,7 +33,7 @@
 #include "callback.h"
 #include "kmkernel.h"
 #include "kmmessage.h"
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
 #include "kmmainwin.h"

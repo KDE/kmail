@@ -41,7 +41,7 @@
 #include "kmgroupware.h"
 #include "kmkernel.h"
 #include <libkdepim/kfileio.h>
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include "partmetadata.h"
 #include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"

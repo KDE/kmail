@@ -42,7 +42,7 @@
 
 #include <qtextcodec.h>
 
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>

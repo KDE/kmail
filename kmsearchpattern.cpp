@@ -13,7 +13,7 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 
 #include <kglobal.h>
 #include <klocale.h>
