@@ -192,28 +192,24 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       file.close();
 
       // create the new message part with data read from temp file
-      KMMessagePart *msgPart = new KMMessagePart;
-      msgPart->setName( fileName );
-      msgPart->setPartSpecifier( fileName );
-      if( url.fileEncoding().isEmpty() ){
-        QValueList<int> allowedCTEs;
-        msgPart->setBodyAndGuessCte( rawData, allowedCTEs );
-      }else{
-        msgPart->setContentTransferEncodingStr( "8bit" );
-        msgPart->setCharset( url.fileEncoding().latin1() );
-        msgPart->setBodyEncodedBinary( rawData );
-      }
-      msgPart->setType(DwMime::kTypeApplication);
-      msgPart->setSubtype(DwMime::kSubtypeOctetStream);
-      msgPart->setContentDisposition( QString("attachment;\n\tfilename=\"%1\"")
+      KMMessagePart msgPart;
+      msgPart.setName( fileName );
+      msgPart.setType(DwMime::kTypeText);
+      msgPart.setSubtype(DwMime::kSubtypePlain);
+      msgPart.setContentDisposition( QString("attachment;\n\tfilename=\"%1\"")
           .arg( fileName ).latin1() );
+      QValueList<int> dummy;
+      msgPart.setBodyAndGuessCte( rawData, dummy );
+      if( !url.fileEncoding().isEmpty() )
+        msgPart.setCharset( url.fileEncoding().latin1() );
+      msgPart.setPartSpecifier( fileName );
 
       // quickly searching for our message part: since Kolab parts are
       // top-level parts we do *not* have to travel into embedded multiparts
       DwBodyPart* part = msg.getFirstDwBodyPart();
       while( part ){
         if( fileName == part->partId() ){
-          DwBodyPart* newPart = msg.createDWBodyPart( msgPart );
+          DwBodyPart* newPart = msg.createDWBodyPart( &msgPart );
           // Make sure the replacing body part is pointing
           // to the same next part as the original body part.
           newPart->SetNext( part->Next() );
@@ -230,7 +226,9 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
       }
 
       if( !bOK ){
-        msg.addBodyPart(msgPart);
+        kdDebug(5006) << "num: " << msg.numBodyParts() << endl;
+        msg.addBodyPart( &msgPart );
+        kdDebug(5006) << "num: " << msg.numBodyParts() << endl;
         kdDebug(5006) << "Attachment added." << endl;
         bOK = true;
       }
@@ -301,9 +299,12 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
   msg->initHeader();
   msg->setType( DwMime::kTypeMultipart );
   msg->setSubtype( DwMime::kSubtypeMixed );
-  msg->setHeaderField( "Content-Type", "Multipart/Mixed" );
   msg->setSubject( "[kolab data]" );
+  msg->setCharset( "8bit" );
   msg->setBody( "Your mailer can not display this format.\nSee http://www.kolab.org for details on the Kolab storage format." );
+    msg->setNeedsAssembly();
+    msg->setAutomaticFields( true );
+    msg->cleanupHeader();
 
   // Add all attachments by reading them from their temp. files
   for( QStringList::ConstIterator it = attachments.begin();
@@ -317,6 +318,9 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
 
   if( bAttachOK ){
     // Mark the message as read and store it in the folder
+    msg->setNeedsAssembly();
+    msg->setAutomaticFields( true );
+    msg->cleanupHeader();
     msg->touch();
     if ( folder.addMsg( msg ) == 0 )
       // Message stored
