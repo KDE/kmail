@@ -1,68 +1,31 @@
-Level 1: High priority (this week)
-DS: Consider Carstens unintegrated patch
-DS: Implement Folder ids
-DS: Apply chosen filter, high wish, 44429
-DS: Remove obsolete files
-DS: Every time a serial number lookup or inverse lookup is made
-    perform a sanity check and if the sanity check fails fix the
-    corrupted
-    files.
-
-Level 2: High priority (this month)
-DS: XML GUI context menus to support KMail plugins
-DS: Subject Threading 9319
-DS: Search use header rules first and only
-    maybe give match a hasBody bool, and let it fail.
-DS: IMAP body searching
-
-Level 3: Within a couple of months
-DS: Zero-copy display of message 15465
-DS: Zero-copy downloading from pop server
-DS: Status filtering
-DS: Set color action
-DS: Dock Windows
-DS: Search folders are invalidated on outbox expunging, fix this.
-
-Level 3a: Before the first 3.2 Beta
+Before the first 3.2 Beta
 MM: Write config upgrade script for
     - AttachmentStyle -> AttachmentStrategy change
     - HeaderStyle -> { HeaderStyle, HeaderStrategy } split
-
-Level 4: Needs more planning
-??: Incremental spell checking
 DS: Full Text Indexing
 DS: Client side imap filtering
+DS: Support for multipart/related mails
+DS: Support for html composing
+DS: Better for replying to html mail
+??: Disconnected IMAP
+
+Needs more planning:
 DS: BBDB like functionality
-DS: Fuller DCOP interface (requires architectural stability)
+DS: Fuller DCOP interface (requires hidden dcop interfaces thanks Alex!)
 DS: Console (plain text) client using dcop interface
 DS: XFace with support for Allison reconstruction.
 DS: writeindex incrementally update for deleted items.
-
-
-Level 5: Early planning stage
-DS safe mmsglist, ref counted message and folder
-   allows for async moving, and maybe filtering
-
-   Sync method get Headers
-   Async methods exist to retrieveBody, retrieve attachments, decrypt,
-   verify
-   hasIndexEntry()
-   hasHeaders()
-   getHeaders() (rename getMsg, sync)
-   hasBody()
-   retrieveBody() (async getMsg for local retrieves msg for imap)
-   hasAllAttachments()
-   retrieveAllAttachments() (async)
-   hasAttachment(int i /*need to look at imap*/)
-   retrieveAttachment(int i) (async)
-
-Unknown:
 DS: (improve status showing, for concurrent account checking)
 DS: Use takeitem to hide read messages, with special behavior
     in threaded mode
-DS: Support for multipart/related mails
 DS: Propoganda: Analysis Articles, head-to-head comparisons
-
+DS: Single message class
+DS: Zero-copy display of message 15465
+DS: Zero-copy downloading from pop server
+DS: Set color action
+DS: XML GUI context menus to support KMail plugins
+DS: IMAP body searching
+??: Dock Windows
 
 Groupware:
 KHZ: Make groupware use a real vCal parser
