@@ -506,7 +506,7 @@ signals:
 
   /** Emitted after an expunge. If not quiet, changed() will be
       emmitted first. */
-  void expunged();
+  void expunged( KMFolder* );
 
   /** Emitted when the icon paths are set. */
   void iconsChanged();

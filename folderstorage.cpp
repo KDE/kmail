@@ -715,7 +715,7 @@ int FolderStorage::expunge()
   if (mAutoCreateIndex)
     writeConfig();
   emit changed();
-  emit expunged();
+  emit expunged( folder() );
 
   return 0;
 }

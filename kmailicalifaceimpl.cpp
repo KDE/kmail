@@ -812,11 +812,11 @@ void KMailICalIfaceImpl::readConfig()
   mNotes    = initFolder( KFolderTreeItem::Notes, "GNo" );
 
   // Connect the expunged signal
-  connect( mCalendar, SIGNAL( expunged() ), this, SLOT( slotRefreshCalendar() ) );
-  connect( mTasks,    SIGNAL( expunged() ), this, SLOT( slotRefreshTasks() ) );
-  connect( mJournals, SIGNAL( expunged() ), this, SLOT( slotRefreshJournals() ) );
-  connect( mContacts, SIGNAL( expunged() ), this, SLOT( slotRefreshContacts() ) );
-  connect( mNotes,    SIGNAL( expunged() ), this, SLOT( slotRefreshNotes() ) );
+  connect( mCalendar, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshCalendar() ) );
+  connect( mTasks,    SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshTasks() ) );
+  connect( mJournals, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshJournals() ) );
+  connect( mContacts, SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshContacts() ) );
+  connect( mNotes,    SIGNAL( expunged( KMFolder* ) ), this, SLOT( slotRefreshNotes() ) );
 
   // Bad hack
   connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
