@@ -595,7 +595,7 @@ private:
   QPtrList<KMMsgBase> mMsgList;
 };
 
-namespace KMail {
+namespace KPIM {
   class ProgressItem;
 }
 class KMMoveCommand : public KMMenuCommand
@@ -621,7 +621,7 @@ private:
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
   QValueList<Q_UINT32> mLostBoys;
-  KMail::ProgressItem *mProgressItem;
+  KPIM::ProgressItem *mProgressItem;
 };
 
 class KMDeleteMsgCommand : public KMMoveCommand

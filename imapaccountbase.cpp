@@ -42,8 +42,8 @@ using KMail::BodyVisitor;
 using KMail::ImapJob;
 #include "protocols.h"
 #include "progressmanager.h"
-using KMail::ProgressManager;
-using KMail::ProgressItem;
+using KPIM::ProgressManager;
+using KPIM::ProgressItem;
 
 #include <kapplication.h>
 #include <kdebug.h>

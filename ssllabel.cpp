@@ -38,7 +38,7 @@
 
 #include <qtooltip.h>
 
-namespace KMail {
+namespace KPIM {
 
 SSLLabel::SSLLabel( QWidget* parent )
   : QLabel( parent )
@@ -91,6 +91,6 @@ void SSLLabel::setState( State state )
 }
 
 
-} //end namespace KMail
+} //end namespace KPIM
 
 //#include "ssllabel.moc"

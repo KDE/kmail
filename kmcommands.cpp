@@ -84,8 +84,8 @@ using KMail::SecondaryWindow;
 #include "kimproxy.h"
 
 #include "progressmanager.h"
-using KMail::ProgressManager;
-using KMail::ProgressItem;
+using KPIM::ProgressManager;
+using KPIM::ProgressItem;
 
 #include "kmcommands.moc"
 

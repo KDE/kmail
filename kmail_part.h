@@ -40,7 +40,8 @@ class KMailBrowserExtension;
 class KMailStatusBarExtension;
 class KMKernel;
 class KMMainWidget;
-class StatusbarProgressWidget;
+namespace KPIM { class StatusbarProgressWidget; }
+using KPIM::StatusbarProgressWidget;
 class KMFolder;
 class KMFolderTreeItem;
 

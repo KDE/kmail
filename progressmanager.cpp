@@ -36,10 +36,10 @@
 #include "progressmanager.h"
 #include <klocale.h>
 
-namespace KMail {
+namespace KPIM {
 
-KMail::ProgressManager * KMail::ProgressManager::mInstance = 0;
-unsigned int KMail::ProgressManager::uID = 42;
+KPIM::ProgressManager * KPIM::ProgressManager::mInstance = 0;
+unsigned int KPIM::ProgressManager::uID = 42;
 
 ProgressItem::ProgressItem(
        ProgressItem* parent, const QString& id,
@@ -111,7 +111,7 @@ void ProgressItem::setProgress( unsigned int v )
    emit progressItemProgress( this, mProgress );
 }
 
-void KMail::ProgressItem::setLabel( const QString& v )
+void ProgressItem::setLabel( const QString& v )
 {
   mLabel = v;
   emit progressItemLabel( this, mLabel );

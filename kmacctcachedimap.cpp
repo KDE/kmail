@@ -45,6 +45,7 @@ using KMail::SieveConfig;
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "progressmanager.h"
+#include "progressdialog.h"
 
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
@@ -238,13 +239,13 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     QPtrList<KMMainWidget>* lst = KMMainWidget::mainWidgetList();
     if ( lst ) {
       for( QPtrListIterator<KMMainWidget> it( *lst ); *it; ++it ) {
-        (*it)->setProgressDialogVisible( true );
+        (*it)->progressDialog()->setVisible( true );
       }
     }
   }
 
   Q_ASSERT( !mMailCheckProgressItem );
-  mMailCheckProgressItem = KMail::ProgressManager::createProgressItem(
+  mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + QString::number( id() ),
     folder->label(), // will be changed immediately in serverSync anyway
     QString::null,

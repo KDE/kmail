@@ -13,8 +13,8 @@
 #include "kmfoldercachedimap.h"
 
 #include "progressmanager.h"
-using KMail::ProgressItem;
-using KMail::ProgressManager;
+using KPIM::ProgressItem;
+using KPIM::ProgressManager;
 
 using KMail::FolderJob;
 

@@ -1,6 +1,5 @@
-
-#ifndef __KMAIL_STATUSBARPROGRESSWIDGET_H
-#define __KMAIL_STATUSBARPROGRESSWIDGET_H
+#ifndef __KPIM_STATUSBARPROGRESSWIDGET_H
+#define __KPIM_STATUSBARPROGRESSWIDGET_H
 /*
   statusbarprogresswidget.h
 
@@ -44,13 +43,11 @@ class QWidgetStack;
 class QBoxLayout;
 class QLabel;
 class QTimer;
-namespace KMail {
-  class SSLLabel;
-  class ProgressItem;
-}
-using KMail::SSLLabel;
-using KMail::ProgressItem;
-#undef None
+
+namespace KPIM {
+class SSLLabel;
+class ProgressItem;
+class ProgressDialog;
 
 class StatusbarProgressWidget : public QFrame {
 
@@ -58,7 +55,7 @@ class StatusbarProgressWidget : public QFrame {
 
 public:
 
-  StatusbarProgressWidget( KMMainWidget* mainWidget, QWidget* parent, bool button = true );
+  StatusbarProgressWidget( ProgressDialog* progressDialog, QWidget* parent, bool button = true );
 
 public slots:
 
@@ -82,7 +79,6 @@ protected:
   virtual bool eventFilter( QObject *, QEvent * );
 
 private:
-  KMMainWidget* m_mainWidget;
   KProgress* m_pProgressBar;
   QLabel* m_pLabel;
   SSLLabel* m_sslLabel;
@@ -96,8 +92,11 @@ private:
   QBoxLayout *box;
   QWidgetStack *stack;
   ProgressItem *mCurrentItem;
+  ProgressDialog* mProgressDialog;
   QTimer *mDelayTimer;
   QTimer *mBusyTimer;
 };
+
+} // namespace
 
 #endif

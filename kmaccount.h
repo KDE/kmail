@@ -25,10 +25,10 @@ class KMMessage;
 class KMFolderJob;
 namespace  KMail {
   class FolderJob;
-  class ProgressItem;
 }
+namespace KPIM { class ProgressItem; }
 using KMail::FolderJob;
-using KMail::ProgressItem;
+using KPIM::ProgressItem;
 
 class KMPrecommand : public QObject
 {

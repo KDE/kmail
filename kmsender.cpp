@@ -417,7 +417,7 @@ void KMSender::doSendMsg()
   if (!mSendInProgress)
   {
     Q_ASSERT( !mProgressItem );
-    mProgressItem = KMail::ProgressManager::createProgressItem(
+    mProgressItem = KPIM::ProgressManager::createProgressItem(
       "Sender",
       i18n( "Sending messages" ),
       i18n("Initiating sender process..."),

@@ -43,11 +43,14 @@ class KMAcctImap;
 class KMMessage;
 class KMFolderTreeItem;
 class KMFolderImap;
+namespace KPIM {
+  class ProgressItem;
+}
+using KPIM::ProgressItem;
 
 namespace KMail {
 
 class AttachmentStrategy;
-class ProgressItem;
 
 class ImapJob : public FolderJob
 {

@@ -30,8 +30,8 @@
  *  your version.
  */
 
-#ifndef __KMAIL_PROGRESSDIALOG_H__
-#define __KMAIL_PROGRESSDIALOG_H__
+#ifndef __KPIM_PROGRESSDIALOG_H__
+#define __KPIM_PROGRESSDIALOG_H__
 
 #include <qdialog.h>
 #include <qlistview.h>
@@ -39,20 +39,13 @@
 #include <qvbox.h>
 #include "overlaywidget.h"
 
-class KMMainWidget;
-namespace KMail {
-  class ProgressItem;
-  class TransactionItemListView;
-}
-using KMail::TransactionItemListView;
-using KMail::ProgressItem;
-using KMail::OverlayWidget;
-
 class QProgressBar;
 class QScrollView;
 class QFrame;
 
-namespace KMail {
+namespace KPIM {
+class ProgressItem;
+class TransactionItemListView;
 class TransactionItem;
 class SSLLabel;
 
@@ -123,11 +116,15 @@ class ProgressDialog : public OverlayWidget
     Q_OBJECT
 
 public:
-  ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, const char* name = 0 );
+  ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name = 0 );
   ~ProgressDialog();
 
-protected slots:
+  void setVisible( bool b );
 
+public slots:
+  void slotToggleVisibility();
+
+protected slots:
   void slotTransactionAdded( ProgressItem *item );
   void slotTransactionCompleted( ProgressItem *item );
   void slotTransactionCanceled( ProgressItem *item );
@@ -136,7 +133,11 @@ protected slots:
   void slotTransactionLabel( ProgressItem *item, const QString& );
   void slotTransactionUsesCrypto( ProgressItem *item, bool );
 
+  void slotClose();
   void slotHide();
+
+signals:
+  void visibilityChanged( bool );
 
 protected:
   virtual void closeEvent( QCloseEvent* );
@@ -147,6 +148,6 @@ protected:
 };
 
 
-} // namespace KMail
+} // namespace KPIM
 
-#endif // __KMAIL_PROGRESSDIALOG_H__
+#endif // __KPIM_PROGRESSDIALOG_H__

@@ -26,7 +26,6 @@ class KConfig;
 class KSelectAction;
 class KRadioAction;
 class KToggleAction;
-class KProgressDialog;
 class KMenuBar;
 
 class KMFolder;
@@ -40,7 +39,8 @@ class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMFldSearch;
-class StatusbarProgressWidget;
+namespace KPIM { class StatusbarProgressWidget; }
+using KPIM::StatusbarProgressWidget;
 class KMSystemTray;
 
 template <typename T> class QValueList;
@@ -134,14 +134,12 @@ public:
 
   void folderSelected(KMFolder*, bool jumpToUnread);
   KMHeaders *headers() const { return mHeaders; }
-  StatusbarProgressWidget* progressDialog() const;
+  StatusbarProgressWidget* progressWidget() const;
+  ProgressDialog* progressDialog() const { return mProgressDialog; }
 
   void toggleSystray(bool enabled, int mode);
 
   void updateListFilterAction();
-
-  /// Show/hide the embedded progress dialog
-  void setProgressDialogVisible( bool b );
 
   /// @return a list of all KMMainWidgets. Warning, the list itself can be 0.
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
@@ -184,14 +182,10 @@ public slots:
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
 
-  /** Show/hide the embedded progress dialog */
-  void slotToggleProgressDialog();
-
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
   void modifiedToolBarConfig( void );
-  void progressDialogVisible( bool );
 
 protected:
   void setupActions();

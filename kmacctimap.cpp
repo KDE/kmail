@@ -35,8 +35,8 @@ using KMail::SieveConfig;
 #include "imapjob.h"
 using KMail::ImapJob;
 #include "progressmanager.h"
-using KMail::ProgressItem;
-using KMail::ProgressManager;
+using KPIM::ProgressItem;
+using KPIM::ProgressManager;
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>

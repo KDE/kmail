@@ -38,6 +38,7 @@
 #include "kmfolder.h"
 #include "kmmsgpart.h"
 #include "progressmanager.h"
+using KPIM::ProgressManager;
 
 #include <kio/scheduler.h>
 #include <kdebug.h>

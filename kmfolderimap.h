@@ -49,7 +49,7 @@ namespace KMail {
 using KMail::FolderJob;
 using KMail::ImapJob;
 using KMail::AttachmentStrategy;
-using KMail::ProgressItem;
+using KPIM::ProgressItem;
 
 class KMMsgMetaData
 {

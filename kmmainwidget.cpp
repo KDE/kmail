@@ -93,7 +93,7 @@ using namespace KMime;
 using KMime::Types::AddrSpecList;
 
 #include "progressmanager.h"
-using KMail::ProgressManager;
+using KPIM::ProgressManager;
 
 #include "kmmainwidget.moc"
 
@@ -1621,7 +1621,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder)
     folderSelected( aFolder, false );
 }
 
-StatusbarProgressWidget* KMMainWidget::progressDialog() const
+StatusbarProgressWidget* KMMainWidget::progressWidget() const
 {
     return mLittleProgress;
 }
@@ -2823,16 +2823,17 @@ void KMMainWidget::setupActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::setupStatusBar()
 {
-  //we setup the progress dialog here, because its the one widget
-  //we want to export to the part.
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
-  KStatusBar *bar =  mainWin ? mainWin->statusBar() : 0;
-  mLittleProgress = new StatusbarProgressWidget( this, bar );
-  mLittleProgress->show();
+  KStatusBar *bar = mainWin ? mainWin->statusBar() : 0;
 
   /* Create a progress dialog and hide it. */
-  mProgressDialog = new KMail::ProgressDialog( bar, this );
+  mProgressDialog = new KPIM::ProgressDialog( bar, this );
   mProgressDialog->hide();
+
+  //we setup the progress widget here, because its the one widget
+  //we want to export to the part.
+  mLittleProgress = new StatusbarProgressWidget( mProgressDialog, bar );
+  mLittleProgress->show();
 }
 
 
@@ -3405,26 +3406,6 @@ void KMMainWidget::updateFileMenu()
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::setProgressDialogVisible( bool b )
-{
-  if( mProgressDialog ) {
-    if ( b )
-      mProgressDialog->show();
-    else
-      mProgressDialog->hide();
-    emit progressDialogVisible( b );
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotToggleProgressDialog()
-{
-  if( mProgressDialog ) {
-    setProgressDialogVisible( !mProgressDialog->isShown() );
-  }
 }
 
 //-----------------------------------------------------------------------------

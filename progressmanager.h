@@ -30,14 +30,14 @@
   your version.
 */
 
-#ifndef __KMAIL_PROGRESSMANAGER_H__
-#define __KMAIL_PROGRESSMANAGER_H__
+#ifndef __KPIM_PROGRESSMANAGER_H__
+#define __KPIM_PROGRESSMANAGER_H__
 
 #include <qobject.h>
 #include <qdict.h>
 #include <qstring.h>
 
-namespace KMail {
+namespace KPIM {
 
 class ProgressItem;
 class ProgressManager;
@@ -382,4 +382,4 @@ class ProgressManager : public QObject
 
 }
 
-#endif // __KMAIL_PROGRESSMANAGER_H__
+#endif // __KPIM_PROGRESSMANAGER_H__

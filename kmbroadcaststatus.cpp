@@ -52,7 +52,7 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( int numMessages,
                                                            int numBytesRead,
                                                            int numBytesToRead,
                                                            bool mLeaveOnServer,
-                                                           KMail::ProgressItem* item )
+                                                           KPIM::ProgressItem* item )
 {
   QString statusMsg;
   if( numMessages > 0 ) {
@@ -90,7 +90,7 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( const QString& accoun
                                                            int numBytesRead,
                                                            int numBytesToRead,
                                                            bool mLeaveOnServer,
-                                                           KMail::ProgressItem* item )
+                                                           KPIM::ProgressItem* item )
 {
   QString statusMsg;
   if( numMessages > 0 ) {

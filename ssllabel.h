@@ -33,7 +33,7 @@
 
 #include <qlabel.h>
 
-namespace KMail {
+namespace KPIM {
 
   class SSLLabel : public QLabel
   {

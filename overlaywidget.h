@@ -32,7 +32,7 @@
 
 #include <qhbox.h>
 
-namespace KMail {
+namespace KPIM {
 
 /**
  * This is a widget that can align itself with another one, without using a layout,

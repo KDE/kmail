@@ -34,16 +34,16 @@
 
 
 #include "ssllabel.h"
-using KMail::SSLLabel;
+using KPIM::SSLLabel;
 #include "progressmanager.h"
-using KMail::ProgressItem;
-using KMail::ProgressManager;
+using KPIM::ProgressItem;
+using KPIM::ProgressManager;
 
 #include <kprogress.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
-
+#include <qtimer.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qtooltip.h>
@@ -51,16 +51,16 @@ using KMail::ProgressManager;
 #include <qlayout.h>
 #include <qwidgetstack.h>
 #include <qframe.h>
-#include <kmkernel.h> // for the progress dialog
 
-#include "kmmainwidget.h"
+#include "progressdialog.h"
 #include "statusbarprogresswidget.h"
 
+using namespace KPIM;
 
 //-----------------------------------------------------------------------------
-StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWidget* parent, bool button )
-  : QFrame( parent ), m_mainWidget( mainWidget ),
-    mCurrentItem( 0 ), mDelayTimer( 0 ), mBusyTimer( 0 )
+StatusbarProgressWidget::StatusbarProgressWidget( ProgressDialog* progressDialog, QWidget* parent, bool button )
+  : QFrame( parent ), mCurrentItem( 0 ), mProgressDialog( progressDialog ),
+    mDelayTimer( 0 ), mBusyTimer( 0 )
 {
   m_bShowButton = button;
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
@@ -99,14 +99,14 @@ StatusbarProgressWidget::StatusbarProgressWidget( KMMainWidget* mainWidget, QWid
   setMode();
 
   connect( m_pButton, SIGNAL( clicked() ),
-           mainWidget, SLOT( slotToggleProgressDialog() ) );
+           progressDialog, SLOT( slotToggleVisibility() ) );
 
   connect ( ProgressManager::instance(), SIGNAL( progressItemAdded( ProgressItem * ) ),
             this, SLOT( slotProgressItemAdded( ProgressItem * ) ) );
   connect ( ProgressManager::instance(), SIGNAL( progressItemCompleted( ProgressItem * ) ),
             this, SLOT( slotProgressItemCompleted( ProgressItem * ) ) );
 
-  connect ( mainWidget, SIGNAL( progressDialogVisible( bool )),
+  connect ( progressDialog, SIGNAL( visibilityChanged( bool )),
             this, SLOT( slotProgressDialogVisible( bool ) ) );
 
   mDelayTimer = new QTimer( this );
@@ -261,7 +261,7 @@ bool StatusbarProgressWidget::eventFilter( QObject *, QEvent *ev )
     if ( e->button() == LeftButton && mode != None ) {    // toggle view on left mouse button
       // Consensus seems to be that we should show/hide the fancy dialog when the user
       // clicks anywhere in the small one.
-      m_mainWidget->slotToggleProgressDialog();
+      mProgressDialog->slotToggleVisibility();
       return true;
     }
   }

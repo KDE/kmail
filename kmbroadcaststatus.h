@@ -13,7 +13,7 @@
 
 #undef None
 
-namespace KMail {
+namespace KPIM {
   class ProgressItem;
 }
 
@@ -43,14 +43,14 @@ public:
                                           int numBytesRead = -1,
                                           int numBytesToRead = -1,
                                           bool mLeaveOnServer = false,
-                                          KMail::ProgressItem* progressItem = 0 ); // set the same status in this progress item
+                                          KPIM::ProgressItem* progressItem = 0 ); // set the same status in this progress item
   void setStatusMsgTransmissionCompleted( const QString& account,
                                           int numMessages,
                                           int numBytes = -1,
                                           int numBytesRead = -1,
                                           int numBytesToRead = -1,
                                           bool mLeaveOnServer = false,
-                                          KMail::ProgressItem* progressItem = 0 ); // set the same status in this progress item
+                                          KPIM::ProgressItem* progressItem = 0 ); // set the same status in this progress item
 
 signals:
 

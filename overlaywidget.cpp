@@ -29,7 +29,7 @@
  */
 
 #include "overlaywidget.h"
-using namespace KMail;
+using namespace KPIM;
 
 OverlayWidget::OverlayWidget( QWidget* alignWidget, QWidget* parent, const char* name )
   : QHBox( parent, name ), mAlignWidget( 0 )

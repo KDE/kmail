@@ -140,7 +140,7 @@ void KMMainWin::slotUpdateToolbars()
 void KMMainWin::setupStatusBar()
 {
   mMessageStatusId = 1;
-  littleProgress = mainKMWidget()->progressDialog();
+  littleProgress = mainKMWidget()->progressWidget();
 
   statusBar()->addWidget( littleProgress, 0 , true );
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );

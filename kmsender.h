@@ -34,7 +34,7 @@ namespace KMime {
   }
 }
 
-namespace KMail {
+namespace KPIM {
   class ProgressItem;
 }
 
@@ -141,7 +141,7 @@ private:
   bool mSendProcStarted;
   bool mSendInProgress;
   KMMessage * mCurrentMsg;
-  KMail::ProgressItem* mProgressItem;
+  KPIM::ProgressItem* mProgressItem;
   int mSentMessages, mTotalMessages;
   int mSentBytes, mTotalBytes;
   int mFailedMessages;

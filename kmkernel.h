@@ -24,12 +24,12 @@ namespace KMail {
   class MailServiceImpl;
   class UndoStack;
   class JobScheduler;
-  class ProgressDialog;
 }
+namespace KPIM { class ProgressDialog; }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
 using KMail::JobScheduler;
-using KMail::ProgressDialog;
+using KPIM::ProgressDialog;
 class KMMsgIndex;
 class QLabel;
 class KMFolder;
@@ -90,7 +90,7 @@ public:
   {
     return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List());
   }
-  /** For backward compatibility 
+  /** For backward compatibility
    * @deprecated
    */
   int openComposer (const QString &to, const QString &cc,
@@ -104,7 +104,7 @@ public:
                     const QCString &attachParamAttr,
                     const QString &attachParamValue,
                     const QCString &attachContDisp);
-  
+
   int openComposer (const QString &to, const QString &cc,
                     const QString &bcc, const QString &subject,
                     const QString &body, int hidden,
@@ -117,7 +117,7 @@ public:
                     const QString &attachParamValue,
                     const QCString &attachContDisp,
                     const QCString &attachCharset);
-  
+
   DCOPRef openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
@@ -261,7 +261,7 @@ public:
    * This is used to cancel mail checks when closing the last mainwindow
    */
   void abortMailCheck();
-  
+
   bool canQueryClose();
 
 public slots:

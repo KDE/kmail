@@ -42,6 +42,9 @@ template <typename T> class QValueVector;
 namespace KIO {
   class Job;
 }
+namespace KPIM {
+  class ProgressItem;
+}
 
 namespace KMail {
 
@@ -49,7 +52,6 @@ namespace KMail {
   typedef QValueVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;
-  class ProgressItem;
 
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT

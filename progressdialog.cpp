@@ -54,15 +54,9 @@
 #include "progressdialog.h"
 #include "progressmanager.h"
 #include "ssllabel.h"
-#include "kmmainwidget.h"
 #include <qwhatsthis.h>
 
-
-
-using KMail::ProgressItem;
-using KMail::ProgressManager;
-
-namespace KMail {
+namespace KPIM {
 
 class TransactionItem;
 
@@ -134,7 +128,7 @@ void TransactionItemView::slotLayoutFirstItem()
      be the first item very shortly. That's the one we want to remove the
      hline for.
   */
-  QObject *o = mBigBox->child( "TransactionItem", "KMail::TransactionItem" );
+  QObject *o = mBigBox->child( "TransactionItem", "KPIM::TransactionItem" );
   TransactionItem *ti = dynamic_cast<TransactionItem*>( o );
   if ( ti ) {
     ti->hideHLine();
@@ -234,8 +228,8 @@ void TransactionItem::addSubTransaction( ProgressItem* /*item*/ )
 
 // ---------------------------------------------------------------------------
 
-ProgressDialog::ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, const char* name )
-    : OverlayWidget( alignWidget, mainWidget, name )
+ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name )
+    : OverlayWidget( alignWidget, parent, name )
 {
     setFrameStyle( QFrame::Panel | QFrame::Sunken ); // QFrame
     setSpacing( 0 ); // QHBox
@@ -250,7 +244,7 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, 
     pbClose->setFixedSize( 16, 16 );
     pbClose->setIconSet( KGlobal::iconLoader()->loadIconSet( "fileclose", KIcon::Small, 14 ) );
     QToolTip::add( pbClose, i18n( "Hide detailed progress window" ) );
-    connect(pbClose, SIGNAL(clicked()), this, SLOT(close()));
+    connect(pbClose, SIGNAL(clicked()), this, SLOT(slotClose()));
     QWidget* spacer = new QWidget( rightBox ); // don't let the close button take up all the height
     rightBox->setStretchFactor( spacer, 100 );
 
@@ -365,13 +359,28 @@ void ProgressDialog::slotHide()
 {
   // check if a new item showed up since we started the timer. If not, hide
   if ( mTransactionsToListviewItems.isEmpty() ) {
-    // [save a member var by simply getting the parent mainwidget from qwidget]
-    KMMainWidget* mainWidget = ::qt_cast<KMMainWidget *>( parentWidget() );
-    // not only hide(), but also toggling the statusbar icon
-    mainWidget->setProgressDialogVisible( false );
+    setVisible( false );
   }
 }
 
+void ProgressDialog::slotClose()
+{
+  setVisible( false );
+}
+
+void ProgressDialog::setVisible( bool b )
+{
+  if ( b )
+      show();
+    else
+      hide();
+  emit visibilityChanged( b );
+}
+
+void ProgressDialog::slotToggleVisibility()
+{
+  setVisible( !isShown() );
+}
 
 }
 

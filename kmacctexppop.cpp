@@ -321,7 +321,7 @@ void KMAcctExpPop::startJob()
   indexOfCurrentMsg = -1;
 
   Q_ASSERT( !mMailCheckProgressItem );
-  mMailCheckProgressItem = KMail::ProgressManager::createProgressItem(
+  mMailCheckProgressItem = KPIM::ProgressManager::createProgressItem(
     "MailCheck" + mName,
     mName,
     i18n("Preparing transmission from \"%1\"...").arg(mName),

@@ -34,8 +34,8 @@ using KMail::ImapJob;
 #include "attachmentstrategy.h"
 using KMail::AttachmentStrategy;
 #include "progressmanager.h"
-using KMail::ProgressItem;
-using KMail::ProgressManager;
+using KPIM::ProgressItem;
+using KPIM::ProgressManager;
 #include "listjob.h"
 using KMail::ListJob;
 
@@ -534,7 +534,7 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 bool KMFolderImap::listDirectory(bool secondStep)
 {
-  if ( !mAccount || 
+  if ( !mAccount ||
        ( mAccount && mAccount->makeConnection() == ImapAccountBase::Error ) )
     return false;
 
@@ -664,7 +664,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
         } else if ( subfolderAttributes[i].find( "hasnochildren", 0, false ) != -1 )
         {
           f->setHasChildren( FolderStorage::HasNoChildren );
-        } else 
+        } else
         {
           if ( mAccount->listOnlyOpenFolders() )
             f->setHasChildren( FolderStorage::ChildrenUnknown );
@@ -681,7 +681,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
           kmkernel->imapFolderMgr()->contentsChanged();
         }
         if ( ( subfolderMimeTypes[i] == "message/directory" ||
-               subfolderMimeTypes[i] == "inode/directory" ) && 
+               subfolderMimeTypes[i] == "inode/directory" ) &&
              !mAccount->listOnlyOpenFolders() )
         {
           f->listDirectory();
@@ -1673,13 +1673,13 @@ void KMFolderImap::setSubfolderState( imapState state )
   if ( state == imapNoInformation && folder()->child() )
   {
     // pass through to childs
-    KMFolderNode* node; 
-    QPtrListIterator<KMFolderNode> it( *folder()->child() ); 
-    for ( ; (node = it.current()); ) 
-    { 
-      ++it; 
-      if (node->isDir()) continue; 
-      KMFolder *folder = static_cast<KMFolder*>(node); 
+    KMFolderNode* node;
+    QPtrListIterator<KMFolderNode> it( *folder()->child() );
+    for ( ; (node = it.current()); )
+    {
+      ++it;
+      if (node->isDir()) continue;
+      KMFolder *folder = static_cast<KMFolder*>(node);
       static_cast<KMFolderImap*>(folder->storage())->setSubfolderState( state );
     }
   }
