@@ -960,7 +960,7 @@ int KMFolderMbox::compact()
     kdDebug(5006) << location() << " compaction skipped." << endl;
     return 0;
   }
-  kdDebug(5006) << "Compacting " << endl;
+  kdDebug(5006) << "Compacting " << idString() << endl;
 
   if (isIndexOutdated()) {
       kdDebug(5006) << "Critical error: " << location() <<
