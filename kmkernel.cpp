@@ -1936,11 +1936,8 @@ Wallet *KMKernel::wallet() {
   mWallet = Wallet::openWallet( Wallet::NetworkWallet(),
         getKMMainWidget() ? getKMMainWidget()->topLevelWidget()->winId() : 0 );
 
-  if ( !mWallet ) {
-    KMessageBox::error( getKMMainWidget(), i18n("The wallet could not be opened. "
-        "This error is most probably caused by providing a wrong password.") );
+  if ( !mWallet )
     return 0;
-  }
 
   if ( !mWallet->hasFolder( "kmail" ) )
     mWallet->createFolder( "kmail" );
