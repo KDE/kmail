@@ -1906,9 +1906,9 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap*, bool success)
 
 void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
 {
-  if (folder != mDestFolder || !mLostBoys.contains( serNum ) ) {
-    kdDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
-                     "folder or invalid serial number." << endl;
+  if (folder != mDestFolder || mLostBoys.find( serNum ) == mLostBoys.end() ) {
+    //kdDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
+    //                 "folder or invalid serial number." << endl;
     return;
   }
   mLostBoys.remove(serNum);
@@ -1916,6 +1916,7 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
     // we are done. All messages transferred to the host succesfully
     if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
       mDestFolder->sync();
+      completeMove( OK ); // imap ones will be completed via folderComplete
     }
   } else {
     mProgressItem->incCompletedItems();
