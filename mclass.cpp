@@ -2,47 +2,86 @@
 #include <stdio.h>
 #include "mclass.h"
 
+static const char *enctable[] = ENCODING;
+static const char *bodytype[] = BODYTYPE;
+
 struct FileType {
 	const char *ext;
 	short type;
 	const char *subtype;
 	const char *charset;
-	short encoding;
 };
 
-const struct FileType defaultFileType = 
-	{ 0, 	TYPEAPPLICATION,	"OCTET-STREAM", 0, ENCBASE64 };
+const struct FileType defaultTextFileType =
+{ 0,	TYPETEXT,	"PLAIN",	"US-ASCII" };
+
+const struct FileType defaultBinFileType =
+{ 0,	TYPEAPPLICATION,	"OCTET-STREAM",	0 };
 
 const struct FileType fInfo[] = {
-	{ "C",	TYPETEXT,	"PLAIN",	"US-ASCII",	ENCBASE64 },
-	{ "Z",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 },
-	{ "arj",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 },
-	{ "au",	TYPEAUDIO,	0,	0,	ENCBASE64 },
-	{ "avi",	TYPEVIDEO,	"AVI",	0,	ENCBASE64 },
-	{ "c",	TYPETEXT,	"PLAIN",	"US-ASCII",	ENCBASE64 },
-	{ "cpp",	TYPETEXT,	"PLAIN",	"US-ASCII",	ENCBASE64 },
-	{ "cxx",	TYPETEXT,	"PLAIN",	"US-ASCII",	ENCBASE64 },
-	{ "eps",	TYPEAPPLICATION,	"PostScript",	0,	ENCBASE64 },
-	{ "gif",	TYPEIMAGE,	"GIF",	0,	ENCBASE64 },
-	{ "gz",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 },
-	{ "h",	TYPETEXT,	"PLAIN",	"US-ASCII",	ENCBASE64 },
-	{ "jpg",	TYPEIMAGE,	"JPEG",	0,	ENCBASE64 },
-	{ "mov",	TYPEVIDEO,	"QUICKTIME",	0,	ENCBASE64 },
-	{ "mpg",	TYPEVIDEO,	"MPEG",	0,	ENCBASE64 },
-	{ "pcx",	TYPEIMAGE,	"PCX",	0,	ENCBASE64 },
-	{ "png",	TYPEIMAGE,	"PNG",	0,	ENCBASE64 },
-	{ "ps",	TYPEAPPLICATION,	"PostScript",	0,	ENCBASE64 },
-	{ "sh",	TYPETEXT,	"PLAIN",	"US-ASCII",	ENCBASE64 },
-	{ "tar.gz",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 },
-	{ "tgz",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 },
-	{ "tiff",	TYPEIMAGE,	"TIFF",	0,	ENCBASE64 },
-	{ "txt",	TYPETEXT,	"PLAIN",	0,	ENCBASE64 },
-	{ "z",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 },
-	{ "zip",	TYPEAPPLICATION,	"OCTET-STREAM",	0,	ENCBASE64 }
+	{ "Z",	TYPEAPPLICATION,	"X-COMPRESS",	0 },
+	{ "ai",	TYPEAPPLICATION,	"PostScript",	0 },
+	{ "aif",	TYPEAUDIO,	"X-AIFF",	0 },
+	{ "aifc",	TYPEAUDIO,	"X-AIFF",	0 },
+	{ "aiff",	TYPEAUDIO,	"X-AIFF",	0 },
+	{ "au",	TYPEAUDIO,	"BASIC",	0 },
+	{ "avi",	TYPEVIDEO,	"X-MSVIDEO",	0 },
+	{ "cpio",	TYPEAPPLICATION,	"X-CPIO",	0 },
+	{ "csh",	TYPEAPPLICATION,	"X-CSH",	0 },
+	{ "dvi",	TYPEAPPLICATION,	"X-DVI",	0 },
+	{ "eps",	TYPEAPPLICATION,	"POSTSCRIPT",	0 },
+	{ "fif",	TYPEAPPLICATION,	"FRACTALS",	0 },
+	{ "gif",	TYPEIMAGE,	"GIF",	0 },
+	{ "gtar",	TYPEAPPLICATION,	"X-GTAR",	0 },
+	{ "gz",	TYPEAPPLICATION,	"X-GZIP",	0 },
+	{ "htm",	TYPETEXT,	"HTML",	"US-ASCII" },
+	{ "html",	TYPETEXT,	"HTML",	"US-ASCII" },
+	{ "ief",	TYPEIMAGE,	"IEF",	0 },
+	{ "jpg",	TYPEIMAGE,	"JPEG",	0 },
+	{ "latex",	TYPEAPPLICATION,	"X-LATEX",	0 },
+	{ "man",	TYPEAPPLICATION,	"X-TROFF-MAN",	0 },
+	{ "me",	TYPEAPPLICATION,	"X-TROFF-ME",	0 },
+	{ "mov",	TYPEVIDEO,	"QUICKTIME",	0 },
+	{ "movie",	TYPEVIDEO,	"X-SGI-MOVIE",	0 },
+	{ "mpe",	TYPEVIDEO,	"MPEG",	0 },
+	{ "mpeg",	TYPEVIDEO,	"MPEG",	0 },
+	{ "mpg",	TYPEVIDEO,	"MPEG",	0 },
+	{ "ms",	TYPEAPPLICATION,	"X-TROFF-MS",	0 },
+	{ "pbm",	TYPEIMAGE,	"X-PORTABLE-BITMAP",	0 },
+	{ "pgm",	TYPEIMAGE,	"X-PORTABLE-GRAYMAP",	0 },
+	{ "png",	TYPEIMAGE,	"PNG",	0 },
+	{ "pnm",	TYPEIMAGE,	"X-PORTABLE-ANYMAP",	0 },
+	{ "ppm",	TYPEIMAGE,	"X-PORTABLE-PIXMAP",	0 },
+	{ "ps",	TYPEAPPLICATION,	"POSTSCRIPT",	0 },
+	{ "qt",	TYPEVIDEO,	"QUCIKTIME",	0 },
+	{ "ras",	TYPEIMAGE,	"X-CMU-RASTER",	0 },
+	{ "rft",	TYPEAPPLICATION,	"X-RTF",	0 },
+	{ "rgb",	TYPEIMAGE,	"X-RGB",	0 },
+	{ "sgml",	TYPETEXT,	"SGML",	"US-ASCII" },
+	{ "sh",	TYPEAPPLICATION,	"X-SH",	0 },
+	{ "shar",	TYPEAPPLICATION,	"X-SHAR",	0 },
+	{ "snd",	TYPEAUDIO,	"BASIC",	0 },
+	{ "t",	TYPEAPPLICATION,	"X-TROFF",	0 },
+	{ "tar",	TYPEAPPLICATION,	"X-TAR",	0 },
+	{ "tcl",	TYPEAPPLICATION,	"X-TCL",	0 },
+	{ "tex",	TYPEAPPLICATION,	"X-TEX",	0 },
+	{ "texi",	TYPEAPPLICATION,	"X-TEXINFO",	0 },
+	{ "texinfo",	TYPEAPPLICATION,	"X-TEXINFO",	0 },
+	{ "text",	TYPETEXT,	"PLAIN",	"US-ASCII" },
+	{ "tif",	TYPEIMAGE,	"TIFF",	0 },
+	{ "tiff",	TYPEIMAGE,	"TIFF",	0 },
+	{ "tr",	TYPEAPPLICATION,	"X-TROFF",	0 },
+	{ "troff",	TYPEAPPLICATION,	"X-TROFF",	0 },
+	{ "txt",	TYPETEXT,	"PLAIN",	"US-ASCII" },
+	{ "vrml",	TYPEMODEL,	"VRML",	0 },
+	{ "wav",	TYPEAUDIO,	"X-WAV",	0 },
+	{ "xbm",	TYPEIMAGE,	"X-XBITMAP",	0 },
+	{ "xpm",	TYPEIMAGE,	"X-XPIXMAP",	0 },
+	{ "xwd",	TYPEIMAGE,	"X-XWINDOWDUMP",	0 },
+	{ "zip",	TYPEAPPLICATION,	"X-ZIP-COMPRESSED",	0 }
 };
 
-#define NUMTYPE	25
-
+#define NUMTYPES      60
 
 /* This must be called before any attempt to access the wrapper class! */
 void initCC() 
@@ -110,8 +149,8 @@ Message *Folder::getMsg(ULONG msgno)
 	char *msg;
 	STRING s;
 
-	a = strdup(fetchHeader(msgno));
-	b = strdup(fetchText(msgno));
+	a = cpystr(fetchHeader(msgno));
+	b = cpystr(fetchText(msgno));
 	msg = (char *)malloc(strlen(a) + strlen(b) + 1);
 	strcat(msg, a);
 	strcat(msg, b);
@@ -186,6 +225,13 @@ Message::~Message()
 	}
 }
 
+Message *Message::reply() const {
+	Message *m = new Message;
+
+	m->setInReplyTo(env->message_id);
+	return m;
+}
+
 const char *Message::getText(ULONG *len) const
 {
 	if (!len)
@@ -257,6 +303,30 @@ void Message::clearFlag(char *flag)
 	mail_clearflag(ms, seq, flag);
 }   
 
+void Message::getAddress(ADDRESS *ad, char *buf) const
+{
+	char tmp[100];
+	char email[70];
+	ADDRESS *a = ad;
+
+	buf[0] = '\0';
+	while (a) {
+		if (a->host)
+			sprintf(email, "%s@%s", a->mailbox, a->host);
+		else
+			sprintf(email, "%s", a->mailbox);
+		if (a->personal) 
+        	sprintf(tmp, "%s <%s>, ", a->personal, email);
+		else
+			sprintf(tmp, "%s, ", email);
+		strcat(buf, tmp);
+		a = a->next;
+	}
+	/* To get rid of the last "," */
+	if (strlen(buf)) 
+		buf[strlen(buf) - 2] = '\0';
+}	
+
 void Message::setDate() 
 {
 	env->date = (char *)fs_get(80);
@@ -327,8 +397,20 @@ void Message::setText(const char *text)
 	else 	// Go to Part I
 		b = &body->nested.part->body;
 	b->type = TYPETEXT;
+	b->encoding = ENC7BIT;
    	b->contents.text.data = cpystr(text);
    	b->contents.text.size = strlen(text);
+}
+
+void Message::setCharset(const char *charset)
+{
+    BODY *b;
+
+    if (body->type != TYPEMULTIPART)
+        b = body;
+    else    // Go to Part I
+        b = &body->nested.part->body;
+	setBodyParameter(b, "CHARSET", charset);
 }
 
 long Message::sendSMTP(const char *h)
@@ -419,16 +501,19 @@ char *Message::toSTRING(ULONG *len)
 // For non-multipart message the number returned is always 0
 ULONG Message::numAttch()
 {
-	ULONG n = 0;
+	ULONG n = 0L;
     PART *next;
 
     if (body->type != TYPEMULTIPART)
-        return n;
+        return 0L;
 	next = body->nested.part;
     /* traverse the list */
-    while (next = next->next)
+    while (next) {
+		next = next->next;
         n++;
-    return n;
+	}
+	// -1 because the first test part is excluded
+    return n - 1;
 }
 
 BODY *Message::getBodyPart(ULONG ptno)
@@ -444,12 +529,11 @@ BODY *Message::getBodyPart(ULONG ptno)
         ctr++;
     }
     if (ctr == ptno) 
-		return &(next->body);
+		return &next->body;
 	return 0;	// incorrect body part
 }
 
-#if 0
-Attachment *Message::getAttachment(ULONG ptno)
+Attachment *Message::getAttch(ULONG ptno)
 {
 	BODY *ptr;
 	Attachment *a;
@@ -458,17 +542,25 @@ Attachment *Message::getAttachment(ULONG ptno)
 	char *txt;
 	ULONG len;
 
-	if (ptr = getBodyPart(ptno + 1))
+	//printf("Get Body\n");
+	if ((ptr = getBodyPart(ptno + 1)))
 		a = new Attachment;
 	else
 		return 0;
 	// Copy info
-	a->setType(ptr->type)
-	a->setDEscription((const char *)ptr->description);
+	//printf("Copy Info\n");
+	//printf("Set type\n");
+	a->setType(ptr->type);
+	//printf("Set Desc\n");
+	a->setDescription((const char *)ptr->description);
+	//printf("Set Subtype\n");
+	if (ptr->subtype)
 	a->setSubtype((const char *)ptr->subtype);
+	//printf("Set Encoding\n");
 	a->setEncoding(ptr->encoding);
 	// Get various attributes
 	p = ptr->parameter;
+	mdebug("Set para\n");
 	while (p) 
 	{
 		char *tmp = cpystr(p->attribute);
@@ -480,143 +572,161 @@ Attachment *Message::getAttachment(ULONG ptno)
 		p = p->next;
 	}
 	// Decode the data
-	sprintf(sec, "%ld", ptno);
+	mdebug("Decoding...\n");
+	sprintf(sec, "%ld", ptno + 1);
 	txt = mail_fetchbody(ms, msgno, sec, &len);
 	switch(ptr->encoding) {
+	void *da;
 	case ENCBASE64:
-		a->setData(rfc822_base64((unsigned char *)txt, len, &len));
+		da = rfc822_base64((unsigned char *)txt, len, &len);
+		a->setData(da, len);
 		break;
 	case ENCQUOTEDPRINTABLE:
-		a->setData((void *)rfc822_qprint((unsigned char *)txt, len, &len));
+		da = rfc822_qprint((unsigned char *)txt, len, &len);
+		a->setData(da, len);
 		break;
-	default:	// Copy the entire thing
-		void *d = fs_get(len + 1);
-		memcpy(d, txt, len + 1);
-		a->setData(d); 
-		break; 	// Can't do anything
+	default:	// Can't do anything
+		break;
 	}
-	a->length = len;
 	return a;
 }
 		
-void setBodyParameter(Body *b, char *att, char *value)
+void setBodyParameter(BODY *b, const char *att, const char *value)
 {
-	PARAMETER *p;
+	PARAMETER *p = b->parameter;
 
+	if (!b->parameter)
+		p = b->parameter = mail_newbody_parameter();
+	while (p->next) 
+		p = p->next;
+	p->attribute = cpystr(att);
+	p->value = cpystr(value);
 }
 
 void Message::attach(Attachment *a)
 {
-	PART *pp;
+	PART *part;
 	BODY *b;
-	PARAMETER *pa;
 
 	if (!a)
 		return;
 	body->type = TYPEMULTIPART;
+	body->subtype = cpystr("MIXED");
 	// If text part not present create it 
 	if (!body->nested.part) 
-		pp = body->nested.part = mail_newbody_part();
+		part = body->nested.part = mail_newbody_part();
 	// Now skip to the tail of the linked list
-	while (pp->next)
-		pp = pp->next;
-	b = &pp->body;
+	while (part->next)
+		part = part->next;
+	// Create this part
+	part->next = mail_newbody_part();
+	b = &part->next->body;
 	b->type = a->type;
 	b->encoding = a->encoding;
-	b->subtype = a->subtype;
+	b->subtype = cpystr(a->subtype);
 	b->id = 0;	// Nothing right now
-	b->description = a->description;
+	b->description = cpystr(a->description);
 	// set up the parameters
-	if (a->charset) {
-		pa = b->parameter = mail_newbody_parameter();
-		pa->attribute = strdup("CHARSET")
-		pa->value = a->charset;
-		pa = pa->next;
-	}
-	if (a->filename) {
-		if (a->charset)
-			pa = b->parameter-
-        pa = mail_newbody_parameter();
-        pa->attribute = strdup("NAME")
-        pa->value = a->charset;
-        pa = pa->next;
-    }
-	
+	if (a->charset) 
+		setBodyParameter(b, "CHARSET", a->charset);
+	if (a->filename) 
+		setBodyParameter(b, "NAME", a->filename);
+	b->contents.text.data = (char *)a->data;
+	b->contents.text.size = a->length;
 
-void printaddr(ADDRESS *a)
-{
-	printf("Personal: %s\n", a->personal);
-	printf("Mailbox: %s\n", a->mailbox);
-	printf("Host: %s\n", a->host);
-	printf("Error: %s\n", a->error);
+	// Set to NULL to avoid freeing the memory twice.
+	a->data = 0;
 }
-
-// For debug purpose only, dump the text to stdout
-void Message::debug() 
+	
+void printa(ADDRESS *a, char *title)
 {
-	ADDRESS *next;
-
-	printf("From:\n");
-	next = env->from;
-	while (next) 
-	{
-		printaddr(next);
+	printf("------------- ADDRESS %s--------------\n", title);
+	ADDRESS *next = a;
+	while (next) {
+		printf("Personal: <%s> ", next->personal);
+		printf("Mailbox: <%s> ", next->mailbox);
+		printf("Host: <%s> ", next->host);
+		printf("Error: <%s>\n", next->error);
 		next = next->next;
 	}
-	
-	printf("\nTo:\n");
-    next = env->to;
-    while (next)
-    {
-        printaddr(next);
-        next = next->next;
-    }
+}
 
-	printf("\nCc:\n");
-    next = env->cc;
-    while (next)
+void printb(BODY *b)
+{
+    PARAMETER *p;
+	printf("------------- BODY --------------\n");
+    printf("Body Type: %s\n", bodytype[b->type]);
+    printf("Encoding: %s\n", enctable[b->encoding]);
+    printf("Subtype: %s\n", b->subtype);
+    printf("Description: %s\n", b->description);
+    printf("Body Content ID: %s\n", b->id);
+    p = b->parameter;
+    while (p)
     {
-        printaddr(next);
-        next = next->next;
+        printf("\tAttribute: %s\n", p->attribute);
+        printf("\tValue: %s\n", p->value);
+        p = p->next;
     }
+}
 
-	printf("\nBcc:\n");
-    next = env->bcc;
-    while (next)
-    {
-        printaddr(next);
-        next = next->next;
-    }
+void printe(ENVELOPE *e)
+{
+	printf("-----------------ENVELOPE---------------------\n");
+	printa(e->return_path, "Return Path");
+	printa(e->from, "From");
+	printa(e->sender, "Sender");
+	printa(e->reply_to, "Reply-To");
+	printa(e->to, "To");
+	printa(e->cc, "Cc");
+	printa(e->bcc, "Bcc");
+	printf("Remail: %s\n", e->remail);
+	printf("Date: %s\n", e->date);
+	printf("Subject: %s\n", e->subject);
+	printf("In Reply To ID: %s\n", e->in_reply_to);
+	printf("Message ID: %s\n", e->message_id);
+	printf("Newsgroups: %s\n", e->newsgroups);
+	printf("Follow-up to: %s\n", e->followup_to);
+	printf("References: %s\n", e->references);
+}
 
-	printf("Date: %s\n", env->date);
-	printf("Subject: %s\n\n", env->subject);
-	printf("%s\n",body->contents.text.data);
+void Message::debug()
+{
+	PART *next = body->nested.part;
+	printf("==================================================\n");
+	printe(env);
+	printb(body);
+	while (next) {
+		printb(&next->body);
+		next = next->next;
+	}
+	printf("==================================================\n");
 }
 
 Attachment::Attachment()
 {
 	// Set up some default values
 	type = TYPEAPPLICATION;
-	subtype = 0;
+	subtype = cpystr("OCTET-STREAM");
 	description = 0;
 	filename = 0;
 	charset = 0;
 	encoding = ENCBASE64;
-	length = 0;
+	length = (ulong)0;
+	data = 0;
 }
 
 Attachment::~Attachment()
 {
-	/*if (filename)
-		fs_give(&filename);
+	if (filename)
+		fs_give((void **)&filename);
 	if (description)
-		fs_give(&description);
+		fs_give((void **)&description);
 	if (subtype)
-		fs_give(&subtype);
+		fs_give((void **)&subtype);
 	if (charset)
-		fs_give(&charset);
-	if (!data)
-		fs_give(&data);*/
+		fs_give((void **)&charset);
+	if (data)
+		fs_give((void **)&data);
 }
 
 static int cmp(const void *key, const void *data)
@@ -630,34 +740,51 @@ static int cmp(const void *key, const void *data)
 long Attachment::guess(CCHAR filename) 
 {
 	char *ext;
+	char ext2[10];
 	const char *b;
-	struct FileType *f;
+	const struct FileType *f = 0;
 	short t;
-
-	b = basename(filename)
+	
 	t = fileType(filename);
-	if (t == BADFILE)
+	if (!t)
 		return NIL;
+	if (!(b = basename(filename)))
+		return NIL;
+	mdebug("Basename = <%s>\n", b);
 	ext = strrchr(b, '.');
-	ext++;
-	f = (strcut FileType *)bsearch(ext, fInfo, NUMTYPE, sizeof(FileType), cmp);
-	// Now setup the data of the attachment
-	if (!f) 
-		f = &defaultFileType;
+	mdebug("Extension = <%s>\n", ext);
+	if (ext++) {
+		strcpy(ext2, ext);
+		f = (struct FileType *)bsearch(lcase(ext2), fInfo, NUMTYPES, sizeof(FileType), cmp);
+	}
+	// Unknown extension or no extension at all
+	if (!f) {
+		mdebug("<<<<<<Unknown/No extension>>>>>>>>\n");
+		switch(t) {
+		case TEXT:
+			f = &defaultTextFileType;
+			break;
+		case BINARY:
+			f = &defaultBinFileType;
+			break;
+		case BADFILE:
+			return NIL;
+			break;
+		}
+	}
 	setFilename(b);
 	setType(f->type);
 	setSubtype(f->subtype);
-	setEncoding(f->encoding);
+	setCharset(f->charset);
+	// Since this is an attachment we treat everything as binary
+	/*if (f->charset)	
+		setEncoding(ENC7BIT);
+	else*/
+	setEncoding(ENCBINARY);
 	// doesn't matter if the data type is data or binary
 	// C-client will take care of the encoding
 	data = readFile(filename, &length);
+	mdebug("Size of data: %ld\n", length);
 	return data? T : NIL;
 }
 
-// Save the attachment to file 
-// If file == 0 use to ./filename
-long Attachment::save(CCHAR *file)
-{
-	return file? writeFile(file, data, length) :
-}
-#endif

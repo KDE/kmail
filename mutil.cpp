@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <pwd.h>
 #include <string.h>
+#include <stdarg.h>
 
 extern "C" {
 #include <mail.h>
@@ -55,15 +56,15 @@ const char *getName()
 	return r;
 }
 
-char *unCRLF(char *s)
+char *unCRLF(char *, ulong)
 {
-	ULONG j = 0;
+/*	ULONG j = 0;
 	ULONG i = 0;
 	char c;
 	char *t = (char *)fs_get(sizeof(s));
 
-	while (i < strlen(s)) {
-		if ((c = s[i]) == '\015') {
+	while (i < len) {
+		if ((c = *s) == '\015') {
 			if ((c = s[i+1]) != '\0' && c == '\012') {
 				i++;
 				t[j] = '\012';
@@ -78,14 +79,14 @@ char *unCRLF(char *s)
 		j++;
 		i++;
 	}
-	//fs_give((void **)&s);
-	return s = t;
+	fs_give((void **)&s);
+	return s = t;*/
+	return 0;
 }
 	
-const char *basename(const char  *path)
+const char *basename(const char *path)
 {
     const char *r = (const char *)strrchr(path, '/');
-
     if (!r)
         return path;
     r++;
@@ -101,15 +102,24 @@ int fileType(const char *file)
     int size, i;
     unsigned char a[CHKBYTES];
 
-    if (fdes == -1) 
-		return BADFILE;
-    if (fstat(fdes, &buf) == -1) 
+    if (fdes == -1 || fstat(fdes, &buf) == -1 || !S_ISREG(buf.st_mode))
 		return BADFILE;
     size = buf.st_size > 512? 512 : buf.st_size;
     read(fdes, a, size);
 	close(fdes);
     for (i = 0; i < size; i++)
-        if (a[i] > 128)
+        if (a[i] > 127)
             return BINARY;
     return TEXT;
+}
+
+void mdebug(char *fmt, ...)
+{
+#ifdef DEBUG
+	va_list list;
+	va_start(list, fmt);
+	printf("MCLASS: ");
+	vprintf(fmt, list);
+	va_end(list);
+#endif
 }

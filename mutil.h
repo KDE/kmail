@@ -22,12 +22,12 @@ extern "C" {
 
 const char *getName();
 const char *getLocalName(char *);
-char *unCRLF(char *);
+char *unCRLF(char *, unsigned long);
 long writeFile(const char *, void *, unsigned long);
 void *readFile(const char *, unsigned long *);
 const char *basename(const char *); 
 int fileType(const char *);
-
+void mdebug(char *, ...);
 //////////////////////////////////////////////////////////////////////////////
 // Some useful inline functions
 //////////////////////////////////////////////////////////////////////////////

@@ -40,18 +40,27 @@ extern "C" {
 #define F_ANS	"\\ANSWERED"
 #define	F_SEEN 	"\\SEEN"
 
-// Length 
-#define L_FROM		30
-#define L_SUBJECT	25
-#define	L_FILE		100
+// Valid charsets
+#define C_USASCII	"US-ASCII"
+#define C_ISO8859_1	"ISO-8859-1"
+#define C_ISO8859_2 "ISO-8859-2"
+#define C_ISO8859_3 "ISO-8859-3"
+#define C_ISO8859_4 "ISO-8859-4" 
+#define C_ISO8859_5 "ISO-8859-5"
+#define C_ISO8859_6 "ISO-8859-6" 
+#define C_ISO8859_7 "ISO-8859-7"
+#define C_ISO8859_8 "ISO-8859-8" 
+#define C_ISO8859_9 "ISO-8859-9"
 
+// Message mode
 #define M_READONLY 0
 #define M_WRITABLE 1
+#define M_REPLY 2
 
-// Service available
-#define SRV_MBOX 0
-#define SRV_POP3 1
-#define	SRV_IMAP 2
+// Length
+#define L_FROM      30
+#define L_SUBJECT   25
+#define L_FILE      100
 
 #define MBOX(s) (s->mailbox)
 
@@ -75,7 +84,6 @@ public:
 	Attachment();
 	~Attachment();
 	long guess(CCHAR);
-	long save(CCHAR);
 	long isText() const { return type == TYPETEXT? T : NIL; }
 	long isBinary() const { return type != TYPETEXT? T : NIL; }
 	short getType() const { return type; }
@@ -83,34 +91,44 @@ public:
 	CCHAR getDescription() const { return (CCHAR)description; }
 	CCHAR getFilename() const { return (CCHAR)filename; }
 	short getEncoding() const { return encoding; }
-	CCHAR getText(ULONG *len) { *len = length; return (CCHAR)data; }
 	CCHAR getCharset() const { return (CCHAR)charset; }
 	void *getData(ULONG *len) { *len = length; return data; }
 
 	// Probably won't use 
 	void setType(short t) { type = t; }
+	void setEncoding(short e) { encoding = e; }
 	void setSubtype(CCHAR d) {
+		if (!d)
+			return;
         if (subtype)
             fs_give((void **)&subtype);
-        subtype = strdup(d);
+        subtype = cpystr(d);
     }
 	void setDescription(CCHAR d) { 
-		if (description)
-			fs_give((void **)&description);
-		description = strdup(d); 
+		if (d) {
+			if (description)
+				fs_give((void **)&description);
+			description = cpystr(d); 
+		}
 	}
 	void setFilename(CCHAR f) {
-        if (filename)
-            fs_give((void **)&filename);
-        filename = strdup(f);
+		if (f) {
+        	if (filename)
+            	fs_give((void **)&filename);
+        	filename = cpystr(f);
+		}
     }
 	void setCharset(CCHAR c) {
-        if (charset)
-            fs_give((void **)&charset);
-        filename = strdup(c);
+		if (c) {
+        	if (charset)
+            	fs_give((void **)&charset);
+        	charset = cpystr(c);
+		}
     }
-	void setEncoding(short e) { encoding = e; }
-	void setData(void *d) { data = d; }
+	void setData(void *d, ULONG len) { data = d; length = len; }
+	long save(const char *f = 0) {
+		return writeFile(f? f : filename, data, length);
+	}
 };
 
 //////////////////////////////////////////////////////////////////////////////
@@ -164,7 +182,11 @@ protected:
 	void setDate();
 	BODY *getBodyPart(ULONG);
 	char *toSTRING(ULONG *);
-
+	void setInReplyTo(CCHAR irt) {
+		if (irt)
+			env->in_reply_to = cpystr(irt);
+	}
+	void getAddress(ADDRESS *, char *) const;
 public:
 	Message();
 	~Message();
@@ -176,21 +198,34 @@ public:
 	CCHAR getText(ULONG *) const;
 	CCHAR getHeader() const;
 	void getDate(char *) const;
+	void getLongDate(char *buf) const {
+		strcpy(buf, env->date);
+	}
 	void getSubject(char *) const;
 	void getFrom(char *) const;
 	int	getType() const;
 	char getFlag() const;
+	void getCc(char *buf) const {
+		getAddress(env->cc, buf);
+	}
+	void getTo(char *buf) const {
+		getAddress(env->to, buf);
+	}
+	void getReplyTo(char *buf) const {
+		getAddress(env->reply_to, buf);
+	}
 	void setFlag(char *);
 	void clearFlag(char *);
 	void del() { setFlag(F_DEL); }
     void undel() { clearFlag(F_DEL); } 
+	Message *reply() const;
 	ULONG numAttch();
 	long export(FILE *f);
 	// MIME-specific
-	Attachment *getAttachment(ULONG);
-
+	Attachment *getAttch(ULONG);
+	
 /////////////////////////////////////////////////////////////////
-// Functions for composing/replying a message
+// Functions for composing a message
 /////////////////////////////////////////////////////////////////
 	void setText(CCHAR);
 	void setTo(CCHAR);
@@ -198,7 +233,7 @@ public:
 	void setCc(CCHAR);
 	void setBcc(CCHAR);
 	void setSubject(CCHAR);
-	//setType(int);
+	void setCharset(CCHAR);
 	long sendSMTP(CCHAR);
 	long sendMTA(CCHAR);
 	// MIME-specific
@@ -210,5 +245,8 @@ public:
 
 void initCC();
 long createFolder(char *);
-void setBodyParamter(BODY *, char *, char *);
+void setBodyParameter(BODY *, const char *, const char *);
+void printe(ENVELOPE *);
+void printa(ADDRESS *, char *);
+void printb(BODY *);
 #endif
