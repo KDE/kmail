@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>690</width>
+            <width>766</width>
             <height>396</height>
         </rect>
     </property>
@@ -369,17 +369,12 @@ It is recommended to keep this option turned on to avoid using certificates that
 &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="2" column="2">
-                                    <property name="name">
-                                        <cstring>warnRootCertificateExpiresLA</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>days</string>
-                                    </property>
-                                </widget>
                                 <widget class="QSpinBox" row="0" column="1">
                                     <property name="name">
                                         <cstring>warnSignatureCertificateExpiresSB</cstring>
+                                    </property>
+                                    <property name="suffix">
+                                        <string> days</string>
                                     </property>
                                     <property name="value">
                                         <number>14</number>
@@ -418,22 +413,6 @@ It is recommended to keep this option turned on to avoid using certificates that
 &lt;/qt&gt;</string>
                                     </property>
                                 </widget>
-                                <widget class="QLabel" row="1" column="2">
-                                    <property name="name">
-                                        <cstring>warnCACertificateExpiresLA</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>days</string>
-                                    </property>
-                                </widget>
-                                <widget class="QLabel" row="0" column="2">
-                                    <property name="name">
-                                        <cstring>warnSignatureCertificateExpiresLA</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>days</string>
-                                    </property>
-                                </widget>
                                 <widget class="QCheckBox" row="2" column="0">
                                     <property name="name">
                                         <cstring>warnRootCertificateExpiresCB</cstring>
@@ -460,6 +439,9 @@ It is recommended to keep this option turned on to avoid using certificates that
                                     <property name="name">
                                         <cstring>warnCACertificateExpiresSB</cstring>
                                     </property>
+                                    <property name="suffix">
+                                        <string> days</string>
+                                    </property>
                                     <property name="value">
                                         <number>14</number>
                                     </property>
@@ -478,6 +460,9 @@ The recommended SPHINX setting is 14 days.
                                 <widget class="QSpinBox" row="2" column="1">
                                     <property name="name">
                                         <cstring>warnRootCertificateExpiresSB</cstring>
+                                    </property>
+                                    <property name="suffix">
+                                        <string> days</string>
                                     </property>
                                     <property name="value">
                                         <number>14</number>
@@ -665,16 +650,11 @@ It is recommended to leave this option turned on for maximum integrity.
                                             <property name="enabled">
                                                 <bool>false</bool>
                                             </property>
+                                            <property name="suffix">
+                                                <string> min</string>
+                                            </property>
                                             <property name="value">
                                                 <number>10</number>
-                                            </property>
-                                        </widget>
-                                        <widget class="QLabel">
-                                            <property name="name">
-                                                <cstring>pinIntervalLA</cstring>
-                                            </property>
-                                            <property name="text">
-                                                <string>Minutes</string>
                                             </property>
                                         </widget>
                                     </hbox>

@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>744</width>
-            <height>448</height>
+            <width>824</width>
+            <height>453</height>
         </rect>
     </property>
     <property name="caption">
@@ -124,14 +124,135 @@ It is recommended to leave this option turned on for maximum integrity.
                 </widget>
             </vbox>
         </widget>
-        <widget class="QButtonGroup" row="0" column="1" rowspan="1" colspan="2">
+        <widget class="QButtonGroup" row="0" column="1">
             <property name="name">
                 <cstring>crlBG</cstring>
             </property>
             <property name="title">
                 <string>Certificate Revocation Lists</string>
             </property>
-            <vbox>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>useCRLsCB</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>11</x>
+                        <y>20</y>
+                        <width>395</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>&amp;Use certificate revocation lists (CRLs)</string>
+                </property>
+                <property name="checked">
+                    <bool>true</bool>
+                </property>
+                <property name="toolTip" stdset="0">
+                    <string>Check to use CRLs</string>
+                </property>
+                <property name="whatsThis" stdset="0">
+                    <string>&lt;qt&gt;
+&lt;h1&gt;Use Certificate Revocation Lists (CRLs)&lt;/h1&gt;
+A certificate revocation list contains certificates that have been withdrawn and should not be used for encryption purposes any longer. A user may wish to have his or her certificate revoked because he or she suspects that the certificate's integrity has been compromised (e.g. somebody has guessed the PIN).
+&lt;p&gt;
+It is recommended to use CRLs for maximum security. In the configuration dialog for certificate and CRL management, you can select where to retrieve the CRLs from.
+&lt;/qt&gt;</string>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>Layout13</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>12</x>
+                        <y>48</y>
+                        <width>400</width>
+                        <height>25</height>
+                    </rect>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <property name="margin">
+                        <number>0</number>
+                    </property>
+                    <property name="spacing">
+                        <number>6</number>
+                    </property>
+                    <widget class="QCheckBox">
+                        <property name="name">
+                            <cstring>warnCRLExpireCB</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Warn if CRL e&amp;xpires in less than</string>
+                        </property>
+                        <property name="checked">
+                            <bool>true</bool>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Check to be warned if a CRL expires in the near future</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If CRL Expires In The Near Future&lt;/h1&gt;
+If this box is checked, you will be warned if one of the CRLs you are using is about to expire in the near future.
+&lt;/qt&gt;</string>
+                        </property>
+                    </widget>
+                    <widget class="QSpinBox">
+                        <property name="name">
+                            <cstring>warnCRLExpireSB</cstring>
+                        </property>
+                        <property name="suffix">
+                            <string> days</string>
+                        </property>
+                        <property name="value">
+                            <number>7</number>
+                        </property>
+                        <property name="toolTip" stdset="0">
+                            <string>Number of days before warning</string>
+                        </property>
+                        <property name="whatsThis" stdset="0">
+                            <string>&lt;qt&gt;
+&lt;h1&gt;Warn If CRL Expires In The Near Future&lt;/h1&gt;
+In this field you can specify how soon before a CRL expires you are warned about this expiry.
+&lt;p&gt;
+The recommended setting for the SPHINX environment is 7 days.
+&lt;/qt&gt;</string>
+                        </property>
+                    </widget>
+                    <spacer>
+                        <property name="name" stdset="0">
+                            <cstring>Spacer8</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>20</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </hbox>
+            </widget>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>encryptionSettingsBG</cstring>
+            </property>
+            <property name="title">
+                <string>Encryption Settings</string>
+            </property>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
@@ -141,33 +262,11 @@ It is recommended to leave this option turned on for maximum integrity.
                 <property name="spacing">
                     <number>6</number>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="QLayoutWidget" row="2" column="0">
                     <property name="name">
-                        <cstring>useCRLsCB</cstring>
+                        <cstring>Layout12</cstring>
                     </property>
-                    <property name="text">
-                        <string>&amp;Use certificate revocation lists (CRLs)</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>Check to use CRLs</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;
-&lt;h1&gt;Use Certificate Revocation Lists (CRLs)&lt;/h1&gt;
-A certificate revocation list contains certificates that have been withdrawn and should not be used for encryption purposes any longer. A user may wish to have his or her certificate revoked because he or she suspects that the certificate's integrity has been compromised (e.g. somebody has guessed the PIN).
-&lt;p&gt;
-It is recommended to use CRLs for maximum security. In the configuration dialog for certificate and CRL management, you can select where to retrieve the CRLs from.
-&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>Layout14</cstring>
-                    </property>
-                    <hbox>
+                    <grid>
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
@@ -177,75 +276,187 @@ It is recommended to use CRLs for maximum security. In the configuration dialog 
                         <property name="spacing">
                             <number>6</number>
                         </property>
-                        <widget class="QCheckBox">
+                        <spacer row="0" column="2">
+                            <property name="name" stdset="0">
+                                <cstring>Spacer6</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QSpinBox" row="1" column="1">
                             <property name="name">
-                                <cstring>warnCRLExpireCB</cstring>
+                                <cstring>warnChainCertificateExpiresSB</cstring>
+                            </property>
+                            <property name="suffix">
+                                <string> days</string>
+                            </property>
+                            <property name="value">
+                                <number>14</number>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Select the number of days here</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Warn If A Certificate In The Chain Expires&lt;/h1&gt;
+Select the minimum number of days all certificates in the chain should be valid without issuing a warning.
+&lt;p&gt;
+The recommended SPHINX setting is 14 days.
+&lt;/qt&gt;</string>
+                            </property>
+                        </widget>
+                        <widget class="QCheckBox" row="1" column="0">
+                            <property name="name">
+                                <cstring>warnChainCertificateExpiresCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn if CRL e&amp;xpires in less than</string>
+                                <string>Warn if a certificate in the &amp;chain expires in less than</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
                             </property>
                             <property name="toolTip" stdset="0">
-                                <string>Check to be warned if a CRL expires in the near future</string>
+                                <string>Check to be warned if the certificate expires soon</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>&lt;qt&gt;
-&lt;h1&gt;Warn If CRL Expires In The Near Future&lt;/h1&gt;
-If this box is checked, you will be warned if one of the CRLs you are using is about to expire in the near future.
+&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
+If this option is checked, then you will be warned when trying to use a certificate for encrypting that expires within the specified amount of days.
+&lt;p&gt;
+It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
 &lt;/qt&gt;</string>
                             </property>
                         </widget>
-                        <widget class="QSpinBox">
+                        <spacer row="1" column="2">
+                            <property name="name" stdset="0">
+                                <cstring>Spacer7</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QSpinBox" row="0" column="1">
                             <property name="name">
-                                <cstring>warnCRLExpireSB</cstring>
+                                <cstring>warnReceiverCertificateExpiresSB</cstring>
+                            </property>
+                            <property name="suffix">
+                                <string> days</string>
                             </property>
                             <property name="value">
-                                <number>7</number>
+                                <number>14</number>
                             </property>
                             <property name="toolTip" stdset="0">
-                                <string>Number of days before warning</string>
+                                <string>Select the number of days here</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>&lt;qt&gt;
-&lt;h1&gt;Warn If CRL Expires In The Near Future&lt;/h1&gt;
-In this field you can specify how soon before a CRL expires you are warned about this expiry.
+&lt;h1&gt;Warn If Encryption Certificate Expires&lt;/h1&gt;
+Select the minimum number of days the encryption certificate should be valid without issuing a warning.
 &lt;p&gt;
-The recommended setting for the SPHINX environment is 7 days.
+The recommended SPHINX setting is 14 days.
 &lt;/qt&gt;</string>
                             </property>
                         </widget>
-                        <widget class="QLabel">
+                        <widget class="QCheckBox" row="0" column="0">
                             <property name="name">
-                                <cstring>TextLabel6</cstring>
+                                <cstring>warnReceiverCertificateExpiresCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Days</string>
+                                <string>Warn if &amp;receiver certificate expires in less than</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Check to be warned if the certificate expires soon</string>
+                            </property>
+                            <property name="whatsThis" stdset="0">
+                                <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
+If this option is checked, then you will be warned when trying to use a certificate for encrypting that expires within the specified amount of days.
+&lt;p&gt;
+It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
+&lt;/qt&gt;</string>
                             </property>
                         </widget>
-                    </hbox>
+                    </grid>
                 </widget>
-            </vbox>
-        </widget>
-        <widget class="QGroupBox" row="1" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>encryptionSettingsBG</cstring>
-            </property>
-            <property name="title">
-                <string>Encryption Settings</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>11</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <widget class="QLayoutWidget">
+                <spacer row="1" column="0">
+                    <property name="name" stdset="0">
+                        <cstring>Spacer3</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <spacer row="3" column="0">
+                    <property name="name" stdset="0">
+                        <cstring>Spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="4" column="0">
+                    <property name="name">
+                        <cstring>warnReceiverNotInCertificateCB</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Warn if receiver's &amp;email address is not in certificate</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                    <property name="toolTip" stdset="0">
+                        <string>Check to be warned if the address is not in the certificate</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>&lt;qt&gt;
+&lt;h1&gt;Warn If Receiver's Email Address Is Not In Certificate&lt;/h1&gt;
+If this option is checked, a warning is issued if the email address of the receiver is not contained in the certificate used for encrypting.
+&lt;p&gt;
+It is recommended to leave this option turned on for maximum security.
+&lt;/qt&gt;</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>Layout13</cstring>
                     </property>
@@ -322,179 +533,9 @@ This setting is a default, you can override it for each individual message.
                         </spacer>
                     </hbox>
                 </widget>
-                <spacer>
-                    <property name="name" stdset="0">
-                        <cstring>Spacer3</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>Layout5</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>6</number>
-                        </property>
-                        <widget class="QCheckBox" row="1" column="0">
-                            <property name="name">
-                                <cstring>warnChainCertificateExpiresCB</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Warn if a certificate in the &amp;chain expires in less than</string>
-                            </property>
-                            <property name="checked">
-                                <bool>true</bool>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Check to be warned if the certificate expires soon</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>&lt;qt&gt;
-&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
-If this option is checked, then you will be warned when trying to use a certificate for encrypting that expires within the specified amount of days.
-&lt;p&gt;
-It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
-&lt;/qt&gt;</string>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox" row="0" column="1">
-                            <property name="name">
-                                <cstring>warnReceiverCertificateExpiresSB</cstring>
-                            </property>
-                            <property name="value">
-                                <number>14</number>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Select the number of days here</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>&lt;qt&gt;
-&lt;h1&gt;Warn If Encryption Certificate Expires&lt;/h1&gt;
-Select the minimum number of days the encryption certificate should be valid without issuing a warning.
-&lt;p&gt;
-The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox" row="0" column="0">
-                            <property name="name">
-                                <cstring>warnReceiverCertificateExpiresCB</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Warn if &amp;receiver certificate expires in less than</string>
-                            </property>
-                            <property name="checked">
-                                <bool>true</bool>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Check to be warned if the certificate expires soon</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>&lt;qt&gt;
-&lt;h1&gt;Warn If Certificate Expires&lt;/h1&gt;
-If this option is checked, then you will be warned when trying to use a certificate for encrypting that expires within the specified amount of days.
-&lt;p&gt;
-It is recommended to keep this option turned on to avoid using certificates that expire in the near future.
-&lt;/qt&gt;</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="2">
-                            <property name="name">
-                                <cstring>warnCACertificateExpiresLA</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Days</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="2">
-                            <property name="name">
-                                <cstring>warnSignatureCertificateExpiresLA</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Days</string>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox" row="1" column="1">
-                            <property name="name">
-                                <cstring>warnChainCertificateExpiresSB</cstring>
-                            </property>
-                            <property name="value">
-                                <number>14</number>
-                            </property>
-                            <property name="toolTip" stdset="0">
-                                <string>Select the number of days here</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>&lt;qt&gt;
-&lt;h1&gt;Warn If A Certificate In The Chain Expires&lt;/h1&gt;
-Select the minimum number of days all certificates in the chain should be valid without issuing a warning.
-&lt;p&gt;
-The recommended SPHINX setting is 14 days.
-&lt;/qt&gt;</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-                <spacer>
-                    <property name="name" stdset="0">
-                        <cstring>Spacer2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>warnReceiverNotInCertificateCB</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Warn if receiver's &amp;email address is not in certificate</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>Check to be warned if the address is not in the certificate</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;
-&lt;h1&gt;Warn If Receiver's Email Address Is Not In Certificate&lt;/h1&gt;
-If this option is checked, a warning is issued if the email address of the receiver is not contained in the certificate used for encrypting.
-&lt;p&gt;
-It is recommended to leave this option turned on for maximum security.
-&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-            </vbox>
+            </grid>
         </widget>
-        <widget class="QButtonGroup" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="QButtonGroup" row="2" column="0">
             <property name="name">
                 <cstring>saveMessagesBG</cstring>
             </property>
@@ -535,7 +576,7 @@ However, there may be local rules that require you to turn this option on. When 
                 </widget>
             </vbox>
         </widget>
-        <widget class="QButtonGroup" row="2" column="2">
+        <widget class="QButtonGroup" row="2" column="1">
             <property name="name">
                 <cstring>certificatePathCheckBG</cstring>
             </property>

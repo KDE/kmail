@@ -4987,7 +4987,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
 #else
   certDialog = 0;
 
-  startCertManagerPB = new QPushButton( i18n( "&Start certificate manager" ), this, "startcertmanagerpb" );
+  startCertManagerPB = new QPushButton( i18n( " &Start Certificate Manager " ), this, "startcertmanagerpb" );
   connect( startCertManagerPB, SIGNAL( clicked() ),
            this, SLOT( slotStartCertManager() ) );
   startCertManagerPB->setFixedSize( startCertManagerPB->sizeHint() );
