@@ -1896,8 +1896,14 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
       extraMessage->cleanupHeader();
       mMsg->setUnencryptedMsg( extraMessage );
+
+      // The extra message is now saved in the message, so don't delete it
+      extraMessage = 0;
     }
   }
+
+  delete extraMessage;
+
   return bOk;
 }
 
