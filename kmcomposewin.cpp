@@ -1556,6 +1556,13 @@ bool KMComposeWin::applyChanges(void)
         i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
       QString question =
         i18n("Store message in the recommended way?");
+      
+      
+      
+      
+      
+            saveSentSignatures    = true;
+      /*
       if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
         if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt + "<br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
             saveSentSignatures    = true;
@@ -1565,7 +1572,7 @@ bool KMComposeWin::applyChanges(void)
         if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt  + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
             saveSentSignatures = true;
         }
-      } else if( doEncrypt && saveMessagesEncrypted ) {
+      } else */if( doEncrypt && saveMessagesEncrypted ) {
         if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
             saveMessagesEncrypted = false;
         }
