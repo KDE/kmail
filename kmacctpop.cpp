@@ -13,6 +13,7 @@
 #include <kconfig.h>
 #include <qlined.h>
 #include <qpushbt.h>
+#include <klocale.h>
 
 #include "kmacctpop.h"
 #include "kalarmtimer.h"
@@ -69,7 +70,8 @@ bool KMAcctPop::processNewMail(void)
   // DwPopClient::Open().
   signal(SIGALRM,SIG_IGN);
 
-  debug("processNewMail");
+  warning("POP support is still experimental\nand not functional.");
+
   DwPopClient client;
   client.SetReceiveTimeout(20);
 
@@ -241,60 +243,6 @@ bool KMAcctPop::processNewMail(void)
 
 }
 
-KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
-			       const char *caption, const char *login,
-			       const char *passwd)
-  :QDialog(parent,name,true)
-{
-  // This function pops up a little dialog which asks you 
-  // for a new username and password if one of them was wrong.
-
-  kbp->idle();
-  setMaximumSize(300,180);
-  setMinimumSize(300,180);
-  setCaption(caption);
-
-  QLabel *label = new QLabel(this);
-  label->setText("Login Name:");
-  label->resize(label->sizeHint());
-
-  label->move(20,30);
-  usernameLEdit = new QLineEdit(this,"NULL");
-  usernameLEdit->setText(login);
-  usernameLEdit->setGeometry(100,27,150,25);
-  
-  QLabel *label1 = new QLabel(this);
-  label1->setText("Password:");
-  label1->resize(label1->sizeHint());
-  label1->move(20,80);
-
-  passwdLEdit = new QLineEdit(this,"NULL");
-  passwdLEdit->setEchoMode(QLineEdit::Password);
-  passwdLEdit->setText(passwd);
-  passwdLEdit->setGeometry(100,76,150,25);
-  connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
-
-  ok = new QPushButton("Ok" ,this,"NULL");
-  ok->setGeometry(55,130,70,25);
-  connect(ok,SIGNAL(pressed()),this,SLOT(slotOkPressed()));
-
-  cancel = new QPushButton("Cancel", this);
-  cancel->setGeometry(180,130,70,25);
-  connect(cancel,SIGNAL(pressed()),this,SLOT(slotCancelPressed()));
-
-}
-
-void KMPasswdDialog::slotOkPressed()
-{
-  kbp->busy();
-  done(1);
-}
-
-void KMPasswdDialog::slotCancelPressed()
-{
-  kbp->busy();
-  done(0);
-}
 
 //-----------------------------------------------------------------------------
 void KMAcctPop::readConfig(KConfig& config)
@@ -302,11 +250,11 @@ void KMAcctPop::readConfig(KConfig& config)
   KMAcctPopInherited::readConfig(config);
 
   mLogin = config.readEntry("login", "");
-  mStorePasswd = config.readNumEntry("store-passwd", 1);
+  mStorePasswd = config.readNumEntry("store-passwd", TRUE);
   if (mStorePasswd) 
-    mPasswd = config.readEntry("passwd");
+    mPasswd = decryptStr(config.readEntry("passwd"));
   else 
-    mPasswd = "?";
+    mPasswd = "";
   mHost = config.readEntry("host");
   mPort = config.readNumEntry("port");
   mProtocol = config.readNumEntry("protocol");
@@ -316,25 +264,46 @@ void KMAcctPop::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctPop::writeConfig(KConfig& config)
 {
-  QString cryptPasswd;
-  unsigned int i;
-
-  KMAcctPopInherited::readConfig(config);
+  KMAcctPopInherited::writeConfig(config);
 
   config.writeEntry("login", mLogin);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd)
   {
     // very primitive password encryption
-    for (i=0; i<mPasswd.length(); i++)
-      cryptPasswd[i] = (char)((int)mPasswd[i] ^ 'F');
-    config.writeEntry("passwd", mPasswd);
+    config.writeEntry("passwd", encryptStr(mPasswd));
   }
   else config.writeEntry("passwd", "");
 
   config.writeEntry("host", mHost);
   config.writeEntry("port", mPort);
   config.writeEntry("protocol", mProtocol);
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMAcctPop::encryptStr(const QString aStr)
+{
+  unsigned int i, val;
+  unsigned int len = aStr.length();
+  QString result(len+1);
+
+  for (i=0; i<len; i++)
+  {
+    val = aStr[i] - ' ';
+    val = (255-' ') - val;
+    result[i] = (char)(val + ' ');
+  }
+  result[i] = '\0';
+
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMAcctPop::decryptStr(const QString aStr)
+{
+  return encryptStr(aStr);
 }
 
 
@@ -375,3 +344,65 @@ void KMAcctPop::setProtocol(short aProtocol)
 }
 
 
+//=============================================================================
+//
+//  Class  KMPasswdDialog
+//
+//=============================================================================
+
+KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
+			       const char *caption, const char *login,
+			       const char *passwd)
+  :QDialog(parent,name,true)
+{
+  // This function pops up a little dialog which asks you 
+  // for a new username and password if one of them was wrong.
+
+  kbp->idle();
+  setMaximumSize(300,180);
+  setMinimumSize(300,180);
+  setCaption(caption);
+
+  QLabel *label = new QLabel(this);
+  label->setText(nls->translate("Login Name:"));
+  label->resize(label->sizeHint());
+
+  label->move(20,30);
+  usernameLEdit = new QLineEdit(this,"NULL");
+  usernameLEdit->setText(login);
+  usernameLEdit->setGeometry(100,27,150,25);
+  
+  QLabel *label1 = new QLabel(this);
+  label1->setText(nls->translate("Password:"));
+  label1->resize(label1->sizeHint());
+  label1->move(20,80);
+
+  passwdLEdit = new QLineEdit(this,"NULL");
+  passwdLEdit->setEchoMode(QLineEdit::Password);
+  passwdLEdit->setText(passwd);
+  passwdLEdit->setGeometry(100,76,150,25);
+  connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
+
+  ok = new QPushButton("Ok" ,this,"NULL");
+  ok->setGeometry(55,130,70,25);
+  connect(ok,SIGNAL(pressed()),this,SLOT(slotOkPressed()));
+
+  cancel = new QPushButton("Cancel", this);
+  cancel->setGeometry(180,130,70,25);
+  connect(cancel,SIGNAL(pressed()),this,SLOT(slotCancelPressed()));
+
+}
+
+//-----------------------------------------------------------------------------
+void KMPasswdDialog::slotOkPressed()
+{
+  kbp->busy();
+  done(1);
+}
+
+//-----------------------------------------------------------------------------
+void KMPasswdDialog::slotCancelPressed()
+{
+  kbp->busy();
+  done(0);
+}

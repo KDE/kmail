@@ -1,10 +1,20 @@
 // kmmessage.cpp
 
+
+// if you do not want GUI elements in here then set ALLOW_GUI to 0.
+#define ALLOW_GUI 1
+
+
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmfolder.h"
 
 #include <mimelib/mimepp.h>
+
+#if ALLOW_GUI
+#include <qmlined.h>
+#endif
+
 
 static DwString emptyString("");
 
@@ -14,6 +24,7 @@ KMMessage::KMMessage()
   mOwner = NULL;
   mStatus = stUnknown;
   mMsg = DwMessage::NewMessage(mMsgStr, 0);
+  mNeedsAssembly = FALSE;
 }
 
 
@@ -21,7 +32,10 @@ KMMessage::KMMessage()
 KMMessage::KMMessage(KMFolder* aOwner, DwMessage* aMsg)
 {
   mOwner = aOwner;
+  mNeedsAssembly = FALSE;
   if (!aMsg) mMsg = DwMessage::NewMessage(mMsgStr, 0);
+  else mMsg->Parse();
+  mNeedsAssembly = FALSE;
 }
 
 
@@ -44,14 +58,49 @@ void KMMessage::takeMessage(DwMessage* aMsg)
 {
   if (mMsg) delete mMsg;
   mMsg = aMsg;
+  mMsg->Parse();
+  mNeedsAssembly = FALSE;
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::asString(void)
 {
-  mMsg->Assemble();
-  return mMsg->AsString().c_str();
+  char* str;
+  static QString qstr;
+  DwString dwstr;
+  int len, num, i;
+
+  if (mNeedsAssembly)
+  {
+    mNeedsAssembly = FALSE;
+    mMsg->Assemble();
+  }
+
+  // We have to work around a nasty bug in mimelib that causes a 
+  // misplaced '\r' at the end of the header section where a '\n' should 
+  // be. This seems to happen when mMsg->Parse() is called.
+  str = (char*)mMsg->AsString().c_str();
+  len = mMsg->Headers().AsString().length();
+  for (num=0, i=len; i>0 && str[i]<=' '; i--)
+  {
+    if (str[i]=='\r') str[i]='\n';
+    num++;
+  }
+  if (num>=3) str[len-1]='\r';
+
+  mMsgStr = mMsg->AsString();
+  return str;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::fromString(const QString aStr)
+{
+  mMsg->FromString((const char*)aStr);
+  mMsg->Parse();
+  mMsgStr = mMsg->AsString();
+  mNeedsAssembly = FALSE;
 }
 
 
@@ -60,6 +109,7 @@ void KMMessage::setStatus(Status aStatus)
 {
   mStatus = aStatus;
   if (mOwner) mOwner->setMsgStatus(this, mStatus);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -105,6 +155,7 @@ void KMMessage::setAutomaticFields(void)
 
     contentType.CreateBoundary(0);
   }
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -134,6 +185,7 @@ time_t KMMessage::date(void) const
 void KMMessage::setDate(time_t aDate)
 {
   mMsg->Headers().Date().FromUnixTime(aDate);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -151,6 +203,7 @@ void KMMessage::setTo(const char* aStr)
 {
   if (!aStr) return;
   mMsg->Headers().To().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -168,6 +221,7 @@ void KMMessage::setReplyTo(const char* aStr)
 {
   if (!aStr) return;
   mMsg->Headers().ReplyTo().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -175,6 +229,7 @@ void KMMessage::setReplyTo(const char* aStr)
 void KMMessage::setReplyTo(KMMessage* aMsg)
 {
   mMsg->Headers().ReplyTo().FromString(aMsg->from());
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -192,6 +247,7 @@ void KMMessage::setCc(const char* aStr)
 {
   if (!aStr) return;
   mMsg->Headers().Cc().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -209,6 +265,7 @@ void KMMessage::setBcc(const char* aStr)
 {
   if (!aStr) return;
   mMsg->Headers().Bcc().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -226,6 +283,7 @@ const char* KMMessage::from(void) const
 void KMMessage::setFrom(const char* aStr)
 {
   mMsg->Headers().From().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -243,7 +301,7 @@ void KMMessage::setSubject(const char* aStr)
 {
   if (!aStr) return;
   mMsg->Headers().Subject().FromString(aStr);
-
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -276,6 +334,7 @@ void KMMessage::setHeaderField(const char* aName, const char* aValue)
   field->Parse();
 
   header.AddOrReplaceField(field);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -301,6 +360,7 @@ int KMMessage::type(void) const
 void KMMessage::setTypeStr(const char* aStr)
 {
   mMsg->Headers().ContentType().SetTypeStr(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -308,6 +368,7 @@ void KMMessage::setTypeStr(const char* aStr)
 void KMMessage::setType(int aType)
 {
   mMsg->Headers().ContentType().SetType(aType);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -334,6 +395,7 @@ int KMMessage::subtype(void) const
 void KMMessage::setSubtypeStr(const char* aStr)
 {
   mMsg->Headers().ContentType().SetSubtypeStr(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -341,6 +403,7 @@ void KMMessage::setSubtypeStr(const char* aStr)
 void KMMessage::setSubtype(int aSubtype)
 {
   mMsg->Headers().ContentType().SetSubtype(aSubtype);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -368,6 +431,7 @@ int KMMessage::contentTransferEncoding(void) const
 void KMMessage::setContentTransferEncodingStr(const char* aStr)
 {
   mMsg->Headers().ContentTransferEncoding().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -375,6 +439,7 @@ void KMMessage::setContentTransferEncodingStr(const char* aStr)
 void KMMessage::setContentTransferEncoding(int aCte)
 {
   mMsg->Headers().ContentTransferEncoding().FromEnum(aCte);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -383,7 +448,6 @@ const char* KMMessage::body(long* len_ret) const
 {
   static DwString str;
 
-  mMsg->Assemble();
   str = mMsg->Body().AsString();
   if (len_ret) *len_ret = str.length();
   return str.c_str();
@@ -393,9 +457,8 @@ const char* KMMessage::body(long* len_ret) const
 //-----------------------------------------------------------------------------
 void KMMessage::setBody(const char* aStr)
 {
-  mMsgStr.assign(aStr);
-  mMsg->Body().FromString(mMsgStr);
-  mMsg->Assemble();
+  mMsg->Body().FromString(aStr);
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -444,7 +507,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart)
     if(headers->ContentType().Name().c_str() != "" )
       aPart->setName(headers->ContentType().Name().c_str());
     else
-      aPart->setName("Undefined Name");
+      aPart->setName("unnamed");
 
     // Content-transfer-encoding
     if (headers->HasContentTransferEncoding())
@@ -535,6 +598,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
     headers.ContentDisposition().FromString(contDisp);
 
   part->Body().FromString(bodyStr); 
+  mNeedsAssembly = TRUE;
 }
 
 
@@ -571,4 +635,28 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     headers.ContentDisposition().FromString(contDisp);
 
   part->Body().FromString(bodyStr); 
+  mNeedsAssembly = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::viewSource(const char* aCaption) const
+{
+  const char* str = ((KMMessage*)this)->asString();
+
+#if ALLOW_GUI
+  QMultiLineEdit* edt;
+
+  edt = new QMultiLineEdit;
+  if (aCaption) edt->setCaption(aCaption);
+
+  edt->insertLine(str);
+  edt->setReadOnly(TRUE);
+  edt->show();
+
+#else //not ALLOW_GUI
+  debug("Message source: %s\n%s\n--- end of message ---", 
+	aCaption ? aCaption : "", str);
+
+#endif
 }

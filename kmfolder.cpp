@@ -559,29 +559,26 @@ KMMessage *KMFolder::getMsg(int msgno)
 void KMFolder::readMsg(int msgno)
 {
   KMMessage* msg;
-  DwMessage* dwmsg;
   unsigned long msgSize;
+  QString msgText;
 
   assert(mStream != NULL);
   assert(msgno >= 1 && msgno <= mMsgs);
   msgno--;
 
-  msg = new KMMessage(this);
-
   msgSize = mMsgInfo[msgno].size();
-  msg->msgStr().resize(msgSize+2);
+  msgText.resize(msgSize+2);
 
   fseek(mStream, mMsgInfo[msgno].offset(), SEEK_SET);
+  fread(msgText.data(), msgSize, 1, mStream);
+  msgText[msgSize] = '\0';
 
-  fread((char*)msg->msgStr().data(), msgSize, 1, mStream);
-  ((char*)msg->msgStr().data())[msgSize] = '\0';
+  msg = new KMMessage(this);
+  msg->fromString(msgText);
+  //msg->viewSource("KMFolder::readMsg: directly after parsing");
 
-  mMsgInfo[msgno].setMsg(msg);
   msg->setStatus(mMsgInfo[msgno].status());
-  dwmsg = DwMessage::NewMessage(msg->msgStr(), 0);
-  dwmsg->Parse();
-
-  msg->takeMessage(dwmsg);
+  mMsgInfo[msgno].setMsg(msg);
 }
 
 
@@ -615,6 +612,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   long offs, size, len;
   int msgArrNum = mMsgInfo.size();
   bool opened = FALSE;
+  const char* msgText;
 
   if (!mStream)
   {
@@ -623,7 +621,8 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   }
 
   assert(mStream != NULL);
-  len = strlen(aMsg->asString());
+  msgText = aMsg->asString();
+  len = strlen(msgText);
 
   if (len <= 0)
   {
@@ -643,7 +642,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   offs = ftell(mStream);
 
   fwrite("From ???@??? 00:00:00 1997 +0000\n", 33, 1, mStream);
-  fwrite((char*)aMsg->asString(), len, 1, mStream);
+  fwrite(msgText, len, 1, mStream);
   fflush(mStream);
 
   size = ftell(mStream) - offs;

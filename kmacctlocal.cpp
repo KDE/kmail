@@ -77,6 +77,7 @@ bool KMAcctLocal::processNewMail(void)
   {
     debug("processing message %ld", i);
     msg = mailFolder.getMsg(i);
+    //msg->viewSource("KMAcctLocal::processNewMail: from getMsg()");
     mailFolder.detachMsg(i);
     if (msg) 
     {

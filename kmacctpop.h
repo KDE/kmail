@@ -49,9 +49,14 @@ public:
 
   
 protected:
-  KMAcctPop(KMAcctMgr* owner, const char* accountName);
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
+  KMAcctPop(KMAcctMgr* owner, const char* accountName);
+
+  /** Very primitive en/de-cryption so that the password is not
+      readable in the config file. But still very easy breakable. */
+  const QString encryptStr(const QString inStr);
+  const QString decryptStr(const QString inStr);
 
   QString mLogin, mPasswd;
   QString mHost;

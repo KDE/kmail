@@ -9,5 +9,9 @@
   Result is that some files are not recognized correctly
 - Attaching bodyParts is not yet possible. Something must be wrong with
   addBodyPart() or I am just too stupid.
-
-
+- In first KMail start:
+  Configure (Settings) goes fine until I set the POP3 account. After
+  pressing OK I get a window with:
+  QGArray::at: Absolute index 0 out of range
+  And KMail crashes with seg. fault. 
+- Add selectable character encodings (ISO-8859-x, ...

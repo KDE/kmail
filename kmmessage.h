@@ -6,6 +6,7 @@
 
 #include <mimelib/string.h>
 #include <time.h>
+#include <qstring.h>
 
 class KMFolder;
 class DwMessage;
@@ -50,8 +51,11 @@ public:
    any folder. */
   virtual KMMessage* reply(void);
 
-  /** Return the message contents as a string */
+  /** Return the entire message contents as a string. */
   virtual const char* asString(void);
+
+  /** Parse the string and create this message from it. */
+  virtual void fromString(const QString str);
 
   /** Set fields that are either automatically set (Message-id)
    or that do not change from one message to another (MIME-Version).
@@ -148,15 +152,19 @@ public:
   /** Owning folder or NULL if none. */
   KMFolder* owner(void) const { return mOwner; }
 
+  /** Open a window containing the complete, unparsed, message. */
+  virtual void viewSource(const char* windowCaption) const;
+
 protected:
   void setOwner(KMFolder*);
-  DwString& msgStr(void) { return mMsgStr; }
   virtual void takeMessage(DwMessage* aMsg);
 
+private:
   DwMessage* mMsg;
   DwString   mMsgStr;
   KMFolder*  mOwner;
   Status     mStatus;
+  bool       mNeedsAssembly;
 };
 
 
