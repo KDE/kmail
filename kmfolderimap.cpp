@@ -992,7 +992,7 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   } else {
     listDirectory();
   }
-  mAccount->removeJob(it);
+  mAccount->removeJob(job);
 }
 
 
