@@ -45,8 +45,8 @@
 //-----------------------------------------------------------------------------
 KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   const QString &aPort)
+  : mSSL( false )
 {
-  mFirstTry = TRUE;
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveResult(KIO::Slave *, int, const QString &)));
@@ -126,9 +126,9 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
-  if (mFirstTry)
+  if (!mSSL)
   {
-    mFirstTry = FALSE;
+    mSSL = true;
     if (!error) mList.append("NORMAL-CONNECTION");
     mUrl.setProtocol(mUrl.protocol() + 's');
     mUrl.setPort(0);

@@ -71,7 +71,7 @@ protected:
   KIO::MetaData slaveConfig() const;
 
 protected:
-  bool           mFirstTry;
+  bool           mSSL;
   KURL           mUrl;
   QStringList    mList;
   QString        mAuthNone;

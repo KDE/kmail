@@ -1396,8 +1396,7 @@ void KMHeaders::slotExpandOrCollapseAllThreads( bool expand )
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
-  QString str;
-  str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
+  QString str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
     .arg(i18n("%n unread", "%n unread", mFolder->countUnread()));
   if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
   KMBroadcastStatus::instance()->setStatusMsg(str);
@@ -1406,9 +1405,6 @@ void KMHeaders::setFolderInfoStatus ()
 //-----------------------------------------------------------------------------
 void KMHeaders::applyFiltersOnMsg()
 {
-  KMMsgBase* msgBase;
-  KMMessage* msg;
-
   emit maybeDeleting();
 
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -1431,10 +1427,10 @@ void KMHeaders::applyFiltersOnMsg()
 
   clearSelection();
 
-  for (msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+  for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
     int idx = msgBase->parent()->find(msgBase);
     assert(idx != -1);
-    msg = mFolder->getMsg(idx);
+    KMMessage * msg = mFolder->getMsg(idx);
     if (msg->transferInProgress()) continue;
     msg->setTransferInProgress(true);
     if ( !msg->isComplete() )
