@@ -55,9 +55,19 @@ namespace KMail {
     static const AttachmentStrategy * inlined();
     static const AttachmentStrategy * hidden();
 
+    //
+    // Navigation methods:
+    //
+
     virtual const char * name() const = 0;
     virtual const AttachmentStrategy * next() const = 0;
     virtual const AttachmentStrategy * prev() const = 0;
+
+    //
+    // Bahavioural:
+    //
+
+    virtual bool inlineNestedMessages() const = 0;
   };
 
 }; // namespace KMail

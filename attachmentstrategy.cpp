@@ -52,6 +52,8 @@ namespace KMail {
     const char * name() const { return "iconic"; }
     const AttachmentStrategy * next() const { return smart(); }
     const AttachmentStrategy * prev() const { return hidden(); }
+
+    bool inlineNestedMessages() const { return false; }
   };
 
   //
@@ -70,6 +72,8 @@ namespace KMail {
     const char * name() const { return "smart"; }
     const AttachmentStrategy * next() const { return inlined(); }
     const AttachmentStrategy * prev() const { return iconic(); }
+
+    bool inlineNestedMessages() const { return true; }
   };
 
   //
@@ -87,6 +91,8 @@ namespace KMail {
     const char * name() const { return "inlined"; }
     const AttachmentStrategy * next() const { return hidden(); }
     const AttachmentStrategy * prev() const { return smart(); }
+
+    bool inlineNestedMessages() const { return true; }
   };
 
   //
@@ -104,6 +110,8 @@ namespace KMail {
     const char * name() const { return "hidden"; }
     const AttachmentStrategy * next() const { return iconic(); }
     const AttachmentStrategy * prev() const { return inlined(); }
+
+    bool inlineNestedMessages() const { return false; }
   };
 
 
