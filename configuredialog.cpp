@@ -1249,7 +1249,7 @@ void ConfigureDialog::makeNetworkPage( void )
   mNetwork.messagePropertyCombo = new QComboBox( page2 );
   mNetwork.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
   mNetwork.messagePropertyCombo->insertItem(
-    i18n("MIME Compilant (Quoted Printable)"));
+    i18n("MIME Compliant (Quoted Printable)"));
   glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
   
  label = new QLabel( i18n("Precommand:"), page2 );
