@@ -243,7 +243,7 @@ protected slots:
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
   //void slotTrashMsg();   // move to trash
-  void slotDeleteMsg();  // completely delete message
+  void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();

@@ -957,10 +957,13 @@ void KMMainWidget::slotEmptyFolder()
   }
   KCursorSaver busy(KBusyPtr::busy());
   slotMarkAll();
-  if (isTrash)
-   slotDeleteMsg();
+  if (isTrash) {
+    /* Don't ask for confirmation again when deleting, the user has already
+       confirmed. */
+    slotDeleteMsg( false );
+  }
   else
-   slotTrashMsg();
+    slotTrashMsg();
 
   if (mMsgView) mMsgView->clearCache();
 
@@ -1220,11 +1223,9 @@ void KMMainWidget::slotTrashMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotDeleteMsg()
+void KMMainWidget::slotDeleteMsg( bool confirmDelete )
 {
-  /* Don't ask for confirmation again when deleting, the user has already
-     confirmed. */
-  mHeaders->moveMsgToFolder( 0, false );
+  mHeaders->moveMsgToFolder( 0, confirmDelete );
   updateMessageActions();
 }
 
