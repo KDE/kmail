@@ -5,12 +5,11 @@
 #include "kmcomposewin.moc"
 #include "kmmainwin.h"
 #include "kmmessage.h"
-#include "kmsender.h"
-#include "kmglobal.h"
 #include <iostream.h>
 #include <qwidget.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <mimelib/string.h>
 
 KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, KMMessage *message, int action) : QWidget(parent,name)
 {
@@ -183,7 +182,6 @@ void KMComposeView::sendIt()
 
 	// Now, what are we going to do: sendNow() or sendLater()?
 
-#ifdef OLD_CODE
 	config = KApplication::getKApplication()->getConfig();
 	config->setGroup("Settings");
 	option = config->readEntry("Send Button");
@@ -191,15 +189,14 @@ void KMComposeView::sendIt()
 		sendNow();
 	else
 		toDo();
-#else
-	sendNow();
-#endif
+
 
 }
 
 void KMComposeView::sendNow()
 {
 	KMMessage *msg = new KMMessage();
+	msg = currentMessage;
 
 	// Now all items in the attachment queue are being displayed.
 
@@ -210,7 +207,7 @@ void KMComposeView::sendNow()
 	printf("\nDone displaying list\n");
 
 	// All attachments in the queue are being attached here.
-#ifdef BROKEN
+#if 0
 	if(indexAttachment !=0)
 	        {int x;
 		QList<KMAttachmentItem> tempList;
@@ -237,18 +234,19 @@ void KMComposeView::sendNow()
 	// Now, I have a problems with the CRLF. Everything works fine under 
 	// Unix (of course ;-) ) but under MS-Windowz the CRLF is not inter-
 	// preted. Why??
+
 	temp = editor->text();
 	temp.replace(QRegExp("\r"),"\r\n");
-
+	
 	// The the necessary Message() stuff
+
 	msg->setFrom(EMailAddress);
 	msg->setTo(toLEdit->text());
 	msg->setCc(ccLEdit->text());
 	msg->setSubject(subjLEdit->text());
 	msg->setBody(temp);
-
-	msgSender->send(msg);
-
+	//msg->sentSMTP();
+	delete msg;
 	((KMComposeWin *)parentWidget())->close();
 }
 
@@ -704,7 +702,9 @@ void KMComposeWin::setupMenuBar()
 void KMComposeWin::setupToolBar()
 {
 	QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
-	pixdir = kapp->kdedir();
+	char *kdedir = getenv("KDEDIR");
+	if (kdedir) pixdir.append(kdedir);
+	 else pixdir.append("/usr/local/kde");
 	pixdir.append("/lib/pics/toolbar/");
 
 	toolBar = new KToolBar(this);

@@ -107,11 +107,9 @@ private slots:
 	void about();
 	void toDo();
 	void parseConfiguration();
-        void doNewMailReader();
+             void doNewMailReader();
 	void toggleToolBar();
-	//void setSettings();
-	//void applySettings();
-	//void cancelSettings();
+
 protected:
 	virtual void closeEvent(QCloseEvent *);
 friend class KMComposeView;
