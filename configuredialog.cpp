@@ -3544,13 +3544,16 @@ void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
 }
 
 void SecurityPage::CryptPlugTab::save() {
-  KConfigGroup general( KMKernel::config(), "General" );
+  // we use kapp->config() here since the config entry is read by
+  // libkleopatra, where the KMKernel::config() hack is not available,
+  // obviously:
+  KConfigGroup general( kapp->config(), "General" );
 
   CryptPlugWrapperList & cpl = KMail::CryptPlugFactory::instance()->list();
 
   uint cryptPlugCount = 0;
   for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it ) {
-    KConfigGroup config( KMKernel::config(),
+    KConfigGroup config( kapp->config(),
                          QString("CryptPlug #%1").arg( cryptPlugCount ) );
     config.writeEntry( "name", it.current()->text( 0 ) );
     config.writePathEntry( "location", it.current()->text( 1 ) );
