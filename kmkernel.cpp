@@ -518,15 +518,19 @@ void KMKernel::testDir(const char *_name)
   QFileInfo info( foldersPath );
   if ( !info.exists() ) {
     if ( ::mkdir( QFile::encodeName( foldersPath ) , S_IRWXU ) == -1 ) {
-      KMessageBox::sorry(0, i18n("KMail couldn't create %1 directory !\n"
-                                 "Make sure you have write permissions in %2 directory.\n")
-                         .arg( foldersPath ).arg( QDir::homeDirPath() ) );
+      KMessageBox::sorry(0, i18n("KMail couldn't create directory '%1'.\n"
+                                 "Please make sure that you can view and "
+                                 "modify the content of the directory '%2'.")
+                            .arg( foldersPath ).arg( QDir::homeDirPath() ) );
       ::exit(-1);
     }
   }
   if ( !info.isDir() || !info.isReadable() || !info.isWritable() ) {
-    KMessageBox::sorry(0, i18n("Permissions on the %1 directory are incorrect!\n"
-                               "Please set them to 0700.\n").arg( foldersPath ) );
+    KMessageBox::sorry(0, i18n("The permissions of the directory '%1' are "
+                               "incorrect.\n"
+                               "Please make sure that you can view and modify "
+                               "the content of this directory.")
+                          .arg( foldersPath ) );
     ::exit(-1);
   }
 }

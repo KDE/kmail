@@ -138,21 +138,26 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   // I guess - till
   if ( info.exists() ) {
    if ( !info.isDir() ) {
-      KMessageBox::sorry(0, i18n("%1 does not appear to be a directory.\n"
-            "Please move the file out of the way.\n").arg( mBasePath ) );
+      KMessageBox::sorry(0, i18n("'%1' does not appear to be a directory.\n"
+                                 "Please move the file out of the way.")
+                            .arg( mBasePath ) );
       ::exit(-1);
     }
     if ( !info.isReadable() || !info.isWritable() ) {
-      KMessageBox::sorry(0, i18n("Permissions on the %1 directory are incorrect!\n"
-            "Please set them to 0700.\n").arg( mBasePath ) );
+      KMessageBox::sorry(0, i18n("The permissions of the directory '%1' are "
+                               "incorrect.\n"
+                               "Please make sure that you can view and modify "
+                               "the content of this directory.")
+                            .arg( mBasePath ) );
       ::exit(-1);
     }
    } else {
     // ~/Mail (or whatever the user specified) doesn't exist, create it
     if ( ::mkdir( QFile::encodeName( mBasePath ) , S_IRWXU ) == -1 ) {
-      KMessageBox::sorry(0, i18n("KMail couldn't create %1 directory !\n"
-                                 "Make sure you have write permissions in %2 directory.\n")
-                         .arg( mBasePath ).arg( QDir::homeDirPath() ) );
+      KMessageBox::sorry(0, i18n("KMail couldn't create directory '%1'.\n"
+                                 "Please make sure that you can view and "
+                                 "modify the content of the directory '%2'.")
+                            .arg( mBasePath ).arg( QDir::homeDirPath() ) );
       ::exit(-1);
     }
   }
