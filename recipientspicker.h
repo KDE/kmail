@@ -114,7 +114,7 @@ class RecipientsPicker : public QWidget
     void setRecipients( const Recipient::List & );
 
   signals:
-    void pickedRecipient( const QString & );
+    void pickedRecipient( const Recipient & );
 
   protected:
     void initCollections();
@@ -127,8 +127,13 @@ class RecipientsPicker : public QWidget
     void readConfig();
     void writeConfig();
 
+    void pick( Recipient::Type );
+
   protected slots:
     void updateList();
+    void slotToClicked();
+    void slotCcClicked();
+    void slotBccClicked();
     void slotOk();
     void slotPicked( QListViewItem * );
     void setFocusList();
@@ -137,6 +142,10 @@ class RecipientsPicker : public QWidget
     QComboBox *mCollectionCombo;
     KListView *mRecipientList;
     KListViewSearchLine *mSearchLine;
+
+    QPushButton *mToButton;
+    QPushButton *mCcButton;
+    QPushButton *mBccButton;
   
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;

@@ -27,6 +27,8 @@
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
 
+#include <libemailfunctions/email.h>
+
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -95,6 +97,8 @@ QString Recipient::typeLabel( Recipient::Type type )
       return i18n("BCC");
     case ReplyTo:
       return i18n("Reply To");
+    case Undefined:
+      break;
   }
 
   return i18n("<Undefined RecipientType>");
@@ -520,8 +524,8 @@ void SideWidget::initRecipientPicker()
   if ( mRecipientPicker ) return;
 
   mRecipientPicker = new RecipientsPicker( this );
-  connect( mRecipientPicker, SIGNAL( pickedRecipient( const QString & ) ),
-    SIGNAL( pickedRecipient( const QString & ) ) );
+  connect( mRecipientPicker, SIGNAL( pickedRecipient( const Recipient & ) ),
+    SIGNAL( pickedRecipient( const Recipient & ) ) );
 
   mPickerPositioner = new KWindowPositioner( this, mRecipientPicker );
 }
@@ -566,8 +570,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
 
   SideWidget *side = new SideWidget( mRecipientsView, this );
   topLayout->addWidget( side );
-  connect( side, SIGNAL( pickedRecipient( const QString & ) ),
-    SLOT( slotPickedRecipient( const QString & ) ) );
+  connect( side, SIGNAL( pickedRecipient( const Recipient & ) ),
+    SLOT( slotPickedRecipient( const Recipient & ) ) );
 
   connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
     side, SLOT( setTotal( int, int ) ) );
@@ -579,10 +583,15 @@ RecipientsEditor::~RecipientsEditor()
 {
 }
 
-void RecipientsEditor::slotPickedRecipient( const QString &rec )
+void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
 {
   RecipientLine *line = mRecipientsView->activeLine();
-  line->setRecipient( Recipient( rec, line->recipientType() ) );
+  Recipient r = rec;
+  if ( r.type() == Recipient::Undefined ) {
+    r.setType( line->recipientType() );
+  }
+  
+  line->setRecipient( r );
   
   mRecipientsView->addLine()->activate();
 }
@@ -597,7 +606,7 @@ void RecipientsEditor::setRecipientString( const QString &str,
 {
   clear();
 
-  QStringList r = QStringList::split( ",", str );
+  QStringList r = KPIM::splitEmailAddrList( str );
   QStringList::ConstIterator it;
   for( it = r.begin(); it != r.end(); ++it ) {
     RecipientLine *line = mRecipientsView->emptyLine();

@@ -185,6 +185,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( label );
   
   mRecipientList = new KListView( this );
+  mRecipientList->setSelectionMode( QListView::Multi );
   mRecipientList->setAllColumnsShowFocus( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
@@ -204,9 +205,26 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   buttonLayout->addStretch( 1 );
 
+  mToButton = new QPushButton( i18n("Add As To"), this );
+  buttonLayout->addWidget( mToButton );
+  connect( mToButton, SIGNAL( clicked() ), SLOT( slotToClicked() ) );
+
+  mCcButton = new QPushButton( i18n("Add As CC"), this );
+  buttonLayout->addWidget( mCcButton );
+  connect( mCcButton, SIGNAL( clicked() ), SLOT( slotCcClicked() ) );
+
+  mBccButton = new QPushButton( i18n("Add As BCC"), this );
+  buttonLayout->addWidget( mBccButton );
+  connect( mBccButton, SIGNAL( clicked() ), SLOT( slotBccClicked() ) );
+  // BCC isn't commonly used, so hide it for now
+  mBccButton->hide();
+
   QPushButton *okButton = new QPushButton( i18n("&Ok"), this );
   buttonLayout->addWidget( okButton );
   connect( okButton, SIGNAL( clicked() ), SLOT( slotOk() ) );
+  // It might be confusing to have "Add As ..." in addition to "Ok", so we might
+  // want to hide this button.
+  // okButton->hide();
 
   QPushButton *cancelButton = new QPushButton( i18n("&Cancel"), this );
   buttonLayout->addWidget( cancelButton );
@@ -369,9 +387,24 @@ void RecipientsPicker::updateList()
   mSearchLine->updateSearch();
 }
 
+void RecipientsPicker::slotToClicked()
+{
+  pick( Recipient::To );
+}
+
+void RecipientsPicker::slotCcClicked()
+{
+  pick( Recipient::Cc );
+}
+
+void RecipientsPicker::slotBccClicked()
+{
+  pick( Recipient::Bcc );
+}
+
 void RecipientsPicker::slotOk()
 {
-  slotPicked( mRecipientList->currentItem() );
+  pick( Recipient::Undefined );
 }
 
 void RecipientsPicker::slotPicked( QListViewItem *viewItem )
@@ -381,7 +414,25 @@ void RecipientsPicker::slotPicked( QListViewItem *viewItem )
   RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
   if ( item ) {
     RecipientItem *i = item->recipientItem();
-    emit pickedRecipient( i->recipient() );
+    emit pickedRecipient( Recipient( i->recipient(), Recipient::Undefined ) );
+  }
+  close();
+}
+
+void RecipientsPicker::pick( Recipient::Type type )
+{
+  QListViewItem *viewItem;
+  for( viewItem = mRecipientList->firstChild(); viewItem;
+       viewItem = viewItem->nextSibling() ) {
+    if ( viewItem->isSelected() ) {
+      RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
+      if ( item ) {
+        RecipientItem *i = item->recipientItem();
+        Recipient r = i->recipient();
+        r.setType( type );
+        emit pickedRecipient( r );
+      }
+    }
   }
   close();
 }

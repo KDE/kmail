@@ -43,7 +43,7 @@ class Recipient
   public:
     typedef QValueList<Recipient> List;
 
-    enum Type { To, Cc, Bcc, ReplyTo };
+    enum Type { To, Cc, Bcc, ReplyTo, Undefined };
 
     Recipient( const QString &email = QString::null, Type type = To );
 
@@ -207,7 +207,7 @@ class SideWidget : public QWidget
     void setFocus();
 
   signals:
-    void pickedRecipient( const QString & );
+    void pickedRecipient( const Recipient & );
 
   protected:
     void initRecipientPicker();
@@ -249,7 +249,7 @@ class RecipientsEditor : public QWidget
     void focusDown();
 
   protected slots:
-    void slotPickedRecipient( const QString & );
+    void slotPickedRecipient( const Recipient & );
 
   private:
     RecipientsView *mRecipientsView;
