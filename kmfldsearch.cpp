@@ -392,7 +392,7 @@ void KMFldSearch::slotSearch()
       int count = 0;
       KMFolder *folder;
       while ((folder = mgr->find(fullName))) {
-        if (folder->inherits("KMFolderSearch"))
+        if (folder->storage()->inherits("KMFolderSearch"))
           break;
         fullName = QString("%1 %2").arg(baseName).arg(++count);
       }
