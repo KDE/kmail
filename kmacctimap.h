@@ -54,23 +54,6 @@ public:
   virtual QString type(void) const;
   virtual void processNewMail(bool);
 
-  struct jobData
-  {
-    QByteArray data;
-    QCString cdata;
-    QStringList items;
-    KMFolderImap *parent;
-    int total, done, offset;
-    bool inboxOnly, quiet;
-    QPtrList<KMMessage> msgList;
-  };
-  QMap<KIO::Job *, jobData> mapJobData;
-
-  /**
-   * Update the progress bar
-   */
-  void displayProgress();
-
   /**
    * Kill all jobs related the the specified folder
    */
@@ -88,17 +71,10 @@ public:
    */
   void setIdle(bool aIdle) { mIdle = aIdle; }
 
-  void slaveDied() { mSlave = 0; killAllJobs(); }
-
   /**
    * Set the top level pseudo folder
    */
   virtual void setImapFolder(KMFolderImap *);
-
-  /**
-   * Initialize a jobData structure
-   */
-  static void initJobData(jobData &jd);
 
   /**
    * Open a folder and close it again when the network transfer is finished

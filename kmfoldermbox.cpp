@@ -330,7 +330,7 @@ int KMFolderMbox::create(bool imap)
   assert(name() != "");
   assert(mOpenCount == 0);
 
-  kdDebug(5006) << "Creating folder " << endl;
+  kdDebug(5006) << "Creating folder " << name() << endl;
   if (access(location().local8Bit(), F_OK) == 0) {
     kdDebug(5006) << "KMFolderMbox::create call to access function failed." << endl;
     kdDebug(5006) << "File:: " << endl;

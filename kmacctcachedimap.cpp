@@ -116,38 +116,6 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
   mAutoExpunge = false;
 }
 
-
-//-----------------------------------------------------------------------------
-void KMAcctCachedImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
-  const QString &errorMsg)
-{
-  if (aSlave != mSlave) return;
-  if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
-  if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
-#if 0
-  if (errorCode == KIO::ERR_DOES_NOT_EXIST)
-  {
-    // folder is gone, so reload the folderlist
-    if (mFolder) mFolder->listDirectory();
-    return;
-  }
-#endif
-  // check if we still display an error
-  killAllJobs();
-  if ( !mErrorDialogIsActive )
-  {
-    mErrorDialogIsActive = true;
-    if ( KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
-          KIO::buildErrorString(errorCode, errorMsg),
-          i18n("Error")) == KMessageBox::Ok )
-    {
-      mErrorDialogIsActive = false;
-    }
-  } else
-    kdDebug(5006) << "suppressing error:" << errorMsg << endl;
-}
-
-
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::displayProgress()
 {
@@ -223,7 +191,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   for (it = mapJobData.begin(); it != mapJobData.end(); ++it)
     if ((*it).parent)
     {
-      KMFolderCachedImap *fld = (*it).parent;
+      KMFolderCachedImap *fld = static_cast<KMFolderCachedImap*>((*it).parent);
       fld->resetSyncState();
       fld->setContentState(KMFolderCachedImap::imapNoInformation);
       fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);

@@ -114,8 +114,8 @@ void KMFolderImap::removeOnServer()
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  KMAcctImap::jobData jd;
-  KMAcctImap::initJobData(jd);
+  ImapAccountBase::jobData jd;
+  ImapAccountBase::initJobData(jd);
   mAccount->mapJobData.insert(job, jd);
   mAccount->displayProgress();
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -125,7 +125,7 @@ void KMFolderImap::removeOnServer()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   if (job->error())
@@ -421,184 +421,125 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
   KMFolderImapInherited::take(msgList);
 }
 
-
-//-----------------------------------------------------------------------------
-// Originally from KMAcctImap
-//-----------------------------------------------------------------------------
-
 //-----------------------------------------------------------------------------
 bool KMFolderImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
-  KMAcctImap::jobData jd;
-  jd.parent = this;
-  jd.total = 1; jd.done = 0;
-  jd.inboxOnly = !secondStep && mAccount->prefix() != "/"
-    && imapPath() == mAccount->prefix();
-  KURL url = mAccount->getUrl();
-  url.setPath(((jd.inboxOnly) ? QString("/") : imapPath())
-    + ";TYPE=" + ((mAccount->onlySubscribedFolders()) ? "LSUB" : "LIST"));
   if (!mAccount->makeConnection())
     return FALSE;
 
-  if (!secondStep) mHasInbox = FALSE;
-  mSubfolderNames.clear();
-  mSubfolderPaths.clear();
-  mSubfolderMimeTypes.clear();
-  KIO::SimpleJob *job = KIO::listDir(url, FALSE);
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  mAccount->mapJobData.insert(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotListResult(KIO::Job *)));
-  connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
-          this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
-  mAccount->displayProgress();
+  // connect to folderlisting
+  connect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &)),
+      this, SLOT(slotListResult(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &)));  
 
-  return TRUE;
+  // get the folders
+  mAccount->listDirectory(mImapPath, mAccount->onlySubscribedFolders(),
+      secondStep, this);
+
+  return true;  
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::slotListResult(KIO::Job * job)
+void KMFolderImap::slotListResult( QStringList mSubfolderNames, 
+                                   QStringList mSubfolderPaths, 
+                                   QStringList mSubfolderMimeTypes,
+                                   const ImapAccountBase::jobData & jobData )
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end()) return;
-  assert(it != mAccount->mapJobData.end());
-  if (job->error())
-  {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+  if (jobData.parent) {
+    // the account is connected to several folders, so we 
+    // have to sort out if this result is for us
+    if (jobData.parent != this) return;
   }
+  // disconnect to avoid recursions
+  disconnect(mAccount, SIGNAL(receivedFolders(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &)),
+      this, SLOT(slotListResult(QStringList, QStringList,
+          QStringList, const ImapAccountBase::jobData &)));  
+
   mSubfolderState = imapFinished;
-  bool it_inboxOnly = (*it).inboxOnly;
-  if (mAccount->slave()) mAccount->mapJobData.remove(it);
-  if (!job->error())
-  {
-    kernel->imapFolderMgr()->quiet(TRUE);
-    if (it_inboxOnly) listDirectory(TRUE);
-    else {
-      if (mIsSystemFolder && mImapPath == "/INBOX/"
+  bool it_inboxOnly = jobData.inboxOnly;
+  // don't react on changes
+  kernel->imapFolderMgr()->quiet(TRUE);
+  if (it_inboxOnly) {
+    // list again only for the INBOX
+    listDirectory(TRUE);
+  } else {
+    if (mIsSystemFolder && mImapPath == "/INBOX/"
         && mAccount->prefix() == "/INBOX/")
+    {
+      mAccount->setHasInbox(FALSE);
+      mSubfolderNames.clear();
+    }
+    createChildFolder();
+    KMFolderImap *folder;
+    KMFolderNode *node = mChild->first();
+    while (node)
+    {
+      // check if the folders still exist on the server
+      if (!node->isDir() && (node->name() != "INBOX" || !mAccount->hasInbox())
+          && mSubfolderNames.findIndex(node->name()) == -1)
       {
-        mHasInbox = FALSE;
-        mSubfolderNames.clear();
+        kdDebug(5006) << node->name() << " disappeared." << endl;
+        kernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
+        node = mChild->first();
       }
-      createChildFolder();
-      KMFolderImap *folder;
-      KMFolderNode *node = mChild->first();
-      while (node)
-      {
-        if (!node->isDir() && (node->name() != "INBOX" || !mHasInbox)
-            && mSubfolderNames.findIndex(node->name()) == -1)
-        {
-          kdDebug(5006) << node->name() << " disappeared." << endl;
-          kernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
-          node = mChild->first();
-        }
-        else node = mChild->next();
-      }
-      if (mHasInbox)
-      {
-        for (node = mChild->first(); node; node = mChild->next())
-          if (!node->isDir() && node->name() == "INBOX") break;
-        if (node) folder = static_cast<KMFolderImap*>(node);
-        else folder = static_cast<KMFolderImap*>
-          (mChild->createFolder("INBOX", TRUE));
-        folder->setAccount(mAccount);
-        folder->setImapPath("/INBOX/");
-        folder->setLabel(i18n("inbox"));
-        if (!node) folder->close();
-        folder->listDirectory();
-        kernel->imapFolderMgr()->contentsChanged();
-      }
-      for (uint i = 0; i < mSubfolderNames.count(); i++)
-      {
-        for (node = mChild->first(); node; node = mChild->next())
-          if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
-        if (node) folder = static_cast<KMFolderImap*>(node);
-        else {
-          folder = static_cast<KMFolderImap*>
-            (mChild->createFolder(mSubfolderNames[i]));
-          if (folder)
-          {
-            folder->close();
-            kernel->imapFolderMgr()->contentsChanged();
-          } else {
-            kdDebug(5006) << "can't create folder " << mSubfolderNames[i] << endl;
-          }
-        }
+      else node = mChild->next();
+    }
+    if (mAccount->hasInbox())
+    {
+      // INBOX-special
+      for (node = mChild->first(); node; node = mChild->next())
+        if (!node->isDir() && node->name() == "INBOX") break;
+      if (node) folder = static_cast<KMFolderImap*>(node);
+      else folder = static_cast<KMFolderImap*>
+        (mChild->createFolder("INBOX", TRUE));
+      folder->setAccount(mAccount);
+      folder->setImapPath("/INBOX/");
+      folder->setLabel(i18n("inbox"));
+      if (!node) folder->close();
+      folder->listDirectory();
+      kernel->imapFolderMgr()->contentsChanged();
+    }
+    for (uint i = 0; i < mSubfolderNames.count(); i++)
+    {
+      // create folders if necessary
+      for (node = mChild->first(); node; node = mChild->next())
+        if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
+      if (node) folder = static_cast<KMFolderImap*>(node);
+      else {
+        folder = static_cast<KMFolderImap*>
+          (mChild->createFolder(mSubfolderNames[i]));
         if (folder)
         {
-          folder->setAccount(mAccount);
-          folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
-          folder->setImapPath(mSubfolderPaths[i]);
-          if (mSubfolderMimeTypes[i] == "message/directory" ||
-              mSubfolderMimeTypes[i] == "inode/directory")
-            folder->listDirectory();
+          folder->close();
+          kernel->imapFolderMgr()->contentsChanged();
+        } else {
+          kdDebug(5006) << "can't create folder " << mSubfolderNames[i] << endl;
         }
       }
-    }
-    kernel->imapFolderMgr()->quiet(FALSE);
-  }
-  mAccount->displayProgress();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
-{
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end()) return;
-  assert(it != mAccount->mapJobData.end());
-  QString name;
-  KURL url;
-  QString mimeType;
-  for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
-    udsIt != uds.end(); udsIt++)
-  {
-    mimeType = QString::null;
-    for (KIO::UDSEntry::ConstIterator eIt = (*udsIt).begin();
-      eIt != (*udsIt).end(); eIt++)
-    {
-      if ((*eIt).m_uds == KIO::UDS_NAME)
-        name = (*eIt).m_str;
-      else if ((*eIt).m_uds == KIO::UDS_URL)
-        url = KURL((*eIt).m_str, 106); // utf-8
-      else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
-        mimeType = (*eIt).m_str;
-    }
-    if ((mimeType == "inode/directory" || mimeType == "message/digest"
-        || mimeType == "message/directory")
-        && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.')
-        && (!(*it).inboxOnly || name == "INBOX"))
-    {
-      if (((*it).inboxOnly || url.path() == "/INBOX/") && name == "INBOX")
-        mHasInbox = TRUE;
-      else {
-        // Some servers send _lots_ of duplicates
-        if (mSubfolderNames.findIndex(name) == -1)
-        {
-          mSubfolderNames.append(name);
-          mSubfolderPaths.append(url.path());
-          mSubfolderMimeTypes.append(mimeType);
-        }
+      if (folder)
+      {
+        folder->setAccount(mAccount);
+        folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+        folder->setImapPath(mSubfolderPaths[i]);
+        if (mSubfolderMimeTypes[i] == "message/directory" ||
+            mSubfolderMimeTypes[i] == "inode/directory")
+          folder->listDirectory();
       }
-/*      static_cast<KMFolderTree*>((*it).parent->listView())
-        ->addImapChildFolder((*it).parent, name, url.path(),
-        mimeType, (*it).inboxOnly); */
     }
   }
-//  static_cast<KMFolderTree*>((*it).parent->listView())->delayedUpdate();
+  // now others should react on the changes
+  kernel->imapFolderMgr()->quiet(FALSE);
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::checkValidity()
 {
-kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
-  KMAcctImap::jobData jd;
+  kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
+  ImapAccountBase::jobData jd;
   jd.parent = this;
   jd.total = 1; jd.done = 0;
   KURL url = mAccount->getUrl();
@@ -639,8 +580,8 @@ ulong KMFolderImap::lastUid()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 {
-kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   if (job->error())
@@ -697,7 +638,7 @@ void KMFolderImap::getFolder(bool force)
 //-----------------------------------------------------------------------------
 void KMFolderImap::reallyGetFolder(const QString &startUid)
 {
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.parent = this;
   jd.total = 1; jd.done = 0;
   KURL url = mAccount->getUrl();
@@ -736,12 +677,12 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotListFolderResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
   QString uids;
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.parent = (*it).parent;
   jd.done = 0;
   if (job->error())
@@ -830,7 +771,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
 void KMFolderImap::slotListFolderEntries(KIO::Job * job,
   const KIO::UDSEntryList & uds)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
@@ -925,7 +866,7 @@ KMFolderImap::ignoreJobsForMessage( KMMessage* msg )
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
@@ -973,7 +914,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 //-----------------------------------------------------------------------------
 void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
@@ -1013,7 +954,7 @@ void KMFolderImap::createFolder(const QString &name)
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.parent = this;
   jd.items = name;
   jd.total = 1; jd.done = 0;
@@ -1027,7 +968,7 @@ void KMFolderImap::createFolder(const QString &name)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   if (job->error())
@@ -1103,7 +1044,7 @@ void KMImapJob::init( JobType jt, QString sets, KMFolderImap* folder, QPtrList<K
     KURL url = account->getUrl();
     url.setPath(folder->imapPath() + ";SECTION="
       + QString::fromLatin1(KMFolderImap::statusToFlags(msg->status())));
-    KMAcctImap::jobData jd;
+    ImapAccountBase::jobData jd;
     jd.parent = 0; jd.offset = 0;
     jd.total = 1; jd.done = 0;
     jd.msgList.append(msg);
@@ -1141,7 +1082,7 @@ void KMImapJob::init( JobType jt, QString sets, KMFolderImap* folder, QPtrList<K
     KURL destUrl = account->getUrl();
     destUrl.setPath(folder->imapPath());
     url.setPath(msg_parent->imapPath() + ";UID=" + sets);
-    KMAcctImap::jobData jd;
+    ImapAccountBase::jobData jd;
     jd.parent = 0; mOffset = 0;
     jd.total = 1; jd.done = 0;
     jd.msgList = msgList;
@@ -1177,7 +1118,7 @@ KMImapJob::~KMImapJob()
   {
     KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
     if (!account || !mJob) return;
-    QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
       account->mapJobData.find(mJob);
     if (it == account->mapJobData.end()) return;
     if ( !(*it).msgList.isEmpty() )
@@ -1205,7 +1146,7 @@ void KMImapJob::slotGetNextMessage()
   KURL url = account->getUrl();
   url.setPath(msgParent->imapPath() + ";UID="
     + msg->headerField("X-UID"));
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.total = 1; jd.done = 0;
   if (!account->makeConnection())
@@ -1239,7 +1180,7 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
     delete this;
     return;
   }
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     account->mapJobData.find(job);
   if (it == account->mapJobData.end()) return;
   if (job->error())
@@ -1273,7 +1214,7 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
 void KMImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 {
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     account->mapJobData.find(job);
   if (it == account->mapJobData.end()) return;
 
@@ -1295,7 +1236,7 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
 {
   KMMessage *msg = mMsgList.first();
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     account->mapJobData.find(job);
   if (it == account->mapJobData.end()) return;
   if (job->error())
@@ -1325,7 +1266,7 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
 void KMImapJob::slotCopyMessageResult(KIO::Job *job)
 {
   KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     account->mapJobData.find(job);
   if (it == account->mapJobData.end()) return;
   if (job->error())
@@ -1351,7 +1292,7 @@ void KMImapJob::slotCopyMessageResult(KIO::Job *job)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
@@ -1403,7 +1344,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.total = 1; jd.done = 0; jd.parent = 0; jd.quiet = FALSE;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -1432,7 +1373,7 @@ void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
     if (!mAccount->makeConnection()) return;
     KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-    KMAcctImap::jobData jd;
+    ImapAccountBase::jobData jd;
     jd.total = 1; jd.done = 0; jd.parent = 0; jd.quiet = FALSE;
     mAccount->mapJobData.insert(job, jd);
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -1578,7 +1519,7 @@ void KMFolderImap::setImapStatus(QString path, QCString flags)
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.total = 1; jd.done = 0; jd.parent = 0;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -1595,7 +1536,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.quiet = quiet;
   jd.total = 1; jd.done = 0;
@@ -1609,7 +1550,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotSetStatusResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   mAccount->mapJobData.remove(it);
@@ -1633,7 +1574,7 @@ void KMFolderImap::processNewMail(bool)
   if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  KMAcctImap::jobData jd;
+  ImapAccountBase::jobData jd;
   KMAcctImap::initJobData(jd);
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
@@ -1645,7 +1586,7 @@ void KMFolderImap::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotStatResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   mAccount->mapJobData.remove(it);

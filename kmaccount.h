@@ -13,6 +13,7 @@
 #include <qguardedptr.h>
 #include <kprocess.h>
 #include <kdeversion.h>
+#include <kaccount.h>
 
 class KMAcctMgr;
 class KMFolder;
@@ -42,7 +43,7 @@ protected:
 };
 
 
-class KMAccount: public QObject
+class KMAccount: public QObject, public KAccount
 {
   Q_OBJECT
   friend class KMAcctMgr;
@@ -169,6 +170,10 @@ public:
 
   static QString importPassword(const QString &);
 
+  /** @return whether this account has an inbox */
+  bool hasInbox() const { return mHasInbox; }
+  virtual void setHasInbox( bool has ) { mHasInbox = has; }
+
   /**
    * If this account is a disconnected IMAP account, invalidate it.
    */
@@ -228,6 +233,7 @@ protected:
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
   QPtrList<KMFolderJob>  mJobList;
+  bool mHasInbox : 1;  
 
   // for resource handling
   QValueList<QPair<QDateTime, QDateTime> > mIntervals;

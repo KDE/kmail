@@ -70,24 +70,6 @@ public:
   virtual QString type() const;
   virtual void processNewMail(bool);
 
-  struct jobData
-  {
-    jobData( QString _url = QString::fromLatin1(""), KMFolderCachedImap *_parent = 0,
-	     int _total = 1, int _done = 0, bool _quiet = false, bool _inboxOnly = false )
-      : url(_url), parent(_parent), total(_total), done(_done), offset(0),
-	inboxOnly(_inboxOnly), quiet(_quiet)
-      {}
-    QString path;
-    QString url;
-    QByteArray data;
-    QCString cdata;
-    QStringList items;
-    KMFolderCachedImap *parent;
-    int total, done, offset;
-    bool inboxOnly, quiet;
-  };
-  QMap<KIO::Job *, jobData> mapJobData;
-
   /**
    * Update the progress bar
    */
@@ -101,14 +83,12 @@ public:
   /**
    * Kill the slave if any jobs are active
    */
-  void killAllJobs( bool disconnectSlave=false );
+  virtual void killAllJobs( bool disconnectSlave=false );
 
   /**
    * Set the account idle or busy
    */
   void setIdle(bool aIdle) { mIdle = aIdle; }
-
-  void slaveDied() { mSlave = 0; killAllJobs(); }
 
   /**
    * Set the top level pseudo folder
@@ -129,11 +109,6 @@ public:
 
 public slots:
   void processNewMail() { processNewMail(TRUE); }
-
-  /**
-   * Display an error message
-   */
-  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
 protected:
   friend class KMAcctMgr;

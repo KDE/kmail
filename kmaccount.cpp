@@ -67,7 +67,8 @@ void KMPrecommand::precommandExited(KProcess *p)
 
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
-  : mName(aName),
+  : KAccount( 0, aName ),
+    mName(aName),
     mTrash(KMKernel::self()->trashFolder()->idString()),
     mOwner(aOwner),
     mFolder(0),

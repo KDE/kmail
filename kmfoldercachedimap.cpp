@@ -14,6 +14,8 @@
 #include "imapprogressdialog.h"
 #include "cachedimapjob.h"
 using KMail::CachedImapJob;
+#include "imapaccountbase.h"
+using KMail::ImapAccountBase;
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -732,7 +734,7 @@ void KMFolderCachedImap::listMessages() {
   flagsForDownload.clear();
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=1:*;SECTION=ENVELOPE");
-  KMAcctCachedImap::jobData jd( url.url(), this );
+  ImapAccountBase::jobData jd( url.url(), this );
 
   KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
@@ -760,7 +762,7 @@ void KMFolderCachedImap::slotGetMessagesResult(KIO::Job * job)
 
 void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end())
     return;
 
@@ -832,7 +834,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
 
 void KMFolderCachedImap::getMessagesResult(KIO::Job * job, bool lastSet)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
@@ -914,7 +916,7 @@ bool KMFolderCachedImap::listDirectory()
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";TYPE="
 	      + (mAccount->onlySubscribedFolders() ? "LSUB" : "LIST"));
-  KMAcctCachedImap::jobData jd( url.url(), this );
+  ImapAccountBase::jobData jd( url.url(), this );
   mSubfolderNames.clear();
   mSubfolderPaths.clear();
   mSubfolderMimeTypes.clear();
@@ -937,7 +939,7 @@ bool KMFolderCachedImap::listDirectory()
 
 void KMFolderCachedImap::slotListResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) {
     kdDebug() << "could not find job!?!?!" << endl;
     serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
@@ -1054,7 +1056,7 @@ void KMFolderCachedImap::listDirectory2() {
 void KMFolderCachedImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
 {
   // kdDebug() << "KMFolderCachedImap::slotListEntries("<<name()<<")" << endl;
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
 
@@ -1100,7 +1102,7 @@ void KMFolderCachedImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList
 
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) return;
   QBuffer buff((*it).data);
   buff.open(IO_WriteOnly | IO_Append);

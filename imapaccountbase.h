@@ -27,10 +27,16 @@
 #include "networkaccount.h"
 
 #include <qtimer.h>
+#include <kio/global.h>
 
 class KMAcctMgr;
 class KMFolder;
 class KConfig/*Base*/;
+class KMessage;
+
+namespace KIO {
+  class Job;
+};
 
 namespace KMail {
 
@@ -78,6 +84,87 @@ namespace KMail {
      */
     virtual bool makeConnection();
 
+    /**
+     * Info Data for the Job
+     */ 
+    struct jobData
+    {
+      jobData( QString _url = QString::fromLatin1(""), KMFolder *_parent = 0,
+          int _total = 1, int _done = 0, bool _quiet = false, bool _inboxOnly = false )
+        : url(_url), parent(_parent), total(_total), done(_done), offset(0),
+      inboxOnly(_inboxOnly), quiet(_quiet)
+      {}
+      QString path;
+      QString url;
+      QByteArray data;
+      QCString cdata;
+      QStringList items;
+      KMFolder *parent;
+      QPtrList<KMMessage> msgList;
+      int total, done, offset;
+      bool inboxOnly, quiet, onlySubscribed;
+    };
+    QMap<KIO::Job *, jobData> mapJobData;
+
+    /**
+     * Initialize a jobData structure
+     */
+    static void initJobData(jobData &jd);    
+
+
+    /**
+     * Lists the directory starting from @p path
+     * All parameters (onlySubscribed, secondStep, parent) are included
+     * in the jobData
+     * connects to slotListResult and slotListEntries
+     */ 
+    void listDirectory(QString path, bool onlySubscribed, 
+        bool secondStep = FALSE, KMFolder* parent = NULL);
+
+    /**
+     * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder
+     * identified by @p imapPath
+     */
+    void changeSubscription(bool subscribe, QString imapPath);
+
+    /**
+     * The KIO-Slave died
+     */ 
+    void slaveDied() { mSlave = 0; killAllJobs(); }
+
+    /**
+     * Kill the slave if any jobs are active
+     */
+    void killAllJobs( bool disconnectSlave=false ) = 0;
+
+  public slots:
+    /** 
+     * gets the results of listDirectory 
+     * it includes the folder-information in mSubfolderNames, -Paths and -MIMETypes
+     */
+    void slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
+
+    /** 
+     * is called when listDirectory has finished
+     * emits receivedFolders
+     */ 
+    void slotListResult(KIO::Job * job);
+
+    /**
+     * is called when the changeSubscription has finished
+     * emits subscriptionChanged
+     */
+    void slotSubscriptionResult(KIO::Job * job); 
+
+    /**
+     * Update the progress bar
+     */
+    void displayProgress();    
+
+    /**
+     * Display an error message
+     */
+    void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
   protected slots:
     /**
@@ -92,6 +179,9 @@ namespace KMail {
     virtual unsigned short int defaultPort() const;
     // ### Hacks
     virtual void setPrefixHook() = 0;
+    QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
+    QStringList mSubfolderNames, mSubfolderPaths, 
+        mSubfolderMimeTypes;      
 
   protected:
     QTimer mIdleTimer;
@@ -105,6 +195,17 @@ namespace KMail {
     bool mIdle : 1;
     bool mErrorDialogIsActive : 1;
 
+  signals: 
+    /**
+     * Emitted when new folders have been received
+     */ 
+    void receivedFolders(QStringList, QStringList, 
+        QStringList, const ImapAccountBase::jobData &);
+
+    /**
+     * Emitted when the subscription has changed
+     */ 
+    void subscriptionChanged(QString imapPath, bool subscribed);    
 
   };
 

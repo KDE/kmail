@@ -120,7 +120,7 @@ void CachedImapJob::deleteMessages( const QString& uids )
 
   KIO::SimpleJob *job = KIO::file_delete( url, FALSE );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
-  KMAcctCachedImap::jobData jd;
+  ImapAccountBase::jobData jd;
   mAccount->mapJobData.insert( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ), this, SLOT( slotDeleteResult(KIO::Job *) ) );
   mAccount->displayProgress();
@@ -134,7 +134,7 @@ void CachedImapJob::expungeFolder()
 
   KIO::SimpleJob *job = KIO::file_delete( url, FALSE );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
-  KMAcctCachedImap::jobData jd( url.url() );
+  ImapAccountBase::jobData jd( url.url() );
   mAccount->mapJobData.insert( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ), this, SLOT( slotDeleteResult(KIO::Job *) ) );
   mAccount->displayProgress();
@@ -142,7 +142,7 @@ void CachedImapJob::expungeFolder()
 
 void CachedImapJob::slotDeleteResult( KIO::Job * job )
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if (it != mAccount->mapJobData.end())
     // What?
     if (mAccount->slave()) mAccount->mJobList.remove(this);
@@ -162,7 +162,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       return;
     }
 
-    QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+    QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
     if ( it == mAccount->mapJobData.end() ) {
       delete this;
       return;
@@ -210,7 +210,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1").arg(mUid));
 
-  KMAcctCachedImap::jobData jd;
+  ImapAccountBase::jobData jd;
   mMsg->setTransferInProgress(TRUE);
   KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
@@ -237,7 +237,7 @@ void CachedImapJob::slotPutNextMessage()
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + ";SECTION="
 	      + QString::fromLatin1(KMFolderCachedImap::statusToFlags(mMsg->status())));
-  KMAcctCachedImap::jobData jd( url.url() );
+  ImapAccountBase::jobData jd( url.url() );
 
   QCString cstr(mMsg->asString());
   int a = cstr.find("\nX-UID: ");
@@ -270,7 +270,7 @@ void CachedImapJob::slotPutNextMessage()
 //-----------------------------------------------------------------------------
 void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if (it == mAccount->mapJobData.end()) {
     delete this;
     return;
@@ -289,7 +289,7 @@ void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 //-----------------------------------------------------------------------------
 void CachedImapJob::slotPutMessageResult(KIO::Job *job)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if ( it == mAccount->mapJobData.end() ) {
     delete this;
     return;
@@ -329,9 +329,9 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
 void CachedImapJob::slotAddNextSubfolder(KIO::Job * job)
 {
   if (job) {
-    QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+    QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
 
-    if ( job->error() && !(*it).parent->silentUpload() ) {
+    if ( job->error() && ! static_cast<KMFolderCachedImap*>((*it).parent)->silentUpload() ) {
       QStringList errors = job->detailedErrorStrings();
       QString myError = "<qt><p><b>" + i18n("Error while uploading folder")
 	+ "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
@@ -339,7 +339,7 @@ void CachedImapJob::slotAddNextSubfolder(KIO::Job * job)
       // kdDebug() << "Error messages:\n 0: " << errors[0].latin1() << "\n 1: " << errors[1].latin1() << "\n 2: " << errors[2].latin1() << endl;
       KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2], errors[0] );
     }
-    (*it).parent->setSilentUpload( false );
+    static_cast<KMFolderCachedImap*>((*it).parent)->setSilentUpload( false );
     mAccount->mapJobData.remove(it);
 
     if( job->error() ) {
@@ -359,7 +359,7 @@ void CachedImapJob::slotAddNextSubfolder(KIO::Job * job)
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + folder->name());
 
-  KMAcctCachedImap::jobData jd( url.url(), folder );
+  ImapAccountBase::jobData jd( url.url(), folder );
   KIO::SimpleJob *simpleJob = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mJob = simpleJob;
@@ -387,7 +387,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
   QString folderPath = mFolderPathList.front(); mFolderPathList.pop_front();
   KURL url = mAccount->getUrl();
   url.setPath(folderPath);
-  KMAcctCachedImap::jobData jd;
+  ImapAccountBase::jobData jd;
   KIO::SimpleJob *simpleJob = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mJob = simpleJob;
@@ -401,7 +401,7 @@ void CachedImapJob::checkUidValidity()
   KURL url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";UID=0:0" );
 
-  KMAcctCachedImap::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder );
 
   KIO::SimpleJob *job = KIO::get( url, FALSE, FALSE );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
@@ -414,7 +414,7 @@ void CachedImapJob::checkUidValidity()
 
 void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it = mAccount->mapJobData.find(job);
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
   if( it == mAccount->mapJobData.end() ) {
     delete this;
     return;
@@ -478,7 +478,7 @@ void CachedImapJob::renameFolder( const QString &newName )
   imapPath += newName + '/';
   urlDst.setPath( imapPath );
 
-  KMAcctCachedImap::jobData jd( newName, mFolder );
+  ImapAccountBase::jobData jd( newName, mFolder );
   jd.path = imapPath;
 
   KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, FALSE );
@@ -514,7 +514,7 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath, const 
 
 void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
 {
-  QMap<KIO::Job *, KMAcctCachedImap::jobData>::Iterator it =
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   if( it == mAccount->mapJobData.end() ) {
     // This shouldn't happen??

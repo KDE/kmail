@@ -49,6 +49,8 @@
 #include "kmreaderwin.h"
 #include "kmreadermainwin.h"
 #include "kmfolderimap.h"
+#include "kmfoldercachedimap.h"
+#include "kmacctcachedimap.h"
 #include "kmcomposewin.h"
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
@@ -67,6 +69,8 @@
 #include "kmsystemtray.h"
 #include "vacation.h"
 using KMail::Vacation;
+#include "subscriptiondialog.h"
+using KMail::SubscriptionDialog;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -2832,3 +2836,23 @@ void KMMainWidget::plugFilterActions(QPopupMenu *menu)
 	      filterAction->plug(menu);
       }
 }
+
+void KMMainWidget::slotSubscriptionDialog()
+{
+  if (!mFolder) return;
+
+  if (mFolder->protocol() == "imap")
+  {
+    SubscriptionDialog * dialog = new SubscriptionDialog(this, 
+        i18n("Subscription"), 
+        static_cast<KMFolderImap*>(mFolder)->account());
+    dialog->show();
+  } else if (mFolder->protocol() == "cachedimap")
+  {
+    SubscriptionDialog * dialog = new SubscriptionDialog(this, 
+        i18n("Subscription"), 
+        static_cast<KMFolderCachedImap*>(mFolder)->account());
+    dialog->show();
+  }
+}
+

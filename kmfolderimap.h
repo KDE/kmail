@@ -27,6 +27,8 @@
 #include "kmacctimap.h"
 #include "kmfoldermbox.h"
 #include "kmmsgbase.h"
+#include "imapaccountbase.h"
+using KMail::ImapAccountBase;
 
 #include "kio/job.h"
 #include "kio/global.h"
@@ -125,6 +127,7 @@ public:
 
   /**
    * List a directory and add the contents to kmfoldermgr
+   * It uses the KMAcctImap->listDirectory to get the folders
    * returns false if the connection failed
    */
   bool listDirectory(bool secondStep = FALSE);
@@ -273,14 +276,11 @@ protected:
 protected slots:
 
   /**
-   * Add the imap folders to the folder tree
+   * Connected to ImapAccountBase::receivedFolders 
+   * creates/removes folders 
    */
-  void slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
-
-  /**
-   * Free the resources
-   */
-  void slotListResult(KIO::Job * job);
+  void slotListResult(QStringList, QStringList,
+      QStringList, const ImapAccountBase::jobData &);
 
   /**
    * Retrieve the whole folder or only the changes
@@ -336,7 +336,6 @@ protected:
   ulong       mLastUid;
   imapState   mContentState, mSubfolderState;
   QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
-  bool        mHasInbox;
   bool        mIsSelected;
   bool        mCheckFlags;
   bool        mReadOnly;

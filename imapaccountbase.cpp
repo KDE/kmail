@@ -26,6 +26,9 @@ using KMail::SieveConfig;
 
 #include "kmacctmgr.h"
 #include "kmfolder.h"
+#include "kmbroadcaststatus.h"
+#include "kmmainwin.h"
+#include "kmmessage.h"
 
 #include <kconfig.h>
 #include <kglobal.h>
@@ -233,6 +236,230 @@ namespace KMail {
     }
   }
 
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::initJobData(jobData &jd)
+  {
+    jd.total = 1;
+    jd.done = 0;
+    jd.parent = 0;
+    jd.quiet = FALSE;
+    jd.inboxOnly = FALSE;
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::displayProgress()
+  {
+    if (mProgressEnabled == mapJobData.isEmpty())
+    {
+      mProgressEnabled = !mapJobData.isEmpty();
+      KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
+          mProgressEnabled );
+      if (!mProgressEnabled)
+      {
+        QPtrListIterator<QGuardedPtr<KMFolder> > it(mOpenFolders);
+        for ( it.toFirst() ; it.current() ; ++it )
+          if ( it.current() ) (*(it.current()))->close();
+        mOpenFolders.clear();
+      }
+    }
+    mIdle = FALSE;
+    if (mapJobData.isEmpty())
+      mIdleTimer.start(15000);
+    else
+      mIdleTimer.stop();
+    int total = 0, done = 0;
+    for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+        it != mapJobData.end(); ++it)
+    {
+      total += (*it).total;
+      done += (*it).done;
+    }
+    if (total == 0)
+    {
+      mTotal = 0;
+      return;
+    }
+    if (total > mTotal) mTotal = total;
+    done += mTotal - total;
+    KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
+        100*done / mTotal );
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::listDirectory(QString path, bool onlySubscribed,
+      bool secondStep, KMFolder* parent)
+  {
+    if (!makeConnection()) return;
+    // create jobData
+    jobData jd;
+    jd.total = 1; jd.done = 0;
+    jd.inboxOnly = !secondStep && prefix() != "/"
+      && path == prefix();
+    jd.onlySubscribed = onlySubscribed;
+    if (parent) jd.parent = parent;
+    if (!secondStep) mHasInbox = FALSE;
+    // make the URL
+    KURL url = getUrl();
+    url.setPath(((jd.inboxOnly) ? QString("/") : path)
+        + ";TYPE=" + ((onlySubscribed) ? "LSUB" : "LIST"));
+    mSubfolderNames.clear();
+    mSubfolderPaths.clear();
+    mSubfolderMimeTypes.clear();
+    // and go
+    KIO::SimpleJob *job = KIO::listDir(url, FALSE);
+    KIO::Scheduler::assignJobToSlave(mSlave, job);
+    mapJobData.insert(job, jd);
+    connect(job, SIGNAL(result(KIO::Job *)),
+        this, SLOT(slotListResult(KIO::Job *)));
+    connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
+        this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
+    displayProgress();  
+  }  
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
+  {
+    QMap<KIO::Job *, jobData>::Iterator it =
+      mapJobData.find(job);
+    if (it == mapJobData.end()) return;
+    assert(it != mapJobData.end());
+    QString name;
+    KURL url;
+    QString mimeType;
+    for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
+        udsIt != uds.end(); udsIt++)
+    {
+      mimeType = QString::null;
+      for (KIO::UDSEntry::ConstIterator eIt = (*udsIt).begin();
+          eIt != (*udsIt).end(); eIt++)
+      {
+        // get the needed information
+        if ((*eIt).m_uds == KIO::UDS_NAME)
+          name = (*eIt).m_str;
+        else if ((*eIt).m_uds == KIO::UDS_URL)
+          url = KURL((*eIt).m_str, 106); // utf-8
+        else if ((*eIt).m_uds == KIO::UDS_MIME_TYPE)
+          mimeType = (*eIt).m_str;
+      }
+      if ((mimeType == "inode/directory" || mimeType == "message/digest"
+            || mimeType == "message/directory")
+          && name != ".." && (hiddenFolders() || name.at(0) != '.')
+          && (!(*it).inboxOnly || name == "INBOX"))
+      {
+        if (((*it).inboxOnly || 
+              url.path() == "/INBOX/") && name == "INBOX")
+          mHasInbox = TRUE; // INBOX-only
+
+        // Some servers send _lots_ of duplicates
+        if (mSubfolderNames.findIndex(name) == -1)
+        {
+          mSubfolderNames.append(name);
+          mSubfolderPaths.append(url.path());
+          mSubfolderMimeTypes.append(mimeType);
+        }
+      }
+    }
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotListResult(KIO::Job * job)
+  {
+    QMap<KIO::Job *, jobData>::Iterator it =
+      mapJobData.find(job);
+    if (it == mapJobData.end()) return;
+    assert(it != mapJobData.end());
+    if (job->error())
+    {
+      slotSlaveError( mSlave, job->error(),
+          job->errorString() );
+      if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
+    }
+    if (!job->error())
+    {
+      // transport the information, include the jobData
+      emit receivedFolders(mSubfolderNames, mSubfolderPaths, 
+          mSubfolderMimeTypes, *it);
+    }
+    if (mSlave) mapJobData.remove(it);
+    mSubfolderNames.clear();
+    mSubfolderPaths.clear();
+    mSubfolderMimeTypes.clear();
+    displayProgress();
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::changeSubscription( bool subscribe, QString imapPath )
+  {
+    // change the subscription of the folder
+    KURL url = getUrl();
+    url.setPath(imapPath);
+
+    QByteArray packedArgs;
+    QDataStream stream( packedArgs, IO_WriteOnly);
+
+    if (subscribe)
+      stream << (int) 'u' << url;
+    else
+      stream << (int) 'U' << url;
+
+    // create the KIO-job
+    if (!makeConnection()) return;
+    KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
+    KIO::Scheduler::assignJobToSlave(mSlave, job);
+    jobData jd;
+    jd.total = 1; jd.done = 0; jd.parent = NULL;
+    // a bit of a hack to save one slot
+    if (subscribe) jd.onlySubscribed = true;
+    else jd.onlySubscribed = false;
+    mapJobData.insert(job, jd);
+
+    connect(job, SIGNAL(result(KIO::Job *)),
+        SLOT(slotSubscriptionResult(KIO::Job *)));
+
+    displayProgress();
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotSubscriptionResult( KIO::Job * job )
+  {
+    // result of a subscription-job
+    QMap<KIO::Job *, jobData>::Iterator it =
+      mapJobData.find(job);
+    if (it == mapJobData.end()) return;
+    if (job->error())
+    {
+      slotSlaveError( mSlave, job->error(),
+          job->errorString() );
+      if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
+    } else {
+      emit subscriptionChanged(
+          static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
+    }
+    if (mSlave) mapJobData.remove(it);
+    displayProgress();
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
+      const QString &errorMsg)
+  {
+    if (aSlave != mSlave) return;
+    if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
+    if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
+    // check if we still display an error
+    killAllJobs();
+    if ( !mErrorDialogIsActive )
+    {
+      mErrorDialogIsActive = true;
+      if ( KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
+            KIO::buildErrorString(errorCode, errorMsg),
+            i18n("Error")) == KMessageBox::Ok )
+      {
+        mErrorDialogIsActive = false;
+      }
+    } else
+      kdDebug(5006) << "suppressing error:" << errorMsg << endl;
+  }
 
 }; // namespace KMail
 

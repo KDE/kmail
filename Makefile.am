@@ -72,7 +72,8 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmail_part.cpp kmstartup.cpp kmmainwidget.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
-		folderjob.cpp cachedimapjob.cpp
+		folderjob.cpp cachedimapjob.cpp \
+		subscriptiondialog.cpp		
 
 METASOURCES = AUTO
 

@@ -98,17 +98,6 @@ int KMAcctImap::tempOpenFolder(KMFolder *folder)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::initJobData(jobData &jd)
-{
-  jd.total = 1;
-  jd.done = 0;
-  jd.parent = 0;
-  jd.quiet = FALSE;
-  jd.inboxOnly = FALSE;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   const QString &errorMsg)
 {
@@ -134,46 +123,6 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
     }
   } else
     kdDebug(5006) << "suppressing error:" << errorMsg << endl;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::displayProgress()
-{
-  if (mProgressEnabled == mapJobData.isEmpty())
-  {
-    mProgressEnabled = !mapJobData.isEmpty();
-    KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
-      mProgressEnabled );
-    if (!mProgressEnabled)
-    {
-      QPtrListIterator<QGuardedPtr<KMFolder> > it(mOpenFolders);
-      for ( it.toFirst() ; it.current() ; ++it )
-        if (*it) (*(*it))->close();
-      mOpenFolders.clear();
-    }
-  }
-  mIdle = FALSE;
-  if (mapJobData.isEmpty())
-    mIdleTimer.start(15000);
-  else
-    mIdleTimer.stop();
-  int total = 0, done = 0;
-  for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-    it != mapJobData.end(); ++it)
-  {
-    total += (*it).total;
-    done += (*it).done;
-  }
-  if (total == 0)
-  {
-    mTotal = 0;
-    return;
-  }
-  if (total > mTotal) mTotal = total;
-  done += mTotal - total;
-  KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
-    100*done / mTotal );
 }
 
 
@@ -218,7 +167,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
     if ((*it).parent)
     {
       // clear folder state
-      KMFolderImap *fld = (*it).parent;
+      KMFolderImap *fld = static_cast<KMFolderImap*>((*it).parent);
       fld->setContentState(KMFolderImap::imapNoInformation);
       fld->setSubfolderState(KMFolderImap::imapNoInformation);
       fld->sendFolderComplete(FALSE);
