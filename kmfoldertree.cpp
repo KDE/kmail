@@ -931,19 +931,22 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
   }
   if (fti->folder() &&
-      (fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->folderType() == KMFolderTypeCachedImap ))
+      (fti->folder()->folderType() == KMFolderTypeImap || 
+       fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
     folderMenu->insertSeparator();
-    folderMenu->insertItem(SmallIcon("configure"),
+    folderMenu->insertItem(SmallIcon("bookmark_folder"),
         i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
     if (!fti->folder()->noContent())
     {
-      folderMenu->insertItem(SmallIcon("reload"), i18n("Check Mail in This Folder"), mMainWidget,
+      folderMenu->insertItem(SmallIcon("kmmsgnew"), i18n("Check Mail in This Folder"), mMainWidget,
           SLOT(slotRefreshFolder()));
-      folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
-          SLOT(slotResetFolderList()));
+      if ( fti->folder()->folderType() == KMFolderTypeImap ) {
+        folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
+            SLOT(slotResetFolderList()));
+      }
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
       KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
