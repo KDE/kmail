@@ -28,6 +28,11 @@ KMFilter::KMFilter( KConfig* aConfig )
 
   if ( aConfig )
     readConfig( aConfig );
+  else {
+    bApplyOnInbound = TRUE;
+    bApplyOnOutbound = FALSE;
+    bStopProcessingHere = TRUE;
+  }
 }
 
 
@@ -37,7 +42,11 @@ KMFilter::KMFilter( KMFilter * aFilter )
 
   if ( aFilter ) {
     mPattern = *aFilter->pattern();
-
+    
+    bApplyOnInbound = aFilter->applyOnInbound();
+    bApplyOnOutbound = aFilter->applyOnOutbound();
+    bStopProcessingHere = aFilter->stopProcessingHere();
+    
     QListIterator<KMFilterAction> it( *aFilter->actions() );
     for ( it.toFirst() ; it.current() ; ++it ) {
       KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
@@ -49,6 +58,10 @@ KMFilter::KMFilter( KMFilter * aFilter )
 	}
       }
     }
+  } else {
+    bApplyOnInbound = TRUE;
+    bApplyOnOutbound = FALSE;
+    bStopProcessingHere = TRUE;
   }
 }
 
@@ -56,7 +69,6 @@ KMFilter::KMFilter( KMFilter * aFilter )
 KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 {
   ReturnCode status = NoResult;
-  stopIt = FALSE;
 
   QListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; !stopIt && it.current() ; ++it ) {
@@ -65,7 +77,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 	      << (*it)->label() << " \"" << (*it)->argsAsString()
 	      << "\"" << endl;
 
-    KMFilterAction::ReturnCode result = (*it)->process( msg, stopIt );
+    KMFilterAction::ReturnCode result = (*it)->process( msg );
 
     switch ( result ) {
     case KMFilterAction::CriticalError:
@@ -75,18 +87,18 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
       status = GoOn;
       break;
     case KMFilterAction::Finished:
+      // Message saved in a folder
       kdDebug() << "got result Finished" << endl;
-      if ( status == NoResult )
-	// Message saved in a folder
-	status = MsgExpropriated;
-      break;
+      status = MsgExpropriated;
     default:
-        break;
+      break;
     }
   }
 
   if ( status == NoResult ) // No filters matched, keep copy of message
     status = GoOn;
+
+  stopIt = stopProcessingHere();
 
   return status;
 }
@@ -111,6 +123,19 @@ void KMFilter::readConfig(KConfig* config)
   // MKSearchPattern::readConfig ensures
   // that the pattern is purified.
   mPattern.readConfig(config);
+
+  { // limit lifetime of "sets"
+    QStringList sets = config->readListEntry("apply-on");
+    if ( sets.isEmpty() ) {
+      bApplyOnOutbound = FALSE;
+      bApplyOnInbound = TRUE;
+    } else {
+      bApplyOnInbound = bool(sets.contains("check-mail"));
+      bApplyOnOutbound = bool(sets.contains("send-mail"));
+    }
+  }
+
+  bStopProcessingHere = config->readBoolEntry("StopProcessingHere", TRUE);
 
   int i, numActions;
   QString actName, argsName;
@@ -154,6 +179,16 @@ void KMFilter::writeConfig(KConfig* config) const
 {
   mPattern.writeConfig(config);
 
+  QStringList sets;
+  if ( bApplyOnInbound )
+    sets.append( "check-mail" );
+  if ( bApplyOnOutbound )
+    sets.append( "send-mail" );
+  sets.append( "manual-filtering" );
+  config->writeEntry( "apply-on", sets );
+
+  config->writeEntry( "StopProcessingHere", bStopProcessingHere );
+
   QString key;
   int i;
 
@@ -195,7 +230,14 @@ const QString KMFilter::asString() const
     result += (*it)->argsAsString();
     result += "\n";
   }
-  result += "}";
+  result += "This filter belongs to the following sets:";
+  if ( bApplyOnInbound )
+    result += " Inbound";
+  if ( bApplyOnOutbound )
+    result += " Outbound";
+  result += "\n";
+  if ( bStopProcessingHere )
+    result += "If it matches, processing stops at this filter.\n";
 
   return result;
 }

@@ -82,34 +82,42 @@ void KMFilterMgr::writeConfig(bool withSync)
 
 
 //-----------------------------------------------------------------------------
-int KMFilterMgr::process(KMMessage* msg)
+int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 {
+  if (!aSet) {
+    kdDebug() << "KMFilterMgr: process() called with not filter set selected"
+	      << endl;
+    return 1;
+  }
+
   KMFilter* filter;
   bool stopIt = FALSE;
   int status = -1;
   KMFilter::ReturnCode result;
 
-  for (filter=first(); !stopIt && filter; filter=next())
+  QListIterator<KMFilter> it(*this);
+  for (it.toFirst() ; !stopIt && it.current() ; ++it)
   {
-    if (!filter->pattern()->matches(msg)) continue;
-    //    kdDebug() << "KMFilterMgr: filter " << filter->name().data() << " matches message " << //    msg->subject().data() << endl;
-    //    if (status < 0)
-    //      status = 0;
-    result = filter->execActions(msg, stopIt);
+    if ( aSet&All
+	 || ( (aSet&Outbound) && (*it)->applyOnOutbound() )
+	 || ( (aSet&Inbound)  && (*it)->applyOnInbound() ) ) {
 
-    switch ( result ) {
-    case KMFilter::CriticalError:
-      // Critical error
-      status = 2;
-      break;
-    case KMFilter::MsgExpropriated:
-      if (status < 0)  // Message saved in a folder
-	status = 0;
-      break;
-    default:
-        break;
+      if ((*it)->pattern()->matches(msg)) {
+      
+	result = (*it)->execActions(msg, stopIt);
+	
+	switch ( result ) {
+	case KMFilter::CriticalError:
+	  // Critical error - immediate return
+	  return 2;
+	case KMFilter::MsgExpropriated:
+	  // Message saved in a folder
+	  status = 0;
+	default:
+	  break;
+	}
+      }
     }
-
   }
 
   if (status < 0) // No filters matched, keep copy of message
@@ -122,11 +130,9 @@ int KMFilterMgr::process(KMMessage* msg)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::cleanup(void)
 {
-  KMFolder* fld;
-
-  for (fld=mOpenFolders.first(); fld; fld=mOpenFolders.next())
-    if (fld) fld->close();
-
+  QListIterator<KMFolder> it(mOpenFolders);
+  for ( it.toFirst() ; it.current() ; ++it )
+    (*it)->close();
   mOpenFolders.clear();
 }
 
@@ -171,11 +177,11 @@ void KMFilterMgr::createFilter( const QString field, const QString value )
 //-----------------------------------------------------------------------------
 bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
-  KMFilter* filter;
   bool rem = FALSE;
 
-  for (filter=first(); filter; filter=next())
-    if (filter->folderRemoved(aFolder, aNewFolder)) rem=TRUE;
+  QListIterator<KMFilter> it(*this);
+  for ( it.toFirst() ; it.current() ; ++it )
+    if ( (*it)->folderRemoved(aFolder, aNewFolder) ) rem=TRUE;
 
   return rem;
 }
@@ -184,11 +190,9 @@ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::dump(void)
 {
-  KMFilter* filter;
-  int i;
-
-  for (i=0, filter=first(); filter; filter=next(), i++)
+  QListIterator<KMFilter> it(*this);
+  for ( it.toFirst() ; it.current() ; ++it )
   {
-    kdDebug() << filter->asString() << endl;
+    kdDebug() << (*it)->asString() << endl;
   }
 }

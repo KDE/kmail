@@ -2,6 +2,7 @@
 
 
 #include "kmfoldermgr.h"
+#include "kmfiltermgr.h"
 #include "kmglobal.h"
 #include "kmfolder.h"
 
@@ -248,14 +249,41 @@ void KMSender::doSendMsg()
   assert(mSendProc != NULL);
   bool someSent = mCurrentMsg;
 
-  // Move previously sent message to folder "sent"
+  // Post-process sent message (filtering)
   if (mCurrentMsg)
-    {
-      mCurrentMsg->setTransferInProgress( FALSE );
-      mCurrentMsg->setStatus(KMMsgStatusSent);
+  { 
+    mCurrentMsg->setTransferInProgress( FALSE );
+    mCurrentMsg->setStatus(KMMsgStatusSent);
+
+    // Filters assume that the message has no parent
+    KMFolder *parent = mCurrentMsg->parent();
+    if ( parent )
+      parent->removeMsg( mCurrentMsg );
+    mCurrentMsg->setParent(0);
+
+    // 0==processed ok, 1==no filter matched, 2==critical error, abort!
+    int processResult = kernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
+    switch (processResult) {
+    case 2:
+      perror("Critical error: Unable to process sent mail (out of space?)");
+      KMessageBox::information(0, i18n("Critical error: "
+				       "Unable to process sent mail (out of space?)"
+				       "Moving failing message to \"sent-mail\" folder."));
       kernel->sentFolder()->moveMsg(mCurrentMsg);
-      mCurrentMsg = NULL;
+      cleanup();
+      return;
+    case 1:
+      kernel->sentFolder()->moveMsg(mCurrentMsg);
+    default:
+      break;
     }
+    if (!mCurrentMsg->parent())
+      parent->addMsg( mCurrentMsg );
+    if (mCurrentMsg->parent()) // unGet this message
+      mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
+
+    mCurrentMsg = 0;
+  }
 
   // If we have been using a message specific transport, lose it now.
   // Would be more efficient to only do this when the mail transport

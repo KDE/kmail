@@ -172,7 +172,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   else aMsg->setStatus(KMMsgStatusNew);
 
   // 0==processed ok, 1==processing failed, 2==critical error, abort!
-  processResult = kernel->filterMgr()->process(aMsg);
+  processResult = kernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
     KMessageBox::information(0,(i18n("Critical error: "

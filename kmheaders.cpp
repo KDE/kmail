@@ -990,7 +990,7 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
   if (parent)
     parent->removeMsg( msg );
   msg->setParent(0);
-  filterResult = kernel->filterMgr()->process(msg);
+  filterResult = kernel->filterMgr()->process(msg,KMFilterMgr::All);
   if (filterResult == 2) {
     // something went horribly wrong (out of space?)
     perror("Critical error: Unable to process messages (out of space?)");

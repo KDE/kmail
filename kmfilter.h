@@ -81,7 +81,7 @@ public:
   /** Remove empty rules (and actions one day). */
   virtual void purify();
 
-  /** Check for empty pattern (and action list one day). */
+  /** Check for empty pattern and action list. */
   virtual bool isEmpty() const
     { return mPattern.isEmpty() || mActions.isEmpty(); }
 
@@ -94,6 +94,33 @@ public:
       @p matches() function before, please convert to using
       myFilter->pattern()->matches() now. */
   KMSearchPattern* pattern() { return &mPattern; }
+
+  /** Set whether this filter should be applied on
+      outbound messages (@p aApply == TRUE) or not.
+      @see applyOnOutbound applyOnInbound setApplyOnInbound
+  */
+  void setApplyOnOutbound( bool aApply=TRUE ) { bApplyOnOutbound = aApply; }
+
+  /** @return TRUE if this filter should be applied on
+      outbound messages, FALSE otherwise.
+      @see setApplyOnOutbound applyOnInbound setApplyOnInbound
+  */
+  bool applyOnOutbound() const { return bApplyOnOutbound; }
+
+  /** Set whether this filter should be applied on
+      inbound messages (@p aApply == TRUE) or not.
+      @see setApplyOnOutbound applyOnInbound applyOnOutbound
+  */
+  void setApplyOnInbound( bool aApply=TRUE ) { bApplyOnInbound = aApply; }
+
+  /** @return TRUE if this filter should be applied on
+      inbound messages, FALSE otherwise.
+      @see setApplyOnOutbound applyOnOutbound setApplyOnInbound
+  */
+  bool applyOnInbound() const { return bApplyOnInbound; }
+
+  void setStopProcessingHere( bool aStop ) { bStopProcessingHere = aStop; }
+  bool stopProcessingHere() const { return bStopProcessingHere; }
 
   /** 
    * Called from the filter manager when a folder is moved.
@@ -110,6 +137,9 @@ public:
   const QString asString() const;
 
 private:
+  bool bApplyOnInbound;
+  bool bApplyOnOutbound;
+  bool bStopProcessingHere;
   KMSearchPattern mPattern;
   QList<KMFilterAction> mActions;
 };

@@ -74,10 +74,9 @@ public:
       critical error has occurred (eg. disk full), @p ErrorButGoOn if
       there was a non-critical error (e.g. invalid address in
       'forward' action), @p GoOn if the message shall be processed by
-      further filters and @p Ok otherwise.  Sets @p stopIt to TRUE to
-      stop applying filters to this @p msg and do not change it
-      otherwise. */
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const = 0;
+      further filters and @p Ok otherwise. 
+  */
+  virtual ReturnCode process(KMMessage* msg) const = 0;
 
   /** Determines whether this action is valid. But this is just a
       quick test. Eg., actions that have a mail address as parameter

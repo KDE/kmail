@@ -422,7 +422,7 @@ class KMFilterActionBounce : public KMFilterActionWithNone
 {
 public:
   KMFilterActionBounce();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -436,7 +436,7 @@ KMFilterActionBounce::KMFilterActionBounce()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg, bool& ) const
+KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg) const
 {
   KMMessage *bounceMsg = msg->createBounce( FALSE );
   if ( !bounceMsg ) return ErrorButGoOn;
@@ -456,7 +456,7 @@ class KMFilterActionTransport: public KMFilterActionWithString
 {
 public:
   KMFilterActionTransport();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -470,7 +470,7 @@ KMFilterActionTransport::KMFilterActionTransport()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionTransport::process(KMMessage* msg, bool& ) const
+KMFilterAction::ReturnCode KMFilterActionTransport::process(KMMessage* msg) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
@@ -487,7 +487,7 @@ class KMFilterActionReplyTo: public KMFilterActionWithString
 {
 public:
   KMFilterActionReplyTo();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -502,7 +502,7 @@ KMFilterActionReplyTo::KMFilterActionReplyTo()
   mParameter = "";
 }
 
-KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMMessage* msg, bool& ) const
+KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMMessage* msg) const
 {
   msg->setHeaderField( "Reply-To", mParameter );
   return GoOn;
@@ -518,7 +518,7 @@ class KMFilterActionIdentity: public KMFilterActionWithStringList
 {
 public:
   KMFilterActionIdentity();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction();
 };
 
@@ -534,7 +534,7 @@ KMFilterActionIdentity::KMFilterActionIdentity()
   mParameter = *mParameterList.at(0);
 }
 
-KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg, bool& ) const
+KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 {
   msg->setHeaderField( "X-KMail-Identity", mParameter );
   return GoOn;
@@ -548,7 +548,7 @@ class KMFilterActionMove: public KMFilterActionWithFolder
 {
 public:
   KMFilterActionMove();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -562,7 +562,7 @@ KMFilterActionMove::KMFilterActionMove()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg, bool&stopIt) const
+KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
 {
   if ( !mFolder )
     return ErrorButGoOn;
@@ -575,7 +575,6 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg, bool&stop
     return Finished; // ok, added
   else {
     kdDebug() << "KMfilterAction - couldn't move msg" << endl;
-    stopIt = TRUE;
     return CriticalError; // critical error: couldn't add
   }
 }
@@ -589,7 +588,7 @@ class KMFilterActionForward: public KMFilterActionWithAddress
 {
 public:
   KMFilterActionForward();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -603,7 +602,7 @@ KMFilterActionForward::KMFilterActionForward()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/) const
+KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 {
   KMMessage* msg;
   if ( mParameter.isEmpty() )
@@ -628,7 +627,7 @@ class KMFilterActionRedirect: public KMFilterActionWithAddress
 {
 public:
   KMFilterActionRedirect();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -642,7 +641,7 @@ KMFilterActionRedirect::KMFilterActionRedirect()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg, bool& /*stop*/) const
+KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) const
 {
   KMMessage* msg;
   if ( mParameter.isEmpty() )
@@ -667,7 +666,7 @@ class KMFilterActionExec : public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExec();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -681,7 +680,7 @@ KMFilterActionExec::KMFilterActionExec()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/) const
+KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
@@ -717,7 +716,7 @@ class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExtFilter();
-  virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
+  virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction(void);
 };
 
@@ -731,7 +730,7 @@ KMFilterActionExtFilter::KMFilterActionExtFilter()
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, bool& ) const
+KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) const
 {
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;

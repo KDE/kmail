@@ -22,6 +22,8 @@ class QListBox;
 class QPushButton;
 class QComboBox;
 class QWidgetStack;
+class QCheckBox;
+class QGroupBox;
 
 
 /** This is a complex widget that is used to manipulate KMail's filter
@@ -283,6 +285,11 @@ public slots:
 	@ref KMFilterActionEdit::setActionList. */
   void slotFilterSelected(KMFilter * aFilter);
 
+protected slots:
+  void slotApplicabilityChanged( int aOption );
+  void slotStopProcessingButtonToggled( bool aChecked );
+  void slotReset();
+
 protected:
   /** The widget that contains the ListBox showing the filters, and
       the controls to remove filters, add new ones and to change their
@@ -292,7 +299,13 @@ protected:
   KMSearchPatternEdit *mPatternEdit;
   /** The widget that allows editing of the filter actions. */
   KMFilterActionWidgetLister *mActionLister;
+  /** Lets the user select whether to apply this filter on
+      inbound/outbound messages, both, or only on explicit CTRL-J. */
+  QComboBox *mApplicability;
+  QCheckBox *mStopProcessingHere;
+  QGroupBox *mAdvOptsGroup;
 
+  KMFilter *mFilter;
 };
 
 

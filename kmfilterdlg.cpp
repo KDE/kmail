@@ -22,11 +22,56 @@
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qwidgetstack.h>
-#ifndef QTOOLTIP_H
 #include <qtooltip.h>
-#endif
+#include <qwhatsthis.h>
+#include <qcheckbox.h>
 
 #include <assert.h>
+
+// What's this help texts
+const char * _wt_filterlist =
+I18N_NOOP( "<qt><p>This is the list of defined filters."
+	   "They are processed top-to-bottom.</p>"
+	   "<p>Click on any filter to edit it"
+	   "using the controls in the right-hand half"
+	   "of the dialog.</p></qt>" );
+const char * _wt_filterlist_new =
+I18N_NOOP( "<qt><p>Click this button to create a new filter.</p>"
+	   "<p>It will be inserted just before the currently"
+	   "selected one, but you can always change that"
+	   "later on.</p>"
+	   "<p>If you have hit this button accidently, you can undo this"
+	   "by clicking on the <em>delete</em> button (to the right).</p></qt>" );
+const char * _wt_filterlist_delete =
+I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently"
+	   "selected filter from the list above.</p>"
+	   "<p>There's no way to get the filter back once"
+	   "it is deleted, but you can always leave the"
+	   "dialog through <em>Cancel</em> to discard the"
+	   "changes made.</p></qt>" );
+const char * _wt_filterlist_up =
+I18N_NOOP( "<qt><p>Click this button to move the currently"
+	   "selected filter <em>up</em> one in the list above.</p>"
+	   "<p>This is useful since the order of the filters in the list"
+	   "determines the order in which they are tried on messages:"
+	   "The topmost filter gets tried first.</p>"
+	   "<p>If you have hit this button accidently, you can undo this"
+	   "by clicking on the <em>down</em> button (to the right)</p></qt>" );
+const char * _wt_filterlist_down =
+I18N_NOOP( "<qt><p>Click this button to move the currently"
+	   "selected filter <em>down</em> one in the list above.</p>"
+	   "<p>This is useful since the order of the filters in the list"
+	   "determines the order in which they are tried on messages:"
+	   "The topmost filter gets tried first.</p>"
+	   "<p>If you have hit this button accidently, you can undo this"
+	   "by clicking on the <em>down</em> button (to the right)</p></qt>" );
+const char * _wt_filterlist_rename =
+I18N_NOOP( "<qt><p>Click this button to rename the currently selected filter.</p>"
+	   "<p>Filters are named automatically, as long as they start with"
+	   "\"<code><</code>\".</p>"
+	   "<p>If you have renamed a filter accidently and want automatic"
+	   "naming back, click this button and select <em>Clear</em> and"
+	   "then <em>OK</em> in the appearing dialog.</p></qt>" );
 
 // The anchor of the filter dialog's help.
 const char * KMFilterDlgHelpAnchor =  "filters-id" ;
@@ -61,6 +106,28 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
   QGroupBox *agb = new QGroupBox( 1 /*column*/, Vertical, i18n("Filter Actions"), w );
   mActionLister = new KMFilterActionWidgetLister( agb );
   vbl->addWidget( agb, 0, Qt::AlignTop );
+
+  mAdvOptsGroup = new QGroupBox ( 1 /*columns*/, Vertical, i18n("Advanced Options"), w);
+  {
+    QWidget *adv_w = new QWidget( mAdvOptsGroup );
+    QGridLayout *gl = new QGridLayout( adv_w, 2 /*rows*/, 2 /*cols*/,
+				       0 /*border*/, spacingHint() );
+    gl->setColStretch( 1, 1 );
+    QLabel *l = new QLabel("Apply this filter on", adv_w );
+    gl->addWidget( l, 0, 0, Qt::AlignLeft );
+    mApplicability = new QComboBox( FALSE, adv_w );
+    mApplicability->insertItem( "incoming messages" );
+    mApplicability->insertItem( "outgoing messages" );
+    mApplicability->insertItem( "both" );
+    mApplicability->insertItem( "explicit \"Apply Filters\" only" );
+    gl->addWidget( mApplicability, 0, 1, Qt::AlignLeft );
+    mStopProcessingHere = new QCheckBox( "If this filter matches, stop processing here", adv_w );
+    gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
+			    1, 1, /*from to row*/
+			    0, 1 /*from to col*/ );
+  }
+  vbl->addWidget( mAdvOptsGroup, 0, Qt::AlignTop );
+
   // spacer:
   vbl->addStretch( 1 );
   
@@ -73,6 +140,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
 	   mPatternEdit, SLOT(reset()) );
   connect( mFilterList, SIGNAL(resetWidgets()),
 	   mActionLister, SLOT(reset()) );
+  connect( mFilterList, SIGNAL(resetWidgets()),
+	   this, SLOT(slotReset()) );
   
   // support auto-naming the filter
   connect( mPatternEdit, SIGNAL(maybeNameChanged()),
@@ -90,6 +159,16 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
   connect( this, SIGNAL(finished()),
 	   this, SLOT(slotDelayedDestruct()) );
 
+  // transfer changes from the 'Apply this filter on...'
+  // combo box to the filter
+  connect( mApplicability, SIGNAL(activated(int)),
+	   this, SLOT(slotApplicabilityChanged(int)) );
+
+  // transfer changes from the 'stop processing here'
+  // check box to the filter
+  connect( mStopProcessingHere, SIGNAL(toggled(bool)),
+	   this, SLOT(slotStopProcessingButtonToggled(bool)) );
+
   adjustSize();
 
   // load the filter list (emits filterSelected())
@@ -99,10 +178,63 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name)
 void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 {
   assert( aFilter );
+  int a=0;
+  
+  kdDebug() << "apply on inbound == "
+	    << aFilter->applyOnInbound() << endl;
+  kdDebug() << "apply on outbound == "
+	    << aFilter->applyOnOutbound() << endl;
+  
+  if ( aFilter->applyOnInbound() )
+    if ( aFilter->applyOnOutbound() )
+      a=2;
+    else
+      a=0;
+  else
+    if ( aFilter->applyOnOutbound() )
+      a=1;
+    else
+      a=3;
+  mApplicability->blockSignals(TRUE);
+  mApplicability->setCurrentItem( a );
+  mApplicability->blockSignals(FALSE);
+
+  mStopProcessingHere->blockSignals(TRUE);
+  mStopProcessingHere->setChecked( aFilter->stopProcessingHere() );
+  mStopProcessingHere->blockSignals(FALSE);
+
   mPatternEdit->setSearchPattern( aFilter->pattern() );
   mActionLister->setActionList( aFilter->actions() );
+  
+  mAdvOptsGroup->setEnabled(TRUE);
+  mFilter = aFilter;
 }
 
+void KMFilterDlg::slotReset()
+{
+  mFilter = 0;
+  mAdvOptsGroup->setEnabled(FALSE);
+}
+
+void KMFilterDlg::slotApplicabilityChanged( int aOption )
+{
+  if ( !mFilter )
+    return;
+
+  kdDebug() << "KMFilterDlg: setting applicability to "
+	    << aOption << endl;
+  
+  mFilter->setApplyOnInbound( aOption == 0 || aOption == 2 );
+  mFilter->setApplyOnOutbound( aOption == 1 || aOption == 2 );
+}
+
+void KMFilterDlg::slotStopProcessingButtonToggled( bool aChecked )
+{
+  if ( !mFilter )
+    return;
+
+  mFilter->setStopProcessingHere( aChecked );
+}
 
 //=============================================================================
 //
@@ -119,9 +251,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   //----------- the list box
   mListBox = new QListBox(this);
   mListBox->setMinimumWidth(150);
-  QToolTip::add(mListBox,i18n("Shows all the defined filter rules.\n"
-  	"Rules are applied from top to bottom,\n"
-	"the first rule that applies is used."));
+  QWhatsThis::add( mListBox, i18n(_wt_filterlist) );
   
   //----------- the first row of buttons
   QHBox *hb = new QHBox(this);
@@ -132,10 +262,11 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown = new QPushButton( QString::null, hb );
   mBtnDown->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
-  QToolTip::add(mBtnUp,i18n("Move the selected filter up in the list,\n"
-    "which gives it priority over lower rules."));
-  QToolTip::add(mBtnDown,i18n("Move the selected filter down in the list."));
-  
+  QToolTip::add( mBtnUp, i18n("Up") );
+  QToolTip::add( mBtnDown, i18n("Down") );
+  QWhatsThis::add( mBtnUp, i18n(_wt_filterlist_up) );
+  QWhatsThis::add( mBtnDown, i18n(_wt_filterlist_down) );
+
   //----------- the second row of buttons
   hb = new QHBox(this);
   hb->setSpacing(4);
@@ -146,9 +277,12 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
-  QToolTip::add(mBtnNew,i18n("Add a new filter to the list."));
-  QToolTip::add(mBtnDelete,i18n("Delete the selected filter."));
-  QToolTip::add(mBtnRename,i18n("Rename the selected filter."));
+  QToolTip::add( mBtnNew, i18n("New") );
+  QToolTip::add( mBtnDelete, i18n("Delete"));
+  QWhatsThis::add( mBtnNew, i18n(_wt_filterlist_new) );
+  QWhatsThis::add( mBtnDelete, i18n(_wt_filterlist_delete) );
+  QWhatsThis::add( mBtnRename, i18n(_wt_filterlist_rename) );
+
 
   //----------- now connect everything
   connect( mListBox, SIGNAL(highlighted(int)),
