@@ -106,7 +106,7 @@ public:
       @li <body>: Try to match against the body of the message.
       @li <any header>: Try to match against any header field.
       @li <recipients>: Try to match against both To: and Cc: header fields.
-      @li <size in bytes>: Try to match against size of message (numerical).
+      @li <size>: Try to match against size of message (numerical).
       @li <age in days>: Try to match against age of message (numerical).
   */
   const QCString field() const { return mField; }
