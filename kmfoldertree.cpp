@@ -629,6 +629,7 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   }
 
   oldCurrent = currentItem();
+  setFocus();
 
   QListViewItem *i = itemAt( contentsToViewport(e->pos()) );
   if ( i ) {
@@ -699,7 +700,7 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
                         visibleHeight()-autoscroll_margin*2);
     QListViewItem *i = itemAt( vp );
     if ( i ) {
-        setSelected( i, TRUE );
+        setCurrentItem( i );
         if ( !inside_margin.contains(vp) ) {
             startAutoScroll();
             e->accept(QRect(0,0,0,0)); // Keep sending move events
@@ -737,8 +738,8 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
     stopAutoScroll();
     dropItem = 0L;
 
-    setCurrentItem( oldCurrent );
-    setSelected( oldCurrent, TRUE );
+    //    setCurrentItem( oldCurrent );
+    //    setSelected( oldCurrent, TRUE );
     connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	    this, SLOT(doFolderSelected(QListViewItem*)));
 }
