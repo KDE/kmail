@@ -72,6 +72,11 @@ public:
     is not stored in any folder. Marks this message as forwarded. */
   virtual KMMessage* createForward(void);
 
+  /** Create a new message that is a delivery receipt of this message,
+      filling required header fileds with the proper values. The
+      returned message is not stored in any folder. */
+  virtual KMMessage* createDeliveryReceipt(void) const;
+
   /** Parse the string and create this message from it. */
   virtual void fromString(const QString& str, bool setStatus=FALSE);
 

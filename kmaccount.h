@@ -103,8 +103,11 @@ protected:
     messages. Returns false if failed to add new message. */
   virtual bool processNewMsg(KMMessage* msg);
 
-  /** Send receipt of message back to sender (confirming delivery). */
-  virtual void sendReceipt(KMMessage* msg, const QString& receiptTo);
+  /** Send receipt of message back to sender (confirming
+      delivery). Checks the config settings, calls
+      @ref KMMessage::createDeliveryReceipt and queues the resulting
+      message in @p mReceipts. */
+  virtual void sendReceipt(KMMessage* msg);
 
   /** Install/deinstall automatic new-mail checker timer. */
   virtual void installTimer();

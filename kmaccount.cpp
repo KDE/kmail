@@ -119,11 +119,8 @@ void KMAccount::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::sendReceipt(KMMessage* aMsg, const QString &aReceiptTo)
+void KMAccount::sendReceipt(KMMessage* aMsg)
 {
-  KMMessage* newMsg = new KMMessage;
-  QString str, receiptTo;
-
   KConfig* cfg = kapp->config();
   bool sendReceipts;
 
@@ -132,37 +129,24 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString &aReceiptTo)
   sendReceipts = cfg->readBoolEntry("send-receipts", false);
   if (!sendReceipts) return;
 
-  receiptTo = aReceiptTo;
-  receiptTo.replace(QRegExp("\\n"),"");
-
-  newMsg->initHeader();
-  newMsg->setTo(receiptTo);
-  newMsg->setSubject(i18n("Receipt: ") + aMsg->subject());
-
-  str  = "Your message was successfully delivered.";
-  str += "\n\n---------- Message header follows ----------\n";
-  str += aMsg->headerAsString();
-  str += "--------------------------------------------\n";
-  // Conversion to latin1 is correct here as Mail headers should contain
-  // ascii only
-  newMsg->setBody(str.latin1());
-  newMsg->setAutomaticFields();
-
-  mReceipts.append(newMsg);
-  mReceiptTimer.start(0,true);
+  KMMessage *newMsg = aMsg->createDeliveryReceipt();
+  if (newMsg) {
+    mReceipts.append(newMsg);
+    mReceiptTimer.start(0,true);
+  }
 }
 
 
 //-----------------------------------------------------------------------------
 bool KMAccount::processNewMsg(KMMessage* aMsg)
 {
-  QString receiptTo;
   int rc, processResult;
 
   assert(aMsg != NULL);
 
-  receiptTo = aMsg->headerField("Return-Receipt-To");
-  if (!receiptTo.isEmpty()) sendReceipt(aMsg, receiptTo);
+  // checks whether we should send delivery receipts
+  // and sends them.
+  sendReceipt(aMsg);
 
   // Set status of new messages that are marked as old to read, otherwise
   // the user won't see which messages newly arrived.

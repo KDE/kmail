@@ -1038,6 +1038,31 @@ KMMessage* KMMessage::createForward(void)
   return msg;
 }
 
+KMMessage* KMMessage::createDeliveryReceipt() const
+{
+  QString str, receiptTo;
+  KMMessage *receipt;
+
+  receiptTo = headerField("Return-Receipt-To");
+  if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
+  receiptTo.replace(QRegExp("\\n"),"");
+
+  receipt = new KMMessage;
+  receipt->initHeader();
+  receipt->setTo(receiptTo);
+  receipt->setSubject(i18n("Receipt: ") + subject());
+
+  str  = "Your message was successfully delivered.";
+  str += "\n\n---------- Message header follows ----------\n";
+  str += headerAsString();
+  str += "--------------------------------------------\n";
+  // Conversion to latin1 is correct here as Mail headers should contain
+  // ascii only
+  receipt->setBody(str.latin1());
+  receipt->setAutomaticFields();
+
+  return receipt;
+}
 
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader( QString id )
