@@ -2228,7 +2228,7 @@ void ConfigureDialog::slotApply( void )
     config.writeEntry( "empty-trash-on-exit", 
 		       mMisc.emptyTrashCheck->isChecked() );
     config.writeEntry( "sendOnCheck",
-		       mMisc.emptyTrashCheck->isChecked() );
+		       mMisc.sendOutboxCheck->isChecked() );
     config.writeEntry( "send-receipts", 
 		       mMisc.sendReceiptCheck->isChecked() );
     config.writeEntry( "compact-all-on-exit", 
