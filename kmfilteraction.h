@@ -488,7 +488,48 @@ public:
     @see KMFilterActionWithString KMFilterAction KMFilter KProcess
 
 */
-class KMFilterActionWithCommand : public KMFilterActionWithString
+class KMFilterActionWithUrl : public KMFilterAction
+{
+public:
+  /** Initialize filter action with (english) name @p aName. This is
+      the name under which this action is known in the config file. */
+    KMFilterActionWithUrl(const char* aName, const QString aLabel);
+    ~KMFilterActionWithUrl();
+  /** Determines whether this action is valid. But this is just a
+      quick test. Eg., actions that have a mail address as parameter
+      shouldn't try real address validation, but only check if the
+      string representation is empty. */
+  virtual bool isEmpty() const { return mParameter.stripWhiteSpace().isEmpty(); }
+
+  /** Creates a widget for setting the filter action parameter. Also
+      sets the value of the widget. */
+  virtual QWidget* createParamWidget(QWidget* parent) const;
+
+  /** The filter action shall set it's parameter from the widget's
+      contents. It is allowed that the value is read by the action
+      before this function is called. */
+  virtual void applyParamWidgetValue(QWidget* paramWidget);
+
+  /** The filter action shall set it's widget's contents from it's
+      parameter. */
+  virtual void setParamWidgetValue(QWidget* paramWidget) const;
+
+  /** The filter action shall clear it's parameter widget's
+      contents. */
+  virtual void clearParamWidget(QWidget* paramWidget) const;
+
+  /** Read extra arguments from given string. */
+  virtual void argsFromString(const QString argsStr);
+
+  /** Return extra arguments as string. Must not contain newlines. */
+  virtual const QString argsAsString() const;
+
+protected:
+  QString mParameter;
+};
+
+
+class KMFilterActionWithCommand : public KMFilterActionWithUrl
 {
 public:
   /** Initialize filter action with (english) name @p aName. This is

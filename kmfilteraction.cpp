@@ -341,28 +341,28 @@ void KMFilterActionWithAddress::clearParamWidget( QWidget* paramWidget ) const
 //=============================================================================
 
 KMFilterActionWithCommand::KMFilterActionWithCommand( const char* aName, const QString aLabel )
-  : KMFilterActionWithString( aName, aLabel )
+  : KMFilterActionWithUrl( aName, aLabel )
 {
 }
 
 QWidget* KMFilterActionWithCommand::createParamWidget( QWidget* parent ) const
 {
-  return KMFilterActionWithString::createParamWidget( parent );
+  return KMFilterActionWithUrl::createParamWidget( parent );
 }
 
 void KMFilterActionWithCommand::applyParamWidgetValue( QWidget* paramWidget )
 {
-  KMFilterActionWithString::applyParamWidgetValue( paramWidget );
+  KMFilterActionWithUrl::applyParamWidgetValue( paramWidget );
 }
 
 void KMFilterActionWithCommand::setParamWidgetValue( QWidget* paramWidget ) const
 {
-  KMFilterActionWithString::setParamWidgetValue( paramWidget );
+  KMFilterActionWithUrl::setParamWidgetValue( paramWidget );
 }
 
 void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
 {
-  KMFilterActionWithString::clearParamWidget( paramWidget );
+  KMFilterActionWithUrl::clearParamWidget( paramWidget );
 }
 
 QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QPtrList<KTempFile> & aTempFileList ) const
@@ -1651,6 +1651,48 @@ KMFilterAction::ReturnCode KMFilterActionExecSound::process(KMMessage */*aMsg*/)
     return GoOn;
 }
 
+
+KMFilterActionWithUrl::KMFilterActionWithUrl( const char* aName, const QString aLabel )
+  : KMFilterAction( aName, aLabel )
+{
+}
+
+KMFilterActionWithUrl::~KMFilterActionWithUrl()
+{
+}
+
+QWidget* KMFilterActionWithUrl::createParamWidget( QWidget* parent ) const
+{
+  KURLRequester *le = new KURLRequester(parent);
+  le->setURL( mParameter );
+  return le;
+}
+
+
+void KMFilterActionWithUrl::applyParamWidgetValue( QWidget* paramWidget )
+{
+  mParameter = ((KURLRequester*)paramWidget)->url();
+}
+
+void KMFilterActionWithUrl::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  ((KURLRequester*)paramWidget)->setURL( mParameter );
+}
+
+void KMFilterActionWithUrl::clearParamWidget( QWidget* paramWidget ) const
+{
+  ((KURLRequester*)paramWidget)->clear();
+}
+
+void KMFilterActionWithUrl::argsFromString( const QString argsStr )
+{
+  mParameter = argsStr;
+}
+
+const QString KMFilterActionWithUrl::argsAsString() const
+{
+  return mParameter;
+}
 
 
 //=============================================================================
