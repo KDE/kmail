@@ -703,7 +703,9 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
         if ( !msgId.isEmpty() ) {
           mAddMessageMsgIds.append( msgId );
         }
-        if ( folder->addMsg( msg ) == 0 ) {
+        int index;
+        if ( folder->addMsg( msg, &index ) == 0 ) {
+          folder->unGetMsg( index );
           retval = 1;
         } else {
           retval =- 2;
@@ -756,7 +758,9 @@ int KMKernel::dcopAddMessage_fastImport(const QString & foldername,const KURL & 
     KMFolder *folder = the_folderMgr->findOrCreate( foldername, false );
 
     if ( folder ) {
-      if ( folder->addMsg( msg ) == 0 ) {
+      int index;
+      if ( folder->addMsg( msg, &index ) == 0 ) {
+        folder->unGetMsg( index );
         retval = 1;
       } else {
         retval =- 2;
