@@ -30,7 +30,7 @@ KMAddrBook::KMAddrBook(): KMAddrBookInherited()
 //-----------------------------------------------------------------------------
 KMAddrBook::~KMAddrBook()
 {
-  if (mModified) 
+  if (mModified)
   {
     if(store() == IO_FatalError)
     {
@@ -189,17 +189,18 @@ int KMAddrBook::compareItems(Item aItem1, Item aItem2)
 void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
 {
   QString addr;
+  QString email;
   KabKey key;
   AddressBook::Entry entry;
   if (keys)
     keys->clear();
   int num = kernel->KABaddrBook()->addressbook()->noOfEntries();
-  
+
   for (int i = 0; i < num; ++i) {
-    if (AddressBook::NoError != 
+    if (AddressBook::NoError !=
 	kernel->KABaddrBook()->addressbook()->getKey( i, key ))
       continue;
-    if (AddressBook::NoError != 
+    if (AddressBook::NoError !=
 	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
       continue;
     if ((entry.emails.count() > 0) && !entry.emails[0].isEmpty()) {
@@ -207,7 +208,13 @@ void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
 	addr = "";
       else
 	addr = "\"" + entry.fn + "\" ";
-      addr += "<" + entry.emails[0] + ">";
+      email = entry.emails[0];
+      if (!addr.isEmpty() && (email.find( "<" ) == -1)
+	  && (email.find( ">" ) == -1)
+	  && (email.find( "," ) == -1))
+	  addr += "<" + email + ">";
+      else
+	  addr += email;
       addr.stripWhiteSpace();
       result->append( addr );
       if (keys)
@@ -245,7 +252,7 @@ bool KabBridge::add(QString address, KabKey &kabkey)
     kdDebug() << "Error occurred trying to update database: operation insert.0" << endl;
     return false;
   }
-  if (kernel->KABaddrBook()->addressbook()->save("", true) != 
+  if (kernel->KABaddrBook()->addressbook()->save("", true) !=
       AddressBook::NoError) {
     kdDebug() << "Error occurred trying to update database: opeation insert.1" << endl;
     return false;
@@ -260,8 +267,8 @@ bool KabBridge::remove(KabKey kabKey)
     kdDebug() << "Error occurred trying to update database: operation remove.0" << endl;
     return false;
   }
-  
-  if (kernel->KABaddrBook()->addressbook()->save("", true) != 
+
+  if (kernel->KABaddrBook()->addressbook()->save("", true) !=
       AddressBook::NoError) {
     kdDebug() << "Error occurred trying to update database: operation remove.1" << endl;
     return false;
@@ -272,7 +279,7 @@ bool KabBridge::remove(KabKey kabKey)
 bool KabBridge::replace(QString address, KabKey kabKey)
 {
   AddressBook::Entry old;
-  if (AddressBook::NoError != 
+  if (AddressBook::NoError !=
       kernel->KABaddrBook()->addressbook()->getEntry( kabKey, old )) {
     kdDebug() << "Error occurred trying to update database: operation replace.0" << endl;
     return false;
@@ -289,7 +296,7 @@ bool KabBridge::replace(QString address, KabKey kabKey)
     return false;
   }
 
-  if (kernel->KABaddrBook()->addressbook()->save("", true) != 
+  if (kernel->KABaddrBook()->addressbook()->save("", true) !=
       AddressBook::NoError) {
     kdDebug() << "Error occurred trying to update database: operation replace.2" << endl;
     return false;
@@ -333,7 +340,7 @@ void KMAddrBookExternal::launch(QWidget *parent) {
   case 1:
     {
     KMAddrBookEditDlg dlg( kernel->addrBook(), parent );
-    dlg.exec();    
+    dlg.exec();
     break;
     }
   case 2:
@@ -347,7 +354,7 @@ void KMAddrBookExternal::launch(QWidget *parent) {
   }
 }
 
-bool KMAddrBookExternal::useKAB() 
+bool KMAddrBookExternal::useKAB()
 {
   KConfig *config = kapp->config();
   config->setGroup("General");
