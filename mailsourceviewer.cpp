@@ -65,19 +65,19 @@ MailSourceViewer::MailSourceViewer( QWidget *parent, const char *name )
 
 MailSourceViewer::~MailSourceViewer()
 {
-   if ( mSourceHighLighter != 0 )
-      delete mSourceHighLighter;
+  delete mSourceHighLighter; mSourceHighLighter = 0;
 }
 
 void MailSourceViewer::setText( const QString& text )
 {
-   if ( text.length() > 500000 ) {
-     setTextFormat( Qt::LogText );
-   } else {
-     setTextFormat( Qt::PlainText );
-     mSourceHighLighter = new MailSourceHighlighter( this );
-   }
-   KTextBrowser::setText( text );
+  delete mSourceHighLighter; mSourceHighLighter = 0;
+  if ( text.length() > 500000 ) {
+    setTextFormat( Qt::LogText );
+  } else {
+    setTextFormat( Qt::PlainText );
+    mSourceHighLighter = new MailSourceHighlighter( this );
+  }
+  KTextBrowser::setText( text );
 }
 
 }
