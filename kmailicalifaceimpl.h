@@ -98,8 +98,12 @@ public:
 
   bool deleteIncidenceKolab( const QString& resource,
                              Q_UINT32 sernum );
+  int incidencesKolabCount( const QString& mimetype,
+                            const QString& resource );
   QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
-                                           const QString& resource );
+                                           const QString& resource,
+                                           int startIndex,
+                                           int nbMessages );
 
   QValueList<SubResource> subresourcesKolab( const QString& contentsType );
 

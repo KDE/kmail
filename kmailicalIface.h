@@ -100,8 +100,16 @@ k_dcop:
 
   virtual bool deleteIncidenceKolab( const QString& resource,
                                      Q_UINT32 sernum ) = 0;
+
+  /// Return the number of mails that need to be looked at by incidencesKolab.
+  /// This allows to call incidencesKolab in chunks.
+  virtual int incidencesKolabCount( const QString& mimetype,
+                                    const QString& resource ) = 0;
+
   virtual QMap<Q_UINT32, QString> incidencesKolab( const QString& mimetype,
-                                                  const QString& resource ) = 0;
+                                                   const QString& resource,
+                                                   int startIndex,
+                                                   int nbMessages ) = 0;
   /**
    * Return list of subresources. @p contentsType is
    * Mail, Calendar, Contact, Note, Task or Journal

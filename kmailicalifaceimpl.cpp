@@ -197,11 +197,12 @@ static DwBodyPart* findBodyPartByMimeType( const KMMessage& msg, const char* sTy
   while( part ){
     //  kdDebug() << part->Headers().ContentType().TypeStr().c_str() << " "
     //          << part->Headers().ContentType().SubtypeStr().c_str() << endl;
-    if ( part->hasHeaders()
-         && part->Headers().HasContentType()
-         && part->Headers().ContentType().TypeStr() == sType
-         && part->Headers().ContentType().SubtypeStr() == sSubtype)
-      return part;
+    if ( part->hasHeaders() ) {
+      DwMediaType& contentType = part->Headers().ContentType();
+      if ( contentType.TypeStr() == sType
+           && contentType.SubtypeStr() == sSubtype )
+        return part;
+    }
     part = part->Next();
   }
   return 0;
@@ -542,8 +543,34 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   return ilist;
 }
 
+int KMailICalIfaceImpl::incidencesKolabCount( const QString& mimetype,
+                                              const QString& resource )
+{
+  if( !mUseResourceIMAP )
+    return 0;
+
+  KMFolder* f = findResourceFolder( resource );
+  if( !f ) {
+    kdError(5006) << "incidencesKolab(" << resource << ") : Not an IMAP resource folder" << endl;
+    return 0;
+  }
+  if ( storageFormat( f ) != StorageXML ) {
+    kdError(5006) << "incidencesKolab(" << resource << ") : Folder has wrong storage format " << storageFormat( f ) << endl;
+    return 0;
+  }
+
+  f->open();
+  int n = f->count();
+  f->close();
+  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolabCount( " << mimetype << ", "
+                << resource << " ) returned " << n << endl;
+  return n;
+}
+
 QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
-                                                             const QString& resource )
+                                                             const QString& resource,
+                                                             int startIndex,
+                                                             int nbMessages )
 {
   /// Get the mimetype attachments from this folder. Returns a
   /// QMap with serialNumber/attachment pairs.
@@ -552,9 +579,6 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   QMap<Q_UINT32, QString> aMap;
   if( !mUseResourceIMAP )
     return aMap;
-
-  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
-                << resource << " )" << endl;
 
   KMFolder* f = findResourceFolder( resource );
   if( !f ) {
@@ -567,8 +591,13 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   }
 
   f->open();
-  QString s;
-  for( int i=0; i<f->count(); ++i ) {
+
+  int stopIndex = nbMessages == -1 ? f->count() :
+                  QMIN( f->count(), startIndex + nbMessages );
+  kdDebug(5006) << "KMailICalIfaceImpl::incidencesKolab( " << mimetype << ", "
+                << resource << " ) from " << startIndex << " to " << stopIndex << endl;
+
+  for(int i = startIndex; i < stopIndex; ++i) {
     KMMessage* msg = f->storage()->readTemporaryMsg(i);
     if ( msg ) {
       const int iSlash = mimetype.find('/');
