@@ -262,7 +262,7 @@ void KMSearch::slotProcessNextBatch()
 	    if (!folder || (idx == -1) || (idx >= folder->count())) {
 		continue;
 	    }
-	    
+	
 	    DwString str = folder->getDwString(idx);
 	    //TODO: matches should try header rules first
 	    if (mSearchPattern && !mSearchPattern->matches(str))
@@ -403,6 +403,8 @@ void KMFolderSearch::executeSearch()
     if (mSearch)
 	mSearch->stop();
     setSearch(mSearch);
+    if ( parent() )
+	parent()->manager()->invalidateFolder(kernel->msgDict(), this);
 }
 
 const KMSearch* KMFolderSearch::search() const

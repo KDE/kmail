@@ -61,6 +61,7 @@ protected slots:
   virtual void slotStop();
   void updateCreateButton( const QString &);
   void renameSearchFolder();
+  void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QListViewItem *);
   virtual void updateContextMenuActions();
   virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );

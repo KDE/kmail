@@ -232,6 +232,8 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
 			      SLOT(slotClearSelection()), ac, "search_clear_selection" );
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
+  connect(kernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
+	  this, SLOT(folderInvalidated(KMFolder*)));
 }
 
 //-----------------------------------------------------------------------------
@@ -496,6 +498,18 @@ void KMFldSearch::renameSearchFolder()
 				    mSearchFolderEdt->text() );
 	props->exec();
 	kernel->searchFolderMgr()->contentsChanged();
+    }
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::folderInvalidated(KMFolder *folder)
+{
+    if (folder == mFolder) {
+	mLbxMatches->clear();
+	connect(mFolder->search(), SIGNAL(finished(bool)),
+		this, SLOT(searchDone()));
+	mTimer->start(200);
+	enableGUI();
     }
 }
 
