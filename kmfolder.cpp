@@ -107,7 +107,7 @@ const QString KMFolder::location() const
   QString sLocation(path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += name();
+  sLocation += name().local8Bit();
 
   return sLocation;
 }
@@ -120,7 +120,7 @@ const QString KMFolder::indexLocation() const
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += name();
+  sLocation += name().local8Bit();
   sLocation += ".index";
 
   return sLocation;
@@ -133,7 +133,7 @@ const QString KMFolder::subdirLocation() const
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += name();
+  sLocation += name().local8Bit();
   sLocation += ".directory";
 
   return sLocation;
@@ -142,7 +142,7 @@ const QString KMFolder::subdirLocation() const
 //-----------------------------------------------------------------------------
 KMFolderDir* KMFolder::createChildFolder()
 {
-  QString childName = "." + name() + ".directory";
+  QString childName = "." + name().local8Bit() + ".directory";
   QString childDir = path() + "/" + childName;
   bool ok = true;
 
@@ -1202,7 +1202,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 
       for (fN = fdir->first(); fN != 0; fN = fdir->next())
 	if (fN->name() == "." + oldName + ".directory" ) {
-	  fN->setName( "." + name() + ".directory" );
+	  fN->setName( "." + name().local8Bit() + ".directory" );
 	  break;
 	}
     }
@@ -1297,7 +1297,7 @@ int KMFolder::compact()
   if (!needsCompact)
     return 0;
   kdDebug() << "Compacting " << endl;
-  tempName = "." + name();
+  tempName = "." + name().local8Bit();
 
   tempName += ".compacted";
   unlink(path() + "/" + tempName);
