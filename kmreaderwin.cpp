@@ -429,8 +429,8 @@ void KMReaderWin::displayAboutPage()
     "mailing standards including MIME, SMTP, POP3 and IMAP.</p>\n"
     "<ul><li>KMail has many powerful features which are described in the "
     "<A HREF=\"%2\">documentation</A></li>\n"
-    "<li>You can find news and updates at the <A HREF=\"%3\">KMail homepage"
-    "</A></li></ul>\n").arg(KMAIL_VERSION)
+    "<li>The <A HREF=\"%3\">KMail homepage</A> offers tools to import other "
+    "mail client's mail folders</li></ul>\n").arg(KMAIL_VERSION)
     .arg("help:kmail")
     .arg("http://kmail.kde.org/") +
     i18n("<p>Some of the new features in this release of KMail include "
