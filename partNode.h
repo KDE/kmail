@@ -60,23 +60,7 @@ public:
                       CryptoType3rdParty };
 
 private:
-    partNode() :
-        mRoot(      0 ),
-        mNext(      0 ),
-        mChild(     0 ),
-        mWasProcessed( false ),
-        mDwPart(       0 ),
-        mType(         DwMime::kTypeUnknown  ),
-        mSubType(      DwMime::kSubtypeUnknown ),
-        mCryptoType(   CryptoTypeUnknown ),
-        mEncryptionState( KMMsgNotEncrypted ),
-        mSignatureState(  KMMsgNotSigned ),
-        mMsgPartOk(    false ),
-        mEncodedOk(    false ),
-        mDeleteDwBodyPart( false ),
-        mMimePartTreeItem( 0 ) {
-        adjustDefaultType( this );
-    }
+    partNode();
 
     int calcNodeIdOrFindNode( int& curId, const partNode* calcNode,
                               int findId, partNode** findNode );
@@ -85,86 +69,14 @@ public:
     partNode( DwBodyPart* dwPart,
               int explicitType    = DwMime::kTypeUnknown,
               int explicitSubType = DwMime::kSubtypeUnknown,
-	      bool deleteDwBodyPart = false ) :
-        mRoot(      0 ),
-        mNext(      0 ),
-        mChild(     0 ),
-        mWasProcessed( false ),
-        mDwPart(       dwPart ),
-        mCryptoType(   CryptoTypeUnknown ),
-        mEncryptionState( KMMsgNotEncrypted ),
-        mSignatureState(  KMMsgNotSigned ),
-        mMsgPartOk(    false ),
-        mEncodedOk(    false ),
-        mDeleteDwBodyPart( deleteDwBodyPart ),
-        mMimePartTreeItem( 0 ) {
-        if( explicitType != DwMime::kTypeUnknown ) {
-            mType    = explicitType;     // this happens e.g. for the Root Node
-            mSubType = explicitSubType;  // representing the _whole_ message
-        } else {
-            kdDebug(5006) << "\n        partNode::partNode()      explicitType == DwMime::kTypeUnknown\n" << endl;
-            if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
-                mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
-                mSubType = dwPart->Headers().ContentType().Subtype();
-            } else {
-                mType    = DwMime::kTypeUnknown;
-                mSubType = DwMime::kSubtypeUnknown;
-            }
-        }
-#ifdef DEBUG
-        {
-            DwString type, subType;
-            DwTypeEnumToStr(    mType,    type );
-            DwSubtypeEnumToStr( mSubType, subType );
-            kdDebug(5006) << "\npartNode::partNode()   " << type.c_str() << "/" << subType.c_str() << "\n" << endl;
-        }
-#endif
-    }
+	      bool deleteDwBodyPart = false );
 
     partNode( bool deleteDwBodyPart,
-              DwBodyPart* dwPart ) :
-        mRoot(      0 ),
-        mNext(      0 ),
-        mChild(     0 ),
-        mWasProcessed( false ),
-        mDwPart(       dwPart ),
-        mCryptoType(   CryptoTypeUnknown ),
-        mEncryptionState( KMMsgNotEncrypted ),
-        mSignatureState(  KMMsgNotSigned ),
-        mMsgPartOk(    false ),
-        mEncodedOk(    false ),
-        mDeleteDwBodyPart( deleteDwBodyPart ),
-        mMimePartTreeItem( 0 ) {
-        if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
-            mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
-            mSubType = dwPart->Headers().ContentType().Subtype();
-        } else {
-            mType    = DwMime::kTypeUnknown;
-            mSubType = DwMime::kSubtypeUnknown;
-        }
-    }
+              DwBodyPart* dwPart );
 
-    ~partNode() {
-        // 0. delete the DwBodyPart if flag is set
-        if( mDeleteDwBodyPart && mDwPart ) delete( mDwPart );
-        // 1. delete our children
-        delete( mChild );
-        // 2. delete our siblings
-        delete( mNext );
-    }
+    ~partNode();
 
-#ifndef NDEBUG
-    void dump( int chars=0 ) const {
-      kdDebug(5006) << QString().fill( ' ', chars ) << "+ "
-		<< typeString() << '/' << subTypeString() << endl;
-      if ( mChild )
-	mChild->dump( chars + 1 );
-      if ( mNext )
-	mNext->dump( chars );
-    }
-#else
-    void dump( int chars=0 ) const { (void)chars; }
-#endif
+    void dump( int chars=0 ) const;
 
     void buildObjectTree( bool processSiblings=true );
 
@@ -185,16 +97,7 @@ public:
         return mMsgPart;
     }
 
-    QCString& encodedBody() {
-        if( !mEncodedOk ) {
-            if( mDwPart )
-                mEncodedBody = mDwPart->AsString().c_str();
-            else
-                mEncodedBody = "";
-            mEncodedOk = true;
-        }
-        return mEncodedBody;
-    }
+    const QCString & encodedBody();
 
     void setType( int type ) {
         mType = type;
@@ -275,30 +178,30 @@ public:
 
     void adjustDefaultType( partNode* node );
 
-    partNode* setNext( partNode* next ) {
+    void setNext( partNode* next ) {
         mNext = next;
         if( mNext ){
             mNext->mRoot = mRoot;
             adjustDefaultType( mNext );
         }
-        return mNext;
     }
 
-    partNode* setFirstChild( partNode* child ) {
+    void setFirstChild( partNode* child ) {
         mChild = child;
         if( mChild ) {
             mChild->mRoot = this;
             adjustDefaultType( mChild );
         }
-        return mChild;
     }
 
-    void setProcessed( bool wasProcessed ) {
-        mWasProcessed = wasProcessed;
-        if( mChild )
-            mChild->setProcessed( wasProcessed );
-        if( mNext )
-            mNext->setProcessed( wasProcessed );
+    void setProcessed( bool processed, bool recurse ) {
+        mWasProcessed = processed;
+	if ( recurse ) {
+	  if( mChild )
+            mChild->setProcessed( processed, true );
+	  if( mNext )
+            mNext->setProcessed( processed, true );
+	}
     }
 
     void setMimePartTreeItem( KMMimePartTreeItem* item ) {
@@ -319,7 +222,12 @@ public:
 
     const QString& trueFromAddress() const;
 
-public:
+    partNode * parentNode() const { return mRoot; }
+    partNode * nextSibling() const { return mNext; }
+    partNode * firstChild() const { return mChild; }
+    bool processed() const { return mWasProcessed; }
+
+private:
     partNode*     mRoot;
     partNode*     mNext;
     partNode*     mChild;

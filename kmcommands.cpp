@@ -1634,7 +1634,8 @@ void KMSaveAttachmentsCommand::execute()
     rootNode->setFromAddress( msg->from() );
 
     if ( firstBodyPart ) {
-      partNode* curNode = rootNode->setFirstChild( new partNode(firstBodyPart) );
+      partNode* curNode = new partNode(firstBodyPart);
+      rootNode->setFirstChild( curNode );
       curNode->buildObjectTree();
     }
     parse( rootNode );
@@ -1644,8 +1645,8 @@ void KMSaveAttachmentsCommand::execute()
 void KMSaveAttachmentsCommand::parse( partNode *rootNode )
 {
   QPtrList<partNode> attachments;
-  for( partNode *child = rootNode; child; child = child->mChild ) {
-    for( partNode *tmp = child; tmp; tmp = tmp->mNext ) {
+  for( partNode *child = rootNode; child; child = child->firstChild() ) {
+    for( partNode *tmp = child; tmp; tmp = tmp->nextSibling() ) {
       attachments.append( tmp );
     }
   }

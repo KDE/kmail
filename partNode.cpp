@@ -40,14 +40,121 @@
   ===========================================================================
 */
 
+partNode::partNode()
+  : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
+    mWasProcessed( false ),
+    mDwPart( 0 ),
+    mType( DwMime::kTypeUnknown ),
+    mSubType( DwMime::kSubtypeUnknown ),
+    mCryptoType( CryptoTypeUnknown ),
+    mEncryptionState( KMMsgNotEncrypted ),
+    mSignatureState( KMMsgNotSigned ),
+    mMsgPartOk( false ),
+    mEncodedOk( false ),
+    mDeleteDwBodyPart( false ),
+    mMimePartTreeItem( 0 )
+{
+  adjustDefaultType( this );
+}
+
+partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
+		    bool deleteDwBodyPart )
+  : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
+    mWasProcessed( false ),
+    mDwPart( dwPart ),
+    mCryptoType( CryptoTypeUnknown ),
+    mEncryptionState( KMMsgNotEncrypted ),
+    mSignatureState( KMMsgNotSigned ),
+    mMsgPartOk( false ),
+    mEncodedOk( false ),
+    mDeleteDwBodyPart( deleteDwBodyPart ),
+    mMimePartTreeItem( 0 )
+{
+  if ( explicitType != DwMime::kTypeUnknown ) {
+    mType    = explicitType;     // this happens e.g. for the Root Node
+    mSubType = explicitSubType;  // representing the _whole_ message
+  } else {
+    kdDebug(5006) << "\n        partNode::partNode()      explicitType == DwMime::kTypeUnknown\n" << endl;
+    if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
+      mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
+      mSubType = dwPart->Headers().ContentType().Subtype();
+    } else {
+      mType    = DwMime::kTypeUnknown;
+      mSubType = DwMime::kSubtypeUnknown;
+    }
+  }
+#ifdef DEBUG
+  {
+    DwString type, subType;
+    DwTypeEnumToStr( mType, type );
+    DwSubtypeEnumToStr( mSubType, subType );
+    kdDebug(5006) << "\npartNode::partNode()   " << type.c_str() << "/" << subType.c_str() << "\n" << endl;
+  }
+#endif
+}
+
+partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
+  : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
+    mWasProcessed( false ),
+    mDwPart( dwPart ),
+    mCryptoType( CryptoTypeUnknown ),
+    mEncryptionState( KMMsgNotEncrypted ),
+    mSignatureState( KMMsgNotSigned ),
+    mMsgPartOk( false ),
+    mEncodedOk( false ),
+    mDeleteDwBodyPart( deleteDwBodyPart ),
+    mMimePartTreeItem( 0 )
+{
+  if ( dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType() ) {
+    mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
+    mSubType = dwPart->Headers().ContentType().Subtype();
+  } else {
+    mType    = DwMime::kTypeUnknown;
+    mSubType = DwMime::kSubtypeUnknown;
+  }
+}
+
+partNode::~partNode() {
+  if( mDeleteDwBodyPart )
+    delete mDwPart;
+  delete mChild;
+  delete mNext;
+}
+
+#ifndef NDEBUG
+void partNode::dump( int chars ) const {
+  kdDebug(5006) << QString().fill( ' ', chars ) << "+ "
+		<< typeString() << '/' << subTypeString() << endl;
+  if ( mChild )
+    mChild->dump( chars + 1 );
+  if ( mNext )
+    mNext->dump( chars );
+}
+#else
+void partNode::dump( int ) const {}
+#endif
+
+const QCString & partNode::encodedBody() {
+  if ( mEncodedOk )
+    return mEncodedBody;
+
+  if ( mDwPart )
+    mEncodedBody = mDwPart->AsString().c_str();
+  else
+    mEncodedBody = 0;
+  mEncodedOk = true;
+  return mEncodedBody;
+}
+
+
 void partNode::buildObjectTree( bool processSiblings )
 {
     partNode* curNode = this;
     while( curNode && curNode->dwPart() ) {
         //dive into multipart messages
         while( DwMime::kTypeMultipart == curNode->type() ) {
-            partNode* newNode = curNode->setFirstChild(
-                new partNode( curNode->dwPart()->Body().FirstBodyPart() ) );
+            partNode * newNode = new partNode( curNode->dwPart()->Body().FirstBodyPart() );
+	    curNode->setFirstChild( newNode );
             curNode = newNode;
         }
         // go up in the tree until reaching a node with next
@@ -63,7 +170,8 @@ void partNode::buildObjectTree( bool processSiblings )
         // store next node
         if( curNode && curNode->dwPart() && curNode->dwPart()->Next() ) {
             partNode* nextNode = new partNode( curNode->dwPart()->Next() );
-            curNode = curNode->setNext( nextNode );
+            curNode->setNext( nextNode );
+	    curNode = nextNode;
         } else
             curNode = 0;
     }

@@ -195,6 +195,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
   if( node ) {
     partNode* curNode = node;
     partNode* dataNode = curNode;
+    partNode * child = node->firstChild();
     bool bIsMultipart = false;
 
     switch( curNode->type() ){
@@ -243,16 +244,15 @@ kdDebug(5006) << "signed" << endl;
             break;
           case DwMime::kSubtypeEncrypted: {
 kdDebug(5006) << "encrypted" << endl;
-              if( curNode->mChild ) {
+              if ( child ) {
                 /*
                     ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
                 */
                 partNode* data =
-                  curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
-                if( !data ) {
-                  data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
-                }
-                if( data && data->mChild )
+                  child->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
+                if ( !data )
+                  data = child->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
+                if ( data && data->firstChild() )
                   dataNode = data;
               }
             }
@@ -268,8 +268,8 @@ kdDebug(5006) << "* message *" << endl;
           switch( curNode->subType() ){
           case DwMime::kSubtypeRfc822: {
 kdDebug(5006) << "RfC 822" << endl;
-              if( curNode->mChild )
-                dataNode = curNode->mChild;
+              if ( child )
+                dataNode = child;
             }
             break;
           }
@@ -283,8 +283,8 @@ kdDebug(5006) << "postscript" << endl;
             break;
           case DwMime::kSubtypeOctetStream: {
 kdDebug(5006) << "octet stream" << endl;
-              if( curNode->mChild )
-                dataNode = curNode->mChild;
+              if ( child )
+                dataNode = child;
             }
             break;
           case DwMime::kSubtypePgpEncrypted:
@@ -297,9 +297,8 @@ kdDebug(5006) << "pgp signed" << endl;
 kdDebug(5006) << "pkcs7 mime" << endl;
               // note: subtype Pkcs7Mime can also be signed
               //       and we do NOT want to remove the signature!
-              if( ( curNode->encryptionState() != KMMsgNotEncrypted )
-                  && curNode->mChild )
-                dataNode = curNode->mChild;
+              if ( child && curNode->encryptionState() != KMMsgNotEncrypted )
+                dataNode = child;
             }
             break;
           }
@@ -346,7 +345,7 @@ kdDebug(5006) << "* model *" << endl;
     DwHeaders * headers(
         (part && part->hasHeaders())
         ? &part->Headers()
-        : (  (weAreReplacingTheRootNode || !dataNode->mRoot)
+        : (  (weAreReplacingTheRootNode || !dataNode->parentNode())
             ? &rootHeaders
             : 0 ) );
     if( dataNode == curNode ) {
@@ -356,7 +355,7 @@ kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << e
       //    AND we are not replacing a node that already *has* replaced
       //    the root node in previous recursion steps of this function...
       if( headers ) {
-        if( dataNode->mRoot && !weAreReplacingTheRootNode ) {
+        if( dataNode->parentNode() && !weAreReplacingTheRootNode ) {
 kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
           resultingData += headers->AsString().c_str();
         } else if( weAreReplacingTheRootNode && part->hasHeaders() ){
@@ -376,10 +375,10 @@ kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   
       }
 
       // B) Store the body of this part.
-      if( headers && bIsMultipart && dataNode->mChild )  {
+      if( headers && bIsMultipart && dataNode->firstChild() )  {
 kdDebug(5006) << "is valid Multipart, processing children:" << endl;
         QCString boundary = headers->ContentType().Boundary().c_str();
-        curNode = dataNode->mChild;
+        curNode = dataNode->firstChild();
         // store children of multipart
         while( curNode ) {
 kdDebug(5006) << "--boundary" << endl;
@@ -398,7 +397,7 @@ kdDebug(5006) << "--boundary" << endl;
                                     theMessage,
                                     false,
                                     recCount + 1 );
-          curNode = curNode->mNext;
+          curNode = curNode->nextSibling();
         }
 kdDebug(5006) << "--boundary--" << endl;
         resultingData += "\n--";
@@ -412,7 +411,7 @@ kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE
       }
     } else {
 kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
-      bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->mRoot;
+      bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->parentNode();
       if( rootNodeReplaceFlag ) {
 kdDebug(5006) << "                      Root node will be replaced." << endl;
       } else {
@@ -1122,7 +1121,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   if( firstBodyPart ) {
 kdDebug(5006) << "\n     ----->  First body part *was* found, filling the Mime Part Tree" << endl;
     // store pointers to the MIME objects in our fast access tree
-    partNode* curNode = mRootNode->setFirstChild( new partNode(firstBodyPart) );
+    partNode* curNode = new partNode(firstBodyPart);
+    mRootNode->setFirstChild( curNode );
     curNode->buildObjectTree();
     // fill the MIME part tree viewer
     mRootNode->fillMimePartTree( 0,

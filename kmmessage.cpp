@@ -680,7 +680,8 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
   }
   partNode rootNode( mainBody, mainType, mainSubType);
   if ( firstBodyPart ) {
-    partNode* curNode = rootNode.setFirstChild( new partNode( firstBodyPart ) );
+    partNode * curNode = new partNode( firstBodyPart );
+    rootNode.setFirstChild( curNode );
     curNode->buildObjectTree();
   }
   // initialy parse the complete message to decrypt any encrypted parts
