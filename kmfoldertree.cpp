@@ -318,7 +318,8 @@ void KMFolderTree::writeConfig()
   QListViewItemIterator it( this );
   while (it.current()) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    writeIsListViewItemOpen(fti);
+    if (fti)
+      writeIsListViewItemOpen(fti);
     ++it;
   }
 }
@@ -337,7 +338,7 @@ void KMFolderTree::reload(void)
   QListViewItemIterator it( this );
   while (it.current()) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (fti->folder)
+    if (fti && fti->folder)
       disconnect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 		 this,SLOT(refresh(KMFolder*)));
     ++it;
@@ -354,7 +355,7 @@ void KMFolderTree::reload(void)
   QListViewItemIterator jt( this );
   while (jt.current()) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(jt.current());
-    if (fti->folder)
+    if (fti && fti->folder)
       connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 	      this,SLOT(refresh(KMFolder*)));
     ++jt;
@@ -425,7 +426,7 @@ void KMFolderTree::delayedUpdate()
   while (it.current()) {
     bool repaintRequired = false;
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (!fti->folder) {
+    if (!fti || !fti->folder) {
       ++it;
       continue;
     }
@@ -464,6 +465,8 @@ void KMFolderTree::delayedUpdate()
 void KMFolderTree::doFolderListChanged()
 {
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
+  if (!fti || !fti->folder)
+    return;
   KMFolder* folder = fti->folder;
   reload();
   QListViewItem *qlvi = indexOfFolder(folder);
@@ -480,13 +483,15 @@ void KMFolderTree::doFolderListChanged()
 void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
-  KMFolder* folder = fti->folder;
+  KMFolder* folder = 0;
+  if (fti)
+    folder = fti->folder;
 
   clearSelection();
   setCurrentItem( qlvi );
   setSelected( qlvi, TRUE );
   if (!folder || folder->isDir()) {
-    emit folderSelected(NULL); // Root has been selected
+    emit folderSelected(0); // Root has been selected
   }
   else emit folderSelected(folder);
 }
@@ -509,7 +514,7 @@ QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
   QListViewItemIterator it( this );
   while (it.current()) {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (fti->folder == folder) {
+    if (fti && fti->folder == folder) {
       return it.current();
     }
     ++it;
@@ -530,7 +535,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
   QPopupMenu *folderMenu = new QPopupMenu;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
-  if (!fti->folder)
+  if (!fti || !fti->folder)
     return;
 
   int m1 =folderMenu->insertItem(i18n("&Create Child Folder..."), this,
@@ -560,6 +565,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 void KMFolderTree::addChildFolder()
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(currentItem());
+  if (!fti)
+    return;
   KMFolder *aFolder = fti->folder;
   if (fti->folder)
     if (!fti->folder->createChildFolder())
@@ -764,7 +771,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     if ( item ) {
         QString str;
 	KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-	if ((fti != oldCurrent) && (fti->folder))
+	if (fti && (fti != oldCurrent) && (fti->folder))
 	  emit folderDrop(fti->folder);
 	e->accept();
     } else
@@ -837,6 +844,10 @@ void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
 				    b );
   clearSelection();
   KMFolderTreeInherited::contentsMousePressEvent( f );
+  // Force current item to be selected for some reason in certain weird
+  // circumstances this is not always the case
+  if (currentItem())
+    setSelected( currentItem(), true );
 }
 
 void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
