@@ -319,6 +319,9 @@ public:
 
   static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
   {
+    if (!msg) return;  // It appears, that QListView in Qt-3.0 asks for the key
+                       // in QListView::clear(), which is called from
+                       // readSortOrder()
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QString("%1") .arg( (char)sortOrder );
     QString sortArrival = QString( "%1" ).arg( id, 8, 36 );
