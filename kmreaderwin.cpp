@@ -1254,9 +1254,14 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
     // only proceed if we were called the normal way - not by
     // double click on the message (==not running in a separate window)
     if(    (aMsg == message())
+        /*
+           We remove this, because it is now required to ask EACH time :-)
+        
           // only proceed if this message was not saved encryptedly before
           // to make sure only *new* messages are saved in decrypted form
         && ((KMMsgStatusUnknown | KMMsgStatusNew | KMMsgStatusUnread) & mLastStatus)
+        */
+
           // avoid endless recursions
         && (mIdOfLastViewedMessage != aMsg->msgId())
           // only proceed if this message is (at least partially) encrypted
