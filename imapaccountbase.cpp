@@ -403,7 +403,7 @@ namespace KMail {
       emit receivedFolders(mSubfolderNames, mSubfolderPaths,
           mSubfolderMimeTypes, *it);
     }
-    if (mSlave) removeJob(it);
+    if (mSlave) removeJob(job);
     mSubfolderNames.clear();
     mSubfolderPaths.clear();
     mSubfolderMimeTypes.clear();
@@ -454,7 +454,7 @@ namespace KMail {
       emit subscriptionChanged(
           static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
     }
-    if (mSlave) removeJob(it);
+    if (mSlave) removeJob(job);
   }
 
   //-----------------------------------------------------------------------------
