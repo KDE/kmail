@@ -83,7 +83,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mUnreadMsgs      = -1;
   needsCompact    = FALSE;
   mChild          = 0;
-  mLockType       = FCNTL;
+  mLockType       = None;
   mConvertToUtf8  = FALSE;
 }
 
