@@ -1207,6 +1207,26 @@ void FolderDiaMailingListTab::fillMLFromWidgets()
   if ( !mHoldsMailingList->isChecked() )
     return;
 
+  // make sure that email addresses are prepended by "mailto:"
+  bool changed = false;
+  QStringList oldList = mEditList->items();
+  QStringList newList; // the correct string list
+  for ( QStringList::ConstIterator it = oldList.begin();
+        it != oldList.end(); ++it ) {
+    if ( !(*it).startsWith("http:") && !(*it).startsWith("https:") &&
+         !(*it).startsWith("mailto:") && ( (*it).find('@') != -1 ) ) {
+      changed = true;
+      newList << "mailto:" + *it;
+    }
+    else {
+      newList << *it;
+    }
+  }
+  if ( changed ) {
+    mEditList->clear();
+    mEditList->insertStringList( newList );
+  }
+
   //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentItem() ) );
   switch ( mLastItem ) {
   case 0:
