@@ -2463,7 +2463,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
                                              "<b>%T</b>: recipient's name, <b>%t</b>: recipient's name and address,<br>"
                                              "<b>%C</b>: carbon copy names, <b>%c</b>: carbon copy names and addresses,<br>"
 					     "<b>%%</b>: percent sign, <b>%_</b>: space, "
-					     "<b>%L</b>: linebreak</qt"), this ),
+					     "<b>%L</b>: linebreak</qt>"), this ),
 			    0, 0, 0, 2 ); // row 0; cols 0..2
 
   // row 1: label and language combo box:
