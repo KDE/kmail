@@ -125,10 +125,9 @@ void lockOrDie() {
        "been locked by another instance of KMail which seems to run "
        "on host %1 with process id (PID) %2.<br><br>"
        "In case you are really sure that this instance is not running any "
-       "longer, press <b>Yes</b> to delete the stale lock file and "
-       "restart KMail afterwards again.<br>"
+       "longer, press <b>Yes</b> and restart KMail afterwards again.<br>"
        "If unsure, press <b>No</b>.<br><br>"
-       "Are you sure the other KMail instance has exitted ?"
+       "Are you sure the other KMail instance has exited ?"
        "</qt>").arg(oldHostName).arg(oldPid) );
 
     if ( KMessageBox::Yes == KMessageBox::warningYesNo(0, msg) ) {
