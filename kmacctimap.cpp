@@ -462,6 +462,7 @@ void KMAcctImap::killAllJobs()
   for (it = mapJobData.begin(); it != mapJobData.end(); it++)
     if ((*it).parent)
     {
+      // clear folder state
       KMFolderImap *fld = (*it).parent;
       fld->setContentState(KMFolderImap::imapNoInformation);
       fld->setSubfolderState(KMFolderImap::imapNoInformation);
@@ -473,10 +474,17 @@ void KMAcctImap::killAllJobs()
     mSlave->kill();
     mSlave = NULL;
   }
+  // remove the jobs
   mapJobData.clear();
   mJobList.setAutoDelete(true);
   mJobList.clear();
   mJobList.setAutoDelete(false);
+  // make sure that no new-mail-check is blocked
+  if (mCountRemainChecks > 0)
+  {
+    mCountRemainChecks = 0;
+    emit finishedCheck(false);
+  }
   displayProgress();
 }
 
@@ -521,8 +529,10 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 void KMAcctImap::processNewMail(bool interactive)
 {
   emit newMailsProcessed(-1);
-  if (!mFolder || !mFolder->child())
+  if (!mFolder || !mFolder->child() ||
+      !makeConnection())
   {
+    mCountRemainChecks = 0;
     emit finishedCheck(false);
     return;
   }
@@ -568,6 +578,7 @@ void KMAcctImap::processNewMail(bool interactive)
   }
 }
 
+//-----------------------------------------------------------------------------
 void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
 {
   disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
@@ -575,6 +586,7 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
   postProcessNewMail(static_cast<KMFolder*>(folder));
 }
 
+//-----------------------------------------------------------------------------
 void KMAcctImap::postProcessNewMail(KMFolder* folder)
 {
   disconnect(folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
@@ -597,3 +609,4 @@ void KMAcctImap::postProcessNewMail(KMFolder* folder)
     mCountUnread = 0;
   }
 }
+
