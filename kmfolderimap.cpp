@@ -1185,63 +1185,66 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     KMMessage *msg = new KMMessage;
     msg->setComplete(false);
     msg->setReadyToShow(false);
-    msg->fromString((*it).cdata.mid(16, pos - 16));
-    flags = msg->headerField("X-Flags").toInt();
-    ulong uid = msg->UID();
-    bool ok = true;
-    if ( uid <= lastUid() )
-    {
-      // as some servers send the messages out of order
-      // we have to check if the message really already exists
-      int idx = 0;
-      KMMsgBase *msg;
-      while ( idx < count() )
+    // nothing between the boundaries, older UWs do that
+    if ( pos != 14 ) {
+      msg->fromString((*it).cdata.mid(16, pos - 16));
+      flags = msg->headerField("X-Flags").toInt();
+      ulong uid = msg->UID();
+      bool ok = true;
+      if ( uid <= lastUid() )
       {
-        msg = getMsgBase( idx );
-        if ( msg && msg->UID() == uid )
+        // as some servers send the messages out of order
+        // we have to check if the message really already exists
+        int idx = 0;
+        KMMsgBase *msg;
+        while ( idx < count() )
         {
-          ok = false; // exists, no need to create it
-          break;
+          msg = getMsgBase( idx );
+          if ( msg && msg->UID() == uid )
+          {
+            ok = false; // exists, no need to create it
+            break;
+          }
+          ++idx;
         }
-        ++idx;
       }
-    }
-    // deleted flag
-    if ( flags & 8 )
-      ok = false;
-    if ( !ok ) {
-      delete msg;
-      msg = 0;
-    } else {
-      if (uidmap.find(uid)) {
-        // assign the sernum from the cache
-        const ulong sernum = (ulong) uidmap[uid];
-        msg->setMsgSerNum(sernum);
-        // delete the entry
-        uidmap.remove(uid);
-      }
-      KMFolderMbox::addMsg(msg, 0);
-      // Transfer the status, if it is cached.
-      QString id = msg->msgIdMD5();
-      if ( mMetaDataMap.find( id ) ) {
-        KMMsgMetaData *md =  mMetaDataMap[id];
-        msg->setStatus( md->status() );
-        if ( md->serNum() != 0 )
-          msg->setMsgSerNum( md->serNum() );
-        mMetaDataMap.remove( id );
-        delete md;
-      }
-      // Merge with the flags from the server.
-      flagsToStatus((KMMsgBase*)msg, flags);
-      // set the correct size
-      msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
-      msg->setUID(uid);
+      // deleted flag
+      if ( flags & 8 )
+        ok = false;
+      if ( !ok ) {
+        delete msg;
+        msg = 0;
+      } else {
+        if (uidmap.find(uid)) {
+          // assign the sernum from the cache
+          const ulong sernum = (ulong) uidmap[uid];
+          msg->setMsgSerNum(sernum);
+          // delete the entry
+          uidmap.remove(uid);
+        }
+        KMFolderMbox::addMsg(msg, 0);
+        // Transfer the status, if it is cached.
+        QString id = msg->msgIdMD5();
+        if ( mMetaDataMap.find( id ) ) {
+          KMMsgMetaData *md =  mMetaDataMap[id];
+          msg->setStatus( md->status() );
+          if ( md->serNum() != 0 )
+            msg->setMsgSerNum( md->serNum() );
+          mMetaDataMap.remove( id );
+          delete md;
+        }
+        // Merge with the flags from the server.
+        flagsToStatus((KMMsgBase*)msg, flags);
+        // set the correct size
+        msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
+        msg->setUID(uid);
 
-      if (count() > 1) unGetMsg(count() - 1);
-      mLastUid = uid;
-      if ( mMailCheckProgressItem ) {
-        mMailCheckProgressItem->incCompletedItems();
-        mMailCheckProgressItem->updateProgress();
+        if (count() > 1) unGetMsg(count() - 1);
+        mLastUid = uid;
+        if ( mMailCheckProgressItem ) {
+          mMailCheckProgressItem->incCompletedItems();
+          mMailCheckProgressItem->updateProgress();
+        }
       }
     }
     (*it).cdata.remove(0, pos);
