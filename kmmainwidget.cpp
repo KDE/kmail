@@ -467,15 +467,17 @@ void KMMainWidget::createWidgets(void)
   headerParent->dumpObjectTree();
 #endif
   mSearchAndHeaders = new QVBox( headerParent );
-  QHBox *search = new QHBox( mSearchAndHeaders );
-  new QLabel(i18n("Quick Search: "), search );
+  KToolBar *searchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
+  searchToolBar->boxLayout()->setSpacing(5);
+  new QLabel(i18n("Quick Search:"), searchToolBar, "kde toolbar widget");
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
   KPIM::KListViewSearchLine *quickSearchLine = 
-     new KPIM::KListViewSearchLine( search, mHeaders, "headers quick search line" );
-  new QLabel(i18n(" Show only mails with status: "), search );
+    new KPIM::KListViewSearchLine(searchToolBar, mHeaders, "headers quick search line");
+  searchToolBar->setStretchableWidget(quickSearchLine);
+  new QLabel(i18n("Show only mails with status:"), searchToolBar, "kde toolbar widget");
   // FIXME hook up to real status widget once that is back in
-  QComboBox *cb = new QComboBox(search, "quick search status combo box");
-  cb->insertItem("any status" );
+  QComboBox *cb = new QComboBox(searchToolBar, "quick search status combo box");
+  cb->insertItem(i18n("any status"));
 
   mHeaders->setFullWidth(true);
   if (mReaderWindowActive) {
