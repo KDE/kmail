@@ -102,7 +102,7 @@ KMSearchRule* KMSearchRuleWidget::rule() const
 	    << mRuleFunc->currentItem() << ", "
 	    << mRuleValue->text() << " );" << endl;
 
-  r->init( mRuleField->currentText(),
+  r->init( ruleFieldToEnglish(mRuleField->currentText()),
 	   (KMSearchRule::Function)mRuleFunc->currentItem(),
 	   mRuleValue->text() );
 
