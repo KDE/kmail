@@ -673,77 +673,48 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
 
 
 //-----------------------------------------------------------------------------
-void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalIn,
+void KMGroupware::processVCalReply( const QCString& sender,
+				    const QString& vCal,
                                     const QString& choice )
 {
-  VCalType type = getVCalType( vCalIn );
+  VCalType type = getVCalType( vCal );
   if( type == vCalUnknown ) {
     kdDebug(5006) << "processVCalReply called with something that is not a vCal\n";
     return;
   }
 
-  if("enter" == choice ){
+  if( choice == "enter" ) {
     // step 1: call Organizer
-    QString vCalOut;
-    ignore_GroupwareDataChangeSlots = true;
-    // emit signal...
-    emit signalIncidenceAnswer( sender, vCalIn, vCalOut );
-#if 0
-    // This code will be taken care of by korganizer
+    QByteArray data, replyData;
+    QCString replyType;
+    QDataStream arg( data, IO_WriteOnly );
+    arg << sender << vCal;
+    if( kapp->dcopClient()->call( "korganizer", "KOrganizerIface",
+				  "eventReply(QCString,QString)",
+				  data, replyType, replyData )
+	&& replyType == "bool" )
+    {
+      bool rc;
+      QDataStream replyStream( replyData, IO_ReadOnly );
+      replyStream >> rc;
+      kdDebug(5006) << "KOrganizer call succeeded, rc = " << rc << endl;
 
-    // Check for the user stopping this transaction or some error happening
-    if( vCalOut == "false" ) {
-      kdDebug(5006) << "Problem in processing the iCal reply\n";
-      ignore_GroupwareDataChangeSlots = false;
-      return;
-    }
-
-    // note: If we do not get a vCalOut back, we just store the vCalIn into mCalendar
-
-    QString uid( "UID" );
-    vPartMicroParser( vCalOut.isEmpty() ? vCalIn.utf8() : vCalOut.utf8(), uid );
-    KMFolder* folder = type == vCalEvent ? mCalendar : mTasks;
-    KMMessage* msgNew = kmkernel->iCalIface().findMessageByUID( uid, folder );
-    bool isNewMsg = ( msgNew == 0 );
-    if( isNewMsg ) {
-      // Process a new event:
-      msgNew = new KMMessage(); // makes a "Content-Type=text/plain" message
-      msgNew->initHeader();
-      msgNew->setType(    DwMime::kTypeText );
-      msgNew->setSubtype( DwMime::kSubtypeVCal );
-      msgNew->setHeaderField("Content-Type",
-                             "text/calendar; method=REPLY; charset=\"utf-8\"");
-      if( type == vCalEvent )
-	msgNew->setSubject( "Meeting" );
-      else if( type == vCalTodo )
-	msgNew->setSubject( "Task" );
+      if( rc )
+	kdDebug(5006) << "KOrganizer call succeeded\n";
     } else
-      // Strip the X-UID header so it will be uploaded to the IMAP server again
-      msgNew->removeHeaderField("X-UID");
-
-    // add missing headers/content:
-    msgNew->setTo( msgNew->from() );
-    msgNew->setBodyEncoded( vCalOut.isEmpty() ? vCalIn.utf8() : vCalOut.utf8() );
-
-    if( isNewMsg ) {
-      // Mark the message as read and store it in a folder
-      msgNew->touch();
-      folder->addMsg( msgNew );
-    }
+      kdDebug(5006) << "KOrganizer call failed\n";
 
     // step 2: inform user that Organizer was updated
     KMessageBox::information( mMainWin, (type == vCalEvent ?
 					 i18n("The answer was registered in your calendar.") :
 					 i18n("The answer was registered in your task list.")),
 			      QString::null, "groupwareBox");
-    ignore_GroupwareDataChangeSlots = false;
-#endif
-  } else if( "cancel" == choice ) {
+  } else if( choice == "cancel" ) {
     QString uid( "UID" );
     QString descr("DESCRIPTION");
     QString summary("SUMMARY");
 
-    vPartMicroParser( vCalIn.utf8(), uid, descr, summary );
+    vPartMicroParser( vCal.utf8(), uid, descr, summary );
     if( type == vCalEvent ) {
       emit signalEventDeleted( uid );
       KMessageBox::information( mMainWin, i18n("<qt>The event <b>%1</b> was deleted from your calendar.</qt>")
@@ -1449,9 +1420,12 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
     return false;
 
   if( gwType != "vCal" || gwData.isEmpty()
-      || ( "request" != gwAction && "reply" != gwAction && "cancel" != gwAction ) )
+      || ( "request" != gwAction && "reply" != gwAction
+	   && "cancel" != gwAction ) ) {
     // Then we can't handle it. But it is a groupware link, so we return true
+    kdDebug(5006) << "Unhandled groupware link\n";
     return true;
+  }
 
   // Read the vCal
   QFile file( gwData );
