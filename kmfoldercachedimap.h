@@ -140,12 +140,19 @@ public:
   virtual int rename(const QString& aName, KMFolderDir *aParent=0);
 
   /* Reimplemented from KMFolderMaildir */
+  virtual KMMessage* take(int idx);
+  /* Reimplemented from KMFolderMaildir */
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
   /* internal version that doesn't remove the X-UID header */
   virtual int addMsgInternal(KMMessage* msg, bool, int* index_return = 0);
   virtual int addMsgKeepUID(KMMessage* msg, int* index_return = 0) {
     return addMsgInternal(msg, false, index_return);
   }
+
+  /* Reimplemented from KMFolderMaildir */
+  virtual void removeMsg(int i, bool imapQuiet = FALSE);
+  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE)
+    { FolderStorage::removeMsg(msgList, imapQuiet); }
 
   /**
    * Emit the folderComplete signal
@@ -304,8 +311,13 @@ private:
   QValueList<KMFolderCachedImap*> mSubfoldersForSync;
   KMFolderCachedImap* mCurrentSubfolder;
 
+  /* Mapping uid ->index
+     Keep updated in addMsg, take and removeMsg */
+  QMap<ulong,int> uidMap;
+  bool uidMapDirty;
   ulong mLastUid;
   int uidWriteTimer;
+  void reloadUidMap();
 
   QString state2String( int state ) const;
   bool mIsConnected;
