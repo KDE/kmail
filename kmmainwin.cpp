@@ -1288,6 +1288,8 @@ void KMMainWin::setupMenuBar()
                        SLOT(slotUndo()), KStdAccel::key(KStdAccel::Undo));
   editMenu->insertItem(i18n("&Copy text"), this, SLOT(slotCopyText()),
 			   KStdAccel::key(KStdAccel::Copy));
+  editMenu->insertItem(i18n("&Delete"), this,
+			  SLOT(slotDeleteMsg()), Key_D);
   // GS - should we put menu items to copy, cut & paste emails?
   editMenu->insertSeparator();
   editMenu->insertItem(i18n("&Search"), this,
@@ -1363,13 +1365,10 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotEditMsg()), Key_T);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
-  messageMenu->insertSeparator();
   moveId = messageMenu->insertItem(i18n("&Move..."), this,
 			  SLOT(slotMoveMsg()));
   copyId = messageMenu->insertItem(i18n("&Copy..."), this,
 			  SLOT(slotCopyMsg()));
-  messageMenu->insertItem(i18n("&Delete"), this,
-			  SLOT(slotDeleteMsg()), Key_D);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Send again..."), this,
 			  SLOT(slotResendMsg()));
