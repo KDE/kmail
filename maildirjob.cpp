@@ -6,9 +6,11 @@
 #include "kmmessage.h"
 #include "kmfoldermaildir.h"
 
+#include <kapplication.h>
 #include <kdebug.h>
 
 #include <qtimer.h>
+#include <qdatetime.h>
 
 namespace KMail {
 
@@ -98,6 +100,7 @@ MaildirJob::expireMessages()
   QValueList<int>  rmvMsgList;
   int              i                = 0;
   time_t           msgTime, maxTime = 0;
+  QTime            t;
 
   days = mParentFolder->daysToExpire( mParentFolder->getUnreadExpireAge(),
                                       mParentFolder->getUnreadExpireUnits() );
@@ -117,6 +120,7 @@ MaildirJob::expireMessages()
     return;
   }
 
+  t.start();
   mParentFolder->open();
   for( i=mParentFolder->count()-1; i>=0; i-- ) {
     mb = mParentFolder->getMsgBase(i);
@@ -133,6 +137,10 @@ MaildirJob::expireMessages()
 
     if (msgTime < maxTime) {
       mParentFolder->removeMsg( i );
+    }
+    if ( t.elapsed() >= 150 ) {
+      kapp->processEvents();
+      t.restart();
     }
   }
   mParentFolder->close();

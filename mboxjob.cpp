@@ -1,11 +1,16 @@
+// mboxjob.cpp
+// Zack Rusin <zack@kde.org>
+// This file is part of KMail. Licensed under GNU GPL.
 #include "mboxjob.h"
 
 #include "kmmessage.h"
 #include "kmfoldermbox.h"
 
+#include <kapplication.h>
 #include <kdebug.h>
 #include <qobject.h>
 #include <qtimer.h>
+#include <qdatetime.h>
 
 namespace KMail {
 
@@ -47,6 +52,7 @@ MboxJob::expireMessages()
   QValueList<int>  rmvMsgList;
   int              i                = 0;
   time_t           msgTime, maxTime = 0;
+  QTime            t;
 
   days = mParent->daysToExpire( mParent->getUnreadExpireAge(),
                                 mParent->getUnreadExpireUnits() );
@@ -66,6 +72,7 @@ MboxJob::expireMessages()
     return;
   }
 
+  t.start();
   mParent->open();
   for( i=mParent->count()-1; i>=0; i-- ) {
     mb = mParent->getMsgBase(i);
@@ -82,6 +89,10 @@ MboxJob::expireMessages()
 
     if (msgTime < maxTime) {
       mParent->removeMsg( i );
+    }
+    if ( t.elapsed() >= 150 ) {
+      kapp->processEvents();
+      t.restart();
     }
   }
   mParent->close();
@@ -101,7 +112,7 @@ void
 MboxJob::startJob()
 {
   KMMessage *msg = mMsgList.first();
-  assert( msg && ( mParent || msg->parent() ) );
+  assert( (msg && ( mParent || msg->parent() )) || ( mParent && mType == tExpireMessages) );
   switch( mType ) {
   case tGetMessage:
     {
