@@ -252,7 +252,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
       kdDebug(5006) << "Adding folder" << endl;
       if(i > mPopupFolders.size()) mPopupFolders.resize(i * 2);
       mPopupFolders.insert(i, it.key());
-      QString item = prettyName(it.key()) + "(" + QString::number(it.data()) + ")";
+      QString item = prettyName(it.key()) + " (" + QString::number(it.data()) + ")";
       popup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
       ++it;
     }
