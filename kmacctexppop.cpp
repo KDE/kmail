@@ -668,6 +668,7 @@ void KMAcctExpPop::slotGetNextMsg()
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
+    kdDebug(5006) << "Data: <End>" << endl; 
     if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     else if (stage == Head){
