@@ -1254,10 +1254,10 @@ void KMMainWin::setupMenuBar()
   QPopupMenu *fileMenu = fileActionMenu->popupMenu();
   connect(fileMenu,SIGNAL(highlighted(int)),this,SLOT(slotMenuActivated()));
 
-  (void) new KAction( i18n("&New Mail Client"), 0, this, SLOT(slotNewMailReader()),
+  (void) new KAction( i18n("&New Mail Client..."), 0, this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
-  (void) new KAction( i18n("Save &As"), "filesave",  KStdAccel::key(KStdAccel::Save),
+  (void) new KAction( i18n("Save &As..."), "filesave",  KStdAccel::key(KStdAccel::Save),
 		      this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
 
   KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
@@ -1315,10 +1315,10 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
   //----- Folder Menu
-  (void) new KAction( i18n("&Create"), 0, this, 
+  (void) new KAction( i18n("&Create..."), 0, this, 
 		      SLOT(slotAddFolder()), actionCollection(), "create" );
 
-  (void) new KAction( i18n("&Modify"), 0, this, 
+  (void) new KAction( i18n("&Modify..."), 0, this, 
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   (void) new KAction( i18n("C&ompact"), 0, this, 
@@ -1327,7 +1327,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Empty"), 0, this, 
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  (void) new KAction( i18n("&Remove"), 0, this, 
+  (void) new KAction( i18n("&Remove..."), 0, this, 
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
   preferHtmlAction = new KToggleAction( i18n("Prefer HTML to plain text"), 0, this, 
@@ -1337,7 +1337,7 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
   //----- Message Menu
-  (void) new KAction( i18n("New &Message"), "filenew", KStdAccel::key(KStdAccel::New), this, 
+  (void) new KAction( i18n("New &Message..."), "filenew", KStdAccel::key(KStdAccel::New), this, 
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
   (void) new KAction( i18n("&Next"), Key_N, mHeaders, 
