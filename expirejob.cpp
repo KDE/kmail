@@ -155,8 +155,8 @@ void ExpireJob::done()
                     << mSrcFolder->location()
                     << " " << count << " messages to remove." << endl;
       KMMoveCommand* cmd = new KMMoveCommand( 0, mRemovedMsgs );
-      connect( cmd, SIGNAL( completed( KMCommand::Result ) ),
-               this, SLOT( slotMessagesMoved( KMCommand::Result ) ) );
+      connect( cmd, SIGNAL( completed( KMCommand * ) ),
+               this, SLOT( slotMessagesMoved( KMCommand * ) ) );
       cmd->start();
       moving = true;
       str = i18n( "Removing 1 old message from folder %1...",
@@ -177,8 +177,8 @@ void ExpireJob::done()
                       << mRemovedMsgs.count() << " messages to move to "
                       << mMoveToFolder->label() << endl;
         KMMoveCommand* cmd = new KMMoveCommand( mMoveToFolder, mRemovedMsgs );
-        connect( cmd, SIGNAL( completed( KMCommand::Result ) ),
-                 this, SLOT( slotMessagesMoved( KMCommand::Result ) ) );
+        connect( cmd, SIGNAL( completed( KMCommand * ) ),
+                 this, SLOT( slotMessagesMoved( KMCommand * ) ) );
         cmd->start();
         moving = true;
         str = i18n( "Moving 1 old message from folder %1 to folder %2...",
@@ -201,12 +201,12 @@ void ExpireJob::done()
   }
 }
 
-void ExpireJob::slotMessagesMoved( KMCommand::Result result )
+void ExpireJob::slotMessagesMoved( KMCommand *command )
 {
   mSrcFolder->storage()->close();
   mFolderOpen = false;
   QString msg;
-  switch ( result ) {
+  switch ( command->result() ) {
   case KMCommand::OK:
     if ( mSrcFolder->expireAction() == KMFolder::ExpireDelete ) {
       msg = i18n( "Removed 1 old message from folder %1.",

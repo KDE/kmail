@@ -46,7 +46,7 @@ public:
 
 private slots:
   void slotDoWork();
-  void slotMessagesMoved( KMCommand::Result result );
+  void slotMessagesMoved( KMCommand *command );
 
 private:
   void done();

@@ -1637,8 +1637,8 @@ void KMHeaders::deleteMsg ()
   finalizeMove( nextItem, contentX, contentY );
 
   KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList );
-  connect( command, SIGNAL( completed( KMCommand::Result ) ),
-           this, SLOT( slotMoveCompleted( KMCommand::Result ) ) );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotMoveCompleted( KMCommand * ) ) );
   command->start();
 
   KMBroadcastStatus::instance()->setStatusMsg("");
@@ -1721,16 +1721,16 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
   finalizeMove( nextItem, contentX, contentY );
 
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
-  connect( command, SIGNAL( completed( KMCommand::Result ) ),
-           this, SLOT( slotMoveCompleted( KMCommand::Result ) ) );
+  connect( command, SIGNAL( completed( KMCommand * ) ),
+           this, SLOT( slotMoveCompleted( KMCommand * ) ) );
   command->start();
 
 }
 
-void KMHeaders::slotMoveCompleted( KMCommand::Result result )
+void KMHeaders::slotMoveCompleted( KMCommand *command )
 {
-   kdDebug(5006) <<  "KMHeaders::slotMoveCompleted: " << result << endl;
-   if ( result == KMCommand::OK ) {
+  kdDebug(5006) << k_funcinfo << command->result() << endl;
+  if ( command->result() == KMCommand::OK ) {
     KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
   } else {
     /* The move failed or the user canceled it; reset the state of all
@@ -1752,7 +1752,7 @@ void KMHeaders::slotMoveCompleted( KMCommand::Result result )
       }
     }
     triggerUpdate();
-    if ( result == KMCommand::Failed )
+    if ( command->result() == KMCommand::Failed )
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
     else
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));

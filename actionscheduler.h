@@ -111,7 +111,7 @@ private slots:
   void messageRetrieved(KMMessage*);
   void filterMessage();
   void moveMessage();
-  void moveMessageFinished( KMCommand::Result result );
+  void moveMessageFinished( KMCommand *command );
 
 private:
   static KMFolderMgr *tempFolderMgr;

@@ -566,14 +566,14 @@ void ActionScheduler::moveMessage()
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
 
   KMCommand *cmd = new KMMoveCommand( folder, msg );
-  connect( cmd, SIGNAL( completed( KMCommand::Result ) ),
-	   this, SLOT( moveMessageFinished( KMCommand::Result ) ) );
+  connect( cmd, SIGNAL( completed( KMCommand * ) ),
+	   this, SLOT( moveMessageFinished( KMCommand * ) ) );
   cmd->start();
 }
 
-void ActionScheduler::moveMessageFinished( KMCommand::Result result )
+void ActionScheduler::moveMessageFinished( KMCommand *command )
 {
-  if ( result != KMCommand::OK )
+  if ( command->result() != KMCommand::OK )
     mResult = ResultError;
 
   if (!mSrcFolder->count())

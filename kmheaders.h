@@ -304,7 +304,7 @@ protected slots:
   void rightButtonPressed( QListViewItem *, const QPoint &, int );
 
 private slots:
-  void slotMoveCompleted( KMCommand::Result result );
+  void slotMoveCompleted( KMCommand * );
 
 private:
   /** Is equivalent to clearing the list and inserting an item for

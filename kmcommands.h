@@ -34,7 +34,7 @@ class KMCommand : public QObject
   Q_OBJECT
 
 public:
-  enum Result { OK, Canceled, Failed };
+  enum Result { Undefined, OK, Canceled, Failed };
 
   // Trival constructor, don't retrieve any messages
   KMCommand( QWidget *parent = 0 );
@@ -46,9 +46,20 @@ public:
   KMCommand( QWidget *parent, KMMessage *message );
   virtual ~KMCommand();
 
+  /** Returns the result of the command. Only call this method from the slot
+      connected to completed().
+  */
+  Result result();
+
 public slots:
   // Retrieve messages then calls execute
   void start();
+
+signals:
+  void messagesTransfered( KMCommand::Result result );
+  /** Emitted when the command has completed.
+   * @param result The status of the command. */
+  void completed( KMCommand *command );
 
 protected:
   // Returns list of messages retrieved
@@ -77,6 +88,12 @@ protected:
   void setEmitsCompletedItself( bool emitsCompletedItself )
   { mEmitsCompletedItself = emitsCompletedItself; }
 
+  /** Use this to set the result of the command.
+      @param result The result of the command.
+   */
+  void setResult( Result result )
+  { mResult = result; }
+
 private:
   // execute should be implemented by derived classes
   virtual Result execute() = 0;
@@ -96,11 +113,6 @@ private slots:
   void slotJobFinished();
   /** the transfer was canceled */
   void slotTransferCancelled();
-signals:
-  void messagesTransfered( KMCommand::Result result );
-  /** Emitted when the command has completed.
-   * @param result The status of the command. */
-  void completed( KMCommand::Result result );
 
 private:
   // ProgressDialog for transferring messages
@@ -108,6 +120,7 @@ private:
   //Currently only one async command allowed at a time
   static int mCountJobs;
   int mCountMsgs;
+  Result mResult;
   bool mDeletesItself : 1;
   bool mEmitsCompletedItself : 1;
 
@@ -698,7 +711,7 @@ public:
 private:
   virtual Result execute();
 private slots:
-  void commandCompleted( KMCommand::Result );
+  void commandCompleted( KMCommand *command );
 protected:
   virtual KURL::List urls() const =0;
 protected:

@@ -90,26 +90,26 @@ using KPIM::ProgressItem;
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
-  : mProgressDialog( 0 ), mDeletesItself( false ),
+  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList )
-  : mProgressDialog( 0 ), mDeletesItself( false ),
+  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent ), mMsgList( msgList )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, KMMsgBase *msgBase )
-  : mProgressDialog( 0 ), mDeletesItself( false ),
+  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   mMsgList.append( msgBase );
 }
 
 KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
-  : mProgressDialog( 0 ), mDeletesItself( false ),
+  : mProgressDialog( 0 ), mResult( Undefined ), mDeletesItself( false ),
     mEmitsCompletedItself( false ), mParent( parent )
 {
   mMsgList.append( &msg->toMsgBase() );
@@ -123,6 +123,13 @@ KMCommand::~KMCommand()
       continue;
     (*fit)->close();
   }
+}
+
+KMCommand::Result KMCommand::result()
+{
+  if ( mResult == Undefined )
+    kdDebug(5006) << k_funcinfo << "mResult is Undefined" << endl;
+  return mResult;
 }
 
 void KMCommand::start()
@@ -188,6 +195,7 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
               this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
   if ( result == OK )
     result = execute();
+  mResult = result;
   QPtrListIterator<KMMessage> it( mRetrievedMsgs );
   KMMessage* msg;
   while ( (msg = it.current()) != 0 )
@@ -198,7 +206,7 @@ void KMCommand::slotPostTransfer( KMCommand::Result result )
   }
   kmkernel->filterMgr()->deref();
   if ( !emitsCompletedItself() )
-    emit completed( result );
+    emit completed( this );
   if ( !deletesItself() )
     delete this;
 }
@@ -561,10 +569,13 @@ void KMUrlSaveCommand::slotUrlSaveResult( KIO::Job *job )
 {
   if ( job->error() ) {
     job->showErrorDialog();
-    emit completed( Failed );
+    setResult( Failed );
+    emit completed( this );
   }
-  else
-    emit completed( OK );
+  else {
+    setResult( OK );
+    emit completed( this );
+  }
 }
 
 
@@ -806,11 +817,13 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
     else
     {
       job->showErrorDialog();
-      emit completed( Failed );
+      setResult( Failed );
+      emit completed( this );
       delete this;
     }
   } else {
-    emit completed( OK );
+    setResult( OK );
+    emit completed( this );
     delete this;
   }
 }
@@ -857,7 +870,8 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
   if ( job->error() ) {
     // handle errors
     job->showErrorDialog();
-    emit completed( Failed );
+    setResult( Failed );
+    emit completed( this );
   }
   else {
     int startOfMessage = 0;
@@ -866,7 +880,8 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
                             i18n( "The file doesn't contain a message." ) );
-        emit completed( Failed );
+        setResult( Failed );
+        emit completed( this );
         // Emulate closing of a secondary window so that KMail exits in case it
         // was started with the --view command line option. Otherwise an
         // invisible KMail would keep running.
@@ -894,7 +909,8 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       KMessageBox::sorry( parentWidget(),
                           i18n( "The file doesn't contain a message." ) );
       delete dwMsg; dwMsg = 0;
-      emit completed( Failed );
+      setResult( Failed );
+      emit completed( this );
       // Emulate closing of a secondary window (see above).
       SecondaryWindow *win = new SecondaryWindow();
       win->close();
@@ -911,7 +927,8 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       KMessageBox::information( win,
                                 i18n( "The file contains multiple messages. "
                                       "Only the first message is shown." ) );
-    emit completed( OK );
+    setResult( OK );
+    emit completed( this );
   }
   delete this;
 }
@@ -1834,7 +1851,8 @@ void KMMoveCommand::completeMove( Result result )
 {
   if ( mProgressItem )
     mProgressItem->setComplete();
-  emit completed( result );
+  setResult( result );
+  emit completed( this );
   deleteLater();
 }
 
@@ -1989,7 +2007,8 @@ void KMSaveAttachmentsCommand::saveAll( const QPtrList<partNode>& attachments )
 {
   if ( attachments.isEmpty() ) {
     KMessageBox::information( 0, i18n("Found no attachments to save.") );
-    emit completed( OK ); // The user has already been informed.
+    setResult( OK );
+    emit completed( this ); // The user has already been informed.
     return;
   }
   mAttachments = attachments;
@@ -2012,7 +2031,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     KFileDialog fdlg( QString::null, QString::null, parentWidget(), 0, true );
     fdlg.setMode( (unsigned int) KFile::Directory );
     if ( fdlg.exec() == QDialog::Rejected ) {
-      emit completed( Canceled );
+      setResult( Canceled );
+      emit completed( this );
       return;
     }
     dirUrl = fdlg.selectedURL();
@@ -2029,7 +2049,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     url = KFileDialog::getSaveURL( s, QString::null, parentWidget(),
                                    QString::null );
     if ( url.isEmpty() ) {
-      emit completed( Canceled );
+      setResult( Canceled );
+      emit completed( this );
       return;
     }
   }
@@ -2074,7 +2095,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
     ++itr;
   }
-  emit completed( globalResult );
+  setResult( globalResult );
+  emit completed( this );
 //  delete this;
 }
 
@@ -2264,7 +2286,8 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage* msg, QString partSpecifie
 KMCommand::Result KMLoadPartsCommand::execute()
 {
   emit partsRetrieved();
-  emit completed( OK );
+  setResult( OK );
+  emit completed( this );
   deleteLater();
   return OK;
 }
@@ -2315,8 +2338,8 @@ KMCommand::Result KMMailingListCommand::execute()
       new KMUrlClickedCommand( lst.first(), mFolder->identity(), 0, false );
   }
   if ( command ) {
-    connect( command, SIGNAL( completed( KMCommand::Result ) ),
-             this, SLOT( commandCompleted( KMCommand::Result ) ) );
+    connect( command, SIGNAL( completed( KMCommand * ) ),
+             this, SLOT( commandCompleted( KMCommand * ) ) );
     setDeletesItself( true );
     setEmitsCompletedItself( true );
     command->start();
@@ -2325,9 +2348,10 @@ KMCommand::Result KMMailingListCommand::execute()
   return Failed;
 }
 
-void KMMailingListCommand::commandCompleted( KMCommand::Result result )
+void KMMailingListCommand::commandCompleted( KMCommand *command )
 {
-  emit completed( result );
+  setResult( command->result() );
+  emit completed( this );
   delete this;
 }
 
