@@ -3607,6 +3607,7 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 
 void KMComposeWin::slotListAction( const QString& style )
 {
+    toggleMarkup(true);
     if ( style == i18n( "Standard" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayBlock, QStyleSheetItem::ListDisc );
     else if ( style == i18n( "Bulleted List (Disc)" ) )
