@@ -811,7 +811,7 @@ void KMComposeWin::setupToolBar()
   toolBar->insertButton(loader->loadIcon("thumb_up.xpm"),6,
 			SIGNAL(clicked()),composeView,
 			SLOT(toDo()),TRUE,"Recipients");
-  toolBar->insertButton(loader->loadIcon("OpenBook.xpm"),7,
+  toolBar->insertButton(loader->loadIcon("openbook.xpm"),7,
 			SIGNAL(clicked()),composeView,
 			SLOT(toDo()),TRUE,"Open addressbook");
   toolBar->insertButton(loader->loadIcon("attach.xpm"),8,
