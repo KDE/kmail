@@ -2032,12 +2032,8 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
   if ( command->result() == KMCommand::OK ) {
     // make sure the current item is shown
     makeHeaderVisible();
-#if 0 // enable after the message-freeze
     BroadcastStatus::instance()->setStatusMsg(
        deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
-#else
-    if ( !deleted ) BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved successfully" ) );
-#endif
   } else {
     /* The move failed or the user canceled it; reset the state of all
      * messages involved and repaint.
