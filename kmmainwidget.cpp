@@ -1307,15 +1307,6 @@ void KMMainWidget::slotRedirectMsg()
   command->start();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::slotBounceMsg()
-{
-  KMCommand *command = new KMBounceCommand( this, mHeaders->currentMsg() );
-  command->start();
-}
-
-
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplyListToMsg()
 {
@@ -2128,7 +2119,6 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mReplyAuthorAction->plug( menu );
       mReplyListAction->plug( menu );
       mForwardActionMenu->plug(menu);
-      mBounceAction->plug(menu);
     }
     menu->insertSeparator();
     if ( !out_folder ) {
@@ -2422,10 +2412,6 @@ void KMMainWidget::setupActions()
 
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
-
-  //---- Bounce action
-  mBounceAction = new KAction( i18n("&Bounce..."), 0, this,
-			      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
   //----- Create filter actions
   mFilterMenu = new KActionMenu( i18n("&Create Filter"), "filter", actionCollection(), "create_filter" );
@@ -3074,7 +3060,6 @@ void KMMainWidget::updateMessageActions()
     kmkernel->folderIsDraftOrOutbox(mFolder));
     replyMenu()->setEnabled( single_actions );
     filterMenu()->setEnabled( single_actions );
-    bounceAction()->setEnabled( single_actions );
     replyAction()->setEnabled( single_actions );
     noQuoteReplyAction()->setEnabled( single_actions );
     replyAuthorAction()->setEnabled( single_actions );

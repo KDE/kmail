@@ -530,41 +530,6 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 //=============================================================================
 
 //=============================================================================
-// KMFilterActionBounce - bounce
-// Return mail as undelivered.
-//=============================================================================
-class KMFilterActionBounce : public KMFilterActionWithNone
-{
-public:
-  KMFilterActionBounce();
-  virtual ReturnCode process(KMMessage* msg) const;
-  static KMFilterAction* newAction(void);
-};
-
-KMFilterAction* KMFilterActionBounce::newAction(void)
-{
-  return (new KMFilterActionBounce);
-}
-
-KMFilterActionBounce::KMFilterActionBounce()
-  : KMFilterActionWithNone( "bounce", i18n("Bounce") )
-{
-}
-
-KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg) const
-{
-  KMMessage *bounceMsg = msg->createBounce( FALSE );
-  if ( !bounceMsg ) return ErrorButGoOn;
-
-  // Queue message. This is a) so that the user can check
-  // the bounces before sending and b) for speed reasons.
-  kmkernel->msgSender()->send( bounceMsg, FALSE );
-
-  return GoOn;
-}
-
-
-//=============================================================================
 // KMFilterActionSendReceipt - send receipt
 // Return delivery receipt.
 //=============================================================================
@@ -1741,7 +1706,6 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionReplyTo::newAction );
   insert( KMFilterActionForward::newAction );
   insert( KMFilterActionRedirect::newAction );
-  insert( KMFilterActionBounce::newAction );
   insert( KMFilterActionSendReceipt::newAction );
   insert( KMFilterActionExec::newAction );
   insert( KMFilterActionExtFilter::newAction );

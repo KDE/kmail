@@ -106,7 +106,6 @@ public:
   KAction *forwardAction() const { return mForwardAction; }
   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
   KAction *redirectAction() const { return mRedirectAction; }
-  KAction *bounceAction() const { return mBounceAction; }
   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() const { return mFilterMenu; }
   KAction *printAction() const { return mPrintAction; }
@@ -374,7 +373,6 @@ protected slots:
   void slotForwardMsg();
   void slotForwardAttachedMsg();
   void slotRedirectMsg();
-  void slotBounceMsg();
   void slotNoQuoteReplyToMsg();
   void slotSubjectFilter();
   void slotMailingListFilter();
@@ -395,7 +393,7 @@ private:
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
       *mReplyListAction,
       *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-      *mBounceAction, *mNoQuoteReplyAction;
+      *mNoQuoteReplyAction;
   KActionMenu *mReplyActionMenu;
   KActionMenu *mForwardActionMenu;
   // Filter actions

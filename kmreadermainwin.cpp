@@ -165,14 +165,6 @@ void KMReaderMainWin::slotRedirectMsg()
   command->start();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMReaderMainWin::slotBounceMsg()
-{
-  KMCommand *command = new KMBounceCommand( this, mReaderWin->message() );
-  command->start();
-}
-
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotShowMsgSrc()
 {
@@ -231,10 +223,6 @@ void KMReaderMainWin::setupAccel()
 				 Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( mRedirectAction );
-
-  mBounceAction = new KAction( i18n("&Bounce..."), 0, this,
-			      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
-
 
   mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
                                       "mail_reply", actionCollection(),
@@ -314,7 +302,6 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
     mReplyAuthorAction->plug( menu );
     mReplyListAction->plug( menu );
     mForwardActionMenu->plug( menu );
-    mBounceAction->plug( menu );
 
     menu->insertSeparator();
 

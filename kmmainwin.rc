@@ -98,7 +98,6 @@
      <Action name="message_forward_inline" />
      <Action name="message_forward_redirect" />
    </Menu>
-   <Action name="bounce" />
    <Action name="send_again" />
    <Separator/>
    <Action name="copy_to" />
