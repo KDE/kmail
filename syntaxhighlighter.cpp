@@ -331,7 +331,7 @@ void DictSpellChecker::slotAutoDetection()
 	    if (mActive)
 		emit activeChanged( "Automatic spell checking enabled." );
 	    else
-		emit activeChanged( "To many misspelled words: automatic "
+		emit activeChanged( "Too many misspelled words: automatic "
 				"spell checking disabled." );
 	rehighlightRequest->start(100, true);
     }
