@@ -22,15 +22,19 @@ class QScrollBar;
 class QString;
 class QTabDialog;
 class QTextCodec;
+
 class DwHeaders;
 class DwMediaType;
+
 class KActionCollection;
 class KAction;
 class KActionMenu;
+class KRadioAction;
 class KToggleAction;
 class KConfigBase;
 class KHTMLPart;
 class KURL;
+
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
@@ -324,6 +328,19 @@ public slots:
   void contactStatusChanged( const QString &uid);
 
 protected slots:
+  void slotCycleHeaderStyles();
+  void slotBriefHeaders();
+  void slotFancyHeaders();
+  void slotStandardHeaders();
+  void slotLongHeaders();
+  void slotAllHeaders();
+
+  void slotCycleAttachmentStrategy();
+  void slotIconicAttachments();
+  void slotSmartAttachments();
+  void slotInlineAttachments();
+  void slotHideAttachments();
+
   /** Some attachment operations. */
   void slotAtmOpen();
   void slotDoAtmOpen();
@@ -387,6 +404,11 @@ private:
   void saveSplitterSizes( KConfigBase & c ) const;
   QString createAtmFileLink() const;
 
+  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+                                       const KMail::HeaderStrategy * );
+  KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
+
+
 private:
   bool mHtmlMail, mHtmlOverride;
   int mAtmCurrent;
@@ -429,6 +451,7 @@ private:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
+  KActionCollection *mActionCollection;
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;

@@ -141,7 +141,7 @@ public:
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
 
   KMSystemTray *systray() const;
-  
+
   /** Checks a shortcut against the actioncollection and returns whether it
    * is already used and therefor not valid or not. */
   bool shortcutIsValid( const KShortcut& ) const;
@@ -193,10 +193,10 @@ public slots:
   /** Clear and create actions for marked filters */
   void clearFilterActions();
   void initializeFilterActions();
-  
+
   /** Create actions for the folder shortcuts. */
   void initializeFolderShortcutActions();
- 
+
   /** Add, remove or adjust the folder's shortcut. */
   void slotShortcutChanged( KMFolder *folder );
 
@@ -210,13 +210,8 @@ protected:
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
   void updateFileMenu();
-  void updateViewMenu();
 
   KActionCollection * actionCollection() const { return mActionCollection; }
-
-  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
-                                       const KMail::HeaderStrategy * );
-  KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
 
   /** @return the correct config dialog depending on whether the parent of the mainWidget
    *          is a KPart or a KMMainWindow. When dealing with geometries, use this pointer
@@ -300,17 +295,6 @@ protected slots:
   void slotSetThreadStatusIgnored();
   void slotToggleUnread();
   void slotToggleTotalColumn();
-  void slotBriefHeaders();
-  void slotFancyHeaders();
-  void slotStandardHeaders();
-  void slotLongHeaders();
-  void slotAllHeaders();
-  void slotIconicAttachments();
-  void slotSmartAttachments();
-  void slotInlineAttachments();
-  void slotHideAttachments();
-  void slotCycleHeaderStyles();
-  void slotCycleAttachmentStrategy();
   void slotSetEncoding();
   void slotSendQueued();
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
@@ -491,7 +475,7 @@ private:
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
   KXMLGUIClient *mGUIClient;
-  
+
   static QPtrList<KMMainWidget>* s_mainWidgetList;
 };
 
