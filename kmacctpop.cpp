@@ -196,7 +196,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 #else
   id = 1;
 #endif
-
+  client.SetReceiveTimeout(40);
+	
   while (id <= num)
   {
     if(wid->abortRequested()) {
