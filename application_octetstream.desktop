@@ -1,7 +1,20 @@
 [Misc]
 Encoding=UTF-8
 Name=Application Octetstream
+Name[da]=Program oktetstrøm
+Name[es]=Aplicación en flujo de octetos
+Name[nl]=Applicatie octetstroom
+Name[sl]=Programski Octetstream
+Name[sv]=Program-oktettström
+Name[ta]=பயன்பாட்டு எண்மம்
 Comment=A bodypart formatter plugin for application/octet-stream
+Comment[da]=Et bodypart formateringsplugin for application/octet-stream
+Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
+Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
+Comment[nl]=Een opmaakplugin voor application/octet-stream
+Comment[sl]=Oblikovni vstavek za application/octet-stream
+Comment[sv]=Ett insticksprogram för brevtextformatering av application/octet-stream
+Comment[ta]=பயன்பாடு அல்லது எண்மத்திற்கான அங்க அமைப்பு சொருகி
 
 [Plugin]
 Type=application/octet-stream
