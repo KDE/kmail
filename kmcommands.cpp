@@ -901,8 +901,7 @@ void KMFilterActionCommand::execute()
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
     msg->setTransferInProgress(false);
 
-    int filterResult = kernel->filterMgr()->process(msg, KMFilterMgr::Explicit,
-						    mFilter);
+    int filterResult = kernel->filterMgr()->process(msg, mFilter);
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
 	kernel->emergencyExit( i18n("Not enough free disk space." ));

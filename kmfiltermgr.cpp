@@ -110,95 +110,105 @@ void KMFilterMgr::writeConfig(bool withSync)
 }
 
 
-//-----------------------------------------------------------------------------
-int KMFilterMgr::process(KMMessage* msg, FilterSet aSet, KMFilter *filter)
-{
-/*
-QFile fileD0( "testdat_xx-kmfiltermngr-0" );
-if( fileD0.open( IO_WriteOnly ) ) {
-    QDataStream ds( &fileD0 );
-    ds.writeRawBytes( msg->asString(), msg->asString().length() );
-    fileD0.close();  // If data is 0 we just create a zero length file.
+int KMFilterMgr::processPop( KMMessage * msg ) {
+  for ( QPtrListIterator<KMFilter> it( *this ) ; it.current() ; ++it )
+    if ( (*it)->pattern()->matches( msg ) )
+      return (*it)->action();
+  return NoAction;
 }
-*/
-  if(bPopFilter) {
-    QPtrListIterator<KMFilter> it(*this);
-    for (it.toFirst() ; it.current() ; ++it) {
-      if ((*it)->pattern()->matches(msg))
-        return (*it)->action();
-    }
-    return NoAction;
-  } else {
-    if ( aSet == NoSet ) {
-      kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
-		    << endl;
-      return 1;
-    }
 
-    bool stopIt = false;
-    int status = -1;
-    bool msgTaken = false; // keep track of whether we removeMsg'ed already
+int KMFilterMgr::process( KMMessage * msg, KMFilter * filter ) {
+  if ( !msg || !filter )
+    return 1;
 
-    KMFolder * parent=0;
+  // remove msg from parent in case we want to move it:
+  KMFolder * parent = msg->parent();
+  if ( parent )
+    parent->removeMsg( parent->find( msg ) );
+  msg->setParent( 0 );
 
-    QPtrListIterator<KMFilter> it(*this);
-    for ( it.toFirst() ; !stopIt && it.current() ; ++it ) {
+  bool stopIt = false;
+  int result;
+  switch( filter->execActions( msg, stopIt ) ) {
+  case KMFilter::CriticalError:
+    return 2;
+  case KMFilter::MsgExpropriated:
+    result = 0;
+    break;
+  default:
+    result = 1;
+    break;
+  }
 
-      if ( ( (aSet&Outbound) && (*it)->applyOnOutbound() ) ||
-  	   ( (aSet&Inbound)  && (*it)->applyOnInbound() ) ||
-	   ( (aSet&Explicit) && (*it)->applyOnExplicit() ) ) {
+  // readd message if it wasn't moved:
+  if ( parent && !msg->parent() && parent->addMsg( msg ) != 0 )
+    kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+
+  return result;
+}
+
+int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
+  if ( bPopFilter )
+    return processPop( msg );
+
+  if ( set == NoSet ) {
+    kdDebug(5006) << "KMFilterMgr: process() called with not filter set selected"
+		  << endl;
+    return 1;
+  }
+
+  bool stopIt = false;
+  int status = -1;
+  bool msgTaken = false; // keep track of whether we removeMsg'ed already
+
+  KMFolder * parent=0;
+
+  for ( QPtrListIterator<KMFilter> it(*this) ; !stopIt && it.current() ; ++it ) {
+
+    if ( ( (set&Outbound) && (*it)->applyOnOutbound() ) ||
+	 ( (set&Inbound)  && (*it)->applyOnInbound() ) ||
+	 ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
 	// filter is applicable
 
-      if ( (filter && (*it == filter)) ||
-	   (!filter && (*it)->pattern()->matches( msg ) )) {
-	  // filter matches
+      if ( (*it)->pattern()->matches( msg ) ) {
+	// filter matches
 
-	  // remove msg from parent in case we want to move it; make
-	  // sure we only do these things once:
-	  if ( !msgTaken ) {
-	    parent = msg->parent();
-	    if (msg->parent())
-		msg->parent()->removeMsg( msg->parent()->find( msg ) );
-	    msg->setParent( 0 );
-	    msgTaken = true;
-	  }
+	// remove msg from parent in case we want to move it; make
+	// sure we only do these things once:
+	if ( !msgTaken ) {
+	  parent = msg->parent();
+	  if ( msg->parent() )
+	    msg->parent()->removeMsg( msg->parent()->find( msg ) );
+	  msg->setParent( 0 );
+	  msgTaken = true;
+	}
 
-	  // execute actions:
-	  switch ( (*it)->execActions(msg, stopIt) ) {
-	  case KMFilter::CriticalError:
-	    // Critical error - immediate return
-  	    return 2;
-	  case KMFilter::MsgExpropriated:
-	    // Message saved in a folder
-	    status = 0;
-	  default:
-	    break;
-	  }
+	// execute actions:
+	switch ( (*it)->execActions(msg, stopIt) ) {
+	case KMFilter::CriticalError:
+	  // Critical error - immediate return
+	  return 2;
+	case KMFilter::MsgExpropriated:
+	  // Message saved in a folder
+	  status = 0;
+	default:
+	  break;
+	}
 
-        }
       }
     }
-
-    // readd the message if it wasn't moved:
-    int rc = 0;
-    if ( msgTaken && parent && !msg->parent() ) {
-      rc = parent->addMsg( msg );
-    if (rc)
-      kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
-    }
-/*
-QFile fileD1( "testdat_xx-kmfiltermngr-1" );
-if( fileD1.open( IO_WriteOnly ) ) {
-    QDataStream ds( &fileD1 );
-    ds.writeRawBytes( msg->asString(), msg->asString().length() );
-    fileD1.close();  // If data is 0 we just create a zero length file.
-}
-*/
-    if (status < 0) // No filters matched, keep copy of message
-      status = 1;
-
-    return status;
   }
+
+  // readd the message if it wasn't moved:
+  if ( msgTaken && parent && !msg->parent() ) {
+    int rc = parent->addMsg( msg );
+    if ( rc )
+      kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+  }
+  if (status < 0) // No filters matched, keep copy of message
+    status = 1;
+
+  return status;
 }
 
 
