@@ -428,6 +428,15 @@ void KMComposeWin::readConfig(void)
     mTransport->setEditText( currentTransport );
 
   kernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
+  for ( unsigned int i = 0; i < mFolderList.count(); i++ )
+  {
+      KMFolder *cur = *mFolderList.at( i );
+      if ( cur == kernel->outboxFolder() )
+      {
+          mFolderList.remove( mFolderList.at( i ) );
+          mFolderNames.remove( mFolderNames.at( i ) );
+      }
+  }
   mFcc->insertStringList( mFolderNames );
 
   if ( !mBtnFcc->isChecked() )

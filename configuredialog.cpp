@@ -1611,6 +1611,16 @@ void ConfigureDialog::setupIdentityPage( void )
   mIdentity.mActiveIdentity = "";
   // populate fcc folder list
   kernel->folderMgr()->createI18nFolderList(&mIdentity.mFolderNames, &mIdentity.mFolderList);
+  for ( unsigned int i = 0; i < mIdentity.mFolderList.count(); i++ )
+  {
+      KMFolder *cur = *mIdentity.mFolderList.at( i );
+      if ( cur == kernel->outboxFolder() )
+      {
+          mIdentity.mFolderList.remove( mIdentity.mFolderList.at( i ) );
+          mIdentity.mFolderNames.remove( mIdentity.mFolderNames.at( i ) );
+      }
+  }
+
   mIdentity.fccCombo->insertStringList(mIdentity.mFolderNames);
 
   slotIdentitySelectorChanged(); // This will trigger an update
@@ -2541,8 +2551,6 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   //
   bool useSignatureFile;
   IdentityEntry *entry = mIdentityList.get( mIdentity.mActiveIdentity );
-
-  kernel->folderMgr()->createI18nFolderList(&mIdentity.mFolderNames, &mIdentity.mFolderList);
 
   if( entry == 0 )
   {
