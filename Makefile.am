@@ -37,6 +37,7 @@ appsdir = $(kde_appsdir)/Internet/
 install-data-local:
 	$(mkinstalldirs) $(appsdir)
 	$(INSTALL_DATA) KMail.kdelnk $(appsdir)
+	$(mkinstalldirs) $(kde_icondir)	
 	$(INSTALL_DATA) kmail.xpm $(kde_icondir)/kmail.xpm
 	$(mkinstalldirs) $(kde_minidir)
 	$(INSTALL_DATA) mini-kmail.xpm $(kde_minidir)/kmail.xpm
