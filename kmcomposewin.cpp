@@ -354,6 +354,11 @@ void KMComposeView::detachFile(int , int)
 {
 }
 
+void KMComposeView::slotSelectFont()
+{
+  editor->selectFont();
+}
+
 //-----------------------------------------------------------------------------
 void KMComposeView::insertFile()
 {
@@ -505,19 +510,17 @@ void KMComposeWin::setupMenuBar()
   menuBar->insertItem(nls->translate("Attach"),amenu);
 
   QPopupMenu *omenu = new QPopupMenu();
-  //  omenu->insertItem(nls->translate("General S&ettings"),this,SLOT(setSettings()),ALT+Key_E);
   omenu->insertItem(nls->translate("Toggle T&oolbar"),this,SLOT(toggleToolBar()),ALT+Key_O);
+  omenu->insertItem(nls->translate("Change &Font"),this,SLOT(slotSelectFont()),ALT+Key_F);
   omenu->setItemChecked(omenu->idAt(2),TRUE);
   menuBar->insertItem(nls->translate("Options"),omenu);
   menuBar->insertSeparator();
 
-#ifdef REMOVED
   QPopupMenu *hmenu = new QPopupMenu();
   hmenu->insertItem(nls->translate("Help"),this,SLOT(invokeHelp()),ALT + Key_H);
   hmenu->insertSeparator();
   hmenu->insertItem(nls->translate("About"),parent(),SLOT(about()));
   menuBar->insertItem(nls->translate("Help"),hmenu);
-#endif
 
   setMenu(menuBar);
 }

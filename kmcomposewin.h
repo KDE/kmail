@@ -80,6 +80,7 @@ private slots:
   void cutText();
   void pasteText();
   void markAll();
+  void slotSelectFont();
   void toDo();
   void newComposer();
   void appendSignature();
