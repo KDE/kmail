@@ -205,8 +205,6 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
     if ((*it).data.size() > 0) {
       QString uid = mMsg->headerField("X-UID");
       size = mMsg->headerField("X-Length").toULong();
-      (*it).data.resize((*it).data.size() + 1);
-      (*it).data[(*it).data.size() - 1] = '\0';
       mMsg->fromByteArray( (*it).data );
       //int idx = mFolder->find(mMsg);
       //if( idx >= 0 ) mFolder->take(idx);
