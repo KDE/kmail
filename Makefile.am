@@ -40,7 +40,7 @@ kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_LDADD   = libkmailprivate.la
 
 libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
-		configuredialog_p.cpp cryptplugconfigdialog.cpp \
+		configuredialog_p.cpp \
 		simplestringlisteditor.cpp kmmsgindex.cpp \
 		identitydrag.cpp identitylistview.cpp identitydialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
