@@ -792,7 +792,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     }
   }
   
-  mViewer->write("<div name=\"header\" style=\"margin-bottom: 1em;\">" + (writeMsgHeader()) + "</div>");
+  mViewer->write("<div id=\"header\" style=\"margin-bottom: 1em;\">" + (writeMsgHeader()) + "</div>");
 
   if (numParts > 0)
   {
@@ -985,7 +985,7 @@ QString KMReaderWin::writeMsgHeader()
 
 
     // the subject line
-    headerStr = QString("<div name=\"foo\" style=\"background: %1; "
+    headerStr = QString("<div id=\"foo\" style=\"background: %1; "
                         "color: %2; padding: 4px; "
                         "border: solid %3 1px;\">"
                         "<b>%5</b></div>")
@@ -1009,7 +1009,7 @@ QString KMReaderWin::writeMsgHeader()
                             .arg(foreground));
 
     // from line
-    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2%3%4</td</tr>")
+    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2%3%4</td></tr>")
                             .arg(i18n("From: "))
                             .arg(KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE))
                             .arg((mVcnum < 0) ?
@@ -1022,20 +1022,20 @@ QString KMReaderWin::writeMsgHeader()
                                    ")"));
 
     // to line
-    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td</tr>")
+    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td></tr>")
                             .arg(i18n("To: "))
                             .arg(KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE)));
 
     // cc line, if any
     if (!mMsg->cc().isEmpty())
     {
-      headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td</tr>")
+      headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td></tr>")
                               .arg(i18n("Cc: "))
                               .arg(KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE)));
     }
 
     // the date
-    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td</tr>")
+    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td></tr>")
                             .arg(i18n("Date: "))
                             .arg(strToHtml(mMsg->dateStr())));
     headerStr.append("</table></div>");
