@@ -32,7 +32,7 @@
 #define KMAILHEADERLISTQUICKSEARCH_H
 
 #include "kmmsgbase.h" // for KMMsgStatus
-#include <klistviewsearchline_pimcopy.h>
+#include <klistviewsearchline.h>
 class QComboBox;
 class QLabel;
 class KListView;
@@ -40,7 +40,7 @@ class KActionCollection;
 
 namespace KMail {
 
-class HeaderListQuickSearch : public KPIM::KListViewSearchLine
+class HeaderListQuickSearch : public KListViewSearchLine
 {
 Q_OBJECT
 public:
