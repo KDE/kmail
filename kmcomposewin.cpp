@@ -1844,7 +1844,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
         if( result == Kpgp::Ok ) {
           if( newBodyPart.name().isEmpty() )
             newBodyPart.setName("signed message part");
-          newBodyPart.setCharset( oldBodyPart.charset() );
+          newBodyPart.setCharset( mCharset );
         } else
           KMessageBox::sorry(this, mErrorProcessingStructuringInfo );
       }
