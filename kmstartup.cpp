@@ -33,7 +33,7 @@ void kmsignalHandler(int sigId)
   kmsetSignalHandler(SIG_DFL);
   fprintf(stderr, "*** KMail got signal %d (Exiting)\n", sigId);
   // try to cleanup all windows
-  kernel->dumpDeadLetters();
+  if (kernel) kernel->dumpDeadLetters();
   ::exit(-1); //
 }
 
