@@ -44,9 +44,7 @@ public slots:
   void markAll();
 
 private:
-  /*int cursorPos;
-  int offset;
-  QString tbuf;*/
+
 protected:
   virtual void mousePressEvent(QMouseEvent *);
 };
@@ -144,7 +142,10 @@ protected:
   virtual const QString bcc(void) const { return mEdtBcc.text(); }
   virtual const QString from(void) const { return mEdtFrom.text(); }
   virtual const QString replyTo(void) const { return mEdtReplyTo.text(); }
+  virtual const QString newsgroups(void) const { return mEdtNewsgroups.text(); }
+  virtual const QString followupTo(void) const { return mEdtFollowupTo.text(); }
 
+  
   /** Save settings upon close. */
   virtual void closeEvent(QCloseEvent*);
 
@@ -164,7 +165,11 @@ protected:
   QWidget   mMainWidget;
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
-
+  /* start Added for KRN */
+  KMLineEdit mEdtNewsgroups, mEdtFollowupTo;
+  QLabel     mLblNewsgroups, mLblFollowupTo;
+  /* end Added for KRN */
+  
   QPopupMenu* mMnuView;
   KEdit* mEditor;
   QGridLayout* mGrid;
