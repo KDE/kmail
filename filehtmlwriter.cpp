@@ -71,6 +71,7 @@ namespace KMail {
 
   void FileHtmlWriter::write( const QString & str ) {
     mStream << str;
+    flush();
   }
 
   void FileHtmlWriter::queue( const QString & str ) {
