@@ -8,6 +8,10 @@
 // Could be extended to include support for normal main window
 // widgets like a toolbar.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <qaccel.h>
 #include <kapplication.h>
 #include <klocale.h>

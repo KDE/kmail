@@ -20,6 +20,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <qbuttongroup.h>
 #include <qlayout.h>
 #include <qradiobutton.h>

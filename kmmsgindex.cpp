@@ -1,6 +1,10 @@
 // Author: Sam Magnuson <zachsman@wiw.org>
 // License GPL -- indexing logic for KMail
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmmsgindex.h"
 
 #include "kmsearchpattern.h"

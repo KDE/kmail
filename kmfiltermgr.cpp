@@ -2,6 +2,10 @@
 // kmfiltermgr.cpp
 
 // my header
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmfiltermgr.h"
 
 // other kmail headers

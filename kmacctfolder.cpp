@@ -1,5 +1,9 @@
 // kmacctfolder.cpp
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmacctfolder.h"
 #include "kmacctmgr.h"
 #include <stdlib.h>

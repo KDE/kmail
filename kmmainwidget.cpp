@@ -2,6 +2,10 @@
 // kmmainwidget.cpp
 //#define MALLOC_DEBUG 1
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <kwin.h>
 
 #ifdef MALLOC_DEBUG

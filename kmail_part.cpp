@@ -23,6 +23,10 @@
     without including the source code for Qt in the source distribution.
 */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmail_part.h"
 
 #include "kmmainwin.h"

@@ -27,6 +27,10 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "folderIface.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"

@@ -32,6 +32,10 @@
 // config keys:
 static const char configKeyDefaultIdentity[] = "Default Identity";
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "identitymanager.h"
 
 #include "kmidentity.h" // for IdentityList::{export,import}Data

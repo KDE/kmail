@@ -30,6 +30,10 @@
  *  your version.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "cachedimapjob.h"
 
 #include "kmfoldermgr.h"

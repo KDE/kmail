@@ -1,6 +1,10 @@
 // -*- mode: C++; c-file-style: "gnu" -*-
 // kmidentity.cpp
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmidentity.h"
 #include "kfileio.h"
 #include "kmkernel.h"

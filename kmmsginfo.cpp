@@ -1,5 +1,9 @@
 // kmmsginfo.cpp
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmmsginfo.h"
 #include "kmmessage.h"
 //#include "kmmsgpart.h" // for encode

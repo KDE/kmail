@@ -1,6 +1,10 @@
 /* simple hash table for kmail.  inspired by QDict */
 /* Author: Ronen Tzur <rtzur@shani.net> */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmdict.h"
 
 #include <string.h>

@@ -1,6 +1,10 @@
 // kfileio.cpp
 // Author: Stefan Taferner <taferner@kde.org>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <kmessagebox.h>
 #include <kdebug.h>
 

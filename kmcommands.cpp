@@ -25,6 +25,10 @@
 //
 // The type of async operation supported by KMCommand is retrieval
 // of messages from an IMAP server.
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <errno.h>
 #include <mimelib/enum.h>
 #include <mimelib/field.h>

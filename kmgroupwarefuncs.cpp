@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmgroupwarefuncs.h"
 
 #include <stdlib.h>

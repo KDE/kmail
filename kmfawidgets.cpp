@@ -2,6 +2,10 @@
 // Copyright: (c) 2001 Marc Mutz <mutz@kde.org>
 // License: GNU Genaral Public License
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmfawidgets.h"
 
 #include <kabc/addresseedialog.h> // for the button in KMFilterActionWithAddress
