@@ -227,9 +227,9 @@ kdDebug(5006) << "html" << endl;
                 writeHTMLStr(     "<table border=1 cellpadding=20><tr><td align=center>");
                 writeHTMLStr(i18n("Data is shown in <b>HTML source mode</b> because<br>"
                                   "mail contains <i>no plain text version</i> of it."));
-                writeHTMLStr(     "<br>&nbsp;<br><b>");
-                writeHTMLStr(i18n("This is the default - and save - behavior of KMail."));
-                writeHTMLStr(     "</b><br>&nbsp;<br><font size=-1>");
+                writeHTMLStr(     "<br>&nbsp;<br>");
+                writeHTMLStr(i18n("This is the default - and safe - behavior of KMail."));
+                writeHTMLStr(     "<br>&nbsp;<br><font size=-1>");
                 writeHTMLStr(i18n("To enable HTML rendering at your own risk<br>"
                                   "use respective &quot;Folder&quot; menu option."));
                 writeHTMLStr(     " </font></td></tr></table>&nbsp;<br>&nbsp;<br>");
