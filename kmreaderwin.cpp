@@ -611,7 +611,8 @@ void KMReaderWin::update( KMail::Interface::Observable * observable ) {
 		    false, false, true );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
 
-  // and now? redisplay, perhaps??
+  // no need to redisplay here as we only replaced the tmp file so that
+  // the desired function (e.g. save) can work with it
 }
 
 //-----------------------------------------------------------------------------
