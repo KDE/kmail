@@ -493,33 +493,32 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   shProc << commandLine;
 
   // run process:
-  if ( !withOutput ) { // "execute command" filter action -> fire and forget
-    if ( shProc.start( KProcess::DontCare, KProcess::NoCommunication ) )
-      return GoOn;
+  if ( !shProc.start( KProcess::Block,
+                      withOutput ? KProcess::Stdout
+                                 : KProcess::NoCommunication ) )
+    return ErrorButGoOn;
+
+  if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
+    return ErrorButGoOn;
+  }
+
+  if ( withOutput ) {
+    // read altered message:
+    QByteArray msgText = shProc.collectedStdout();
+
+    if ( !msgText.isEmpty() ) {
+    /* If the pipe through alters the message, it could very well
+       happen that it no longer has a X-UID header afterwards. That is
+       unfortunate, as we need to removed the original from the folder
+       using that, and look it up in the message. When the (new) message
+       is uploaded, the header is stripped anyhow. */
+      QString uid = aMsg->headerField("X-UID");
+      aMsg->fromByteArray( msgText );
+      aMsg->setHeaderField("X-UID",uid);
+    }
     else
       return ErrorButGoOn;
   }
-
-  if ( !shProc.start( KProcess::Block, KProcess::Stdout ) ||
-       !shProc.normalExit() || shProc.exitStatus() != 0 )
-    return ErrorButGoOn;
-
-  // read altered message:
-  QByteArray msgText = shProc.collectedStdout();
-
-  if ( !msgText.isEmpty() ) {
-  /* If the pipe through alters the message, it could very well
-     happen that it no longer has a X-UID header afterwards. That is
-     unfortunate, as we need to removed the original from the folder
-     using that, and look it up in the message. When the (new) message
-     is uploaded, the header is stripped anyhow. */
-    QString uid = aMsg->headerField("X-UID");
-    aMsg->fromByteArray( msgText );
-    aMsg->setHeaderField("X-UID",uid);
-  }
-  else
-    return ErrorButGoOn;
-
   return GoOn;
 }
 
