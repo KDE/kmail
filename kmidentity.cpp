@@ -34,7 +34,8 @@ void KMIdentity::readConfig(void)
 {
   KConfig* config = kapp->getConfig();
   struct passwd* pw;
-  char  str[80];
+  char str[80];
+  int i;
 
   config->setGroup("Identity");
 
@@ -46,6 +47,8 @@ void KMIdentity::readConfig(void)
     {
       mFullName = pw->pw_gecos;
       mFullName.detach();
+      i = mFullName.find(',');
+      if (i>0) mFullName.truncate(i);
     }
   }
 

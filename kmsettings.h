@@ -54,7 +54,6 @@ private slots:
   void setDefaults();
 
 private:
-  QWidget *identityTab,*networkTab;
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;

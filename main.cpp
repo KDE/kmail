@@ -130,6 +130,32 @@ static void transferMail(void)
 
 
 //-----------------------------------------------------------------------------
+static void initFolders(KConfig* cfg)
+{
+  QString name;
+
+  name = cfg->readEntry("inboxFolder");
+  if (name.isEmpty()) name = getenv("MAIL");
+  if (name.isEmpty()) name = "inbox";
+  
+  inboxFolder  = (KMFolder*)folderMgr->findOrCreate(name);
+  //inboxFolder->open();
+
+  outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
+  outboxFolder->setType("out");
+  outboxFolder->open();
+
+  sentFolder = folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
+  sentFolder->setType("st");
+  sentFolder->open();
+
+  trashFolder  = folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
+  trashFolder->setType("tr");
+  trashFolder->open();
+}
+
+
+//-----------------------------------------------------------------------------
 static void init(int argc, char *argv[])
 {
   QString  acctPath, foldersPath;
@@ -166,21 +192,7 @@ static void init(int argc, char *argv[])
   filterActionDict = new KMFilterActionDict;
   addrBook  = new KMAddrBook;
 
-  inboxFolder  = (KMFolder*)folderMgr->findOrCreate(
-				         cfg->readEntry("inboxFolder", "inbox"));
-  //inboxFolder->open();
-
-  outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
-  outboxFolder->setType("out");
-  outboxFolder->open();
-
-  sentFolder   = folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent_mail"));
-  sentFolder->setType("st");
-  sentFolder->open();
-
-  trashFolder  = folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
-  trashFolder->setType("tr");
-  trashFolder->open();
+  initFolders(cfg);
 
   acctMgr->readConfig();
   filterMgr->readConfig();

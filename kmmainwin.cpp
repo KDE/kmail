@@ -706,7 +706,8 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(nls->translate("&Settings..."), this, 
 		       SLOT(slotSettings()));
   fileMenu->insertItem(nls->translate("&Filter..."), this, 
-		       SLOT(slotFilter()));
+		       // SLOT(slotFilter()));
+		       SLOT(slotUnimplemented()));
   fileMenu->insertItem(nls->translate("&Addressbook..."), this, 
 		       SLOT(slotAddrBook()));
   fileMenu->insertSeparator();

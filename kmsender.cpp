@@ -22,7 +22,7 @@
 #define SENDER_GROUP "sending mail"
 
 // uncomment the following line for SMTP debug output
-//#define SMTP_DEBUG_OUTPUT
+#define SMTP_DEBUG_OUTPUT
 
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
@@ -530,31 +530,15 @@ bool KMSendSMTP::smtpSend(KMMessage* msg)
   smtpDebug("MAIL");
   if(replyCode != 250) return smtpFailed("MAIL", replyCode);
 
-  smtpInCmd("RCPT");
-  replyCode = mClient->Rcpt(msg->to()); // Send RCPT command
-  smtpDebug("RCPT");
-  if(replyCode != 250 && replyCode != 251) 
-    return smtpFailed("RCPT", replyCode);
+  if (!smtpSendRcptList(msg->to())) return FALSE;
 
-  if(!msg->cc().isEmpty())  // Check if cc is set.
-  {
-    smtpInCmd("RCPT");
-    replyCode = mClient->Rcpt(msg->cc()); // Send RCPT command
-    smtpDebug("RCPT");
-    if(replyCode != 250 && replyCode != 251)
-      return smtpFailed("RCPT", replyCode);
-  }
+  if(!msg->cc().isEmpty())
+    if (!smtpSendRcptList(msg->cc())) return FALSE;
 
-  if(!msg->bcc().isEmpty())  // Check if bcc ist set.
-  {
-    smtpInCmd("RCPT");
-    replyCode = mClient->Rcpt(msg->bcc()); // Send RCPT command
-    smtpDebug("RCPT");
-    if(replyCode != 250 && replyCode != 251)
-      return smtpFailed("RCPT", replyCode);
-  }
+  if(!msg->bcc().isEmpty())
+    if (!smtpSendRcptList(msg->bcc())) return FALSE;
 
-  app->processEvents(1000);
+  app->processEvents(500);
 
   smtpInCmd("DATA");
   replyCode = mClient->Data(); // Send DATA command
@@ -567,6 +551,35 @@ bool KMSendSMTP::smtpSend(KMMessage* msg)
   smtpDebug("<body>");
   if(replyCode != 250 && replyCode != 251)
     return smtpFailed("<body>", replyCode);
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMSendSMTP::smtpSendRcptList(const QString aRecipients)
+{
+  QString receiver;
+  int index, lastindex, replyCode;
+
+  lastindex = -1;
+  do
+  {
+    index = aRecipients.find(",",lastindex+1);
+    receiver = aRecipients.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
+    if (!receiver.isEmpty())
+    {
+      smtpInCmd("RCPT");
+      replyCode = mClient->Rcpt(receiver);
+      smtpDebug("RCPT");
+
+      if(replyCode != 250 && replyCode != 251)
+	return smtpFailed("RCPT", replyCode);
+
+      lastindex = index;
+    }
+  }
+  while (lastindex > 0);
 
   return TRUE;
 }

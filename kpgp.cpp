@@ -617,11 +617,9 @@ Kpgp::runPGP(int action, const char* args)
     close(errfd);
   }
 
-#ifdef TESTING
   unlink(inName.data());
   unlink(outName.data());
   unlink(errName.data());
-#endif
 
   debug("pgp: parsing results");
   return parseInfo(action);

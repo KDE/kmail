@@ -63,7 +63,6 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
     mBasePath = "";
     mBasePath.append(aBasePath);
   }
-
   mBasePath.detach();
 
   dir.setPath(mBasePath);
@@ -81,6 +80,10 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
     fld.close();
 
     fld.setName("outbox");
+    fld.create();
+    fld.close();
+
+    fld.setName("sent-mail");
     fld.create();
     fld.close();
 

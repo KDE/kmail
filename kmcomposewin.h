@@ -16,6 +16,9 @@
 #include <qpalette.h>
 #include <kmsgbox.h>
 #include "kmmsgpart.h"
+#ifdef HAS_KSPELL
+#include <kspell.h>
+#endif
 
 class QLineEdit;
 class QGridLayout;
@@ -29,6 +32,8 @@ class KToolBar;
 class KStatusBar;
 class QPushButton;
 class QCloseEvent;
+class KSpell;
+class KSpellConfig;
 
 typedef QList<KMMessagePart> KMMsgPartList;
 
@@ -122,14 +127,33 @@ public slots:
   void slotAttachSave();
   void slotAttachProperties();
 
+  /** Message flags. */
+  void slotToggleConfirmDelivery();
+  void slotToggleConfirmRead();
+  void slotSetPriHigh();
+  void slotSetPriNormal();
+  void slotSetPriLow();
+
   /** Change visibility of a header field. */
   void slotMenuViewActivated(int id);
+
+  /** Open addressbook editor dialog. */
+  void slotAddrBook();
 
   /** Select an email from the addressbook and add it to the line
     the pressed button belongs to. */
   void slotAddrBookTo();
   void slotAddrBookCc();
   void slotAddrBookBcc();
+  void slotAddrBookFrom();
+  void slotAddrBookReplyTo();
+
+  /** Check spelling of text. */
+  void slotSpellcheck();
+  void slotSpellcheck2(KSpell*);
+  void slotSpellResult(char* newtext);
+  void slotSpellCorrected(char *originalword, char *newword, long pos);
+  void slotSpellMispelling (char *word, QStrList *, long pos);
 
 protected:
   /** Install grid management and header fields. If fields exist that
@@ -185,13 +209,13 @@ protected:
   QWidget   mMainWidget;
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
-  QPushButton mBtnTo, mBtnCc, mBtnBcc;
+  QPushButton mBtnTo, mBtnCc, mBtnBcc, mBtnFrom, mBtnReplyTo;
   /* start Added for KRN */
   KMLineEdit mEdtNewsgroups, mEdtFollowupTo;
   QLabel     mLblNewsgroups, mLblFollowupTo;
   /* end Added for KRN */
   
-  QPopupMenu* mMnuView;
+  QPopupMenu *mMnuView, *mMnuOptions;
   KEdit* mEditor;
   QGridLayout* mGrid;
   KDNDDropZone *mDropZone;
@@ -208,8 +232,14 @@ protected:
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;
-  int mBtnIdSign, mBtnIdEncrypt;
+  short mBtnIdSign, mBtnIdEncrypt;
+  short mMnuIdPriHigh, mMnuIdPriNormal, mMnuIdPriLow;
+  short mMnuIdConfDeliver, mMnuIdConfRead;
   QString mForeColor, mBackColor;
+#ifdef HAS_KSPELL
+  KSpell* mKSpell;
+  KSpellConfig* mKSpellConfig;
+#endif
 
 private:
   QColor foreColor,backColor;

@@ -26,6 +26,7 @@
 #include <qstring.h>
 #include <errno.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <string.h>
 #include <qbitmap.h>
 #include <qcursor.h>
@@ -379,8 +380,8 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if (ch=='\n' || ch=='\0')
     {
       *pos = '\0';
-      line = strToHtml(beg);
-      *pos='\n';
+      line = strToHtml(beg,TRUE,TRUE);
+      *pos = '\n';
       if (quoted && !lastQuoted) line.prepend("<I>");
       else if (!quoted && lastQuoted) line.prepend("</I>");
 
@@ -428,18 +429,37 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
 
 //-----------------------------------------------------------------------------
-const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
+const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
+				     bool aPreserveBlanks) const
 {
-  QString htmlStr, qpstr, iStr,tStr;
+  QString htmlStr, qpstr, iStr;
   char ch, *pos, str[256];
-  int i,i1;
+  int i,i1, x;
 
   if (aDecodeQP) qpstr = KMMsgBase::decodeQuotedPrintableString(aStr);
   else qpstr = aStr;
 
-  for (pos=qpstr.data(); *pos; pos++)
+  for (pos=qpstr.data(),x=0; *pos; pos++,x++)
   {
     ch = *pos;
+    if (aPreserveBlanks)
+    {
+      if (ch==' ')
+      {
+	htmlStr += "&nbsp;";
+	continue;
+      }
+      else if (ch=='\t')
+      {
+	do
+	{
+	  htmlStr += "&nbsp;";
+	  x++;
+	}
+	while((x&7) != 0);
+      }
+      else aPreserveBlanks = FALSE;
+    }
     if (ch=='<') htmlStr += "&lt;";
     else if (ch=='>') htmlStr += "&gt;";
     else if (ch=='&') htmlStr += "&amp;";
@@ -459,21 +479,21 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
     }
     else if (ch=='@')
       {
-	for (i=0; *pos && *pos > ' ' && i<255; i++, pos--);
+	for (i=0; *pos && (isalnum(*pos) || *pos=='@' || *pos=='.' ||
+			   *pos=='-') && i<255; i++, pos--)
+	{
+	}
 	i1 = i;
 	pos++; 
-	for (i=0; *pos && *pos > ' ' && i<255; i++, pos++)
+	for (i=0; *pos && (isalnum(*pos)||*pos=='@' || *pos=='.' ||
+			   *pos=='-') && i<255; i++, pos++)
+	{
 	  iStr += *pos;
+	}
 	pos--; 
-	tStr = iStr.copy();
-	tStr.prepend("<A HREF=\"mailto:");
-	tStr += "\">";
-	tStr.append(iStr);
-	tStr += "</A>";
-	htmlStr.truncate(htmlStr.length() -i1);
-	htmlStr += tStr + " " ;
+	htmlStr.truncate(htmlStr.length() - i1 + 1);
+	htmlStr += "<A HREF=\"mailto:" + iStr + "\">" + iStr + "</A>";
 	iStr = "";
-	tStr = "";
       }	
 
     else htmlStr += ch;

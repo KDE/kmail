@@ -198,7 +198,8 @@ protected:
   virtual bool smtpFailed(const char* inCommand, int replyCode);
   virtual void smtpDebug(const char* inCommand);
   virtual void smtpInCmd(const char* inCommand);
-
+  virtual bool smtpSendRcptList(const QString recipients);
+  
   void (*mOldHandler)(int);
   DwSmtpClient* mClient;
 };

@@ -143,7 +143,6 @@ void KMSettings::createTabIdentity(QWidget* parent)
   grid->setColStretch(1,1);
   grid->setColStretch(2,0);
 
-  identityTab = tab;
   addTab(tab, nls->translate("Identity"));
   grid->activate();
 }
@@ -161,8 +160,6 @@ void KMSettings::createTabNetwork(QWidget* parent)
   QLabel* label;
   KMAccount* act;
   QString str;
-
-  networkTab = tab;
 
   //---- group: sending mail
   bgrp = new QButtonGroup(nls->translate("Sending Mail"), tab);

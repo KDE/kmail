@@ -124,8 +124,6 @@ void KMFolderTree::doFolderSelected(int index, int)
 {
   KMFolder* folder;
 
-  printf("KMFolderTree::doFolderSelected(%d)\n", index);
-
   if (index < 0) return;
 
   folder = (KMFolder*)mList.at(index);
