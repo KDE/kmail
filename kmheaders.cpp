@@ -196,14 +196,14 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	setMsgRead(id);
 	setCurrentItem(id);
 	makeHeaderVisible();
-	updateItem(id, FALSE);
+	updateItem(id, TRUE);
       }
       else
       {
+	setMsgRead(mCurrentItem);
 	setTopItem(mTopItem);
 	setCurrentItem(mCurrentItem);
-	setMsgRead(mCurrentItem);
-	updateItem(mCurrentItem, FALSE);
+	updateItem(mCurrentItem, TRUE);
       }
     }
     else setCurrentItem(0);

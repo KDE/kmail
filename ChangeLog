@@ -1,4 +1,7 @@
-1999-02-10  Stefan Taferner  <taferner@kde.org>
+1999-02-10  Stefan Taferner  <taferner@kde.org> (KMail-1.1.1)
+
+	* Bugfix: new/unread messages that are displayed upon selecting
+	of a folder are now properly displayed as read.
 
 	* Bugfix: filter-dialog: up/down moving (esp. of last entry)
 	now works properly
