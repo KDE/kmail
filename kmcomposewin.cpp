@@ -2548,7 +2548,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 		    dialog.setCaption( caption );
 		}
 		certificate[iZ] = '\0';
-		QString s = &certificate[iA];
+		QString s = QString::fromUtf8( &certificate[iA] );
 		certificate[iZ] = c;
 		if( useDialog )
 		    dialog.entriesLB->insertItem( s );
