@@ -154,6 +154,9 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
   else if (stricmp(aType,"experimental pop")==0) 
     act = new KMAcctExpPop(this, aName);
 
+  else if (stricmp(aType,"advanced pop")==0) 
+    act = new KMAcctExpPop(this, aName);
+
   if (act) 
   {
     mAcctList.append(act);
