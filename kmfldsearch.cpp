@@ -396,7 +396,7 @@ void KMFldSearch::searchInAllFolders(void)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::slotFolderActivated(int nr)
+void KMFldSearch::slotFolderActivated(int /*nr*/)
 {
   KMFolder* folder = mCbxFolders->getFolder();
   
