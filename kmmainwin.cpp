@@ -177,7 +177,11 @@ void KMMainWin::slotConfigChanged()
 }
 
 //-----------------------------------------------------------------------------
-bool KMMainWin::queryClose() {
+bool KMMainWin::queryClose() 
+{
+  if ( kapp->sessionSaving() )
+    writeConfig();
+
   if ( kmkernel->shuttingDown() || kapp->sessionSaving() || mReallyClose )
     return true;
   return kmkernel->canQueryClose();
