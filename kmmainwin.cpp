@@ -949,12 +949,12 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
 //-----------------------------------------------------------------------------
 void KMMainWin::getAccountMenu()
 {
-  QStrList actList;
+  QStrList actList; // should be QStringList
 
   actMenu->clear();
   actList = acctMgr->getAccounts();
   QString tmp;
-  for(tmp = actList.first(); tmp ; tmp = actList.next())
+  for(tmp = actList.first(); !tmp.isNull() ; tmp = actList.next())
     actMenu->insertItem(tmp);
 }
 
