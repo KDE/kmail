@@ -655,8 +655,6 @@ void KMMainWidget::hide()
 //-----------------------------------------------------------------------------
 void KMMainWidget::show()
 {
-  if( mPanner1 ) mPanner1->setSizes( mPanner1Sep );
-  if( mPanner2 ) mPanner2->setSizes( mPanner2Sep );
   QWidget::show();
 }
 
