@@ -3131,8 +3131,8 @@ void KMMainWidget::clearFilterActions()
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
     mFilterTBarActions.clear();
   }
+  mApplyFilterActionsMenu->popupMenu()->clear();
   if ( !mFilterMenuActions.isEmpty() ) {
-    mApplyFilterActionsMenu->popupMenu()->clear();
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "menu_filter_actions" );
     mFilterMenuActions.clear();
