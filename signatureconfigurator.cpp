@@ -102,6 +102,7 @@ namespace KMail {
     mEditButton = new QPushButton( i18n("Edit &File"), page );
     connect( mEditButton, SIGNAL(clicked()), SLOT(slotEdit()) );
     mEditButton->setAutoDefault( false );
+    mEditButton->setEnabled( false ); // initially nothing to edit
     hlay->addWidget( mEditButton );
     page_vlay->addStretch( 1 ); // spacer
 
@@ -229,7 +230,7 @@ namespace KMail {
 
   void SignatureConfigurator::slotEdit() {
     QString url = mFileRequester->url().stripWhiteSpace();
-    // slotEnableSignatureButton should prevent this assert from being hit:
+    // slotEnableEditButton should prevent this assert from being hit:
     assert( !url.isEmpty() );
 
     (void)KRun::runURL( url, QString::fromLatin1("text/plain") );
