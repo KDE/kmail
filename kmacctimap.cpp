@@ -587,7 +587,7 @@ KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
     int a = cstr.find("\nX-UID: ");
     int b = cstr.find("\n", a);
     if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-    mData = cstr;
+    mData = cstr.replace(QRegExp("[^\r]\n"), "\r\n");
     account->makeConnection();
     KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
