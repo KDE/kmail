@@ -1456,7 +1456,7 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("H&eaders") );
+  addTab( mHeadersTab, i18n("M&essage List") );
 
   //
   // "System Tray" tab:
