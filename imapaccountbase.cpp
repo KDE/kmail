@@ -544,6 +544,14 @@ namespace KMail {
       kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no attachment strategy!" << endl;
       return;
     }
+    // check the size, if the message is smaller than 5KB then load it in one go
+    if ( msg->msgLength() < 5000 )
+    {
+      FolderJob *job = msg->parent()->createJob(
+          msg, FolderJob::tGetMessage, 0, "TEXT" );
+      job->start();
+      return;
+    }    
 
     // download parts according to attachmentstrategy
     BodyVisitor *visitor = BodyVisitorFactory::getVisitor( as );
