@@ -117,7 +117,7 @@ const QString& KMFolderDir::path(void) const
 bool KMFolderDir::reload(void)
 {
   QDir      dir;
-  //KMFolderDir* folderDir;
+  KMFolderDir* folderDir;
   KMFolder* folder;
   QFileInfo* fileInfo;
   QFileInfoList* fiList;
@@ -151,11 +151,9 @@ bool KMFolderDir::reload(void)
 
     else if (fileInfo->isDir()) // a directory
     {
-      // Ignore subfolders - they do not work anyway
-      debug ("Subfolder ignored");
-      continue;
-      //folderDir = new KMFolderDir(this, fname);
-      //append(folderDir);
+      folderDir = new KMFolderDir(this, fname);
+      append(folderDir);
+      folderDir->reload();
     }
 
     else // all other files are folders (at the moment ;-)

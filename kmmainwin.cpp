@@ -74,8 +74,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupStatusBar();
 
   // set active folder to `inbox' folder
-  idx = mFolderTree->indexOfFolder(inboxFolder);
-  if (idx>=0) mFolderTree->setCurrentItem(idx);
+  mFolderTree->setCurrentFolderNode(inboxFolder);
 
   connect(msgSender, SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
@@ -159,7 +158,7 @@ void KMMainWin::readConfig(void)
   {
     activatePanners();
     kbp->busy();
-    mFolderTree->setCurrentItem(mFolderTree->currentItem());
+    // mFolderTree->setCurrentItem(mFolderTree->currentItem());
     mMsgView->clear();
     mHeaders->setFolder(mFolder);
     kbp->idle();
@@ -445,7 +444,10 @@ void KMMainWin::slotCheckOneAccount(int item)
 
 }
 
-void KMMainWin::slotNewMail(KMAccount *) {
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotNewMail(KMAccount *)
+{
   mHeaders->sortAndShow();
 }
 
@@ -712,13 +714,12 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 {
   debug ("Entering folderSelected\n");
   if(!aFolder)
-    {
-      debug("KMMainWin::folderSelected(): aFolder == NULL");
-      return;
-    }
-    
-  if (mFolder == aFolder)
+  {
+    debug("KMMainWin::folderSelected(): aFolder == NULL");
     return;
+  }
+    
+  if (mFolder == aFolder) return;
 
   kbp->busy();
   mFolder = (KMFolder*)aFolder;

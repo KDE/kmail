@@ -263,7 +263,9 @@ protected:
     and FALSE otherwise. Returns TRUE if there is no index file, and
     TRUE if there is no contents (file). */
   virtual bool isIndexOutdated(void);
-      
+
+  /** Emits signals */
+  virtual void unreadChanged(void);
 
   FILE* mStream; // file with the messages
   FILE* mIndexStream; // table of contents file

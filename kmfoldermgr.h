@@ -17,6 +17,8 @@ class KMFolderMgr: public QObject
 {
   Q_OBJECT
 
+  friend class KMFolder;
+
 public:
   KMFolderMgr(const char* basePath);
   virtual ~KMFolderMgr();
@@ -57,6 +59,9 @@ signals:
     is meant to be emitted whenever the code using the folder-manager
     changed things. */
   void changed();
+
+  /** Emitted when the number of unread messages of a folder has changed. */
+  void unreadChanged(KMFolder*);
 
 protected:
   QString mBasePath;

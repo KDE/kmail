@@ -7,6 +7,7 @@
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmfolderdir.h"
+#include "kmfoldermgr.h"
 
 #include <kapp.h>
 #include <mimelib/mimepp.h>
@@ -653,7 +654,7 @@ KMMessage* KMFolder::take(int idx)
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew) {
     --unreadMsgs;
-    emit numUnreadMsgsChanged( this );
+    unreadChanged();
   }
   msg->setParent(NULL);
   mDirty = TRUE;
@@ -766,7 +767,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   if (aMsg->status()==KMMsgStatusUnread ||
       aMsg->status()==KMMsgStatusNew) {
     ++unreadMsgs;
-    emit numUnreadMsgsChanged( this );
+    unreadChanged();
   }
 
   assert(mStream != NULL);
@@ -899,7 +900,7 @@ int KMFolder::expunge(void)
   }
 
   unreadMsgs = 0;
-  emit numUnreadMsgsChanged( this );
+  unreadChanged();
   if (!mQuiet) emit changed();
   return 0;
 }
@@ -1046,6 +1047,13 @@ long KMFolder::countUnread(void)
 }
 
 //-----------------------------------------------------------------------------
+void KMFolder::unreadChanged(void)
+{
+  emit numUnreadMsgsChanged(this);
+  emit folderMgr->unreadChanged(this);
+}
+
+//-----------------------------------------------------------------------------
 void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   const KMMsgStatus newStatus)
 {
@@ -1060,7 +1068,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 
   if (deltaUnread != 0) {
      unreadMsgs += deltaUnread;
-     emit numUnreadMsgsChanged( this );
+     unreadChanged();
   }
 }
 
