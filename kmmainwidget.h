@@ -1,12 +1,17 @@
 /* kmail main window
- * Maintained by Stefan Taferner <taferner@kde.org>
- * This code is under the GPL
+ * Copyright 2002 Don Sanders <sanders@kde.org>
+ * Based on the work of Stefan Taferner <taferner@kde.org>
+ *
+ * License GPL
  */
-#ifndef __KMMAINWIN
-#define __KMMAINWIN
+#ifndef __KMMAINWIDGET
+#define __KMMAINWIDGET
 
-#include "kmtopwidget.h"
+#error dont use
+
 #include <kurl.h>
+#include <qlistview.h>
+#include "kmreaderwin.h" //for inline actions
 
 class KMFolder;
 class KMFolderDir;
@@ -14,52 +19,46 @@ class KMFolderTree;
 class KMFolderTreeItem;
 class KMMimePartTree;
 class KMHeaders;
-class KMReaderWin;
+class QVBoxLayout;
 class QSplitter;
 class QTextCodec;
-class QListViewItem;
 class KMenuBar;
-class KToolBar;
-class KStatusBar;
 class KMCommand;
 class KMMetaFilterActionCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
-class KMLittleProgressDlg;
 class KMFldSearch;
-class KAction;
 class KToggleAction;
 class KActionMenu;
 class KSelectAction;
 class KRadioAction;
 class KProgressDialog;
-class KMReaderMainWin;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
 template <typename T> class QGuardedPtr;
 
-namespace KIO {
+namespace KIO
+{
   class Job;
-};
-
-namespace KMail {
-  class Vacation;
 }
 
-#define KMMainWinInherited KMTopLevelWidget
+namespace KMail {
+    class Vacation;
+}
+
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
 
-class KMMainWin : public KMTopLevelWidget
+class KMMainWidget : public QWidget
 {
   Q_OBJECT
 
 public:
-  // the main window needs to have a name since else restoring the window
-  // settings by kwin doesn't work
-  KMMainWin(QWidget *parent = 0);
-  virtual ~KMMainWin();
+  KMMainWidget(QWidget *parent, const char *name,
+	       KActionCollection *actionCollection );
+  virtual ~KMMainWidget();
+  void destruct();
 
   /** Read configuration options before widgets are created. */
   virtual void readPreConfig(void);
@@ -80,36 +79,38 @@ public:
   KMReaderWin* messageView(void) const { return mMsgView; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
-  QPopupMenu* makeFolderMenu(KMFolderTreeItem* item,
-                    bool move,
-					QObject *receiver,
-					KMMenuToFolder *aMenuToFolder,
-					QPopupMenu *menu);
-
   static void cleanup();
 
-  KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
-    *forwardAction, *forwardAttachedAction, *redirectAction,
-    *trashAction, *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *viewSourceAction, *printAction, *sendAgainAction, *applyFiltersAction;
-  KToggleAction *toggleFixFontAction;
-  KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
-    *moveActionMenu, *copyActionMenu, *applyFilterActionsMenu;
+  // Proxy the actions from the reader window,
+  // but action( "some_name" ) some name could be used instead.
+  KAction *action( const char *name ) { return mActionCollection->action( name ); }
+  KAction *replyAction() { return mMsgView->replyAction(); }
+  KAction *replyAllAction() { return mMsgView->replyAllAction(); }
+  KAction *replyListAction() { return mMsgView->replyListAction(); }
+  KActionMenu *forwardMenu() { return mForwardActionMenu; }
+  KAction *forwardAction() { return mForwardAction; }
+  KAction *forwardAttachedAction() { return mForwardAttachedAction; }
+  KAction *redirectAction() { return mMsgView->redirectAction(); }
+  KAction *bounceAction() { return mMsgView->bounceAction(); }
+  KAction *noQuoteReplyAction() { return mMsgView->noQuoteReplyAction(); }
+  KActionMenu *filterMenu() { return mMsgView->filterMenu(); }
+  KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
+  KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
+  KAction *printAction() { return mMsgView->printAction(); }
+
+  //FIXME: wtf? member variables in the public interface:
+  KAction *trashAction, *deleteAction, *saveAsAction, *editAction,
+    *sendAgainAction, *mForwardAction, *mForwardAttachedAction,
+    *applyFiltersAction;
+  KActionMenu *statusMenu, *threadStatusMenu,
+    *moveActionMenu, *copyActionMenu, *mForwardActionMenu,
+    *applyFilterActionsMenu;
 
   /** we need to access those KToggleActions from the foldertree-popup */
   KToggleAction* unreadColumnToggle;
   KToggleAction* totalColumnToggle;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
-
-  /** Jump to any message in any folder.  The message serial number of the
-      argument message is used to locate the original message, which
-      is then returned. */
-  KMMessage *jumpToMessage(KMMessage *aMsg);
-
-  /** transfers the currently selected (imap)-messages
-   *  this is a necessary preparation for e.g. forwarding */
-  void transferSelectedMsgs();
 
 public slots:
   virtual void show();
@@ -118,12 +119,11 @@ public slots:
   void slotCheckMail();
 
   /** Output given message in the statusbar message field. */
-  void statusMsg(const QString&);
-  void htmlStatusMsg(const QString&);
   void folderSelected(KMFolder*);
   void folderSelectedUnread( KMFolder* );
 
   void slotMsgSelected(KMMessage*);
+  void slotMsgChanged();
 
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
@@ -137,24 +137,19 @@ public slots:
   void startUpdateMessageActionsTimer();
   /** Update message actions */
   void updateMessageActions();
-
-  /** Update the undo action */
-  void slotUpdateUndo();
+  void statusMsg(const QString&);
 
 protected:
-  void setupMenuBar();
-  void setupStatusBar();
+  void setupActions();
   void createWidgets();
   void activatePanners();
-  void showMsg(KMReaderMainWin *win, KMMessage *msg);
+  void showMsg(KMReaderWin *win, KMMessage *msg);
   virtual bool queryClose();
 
 protected slots:
-  void displayStatusMsg(const QString&);
   void slotCheckOneAccount(int);
   void slotMailChecked(bool newMail, bool sendOnCheck);
   void getAccountMenu();
-  void slotQuit();
   void slotHelp();
   void slotNewMailReader();
   void slotFilter();
@@ -175,32 +170,15 @@ protected slots:
   void slotCompactAll();
   void slotOverrideHtml();
   void slotOverrideThread();
-
-  /** replying */
-  void slotReplyToMsg();
-  void slotNoQuoteReplyToMsg();
-  void slotReplyAllToMsg();
-  void slotReplyListToMsg();
-
-  /** Called from the "forward" tool button when clicked. */
-  void slotForward();
-
-  /** forwarding */
+  void slotMessageQueuedOrDrafted();
   void slotForwardMsg();
   void slotForwardAttachedMsg();
-
-  /** redirect and bounce */
-  void slotRedirectMsg();
-  void slotBounceMsg();
-
-  void slotMessageQueuedOrDrafted();
   void slotEditMsg();
   void slotTrashMsg();   // move to trash
   void slotDeleteMsg();  // completely delete message
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();
-  void slotPrintMsg();
   void slotMoveMsg();
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotCopyMsgToFolder( KMFolder *dest);
@@ -208,10 +186,6 @@ protected slots:
   void slotResendMsg();
   void slotEditVacation();
   void slotApplyFilters();
-  void slotSubjectFilter();
-  void slotMailingListFilter();
-  void slotFromFilter();
-  void slotToFilter();
   void slotExpandThread();
   void slotExpandAllThreads();
   void slotCollapseThread();
@@ -232,8 +206,6 @@ protected slots:
   void slotSetThreadStatusQueued();
   void slotSetThreadStatusSent();
   void slotSetThreadStatusFlag();
-  void slotShowMsgSrc();
-  void slotToggleFixedFont();
   void slotToggleUnreadColumn();
   void slotToggleTotalColumn();
   void slotBriefHeaders();
@@ -250,29 +222,18 @@ protected slots:
   void slotSetEncoding();
   void slotSendQueued();
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
-  void slotUrlClicked(const KURL &url, int button);
-  void slotCopyText();
   void slotMarkAll();
-  void slotSelectText();
   void slotMemInfo();
   void slotSearch();
   void slotSearchClosed();
   void slotFind();
   void slotUpdateImapMessage(KMMessage *msg);
   void slotIntro();
+  void slotShowStartupFolder();
   /** Show tip-of-the-day on startup */
   void slotShowTipOnStart();
   /** Show tip-of-the-day, forced */
   void slotShowTip();
-
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  void slotToggleFolderBar();
-  void slotToggleHeaderBar();
-  void slotToggleMimeBar();
-  */
-  // (khz, 19.04.2002)
-
 
   /** Message navigation */
   void slotNextMessage();
@@ -287,22 +248,8 @@ protected slots:
   /** etc. */
   void slotMsgActivated(KMMessage*);
 
-  /** Operations on mailto: URLs. */
-  void slotMailtoCompose();
-  void slotMailtoReply();
-  void slotMailtoForward();
-  void slotMailtoAddAddrBook();
-  void slotMailtoOpenAddrBook();
-
-  /** Open URL in mUrlCurrent using Kfm. */
-  void slotUrlOpen();
-
-  /** Save the page to a file */
-  void slotUrlSave();
-
-  /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
-      beginning of URL before copying. */
-  void slotUrlCopy();
+  /** Update the undo action */
+  void slotUpdateUndo();
 
   /** Move selected messages to folder with corresponding to given menuid */
   virtual void moveSelectedToFolder( int menuId );
@@ -320,10 +267,6 @@ protected slots:
 
 
   /** XML-GUI stuff */
-  void slotToggleToolBar();
-  void slotToggleStatusBar();
-  void slotEditToolbars();
-  void slotUpdateToolbars();
   void slotEditNotifications();
   void slotEditKeys();
 
@@ -336,11 +279,12 @@ protected slots:
   void plugFilterActions(QPopupMenu*);
 
 protected:
+  KActionCollection * actionCollection() { return mActionCollection; }
+
   KRadioAction * actionForHeaderStyle(int);
   KRadioAction * actionForAttachmentStyle(int);
 
 protected:
-  QString      mLastStatusMsg;
   KMFolderTree *mFolderTree;
   KMMimePartTree* mMimePartTree;
   KMReaderWin  *mMsgView;
@@ -373,28 +317,24 @@ protected:
   int copyId, moveId, htmlId, threadId;
   bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref;
   QPopupMenu *messageMenu;
-  KMLittleProgressDlg *littleProgress;
   KMFldSearch *searchWin;
 
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
-    *compactFolderAction, *emptyFolderAction, *markAllAsReadAction;
+      *compactFolderAction, *emptyFolderAction, *markAllAsReadAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
-  KToggleAction *toolbarAction, *statusbarAction, *folderAction, *headerAction, *mimeAction;
+  KToggleAction *folderAction, *headerAction, *mimeAction;
 
   QTimer *menutimer;
-
-  //KDockWidget* mMsgDock;
-  //KDockWidget* mHeaderDock;
-  //KDockWidget* mFolderDock;
-  //KDockWidget* mMimeDock;
 
   // ProgressDialog for transfering messages
   KProgressDialog* mProgressDialog;
   int mCountJobs, mCountMsgs;
 
   QPtrList<KMMessage> mSelectedMsgs;
-
   QGuardedPtr<KMail::Vacation> mVacation;
+  KActionCollection *mActionCollection;
+  QVBoxLayout *mTopLayout;
+  bool mDestructed;
   QPtrList<KAction> mFilterActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
 

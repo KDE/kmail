@@ -1,18 +1,30 @@
+KDE_OPTIONS = nofinal
 KDE_CXXFLAGS = $(USE_RTTI)
 
-SUBDIRS = . about pics profiles
-INCLUDES = -I$(top_srcdir)/libkdenetwork \
-	   -I$(top_srcdir)/mimelib \
-	   $(all_includes)
-LDADD = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
-	../libkdenetwork/libkdenetwork.la ../mimelib/libmimelib.la
+SUBDIRS =  . about pics profiles
+
+INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
 
 bin_PROGRAMS = kmail
 
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
+kmail_LDADD   = libkmailpart.la
+kmail_SOURCES = dummy.cpp
+
+dummy.cpp:
+	echo > $@
+
+check_PROGRAMS = dcoptest
+
+lib_LTLIBRARIES = libkmailpart.la
+
+libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
+libkmailpart_la_LIBADD	= $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
+			../libkdenetwork/libkdenetwork.la \
+			../mimelib/libmimelib.la 
+libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
-		simplestringlisteditor.cpp kmcommands.cpp \
+		simplestringlisteditor.cpp \
 		configmanager.cpp identitymanager.cpp identitycombo.cpp \
 		identitydrag.cpp identitylistview.cpp identitydialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
@@ -38,21 +50,26 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
-                kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
+                kmkernel.cpp kmailpartIface.skel kmailIface.skel main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
 		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
 		kmpopheaders.cpp kmpopfiltercnfrmdlg.cpp \
 		directoryservicesconfigurationdialogimpl.cpp \
-		adddirectoryservicedialog.ui adddirectoryservicedialogimpl.cpp kmmimeparttree.cpp \
-		certificatehandlingdialog.ui certificatehandlingdialogimpl.cpp \
+		adddirectoryservicedialog.ui  \
+		adddirectoryservicedialogimpl.cpp kmmimeparttree.cpp \
+		certificatehandlingdialog.ui \
+		certificatehandlingdialogimpl.cpp \
 		certificatewizard.ui certificatewizardimpl.cpp \
 		mailinglist-magic.cpp kmrecentaddr.cpp kmacctmaildir.cpp \
 		linklocator.cpp spellingfilter.cpp \
-                mailcomposerIface.skel mailcomposerIface.stub \
+                mailcomposerIface.skel \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
 		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
-		transportmanager.cpp
+		kmcommands.cpp transportmanager.cpp kmreadermainwin.cpp \
+		 kmstartup.cpp \
+                folderpropertiesdialog.ui 
+#  kmail_part.cpp kmmainwidget.cpp kmmsgindex.cpp kmfolderindex.cpp kmfoldersearch.cpp 
 
 METASOURCES = AUTO
 
@@ -61,13 +78,12 @@ noinst_HEADERS = directoryservicesconfigurationdialogimpl.h \
 		 kmmainwin.h certificatehandlingdialogimpl.h \
 		 certificatewizardimpl.h partNode.h \
 		 signatureconfigurationdialogimpl.h \
-		 encryptionconfigurationdialogimpl.h
+		 encryptionconfigurationdialogimpl.h \
+		 signatureconfigurationdialogimpl.h
 
-check_PROGRAMS = dcoptest
+dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 
-dcoptest_SOURCES = dcoptest.cpp kmailIface.stub mailcomposerIface.stub
-
-include_HEADERS = kmailIface.h
+include_HEADERS = kmailIface.h kmailpartIface.h
 
 appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop
@@ -77,7 +93,7 @@ EXTRA_DIST = KMail.desktop
 KDE_ICON = AUTO
 
 rcdir = $(kde_datadir)/kmail
-rc_DATA = kmcomposerui.rc kmmainwin.rc eventsrc
+rc_DATA = kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc
 
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \

@@ -15,6 +15,7 @@
 #include "kmmsglist.h"
 #include "kmglobal.h"
 #include "mimelib/string.h"
+#include "kmfoldertype.h"
 
 #include <stdio.h>
 #include <qptrvector.h>
@@ -327,22 +328,22 @@ public:
   bool useCustomIcons() const { return mUseCustomIcons; }
   void setUseCustomIcons( bool yes ) { mUseCustomIcons = yes; }
   void setIconPaths(const QString &normal, const QString &unread)
-  { mNormalIconPath = normal; mUnreadIconPath = unread; iconsFromPath(); 
+  { mNormalIconPath = normal; mUnreadIconPath = unread; iconsFromPath();
     writeConfig(); if (mUseCustomIcons) mNeedsRepainting = true; }
-  QString normalIconPath() const 
+  QString normalIconPath() const
   { return mNormalIconPath; }
   QString unreadIconPath() const
   { return mUnreadIconPath; }
-  QPixmap* normalIcon() const 
+  QPixmap* normalIcon() const
   { if ( mUseCustomIcons ) return mNormalIcon; else return 0; }
   QPixmap* unreadIcon() const
   { if ( mUseCustomIcons ) return mUnreadIcon; else return 0; }
-  
+
   /** Tell the folder tree if repainting is required */
-  bool needsRepainting() const 
+  bool needsRepainting() const
   { return mNeedsRepainting; }
   /** repaint has been scheduled so stop demanding it */
-  void repaintScheduled() 
+  void repaintScheduled()
   { mNeedsRepainting = false; }
 
   /** Tell the folder that a header field that is usually used for
@@ -365,7 +366,7 @@ public:
   virtual QString idString() const;
 
   uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
-  
+
   bool indexSwapByteOrder() { return mIndexSwapByteOrder; }
   int  indexSizeOfLong() { return mIndexSizeOfLong; }
 
@@ -464,25 +465,25 @@ public:
   /** Inserts messages into the message dictionary.  Might be called
     during kernel initialization. */
   void fillMsgDict(KMMsgDict *dict);
-  
+
   /** Writes the message serial number file. */
   int writeMsgDict(KMMsgDict *dict = 0);
-  
+
   /** Touches the message serial number file. */
   int touchMsgDict();
-  
+
   /** Append message to end of message serial number file. */
   int appendtoMsgDict(int idx = -1);
-  
+
   /** Sets the reverse-dictionary for this folder. */
   void setRDict(KMMsgDictREntry *rentry);
-  
+
   /** Returns the reverse-dictionary for this folder. */
   KMMsgDictREntry *rDict() const { return mRDict; }
-  
+
   /** Set the status of the message at index @p idx to @p status. */
   virtual void setStatus(int idx, KMMsgStatus status);
-  
+
   /** Set the status of the message @p msg to @p status.  The message
    * should be in the current folder. */
   void setStatus(KMMsgBase *msg, KMMsgStatus status);
@@ -554,12 +555,12 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int removeContents() = 0;
-  
+
   /** Called by KMFolder::expunge() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
-  
+
   /** Write the config file */
   virtual void writeConfig();
 
@@ -568,7 +569,7 @@ protected:
 
   /** tries to create icons from paths */
   virtual void iconsFromPath();
-  
+
   /** table of contents file */
   FILE* mIndexStream;
   /** list of index entries or messages */
@@ -602,7 +603,7 @@ protected:
   QString mUnreadIconPath;
   bool    mUseCustomIcons;
   bool    mNeedsRepainting;
-  
+
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   int mTotalMsgs;
@@ -627,7 +628,7 @@ protected:
   ExpireUnits  readExpireUnits;
 
   int          daysToExpire(int num, ExpireUnits units);
-  
+
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
 };

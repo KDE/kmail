@@ -251,7 +251,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
+void KMAcctImap::ignoreJobsForMessage( KMMessage*  )
 {
     /* TODO: doesn't yet compile because kmfolderimap.h needs to be merged (coolo)
   KMImapJob *job;

@@ -28,8 +28,8 @@ public:
   // Trival constructor, don't retrieve any messages
   KMCommand( QWidget *parent = 0 );
   // Retrieve all messages in msgList when start is called.
-  KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList, 
-		  KMFolder *folder );
+  KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+		  KMFolder *folder = 0);
   // Retrieve the single message msgBase when start is called.
   KMCommand( QWidget *parent, KMMsgBase *msgBase );
   virtual ~KMCommand();
@@ -225,8 +225,7 @@ class KMSaveMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMSaveMsgCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList, 
-		    KMFolder *folder );
+  KMSaveMsgCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList, KMFolder *);
   KURL url();
 
 private:
@@ -297,8 +296,7 @@ class KMForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList, 
-		    KMFolder *folder );
+  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList);
 
 private:
   virtual void execute();
@@ -313,7 +311,7 @@ class KMForwardAttachedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardAttachedCommand( QWidget *parent, 
+  KMForwardAttachedCommand( QWidget *parent,
 			    const QPtrList<KMMsgBase> &msgList, KMFolder *folder );
 
 private:
@@ -373,7 +371,7 @@ class KMSetStatusCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMSetStatusCommand( KMMsgStatus status, const QValueList<int> &ids, 
+  KMSetStatusCommand( KMMsgStatus status, const QValueList<int> &ids,
 		      KMFolder *folder );
 
 private:
@@ -421,7 +419,7 @@ class KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers, 
+  KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers,
 			     KMMainWin *main );
 
 public slots:
@@ -458,7 +456,7 @@ class KMMenuCommand : public KMCommand
   Q_OBJECT
 
 public:
-  static QPopupMenu* folderToPopupMenu(bool move, QObject *receiver, 
+  static QPopupMenu* folderToPopupMenu(bool move, QObject *receiver,
     KMMenuToFolder *aMenuToFolder, QPopupMenu *menu );
 
   static QPopupMenu* makeFolderMenu(KMFolderNode* item, bool move,
@@ -470,7 +468,7 @@ class KMCopyCommand : public KMMenuCommand
   Q_OBJECT
 
 public:
-  KMCopyCommand( KMFolder* srcFolder, KMFolder* destFolder, 
+  KMCopyCommand( KMFolder* srcFolder, KMFolder* destFolder,
 		 const QPtrList<KMMsgBase> &msgList );
 
 private:
@@ -485,9 +483,9 @@ class KMMoveCommand : public KMMenuCommand
   Q_OBJECT
 
 public:
-  KMMoveCommand( KMFolder* srcFolder, KMFolder* destFolder, 
+  KMMoveCommand( KMFolder* srcFolder, KMFolder* destFolder,
 		 const QPtrList<KMMsgBase> &msgList, KMHeaders* headers = 0 );
-		 
+
 
 private:
   virtual void execute();
@@ -504,7 +502,7 @@ class KMDeleteMsgCommand : public KMCommand
 public:
   KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList,
 		      KMHeaders* headers = 0 );
-		
+
   virtual void execute();
 };
 
@@ -513,7 +511,7 @@ class KMUrlClickedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMUrlClickedCommand( const KURL &url, KMFolder* folder, 
+  KMUrlClickedCommand( const KURL &url, KMFolder* folder,
     KMReaderWin *readerWin, bool mHtmlPref, KMMainWin *mainWin = 0 );
 
 private:

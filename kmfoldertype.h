@@ -9,4 +9,11 @@ typedef enum
   KMFolderTypeImap
 } KMFolderType;
 
+typedef enum
+{
+   KMStandardDir = 0,
+   KMImapDir,
+   KMSearchDir
+} KMFolderDirType;
+
 #endif // KMFOLDERTYPE_H

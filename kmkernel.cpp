@@ -6,9 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <kstaticdeleter.h>
 
 #include "kmkernel.h"
-
+#include "kmfoldertype.h"
 #include <dcopclient.h>
 
 #include <qvbox.h>
@@ -24,13 +25,14 @@
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kpassivepopup.h>
-#include <kstaticdeleter.h>
 
+#include "kmmsgindex.h"
 #include "kmreaderwin.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
+#include "kmfoldertype.h"
 #include "kmfoldercachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
@@ -76,6 +78,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   closed_by_user = true;
   the_firstInstance = true;
   the_msgDict = 0;
+  the_msgIndex = 0;
 
   the_inboxFolder = 0;
   the_outboxFolder = 0;
@@ -86,16 +89,19 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_kbp = 0;
   the_folderMgr = 0;
   the_imapFolderMgr = 0;
+  the_searchFolderMgr = 0;
   the_undoStack = 0;
   the_acctMgr = 0;
   the_filterMgr = 0;
   the_popFilterMgr = 0;
   the_filterActionDict = 0;
   the_msgSender = 0;
-  the_msgDict = 0;
   mWin = 0;
 
   mSystemTray = 0;
+  mXmlGuiInstance = 0;
+  mDeadLetterTimer = 0;
+  mDeadLetterInterval = 1000*120; // 2 minutes
 
   new KMpgpWrap();
   // register our own (libkdenetwork) utf-7 codec as long as Qt
@@ -132,10 +138,6 @@ KMKernel::~KMKernel ()
     job->kill();
     it = mPutJobs.begin();
   }
-  delete mConfigureDialog;
-  mConfigureDialog = 0;
-  delete mWin;
-  mWin = 0;
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
@@ -533,8 +535,14 @@ void KMKernel::recoverDeadLetters(void)
   QDir dir = QDir::home();
   QString fname = dir.path();
   int i, rc, num;
+  mDeadLetterTimer = new QTimer(this);
+  connect(mDeadLetterTimer, SIGNAL(timeout()), this, SLOT(dumpDeadLetters()));
 
-  if (!dir.exists("dead.letter")) return;
+  if (!dir.exists("dead.letter")) {
+      mDeadLetterTimer->start(mDeadLetterInterval);
+      return;
+  }
+
   fname += "/dead.letter";
   KMFolderMbox folder(0, fname);
 
@@ -543,6 +551,7 @@ void KMKernel::recoverDeadLetters(void)
   if (rc)
   {
     perror(QString("cannot open file "+fname).latin1());
+    mDeadLetterTimer->start(mDeadLetterInterval);
     return;
   }
 
@@ -562,6 +571,7 @@ void KMKernel::recoverDeadLetters(void)
   }
   folder.close();
   QFile::remove(fname);
+  mDeadLetterTimer->start(mDeadLetterInterval);
 }
 
 void KMKernel::initFolders(KConfig* cfg)
@@ -574,7 +584,7 @@ void KMKernel::initFolders(KConfig* cfg)
   // in the base folder directory.
   //if (name.isEmpty()) name = getenv("MAIL");
 
-  if (name.isEmpty()) name = I18N_NOOP("inbox");
+  if (name.isEmpty()) name = "inbox";
 
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
 
@@ -586,7 +596,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_inboxFolder->setSystemFolder(TRUE);
   // inboxFolder->open();
 
-  the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", I18N_NOOP("outbox")));
+  the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   if (the_outboxFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your outbox folder.") );
     ::exit(1);
@@ -596,39 +606,37 @@ void KMKernel::initFolders(KConfig* cfg)
   the_outboxFolder->setSystemFolder(TRUE);
   the_outboxFolder->open();
 
-  the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
+  the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
   if (the_sentFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your sent-mail folder.") );
     ::exit(1);
   }
   the_sentFolder->setType("St");
   the_sentFolder->setSystemFolder(TRUE);
-  the_sentFolder->open();
+  // the_sentFolder->open();
 
-  the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", I18N_NOOP("trash")));
+  the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
   if (the_trashFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your trash folder.") );
     ::exit(1);
   }
   the_trashFolder->setType("Tr");
   the_trashFolder->setSystemFolder(TRUE);
-  the_trashFolder->open();
+  // the_trashFolder->open();
 
-  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
+  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
   if (the_draftsFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your drafts folder.") );
     ::exit(1);
   }
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
-  the_draftsFolder->open();
-
+  // the_draftsFolder->open();
 }
 
 
 void KMKernel::init()
 {
-  kdDebug(5006) << "entering KMKernel::init()" << endl;
   QString foldersPath;
   KConfig* cfg;
 
@@ -656,10 +664,10 @@ void KMKernel::init()
     foldersPath = QDir::homeDirPath() + QString("/Mail");
     transferMail();
   }
-
   the_undoStack     = new KMUndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
-  the_imapFolderMgr = new KMFolderMgr(locateLocal("appdata","imap"), TRUE);
+  the_imapFolderMgr = new KMFolderMgr(locateLocal("data","kmail/imap"), KMImapDir);
+  the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
   the_acctMgr       = new KMAcctMgr();
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
@@ -673,9 +681,6 @@ void KMKernel::init()
 
   KMMessage::readConfig();
   the_msgSender = new KMSender;
-
-  the_msgDict = new KMMsgDict;
-
   the_server_is_ready = true;
 
   { // area for config group "Composer"
@@ -686,7 +691,9 @@ void KMKernel::init()
     }
   }
   // filterMgr->dump();
-  kdDebug(5006) << "exiting KMKernel::init()" << endl;
+#if 0 //disbabled for now..
+  the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
+#endif
 }
 
 void KMKernel::cleanupImapFolders()
@@ -774,8 +781,6 @@ void KMKernel::cleanup(void)
   the_undoStack = 0;
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
-
-  KMReaderWin::deleteAllStandaloneWindows();
 
   // Since the application has already quit we can't use
   // kapp->processEvents() because it will return immediately:
@@ -894,17 +899,37 @@ void KMKernel::cleanupLoop()
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
 
+  folderMgr()->writeMsgDict(msgDict());
+  imapFolderMgr()->writeMsgDict(msgDict());
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  QStringList strList;
+  KMFolder *folder;
+  the_searchFolderMgr->createFolderList(&strList, &folders);
+  for (int i = 0; folders.at(i) != folders.end(); i++)
+  {
+    folder = *folders.at(i);
+    if (!folder || folder->isDir()) continue;
+    folder->close(TRUE);
+  }
   delete the_msgDict;
   the_msgDict = 0;
+  delete the_msgIndex;
+  the_msgIndex = 0;
   delete the_folderMgr;
   the_folderMgr = 0;
   delete the_imapFolderMgr;
   the_imapFolderMgr = 0;
+  delete the_searchFolderMgr;
+  the_searchFolderMgr = 0;
   delete the_kbp;
   the_kbp = 0;
+  delete mConfigureDialog;
+  mConfigureDialog = 0;
+  delete mWin;
+  mWin = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
-  KMRecentAddresses::self()->save( KGlobal::config() );
+  KMRecentAddresses::self()->save( KMKernel::config() );
   KMKernel::config()->sync();
   if (mCleanupPopup)
   {
@@ -987,14 +1012,21 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 }
 void KMKernel::dumpDeadLetters()
 {
+  mDeadLetterTimer->stop();
   QWidget *win;
+  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+  QDir dir = QDir::home();
+  QString fname = dir.path();
+  QFile::remove(fname + "/dead.letter.tmp");
 
-  while (KMainWindow::memberList->first() != 0)
-  {
-    win = KMainWindow::memberList->take();
+  while ((win = it.current()) != 0) {
+    ++it;
     if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
 //    delete win; // WABA: Don't delete, we might crash in there!
   }
+  QFile::remove(fname + "/dead.letter");
+  dir.rename("dead.letter.tmp","dead.letter");
+  mDeadLetterTimer->start(mDeadLetterInterval);
 }
 
 
@@ -1123,6 +1155,18 @@ void KMKernel::slotShowConfigurationDialog()
 void KMKernel::notClosedByUser()
 {
   closed_by_user = false;
+  delete the_acctMgr;
+  the_acctMgr = 0;
+  delete the_filterMgr;
+  the_filterMgr = 0;
+  delete the_msgSender;
+  the_msgSender = 0;
+  delete the_filterActionDict;
+  the_filterActionDict = 0;
+  delete the_undoStack;
+  the_undoStack = 0;
+  delete the_popFilterMgr;
+  the_popFilterMgr = 0;
 
   QStringList strList;
   QValueList<QGuardedPtr<KMFolder> > folders;
@@ -1132,8 +1176,35 @@ void KMKernel::notClosedByUser()
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    if (folder->isOpened() && folder->dirty()) folder->writeIndex();
+    folder->close(TRUE);
   }
+  strList.clear();
+  folders.clear();
+  the_searchFolderMgr->createFolderList(&strList, &folders);
+  for (int i = 0; folders.at(i) != folders.end(); i++)
+  {
+    folder = *folders.at(i);
+    if (!folder || folder->isDir()) continue;
+    folder->close(TRUE);
+  }
+  folderMgr()->writeMsgDict(msgDict());
+  imapFolderMgr()->writeMsgDict(msgDict());
+  delete the_msgDict;
+  the_msgDict = 0;
+  delete the_msgIndex;
+  the_msgIndex = 0;
+  delete the_folderMgr;
+  the_folderMgr = 0;
+  delete the_imapFolderMgr;
+  the_imapFolderMgr = 0;
+  delete the_searchFolderMgr;
+  the_searchFolderMgr = 0;
+  delete the_kbp;
+  the_kbp = 0;
+  delete mConfigureDialog;
+  mConfigureDialog = 0;
+  delete mWin;
+  mWin = 0;
 }
 
 void KMKernel::emergencyExit( const QString& reason )
@@ -1205,6 +1276,21 @@ IdentityManager * KMKernel::identityManager() {
   return mIdentityManager;
 }
 
+KMMsgDict *KMKernel::msgDict()
+{
+    if (the_msgDict)
+	return the_msgDict;
+    the_msgDict = new KMMsgDict;
+    folderMgr()->readMsgDict(msgDict());
+    imapFolderMgr()->readMsgDict(msgDict());
+    return the_msgDict;
+}
+
+KMMsgIndex *KMKernel::msgIndex()
+{
+    return the_msgIndex;
+}
+
 KMMainWin* KMKernel::mainWin()
 {
   KMainWindow *kmWin = 0;
@@ -1217,6 +1303,30 @@ KMMainWin* KMKernel::mainWin()
   } else {
     mWin = new KMMainWin;
     return mWin;
+  }
+}
+
+/**
+ * Emptyies al the trash folders
+ */
+void KMKernel::slotEmptyTrash()
+{
+  QString title = i18n("Empty Trash");
+  QString text = i18n("Are you sure you want to empty the trash?");
+  if (KMessageBox::warningContinueCancel(0, text, title,
+                                         KStdGuiItem::cont(), "confirm_empty_trash")
+      != KMessageBox::Continue)
+  {
+    return;
+  }
+
+  for (KMAccount* acct = acctMgr()->first(); acct; acct = acctMgr()->next())
+  {
+    KMFolder* trash = folderMgr()->findIdString(acct->trash());
+    if (trash)
+    {
+      trash->expunge();
+    }
   }
 }
 

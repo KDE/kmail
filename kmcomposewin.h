@@ -28,6 +28,7 @@
 #include "mailcomposerIface.h"
 
 #include "cryptplugwrapper.h"
+#include <kabc/addresslineedit.h>
 
 class _StringPair {
  public:
@@ -60,8 +61,8 @@ class KToolBar;
 class KToggleAction;
 class KURL;
 class IdentityCombo;
-class CryptPlugWrapperList;
 class SpellingFilter;
+class  CryptPlugWrapperList;
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
@@ -92,6 +93,11 @@ public:
   inline void setExternalEditor(bool extEd) { extEditor=extEd; }
   inline void setExternalEditorPath(QString path) { mExtEditor=path; }
 
+  /** Drag and drop methods */
+  void contentsDragEnterEvent(QDragEnterEvent *e);
+  void contentsDragMoveEvent(QDragMoveEvent *e);
+  void contentsDropEvent(QDropEvent *e);
+
 signals:
   void spellcheck_done(int result);
 public slots:
@@ -119,59 +125,32 @@ private:
 
 
 //-----------------------------------------------------------------------------
-#define KMLineEditInherited KLineEdit
-class KMLineEdit : public KLineEdit
+class KMLineEdit : public KABC::AddressLineEdit
 {
-  Q_OBJECT
-
+    Q_OBJECT
+    typedef KABC::AddressLineEdit KMLineEditInherited;
 public:
-  KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
-             const char *name = 0);
-  virtual ~KMLineEdit();
-
-  virtual void setFont( const QFont& );
-
-public slots:
-  void undo();
-  /**
-   * Set cursor to end of line.
-   */
-  void cursorAtEnd();
-
+    KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
+               const char *name = 0);
 protected:
-  virtual bool eventFilter(QObject*, QEvent*);
-  virtual void dropEvent(QDropEvent *e);
-  virtual void paste();
-  virtual void insert(const QString &t);
-  virtual void mouseReleaseEvent( QMouseEvent * e );
-  void doCompletion(bool ctrlT);
-  KMComposeWin* mComposer;
+    virtual void loadAddresses();
+    /**
+     * Smart insertion of email addresses. If @p pos is -1 then
+     * @p str is inserted at the end of the current contents of this
+     * lineedit. Else @p str is inserted at @p pos.
+     * Features:
+     * - Automatically adds ',' if necessary to separate email addresses
+     * - Correctly decodes mailto URLs
+     * - Recognizes email addresses which are protected against address
+     *   harvesters, i.e. "name at kde dot org" and "name(at)kde.org"
 
-private slots:
-  void slotCompletion() { doCompletion(false); }
-  void slotPopupCompletion( const QString& );
+    void smartInsert( const QString &str, int pos = -1 );
+    virtual void dropEvent(QDropEvent *e);
+*/
 
+    virtual void keyPressEvent(QKeyEvent*);
 private:
-  void loadAddresses();
-  /**
-   * Smart insertion of email addresses. If @p pos is -1 then
-   * @p str is inserted at the end of the current contents of this
-   * lineedit. Else @p str is inserted at @p pos.
-   * Features:
-   * - Automatically adds ',' if necessary to separate email addresses
-   * - Correctly decodes mailto URLs
-   * - Recognizes email addresses which are protected against address
-   *   harvesters, i.e. "name at kde dot org" and "name(at)kde.org"
-   */
-  void smartInsert( const QString &str, int pos = -1 );
-
-  QString m_previousAddresses;
-  bool m_useCompletion;
-  bool m_smartPaste;
-
-  static bool s_addressesDirty;
-  static KCompletion *s_completion;
-
+    KMComposeWin* mComposer;
 };
 
 

@@ -595,9 +595,9 @@ void KMReplyToAllCommand::execute()
 
 
 KMForwardCommand::KMForwardCommand( QWidget *parent,
-  const QPtrList<KMMsgBase> &msgList, KMFolder *folder )
-  : KMCommand( parent, msgList, folder ),
-    mParent( parent ), mFolder( folder )
+  const QPtrList<KMMsgBase> &msgList )
+  : KMCommand( parent, msgList),
+    mParent( parent )
 {
 }
 
@@ -821,7 +821,7 @@ KMPrintCommand::KMPrintCommand( QWidget *parent,
 
 void KMPrintCommand::execute()
 {
-  KMReaderWin printWin;
+  KMReaderWin printWin(0, 0, 0);
   printWin.setPrinting(TRUE);
   printWin.readConfig();
   printWin.setMsg(retrievedMessage(), TRUE);
@@ -932,7 +932,7 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
 
   if (!kernel->imapFolderMgr()->dir().first()) {
     KMMenuCommand::makeFolderMenu(  &kernel->folderMgr()->dir(), move,
-      receiver, aMenuToFolder, menu );		
+      receiver, aMenuToFolder, menu );
   } else {
     // operate on top-level items
     QPopupMenu* subMenu = new QPopupMenu(menu);
@@ -942,7 +942,7 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
     KMFolderDir* fdir = &kernel->imapFolderMgr()->dir();
     for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
       if (node->isDir())
-        continue;	
+        continue;
       subMenu = new QPopupMenu(menu);
       subMenu = makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
       menu->insertItem( node->label(), subMenu );
