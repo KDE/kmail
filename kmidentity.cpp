@@ -105,6 +105,7 @@ void KMIdentity::readConfig(void)
   mSignatureFile = config->readEntry("Signature File");
   mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
   mSignatureInlineText = config->readEntry("Inline Signature");
+  mTransport = config->readEntry("Transport");
 }
 
 
@@ -128,6 +129,7 @@ void KMIdentity::writeConfig(bool aWithSync)
   config->writeEntry("Inline Signature", mSignatureInlineText );
   config->writeEntry("UseSignatureFile", mUseSignatureFile );
   config->writeEntry("VCardFile", mVCardFile);
+  config->writeEntry("Transport", mTransport);
 
   if (aWithSync) config->sync();
 }
@@ -213,6 +215,11 @@ void KMIdentity::setUseSignatureFile( bool flag )
   mUseSignatureFile = flag;
 }
 
+//-----------------------------------------------------------------------------
+void KMIdentity::setTransport(const QString str)
+{
+  mTransport = str.copy();
+}
 
 //-----------------------------------------------------------------------------
 const QString KMIdentity::signature(void) const

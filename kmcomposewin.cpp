@@ -2178,6 +2178,29 @@ void KMComposeWin::slotIdentityActivated(int)
   QString edtText = mEditor->text();
   int pos = edtText.findRev( "\n-- \n" + mOldSigText);
 
+  if (!mBtnTransport.isChecked()) {
+    if (ident.transport().isEmpty())
+      mMsg->removeHeaderField("X-KMail-Transport");
+    else
+      mMsg->setHeaderField("X-KMail-Transport", ident.transport());
+    QString transp = ident.transport();
+    if (transp.isEmpty()) transp = kernel->msgSender()->transportString();
+    bool found = false;
+    int i;
+    for (i = 0; i < mTransport.count(); i++) {
+      if (mTransport.text(i) == transp) {
+        found = true;
+        mTransport.setCurrentItem(i);
+        break;
+      }
+    }
+    if (found == false) {
+      if (i == mTransport.maxCount()) mTransport.setMaxCount(i + 1);
+      mTransport.insertItem(transp,i);
+      mTransport.setCurrentItem(i);
+    }
+  }
+
   if (((pos >= 0) && (pos + mOldSigText.length() + 5 == edtText.length())) ||
       (mOldSigText.isEmpty())) {
     if (pos >= 0)

@@ -83,10 +83,15 @@ public:
     the signature file. */
   virtual const QString signature(void) const;
 
+  /** The transport that is set for this identity. Used to link a
+      transport with an identity. */
+  const QString transport(void) { return mTransport; }
+  virtual void setTransport(QString);
+
 protected:
   QString mIdentity, mFullName, mOrganization, mPgpIdentity, mEmailAddr;
   QString mReplyToAddr, mSignatureFile;
-  QString mSignatureInlineText;
+  QString mSignatureInlineText, mTransport;
   QString mVCardFile;
   bool    mUseSignatureFile;
 };

@@ -118,6 +118,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   setCaption( i18n("KDE Mail Client") );
 
+  mFolderTree->cleanupConfigFile();
+
   // must be the last line of the constructor:
   mStartupDone = TRUE;
 }

@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <kapp.h>
 #include <kconfig.h>
+#include <ksimpleconfig.h>
 #include <qpixmap.h>
 #include <kiconloader.h>
 #include <qtimer.h>
@@ -807,6 +808,52 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + folder->name());
   config->writeEntry("isOpen", fti->isOpen());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::cleanupConfigFile()
+{
+  KConfig* appConfig = kapp->config();
+  appConfig->sync();
+  KSimpleConfig config(locateLocal("config","kmailrc"));
+  QStringList existingFolders;
+  QListViewItemIterator fldIt(this);
+  QMap<QString,bool> folderMap;
+  KMFolderTreeItem *fti;
+  for (QListViewItemIterator fldIt(this); fldIt.current(); fldIt++)
+  {
+    fti = static_cast<KMFolderTreeItem*>(fldIt.current());
+    if (fti && fti->folder) 
+      folderMap.insert(fti->folder->idString(), fti->isExpandable());
+  }
+  QStringList groupList = config.groupList();
+  QString name, wholeName;
+  int pos;
+  bool original;
+  for (QStringList::Iterator grpIt = groupList.begin();
+    grpIt != groupList.end(); grpIt++)
+  {
+    if ((*grpIt).left(7) != "Folder-") continue;
+    wholeName = name = (*grpIt).mid(7);
+    original = TRUE;
+    while ((folderMap.find(name) == folderMap.end()) ||
+      !(original || *(folderMap.find(name))))
+    {
+      if ((pos = name.findRev(".directory/")) != -1)
+      {
+        name = name.left(pos);
+        name.remove(((pos = name.findRev("/.")) == -1) ? 0 : (pos+1), 1);
+        original = FALSE;
+      } else {
+        config.deleteGroup(*grpIt, TRUE);
+kdDebug() << "Deleting information about folder " << wholeName << endl;
+        break;
+      }
+    }
+  }
+  config.sync();
+  appConfig->reparseConfiguration();
 }
 
 

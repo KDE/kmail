@@ -104,6 +104,9 @@ public:
   /** Ensure that there is only one selected item */
   virtual void setSelected( QListViewItem *, bool );
 
+  /** Remove information about not existing folders from the config file */
+  void cleanupConfigFile();
+
 signals:
   /* The selected folder has changed */
   void folderSelected(KMFolder*);

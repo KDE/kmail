@@ -504,7 +504,7 @@ void ConfigureDialog::makeIdentityPage( void )
 
   QGridLayout *glay = new QGridLayout( topLevel, 12, 3 );
   glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  glay->addRowSpacing( 6, spacingHint() );
+  //glay->addRowSpacing( 6, spacingHint() );
   glay->setRowStretch( 11, 10 );
   glay->setColStretch( 1, 10 );
 
@@ -589,7 +589,22 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.signatureFileRadio =
     new QRadioButton( i18n("Use a signature from file"), page );
   buttonGroup->insert( mIdentity.signatureFileRadio );
-  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 7, 7, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 7, 7, 0, 1 );
+
+  mIdentity.transportButton = new QPushButton(i18n("Add Transport..."),
+                                              page);
+  connect(mIdentity.transportButton, SIGNAL(clicked()), this,
+          SLOT(slotIdentityTransport()));
+  glay->addWidget(mIdentity.transportButton, 7, 2);
+  mIdentity.transportButton->setAutoDefault( false );
+  if (mIdentity.identityCombo->currentItem() == 0) {
+    mIdentity.transportButton->setEnabled(false);
+    mIdentity.transportButton->hide();
+  }
+  else {
+    mIdentity.transportButton->setEnabled(true);
+    mIdentity.transportButton->show();
+  }
 
   mIdentity.signatureFileLabel = new QLabel( i18n("Signature File:"), page );
   glay->addWidget( mIdentity.signatureFileLabel, 8, 0 );
@@ -2276,6 +2291,10 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.signatureExecCheck->setChecked(entry->signatureFileIsAProgram());
     mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
     useSignatureFile = entry->useSignatureFile();
+    if (entry->transport().isNull() || entry->transport().isEmpty())
+      mIdentity.transportButton->setText(i18n("Add Transport..."));
+    else
+      mIdentity.transportButton->setText(i18n("Edit Transport..."));
   }
 
   if( useSignatureFile == true )
@@ -2416,6 +2435,14 @@ void ConfigureDialog::slotIdentitySelectorChanged( void )
   mIdentity.removeIdentityButton->setEnabled( currentItem != 0 );
   mIdentity.renameIdentityButton->setEnabled( currentItem != 0 );
   setIdentityInformation( mIdentity.identityCombo->currentText() );
+  if (currentItem == 0) {
+    mIdentity.transportButton->setEnabled(false);
+    mIdentity.transportButton->hide();
+  }
+  else {
+    mIdentity.transportButton->setEnabled(true);
+    mIdentity.transportButton->show();
+  }
 }
 
 
@@ -3286,6 +3313,11 @@ bool IdentityEntry::useSignatureFile() const
   return( mUseSignatureFile );
 }
 
+QString IdentityEntry::transport() const
+{
+  return ( mTransport );
+}
+
 
 void IdentityEntry::setIdentity( const QString &identity )
 {
@@ -3354,7 +3386,10 @@ void IdentityEntry::setUseSignatureFile( bool useSignatureFile )
   mUseSignatureFile = useSignatureFile;
 }
 
-
+void IdentityEntry::setTransport( const QString &transport )
+{
+  mTransport = transport;
+}
 
 
 
@@ -3424,6 +3459,7 @@ void IdentityList::importData()
     entry.setSignatureFileName( ident.signatureFile(), true );
     entry.setSignatureInlineText( ident.signatureInlineText() );
     entry.setUseSignatureFile( ident.useSignatureFile() );
+    entry.setTransport(ident.transport());
     add( entry );
   }
 }
@@ -3443,6 +3479,7 @@ void IdentityList::exportData()
     ident.setUseSignatureFile( e->useSignatureFile() );
     ident.setSignatureFile( e->signatureFileName(true) );
     ident.setSignatureInlineText( e->signatureInlineText() );
+    ident.setTransport( e->transport() );
     ident.writeConfig(false);
     ids.append( e->identity() );
   }
@@ -3534,5 +3571,168 @@ void IdentityList::update( const IdentityEntry &entry )
       *e = entry;
       return;
     }
+  }
+}
+
+
+// ConfigureTransportDialog stuff below here.
+
+ConfigureTransportDialog::ConfigureTransportDialog(QWidget *parent, const char *name, bool modal, const QString &transport) : KDialogBase( parent, name, modal, i18n("Configure Transport"), Ok|Cancel, Ok, true )
+{
+  QFrame *frame = makeMainWidget();
+  QButtonGroup *buttonGroup = new QButtonGroup( frame );
+  buttonGroup->hide();
+  connect( buttonGroup, SIGNAL(clicked(int)),
+	   this, SLOT(slotSendmailType(int)) );
+
+  QGridLayout *glay = new QGridLayout( frame, 6, 4, spacingHint() );
+  glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
+
+  this->sendmailRadio = new QRadioButton( i18n("Sendmail"), frame );
+  buttonGroup->insert(this->sendmailRadio);
+  glay->addMultiCellWidget(this->sendmailRadio, 0, 0, 0, 3);
+  QLabel *label = new QLabel( i18n("Location:"), frame );
+  glay->addWidget( label, 1, 1 );
+  this->sendmailLocationEdit = new QLineEdit( frame );
+  glay->addWidget( this->sendmailLocationEdit, 1, 2 );
+  this->sendmailChooseButton =
+    new QPushButton( i18n("Choose..."), frame );
+  connect( this->sendmailChooseButton, SIGNAL(clicked()),
+	   this, SLOT(slotSendmailChooser()) );
+  this->sendmailChooseButton->setAutoDefault( false );
+  glay->addWidget( this->sendmailChooseButton, 1, 3 );
+
+  this->smtpRadio = new QRadioButton( i18n("SMTP"), frame );
+  buttonGroup->insert(this->smtpRadio);
+  glay->addMultiCellWidget(this->smtpRadio, 2, 2, 0, 3);
+  label = new QLabel( i18n("Server:"), frame );
+  glay->addWidget( label, 3, 1 );
+  this->smtpServerEdit = new QLineEdit( frame );
+  glay->addWidget( this->smtpServerEdit, 3, 2 );
+  label = new QLabel( i18n("Port:"), frame );
+  glay->addWidget( label, 4, 1 );
+  this->smtpPortEdit = new QLineEdit( frame );
+  this->smtpPortEdit->setValidator( new QIntValidator(frame) );
+  glay->addWidget( this->smtpPortEdit, 4, 2 );
+
+  this->deleteRadio = new QRadioButton(i18n("Remove this transport."), frame);
+  buttonGroup->insert(this->deleteRadio);
+  glay->addMultiCellWidget(this->deleteRadio, 5, 5, 0, 3);
+
+  // Set widgets to default values:
+  sendmailLocationEdit->setText(kernel->msgSender()->mailer());
+  // Reset the widgets based on passed in values.
+  mTransport = transport;
+  if (mTransport && !mTransport.isEmpty()) {
+    if (mTransport.left(5) == "smtp:") {
+      int lastColon = mTransport.find(":", 7);
+      smtpRadio->setChecked(true);
+      smtpServerEdit->setText(mTransport.mid(7,lastColon - 7));
+      smtpPortEdit->setText(mTransport.mid(lastColon + 1, mTransport.length()
+                                           - (lastColon + 1)));
+      this->slotSendmailType(1);
+    }
+    else {
+      sendmailRadio->setChecked(true);
+      sendmailLocationEdit->setText(mTransport);
+      this->slotSendmailType(0);
+    }
+  }
+}
+
+QString ConfigureTransportDialog::getTransport(void)
+{
+  return mTransport;
+}
+
+void ConfigureTransportDialog::slotOk( void )
+{
+  if (smtpRadio->isChecked()) {
+    if (!smtpServerEdit->text().isEmpty()) {
+      mTransport = "smtp://" + smtpServerEdit->text() + ":";
+      if (smtpPortEdit->text().isNull()) mTransport += "25";
+      else mTransport += smtpPortEdit->text();
+    }
+  }
+  else if (sendmailRadio->isChecked()) {
+    if (!sendmailLocationEdit->text().isEmpty())
+      mTransport = sendmailLocationEdit->text();
+  }
+  else if (deleteRadio->isChecked()) {
+    mTransport = "";
+  }
+  accept();
+}
+
+void ConfigureTransportDialog::slotCancel( void )
+{
+  reject();
+}
+
+void ConfigureTransportDialog::slotSendmailType( int id )
+{
+  bool useSendmail;
+  if( id == 0 )
+  {
+    useSendmail = true;
+  }
+  else if( id == 1 )
+  {
+    useSendmail = false;
+  }
+  else
+  {
+    this->sendmailLocationEdit->setEnabled(false);
+    this->sendmailChooseButton->setEnabled(false);
+    this->smtpServerEdit->setEnabled(false);
+    this->smtpPortEdit->setEnabled(false);
+    return;
+  }
+
+  this->sendmailLocationEdit->setEnabled( useSendmail );
+  this->sendmailChooseButton->setEnabled( useSendmail );
+  this->smtpServerEdit->setEnabled( !useSendmail );
+  this->smtpPortEdit->setEnabled( !useSendmail );
+}
+
+void ConfigureTransportDialog::slotSendmailChooser( void )
+{
+  KFileDialog dialog("/", "*", this, 0, true );
+  dialog.setCaption(i18n("Choose Sendmail Location") );
+
+  if( dialog.exec() == QDialog::Accepted )
+  {
+    KURL url = dialog.selectedURL();
+    if( url.isEmpty() == true )
+    {
+      return;
+    }
+
+    if( url.isLocalFile() == false )
+    {
+      KMessageBox::sorry( 0L, i18n( "Only local files allowed." ) );
+      return;
+    }
+
+    this->sendmailLocationEdit->setText( url.path() );
+  }
+}
+
+// This is the ConfigureDialog slot for the button that opens the
+// ConfigureTransportDialog. I put it down here, so I can easily
+// find it while working on it.
+void ConfigureDialog::slotIdentityTransport(void)
+{
+  IdentityEntry *id;
+  id = mIdentityList.get(mIdentity.mActiveIdentity);
+  // Create the dialog.
+  ConfigureTransportDialog ctd(this, 0, true, id->transport());
+  ctd.setCaption(i18n("Configure Transport"));
+  if (ctd.exec() == QDialog::Accepted) {
+    id->setTransport(ctd.getTransport());
+    if (ctd.getTransport().isEmpty())
+      mIdentity.transportButton->setText("Add Transport...");
+    else
+      mIdentity.transportButton->setText("Edit Transport...");
   }
 }

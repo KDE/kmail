@@ -117,6 +117,7 @@ class IdentityEntry
     QString signatureInlineText() const;
     bool    signatureFileIsAProgram() const;
     bool    useSignatureFile() const;
+    QString transport() const;
 
     void setIdentity( const QString &identity );
     void setFullName( const QString &fullName );
@@ -129,6 +130,7 @@ class IdentityEntry
     void setSignatureInlineText( const QString &signatureInlineText );
     void setSignatureFileIsAProgram( bool signatureFileIsAProgram );
     void setUseSignatureFile( bool useSignatureFile );
+    void setTransport(const QString &transport);
 
   private:
     QString mIdentity;
@@ -141,6 +143,7 @@ class IdentityEntry
     QString mSignatureInlineText;
     bool    mSignatureFileIsAProgram;
     bool    mUseSignatureFile;
+    QString mTransport;
 };
 
 
@@ -167,6 +170,34 @@ class IdentityList
     QList<IdentityEntry> mList;
 };
 
+
+class ConfigureTransportDialog : public KDialogBase
+{
+Q_OBJECT
+ public:
+  ConfigureTransportDialog(QWidget *parent=0, const char *name=0,
+                           bool modal=true, const QString &transport=0);
+ QString getTransport(void); 
+
+ protected slots:
+  virtual void slotOk( void );
+  virtual void slotCancel( void );
+
+ private slots:
+  void slotSendmailType( int id );
+  void slotSendmailChooser( void );
+
+  
+ private:
+  QRadioButton *sendmailRadio;
+  QRadioButton *smtpRadio;
+  QRadioButton *deleteRadio;
+  QPushButton  *sendmailChooseButton;
+  QLineEdit    *sendmailLocationEdit;
+  QLineEdit    *smtpServerEdit;
+  QLineEdit    *smtpPortEdit;
+  QString      mTransport;
+};
 
 class LanguageItem
 {
@@ -255,6 +286,7 @@ class ConfigureDialog : public KDialogBase
       QCheckBox      *signatureExecCheck;
       QPushButton    *signatureBrowseButton;
       QPushButton    *signatureEditButton;
+      QPushButton    *transportButton;
       QRadioButton   *signatureFileRadio;
       QRadioButton   *signatureTextRadio;
       QMultiLineEdit *signatureTextEdit;
@@ -451,6 +483,7 @@ class ConfigureDialog : public KDialogBase
     void slotSignatureEdit( void );
     void slotSignatureFile( const QString &filename );
     void slotSignatureExecMode( bool state );
+    void slotIdentityTransport( void );
     void slotSendmailType( int id );
     void slotSendmailChooser( void );
     void slotAccountSelected( void );
@@ -509,6 +542,5 @@ class ConfigureDialog : public KDialogBase
     QValueList<mModifiedAccountsType*> mModifiedAccounts;
     bool secondIdentity;
 };
-
 
 #endif
