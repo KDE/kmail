@@ -1230,6 +1230,7 @@ bool KMMsgBase::syncIndexString() const
   if (len == mIndexLength) {
     Q_ASSERT(mParent->mIndexStream);
     fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
+    assert( mIndexOffset > 0 );
     fwrite( buffer, len, 1, mParent->mIndexStream);
     return TRUE;
   }
