@@ -18,7 +18,7 @@ while read; do
 	Identity*)
 	    echo "# got Identity Key \"$KEY\""
 	    case "$KEY" in
-		"Default PGP Identity")
+		"Default PGP Key")
 		    echo "[$GROUP]PGP Signing Key=$VALUE"
 		    echo "[$GROUP]PGP Encryption Key=$VALUE"
 		    delete_this_key
