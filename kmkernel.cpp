@@ -957,7 +957,7 @@ void KMKernel::cleanupImapFolders()
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
       ->findOrCreate(QString::number(acct->id()), false)->storage());
     fld->setNoContent(true);
-    fld->setLabel(acct->name());
+    fld->folder()->setLabel(acct->name());
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
@@ -987,7 +987,7 @@ void KMKernel::cleanupImapFolders()
     }
 
     cfld->setNoContent(true);
-    cfld->setLabel(acct->name());
+    cfld->folder()->setLabel(acct->name());
     cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
     cfld->setAccount(cachedImapAcct);
     cachedImapAcct->setImapFolder(cfld);

@@ -93,6 +93,8 @@ KMFolder::~KMFolder()
 
 void KMFolder::readConfig( KConfig* config )
 {
+  if ( !config->readEntry("SystemLabel").isEmpty() )
+    mSystemLabel = config->readEntry("SystemLabel");
   mExpireMessages = config->readBoolEntry("ExpireMessages", false);
   mReadExpireAge = config->readNumEntry("ReadExpireAge", 3);
   mReadExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
@@ -117,6 +119,7 @@ void KMFolder::readConfig( KConfig* config )
 
 void KMFolder::writeConfig( KConfig* config ) const
 {
+  config->writeEntry("SystemLabel", mSystemLabel);
   config->writeEntry("ExpireMessages", mExpireMessages);
   config->writeEntry("ReadExpireAge", mReadExpireAge);
   config->writeEntry("ReadExpireUnits", mReadExpireUnits);
@@ -478,7 +481,13 @@ bool KMFolder::isReadOnly() const
 
 QString KMFolder::label() const
 {
-  return mStorage->label();
+  if ( !mSystemLabel.isEmpty() )
+     return mSystemLabel;
+  if ( !mLabel.isEmpty() )
+     return mLabel;
+  if ( isSystemFolder() )
+     return i18n( name().latin1() );
+  return name();
 }
 
 //--------------------------------------------------------------------------
@@ -493,21 +502,6 @@ QString KMFolder::mailingListPostAddress() const
     }
   }
   return QString::null;
-}
-
-void KMFolder::setLabel( const QString& lbl )
-{
-  mStorage->setLabel( lbl );
-}
-
-QString KMFolder::systemLabel() const
-{
-  return mStorage->systemLabel();
-}
-
-void KMFolder::setSystemLabel( const QString& lbl )
-{
-  mStorage->setSystemLabel( lbl );
 }
 
 const char* KMFolder::type() const

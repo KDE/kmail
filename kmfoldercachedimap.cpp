@@ -154,7 +154,7 @@ void KMFolderCachedImap::readConfig()
   if( mImapPath.isEmpty() ) mImapPath = config->readEntry( "ImapPath" );
   if( QString( name() ).upper() == "INBOX" && mImapPath == "/INBOX/" )
   {
-    mLabel = i18n( "inbox" );
+    folder()->setLabel( i18n( "inbox" ) );
     // for the icon
     folder()->setSystemFolder( true );
   }
@@ -1212,7 +1212,7 @@ void KMFolderCachedImap::listDirectory2() {
       (folder()->child()->createFolder("INBOX", true, KMFolderTypeCachedImap)->storage());
     f->setAccount(mAccount);
     f->setImapPath("/INBOX/");
-    f->setLabel(i18n("inbox"));
+    f->folder()->setLabel(i18n("inbox"));
     if (!node) {
       f->close();
       kmkernel->dimapFolderMgr()->contentsChanged();

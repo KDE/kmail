@@ -149,7 +149,7 @@ void KMFolderImap::readConfig()
   if (QString(name()).upper() == "INBOX" && mImapPath == "/INBOX/")
   {
     folder()->setSystemFolder( true );
-    setLabel( i18n("inbox") );
+    folder()->setLabel( i18n("inbox") );
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
@@ -604,7 +604,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
         (folder()->child()->createFolder("INBOX", true)->storage());
       f->setAccount(mAccount);
       f->setImapPath("/INBOX/");
-      f->setLabel(i18n("inbox"));
+      f->folder()->setLabel(i18n("inbox"));
       if (!node) f->close();
       // so we have an INBOX
       mAccount->setCreateInbox( false );

@@ -307,12 +307,12 @@ public:
   void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
 
   /** Returns the label of the folder for visualization. */
-  QString label() const;
-  void setLabel(const QString& lbl);
+  virtual QString label() const;
+  void setLabel( const QString& l ) { mLabel = l; }
 
-  /** Returns the system default label of the folder */
-  QString systemLabel() const;
-  void setSystemLabel(const QString& lbl);
+  /** Set the label that is used as a system default */
+  virtual QString systemLabel() const { return mSystemLabel; }
+  void setSystemLabel( const QString& l ) { mSystemLabel = l; }
 
   /** Type of the folder. Inherited. */
   const char* type() const;
@@ -524,6 +524,10 @@ private:
   KMFolderDir* mParent;
   KMFolderDir* mChild;
   bool mIsSystemFolder;
+
+  /** nationalized label or QString::null (then name() should be used) */
+  QString mLabel;
+  QString mSystemLabel;
 
   /** Support for automatic expiry of old messages */
   bool         mExpireMessages;          // TRUE if old messages are expired

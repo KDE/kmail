@@ -304,14 +304,8 @@ public:
   /** Is the folder read-only? */
   virtual bool isReadOnly() const = 0;
 
-
   /** Returns the label of the folder for visualization. */
-  virtual QString label() const;
-  void setLabel(const QString& lbl) { mLabel = lbl; }
-
-  /** Set the label that is used as a system default */
-  virtual QString systemLabel() const { return mSystemLabel; }
-  void setSystemLabel(const QString& lbl) { mSystemLabel = lbl; }
+  QString label() const;
 
   /** Type of the folder. Inherited. */
   virtual const char* type() const;
@@ -482,9 +476,6 @@ protected:
   bool mDirty;
   /** TRUE if the files of the folder are locked (writable) */
   bool mFilesLocked;
-  /** nationalized label or QString::null (then name() should be used) */
-  QString mLabel;
-  QString mSystemLabel;
   KMAcctList* mAcctList;
 
   /** number of unread messages, -1 if not yet set */
