@@ -451,7 +451,7 @@ void KMAcctExpPop::startJob() {
   KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   KMBroadcastStatus::instance()->setStatusMsg( 
-                     i18n( "Preparing transmission..." ));
+	i18n("Preparing transmission from %1...").arg(mHost));
 
   numBytes = 0;
   numBytesRead = 0;

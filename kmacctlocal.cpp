@@ -81,7 +81,7 @@ void KMAcctLocal::processNewMail(bool)
 
   KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusMsg( 
-                     i18n( "Preparing transmission..." ));
+	i18n("Preparing transmission from %1...").arg(mailFolder.name()));
 
   kapp->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);

@@ -92,7 +92,7 @@ void KMAcctPop::processNewMail(bool interactive)
   pipeHandler = signal(SIGPIPE, SIG_IGN);
   KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusMsg( 
-                     i18n( "Preparing transmission..." ));
+	i18n("Preparing transmission from %1...").arg(mHost));
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   hasNewMail = doProcessNewMail(interactive);
   KMBroadcastStatus::instance()->setStatusProgressEnable( false );
