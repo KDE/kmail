@@ -784,6 +784,31 @@ KMMsgStatus KMFolderImap::flagsToStatus(int flags, bool newMsg)
 
 
 //-----------------------------------------------------------------------------
+QCString KMFolderImap::statusToFlags(KMMsgStatus status)
+{
+  QCString flags = "";
+  switch (status)
+  {
+    case KMMsgStatusNew:
+    case KMMsgStatusUnread:
+      break;
+    case KMMsgStatusDeleted:
+      flags = "\\DELETED";
+      break;
+    case KMMsgStatusReplied:
+      flags = "\\SEEN \\ANSWERED";
+      break;
+    case KMMsgStatusFlag:
+      flags = "\\SEEN \\FLAGGED";
+      break;
+    default:
+      flags = "\\SEEN";
+  }
+  return flags;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 {
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
@@ -929,7 +954,8 @@ void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder, QPtrList<KM
   {
     // transfers the complete message to the server
     KURL url = account->getUrl();
-    url.setPath(folder->imapPath());
+    url.setPath(folder->imapPath() + ";SECTION="
+      + QString::fromLatin1(KMFolderImap::statusToFlags(msg->status())));
     KMAcctImap::jobData jd;
     jd.parent = NULL; jd.offset = 0;
     jd.total = 1; jd.done = 0;
@@ -1252,24 +1278,7 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status)
   getUids(ids, uids, true);
 
   // get the flags
-  QCString flags = "";
-  switch (status)
-  {
-    case KMMsgStatusNew:
-    case KMMsgStatusUnread:
-      break;
-    case KMMsgStatusDeleted:
-      flags = "\\DELETED";
-      break;
-    case KMMsgStatusReplied:
-      flags = "\\SEEN \\ANSWERED";
-      break;
-    case KMMsgStatusFlag:
-      flags = "\\SEEN \\FLAGGED";
-      break;
-    default:
-      flags = "\\SEEN";
-  }
+  QCString flags = statusToFlags(status);
 
   // get the sets of ranges..
   QStringList sets = makeSets(uids);

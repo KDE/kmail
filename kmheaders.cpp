@@ -1779,6 +1779,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
     } else {
       newMsg = new KMMessage;
       newMsg->fromString(msg->asString());
+      newMsg->setStatus(msg->status());
       newMsg->setComplete(msg->isComplete());
 
       if ((mFolder->protocol() == "imap") && !newMsg->isComplete())

@@ -205,6 +205,11 @@ public:
   static QString decodeFileName(const QString &);
 
   /**
+   * Convert message status to a list of IMAP flags
+   */
+  static QCString statusToFlags(KMMsgStatus status);
+
+  /**
    * Return the filename of the folder (reimplemented from KFolder)
    */
   virtual QString fileName() const { return encodeFileName(name()); }
