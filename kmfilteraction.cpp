@@ -22,9 +22,12 @@
 #include <ktempfile.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kprocess.h>
 
 #include <qcombobox.h>
 #include <qlineedit.h>
+#include <qvaluelist.h>
+#include <qtl.h>  // QT Template Library, needed for qHeapSort
 
 #include <signal.h>
 #include <stdlib.h>
@@ -306,7 +309,55 @@ void KMFilterActionWithCommand::clearParamWidget( QWidget* paramWidget ) const
   KMFilterActionWithString::clearParamWidget( paramWidget );
 }
 
+QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile> & aTempFileList ) const
+{
+  QString result = mParameter;
+  QValueList<int> argList;
+  QRegExp r( "%[0-9]+" );
+  int start=-1, len=0;
+  bool OK = FALSE;
+  
+  // search for '%n'
+  while ( ( start = r.match( result, start + 1, &len ) ) > 0 ) {
+    // and save the encountered 'n' in a list.
+    int n = result.mid( start + 1, len - 1 ).toInt( &OK );
+    if ( OK )
+      argList.append( n );
+  }
 
+  // sort the list of n's
+  qHeapSort( argList );
+
+  // and use QString::arg to substitute filenames for the %n's.
+  int lastSeen = -1;
+  QString tempFileName;
+  KMMessagePart msgPart;
+  QValueList<int>::Iterator it;
+  for ( it = argList.begin() ; it != argList.end() ; ++it ) {
+    // setup temp files with check for duplicate %n's
+    if ( (*it) != lastSeen ) {
+      KTempFile *tf = new KTempFile();
+      if ( tf->status() != 0 ) {
+	delete tf;
+	kdDebug() << "KMFilterActionWithCommand: Could not create temp file!" << endl;
+	return QString::null;
+      }
+      tf->setAutoDelete(TRUE);
+      aTempFileList.append( tf );
+      tempFileName = tf->name();
+      aMsg->bodyPart( (*it), &msgPart );
+      kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
+			false, false, false );
+      tf->close();
+    }
+    // QString( "%0 and %1 and %1" ).arg( 0 ).arg( 1 )
+    // returns "0 and 1 and %1", so we must call .arg as
+    // many times as there are %n's, regardless of their multiplicity.
+    result = result.arg( tempFileName );
+  }
+
+  return result;
+}
 
 
 //=============================================================================
@@ -562,72 +613,54 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg, bool
 class KMFilterActionExec : public KMFilterActionWithCommand
 {
 public:
-  KMFilterActionExec(const char* aName, const QString aLabel );
+  KMFilterActionExec();
   virtual ReturnCode process(KMMessage* msg, bool& stopIt) const;
   static KMFilterAction* newAction(void);
-  static void dummySigHandler(int);
 };
 
 KMFilterAction* KMFilterActionExec::newAction(void)
 {
-  return (new KMFilterActionExec(0,0)); // ###
+  return (new KMFilterActionExec());
 }
 
-KMFilterActionExec::KMFilterActionExec(const char* aName, const QString aLabel )
-  : KMFilterActionWithCommand( aName ? aName : "execute" , aLabel ? aLabel : i18n("execute command") )
-{
-}
-
-void KMFilterActionExec::dummySigHandler(int)
+KMFilterActionExec::KMFilterActionExec()
+  : KMFilterActionWithCommand( "execute", i18n("execute command") )
 {
 }
 
 KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/) const
 {
-  // should use K{,Shell}Process....
-  void (*oldSigHandler)(int);
-  int rc;
-  if (mParameter.isEmpty()) return ErrorButGoOn;
-  QString fullCmd = mParameter + " ";
-  QList<KTempFile> atmList;
-  KMMessagePart msgPart;
-  int i, nr;
-  while (fullCmd.contains("%"))
-  {
-    // this code seems broken for commands that
-    // specify e.g. %2 before %1. (mmutz)
-    i = fullCmd.find("%") + 1;
-    nr = fullCmd.mid(i, fullCmd.find(" ", i) - i).toInt();
-    aMsg->bodyPart(nr, &msgPart);
-    KTempFile *atmTempFile = new KTempFile();
-    atmList.append( atmTempFile );
-    atmTempFile->setAutoDelete( true );
-    kByteArrayToFile(msgPart.bodyDecodedBinary(), atmTempFile->name(),
-		     false, false, false);
-    fullCmd = fullCmd.arg( atmTempFile->name() );
-  }
-  oldSigHandler = signal(SIGALRM, &KMFilterActionExec::dummySigHandler);
-  alarm(30);
-  rc = system(fullCmd.left(fullCmd.length() - 1 ));
-  alarm(0);
-  signal(SIGALRM, oldSigHandler);
-  if (rc & 255)
+  if ( mParameter.isEmpty() )
     return ErrorButGoOn;
-  else
+
+  QList<KTempFile> atmList;
+  atmList.setAutoDelete(TRUE);
+
+  assert( aMsg );
+
+  QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
+
+  if ( commandLine.isEmpty() )
+    return ErrorButGoOn;
+
+  KShellProcess shProc;
+  shProc << commandLine;
+
+  if ( !shProc.start( KProcess::Block, KProcess::NoCommunication ) )
+    return ErrorButGoOn;
+
+  if ( shProc.normalExit() && shProc.exitStatus() == 0 )
     return GoOn;
+  else
+    return ErrorButGoOn;
 }
-
-// support suspended until proted to KProcess.
-#define KMFILTERACTIONEXTFILTER_IS_BROKEN
-
-#ifndef KMFILTERACTIONEXTFILTER_IS_BROKEN
 
 //=============================================================================
 // KMFilterActionExtFilter - use external filter app
 // External message filter: executes a shell command with message
 // on stdin; altered message is expected on stdout.
 //=============================================================================
-class KMFilterActionExtFilter: public KMFilterActionExec
+class KMFilterActionExtFilter: public KMFilterActionWithCommand
 {
 public:
   KMFilterActionExtFilter();
@@ -641,67 +674,87 @@ KMFilterAction* KMFilterActionExtFilter::newAction(void)
 }
 
 KMFilterActionExtFilter::KMFilterActionExtFilter()
-  : KMFilterActionExec( "filter app", i18n("use external filter app") )
+  : KMFilterActionWithCommand( "filter app", i18n("pipe through") )
 {
 }
 
-KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, bool& stop) const
+KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg, bool& ) const
 {
-  int len;
-  ReturnCode rc=Ok;
-  QString msgText, origCmd;
-  char buf[8192];
-  FILE *fh;
-  bool ok = TRUE;
-  KTempFile inFile(locateLocal("tmp", "kmail-filter"), "in");
-  KTempFile outFile(locateLocal("tmp", "kmail-filter"), "out");
+  if ( mParameter.isEmpty() )
+    return ErrorButGoOn;
 
-  if (mParameter.isEmpty()) return ErrorButGoOn;
+  ///////////////
+  KTempFile * inFile = new KTempFile;
+  KTempFile * outFile = new KTempFile;
+  inFile->setAutoDelete(TRUE);
+  outFile->setAutoDelete(TRUE);
+  outFile->close();
+
+  QList<KTempFile> atmList;
+  atmList.setAutoDelete(TRUE);
+  atmList.append( inFile );
+  atmList.append( outFile );
+
+  assert( aMsg );
+
+  QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
+  if ( commandLine.isEmpty() )
+    return ErrorButGoOn;
+
+  // The parentheses force the creation of a subshell
+  // in which the user-specifed command is executed.
+  // This is to really catch all output of the command as well
+  // as to avoid clashes of our redirection with the ones
+  // the user may have specified. In the long run, we
+  // shouldn't be using tempfiles at all for this class, due
+  // to security aspects. (mmutz)
+  commandLine = QString( "(%1) <%2 >%3" ).arg( commandLine ).arg( inFile->name() ).arg( outFile->name() );
 
   // write message to file
-  fh = inFile.fstream();
-  if (fh)
-  {
+  QString msgText;
+  FILE *fh;
+  bool ok = TRUE;
+
+  fh = inFile->fstream();
+  if (fh) {
     msgText = aMsg->asString();
     if (!fwrite(msgText, msgText.length(), 1, fh)) ok = FALSE;
-    inFile.close();
-  }
-  else ok = FALSE;
+    inFile->close();
+  } else ok = FALSE;
 
-  outFile.close();
-  if (ok)
-  {
-    // execute filter
-    origCmd = mParameter;
-    mParameter += " <" + inFile.name() + " >" + outFile.name();
-    rc = KMFilterActionExec::process(aMsg, stop);
-    mParameter = origCmd;
+  if ( !ok )
+    return ErrorButGoOn;
 
-    // read altered message
-    fh = fopen(outFile.name(), "r");
-    if (fh)
-    {
-      msgText = "";
-      while (1)
-      {
-	len = fread(buf, 1, 1023, fh);
-	if (len <= 0) break;
-	buf[len] = 0;
-	msgText += buf;
-      }
-      outFile.close();
-      if (!msgText.isEmpty()) aMsg->fromString(msgText);
+  KShellProcess shProc;
+  shProc << commandLine;
+
+  if ( !shProc.start( KProcess::Block, KProcess::NoCommunication ) )
+    return ErrorButGoOn;
+
+  if ( !shProc.normalExit() || shProc.exitStatus() != 0 )
+    return ErrorButGoOn;
+
+  // read altered message
+  int len;
+  char buf[8192];
+
+  fh = fopen(outFile->name(), "r");
+  if (fh) {
+    msgText = "";
+    while (1) {
+      len = fread(buf, 1, 1023, fh);
+      if (len <= 0) break;
+      buf[len] = 0;
+      msgText += buf;
     }
-    else ok = FALSE;
-  }
-
-  inFile.unlink();
-  outFile.unlink();
-
-  return rc;
+    outFile->close();
+    if ( !msgText.isEmpty() )
+      aMsg->fromString( msgText );
+  } else
+    return ErrorButGoOn;
+  
+  return GoOn;
 }
-
-#endif
 
 
 //=============================================================================
@@ -721,9 +774,7 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionBounce::newAction );
 #endif
   insert( KMFilterActionExec::newAction );
-#ifndef KMFILTERACTIONEXTFILTER_IS_BROKEN
   insert( KMFilterActionExtFilter::newAction );
-#endif
   // Register custom filter actions below this line.
 }
 // The int in the QDict constructor (23) must be a prime

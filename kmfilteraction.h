@@ -19,7 +19,7 @@ class KMMessage;
 class QWidget;
 class KMFolder;
 class QStringList;
-
+class KTempFile;
 
 
 //=========================================================
@@ -401,17 +401,22 @@ public:
 
 
 /** Abstract base class for KMail's filter actions that need a command
-    line as parameter, e.g. 'forward to'. Can create a @ref QListBox
-    (are there better widgtes in the depth of the kdelibs?) as
+    line as parameter, e.g. 'forward to'. Can create a @ref QLineEdit
+    (are there better widgets in the depths of the kdelibs?) as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:
 
     @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
     @li static @ref KMFilterAction::newAction
 
+    The implementation of @ref KMFilterAction::process should take the
+    command line specified in mParameter, make all required
+    modifications and stream the resulting command line into @p
+    mProcess. Then you can start the command with @p mProcess.start().
+
     @short Abstract base class for filter actions with a command line as parameter.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
-    @see KMFilterActionWithString KMFilterAction KMFilter
+    @see KMFilterActionWithString KMFilterAction KMFilter KShellProcess
 
 */
 class KMFilterActionWithCommand : public KMFilterActionWithString
@@ -437,6 +442,14 @@ public:
   /** The filter action shall clear it's parameter widget's
       contents. */
   virtual void clearParamWidget(QWidget* paramWidget) const;
+
+  /** Substitutes various placeholders for data from the message
+      resp. for filenames containing that data. Currently, only %n is
+      supported, where n in an integer >= 0. %n gets substituted for
+      the name of a tempfile holding the n'th message part, with n=0
+      meaning the body of the message. */
+  virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QList<KTempFile> & aTempFileList  ) const;
+
 };
 
 

@@ -205,14 +205,13 @@ void KMFilterListBox::slotUpdateFilterName()
 
 void KMFilterListBox::slotApplyFilterChanges()
 {
-  setEnabled( FALSE );
-
   // unselect all filters:
   mListBox->selectAll( FALSE );
   // maybe QListBox doesn't emit selected(-1) on unselect,
   // so we make sure the edit widgets receive an equivalent:
   emit resetWidgets();
   mIdxSelItem = -1;
+  enableControls();
 
   // by now all edit widgets should have written back
   // their widget's data into our filter list.
@@ -235,10 +234,8 @@ void KMFilterListBox::slotApplyFilterChanges()
       delete f;
   }
   
-  // allow usage of the filters agin.
+  // allow usage of the filters again.
   fm->endUpdate();
-  setEnabled( TRUE );
-
   fm->writeConfig();
 }
 
