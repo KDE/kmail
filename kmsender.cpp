@@ -280,6 +280,7 @@ void KMSender::doSendMsg()
     }
     mCurrentMsg->setStatus(KMMsgStatusSent);
     mCurrentMsg->setStatus(KMMsgStatusRead); // otherwise it defaults to new on imap
+    mCurrentMsg->updateAttachmentState();
 
     const KPIM::Identity & id = kmkernel->identityManager()
       ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
