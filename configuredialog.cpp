@@ -412,7 +412,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   connect( button, SIGNAL(clicked()), 
            this, SLOT(slotChangeDefaultPGPKey()) );
   QWhatsThis::add( mPgpIdentityLabel,
-		   i18n("<qt><p>The PGP key you choose here will be used "
+		   i18n("<qt><p>The OpenPGP key you choose here will be used "
 			"to sign messages and to encrypt messages to "
 			"yourself.</p></qt>") );
 
@@ -2010,12 +2010,12 @@ static const struct {
   { "NewMessage", I18N_NOOP("New message") },
   { "UnreadMessage", I18N_NOOP("Unread message") },
   { "FlagMessage", I18N_NOOP("Important message") },
-  { "PGPMessageEncr", I18N_NOOP("PGP message's header - encrypted") },
-  { "PGPMessageOkKeyOk", I18N_NOOP("PGP message's header - valid signature with trusted key") },
-  { "PGPMessageOkKeyBad", I18N_NOOP("PGP message's header - valid signature with untrusted key") },
-  { "PGPMessageWarn", I18N_NOOP("PGP message's header - unchecked signature") },
-  { "PGPMessageErr", I18N_NOOP("PGP message's header - bad signature") },
-  { "ColorbarPGP", I18N_NOOP("Colorbar - PGP message") },
+  { "PGPMessageEncr", I18N_NOOP("OpenPGP message's frame - encrypted") },
+  { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP message's frame - valid signature with trusted key") },
+  { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP message's frame - valid signature with untrusted key") },
+  { "PGPMessageWarn", I18N_NOOP("OpenPGP message's frame - unchecked signature") },
+  { "PGPMessageErr", I18N_NOOP("OpenPGP message's frame - bad signature") },
+  { "ColorbarPGP", I18N_NOOP("Colorbar - OpenPGP message") },
   { "ColorbarPlain", I18N_NOOP("Colorbar - plain text message") },
   { "ColorbarHTML", I18N_NOOP("Colorbar - HTML message") },
 };
@@ -2462,7 +2462,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   vlay->addWidget( mSmartQuoteCheck );
 
   mPgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically sig&n messages using PGP"), this );
+    new QCheckBox( i18n("Automatically sig&n messages using OpenPGP"), this );
   vlay->addWidget( mPgpAutoSignatureCheck );
 
   mPgpAutoEncryptCheck =
