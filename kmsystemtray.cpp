@@ -480,10 +480,12 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 
 void KMSystemTray::updateNewMessages()
 {
-  for ( QMap<KMFolder*, bool>::Iterator it = mPendingUpdates.begin();
+  for ( QMap<QGuardedPtr<KMFolder>, bool>::Iterator it = mPendingUpdates.begin();
         it != mPendingUpdates.end(); ++it)
   {
   KMFolder *fldr = it.key();
+  if ( !fldr ) // deleted folder
+    continue;
 
   /** The number of unread messages in that folder */
   int unread = fldr->countUnread();
