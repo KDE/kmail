@@ -64,6 +64,7 @@ using KRecentAddress::RecentAddresses;
 #include <kapplication.h>
 #include <kstatusbar.h>
 #include <kaction.h>
+#include <kdirwatch.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -242,7 +243,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   rethinkFields();
 
   if (useExtEditor) {
-    mEditor->setExternalEditor(true);
+    mEditor->setUseExternalEditor(true);
     mEditor->setExternalEditorPath(mExtEditor);
   }
 
@@ -1390,7 +1391,8 @@ void KMComposeWin::setFcc( const QString &idString )
 //-----------------------------------------------------------------------------
 bool KMComposeWin::queryClose ()
 {
-  int rc;
+  if ( !mEditor->checkExternalEditorFinished() )
+    return false;
   if (kmkernel->shuttingDown() || kapp->sessionSaving())
     return true;
 
@@ -1399,7 +1401,7 @@ bool KMComposeWin::queryClose ()
      mEdtSubject->edited() || mAtmModified ||
      (mTransport->lineEdit() && mTransport->lineEdit()->edited()))
   {
-    rc = KMessageBox::warningYesNoCancel(this,
+    const int rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to discard the message or save it for later?"),
            i18n("Discard or Save Message"),
            i18n("&Save as Draft"),
@@ -4408,16 +4410,11 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 //-----------------------------------------------------------------------------
 int KMComposeWin::currentAttachmentNum()
 {
-  int idx = -1;
   int i = 0;
-  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
-    if ( *it == mAtmListView->currentItem() ) {
-      idx = i;
-      break;
-    }
-  }
-
-  return idx;
+  for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i )
+    if ( *it == mAtmListView->currentItem() )
+      return i;
+  return -1;
 }
 
 //-----------------------------------------------------------------------------
@@ -5033,20 +5030,21 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
-  doSend(FALSE);
+  if ( mEditor->checkExternalEditorFinished() )
+    doSend( false );
 }
 
 
 //----------------------------------------------------------------------------
-bool KMComposeWin::slotSaveDraft()
-{
-  return doSend(FALSE, TRUE);
+bool KMComposeWin::slotSaveDraft() {
+  return mEditor->checkExternalEditorFinished() && doSend( false, true );
 }
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSendNow()
-{
+void KMComposeWin::slotSendNow() {
+  if ( !mEditor->checkExternalEditorFinished() )
+    return;
   if (mConfirmSend) {
     switch(KMessageBox::warningYesNoCancel(mMainWidget,
                                     i18n("About to send email..."),
@@ -5755,20 +5753,21 @@ void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &
 //=============================================================================
 KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
 	       const char *name)
-  : KEdit(parent, name)
+  : KEdit( parent, name ),
+    mComposer( composer ),
+    mKSpell( 0 ),
+    mSpellingFilter( 0 ),
+    mExtEditorTempFile( 0 ),
+    mExtEditorTempFileWatcher( 0 ),
+    mExtEditorProcess( 0 ),
+    mUseExtEditor( false ),
+    mWasModifiedBeforeSpellCheck( false ),
+    mSpellChecker( 0 ),
+    mSpellLineEdit( false )
 {
-  mComposer = composer;
   installEventFilter(this);
   KCursor::setAutoHideCursor( this, true, true );
 
-  extEditor = false;     // the default is to use ourself
-  spellLineEdit = false;
-  mKSpell = 0;
-  mSpellingFilter = 0;
-  mTempFile = 0;
-  mExtEditorProcess = 0;
-  mWasModifiedBeforeSpellCheck = false;
-  mBound = QRegExp( QString::fromLatin1("[\\s\\W]") );
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
@@ -5779,7 +5778,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   QColor col2 = config->readColorEntry( "QuotedText3", &defaultColor3 );
   QColor col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
-  QColor c = QColor("red");
+  QColor c = Qt::red;
   mSpellChecker = new KDictSpellingHighlighter(this, /*active*/ true, /*autoEnabled*/ true,
     /*spellColor*/ config->readColorEntry("NewMessage", &c),
     /*colorQuoting*/ true, col1, col2, col3, col4);
@@ -5840,7 +5839,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
   {
     QKeyEvent *k = (QKeyEvent*)e;
 
-    if (extEditor) {
+    if (mUseExtEditor) {
       if (k->key() == Key_Up)
       {
         mComposer->focusNextPrevEdit(0, false); //take me up
@@ -5851,18 +5850,17 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       if ( (k->key() == Key_Shift) || (k->key() == Key_Control) ||
            (k->key() == Key_Meta) || (k->key() == Key_Alt) )
         return true;
-      if (mTempFile) return TRUE;
-      QRegExp repFn("\\%f");
+      if (mExtEditorTempFile) return TRUE;
       QString sysLine = mExtEditor;
-      mTempFile = new KTempFile();
+      mExtEditorTempFile = new KTempFile();
 
-      mTempFile->setAutoDelete(true);
+      mExtEditorTempFile->setAutoDelete(true);
 
-      (*mTempFile->textStream()) << text();
+      (*mExtEditorTempFile->textStream()) << text();
 
-      mTempFile->close();
+      mExtEditorTempFile->close();
       // replace %f in the system line
-      sysLine.replace(repFn, mTempFile->name());
+      sysLine.replace( "%f", mExtEditorTempFile->name() );
       mExtEditorProcess = new KProcess();
       sysLine += " ";
       while (!sysLine.isEmpty())
@@ -5875,12 +5873,13 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       if (!mExtEditorProcess->start())
       {
         KMessageBox::error(0, i18n("Unable to start external editor."));
-        delete mExtEditorProcess;
-        mExtEditorProcess = 0;
-        delete mTempFile;
-        mTempFile = 0;
+	killExternalEditor();
+      } else {
+	mExtEditorTempFileWatcher = new KDirWatch( this, "mExtEditorTempFileWatcher" );
+	connect( mExtEditorTempFileWatcher, SIGNAL(dirty(const QString&)),
+		 SLOT(slotExternalEditorTempFileChanged(const QString&)) );
+	mExtEditorTempFileWatcher->addFile( mExtEditorTempFile->name() );
       }
-
       return TRUE;
     } else {
     // ---sven's Arrow key navigation start ---
@@ -5898,7 +5897,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     {
       deselect();
       mComposer->focusNextPrevEdit(0, false);
-	  return TRUE;
+      return TRUE;
     }
 
     }
@@ -5914,8 +5913,9 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     if( !paraText.at(charPos).isSpace() )
     {
       //Get word right clicked on
-      firstSpace = paraText.findRev( mBound, charPos ) + 1;
-      lastSpace = paraText.find( mBound, charPos );
+      const QRegExp wordBoundary( "[\\s\\W]" );
+      firstSpace = paraText.findRev( wordBoundary, charPos ) + 1;
+      lastSpace = paraText.find( wordBoundary, charPos );
       if( lastSpace == -1 )
         lastSpace = paraText.length();
       QString word = paraText.mid( firstSpace, lastSpace - firstSpace );
@@ -5971,33 +5971,59 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotExternalEditorDone(KProcess* proc)
-{
-  assert(proc == mExtEditorProcess);
+void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
+  if ( !mExtEditorTempFile )
+    return;
+  if ( fileName != mExtEditorTempFile->name() )
+    return;
+  // read data back in from file
   setAutoUpdate(false);
   clear();
 
-  // read data back in from file
-  insertLine(QString::fromLocal8Bit(kFileToString(mTempFile->name(),
-    TRUE, FALSE)), -1);
-
+  insertLine(QString::fromLocal8Bit(kFileToString( fileName, true, false )), -1);
   setAutoUpdate(true);
   repaint();
-  delete proc;
-  proc = 0;
-  delete mTempFile;
-  mTempFile = 0;
-  mExtEditorProcess = 0;
 }
 
+void KMEdit::slotExternalEditorDone( KProcess * proc ) {
+  assert(proc == mExtEditorProcess);
+  // make sure, we update even when KDirWatcher is too slow:
+  slotExternalEditorTempFileChanged( mExtEditorTempFile->name() );
+  killExternalEditor();
+}
+
+void KMEdit::killExternalEditor() {
+  delete mExtEditorTempFileWatcher; mExtEditorTempFileWatcher = 0;
+  delete mExtEditorTempFile; mExtEditorTempFile = 0;
+  delete mExtEditorProcess; mExtEditorProcess = 0;
+}
+
+
+bool KMEdit::checkExternalEditorFinished() {
+  if ( !mExtEditorProcess )
+    return true;
+  switch ( KMessageBox::warningYesNoCancel( this,
+           i18n("The external editor is still running.\n"
+		"Abort the external editor or leave it open?"),
+           i18n("External Editor"),
+	   i18n("Abort Editor"), i18n("Leave Editor Open") ) ) {
+  case KMessageBox::Yes:
+    killExternalEditor();
+    return true;
+  case KMessageBox::No:
+    return true;
+  default:
+    return false;
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMEdit::spellcheck()
 {
-  if (  mKSpell )
+  if ( mKSpell )
     return;
   mWasModifiedBeforeSpellCheck = isModified();
-  spellLineEdit = !spellLineEdit;
+  mSpellLineEdit = !mSpellLineEdit;
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 		       SLOT(slotSpellcheck2(KSpell*)));
   QStringList l = KSpellingHighlighter::personalWords();
@@ -6043,7 +6069,7 @@ void KMEdit::del() { KEdit::del(); }
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
     kdDebug()<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;
-    if( spellLineEdit )
+    if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
     else
         misspelling(text, lst, pos);
@@ -6052,7 +6078,7 @@ void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsign
 void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos)
 {
     kdDebug()<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) : "<<oldWord<<endl;
-    if( spellLineEdit )
+    if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerCorrected( oldWord, newWord, pos);
      else
          corrected(oldWord, newWord, pos);
@@ -6061,7 +6087,7 @@ void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsi
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellcheck2(KSpell*)
 {
-    if( !spellLineEdit)
+    if( !mSpellLineEdit)
     {
         spellcheck_start();
 
@@ -6092,16 +6118,16 @@ void KMEdit::slotSpellcheck2(KSpell*)
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellResult(const QString &s)
 {
-    if( !spellLineEdit)
+    if( !mSpellLineEdit)
         spellcheck_stop();
 
   int dlgResult = mKSpell->dlgResult();
   if ( dlgResult == KS_CANCEL )
   {
-      if( spellLineEdit)
+      if( mSpellLineEdit)
       {
           //stop spell check
-          spellLineEdit = false;
+          mSpellLineEdit = false;
           QString tmpText( s );
           tmpText =  tmpText.remove('\n');
 
@@ -6146,7 +6172,7 @@ void KMEdit::slotSpellDone()
   }
   else
   {
-      if( spellLineEdit )
+      if( mSpellLineEdit )
           spellcheck();
 #if KDE_IS_VERSION( 3, 1, 90 )
       else if( status == KSpell::FinishedNoMisspellingsEncountered )

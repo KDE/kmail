@@ -16,7 +16,6 @@
 #include <qpalette.h>
 #include <qfont.h>
 #include <qptrlist.h>
-#include <qregexp.h>
 
 #include <klineedit.h>
 #include <kio/job.h>
@@ -54,6 +53,7 @@ class KMComposeWin;
 class KMFolderComboBox;
 class KMMessage;
 class KProcess;
+class KDirWatch;
 class KSelectAction;
 class KSpell;
 class KSpellConfig;
@@ -98,8 +98,17 @@ public:
   /**
    * For the external editor
    */
-  inline void setExternalEditor(bool extEd) { extEditor=extEd; }
-  inline void setExternalEditorPath(QString path) { mExtEditor=path; }
+  void setUseExternalEditor( bool use ) { mUseExtEditor = use; }
+  void setExternalEditorPath( const QString & path ) { mExtEditor = path; }
+
+  /**
+   * Check that the external editor has finished and output a warning
+   * if it hasn't.
+   * @return false if the user chose to cancel whatever operation
+   * called this method.
+   */
+  bool checkExternalEditorFinished();
+
 
   /** Drag and drop methods */
   void contentsDragEnterEvent(QDragEnterEvent *e);
@@ -127,18 +136,25 @@ protected:
   virtual void keyPressEvent( QKeyEvent* );
 
   KMComposeWin* mComposer;
+
+private slots:
+  void slotExternalEditorTempFileChanged( const QString & fileName );
+
+private:
+  void killExternalEditor();
+
 private:
   KSpell *mKSpell;
   QMap<QString,QStringList> mReplacements;
-  QRegExp mBound;
   SpellingFilter* mSpellingFilter;
-  KTempFile *mTempFile;
+  KTempFile *mExtEditorTempFile;
+  KDirWatch *mExtEditorTempFileWatcher;
   KProcess  *mExtEditorProcess;
-  bool      extEditor;
+  bool      mUseExtEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
   KDictSpellingHighlighter *mSpellChecker;
-  bool spellLineEdit;
+  bool mSpellLineEdit;
 };
 
 
