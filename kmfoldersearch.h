@@ -77,6 +77,7 @@ private:
   int mSearchedCount, mFoundCount;
 };
 
+#define KMFolderSearchInherited KMFolder
 
 class KMFolderSearch: public KMFolder
 {
@@ -95,6 +96,9 @@ public:
   const KMSearch* search() const;
   // Stops the current search
   void stopSearch() { if (mSearch) mSearch->stop(); }
+
+  virtual KMMessage* getMsg(int idx);
+  virtual void ignoreJobsForMessage( KMMessage* );
 
 protected slots:
   // Reads search definition for this folder and creates a KMSearch

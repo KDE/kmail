@@ -661,6 +661,37 @@ KMMsgBase* KMFolderSearch::getMsgBase(int idx)
     return folder->getMsgBase(folderIdx);
 }
 
+//-----------------------------------------------------------------------------
+KMMessage* KMFolderSearch::getMsg(int idx)
+{
+    int folderIdx = -1;
+    KMFolder *folder = 0;
+    if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
+	return 0;
+    kernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
+    assert(folder && (folderIdx != -1));
+    KMMessage* msg = folder->getMsg( folderIdx );
+    return msg;
+}
+
+//-------------------------------------------------------------
+void
+KMFolderSearch::ignoreJobsForMessage( KMMessage* msg )
+{
+  /* While non-imap folders manage their jobs themselves, imap ones let
+     their account manage them. Therefor first clear the jobs managed by
+     this folder via the inherited method, then clear the imap ones. */
+  KMFolderSearchInherited::ignoreJobsForMessage( msg );
+  if (!msg || msg->transferInProgress())
+    return;
+  KMAcctImap *account;
+  if ( !(account = static_cast<KMFolderImap*>(msg->parent())->account()) )
+    return;
+
+  account->ignoreJobsForMessage( msg );
+}
+
+
 int KMFolderSearch::find(const KMMsgBase* msg) const
 {
     int pos = 0;
