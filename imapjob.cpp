@@ -347,7 +347,8 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   {
     QString errorStr = i18n( "Error while retrieving messages from the server." );
     account->handleJobError( job, errorStr );
-    (*it).progressItem->setStatus( errorStr );
+    if ( (*it).progressItem )
+      (*it).progressItem->setStatus( errorStr );
     return;
   } else {
     if ((*it).data.size() > 0)
