@@ -513,7 +513,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	//	if ((mSortCol == 3) && !mSortDescending)
 	//	  setTopItemByIndex( id );
 	//	else
-	  center( contentsX(), itemPos(item), 0, 9.0 );
+        center( contentsX(), itemPos(item), 0, 9.0 );
       }
       else
       {
@@ -1318,7 +1318,6 @@ void KMHeaders::updateMessageList(void)
   long i;
   KMMsgBase* mb;
   bool autoUpd;
-  int id = currentItemIndex();
 
   KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
   //    clear();
@@ -1340,6 +1339,7 @@ void KMHeaders::updateMessageList(void)
   //  kbp->busy();
   autoUpd = isUpdatesEnabled();
   setUpdatesEnabled(FALSE);
+
   int oldSize = mItems.size();
   for (int temp = oldSize; temp > mFolder->count(); --temp)
     if (mItems[temp-1])
@@ -1351,13 +1351,7 @@ void KMHeaders::updateMessageList(void)
     mb = mFolder->getMsgBase(i);
     assert(mb != NULL); // otherwise using count() above is wrong
 
-    if (i == id) {
-      // Try to ensure the current item always changes
-      delete mItems[id];
-      KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-      mItems.operator[](i) = hi;      
-    }
-    else if (i >= oldSize) {
+    if (i >= oldSize) {
       KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
       mItems.operator[](i) = hi;
     }
@@ -1563,8 +1557,11 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
 {
   if ((msgIdx >= 0) && (msgIdx < (int)mItems.size())) {
     clearSelection();
-    setSelected( mItems[msgIdx], TRUE );
+    bool unchanged = (currentItem() == mItems[msgIdx]);
     setCurrentItem( mItems[msgIdx] );
+    setSelected( mItems[msgIdx], TRUE );
+    if (unchanged)
+       highlightMessage( mItems[msgIdx] );
   }
 }
 
