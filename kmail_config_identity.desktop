@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=identity
+Type=Service
+ServiceTypes=KCModule
+
+X-KDE-ModuleType=Library
+X-KDE-Library=kmail
+X-KDE-FactoryName=kmail_config_identity
+X-KDE-HasReadOnlyMode=false
+X-KDE-ParentApp=kmail
+X-KDE-ParentComponents=kmail,kontact_kmailplugin
+X-KDE-CfgDlgHierarchy=KMail
+
+Name=Identities
+Comment=Manage Identities
+Keywords=kmail,identity

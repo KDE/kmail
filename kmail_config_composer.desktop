@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=edit
+Type=Service
+ServiceTypes=KCModule
+
+X-KDE-ModuleType=Library
+X-KDE-Library=kmail
+X-KDE-FactoryName=kmail_config_composer
+X-KDE-HasReadOnlyMode=false
+X-KDE-ParentApp=kmail
+X-KDE-ParentComponents=kmail,kontact_kmailplugin
+X-KDE-CfgDlgHierarchy=KMail
+
+Name=Composer
+Comment=Phrases & General Behavior
+Keywords=kmail,composer

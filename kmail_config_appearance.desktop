@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=looknfeel
+Type=Service
+ServiceTypes=KCModule
+
+X-KDE-ModuleType=Library
+X-KDE-Library=kmail
+X-KDE-FactoryName=kmail_config_appearance
+X-KDE-HasReadOnlyMode=false
+X-KDE-ParentApp=kmail
+X-KDE-ParentComponents=kmail,kontact_kmailplugin
+X-KDE-CfgDlgHierarchy=KMail
+
+Name=Appearance
+Comment=Customize Visual Appearance
+Keywords=kmail,appearance

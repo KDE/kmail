@@ -1,0 +1,17 @@
+[Desktop Entry]
+Encoding=UTF-8
+Icon=encrypted
+Type=Service
+ServiceTypes=KCModule
+
+X-KDE-ModuleType=Library
+X-KDE-Library=kmail
+X-KDE-FactoryName=kmail_config_security
+X-KDE-HasReadOnlyMode=false
+X-KDE-ParentApp=kmail
+X-KDE-ParentComponents=kmail,kontact_kmailplugin
+X-KDE-CfgDlgHierarchy=KMail
+
+Name=Security
+Comment=Security & Privacy Settings
+Keywords=kmail,security
