@@ -704,9 +704,10 @@ void KMFolder::daysToExpire(int& unreadDays, int& readDays) {
 void KMFolder::expireOldMessages( bool immediate )
 {
   KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
-  if ( immediate )
+  if ( immediate ) {
     kmkernel->jobScheduler()->runTaskNow( task );
-  else
+    compact( CompactSilentlyNow ); // #82259
+  } else
     kmkernel->jobScheduler()->registerTask( task );
 }
 
