@@ -3260,7 +3260,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!saveInDrafts)
   {
-    if ( from().isEmpty() ) {
+    if ( KPIM::getEmailAddr( from() ).isEmpty() ) {
       if ( !( mShowHeaders & HDR_FROM ) ) {
         mShowHeaders |= HDR_FROM;
         rethinkFields( false );
