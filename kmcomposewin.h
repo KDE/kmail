@@ -5,7 +5,7 @@
 #ifndef __KMComposeWin
 #define __KMComposeWin
 
-#include "kmtopwidget.h"
+#include "secondarywindow.h"
 
 #include <qlabel.h>
 #include <qlistview.h>
@@ -235,7 +235,7 @@ private:
 class KMHeaders;
 
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
+class KMComposeWin : public KMail::SecondaryWindow, virtual public MailComposerIface
 {
   Q_OBJECT
   friend class KMHeaders;         // needed for the digest forward

@@ -49,7 +49,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kfileio.cpp kmaddrbook.cpp  \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
-		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
+		kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
 		undostack.cpp kmbroadcaststatus.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldercachedimap.cpp \
@@ -83,6 +83,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		attachmentlistview.cpp ssllabel.cpp \
 		iobserver.cpp isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
+		secondarywindow.cpp \
 		korganizeriface.stub
 
 kmail_SOURCES = main.cpp

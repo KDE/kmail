@@ -992,14 +992,14 @@ bool KMKernel::doSessionManagement()
   return false;  // no, we were not restored
 }
 
-void KMKernel::closeAllKMTopLevelWidgets()
+void KMKernel::closeAllKMailWindows()
 {
   QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
   KMainWindow *window = 0;
   while ((window = it.current()) != 0) {
     ++it;
-    if (window->inherits("KMTopLevelWidget"))
-      window->close(TRUE);
+    if (window->isA("KMMainWindow") || window->inherits("SecondaryWindow"))
+      window->close( true ); // close and delete the window
   }
 }
 
@@ -1009,7 +1009,7 @@ void KMKernel::notClosedByUser()
     return;
   closed_by_user = false;
   the_shuttingDown = true;
-  closeAllKMTopLevelWidgets();
+  closeAllKMailWindows();
 
   delete the_acctMgr;
   the_acctMgr = 0;
@@ -1069,7 +1069,7 @@ void KMKernel::cleanup(void)
   dumpDeadLetters();
   mDeadLetterTimer->stop();
   the_shuttingDown = TRUE;
-  closeAllKMTopLevelWidgets();
+  closeAllKMailWindows();
 
   delete the_acctMgr;
   the_acctMgr = 0;

@@ -121,7 +121,7 @@ public:
   void testDir(const char *_name);
   void recoverDeadLetters(void);
   void initFolders(KConfig* cfg);
-  void closeAllKMTopLevelWidgets();
+  void closeAllKMailWindows();
   void notClosedByUser();
   void cleanup(void);
   void quit();

@@ -18,8 +18,9 @@
 #include "kmmainwin.moc"
 
 KMMainWin::KMMainWin(QWidget *)
-	: KMTopLevelWidget("kmail-mainwindow")
+    : KMainWindow( 0, "kmail-mainwindow#" )
 {
+  kapp->ref();
   mKMMainWidget = new KMMainWidget( this, "KMMainWidget", actionCollection() );
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
@@ -70,6 +71,7 @@ KMMainWin::~KMMainWin()
 {
   saveMainWindowSettings(KMKernel::config(), "Main Window");
   KMKernel::config()->sync();
+  kapp->deref();
 }
 
 void KMMainWin::statusMsg(const QString& aText)

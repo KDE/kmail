@@ -97,7 +97,7 @@ using KRecentAddress::RecentAddresses;
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
-  : MailComposerIface(), KMTopLevelWidget("kmail-composer#"),
+  : MailComposerIface(), KMail::SecondaryWindow( "kmail-composer#" ),
     mMsg( 0 ),
     mAutoRequestMDN( false ),
     mId( id ), mNeverSign( false ), mNeverEncrypt( false )
@@ -375,7 +375,7 @@ bool KMComposeWin::event(QEvent *e)
   {
      readColorConfig();
   }
-  return KMTopLevelWidget::event(e);
+  return KMail::SecondaryWindow::event(e);
 }
 
 

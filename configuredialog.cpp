@@ -34,7 +34,6 @@
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
 #include "kmsender.h"
-#include "kmtopwidget.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
 #include "cryptplugconfigdialog.h"

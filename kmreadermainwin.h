@@ -3,8 +3,9 @@
 #ifndef KMReaderMainWin_h
 #define KMReaderMainWin_h
 
+#include "secondarywindow.h"
+
 #include <kurl.h>
-#include "kmtopwidget.h"
 
 class QTextCodec;
 class KMReaderWin;
@@ -15,7 +16,7 @@ class KActionMenu;
 class KMFolderIndex;
 template <typename T, typename S> class QMap;
 
-class KMReaderMainWin : public KMTopLevelWidget
+class KMReaderMainWin : public KMail::SecondaryWindow
 {
   Q_OBJECT
 

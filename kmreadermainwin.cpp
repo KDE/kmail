@@ -29,7 +29,7 @@
 #include "kmreadermainwin.moc"
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
-  : KMTopLevelWidget( name ), mMsg( 0 )
+  : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
@@ -45,7 +45,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
 
 
 KMReaderMainWin::KMReaderMainWin( char *name )
-  : KMTopLevelWidget( name ), mMsg( 0 )
+  : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setAutoDelete( true );
@@ -60,7 +60,7 @@ KMReaderMainWin::KMReaderMainWin( char *name )
 KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QTextCodec *codec, char *name )
-  : KMTopLevelWidget( name ), mMsg( 0 )
+  : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
   resize( 550, 600 );
   mReaderWin = new KMReaderWin( this, this, actionCollection() ); //new reader
@@ -173,7 +173,7 @@ void KMReaderMainWin::slotBounceMsg()
 //-----------------------------------------------------------------------------
 void KMReaderMainWin::slotConfigChanged()
 {
-  readConfig();
+  //readConfig();
 }
 
 void KMReaderMainWin::setupAccel()

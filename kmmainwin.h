@@ -5,7 +5,7 @@
 #ifndef __KMMAINWIN
 #define __KMMAINWIN
 
-#include "kmtopwidget.h"
+#include <kmainwindow.h>
 #include "kdeversion.h"
 #include "qstring.h"
 
@@ -15,7 +15,7 @@ class KMLittleProgressDlg;
 class KToggleAction;
 #endif
 
-class KMMainWin : public KMTopLevelWidget
+class KMMainWin : public KMainWindow
 {
   Q_OBJECT
 
