@@ -7,7 +7,7 @@
 #include "kmime_util.h"
 #include "kmcommands.h"
 #include "headeritem.h"
-using KMail::KMSortCacheItem;
+using KMail::SortCacheItem;
 using KMail::HeaderItem;
 
 #include <klistview.h>
@@ -360,20 +360,20 @@ private:
 
 
   /** */
-  QDict< KMSortCacheItem > mSortCacheItems;
+  QDict< SortCacheItem > mSortCacheItems;
   /** */
-  QDict< QPtrList< KMSortCacheItem > > mSubjectLists;
+  QDict< QPtrList< SortCacheItem > > mSubjectLists;
   /** */
   QPtrList<HeaderItem> mImperfectlyThreadedList;
 
   /** Initializes the mSortCacheItems tree with the contents of the folder */
-  void buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
+  void buildThreadingTree( QMemArray<SortCacheItem *> sortCache );
   /** Initializes the mSubjectLists tree with the contents of the folder */
-  void buildSubjectThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
+  void buildSubjectThreadingTree( QMemArray<SortCacheItem *> sortCache );
   /** Find a msg to thread item below */
-  KMSortCacheItem* findParent(KMSortCacheItem *item);
+  SortCacheItem* findParent(SortCacheItem *item);
   /** Find a msg to thread item below by subject */
-  KMSortCacheItem* findParentBySubject(KMSortCacheItem *item);
+  SortCacheItem* findParentBySubject(SortCacheItem *item);
 
   /** */
   void appendItemToSortFile(HeaderItem *);

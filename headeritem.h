@@ -42,40 +42,40 @@ namespace KMail
 {
 class HeaderItem; // forward declaration
 
-class KMSortCacheItem {
+class SortCacheItem {
 
 public:
-    KMSortCacheItem() : mItem(0), mParent(0), mId(-1), mSortOffset(-1),
+    SortCacheItem() : mItem(0), mParent(0), mId(-1), mSortOffset(-1),
         mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0),
         mImperfectlyThreaded (true) { }
-    KMSortCacheItem(int i, QString k, int o=-1)
+    SortCacheItem(int i, QString k, int o=-1)
         : mItem(0), mParent(0), mId(i), mSortOffset(o), mKey(k),
           mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0),
           mImperfectlyThreaded (true) { }
-    ~KMSortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
+    ~SortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
-    KMSortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
+    SortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
     bool isImperfectlyThreaded() const
         { return mImperfectlyThreaded; }
     void setImperfectlyThreaded (bool val)
         { mImperfectlyThreaded = val; }
     bool hasChildren() const
         { return mSortedChildren.count() || mUnsortedCount; }
-    const QPtrList<KMSortCacheItem> *sortedChildren() const
+    const QPtrList<SortCacheItem> *sortedChildren() const
         { return &mSortedChildren; }
-    KMSortCacheItem **unsortedChildren(int &count) const
+    SortCacheItem **unsortedChildren(int &count) const
         { count = mUnsortedCount; return mUnsortedChildren; }
-    void addSortedChild(KMSortCacheItem *i) {
+    void addSortedChild(SortCacheItem *i) {
         i->mParent = this;
         mSortedChildren.append(i);
     }
-    void addUnsortedChild(KMSortCacheItem *i) {
+    void addUnsortedChild(SortCacheItem *i) {
         i->mParent = this;
         if(!mUnsortedChildren)
-            mUnsortedChildren = (KMSortCacheItem **)malloc((mUnsortedSize = 25) * sizeof(KMSortCacheItem *));
+            mUnsortedChildren = (SortCacheItem **)malloc((mUnsortedSize = 25) * sizeof(SortCacheItem *));
         else if(mUnsortedCount >= mUnsortedSize)
-            mUnsortedChildren = (KMSortCacheItem **)realloc(mUnsortedChildren,
-                                                            (mUnsortedSize *= 2) * sizeof(KMSortCacheItem *));
+            mUnsortedChildren = (SortCacheItem **)realloc(mUnsortedChildren,
+                                                            (mUnsortedSize *= 2) * sizeof(SortCacheItem *));
         mUnsortedChildren[mUnsortedCount++] = i;
     }
 
@@ -96,13 +96,13 @@ public:
                          bool update_discovered_count = false);
 private:
     HeaderItem *mItem;
-    KMSortCacheItem *mParent;
+    SortCacheItem *mParent;
     int mId, mSortOffset;
     QString mKey;
 
-    QPtrList<KMSortCacheItem> mSortedChildren;
+    QPtrList<SortCacheItem> mSortedChildren;
     int mUnsortedCount, mUnsortedSize;
-    KMSortCacheItem **mUnsortedChildren;
+    SortCacheItem **mUnsortedChildren;
     bool mImperfectlyThreaded;
 };
 
@@ -160,14 +160,14 @@ public:
   bool aboutToBeDeleted() const { return mAboutToBeDeleted; }
   void setAboutToBeDeleted( bool val ) { mAboutToBeDeleted = val; }
 
-  void setSortCacheItem( KMSortCacheItem *item ) { mSortCacheItem = item; }
-  KMSortCacheItem* sortCacheItem() const { return mSortCacheItem; }
+  void setSortCacheItem( SortCacheItem *item ) { mSortCacheItem = item; }
+  SortCacheItem* sortCacheItem() const { return mSortCacheItem; }
 
 private:
   int mMsgId;
   QString mKey;
   bool mAboutToBeDeleted;
-  KMSortCacheItem *mSortCacheItem;
+  SortCacheItem *mSortCacheItem;
 }; // End of class HeaderItem
 
 } // End of namespace KMail
