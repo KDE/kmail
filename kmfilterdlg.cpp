@@ -173,7 +173,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   grid->activate();
 
   reloadFilterList();
-  mFilterList->setCurrentItem(0);
+  if(mFilterList->count() > 0)
+    mFilterList->setCurrentItem(0);
 }
 
 

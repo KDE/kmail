@@ -8,6 +8,7 @@
 
 #include <kapp.h>
 #include <kconfig.h>
+#include <kmsgbox.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -64,6 +65,10 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   rc = mailFolder.open();
   if (rc)
   {
+    QString aStr;
+    aStr = i18n("Cannot open file:");
+    aStr += mailFolder.path()+"/"+mailFolder.name();
+    KMsgBox::message(0,"KMail notification",aStr);
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
     return FALSE;
   }

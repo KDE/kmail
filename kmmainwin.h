@@ -77,6 +77,7 @@ protected slots:
   void slotReplyToMsg();
   void slotReplyAllToMsg();
   void slotForwardMsg();
+  void slotEditMsg();
   void slotDeleteMsg();
   void slotSaveMsg();
   void slotPrintMsg();
@@ -127,6 +128,7 @@ protected:
   KMFolder     *mFolder;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   bool		mIntegrated;
+  bool          mSendOnCheck;
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;
   QString       mUrlCurrent;

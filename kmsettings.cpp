@@ -206,7 +206,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
   //---- group: sending mail
   bgrp = new QButtonGroup(i18n("Sending Mail"), tab);
   box->addWidget(bgrp);
-  grid = new QGridLayout(bgrp, 5, 4, 20, 4);
+  grid = new QGridLayout(bgrp, 6, 4, 20, 4);
 
   sendmailRadio = new QRadioButton(bgrp);
   sendmailRadio->setMinimumSize(sendmailRadio->size());
@@ -278,6 +278,9 @@ void KMSettings::createTabNetwork(QWidget* parent)
   removeButton = createPushButton(grp, grid, i18n("Delete"), 3, 1);
   connect(removeButton,SIGNAL(clicked()),this,SLOT(removeAccount()));
   removeButton->setEnabled(FALSE);
+
+
+				
 
   grid->setColStretch(0, 10);
   grid->setColStretch(1, 0);
@@ -521,18 +524,24 @@ void KMSettings::createTabMisc(QWidget *parent)
   //---------- group: folders
   grp = new QGroupBox(i18n("Folders"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 1, 3, 20, 4);
+  grid = new QGridLayout(grp, 2, 3, 20, 4);
 
   emptyTrashOnExit=new QCheckBox(i18n("empty trash on exit"),grp);
   emptyTrashOnExit->setMinimumSize(emptyTrashOnExit->sizeHint());
   grid->addMultiCellWidget(emptyTrashOnExit, 0, 0, 0, 2);
+
+  sendOnCheck = new QCheckBox(i18n("Send Mail in outbox Folder on Check"),grp);
+  sendOnCheck->setMinimumSize(sendOnCheck->sizeHint());
+  grid->addMultiCellWidget(sendOnCheck,1,1,0,2);
+
   grid->activate();
 
   //---------- set values
   config->setGroup("General");
   emptyTrashOnExit->setChecked(config->readNumEntry("empty-trash-on-exit",0));
+  sendOnCheck->setChecked(config->readBoolEntry("sendOnCheck",false));
 
-  //---------- ére we gø
+  //---------- here we go
   box->addStretch(10);
   box->activate();
  
@@ -800,6 +809,7 @@ void KMSettings::doApply()
   config->setGroup("General");
   config->writeEntry("empty-trash-on-exit", emptyTrashOnExit->isChecked());
   config->writeEntry("first-start", FALSE);
+  config->writeEntry("sendOnCheck",sendOnCheck->isChecked());
 
   //-----
   config->sync();
@@ -807,6 +817,7 @@ void KMSettings::doApply()
 
   folderMgr->contentsChanged();
   KMMessage::readConfig();
+
   KMTopLevelWidget::forEvery(&KMTopLevelWidget::readConfig);
 }
 

@@ -146,6 +146,10 @@ void KMMainWin::readConfig(void)
     sscanf(str,"%d,%d",&mVertPannerSep,&mHorizPannerSep);
   else
     mHorizPannerSep = mVertPannerSep = 100;
+  
+  config->setGroup("General");
+  mSendOnCheck = config->readBoolEntry("SendOnCheck",false);
+  
 
   mMsgView->readConfig();
   mHeaders->readConfig();
@@ -223,6 +227,12 @@ void KMMainWin::slotNewMailReader()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSettings()
 {
+  // markus: we write the Config here cause otherwise the
+  // geometry will be set to the value in the config.
+  // Problem arises when we change the geometry during the
+  // session are press the OK button in the settings. Then we
+  // lose the current geometry! Not anymore ;-)
+  writeConfig();
   KMSettings dlg(this);
   dlg.exec();
 }
@@ -280,6 +290,8 @@ void KMMainWin::slotCheckMail()
  
  if (!rc) warning(i18n("No new mail available"));
  
+ if(mSendOnCheck)
+   slotSendQueued();
  checkingMail = FALSE;
 
 }
@@ -312,6 +324,9 @@ void KMMainWin::slotCheckOneAccount(int item)
   kbp->idle();
   
   if (!rc) warning(i18n("No new mail available"));
+  if(mSendOnCheck)
+    slotSendQueued();
+
   checkingMail = FALSE; 
 }
 
@@ -448,6 +463,32 @@ void KMMainWin::slotForwardMsg()
 { 
   mHeaders->forwardMsg();
 }
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotEditMsg() 
+{
+  KMMessage *msg;
+  int aIdx;
+  
+  if(mFolder != outboxFolder) 
+    {
+      KMsgBox::message(0,i18n("KMail notification!"),
+		       i18n("Only messages in the outbox folder can be edited!"));
+      return;
+    }
+    
+  
+  if((aIdx = mHeaders->currentItem()) <= -1)
+    return;
+  if(!(msg = mHeaders->getMsg(aIdx)))
+    return;
+  
+  KMComposeWin *win = new KMComposeWin;
+  win->setMsg(msg,FALSE);
+  win->show();
+}
+  
 
 
 //-----------------------------------------------------------------------------
@@ -887,6 +928,9 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotReplyAllToMsg()), Key_A);
   messageMenu->insertItem(i18n("&Forward..."), this, 
 			  SLOT(slotForwardMsg()), Key_F);
+  messageMenu->insertSeparator();
+  messageMenu->insertItem(i18n("Edi&t..."),this,
+			  SLOT(slotEditMsg()), Key_T);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
   messageMenu->insertSeparator();

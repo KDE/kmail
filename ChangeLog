@@ -1,3 +1,13 @@
+1998-07-31  Markus Wuebben  <markus@kde.org>
+
+	* kmsettings.cpp / kmmainwin.cpp Implemented send mail on check.
+	* kmacctlocal.cpp (processNewMail): Added message box
+	warning if mail folder was not found.
+
+	* kmmainwin.cpp Added editing of message in outbox folder.
+	* kmfolderdlg.cpp Removed out of index warning
+	
+
 1998-07-23  Stefan Taferner  <taferner@kde.org>
 
 	* Added message status "Read". This status is set to
