@@ -126,6 +126,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
 {
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
+  connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
+           this, SLOT( slotFolderRemoved( KMFolder* ) ) );
 
   mExtraFolders.setAutoDelete( true );
 }
@@ -925,6 +927,14 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
 
   mResourceQuiet = quiet;
   return url;
+}
+
+
+void KMailICalIfaceImpl::slotFolderRemoved( KMFolder* folder )
+{
+  // pretend the folder just changed back to the mail type, which
+  // does the right thing, namely remove resource
+  folderContentsTypeChanged( folder, KMail::ContentsTypeMail );
 }
 
 // KMail added a file to one of the groupware folders

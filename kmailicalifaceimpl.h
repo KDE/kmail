@@ -161,6 +161,7 @@ public:
 public slots:
   /* (Re-)Read configuration file */
   void readConfig();
+  void slotFolderRemoved( KMFolder* folder );
 
   void slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum );
   void slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum );
