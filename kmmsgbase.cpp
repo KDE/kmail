@@ -168,7 +168,9 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 
   if (str[i] == sepChar) // skip following spaces too
   {
-    while (str[i] == ' ') i++;
+    do {
+      i++;
+    } while (str[i] == ' ');
     if (hasKeyword) *hasKeyword=TRUE;
     return str.mid(i);
   }
