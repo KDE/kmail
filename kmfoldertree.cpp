@@ -1030,7 +1030,6 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
       folderMenu->insertItem( SmallIcon("wizard"),
 			      i18n("&Troubleshoot IMAP Cache..."),
 			      folder, SLOT(slotTroubleshoot()) );
-      folder->slotTroubleshoot();
     }
   }
 
