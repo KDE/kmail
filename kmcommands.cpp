@@ -503,7 +503,12 @@ void KMEditMsgCommand::execute()
       !kmkernel->folderIsDraftOrOutbox( msg->parent() ))
     return;
 
-  msg->parent()->take( msg->parent()->find( msg ) );
+  // Remember the old parent, we need it a bit further down to be able
+  // to put the unchanged messsage back in the drafts folder if the nth
+  // edit is discarded, for n > 1.
+  KMFolder *parent = msg->parent();
+  if ( parent )
+    parent->take( parent->find( msg ) );
 #if 0
   // Useful?
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
@@ -517,7 +522,7 @@ void KMEditMsgCommand::execute()
                     this, SLOT( slotMessageQueuedOrDrafted()) );
 #endif
   win->setMsg(msg, FALSE, TRUE);
-  win->setFolder( msg->parent() );
+  win->setFolder( parent );
   win->show();
 }
 
