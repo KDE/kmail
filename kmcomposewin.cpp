@@ -1918,6 +1918,7 @@ void KMComposeWin::slotAppendSignature()
     signatures and we should respect it: */
     mEditor->insertLine("-- ", -1);
     mEditor->insertLine(sigText, -1);
+    mEditor->update();
     mEditor->setModified(mod);
   }
 }
