@@ -91,22 +91,22 @@ namespace KMail {
       : otp( _otp ), wrapper( _otp ? _otp->cryptPlugWrapper() : 0 )
     {
       if ( otp )
-	otp->setCryptPlugWrapper( _w );
+        otp->setCryptPlugWrapper( _w );
     }
 
     ~CryptPlugWrapperSaver() {
       if ( otp )
-	otp->setCryptPlugWrapper( wrapper );
+        otp->setCryptPlugWrapper( wrapper );
     }
   };
 
 
   ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, CryptPlugWrapper * wrapper,
-				      bool showOnlyOneMimePart, bool keepEncryptions,
-				      bool includeSignatures,
-				      const AttachmentStrategy * strategy,
-				      HtmlWriter * htmlWriter,
-				      CSSHelper * cssHelper )
+                                      bool showOnlyOneMimePart, bool keepEncryptions,
+                                      bool includeSignatures,
+                                      const AttachmentStrategy * strategy,
+                                      HtmlWriter * htmlWriter,
+                                      CSSHelper * cssHelper )
     : mReader( reader ),
       mCryptPlugWrapper( wrapper ),
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
@@ -119,7 +119,7 @@ namespace KMail {
   {
     if ( !attachmentStrategy() )
       mAttachmentStrategy = reader ? reader->attachmentStrategy()
-	                           : AttachmentStrategy::smart();
+                                   : AttachmentStrategy::smart();
     if ( reader && !this->htmlWriter() )
       mHtmlWriter = reader->htmlWriter();
     if ( reader && !this->cssHelper() )
@@ -143,9 +143,9 @@ namespace KMail {
   ObjectTreeParser::~ObjectTreeParser() {}
 
   void ObjectTreeParser::insertAndParseNewChildNode( partNode& startNode,
-						     const char* content,
-						     const char* cntDesc,
-						     bool append )
+                                                     const char* content,
+                                                     const char* cntDesc,
+                                                     bool append )
   {
     //  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
     DwBodyPart* myBody = new DwBodyPart( DwString( content ), 0 );
@@ -189,12 +189,12 @@ namespace KMail {
     if ( startNode.mimePartTreeItem() ) {
       kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
       newNode->fillMimePartTree( startNode.mimePartTreeItem(), 0,
-				 QString::null, QString::null, QString::null, 0,
-				 append );
+                                 QString::null, QString::null, QString::null, 0,
+                                 append );
       kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
     } else {
       kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
-		    << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
+                    << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
     }
     kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
     ObjectTreeParser otp( mReader, cryptPlugWrapper() );
@@ -208,9 +208,9 @@ namespace KMail {
 
   void ObjectTreeParser::parseObjectTree( partNode * node ) {
     kdDebug(5006) << "\n**\n** ObjectTreeParser::parseObjectTree( "
-		  << (node ? "node OK, " : "no node, ")
-		  << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
-		  << " ) **\n**" << endl;
+                  << (node ? "node OK, " : "no node, ")
+                  << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
+                  << " ) **\n**" << endl;
 
     if ( !node )
       return;
@@ -220,7 +220,7 @@ namespace KMail {
       // ... this node and all descendants
       node->setProcessed( false, false );
       if ( partNode * child = node->firstChild() )
-	child->setProcessed( false, true );
+        child->setProcessed( false, true );
     } else if ( mReader && !node->parentNode() ) {
       // ...this node and all it's siblings and descendants
       node->setProcessed( false, true );
@@ -230,21 +230,21 @@ namespace KMail {
       ProcessResult processResult;
 
       if ( node->processed() ) {
-	// ### (mmutz) I think this is a bug if node->processed() is
-	// true from the beginning (_can_ it?), then any crypto state is
-	// reset. I therefore believe that this code should be inside the
-	// corresponding conditional above:
-	processResult.adjustCryptoStatesOfNode( node );
-	continue;
+        // ### (mmutz) I think this is a bug if node->processed() is
+        // true from the beginning (_can_ it?), then any crypto state is
+        // reset. I therefore believe that this code should be inside the
+        // corresponding conditional above:
+        processResult.adjustCryptoStatesOfNode( node );
+        continue;
       }
 
       const BodyPartFormatter * bpf
-	= BodyPartFormatter::createFor( node->type(), node->subType() );
+        = BodyPartFormatter::createFor( node->type(), node->subType() );
       kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
-			    << node->typeString() << '/' << node->subTypeString()
-			    << ')' << endl;
+                            << node->typeString() << '/' << node->subTypeString()
+                            << ')' << endl;
       if ( !bpf->process( this, node, processResult ) )
-	defaultHandling( node, processResult );
+        defaultHandling( node, processResult );
 
       node->setProcessed( true, false );
 
@@ -252,7 +252,7 @@ namespace KMail {
       processResult.adjustCryptoStatesOfNode( node );
 
       if ( showOnlyOneMimePart() )
-	break;
+        break;
     }
   }
 
@@ -262,8 +262,8 @@ namespace KMail {
     if ( !mReader )
       return;
     if ( attachmentStrategy() == AttachmentStrategy::hidden() &&
-	 !showOnlyOneMimePart() &&
-	 node->parentNode() /* message is not an attachment */ )
+         !showOnlyOneMimePart() &&
+         node->parentNode() /* message is not an attachment */ )
       return;
 
     bool asIcon = true;
@@ -274,27 +274,27 @@ namespace KMail {
       asIcon = !node->hasContentDispositionInline();
     else if ( !result.neverDisplayInline() )
       if ( const AttachmentStrategy * as = attachmentStrategy() )
-	asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
+        asIcon = as->defaultDisplay( node ) == AttachmentStrategy::AsIcon;
     // neither image nor text -> show as icon
     if ( !result.isImage()
-	 && node->type() != DwMime::kTypeText )
+         && node->type() != DwMime::kTypeText )
       asIcon = true;
     if ( asIcon ) {
       if ( attachmentStrategy() != AttachmentStrategy::hidden()
-	   || showOnlyOneMimePart() )
-	writePartIcon( &node->msgPart(), node->nodeId() );
+           || showOnlyOneMimePart() )
+        writePartIcon( &node->msgPart(), node->nodeId() );
     } else if ( result.isImage() )
       writePartIcon( &node->msgPart(), node->nodeId(), true );
     else
       writeBodyString( node->msgPart().bodyDecoded(),
-		       node->trueFromAddress(),
-		       codecFor( node ), result );
+                       node->trueFromAddress(),
+                       codecFor( node ), result );
     // end of ###
   }
 
   void ProcessResult::adjustCryptoStatesOfNode( partNode * node ) const {
     if ( ( inlineSignatureState()  != KMMsgNotSigned ) ||
-	 ( inlineEncryptionState() != KMMsgNotEncrypted ) ) {
+         ( inlineEncryptionState() != KMMsgNotEncrypted ) ) {
       node->setSignatureState( inlineSignatureState() );
       node->setEncryptionState( inlineEncryptionState() );
     }
@@ -305,12 +305,12 @@ namespace KMail {
   //////////////////
 
   bool ObjectTreeParser::writeOpaqueOrMultipartSignedData( partNode* data,
-						      partNode& sign,
-						      const QString& fromAddress,
-						      bool doCheck,
-						      QCString* cleartextData,
-						      struct CryptPlugWrapper::SignatureMetaData* paramSigMeta,
-						      bool hideErrors )
+                                                      partNode& sign,
+                                                      const QString& fromAddress,
+                                                      bool doCheck,
+                                                      QCString* cleartextData,
+                                                      struct CryptPlugWrapper::SignatureMetaData* paramSigMeta,
+                                                      bool hideErrors )
   {
     bool bIsOpaqueSigned = false;
     enum { NO_PLUGIN, NOT_INITIALIZED, CANT_VERIFY_SIGNATURES }
@@ -475,18 +475,18 @@ namespace KMail {
         // The following if /should/ always result in TRUE but we
         // won't trust implicitely the plugin that gave us these data.
         if ( ext.emailList[ iMail ] && *ext.emailList[ iMail ] ) {
-	  QString email = QString::fromUtf8( ext.emailList[ iMail ] );
-	  // ### work around gpgme 0.3.x / cryptplug bug where the
-	  // ### email addresses are specified as angle-addr, not addr-spec:
-	  if ( email.startsWith( "<" ) && email.endsWith( ">" ) )
-	    email = email.mid( 1, email.length() - 2 );
+          QString email = QString::fromUtf8( ext.emailList[ iMail ] );
+          // ### work around gpgme 0.3.x / cryptplug bug where the
+          // ### email addresses are specified as angle-addr, not addr-spec:
+          if ( email.startsWith( "<" ) && email.endsWith( ">" ) )
+            email = email.mid( 1, email.length() - 2 );
           messagePart.signerMailAddresses.append( email );
-	}
+        }
       if ( ext.creation_time )
         messagePart.creationTime = *ext.creation_time;
       if (     70 > messagePart.creationTime.tm_year
           || 200 < messagePart.creationTime.tm_year
-	  ||   1 > messagePart.creationTime.tm_mon
+          ||   1 > messagePart.creationTime.tm_mon
           ||  12 < messagePart.creationTime.tm_mon
           ||   1 > messagePart.creationTime.tm_mday
           ||  31 < messagePart.creationTime.tm_mday ) {
@@ -499,8 +499,8 @@ namespace KMail {
           messagePart.signer = QString::fromUtf8( ext.name );
         if ( !messagePart.signerMailAddresses.empty() ) {
           if ( messagePart.signer.isEmpty() )
-	    messagePart.signer = messagePart.signerMailAddresses.front();
-	  else
+            messagePart.signer = messagePart.signerMailAddresses.front();
+          else
             messagePart.signer += " <" + messagePart.signerMailAddresses.front() + '>';
         }
       }
@@ -519,8 +519,8 @@ namespace KMail {
       if ( cleartextData || new_cleartext ) {
         if ( mReader )
           htmlWriter()->queue( writeSigstatHeader( messagePart,
-						   cryptPlug,
-						   fromAddress ) );
+                                                   cryptPlug,
+                                                   fromAddress ) );
         bIsOpaqueSigned = true;
 
 #ifndef NDEBUG
@@ -591,8 +591,8 @@ namespace KMail {
         }
 
         htmlWriter()->queue( writeSigstatHeader( messagePart,
-						 cryptPlug,
-						 fromAddress ) );
+                                                 cryptPlug,
+                                                 fromAddress ) );
       }
 
       ObjectTreeParser otp( mReader, cryptPlug, true );
@@ -607,18 +607,18 @@ namespace KMail {
       cryptPlug->freeSignatureMetaData( sigMeta );
 
     kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: done, returning "
-		  << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
+                  << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
     return bIsOpaqueSigned;
   }
 
 
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
-				      QCString& decryptedData,
-				      bool& signatureFound,
-				      struct CryptPlugWrapper::SignatureMetaData& sigMeta,
-				      bool showWarning,
-				      bool& passphraseError,
-				      QString& aErrorText )
+                                      QCString& decryptedData,
+                                      bool& signatureFound,
+                                      struct CryptPlugWrapper::SignatureMetaData& sigMeta,
+                                      bool showWarning,
+                                      bool& passphraseError,
+                                      QString& aErrorText )
 {
   passphraseError = false;
   aErrorText = QString::null;
@@ -750,9 +750,9 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 }
 
 QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
-					       const QString& dirExt,
-					       const QString& orgName,
-					       const QByteArray& theBody )
+                                               const QString& dirExt,
+                                               const QString& orgName,
+                                               const QByteArray& theBody )
 {
   KTempFile *tempFile = new KTempFile( QString::null, "." + dirExt );
   tempFile->setAutoDelete(true);
@@ -795,33 +795,33 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       return true;
 
     if ( mIsFirstTextPart ||
-	 attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
-	 showOnlyOneMimePart() )
+         attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
+         showOnlyOneMimePart() )
     {
       mIsFirstTextPart = false;
       if ( mReader->htmlMail() ) {
-	// ---Sven's strip </BODY> and </HTML> from end of attachment start-
-	// We must fo this, or else we will see only 1st inlined html
-	// attachment.  It is IMHO enough to search only for </BODY> and
-	// put \0 there.
-	int i = cstr.findRev("</body>", -1, false); //case insensitive
-	if ( 0 <= i )
-	  cstr.truncate(i);
-	else // just in case - search for </html>
-	{
-	  i = cstr.findRev("</html>", -1, false); //case insensitive
-	  if ( 0 <= i ) cstr.truncate(i);
-	}
-	// ---Sven's strip </BODY> and </HTML> from end of attachment end-
+        // ---Sven's strip </BODY> and </HTML> from end of attachment start-
+        // We must fo this, or else we will see only 1st inlined html
+        // attachment.  It is IMHO enough to search only for </BODY> and
+        // put \0 there.
+        int i = cstr.findRev("</body>", -1, false); //case insensitive
+        if ( 0 <= i )
+          cstr.truncate(i);
+        else // just in case - search for </html>
+        {
+          i = cstr.findRev("</html>", -1, false); //case insensitive
+          if ( 0 <= i ) cstr.truncate(i);
+        }
+        // ---Sven's strip </BODY> and </HTML> from end of attachment end-
       } else {
-	htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
-	htmlWriter()->queue( i18n("<b>Note:</b> This is an HTML message. For "
-				  "security reasons, only the raw HTML code "
-				  "is shown. If you trust the sender of this "
-				  "message then you can activate formatted "
-				  "HTML display for this message "
-				  "<a href=\"kmail:showHTML\">by clicking here</a>.") );
-	htmlWriter()->queue( "</div><br><br>" );
+        htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
+        htmlWriter()->queue( i18n("<b>Note:</b> This is an HTML message. For "
+                                  "security reasons, only the raw HTML code "
+                                  "is shown. If you trust the sender of this "
+                                  "message then you can activate formatted "
+                                  "HTML display for this message "
+                                  "<a href=\"kmail:showHTML\">by clicking here</a>.") );
+        htmlWriter()->queue( "</div><br><br>" );
       }
       htmlWriter()->queue( codecFor( curNode )->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
       mReader->mColorBar->setHtmlMode();
@@ -900,8 +900,8 @@ namespace KMail {
     digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
     digestHeaderStr += cstr.mid( 0, thisDelim );
     insertAndParseNewChildNode( *curNode,
-				&*digestHeaderStr,
-				"Digest Header", true );
+                                &*digestHeaderStr,
+                                "Digest Header", true );
     //mReader->queueHtml("<br><hr><br>");
     // temporarily change curent node's Content-Type
     // to get our embedded RfC822 messages properly inserted
@@ -910,17 +910,17 @@ namespace KMail {
     while( -1 < nextDelim ){
       int thisEoL = cstr.find("\nMessage:", thisDelim, false);
       if ( -1 < thisEoL )
-	thisDelim = thisEoL+1;
+        thisDelim = thisEoL+1;
       else{
-	thisEoL = cstr.find("\n_____________", thisDelim, false);
-	if ( -1 < thisEoL )
-	  thisDelim = thisEoL+1;
+        thisEoL = cstr.find("\n_____________", thisDelim, false);
+        if ( -1 < thisEoL )
+          thisDelim = thisEoL+1;
       }
       thisEoL = cstr.find('\n', thisDelim);
       if ( -1 < thisEoL )
-	thisDelim = thisEoL+1;
+        thisDelim = thisEoL+1;
       else
-	thisDelim = thisDelim+1;
+        thisDelim = thisDelim+1;
       //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
       //  ++thisDelim;
 
@@ -930,24 +930,24 @@ namespace KMail {
       QCString subSearch("\nSubject:");
       int subPos = partStr.find(subSearch, 0, false);
       if ( -1 < subPos ){
-	subject = partStr.mid(subPos+subSearch.length());
-	thisEoL = subject.find('\n');
-	if ( -1 < thisEoL )
-	  subject.truncate( thisEoL );
+        subject = partStr.mid(subPos+subSearch.length());
+        thisEoL = subject.find('\n');
+        if ( -1 < thisEoL )
+          subject.truncate( thisEoL );
       }
       kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
       insertAndParseNewChildNode( *curNode,
-				  &*partStr,
-				  subject, true );
+                                  &*partStr,
+                                  subject, true );
       //mReader->queueHtml("<br><hr><br>");
       thisDelim = nextDelim+1;
       nextDelim = cstr.find(delim1, thisDelim, false);
       if ( -1 == nextDelim )
-	nextDelim = cstr.find(delim2, thisDelim, false);
+        nextDelim = cstr.find(delim2, thisDelim, false);
       if ( -1 == nextDelim )
-	nextDelim = cstr.find(delimZ1, thisDelim, false);
+        nextDelim = cstr.find(delimZ1, thisDelim, false);
       if ( -1 == nextDelim )
-	nextDelim = cstr.find(delimZ2, thisDelim, false);
+        nextDelim = cstr.find(delimZ2, thisDelim, false);
     }
     // reset curent node's Content-Type
     curNode->setType(    DwMime::kTypeText );
@@ -957,15 +957,15 @@ namespace KMail {
       thisDelim = thisEoL;
       thisEoL = cstr.find('\n', thisDelim);
       if ( -1 < thisEoL )
-	thisDelim = thisEoL+1;
+        thisDelim = thisEoL+1;
     }
     else
       thisDelim = thisDelim+1;
     partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
     partStr += cstr.mid( thisDelim );
     insertAndParseNewChildNode( *curNode,
-				&*partStr,
-				"Digest Footer", true );
+                                &*partStr,
+                                "Digest Footer", true );
     return true;
   }
 
@@ -978,8 +978,8 @@ namespace KMail {
 
     //resultingRawData += cstr;
     if ( !mIsFirstTextPart &&
-	 attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
-	 !showOnlyOneMimePart() )
+         attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
+         !showOnlyOneMimePart() )
       return false;
 
     mRawReplyString = cstr;
@@ -995,24 +995,24 @@ namespace KMail {
       label = KMMessage::quoteHtmlChars( label, true );
 
       const QString comment =
-	KMMessage::quoteHtmlChars( curNode->msgPart().contentDescription(), true );
+        KMMessage::quoteHtmlChars( curNode->msgPart().contentDescription(), true );
 
       const QString fileName =
-	mReader->writeMessagePartToTempFile( &curNode->msgPart(),
-					     curNode->nodeId() );
+        mReader->writeMessagePartToTempFile( &curNode->msgPart(),
+                                             curNode->nodeId() );
 
       const QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
 
       QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
                  "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
       if ( !fileName.isEmpty() )
-	htmlStr += "<a href=\"" + QString("file:")
-	  + KURL::encode_string( fileName ) + "\">"
-	  + label + "</a>";
+        htmlStr += "<a href=\"" + QString("file:")
+          + KURL::encode_string( fileName ) + "\">"
+          + label + "</a>";
       else
-	htmlStr += label;
+        htmlStr += label;
       if ( !comment.isEmpty() )
-	htmlStr += "<br>" + comment;
+        htmlStr += "<br>" + comment;
       htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
 
       htmlWriter()->queue( htmlStr );
@@ -1020,9 +1020,9 @@ namespace KMail {
     // process old style not-multipart Mailman messages to
     // enable verification of the embedded messages' signatures
     if ( !isMailmanMessage( curNode ) ||
-	 !processMailmanMessage( curNode ) )
+         !processMailmanMessage( curNode ) )
       writeBodyString( cstr, curNode->trueFromAddress(),
-		       codecFor( curNode ), result );
+                       codecFor( curNode ), result );
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );
 
@@ -1049,11 +1049,11 @@ namespace KMail {
     // Might be a Kroupware message,
     // let's look for the parts contained in the mixture:
     partNode * dataPlain = child->findType( DwMime::kTypeText,
-					    DwMime::kSubtypePlain, false, true );
+                                            DwMime::kSubtypePlain, false, true );
 
     // special treatment of vCal attachment (might be invitation or similar)
     partNode * dataCal = child->findType( DwMime::kTypeText,
-					  DwMime::kSubtypeVCal, false, true );
+                                          DwMime::kSubtypeVCal, false, true );
     if ( dataCal ) {
       ProcessResult dummy;
       if ( processTextVCalSubtype( dataCal, dummy ) ) {
@@ -1067,7 +1067,7 @@ namespace KMail {
 
     // special treatment of TNEF attachment (might be invitation or similar)
     partNode * dataTNEF = child->findType( DwMime::kTypeApplication,
-					   DwMime::kSubtypeMsTNEF, false, true );
+                                           DwMime::kSubtypeMsTNEF, false, true );
     if ( dataTNEF ) {
       ProcessResult dummy;
       if ( processApplicationMsTnefSubtype( dataTNEF, dummy ) ) {
@@ -1090,9 +1090,9 @@ namespace KMail {
       return false;
 
     partNode * dataHtml = child->findType( DwMime::kTypeText,
-					   DwMime::kSubtypeHtml, false, true );
+                                           DwMime::kSubtypeHtml, false, true );
     partNode * dataPlain = child->findType( DwMime::kTypeText,
-					    DwMime::kSubtypePlain, false, true );
+                                            DwMime::kSubtypePlain, false, true );
 
     if ( (mReader && mReader->htmlMail() && dataHtml) ||
          (dataHtml && dataPlain && dataPlain->msgPart().body().isEmpty()) ) {
@@ -1139,26 +1139,26 @@ namespace KMail {
     // ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
     partNode * data = 0;
     partNode * sign = child->findType( DwMime::kTypeApplication,
-				       DwMime::kSubtypePgpSignature, false, true );
+                                       DwMime::kSubtypePgpSignature, false, true );
     if ( sign ) {
       kdDebug(5006) << "       OpenPGP signature found" << endl;
       data = child->findTypeNot( DwMime::kTypeApplication,
-				 DwMime::kSubtypePgpSignature, false, true );
+                                 DwMime::kSubtypePgpSignature, false, true );
       if ( data ) {
-	useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
+        useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
       }
     } else {
       sign = child->findType( DwMime::kTypeApplication,
-			      DwMime::kSubtypePkcs7Signature, false, true );
+                              DwMime::kSubtypePkcs7Signature, false, true );
       if ( sign ) {
-	kdDebug(5006) << "       S/MIME signature found" << endl;
-	data = child->findTypeNot( DwMime::kTypeApplication,
-				   DwMime::kSubtypePkcs7Signature, false, true );
-	if ( data ) {
-	  useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
-	}
+        kdDebug(5006) << "       S/MIME signature found" << endl;
+        data = child->findTypeNot( DwMime::kTypeApplication,
+                                   DwMime::kSubtypePkcs7Signature, false, true );
+        if ( data ) {
+          useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
+        }
       } else {
-	kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
+        kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
       }
     }
 
@@ -1175,11 +1175,11 @@ namespace KMail {
 
     if ( !includeSignatures() ) {
       if ( !data )
-	data = child;
+        data = child;
       const QCString cstr = data->msgPart().bodyDecoded();
       if ( mReader )
-	writeBodyString( cstr, node->trueFromAddress(),
-			 codecFor( data ), result );
+        writeBodyString( cstr, node->trueFromAddress(),
+                         codecFor( data ), result );
       mRawReplyString += cstr;
       return true;
     } else if ( sign && data ) {
@@ -1187,8 +1187,8 @@ namespace KMail {
       // by parseObjectTree( data ) called from writeOpaqueOrMultipartSignedData().
       sign->setProcessed( true, false );
       writeOpaqueOrMultipartSignedData( data,
-					*sign,
-					node->trueFromAddress() );
+                                        *sign,
+                                        node->trueFromAddress() );
       return true;
     }
 
@@ -1205,8 +1205,8 @@ namespace KMail {
       node->setEncryptionState( KMMsgFullyEncrypted );
       const QCString cstr = node->msgPart().bodyDecoded();
       if ( mReader )
-	writeBodyString( cstr, node->trueFromAddress(),
-			 codecFor( node ), result );
+        writeBodyString( cstr, node->trueFromAddress(),
+                         codecFor( node ), result );
       mRawReplyString += cstr;
       return true;
     }
@@ -1217,15 +1217,15 @@ namespace KMail {
       ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
     */
     partNode * data = child->findType( DwMime::kTypeApplication,
-				       DwMime::kSubtypeOctetStream, false, true );
+                                       DwMime::kSubtypeOctetStream, false, true );
     if ( data ) {
       useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
     }
     if ( !data ) {
       data = child->findType( DwMime::kTypeApplication,
-			      DwMime::kSubtypePkcs7Mime, false, true );
+                              DwMime::kSubtypePkcs7Mime, false, true );
       if ( data ) {
-	useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
+        useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
       }
     }
     /*
@@ -1259,12 +1259,12 @@ namespace KMail {
     bool passphraseError;
 
     bool bOkDecrypt = okDecryptMIME( *data,
-				     decryptedData,
-				     signatureFound,
-				     sigMeta,
-				     true,
-				     passphraseError,
-				     messagePart.errorText );
+                                     decryptedData,
+                                     signatureFound,
+                                     sigMeta,
+                                     true,
+                                     passphraseError,
+                                     messagePart.errorText );
 
     // paint the frame
     if ( mReader ) {
@@ -1272,8 +1272,8 @@ namespace KMail {
       messagePart.isEncrypted = true;
       messagePart.isSigned = false;
       htmlWriter()->queue( writeSigstatHeader( messagePart,
-					       cryptPlugWrapper(),
-					       node->trueFromAddress() ) );
+                                               cryptPlugWrapper(),
+                                               node->trueFromAddress() ) );
     }
 
     if ( bOkDecrypt ) {
@@ -1289,25 +1289,25 @@ namespace KMail {
       // MUA 'should' have sent.  :-D       (khz, 12.09.2002)
       //
       if ( signatureFound ) {
-	writeOpaqueOrMultipartSignedData( 0,
-					  *node,
-					  node->trueFromAddress(),
-					  false,
-					  &decryptedData,
-					  &sigMeta,
-					  false );
-	node->setSignatureState( KMMsgFullySigned );
+        writeOpaqueOrMultipartSignedData( 0,
+                                          *node,
+                                          node->trueFromAddress(),
+                                          false,
+                                          &decryptedData,
+                                          &sigMeta,
+                                          false );
+        node->setSignatureState( KMMsgFullySigned );
       } else {
-	insertAndParseNewChildNode( *node,
-				    &*decryptedData,
-				    "encrypted data" );
+        insertAndParseNewChildNode( *node,
+                                    &*decryptedData,
+                                    "encrypted data" );
       }
     } else {
       mRawReplyString += decryptedData;
       if ( mReader ) {
-	// print the error message that was returned in decryptedData
-	// (utf8-encoded)
-	htmlWriter()->queue( QString::fromUtf8( decryptedData.data() ) );
+        // print the error message that was returned in decryptedData
+        // (utf8-encoded)
+        htmlWriter()->queue( QString::fromUtf8( decryptedData.data() ) );
       }
     }
 
@@ -1320,8 +1320,8 @@ namespace KMail {
 
   bool ObjectTreeParser::processMessageRfc822Subtype( partNode * node, ProcessResult & ) {
     if ( mReader
-	 && !attachmentStrategy()->inlineNestedMessages()
-	 && !showOnlyOneMimePart() )
+         && !attachmentStrategy()->inlineNestedMessages()
+         && !showOnlyOneMimePart() )
       return false;
 
     if ( partNode * child = node->firstChild() ) {
@@ -1343,8 +1343,8 @@ namespace KMail {
         mReader->writeMessagePartToTempFile( &node->msgPart(),
                                             node->nodeId() );
       htmlWriter()->queue( writeSigstatHeader( messagePart,
-					       cryptPlugWrapper(),
-					       node->trueFromAddress(),
+                                               cryptPlugWrapper(),
+                                               node->trueFromAddress(),
                                                filename ) );
     }
     QCString rfc822messageStr( node->msgPart().bodyDecoded() );
@@ -1366,8 +1366,8 @@ namespace KMail {
       //mReader->parseMsgHeader( &rfc822message );
     // display the body of the encapsulated message
     insertAndParseNewChildNode( *node,
-				&*rfc822messageStr,
-				"encapsulated message" );
+                                &*rfc822messageStr,
+                                "encapsulated message" );
     if ( mReader )
       htmlWriter()->queue( writeSigstatFooter( messagePart ) );
     return true;
@@ -1386,65 +1386,65 @@ namespace KMail {
 
     CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
     if (    node->parentNode()
-	    && DwMime::kTypeMultipart    == node->parentNode()->type()
-	    && DwMime::kSubtypeEncrypted == node->parentNode()->subType() ) {
+            && DwMime::kTypeMultipart    == node->parentNode()->type()
+            && DwMime::kSubtypeEncrypted == node->parentNode()->subType() ) {
       kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
       node->setEncryptionState( KMMsgFullyEncrypted );
       if ( keepEncryptions() ) {
-	const QCString cstr = node->msgPart().bodyDecoded();
-	if ( mReader )
-	  writeBodyString( cstr, node->trueFromAddress(),
-			   codecFor( node ), result );
-	mRawReplyString += cstr;
+        const QCString cstr = node->msgPart().bodyDecoded();
+        if ( mReader )
+          writeBodyString( cstr, node->trueFromAddress(),
+                           codecFor( node ), result );
+        mRawReplyString += cstr;
       } else {
-	/*
-	  ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
-	*/
-	PartMetaData messagePart;
-	setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "openpgp" ) );
-	QCString decryptedData;
-	bool signatureFound;
-	struct CryptPlugWrapper::SignatureMetaData sigMeta;
-	sigMeta.status              = 0;
-	sigMeta.extended_info       = 0;
-	sigMeta.extended_info_count = 0;
-	sigMeta.nota_xml            = 0;
-	bool passphraseError;
+        /*
+          ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
+        */
+        PartMetaData messagePart;
+        setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "openpgp" ) );
+        QCString decryptedData;
+        bool signatureFound;
+        struct CryptPlugWrapper::SignatureMetaData sigMeta;
+        sigMeta.status              = 0;
+        sigMeta.extended_info       = 0;
+        sigMeta.extended_info_count = 0;
+        sigMeta.nota_xml            = 0;
+        bool passphraseError;
 
-	bool bOkDecrypt = okDecryptMIME( *node,
-					 decryptedData,
-					 signatureFound,
-					 sigMeta,
-					 true,
-					 passphraseError,
-					 messagePart.errorText );
+        bool bOkDecrypt = okDecryptMIME( *node,
+                                         decryptedData,
+                                         signatureFound,
+                                         sigMeta,
+                                         true,
+                                         passphraseError,
+                                         messagePart.errorText );
 
-	// paint the frame
-	if ( mReader ) {
-	  messagePart.isDecryptable = bOkDecrypt;
-	  messagePart.isEncrypted = true;
-	  messagePart.isSigned = false;
-	  htmlWriter()->queue( writeSigstatHeader( messagePart,
-						   cryptPlugWrapper(),
-						   node->trueFromAddress() ) );
-	}
+        // paint the frame
+        if ( mReader ) {
+          messagePart.isDecryptable = bOkDecrypt;
+          messagePart.isEncrypted = true;
+          messagePart.isSigned = false;
+          htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                   cryptPlugWrapper(),
+                                                   node->trueFromAddress() ) );
+        }
 
-	if ( bOkDecrypt ) {
-	  // fixing the missing attachments bug #1090-b
-	  insertAndParseNewChildNode( *node,
-				      &*decryptedData,
-				      "encrypted data" );
-	} else {
-	  mRawReplyString += decryptedData;
-	  if ( mReader ) {
-	    // print the error message that was returned in decryptedData
-	    // (utf8-encoded)
-	    htmlWriter()->queue( QString::fromUtf8( decryptedData.data() ) );
-	  }
-	}
+        if ( bOkDecrypt ) {
+          // fixing the missing attachments bug #1090-b
+          insertAndParseNewChildNode( *node,
+                                      &*decryptedData,
+                                      "encrypted data" );
+        } else {
+          mRawReplyString += decryptedData;
+          if ( mReader ) {
+            // print the error message that was returned in decryptedData
+            // (utf8-encoded)
+            htmlWriter()->queue( QString::fromUtf8( decryptedData.data() ) );
+          }
+        }
 
-	if ( mReader )
-	  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+        if ( mReader )
+          htmlWriter()->queue( writeSigstatFooter( messagePart ) );
       }
       return true;
     }
@@ -1493,9 +1493,9 @@ namespace KMail {
     // or there is neither signed nor encrypted parameter.
     if ( !isSigned ) {
       if ( isEncrypted )
-	kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
+        kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: enveloped (encrypted) data" << endl;
       else
-	kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
+        kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
       QCString decryptedData;
       PartMetaData messagePart;
       messagePart.isEncrypted = true;
@@ -1509,77 +1509,77 @@ namespace KMail {
       bool passphraseError;
 
       if ( okDecryptMIME( *node,
-			  decryptedData,
-			  signatureFound,
-			  sigMeta,
-			  false,
-			  passphraseError,
-			  messagePart.errorText ) ) {
-	kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
-	isEncrypted = true;
-	node->setEncryptionState( KMMsgFullyEncrypted );
-	signTestNode = 0;
-	// paint the frame
-	messagePart.isDecryptable = true;
-	if ( mReader )
-	  htmlWriter()->queue( writeSigstatHeader( messagePart,
-						   cryptPlugWrapper(),
-						   node->trueFromAddress() ) );
-	insertAndParseNewChildNode( *node,
-				    &*decryptedData,
-				    "encrypted data" );
-	if ( mReader )
-	  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+                          decryptedData,
+                          signatureFound,
+                          sigMeta,
+                          false,
+                          passphraseError,
+                          messagePart.errorText ) ) {
+        kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
+        isEncrypted = true;
+        node->setEncryptionState( KMMsgFullyEncrypted );
+        signTestNode = 0;
+        // paint the frame
+        messagePart.isDecryptable = true;
+        if ( mReader )
+          htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                   cryptPlugWrapper(),
+                                                   node->trueFromAddress() ) );
+        insertAndParseNewChildNode( *node,
+                                    &*decryptedData,
+                                    "encrypted data" );
+        if ( mReader )
+          htmlWriter()->queue( writeSigstatFooter( messagePart ) );
       } else {
 
-	if ( passphraseError ) {
-	  isEncrypted = true;
-	  signTestNode = 0;
-	}
+        if ( passphraseError ) {
+          isEncrypted = true;
+          signTestNode = 0;
+        }
 
-	if ( isEncrypted ) {
-	  kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
-	  // paint the frame
-	  messagePart.isDecryptable = false;
-	  if ( mReader ) {
-	    htmlWriter()->queue( writeSigstatHeader( messagePart,
-						     cryptPlugWrapper(),
-						     node->trueFromAddress() ) );
-	    writePartIcon( &node->msgPart(), node->nodeId() );
-	    htmlWriter()->queue( writeSigstatFooter( messagePart ) );
-	  }
-	} else {
-	  kdDebug(5006) << "pkcs7 mime  -  NO encryption found" << endl;
-	}
+        if ( isEncrypted ) {
+          kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
+          // paint the frame
+          messagePart.isDecryptable = false;
+          if ( mReader ) {
+            htmlWriter()->queue( writeSigstatHeader( messagePart,
+                                                     cryptPlugWrapper(),
+                                                     node->trueFromAddress() ) );
+            writePartIcon( &node->msgPart(), node->nodeId() );
+            htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+          }
+        } else {
+          kdDebug(5006) << "pkcs7 mime  -  NO encryption found" << endl;
+        }
       }
       if ( isEncrypted )
-	node->setEncryptionState( KMMsgFullyEncrypted );
+        node->setEncryptionState( KMMsgFullyEncrypted );
     }
 
     // We now try signature verification if necessarry.
     if ( signTestNode ) {
       if ( isSigned )
-	kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
+        kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
       else
-	kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
+        kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
       bool sigFound = writeOpaqueOrMultipartSignedData( 0,
-							*signTestNode,
-							node->trueFromAddress(),
-							true,
-							0,
-							0,
-							isEncrypted );
+                                                        *signTestNode,
+                                                        node->trueFromAddress(),
+                                                        true,
+                                                        0,
+                                                        0,
+                                                        isEncrypted );
       if ( sigFound ) {
-	if ( !isSigned ) {
-	  kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
-	  isSigned = true;
-	}
-	signTestNode->setSignatureState( KMMsgFullySigned );
-	if ( signTestNode != node )
-	  node->setSignatureState( KMMsgFullySigned );
+        if ( !isSigned ) {
+          kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
+          isSigned = true;
+        }
+        signTestNode->setSignatureState( KMMsgFullySigned );
+        if ( signTestNode != node )
+          node->setSignatureState( KMMsgFullySigned );
       } else {
-	kdDebug(5006) << "pkcs7 mime  -  NO signature found   :-(" << endl;
+        kdDebug(5006) << "pkcs7 mime  -  NO signature found   :-(" << endl;
       }
     }
 
@@ -1605,14 +1605,14 @@ namespace KMail {
 
 
   void ObjectTreeParser::writeBodyString( const QCString & bodyString,
-					  const QString & fromAddress,
-					  const QTextCodec * codec,
-					  ProcessResult & result ) {
+                                          const QString & fromAddress,
+                                          const QTextCodec * codec,
+                                          ProcessResult & result ) {
     assert( mReader ); assert( codec );
     KMMsgSignatureState inlineSignatureState = result.inlineSignatureState();
     KMMsgEncryptionState inlineEncryptionState = result.inlineEncryptionState();
     writeBodyStr( bodyString, codec, fromAddress,
-		  inlineSignatureState, inlineEncryptionState );
+                  inlineSignatureState, inlineEncryptionState );
     result.setInlineSignatureState( inlineSignatureState );
     result.setInlineEncryptionState( inlineEncryptionState );
   }
@@ -1645,25 +1645,25 @@ namespace KMail {
     else {
       iconName = msgPart->iconName();
       if( iconName.right( 14 ) == "mime_empty.png" ) {
-	msgPart->magicSetType();
-	iconName = msgPart->iconName();
+        msgPart->magicSetType();
+        iconName = msgPart->iconName();
       }
     }
 
     if( inlineImage )
       // show the filename of the image below the embedded image
       htmlWriter()->queue( "<div><a href=\"" + href + "\">"
-			   "<img src=\"" + iconName + "\" border=\"0\"></a>"
-			   "</div>"
-			   "<div><a href=\"" + href + "\">" + label + "</a>"
-			   "</div>"
-			   "<div>" + comment + "</div><br>" );
+                           "<img src=\"" + iconName + "\" border=\"0\"></a>"
+                           "</div>"
+                           "<div><a href=\"" + href + "\">" + label + "</a>"
+                           "</div>"
+                           "<div>" + comment + "</div><br>" );
     else
       // show the filename next to the image
       htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
-			   iconName + "\" border=\"0\">" + label +
-			   "</a></div>"
-			   "<div>" + comment + "</div><br>" );
+                           iconName + "\" border=\"0\">" + label +
+                           "</a></div>"
+                           "<div>" + comment + "</div><br>" );
   }
 
 #define SIG_FRAME_COL_UNDEF  99
@@ -1849,8 +1849,8 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
 
 
 QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
-					      CryptPlugWrapper * cryptPlug,
-					      const QString & fromAddress,
+                                              CryptPlugWrapper * cryptPlug,
+                                              const QString & fromAddress,
                                               const QString & filename )
 {
     bool isSMIME = cryptPlug && (0 <= cryptPlug->libName().find( "smime",   0, false ));
@@ -1994,7 +1994,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                 i18n("sender: ") +
                                 msgFrom +
                                 "<br />" +
-			        i18n("stored: ");
+                                i18n("stored: ");
                             // We cannot use Qt's join() function here but
                             // have to join the addresses manually to
                             // extract the mail addresses (without '<''>')
@@ -2226,16 +2226,16 @@ QString ObjectTreeParser::writeSigstatFooter( PartMetaData& block )
     QString htmlStr;
 
     if (block.isSigned) {
-	htmlStr += "</td></tr><tr class=\"" + block.signClass + "H\">";
-	htmlStr += "<td dir=\"" + dir + "\">" +
-	    i18n( "End of signed message" ) +
-	    "</td></tr></table>";
+        htmlStr += "</td></tr><tr class=\"" + block.signClass + "H\">";
+        htmlStr += "<td dir=\"" + dir + "\">" +
+            i18n( "End of signed message" ) +
+            "</td></tr></table>";
     }
 
     if (block.isEncrypted) {
-	htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
-		i18n( "End of encrypted message" ) +
-	    "</td></tr></table>";
+        htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
+                i18n( "End of encrypted message" ) +
+            "</td></tr></table>";
     }
 
     if( block.isEncapsulatedRfc822Message )
@@ -2293,10 +2293,10 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
       QString htmlStr;
       for( ; *pbit != 0; ++pbit, ++npbit )
       {
-	  // insert the next Non-OpenPGP block
-	  QCString str( *npbit );
-	  if( !str.isEmpty() ) {
-	    htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+          // insert the next Non-OpenPGP block
+          QCString str( *npbit );
+          if( !str.isEmpty() ) {
+            htmlStr += quotedHTML( aCodec->toUnicode( str ) );
             kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
                             << "'" << endl;
             // treat messages with empty lines before the first clearsigned
@@ -2316,74 +2316,81 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
           }
           firstNonPgpBlock = false;
 
-	  //htmlStr += "<br>";
+          //htmlStr += "<br>";
 
-	  Kpgp::Block* block = *pbit;
-	  if( ( block->type() == Kpgp::PgpMessageBlock &&
+          Kpgp::Block* block = *pbit;
+          if( ( block->type() == Kpgp::PgpMessageBlock &&
                 // ### Workaround for bug 56693
                 !kmkernel->contextMenuShown() ) ||
-	      ( block->type() == Kpgp::ClearsignedBlock ) )
-	  {
-	      isPgpMessage = true;
-	      if( block->type() == Kpgp::PgpMessageBlock )
-	      {
-		if ( mReader )
-		  emit mReader->noDrag();
-		// try to decrypt this OpenPGP block
-		couldDecrypt = block->decrypt();
-		isEncrypted = block->isEncrypted();
-		if (!couldDecrypt) {
-		  decryptionError = pgp->lastErrorMsg();
-		}
-	      }
-	      else
-	      {
-		  // try to verify this OpenPGP block
-		  block->verify();
-	      }
+              ( block->type() == Kpgp::ClearsignedBlock ) )
+          {
+              isPgpMessage = true;
+              if( block->type() == Kpgp::PgpMessageBlock )
+              {
+                if ( mReader )
+                  emit mReader->noDrag();
+                // try to decrypt this OpenPGP block
+                couldDecrypt = block->decrypt();
+                isEncrypted = block->isEncrypted();
+                if (!couldDecrypt) {
+                  decryptionError = pgp->lastErrorMsg();
+                }
+              }
+              else
+              {
+                  // try to verify this OpenPGP block
+                  block->verify();
+              }
 
-	      isSigned = block->isSigned();
-	      if( isSigned )
-	      {
+              isSigned = block->isSigned();
+              if( isSigned )
+              {
                   keyId = block->signatureKeyId();
-		  signer = block->signatureUserId();
-		  if( !signer.isEmpty() )
-		  {
-		      goodSignature = block->goodSignature();
+                  signer = block->signatureUserId();
+                  if( !signer.isEmpty() )
+                  {
+                      goodSignature = block->goodSignature();
 
-		      if( !keyId.isEmpty() )
-			keyTrust = pgp->keyTrust( keyId );
-		      else
-			// This is needed for the PGP 6 support because PGP 6 doesn't
-			// print the key id of the signing key if the key is known.
-			keyTrust = pgp->keyTrust( signer );
-		  }
-	      }
+                      if( !keyId.isEmpty() ) {
+                        keyTrust = pgp->keyTrust( keyId );
+                        Kpgp::Key* key = pgp->publicKey( keyId );
+                        if ( key ) {
+                          // Use the user ID from the key because this one
+                          // is charset safe.
+                          signer = key->primaryUserID();
+                        }
+                      }
+                      else
+                        // This is needed for the PGP 6 support because PGP 6 doesn't
+                        // print the key id of the signing key if the key is known.
+                        keyTrust = pgp->keyTrust( signer );
+                  }
+              }
 
               if( isSigned )
                 inlineSignatureState = KMMsgPartiallySigned;
-	      if( isEncrypted )
+              if( isEncrypted )
                 inlineEncryptionState = KMMsgPartiallyEncrypted;
 
-	      PartMetaData messagePart;
+              PartMetaData messagePart;
 
-	      messagePart.isSigned = isSigned;
-	      messagePart.technicalProblem = false;
-	      messagePart.isGoodSignature = goodSignature;
-	      messagePart.isEncrypted = isEncrypted;
-	      messagePart.isDecryptable = couldDecrypt;
-	      messagePart.decryptionError = decryptionError;
-	      messagePart.signer = signer;
-	      messagePart.keyId = keyId;
-	      messagePart.keyTrust = keyTrust;
+              messagePart.isSigned = isSigned;
+              messagePart.technicalProblem = false;
+              messagePart.isGoodSignature = goodSignature;
+              messagePart.isEncrypted = isEncrypted;
+              messagePart.isDecryptable = couldDecrypt;
+              messagePart.decryptionError = decryptionError;
+              messagePart.signer = signer;
+              messagePart.keyId = keyId;
+              messagePart.keyTrust = keyTrust;
 
-	      htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
+              htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
-	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
-	      htmlStr += writeSigstatFooter( messagePart );
-	  }
-	  else // block is neither message block nor clearsigned block
-	    htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
+              htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
+              htmlStr += writeSigstatFooter( messagePart );
+          }
+          else // block is neither message block nor clearsigned block
+            htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
       }
 
       // add the last Non-OpenPGP block
@@ -2438,7 +2445,7 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
     /* search next occurrence of '\n' */
     pos = s.find('\n', beg, FALSE);
     if (pos == (unsigned int)(-1))
-	pos = length;
+        pos = length;
 
     line = s.mid(beg,pos-beg);
     beg = pos+1;
@@ -2515,14 +2522,14 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
 
 #ifdef MARCS_DEBUG
   void ObjectTreeParser::dumpToFile( const char * filename, const char * start,
-				     size_t len ) {
+                                     size_t len ) {
     assert( filename );
 
     QFile f( filename );
     if ( f.open( IO_WriteOnly ) ) {
       if ( start ) {
-	QDataStream ds( &f );
-	ds.writeRawBytes( start, len );
+        QDataStream ds( &f );
+        ds.writeRawBytes( start, len );
       }
       f.close();  // If data is 0 we just create a zero length file.
     }
