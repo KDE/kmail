@@ -510,7 +510,6 @@ bool KMHeaders::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
-     return true;
   }
   return KMHeadersInherited::event(e);
 }
