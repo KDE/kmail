@@ -103,7 +103,7 @@ namespace KMail {
 
       bool addPartToList( KMMessagePart * part );
   };
-  
-};
+
+}
 
 #endif

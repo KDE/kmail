@@ -38,5 +38,5 @@ namespace KMail {
     }
   }
 
-};
+}
 

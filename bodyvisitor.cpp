@@ -179,4 +179,4 @@ namespace KMail {
     return false;
   }
   
-};
+}

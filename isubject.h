@@ -58,6 +58,6 @@ namespace KMail {
       QPtrList<IObserver> mObserverList;
   };
 
-}; // namespace KMail
+} // namespace KMail
 
 #endif
