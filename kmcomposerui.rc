@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui name="kmcomposer" version="1">
 <MenuBar>
 <Menu noMerge="1" name="file" >
 <text>
@@ -64,7 +64,7 @@ Message &amp;Options</text>
 <Action name="options_configure_toolbars" />
 </Menu>
 </MenuBar>
-<ToolBar noMerge="1" name="mainToolBar" >
+<ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
 <Action name="send_default" />
 <Action name="send_alternative" />
 <Separator/>

@@ -301,6 +301,9 @@ void KMReaderWin::initHtmlWidget(void)
   connect(mViewer->browserExtension(),
 	  SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
   	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
+  connect(mViewer->browserExtension(),
+	  SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
+  	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
 	  SLOT(slotUrlOn(const QString &)));
     connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
@@ -583,7 +586,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
   else // if numBodyParts <= 0
   {
-    if (htmlMail() && (type.find("text/html;") != -1))
+    if (htmlMail() && ((type == "text/html") || (type.find("text/html") != -1)))
       mViewer->write(aMsg->bodyDecoded());
     else
       writeBodyStr(aMsg->bodyDecoded());

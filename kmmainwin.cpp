@@ -1288,7 +1288,7 @@ void KMMainWin::setupMenuBar()
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
 
   (void) new KAction( i18n("Send &Queued"), 0, this, 
-		      SLOT(slotSendQueued()), actionCollection(), "");
+		      SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
   (void) new KAction( i18n("Configuration..."), 0, this, 
 		      SLOT(slotSettings()), actionCollection(), "settings" );
