@@ -830,7 +830,8 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   QString uids;
   if (job->error())
   {
-    mAccount->handleJobError( job, i18n("Error while listing the contents of a folder.") );
+    mAccount->handleJobError( job, 
+        i18n("Error while listing the contents of the folder %1.").arg( label() ) );
     quiet( false );
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
@@ -871,7 +872,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   for (uid = (*it).items.begin(); uid != (*it).items.end(); uid++)
     (*uid).truncate((*uid).find(","));
   ImapAccountBase::jobData jd( QString::null, (*it).parent );
-//jd.items = (*it).items;
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
@@ -1036,7 +1036,29 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
     ulong uid = msg->UID();
-    if (flags & 8 || uid <= lastUid()) {
+    bool ok = true;
+    if ( uid <= lastUid() )
+    {
+      // as some servers send the messages out of order
+      // we have to check if the message really already exists
+      int idx = 0;
+      KMMsgBase *msg;
+      while ( idx < count() )
+      {
+        msg = getMsgBase( idx );
+        if ( msg && msg->UID() == uid )
+        {
+          ok = false; // exists, no need to create it
+          break;
+        }
+        ++idx;
+      }
+    }
+    // deleted flag
+    if ( flags & 8 ) 
+      ok = false;
+    if ( !ok )
+    {
       delete msg;
       msg = 0;
     }
@@ -1587,7 +1609,7 @@ void
 KMFolderImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
-  kdDebug() << imapPath() << " setUserRights: " << userRights << endl;
+  kdDebug(5006) << imapPath() << " setUserRights: " << userRights << endl;
 }
 
 #include "kmfolderimap.moc"
