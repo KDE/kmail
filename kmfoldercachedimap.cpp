@@ -123,7 +123,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mFolderRemoved( false ), mResync( false ),
-    /*mHoldSyncs( false ),*/ mRecurse( true )
+    /*mHoldSyncs( false ),*/ mRecurse( true ),
+    mContentsTypeChanged( false )
 {
   setUidValidity("");
   mLastUid=0;
@@ -172,6 +173,7 @@ void KMFolderCachedImap::readConfig()
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
 
   KMFolderMaildir::readConfig();
+  mContentsTypeChanged = false;
 }
 
 void KMFolderCachedImap::remove()
@@ -627,8 +629,11 @@ void KMFolderCachedImap::serverSyncInternal()
        // We haven't downloaded messages yet, so we need to build the map.
        if( uidMapDirty )
          reloadUidMap();
-       uploadFlags();
-      break;
+       // Upload flags, unless we know from the ACL that we're not allowed to do that
+       if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::WriteFlags ) ) {
+         uploadFlags();
+         break;
+       }
     }
     // Else carry on
   case SYNC_STATE_LIST_SUBFOLDERS:
@@ -1149,8 +1154,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
          // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
          uidsForDeletionOnServer << uid;
       } else {
-         /* The message is OK, update flags */
-         KMFolderImap::flagsToStatus( existingMessage, flags );
+        /* The message is OK, update flags */
+        if (!mReadOnly)
+          KMFolderImap::flagsToStatus( existingMessage, flags );
          // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
     } else {
@@ -1470,6 +1476,8 @@ KMFolderCachedImap::slotReceivedUserRights( KMFolder* folder )
                 this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
     if ( mUserRights == 0 ) // didn't work
       mUserRights = -1; // error code (used in folderdia)
+    else
+      mReadOnly = ( mUserRights & KMail::ACLJobs::Insert ) == 0;
     mProgress += 5;
     serverSyncInternal();
   }
@@ -1576,6 +1584,19 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
       KMFolder *folder = static_cast<KMFolder*>(node);
       static_cast<KMFolderCachedImap*>(folder->storage())->setSubfolderState( state );
     }
+  }
+}
+
+void KMFolderCachedImap::setImapPath(const QString &path)
+{
+  mImapPath = path;
+}
+
+void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
+{
+  if ( type != mContentsType ) {
+    FolderStorage::setContentsType( type );
+    mContentsTypeChanged = true;
   }
 }
 
