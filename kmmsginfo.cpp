@@ -121,14 +121,14 @@ void KMMsgInfo::fromIndexString(const QString str)
   char statusCh;
   unsigned long ldate;
 
-  sscanf(str.data(), "%c %9lu %9lu %9lu", &statusCh, &mFolderOffset,
+  sscanf(str.data(), "%c %9lu %9lu %10lu", &statusCh, &mFolderOffset,
 	 &mMsgSize, &ldate);
 
   mDate    = (time_t)ldate;
   mStatus  = (KMMsgStatus)statusCh;
-  mXMark   = str.mid(32, 3).stripWhiteSpace();
-  mSubject = str.mid(36, 100).stripWhiteSpace();
-  mFrom    = str.mid(137, 100).stripWhiteSpace();
-  mTo      = str.mid(238, 100).stripWhiteSpace();
+  mXMark   = str.mid(33, 3).stripWhiteSpace();
+  mSubject = str.mid(37, 100).stripWhiteSpace();
+  mFrom    = str.mid(138, 100).stripWhiteSpace();
+  mTo      = str.mid(239, 100).stripWhiteSpace();
   mDirty   = FALSE;
 }

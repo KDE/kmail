@@ -152,7 +152,8 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   // Set status of new messages that are marked as old to read, otherwise
   // the user won't see which messages newly arrived.
   if (aMsg->status()==KMMsgStatusOld)
-    aMsg->setStatus(KMMsgStatusRead);
+    aMsg->setStatus(KMMsgStatusUnread);  // -sanders
+  //    aMsg->setStatus(KMMsgStatusRead);
   else aMsg->setStatus(KMMsgStatusNew);
 
   // 0==processed ok, 1==processing failed, 2==critical error, abort!

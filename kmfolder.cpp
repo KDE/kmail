@@ -48,7 +48,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1202
+#define INDEX_VERSION 1300
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -234,8 +234,11 @@ int KMFolder::create()
   assert(name() != "");
   assert(mOpenCount == 0);
 
+  debug( "Creating folder " + location() );
   if (access(location(), F_OK) == 0) {
     debug("KMFolder::create call to access function failed.");
+    debug("File:: " + location());
+    debug("Error " + QString( strerror(errno) ));
     return EEXIST;
   }
 
@@ -1089,12 +1092,11 @@ int KMFolder::compact()
 
   if (!needsCompact)
     return 0;
-  debug ("Compacting %s ", name().data());
-
+  debug( "Compacting " + name() );
   tempName = "." + name();
   
   tempName += ".compacted";
-  unlink(tempName);
+  unlink(path() + "/" + tempName);
   tempFolder = new KMFolder(parent(), tempName);   //sven: we create it
   if(tempFolder->create()) {
     debug("KMFolder::compact() Creating tempFolder failed!\n");

@@ -73,6 +73,9 @@ signals:
 
 protected:
 
+  /* Auxillary function to faciliate compaction of folders */
+  void compactAllAux(KMFolderDir* dir);
+
   /* Auxillary function to facilitate removal of a folder */
   void removeFolderAux(KMFolder* aFolder);
 

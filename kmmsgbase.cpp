@@ -186,39 +186,37 @@ const QString KMMsgBase::asIndexString(void) const
 {
   int i, len;
   QString str; 
+  unsigned long dateTen = date();
+  dateTen %= 10000000000; // In index only 10 chars are reserved for the date
 
-  // Begin workaround QString.sprintf bug
-  // This bug has been reported to Troll Tech and should be fixed in CVS
   QString a((const char*)decodeQuotedPrintableString(subject()));
   a.truncate(100);
   QString b((const char*)decodeQuotedPrintableString(from()));
   b.truncate(100);
   QString c((const char*)decodeQuotedPrintableString(to()));
   c.truncate(100);
-  str.sprintf("%c %-.9lu %-.9lu %-.9lu %-3.3s ",
-	      (char)status(), folderOffset(), msgSize(), (unsigned long)date(),
+
+  // don't forget to change indexStringLength() below !!
+  str.sprintf("%c %-.9lu %-.9lu %-.10lu %-3.3s ",
+	      (char)status(), folderOffset(), msgSize(), dateTen,
 	      (const char*)xmark() );
+  if (str.length() != 37)
+    debug( "Invalid length " + str );
   str += a.rightJustify( 100, ' ' );
   str += " ";
   str += b.rightJustify( 100, ' ' );
   str += " ";
   str += c.rightJustify( 100, ' ' );
-  // End workaround QString.sprintf bug
 
-  /*
-  // don't forget to change indexStringLength() below !!
-  str.sprintf("%c %-.9lu %-.9lu %-.9lu %-3.3s %-100.100s %-100.100s %-100.100s",
-	      (char)status(), folderOffset(), msgSize(), (unsigned long)date(),
-	      (const char*)xmark(),
-	      (const char*)decodeQuotedPrintableString(subject()),
-	      (const char*)decodeQuotedPrintableString(from()),
-	      (const char*)decodeQuotedPrintableString(to())); //sven
-  */
   len = str.length();
   for (i=0; i<len; i++)
     if (str[i] < ' ' && str[i] >= 0)
       str[i] = ' ';
 
+  if (str.length() != 339) {
+    debug( QString( "Error invalid index entry %1").arg(str.length()) );
+    debug( str );
+  }
   return str;
 }
 
@@ -227,7 +225,8 @@ const QString KMMsgBase::asIndexString(void) const
 int KMMsgBase::indexStringLength(void)
 {
   //return 237;
-  return 338; //sven (+ 100 chars to + one space, right?
+  //  return 338; //sven (+ 100 chars to + one space, right?
+  return 339; //sanders (use 10 digits for the date we need this in 2001!)
 }
 
 

@@ -52,11 +52,24 @@ KMFolderMgr::~KMFolderMgr()
 //-----------------------------------------------------------------------------
 void KMFolderMgr::compactAll()
 {
+  compactAllAux( &mDir );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::compactAllAux(KMFolderDir* dir)
+{
   KMFolderNode* node;
-  for (node=mDir.first(); node; node=mDir.next())
+  if (dir == 0)
+    return;
+  for (node = dir->first(); node; node = dir->next())
   {
-    if (node->isDir()) continue;
-    ((KMFolder*)node)->compact(); // compact know if it's needed
+    if (node->isDir()) {
+      KMFolderDir *child = static_cast<KMFolderDir*>(node);
+      compactAllAux( child );
+    }
+    else
+      ((KMFolder*)node)->compact(); // compact now if it's needed
   }
 }
 
