@@ -459,7 +459,7 @@
                         <cstring>textLabel1</cstring>
                     </property>
                     <property name="text">
-                        <string>Sender Identit&amp;y:</string>
+                        <string>Sender identit&amp;y:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>mIdentity</cstring>
@@ -480,7 +480,7 @@
                         <cstring>TextLabel1_2</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Storage Format:</string>
+                        <string>&amp;Storage format:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>mMailboxType</cstring>
@@ -491,7 +491,7 @@
                         <cstring>TextLabel1_3</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;List Displays:</string>
+                        <string>&amp;List displays:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>mListDisplays</cstring>
