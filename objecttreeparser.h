@@ -196,6 +196,7 @@ namespace KMail {
 
     void writeBodyString( const QCString & bodyString,
 			  const QString & fromAddress,
+			  const QTextCodec * codec,
 			  ProcessResult & result );
 
 #ifndef NDEBUG

@@ -340,7 +340,8 @@ namespace KMail {
 	    mReader->mInlineImage = false;
 	  } else {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
-	    writeBodyString( cstr, curNode->trueFromAddress(), processResult );
+	    writeBodyString( cstr, curNode->trueFromAddress(),
+			     curNode->msgPart().codec(), processResult );
 	  }
 	}
 	curNode->mWasProcessed = true;
@@ -915,11 +916,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					      mReader->mUseGroupware,
 					      prefix, postfix ) ){
 		  htmlWriter()->queue( prefix );
+		  // ### Hmmm, writeBdoyString should escape html specials...
 		  vCal.replace( '&',  "&amp;"  );
 		  vCal.replace( '<',  "&lt;"   );
 		  vCal.replace( '>',  "&gt;"   );
 		  vCal.replace( '\"', "&quot;" );
-		  writeBodyString( vCal, curNode->trueFromAddress(), result );
+		  writeBodyString( vCal, curNode->trueFromAddress(),
+				   curNode->msgPart().codec(), result );
 		  htmlWriter()->queue( postfix );
 		}
 	      }
@@ -1078,7 +1081,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      }
 	    }
 	    if( !bDone )
-	      writeBodyString( cstr, curNode->trueFromAddress(), result );
+	      writeBodyString( cstr, curNode->trueFromAddress(),
+			       curNode->msgPart().codec(), result );
 	  }
 	  mResultString = cstr;
 	  bDone = true;
@@ -1237,7 +1241,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    data = curNode->mChild;
 	  QCString cstr( data->msgPart().bodyDecoded() );
 	  if( mReader )
-	    writeBodyString( cstr, curNode->trueFromAddress(), result );
+	    writeBodyString( cstr, curNode->trueFromAddress(),
+			     data->msgPart().codec(), result );
 	  mResultString += cstr;
 	  bDone = true;
 	} else if( sign && data && plugFound ) {
@@ -1260,7 +1265,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
         curNode->setEncryptionState( KMMsgFullyEncrypted );
 	QCString cstr( curNode->msgPart().bodyDecoded() );
 	if( mReader )
-	  writeBodyString ( cstr, curNode->trueFromAddress(), result );
+	  writeBodyString ( cstr, curNode->trueFromAddress(),
+			    curNode->msgPart().codec(), result );
 	mResultString += cstr;
 	bDone = true;
       } else if( curNode->mChild ) {
@@ -1491,7 +1497,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  if( keepEncryptions() ) {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
 	    if( mReader )
-	      writeBodyString( cstr, curNode->trueFromAddress(), result );
+	      writeBodyString( cstr, curNode->trueFromAddress(),
+			       curNode->msgPart().codec(), result );
 	    mResultString += cstr;
 	    bDone = true;
 	  } else {
@@ -1715,11 +1722,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 				       prefix, postfix );
 	if( bVPartCreated && mReader && !showOnlyOneMimePart() ){
 	  htmlWriter()->queue( prefix );
+	  // ### writeBodyPart should already escape the html specials...
 	  vPart.replace( '&',  "&amp;"  );
 	  vPart.replace( '<',  "&lt;"   );
 	  vPart.replace( '>',  "&gt;"   );
 	  vPart.replace( '\"', "&quot;" );
-	  writeBodyString( vPart.latin1(), curNode->trueFromAddress(), result );
+	  writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
+			   curNode->msgPart().codec(), result );
 	  htmlWriter()->queue( postfix );
 	}
       }
@@ -1759,11 +1768,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 
   void ObjectTreeParser::writeBodyString( const QCString & bodyString,
 					  const QString & fromAddress,
+					  const QTextCodec * codec,
 					  ProcessResult & result ) {
-    assert( mReader );
+    assert( mReader ); assert( codec );
     KMMsgSignatureState inlineSignatureState = result.inlineSignatureState();
     KMMsgEncryptionState inlineEncryptionState = result.inlineEncryptionState();
-    mReader->writeBodyStr( bodyString, mReader->mCodec, fromAddress,
+    mReader->writeBodyStr( bodyString, codec, fromAddress,
 			   inlineSignatureState, inlineEncryptionState );
     result.setInlineSignatureState( inlineSignatureState );
     result.setInlineEncryptionState( inlineEncryptionState );
