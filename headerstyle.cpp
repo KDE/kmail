@@ -41,6 +41,8 @@
 #include "kmkernel.h"
 
 #include <libemailfunctions/email.h>
+#include <libkdepim/kxface.h>
+using namespace KPIM;
 
 #include <mimelib/string.h>
 #include <mimelib/field.h>
@@ -55,6 +57,7 @@
 #include <kmdcodec.h>
 #include <qdatetime.h>
 #include <qbuffer.h>
+#include <qbitmap.h>
 #include <qimage.h>
 #include <qapplication.h>
 #include <qregexp.h>
@@ -392,6 +395,9 @@ namespace KMail {
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
     KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
 
+    QString photoURL;
+    int photoWidth = 60;
+    int photoHeight = 60;
     if( addresses.count() == 1 )
     {
       // kabcUid is embedded in im: URIs to indicate which IM contact to message
@@ -408,9 +414,6 @@ namespace KMail {
           }
       }
       // picture
-      QString photoURL;
-      int photoWidth = 60;
-      int photoHeight = 60;
       if ( addresses[0].photo().isIntern() )
       {
         // get photo data and convert to data: url
@@ -437,36 +440,53 @@ namespace KMail {
         if ( photoURL.startsWith("/") )
           photoURL.prepend( "file:" );
       }
-      if( !photoURL.isEmpty() )
-      {
-        //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
-        userHTML = QString("<img src=\"%1\" width=\"%2\" height=\"%3\">")
-                           .arg( photoURL ).arg( photoWidth ).arg( photoHeight );
-        if ( presence.isEmpty() ) {
-          userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
-        } else {
-          userHTML = QString( "<div class=\"senderpic\">"
-              "<a href=\"im:%1\">%2<div class=\"senderstatus\">"
-              "<span name=\"presence-%3\">%4</span></div></a>"
-              "</div>" ).arg( kabcUid )
-              .arg( userHTML )
-              .arg( kabcUid )
-              .arg( presence );
-        }
-      } else {
-        // we don't have a photo, just show presence, if we have it
-        if ( !presence.isEmpty() ) {
-          userHTML = QString( "<div class=\"senderstatus\">"
-              "<span name=\"presence-%1\">%2</span></div>" )
-              .arg( kabcUid )
-              .arg( presence );
-        }
-      }
     }
     else // TODO: find a usable one
     {
       kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
       userHTML = "&nbsp;";
+    }
+
+    if( photoURL.isEmpty() )
+    {
+      // no photo, look for a X-Face header
+      QString xfaceURL;
+      QString xfhead = message->headerField( "X-Face" );
+      if ( !xfhead.isEmpty() )
+      {
+        KXFace xf;
+        photoURL = imgToDataUrl( xf.toBitmap( xfhead ).convertToImage() );
+        photoWidth = 48;
+        photoHeight = 48;
+
+      }
+
+    }
+
+    if( !photoURL.isEmpty() )
+    {
+        //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
+      userHTML = QString("<img src=\"%1\" width=\"%2\" height=\"%3\">")
+          .arg( photoURL ).arg( photoWidth ).arg( photoHeight );
+      if ( presence.isEmpty() ) {
+        userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
+      } else {
+        userHTML = QString( "<div class=\"senderpic\">"
+            "<a href=\"im:%1\">%2<div class=\"senderstatus\">"
+            "<span name=\"presence-%3\">%4</span></div></a>"
+            "</div>" ).arg( kabcUid )
+            .arg( userHTML )
+             .arg( kabcUid )
+            .arg( presence );
+      }
+    } else {
+       // we don't have a photo, just show presence, if we have it
+      if ( !presence.isEmpty() )
+        userHTML = QString( "<a href=\"im:%1\"><div class=\"senderstatus\">"
+            "<span name=\"presence-%2\">%3</span></div></a>" )
+            .arg( kabcUid )
+            .arg( kabcUid )
+            .arg( presence );
     }
 #if 0
     // Disabled 'Launch IM' link in headers - Will
@@ -547,8 +567,7 @@ namespace KMail {
                                     .arg(onlineStatus));
     */
     headerStr.append(
-          QString("</table></td><td align=\"center\">%1</td></tr></table>\n").arg(userHTML)
-                     );
+          QString( "</table></td><td align=\"center\">%1</td></tr></table>\n" ).arg(userHTML) );
 
     headerStr += "</div>\n\n";
     return headerStr;

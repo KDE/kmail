@@ -1412,6 +1412,20 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   // check for presence of a priority header, indicating urgent mail:
   mUrgentAction->setChecked( newMsg->isUrgent() );
 
+  if (!ident.isXFaceEnabled() || ident.xface().isEmpty())
+    mMsg->removeHeaderField("X-Face");
+  else
+  {
+    QString xface = ident.xface();
+    if (!xface.isEmpty())
+    {
+      int numNL = ( xface.length() - 1 ) / 70;
+      for ( int i = numNL; i > 0; --i )
+        xface.insert( i*70, "\n\t" );
+      mMsg->setHeaderField("X-Face", xface);
+    }
+  }
+
   // enable/disable encryption if the message was/wasn't encrypted
   switch ( mMsg->encryptionState() ) {
     case KMMsgFullyEncrypted: // fall through
@@ -3476,6 +3490,20 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
     mMsg->removeHeaderField("Organization");
   else
     mMsg->setHeaderField("Organization", ident.organization());
+
+  if (!ident.isXFaceEnabled() || ident.xface().isEmpty())
+    mMsg->removeHeaderField("X-Face");
+  else
+  {
+    QString xface = ident.xface();
+    if (!xface.isEmpty())
+    {
+      int numNL = ( xface.length() - 1 ) / 70;
+      for ( int i = numNL; i > 0; --i )
+        xface.insert( i*70, "\n\t" );
+      mMsg->setHeaderField("X-Face", xface);
+    }
+  }
 
   if ( !mBtnTransport->isChecked() ) {
     QString transp = ident.transport();

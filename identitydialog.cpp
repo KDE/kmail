@@ -37,6 +37,7 @@
 
 // other KMail headers:
 #include "signatureconfigurator.h"
+#include "xfaceconfigurator.h"
 #include "folderrequester.h"
 using KMail::FolderRequester;
 #include "kmfoldermgr.h"
@@ -367,6 +368,10 @@ namespace KMail {
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("&Signature") );
 
+    mXFaceConfigurator = new XFaceConfigurator( tabWidget );
+    mXFaceConfigurator->layout()->setMargin( KDialog::marginHint() );
+    tabWidget->addTab( mXFaceConfigurator, i18n("&Picture") );
+
     KConfigGroup geometry( KMKernel::config(), "Geometry" );
     if ( geometry.hasKey( "Identity Dialog size" ) )
       resize( geometry.readSizeEntry( "Identity Dialog size" ) );
@@ -550,6 +555,8 @@ namespace KMail {
 
     // "Signature" tab:
     mSignatureConfigurator->setSignature( ident.signature() );
+    mXFaceConfigurator->setXFace( ident.xface() );
+    mXFaceConfigurator->setXFaceEnabled( ident.isXFaceEnabled() );
   }
 
   void IdentityDialog::updateIdentity( KPIM::Identity & ident ) {
@@ -592,6 +599,8 @@ namespace KMail {
                      mDraftsCombo->folder()->idString() : QString::null );
     // "Signature" tab:
     ident.setSignature( mSignatureConfigurator->signature() );
+    ident.setXFace( mXFaceConfigurator->xface() );
+    ident.setXFaceEnabled( mXFaceConfigurator->isXFaceEnabled() );
   }
 
   void IdentityDialog::slotUpdateTransportCombo( const QStringList & sl ) {

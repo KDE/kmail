@@ -49,6 +49,7 @@ namespace KPIM {
 }
 namespace KMail {
   class SignatureConfigurator;
+  class XFaceConfigurator;
   class DictionaryComboBox;
   class FolderRequester;
 }
@@ -98,6 +99,8 @@ namespace KMail {
     QComboBox                    *mTransportCombo; // should be a KMTransportCombo...
     // "signature" tab:
     KMail::SignatureConfigurator *mSignatureConfigurator;
+    // "X-Face" tab:
+    KMail::XFaceConfigurator *mXFaceConfigurator;
   };
 
 } // namespace KMail
