@@ -1657,33 +1657,30 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
       msg = mFolder->getMsg(idx);
     }
 
-    if (mFolder->protocol() == "imap")
+    if ((mFolder->protocol() == "imap") && (destFolder->protocol() == "imap") &&
+	(static_cast<KMFolderImap*>(mFolder)->account() ==
+	 static_cast<KMFolderImap*>(destFolder)->account()))
     {
-      KMFolderImap *folder = static_cast<KMFolderImap*>(mFolder);
-      if (destFolder->protocol() == "imap")
-      {
-        KMFolderImap *dest_folder = static_cast<KMFolderImap*>(destFolder);
-        if (folder && folder == dest_folder)
-          new KMImapJob(msg, KMImapJob::tCopyMessage, dest_folder);
-        else {
-          newMsg = new KMMessage;
-          newMsg->fromString(msg->asString());
-          newMsg->setComplete(msg->isComplete());
+      new KMImapJob(msg, KMImapJob::tCopyMessage, 
+		    static_cast<KMFolderImap*>(destFolder));
+    } else {
+      newMsg = new KMMessage;
+      newMsg->fromString(msg->asString());
+      newMsg->setComplete(msg->isComplete());
 
-          if (!newMsg->isComplete())
-          {
-            newMsg->setParent(msg->parent());
-            KMImapJob *imapJob = new KMImapJob(newMsg);
-            connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-                destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
-          } else {
-            rc = destFolder->addMsg(newMsg, &index);
-            if (rc == 0 && index != -1)
-              destFolder->unGetMsg( destFolder->count() - 1 );
-          }
-        }
-      }
+      if ((mFolder->protocol() == "imap") && !newMsg->isComplete())
+      {
+	newMsg->setParent(msg->parent());
+        KMImapJob *imapJob = new KMImapJob(newMsg);
+        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+		destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+      } else {
+	rc = destFolder->addMsg(newMsg, &index);
+	if (rc == 0 && index != -1)
+	    destFolder->unGetMsg( destFolder->count() - 1 );
+      }	
     }
+    
     if (!isMessage)
     {
       assert(idx != -1);
@@ -3021,7 +3018,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		  compare_KMSortCacheItem);
 	//merge two sorted lists of siblings
 	for(QListIterator<KMSortCacheItem> it(*sorted);
-	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {	    
+	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {	
 	    if(it.current() &&
 	       (!unsorted || unsorted_off >= unsorted_count ||
 		(ascending && (*it)->key() >= unsorted[unsorted_off]->key()) ||
