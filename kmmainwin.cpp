@@ -1516,8 +1516,8 @@ void KMMainWin::setupMenuBar()
   replyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
 
-  noQuoteReplyAction = new KAction( i18n("Reply &w/o quote..."), ALT+Key_R, this,
-		      SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
+  noQuoteReplyAction = new KAction( i18n("Reply &without quote..."), ALT+Key_R,
+    this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
   replyAllAction = new KAction( i18n("Reply &All..."), "mail_replyall",
      Key_A, this, SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
