@@ -129,7 +129,7 @@ public:
 
   /** Initialize headers fields according to the identity and the transport
     header of the given original message */
-  virtual void initFromMessage(const KMMessage *);
+  virtual void initFromMessage(const KMMessage *msg, bool idHeaders = TRUE);
 
   /** Removes empty fields from the header, e.g. an empty Cc: or Bcc:
     field. */

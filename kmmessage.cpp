@@ -954,7 +954,7 @@ KMMessage* KMMessage::createBounce( bool )
 #endif
 
   KMMessage *msg = new KMMessage;
-  msg->initFromMessage(this);
+  msg->initFromMessage(this, FALSE);
   msg->setTo( senderStr );
   msg->setDateToday();
   msg->setSubject( "mail failed, returning to sender" );
@@ -1163,14 +1163,15 @@ void KMMessage::initHeader( const QString & id )
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::initFromMessage(const KMMessage *msg)
+void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
 {
   QString id = msg->headerField("X-KMail-Identity");
   if ( id.isEmpty() )
     id = KMIdentity::matchIdentity(msg->to() + " " + msg->cc());
   if ( id.isEmpty() && msg->parent() )
     id = msg->parent()->identity();
-  initHeader(id);
+  if (idHeaders) initHeader(id);
+  else setHeaderField("X-KMail-Identity", id);
   if (!msg->headerField("X-KMail-Transport").isEmpty())
     setHeaderField("X-KMail-Transport", msg->headerField("X-KMail-Transport"));
 }
