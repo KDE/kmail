@@ -37,8 +37,11 @@
 #include "kmacctcachedimap.h"
 #include "kmfolder.h"
 
-#include <kabc/addresseedialog.h>
+#include <addressesdialog.h>
 #include <kabc/addresseelist.h>
+#include <kabc/distributionlist.h>
+#include <kabc/stdaddressbook.h>
+#include <kaddrbook.h>
 #include <kpushbutton.h>
 #include <kdebug.h>
 
@@ -72,11 +75,10 @@ static const struct {
 };
 
 
-KMail::ACLEntryDialog::ACLEntryDialog( DialogType dialogType, IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name )
+KMail::ACLEntryDialog::ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name )
   : KDialogBase( parent, name, true /*modal*/, caption,
                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true /*sep*/ )
   , mUserIdFormat( userIdFormat )
-  , mDialogType( dialogType )
 {
   QWidget *page = new QWidget( this );
   setMainWidget(page);
@@ -133,22 +135,32 @@ static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat 
 
 void KMail::ACLEntryDialog::slotSelectAddresses()
 {
-  if ( mDialogType == SingleUser ) {
-    const KABC::Addressee addr = KABC::AddresseeDialog::getAddressee( this );
-    if ( !addr.isEmpty() )
-      mUserIdLineEdit->setText( addresseeToUserId( addr, mUserIdFormat ) );
-  } else {
-    const KABC::Addressee::List lst = KABC::AddresseeDialog::getAddressees( this );
-    if ( !lst.isEmpty() ) {
-      QString txt;
-      for( QValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
-        if ( !txt.isEmpty() )
-          txt += ", ";
-        txt += addresseeToUserId( *it, mUserIdFormat );
-      }
-      mUserIdLineEdit->setText( txt );
+  KPIM::AddressesDialog dlg( this );
+  dlg.setShowCC( false );
+  dlg.setShowBCC( false );
+  if ( mUserIdFormat == FullEmail ) // otherwise we have no way to go back from userid to email
+    dlg.setSelectedTo( userIds() );
+  if ( dlg.exec() != QDialog::Accepted )
+    return;
+
+  const QStringList distrLists = dlg.toDistributionLists();
+  QString txt;
+  if ( !distrLists.isEmpty() ) {
+    for( QStringList::ConstIterator it = distrLists.begin(); it != distrLists.end(); ++it ) {
+      if ( !txt.isEmpty() )
+        txt += ", ";
+      txt += *it; // put the distr list name here, don't expand until saving
     }
   }
+  const KABC::Addressee::List lst = dlg.toAddresses();
+  if ( !lst.isEmpty() ) {
+    for( QValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+      if ( !txt.isEmpty() )
+        txt += ", ";
+      txt += addresseeToUserId( *it, mUserIdFormat );
+    }
+  }
+  mUserIdLineEdit->setText( txt );
 }
 
 void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permissions )
@@ -160,13 +172,11 @@ void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permi
 
 QString KMail::ACLEntryDialog::userId() const
 {
-  Q_ASSERT( mDialogType == SingleUser );
   return mUserIdLineEdit->text();
 }
 
 QStringList KMail::ACLEntryDialog::userIds() const
 {
-  Q_ASSERT( mDialogType == MultiUser );
   QStringList lst = QStringList::split( ",", mUserIdLineEdit->text() );
   for( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
     // Strip white space (in particular, due to ", ")
@@ -191,10 +201,10 @@ class KMail::FolderDiaACLTab::ListViewItem : public KListViewItem
 public:
   ListViewItem( QListView* listview )
     : KListViewItem( listview, listview->lastItem() ),
-      mModified( false ) {}
+      mModified( false ), mNew( false ) {}
 
   void load( const ACLListEntry& entry );
-  void save( ACLListEntry& entry );
+  void save( ACLList& list, KABC::DistributionListManager& manager, IMAPUserIdFormat userIdFormat );
 
   QString userId() const { return text( 0 ); }
   void setUserId( const QString& userId ) { setText( 0, userId ); }
@@ -205,9 +215,16 @@ public:
   bool isModified() const { return mModified; }
   void setModified( bool b ) { mModified = b; }
 
+  // The fact that an item is new doesn't matter much.
+  // This bool is only used to handle deletion differently
+  bool isNew() const { return mNew; }
+  void setNew( bool b ) { mNew = b; }
+
 private:
   unsigned int mPermissions;
+  QString mInternalRightsList; ///< protocol-dependent string (e.g. IMAP rights list)
   bool mModified;
+  bool mNew;
 };
 
 // internalRightsList is only used if permissions doesn't match the standard set
@@ -233,19 +250,45 @@ void KMail::FolderDiaACLTab::ListViewItem::setPermissions( unsigned int permissi
 
 void KMail::FolderDiaACLTab::ListViewItem::load( const ACLListEntry& entry )
 {
+  // Don't allow spaces in userids. If you need this, fix the slave->app communication,
+  // since it uses space as a separator (imap4.cc, look for GETACL)
+  // It's ok in distribution list names though, that's why this check is only done here
+  // and also why there's no validator on the lineedit.
+  if ( entry.userId.contains( ' ' ) )
+    kdWarning(5006) << "Userid contains a space!!!  '" << entry.userId << "'" << endl;
+
   setUserId( entry.userId );
   mPermissions = entry.permissions;
+  mInternalRightsList = entry.internalRightsList;
   setText( 1, permissionsToUserString( entry.permissions, entry.internalRightsList ) );
   mModified = entry.changed; // for dimap, so that earlier changes are still marked as changes
 }
 
-void KMail::FolderDiaACLTab::ListViewItem::save( ACLListEntry& entry )
+void KMail::FolderDiaACLTab::ListViewItem::save( ACLList& aclList, KABC::DistributionListManager& manager, IMAPUserIdFormat userIdFormat )
 {
-  entry.userId = userId();
-  entry.permissions = mPermissions;
-  if ( mModified )
-    entry.internalRightsList = QString::null;
-  entry.changed = mModified;
+  // expand distribution lists
+  // kaddrbook.cpp has a strange two-pass case-insensitive lookup; is it ok to be case sensitive?
+  KABC::DistributionList* list = manager.list( userId() );
+  if ( list ) {
+    Q_ASSERT( mModified ); // it has to be new, it couldn't be stored as a distr list name....
+    KABC::DistributionList::Entry::List entryList = list->entries();
+    KABC::DistributionList::Entry::List::ConstIterator it; // nice number of "::"!
+    for( it = entryList.begin(); it != entryList.end(); ++it ) {
+      QString email = (*it).email;
+      if ( email.isEmpty() )
+        email = addresseeToUserId( (*it).addressee, userIdFormat );
+      ACLListEntry entry( email, QString::null, mPermissions );
+      entry.changed = true;
+      aclList.append( entry );
+    }
+  } else { // it wasn't a distribution list
+    ACLListEntry entry( userId(), mInternalRightsList, mPermissions );
+    if ( mModified ) {
+      entry.internalRightsList = QString::null;
+      entry.changed = true;
+    }
+    aclList.append( entry );
+  }
 }
 
 ////
@@ -255,7 +298,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
     mImapAccount( 0 ),
     mUserRights( 0 ),
     mDlg( dlg ),
-    mChanged( false ), mAccepting( false )
+    mChanged( false ), mAccepting( false ), mSaving( false )
 {
   QVBoxLayout* topLayout = new QVBoxLayout( this );
   // We need a widget stack to show either a label ("no acl support", "please wait"...)
@@ -439,9 +482,9 @@ void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder*, KIO::Job* job, const KM
   loadFinished( aclList );
 }
 
-void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
+void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
 {
-  // Now we can populate the listview
+  mListView->clear();
   for( ACLList::const_iterator it = aclList.begin(); it != aclList.end(); ++it ) {
     // -1 means deleted (for cachedimap), don't show those
     if ( (*it).permissions > -1 ) {
@@ -449,6 +492,11 @@ void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
       item->load( *it );
     }
   }
+}
+
+void KMail::FolderDiaACLTab::loadFinished( const ACLList& aclList )
+{
+  loadListView( aclList );
   mInitialACLList = aclList;
   mStack->raiseWidget( mACLWidget );
   slotSelectionChanged( mListView->selectedItem() );
@@ -458,13 +506,19 @@ void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
 {
   if ( !item ) return;
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
-  ACLEntryDialog dlg( ACLEntryDialog::SingleUser, mUserIdFormat, i18n( "Modify Permissions" ), this );
+  ACLEntryDialog dlg( mUserIdFormat, i18n( "Modify Permissions" ), this );
   dlg.setValues( ACLitem->userId(), ACLitem->permissions() );
   if ( dlg.exec() == QDialog::Accepted ) {
-    ACLitem->setUserId( dlg.userId() );
+    QStringList userIds = dlg.userIds();
+    Q_ASSERT( !userIds.isEmpty() ); // impossible, the OK button is disabled in that case
+    ACLitem->setUserId( dlg.userIds().front() );
     ACLitem->setPermissions( dlg.permissions() );
     ACLitem->setModified( true );
     emit changed(true);
+    if ( userIds.count() > 1 ) { // more emails were added, append them
+      userIds.pop_front();
+      addACLs( userIds, dlg.permissions() );
+    }
   }
 }
 
@@ -473,17 +527,23 @@ void KMail::FolderDiaACLTab::slotEditACL()
   slotEditACL( mListView->currentItem() );
 }
 
+void KMail::FolderDiaACLTab::addACLs( const QStringList& userIds, unsigned int permissions )
+{
+  for( QStringList::const_iterator it = userIds.begin(); it != userIds.end(); ++it ) {
+    ListViewItem* ACLitem = new ListViewItem( mListView );
+    ACLitem->setUserId( *it );
+    ACLitem->setPermissions( permissions );
+    ACLitem->setModified( true );
+    ACLitem->setNew( true );
+  }
+}
+
 void KMail::FolderDiaACLTab::slotAddACL()
 {
-  ACLEntryDialog dlg( ACLEntryDialog::MultiUser, mUserIdFormat, i18n( "Add Permissions" ), this );
+  ACLEntryDialog dlg( mUserIdFormat, i18n( "Add Permissions" ), this );
   if ( dlg.exec() == QDialog::Accepted ) {
     const QStringList userIds = dlg.userIds();
-    for( QStringList::const_iterator it = userIds.begin(); it != userIds.end(); ++it ) {
-      ListViewItem* ACLitem = new ListViewItem( mListView );
-      ACLitem->setUserId( *it );
-      ACLitem->setPermissions( dlg.permissions() );
-      ACLitem->setModified( true );
-    }
+    addACLs( dlg.userIds(), dlg.permissions() );
     emit changed(true);
   }
 }
@@ -492,9 +552,9 @@ void KMail::FolderDiaACLTab::slotSelectionChanged(QListViewItem* item)
 {
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
   bool lvVisible = mStack->visibleWidget() == mACLWidget;
-  mAddACL->setEnabled( lvVisible && canAdmin );
-  mEditACL->setEnabled( item && lvVisible && canAdmin );
-  mRemoveACL->setEnabled( item && lvVisible && canAdmin );
+  mAddACL->setEnabled( lvVisible && canAdmin && !mSaving );
+  mEditACL->setEnabled( item && lvVisible && canAdmin && !mSaving );
+  mRemoveACL->setEnabled( item && lvVisible && canAdmin && !mSaving );
 }
 
 void KMail::FolderDiaACLTab::slotRemoveACL()
@@ -502,7 +562,8 @@ void KMail::FolderDiaACLTab::slotRemoveACL()
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
   if ( !ACLitem )
     return;
-  mRemovedACLs.append( ACLitem->userId() );
+  if ( !ACLitem->isNew() )
+    mRemovedACLs.append( ACLitem->userId() );
   delete ACLitem;
   emit changed(true);
 }
@@ -526,14 +587,29 @@ bool KMail::FolderDiaACLTab::save()
     return true;
   assert( mDlg->folder() ); // should have been created already
 
+  // Expand distribution lists. This is necessary because after Apply
+  // we would otherwise be able to "modify" the permissions for a distr list,
+  // which wouldn't work since the ACLList and the server only know about the
+  // individual addresses.
+  // slotACLChanged would have trouble matching the item too.
+  // After reloading we'd see the list expanded anyway,
+  // so this is more consistent.
+  // But we do it now and not when inserting it, because this allows to
+  // immediately remove a wrongly inserted distr list without having to
+  // remove 100 items.
+  // Now, how to expand them? Playing with listviewitem iterators and inserting
+  // listviewitems at the same time sounds dangerous, so let's just save into
+  // ACLList and reload that.
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::DistributionListManager manager( addressBook );
+  manager.load();
   ACLList aclList;
   for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
-
-    ACLListEntry entry;
-    ACLitem->save( entry );
-    aclList.append( entry );
+    ACLitem->save( aclList, manager, mUserIdFormat );
   }
+  loadListView( aclList );
+
   // Now compare with the initial ACLList, because if the user renamed a userid
   // we have to add the old userid to the "to be deleted" list.
   for( ACLList::ConstIterator init = mInitialACLList.begin(); init != mInitialACLList.end(); ++init ) {
@@ -545,7 +621,7 @@ bool KMail::FolderDiaACLTab::save()
       mRemovedACLs.append( uid );
   }
 
-  for( QStringList::ConstIterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
+  for ( QStringList::ConstIterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
     // We use permissions == -1 to signify deleting. At least on cyrus, setacl(0) or deleteacl are the same,
     // but I'm not sure if that's true for all servers.
     ACLListEntry entry( *rit, QString::null, -1 );
@@ -553,6 +629,7 @@ bool KMail::FolderDiaACLTab::save()
     aclList.append( entry );
   }
 
+  // aclList is finally ready. We can save it (dimap) or apply it (imap).
 
   if ( mFolderType == KMFolderTypeCachedImap ) {
     // Apply the changes to the aclList stored in the folder.
@@ -593,9 +670,10 @@ void KMail::FolderDiaACLTab::slotMultiSetACLResult(KIO::Job* job)
       emit cancelAccept();
       mAccepting = false; // don't emit readyForAccept anymore
     }
+  } else {
+    if ( mAccepting )
+      emit readyForAccept();
   }
-  if ( mAccepting )
-    emit readyForAccept();
 }
 
 void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissions )
@@ -607,8 +685,8 @@ void KMail::FolderDiaACLTab::slotACLChanged( const QString& userId, int permissi
     for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
       ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
       if ( ACLitem->userId() == userId ) {
-        if ( ACLitem->permissions() == (uint)permissions ) // i.e. the user didn't have time to change it again :)
-          ACLitem->setModified( false );
+        ACLitem->setModified( false );
+        ACLitem->setNew( false );
         ok = true;
         break;
       }

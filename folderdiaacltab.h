@@ -59,8 +59,7 @@ class ACLEntryDialog :public KDialogBase {
   Q_OBJECT
 
 public:
-  enum DialogType { SingleUser, MultiUser };
-  ACLEntryDialog( DialogType dialogType, IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name = 0 );
+  ACLEntryDialog( IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name = 0 );
 
   void setValues( const QString& userId, unsigned int permissions );
 
@@ -76,7 +75,6 @@ private:
   QVButtonGroup* mButtonGroup;
   KLineEdit* mUserIdLineEdit;
   IMAPUserIdFormat mUserIdFormat;
-  DialogType mDialogType;
 };
 
 /**
@@ -117,7 +115,9 @@ private:
   KURL imapURL() const;
   void initializeWithValuesFromFolder( KMFolder* folder );
   void startListing();
+  void loadListView( const KMail::ACLList& aclList );
   void loadFinished( const KMail::ACLList& aclList );
+  void addACLs( const QStringList& userIds, unsigned int permissions );
 
 private:
   // The widget containing the ACL widgets (listview and buttons)
@@ -143,6 +143,7 @@ private:
 
   bool mChanged;
   bool mAccepting; // i.e. close when done
+  bool mSaving;
 };
 
 } // end of namespace KMail
