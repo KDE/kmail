@@ -1014,7 +1014,6 @@ void AccountsPage::SendingTab::load() {
   mDefaultDomainEdit->setText( str );
 }
 
-
 void AccountsPage::SendingTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
@@ -1367,7 +1366,15 @@ void AccountsPage::ReceivingTab::load() {
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
   mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
   mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
+  QTimer::singleShot( 0, this, SLOT( slotTweakAccountList() ) );
 }
+
+void AccountsPage::ReceivingTab::slotTweakAccountList() 
+{
+  // Force the contentsWidth of mAccountList to be recalculated so that items can be
+  // selected in the normal way. It would be best if this were not necessary.
+  mAccountList->resizeContents( mAccountList->visibleWidth(), mAccountList->contentsHeight() );
+}  
 
 void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new

@@ -339,6 +339,7 @@ protected slots:
   void slotModifySelectedAccount();
   void slotRemoveSelectedAccount();
   void slotEditNotifications();
+  void slotTweakAccountList();
 
 protected:
   QStringList occupiedNames();
