@@ -516,7 +516,9 @@ void KMReaderWin::parseMsg(void)
     mViewer->setCharset(mCodec->name(), true);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("a { color: #%1;").arg(colorToString(c2)) +
+		 QString("body { font-family: \"%1\" }\n").arg( mBodyFamily ) +
+		 QString("p { font-size: %1pt }\n").arg( fntSize  ) +
+		 QString("a { color: #%1; ").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
 		 // TODO: move these to stylesheet, too:
@@ -827,7 +829,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   QString line, sig, htmlStr = "";
   Kpgp* pgp = Kpgp::getKpgp();
   assert(pgp != NULL);
-  //  assert(!aStr.isNull());
+  // assert(!aStr.isNull());
   bool pgpMessage = false;
 
   if (pgp->setMessage(aStr))
@@ -858,7 +860,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       else
          sig = i18n("Warning: Bad signature from");
 
-      /* HTMLize signedBy data */
+      /* HTMLize signedBy data */ 
       QString sdata=pgp->signedBy();
       sdata.replace(QRegExp("\""), "&quot;");
       sdata.replace(QRegExp("<"), "&lt;");
@@ -900,7 +902,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
   int prevQuoteLevel = -1;
   int newlineCount = 0;
   tmpStr = "<div>"; //work around KHTML slowness
-
+  
   // skip leading empty lines
   for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
   beg = pos;
