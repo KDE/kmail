@@ -77,6 +77,7 @@ private slots:
 	void replyMessage();
 	void replyAll();
 	void detachFile(int,int);
+	void insertFile();
 protected:
 	virtual void resizeEvent(QResizeEvent *);
 };

@@ -459,6 +459,30 @@ void KMComposeView::detachFile(int index, int col)
 	
 }
 
+void KMComposeView::insertFile()
+{
+      	QString iFileString;
+	QString textString;
+	QFile *iFileName;
+	char buf[255];
+	int col, line;
+       	QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
+        d->setCaption("Insert File");
+        if (d->exec()) 
+		{iFileString = d->selectedFile();
+		 iFileName = new QFile(iFileString);
+		 iFileName->open(IO_ReadOnly);
+		 iFileName->at(0);
+  		 while(iFileName->readLine(buf,254) != 0)
+ 			textString.append(buf);			
+		iFileName->close();
+	        editor->getCursorPosition(&line,&col);
+		editor->insertAt(textString,line,col);
+		editor->update();
+		editor->repaint(); 
+		}
+}	
+
 void KMComposeView::toDo()
 {
    KMsgBox::message(this,"Ouch",
@@ -680,6 +704,7 @@ void KMComposeWin::setupMenuBar()
 
   QPopupMenu *mmenu = new QPopupMenu();
   mmenu->insertItem("Recip&ients...",composeView,SLOT(toDo()),ALT+Key_I);
+  mmenu->insertItem("Insert &File", composeView,SLOT(insertFile()),ALT+Key_F);
   mmenu->insertSeparator();
   QPopupMenu *menv = new QPopupMenu();
   menv->insertItem("High");
