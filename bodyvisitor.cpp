@@ -106,7 +106,8 @@ namespace KMail {
           part->setLoadPart( true );
         }
       }
-      if ( !part->partSpecifier().endsWith(".HEADER") )
+      if ( !part->partSpecifier().endsWith(".HEADER") &&
+           !part->loadPart() )
         part->setLoadHeaders( true ); // load MIME header
       
       if ( part->loadHeaders() || part->loadPart() )
