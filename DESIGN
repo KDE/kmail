@@ -6,27 +6,12 @@ codebase. It should esp. be handy for people not hacking full-time on
 KMail as well as people that want to trace bugs in parts of KMail
 which they don't know well.
 
+Contents:
+- Identity
+- Filters
+- ConfigureDialog
 
 TODO: reader, composer, messages, folder, accounts, ...
-
-KERNEL
-======
-
-MESSAGES
-========
-
-COMPOSER
-========
-
-READER
-======
-
-FOLDER
-======
-
-
-ACCOUNT
-=======
 
 IDENTITY
 ========
@@ -120,3 +105,49 @@ foreach message {
   KMFilterMgr::process():
 }
 
+
+CONFIGURE DIALOG
+================
+
+Files: configuredialog*.{h,cpp} ( identitylistview.{h,cpp} )
+
+Contact Marc Mutz <mutz@kde.org> on questions...
+
+The configuredialog is made up of pages that in turn may consist of a
+number of tabs. The genral rule of thumb is that each page and tab is
+responsible for reading and writing the config options presented on
+it, although in the future, that may be reduced to interacting with
+the corresponding config manager instead. But that won't change the
+basic principle.
+
+Thus, there is an abstract base class ConfigurePage (defined in
+configuredialog_p.h), which derives from QWidget. It has four methods
+of which you have to reimplement at least the first two:
+
+- void setup()
+  Re-read the config (from the config file or the manager) and update
+  the widgets correspondingly. That is, you should only create the
+  widgets in the ctor, not set the options yet. The reason for that is
+  that the config dialog, once created, is simply hidden and shown
+  subsequently, so we need a reset-like method anyway.
+
+- void apply()
+  Read the config from the widgets and write it into the config file
+  or the corresponding config manager.
+
+- void dismiss()
+  Called on cancel. You should clean up any temporary stuff you
+  needed. If you work with a config-manager backed page, you want to
+  call ConfigManager::rollback() here.
+
+- void installProfile()
+  This is called when the user selected a profile and hit apply. A
+  profile is just another KConfig object. Therefore, this method
+  should be the same as setup(), except that you should only alter
+  widgets for configs that really exist in the profile.
+
+For tabbed config pages, there exists a convenience class called
+TabbedConfigurationPage, which (as of this writing only offers the
+addTab() convenience method. It is planned to also provide
+reimplemenations of setup, dismiss, apply and installProfile that just
+call the same functions for each tab.
