@@ -24,7 +24,6 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   QPushButton *btnCancel, *btnOk;
   QBoxLayout* box = new QVBoxLayout(this, 2, 0);
   QBoxLayout* bbox = new QHBoxLayout(0);
-  KMFolderDir* fdir = &kernel->folderMgr()->dir();
   KMFolder* cur;
 
   initMetaObject();
@@ -53,11 +52,15 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   resize(100, 300);
   box->activate();
 
-  for (cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next())
+  QStringList str;
+  kernel->folderMgr()->createFolderList( &str, &mFolder  );
+  int i = 1;
+  mListBox->insertStringList( str );
+  for (cur = mFolder.first(); cur; cur = mFolder.next())
   {
-    mListBox->insertItem(cur->label());
     if(!oldSelection.isNull() && oldSelection == cur->label())
-      mListBox->setCurrentItem(mListBox->count() - 1);
+      mListBox->setCurrentItem(i - 1);
+    ++i;
   }
   
   // make sure item is visible
@@ -81,11 +84,10 @@ KMFolderSelDlg::~KMFolderSelDlg()
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderSelDlg::folder(void)
 {
-  KMFolderDir* fdir = &kernel->folderMgr()->dir();
   int idx = mListBox->currentItem();
 
   if (idx < 0) return NULL;
-  return (KMFolder*)fdir->at(idx);
+  return mFolder.at(idx);
 }
 
 

@@ -6,6 +6,7 @@
 #define kmfolderseldlg_h
 
 #include <qdialog.h>
+#include <qlist.h>
 
 class QListBox;
 class KMFolder;
@@ -28,6 +29,7 @@ protected slots:
 
 protected:
   QListBox* mListBox;
+  QList<KMFolder> mFolder;
 
   static QString oldSelection;
 };
