@@ -4361,7 +4361,7 @@ void KMComposeWin::slotAttachView()
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
-  pname = msgPart->name();
+  pname = msgPart->name().stripWhiteSpace();
   if (pname.isEmpty()) pname=msgPart->contentDescription();
   if (pname.isEmpty()) pname="unnamed";
 
