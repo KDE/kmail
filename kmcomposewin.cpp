@@ -427,6 +427,12 @@ void KMComposeWin::readConfig(void)
     else
       mBodyFont = KGlobalSettings::generalFont();
     if (mEditor) mEditor->setFont(mBodyFont);
+    mEdtFrom.setFont(mBodyFont);
+    mEdtReplyTo.setFont(mBodyFont);
+    mEdtTo.setFont(mBodyFont);
+    mEdtCc.setFont(mBodyFont);
+    mEdtBcc.setFont(mBodyFont);
+    mEdtSubject.setFont(mBodyFont);
   }
 
   { // area fo config group "Fonts"
