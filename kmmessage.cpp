@@ -3080,16 +3080,17 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     }
   }
 
-  if (RFC2231encoded)
-  {
-    DwParameter *nameParam;
-    nameParam = new DwParameter;
-    nameParam->SetAttribute("name*");
-    nameParam->SetValue(name.data(),true);
-    ct.AddParameter(nameParam);
-  } else {
-    if(!name.isEmpty())
+  if ( !name.isEmpty() ) {
+    if (RFC2231encoded)
+    {
+      DwParameter *nameParam;
+      nameParam = new DwParameter;
+      nameParam->SetAttribute("name*");
+      nameParam->SetValue(name.data(),true);
+      ct.AddParameter(nameParam);
+    } else {
       ct.SetName(name.data());
+    }
   }
 
   if (!paramAttr.isEmpty())
