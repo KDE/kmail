@@ -144,6 +144,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
            this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
   connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
+  connect( mainWidget, SIGNAL(modifiedToolBarConfig()),
+           this, SLOT(slotToolbarChanged()) );
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
@@ -197,6 +199,15 @@ void KMailPart::slotIconChanged( KMFolderTreeItem *fti )
 void KMailPart::slotNameChanged( KMFolderTreeItem *fti )
 {
   emit textChanged( fti->folder()->label() );
+}
+
+void KMailPart::slotToolbarChanged()
+{
+  kdDebug(5006) << "KMailPart - need to reload the toolbar" << endl;
+//FIXME
+  // Don't do the next statement -> crash!!!
+  //mStatusBar->mainWindow()->createGUI("kmmainwin.rc");
+  reloadXML();
 }
 
 
