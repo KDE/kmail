@@ -26,6 +26,7 @@
 #include <kfiledialog.h>
 #include <ktip.h>
 #include <knotifydialog.h>
+#include <kstandarddirs.h>
 #include <dcopclient.h>
 
 #include "kcursorsaver.h"
@@ -2075,15 +2076,17 @@ void KMMainWidget::setupActions()
 
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
-
+  KAction *act;
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
-    (void) new KAction( i18n("&Address Book..."), "contents", 0, this,
+    act =  new KAction( i18n("&Address Book..."), "contents", 0, this,
 			SLOT(slotAddrBook()), actionCollection(), "addressbook" );
+    if (KStandardDirs::findExe("kaddressbook").isEmpty()) act->setEnabled(false);
   }
 
-  (void) new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
-		      SLOT(slotImport()), actionCollection(), "import" );
+  act = new KAction( i18n("&Import Messages..."), "fileopen", 0, this,
+		     SLOT(slotImport()), actionCollection(), "import" );
+  if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
 		      "configure", 0, this, SLOT(slotEditVacation()),
