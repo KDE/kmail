@@ -1498,10 +1498,6 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
     return FALSE;
   }
 
-  if ( !backgroundMode )
-    if ( userForgotAttachment() )
-      return false;
-
   bccMsgList.clear();
 
   if (bAutoCharset) {
@@ -4885,7 +4881,7 @@ void KMComposeWin::slotPrint()
                                mEdtSubject->edited() || mAtmModified ||
                                ( mTransport->lineEdit() &&
                                  mTransport->lineEdit()->edited() ) );
-  applyChanges();
+  applyChanges( true );
   KMCommand *command = new KMPrintCommand( this, mMsg );
   command->start();
   mEditor->setModified( bMessageWasModified );
@@ -4917,6 +4913,9 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
            return false;
         }
      }
+
+     if ( userForgotAttachment() )
+       return false;
   }
 
   KCursorSaver busy(KBusyPtr::busy());

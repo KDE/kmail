@@ -279,8 +279,7 @@ public:
    * and signs/encrypts the message if activated. Returns FALSE in
    * case of an error (e.g. if PGP encryption fails).
    * If backgroundMode is true then no functions which might require
-   * user interaction (like signing/encrypting/checking for missing
-   * attachments) are performed
+   * user interaction (like signing/encrypting) are performed
    */
    bool applyChanges( bool backgroundMode = false );
 
