@@ -733,13 +733,15 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   if ( sernum != 0 )
     msg = findMessageBySerNum( sernum, f );
   if ( msg ) {
-    // Message found - update it:
+    // Message found - make a copy and update it:
+    KMMessage* newMsg = new KMMessage( *msg );
+    newMsg->setSubject( subject );
 
     // Delete some attachments according to list
     for( QStringList::ConstIterator it = deletedAttachments.begin();
          it != deletedAttachments.end();
          ++it ){
-      if( !deleteAttachment( *msg, *it ) ){
+      if( !deleteAttachment( *newMsg, *it ) ){
         // Note: It is _not_ an error if an attachment was already deleted.
       }
     }
@@ -753,21 +755,15 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
          && itmime != attachmentMimetypes.end()
          && itname != attachmentNames.end();
          ++iturl, ++itname, ++itmime ){
-      if( !updateAttachment( *msg, *iturl, *itname, *itmime ) ){
+      if( !updateAttachment( *newMsg, *iturl, *itname, *itmime ) ){
         kdDebug(5006) << "Attachment error, can not update attachment " << *iturl << endl;
         break;
       }
     }
 
-    // Just for cosmetics: update subject
-    if ( msg->subject() != subject ) {
-        KMMessage* newMsg = new KMMessage( *msg );
-        newMsg->setSubject( subject );
-        deleteMsg( msg );
-        f->addMsg( newMsg );
-    }
+    deleteMsg( msg );
+    rc = f->addMsg( newMsg );
 
-    rc = sernum;
   }else{
     // Message not found - store it newly
     rc = addIncidenceKolab( *f, subject,
