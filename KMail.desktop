@@ -73,5 +73,4 @@ Terminal=0
 X-KDE-StartupNotify=true
 X-DCOP-ServiceType=Unique
 X-DCOP-ServiceName=kmail
-ServiceTypes=DCOP/ResourceBackend/IMAP,DCOP/Mailer
 Categories=Qt;KDE;Network
