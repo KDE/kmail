@@ -90,6 +90,10 @@ QString LinkLocator::getUrl()
 // keep this in sync with KMMainWin::slotUrlClicked()
 bool LinkLocator::atUrl() const
 {
+  // the character directly before the URL must not be a letter or a number
+  if( ( mPos > 0 ) && mText[mPos-1].isLetterOrNumber() )
+    return false;
+
   QChar ch = mText[mPos];
   return (ch=='h' && mText.mid(mPos, 7) == "http://") ||
          (ch=='h' && mText.mid(mPos, 8) == "https://") ||
