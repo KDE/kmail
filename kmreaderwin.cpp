@@ -1226,8 +1226,11 @@ kdDebug(5006) << "* model *" << endl;
             }
           }
         }
+        bool forcedIcon = !isImage && curNode->type() != DwMime::kTypeText;
+        if (forcedIcon) asIcon = TRUE;
         if( asIcon ) {
-          reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
+          if (!forcedIcon || reader->mAttachmentStyle != HideAttmnt)
+            reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
         } else if (isImage) {
           reader->mInlineImage = true;
           reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
