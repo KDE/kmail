@@ -2533,7 +2533,9 @@ void KMMainWidget::updateFolderMenu()
   modifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   compactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   refreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  emptyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  emptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
+                                             && ( mFolder->count() > 0 ) )
+                                         : false );
   emptyFolderAction->setText( (mFolder && kernel->folderIsTrash(mFolder))
     ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );

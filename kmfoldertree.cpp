@@ -986,10 +986,11 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
       folderMenu->insertSeparator();
 
-      folderMenu->insertItem(SmallIcon("edittrash"),
+      itemId = folderMenu->insertItem(SmallIcon("edittrash"),
         (kernel->folderIsTrash(fti->folder())) ? i18n("&Empty") :
                              i18n("&Move All Messages to Trash"), mMainWidget,
                              SLOT(slotEmptyFolder()));
+      folderMenu->setItemEnabled( itemId, fti->folder()->count() > 0 );
     }
     if ( !fti->folder()->isSystemFolder() )
       folderMenu->insertItem(SmallIcon("editdelete"),
