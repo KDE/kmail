@@ -385,7 +385,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   // identity
   QHBoxLayout *idLayout = new QHBoxLayout( topLayout );
-  label = new QLabel( i18n("&Sender Identity:"), this );
+  label = new QLabel( i18n("&Sender identity:"), this );
   idLayout->addWidget( label );
   mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), this );
   label->setBuddy( mIdentityComboBox );
