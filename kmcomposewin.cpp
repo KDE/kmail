@@ -1293,8 +1293,8 @@ bool KMComposeWin::applyChanges(void)
       return false;
     }
     mCharset = charset;
-    mMsg->setCharset(mCharset);
   }
+  mMsg->setCharset(mCharset);
 
   mMsg->setTo(to());
   mMsg->setFrom(from());
