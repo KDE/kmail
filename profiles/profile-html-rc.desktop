@@ -1,9 +1,11 @@
 [KMail Profile]
 Name=HTML
+Name[bg]=Поддръжка на HTML
 Name[xx]=xxHTMLxx
 Comment=Standard profile with HTML preview enabled - less secure!
 Comment[ar]=تشكيل قياسي مع تمكين استعراض HTML - أقل أمانا!
 Comment[az]=HTML nümayişli standard - ən az etibarlı!
+Comment[bg]=Стандартен профил с поддръжка на HTML в писмата (по-малко сигурен)
 Comment[bs]=Standardni profil sa omogućenim HTML pregledom - manje siguran!
 Comment[ca]=Perfil estàndard amb la vista prèvia de l'HTML habilitada - menys segur!
 Comment[cs]=Standardní profil s povoleným náhledem HTML souborů - méně bezpečné!
@@ -21,12 +23,14 @@ Comment[it]=Profilo standard con l'anteprima HTML abilitata - meno sicuro!
 Comment[ja]=HTMLプレビューを有効にしたスタンダードプロファイル - 安全度は下がります!
 Comment[lt]=Standartinis profilis su HTML peržiūra – mažiau saugus!
 Comment[lv]=Standarta profils ar atļautu HTML apskati - nedrošāks!
-Comment[nl]=Standaardprofiel met HTML-voorbeeld geactiveerd - minder veilig !
+Comment[nl]=Standaardprofiel met HTML-voorbeeld geactiveerd - minder veilig!
+Comment[nn]=Standard profil med HTML-vising slått på - mindre trygt!
 Comment[pt]=O perfil predefinido com a antevisão de HTML activada - menos seguro!
 Comment[pt_BR]=Perfil padrão com previsão de HTML habilitada - menos seguro!
 Comment[ro]=Profil standard cu previzualizare HTML activată (securitate scăzută!)
 Comment[ru]=Обычный профиль с просмотром HTML - менее безопасный!
 Comment[sk]=Štandardný profil s HTML náhľadom - menej bezpečné!
+Comment[sl]=Običajen profil z omogočenim ogledom v HTML - manj varno!
 Comment[sr]=Стандардни профил са омогућеним прегледом HTML-а — мање безбедно!
 Comment[sv]=Standardprofil med HTML-förhandsgranskning aktiverad - mindre säker!
 Comment[th]=โปรไฟล์มาตรฐานพร้อมกับแสดงตัวอย่าง HTML - ความปลอดภัยน้อย !
