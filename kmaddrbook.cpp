@@ -107,7 +107,7 @@ QString KabcBridge::expandDistributionLists(QString recipients)
     if (!expRecipients.isEmpty())
       expRecipients += ", ";
     receiver = (*it).stripWhiteSpace();
-    for ( jt = names.begin(); jt != names.end(); ++jt)
+    for ( jt = names.begin(); jt != names.end(); ++jt) {
       if (receiver.lower() == (*jt).lower()) {
 	QStringList el = manager.list( receiver )->emails();
 	for ( QStringList::Iterator kt = el.begin(); kt != el.end(); ++kt ) {
@@ -117,6 +117,7 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 	}
 	break;
       }
+    }
     if ( jt == names.end() )
     {
       if (receiver.find('@') == -1)
