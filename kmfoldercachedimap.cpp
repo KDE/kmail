@@ -193,12 +193,12 @@ void KMFolderCachedImap::readConfig()
     // if there is an annotation, it has to XML
     if ( !mAnnotationFolderType.isEmpty() )
       kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
-    kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
-                  << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
+//    kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
+//                  << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
   }
   mIncidencesFor = incidencesForFromString( config->readEntry( "IncidencesFor" ) );
-  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
-                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
+//  kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
+//                << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
   KMFolderMaildir::readConfig();
 
