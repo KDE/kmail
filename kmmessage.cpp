@@ -309,11 +309,15 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
      if ((pgp->setMessage(bodyDecoded())) &&
          (pgp->isEncrypted()) &&
          (pgp->decrypt()))
-           result = QString(pgp->message()).stripWhiteSpace()
-                         .replace(reNL,nlIndentStr) + '\n';
+     {
+       result = QString(pgp->message()).stripWhiteSpace();
+       result.replace(reNL,nlIndentStr) + '\n';
+     }
      else 
-           result = QString(bodyDecoded()).stripWhiteSpace()
-                .replace(reNL,nlIndentStr) + '\n';
+     {  
+       result = QString(bodyDecoded()).stripWhiteSpace();
+       result.replace(reNL,nlIndentStr) + '\n';
+     }
   }
   else
   {
@@ -333,15 +337,20 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 	  result += aIndentStr;
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
+	  QString part;
           if ((pgp->setMessage(msgPart.bodyDecoded())) &&
               (pgp->isEncrypted()) &&
               (pgp->decrypt()))
-                  result = QString(pgp->message())
-                              .replace(reNL,nlIndentStr) + '\n';
+	  {
+	    part = QString(pgp->message());
+	    part = part.replace(reNL,nlIndentStr);
+	  }
           else
-	    result += QString(msgPart.bodyDecoded())
-	       .replace(reNL,(const char*)nlIndentStr);
-	  result += '\n';
+	  {
+	    part = QString(msgPart.bodyDecoded());
+	    part = part.replace(reNL,(const char*)nlIndentStr);
+	  }
+	  result += part + '\n';
 	}
 	else isInline = FALSE;
       }
@@ -378,11 +387,38 @@ KMMessage* KMMessage::createReply(bool replyToAll)
 
   if (replyToAll)
   {
+    int i;
     if (!replyToStr.isEmpty()) toStr += replyToStr + ", ";
     else if (!loopToStr.isEmpty()) toStr = loopToStr + ", ";
     if (!from().isEmpty()) toStr += from() + ", ";
+    if (!to().isEmpty()) toStr += to() + ", ";
+    toStr = toStr.simplifyWhiteSpace() + " ";
+
+    // now try to strip my own e-mail adress:
+    QString f = msg->from();
+    if((i = f.find("<")) != -1) // just keep <foo@bar.com>
+      f = f.right(f.size() - i);
+    if((i = toStr.find(f)) != -1)
+    {
+      int pos1, pos2;
+      pos1 = toStr.findRev(", ", i);
+      if( pos1 == -1 ) pos1 = 0;
+      pos2 = toStr.find(", ", i);
+      toStr = toStr.left(pos1) + toStr.right(toStr.size() - pos2 - 1); 
+    }
     toStr.truncate(toStr.length()-2);
-    msg->setCc(cc());
+    // same for the cc field
+    QString ccStr = cc().simplifyWhiteSpace() + ", ";
+    if((i = ccStr.find(f)) != -1)
+    {
+      int pos1, pos2;
+      pos1 = ccStr.findRev(", ", i);
+      if( pos1 == -1 ) pos1 = 0;
+      pos2 = ccStr.find(", ", i);
+      ccStr = ccStr.left(pos1) + toStr.right(toStr.size() - pos2 - 1);
+    }
+    ccStr.truncate(ccStr.length()-2);
+    msg->setCc(ccStr);
   }
   else
   {
