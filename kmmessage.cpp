@@ -69,7 +69,8 @@ static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix;
+static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix,
+  sWordWrap;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static QStringList sPrefCharsets;
@@ -796,7 +797,7 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
   content += '\n';
 
   const QString headerStr = formatString( aHeaderStr );
-  if ( sSmartQuote )
+  if ( sSmartQuote && sWordWrap )
     return headerStr + smartQuote( content, sWrapCol );
   else
     return headerStr + content;
@@ -3899,6 +3900,7 @@ void KMMessage::readConfig()
     sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
 
     sSmartQuote = config->readBoolEntry("smart-quote", true);
+    sWordWrap = config->readBoolEntry( "word-wrap", true );
     sWrapCol = config->readNumEntry("break-at", 78);
     if ((sWrapCol == 0) || (sWrapCol > 78))
       sWrapCol = 78;
