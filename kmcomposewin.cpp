@@ -140,6 +140,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mAtmListBox->addColumn(i18n("Size"), 80);
   mAtmListBox->addColumn(i18n("Encoding"), 120);
   mAtmListBox->addColumn(i18n("Type"), 150);
+  mAtmListBox->setAllColumnsShowFocus(true);
+  
   connect(mAtmListBox,
 	  SIGNAL(doubleClicked(QListViewItem *)),
 	  SLOT(slotAttachProperties()));
