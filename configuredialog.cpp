@@ -4261,32 +4261,24 @@ void MiscPage::GroupwareTab::save() {
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
-  KMFolder *folder = 0;
-  if ( format == 0 )
-    folder = mFolderCombo->getFolder();
-  else {
+  QString folderId;
+  if (  format == 0 ) {
+    KMFolder* folder = mFolderCombo->getFolder();
+    if (  folder )
+      folderId = folder->idString();
+  } else {
     // Inbox folder of the selected account
     KMAccount* acct = mAccountCombo->currentAccount();
-    if ( acct && acct->hasInbox() ) {
-      // it's an (d)imap account
-      ImapAccountBase * imapAcct = dynamic_cast<ImapAccountBase*>( acct );
-      if ( imapAcct ) {
-        KMFolderNode *node = imapAcct->rootFolder()->folder()->child()->first();
-        while ( node && !folder ) {
-          if (!node->isDir() && (node->name().upper() == "INBOX" ) )
-            folder = static_cast<KMFolder*>(node);
-          node = imapAcct->rootFolder()->folder()->child()->next();
-        }
-      }
+    if (  acct ) {
+      folderId = QString( ".%1.directory/INBOX" ).arg(  acct->id() );
+      GlobalSettings::setTheIMAPResourceAccount(  acct->id() );
     }
-    if ( acct )
-      GlobalSettings::setTheIMAPResourceAccount( acct->id() );
   }
 
-  bool enabled = mEnableImapResCB->isChecked() && folder;
+  bool enabled = mEnableImapResCB->isChecked() && !folderId.isEmpty();
   GlobalSettings::setTheIMAPResourceEnabled( enabled );
   GlobalSettings::setTheIMAPResourceFolderLanguage( mLanguageCombo->currentItem() );
-  GlobalSettings::setTheIMAPResourceFolderParent( folder? folder->idString(): "" );
+  GlobalSettings::setTheIMAPResourceFolderParent( folderId );
 }
 
 void MiscPage::GroupwareTab::slotStorageFormatChanged( int format )
