@@ -1160,11 +1160,10 @@ bool KMComposeWin::applyChanges(void)
   kdDebug() << "KMComposeWin::applyChanges: " << mFcc->currentText() << "==" << id.fcc() << "?" << endl;
 
   KMFolder *f = mFcc->getFolder();
-
   if ( f->idString() == id.fcc() )
-      mMsg->setFcc( QString::null );
+    mMsg->removeHeaderField("X-KMail-Fcc");
   else
-      mMsg->setFcc( f->idString() );
+    mMsg->setFcc( f->idString() );
 
   if (mIdentity->currentText() == i18n("Default"))
     mMsg->removeHeaderField("X-KMail-Identity");
