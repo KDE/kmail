@@ -54,6 +54,12 @@ KMSearchRule::KMSearchRule()
   init();
 }
 
+KMSearchRule::~KMSearchRule()
+{
+	delete mBmEndHeader;
+	delete mBmEndHeaders2;
+	delete mBmEndHeaders1;
+}
 
 //-----------------------------------------------------------------------------
 void KMSearchRule::init(const QCString aField, Function aFunction,

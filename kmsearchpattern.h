@@ -43,6 +43,7 @@ public:
       string and the function to @p FuncEquals. Use @ref init to set
       other data.*/
   KMSearchRule();
+  ~KMSearchRule();
 
   /** Initialize the rule.
       @param field
