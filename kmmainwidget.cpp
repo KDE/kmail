@@ -2763,8 +2763,10 @@ void KMMainWidget::updateMessageActions()
     }
 
     mSendAgainAction->setEnabled( single_actions &&
-          mHeaders->currentMsg() &&
-          mHeaders->currentMsg()->isSent() );
+             ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
+          || ( mFolder && kmkernel->folderIsDraftOrOutbox( mFolder ) )
+          || ( mFolder && kmkernel->folderIsSentMailFolder( mFolder ) )
+             );
     mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
     bool enable_goto_unread = mails || (mHeaders->loopOnGotoUnread() == LoopInAllFolders);
