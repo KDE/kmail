@@ -1,7 +1,7 @@
 
 SUBDIRS = pics doc
 INCLUDES=	-I.. @all_includes@
-LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif -ljpeg -lmimelib
+LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib
 MOC	=	@MOC@
 
 bin_PROGRAMS = kmail
