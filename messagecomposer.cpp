@@ -1211,10 +1211,6 @@ void MessageComposer::encryptMessage( KMMessage* msg,
                                       int previousBoundaryLevel,
                                       KMMessagePart newBodyPart )
 {
-#ifdef DEBUG
-  kdDebug(5006) << "entering KMComposeWin::encryptMessage" << endl;
-#endif
-
   // This c-string (init empty here) is set by *first* testing of expiring
   // encryption certificate: stops us from repeatedly asking same questions.
   QCString encryptCertFingerprints;
