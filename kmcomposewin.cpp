@@ -524,7 +524,7 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotAppendSignature()));
   menu->insertItem(i18n("&Insert File"), this,
 		   SLOT(slotInsertFile()));
-  int id=menu->insertItem(i18n("Insert My &Public Key..."), this,
+  int id=menu->insertItem(i18n("Insert My &Public Key"), this,
 		    SLOT(slotInsertMyPublicKey()));
   if(!Kpgp::getKpgp()->havePGP())
    menu->setItemEnabled(id, false);
