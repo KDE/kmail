@@ -31,6 +31,7 @@ class KMFldSearch;
 class KToggleAction;
 class KActionMenu;
 class KSelectAction;
+class KRadioAction;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
 
@@ -223,7 +224,16 @@ protected slots:
   void slotSetThreadStatusFlag();
   void slotShowMsgSrc();
   void slotToggleFixedFont();
-  void slotSetHeaderStyle(int);
+  void slotBriefHeaders();
+  void slotFancyHeaders();
+  void slotStandardHeaders();
+  void slotLongHeaders();
+  void slotAllHeaders();
+  void slotIconicAttachments();
+  void slotSmartAttachments();
+  void slotInlineAttachments();
+  void slotCycleHeaderStyles();
+  void slotCycleAttachmentStyles();
   void slotSetEncoding();
   void slotSendQueued();
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
@@ -294,6 +304,10 @@ protected slots:
   void slotEditToolbars();
   void slotUpdateToolbars();
   void slotEditKeys();
+
+protected:
+  KRadioAction * actionForHeaderStyle(int);
+  KRadioAction * actionForAttachmentStyle(int);
 
 protected:
   KStatusBar   *mStatusBar;

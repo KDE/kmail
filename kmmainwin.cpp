@@ -1457,24 +1457,59 @@ void KMMainWin::slotViewChange()
 }
 
 
-//-----------------------------------------------------------------------------
-void KMMainWin::slotSetHeaderStyle(int id)
-{
-  if (id >= KMReaderWin::HdrFancy && id <= KMReaderWin::HdrAll)
-  {
-    mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
-    mMsgView->setHeaderStyle((KMReaderWin::HeaderStyle)id);
-    mViewMenu->setItemChecked(id, TRUE);
-    return;
-  }
+void KMMainWin::slotBriefHeaders() {
+  mMsgView->setHeaderStyle( KMReaderWin::HdrBrief );
+}
 
-  if (id >= 5+KMReaderWin::IconicAttmnt && id <= 5+KMReaderWin::InlineAttmnt)
-  {
-    mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, FALSE);
-    mViewMenu->setItemChecked(id, TRUE);
-    mMsgView->setAttachmentStyle(id-5);
-    return;
-  }
+void KMMainWin::slotFancyHeaders() {
+  mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
+}
+
+void KMMainWin::slotStandardHeaders() {
+  mMsgView->setHeaderStyle( KMReaderWin::HdrStandard );
+}
+
+void KMMainWin::slotLongHeaders() {
+  mMsgView->setHeaderStyle( KMReaderWin::HdrLong );
+}
+
+void KMMainWin::slotAllHeaders() {
+  mMsgView->setHeaderStyle( KMReaderWin::HdrAll );
+}
+
+void KMMainWin::slotCycleHeaderStyles() {
+  KMReaderWin::HeaderStyle style = mMsgView->headerStyle();
+  if ( style == KMReaderWin::HdrAll ) // last, go to top again:
+    mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
+  else
+    mMsgView->setHeaderStyle( KMReaderWin::HeaderStyle(++int(style)) );
+  KRadioAction * action = actionForHeaderStyle( mMsgView->headerStyle() );
+  assert( action );
+  action->setChecked( true );
+}
+
+
+void KMMainWin::slotIconicAttachments() {
+  mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
+}
+
+void KMMainWin::slotSmartAttachments() {
+  mMsgView->setAttachmentStyle( KMReaderWin::SmartAttmnt );
+}
+
+void KMMainWin::slotInlineAttachments() {
+  mMsgView->setAttachmentStyle( KMReaderWin::InlineAttmnt );
+}
+
+void KMMainWin::slotCycleAttachmentStyles() {
+  KMReaderWin::AttachmentStyle style = mMsgView->attachmentStyle();
+  if ( style == KMReaderWin::InlineAttmnt ) // last, go to top again:
+    mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
+  else
+    mMsgView->setAttachmentStyle( KMReaderWin::AttachmentStyle(++int(style)) );
+  KRadioAction * action = actionForAttachmentStyle( mMsgView->attachmentStyle() );
+  assert( action );
+  action->setChecked( true );
 }
 
 void KMMainWin::folderSelected(KMFolder* aFolder)
@@ -2103,6 +2138,43 @@ void KMMainWin::getAccountMenu()
     actMenu->insertItem((*it).replace(QRegExp("&"),"&&"), id);
 }
 
+// little helper function
+KRadioAction * KMMainWin::actionForHeaderStyle( int style ) {
+  const char * actionName = 0;
+  switch( style ) {
+  case KMReaderWin::HdrFancy:
+    actionName = "view_headers_fancy"; break;
+  case KMReaderWin::HdrBrief:
+    actionName = "view_headers_brief"; break;
+  case KMReaderWin::HdrStandard:
+    actionName = "view_headers_standard"; break;
+  case KMReaderWin::HdrLong:
+    actionName = "view_headers_long"; break;
+  case KMReaderWin::HdrAll:
+    actionName = "view_headers_all"; break;
+  }
+  if ( actionName )
+    return static_cast<KRadioAction*>(actionCollection()->action(actionName));
+  else
+    return 0;
+}
+
+KRadioAction * KMMainWin::actionForAttachmentStyle( int style ) {
+  const char * actionName = 0;
+  switch ( style ) {
+  case KMReaderWin::IconicAttmnt:
+    actionName = "view_attachments_as_icons"; break;
+  case KMReaderWin::SmartAttmnt:
+    actionName = "view_attachments_smart"; break;
+  case KMReaderWin::InlineAttmnt:
+    actionName = "view_attachments_inline"; break;
+  }
+  if ( actionName )
+    return static_cast<KRadioAction*>(actionCollection()->action(actionName));
+  else
+    return 0;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
@@ -2413,33 +2485,104 @@ void KMMainWin::setupMenuBar()
 
 
   //----- View Menu
-  KActionMenu *viewMenuAction = new
-    KActionMenu( i18n("&View"), actionCollection(), "view" );
+  KRadioAction * raction = 0;
 
-  mViewMenu = viewMenuAction->popupMenu();
-  mViewMenu->setCheckable(TRUE);
-  connect(mViewMenu,SIGNAL(activated(int)),SLOT(slotSetHeaderStyle(int)));
-  mViewMenu->insertItem(i18n("&Brief Headers"), KMReaderWin::HdrBrief);
-  mViewMenu->insertItem(i18n("&Fancy Headers"), KMReaderWin::HdrFancy);
-  mViewMenu->insertItem(i18n("&Standard Headers"), KMReaderWin::HdrStandard);
-  mViewMenu->insertItem(i18n("&Long Headers"), KMReaderWin::HdrLong);
-  mViewMenu->insertItem(i18n("&All Headers"), KMReaderWin::HdrAll);
-  mViewMenu->insertSeparator();
-  mViewMenu->insertItem(i18n("&Iconic Attachments"),
-		       KMReaderWin::HdrAll + KMReaderWin::IconicAttmnt);
-  mViewMenu->insertItem(i18n("Sma&rt Attachments"),
-		       KMReaderWin::HdrAll + KMReaderWin::SmartAttmnt);
-  mViewMenu->insertItem(i18n("I&nlined Attachments"),
-		       KMReaderWin::HdrAll + KMReaderWin::InlineAttmnt);
-  mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
-  mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
+  // "Headers" submenu:
+  KActionMenu * headerMenu =
+    new KActionMenu( i18n("View->", "&Headers"),
+		     actionCollection(), "view_headers" );
+  msg = i18n("Choose display style of message headers");
+  headerMenu->setToolTip( msg );
 
-  mViewMenu->insertSeparator();
+  connect( headerMenu, SIGNAL(activated()), SLOT(slotCycleHeaderStyles()) );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Fancy"), 0, this,
+			      SLOT(slotFancyHeaders()),
+			      actionCollection(), "view_headers_fancy" );
+  msg = i18n("Show the list of headers in a fancy format");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Brief"), 0, this,
+			      SLOT(slotBriefHeaders()),
+			      actionCollection(), "view_headers_brief" );
+  msg = i18n("Show brief list of message headers");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Standard"), 0, this,
+			      SLOT(slotStandardHeaders()),
+			      actionCollection(), "view_headers_standard" );
+  msg = i18n("Show standard list of message headers");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&Long"), 0, this,
+			      SLOT(slotLongHeaders()),
+			      actionCollection(), "view_headers_long" );
+  msg = i18n("Show long list of message headers");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->headers->", "&All"), 0, this,
+			      SLOT(slotAllHeaders()),
+			      actionCollection(), "view_headers_all" );
+  msg = i18n("Show all message headers");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
+
+  // check the right one:
+  raction = actionForHeaderStyle( mMsgView->headerStyle() ); 
+  if ( raction )
+    raction->setChecked( true );
+
+  // "Attachments" submenu:
+  KActionMenu * attachmentMenu =
+    new KActionMenu( i18n("View->", "&Attachments"),
+		     actionCollection(), "view_attachments" );
+  connect( attachmentMenu, SIGNAL(activated()),
+	   SLOT(slotCycleAttachmentStyles()) );
+
+  msg = i18n("Choose display style of attachments");
+  attachmentMenu->setToolTip( msg );
+
+  raction = new KRadioAction( i18n("View->attachments->", "&As Icons"), 0, this,
+			      SLOT(slotIconicAttachments()),
+			      actionCollection(), "view_attachments_as_icons" );
+  msg = i18n("Show all attachments as icons. Click to see them.");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->attachments->", "&Smart"), 0, this,
+			      SLOT(slotSmartAttachments()),
+			      actionCollection(), "view_attachments_smart" );
+  msg = i18n("Show attachments as suggested by sender.");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
+
+  raction = new KRadioAction( i18n("View->attachments->", "&Inline"), 0, this,
+			      SLOT(slotInlineAttachments()),
+			      actionCollection(), "view_attachments_inline" );
+  msg = i18n("Show all attachments inline (if possible)");
+  raction->setToolTip( msg );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
+
+  // check the right one:
+  raction = actionForAttachmentStyle( mMsgView->attachmentStyle() );
+  if ( raction )
+    raction->setChecked( true );
+
   toggleFixFontAction = new KToggleAction( i18n("Fixed Font &Widths"),
 			0, this, SLOT(slotToggleFixedFont()),
 			actionCollection(), "toggle_fixedfont" );
-  viewMenuAction->insert( toggleFixFontAction );
-
 
   //----- Settings Menu
   toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
