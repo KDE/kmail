@@ -133,13 +133,13 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     if (numerical)
       return ( numericalValue == numericalMsgContents );
     else
-      return (qstricmp(msgContents, mContents) == 0);
+      return (QString::compare(msgContents.lower(), mContents.lower()) == 0);
 
   case KMSearchRule::FuncNotEqual:
     if (numerical)
       return ( numericalValue != numericalMsgContents );
     else
-      return (qstricmp(msgContents, mContents) != 0);
+      return (QString::compare(msgContents.lower(), mContents.lower()) != 0);
 
   case KMSearchRule::FuncContains:
     return msgContents.contains(mContents, FALSE);
@@ -163,25 +163,25 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     if (numerical)
       return (numericalMsgContents > numericalValue);
     else
-      return (qstricmp(msgContents, mContents) > 0);
+      return (QString::compare(msgContents.lower(), mContents.lower()) > 0);
 
   case FuncIsLessOrEqual:
     if (numerical)
       return (numericalMsgContents <= numericalValue);
     else
-      return (qstricmp(msgContents, mContents) <= 0);
+      return (QString::compare(msgContents.lower(), mContents.lower()) <= 0);
 
   case FuncIsLess:
     if (numerical)
       return (numericalMsgContents < numericalValue);
     else
-      return (qstricmp(msgContents, mContents) < 0);
+      return (QString::compare(msgContents.lower(), mContents.lower()) < 0);
 
   case FuncIsGreaterOrEqual:
     if (numerical)
       return (numericalMsgContents >= numericalValue);
     else
-      return (qstricmp(msgContents, mContents) >= 0);
+      return (QString::compare(msgContents.lower(), mContents.lower()) >= 0);
   }
 
   return FALSE;
@@ -192,7 +192,7 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
   char cIdx = char( int('A') + aIdx );
 
   init( config->readEntry( QString("field") + cIdx  ),
-	config->readEntry( QString("func") + cIdx ),
+	config->readEntry( QString("func") + cIdx ).latin1(),
 	config->readEntry( QString("contents") + cIdx ) );
 }
 

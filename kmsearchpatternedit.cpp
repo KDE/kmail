@@ -125,8 +125,10 @@ int KMSearchRuleWidget::indexOfRuleField(const QString aName) const
 
   if ( aName.isEmpty() ) return -1;
 
+  QString i18n_aName = i18n( aName.latin1() );
+
   for (i=sFilterFieldList.count()-1; i>=0; i--) {
-    if (*(sFilterFieldList.at(i))==i18n(aName)) break;
+    if (*(sFilterFieldList.at(i))==i18n_aName) break;
   }
   return i;
 }
