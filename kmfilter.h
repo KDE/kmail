@@ -54,6 +54,11 @@ public:
   /** Cleanup. */
   virtual ~KMFilter() {};
 
+  /** Equivalent to @pattern()->name(). @return name of the filter */
+  QString name() const {
+    return mPattern.name();
+  }
+
   /** Execute the filter action(s) on the given message.
       Returns:
       @li 2 if a critical error occurred,
