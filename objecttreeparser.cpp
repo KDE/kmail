@@ -1940,7 +1940,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return bDone;
   }
 
-  bool ObjectTreeParser::processImageType( int subtype, partNode * /*curNode*/,
+  bool ObjectTreeParser::processImageType( int /*subtype*/, partNode * /*curNode*/,
 					   bool /*showOneMimePart*/,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
@@ -1948,25 +1948,11 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool & /*isInlineEncrypted*/,
 					   bool & /*bNeverDisplayInline*/,
 					   bool & isImage ) {
-    bool bDone = false;
-    kdDebug(5006) << "* image *" << endl;
-	  
-    switch( subtype  ){
-    case DwMime::kSubtypeJpeg: {
-      kdDebug(5006) << "JPEG" << endl;
-    }
-      break;
-    case DwMime::kSubtypeGif: {
-      kdDebug(5006) << "GIF" << endl;
-    }
-      break;
-    }
     isImage = true;
-
-    return bDone;
+    return false;
   }
 
-  bool ObjectTreeParser::processAudioType( int subtype, partNode * curNode,
+  bool ObjectTreeParser::processAudioType( int /*subtype*/, partNode * curNode,
 					   bool showOneMimePart,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
@@ -1974,22 +1960,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool & /*isInlineEncrypted*/,
 					   bool & /*bNeverDisplayInline*/,
 					   bool & /*isImage*/ ) {
-    bool bDone = false;
-    kdDebug(5006) << "* audio *" << endl;
-    switch( subtype  ){
-    case DwMime::kSubtypeBasic: {
-      kdDebug(5006) << "basic" << endl;
-    }
-      break;
-    }
-    // We allways show audio as icon.
+    // We always show audio as icon.
     if( mReader && ( mReader->mAttachmentStyle != KMReaderWin::HideAttmnt || showOneMimePart ) )
       mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
-    bDone = true;
-    return bDone;
+    return true;
   }
 
-  bool ObjectTreeParser::processVideoType( int subtype, partNode * /*curNode*/,
+  bool ObjectTreeParser::processVideoType( int /*subtype*/, partNode * /*curNode*/,
 					   bool /*showOneMimePart*/,
 					   bool /*keepEncryptions*/,
 					   bool /*includeSignatures*/,
@@ -1997,15 +1974,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool & /*isInlineEncrypted*/,
 					   bool & /*bNeverDisplayInline*/,
 					   bool & /*isImage*/ ) {
-    bool bDone = false;
-    kdDebug(5006) << "* video *" << endl;
-    switch( subtype  ){
-    case DwMime::kSubtypeMpeg: {
-      kdDebug(5006) << "mpeg" << endl;
-    }
-      break;
-    }
-    return bDone;
+    return false;
   }
 
   bool ObjectTreeParser::processModelType( int /*subtype*/, partNode * /*curNode*/,
@@ -2016,10 +1985,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   bool & /*isInlineEncrypted*/,
 					   bool & /*bNeverDisplayInline*/,
 					   bool & /*isImage*/ ) {
-    bool bDone = false;
-    kdDebug(5006) << "* model *" << endl;
-    // what the hell is "Content-Type: model/.." ?
-    return bDone;
+    return false;
   }
 
 
