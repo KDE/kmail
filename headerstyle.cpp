@@ -389,7 +389,7 @@ namespace KMail {
     QString presence;
 
     // IM presence and kabc photo
-    
+
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
     QString kabcUid;
     KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
@@ -402,7 +402,7 @@ namespace KMail {
     {
       // kabcUid is embedded in im: URIs to indicate which IM contact to message
       kabcUid = addresses[0].uid();
- 
+
       if ( imProxy->initialize() ) {
           // im status
           presence = imProxy->presenceString( kabcUid );
@@ -496,8 +496,8 @@ namespace KMail {
     //presence = i18n( "DCOP/InstantMessenger not installed" );
     kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
 #endif
-    
-    
+
+
     //case HdrFancy:
     // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) )
