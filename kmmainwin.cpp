@@ -2329,7 +2329,7 @@ void KMMainWin::slotReadOn()
         mMsgView->slotJumpDown();
         return;
     }
-    int i = mHeaders->findUnread(true, -1, false, true);
+    int i = mHeaders->findUnread(true, -1, false, false);
     if ( i < 0 ) // let's try from start, what gives?
         i = mHeaders->findUnread(true, 0, false, true);
     if ( i >= 0 ) {
