@@ -41,6 +41,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   mInterval = 0;
   mExclude = false;
   mCheckingMail = FALSE;
+  connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
 
 
@@ -112,7 +113,7 @@ void KMAccount::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
+void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo)
 {
   KMMessage* newMsg = new KMMessage;
   QString str, receiptTo;
@@ -138,7 +139,8 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
   newMsg->setBody(str);
   newMsg->setAutomaticFields();
 
-  kernel->msgSender()->send(newMsg);
+  mReceipts.append(newMsg);
+  mReceiptTimer.start(0,true);
 }
 
 
@@ -285,3 +287,18 @@ void KMAccount::mailCheck()
  kernel->acctMgr()->singleCheckMail(this,false);
  mCheckingMail = FALSE;
 }
+
+//-----------------------------------------------------------------------------
+void KMAccount::sendReceipts()
+{
+  // re-entrant
+  QValueList<KMMessage*> receipts;
+  QValueList<KMMessage*>::Iterator it;
+  for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
+    receipts.append(*it);
+  mReceipts.clear();
+
+  for(it = receipts.begin(); it != receipts.end(); ++it)
+    kernel->msgSender()->send(*it);  //might process events
+}
+

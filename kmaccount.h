@@ -7,6 +7,7 @@
 
 #include <qstring.h>
 #include <qlist.h>
+#include <qvaluelist.h>
 #include <qtimer.h>
 #include <qsignal.h>
 #include "kmnewiostatuswdg.h"
@@ -84,6 +85,7 @@ signals:
 
 protected slots:
   virtual void mailCheck();
+  virtual void sendReceipts(); 
 
 protected:
   KMAccount(KMAcctMgr* owner, const char* accountName);
@@ -94,7 +96,7 @@ protected:
   virtual bool processNewMsg(KMMessage* msg);
 
   /** Send receipt of message back to sender (confirming delivery). */
-  virtual void sendReceipt(KMMessage* msg, const QString receiptTo) const;
+  virtual void sendReceipt(KMMessage* msg, const QString receiptTo);
 
   /** Install/deinstall automatic new-mail checker timer. */
   virtual void installTimer();
@@ -105,10 +107,11 @@ protected:
   QString       mPrecommand;
   KMAcctMgr*    mOwner;
   KMAcctFolder* mFolder;
-  QTimer *mTimer;
+  QTimer *mTimer, mReceiptTimer;
   int mInterval;
   bool mExclude;
   bool mCheckingMail;
+  QValueList<KMMessage*> mReceipts;
 };
 
 
