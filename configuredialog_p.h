@@ -475,6 +475,23 @@ protected: // data
   QLineEdit    *mCustomDateFormatEdit;
 };
 
+class AppearancePageReaderTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  AppearancePageReaderTab( QWidget * parent=0, const char * name=0 );
+
+  QString helpAnchor() const;
+
+  void load();
+  void save();
+  void defaults() {}
+  void installProfile( KConfig * profile );
+
+private: // data
+  QComboBox *mCharsetCombo;
+};
+
+
 class AppearancePageSystemTrayTab : public ConfigModuleTab {
   Q_OBJECT
 public:
@@ -504,6 +521,7 @@ public:
   typedef AppearancePageColorsTab ColorsTab;
   typedef AppearancePageLayoutTab LayoutTab;
   typedef AppearancePageHeadersTab HeadersTab;
+  typedef AppearancePageReaderTab ReaderTab;
   typedef AppearancePageSystemTrayTab SystemTrayTab;
 
 protected:
@@ -511,6 +529,7 @@ protected:
   ColorsTab     *mColorsTab;
   LayoutTab     *mLayoutTab;
   HeadersTab    *mHeadersTab;
+  ReaderTab     *mReaderTab;
   SystemTrayTab *mSystemTrayTab;
 };
 

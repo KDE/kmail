@@ -4,6 +4,7 @@
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <include>kmglobal.h</include>
+  <include>qtextcodec.h</include>
   <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
       <entry name="DelayedMarkAsRead"  type="Bool">
@@ -364,6 +365,12 @@
      <entry name="BackgroundColor" type="Color" key="BackgroundColor">
        <default code="true">kapp->palette().active().base()</default>
      </entry>
+     <entry name="FallbackCharacterEncoding" type="String" key="FallbackCharacterEncoding">
+       <default code="true"> QCString(QTextCodec::codecForLocale()->name()).lower() == "eucjp"? "jis7" : QCString(QTextCodec::codecForLocale()->name()).lower()</default>
+       <label></label>
+       <whatsthis></whatsthis>
+     </entry>
+
 
     </group>
 

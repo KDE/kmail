@@ -4333,6 +4333,11 @@ const QTextCodec * KMMessage::codec() const {
   if ( !c )
     // no override-codec set for this message, try the CT charset parameter:
     c = KMMsgBase::codecForName( charset() );
+  if ( !c ) {
+    // Ok, no override and nothing in the message, let's use the fallback
+    // the user configured
+    c = KMMsgBase::codecForName( GlobalSettings::fallbackCharacterEncoding().latin1() );
+  }
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
     // be okay

@@ -1459,10 +1459,16 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   addTab( mHeadersTab, i18n("M&essage List") );
 
   //
+  // "Reader window" tab:
+  //
+  mReaderTab = new ReaderTab();
+  addTab( mReaderTab, i18n("Message W&indow") );
+
+  //
   // "System Tray" tab:
   //
   mSystemTrayTab = new SystemTrayTab();
-  addTab( mSystemTrayTab, i18n("System Tray") );
+  addTab( mSystemTrayTab, i18n("System &Tray") );
 
   load();
 }
@@ -1909,6 +1915,10 @@ void AppearancePage::LayoutTab::save() {
   saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
+//
+// Appearance Message List
+//
+
 QString AppearancePage::HeadersTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-headers");
 }
@@ -2141,6 +2151,70 @@ void AppearancePage::HeadersTab::save() {
   general.writeEntry( "dateFormat",
 		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
+}
+
+
+//
+// Message Window 
+//
+
+
+QString AppearancePage::ReaderTab::helpAnchor() const {
+  return QString::fromLatin1("configure-appearance-reader");
+}
+
+AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
+                                                  const char * name )
+  : ConfigModuleTab( parent, name )
+{
+}
+
+void AppearancePage::ReaderTab::load() {
+
+  QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  QHBoxLayout *hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mCharsetCombo = new QComboBox( this );
+  QStringList encodings = KMMsgBase::supportedEncodings( false );
+  mCharsetCombo->insertStringList( encodings );
+
+  QStringList::Iterator it( encodings.begin() );
+  QStringList::Iterator end( encodings.end() );
+  QString currentEncoding = GlobalSettings::fallbackCharacterEncoding();
+  int i = 0;
+  for( ; it != end; ++it)
+  {
+    if( KGlobal::charsets()->encodingForName(*it) == currentEncoding )
+    {
+      mCharsetCombo->setCurrentItem( i );
+      break;
+    }
+    i++;
+  }
+  connect( mCharsetCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  QString fallbackCharsetWhatsThis = 
+    i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
+  QWhatsThis::add( mCharsetCombo, fallbackCharsetWhatsThis );
+
+  QLabel *label = new QLabel( i18n("Fallback Ch&aracter Encoding"), this );
+  label->setBuddy( mCharsetCombo );
+
+  hlay->addWidget( label );
+  hlay->addWidget( mCharsetCombo );
+
+  vlay->addStretch( 100 ); // spacer
+}
+
+void AppearancePage::ReaderTab::save() {
+  GlobalSettings::setFallbackCharacterEncoding(
+      KGlobal::charsets()->encodingForName( mCharsetCombo->currentText() ) );
+}
+
+
+void AppearancePage::ReaderTab::installProfile( KConfig * profile ) {
+  KConfigGroup general( profile, "General" );
 }
 
 
