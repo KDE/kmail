@@ -33,8 +33,8 @@
 #ifndef PROTOCOLS_H
 #define PROTOCOLS_H
 
-#define IMAP_PROTOCOL "newimap"
-#define IMAP_SSL_PROTOCOL "newimaps"
+#define IMAP_PROTOCOL "imap"
+#define IMAP_SSL_PROTOCOL "imaps"
 
 #define POP_PROTOCOL "pop3"
 #define POP_SSL_PROTOCOL "pop3s"
