@@ -64,8 +64,10 @@ QString LinkLocator::getUrl()
     {
       ++mPos;
     }
-    while(mPos > start && mText[mPos-1].isPunct() && mText[mPos-1] != '/' &&
-      mText[mPos-1] != '#')
+    /* some URLs really end with:  # / &     */
+    const QString allowedSpecialChars = QString("#/&");
+    while(mPos > start && mText[mPos-1].isPunct() && 
+		    allowedSpecialChars.find(mText[mPos-1]) == -1 )
     {
       --mPos;
     }
