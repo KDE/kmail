@@ -140,7 +140,7 @@ namespace {
 
 
 namespace {
-  template <typename T> struct Delete {
+  template <typename T> struct DeleteObject {
     void operator()( const T * x ) { delete x; x = 0; }
   };
 }
@@ -170,7 +170,7 @@ private:
 
 KMail::URLHandlerManager::BodyPartURLHandlerManager::~BodyPartURLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    Delete<Interface::BodyPartURLHandler>() );
+	    DeleteObject<Interface::BodyPartURLHandler>() );
 }
 
 void KMail::URLHandlerManager::BodyPartURLHandlerManager::registerHandler( const Interface::BodyPartURLHandler * handler ) {
@@ -270,7 +270,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
 
 KMail::URLHandlerManager::~URLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    Delete<URLHandler>() );
+	    DeleteObject<URLHandler>() );
 }
 
 void KMail::URLHandlerManager::registerHandler( const URLHandler * handler ) {

@@ -325,9 +325,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mDone = true;
 }
 
+namespace {
 template <typename T>
-inline void Delete( const T * t ) {
+inline void DeleteObject( const T * t ) {
   delete t; t = 0;
+}
 }
 
 //-----------------------------------------------------------------------------
@@ -353,7 +355,7 @@ KMComposeWin::~KMComposeWin()
     job->kill();
     it = mMapAtmLoadData.begin();
   }
-  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), DeleteObject<KMMessage> );
 }
 
 //-----------------------------------------------------------------------------
@@ -1762,7 +1764,7 @@ void KMComposeWin::applyChanges( bool dontSignNorEncrypt, bool dontDisable )
 
 void KMComposeWin::slotComposerDone( bool rc )
 {
-  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), Delete<KMMessage> );
+  std::for_each( mComposedMessages.begin(), mComposedMessages.end(), DeleteObject<KMMessage> );
   mComposedMessages = mComposer->composedMessageList();
   emit applyChangesDone( rc );
   delete mComposer;

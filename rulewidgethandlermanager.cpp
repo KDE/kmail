@@ -206,14 +206,14 @@ KMail::RuleWidgetHandlerManager::RuleWidgetHandlerManager()
 }
 
 namespace {
-  template <typename T> struct Delete {
+  template <typename T> struct DeleteObject {
     void operator()( const T * x ) { delete x; x = 0; }
   };
 }
 
 KMail::RuleWidgetHandlerManager::~RuleWidgetHandlerManager()
 {
-  for_each( mHandlers.begin(), mHandlers.end(), Delete<RuleWidgetHandler>() );
+  for_each( mHandlers.begin(), mHandlers.end(), DeleteObject<RuleWidgetHandler>() );
 }
 
 void KMail::RuleWidgetHandlerManager::registerHandler( const RuleWidgetHandler * handler )
