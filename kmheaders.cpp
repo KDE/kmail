@@ -1254,6 +1254,7 @@ void KMHeaders::msgAdded(int id)
     setSelected( hi, true );
     setCurrentItem( firstChild() );
   }
+  ensureCurrentItemVisible();
 
   END_TIMER(msgAdded);
   SHOW_TIMER(msgAdded);
