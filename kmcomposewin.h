@@ -133,6 +133,7 @@ public:
     KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
                const char *name = 0);
 protected:
+    // Inherited. Always called by the parent when this widget is created.
     virtual void loadAddresses();
     /**
      * Smart insertion of email addresses. If @p pos is -1 then
@@ -428,8 +429,6 @@ public slots:
    * the pressed button belongs to.
    */
   void slotAddrBookTo();
-  void slotAddrBookCc();
-  void slotAddrBookBcc();
   void slotAddrBookFrom();
   void slotAddrBookReplyTo();
 
@@ -552,7 +551,7 @@ protected:
    * Open addressbook and append selected addresses to the given
    * edit field.
    */
-   void addrBookSelInto(KMLineEdit* destEdit);
+  void addrBookSelInto();
 
 private:
   /**

@@ -18,7 +18,6 @@
 #include "kmkernel.h" // for KabcBridge
 #include "kbusyptr.h"
 #include "kmmessage.h" // for KabcBridge
-#include "kmaddrbookdlg.h" // for kmaddrbookexternal
 #include <krun.h> // for kmaddrbookexternal
 #include <kprocess.h>
 #include <kabc/stdaddressbook.h>
@@ -78,6 +77,18 @@ void KabcBridge::addresses(QStringList* result) // includes lists
   result->sort();
 
   kernel->kbp()->idle();
+}
+
+QStringList KabcBridge::addresses()
+{
+    QStringList entries;
+    KABC::AddressBook::Iterator it;
+
+    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+    for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
+        entries += (*it).fullEmail();
+    }
+    return entries;
 }
 
 //-----------------------------------------------------------------------------
@@ -253,5 +264,17 @@ bool KMAddrBookExternal::checkForAddressBook()
   } else {
     return true;
   }
+}
+
+void KMAddrBookExternal::addNewAddressee( QWidget* )
+{
+  if (useKAddressbook()) {
+    if ( checkForAddressBook() ) {
+      KRun::runCommand( "kaddressbook --editor-only --new-contact" );
+    }
+    return;
+  }
+  // TODO: Write a simple add-to-addressbook-dialog, or just add the address
+  // silently to kabc.
 }
 

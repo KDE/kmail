@@ -44,7 +44,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfilteraction.cpp kmsearchpattern.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kmpgpwrap.cpp \
-		kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp \
+		kfileio.cpp kmaddrbook.cpp  \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
 		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
@@ -72,8 +72,8 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmail_part.cpp kmstartup.cpp kmmainwidget.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
-		folderjob.cpp cachedimapjob.cpp \
-		subscriptiondialog.cpp		
+		folderjob.cpp cachedimapjob.cpp addressesdialog.cpp \
+		addresspicker.ui subscriptiondialog.cpp		
 
 METASOURCES = AUTO
 
@@ -83,7 +83,7 @@ noinst_HEADERS = adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmgroupwarefuncs.h kmgroupwarewizard.h \
 		 signatureconfigurationdialogimpl.h \
 		 encryptionconfigurationdialogimpl.h \
-		 signatureconfigurationdialogimpl.h
+		 signatureconfigurationdialogimpl.h addressesdialog.h
 
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 

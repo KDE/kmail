@@ -14,6 +14,8 @@
 #include <qtextcodec.h>
 #include <qheader.h>
 
+#include "addressesdialog.h"
+using KMail::AddressesDialog;
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmkernel.h"
@@ -25,7 +27,6 @@
 #include "kmmsgpartdlg.h"
 #include <kpgp.h>
 #include <kpgpblock.h>
-#include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
@@ -204,8 +205,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
   connect(mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
-  connect(mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookCc()));
-  connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
+  connect(mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
+  connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
   connect(mIdentity,SIGNAL(identityChanged(uint)),
@@ -3807,26 +3808,40 @@ bool KMComposeWin::signFlagOfAttachment(int idx)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
+void KMComposeWin::addrBookSelInto()
 {
-  KMAddrBookSelDlg dlg(this);
+  AddressesDialog dlg( this );
   QString txt;
+  QStringList lst;
 
-  //assert(aLineEdit!=0);
-  if(!aLineEdit)
-    {
-      kdDebug(5006) << "KMComposeWin::addrBookSelInto() : aLineEdit == 0\n" << endl;
-      return;
-    }
+  txt = mEdtTo->text().stripWhiteSpace();
+  if ( !txt.isEmpty() ) {
+      lst = KMMessage::splitEmailAddrList( txt );
+      dlg.setSelectedTo( lst );
+  }
+
+  txt = mEdtCc->text().stripWhiteSpace();
+  if ( !txt.isEmpty() ) {
+      lst = KMMessage::splitEmailAddrList( txt );
+      dlg.setSelectedCC( lst );
+  }
+
+  txt = mEdtBcc->text().stripWhiteSpace();
+  if ( !txt.isEmpty() ) {
+      lst = KMMessage::splitEmailAddrList( txt );
+      dlg.setSelectedBCC( lst );
+  }
+
   if (dlg.exec()==QDialog::Rejected) return;
-  txt = aLineEdit->text().stripWhiteSpace();
-  if (!txt.isEmpty())
-    {
-      if (txt.right(1).at(0)!=',') txt += ", ";
-      else txt += ' ';
-    }
-  aLineEdit->setText(txt + dlg.address());
-  aLineEdit->setEdited(true);
+
+  mEdtTo->setText( dlg.to().join(", ") );
+  mEdtTo->setEdited( true );
+
+  mEdtCc->setText( dlg.cc().join(", ") );
+  mEdtCc->setEdited( true );
+
+  mEdtBcc->setText( dlg.bcc().join(", ") );
+  mEdtBcc->setEdited( true );
 }
 
 
@@ -3878,37 +3893,22 @@ void KMComposeWin::slotAddrBook()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookFrom()
 {
-  addrBookSelInto(mEdtFrom);
+  addrBookSelInto();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookReplyTo()
 {
-  addrBookSelInto(mEdtReplyTo);
+  addrBookSelInto();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookTo()
 {
-  addrBookSelInto(mEdtTo);
+  addrBookSelInto();
 }
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAddrBookCc()
-{
-  addrBookSelInto(mEdtCc);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotAddrBookBcc()
-{
-  addrBookSelInto(mEdtBcc);
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachFile()

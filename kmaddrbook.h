@@ -12,6 +12,7 @@
 
 class KabcBridge {
 public:
+  static QStringList addresses();
   static void addresses(QStringList* result);
   static QString expandDistributionLists(QString recipients);
 };
@@ -19,6 +20,7 @@ public:
 class KMAddrBookExternal {
 public:
   static void addEmail( const QString &addr, QWidget *parent );
+  static void addNewAddressee( QWidget* );
   static void openEmail( const QString &addr, QWidget *parent );
   static void launch(QWidget *parent);
   static bool useKab();
