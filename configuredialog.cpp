@@ -3791,9 +3791,10 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged() ) );
 
-  // Groupware functionality setup
-  b1 = new QVGroupBox( i18n("Groupware Options"), this );
+  // Groupware functionality compatibility setup
+  b1 = new QVGroupBox( i18n("Groupware Compatibility and Legacy Options"), this );
 
+  /* // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
   gBox = new QVBox( b1 );
   gBox->setSpacing( KDialog::spacingHint() );
@@ -3801,7 +3802,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
 	   gBox, SLOT( setEnabled(bool) ) );
   connect( mEnableGwCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-
+  */
   mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), gBox );
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
