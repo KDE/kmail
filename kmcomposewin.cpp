@@ -589,14 +589,13 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->setMaximumSize(1000, aLbl->height()+2);
     mEdtList.append(aEdt);
 
+    mGrid->addWidget(aEdt, aRow, 1);
     if (aBtn)
     {
-      mGrid->addWidget(aEdt, aRow, 1);
       mGrid->addWidget(aBtn, aRow, 2);
       aBtn->setFixedSize(aBtn->sizeHint().width(), aLbl->height());
       aBtn->show();
     }
-    else mGrid->addMultiCellWidget(aEdt, aRow, aRow, 1, 2);
     aRow++;
   }
   else
