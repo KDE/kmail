@@ -72,9 +72,10 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   grid->setRowStretch(3,100);
 
   attachmentWidget = new KTabListBox(this,NULL,3);
-  attachmentWidget->setColumn(0,"F",20,KTabListBox::PixmapColumn);
-  attachmentWidget->setColumn(1,"Filename",parent->width()-120);
-  attachmentWidget->setColumn(2,"Size",60);
+  attachmentWidget->setColumn(0,nls->translate("F"),20,KTabListBox::PixmapColumn);
+  attachmentWidget->setColumn(1,nls->translate("Filename"),parent->width()-140);
+  attachmentWidget->setColumn(2,nls->translate("Size"),80);
+  connect(attachmentWidget,SIGNAL(popupMenu(int,int)),SLOT(slotPopupMenu(int,int)));
   grid->addMultiCellWidget(attachmentWidget,9,9,0,1);
   attachmentWidget->hide();  
 
@@ -191,18 +192,53 @@ void KMComposeView::deleteAttachmentWidget()
 void KMComposeView::insertNewAttachment(QString File)
 {
   QString element;
+  QString temp;
+  struct stat filestat;
   cout << "Inserting Attachment\"" + File << "\" into widget\n";
   element = urlList->first();
   cout << "Elements to be inserted: " << urlList->count() << "\n";
   attachmentWidget->clear();
   while(element.isEmpty() == FALSE)
     {cout << element << "\n";
-    element = " \n" + element + "\n ";
+    stat(element.data(),&filestat);
+    if(filestat.st_size > 1024)
+      temp.sprintf("%.01f kb",(double)filestat.st_size/1024 * 1,0);
+    else
+      temp.sprintf("%ld bytes",filestat.st_size);
+    element = " \n" +  element +  " \n " + temp;
     attachmentWidget->insertItem(element);
     element = urlList->next();}
 
   resize(this->size());
   
+}
+//----------------------------------------------------------------------------
+void KMComposeView::slotOpenAttachment()
+{
+  // Need Torben's mime code.
+
+  toDo();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeView::slotRemoveAttachment()
+{
+  int index = attachmentWidget->currentItem();
+  attachmentWidget->removeItem(index); // Remove item from WidgetList
+  urlList->remove(index); // Remove item from internal list
+  if(attachmentWidget->count() == 0)
+    {printf("Debug: Removing attachmentWidget\n");
+    attachmentWidget->hide();
+    grid->setRowStretch(3,100);
+    grid->setRowStretch(9,0);
+    resize(this->size());}
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeView::slotShowProperties()
+{
+  toDo();
 }
 
 //-----------------------------------------------------------------------------
@@ -316,15 +352,15 @@ void KMComposeView::sendLater()
   
 
 
-void KMComposeView::slotPopupMenu(const char *_url, const QPoint &point)
+void KMComposeView::slotPopupMenu(int index, int)
 {
-  cout << "_url: " << _url << "\n";
+  attachmentWidget->setCurrentItem(index);
+  const QPoint *point = new QPoint(200,200);
   QPopupMenu *p = new QPopupMenu();
-  p->insertItem("Open");
-  p->insertItem("Save as...");
-  p->insertItem("Delete");
-  p->insertItem("Properties");
-  p->popup(point);
+  p->insertItem("Open",this,SLOT(slotOpenAttachment()));
+  p->insertItem("Delete",this,SLOT(slotRemoveAttachment()));
+  p->insertItem("Properties",this,SLOT(slotShowProperties()));
+  p->popup(*point);
 }
 //-----------------------------------------------------------------------------
 
@@ -570,6 +606,10 @@ void KMComposeView::slotEncodingChanged()
 {
   // This slot is called if the Encoding in the menuBar was changed
   toDo();
+}
+
+void KMComposeView::resizeEvent(QResizeEvent *)
+{
 }
 
 
@@ -839,6 +879,7 @@ void KMComposeWin::toDo()
 {
   warning(nls->translate("Sorry, but this feature\nis still missing"));
 }
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent *e)

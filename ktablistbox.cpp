@@ -597,7 +597,7 @@ void KTabListBox::resizeEvent(QResizeEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox::paintEvent(QPaintEvent* e)
+void KTabListBox::paintEvent(QPaintEvent*)
 {
   int i, ih, x, w;
   QPainter paint;
@@ -716,14 +716,14 @@ void KTabListBox::mouseReleaseEvent(QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox::doMouseResizeCol(QMouseEvent* e)
+void KTabListBox::doMouseResizeCol(QMouseEvent* )
 {
   if (!mMouseAction) mMouseAction = TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox::doMouseMoveCol(QMouseEvent* e)
+void KTabListBox::doMouseMoveCol(QMouseEvent* )
 {
   if (!mMouseAction) mMouseAction = TRUE;
 }

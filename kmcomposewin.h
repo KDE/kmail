@@ -17,6 +17,7 @@
 #include <qregexp.h>
 #include <qlist.h>
 #include <qframe.h>
+#include <qevent.h>
 #include "KEdit.h"
 #include <ktopwidget.h>
 #include <kmenubar.h>
@@ -29,6 +30,9 @@
 #include <qpainter.h>
 #include <drag.h>
 #include <html.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
@@ -94,10 +98,15 @@ private slots:
   void createAttachmentWidget();
   void deleteAttachmentWidget();
   void slotChangeHeading(const char *);
-  void slotPopupMenu(const char *, const QPoint &);
+  void slotPopupMenu(int, int);
+  void slotOpenAttachment();
+  void slotRemoveAttachment();
+  void slotShowProperties();
+  
 
 protected:
   QGridLayout* grid;
+  virtual void resizeEvent(QResizeEvent*);
 };
 
 
