@@ -3266,7 +3266,7 @@ QString KMMessage::decodeMailtoUrl( const QString& url )
 //-----------------------------------------------------------------------------
 QCString KMMessage::stripEmailAddr( const QCString& aStr )
 {
-  kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
+  //kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
   if ( aStr.isEmpty() )
     return QCString();
@@ -3315,12 +3315,14 @@ QCString KMMessage::stripEmailAddr( const QCString& aStr )
                    name = name.stripWhiteSpace();
                    comment = comment.stripWhiteSpace();
                    angleAddress = angleAddress.stripWhiteSpace();
+                   /*
                    kdDebug(5006) << "Name    : \"" << name
                                  << "\"" << endl;
                    kdDebug(5006) << "Comment : \"" << comment
                                  << "\"" << endl;
                    kdDebug(5006) << "Address : \"" << angleAddress
                                  << "\"" << endl;
+                   */
                    if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
                      // handle Outlook-style addresses like
                      // john.doe@invalid (John Doe)
@@ -3395,9 +3397,11 @@ QCString KMMessage::stripEmailAddr( const QCString& aStr )
   name = name.stripWhiteSpace();
   comment = comment.stripWhiteSpace();
   angleAddress = angleAddress.stripWhiteSpace();
+  /*
   kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
   kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
   kdDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
+  */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
     // john.doe@invalid (John Doe)
@@ -3413,15 +3417,15 @@ QCString KMMessage::stripEmailAddr( const QCString& aStr )
     result += angleAddress;
   }
 
-  kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
-                << "\"" << endl;
+  //kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
+  //              << "\"" << endl;
   return result;
 }
 
 //-----------------------------------------------------------------------------
 QString KMMessage::stripEmailAddr( const QString& aStr )
 {
-  kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
+  //kdDebug(5006) << "KMMessage::stripEmailAddr( " << aStr << " )" << endl;
 
   if ( aStr.isEmpty() )
     return QString::null;
@@ -3472,12 +3476,14 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
                    name = name.stripWhiteSpace();
                    comment = comment.stripWhiteSpace();
                    angleAddress = angleAddress.stripWhiteSpace();
+                   /*
                    kdDebug(5006) << "Name    : \"" << name
                                  << "\"" << endl;
                    kdDebug(5006) << "Comment : \"" << comment
                                  << "\"" << endl;
                    kdDebug(5006) << "Address : \"" << angleAddress
                                  << "\"" << endl;
+                   */
                    if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
                      // handle Outlook-style addresses like
                      // john.doe@invalid (John Doe)
@@ -3552,9 +3558,11 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   name = name.stripWhiteSpace();
   comment = comment.stripWhiteSpace();
   angleAddress = angleAddress.stripWhiteSpace();
+  /*
   kdDebug(5006) << "Name    : \"" << name << "\"" << endl;
   kdDebug(5006) << "Comment : \"" << comment << "\"" << endl;
   kdDebug(5006) << "Address : \"" << angleAddress << "\"" << endl;
+  */
   if ( angleAddress.isEmpty() && !comment.isEmpty() ) {
     // handle Outlook-style addresses like
     // john.doe@invalid (John Doe)
@@ -3570,8 +3578,8 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
     result += angleAddress;
   }
 
-  kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
-                << "\"" << endl;
+  //kdDebug(5006) << "KMMessage::stripEmailAddr(...) returns \"" << result
+  //              << "\"" << endl;
   return result;
 }
 
