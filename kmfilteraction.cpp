@@ -497,8 +497,12 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 		      withOutput ? KProcess::Stdout : KProcess::NoCommunication ) )
     return ErrorButGoOn;
 
-  if ( !shProc.normalExit() || shProc.exitStatus() != 0 )
+  if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
+    // eat the output to avoid acummulation for following processes
+    if ( withOutput ) 
+      kmkernel->getCollectedStdOut( &shProc );
     return ErrorButGoOn;
+  }
 
   if ( withOutput ) {
     // read altered message:
