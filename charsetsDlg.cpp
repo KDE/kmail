@@ -81,7 +81,7 @@ int i;
     is7BitASCII->setChecked(ascii);
     optl->addWidget(is7BitASCII);
     
-    quoteUnknown=new QCheckBox(i18n("&Qute unknonw characters"),this,"qu");
+    quoteUnknown=new QCheckBox(i18n("&Quote unknown characters"),this,"qu");
     quoteUnknown->setChecked(quote);
     optl->addWidget(quoteUnknown);
 
