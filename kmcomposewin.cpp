@@ -2586,7 +2586,7 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
   {
     QKeyEvent* k = (QKeyEvent*)e;
 
-    if (k->state()==ControlButton && k->key() == Key_T)
+    if (KStdAccel::isEqual( e, KStdAccel::SubstringCompletion ))
     {
       doCompletion(true);
       return TRUE;
