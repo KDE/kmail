@@ -775,7 +775,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   if (replyToAll || replyToList || !mailingListStr.isEmpty())
     replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
-  replyStr += "\n\n";
+  replyStr += "\n";
 
   if (!noQuote)
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, false, true, allowDecryption));
