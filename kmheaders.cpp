@@ -2033,7 +2033,7 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
     // make sure the current item is shown
     makeHeaderVisible();
     BroadcastStatus::instance()->setStatusMsg(
-       deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
+       deleted ? i18n("Messages deleted successfully.") : i18n("Messages moved successfully") );
   } else {
     /* The move failed or the user canceled it; reset the state of all
      * messages involved and repaint.
@@ -2056,10 +2056,10 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
     triggerUpdate();
     if ( command->result() == KMCommand::Failed )
       BroadcastStatus::instance()->setStatusMsg(
-           deleted ? i18nTODO("Deleting messages failed.") : i18nTODO("Moving messages failed.") );
+           deleted ? i18n("Deleting messages failed.") : i18n("Moving messages failed.") );
     else
       BroadcastStatus::instance()->setStatusMsg(
-           deleted ? i18nTODO("Deleting messages canceled.") : i18nTODO("Moving messages canceled.") );
+           deleted ? i18n("Deleting messages canceled.") : i18n("Moving messages canceled.") );
  }
 }
 
