@@ -445,15 +445,28 @@ public:
     serial number will be assigned using the dictionary. */
   void setMsgSerNum(unsigned long newMsgSerNum = 0);
 
-  /** Get or set header field with given name */
+  /** Returns the value of a header field with the given name. If multiple
+      header fields with the given name might exist then you should use
+      headerFields() instead.
+  */
   QString headerField(const QCString& name) const;
+
+  /** Set the header field with the given name to the given value. */
   void setHeaderField(const QCString& name, const QString& value);
 
-  /** Get the comma separated contents of all header fields with given name */
-  QString allHeaderFields(const QCString& aName) const;
+  /** Returns a list of the values of all header fields with the given name. */
+  QStringList headerFields( const QCString& name ) const;
 
-  /** Get a raw header field */
+  /** Returns the raw value of a header field with the given name. If multiple
+      header fields with the given name might exist then you should use
+      rawHeaderFields() instead.
+  */
   QCString rawHeaderField( const QCString & name ) const;
+
+  /** Returns a list of the raw values of all header fields with the given
+      name.
+  */
+  QValueList<QCString> rawHeaderFields( const QCString & name ) const;
 
   /** Returns header address list as string list.
       Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,

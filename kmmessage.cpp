@@ -1887,7 +1887,7 @@ QString KMMessage::cc() const
 {
   // get the combined contents of all Cc headers (as workaround for invalid
   // messages with multiple Cc headers)
-  return allHeaderFields("Cc");
+  return headerFields( "Cc" ).join( ", " );
 }
 
 
@@ -2210,6 +2210,20 @@ QCString KMMessage::rawHeaderField( const QCString & name ) const {
   return header.FieldBody( name.data() ).AsString().c_str();
 }
 
+QValueList<QCString> KMMessage::rawHeaderFields( const QCString& field ) const
+{
+  if ( field.isEmpty() || !mMsg->Headers().FindField( field ) )
+    return QValueList<QCString>();
+
+  std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
+  QValueList<QCString> headerFields;
+  for ( uint i = 0; i < v.size(); ++i ) {
+    headerFields.append( v[i]->AsString().c_str() );
+  }
+
+  return headerFields;
+}
+
 QString KMMessage::headerField(const QCString& aName) const
 {
   if ( aName.isEmpty() )
@@ -2221,18 +2235,19 @@ QString KMMessage::headerField(const QCString& aName) const
   return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
 }
 
-
-QString KMMessage::allHeaderFields(const QCString& aName) const
+QStringList KMMessage::headerFields( const QCString& field ) const
 {
-  if ( aName.isEmpty() )
-    return QString::null;
+  if ( field.isEmpty() || !mMsg->Headers().FindField( field ) )
+    return QStringList();
 
-  if ( !mMsg->Headers().FindField( aName ) )
-    return QString::null;
+  std::vector<DwFieldBody*> v = mMsg->Headers().AllFieldBodies( field.data() );
+  QStringList headerFields;
+  for ( uint i = 0; i < v.size(); ++i ) {
+    headerFields.append( decodeRFC2047String( v[i]->AsString().c_str() ) );
+  }
 
-  return decodeRFC2047String( mMsg->Headers().AllFieldBodiesAsString( aName.data() ).c_str() );
+  return headerFields;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMessage::removeHeaderField(const QCString& aName)
@@ -4160,9 +4175,9 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 //-----------------------------------------------------------------------------
 void KMMessage::updateAttachmentState( DwBodyPart* part )
 {
-  if ( !part ) 
+  if ( !part )
     part = getFirstDwBodyPart();
-  if ( !part ) 
+  if ( !part )
   {
     setStatus( KMMsgStatusHasNoAttach );
     return;
@@ -4195,7 +4210,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   // next part
   if ( part->Next() )
     updateAttachmentState( part->Next() );
-  else if ( attachmentState() == KMMsgAttachmentUnknown ) 
+  else if ( attachmentState() == KMMsgAttachmentUnknown )
     setStatus( KMMsgStatusHasNoAttach );
 }
 
