@@ -105,11 +105,20 @@ k_dcop:
    */
   virtual QValueList<KMailICalIface::SubResource> subresourcesKolab( const QString& contentsType ) = 0;
 
+  /// The format of the mails containing other contents than actual mail
+  /// (like contacts, calendar etc.)
+  /// This is currently either ical/vcard, or XML.
+  /// The imap resource uses this folder if ical/vcard storage,
+  /// the kolab resource uses this folder if xml storage.
+  /// For actual mail folders this simply to know which resource handles it
+  /// This enum matches the one defined in kmail.kcfg
+  enum StorageFormat { StorageIcalVcard, StorageXML };
+
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,
                        const QString& entry );
   void incidenceAdded( const QString& type, const QString& folder,
-                       Q_UINT32 sernum, const QString& entry );
+                       Q_UINT32 sernum, int format, const QString& entry );
   void incidenceDeleted( const QString& type, const QString& folder,
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );

@@ -153,15 +153,6 @@ public:
   /** Called when a folders contents have changed */
   void folderContentsTypeChanged( KMFolder*, KMail::FolderContentsType );
 
-  /// The format of the mails containing other contents than actual mail
-  /// (like contacts, calendar etc.)
-  /// This is currently either ical/vcard, or XML.
-  /// The imap resource uses this folder if ical/vcard storage,
-  /// the kolab resource uses this folder if xml storage.
-  /// For actual mail folders this simply to know which resource handles it
-  /// This enum matches the one defined in kmail.kcfg
-  enum StorageFormat { StorageIcalVcard, StorageXML };
-
   /// @return the storage format of a given folder
   StorageFormat storageFormat( KMFolder* folder ) const;
   /// Set the storage format of a given folder. Called when seeing the kolab annotation.

@@ -942,7 +942,8 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     QString s;
     bool ok = false;
     KMMessage* msg = folder->getMsg( i );
-    switch( storageFormat( folder ) ) {
+    StorageFormat format = storageFormat( folder );
+    switch( format ) {
     case StorageIcalVcard:
       // Read the iCal or vCard
       ok = KMGroupware::vPartFoundAndDecoded( msg, s );
@@ -956,7 +957,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                       << ", " << folder->location() << ", " << s << " )" << endl;
       incidenceAdded( type, folder->location(), s );
-      incidenceAdded( type, folder->location(), sernum, s );
+      incidenceAdded( type, folder->location(), sernum, format, s );
     }
     if( unget ) folder->unGetMsg(i);
   } else
