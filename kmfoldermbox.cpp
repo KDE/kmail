@@ -137,41 +137,22 @@ int KMFolderMbox::open()
                                     KMessageBox::AllowLink );
           if (busy) kernel->kbp()->busy();
         }
-// ######### FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
-        if( 0 ) {
-            KMessageBox::information( 0,
-                                      i18n("<qt><p>The index of folder '%1' seems "
-                                           "to be out of date. To prevent message "
-                                           "corruption the index will be "
-                                           "regenerated. As a result deleted "
-                                           "messages might reappear and status "
-                                           "flags might be lost.</p>"
-                                           "<p>Please read the corresponding entry "
-                                           "in the FAQ section of the manual of "
-                                           "KMail for "
-                                           "information about how to prevent this "
-                                           "problem from happening again.</p></qt>")
-                                      .arg(name()),
-                                      i18n("Index Out of Date"),
-                                      "dontshowIndexRegenerationWarning");
-        }
-// ######### end of FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
        }
        QString str;
        mIndexStream = 0;
        str = i18n("Folder `%1' changed. Recreating index.")
              .arg(name());
-      emit statusMsg(str);
-    } else {
-      mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
-      updateIndexStreamPtr();
-    }
+       emit statusMsg(str);
+     } else {
+       mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
+       updateIndexStreamPtr();
+     }
 
-    if (!mIndexStream)
-      rc = createIndexFromContents();
-    else
-      if (!readIndex())
-	rc = createIndexFromContents();
+     if (!mIndexStream)
+       rc = createIndexFromContents();
+     else
+       if (!readIndex())
+         rc = createIndexFromContents();
   }
   else
   {
