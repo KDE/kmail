@@ -419,6 +419,10 @@ public:
 
     KListViewItem::paintCell( p, _cg, column, width, align );
 
+    if (aboutToBeDeleted()) {
+      // strike through
+      p->drawLine( 0, height()/2, width, height()/2);
+    }
     _cg.setColor( QColorGroup::Text, c );
   }
 
@@ -1686,13 +1690,12 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
 {
-  KMMessageList msgList = *selectedMsgs(true);
   if ( !destFolder &&     // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
          i18n("<qt>Do you really want to delete the selected message?<br>"
               "Once deleted, it cannot be restored!</qt>",
-              "<qt>Do you really want to delete the %n selected messages?<br>"
-              "Once deleted, they cannot be restored!</qt>", msgList.count() ),
+              "<qt>Do you really want to delete the selected messages?<br>"
+              "Once deleted, they cannot be restored!</qt>"),
          i18n("Delete Messages"), i18n("De&lete"), "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 
@@ -1700,6 +1703,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
   int contentX, contentY;
   KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
 
+  KMMessageList msgList = *selectedMsgs(true);
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
   command->start();
 
@@ -1781,7 +1785,11 @@ KMMessageList* KMHeaders::selectedMsgs(bool toBeDeleted)
   for (QListViewItemIterator it(this); it.current(); it++) {
     if (it.current()->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
-      if (toBeDeleted) item->setAboutToBeDeleted ( true );
+      if (toBeDeleted) {
+        // make sure the item is not uselessly rethreaded and not selectable 
+        item->setAboutToBeDeleted ( true );
+        item->setSelectable ( false );
+      }
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       mSelMsgBaseList.append(msgBase);
     }
