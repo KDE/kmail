@@ -7,6 +7,7 @@
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
 #include "kmbroadcaststatus.h"
+#include "kmfiltermgr.h"
 
 
 #include <assert.h>
