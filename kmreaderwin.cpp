@@ -1319,9 +1319,9 @@ void KMReaderWin::readConfig(void)
   }
 
   {
-    KConfigGroupSaver saver(config, "Behaviour");
-    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", false);
-      mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
+    KConfigGroup behaviour( kapp->config(), "Behaviour" );
+    mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
+    mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
   }
 
   readColorConfig();
