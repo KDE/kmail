@@ -286,13 +286,12 @@ const QString KMMessage::formatString(const QString& aStr) const
 	/* I'm not too sure about this change. Is it not possible
 	   to have a long form of the date used? I don't
 	   like this change to a short XX/XX/YY date format.
-	   At least not for the default. -sanders
+	   At least not for the default. -sanders */
+        {
         QDateTime datetime;
 	datetime.setTime_t(date());
-        result += KGlobal::locale()->formatDate(datetime.date());
-	*/
-        // dyp: Use our own procs
-        result += KGlobal::locale()->formatDateTime(QDateTime::currentDateTime(), false);
+        result += KGlobal::locale()->formatDateTime(datetime, false);
+        }
         break;
       case 'F':
         result += stripEmailAddr(from());
