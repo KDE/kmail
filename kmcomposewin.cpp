@@ -754,7 +754,7 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Attach..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
-  (void) new KAction (i18n("Attach &Public Key"), 0, this,
+  (void) new KAction (i18n("Attach &Public Key..."), 0, this,
                       SLOT(slotInsertPublicKey()),
                       actionCollection(), "attach_public_key");
   KAction *attachMPK = new KAction (i18n("Attach My &Public Key"), 0, this,
