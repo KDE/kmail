@@ -1251,7 +1251,6 @@ void KMHeaders::msgAdded(int id)
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
 
-  emit messageListUpdated();
   END_TIMER(msgAdded);
   SHOW_TIMER(msgAdded);
 }
@@ -2188,7 +2187,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   if (mReaderWindowActive)
   {
     KMMessage *msg = mFolder->getMsg(idx);
-    if (!msg || msg->transferInProgress())
+    if (!msg )
     {
       emit selected( 0 );
       mPrevCurrent = 0;
