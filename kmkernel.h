@@ -74,8 +74,6 @@ public:
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   inline KMAddrBook *addrBook() { return the_addrBook; }
   KabAPI *KABaddrBook();
-  inline bool useKAB() { return mUseKAB; }
-  inline void setUseKAB( bool useKAB ) { mUseKAB = useKAB; }
   inline KMSender *msgSender() { return the_msgSender; }
 
   inline bool firstStart() { return the_firstStart; }
@@ -103,7 +101,6 @@ private:
   bool the_shuttingDown;        // are we going down? set from here
   bool the_checkingMail;        // are we checking mail? set from... where the mail is checked
   bool the_server_is_ready;     // are we in the middle of network operations (needed?)
-  bool mUseKAB;
 
   static KMKernel *mySelf;
 };

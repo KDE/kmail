@@ -2273,10 +2273,6 @@ void ConfigureDialog::slotApply( void )
     bool messageSize = mAppearance.messageSizeCheck->isChecked();
     config.writeEntry( "showMessageSize", messageSize );
     config.writeEntry( "addressbook", mAppearance.addressbookCombo->currentItem() );
-    if (mAppearance.addressbookCombo->currentItem() < 1)
-      kernel->setUseKAB( false );
-    else
-      kernel->setUseKAB( true );
   }
   else if( activePage == mComposer.pageIndex )
   {

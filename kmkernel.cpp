@@ -307,7 +307,6 @@ void KMKernel::init()
   the_checkingMail = false;
   the_shuttingDown = false;
   the_server_is_ready = false;
-  mUseKAB = false;
 
   the_kbp = new KBusyPtr;
   cfg = kapp->config();

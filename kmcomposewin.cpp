@@ -2264,7 +2264,7 @@ void KMLineEdit::slotCompletion()
   }
 
   n=0;
-  if (!kernel->useKAB())
+  if (!KMAddrBookExternal::useKAB())
     for (QString a=adb.first(); a; a=adb.next())
       {
 	if (QString(a).find(s,0,false) >= 0)
