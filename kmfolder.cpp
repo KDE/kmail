@@ -1097,6 +1097,8 @@ void KMFolder::removeJobs()
 //-----------------------------------------------------------------------------
 size_t KMFolder::crlf2lf( char* str, const size_t strLen )
 {
+  if ( !str || strLen == 0 ) return 0;
+  
   const char* source = str;
   const char* sourceEnd = source + strLen;
 
