@@ -445,31 +445,14 @@ void KMReaderWin::displayAboutPage()
     "mailing standards including MIME, SMTP, POP3 and IMAP.</p>\n"
     "<ul><li>KMail has many powerful features which are described in the "
     "<A HREF=\"%2\">documentation</A></li>\n"
-    "<li>The <A HREF=\"%3\">KMail homepage</A> offers tools to import other "
-    "mail client's mail folders</li></ul>\n").arg(KMAIL_VERSION)
+    "<li>The <A HREF=\"%3\">KMail homepage</A> offers information about "
+    "new versions of KMail</li></ul>\n").arg(KMAIL_VERSION)
     .arg("help:/kmail")
     .arg("http://kmail.kde.org/") +
     i18n("<p>Some of the new features in this release of KMail include "
-    "(compared to KMail 1.2, which is part of KDE 2.1):</p>\n"
+    "(compared to KMail 1.3, which is part of KDE 2.2):</p>\n"
     "<ul>\n"
-    "<li>IMAP support including SSL and TLS</li>\n"
-    "<li>SSL and TLS support for POP3</li>\n"
-    "<li>Configuration for SASL and APOP authentication</li>\n"
-    "<li>Non-blocking sending</li>\n"
-    "<li>Performance improvements for huge folders</li>\n"
-    "<li>Message scoring</li>\n"
-    "<li>Improved filter dialog</li>\n"
-    "<li>Automatic filter creation</li>\n"
-    "<li>Only the selected part of a mail will be quoted on reply</li>\n"
-    "<li>Forwarding of mails as attachment</li>\n"
-    "<li>Delete only <em>old</em> messages from the trash folder on exit</li>\n"
-    "<li>Collapsable threads</li>\n"
-    "<li>Multiple PGP identities</li>\n"
-    "<li>Bind an SMTP server to an identity</li>\n"
-    "<li>Use a specified identity for a mailing list</li>\n"
-    "<li>Better procmail support via the local account</li>\n"
-    "<li>Messages can be flagged</li>\n"
-    "<li>Read the new messages by only hitting the space key</li>\n"
+    "<li>Maildir support</li>\n"
     "</ul>\n");
   if( kernel->firstStart() ) {
     info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
