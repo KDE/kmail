@@ -1429,13 +1429,18 @@ void KMMainWin::slotMailtoReply()
 {
   KMComposeWin *win;
   KMMessage *msg, *rmsg;
+  QString id;
 
   if (!(msg = mHeaders->getMsg(-1))) return;
+  id = msg->headerField( "X-KMail-Identity" );
+  if (id.isEmpty() && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
   rmsg = msg->createReply(FALSE, FALSE, mMsgView->copyText());
   rmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(rmsg);
+  win = new KMComposeWin(rmsg,id);
   win->setCharset(msg->codec()->name(), TRUE);
+  win->setReplyFocus();
   win->show();
 }
 
