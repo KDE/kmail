@@ -806,6 +806,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
                             i18n( "The file doesn't contain a message." ) );
+        deleteLater();
         return;
       }
       startOfMessage += 1; // the message starts after the '\n'
@@ -826,6 +827,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       KMessageBox::sorry( parentWidget(),
                           i18n( "The file doesn't contain a message." ) );
       delete dwMsg; dwMsg = 0;
+      deleteLater();
       return;
     }
     KMMessage *msg = new KMMessage( dwMsg );
