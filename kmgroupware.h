@@ -94,7 +94,7 @@ public:
   void processVCalRequest( const QCString& receiver, const QString& vCalIn,
                            QString& choice );
   void processVCalReply( const QCString& sender, const QString& vCalIn,
-                         QString& choice );
+			 const QString& choice );
 
   /* (Re-)Read configuration file */
   void readConfig();
@@ -108,7 +108,7 @@ public:
 				      bool takeMessage=true );
 
   // Convenience function to delete a message
-  void deleteMsg( KMMessage* msg );
+  static void deleteMsg( KMMessage* msg );
 
   // retrieve matching body part (either text/vCal (or vCard) or application/ms-tnef)
   // and decode it
@@ -119,20 +119,15 @@ public:
   //       iCal standard (RfC2445,2446) there is no update counter.
   static bool vPartFoundAndDecoded( KMMessage* msg,
                                     int& aUpdateCounter,
-                                    QString* s,
-                                    QCString* sc );
+                                    QString& s );
 
   enum DefaultUpdateCounterValue { NoUpdateCounter=-1 };
   // functions to be called by KMReaderWin for 'print formatting'
-  static bool vPartToHTML( int aUpdateCounter,
-                           const QCString& vCal,
-                           QString fname,
-                           bool useGroupware,
-                           QString& prefix, QString& postfix );
+  static bool vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
+                           bool useGroupware, QString& prefix, QString& postfix );
   static bool msTNEFToVPart( const QByteArray& tnef,
                              int& aUpdateCounter, // there is no such counter in RfC2466 (khz)
-                             QString* aVPart,
-                             QCString* aVPartc );
+                             QString& aVPart );
   static bool msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname, bool useGroupware,
                             QString& prefix, QString& postfix );
 
@@ -288,8 +283,6 @@ private:
   KMFolder* mCalendar;
   KMFolder* mNotes;
   KMFolder* mTasks;
-
-  bool mWizardRunning;
 };
 
 #endif /* KMGROUPWARE_H */

@@ -182,7 +182,7 @@ bool KMGroupware::isGroupwareFolder( KMFolder* folder ) const
 //-----------------------------------------------------------------------------
 KFolderTreeItem::Type KMGroupware::folderType( KMFolder* folder ) const
 {
-  if( mUseGroupware ) {
+  if( mUseGroupware && folder ) {
     if( folder == mCalendar )
       return KFolderTreeItem::Calendar;
     else if( folder == mContacts )
@@ -279,6 +279,7 @@ void KMGroupware::initFolders()
   // Close the previous folders
   cleanup();
 
+  // Set the new folders
   if( mUseGroupware && mFolderParent ) {
     mContacts = initFolder( KFolderTreeItem::Contacts, "GCo" );
     mCalendar = initFolder( KFolderTreeItem::Calendar, "GCa" );
@@ -327,11 +328,9 @@ void KMGroupware::cleanup()
 
 bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
                                         int& aUpdateCounter,
-                                        QString* s,
-                                        QCString* sc )
+                                        QString& s )
 {
   assert( msg );
-  assert( s != 0 || sc != 0 );
 //   kdDebug(5006) << "KMGroupware::vPartFoundAndDecoded( " << msg->subject() << endl;
 //   kdDebug(5006) << msg->type() << ", " << msg->subtype() << ")" << endl;
 
@@ -340,10 +339,7 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
       ( DwMime::kTypeApplication == msg->type() &&
 	DwMime::kSubtypeOctetStream == msg->subtype() ) )
   {
-    if( sc )
-      *sc = msg->bodyDecoded();
-    if( s )
-      *s = QString::fromUtf8( sc ? *sc : msg->bodyDecoded() );
+    s = QString::fromUtf8( msg->bodyDecoded() );
     return true;
   } else if( DwMime::kTypeMultipart == msg->type() &&
 	    DwMime::kSubtypeMixed  == msg->subtype() )
@@ -358,7 +354,7 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
       // kdDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
-      return KMGroupware::msTNEFToVPart( msgPart.bodyDecodedBinary(), aUpdateCounter, s, sc );
+      return KMGroupware::msTNEFToVPart( msgPart.bodyDecodedBinary(), aUpdateCounter, s );
     }
   }else if( DwMime::kTypeMultipart == msg->type() &&
 	    DwMime::kSubtypeMixed  == msg->subtype() ){
@@ -376,7 +372,7 @@ void KMGroupware::slotCalendarFolderChanged()
   if( mCalendar )
     for( int i=0; i<mCalendar->count(); ++i ){
       bool unget = !mCalendar->isMessage(i);
-      if( KMGroupware::vPartFoundAndDecoded( mCalendar->getMsg( i ), iDummy, &s, 0 ) )
+      if( KMGroupware::vPartFoundAndDecoded( mCalendar->getMsg( i ), iDummy, s ) )
         lEvents << s;
       if( unget ) mCalendar->unGetMsg(i);
     }
@@ -401,7 +397,7 @@ void KMGroupware::slotTasksFolderChanged()
   if( mTasks )
     for( int i=0; i<mTasks->count(); ++i ){
       bool unget = !mTasks->isMessage(i);
-      if( vPartFoundAndDecoded( mTasks->getMsg( i ), iDummy, &s, 0 ) )
+      if( vPartFoundAndDecoded( mTasks->getMsg( i ), iDummy, s ) )
         lTasks << s;
       if( unget ) mTasks->unGetMsg(i);
     }
@@ -742,10 +738,10 @@ KMMessage *KMGroupware::findMessageByUID( const QString& uid, KMFolder* folder,
     m = folder->getMsg( i );
     if( m ){
       int iDummy;
-      QCString vCalOld;
-      if( vPartFoundAndDecoded( m, iDummy, 0, &vCalOld ) ){
+      QString vCalOld;
+      if( vPartFoundAndDecoded( m, iDummy, vCalOld ) ){
 	QString uidOld( "UID" );
-	vPartMicroParser( vCalOld, uidOld );
+	vPartMicroParser( vCalOld.utf8(), uidOld );
 	if( uidOld == uid ){
 	  if( takeMessage ) {
 	    msg = folder->take(i);
@@ -784,7 +780,7 @@ void KMGroupware::requestAddresses( QString fname )
       QString s;
       for( int i=0; i<mContacts->count(); ++i ){
         bool unget = !mContacts->isMessage(i);
-        if( KMGroupware::vPartFoundAndDecoded( mContacts->getMsg( i ), iDummy, &s, 0 ) ){
+        if( KMGroupware::vPartFoundAndDecoded( mContacts->getMsg( i ), iDummy, s ) ){
           ts << s;
           s.replace('\n', "\\n");
           s.truncate(65);
@@ -862,7 +858,7 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
 	// Figure out if the contact have been changed
 	int iDummy;
 	QString s;
-	if( vPartFoundAndDecoded( msg, iDummy, &s, 0 ) && s.utf8() != vCard ) {
+	if( vPartFoundAndDecoded( msg, iDummy, s ) && s.utf8() != vCard ) {
 	  msg->setBodyEncoded( vCard );
 	  msg->setTo( name );
 	}
@@ -1035,7 +1031,7 @@ QStringList KMGroupware::incidences( const QString& type )
   int iDummy;  
   for( int i=0; i<folder->count(); ++i ){
     bool unget = !folder->isMessage(i);
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, &s, 0 ) )
+    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) )
       ilist << s;
     if( unget ) folder->unGetMsg(i);
   }
@@ -1066,7 +1062,7 @@ void KMGroupware::slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum )
   bool unget = !folder->isMessage( i );
   int iDummy;
   QString s;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, &s, 0 ) )
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) )
     emit incidenceAdded( type, s );
   if( unget ) folder->unGetMsg(i);
 }
@@ -1095,7 +1091,7 @@ void KMGroupware::slotIncidenceDeleted( KMFolder* folder, Q_UINT32 sernum )
   bool unget = !folder->isMessage( i );
   int iDummy;
   QString s;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, &s, 0 ) ) {
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) ) {
     QString uid( "UID" );
     vPartMicroParser( s.utf8(), uid );
     emit incidenceDeleted( type, uid );
@@ -1201,7 +1197,8 @@ KMGroupware::VCalType KMGroupware::getVCalType( const QString &vCal )
 }
 
 //-----------------------------------------------------------------------------
-void KMGroupware::processVCalRequest( const QCString& receiver, const QString& vCalIn,
+void KMGroupware::processVCalRequest( const QCString& receiver,
+				      const QString& vCalIn,
                                       QString& choice )
 {
   ignore_GroupwareDataChangeSlots = true;
@@ -1316,7 +1313,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver, const QString& v
 
 //-----------------------------------------------------------------------------
 void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalIn,
-                                    QString& choice )
+                                    const QString& choice )
 {
   VCalType type = getVCalType( vCalIn );
   if( type == vCalUnknown ) {
@@ -1368,10 +1365,10 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
       mTasks->addMsg( msgNew );
 
     // step 2: inform user that Organizer was updated
-    KMessageBox::information(mMainWin, (type == vCalEvent ?
-					i18n("The answer was registered in your calendar.") :
-					i18n("The answer was registered in your task list.")),
-			     QString::null, "groupwareBox");
+    KMessageBox::information( mMainWin, (type == vCalEvent ?
+					 i18n("The answer was registered in your calendar.") :
+					 i18n("The answer was registered in your task list.")),
+			      QString::null, "groupwareBox");
     ignore_GroupwareDataChangeSlots = false;
   } else if( "cancel" == choice ) {
     QString uid( "UID" );
@@ -1484,7 +1481,7 @@ bool KMGroupware::eventFilter( QObject *o, QEvent *e ) const {
 }
 
 //-----------------------------------------------------------------------------
-bool KMGroupware::vPartToHTML( int aUpdateCounter, const QCString& vCal, QString fname,
+bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
                                bool useGroupware, QString& prefix, QString& postfix )
 {
   VCalType type = getVCalType( vCal );
@@ -1501,7 +1498,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QCString& vCal, QString
   QString sMethod( "METHOD");
   QString sAttendee( "ATTENDEE" );
   QString sSummary( "SUMMARY" );
-  vPartMicroParser( vCal, sLocation, sDtStart, sDtEnd, sDescr, sMethod, sAttendee, sSummary );
+  vPartMicroParser( vCal.utf8(), sLocation, sDtStart, sDtEnd, sDescr, sMethod, sAttendee, sSummary );
   string2HTML( sLocation );
   while( sDescr.endsWith("\\n") )
     sDescr.truncate( sDescr.length()-2 );
@@ -1566,9 +1563,9 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QCString& vCal, QString
     }
   } else if( sMethod == "cancel" ) {
     if( type == vCalEvent ) {
-      prefix = i18n("The event %1 was canceled").arg(sSummary);
+      prefix = i18n("The event %1 was cancelled").arg(sSummary);
     } else if( type == vCalTodo ) {
-      prefix = i18n("The task %1 was canceled").arg(sSummary);
+      prefix = i18n("The task %1 was cancelled").arg(sSummary);
     }
   }
 
@@ -1702,13 +1699,11 @@ QString sNamedProp( KTNEFMessage* tnefMsg, const QString& prefix, const QString&
 //-----------------------------------------------------------------------------
 bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
                                  int& aUpdateCounter,
-                                 QString* aVPart,
-                                 QCString* aVPartc )
+                                 QString& vPart )
 {
   // Note: vPart is not erased but
   //       keeps it's initial data if it cannot be decoded
   bool bOk = false;
-  QString vPart;
 
   KTNEFParser parser;
   QBuffer buf( tnef );
@@ -2054,33 +2049,27 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef,
       } // else if ... and so on ...
     }
   }
-  if( aVPart )
-    *aVPart = vPart;
-  if( aVPartc )
-    *aVPartc = vPart.utf8();
+
   return bOk;
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMGroupware::msTNEFToHTML( KMReaderWin* reader,
-                                QString& vPart, QString fname,
-                                bool useGroupware,
-                                QString& prefix, QString& postfix )
+bool KMGroupware::msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname,
+                                bool useGroupware, QString& prefix, QString& postfix )
 {
   QByteArray tnef( kFileToBytes( fname, false ) );
   if( tnef.count() ) {
     int updateCounter;
-    QCString vPartc;
-    if( msTNEFToVPart( tnef, updateCounter, &vPart, &vPartc ) ){
-      QByteArray theBody( vPartc );
+    if( msTNEFToVPart( tnef, updateCounter, vPart ) ){
+      QByteArray theBody( vPart.utf8() );
       QString fname2( ObjectTreeParser::byteArrayToTempFile( reader,
                                                         "groupware",
                                                         "vPart_decoded.raw",
                                                         theBody ) );
       if( !fname2.isEmpty() )
-        return vPartToHTML( updateCounter, vPartc, fname2,
-                            useGroupware, prefix, postfix );
+        return vPartToHTML( updateCounter, vPart, fname2,
+			    useGroupware, prefix, postfix );
     }
   }else{
     KMessageBox::error(0, i18n("<qt>Unable to open file <b>%1</b>.</qt>").arg(fname));
@@ -2152,6 +2141,7 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
     return true;
   }
   QTextStream ts( &file );
+  ts.setEncoding( QTextStream::UnicodeUTF8 );
   QString vCal = ts.read();
   file.close();
 
@@ -2200,7 +2190,7 @@ bool KMGroupware::incomingResourceMessage( KMAccount* acct, KMMessage* msg )
 
   int updateCounter;
   QString vCalIn;
-  if( vPartFoundAndDecoded( msg, updateCounter, &vCalIn, 0 ) )
+  if( vPartFoundAndDecoded( msg, updateCounter, vCalIn ) )
     return false;
 
   bool vCalInOK, vCalOutOK, isFree;
@@ -2244,16 +2234,16 @@ void KMGroupware::msgRemoved( KMFolder* folder, KMMessage* msg )
   assert( msg->isMessage() );
 
   int iDummy;
-  QCString vCal;
+  QString vCal;
 
   // Let's try for a note
   QString noteId = msg->headerField( "X-KOrg-Note-Id" );
   if( !noteId.isEmpty() ) {
     kdDebug(5006) << "%%% Deleting note with id: " << noteId << endl;
     emit signalNoteDeleted( noteId );
-  } if( vPartFoundAndDecoded( msg, iDummy, 0, &vCal ) ) {
+  } if( vPartFoundAndDecoded( msg, iDummy, vCal ) ) {
     QString uid( "UID" );
-    vPartMicroParser( vCal, uid );
+    vPartMicroParser( vCal.utf8(), uid );
     if( !uid.isEmpty() ){
       // We have found something with an UID, now tell KOrganizer if
       // this was a relevant folder.

@@ -919,7 +919,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  if( method == "request" || // an invitation to a meeting *or*
 	      method == "reply" ||   // a reply to an invitation we sent
 	      method == "cancel" ) { // Outlook uses this when cancelling
-	    QCString vCal( curNode->msgPart().bodyDecoded() );
+	    QCString vCalC( curNode->msgPart().bodyDecoded() );
+	    QString vCal( curNode->msgPart().bodyToUnicode() );
 	    if( mReader ){
 	      QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
 	      QString fname( byteArrayToTempFile( mReader,
@@ -942,13 +943,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  vCal.replace( '<',  "&lt;"   );
 		  vCal.replace( '>',  "&gt;"   );
 		  vCal.replace( '\"', "&quot;" );
-		  writeBodyString( vCal, curNode->trueFromAddress(),
-				   codecFor( curNode ), result );
+		  htmlWriter()->queue( mReader->quotedHTML( vCal ) );
 		  htmlWriter()->queue( postfix );
 		}
 	      }
 	    }
-	    mResultString = vCal;
+	    mResultString = vCalC;
 	  }
 	}
 	param = param->Next();
