@@ -903,7 +903,7 @@ void KMComposeWin::setupActions(void)
   ident.readConfig();
   pgpUserId = ident.pgpIdentity();
 
-  if(!Kpgp::getKpgp()->usePGP())
+  if(!Kpgp::Module::getKpgp()->usePGP())
   {
     attachPK->setEnabled(false);
     attachMPK->setEnabled(false);
@@ -1048,7 +1048,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   ident.readConfig();
   QString pgpUserId = ident.pgpIdentity();
 
-  if(Kpgp::getKpgp()->usePGP()) {
+  if(Kpgp::Module::getKpgp()->usePGP()) {
     if (pgpUserId.isEmpty()) {
       attachMPK->setEnabled(false);
       signAction->setEnabled(false);
@@ -1107,7 +1107,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
     QCString bodyDecoded = mMsg->bodyDecoded();
 
-      Kpgp* pgp = Kpgp::getKpgp();
+      Kpgp::Module* pgp = Kpgp::Module::getKpgp();
       assert(pgp != NULL);
 
       if (allowDecryption && pgp->setMessage(bodyDecoded))
@@ -1309,7 +1309,7 @@ bool KMComposeWin::queryExit ()
 //-----------------------------------------------------------------------------
 QCString KMComposeWin::pgpProcessedMsg(void)
 {
-  Kpgp *pgp = Kpgp::getKpgp();
+  Kpgp::Module *pgp = Kpgp::Module::getKpgp();
   bool doSign = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
   QString text;
@@ -1362,7 +1362,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   pgp->setMessage(cText, mCharset);
 
   // get PGP user id for the chosen identity
-  QString pgpUserId;
+  QCString pgpUserId;
   QString identStr = i18n( "Default" );
   if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
     identStr = mId;
@@ -1379,69 +1379,11 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   {
     // encrypting
 
-// FIXME: Use QStringList instead of QStrList in order to support unicode
-    QStrList recipients;
     QString _to = to();
-
     if(!cc().isEmpty()) _to += "," + cc();
     if(!bcc().isEmpty()) _to += "," + bcc();
-    // split the to, cc and bcc header into separate addresses
-    // important: always ignore quoted characters
-    //            ignore '(', ')' and ',' inside quoted strings
-    //            comments may be nested
-    //            ignore '"' and ',' inside comments
-    if (!_to.isEmpty()) {
-      QString recipient;
-      uint addrstart = 0;
-      int commentlevel = 0;
-      bool insidequote = false;
 
-      for (uint index=0; index<_to.length(); index++) {
-        // the following conversion to latin1 is o.k. because
-        // we can safely ignore all non-latin1 characters
-        switch (_to[index].latin1()) {
-        case '"' : // start or end of quoted string
-          if (commentlevel == 0)
-            insidequote = !insidequote;
-          break;
-        case '(' : // start of comment
-          if (!insidequote)
-            commentlevel++;
-          break;
-        case ')' : // end of comment
-          if (!insidequote) {
-            if (commentlevel > 0)
-              commentlevel--;
-            else
-              kdDebug(5006) << "Error in address splitting: Unmatched ')'"
-                            << endl;
-          }
-          break;
-        case '\\' : // quoted character
-          index++; // ignore the quoted character
-          break;
-        case ',' :
-          if (!insidequote && (commentlevel == 0)) {
-            recipient = _to.mid(addrstart, index-addrstart);
-            kdDebug(5006) << "Found recipient: " << recipient << endl;
-            if (!recipient.isEmpty())
-              recipients.append(recipient.simplifyWhiteSpace().latin1());
-            addrstart = index+1;
-          }
-          break;
-        }
-      }
-      // append the last address to the list of recipients
-      if (!insidequote && (commentlevel == 0)) {
-        recipient = _to.mid(addrstart, _to.length()-addrstart);
-        kdDebug(5006) << "Found recipient: " << recipient << endl;
-        if (!recipient.isEmpty())
-          recipients.append(recipient.simplifyWhiteSpace().latin1());
-      }
-      else
-        kdDebug(5006) << "Error in address splitting: "
-                      << "Unexpected end of address list";
-    }
+    QStringList recipients = KMMessage::splitEmailAddrList(_to);
 
     if(pgp->encryptFor(recipients, pgpUserId, doSign))
       return pgp->message();
@@ -1775,7 +1717,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   kernel->kbp()->busy();
 
   // get PGP user id for the chosen identity
-  QString pgpUserId;
+  QCString pgpUserId;
   QString identStr = i18n( "Default" );
   if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
     identStr = mId;
@@ -1784,12 +1726,12 @@ void KMComposeWin::slotInsertMyPublicKey()
   ident.readConfig();
   pgpUserId = ident.pgpIdentity();
 
-  str=Kpgp::getKpgp()->getAsciiPublicKey(pgpUserId);
+  str=Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (str.isEmpty())
   {
     kernel->kbp()->idle();
     KMessageBox::sorry( 0L, i18n("Couldn't get your public key for\n%1.")
-      .arg(Kpgp::getKpgp()->user()) );
+      .arg(Kpgp::Module::getKpgp()->user()) );
     return;
   }
 
@@ -1812,26 +1754,30 @@ void KMComposeWin::slotInsertMyPublicKey()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertPublicKey()
 {
-  QString str, name;
+  QString str;
+  QCString keyID;
   KMMessagePart* msgPart;
-  Kpgp *pgp;
+  Kpgp::Module *pgp;
 
-  pgp=Kpgp::getKpgp();
-
-  name = KpgpKey::getKeyName(this, pgp->keys());
-  if (name.isEmpty())
+  if ( !(pgp = Kpgp::Module::getKpgp()) )
     return;
 
-  str = pgp->getAsciiPublicKey(name);
+  keyID = pgp->selectPublicKey(i18n("Please select the public key which "
+                                    "should be attached."));
+
+  if (keyID.isEmpty())
+    return;
+
+  str = pgp->getAsciiPublicKey(keyID);
   if (!str.isEmpty()) {
     // create message part
     msgPart = new KMMessagePart;
-    msgPart->setName(i18n("pgp key"));
+    msgPart->setName(i18n("PGP key 0x%1").arg(keyID));
     msgPart->setCteStr("base64");
     msgPart->setTypeStr("application");
     msgPart->setSubtypeStr("pgp-keys");
     msgPart->setBodyEncoded(QCString(str.ascii()));
-    msgPart->setContentDisposition("attachment; filename=public_key.asc");
+    msgPart->setContentDisposition("attachment; filename=0x" + keyID + ".asc");
 
     // add the new attachment to the list
     addAttach(msgPart);

@@ -45,6 +45,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kpgp.h>
+#include <kpgpui.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 #include <kscoring.h>
@@ -566,11 +567,20 @@ void ConfigureDialog::makeIdentityPage( void )
   label->setBuddy(mIdentity.fccCombo);
   glay->addMultiCellWidget( mIdentity.fccCombo, 6, 6, 1, 2 );
 
-  label = new QLabel( i18n("PGP &User Identity:"), page );
+  label = new QLabel( i18n("Default PGP &Key:"), page );
   glay->addWidget( label, 7, 0 );
-  mIdentity.pgpIdentityEdit = new QLineEdit( page );
-  label->setBuddy(mIdentity.pgpIdentityEdit);
-  glay->addMultiCellWidget( mIdentity.pgpIdentityEdit, 7, 7, 1, 2 );
+  mIdentity.pgpIdentityLabel = new QLabel( page );
+  mIdentity.pgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+  glay->addWidget( mIdentity.pgpIdentityLabel, 7, 1 );
+  QPushButton *changeKey = new QPushButton( i18n("Change..."), page );
+  connect( changeKey, SIGNAL(clicked()), 
+           this, SLOT(slotChangeDefaultPGPKey()) );
+  changeKey->setAutoDefault( false );
+  glay->addWidget( changeKey, 7, 2 );
+  QWhatsThis::add(label,
+                  i18n("<qt><p>The PGP key you choose here will be used "
+                       "to sign messages and to encrypt messages to "
+                       "yourself.</p></qt>"));
 
   mIdentity.transportCheck = new QCheckBox( i18n("Spe&cial transport"), page );
   glay->addWidget( mIdentity.transportCheck, 8, 0 );
@@ -612,7 +622,7 @@ void ConfigureDialog::makeIdentityPage( void )
   button->setMinimumSize( mIdentity.signatureEditButton->sizeHint() );
 
   mIdentity.signatureTextRadio =
-    new QRadioButton( i18n("&Specify signature below"), page );
+    new QRadioButton( i18n("S&pecify signature below"), page );
   buttonGroup->insert( mIdentity.signatureTextRadio );
   glay->addMultiCellWidget( mIdentity.signatureTextRadio, 12, 12, 0, 2 );
 
@@ -1484,7 +1494,7 @@ void ConfigureDialog::makeSecurityPage( void )
     tabWidget->addTab( page, i18n("&PGP") );
     vlay = new QVBoxLayout( page, spacingHint() );
 
-    mSecurity.pgpConfig = new KpgpConfig(page);
+    mSecurity.pgpConfig = new Kpgp::Config(page);
     vlay->addWidget( mSecurity.pgpConfig );
     vlay->addStretch(10);
 }
@@ -2525,7 +2535,7 @@ void ConfigureDialog::saveActiveIdentity( void )
   {
     entry->setFullName( mIdentity.nameEdit->text() );
     entry->setOrganization( mIdentity.organizationEdit->text() );
-    entry->setPgpIdentity( mIdentity.pgpIdentityEdit->text() );
+    entry->setPgpIdentity( mIdentity.pgpIdentityLabel->text() );
     entry->setEmailAddress( mIdentity.emailEdit->text() );
     entry->setReplyToAddress( mIdentity.replytoEdit->text() );
     entry->setSignatureFileName( mIdentity.signatureFileEdit->url() );
@@ -2564,7 +2574,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   {
     mIdentity.nameEdit->clear();
     mIdentity.organizationEdit->clear();
-    mIdentity.pgpIdentityEdit->clear();
+    mIdentity.pgpIdentityLabel->clear();
     mIdentity.emailEdit->clear();
     mIdentity.replytoEdit->clear();
     mIdentity.signatureFileEdit->clear();
@@ -2584,7 +2594,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
   {
     mIdentity.nameEdit->setText( entry->fullName() );
     mIdentity.organizationEdit->setText( entry->organization() );
-    mIdentity.pgpIdentityEdit->setText( entry->pgpIdentity() );
+    mIdentity.pgpIdentityLabel->setText( entry->pgpIdentity() );
     mIdentity.emailEdit->setText( entry->emailAddress() );
     mIdentity.replytoEdit->setText( entry->replyToAddress() );
     mIdentity.signatureFileEdit->setURL( entry->signatureFileName() );
@@ -2748,6 +2758,20 @@ void ConfigureDialog::slotIdentitySelectorChanged( void )
 void ConfigureDialog::slotSpecialTransportClicked( void )
 {
   mIdentity.transportCombo->setEnabled(mIdentity.transportCheck->isChecked());
+}
+
+
+void ConfigureDialog::slotChangeDefaultPGPKey( void )
+{
+  Kpgp::Module *pgp;
+  
+  if ( !(pgp = Kpgp::Module::getKpgp()) )
+    return;
+
+  QCString keyID = pgp->selectDefaultKey();
+
+  if ( !keyID.isEmpty() )
+    mIdentity.pgpIdentityLabel->setText( keyID ); 
 }
 
 
@@ -3901,7 +3925,7 @@ void IdentityList::exportData()
     KMIdentity ident( e->identity() );
     ident.setFullName( e->fullName() );
     ident.setOrganization( e->organization() );
-    ident.setPgpIdentity( e->pgpIdentity() );
+    ident.setPgpIdentity( e->pgpIdentity().local8Bit() );
     ident.setEmailAddr( e->emailAddress() );
     ident.setReplyToAddr( e->replyToAddress() );
     ident.setUseSignatureFile( e->useSignatureFile() );

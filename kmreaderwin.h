@@ -18,6 +18,8 @@ class QMultiLineEdit;
 class QScrollBar;
 class QString;
 class QTabDialog;
+class QLabel;
+class QHBox;
 
 namespace KParts
 {
@@ -197,6 +199,10 @@ protected:
     string. May contain body parts. */
   virtual void writeBodyStr(const QCString bodyString, QTextCodec *aCodec);
 
+  /** Feeds the HTML widget with the contents of the given HTML message-body
+    string. May contain body parts. */
+  virtual void writeHTMLStr(const QString& aStr);
+
   /** Create a nice icon with comment and name for the given
     body part, appended to the HTML view. Content type and subtype
     are set afterwards if they were not before. */
@@ -236,6 +242,8 @@ protected:
   KMMessage *mMsg, *mMsgBuf;
   int mMsgBufSize;
   QString mMsgBufMD5;
+  QHBox *mBox;
+  QLabel *mColorBar;
   KHTMLPart *mViewer;
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;

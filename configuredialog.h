@@ -34,11 +34,13 @@ class KIntNumInput;
 class KColorButton;
 class KFontChooser;
 class KURLRequester;
-class KpgpConfig;
 class ColorListBox;
 class KMAccount;
 class KMTransportInfo;
 class KMFolder;
+namespace Kpgp {
+  class Config;
+};
 
 #include <klistview.h>
 #include <kdialogbase.h>
@@ -263,7 +265,7 @@ private:
       QLineEdit      *organizationEdit;
       QLineEdit      *emailEdit;
       QLineEdit      *replytoEdit;
-      QLineEdit      *pgpIdentityEdit;
+      QLabel         *pgpIdentityLabel;
       QCheckBox      *transportCheck;
       QComboBox      *transportCombo;
       QComboBox      *fccCombo;
@@ -390,11 +392,11 @@ private:
     };
     struct SecurityWidget
     {
-      int        pageIndex;
-      KpgpConfig *pgpConfig;
-      QCheckBox  *htmlMailCheck;
-      QCheckBox  *externalReferences;
-      QCheckBox  *sendReceiptCheck;
+      int          pageIndex;
+      Kpgp::Config *pgpConfig;
+      QCheckBox    *htmlMailCheck;
+      QCheckBox    *externalReferences;
+      QCheckBox    *sendReceiptCheck;
     };
     struct MiscWidget
     {
@@ -473,6 +475,7 @@ private:
     void slotRenameIdentity( void );
     void slotRemoveIdentity( void );
     void slotIdentitySelectorChanged( void );
+    void slotChangeDefaultPGPKey( void );
     void slotSignatureType( int id );
     void slotSignatureChooser( KURLRequester * );
     void slotSignatureEdit( void );

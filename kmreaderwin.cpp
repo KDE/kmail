@@ -9,6 +9,9 @@
 #include <string.h>
 
 #include <qclipboard.h>
+#include <qlabel.h>
+//#include <qlayout.h>
+#include <qhbox.h>
 #include <kaction.h>
 
 #include <kfiledialog.h>
@@ -289,7 +292,15 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
-  mViewer = new KHTMLPart(this, "khtml");
+  mBox = new QHBox(this);
+
+#ifdef COLORBAR
+  // Removed the colorbar until it's configurable.
+  mColorBar = new QLabel(" ", mBox);
+  mColorBar->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+#endif
+
+  mViewer = new KHTMLPart(mBox, "khtml");
   mViewer->widget()->setFocusPolicy(WheelFocus);
   // Let's better be paranoid and disable plugins (it defaults to enabled):
   mViewer->setPluginsEnabled(false);
@@ -538,14 +549,13 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("body { font-family: \"%1\"; font-size: %2pt }\n")
-                 .arg( mBodyFamily ).arg( fntSize ) +
+		 QString("body { font-family: \"%1\"; font-size: %2pt; "
+                         "color: #%3; background-color: #%4; }\n")
+                 .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1)).arg(colorToString(c4)) +
 		 QString("a { color: #%1; ").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
 		 // TODO: move these to stylesheet, too:
-                 QString(" text=\"#%1\"").arg(colorToString(c1)) +
-  		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) +
                  bkgrdStr + ">" );
 
   if (!parent())
@@ -617,7 +627,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
         if (htmlMail() && qstricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
           str = msgPart.bodyDecoded();      // decode it...
-          mViewer->write(mCodec->toUnicode(str.data()));    // write it...
+          //mViewer->write(mCodec->toUnicode(str.data()));    // write it...
+          writeHTMLStr(mCodec->toUnicode(str.data()));
           return;                           // return, finshed.
         }
 	else if (!htmlMail() && (qstricmp(subtype, "plain")==0))
@@ -687,7 +698,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
               if (i>0) cstr.truncate(i);
             }
             // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-            mViewer->write(atmCodec->toUnicode(cstr.data()));
+            //mViewer->write(atmCodec->toUnicode(cstr.data()));
+            writeHTMLStr(atmCodec->toUnicode(cstr.data()));
 	  }
           else writeBodyStr(cstr, atmCodec);
 	}
@@ -710,7 +722,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   else // if numBodyParts <= 0
   {
     if (htmlMail() && ((type == "text/html") || (type.find("text/html") != -1)))
-      mViewer->write(mCodec->toUnicode(aMsg->bodyDecoded().data()));
+      //mViewer->write(mCodec->toUnicode(aMsg->bodyDecoded().data()));
+      writeHTMLStr(mCodec->toUnicode(aMsg->bodyDecoded().data()));
     else
       writeBodyStr(aMsg->bodyDecoded(), mCodec);
   }
@@ -777,8 +790,8 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
       mViewer->write(i18n("Cc: ")+
                      KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
     mViewer->write(i18n("Date: ")+
-                   strToHtml(mMsg->dateStr()) + "<br>\n");
-    mViewer->write("</b></td></tr></table>");
+                   strToHtml(mMsg->dateStr()) + "\n");
+    mViewer->write("</td></tr></table>");
     break;
 
   case HdrLong:
@@ -826,73 +839,117 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 {
-  QString line, sig, htmlStr;
-  Kpgp* pgp = Kpgp::getKpgp();
+  QString line, htmlStr;
+  Kpgp::Module* pgp = Kpgp::Module::getKpgp();
   assert(pgp != NULL);
   // assert(!aStr.isNull());
-  bool pgpMessage = false;
+  //bool pgpMessage = false;
+  bool isEncrypted = false, isSigned = false;
 
   if (pgp->setMessage(aStr))
   {
     QCString str = pgp->frontmatter();
     if(!str.isEmpty()) htmlStr += quotedHTML(aCodec->toUnicode(str));
-    htmlStr += "<br>";
-    if (pgp->isEncrypted())
+    //htmlStr += "<br>";
+    isEncrypted = pgp->isEncrypted();
+    if (isEncrypted)
     {
       emit noDrag();
-      pgpMessage = true;
+      htmlStr += "<table border=\"0\" bgcolor=\"00ff00\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"00ff00\"><td>\n";
       if(pgp->decrypt())
       {
-	htmlStr += QString("<b>%1</b><br>").arg(i18n("Encrypted message"));
+	htmlStr += QString("<b>%1</b>").arg(i18n("Encrypted message"));
       }
       else
       {
-	htmlStr += QString("<b>%1</b><br>%2<br><br>")
+	htmlStr += QString("<b>%1</b><br>%2")
                     .arg(i18n("Cannot decrypt message:"))
                     .arg(pgp->lastErrorMsg());
       }
+      htmlStr += "</td></tr>\n<tr bgcolor=\"ddffdd\"><td>\n";
     }
     // check for PGP signing
-    if (pgp->isSigned())
+    isSigned = pgp->isSigned();
+    if (isSigned)
     {
-      pgpMessage = true;
-      if (pgp->goodSignature())
-         sig = i18n("Message was signed by");
-      else
-	 sig = i18n("Warning: Bad signature from");
-
-      /* HTMLize signedBy data ### FIXME: use .arg()*/
-      QString sdata=pgp->signedBy();
-      sdata.replace(QRegExp("&"), "&amp;");
-      sdata.replace(QRegExp("<"), "&lt;");
-      sdata.replace(QRegExp(">"), "&gt;");
-
-      if (sdata.contains(QRegExp("unknown key ID")))
+      QString signer = pgp->signedBy();
+      if (signer.isEmpty())
       {
-         sdata.replace(QRegExp("unknown key ID"), i18n("unknown key ID"));
-         htmlStr += QString("<b>%1 %2</b><br>").arg(sig).arg(sdata);
+        htmlStr += "<table border=\"0\" bgcolor=\"ffff00\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"ffff00\"><td>\n<b>";
+        htmlStr += i18n("Message was signed with unknown key %1.").arg(pgp->signedByKey());
+        htmlStr += "<br>";
+        htmlStr += i18n("The validity of the signature can't be checked.");
+        htmlStr += "</b>\n</td></tr>\n<tr bgcolor=\"ffffdd\"><td>\n";
       }
-      else {
-         htmlStr += QString("<b>%1 <a href=\"mailto:%2\">%3</a></b><br>")
-                      .arg(sig).arg(sdata).arg(sdata);
+      else
+      {
+        /* HTMLize signedBy data ### FIXME: use .arg()*/
+        signer.replace(QRegExp("&"), "&amp;");
+        signer.replace(QRegExp("<"), "&lt;");
+        signer.replace(QRegExp(">"), "&gt;");
+
+        signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
+
+        if (pgp->goodSignature())
+        {
+          htmlStr += "<table border=\"0\" bgcolor=\"00ff00\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"00ff00\"><td>\n<b>";
+          htmlStr += i18n("Message was signed by %1.").arg(signer);
+          htmlStr += "<br>";
+          htmlStr += i18n("The signature is good.");
+          htmlStr += "</b>\n</td></tr>\n<tr bgcolor=\"ddffdd\"><td>\n";
+        }
+        else
+        {
+          htmlStr += "<table border=\"0\" bgcolor=\"ff0000\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"ff0000\"><td>\n<b>";
+          htmlStr += i18n("Message was signed by %1.").arg(signer);
+          htmlStr += "<br>";
+          htmlStr += i18n("Warning: The signature is bad.");
+          htmlStr += "</b>\n</td></tr>\n<tr bgcolor=\"ffdddd\"><td>\n";
+        }
       }
     }
-    if (pgpMessage)
+    if (isEncrypted || isSigned)
     {
       htmlStr += quotedHTML(aCodec->toUnicode(pgp->message()));
-      htmlStr += QString("<br><b>%1</b><br><br>")
-        .arg(i18n("End of pgp message"));
+      if (isSigned) {
+        htmlStr += "</td></tr></table>";
+      }
+      if (isEncrypted) {
+        htmlStr += "</td></tr></table>";
+      }
+      //htmlStr += QString("<br><b>%1</b><br><br>")
+      //  .arg(i18n("End of pgp message"));
       str = pgp->backmatter();
       if(!str.isEmpty()) htmlStr += quotedHTML(aCodec->toUnicode(str));
     } // if (!pgpMessage) then the message only looked similar to a pgp message
     else htmlStr = quotedHTML(aCodec->toUnicode(aStr));
   }
   else htmlStr = quotedHTML(aCodec->toUnicode(aStr));
+#ifdef COLORBAR
+  if (isEncrypted || isSigned)
+  {
+    mColorBar->setEraseColor("green");
+    mColorBar->setText(i18n("\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne\n"));
+  }
+  else
+  {
+    mColorBar->setEraseColor("yellow");
+    mColorBar->setText(i18n("\nN\no\n\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne\n"));
+  }
+#endif
   mViewer->write(htmlStr);
 }
 
 
-
+//-----------------------------------------------------------------------------
+void KMReaderWin::writeHTMLStr(const QString& aStr)
+{
+#ifdef COLORBAR
+  mColorBar->setEraseColor("red");
+  mColorBar->setText(i18n("\nH\nT\nM\nL\n\nM\ne\ns\ns\na\ng\ne\n"));
+#endif
+  mViewer->write(aStr);
+}
 
 //-----------------------------------------------------------------------------
 
@@ -1239,7 +1296,8 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
-  mViewer->widget()->setGeometry(0, 0, width(), height());
+  //mViewer->widget()->setGeometry(0, 0, width(), height());
+  mBox->setGeometry(0, 0, width(), height());
 }
 
 
@@ -1412,7 +1470,8 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 
       QCString str = aMsgPart->bodyDecoded();
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
-	win->mViewer->write(win->codec()->toUnicode(str));
+        //win->mViewer->write(win->codec()->toUnicode(str));
+	win->writeHTMLStr(win->codec()->toUnicode(str));
       else  // plain text
 	win->writeBodyStr(str, win->codec());
       win->mViewer->write("</body></html>");

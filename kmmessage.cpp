@@ -579,7 +579,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       result = selection;
     } else {
       cStr = bodyDecoded();
-      Kpgp* pgp = Kpgp::getKpgp();
+      Kpgp::Module* pgp = Kpgp::Module::getKpgp();
       assert(pgp != NULL);
 
       if(allowDecryption && (pgp->setMessage(cStr) &&
@@ -637,7 +637,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         if (qstricmp(msgPart.typeStr(),"text") == 0 ||
           msgPart.typeStr().isEmpty())
         {
-          Kpgp* pgp = Kpgp::getKpgp();
+          Kpgp::Module* pgp = Kpgp::Module::getKpgp();
           assert(pgp != NULL);
           QString part;
           if (allowDecryption && ((pgp->setMessage(msgPart.bodyDecoded())) &&

@@ -3,7 +3,7 @@
 #include "kbusyptr.h"
 
 KMpgpWrap::KMpgpWrap()
-  : Kpgp()
+  : Kpgp::Module()
 {
 }
 

@@ -3,12 +3,12 @@
 
 #include <kpgp.h>
 
-/** This class is a wrapper around @ref Kpgp (in libkdenetwork). It's
-    only purpose is to teach @ref Kpgp how to show the "busy"
+/** This class is a wrapper around @ref Kpgp::Module (in libkdenetwork). It's
+    only purpose is to teach @ref Kpgp::Module how to show the "busy"
     cursor.
-    @short This wrapper around Kpgp.
+    @short This is a wrapper around Kpgp::Module.
 */
-class KMpgpWrap : public Kpgp
+class KMpgpWrap : public Kpgp::Module
 {
 public:
   KMpgpWrap();

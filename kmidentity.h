@@ -49,8 +49,8 @@ public:
   virtual void setOrganization(const QString&);
 
   /** The user's PGP identity */
-  QString pgpIdentity(void) const { return mPgpIdentity; }
-  virtual void setPgpIdentity(const QString&);
+  QCString pgpIdentity(void) const { return mPgpIdentity; }
+  virtual void setPgpIdentity(const QCString&);
 
   /** email address (without the user name - only name@host) */
   QString emailAddr(void) const { return mEmailAddr; }
@@ -99,8 +99,9 @@ public:
   virtual void setFcc(const QString&);
 
 protected:
-  QString mIdentity, mFullName, mOrganization, mPgpIdentity, mEmailAddr;
+  QString mIdentity, mFullName, mOrganization, mEmailAddr;
   QString mFcc;
+  QCString mPgpIdentity;
   QString mReplyToAddr, mSignatureFile;
   QString mSignatureInlineText, mTransport;
   QString mVCardFile;
