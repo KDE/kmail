@@ -109,7 +109,7 @@ QString VCard::getError(int err) {
     case VC_ERR_INVALID_LINE:
       return i18n("The vCard line was invalid.");
     case VC_ERR_INTERNAL:
-      return i18n("An unknown internal error occurred.  Please report to kmail@kde.org");
+      return i18n("An unknown internal error occurred. Please report to kmail@kde.org");
     case VC_ERR_INVALID_NAME:
       return i18n("The vCard contained an invalid field.");
     case VC_ERR_MISSING_MANDATORY:

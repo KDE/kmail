@@ -1338,7 +1338,7 @@ void KMHeaders::forwardMsg ()
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
-      msgPartText = i18n("\nThis is a MIME digest forward.  The content of the"
+      msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
                          " message is contained in the attachment(s).\n\n\n"
                          "--\n");
       kdDebug(5006) << "Doing a mime digest forward\n" << endl;
