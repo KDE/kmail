@@ -11,6 +11,9 @@
 #include <mimelib/string.h>
 #include "kmmsgbase.h"
 
+template <typename T>
+class QValueList;
+
 class QStringList;
 class QString;
 class QTextCodec;
@@ -377,6 +380,21 @@ public:
       the second for binary data */
   virtual void setBodyEncoded(const QCString& aStr);
   virtual void setBodyEncodedBinary(const QByteArray& aStr);
+
+  /** Sets body, encoded in the best fitting
+    content-transfer-encoding, which is determined by character
+    frequency count.
+
+    @param aBuf       input buffer
+    @param allowedCte return: list of allowed cte's
+    @param allow8Bit  whether "8bit" is allowed as cte.
+  */
+  virtual void setBodyAndGuessCte(const QByteArray& aBuf,
+                  QValueList<int>& allowedCte,
+                  bool allow8Bit=false);
+  virtual void setBodyAndGuessCte(const QCString& aBuf,
+                  QValueList<int>& allowedCte,
+                  bool allow8Bit=false);
 
   /** Returns a decoded version of the body from the current content transfer
       encoding. The first method returns a null terminated string, the second

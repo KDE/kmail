@@ -1221,7 +1221,9 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   {
     msg->setAutomaticFields( true );
     msg->setHeaderField( "Content-Type", "text/plain" );
-    msg->setCteStr( isQP ? "quoted-printable": "8bit" );
+    // msg->setCteStr( isQP ? "quoted-printable": "8bit" );
+    QValueList<int> dummy;
+    msg->setBodyAndGuessCte(str, dummy, !isQP);
     msg->setCharset( encoding );
     if( isQP )
       msg->setBodyEncoded( str );
@@ -1239,7 +1241,9 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
     bodyPart.setTypeStr( "text" );
     bodyPart.setSubtypeStr( "plain" );
-    bodyPart.setCteStr( isQP ? "quoted-printable": "8bit" );
+    // bodyPart.setCteStr( isQP ? "quoted-printable": "8bit" );
+    QValueList<int> dummy;
+    bodyPart.setBodyAndGuessCte(str, dummy, !isQP);
     bodyPart.setCharset( encoding );
     bodyPart.setBodyEncoded( str );
     msg->addBodyPart( &bodyPart );

@@ -1772,7 +1772,9 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     innerBodyPart.setSubtypeStr("plain");
     innerBodyPart.setContentDescription( "body text" );
     innerBodyPart.setContentDisposition( "inline" );
-    innerBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+    // innerBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+    QValueList<int> allowedCTEs;
+    innerBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP);
     innerBodyPart.setCharset(mCharset);
     innerBodyPart.setBodyEncoded( body );
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
@@ -1808,7 +1810,9 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   }
   else
   {
-    oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+    // oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+    QValueList<int> allowedCTEs;
+    oldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !isQP);
     oldBodyPart.setCharset(mCharset);
   }
   // create S/MIME body part for signing and/or encrypting
