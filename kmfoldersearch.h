@@ -63,7 +63,7 @@ signals:
 
 protected slots:
   void slotProcessNextBatch();
-  void slotFolderComplete(KMFolderImap *folder, bool success);
+  void slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> );
 
 protected:
   friend class KMIndexSearchTarget;
@@ -73,7 +73,6 @@ protected:
   void setCurrentFolder(const QString &f) { mLastFolder = f; }
 
 private:
-  int mRemainingMessages;
   int mRemainingFolders;
   bool mRecursive, mRunning, mIdle, mRunByIndex;
   QGuardedPtr<KMFolder> mRoot;

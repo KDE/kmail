@@ -161,8 +161,6 @@ const QString KMSearchRule::asString() const
   return result;
 }
 
-
-
 //==================================================
 //
 // class KMSearchRuleString
@@ -685,7 +683,7 @@ KMSearchPattern::~KMSearchPattern()
 {
 }
 
-bool KMSearchPattern::matches( const KMMessage * msg ) const
+bool KMSearchPattern::matches( const KMMessage * msg, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
@@ -694,20 +692,22 @@ bool KMSearchPattern::matches( const KMMessage * msg ) const
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it.toFirst() ; it.current() ; ++it )
-      if ( !(*it)->matches( msg ) )
-	return false;
+      if ( !((*it)->requiresBody() && ignoreBody) )
+        if ( !(*it)->matches( msg ) )
+          return false;
     return true;
   case OpOr:  // at least one rule must match
     for ( it.toFirst() ; it.current() ; ++it )
-      if ( (*it)->matches( msg ) )
-	return true;
+      if ( !((*it)->requiresBody() && ignoreBody) )
+        if ( (*it)->matches( msg ) )
+          return true;
     // fall through
   default:
     return false;
   }
 }
 
-bool KMSearchPattern::matches( const DwString & aStr ) const
+bool KMSearchPattern::matches( const DwString & aStr, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
@@ -717,20 +717,22 @@ bool KMSearchPattern::matches( const DwString & aStr ) const
   switch ( mOperator ) {
   case OpAnd: // all rules must match
     for ( it.toFirst() ; it.current() ; ++it )
-      if ( !(*it)->matches( aStr, msg ) )
-	return false;
+      if ( !((*it)->requiresBody() && ignoreBody) )
+        if ( !(*it)->matches( aStr, msg ) )
+          return false;
     return true;
   case OpOr:  // at least one rule must match
     for ( it.toFirst() ; it.current() ; ++it )
-      if ( (*it)->matches( aStr, msg ) )
-	return true;
+      if ( !((*it)->requiresBody() && ignoreBody) )
+        if ( (*it)->matches( aStr, msg ) )
+          return true;
     // fall through
   default:
     return false;
   }
 }
 
-bool KMSearchPattern::matches( Q_UINT32 serNum ) const
+bool KMSearchPattern::matches( Q_UINT32 serNum, bool ignoreBody ) const
 {
   if ( isEmpty() )
     return true;
@@ -747,14 +749,14 @@ bool KMSearchPattern::matches( Q_UINT32 serNum ) const
   if ( !opened )
     folder->open();
   KMMsgBase *msgBase = folder->getMsgBase(idx);
-  if (requiresBody()) {
+  if (requiresBody() && !ignoreBody) {
     bool unGet = !msgBase->isMessage();
     KMMessage *msg = folder->getMsg(idx);
-    res = matches( msg );
+    res = matches( msg, ignoreBody );
     if (unGet)
       folder->unGetMsg(idx);
   } else {
-    res = matches( folder->getDwString(idx) );
+    res = matches( folder->getDwString(idx), ignoreBody );
   }
   if ( !opened )
     folder->close();

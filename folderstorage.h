@@ -46,6 +46,7 @@
 using KMail::FolderJob;
 #include "listjob.h"
 using KMail::ListJob;
+#include "kmsearchpattern.h"
 
 #include "mimelib/string.h"
 
@@ -405,6 +406,12 @@ public:
   /// @return the type of contents held in this folder (mail, calendar, etc.)
   KMail::FolderContentsType contentsType() const { return mContentsType; }
 
+  /** 
+    * Search for messages
+    * The end is signaled with searchDone()
+    */
+  virtual void search( KMSearchPattern* );
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -446,6 +453,12 @@ signals:
 
   /** Emitted when a folder was removed */
   void removed(KMFolder*, bool);
+
+  /** 
+   * Emitted when a search is completed
+   * The matching serial numbers are included 
+   */
+  void searchDone( KMFolder*, QValueList<Q_UINT32> serNums );
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */

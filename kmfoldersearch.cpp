@@ -55,10 +55,8 @@ KMSearch::KMSearch(QObject * parent, const char * name)
     :QObject(parent, name)
 {
     mRemainingFolders = -1;
-    mRemainingMessages = -1;
     mRecursive = true;
     mRunByIndex = mRunning = false;
-    mIdle = false;
     mRoot = 0;
     mSearchPattern = 0;
     mSearchedCount = 0;
@@ -90,22 +88,22 @@ bool KMSearch::write(QString location) const
 
 bool KMSearch::read(QString location)
 {
-    KConfig config(location);
-    config.setGroup("Search Folder");
-    if (!mSearchPattern)
+    KConfig config( location );
+    config.setGroup( "Search Folder" );
+    if ( !mSearchPattern )
         mSearchPattern = new KMSearchPattern();
-    mSearchPattern->readConfig(&config);
-    QString rootString = config.readEntry("Base");
-    mRoot = kmkernel->findFolderById(rootString);
-    mRecursive = config.readBoolEntry("Recursive");
+    mSearchPattern->readConfig( &config );
+    QString rootString = config.readEntry( "Base" );
+    mRoot = kmkernel->findFolderById( rootString );
+    mRecursive = config.readBoolEntry( "Recursive" );
     return true;
 }
 
 void KMSearch::setSearchPattern(KMSearchPattern *searchPattern)
 {
-    if (running())
+    if ( running() )
         stop();
-    if (mSearchPattern != searchPattern) {
+    if ( mSearchPattern != searchPattern ) {
         delete mSearchPattern;
         mSearchPattern = searchPattern;
     }
@@ -113,15 +111,15 @@ void KMSearch::setSearchPattern(KMSearchPattern *searchPattern)
 
 bool KMSearch::inScope(KMFolder* folder) const
 {
-    if (mRoot.isNull() || folder == mRoot)
+    if ( mRoot.isNull() || folder == mRoot )
         return true;
-    if (!recursive())
+    if ( !recursive() )
         return false;
 
     KMFolderDir *rootDir = mRoot->child();
     KMFolderDir *ancestorDir = folder->parent();
-    while (ancestorDir) {
-        if (ancestorDir == rootDir)
+    while ( ancestorDir ) {
+        if ( ancestorDir == rootDir )
             return true;
         ancestorDir = ancestorDir->parent();
     }
@@ -130,10 +128,10 @@ bool KMSearch::inScope(KMFolder* folder) const
 
 void KMSearch::start()
 {
-    if (running())
+    if ( running() )
         return;
 
-    if (!mSearchPattern) {
+    if ( !mSearchPattern ) {
         emit finished(true);
         return;
     }
@@ -142,197 +140,118 @@ void KMSearch::start()
     mFoundCount = 0;
     mRunning = true;
     mRunByIndex = false;
-    if(kmkernel->msgIndex() && kmkernel->msgIndex()->startQuery(this)) {
+    // check if this query can be done with the index
+    if ( kmkernel->msgIndex() && kmkernel->msgIndex()->startQuery( this ) ) {
         mRunByIndex = true;
         return;
     }
 
-    QValueList<QGuardedPtr<KMFolder> > folders;
-    folders.append(mRoot);
-    if (recursive()) { //Append all descendants to folders
+    mFolders.append( mRoot );
+    if ( recursive() ) 
+    { 
+        //Append all descendants to folders
         KMFolderNode* node;
         KMFolder* folder;
         QValueListConstIterator<QGuardedPtr<KMFolder> > it;
-        for (it = folders.begin(); it != folders.end(); ++it) {
+        for ( it = mFolders.begin(); it != mFolders.end(); ++it ) 
+        {
             folder = *it;
             KMFolderDir *dir = 0;
-            if (folder)
+            if ( folder )
                 dir = folder->child();
             else
                 dir = &kmkernel->folderMgr()->dir();
-            if (!dir)
+            if ( !dir )
                 continue;
             QPtrListIterator<KMFolderNode> it(*dir);
-            while ((node = it.current())) {
+            while ( (node = it.current()) ) {
                 ++it;
-                if (!node->isDir())
-                {
-                    KMFolder* kmf = dynamic_cast<KMFolder*>(node);
-                    if (kmf)
-                        folders.append(kmf);
+                if ( !node->isDir() ) {
+                    KMFolder* kmf = dynamic_cast<KMFolder*>( node );
+                    if ( kmf ) 
+                        mFolders.append( kmf );
                 }
             }
         }
     }
-
+    
+    mRemainingFolders = mFolders.count();
     mLastFolder = QString::null;
-    mRemainingFolders = folders.count();
-    mRemainingMessages = 0;
-    QValueListConstIterator<QGuardedPtr<KMFolder> > it;
-    for (it = folders.begin(); it != folders.end(); ++it) {
-        KMFolder *folder = *it;
-        if (!folder) {
-            --mRemainingFolders;
-            continue;
-        }
-        //TODO: Get rid of this protocol check, need a bool KMFolder::isComplete()
-        if (folder->folderType() == KMFolderTypeImap) {
-            KMFolderImap *imapFolder =
-                dynamic_cast<KMFolderImap*>( folder->storage() );
-            if (imapFolder && imapFolder->getContentState() ==
-                    KMFolderImap::imapNoInformation) {
-                mIncompleteFolders.append(imapFolder);
-                connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-                        SLOT(slotFolderComplete(KMFolderImap*, bool)));
-                imapFolder->getFolder();
-            } else {
-                mFolders.append(folder);
-            }
-        } else {
-            mFolders.append(folder);
-        }
-    }
-
-    mProcessNextBatchTimer->start(0, true);
+    mProcessNextBatchTimer->start( 0, true );
 }
 
 void KMSearch::stop()
 {
-    if (!running())
+    if ( !running() )
         return;
-    if(mRunByIndex) {
-        if(kmkernel->msgIndex())
-            kmkernel->msgIndex()->stopQuery(this);
+    if ( mRunByIndex ) {
+        if ( kmkernel->msgIndex() )
+            kmkernel->msgIndex()->stopQuery( this );
     } else {
-        //kill all pending jobs
-        QValueListConstIterator<QGuardedPtr<KMFolderImap> > it;
-        for (it = mIncompleteFolders.begin();
-                it != mIncompleteFolders.end(); ++it) {
-            KMFolderImap *aFolder = (*it);
-            if (aFolder)
-                disconnect(aFolder,
-                        SIGNAL(folderComplete(KMFolderImap*, bool)),
-                        this,
-                        SLOT(slotFolderComplete(KMFolderImap*, bool)));
-        }
         mIncompleteFolders.clear();
         QValueListConstIterator<QGuardedPtr<KMFolder> > jt;
-        for (jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt) {
+        for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
             KMFolder *folder = *jt;
             if (folder)
                 folder->close();
         }
     }
-    mOpenedFolders.clear();
-    mRemainingMessages = -1;
     mRemainingFolders = -1;
+    mOpenedFolders.clear();
     mFolders.clear();
-    mLastFolder = "";
+    mLastFolder = QString::null;
     mRunByIndex = mRunning = false;
-    mIdle = false;
     emit finished(false);
 }
 
 void KMSearch::slotProcessNextBatch()
 {
-    if (!running())
+    if ( !running() )
         return;
-    mIdle = false;
 
-    if (mSerNums.count() != 0) {
-        int i = 10;
-        QValueListIterator<Q_UINT32> it;
-        for (it = mSerNums.begin(); it != mSerNums.end();) {
-            if (--i == 0)
-                break;
-
-            Q_UINT32 serNum = *it;
-            it = mSerNums.erase(it);
-            --mRemainingMessages;
-            ++mSearchedCount;
-
-            //TODO: matches should try header rules first and check
-            // rule->needsBody() and download imap message if needed
-            if (mSearchPattern && !mSearchPattern->matches(serNum))
-                continue;
-            emit found(serNum);
-            ++mFoundCount;
-        }
-        mProcessNextBatchTimer->start(0, true);
-        return;
-    }
-
-    if (mFolders.count() != 0) {
-        --mRemainingFolders;
-        KMFolder *folder = *(mFolders.begin());
-        if (folder) {
-            if (folder->isSystemFolder())
-                mLastFolder = i18n(folder->name().utf8());
-            else
-                mLastFolder = folder->name();
-        }
-        mFolders.erase(mFolders.begin());
-        if (folder) {
+    if ( mFolders.count() != 0 ) 
+    {
+        KMFolder *folder = *( mFolders.begin() );
+        mFolders.erase( mFolders.begin() );
+        if ( folder ) 
+        {
+            mLastFolder = folder->label();
             folder->open();
-            mOpenedFolders.append(folder);
-            for(int i = 0; i < folder->count(); ++i) {
-                Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(folder, i);
-                ++mRemainingMessages;
-                // Prepend message to the list to search newest mail first.
-                mSerNums.prepend(serNum);
-            }
-        }
-        mProcessNextBatchTimer->start(0, true);
+            mOpenedFolders.append( folder );
+            connect( folder->storage(), 
+                    SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
+                    this,
+                    SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> ) ) );
+            folder->storage()->search( mSearchPattern );
+        } else
+          --mRemainingFolders;
+        mProcessNextBatchTimer->start( 0, true );
         return;
     }
-    if (mRemainingFolders == 0) {
+}
+
+void KMSearch::slotSearchFolderDone( KMFolder* folder, QValueList<Q_UINT32> serNums )
+{
+    kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
+    --mRemainingFolders;
+    mSearchedCount += folder->count();
+    folder->close();
+    mOpenedFolders.remove( folder );
+    QValueListIterator<Q_UINT32> it;
+    for ( it = serNums.begin(); it != serNums.end(); ++it )
+    {
+        emit found( *it );
+        ++mFoundCount;
+    }
+    if ( mRemainingFolders <= 0 )
+    {
         mRunning = false;
-        QValueListConstIterator<QGuardedPtr<KMFolder> > it;
-        for (it = mOpenedFolders.begin(); it != mOpenedFolders.end(); ++it) {
-            KMFolder *folder = *it;
-            if (folder)
-                folder->close();
-        }
-        mOpenedFolders.clear();
-        mRemainingMessages = -1;
+        mLastFolder = QString::null;
         mRemainingFolders = -1;
         mFolders.clear();
-        mLastFolder = "";
-        emit finished(true);
-        return;
-    }
-
-    //wait for imap folders to be retrieved
-    mIdle = true;
-}
-
-void KMSearch::slotFolderComplete(KMFolderImap *folder, bool success)
-{
-    disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-            this, SLOT(slotFolderComplete(KMFolderImap*, bool)));
-
-    if (success) {
-        //if !(mSearchPattern.hasBodyRules())
-        mFolders.append(folder->folder());
-        //else
-        //  get all the bodies of messages in the folder, need kroupware body caching
-        if (mIdle)
-            mProcessNextBatchTimer->start(0, true);
-    } else {
-        stop();
+        emit finished( true );
     }
 }
-
 
 //-----------------------------------------------------------------------------
 KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)

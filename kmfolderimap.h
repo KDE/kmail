@@ -40,6 +40,7 @@ using KMail::ImapAccountBase;
 
 class KMFolderTreeItem;
 class KMFolderImap;
+class KMSearchPattern;
 namespace KMail {
   class FolderJob;
   class ImapJob;
@@ -285,6 +286,13 @@ public:
   /** Set the user's rights on this folder - called by getUserRights */
   void setUserRights( unsigned int userRights );
 
+  /** 
+    * Search for messages
+    * The actual search is done in slotSearch and the end
+    * is signaled with searchDone()
+    */
+  virtual void search( KMSearchPattern* );
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
@@ -345,6 +353,9 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
+
+  /** Generates an IMAP search command from the pattern */
+  QString searchStringFromPattern( KMSearchPattern* );
 
 protected slots:
 
@@ -417,6 +428,18 @@ protected slots:
    */
   void slotCreatePendingFolders();
 
+  /**
+   * Do an IMAP search
+   * It uses the mLastSearchPattern for this
+   */
+  void slotSearch();
+
+  /**
+   * Is called when the search is done
+   */ 
+  void slotSearchData( KIO::Job * job, const QString& data );
+  void slotSearchResult( KIO::Job * job );
+  
 protected:
   QString     mImapPath;
   ulong       mLastUid;
@@ -437,6 +460,8 @@ private:
   QGuardedPtr<ProgressItem> mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
   QStringList mFoldersPendingCreation;
+  // remember the SearchPattern
+  KMSearchPattern* mLastSearchPattern;
 };
 
 #endif // kmfolderimap_h

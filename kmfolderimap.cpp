@@ -29,6 +29,7 @@
 #include "kmfoldertree.h"
 #include "undostack.h"
 #include "kmfoldermgr.h"
+#include "kmmsgdict.h"
 #include "imapjob.h"
 using KMail::ImapJob;
 #include "attachmentstrategy.h"
@@ -1885,6 +1886,132 @@ void KMFolderImap::slotCreatePendingFolders()
     createFolder( *it );
   }
   mFoldersPendingCreation.clear();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::search( KMSearchPattern* pattern )
+{
+  mLastSearchPattern = pattern;
+
+  // first make sure the folder is complete
+  // needed for local searches and to map the uid to the serial number later
+  connect ( this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+            this, SLOT( slotSearch()) );
+  getFolder();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotSearch()
+{
+  disconnect ( this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+            this, SLOT( slotSearch()) );
+  QString searchString = searchStringFromPattern( mLastSearchPattern );
+  if ( !mLastSearchPattern->requiresBody() || 
+        searchString.isEmpty() )
+    return FolderStorage::search( mLastSearchPattern );
+
+  // do the IMAP search  
+  KURL url = mAccount->getUrl();
+  url.setPath( imapPath() + ";SECTION=" + searchString );
+  QByteArray packedArgs;
+  QDataStream stream( packedArgs, IO_WriteOnly );
+  stream << (int) 'E' << url;
+  KIO::SimpleJob *job = KIO::special( url, packedArgs, false );
+  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+  connect( job, SIGNAL(infoMessage(KIO::Job*,const QString&)),
+      SLOT(slotSearchData(KIO::Job*,const QString&)) );
+  connect( job, SIGNAL(result(KIO::Job *)),
+      SLOT(slotSearchResult(KIO::Job *)) );
+}
+
+//-----------------------------------------------------------------------------
+QString KMFolderImap::searchStringFromPattern( KMSearchPattern* pattern )
+{
+  QStringList parts;
+
+  for ( QPtrListIterator<KMSearchRule> it( *pattern ) ; it.current() ; ++it )
+  {
+    bool accept = true;
+    QString result;
+    if ( (*it)->function() == KMSearchRule::FuncContainsNot )
+      result = "NOT ";
+    else if ( (*it)->function() != KMSearchRule::FuncContains )
+      accept = false;
+
+    if ( (*it)->field() == "<message>" )
+      result += "TEXT ";
+    else if ( (*it)->field() == "<body>" )
+      result += "BODY ";
+    else
+      accept = false;
+
+    result += "\"" + (*it)->contents() + "\"";
+    if ( result.isEmpty() )
+      accept = false;
+
+    if ( accept )
+      parts += result;
+  }
+  
+  QString search;
+  if ( pattern->op() == KMSearchPattern::OpOr )
+    search = "(OR " + parts.join(" ") + ")";
+  else
+    search = parts.join(" ");
+
+  return search;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotSearchData( KIO::Job* job, const QString& data )
+{
+  if ( job->error() )
+   return; 
+  
+  QValueList<Q_UINT32> serNums;
+  // search for the serial number of the UIDs
+  // data contains all found uids separated by blank
+  if ( mLastSearchPattern->op() == KMSearchPattern::OpAnd )
+  {
+    for ( int i = 0; i < count(); ++i )
+    {
+      KMMsgBase * base = getMsgBase( i );
+      Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), i );
+      // merge imap search and local search
+      if ( data.contains( QString::number(base->UID()) ) &&
+           mLastSearchPattern->matches( serNum, true ) )
+      {
+        serNums.append( serNum );
+      }
+    }
+  } else if ( mLastSearchPattern->op() == KMSearchPattern::OpOr )
+  {
+    for ( int i = 0; i < count(); ++i )
+    {
+      KMMsgBase * base = getMsgBase( i );
+      Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), i );
+      // either imap search or local search have to match
+      if ( data.contains( QString::number(base->UID()) ) ||
+           mLastSearchPattern->matches( serNum, true ) )
+      {
+        serNums.append( serNum );
+      }
+    }
+  } else
+    kdDebug(5006) << k_funcinfo << "unknown operator" << endl;
+
+  emit searchDone( folder(), serNums );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotSearchResult(KIO::Job *job)
+{
+  if ( job->error() )
+  {
+    QValueList<Q_UINT32> serNums;
+    mAccount->handleJobError( job, i18n("Error while searching.") );
+    emit searchDone( folder(), serNums );
+  }
 }
 
 #include "kmfolderimap.moc"

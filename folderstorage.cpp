@@ -46,6 +46,7 @@
 #include "listjob.h"
 using KMail::ListJob;
 #include "kmailicalifaceimpl.h"
+#include "kmsearchpattern.h"
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -1004,6 +1005,19 @@ void FolderStorage::setContentsType( KMail::FolderContentsType type )
     writeConfig();
     kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
   }
+}
+
+//-----------------------------------------------------------------------------
+void FolderStorage::search( KMSearchPattern* pattern )
+{
+  QValueList<Q_UINT32> serNums;
+  for ( int i = 0; i < count(); ++i ) 
+  {
+    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( folder(), i );
+    if ( pattern->matches( serNum ) )
+      serNums.append( serNum );
+  }
+  emit searchDone( folder(), serNums );
 }
 
 #include "folderstorage.moc"

@@ -308,9 +308,9 @@ public:
 
       @return TRUE if the match was successful, FALSE otherwise.
   */
-  bool matches( const KMMessage * msg ) const;
-  bool matches( const DwString & str ) const;
-  bool matches( Q_UINT32 sernum ) const;
+  bool matches( const KMMessage * msg, bool ignoreBody = false ) const;
+  bool matches( const DwString & str, bool ignoreBody = false ) const;
+  bool matches( Q_UINT32 sernum, bool ignoreBody = false ) const;
 
   /** Returns true if the pattern only depends the DwString that backs
       a message */

@@ -95,8 +95,6 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
 
   connect(mCbxFolders, SIGNAL(activated(int)),
           this, SLOT(slotFolderActivated(int)));
-  connect(mCbxFolders, SIGNAL(activated(int)),
-          this, SLOT(slotFilterAvailableRules()));
     
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
@@ -241,11 +239,6 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   else
       kdDebug(5006) << "KMFldSearch: regExpLineEdit not found" << endl;
 
-  // Remove the <message> and <body> rule fields when searching imap folders
-  slotFilterAvailableRules();
-  connect(mChkbxAllFolders, SIGNAL(toggled(bool)),
-          this, SLOT(slotFilterAvailableRules()));
-
   //set up actions
   KActionCollection *ac = actionCollection();
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", 0, this,
@@ -364,21 +357,6 @@ void KMFldSearch::slotFolderActivated(int /*nr*/)
     mChkbxSpecificFolders->setChecked(true);
     mBtnSearch->setEnabled(folder);
 }
-
-
-//-----------------------------------------------------------------------------
-void KMFldSearch::slotFilterAvailableRules()
-{
-    static bool lastHeadersOnly = false;
-    KMFolder* folder = mCbxFolders->getFolder();
-    bool headersOnly = folder->folderType() == KMFolderTypeImap;
-    if (mChkbxAllFolders->isChecked())
-	headersOnly = false;
-    if (headersOnly != lastHeadersOnly)
-	mPatternEdit->setHeadersOnly( headersOnly );
-    lastHeadersOnly = headersOnly;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::activateFolder(KMFolder *curFolder)

@@ -950,6 +950,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Per-identity cryptographic message format preselection"),
   I18N_NOOP("Per-contact crypto preferences"),
   I18N_NOOP("List only opened IMAP folders"),
+  I18N_NOOP("Searching in IMAP messages fully supported"),
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
