@@ -189,4 +189,4 @@ messages: rc.cpp
 
 kde_kcfg_DATA = kmail.kcfg replyphrases.kcfg custommimeheader.kcfg
 
-include ../admin/Doxyfile.am
+include $(top_srcdir)/doc/api/Doxyfile.am
