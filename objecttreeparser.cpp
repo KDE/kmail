@@ -1199,16 +1199,17 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     partNode* dataPlain =
       curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
 
-    if ( !mReader || (mReader->htmlMail() && dataHtml) ) {
+    if ( !mReader || (mReader->htmlMail() && dataHtml) ||
+         (dataHtml && dataPlain && dataPlain->msgPart().body().isEmpty()) ) {
       if ( dataPlain )
-	dataPlain->mWasProcessed = true;
+        dataPlain->mWasProcessed = true;
       ObjectTreeParser otp( *this );
       otp.setShowOnlyOneMimePart( false );
       otp.parseObjectTree( dataHtml );
       mResultString += otp.resultString();
     } else if ( !mReader || (!mReader->htmlMail() && dataPlain) ) {
       if ( dataHtml )
-	dataHtml->mWasProcessed = true;
+        dataHtml->mWasProcessed = true;
       ObjectTreeParser otp( *this );
       otp.setShowOnlyOneMimePart( false );
       otp.parseObjectTree( dataPlain );
