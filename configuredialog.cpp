@@ -536,10 +536,8 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
   //
   mReceivingTab = new ReceivingTab();
   addTab( mReceivingTab, i18n( "&Receiving" ) );
-
   connect( mReceivingTab, SIGNAL(accountListChanged(const QStringList &)),
 	   this, SIGNAL(accountListChanged(const QStringList &)) );
-  load();
 
   //
   // "Sending" tab:
@@ -549,6 +547,7 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
   connect( mSendingTab, SIGNAL(transportListChanged(const QStringList&)),
 	   this, SIGNAL(transportListChanged(const QStringList&)) );
 
+  load();
 }
 
 QString NetworkPage::SendingTab::helpAnchor() const {
