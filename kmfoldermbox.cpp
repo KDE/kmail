@@ -16,6 +16,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <knotifyclient.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -79,6 +80,8 @@ int KMFolderMbox::open()
   mStream = fopen(location().local8Bit(), "r+"); // messages file
   if (!mStream)
   {
+    KNotifyClient::event("warning", 
+    i18n("Cannot open file \"%1\":\n%2").arg(location()).arg(strerror(errno)));
     kdDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
     return errno;
@@ -220,6 +223,7 @@ void KMFolderMbox::sync()
 	!mIndexStream || fsync(fileno(mIndexStream))) {
 	kdDebug(5006) << "Error: Could not sync folder" << endl;
 	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
+        KNotifyClient::event("fatalerror", i18n("Not enough free disk space."));
 	exit(1);
     }
 }
@@ -775,6 +779,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
       truncate( location().local8Bit(), revert );
     }
     kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
+    KNotifyClient::event("fatalerror", i18n("Not enough free disk space."));
     exit(1);
     /* This code is not 100% reliable
     bool busy = kernel->kbp()->isBusy();
