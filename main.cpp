@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
                    KMAIL_VERSION,
 		   I18N_NOOP("The KDE Email client."),
 		   KAboutData::License_GPL,
-                   I18N_NOOP("(c) 1997-2001, The KMail developers"),
+                   I18N_NOOP("(c) 1997-2002, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
   about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Current maintainer"), "haeckel@kde.org" );
