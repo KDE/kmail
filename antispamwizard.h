@@ -103,7 +103,7 @@ namespace KMail {
 
       /** Constructor that needs to initialize from the main folder tree
         of KMail.
-        &param mode The mode the wizard should run in.
+        @param mode The mode the wizard should run in.
         @param parent The parent widget for the wizard.
         @param mainFolderTree The main folder tree from which the folders
           are copied to allow the selection of a spam folder in a tree

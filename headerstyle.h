@@ -40,7 +40,7 @@ namespace KMail {
   class HeaderStrategy;
 
   /** This class encapsulates the visual appearance of message
-      headers. Together with @ref HeaderStrategy, which determines
+      headers. Together with @see HeaderStrategy, which determines
       which of the headers present in the message be shown, it is
       responsible for the formatting of message headers.
 

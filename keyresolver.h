@@ -54,7 +54,7 @@ namespace Kleo {
   /**
      \short A class to resolve signing/encryption keys w.r.t. per-recipient preferences
 
-     \sect Step 1: Set the information needed
+     \section Step 1: Set the information needed
 
      The constructor takes some basic options as arguments, such as
      whether or not encryption was actually requested. Recipient and
@@ -63,7 +63,7 @@ namespace Kleo {
      setPrimaryRecipients() (To/Cc) and \c setSecondaryRecipients()
      (Bcc).
 
-     \sect Step 2: Lookup and check per-recipient crypto preferences / Opportunistic Encryption
+     \section Step 2: Lookup and check per-recipient crypto preferences / Opportunistic Encryption
 
      First, \c checkSigningPreferences() goes through all recipient's
      signing perferences, to determine whether or not to sign. It also
@@ -91,21 +91,21 @@ namespace Kleo {
      <dt>Impossible</dt><dd>Signing or encryption is impossible,
      e.g. due to missing keys or unsupported formats.</dd> </dl>
 
-     \sect Step 3: Resolve all keys.
+     \section Step 3: Resolve all keys.
 
      In case signing or encryption was implicitly or explicitly
      requested by the user, \c resolveAllKeys() tries to find signing
      keys for each required format, as well as encryption keys for all
      recipients (incl. the sender, if encrypt-to-self is set).
 
-     \sect Step 4: Get signing keys.
+     \section Step 4: Get signing keys.
 
      If, after key resolving, signing is still requested and
      apparently possible, you can get the result of all this by
      iterating over the available message formats and retrieving the
      set of signing keys to use with a call to \c signingKeys().
 
-     \sect Step 5: Get encrytion key sets.
+     \section Step 5: Get encrytion key sets.
 
      If after key resolving, encryption is still requested and
      apparently possible, you can get the result of all this by

@@ -603,7 +603,7 @@ private:
       move is TRUE this slot will cause all selected messages to
       be moved into the given folder, otherwise messages will be
       copied.
-      Am empty @ref KMMenuToFolder must be passed in. */
+      Am empty @see KMMenuToFolder must be passed in. */
 
 class KMMenuCommand : public KMCommand
 {

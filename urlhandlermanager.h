@@ -49,7 +49,7 @@ namespace KMail {
   }
 
   /**
-   * @short Singleton to manage the list of @ref URLHandlers
+   * @short Singleton to manage the list of @see URLHandlers
    * @author Marc Mutz <mutz@kde.org>
    */
   class URLHandlerManager {

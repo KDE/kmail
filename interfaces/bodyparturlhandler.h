@@ -48,7 +48,7 @@ namespace KMail {
      * @author Marc Mutz <mutz@kde.org>
      *
      * This interface is a condensed of variant of the more general
-     * @ref URLHandler interface, designed to make bodypart-dependent
+     * @see URLHandler interface, designed to make bodypart-dependent
      * link operations possible without exposing KMail-internal
      * classes.
      *

@@ -42,7 +42,7 @@ class KTempFile;
 class KMFilterAction
 {
 public:
-  /** Possible return codes of @ref process:
+  /** Possible return codes of @see process:
 
       @li @p ErrorNeedComplete: Could not process because a
       complete message is needed.
@@ -127,7 +127,7 @@ public:
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
 
-  /** Temporarily open folder. Will be closed by the next @ref
+  /** Temporarily open folder. Will be closed by the next @see
     KMFilterMgr::cleanup() call.  */
   static int tempOpenFolder(KMFolder* aFolder);
 
@@ -149,12 +149,12 @@ private:
 
 
 /** Abstract base class for KMail's filter actions that need no
-    parameter, e.g. 'bounce'. Creates an (empty) @ref QWidget as
+    parameter, e.g. 'bounce'. Creates an (empty) @see QWidget as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
 
     @short Abstract base class for filter actions with no parameter.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
@@ -173,7 +173,7 @@ public:
   virtual void argsFromString(const QString) {};
 
   /** Return extra arguments as string. Must not contain newlines. We
-      return @ref QString::null, because we have no parameter. */
+      return @see QString::null, because we have no parameter. */
   virtual const QString argsAsString() const { return QString::null; }
 };
 
@@ -186,11 +186,11 @@ public:
 
 /** Abstract base class for KMail's filter actions that need a
     free-form parameter, e.g. 'set transport' or 'set reply to'.  Can
-    create a @ref QLineEdit as parameter widget. A subclass of this
+    create a @see QLineEdit as parameter widget. A subclass of this
     must provide at least implementations for the following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
 
     @short Abstract base class for filter actions with a free-form string as parameter.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
@@ -248,8 +248,8 @@ protected:
     parameter that has a UOID, e.g. "set identity". A subclass of this
     must provide at least implementations for the following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
     @li the *ParamWidget* methods.
 
     @short Abstract base class for filter actions with a free-form string as parameter.
@@ -289,14 +289,14 @@ protected:
 
 /** Abstract base class for KMail's filter actions that need a
     parameter which can be chosen from a fixed set, e.g. 'set
-    identity'.  Can create a @ref QComboBox as parameter widget. A
+    identity'.  Can create a @see QComboBox as parameter widget. A
     subclass of this must provide at least implementations for the
     following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
 
-    Additionally, it's constructor should populate the @ref
+    Additionally, it's constructor should populate the @see
     QStringList @p mParameterList with the valid parameter
     strings. The combobox will then contain be populated automatically
     with those strings. The default string will be the first one.
@@ -347,11 +347,11 @@ protected:
 
 /** Abstract base class for KMail's filter actions that need a
     mail folder as parameter, e.g. 'file into folder'. Can
-    create a @ref QComboBox as parameter widget. A subclass of this
+    create a @see QComboBox as parameter widget. A subclass of this
     must provide at least implementations for the following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
 
     @short Abstract base class for filter actions with a mail folder as parameter.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
@@ -413,13 +413,13 @@ protected:
 
 
 /** Abstract base class for KMail's filter actions that need a mail
-    address as parameter, e.g. 'forward to'. Can create a @ref
+    address as parameter, e.g. 'forward to'. Can create a @see
     QComboBox (capable of completion from the address book) as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
 
     @short Abstract base class for filter actions with a mail address as parameter.
     @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
@@ -459,15 +459,15 @@ public:
 
 
 /** Abstract base class for KMail's filter actions that need a command
-    line as parameter, e.g. 'forward to'. Can create a @ref QLineEdit
+    line as parameter, e.g. 'forward to'. Can create a @see QLineEdit
     (are there better widgets in the depths of the kdelibs?) as
     parameter widget. A subclass of this must provide at least
     implementations for the following methods:
 
-    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
-    @li static @ref KMFilterAction::newAction
+    @li virtual @see KMFilterAction::ReturnCodes @see KMFilterAction::process
+    @li static @see KMFilterAction::newAction
 
-    The implementation of @ref KMFilterAction::process should take the
+    The implementation of @see KMFilterAction::process should take the
     command line specified in mParameter, make all required
     modifications and stream the resulting command line into @p
     mProcess. Then you can start the command with @p mProcess.start().
@@ -599,7 +599,7 @@ typedef KMFilterAction* (*KMFilterActionNewFunc)(void);
 
 
 //-----------------------------------------------------------------------------
-/** Auxiliary struct to @ref KMFilterActionDict.  */
+/** Auxiliary struct to @see KMFilterActionDict.  */
 struct KMFilterActionDesc
 {
   QString label, name;
@@ -608,8 +608,8 @@ struct KMFilterActionDesc
 
 /** Dictionary that contains a list of all registered filter actions
     with their creation functions. They are hard-coded into the
-    constructor. If you want to add a new @ref KMFilterAction, make
-    sure you add the details of it in @ref init, too.
+    constructor. If you want to add a new @see KMFilterAction, make
+    sure you add the details of it in @see init, too.
 
     You will be able to find a description of a KMFilterAction by
     looking up either it's (english) name or it's (i18n) label:
@@ -621,7 +621,7 @@ struct KMFilterActionDesc
     KMFilterAction *action = dict["transfer"]->create();
     </pre>
 
-    You can iterate over all known filter actions by using @ref list.
+    You can iterate over all known filter actions by using @see list.
 
     @short List of known KMFilterAction-types.
     @author Marc Mutz <Marc@Mutz.com>, based on work by Stefan Taferner <taferner@kde.org>
@@ -634,10 +634,10 @@ public:
   KMFilterActionDict();
 
   /** Overloaded member function, provided for convenience. Thin
-      wrapper around @ref QDict::insert and @ref
-      QPtrList::insert. Inserts the resulting @ref KMFilterActionDesc
+      wrapper around @see QDict::insert and @see
+      QPtrList::insert. Inserts the resulting @see KMFilterActionDesc
       thrice: First with the name, then with the label as key into the
-      @ref @QDict, then into the @ref QPtrList. For that, it creates an
+      @see QDict, then into the @see QPtrList. For that, it creates an
       instance of the action internally and deletes it again after
       querying it for name and label. */
   void insert(KMFilterActionNewFunc aNewFunc);
@@ -647,7 +647,7 @@ public:
   const QPtrList<KMFilterActionDesc>& list() const { return mList; }
 
 protected:
-  /** Populate the dictionary with all known @ref KMFilterAction
+  /** Populate the dictionary with all known @see KMFilterAction
      types. Called automatically from the constructor. */
   virtual void init(void);
 

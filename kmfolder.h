@@ -45,7 +45,7 @@ typedef QValueList<Q_UINT32> SerNumList;
 /** Mail folder.
  * (description will be here).
  *
- * @sect Accounts:
+ * @section Accounts:
  *   The accounts (of KMail) that are fed into the folder are
  *   represented as the children of the folder. They are only stored here
  *   during runtime to have a reference for which accounts point to a

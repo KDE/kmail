@@ -70,37 +70,37 @@ namespace KMail {
    * Operate this interface in one and only one of the following two
    * modes:
    *
-   * @sect Sync Mode
+   * @section Sync Mode
    *
-   * In sync mode, use @ref #begin() to initiate a session, then @ref
-   * #write() some chunks of HTML code and finally @ref #end() the session.
+   * In sync mode, use @see #begin() to initiate a session, then @see
+   * #write() some chunks of HTML code and finally @see #end() the session.
    *
-   * @sect Async Mode
+   * @section Async Mode
    *
-   * In async mode, use @ref #begin() to initialize a session, then
-   * @ref #queue() some chunks of HTML code and finally end the
-   * session by calling @ref #flush().
+   * In async mode, use @see #begin() to initialize a session, then
+   * @see #queue() some chunks of HTML code and finally end the
+   * session by calling @see #flush().
    *
    * Queued HTML code is fed to the html sink using a timer. For this
    * to work, control must return to the event loop so timer events
    * are delivered.
    *
-   * @sect Combined mode
+   * @section Combined mode
    *
    * You may combine the two modes in the following way only. Any
-   * number of @ref #write() calls can precede @ref #queue() calls,
-   * but once a chunk has been queued, you @em must @em not @ref
-   * #write() more data, only @ref #queue() it.
+   * number of @see #write() calls can precede @see #queue() calls,
+   * but once a chunk has been queued, you @em must @em not @see
+   * #write() more data, only @see #queue() it.
    *
    * Naturally, whenever you queued data in a given session, that
-   * session must be ended by calling @ref #flush(), not @ref #end().
+   * session must be ended by calling @see #flush(), not @see #end().
    */
   class HtmlWriter : public Interface::HtmlWriter {
   public:
     virtual ~HtmlWriter() {}
 
     /** Stop all possibly pending processing in order to be able to
-	call @ref #begin() again. */
+	call @see #begin() again. */
     virtual void reset() = 0;
 
     virtual void queue( const QString & str ) = 0;

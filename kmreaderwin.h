@@ -186,7 +186,7 @@ public:
 
   bool isFixedFont() { return mUseFixedFont; }
 
-  /** Return the @ref HtmlWriter connected to the @ref KHTMLPart we use */
+  /** Return the @see HtmlWriter connected to the @see KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 
   // Action to reply to a message
@@ -223,7 +223,7 @@ public:
 
   void setUpdateAttachment() { mAtmUpdate = true; }
 
-  /** Access to the @ref KHTMLPart used for the viewer. Use with
+  /** Access to the @see KHTMLPart used for the viewer. Use with
       care! */
   KHTMLPart * htmlPart() const { return mViewer; }
 

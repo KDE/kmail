@@ -44,7 +44,7 @@ public:
   /** Sets body, encoded in the best fitting
       content-transfer-encoding, which is determined by character
       frequency count.
-      
+
       @param aBuf       input buffer
       @param allowedCte return: list of allowed cte's
       @param allow8Bit  whether "8bit" is allowed as cte.
@@ -145,7 +145,7 @@ public:
   /** Set the message part charset. */
   void setCharset( const QCString & c );
 
-  /** Get a @ref QTextCodec suitable for this message part */
+  /** Get a @see QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
 
   /** Get or set name parameter */

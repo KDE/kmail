@@ -38,7 +38,7 @@
 
 namespace KMail {
 
-  /** @short A @ref QDragObject for @ref KPIM::Identity
+  /** @short A @see QDragObject for @see KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
   class IdentityDrag : public QDragObject {

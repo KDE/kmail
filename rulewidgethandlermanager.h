@@ -47,7 +47,7 @@ namespace KMail {
   class RuleWidgetHandler;
 
   /**
-   * @short Singleton to manage the list of @ref RuleWidgetHandlers
+   * @short Singleton to manage the list of @see RuleWidgetHandlers
    */
   class RuleWidgetHandlerManager {
     static RuleWidgetHandlerManager * self;

@@ -47,7 +47,7 @@ public:
 
   /** A new folder has been selected update the list of headers shown
    * To override the global settings for jumping to the first unread msg
-   * use @p forceJumpToUnread 
+   * use @p forceJumpToUnread
    */
   virtual void setFolder(KMFolder *, bool forceJumpToUnread = false);
 
@@ -364,7 +364,7 @@ private:
   /** */
   bool writeSortOrder();
   /** */
-  bool readSortOrder( bool set_selection = false, 
+  bool readSortOrder( bool set_selection = false,
       bool forceJumpToUnread = false );
 
   /** Updated as side effect of KMHeaders::getMsg */
@@ -373,7 +373,7 @@ private:
   bool getMsgMulti;
   /** ditto */
   KMHeaderItem* getMsgItem;
-  /** @ref KMHeaders::selectedMsgs isn't reentrant */
+  /** @see KMHeaders::selectedMsgs isn't reentrant */
   KMMessageList mSelMsgBaseList;
   QPtrList<KMMessage> mSelMsgList;
   KMHeaderItem* mPrevCurrent;

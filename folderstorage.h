@@ -71,7 +71,7 @@ typedef QValueList<Q_UINT32> SerNumList;
 /** Mail folder.
  * (description will be here).
  *
- * @sect Accounts:
+ * @section Accounts:
  *   The accounts (of KMail) that are fed into the folder are
  *   represented as the children of the folder. They are only stored here
  *   during runtime to have a reference for which accounts point to a
@@ -406,7 +406,7 @@ public:
   /// @return the type of contents held in this folder (mail, calendar, etc.)
   KMail::FolderContentsType contentsType() const { return mContentsType; }
 
-  /** 
+  /**
     * Search for messages
     * The end is signaled with searchDone()
     */
@@ -454,9 +454,9 @@ signals:
   /** Emitted when a folder was removed */
   void removed(KMFolder*, bool);
 
-  /** 
+  /**
    * Emitted when a search is completed
-   * The matching serial numbers are included 
+   * The matching serial numbers are included
    */
   void searchDone( KMFolder*, QValueList<Q_UINT32> serNums );
 

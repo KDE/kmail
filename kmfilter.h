@@ -27,7 +27,7 @@ const int FILTER_MAX_ACTIONS = 8;
 class KMFilter
 {
 public:
-  /** Result codes returned by @ref process. They mean:
+  /** Result codes returned by @see process. They mean:
 
       @param GoOn Everything OK. You are still the owner of the
       message and you should continue applying filter actions to this
@@ -156,12 +156,12 @@ public:
 
   /** Set whether this filter should be plugged into the filter menu.
   */
-  void setConfigureShortcut( bool aShort ) { 
-    bConfigureShortcut = aShort; 
-    bConfigureToolbar = bConfigureToolbar && bConfigureShortcut; 
+  void setConfigureShortcut( bool aShort ) {
+    bConfigureShortcut = aShort;
+    bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
   }
-  
-  /** @return TRUE if this filter should be plugged into the filter menu, 
+
+  /** @return TRUE if this filter should be plugged into the filter menu,
       FALSE otherwise.
       @see setConfigureShortcut
   */
@@ -171,23 +171,23 @@ public:
       This can be done only if a shortcut is defined.
       @see setConfigureShortcut
   */
-  void setConfigureToolbar( bool aTool ) { 
-    bConfigureToolbar = aTool && bConfigureShortcut; 
+  void setConfigureToolbar( bool aTool ) {
+    bConfigureToolbar = aTool && bConfigureShortcut;
   }
-  
-  /** @return TRUE if this filter should be plugged into the toolbar, 
+
+  /** @return TRUE if this filter should be plugged into the toolbar,
       FALSE otherwise.
       @see setConfigureToolbar
   */
   bool configureToolbar() const { return bConfigureToolbar; }
 
-  /** Set the icon to be used if plugged into the filter menu 
+  /** Set the icon to be used if plugged into the filter menu
       or toolbar. Default is the gear icon.
       @see setConfigureShortcut setConfigureToolbar
   */
   void setIcon( QString icon ) { mIcon = icon; }
-  
-  /** @return The name of the icon to be used. 
+
+  /** @return The name of the icon to be used.
       @see setIcon
   */
   QString icon() const { return mIcon; }

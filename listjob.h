@@ -50,7 +50,7 @@ namespace KMail {
 
 /**
  * Generic folder list job for (d)imap accounts
- */ 
+ */
 class ListJob : public FolderJob
 {
   Q_OBJECT
@@ -59,6 +59,7 @@ public:
    * Create a new job
    * @param storage the parent folder, either provide this or a path
    * @param account the ImapAccountBase
+   * @param type Type of subscription
    * @param secondStep if this is the second listing (when a prefix is set)
    * @param complete list all folders or only next level
    * @param hasInbox if you already have an inbox
@@ -68,7 +69,7 @@ public:
    */
   ListJob( FolderStorage* storage, ImapAccountBase* account,
            ImapAccountBase::ListType type,
-           bool secondStep = false, bool complete = false, 
+           bool secondStep = false, bool complete = false,
            bool hasInbox = false, const QString& path = QString::null,
            KPIM::ProgressItem* item = 0 );
 
@@ -114,9 +115,9 @@ protected:
   bool mSecondStep;
   bool mComplete;
   QString mPath;
-  QStringList mSubfolderNames, mSubfolderPaths, 
+  QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
-  KPIM::ProgressItem* mParentProgressItem;            
+  KPIM::ProgressItem* mParentProgressItem;
 };
 
 } // namespace

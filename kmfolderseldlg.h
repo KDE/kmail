@@ -33,7 +33,7 @@ class KMFolderSelDlg: public KDialogBase
   Q_OBJECT
 
 public:
-  /** Constructor. @p parent @em must be a @ref KMMainWin, because we
+  /** Constructor. @p parent @em must be a @see KMMainWin, because we
       need its foldertree.
    * @param mustBeReadWrite if true, readonly folders are disabled
    */

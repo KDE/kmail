@@ -43,13 +43,13 @@ namespace KMail {
    * @short An interface to reader link handlers
    * @author Marc Mutz <mutz@kde.org>
    *
-   * The @ref KMReaderWin parameters are temporary until such time as
+   * The @see KMReaderWin parameters are temporary until such time as
    * the Memento-store is in place.
    */
   class URLHandler {
   public:
     virtual ~URLHandler() {}
-    
+
     /** Called when LMB-clicking on a link in the reader. Should start
 	processing equivalent to "opening" the link.
 

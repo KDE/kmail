@@ -48,7 +48,7 @@ public:
 		    size_t msgSize=0,
             size_t msgSizeServer = 0, ulong UID = 0);
 
-  /** Inherited methods (see @ref KMMsgBase for description): */
+  /** Inherited methods (see @see KMMsgBase for description): */
   virtual QString subject(void) const;
   virtual QString fromStrip(void) const;
   virtual QString toStrip(void) const;

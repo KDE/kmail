@@ -124,7 +124,7 @@ k_dcop_hidden:
    * Returns true if the command line was handled, false if it was empty and
    * not handled (due to noArgsOpensReader==false).
    */
-  virtual bool handleCommandLine( bool /*noArgsOpensReader*/ ) = 0;
+  virtual bool handleCommandLine( bool noArgsOpensReader ) = 0;
   /**
    *
    * DCOP-enabled for use in kaddressbook drop

@@ -176,7 +176,7 @@ public:
    */
   KMMessage* createRedirect();
   // new implementation, ATM only used for redirect filter action
-  KMMessage* createRedirect2( const QString &toStr ); 
+  KMMessage* createRedirect2( const QString &toStr );
 
   /** Create a new message that is a "failed delivery" reply to this
     message, filling all required header fields with the proper
@@ -203,8 +203,8 @@ public:
 
       @param a Use AutomaticAction for filtering and ManualAction for
                user-induced events.
-      @param d See docs for @ref KMime::MDN::DispositionType
-      @param m See docs for @ref KMime::MDN::DispositionModifier
+      @param d See docs for @see KMime::MDN::DispositionType
+      @param m See docs for @see KMime::MDN::DispositionModifier
       @param allowGUI Set to true if this method is allowed to ask the
                       user questions
 
@@ -231,8 +231,8 @@ public:
       slow for large message since it involves a string copy. If you
       need the string representation only for a short time
       (i.e. without the chance of calling any function in the
-      underlying mimelib, then you should use the @ref asByteArray,
-      which is more efficient or use the @ref asDwString function.
+      underlying mimelib, then you should use the @see asByteArray,
+      which is more efficient or use the @see asDwString function.
       @see asByteArray
       @see asDwString
   */
@@ -281,8 +281,8 @@ public:
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
-      searches with @ref KPIM::IdentityManager::identityForAddress()
-      and if that fails queries the @ref #parent() folder for a default.
+      searches with @see KPIM::IdentityManager::identityForAddress()
+      and if that fails queries the @see #parent() folder for a default.
    **/
   uint identityUoid() const;
 
@@ -428,7 +428,7 @@ public:
       and does not overwrite an existing header field with the same name.
   */
   void setHeaderField( const QCString& name, const QString& value,
-                       HeaderFieldType type = Unstructured, 
+                       HeaderFieldType type = Unstructured,
                        bool prepend = false );
 
   /** Returns a list of the values of all header fields with the given name. */
@@ -738,7 +738,7 @@ public:
   /** Get a list of preferred message charsets.*/
   static const QStringList &preferredCharsets();
 
-  /** Replaces every occurrence of "${foo}" in @p s with @ref
+  /** Replaces every occurrence of "${foo}" in @p s with @see
       headerField("foo") */
   QString replaceHeadersInString( const QString & s ) const;
 
@@ -748,7 +748,7 @@ public:
   /** Set the message charset. */
   void setCharset(const QCString& aStr);
 
-  /** Get a @ref QTextCodec suitable for this message part */
+  /** Get a @see QTextCodec suitable for this message part */
   const QTextCodec * codec() const;
 
   /** Set the charset the user selected for the message to display */

@@ -249,7 +249,7 @@ protected:
   /**
    * Send receipt of message back to sender (confirming
    *   delivery). Checks the config settings, calls
-   *   @ref KMMessage::createDeliveryReceipt and queues the resulting
+   *   @see KMMessage::createDeliveryReceipt and queues the resulting
    *   message in @p mReceipts.
    */
   virtual void sendReceipt(KMMessage* msg);

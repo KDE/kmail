@@ -49,7 +49,7 @@ class ScheduledJob;
 /**
  * A scheduled task is some information about a folder job that should be run later.
  * As long as it's not running, it's called a "task", i.e. something that needs to be done.
- * Tasks are held in the @ref JobScheduler.
+ * Tasks are held in the @see JobScheduler.
  */
 class ScheduledTask {
 public:

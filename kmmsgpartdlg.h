@@ -37,7 +37,7 @@ public:
       convenience. It behaves essentially like the above function.
 
       Sets the mime type to be displayed, but only if @p mimeType
-      passes @ref KMimeTypeValidator's test.  */
+      passes @see KMimeTypeValidator's test.  */
   void setMimeType( const QString & mimeType );
   /** Sets the initial list of mime types to be displayed in the
       combobox. The items are @em not validated. */
@@ -47,7 +47,7 @@ public:
       strictly informational and thus can't be queried. If @p approx
       is true, the size is an estimation based on typical */
   void setSize( KIO::filesize_t size, bool estimated=false );
-  
+
   /** Returns the current file name of the attachment. Note that this
       doesn't define which file is being attached. It only defines
       what the attachment's filename parameter should contain. */
@@ -78,9 +78,9 @@ public:
   /** Sets the encoding to use */
   void setEncoding( Encoding encoding );
   /** Sets the list of encodings to be shown. @p encodings is the
-      bitwise OR of @ref Encoding flags */
+      bitwise OR of @see Encoding flags */
   void setShownEncodings( int encodings );
-  
+
   /** Returns true if the attchment has a content-disposition of
       "inline", false otherwise. */
   bool isInline() const;

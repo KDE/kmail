@@ -41,7 +41,7 @@ class QString;
 namespace KMail {
 
 
-  /** @short A @ref HtmlWriter that dispatches all calls to a list of other @ref HtmlWriters
+  /** @short A @see HtmlWriter that dispatches all calls to a list of other @see HtmlWriters
       @author Marc Mutz <mutz@kde.org>
   **/
   class TeeHtmlWriter : public KMail::HtmlWriter {
