@@ -191,8 +191,9 @@ protected:
   KMFolder     *mFolder;
   QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
-    KSelectAction *mEncoding;
-    bool		mIntegrated;
+  KSelectAction *mEncoding;
+  QString	mEncodingStr;
+  bool		mIntegrated;
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
   QString       mNewMailCmd;

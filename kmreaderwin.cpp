@@ -197,6 +197,7 @@ void KMReaderWin::readColorConfig(void)
 void KMReaderWin::readConfig(void)
 {
   KConfig *config = kapp->config();
+  QString encoding;
 
   config->setGroup("Pixmaps");
   mBackingPixmapOn = FALSE;
@@ -210,7 +211,9 @@ void KMReaderWin::readConfig(void)
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
 							   SmartAttmnt);
-
+  encoding = config->readEntry("encoding", "iso8859-1" );
+  mCodec = QTextCodec::codecForName(encoding);
+  mAutoDetectEncoding = config->readBoolEntry("autodetect-encoding", true );
 
 #ifndef KRN
   int i, diff;
@@ -257,11 +260,16 @@ void KMReaderWin::readConfig(void)
 void KMReaderWin::writeConfig(bool aWithSync)
 {
   KConfig *config = kapp->config();
+  QString encoding = "";
+  if (mCodec)
+      encoding = mCodec->name();
 
   config->setGroup("Reader");
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
   config->writeEntry("attmnt-style",(int)mAttachmentStyle);
+  config->writeEntry("encoding", encoding);
+  config->writeEntry("autodetect-encoding", mAutoDetectEncoding);
 
   if (aWithSync) config->sync();
 }
@@ -486,6 +494,7 @@ void KMReaderWin::parseMsg(void)
   QString type = mMsg->typeStr().lower();
 
   if (mAutoDetectEncoding) {
+    mCodec = 0;
     QString encoding;
     if (type.find("text/") != -1)
       encoding = mMsg->charset();

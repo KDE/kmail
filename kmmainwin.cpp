@@ -144,6 +144,9 @@ void KMMainWin::readPreConfig(void)
 
   config->setGroup("Geometry");
   mLongFolderList = config->readBoolEntry("longFolderList", false);
+
+  config->setGroup("General");
+  mEncodingStr = config->readEntry("encoding", "");
 }
 
 
@@ -294,6 +297,7 @@ void KMMainWin::writeConfig(void)
   config->writeEntry("Panners", s);
 
   config->setGroup("General");
+  config->writeEntry("encoding", mEncodingStr);
 }
 
 
@@ -413,11 +417,11 @@ void KMMainWin::activatePanners(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetEncoding()
 {
-     QString enc = mEncoding->currentText();
+     mEncodingStr = mEncoding->currentText();
      if (mEncoding->currentItem() == 0) // Auto
        mCodec = 0;
      else
-       mCodec = KGlobal::charsets()->codecForName( enc );
+       mCodec = KGlobal::charsets()->codecForName( mEncodingStr );
      mMsgView->setCodec(mCodec);
      return;
 }
@@ -1373,6 +1377,8 @@ void KMMainWin::setupMenuBar()
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
   mEncoding->setCurrentItem(0);
+  if (encodings.findIndex( mEncodingStr ) != -1)
+      mEncoding->setCurrentItem(encodings.findIndex( mEncodingStr ));
 
   (void) new KAction( i18n("Edi&t..."), Key_T, this,
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
