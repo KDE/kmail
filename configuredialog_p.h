@@ -716,11 +716,13 @@ public slots:
 
 protected slots:
   void slotPlugSelectionChanged();
+  void slotRescan();
 
 private:
   KListView     *mPlugList;
   QPushButton   *mActivateButton;
   QPushButton   *mConfigureButton;
+  QPushButton   *mRescanButton;
   QLineEdit     *mNameEdit;
 };
 

@@ -3476,6 +3476,14 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   connect( mConfigureButton, SIGNAL(clicked()),
 	   SLOT(slotConfigurePlugIn()) );
 
+  // "Rescan..." button:
+  mRescanButton = new QPushButton( i18n("Rescan"), this );
+  mRescanButton->setAutoDefault( false );
+  vlay->addWidget( mRescanButton );
+
+  connect( mRescanButton, SIGNAL(clicked()),
+	   SLOT(slotRescan()) );
+
   vlay->addStretch( 1 );
 }
 
@@ -3624,6 +3632,11 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
   emit changed( true );
 }
 
+void SecurityPage::CryptPlugTab::slotRescan() {
+  KMail::CryptPlugFactory::instance()->scanForBackends();
+  load();
+  emit changed( true ); // you never know...
+}
 
 // *************************************************************
 // *                                                           *
