@@ -83,6 +83,7 @@ using KMail::SignatureConfigurator;
 #include <qvbuttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
+#include <qlayout.h>
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qlineedit.h>
@@ -99,9 +100,6 @@ using KMail::SignatureConfigurator;
 #include <qradiobutton.h>
 #include <qspinbox.h>
 #include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-//#include <qfiledialog.h>
 #include "cryptplugwrapperlist.h"
 #include "cryptplugwrapper.h"
 #include "signatureconfigurationdialog.h"
@@ -200,9 +198,6 @@ ConfigureDialog::ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
 
   page = addPage( PluginPage::iconLabel(), PluginPage::title(),
 		  loadIcon( PluginPage::iconName() ) );
-
-//  page = new QWidget();
-
   vlay = new QVBoxLayout( page, 0, spacingHint() );
   mPluginPage = new PluginPage( mCryptPlugList, page );
   vlay->addWidget( mPluginPage );
@@ -357,6 +352,8 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   QHBoxLayout *hlay;
   QPushButton *button;
   QWidget     *tab;
+  QLabel      *label;
+  QString      msg;
   int row;
 
   //
@@ -449,11 +446,20 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 			       i18n("Re&ply-To address:"), tab ), row, 0 );
 
   // "BCC addresses" line edit and label:
-  row++;
+  ++row;
   mBccEdit = new QLineEdit( tab );
   glay->addWidget( mBccEdit, row, 1 );
-  glay->addWidget( new QLabel( mBccEdit,
-			       i18n("&BCC addresses:"), tab ), row, 0 );
+  label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
+  glay->addWidget( label, row, 0 );
+  msg = i18n("<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
+	     "<p>The addresses that you enter here will be added to each"
+	     "   outgoing mail that is sent with this identity. They will not"
+	     "   be visible to other recipients.</p>"
+	     "<p>This is commonly used to send a copy of each sent message to"
+	     "   another account of yours.</p>"
+	     "<p>If in doubt, leave this field blank.</p></qt>");
+  QWhatsThis::add( label, msg );
+  QWhatsThis::add( mBccEdit, msg );
 
   // "OpenPGP Key" requester and label:
   ++row;
@@ -464,12 +470,15 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 					   "should be used to sign your "
 					   "messages and when encrypting to "
 					   "yourself.") );
-  QWhatsThis::add( mPgpKeyRequester,
-		   i18n("<qt><p>The OpenPGP key you choose here will be used "
-			"to sign messages and to encrypt messages to "
-			"yourself.</p></qt>") );
+  msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
+	     "to sign messages and to encrypt messages to "
+	     "yourself.</p></qt>");
 
-  glay->addWidget( new QLabel( mPgpKeyRequester, i18n("OpenPGP &key:"), tab ), row, 0 );
+  label = new QLabel( mPgpKeyRequester, i18n("OpenPGP &key:"), tab );
+  QWhatsThis::add( mPgpKeyRequester, msg );
+  QWhatsThis::add( label, msg );
+
+  glay->addWidget( label, row, 0 );
   glay->addWidget( mPgpKeyRequester, row, 1 );
   
   // "Sent-mail Folder" combo box and label:
