@@ -460,7 +460,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   }
 
   KMComposeWin *cWin = new KMComposeWin();
-  cWin->setMsg( msg, false /* mayAutoSign */ );
+  cWin->setMsg( msg, !isICalInvitation /* mayAutoSign */ );
   cWin->setAutoDelete( true );
   if( noWordWrap )
     cWin->slotWordWrapToggled( false );
