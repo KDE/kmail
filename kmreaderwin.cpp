@@ -1076,7 +1076,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Multiple messages can now be selected in the search dialog."),
   I18N_NOOP("New context menu in the search dialog with Move, Copy, Reply etc. actions for operating on selected messages."),
   I18N_NOOP("Search criteria in the search dialog now supports more types of rules and a variable number of rules."),
-  I18N_NOOP("Faster searching of large messsages."),
+  I18N_NOOP("Faster searching of large messages."),
   I18N_NOOP("'Search Folders' which are a KMail folder that stores a search expression and is dynamically updated (also known as virtual folders)."),
   I18N_NOOP("The separate window for reading mail has a context menu with Reply, Copy etc. actions for operating on the message displayed."),
   I18N_NOOP("The separate window for reading mail has a tool bar."),

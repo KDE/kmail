@@ -72,7 +72,7 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
 
 KMReaderMainWin::~KMReaderMainWin()
 {
-  saveMainWindowSettings(KMKernel::config(), "Seperate Reader Window");
+  saveMainWindowSettings(KMKernel::config(), "Separate Reader Window");
 }
 
 

@@ -406,7 +406,7 @@ QWidget* KMGroupwareWizard::createLanguagePage()
   QTextBrowser* text = new QTextBrowser(  page );
   text->setText( i18n("If you want to make your groupware folders work with other "
 		    "applications, you might want to select a different language "
-		    "than english.<br>"
+		    "than English.<br>"
 		    "If this is not an issue, leave the language as it is."));
   top->addWidget( text );
 

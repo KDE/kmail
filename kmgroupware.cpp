@@ -1567,7 +1567,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QCString& vCal, QString
 {
   VCalType type = getVCalType( vCal );
   if( type == vCalUnknown ) {
-    kdDebug(5006) << "Unkown incidence!\n";
+    kdDebug(5006) << "Unknown incidence!\n";
     return false;
   }
 
@@ -1644,9 +1644,9 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QCString& vCal, QString
     }
   } else if( sMethod == "cancel" ) {
     if( type == vCalEvent ) {
-      prefix = i18n("The event %1 was cancelled").arg(sSummary);
+      prefix = i18n("The event %1 was canceled").arg(sSummary);
     } else if( type == vCalTodo ) {
-      prefix = i18n("The task %1 was cancelled").arg(sSummary);
+      prefix = i18n("The task %1 was canceled").arg(sSummary);
     }
   }
 

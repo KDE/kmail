@@ -68,7 +68,7 @@ IdentityManager::IdentityManager( QObject * parent, const char * name )
 IdentityManager::~IdentityManager()
 {
   kdWarning( hasPendingChanges(), 5006 )
-    << "IdentityManager: There were uncommited changes!" << endl;
+    << "IdentityManager: There were uncommitted changes!" << endl;
 }
 
 void IdentityManager::commit()

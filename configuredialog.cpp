@@ -3336,7 +3336,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "at all.</p></qt>");
   QWhatsThis::add( mSendReceivedReceiptCheck, msg );
 
-  msg = i18n( "<qt><h3>Message Dispositon Notification Policy</h3>"
+  msg = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
 	      "<p>MDNs are a generalization of what is commonly called \"read"
  	      "   receipt\". The message author requests a disposition"
  	      "   notification to be sent and the receiver's mail program"
