@@ -170,14 +170,14 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
-  mEdtFrom = new KMLineEdit(this,false,mMainWidget, "fromLine");
+  mEdtFrom = new KMLineEdit(false,mMainWidget, "fromLine");
   if ( mClassicalRecipients ) {
     mRecipientsEditor = 0;
 
-    mEdtReplyTo = new KMLineEdit(this,true,mMainWidget, "replyToLine");
-    mEdtTo = new KMLineEdit(this,true,mMainWidget, "toLine");
-    mEdtCc = new KMLineEdit(this,true,mMainWidget, "ccLine");
-    mEdtBcc = new KMLineEdit(this,true,mMainWidget, "bccLine");
+    mEdtReplyTo = new KMLineEdit(true,mMainWidget, "replyToLine");
+    mEdtTo = new KMLineEdit(true,mMainWidget, "toLine");
+    mEdtCc = new KMLineEdit(true,mMainWidget, "ccLine");
+    mEdtBcc = new KMLineEdit(true,mMainWidget, "bccLine");
 
     mLblReplyTo = new QLabel(mMainWidget);
     mLblTo = new QLabel(mMainWidget);
@@ -236,8 +236,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mBtnReplyTo = 0;
 
     mRecipientsEditor = new RecipientsEditor( mMainWidget );
+
+    mRecipientsEditor->setFocus();
   }
-  mEdtSubject = new KMLineEditSpell(this,false,mMainWidget, "subjectLine");
+  mEdtSubject = new KMLineEditSpell(false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
   mDictionaryLabel = new QLabel( mMainWidget );
   mLblFcc = new QLabel(mMainWidget);
@@ -784,7 +786,6 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mGrid->setColStretch(2, 1);
   mGrid->setRowStretch(mNumHeaders, 100);
 
-  mEdtList.clear();
   row = 0;
   kdDebug(5006) << "KMComposeWin::rethinkFields" << endl;
   if (!fromSlot) mAllFieldsAction->setChecked(showHeaders==HDR_ALL);
@@ -804,16 +805,23 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("sender address field", "&From:"),
                     mLblFrom, mEdtFrom /*, mBtnFrom */ );
+  QWidget *prevFocus = mEdtFrom;
   if ( mClassicalRecipients ) {
     if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
     rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
                     mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
+    if ( showHeaders & HDR_REPLY_TO ) {
+      prevFocus = connectFocusMoving( prevFocus, mEdtReplyTo );
+    }
     if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
     rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("recipient address field", "&To:"),
                     mLblTo, mEdtTo, mBtnTo,
                     i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
                          "in this field receive a copy of the email.</qt>"));
+    if ( showHeaders & HDR_TO ) {
+      prevFocus = connectFocusMoving( prevFocus, mEdtTo );
+    }
     if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
     rethinkHeaderLine(showHeaders, HDR_CC, row, i18n("&Copy to (CC):"),
                     mLblCc, mEdtCc, mBtnCc,
@@ -825,6 +833,9 @@ void KMComposeWin::rethinkFields(bool fromSlot)
                          "that it usually symbolises the receiver of the "
                          "Carbon Copy (CC) is a listener, not the main "
                          "recipient.</qt>"));
+    if ( showHeaders & HDR_CC ) {
+      prevFocus = connectFocusMoving( prevFocus, mEdtCc );
+    }
     if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
     rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Blind copy to (BCC):"),
                     mLblBcc, mEdtBcc, mBtnBcc,
@@ -833,13 +844,29 @@ void KMComposeWin::rethinkFields(bool fromSlot)
                          "as the <b>Copy To:</b> field but differs in that "
                          "all other recipients do not see who receives a "
                          "blind copy.</qt>"));
+    if ( showHeaders & HDR_BCC ) {
+      prevFocus = connectFocusMoving( prevFocus, mEdtBcc );
+    }
   } else {
     mGrid->addMultiCellWidget( mRecipientsEditor, row, row, 0, 2 );
     ++row;
+
+    connect( mEdtFrom, SIGNAL( focusDown() ), mRecipientsEditor,
+      SLOT( setFocusTop() ) );
+    connect( mRecipientsEditor, SIGNAL( focusUp() ), mEdtFrom, SLOT( setFocus() ) );
+    
+    connect( mRecipientsEditor, SIGNAL( focusDown() ), mEdtSubject,
+      SLOT( setFocus() ) );
+    connect( mEdtSubject, SIGNAL( focusUp() ), mRecipientsEditor,
+      SLOT( setFocusBottom() ) );
+
+    prevFocus = mRecipientsEditor;
   }
   if (!fromSlot) mSubjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
                     mLblSubject, mEdtSubject);
+  connectFocusMoving( mEdtSubject, mEditor );
+
   assert(row<=mNumHeaders);
 
   mGrid->addMultiCellWidget(mSplitter, row, mNumHeaders, 0, 2);
@@ -866,6 +893,13 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mSubjectAction->setEnabled(!mAllFieldsAction->isChecked());
 }
 
+QWidget *KMComposeWin::connectFocusMoving( QWidget *prev, QWidget *next )
+{
+  connect( prev, SIGNAL( focusDown() ), next, SLOT( setFocus() ) );
+  connect( next, SIGNAL( focusUp() ), prev, SLOT( setFocus() ) );
+
+  return next;
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
@@ -890,7 +924,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->setBackgroundColor( mBackColor );
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
-    mEdtList.append(aEdt);
 
     mGrid->addWidget(aEdt, aRow, 1);
     if (aBtn)
@@ -3843,27 +3876,6 @@ void KMComposeWin::slotSpellcheckDoneClearStatus()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
-{
-  QWidget* cur;
-
-  if (!aCur)
-  {
-    cur=mEdtList.last();
-  }
-  else
-  {
-    for (cur=mEdtList.first(); aCur!=cur && cur; cur=mEdtList.next())
-      ;
-    if (!cur) return;
-    if (aNext) cur = mEdtList.next();
-    else cur = mEdtList.prev();
-  }
-  if (cur) cur->setFocus();
-  else if (aNext) mEditor->setFocus(); //Key up from first doea nothing (sven)
-}
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::slotIdentityChanged( uint uoid )
 {
   const KPIM::Identity & ident =
@@ -4575,9 +4587,9 @@ QCString KMAtmListViewItem::uncompressedCodec()
 //
 //=============================================================================
 
-KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
+KMLineEdit::KMLineEdit(bool useCompletion,
                        QWidget *parent, const char *name)
-    : KPIM::AddresseeLineEdit(parent,useCompletion,name), mComposer(composer)
+    : KPIM::AddresseeLineEdit(parent,useCompletion,name)
 {
 }
 
@@ -4585,27 +4597,23 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
 //-----------------------------------------------------------------------------
 void KMLineEdit::keyPressEvent(QKeyEvent *e)
 {
-    if ( mComposer ) {
-        // ---sven's Return is same Tab and arrow key navigation start ---
-        if ((e->key() == Key_Enter || e->key() == Key_Return) &&
-            !completionBox()->isVisible())
-        {
-          mComposer->focusNextPrevEdit(this,TRUE);
-          return;
-        }
-        if (e->key() == Key_Up)
-        {
-          mComposer->focusNextPrevEdit(this,FALSE); // Go up
-          return;
-        }
-        if (e->key() == Key_Down)
-        {
-          mComposer->focusNextPrevEdit(this,TRUE); // Go down
-          return;
-        }
-        // ---sven's Return is same Tab and arrow key navigation end ---
-    }
-    AddresseeLineEdit::keyPressEvent(e);
+  if ((e->key() == Key_Enter || e->key() == Key_Return) &&
+      !completionBox()->isVisible())
+  {
+    emit focusDown();
+    return;
+  }
+  if (e->key() == Key_Up)
+  {
+    emit focusUp();
+    return;
+  }
+  if (e->key() == Key_Down)
+  {
+    emit focusDown();
+    return;
+  }
+  AddresseeLineEdit::keyPressEvent(e);
 }
 
 
@@ -4724,9 +4732,9 @@ void KMLineEdit::loadContacts()
 }
 
 
-KMLineEditSpell::KMLineEditSpell(KMComposeWin* composer, bool useCompletion,
+KMLineEditSpell::KMLineEditSpell(bool useCompletion,
                        QWidget *parent, const char *name)
-    : KMLineEdit(composer,useCompletion,parent,name)
+    : KMLineEdit(useCompletion,parent,name)
 {
 }
 
@@ -4909,7 +4917,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     if (mUseExtEditor) {
       if (k->key() == Key_Up)
       {
-        mComposer->focusNextPrevEdit(0, false); //take me up
+        emit focusUp();
         return TRUE;
       }
 
@@ -4957,7 +4965,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       && lineOfChar(0, currentColumn()) == 0)
     {
       deselect();
-      mComposer->focusNextPrevEdit(0, false); //take me up
+      emit focusUp();
       return TRUE;
     }
     // ---sven's Arrow key navigation end ---
@@ -4965,7 +4973,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     if (k->key() == Key_Backtab && k->state() == ShiftButton)
     {
       deselect();
-      mComposer->focusNextPrevEdit(0, false);
+      emit focusUp();
       return TRUE;
     }
 

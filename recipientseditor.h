@@ -74,6 +74,7 @@ class RecipientLine : public QWidget
     void setRecipient( const QString & );
 
     void activate();
+    bool isActive();
 
   signals:
     void returnPressed( RecipientLine * );
@@ -107,8 +108,14 @@ class RecipientsView : public QScrollView
   public slots:
     RecipientLine *addLine();
 
+    void setFocus();
+    void setFocusTop();
+    void setFocusBottom();
+
   signals:
     void totalChanged( int );
+    void focusUp();
+    void focusDown();
 
   protected:
     void viewportResizeEvent( QResizeEvent * );
@@ -159,6 +166,15 @@ class RecipientsEditor : public QWidget
 
     void setRecipientString( const QString &, Recipient::Type );
     QString recipientString( Recipient::Type );
+
+  public slots:
+    void setFocus();
+    void setFocusTop();
+    void setFocusBottom();
+
+  signals:
+    void focusUp();
+    void focusDown();
 
   protected slots:
     void slotPickedRecipient( const QString & );

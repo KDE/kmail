@@ -154,6 +154,11 @@ void RecipientLine::activate()
   mEdit->setFocus();
 }
 
+bool RecipientLine::isActive()
+{
+  return mEdit->hasFocus();
+}
+
 void RecipientLine::slotReturnPressed()
 {
   emit returnPressed( this );
@@ -224,7 +229,9 @@ void RecipientsView::slotReturnPressed( RecipientLine *line )
 void RecipientsView::slotDownPressed( RecipientLine *line )
 {
   int pos = mLines.find( line );
-  if ( pos >= 0 && pos < (int)mLines.count() - 1 ) {
+  if ( pos >= (int)mLines.count() - 1 ) {
+    emit focusDown();
+  } else if ( pos >= 0 ) {
     mLines.at( pos + 1 )->activate();
   }
 }
@@ -234,6 +241,8 @@ void RecipientsView::slotUpPressed( RecipientLine *line )
   int pos = mLines.find( line );
   if ( pos > 0 ) {
     mLines.at( pos - 1 )->activate();
+  } else {
+    emit focusUp();
   }
 }
 
@@ -278,6 +287,26 @@ Recipient::List RecipientsView::recipients() const
   }
   
   return recipients;
+}
+
+void RecipientsView::setFocus()
+{
+  if ( mLines.last()->isActive() ) setFocusBottom();
+  else setFocusTop();
+}
+
+void RecipientsView::setFocusTop()
+{
+  RecipientLine *line = mLines.first();
+  if ( line ) line->activate();
+  else kdWarning() << "No first" << endl;
+}
+
+void RecipientsView::setFocusBottom()
+{
+  RecipientLine *line = mLines.last();
+  if ( line ) line->activate();
+  else  kdWarning() << "No last" << endl;
 }
 
 
@@ -338,6 +367,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
 
   mRecipientsView = new RecipientsView( this );
   topLayout->addWidget( mRecipientsView );
+  connect( mRecipientsView, SIGNAL( focusUp() ), SIGNAL( focusUp() ) );
+  connect( mRecipientsView, SIGNAL( focusDown() ), SIGNAL( focusDown() ) );
 
   SideWidget *side = new SideWidget( mRecipientsView, this );
   topLayout->addWidget( side );
@@ -394,6 +425,21 @@ QString RecipientsEditor::recipientString( Recipient::Type type )
 
 void RecipientsEditor::clear()
 {
+}
+
+void RecipientsEditor::setFocus()
+{
+  mRecipientsView->setFocus();
+}
+
+void RecipientsEditor::setFocusTop()
+{
+  mRecipientsView->setFocusTop();
+}
+
+void RecipientsEditor::setFocusBottom()
+{
+  mRecipientsView->setFocusBottom();
 }
 
 #include "recipientseditor.moc"

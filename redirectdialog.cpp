@@ -59,7 +59,7 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   
   QHBox *hbox = new QHBox( vbox );
   hbox->setSpacing(4);
-  mEditTo = new KMLineEdit( 0, true, hbox, "toLine" );
+  mEditTo = new KMLineEdit( true, hbox, "toLine" );
   mEditTo->setMinimumWidth( 300 );
 
   mBtnTo = new QPushButton( QString::null, hbox, "toBtn" );

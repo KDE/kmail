@@ -139,6 +139,7 @@ public:
 signals:
   void spellcheck_done(int result);
   void pasteImage();
+  void focusUp();
 public slots:
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString&);
@@ -186,8 +187,13 @@ class KMLineEdit : public KPIM::AddresseeLineEdit
 {
     Q_OBJECT
 public:
-    KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
+    KMLineEdit(bool useCompletion, QWidget *parent = 0,
                const char *name = 0);
+
+signals:
+    void focusUp();
+    void focusDown();
+
 protected:
     // Inherited. Always called by the parent when this widget is created.
     virtual void loadContacts();
@@ -200,7 +206,6 @@ private slots:
     void editRecentAddresses();
 
 private:
-    KMComposeWin* mComposer;
     void dropEvent( QDropEvent *event );
     void insertEmails( QStringList emails );
 };
@@ -210,7 +215,7 @@ class KMLineEditSpell : public KMLineEdit
 {
     Q_OBJECT
 public:
-    KMLineEditSpell(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
+    KMLineEditSpell(bool useCompletion, QWidget *parent = 0,
                const char *name = 0);
     void highLightWord( unsigned int length, unsigned int pos );
     void spellCheckDone( const QString &s );
@@ -572,11 +577,6 @@ public slots:
   void slotView();
 
   /**
-   * Move focus to next/prev edit widget
-   */
-  void focusNextPrevEdit(const QWidget* current, bool next);
-
-  /**
    * Update composer field to reflect new identity
    */
   void slotIdentityChanged(uint);
@@ -642,6 +642,11 @@ protected:
    * created if necessary.
    */
   void rethinkFields(bool fromslot=false);
+
+  /**
+    Connect signals for moving focus by arrow keys. Returns next edit.
+  */
+  QWidget *connectFocusMoving( QWidget *prev, QWidget *next );
 
   /**
    * Show or hide header lines
@@ -818,7 +823,6 @@ protected:
   bool mUseHTMLEditor;
   bool mHtmlMarkup;
   QFont mBodyFont, mFixedFont;
-  QPtrList<QWidget> mEdtList;
   QPtrList<KTempFile> mAtmTempList;
   QPalette mPalette;
   uint mId;
