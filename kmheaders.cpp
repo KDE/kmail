@@ -507,13 +507,10 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       {
         setMsgRead(id);
 	setCurrentItemByIndex(id);
-	if ((mSortCol == 3) && !mSortDescending)
-	  setTopItemByIndex( id );
-	/* Doesn't work, that is center this item, don't know why not
-	int h = (mItems[id]->height()+1)/2;
-	setTopItemByIndex( id );
-	center( contentsX(), itemPos( mItems[id] )+h );
-	*/
+	//	if ((mSortCol == 3) && !mSortDescending)
+	//	  setTopItemByIndex( id );
+	//	else
+	  center( contentsX(), itemPos(item), 0, 9.0 );
       }
       else
       {
@@ -1245,6 +1242,8 @@ void KMHeaders::nextUnreadMessage()
 {
   int i = findUnread(TRUE);
   setCurrentMsg(i);
+  if ((i >= 0) && (i < (int)mItems.size()))
+    center( contentsX(), itemPos(mItems[i]), 0, 9.0 );
 }
 
 
@@ -1253,6 +1252,8 @@ void KMHeaders::prevUnreadMessage()
 {
   int i = findUnread(FALSE);
   setCurrentMsg(i);
+  if ((i >= 0) && (i < (int)mItems.size()))
+    center( contentsX(), itemPos(mItems[i]), 0, 9.0 );
 }
 
 
@@ -1299,6 +1300,7 @@ void KMHeaders::updateMessageList(void)
   long i;
   KMMsgBase* mb;
   bool autoUpd;
+  int id = currentItemIndex();
 
   KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
   //    clear();
@@ -1331,7 +1333,13 @@ void KMHeaders::updateMessageList(void)
     mb = mFolder->getMsgBase(i);
     assert(mb != NULL); // otherwise using count() above is wrong
 
-    if (i >= oldSize) {
+    if (i == id) {
+      // Try to ensure the current item always changes
+      delete mItems[id];
+      KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+      mItems.operator[](i) = hi;      
+    }
+    else if (i >= oldSize) {
       KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
       mItems.operator[](i) = hi;
     }
