@@ -291,6 +291,7 @@ public:
 
 private:
   bool mFixedFont;
+  bool mMsgWasComplete;
 };
 
 class KMSaveMsgCommand : public KMCommand

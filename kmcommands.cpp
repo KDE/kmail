@@ -628,11 +628,15 @@ KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
   KMMessage *msg, bool fixedFont )
   :KMCommand( parent, msg ), mFixedFont( fixedFont )
 {
+  // remember complete state
+  mMsgWasComplete = msg->isComplete();
 }
 
 KMCommand::Result KMShowMsgSrcCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
+  if ( msg->isComplete() && !mMsgWasComplete )
+    msg->notify(); // notify observers as msg was transfered
   QString str = msg->codec()->toUnicode( msg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
