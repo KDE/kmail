@@ -192,6 +192,9 @@ public:
   /// Set the storage format of a given folder. Called when seeing the kolab annotation.
   void setStorageFormat( KMFolder* folder, StorageFormat format );
 
+  /// The folder holding the standard resource folders
+  KMFolderDir* standardResourceFolderParent() const { return mFolderParentDir; }
+
   static const char* annotationForContentsType( KMail::FolderContentsType type );
 
 public slots:
