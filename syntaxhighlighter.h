@@ -88,6 +88,7 @@ private:
     static QDict<int> dict;
     static QObject *sDictionaryMonitor;
     KSpell *mSpell;
+    bool mRehighlightRequested;
 };
 
 }; //namespace KMail

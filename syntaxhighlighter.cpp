@@ -173,6 +173,7 @@ QObject *DictSpellChecker::sDictionaryMonitor = 0;
 DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
     : SpellChecker( textEdit )
 {
+    mRehighlightRequested = false;
     mSpell = 0;
     if (!sDictionaryMonitor)
 	sDictionaryMonitor = new QObject();
@@ -195,7 +196,10 @@ void DictSpellChecker::slotSpellReady( KSpell *spell )
     }
     connect( spell, SIGNAL( misspelling (const QString &, const QStringList &, unsigned int) ),
 	     this, SLOT( slotMisspelling (const QString &, const QStringList &, unsigned int)));
-    QTimer::singleShot(0, this, SLOT(slotRehighlight()));
+    if (!mRehighlightRequested) {
+	mRehighlightRequested = true;
+	QTimer::singleShot(0, this, SLOT(slotRehighlight()));
+    }
 }
 
 bool DictSpellChecker::isMisspelled( const QString& word )
@@ -224,7 +228,10 @@ void DictSpellChecker::slotMisspelling (const QString & originalword, const QStr
     dict.replace( originalword, NotOkay );
 
     // this is slow but since kspell is async this will have to do for now
-    QTimer::singleShot(0, this, SLOT(slotRehighlight()));
+    if (!mRehighlightRequested) {
+	mRehighlightRequested = true;
+	QTimer::singleShot(0, this, SLOT(slotRehighlight()));
+    }
 }
 
 void DictSpellChecker::dictionaryChanged()
@@ -237,6 +244,7 @@ void DictSpellChecker::dictionaryChanged()
 
 void DictSpellChecker::slotRehighlight()
 {
+    mRehighlightRequested = false;
     rehighlight();
 }
 
