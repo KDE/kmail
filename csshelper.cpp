@@ -136,7 +136,7 @@ namespace KMail {
     inline QColor fixValue( const QColor & c, int newV ) {
       int h, s, v;
       c.hsv( &h, &s, &v );
-      return QColor( h, s, newV );
+      return QColor( h, s, newV, QColor::Hsv );
     }
 
     inline int getValueOf( const QColor & c ) {
