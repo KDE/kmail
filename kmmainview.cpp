@@ -7,6 +7,7 @@
 #include <qtstream.h>
 #include <kmsgbox.h>
 #include <kpanner.h>
+#include <klocale.h>
 
 #include "util.h"
 #include "kmcomposewin.h"
@@ -48,21 +49,28 @@ KMMainView::KMMainView(QWidget *parent, const char *name):
 //-----------------------------------------------------------------------------
 void KMMainView::initSeparated()
 {
-  vertPanner=new KPanner(this, NULL,KPanner::O_VERTICAL,30);
+  vertPanner=new KPanner(NULL, NULL,KPanner::O_VERTICAL,30);
   connect(vertPanner, SIGNAL(positionChanged()),
 	  this, SLOT(pannerHasChanged()));
 
-  folderTree = new KMFolderTree(vertPanner->child0());
+  folderTree = new KMFolderTree(NULL, "foldertree-seperated");
   connect(folderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
+  folderTree->setCaption(nls->translate("KMail Folders"));
+  folderTree->resize(folderTree->size());
+  folderTree->show();
 
-  headers = new KMHeaders(vertPanner->child1());
+  headers = new KMHeaders;
   connect(headers, SIGNAL(messageSelected(KMMessage*)),
 	  this, SLOT(messageSelected(KMMessage *)));
+  headers->setCaption(nls->translate("KMail Message List"));
+  headers->resize(headers->size());
+  headers->show();
 
   horzPanner = NULL;
   Integrated = FALSE;
 
+  resize(10,10);
 }
 
 
@@ -77,7 +85,7 @@ void KMMainView::initIntegrated()
   connect(vertPanner, SIGNAL(positionChanged()),
 	  this, SLOT(pannerHasChanged()));
 
-  folderTree = new KMFolderTree(vertPanner->child0());
+  folderTree = new KMFolderTree(vertPanner->child0(), "foldertree-integrated");
   connect(folderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
 

@@ -40,6 +40,7 @@ public:
   virtual const QString& path(void) const;
 
   const QString& name(void) const { return mName; }
+  void setName(const QString& aName) { mName = aName; }
 
 protected:
   QString mName;

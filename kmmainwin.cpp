@@ -24,6 +24,7 @@
 #include "kmmainwin.moc"
 
 
+//-----------------------------------------------------------------------------
 KMMainWin::KMMainWin(QWidget *, char *name) :
         KMMainWinInherited(name)
 {
@@ -41,6 +42,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 	windowCount++;
 }
 
+
+//-----------------------------------------------------------------------------
 void KMMainWin::parseConfiguration()
 {
 	KConfig *config;
@@ -56,6 +59,7 @@ void KMMainWin::parseConfiguration()
 	}
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
 {
 	QPopupMenu *fileMenu = new QPopupMenu();
@@ -104,6 +108,7 @@ void KMMainWin::setupMenuBar()
 	setMenu(menuBar);
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::setupToolBar()
 {
 	QString pixdir = kapp->kdedir();
@@ -162,6 +167,7 @@ void KMMainWin::setupToolBar()
 	addToolBar(toolBar);
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::setupStatusBar()
 {
 	statusBar = new KStatusBar(this);
@@ -170,6 +176,7 @@ void KMMainWin::setupStatusBar()
 	setStatusBar(statusBar);
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::doAbout()
 {
 	KMsgBox::message(this,"About",
@@ -182,15 +189,18 @@ void KMMainWin::doAbout()
 }
 
 
+//-----------------------------------------------------------------------------
 void KMMainWin::doClose() {
 	close();
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::doHelp()
 {
 	KApplication::getKApplication()->invokeHTMLHelp("","");
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::doNewMailReader()
 {
 	KMMainWin *d;
@@ -199,6 +209,7 @@ void KMMainWin::doNewMailReader()
 	d->resize(d->size());
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::doSettings()
 {
 	KMSettings *d=new KMSettings(this);
@@ -206,6 +217,7 @@ void KMMainWin::doSettings()
 	delete d;
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::doUnimplemented()
 {
 	KMsgBox::message(this,"Oops",
@@ -213,6 +225,7 @@ void KMMainWin::doUnimplemented()
 	 "We are sorry for the inconvenience.",1);
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::closeEvent(QCloseEvent *e)
 {
 	KTopLevelWidget::closeEvent(e);
@@ -227,6 +240,7 @@ void KMMainWin::closeEvent(QCloseEvent *e)
 	if (!(--windowCount)) qApp->quit();
 }
 
+//-----------------------------------------------------------------------------
 void KMMainWin::show(void)
 {
 	KMMainWinInherited::show();

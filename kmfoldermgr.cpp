@@ -3,6 +3,7 @@
 #include <qdir.h>
 #include <assert.h>
 #include "kmfoldermgr.h"
+#include "kmfolder.h"
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const char* aBasePath)
@@ -43,9 +44,23 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
   dir.setPath(mBasePath);
   if (!dir.exists())
   {
+    KMFolder fld(&mDir);
+
     warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
 	    "KMail will create it now.");
     dir.mkdir(mBasePath, TRUE);
+
+    fld.setName("inbox");
+    fld.create();
+    fld.close();
+
+    fld.setName("outbox");
+    fld.create();
+    fld.close();
+
+    fld.setName("trash");
+    fld.create();
+    fld.close();
   }
 
   mDir.setPath(mBasePath);

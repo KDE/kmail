@@ -84,6 +84,8 @@ static void init(int argc, char *argv[])
 //-----------------------------------------------------------------------------
 static void cleanup(void)
 {
+  app->getConfig()->sync();
+
   qInstallMsgHandler(oldMsgHandler);
 
   if (msgSender) delete msgSender;

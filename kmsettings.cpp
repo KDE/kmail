@@ -1,26 +1,34 @@
+// kmsettings.cpp
+#include <qdir.h>
 #include <qlabel.h>
 #include <qpushbt.h>
 #include <qfiledlg.h>
 #include <qframe.h>
 #include <kmsgbox.h>
 #include <qlayout.h>
+#include <qgrpbox.h>
+#include <qlayout.h>
 #include "util.h"
 #include "kmmainwin.h"
 #include "kmaccount.h"
 #include "kmacctmgr.h"
+#include "kmacctfolder.h"
 #include "kmglobal.h"
 #include "kmsender.h"
+#include "ktablistbox.h"
 #include <klocale.h>
 //------
 #include "kmsettings.moc"
 
 //-----------------------------------------------------------------------------
 KMSettings::KMSettings(QWidget *parent, const char *name) :
-  QTabDialog(parent,name,TRUE)
+  QTabDialog(parent, name, TRUE)
 {
+  initMetaObject();
+
   config=app->getConfig();
   setCaption(nls->translate("Settings"));
-  resize(570,545);
+  resize(500,600);
   setCancelButton();
   setDefaultButton();
   connect(this,SIGNAL(defaultButtonPressed()),this,SLOT(setDefaults()));
@@ -41,7 +49,7 @@ KMSettings::~KMSettings()
 QLineEdit* KMSettings::createLabeledEntry(QWidget* parent, QGridLayout* grid,
 					  const char* aLabel,
 					  const char* aText, 
-					  int gridx, int gridy,
+					  int gridy, int gridx,
 					  QPushButton** detail_return)
 {
   QLabel* label = new QLabel(parent);
@@ -55,8 +63,8 @@ QLineEdit* KMSettings::createLabeledEntry(QWidget* parent, QGridLayout* grid,
   grid->addWidget(label, gridy, gridx++);
 
   if (aText) edit->setText(aText);
-  edit->setMinimumSize(100, label->height());
-  edit->setMaximumSize(1000, label->height());
+  edit->setMinimumSize(100, label->height()+2);
+  edit->setMaximumSize(1000, label->height()+2);
   grid->addWidget(edit, gridy, gridx++);
 
   if (detail_return)
@@ -72,18 +80,33 @@ QLineEdit* KMSettings::createLabeledEntry(QWidget* parent, QGridLayout* grid,
 
 
 //-----------------------------------------------------------------------------
+QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
+					  const char* label, 
+					  int gridy, int gridx)
+{
+  QPushButton* button = new QPushButton(parent, label);
+  button->setText(nls->translate(label));
+  button->adjustSize();
+  button->setMinimumSize(button->size());
+  grid->addWidget(button, gridy, gridx);
+
+  return button;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMSettings::createTabIdentity(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 8, 3, 6, 3);
+  QGridLayout* grid = new QGridLayout(tab, 8, 3, 20, 6);
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, "Name", NULL, 0, 0);
-  orgEdit = createLabeledEntry(tab, grid, "Organization", NULL, 0, 1);
-  emailEdit = createLabeledEntry(tab, grid, "Email Address", NULL, 0, 2);
-  replytoEdit = createLabeledEntry(tab, grid, "Reply-To Address", NULL, 0, 3);
+  orgEdit = createLabeledEntry(tab, grid, "Organization", NULL, 1, 0);
+  emailEdit = createLabeledEntry(tab, grid, "Email Address", NULL, 2, 0);
+  replytoEdit = createLabeledEntry(tab, grid, "Reply-To Address", NULL, 3, 0);
 
-  sigEdit = createLabeledEntry(tab, grid, "Signature File", NULL, 0, 4, 
+  sigEdit = createLabeledEntry(tab, grid, "Signature File", NULL, 4, 0, 
 			       &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
 
@@ -98,9 +121,9 @@ void KMSettings::createTabIdentity(QWidget* parent)
   grid->setColStretch(1,1);
   grid->setColStretch(2,0);
 
-  addTab(tab,nls->translate("Identity"));
-  grid->activate();
   identityTab = tab;
+  addTab(tab, nls->translate("Identity"));
+  grid->activate();
 }
 
 
@@ -108,89 +131,46 @@ void KMSettings::createTabIdentity(QWidget* parent)
 void KMSettings::createTabNetwork(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 8, 3, 6, 3);
+  QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
+  QGridLayout* grid;
+  QGroupBox*   grp;
+  QButtonGroup*   bgrp;
   QPushButton* button;
+  QLabel* label;
+  KMAccount* act;
+  QString str;
 
-#ifdef BROKEN
-  nameEdit = createLabeledEntry(tab, grid, "Name", NULL, 0, 0);
+  networkTab = tab;
 
-  networkTab = new QWidget(parent);
+  //---- group: sending mail
+  bgrp = new QButtonGroup(nls->translate("Sending Mail"), tab);
+  box->addWidget(bgrp);
+  grid = new QGridLayout(bgrp, 5, 4, 20, 4);
 
-  outgoingGroup = new QButtonGroup(networkTab);
-  outgoingGroup->setGeometry(15,15,525,200);
-  outgoingGroup->setTitle("Outgoing Mail");
+  sendmailRadio = new QRadioButton(bgrp);
+  sendmailRadio->setMinimumSize(sendmailRadio->size());
+  sendmailRadio->setText(nls->translate("Sendmail"));
+  bgrp->insert(sendmailRadio);
+  grid->addMultiCellWidget(sendmailRadio, 0, 0, 0, 3);
 
-  sendmailRadio = new QRadioButton(networkTab);
-  sendmailRadio->setGeometry(35,35,100,25);
-  sendmailRadio->setText("Sendmail");
-
-  label = new QLabel(networkTab);
-  label->setGeometry(55,65,70,25);
-  label->setText("Location");
-  label->setAlignment(290);
-
-  sendmailLocationEdit = new QLineEdit(networkTab);
-  sendmailLocationEdit->setGeometry(135,65,350,25);
-
-  button = new QPushButton(networkTab);
-  button->setGeometry(495,65,30,25);
-  button->setText("...");
+  sendmailLocationEdit = createLabeledEntry(bgrp, grid, "Location", NULL, 
+					    1, 1, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSendmailLocation()));
 
-  smtpRadio = new QRadioButton(networkTab);
-  smtpRadio->setGeometry(35,105,60,25);
-  smtpRadio->setText("SMTP");
+  smtpRadio = new QRadioButton(bgrp);
+  smtpRadio->setText(nls->translate("SMTP"));
+  smtpRadio->setMinimumSize(smtpRadio->size());
+  bgrp->insert(smtpRadio);
+  grid->addMultiCellWidget(smtpRadio, 2, 2, 0, 3);
 
-  label = new QLabel(networkTab);
-  label->setGeometry(55,135,70,25);
-  label->setText("Server");
-  label->setAlignment(290);
-
-  smtpServerEdit = new QLineEdit(networkTab);
-  smtpServerEdit->setGeometry(135,135,390,25);
-
-  label = new QLabel(networkTab);
-  label->setGeometry(25,175,100,25);
-  label->setText("Port");
-  label->setAlignment(290);
-
-  smtpPortEdit = new QLineEdit(networkTab);
-  smtpPortEdit->setGeometry(135,175,70,25);
-
-  outgoingGroup->insert(sendmailRadio);
-  outgoingGroup->insert(smtpRadio);
-
-  incomingGroup = new QButtonGroup(networkTab);
-  incomingGroup->setGeometry(15,230,525,225);
-  incomingGroup->setTitle("Incoming Mail");
-
-  label = new QLabel(networkTab);
-  label->setGeometry(35,255,100,25);
-  label->setText("Accounts");
-
-  accountList = new QListBox(networkTab);
-  accountList->setGeometry(35,280,355,160);
-  connect(accountList,SIGNAL(highlighted(int)),this,SLOT(accountSelected(int)));
-  connect(accountList,SIGNAL(selected(int)),this,SLOT(modifyAccount(int)));
-  for (act=acctMgr->first(); act; act=acctMgr->next())
-    accountList->inSort(act->name());
-
-  addButton = new QPushButton(networkTab);
-  addButton->setGeometry(405,280,120,20);
-  addButton->setText(nls->translate("Add..."));
-  connect(addButton,SIGNAL(clicked()),this,SLOT(addAccount()));
-
-  modifyButton = new QPushButton(networkTab);
-  modifyButton->setGeometry(405,340,120,20);
-  modifyButton->setText(nls->translate("Modify..."));
-  modifyButton->setEnabled(FALSE);
-  connect(modifyButton,SIGNAL(clicked()),this,SLOT(modifyAccount2()));
-
-  removeButton = new QPushButton(networkTab);
-  removeButton->setGeometry(405,400,120,20);
-  removeButton->setText(nls->translate("Remove"));
-  removeButton->setEnabled(FALSE);
-  connect(removeButton,SIGNAL(clicked()),this,SLOT(removeAccount()));
+  smtpServerEdit = createLabeledEntry(bgrp, grid, "Server", NULL, 3, 1);
+  smtpPortEdit = createLabeledEntry(bgrp, grid, "Port", NULL, 4, 1);
+  grid->setColStretch(0,4);
+  grid->setColStretch(1,1);
+  grid->setColStretch(2,10);
+  grid->setColStretch(3,0);
+  grid->activate();
+  bgrp->adjustSize();
 
   if (msgSender->method()==KMSender::smMail) 
     sendmailRadio->setChecked(TRUE);
@@ -201,39 +181,105 @@ void KMSettings::createTabNetwork(QWidget* parent)
   smtpServerEdit->setText(msgSender->smtpHost());
   smtpPortEdit->setText(QString(msgSender->smtpPort()));
 
-  addTab(networkTab, nls->translate("Network"));
-#endif
 
-  networkTab = tab;
+  //---- group: incoming mail
+  grp = new QGroupBox(nls->translate("Incoming Mail"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 5, 2, 20, 8);
+
+  label = new QLabel(grp);
+  label->setText(nls->translate("Accounts"));
+  label->setMinimumSize(label->size());
+  grid->addMultiCellWidget(label, 0, 0, 0, 1);
+
+  accountList = new KTabListBox(grp, "LstAccounts", 3);
+  accountList->setColumn(0, nls->translate("Name"), 80);
+  accountList->setColumn(1, nls->translate("Type"), 60);
+  accountList->setColumn(2, nls->translate("Folder"), 80);
+  accountList->setMinimumSize(50, 50);
+  connect(accountList,SIGNAL(highlighted(int,int)),
+	  this,SLOT(accountSelected(int,int)));
+  connect(accountList,SIGNAL(selected(int,int)),
+	  this,SLOT(modifyAccount(int,int)));
+  grid->addMultiCellWidget(accountList, 1, 4, 0, 0);
+
+  addButton = createPushButton(grp, grid, nls->translate("Add..."), 1, 1);
+  connect(addButton,SIGNAL(clicked()),this,SLOT(addAccount()));
+
+  modifyButton = createPushButton(grp, grid, nls->translate("Modify..."),2,1);
+  connect(modifyButton,SIGNAL(clicked()),this,SLOT(modifyAccount2()));
+
+  removeButton = createPushButton(grp, grid, nls->translate("Delete"), 3, 1);
+  connect(removeButton,SIGNAL(clicked()),this,SLOT(removeAccount()));
+
+  grid->setColStretch(0, 10);
+  grid->setColStretch(1, 0);
+  grid->setRowStretch(4, 10);
+  grid->activate();
+  grp->adjustSize();
+
+  accountList->clear();
+  for (act=acctMgr->first(); act; act=acctMgr->next())
+    tabNetworkAddAcct(accountList, act);
+
+  addTab(tab, nls->translate("Network"));
+  box->addStretch(100);
+  box->activate();
+  tab->adjustSize();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMSettings::accountSelected(int) {
+void KMSettings::tabNetworkAddAcct(KTabListBox* actList, KMAccount* act, 
+				   int idx)
+{
+  QString str;
+  
+  str = "";
+  str += act->name();
+  str += "\n";
+  str += act->type();
+  str += "\n";
+  if (act->folder()) str += act->folder()->name();
+
+  actList->insertItem(str, idx);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::accountSelected(int,int)
+{
   modifyButton->setEnabled(TRUE);
   removeButton->setEnabled(TRUE);
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::addAccount() {
+void KMSettings::addAccount()
+{
 #ifdef BROKEN
+  KMAccount act = acctMgr->
+
   KMAccount *a=acctMgr->createAccount(".temp");
   KMAccountSettings *d=new KMAccountSettings(this,NULL,a);
   d->setCaption("Create Account");
-  if (d->exec()) {
+  if (d->exec())
+  {
     QString s=a->name;
     acctMgr->renameAccount(QString(".temp"),s);
-    // "a" is not longer valid here !!!
+    // `a' is not longer valid here !!!
     accountList->inSort(s);
-  } else acctMgr->removeAccount(QString(".temp"));
+  }
+  else acctMgr->removeAccount(QString(".temp"));
+
   delete d;
 #endif
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::chooseSendmailLocation() {
+void KMSettings::chooseSendmailLocation()
+{
   QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
-  d->setCaption("Choose Sendmail Location");
+  d->setCaption(nls->translate("Choose Sendmail Location"));
   if (d->exec()) sendmailLocationEdit->setText(d->selectedFile());
   delete d;
 }
@@ -241,26 +287,31 @@ void KMSettings::chooseSendmailLocation() {
 //-----------------------------------------------------------------------------
 void KMSettings::chooseSigFile()
 {
-  QFileDialog *d=new QFileDialog(".","*",this,NULL,TRUE);
-  d->setCaption("Choose Signature File");
+  QFileDialog *d=new QFileDialog(QDir::homeDirPath(),"*",this,NULL,TRUE);
+  d->setCaption(nls->translate("Choose Signature File"));
   if (d->exec()) sigEdit->setText(d->selectedFile());
   delete d;
 }
 
 //-----------------------------------------------------------------------------
-void KMSettings::modifyAccount(int index) {
-  KMAccount *a=acctMgr->find(accountList->text(index));
-  KMAccountSettings *d=new KMAccountSettings(this,NULL,a);
-  d->setCaption("Modify Account");
+void KMSettings::modifyAccount(int index,int)
+{
+  KMAccount* act = acctMgr->find(accountList->text(index,0));
+  KMAccountSettings* d;
+
+  assert(act != NULL);
+
+  d = new KMAccountSettings(this, NULL, act);
   d->exec();
-  accountList->removeItem(index);
-  accountList->inSort(a->name());
   delete d;
+
+  accountList->removeItem(index);
+  tabNetworkAddAcct(accountList, act, index);
 }
 
 //-----------------------------------------------------------------------------
 void KMSettings::modifyAccount2() {
-  modifyAccount(accountList->currentItem());
+  modifyAccount(accountList->currentItem(),-1);
 }
 
 //-----------------------------------------------------------------------------
@@ -321,7 +372,11 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   QString s;
   int i;
 
+  initMetaObject();
+
   account=a;
+
+  setCaption(nls->translate("Modify Account"));
 
   QLabel *label;
   label = new QLabel(this);

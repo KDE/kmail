@@ -12,6 +12,7 @@ class KMFolderTree : public KTabListBox
   Q_OBJECT
 public:
   KMFolderTree(QWidget *parent=0, const char *name=0);
+  virtual ~KMFolderTree();
 
   // get/refresh the folder tree
   virtual void reload(void);
@@ -23,6 +24,8 @@ private slots:
  void doFolderSelected(int,int);
 
 protected:
+  virtual void resizeEvent(QResizeEvent*);
+
   KMFolderNodeList mList;
 };
 

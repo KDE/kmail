@@ -130,10 +130,12 @@ KMAccount* KMAcctMgr::find(const QString& aName)
 {
   KMAccount* cur;
 
-  assert(aName != NULL);
+  assert(!aName.isEmpty());
 
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
+  {
     if (cur->name() == aName) return cur;
+  }
 
   return NULL;
 }

@@ -31,6 +31,8 @@ public:
   virtual ~KTabListBoxTable();
 
 protected:
+  virtual void focusInEvent(QFocusEvent*);
+  virtual void focusOutEvent(QFocusEvent*);
   virtual void mouseDoubleClickEvent (QMouseEvent*);
   virtual void mousePressEvent (QMouseEvent*);
   virtual void mouseReleaseEvent (QMouseEvent*);
@@ -71,6 +73,9 @@ public:
     appended at the end. Returns index of inserted item. */
   virtual void insertItem (const char* string, int itemIndex=-1);
 
+  /** Same as insertItem, but always appends the new item. */
+  void appendItem (const char* string) { insertItem(string); }
+
   /** Change contents of a line using the separator character
     to separate the fields. */
   virtual void changeItem (const char* string, int itemIndex);
@@ -84,6 +89,13 @@ public:
   /** Set/get number of pixels one tab character stands for. Default: 10 */
   int tabWidth(void) const { return tabPixels; }
   virtual void setTabWidth(int);
+
+  /** Returns contents of given row/column. If col is not set the
+   contents of the whole row is returned, seperated with the current 
+   seperation character. In this case the string returned is a 
+   temporary string that will change on the next text() call on any
+   KTabListBox object. */
+  const QString& text(int idx, int col=-1) const;
 
   /** Remove one item from the list. */
   virtual void removeItem (int itemIndex);
@@ -187,6 +199,7 @@ protected:
   bool needsUpdate (int id) { return (lbox.autoUpdate() && itemVisible(id)); }
 
   KTabListBoxItem* getItem (int idx);
+  const KTabListBoxItem* getItem (int idx) const;
 
   virtual void resizeEvent (QResizeEvent*);
   virtual void paintEvent (QPaintEvent*);
@@ -225,7 +238,7 @@ public:
   KTabListBoxItem(int numColumns=1);
   virtual ~KTabListBoxItem();
 
-  virtual const char *text(int column)   const { return txt[column]; }
+  virtual const QString& text(int column) const { return txt[column]; }
   void setText (int column, const char *text) { txt[column] = text; }
   virtual void setForeground (const QColor& color);
   const QColor& foreground (void) { return fgColor; }
@@ -275,6 +288,11 @@ protected:
 
 
 inline KTabListBoxItem* KTabListBox :: getItem (int idx)
+{
+  return ((idx>=0 && idx<maxItems) ? &itemList[idx] : (KTabListBoxItem*)NULL);
+}
+
+inline const KTabListBoxItem* KTabListBox :: getItem (int idx) const
 {
   return ((idx>=0 && idx<maxItems) ? &itemList[idx] : (KTabListBoxItem*)NULL);
 }

@@ -14,6 +14,8 @@
 KMFolderRootDir::KMFolderRootDir(const char* path):
   KMFolderDir(NULL, path)
 {
+  initMetaObject();
+
   setPath(path);
 }
 
@@ -39,6 +41,8 @@ const QString& KMFolderRootDir::path(void) const
 KMFolderDir::KMFolderDir(KMFolderDir* parent, const char* name):
   KMFolderNode(parent,name), KMFolderNodeList()
 {
+  initMetaObject();
+
   setAutoDelete(TRUE);
 }
 

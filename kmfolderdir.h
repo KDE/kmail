@@ -35,6 +35,8 @@ public:
 
 class KMFolderRootDir: public KMFolderDir
 {
+  Q_OBJECT
+
 public:
   KMFolderRootDir(const char* name=NULL);
   virtual const QString& path(void) const;

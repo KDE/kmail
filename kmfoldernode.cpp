@@ -9,6 +9,8 @@ static QString sEmpty("");
 KMFolderNode::KMFolderNode(KMFolderDir* aParent, const char* aName):
   KMFolderNodeInherited(aParent)
 {
+  initMetaObject();
+
   mName = aName;
   mName.detach();
   setName(mName);

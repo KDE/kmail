@@ -27,16 +27,16 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
   mSmtpHost = mCfg->readEntry("smtphost", &QString("localhost"));
   mSmtpPort = mCfg->readNumEntry("smtpport", 110);
 
-  mQueue = mFolderMgr->find("queue");
+  mQueue = mFolderMgr->find("outbox");
   if (!mQueue) 
   {
-    warning("The folder 'queue' does not exist in the\n"
+    warning("The folder `outbox' does not exist in the\n"
 	    "mail folder directory. The mail sender depends\n"
 	    "on this folder and will not work without it.\n"
 	    "Therefore the folder will now be created.");
 
-    mQueue = mFolderMgr->createFolder("queue");
-    if (!mQueue) fatal("Cannot create the folder 'queue'.");
+    mQueue = mFolderMgr->createFolder("outbox");
+    if (!mQueue) fatal("Cannot create the folder `outbox'.");
   }
 }
 

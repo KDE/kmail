@@ -19,7 +19,7 @@
 //  C L A S S   KTabListBoxItem
 //
 //=============================================================================
-KTabListBoxItem :: KTabListBoxItem (int aColumns)
+KTabListBoxItem::KTabListBoxItem(int aColumns)
 {
   columns = aColumns;
   txt = new QString[columns];
@@ -27,26 +27,30 @@ KTabListBoxItem :: KTabListBoxItem (int aColumns)
 }
 
 
-KTabListBoxItem :: ~KTabListBoxItem ()
+//-----------------------------------------------------------------------------
+KTabListBoxItem::~KTabListBoxItem()
 {
   if (txt) delete[] txt;
   txt = NULL;
 }
 
 
-void KTabListBoxItem :: setForeground (const QColor& fg)
+//-----------------------------------------------------------------------------
+void KTabListBoxItem::setForeground(const QColor& fg)
 {
   fgColor = fg;
 }
 
 
-void KTabListBoxItem :: setMarked (int m)
+//-----------------------------------------------------------------------------
+void KTabListBoxItem::setMarked(int m)
 {
   mark = m;
 }
 
 
-KTabListBoxItem& KTabListBoxItem :: operator= (const KTabListBoxItem& from)
+//-----------------------------------------------------------------------------
+KTabListBoxItem& KTabListBoxItem::operator=(const KTabListBoxItem& from)
 {
   int i;
 
@@ -65,7 +69,7 @@ KTabListBoxItem& KTabListBoxItem :: operator= (const KTabListBoxItem& from)
 //
 //=============================================================================
 //-----------------------------------------------------------------------------
-KTabListBoxColumn :: KTabListBoxColumn (KTabListBox* pa, int w): QObject()
+KTabListBoxColumn::KTabListBoxColumn(KTabListBox* pa, int w): QObject()
 {
   initMetaObject();
   iwidth = w;
@@ -75,54 +79,54 @@ KTabListBoxColumn :: KTabListBoxColumn (KTabListBox* pa, int w): QObject()
 
 
 //-----------------------------------------------------------------------------
-KTabListBoxColumn :: ~KTabListBoxColumn ()
+KTabListBoxColumn::~KTabListBoxColumn()
 {
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxColumn :: setWidth (int w)
+void KTabListBoxColumn::setWidth(int w)
 {
   iwidth = w;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxColumn :: setType (KTabListBox::ColumnType lbt)
+void KTabListBoxColumn::setType(KTabListBox::ColumnType lbt)
 {
   colType = lbt;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxColumn :: paintCell (QPainter* paint, int row, 
-				     const QString& string, bool marked)
+void KTabListBoxColumn::paintCell(QPainter* paint, int row, 
+				  const QString& string, bool marked)
 {
   const QFontMetrics* fm = &paint->fontMetrics();
   QPixmap* pix = NULL;
   int beg, end, x;
 
-  // p->fillRect (0, 0, cellWidth(col), cellHeight(row), bg);
+  // p->fillRect(0, 0, cellWidth(col), cellHeight(row), bg);
   if (marked)
   {
-    paint->fillRect (0, 0, iwidth, parent->cellHeight(row), 
+    paint->fillRect(0, 0, iwidth, parent->cellHeight(row), 
 		     parent->highlightColor);
   }
 
-  switch (colType)
+  switch(colType)
   {
   case KTabListBox::PixmapColumn:
     if (string) pix = parent->dict().find(string);
     if (pix)
     {
-      paint->drawPixmap (0, 0, *pix);
+      paint->drawPixmap(0, 0, *pix);
       break;
     }
     /*else output as string*/
 
   case KTabListBox::TextColumn:
-    paint->drawText (1, fm->ascent() + (fm->leading()), 
-		     (const char*)string); 
+    paint->drawText(1, fm->ascent() +(fm->leading()), 
+		    (const char*)string); 
     break;
 
   case KTabListBox::MixedColumn:
@@ -131,7 +135,7 @@ void KTabListBoxColumn :: paintCell (QPainter* paint, int row,
       ;
     end = beg-1;
 
-    while (string[beg] == '{')
+    while(string[beg] == '{')
     {
       end = string.find('}', beg+1);
       if (end >= 0)
@@ -143,30 +147,30 @@ void KTabListBoxColumn :: paintCell (QPainter* paint, int row,
 	  warning("KTabListBox: no pixmap with name '"+pixName+
 		  "' registered. This is a program bug.\n");
 	} 
-	paint->drawPixmap (x, 0, *pix);
+	paint->drawPixmap(x, 0, *pix);
 	x += pix->width()+1;
 	beg = end+1;
       }
       else break;
     }
 
-    paint->drawText (x+1, fm->ascent() + (fm->leading()), 
-		     (const char*)string.mid(beg+1, string.length()-beg+1)); 
+    paint->drawText(x+1, fm->ascent() +(fm->leading()), 
+		    (const char*)string.mid(beg+1, string.length()-beg+1)); 
     break;
   }
 
   if (marked) 
-    paint->fillRect (iwidth-6, 0, iwidth, 128, parent->highlightColor);
+    paint->fillRect(iwidth-6, 0, iwidth, 128, parent->highlightColor);
   else
-    paint->eraseRect (iwidth-6, 0, iwidth, 128);
+    paint->eraseRect(iwidth-6, 0, iwidth, 128);
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxColumn :: paint (QPainter* paint)
+void KTabListBoxColumn::paint(QPainter* paint)
 {
   const QFontMetrics* fm = &paint->fontMetrics();
-  paint->drawText (3, fm->ascent() + (fm->leading()), (const char*)name());
+  paint->drawText(3, fm->ascent() +(fm->leading()),(const char*)name());
 }
 
 
@@ -177,13 +181,14 @@ void KTabListBoxColumn :: paint (QPainter* paint)
 //   C L A S S   KTabListBox
 //
 //=============================================================================
-KTabListBox :: KTabListBox (QWidget *parent, const char *name, int columns,
+KTabListBox::KTabListBox(QWidget *parent, const char *name, int columns,
 			    WFlags f): 
-  KTabListBoxInherited (parent, name, f), lbox(this)
+  KTabListBoxInherited(parent, name, f), lbox(this)
 {
   const QFontMetrics* fm = &fontMetrics();
   QString f;
   QColorGroup g = colorGroup();
+  KConfig* conf = KApplication::getKApplication()->getConfig();
 
   initMetaObject();
 
@@ -209,7 +214,7 @@ KTabListBox :: KTabListBox (QWidget *parent, const char *name, int columns,
 
 
 //-----------------------------------------------------------------------------
-KTabListBox :: ~KTabListBox ()
+KTabListBox::~KTabListBox()
 {
   if (colList)  delete[] colList;
   if (itemList) delete[] itemList;
@@ -219,21 +224,21 @@ KTabListBox :: ~KTabListBox ()
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setNumRows (int aRows)
+void KTabListBox::setNumRows(int aRows)
 {
   lbox.setNumRows(aRows);
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setTabWidth (int aTabWidth)
+void KTabListBox::setTabWidth(int aTabWidth)
 {
   tabPixels = aTabWidth;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setNumCols (int aCols)
+void KTabListBox::setNumCols(int aCols)
 {
   maxItems = 0;
 
@@ -253,7 +258,7 @@ void KTabListBox :: setNumCols (int aCols)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setColumnWidth (int col, int aWidth)
+void KTabListBox::setColumnWidth(int col, int aWidth)
 {
   if (col<0 || col>=numCols()) return;
   colList[col].setWidth(aWidth);
@@ -261,8 +266,8 @@ void KTabListBox :: setColumnWidth (int col, int aWidth)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setColumn (int col, const char* aName, int aWidth,
-			       ColumnType aType)
+void KTabListBox::setColumn(int col, const char* aName, int aWidth,
+			    ColumnType aType)
 {
   if (col<0 || col>=numCols()) return;
 
@@ -274,7 +279,7 @@ void KTabListBox :: setColumn (int col, const char* aName, int aWidth,
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setCurrentItem (int idx, int colId)
+void KTabListBox::setCurrentItem(int idx, int colId)
 {
   int i;
 
@@ -299,7 +304,7 @@ void KTabListBox :: setCurrentItem (int idx, int colId)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: markItem (int idx, int colId)
+void KTabListBox::markItem(int idx, int colId)
 {
   if (itemList[idx].marked()==colId) return;
   itemList[idx].setMarked(colId);
@@ -308,7 +313,7 @@ void KTabListBox :: markItem (int idx, int colId)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: unmarkItem (int idx)
+void KTabListBox::unmarkItem(int idx)
 {
   int mark;
 
@@ -319,7 +324,7 @@ void KTabListBox :: unmarkItem (int idx)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: unmarkAll (void)
+void KTabListBox::unmarkAll(void)
 {
   int i;
 
@@ -329,7 +334,28 @@ void KTabListBox :: unmarkAll (void)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: insertItem (const char* aStr, int row)
+const QString& KTabListBox::text(int row, int col) const
+{
+  KTabListBoxItem* item = getItem(row);
+  static QString str;
+  int i, cols;
+
+  if (!item) return NULL;
+  if (col >= 0) return item->text(col);
+
+  cols = item->columns - 1;
+  for (str="",i=0; i<=cols; i++)
+  {
+    str += item->text(i);
+    if (i<cols) str += sepChar;
+  }
+
+  return str;
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox::insertItem(const char* aStr, int row)
 {
   int i;
 
@@ -341,15 +367,15 @@ void KTabListBox :: insertItem (const char* aStr, int row)
 
   if (current >= row) current++;
 
-  setNumRows (numRows()+1);
-  changeItem (aStr, row);
+  setNumRows(numRows()+1);
+  changeItem(aStr, row);
 
   if (needsUpdate(row)) lbox.repaint();
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: changeItem (const char* aStr, int row)
+void KTabListBox::changeItem(const char* aStr, int row)
 {
   char* str;
   char  sepStr[2];
@@ -360,20 +386,20 @@ void KTabListBox :: changeItem (const char* aStr, int row)
   if (row < 0 || row >= numRows()) return;
 
   str = new char[strlen(aStr)+2];
-  strcpy (str, aStr);
+  strcpy(str, aStr);
 
   sepStr[0] = sepChar;
   sepStr[1] = '\0';
 
   item = &itemList[row];
 
-  pos = strtok (str, sepStr);
+  pos = strtok(str, sepStr);
   for (i=0; pos && *pos && i<numCols(); i++)
   {
-    item->setText (i, pos);
-    pos = strtok (NULL, sepStr);
+    item->setText(i, pos);
+    pos = strtok(NULL, sepStr);
   }
-  item->setForeground (black);
+  item->setForeground(black);
 
   if (needsUpdate(row)) lbox.repaint();
 
@@ -382,29 +408,29 @@ void KTabListBox :: changeItem (const char* aStr, int row)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: changeItemPart (const char* aStr, int row, int col)
+void KTabListBox::changeItemPart(const char* aStr, int row, int col)
 {
   if (row < 0 || row >= numRows()) return;
   if (col < 0 || col >= numCols()) return;
 
-  itemList[row].setText (col, aStr);
+  itemList[row].setText(col, aStr);
   if (needsUpdate(row)) lbox.repaint();
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: changeItemColor (const QColor& newColor, int row)
+void KTabListBox::changeItemColor(const QColor& newColor, int row)
 {
   if (row >= numRows()) return;
   if (row < 0) row = numRows()-1;
 
-  itemList[row].setForeground (newColor);
+  itemList[row].setForeground(newColor);
   if (needsUpdate(row)) lbox.repaint();
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: removeItem (int row)
+void KTabListBox::removeItem(int row)
 {
   int i, nr;
 
@@ -423,17 +449,17 @@ void KTabListBox :: removeItem (int row)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: updateItem (int row, bool erase)
+void KTabListBox::updateItem(int row, bool erase)
 {
   int i;
 
   for (i=numCols()-1; i>=0; i--)
-    lbox.updateCell (row, i, erase);
+    lbox.updateCell(row, i, erase);
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: clear (void)
+void KTabListBox::clear(void)
 {
   int i;
 
@@ -447,19 +473,19 @@ void KTabListBox :: clear (void)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: setSeparator (char sep)
+void KTabListBox::setSeparator(char sep)
 {
   sepChar = sep;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: resizeList (int newNumItems)
+void KTabListBox::resizeList(int newNumItems)
 {
   KTabListBoxItem* newItemList;
   int i, ih;
 
-  if (newNumItems < 0) newNumItems = (maxItems << 1);
+  if (newNumItems < 0) newNumItems =(maxItems << 1);
   if (newNumItems < INIT_MAX_ITEMS) newNumItems = INIT_MAX_ITEMS;
 
   newItemList = new KTabListBoxItem[newNumItems](numCols());
@@ -479,7 +505,7 @@ void KTabListBox :: resizeList (int newNumItems)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: resizeEvent (QResizeEvent* e)
+void KTabListBox::resizeEvent(QResizeEvent* e)
 {
   int i, w;
 
@@ -490,10 +516,10 @@ void KTabListBox :: resizeEvent (QResizeEvent* e)
 
   if (w + cellWidth(numCols()-1) < e->size().width())
   {
-    setColumnWidth (numCols()-1, e->size().width() - w);
+    setColumnWidth(numCols()-1, e->size().width() - w);
   }
 
-  lbox.setGeometry (0, labelHeight, e->size().width(), 
+  lbox.setGeometry(0, labelHeight, e->size().width(), 
 		    e->size().height()-labelHeight);
   lbox.reconnectSBSignals();
 
@@ -502,7 +528,7 @@ void KTabListBox :: resizeEvent (QResizeEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: paintEvent (QPaintEvent* e)
+void KTabListBox::paintEvent(QPaintEvent* e)
 {
   int i, ih, x, w;
   QPainter paint;
@@ -511,7 +537,7 @@ void KTabListBox :: paintEvent (QPaintEvent* e)
 
   ih = numCols();
   x  = -lbox.xOffset();
-  matrix.translate (x, 0);
+  matrix.translate(x, 0);
 
   //if (!isUpdatesEnabled()) return;
 
@@ -522,15 +548,15 @@ void KTabListBox :: paintEvent (QPaintEvent* e)
 
     if (w + x >= 0)
     {
-      clipR.setRect (x, 0, w, labelHeight);
-      paint.setWorldMatrix (matrix, FALSE);
-      paint.setClipRect (clipR);
+      clipR.setRect(x, 0, w, labelHeight);
+      paint.setWorldMatrix(matrix, FALSE);
+      paint.setClipRect(clipR);
 
-      colList[i].paint (&paint);
-      qDrawShadePanel (&paint, 0, 0, w, labelHeight, 
+      colList[i].paint(&paint);
+      qDrawShadePanel(&paint, 0, 0, w, labelHeight, 
 		       KTabListBoxInherited::colorGroup());
     }
-    matrix.translate (w, 0);
+    matrix.translate(w, 0);
     x += w;
   }
   paint.end();
@@ -538,7 +564,7 @@ void KTabListBox :: paintEvent (QPaintEvent* e)
 
 
 //-----------------------------------------------------------------------------
-bool KTabListBox :: startDrag (int aCol, int aRow, const QPoint& p)
+bool KTabListBox::startDrag(int aCol, int aRow, const QPoint& p)
 {
   int       dx = -(dndDefaultPixmap.width() >> 1);
   int       dy = -(dndDefaultPixmap.height() >> 1);
@@ -554,25 +580,24 @@ bool KTabListBox :: startDrag (int aCol, int aRow, const QPoint& p)
 
 
 //-----------------------------------------------------------------------------
-bool KTabListBox :: prepareForDrag (int /*aCol*/, int /*aRow*/, 
-				    char** /*data*/, int* /*size*/,
-				    int* /*type*/)
+bool KTabListBox::prepareForDrag(int /*aCol*/, int /*aRow*/, 
+				 char** /*data*/, int* /*size*/,
+				 int* /*type*/)
 {
   return FALSE;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: horSbValue (int /*val*/)
+void KTabListBox::horSbValue(int /*val*/)
 {
   update();
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: horSbSlidingDone ()
+void KTabListBox::horSbSlidingDone()
 {
-  printf ("sliding done\n");
 }
 
 
@@ -590,8 +615,8 @@ int KTabListBoxTable::dragRow = -1;
 int KTabListBoxTable::selIdx  = -1;
 
 
-KTabListBoxTable :: KTabListBoxTable (KTabListBox *parent):
-  KTabListBoxTableInherited (parent)
+KTabListBoxTable::KTabListBoxTable(KTabListBox *parent):
+  KTabListBoxTableInherited(parent)
 {
   QFontMetrics fm = fontMetrics();
 
@@ -599,61 +624,61 @@ KTabListBoxTable :: KTabListBoxTable (KTabListBox *parent):
 
   dragging = FALSE;
 
-  setTableFlags (Tbl_autoVScrollBar|Tbl_autoHScrollBar|Tbl_smoothVScrolling|
+  setTableFlags(Tbl_autoVScrollBar|Tbl_autoHScrollBar|Tbl_smoothVScrolling|
 		 Tbl_clipCellPainting);
 
-  switch (style())
+  switch(style())
   {
   case MotifStyle:
   case WindowsStyle:
-    setBackgroundColor (colorGroup().base());
+    setBackgroundColor(colorGroup().base());
     setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
     break;
   default:
-    setLineWidth (1);
-    setFrameStyle (QFrame::Panel|QFrame::Plain);
+    setLineWidth(1);
+    setFrameStyle(QFrame::Panel|QFrame::Plain);
   }
 
-  setCellWidth (0);
-  setCellHeight (fm.lineSpacing() + 1);
-  setNumRows (0);
+  setCellWidth(0);
+  setCellHeight(fm.lineSpacing() + 1);
+  setNumRows(0);
 
-  setFocusPolicy (StrongFocus);
+  setFocusPolicy(StrongFocus);
 }
 
 
 //-----------------------------------------------------------------------------
-KTabListBoxTable :: ~KTabListBoxTable()
+KTabListBoxTable::~KTabListBoxTable()
 {
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: paintCell (QPainter* p, int row, int col)
+void KTabListBoxTable::paintCell(QPainter* p, int row, int col)
 {
-  KTabListBox*     owner = (KTabListBox*)parentWidget();
+  KTabListBox*     owner =(KTabListBox*)parentWidget();
   KTabListBoxItem* item  = owner->getItem(row);
 
   if (!item) return;
-  p->setPen (item->foreground());
+  p->setPen(item->foreground());
 
-  owner->colList[col].paintCell(p, row, item->text(col), (item->marked()==-1));
+  owner->colList[col].paintCell(p, row, item->text(col),(item->marked()==-1));
 }
 
 
 //-----------------------------------------------------------------------------
-int KTabListBoxTable :: cellWidth (int col)
+int KTabListBoxTable::cellWidth(int col)
 {
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
 
-  return (owner->colList ? owner->colList[col].width() : 0);
+  return(owner->colList ? owner->colList[col].width() : 0);
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: mouseDoubleClickEvent (QMouseEvent* e)
+void KTabListBoxTable::mouseDoubleClickEvent(QMouseEvent* e)
 {
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
   int idx, colnr;
 
   //mouseReleaseEvent(event);
@@ -664,17 +689,17 @@ void KTabListBoxTable :: mouseDoubleClickEvent (QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: doItemSelection (QMouseEvent* e, int idx)
+void KTabListBoxTable::doItemSelection(QMouseEvent* e, int idx)
 {
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
   int i, di;
 
   owner->unmarkAll();
   if ((e->state()&ShiftButton)!=0 && owner->currentItem()>=0)
   {
     i  = owner->currentItem();
-    di = (i>idx ? -1 : 1);
-    while (1)
+    di =(i>idx ? -1 : 1);
+    while(1)
     {
       owner->markItem(i);
       if (i == idx) break;
@@ -686,9 +711,9 @@ void KTabListBoxTable :: doItemSelection (QMouseEvent* e, int idx)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: mousePressEvent (QMouseEvent* e)
+void KTabListBoxTable::mousePressEvent(QMouseEvent* e)
 {
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
   int row, col;
 
   row = findRow(e->pos().y());
@@ -718,9 +743,9 @@ void KTabListBoxTable :: mousePressEvent (QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: mouseReleaseEvent (QMouseEvent* e)
+void KTabListBoxTable::mouseReleaseEvent(QMouseEvent* e)
 {
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
   int idx;
 
   if (e->button() != LeftButton) return;
@@ -741,9 +766,9 @@ void KTabListBoxTable :: mouseReleaseEvent (QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: mouseMoveEvent (QMouseEvent* e)
+void KTabListBoxTable::mouseMoveEvent(QMouseEvent* e)
 {
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
 
   if (dragging)
   {
@@ -751,7 +776,7 @@ void KTabListBoxTable :: mouseMoveEvent (QMouseEvent* e)
     return;
   }
 
-  if ((e->state() & (RightButton|LeftButton|MidButton)) != 0)
+  if ((e->state() &(RightButton|LeftButton|MidButton)) != 0)
   {
     if (dragRow >= 0 && dragCol >= 0 &&
 	(abs(e->pos().x()-dragStartPos.x()) >= 5 ||
@@ -766,13 +791,29 @@ void KTabListBoxTable :: mouseMoveEvent (QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KTabListBoxTable :: reconnectSBSignals (void)
+void KTabListBoxTable::reconnectSBSignals(void)
 {
-  QWidget* hsb = (QWidget*)horizontalScrollBar();
-  KTabListBox* owner = (KTabListBox*)parentWidget();
+  QWidget* hsb =(QWidget*)horizontalScrollBar();
+  KTabListBox* owner =(KTabListBox*)parentWidget();
 
   if (!hsb) return;
 
   connect(hsb, SIGNAL(valueChanged(int)), owner, SLOT(horSbValue(int)));
   connect(hsb, SIGNAL(sliderReleased()), owner, SLOT(horSbSlidingDone()));
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBoxTable::focusInEvent(QFocusEvent*)
+{
+  // Just do nothing here to avoid the annoying flicker whick happens due
+  // to a redraw() call per default.
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBoxTable::focusOutEvent(QFocusEvent*)
+{
+  // Just do nothing here to avoid the annoying flicker whick happens due
+  // to a redraw() call per default.
 }
