@@ -6,11 +6,9 @@
 #include <kdebug.h>
 
 #include <qstring.h>
-#include <unistd.h>
-#include <string.h>
 #include <assert.h>
 #include <qfile.h>
-#include <qfileinfo.h>
+#include <qdir.h>
 
 #include "kfileio.h"
 #include <klocale.h>
@@ -33,7 +31,7 @@ QString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
   QFile file(aFileName);
 
   //assert(aFileName!=NULL);
-  if( aFileName == NULL)
+  if( aFileName.isEmpty() )
     return "";
 
   if (!info.exists())
@@ -103,7 +101,7 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
   QFile file(aFileName);
 
   //assert(aFileName!=NULL);
-  if( aFileName == NULL)
+  if( aFileName.isEmpty() )
     return result;
 
   if (!info.exists())
@@ -169,14 +167,13 @@ bool kBytesToFile(const char* aBuffer, int len,
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
   QFile file(aFileName);
-  QFileInfo info(aFileName);
   int writeLen, rc;
 
   //assert(aFileName!=NULL);
-  if(aFileName == NULL)
-    return "";
+  if(aFileName.isEmpty())
+    return FALSE;
 
-  if (info.exists())
+  if (file.exists())
   {
     if (aAskIfExists)
     {
@@ -192,9 +189,8 @@ bool kBytesToFile(const char* aBuffer, int len,
       // make a backup copy
       QString bakName = aFileName;
       bakName += '~';
-      unlink(bakName);
-      rc = rename(aFileName, bakName);
-      if (rc)
+      QFile::remove(bakName);
+      if( !QDir::current().rename(aFileName, bakName) )
       {
 	// failed to rename file
 	if (!aVerbose) return FALSE;
