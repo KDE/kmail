@@ -101,10 +101,10 @@ signals:
   void statusMsg(const QString& text);
 
   /** The user presses the right mouse button. 'url' may be NULL. */
-  void popupMenu(const char* url, const QPoint& mousePos);
+  void popupMenu(const KURL &url, const QPoint& mousePos);
 
   /** The user has clicked onto an URL that is no attachment. */
-  void urlClicked(const char* url, int button);
+  void urlClicked(const KURL &url, int button);
 
   /** The user wants to see the attachment which is message */
   void showAtmMsg (KMMessage *msg);
@@ -181,7 +181,7 @@ protected:
   virtual void resizeEvent(QResizeEvent *);
 
   /** Returns id of message part from given URL or -1 if invalid. */
-  virtual int msgPartFromUrl(const char* url);
+  virtual int msgPartFromUrl(const KURL &url);
 
   /** View message part of type message/RFC822 in extra viewer window. */
   virtual void atmViewMsg(KMMessagePart* msgPart);

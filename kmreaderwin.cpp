@@ -27,6 +27,7 @@
 #include <kconfig.h>
 #include <kcursor.h>
 #include <krun.h>
+#include <kpopupmenu.h>
 #include <kopenwith.h>
 #include <kmessagebox.h>
 #include <mimelib/mimepp.h>
@@ -104,11 +105,12 @@ void KMReaderWin::makeAttachDir(void)
   KGlobal::dirs()->
     addResourceType("kmail_tmp",
 		    KStandardDirs::kde_default("data") + directory);
-  mAttachDir = locateLocal( "kmail_tmp", "/" );
+  mAttachDir = locateLocal( "kmail_tmp", "" );
 
   if (mAttachDir.isNull()) warning(i18n("Failed to create temporary "
-					"attachment directory '%s': %s"),
-				   directory.ascii(), strerror(errno));
+					"attachment directory '%2': %1")
+					.arg(strerror(errno))
+					.arg(directory));
 }
 
 
@@ -812,7 +814,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 //--- Sven's save attachments to /tmp start ---
   bool ok = true;
 
-  QString fname = QString("%1/part%2").arg(mAttachDir).arg(aPartNum+1);
+  QString fname = QString("%1part%2").arg(mAttachDir).arg(aPartNum+1);
   if (access(fname.data(), W_OK) != 0) // Not there or not writable
     if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
       ok = false; //failed create
@@ -1004,19 +1006,22 @@ void KMReaderWin::printMsg(void)
 
 
 //-----------------------------------------------------------------------------
-int KMReaderWin::msgPartFromUrl(const char* aUrl)
+int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 {
-  if (!aUrl || !mMsg) return -1;
+  if (aUrl.isEmpty() || !mMsg) return -1;
 
-  QString url = QString("file:%1/part").arg(mAttachDir);
-  int s = url.length();
-  if (strncmp(aUrl, url, s) == 0)
+  if (!aUrl.isLocalFile()) return -1;
+
+  QString prefix = mAttachDir + "part";
+
+  if (aUrl.path().left(prefix.length()) == prefix)
   {
-    url = aUrl;
-    int i = url.find('/', s);
-    url = url.mid(s, i-s);
-    //debug ("Url num = %s", url.data());
-    return atoi(url.data());
+    QString num = aUrl.path().mid(prefix.length());
+    int i = num.find('/');
+    if (i > 0)
+       num = num.left(i);
+    
+    return num.toInt();
   }
   return -1;
 }
@@ -1105,21 +1110,18 @@ void KMReaderWin::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
-  int id;
-  KMMessagePart msgPart;
-  QString str;
-  QString url = aUrl;
-  KURL::decode( url );
+  KURL url(aUrl);
 
-  id = msgPartFromUrl(url);
+  int id = msgPartFromUrl(url);
   if (id <= 0)
   {
-    emit statusMsg(url);
+    emit statusMsg(aUrl);
   }
   else
   {
+    KMMessagePart msgPart;
     mMsg->bodyPart(id-1, &msgPart);
-    str = msgPart.fileName();
+    QString str = msgPart.fileName();
     if (str.isEmpty()) str = msgPart.name();
     emit statusMsg(i18n("Attachment: ") + str);
   }
@@ -1129,10 +1131,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 {
-  int id;
-  QString url = aUrl.decodedURL();
-
-  id = msgPartFromUrl(url);
+  int id = msgPartFromUrl(aUrl);
   if (id > 0)
   {
     // clicked onto an attachment
@@ -1140,26 +1139,25 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 
     slotAtmOpen();
   }
-  else emit urlClicked(url,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
+  else emit urlClicked(aUrl,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
-  KMMessagePart msgPart;
-  int id;
-  QPopupMenu *menu;
-  QString url = aUrl;
-  KURL::decode( url );
+  KURL url( aUrl );
 
-  id = msgPartFromUrl(url);
-  if (id <= 0) emit popupMenu(aUrl, aPos);
+  int id = msgPartFromUrl(url);
+  if (id <= 0) 
+  {
+    emit popupMenu(url, aPos);
+  }
   else
   {
     // Attachment popup
     mAtmCurrent = id-1;
-    menu = new QPopupMenu();
+    KPopupMenu *menu = new KPopupMenu();
     menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
     menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
     menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
@@ -1236,7 +1234,7 @@ void KMReaderWin::slotAtmView()
     {
       //image
       // Attachment is saved already; this is the file:
-      QString linkName = QString("<img src=\"file:%1/part%2/%3\" border=0>")
+      QString linkName = QString("<img src=\"file:%1part%2/%3\" border=0>")
                         .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><body>");
@@ -1274,7 +1272,7 @@ void KMReaderWin::slotAtmOpen()
   if (pname.isEmpty()) pname="unnamed";
   //--- Sven's save attachments to /tmp start ---
   // Sven added:
-  fileName = QString("%1/part%2/%3")
+  fileName = QString("%1part%2/%3")
              .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
   // Sven commented out:
   //tmpName = tempnam(NULL, NULL);

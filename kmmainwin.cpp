@@ -19,6 +19,7 @@
 
 #include <krun.h>
 #include <kopenwith.h>
+#include <kpopupmenu.h>
 
 #include <kmenubar.h>
 #include <kmessagebox.h>
@@ -301,10 +302,10 @@ void KMMainWin::createWidgets(void)
   mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(statusMsg(const QString&)));
-  connect(mMsgView, SIGNAL(popupMenu(const char*,const QPoint&)),
-	  this, SLOT(slotMsgPopup(const char*,const QPoint&)));
-  connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
-	  this, SLOT(slotUrlClicked(const char*,int)));
+  connect(mMsgView, SIGNAL(popupMenu(const KURL&,const QPoint&)),
+	  this, SLOT(slotMsgPopup(const KURL&,const QPoint&)));
+  connect(mMsgView, SIGNAL(urlClicked(const KURL&,int)),
+	  this, SLOT(slotUrlClicked(const KURL&,int)));
   connect(mMsgView, SIGNAL(showAtmMsg(KMMessage *)),
 	  this, SLOT(slotAtmMsg(KMMessage *)));
   accel->connectItem(accel->insertItem(Key_Up),
@@ -950,10 +951,10 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
 
   connect(win, SIGNAL(statusMsg(const QString&)),
           this, SLOT(statusMsg(const QString&)));
-  connect(win, SIGNAL(popupMenu(const char*,const QPoint&)),
-          this, SLOT(slotMsgPopup(const char*,const QPoint&)));
-  connect(win, SIGNAL(urlClicked(const char*,int)),
-          this, SLOT(slotUrlClicked(const char*,int)));
+  connect(win, SIGNAL(popupMenu(const KURL&,const QPoint&)),
+          this, SLOT(slotMsgPopup(const KURL&,const QPoint&)));
+  connect(win, SIGNAL(urlClicked(const KURL&,int)),
+          this, SLOT(slotUrlClicked(const KURL&,int)));
 
   QAccel *accel = new QAccel(win);
   accel->connectItem(accel->insertItem(Key_Up),
@@ -985,29 +986,33 @@ void KMMainWin::slotMarkAll() {
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotUrlClicked(const char* aUrl, int)
+void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 {
   KMComposeWin *win;
   KMMessage* msg;
 
-  if (!strnicmp(aUrl, "mailto:", 7))
+  if (aUrl.protocol() == "mailto")
   {
     msg = new KMMessage;
     msg->initHeader();
-    msg->setTo(aUrl+7);
+    msg->setTo(aUrl.path());
+    QString query=aUrl.query();
+    if (query.left(8) == "subject=")
+    {
+       msg->setSubject( query.mid(8) ); // TODO: Decode subject!
+    }
 
     win = new KMComposeWin(msg);
     win->show();
   }
-  else if (!strnicmp(aUrl, "http:", 5) || !strnicmp(aUrl, "ftp:", 4) ||
-	   !strnicmp(aUrl, "file:", 5))
+  else if ((aUrl.protocol() == "http") || (aUrl.protocol() ==  "ftp") ||
+           (aUrl.protocol() == "file"))
   {
     statusMsg(i18n("Opening URL..."));
     // -- David : replacement for KFM::openURL
-    KURL kURL( aUrl );
     if ( !KOpenWithHandler::exists() )
       (void) new KFileOpenWithHandler();
-    (void) new KRun( kURL );
+    (void) new KRun( aUrl );
   }
 }
 
@@ -1093,19 +1098,17 @@ void KMMainWin::slotUrlOpen()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
+void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 {
-  QPopupMenu* menu = new QPopupMenu;
+  KPopupMenu* menu = new KPopupMenu;
 
-  mUrlCurrent = aUrl;
+  mUrlCurrent = aUrl.url();
 
-
-  if (aUrl)
+  if (!aUrl.isEmpty())
   {
-    if (strnicmp(aUrl,"mailto:",7)==0)
+    if (aUrl.protocol() == "mailto")
     {
       // popup on a mailto URL
-      menu = new QPopupMenu();
       menu->insertItem(i18n("Send to..."), this,
 		       SLOT(slotMailtoCompose()));
       menu->insertItem(i18n("Send reply to..."), this,

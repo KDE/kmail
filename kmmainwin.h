@@ -8,6 +8,7 @@
 #include "kmtopwidget.h"
 #include "qvaluelist.h"
 #include <qmap.h>
+#include <kurl.h>
 
 class KMFolder;
 class KMFolderDir;
@@ -124,8 +125,8 @@ protected slots:
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);
   void slotSendQueued();
-  void slotMsgPopup(const char* url, const QPoint&);
-  void slotUrlClicked(const char* url, int button);
+  void slotMsgPopup(const KURL &url, const QPoint&);
+  void slotUrlClicked(const KURL &url, int button);
   void slotCopyText();
   void slotMarkAll();
 
