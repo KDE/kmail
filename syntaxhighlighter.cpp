@@ -60,7 +60,7 @@ MessageHighlighter::~MessageHighlighter()
 int MessageHighlighter::highlightParagraph( const QString &text, int )
 {
     QString simplified = text;
-    simplified = simplified.replace( QRegExp( "\\s" ), "" );
+    simplified = simplified.replace( QRegExp( "\\s" ), "" ).replace( QRegExp( "\\|" ), ">" );
     if ( simplified.startsWith( ">>>>" ) )
 	setFormat( 0, text.length(), col1 );
     else if	( simplified.startsWith( ">>>" ) || simplified.startsWith( "> >	>" ) )
@@ -94,7 +94,7 @@ int SpellChecker::highlightParagraph( const QString& text,
     QRegExp norwegian( "[\xc4-\xc6\xd6\xd8\xdc\xdf\xe4-\xe6\xf6\xf8\xfc]" );
 
     // leave #includes, diffs, and quoted replies alone
-    QString diffAndCo( ">" );
+    QString diffAndCo( ">|" );
 
     bool isCode = diffAndCo.find(text[0]) != -1;
     bool isNorwegian = ( text.find(norwegian) != -1 );
@@ -106,6 +106,9 @@ int SpellChecker::highlightParagraph( const QString& text,
     MessageHighlighter::highlightParagraph( text, endStateOfLastPara );
 
     if ( !isCode && !isNorwegian ) {
+        int para, index;
+	textEdit()->getCursorPosition( &para, &index );
+	QString paraText = textEdit()->text( para );
 	int len = text.length();
 	if ( alwaysEndsWithSpace )
 	    len--;
@@ -120,7 +123,9 @@ int SpellChecker::highlightParagraph( const QString& text,
 		currentWord += text[i];
 	    }
 	}
-	if ( !text[len - 1].isLetter() )
+	if ( !text[len - 1].isLetter() || 
+	     index + 1 != text.length() || 
+	     text != paraText)
 	    flushCurrentWord();
     }
     return endStateOfLastPara;
@@ -153,7 +158,8 @@ void SpellChecker::flushCurrentWord()
 
     if ( !currentWord.isEmpty() ) {
 	if ( isMisspelled(currentWord) )
-	    setFormat( currentPos, currentWord.length(), mColor );
+	    setMisspelled( currentPos, currentWord.length(), true );
+	//setFormat( currentPos, currentWord.length(), mColor );
     }
     currentWord = "";
 }
@@ -164,6 +170,8 @@ QObject *DictSpellChecker::sDictionaryMonitor = 0;
 DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
     : SpellChecker( textEdit )
 {
+    textEdit->installEventFilter( this );
+    mInitialMove = true;
     mRehighlightRequested = false;
     mSpell = 0;
     mSpellKey = spellKey();
@@ -278,6 +286,30 @@ void DictSpellChecker::timerEvent(QTimerEvent*)
 	mSpellKey = spellKey();
 	DictSpellChecker::dictionaryChanged();
     }
+}
+
+bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
+{
+    if (o == textEdit() && (e->type() == QEvent::KeyPress)) {
+	QKeyEvent *k = (QKeyEvent*)e;
+	if (k->key() == Key_Enter ||
+	    k->key() == Key_Return || 
+	    k->key() == Key_Up || 
+	    k->key() == Key_Down || 
+	    k->key() == Key_Left || 
+	    k->key() == Key_Right) {
+	    if (mInitialMove) {
+		if (!mRehighlightRequested) {
+		    mRehighlightRequested = true;
+		    QTimer::singleShot(0, this, SLOT(slotRehighlight()));
+		}
+		mInitialMove = false;
+	    }
+	} else {
+	    mInitialMove = true;
+	}
+    }
+    return false;
 }
 
 } //namespace KMail

@@ -81,6 +81,7 @@ public:
 protected:
     void timerEvent(QTimerEvent *);
     QString spellKey();
+    bool eventFilter(QObject* o, QEvent* e);
 
 protected slots:
     void slotMisspelling (const QString & originalword, const QStringList & suggestions, unsigned int pos);
@@ -94,6 +95,7 @@ private:
     KSpell *mSpell;
     bool mRehighlightRequested;
     QString mSpellKey;
+    bool mInitialMove;
 };
 
 }; //namespace KMail
