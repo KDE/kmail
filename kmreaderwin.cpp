@@ -717,6 +717,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if(!str.isEmpty()) htmlStr += quotedHTML(str);
   }
   else htmlStr += quotedHTML(aStr);
+  htmlStr += "<br>";
 
   mViewer->write(htmlStr);
 }
