@@ -1923,12 +1923,17 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   mDelayedMarkTimer.stop();
 
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
-
+  
   // assume if a serial number exists it can be used to find the assoc KMMessage
   if (!mLastSerNum)
-      mMessage = aMsg;
+    mMessage = aMsg;
   else
-      mMessage = 0;
+    mMessage = 0;
+  if (message() != aMsg) {
+    mMessage = aMsg;  
+    mLastSerNum = 0; // serial number was invalid
+  }
+      
   mLastStatus = (aMsg) ? aMsg->status() : KMMsgStatusUnknown;
   if (aMsg)
   {
@@ -2137,10 +2142,10 @@ void KMReaderWin::parseMsg(void)
 
   if( mMimePartTree )
     mMimePartTree->clear();
-  
+
   int mainType = msg->type();
   bool isMultipart = ( DwMime::kTypeMultipart == mainType );
-  
+
   showHideMimeTree( isMultipart );
 
   QString bkgrdStr = "";
@@ -2868,7 +2873,7 @@ kdDebug(5006) << s << endl;
 
   mColorBar->setEraseColor( QColor( "white" ) );
   mColorBar->setText("");
-  
+
   if( !onlyProcessHeaders )
     removeTempFiles();
   KMMessagePart msgPart;
@@ -2939,7 +2944,7 @@ kdDebug(5006) << s << endl;
                             mainSubType );
 
   mRootNode->setFromAddress( aMsg->from() );
-  
+
   QString cntDesc, cntSize, cntEnc;
   cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )
@@ -3095,7 +3100,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
 
   // save current main Content-Type before deleting mRootNode
   int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
-  
+
   // if necessary restore original mRootNode
   if( savedRootNode ) {
     if( mRootNode )
@@ -3115,7 +3120,7 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
                       (DwMime::kTypeApplication == rootNodeCntType) ||
                       (DwMime::kTypeMessage     == rootNodeCntType) ||
                       (DwMime::kTypeModel       == rootNodeCntType) );
-    
+
     if( mColorBar->text().isEmpty() ) {
       if(    (KMMsgFullyEncrypted     == encryptionState)
           || (KMMsgPartiallyEncrypted == encryptionState)
@@ -3123,7 +3128,7 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
           || (KMMsgPartiallySigned    == signatureState) ){
         mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : cCBpgp );
         mColorBar->setText(i18n("\nS\nE\nC\nU\nR\nE\n \nM\nI\nM\nE\n \nM\nE\nS\nS\nA\nG\nE"));
-      }    
+      }
     }
   }
 }
@@ -4889,11 +4894,10 @@ KMMessage* KMReaderWin::message() const
     KMMessage *message = 0;
     int index;
     kernel->msgDict()->getLocation( mLastSerNum, &folder, &index );
-    Q_ASSERT( folder );
-    Q_ASSERT( (*folder)[index] );
-    Q_ASSERT( (*folder)[index]->isMessage() );
     if (folder )
       message = folder->getMsg( index );
+    if (!message)
+      kdDebug(5006) << "Attempt to reference invalid serial number " << mLastSerNum << "\n" << endl;
     return message;
   }
   return 0;
