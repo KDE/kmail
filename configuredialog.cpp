@@ -60,6 +60,7 @@ using KMime::DateFormatter;
 #include <kleo/cryptobackendfactory.h>
 #include <ui/backendconfigwidget.h>
 #include <ui/keyrequester.h>
+#include <ui/keyselectiondialog.h>
 
 // other KDE headers:
 #include <klocale.h>
@@ -3526,6 +3527,17 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * n
   mWidget = new WarningConfiguration( this );
   vlay->addWidget( mWidget );
 
+  connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  connect( mWidget->warnUnencryptedCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+  connect( mWidget->mWarnSignKeyExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
+  connect( mWidget->mWarnSignChainCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
+  connect( mWidget->mWarnSignRootCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
+
+  connect( mWidget->mWarnEncrKeyExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
+  connect( mWidget->mWarnEncrChainCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
+  connect( mWidget->mWarnEncrRootCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
+
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()),
 	   SLOT(slotReenableAllWarningsClicked()) );
 }
@@ -3622,10 +3634,23 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
   bg->insert( mWidget->OCSPRB );
 
   // Settings for the keyrequester custom widget
-  mWidget->OCSPResponderSignature->setAllowedKeys( Kleo::SigningKeyRequester::SMIME );
+  mWidget->OCSPResponderSignature->setAllowedKeys(
+     Kleo::KeySelectionDialog::SMIMEKeys
+     | Kleo::KeySelectionDialog::TrustedKeys
+     | Kleo::KeySelectionDialog::ValidKeys
+     | Kleo::KeySelectionDialog::SigningKeys
+     | Kleo::KeySelectionDialog::PublicKeys );
   mWidget->OCSPResponderSignature->setMultipleKeysEnabled( false );
 
   mConfig = Kleo::CryptoBackendFactory::instance()->config();
+
+  connect( mWidget->CRLRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->OCSPRB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->OCSPResponderURL, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->OCSPResponderSignature, SIGNAL( changed() ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->doNotCheckCertPolicyCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->neverConsultCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
+  connect( mWidget->fetchMissingCB, SIGNAL( toggled( bool ) ), this, SLOT( slotEmitChanged() ) );
 }
 
 void SecurityPage::SMimeTab::load() {
