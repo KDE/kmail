@@ -109,6 +109,8 @@ public slots:
   void slotSpellResult(const QString&);
   void slotSpellDone();
   void slotExternalEditorDone(KProcess*);
+    void slotMisspelling(const QString &, const QStringList &, unsigned int);
+    void slotCorrected (const QString &, const QString &, unsigned int);
 
 protected:
   /**
@@ -126,6 +128,7 @@ private:
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
   Syntaxhighlighter::DictSpellChecker *mSpellChecker;
+    bool spellLineEdit;
 };
 
 
@@ -157,6 +160,19 @@ protected:
     virtual void keyPressEvent(QKeyEvent*);
 private:
     KMComposeWin* mComposer;
+};
+
+
+class KMLineEditSpell : public KMLineEdit
+{
+    Q_OBJECT
+public:
+    KMLineEditSpell(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
+               const char *name = 0);
+    void highLightWord( unsigned int length, unsigned int pos );
+    void spellCheckDone( const QString &s );
+    void spellCheckerMisspelling( const QString &text, const QStringList &, unsigned int pos);
+    void spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos);
 };
 
 
@@ -299,6 +315,7 @@ public:
    static QString prettyMimeType( const QString& type );
     QString quotePrefixName() const;
 
+    KMLineEditSpell *sujectLineWidget() const { return mEdtSubject;}
 public slots:
   /**
    * Actions:
@@ -672,8 +689,9 @@ protected:
   QComboBox *mTransport;
   IdentityCombo    *mIdentity;
   KMFolderComboBox *mFcc;
-  KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc, *mEdtSubject;
-  QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
+  KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc;
+    KMLineEditSpell *mEdtSubject;
+    QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;
   QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
   QCheckBox *mBtnIdentity, *mBtnTransport, *mBtnFcc;
   QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;

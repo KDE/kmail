@@ -115,7 +115,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mEdtTo = new KMLineEdit(this,true,mMainWidget);
   mEdtCc = new KMLineEdit(this,true,mMainWidget);
   mEdtBcc = new KMLineEdit(this,true,mMainWidget);
-  mEdtSubject = new KMLineEdit(this,false,mMainWidget, "subjectLine");
+  mEdtSubject = new KMLineEditSpell(this,false,mMainWidget, "subjectLine");
   mLblIdentity = new QLabel(mMainWidget);
   mLblFcc = new QLabel(mMainWidget);
   mLblTransport = new QLabel(mMainWidget);
@@ -5472,6 +5472,41 @@ void KMLineEdit::loadAddresses()
         addAddress( *it );
 }
 
+
+KMLineEditSpell::KMLineEditSpell(KMComposeWin* composer, bool useCompletion,
+                       QWidget *parent, const char *name)
+    : KMLineEdit(composer,useCompletion,parent,name)
+{
+}
+
+
+void KMLineEditSpell::highLightWord( unsigned int length, unsigned int pos )
+{
+    setSelection ( pos, length );
+}
+
+void KMLineEditSpell::spellCheckDone( const QString &s )
+{
+    if( s != text() )
+	setText( s );
+}
+
+void KMLineEditSpell::spellCheckerMisspelling( const QString &_text, const QStringList &, unsigned int pos)
+{
+     highLightWord( _text.length(),pos );
+}
+
+void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &corr, unsigned int pos)
+{
+    if( old!= corr )
+    {
+        setSelection ( pos, old.length() );
+        insert( corr );
+        setSelection ( pos, corr.length() );
+    }
+}
+
+
 //=============================================================================
 //
 //   Class  KMEdit
@@ -5486,7 +5521,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   KCursor::setAutoHideCursor( this, true, true );
 
   extEditor = false;     // the default is to use ourself
-
+  spellLineEdit = false;
   mKSpell = 0;
   mSpellingFilter = 0;
   mTempFile = 0;
@@ -5660,7 +5695,7 @@ void KMEdit::slotExternalEditorDone(KProcess* proc)
 void KMEdit::spellcheck()
 {
   mWasModifiedBeforeSpellCheck = isModified();
-
+  spellLineEdit = !spellLineEdit;
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 		       SLOT(slotSpellcheck2(KSpell*)));
   QStringList l = SpellChecker::personalWords();
@@ -5670,38 +5705,60 @@ void KMEdit::spellcheck()
   connect (mKSpell, SIGNAL( death()),
           this, SLOT (slotSpellDone()));
   connect (mKSpell, SIGNAL (misspelling (const QString &, const QStringList &, unsigned int)),
-          this, SLOT (misspelling (const QString &, const QStringList &, unsigned int)));
+          this, SLOT (slotMisspelling (const QString &, const QStringList &, unsigned int)));
   connect (mKSpell, SIGNAL (corrected (const QString &, const QString &, unsigned int)),
-          this, SLOT (corrected (const QString &, const QString &, unsigned int)));
+          this, SLOT (slotCorrected (const QString &, const QString &, unsigned int)));
   connect (mKSpell, SIGNAL (done(const QString &)),
           this, SLOT (slotSpellResult (const QString&)));
 }
 
 
+void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
+{
+     if( spellLineEdit )
+         mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
+     else
+         misspelling(text, lst, pos);
+
+}
+
+void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos)
+{
+    if( spellLineEdit )
+        mComposer->sujectLineWidget()->spellCheckerCorrected( oldWord, newWord, pos);
+     else
+         corrected(oldWord, newWord, pos);
+}
+
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellcheck2(KSpell*)
 {
-  spellcheck_start();
+    if( !spellLineEdit)
+    {
+        spellcheck_start();
 
-  QString quotePrefix;
-  if(mComposer && mComposer->msg())
-  {
-    // read the quote indicator from the preferences
-    KConfig *config=KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
+        QString quotePrefix;
+        if(mComposer && mComposer->msg())
+        {
+            // read the quote indicator from the preferences
+            KConfig *config=KMKernel::config();
+            KConfigGroupSaver saver(config, "General");
 
-    int languageNr = config->readNumEntry("reply-current-language",0);
-    config->setGroup( QString("KMMessage #%1").arg(languageNr) );
+            int languageNr = config->readNumEntry("reply-current-language",0);
+            config->setGroup( QString("KMMessage #%1").arg(languageNr) );
 
-    quotePrefix = config->readEntry("indent-prefix", ">%_");
-    quotePrefix = mComposer->msg()->formatString(quotePrefix);
-  }
+            quotePrefix = config->readEntry("indent-prefix", ">%_");
+            quotePrefix = mComposer->msg()->formatString(quotePrefix);
+        }
 
-  kdDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
-  mSpellingFilter = new SpellingFilter(text(), quotePrefix, SpellingFilter::FilterUrls,
-    SpellingFilter::FilterEmailAddresses);
+        kdDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
+        mSpellingFilter = new SpellingFilter(text(), quotePrefix, SpellingFilter::FilterUrls,
+                                             SpellingFilter::FilterEmailAddresses);
 
-  mKSpell->check(mSpellingFilter->filteredText());
+        mKSpell->check(mSpellingFilter->filteredText());
+    }
+    else if( mComposer )
+        mKSpell->check( mComposer->sujectLineWidget()->text());
 }
 
 //-----------------------------------------------------------------------------
@@ -5712,9 +5769,19 @@ void KMEdit::slotSpellResult(const QString &)
   int dlgResult = mKSpell->dlgResult();
   if ( dlgResult == KS_CANCEL )
   {
-    kdDebug(5006) << "spelling: canceled - restoring text from SpellingFilter" << endl;
-    setText(mSpellingFilter->originalText());
-    setModified(mWasModifiedBeforeSpellCheck);
+      if( spellLineEdit)
+      {
+          //stop spell check
+          spellLineEdit = false;
+          //todo
+          //mComposer->sujectLineWidget()->text()
+      }
+      else
+      {
+          kdDebug(5006) << "spelling: canceled - restoring text from SpellingFilter" << endl;
+          setText(mSpellingFilter->originalText());
+          setModified(mWasModifiedBeforeSpellCheck);
+      }
   }
   mKSpell->cleanUp();
   DictSpellChecker::dictionaryChanged();
@@ -5743,5 +5810,10 @@ void KMEdit::slotSpellDone()
      spellcheck_stop();
      KMessageBox::sorry(this, i18n("ISpell/Aspell seems to have crashed."));
      emit spellcheck_done( KS_CANCEL );
+  }
+  else
+  {
+      if( spellLineEdit )
+          spellcheck();
   }
 }
