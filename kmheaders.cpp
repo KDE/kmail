@@ -1177,7 +1177,7 @@ void KMHeaders::resendMsg ()
 {
   KMComposeWin *win;
   KMMessage *newMsg, *msg = currentMsg();
-  if (!msg) return;
+  if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
   newMsg = new KMMessage;
@@ -1335,7 +1335,7 @@ void KMHeaders::forwardMsg ()
   // forward a single message at most.
 
   KMMessage *msg = currentMsg();
-  if (!msg) return;
+  if (!msg || !msg->codec()) return;
 
   QString id = msg->headerField( "X-KMail-Identity" );
   if ( id.isEmpty() )
@@ -1411,7 +1411,7 @@ void KMHeaders::redirectMsg()
   KMComposeWin *win;
   KMMessage *msg = currentMsg();
 
-  if (!msg) return;
+  if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
   win = new KMComposeWin();
@@ -1429,7 +1429,7 @@ void KMHeaders::noQuoteReplyToMsg()
   KMMessage *msg = currentMsg();
   QString id;
 
-  if (!msg)
+  if (!msg || !msg->codec())
     return;
 
   kernel->kbp()->busy();
@@ -1450,7 +1450,7 @@ void KMHeaders::replyToMsg (QString selection)
   KMMessage *msg = currentMsg();
   QString id;
 
-  if (!msg)
+  if (!msg || !msg->codec())
     return;
 
   kernel->kbp()->busy();
@@ -1472,7 +1472,7 @@ void KMHeaders::replyAllToMsg (QString selection)
   KMMessage *msg = currentMsg();
   QString id;
 
-  if (!msg) return;
+  if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
   id = msg->headerField( "X-KMail-Identity" );
@@ -1492,7 +1492,7 @@ void KMHeaders::replyListToMsg (QString selection)
   KMMessage *msg = currentMsg();
   QString id;
 
-  if (!msg) return;
+  if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
   id = msg->headerField( "X-KMail-Identity" );
