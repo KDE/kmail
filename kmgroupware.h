@@ -40,8 +40,8 @@ public:
   KMGroupware( QObject* parent = 0, const char* name = 0 );
   virtual ~KMGroupware();
 
-  ///////////////////////////////////
-  // Resource IMAP interface
+  ////////////////////////////////////////////////////////////////
+  // Resource IMAP interface - See also kmailicalifaceimap.(h|cpp)
   bool addIncidence( const QString& type, 
 		     const QString& uid, 
 		     const QString& ical );
@@ -60,7 +60,7 @@ private slots:
   void slotIncidenceAdded( KMFolder*, Q_UINT32 );
   void slotIncidenceDeleted( KMFolder*, Q_UINT32 );
   
-  //////////////////////////////////
+  ////////////////////////////////////////////////////////////////
 
 public:
 

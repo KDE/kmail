@@ -37,6 +37,8 @@ public:
 public slots:
   void slotIncidenceAdded( const QString& folder, const QString& ical );
   void slotIncidenceDeleted( const QString& folder, const QString& uid );
+  void slotRefresh( const QString& type);
+
 private:
   KMGroupware* mGroupware;
 };

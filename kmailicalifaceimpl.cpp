@@ -36,6 +36,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl( KMGroupware* gw )
 
   connect( gw, SIGNAL( incidenceDeleted( const QString&, const QString& ) ),
 	   this, SLOT( slotIncidenceDeleted( const QString&, const QString& ) ) );
+  connect( gw, SIGNAL( signalRefresh( const QString& ) ),
+	   this, SLOT( slotRefresh( const QString& ) ) );
 }
 
 bool KMailICalIfaceImpl::addIncidence( const QString& folder, 
@@ -81,6 +83,15 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( const QString& folder, const QStr
   kdDebug() << "Emitting DCOP signal incidenceDeleted( " << folder << ", " << uid << " )" << endl;
   emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
   //kapp->dcopClient()->send( "korganizer", "ResourceIMAP", "deleteIncidence(QString,QString)", data );
+}
+
+void KMailICalIfaceImpl::slotRefresh( const QString& type )
+{
+  QByteArray data;
+  QDataStream arg(data, IO_WriteOnly );
+  arg << type;
+  kdDebug() << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
+  emitDCOPSignal( "signalRefresh(QString)", data );
 }
 
 #include "kmailicalifaceimpl.moc"
