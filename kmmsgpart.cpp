@@ -189,11 +189,8 @@ QCString KMMessagePart::bodyDecoded(void) const
     QCString result(b.size()+1); // with additional trailing 0
     memcpy(result.data(),b.data(),b.size());
     result.truncate(result.length());
-    if (result.length()<(b.size()-1)) {
+    if (result.length()<(b.size()-1))
       kdDebug() << "WARNING -- body is binary but used as text" << endl;
-      cerr << "result/length:"<<result<<"::::"<<result.length()<<endl;
-      cerr << "b/size:"<<b<<"::::"<<b.size()<<endl;
-    }
     return result;
 }
 
