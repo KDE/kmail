@@ -121,9 +121,9 @@ QValueList<QString> values;
   grid->addWidget(value, 2, 1);
 
   //
-  // Display the E-Mail: field
+  // Display the Email: field
   tmpstr = _vc->getValue(VCARD_EMAIL, VCARD_EMAIL_INTERNET);
-  name = new QLabel(i18n("E-Mail:"), page);
+  name = new QLabel(i18n("Email:"), page);
   urlvalue = new KURLLabel(tmpstr, tmpstr, page);
   grid->addWidget(name, 3, 0);
   grid->addWidget(urlvalue, 3, 1);
