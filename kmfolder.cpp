@@ -334,7 +334,7 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
   if (aMsg->transferInProgress())
       return false;
 #warning "FIXME : extract tempOpenFolder to some base class"
-  if (msgParent  && msgParent->protocol() == "imap" &&!aMsg->isComplete())
+  if (!aMsg->isComplete() && msgParent && msgParent->folderType() == KMFolderTypeImap)
   {
     FolderJob *job = msgParent->createJob(aMsg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
@@ -399,7 +399,7 @@ void KMFolder::removeMsg(int idx, bool)
   }
 
   KMMsgBase* mb = getMsgBase(idx);
-  QString msgIdMD5 = mb->msgIdMD5();
+
   Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
   if (!mQuiet && serNum != 0)
     emit msgRemoved(this, serNum);
@@ -417,7 +417,13 @@ void KMFolder::removeMsg(int idx, bool)
   --mTotalMsgs;
 
   if (!mQuiet) {
-    emit msgRemoved(idx, msgIdMD5);
+    QString msgIdMD5 = mb->msgIdMD5();
+    QString strippedSubjMD5 = mb->strippedSubjectMD5();
+    if (strippedSubjMD5.isEmpty()) {
+       mb->initStrippedSubjectMD5();
+       strippedSubjMD5 = mb->strippedSubjectMD5();
+    }
+    emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
     emit msgRemoved(this);
   } else {
     mChanged = TRUE;
@@ -441,7 +447,7 @@ KMMessage* KMFolder::take(int idx)
     emit msgRemoved(this,serNum);
 
   msg = (KMMessage*)takeIndexEntry(idx);
-  QString msgIdMD5 = msg->msgIdMD5();
+
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew ||
       (this == kernel->outboxFolder())) {
@@ -453,7 +459,13 @@ KMMessage* KMFolder::take(int idx)
   setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
   if (!mQuiet) {
-    emit msgRemoved(idx, msgIdMD5);
+    QString msgIdMD5 = msg->msgIdMD5();
+    QString strippedSubjMD5 = msg->strippedSubjectMD5();
+    if (strippedSubjMD5.isEmpty()) {
+       msg->initStrippedSubjectMD5();
+       strippedSubjMD5 = msg->strippedSubjectMD5();
+    }
+    emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
     emit msgRemoved(this);
   } else {
     mChanged = TRUE;

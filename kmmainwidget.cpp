@@ -635,7 +635,7 @@ void KMMainWidget::createWidgets(void)
   accel->connectItem(accel->insertItem(CTRL+Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
 
-  connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
+  connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
   connect( kernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );

@@ -442,6 +442,10 @@ signals:
     folder changed. */
   void changed();
 
+  /** Emitted when the contents of a folder have been cleared
+     (new search in a search folder, for example) */
+  void cleared();
+      
   /** Emitted after an expunge. If not quiet, changed() will be
       emmitted first. */
   void expunged();
@@ -453,7 +457,7 @@ signals:
   void msgRemoved(KMFolder*, Q_UINT32 sernum);
 
   /** Emitted after a message is removed from the folder. */
-  void msgRemoved(int idx,QString msgIdMD5);
+  void msgRemoved(int idx,QString msgIdMD5, QString strippedSubjMD5);
   void msgRemoved(KMFolder*);
 
   /** Emitted when a message is added from the folder. */

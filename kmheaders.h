@@ -68,8 +68,8 @@ public:
   virtual void undo();
   virtual bool canUndo() const;
   virtual void resendMsg();
-  virtual void prepareMove( KMMsgBase **curMsg, int *contentX, int *contentY );
-  virtual void finalizeMove( KMMsgBase *curMsg, int contentX, int contentY );
+  virtual void prepareMove( int *id, int *contentX, int *contentY );
+  virtual void finalizeMove( int id, int contentX, int contentY );
 
   /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. */
@@ -166,10 +166,12 @@ public slots:
   void msgHeaderChanged(KMFolder *folder, int msgId);
   /** For when the list of messages in a folder has changed */
   void msgChanged();
+  /** For when the folder has been cleared */
+  void folderCleared();
   /** For when the message with the given message id has been added to a folder */
   void msgAdded(int);
   /** For when the message with the given id has been removed for a folder */
-  void msgRemoved(int,QString);
+  void msgRemoved(int, QString, QString);
   /** Make the next header visible scrolling if necessary */
   void nextMessage();
   /** Same as nextMessage() but don't clear the current selection */
@@ -284,13 +286,20 @@ private:
   /** Map messages ids into KMHeaderItems */
   QMemArray<KMHeaderItem*> mItems;
   QDict< KMHeaderItem > mIdTree;
+  QDict< KMHeaderItem> mMsgSubjects;
+
+  /** Build the tree if necessary */
+  void buildIdTrees (int count);
   QDict< KMHeaderItem > mPhantomIdTree;
   QDict< QValueList< int > > mTree;
   QDict< bool > mTreeSeen;
   QDict< bool > mTreeToplevel;
   bool mNested, mNestedOverride;
   NestingPolicy nestingPolicy;
+  QPtrList<KMHeaderItem> mImperfectlyThreadedList;
 
+  /** Find a msg to thread mb below */
+  KMHeaderItem * findParent(int id, bool *perfectParent = NULL);
   /** These must replaced by something better! */
   static bool mTrue, mFalse;
 

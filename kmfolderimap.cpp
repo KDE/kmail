@@ -258,7 +258,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
   if (msgParent)
   {
     mAccount->tempOpenFolder(msgParent);
-    if (msgParent->protocol() == "imap")
+    if (msgParent->folderType() == KMFolderTypeImap)
     {
       // make sure the messages won't be deleted while we work with them
       for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )

@@ -387,6 +387,7 @@ KMFolderSearch::~KMFolderSearch()
 void KMFolderSearch::setSearch(KMSearch *search)
 {
     truncateIndex(); //new search old index is obsolete
+    emit cleared();
     mInvalid = false;
     setDirty( true ); //have to write the index
     if (!mUnlinked) {
@@ -405,6 +406,7 @@ void KMFolderSearch::setSearch(KMSearch *search)
     mUnreadMsgs = 0;
     emit numUnreadMsgsChanged(this);
     emit changed(); // really want a kmfolder cleared signal
+    /* TODO There is KMFolder::cleared signal now. Adjust. */
     mSearch->start();
     open();
 }
@@ -514,6 +516,7 @@ int KMFolderSearch::open()
     if (!mSearch && !readSearch())
 	return -1;
 
+    emit cleared();
     if (!mSearch || !search()->running())
 	if (!readIndex()) {
 	    executeSearch();
@@ -678,6 +681,8 @@ KMMessage* KMFolderSearch::getMsg(int idx)
 void
 KMFolderSearch::ignoreJobsForMessage( KMMessage* msg )
 {
+    if ( !msg || msg->transferInProgress() )
+      return;
   /* While non-imap folders manage their jobs themselves, imap ones let
      their account manage them. Therefor first clear the jobs managed by
      this folder via the inherited method, then clear the imap ones. */

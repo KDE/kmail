@@ -1157,11 +1157,11 @@ void KMMoveCommand::execute()
   if (mDestFolder && mDestFolder->open() != 0)
     return;
   kernel->kbp()->busy();
-
-  KMMsgBase *curMsg = 0;
+  // used for remembering the message to select afterwards
+  int nextId;
   int contentX, contentY;
   if (mHeaders)
-    mHeaders->prepareMove( &curMsg, &contentX, &contentY );
+    mHeaders->prepareMove( &nextId, &contentX, &contentY );
 
   KMMessage *msg;
   KMMsgBase *msgBase;
@@ -1203,6 +1203,9 @@ void KMMoveCommand::execute()
         delete msg;
       }
     }
+    // adjust the remembered number, numbering is changed during delete.
+    if ( nextId > idx ) nextId--;
+
   }
   if (!list.isEmpty() && mDestFolder)
     mDestFolder->moveMsg(list, &index);
@@ -1214,7 +1217,7 @@ void KMMoveCommand::execute()
   }
 
   if (mHeaders)
-    mHeaders->finalizeMove( curMsg, contentX, contentY );
+    mHeaders->finalizeMove( nextId, contentX, contentY );
 
   if (mDestFolder) {
      mDestFolder->sync();
