@@ -236,7 +236,7 @@ void ImapJob::slotGetNextMessage()
       path += ";SECTION=BODY.PEEK[" + mPartSpecifier +"]";
     }
   } else {
-      path += ";SECTION=BODY.PEEK";
+      path += ";SECTION=BODY.PEEK[]";
   }
   url.setPath( path );
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
