@@ -26,6 +26,7 @@
 #include <ksimpleconfig.h>
 #include <kiconloader.h>
 #include <kmsgbox.h>
+#include <klocale.h>
 
 Kpgp *Kpgp::kpgpObject = 0L;
 

@@ -7,6 +7,7 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <kapp.h>
+#include <klocale.h>
 #include <kapp.h>
 
 //-----------------------------------------------------------------------------

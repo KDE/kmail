@@ -27,6 +27,7 @@
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include <kapp.h>
+#include <klocale.h>
 
 
 //-----------------------------------------------------------------------------

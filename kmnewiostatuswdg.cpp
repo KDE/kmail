@@ -5,6 +5,7 @@
 #include <iostream.h>
 #include <kapp.h>
 #include "kmnewiostatuswdg.h"
+#include <klocale.h>
 #include "kmnewiostatuswdg.moc"
 
 KMIOStatusWdg::KMIOStatusWdg(QWidget *parent, const char *name, 

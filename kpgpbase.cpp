@@ -12,6 +12,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <klocale.h>
  
 KpgpBase::KpgpBase()
 {

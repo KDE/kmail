@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <kapp.h>
 #include <kmsgbox.h>
+#include <klocale.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):

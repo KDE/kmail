@@ -14,6 +14,7 @@
 #include <kapp.h>
 #include <qaccel.h>
 #include <kbuttonbox.h>
+#include <klocale.h>
 
 QString KMFolderSelDlg::oldSelection;
 

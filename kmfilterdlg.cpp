@@ -26,6 +26,7 @@
 #include <qlineedit.h>
 #include <assert.h>
 #include <qstrlist.h>
+#include <klocale.h>
 
 static QStrList sFilterOpList, sFilterFuncList, sFilterFieldList, 
                 sFilterActionList;

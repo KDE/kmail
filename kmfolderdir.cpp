@@ -10,6 +10,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <errno.h>
+#include <klocale.h>
 
 
 //=============================================================================

@@ -19,6 +19,7 @@
 #include "kmfoldermgr.h"
 
 #include <assert.h>
+#include <klocale.h>
 
 #include "kmfolderdia.moc"
 

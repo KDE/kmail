@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <iostream.h>
+#include <klocale.h>
 
 extern KBusyPtr *kbp;
 //-----------------------------------------------------------------------------

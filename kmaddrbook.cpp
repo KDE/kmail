@@ -8,6 +8,7 @@
 #include <kmsgbox.h>
 #include <qfile.h>
 #include <assert.h>
+#include <klocale.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBook::KMAddrBook(): KMAddrBookInherited()

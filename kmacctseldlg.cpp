@@ -9,6 +9,7 @@
 
 #include "kmacctseldlg.h"
 #include "kmglobal.h"
+#include <klocale.h>
 
 //-----------------------------------------------------------------------------
 KMAcctSelDlg::KMAcctSelDlg(QWidget* parent, const char* name):

@@ -12,6 +12,7 @@
 #include "kmfolderdir.h"
 #include "kmfolder.h"
 #include <drag.h>
+#include <klocale.h>
 
 #include "kmfoldertree.moc"
 
