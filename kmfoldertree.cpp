@@ -190,6 +190,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 	   this, SLOT( mouseButtonPressed( int, QListViewItem*, const QPoint &, int)));
   connect( this, SIGNAL( expanded( QListViewItem* ) ),
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
+  connect( this, SIGNAL( collapsed( QListViewItem* ) ),
+           this, SLOT( slotFolderCollapsed( QListViewItem* ) ) );
 }
 
 bool KMFolderTree::event(QEvent *e)
@@ -1210,6 +1212,8 @@ void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
   KMFolderTreeInherited::contentsMouseMoveEvent( e );
 }
 
+
+//-----------------------------------------------------------------------------
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
@@ -1219,6 +1223,19 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
     if (folder->getImapState() == KMFolderImap::imapNoInformation)
       folder->listDirectory( fti );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
+{
+  KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
+  if (fti && fti->parent() == firstChild() && fti->folder
+    && fti->folder->protocol() == "imap")
+  {
+    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
+    folder->setImapState(KMFolderImap::imapNoInformation);
   }
 }
 

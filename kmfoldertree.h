@@ -180,6 +180,9 @@ protected slots:
   /** Expand an IMAP folder */
   void slotFolderExpanded( QListViewItem * item );
 
+  /** Tell the folder to refresh the contents on the next expansion */
+  void slotFolderCollapsed( QListViewItem * item );
+
 protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
