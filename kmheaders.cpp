@@ -2434,9 +2434,6 @@ void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
 
-  if (currentMsg()->transferInProgress())
-    return;
-
   QPopupMenu *menu = new QPopupMenu(this);
 
   mMenuToFolder.clear();
