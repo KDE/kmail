@@ -35,7 +35,7 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
 		charsetsDlg.moc kmtopwidget.moc
 
-appsdir = $(kde_appsdir)/Internet/
+appsdir = $(kde_appsdir)/Programs/Internet
 apps_DATA = KMail.desktop
 
 EXTRA_DIST = KMail.desktop
