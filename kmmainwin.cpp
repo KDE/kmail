@@ -40,6 +40,7 @@
 #include <kkeydialog.h>
 #include <kcharsets.h>
 #include <kmimetype.h>
+#include <knotifyclient.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -617,7 +618,7 @@ void KMMainWin::slotMailChecked(bool newMail) {
     return;
 
   if (mBeepOnNew) {
-    KApplication::beep();
+    KNotifyClient::beep();
   }
 
   // FIXME: change system() to a KProcess
