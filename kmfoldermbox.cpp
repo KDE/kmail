@@ -908,7 +908,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   {
     opened = true;
     rc = open();
-    kdDebug(5006) << "addMsg-open: " << rc << endl;
+    kdDebug(5006) << "KMFolderMBox::addMsg-open: " << rc << " of folder: " << label() << endl;
     if (rc) return rc;
   }
 

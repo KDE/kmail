@@ -389,7 +389,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   {
     opened = TRUE;
     rc = open();
-    kdDebug(5006) << "addMsg-open: " << rc << endl;
+    kdDebug(5006) << "KMFolderMaildir::addMsg-open: " << rc << " of folder: " << label() << endl;
     if (rc) return rc;
   }
 
