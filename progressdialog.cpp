@@ -167,8 +167,8 @@ void TransactionItem::slotItemCanceled()
 
 
 
-ProgressDialog::ProgressDialog( QWidget* parent, const char* name, bool modal, WFlags fl )
-    : QDialog( parent, name, modal, fl )
+ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name )
+    : OverlayWidget( alignWidget, parent, name )
 {
     setCaption( i18n("Progress") );
     resize( 600, 400 );
@@ -237,7 +237,8 @@ void ProgressDialog::closeEvent( QCloseEvent* e )
 void ProgressDialog::showEvent( QShowEvent* e )
 {
   mListView->slotAdjustGeometry();
-  QDialog::showEvent( e );
+  resize( sizeHint() );
+  OverlayWidget::showEvent( e );
 }
 
 
@@ -264,6 +265,7 @@ void ProgressDialog::slotTransactionAdded( ProgressItem *item )
    // FIXME Maybe it's better to only auto show if the dialog was timed out
    // and not closed by the user. dunno
    // if ( mTransactionsToListviewItems.size() == 1 ) show();
+  resize( sizeHint() );
 }
 
 void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
@@ -278,6 +280,8 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.size() == 0 )
      QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
+   else
+     resize( sizeHint() );
 }
 
 void ProgressDialog::slotTransactionCanceled( ProgressItem * )

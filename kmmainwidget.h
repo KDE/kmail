@@ -176,6 +176,11 @@ public slots:
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
 
+  /** Show/hide the embedded progress dialog */
+  void slotToggleProgressDialog();
+  /** Show the embedded progress dialog */
+  void slotShowProgressDialog();
+
 signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
@@ -452,10 +457,11 @@ private:
   QTimer *menutimer;
 
   // ProgressDialog for transferring messages
-  KProgressDialog* mProgressDialog;
-  int mCountJobs, mCountMsgs;
+  //KProgressDialog* mProgressDialog;
+  //int mCountJobs, mCountMsgs;
 
   KMLittleProgressDlg *mLittleProgress;
+  ProgressDialog *mProgressDialog;
 
   QPtrList<KMMessage> mSelectedMsgs;
   QGuardedPtr<KMail::Vacation> mVacation;

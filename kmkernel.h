@@ -236,7 +236,6 @@ public slots:
   void slotEmptyTrash();
 
   void slotShowConfigurationDialog();
-  void slotShowProgressDialog();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
@@ -301,7 +300,6 @@ private:
   QLabel *mCleanupLabel;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
-  ProgressDialog *mProgressDialog;
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
   QTimer *mExpireFoldersTimer;

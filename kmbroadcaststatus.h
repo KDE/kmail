@@ -11,6 +11,7 @@
 #include <qwidget.h>
 #include <qframe.h>
 
+class KMMainWidget;
 class KProgress;
 class QPushButton;
 class QWidgetStack;
@@ -111,7 +112,7 @@ class KMLittleProgressDlg : public QFrame {
 
 public:
 
-  KMLittleProgressDlg( QWidget* parent, bool button = true );
+  KMLittleProgressDlg( KMMainWidget* mainWidget, QWidget* parent, bool button = true );
 
 public slots:
 
@@ -125,6 +126,7 @@ public slots:
   virtual void slotProgressItemProgress( ProgressItem *i, unsigned int value );
 
 protected:
+  KMMainWidget* m_mainWidget;
   KProgress* m_pProgressBar;
   QLabel* m_pLabel;
   SSLLabel* m_sslLabel;

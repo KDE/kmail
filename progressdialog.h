@@ -35,12 +35,14 @@
 
 #include <qdialog.h>
 #include <qlistview.h>
+#include "overlaywidget.h"
 namespace KMail {
   class ProgressItem;
   class TransactionItemListView;
 }
 using KMail::TransactionItemListView;
 using KMail::ProgressItem;
+using KMail::OverlayWidget;
 
 class QProgressBar;
 
@@ -94,13 +96,12 @@ private:
 
 };
 
-class ProgressDialog : public QDialog
+class ProgressDialog : public OverlayWidget
 {
     Q_OBJECT
 
 public:
-    ProgressDialog( QWidget* parent = 0, const char* name = 0, bool modal = FALSE,
-                        WFlags fl = 0 );
+    ProgressDialog( QWidget* alignWidget, QWidget* parent = 0, const char* name = 0 );
     ~ProgressDialog();
 
 protected slots:

@@ -33,6 +33,7 @@ using KMail::ProgressManager;
 #include <qwidgetstack.h>
 #include <qdatetime.h>
 #include <kmkernel.h> // for the progress dialog
+#include "kmmainwidget.h"
 
 //-----------------------------------------------------------------------------
 KMBroadcastStatus* KMBroadcastStatus::instance_ = 0;
@@ -198,8 +199,8 @@ void KMBroadcastStatus::requestAbort()
 
 
 //-----------------------------------------------------------------------------
-KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
-  : QFrame( parent ), mCurrentItem( 0 )
+KMLittleProgressDlg::KMLittleProgressDlg( KMMainWidget* mainWidget, QWidget* parent, bool button )
+  : QFrame( parent ), m_mainWidget( mainWidget ), mCurrentItem( 0 )
 {
   m_bShowButton = button;
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
@@ -238,8 +239,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   setMode();
 
   connect( m_pButton, SIGNAL( clicked() ),
-           kmkernel, SLOT( slotShowProgressDialog() ) );
-          // KMBroadcastStatus::instance(), SLOT( requestAbort() ));
+           mainWidget, SLOT( slotToggleProgressDialog() ) );
 
   connect ( ProgressManager::instance(), SIGNAL( progressItemAdded( ProgressItem * ) ),
             this, SLOT( slotProgressItemAdded( ProgressItem * ) ) );
@@ -371,9 +371,9 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
       }
       setMode();
 */
-      // Consensus seems to be that we should show the fancy dialog when the user
+      // Consensus seems to be that we should show/hide the fancy dialog when the user
       // clicks anywhere in the small one.
-      kmkernel->slotShowProgressDialog();
+      m_mainWidget->slotToggleProgressDialog();
       return true;
     }
   }

@@ -61,6 +61,7 @@
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
+#include "progressdialog.h"
 #include "vacation.h"
 using KMail::Vacation;
 #include "subscriptiondialog.h"
@@ -109,7 +110,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mReaderWindowActive = true;
   mReaderWindowBelow = true;
   mFolderHtmlPref = false;
-  mCountJobs = 0;
   mSystemTray = 0;
   mDestructed = false;
   mActionCollection = actionCollection;
@@ -2764,8 +2764,12 @@ void KMMainWidget::setupStatusBar()
   //we want to export to the part.
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *bar =  mainWin ? mainWin->statusBar() : 0;
-  mLittleProgress = new KMLittleProgressDlg( bar );
+  mLittleProgress = new KMLittleProgressDlg( this, bar );
   mLittleProgress->show();
+
+  /* Create a progress dialog and hide it. */
+  mProgressDialog = new KMail::ProgressDialog( bar, this );
+  mProgressDialog->hide();
 
   /* TODO remove old cruft */
   /*
@@ -3346,4 +3350,23 @@ void KMMainWidget::updateFileMenu()
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotShowProgressDialog()
+{
+  if( mProgressDialog ) {
+    mProgressDialog->show();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotToggleProgressDialog()
+{
+  if( mProgressDialog ) {
+    if ( mProgressDialog->isShown() )
+      mProgressDialog->hide();
+    else if ( mProgressDialog->isHidden() )
+      mProgressDialog->show();
+  }
 }

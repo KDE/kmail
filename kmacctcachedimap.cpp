@@ -273,7 +273,10 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mCountLastUnread = 0;
 
   if( interactive && isProgressDialogEnabled() ) {
-    kmkernel->slotShowProgressDialog();
+#if 0
+    // ### use the right mainwindow!!!
+    theMainWindow->showProgressDialog();
+#endif
   }
 
   Q_ASSERT( !mMailCheckProgressItem );

@@ -46,8 +46,6 @@ using KMail::MailServiceImpl;
 using KMail::FolderIface;
 #include "jobscheduler.h"
 
-#include "progressdialog.h"
-
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <kmessagebox.h>
@@ -156,10 +154,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                      "selectFolder(QString)", false );
-
-  /* Create a progress dialog and hide it. */
-  mProgressDialog = new KMail::ProgressDialog();
-  mProgressDialog->hide();
 }
 
 KMKernel::~KMKernel ()
@@ -1138,8 +1132,6 @@ void KMKernel::notClosedByUser()
   the_msgDict = 0;
   delete mConfigureDialog;
   mConfigureDialog = 0;
-  delete mProgressDialog;
-  mProgressDialog = 0;
   delete mWin;
   mWin = 0;
 }
@@ -1522,13 +1514,6 @@ void KMKernel::slotShowConfigurationDialog()
     mConfigureDialog->show();
   else
     mConfigureDialog->raise();
-}
-
-void KMKernel::slotShowProgressDialog()
-{
-  if( mProgressDialog ) {
-    mProgressDialog->show();
-  }
 }
 
 bool KMKernel::haveSystemTrayApplet()
