@@ -51,6 +51,10 @@ I18N_NOOP( "<qt><p>Click this button to create a new filter.</p>"
 	   "later on.</p>"
 	   "<p>If you have clicked this button accidentally, you can undo this "
 	   "by clicking on the <em>Delete</em> button.</p></qt>" );
+const char * _wt_filterlist_copy =
+I18N_NOOP( "<qt><p>Click this button to copy a filter.</p>"
+	   "<p>If you have clicked this button accidentally, you can undo this "
+	   "by clicking on the <em>Delete</em> button.</p></qt>" );
 const char * _wt_filterlist_delete =
 I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently-"
 	   "selected filter from the list above.</p>"
@@ -215,6 +219,9 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
   connect( mFilterList, SIGNAL(resetWidgets()),
 	   this, SLOT(slotReset()) );
 
+  connect( mFilterList, SIGNAL( applyWidgets() ),
+           this, SLOT( slotUpdateFilter() ) );
+
   // support auto-naming the filter
   connect( mPatternEdit, SIGNAL(maybeNameChanged()),
 	   mFilterList, SLOT(slotUpdateFilterName()) );
@@ -320,6 +327,14 @@ void KMFilterDlg::slotReset()
   }
 }
 
+void KMFilterDlg::slotUpdateFilter()
+{
+  mPatternEdit->updateSearchPattern();
+  if ( !bPopFilter ) {
+    mActionLister->updateActionList();
+  }
+}
+
 void KMFilterDlg::slotApplicabilityChanged()
 {
   if ( !mFilter )
@@ -401,13 +416,18 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnNew = new QPushButton( QString::null, hb );
   mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
   mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
+  mBtnCopy = new QPushButton( QString::null, hb );
+  mBtnCopy->setPixmap( BarIcon( "editcopy", KIcon::SizeSmall ) );
+  mBtnCopy->setMinimumSize( mBtnCopy->sizeHint() * 1.2 );
   mBtnDelete = new QPushButton( QString::null, hb );
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename..."), hb );
   QToolTip::add( mBtnNew, i18n("New") );
+  QToolTip::add( mBtnCopy, i18n("Copy") );
   QToolTip::add( mBtnDelete, i18n("Delete"));
   QWhatsThis::add( mBtnNew, i18n(_wt_filterlist_new) );
+  QWhatsThis::add( mBtnCopy, i18n(_wt_filterlist_copy) );
   QWhatsThis::add( mBtnDelete, i18n(_wt_filterlist_delete) );
   QWhatsThis::add( mBtnRename, i18n(_wt_filterlist_rename) );
 
@@ -423,6 +443,8 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 	   this, SLOT(slotDown()) );
   connect( mBtnNew, SIGNAL(clicked()),
 	   this, SLOT(slotNew()) );
+  connect( mBtnCopy, SIGNAL(clicked()),
+	   this, SLOT(slotCopy()) );
   connect( mBtnDelete, SIGNAL(clicked()),
 	   this, SLOT(slotDelete()) );
   connect( mBtnRename, SIGNAL(clicked()),
@@ -467,7 +489,7 @@ void KMFilterListBox::slotUpdateFilterName()
   if ( shouldBeName.stripWhiteSpace().isEmpty() || shouldBeName[0] == '<' ) {
     // auto-naming of patterns
     if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )
-      shouldBeName = QString( "<%1>:%2" ).arg( p->first()->field() ).arg( p->first()->contents() );
+      shouldBeName = QString( "<%1>: %2" ).arg( p->first()->field() ).arg( p->first()->contents() );
     else
       shouldBeName = "<" + i18n("unnamed") + ">";
     p->setName( shouldBeName );
@@ -562,6 +584,27 @@ void KMFilterListBox::slotNew()
 {
   // just insert a new filter.
   insertFilter( new KMFilter(0, bPopFilter) );
+  enableControls();
+}
+
+void KMFilterListBox::slotCopy()
+{
+  if ( mIdxSelItem < 0 ) {
+    kdDebug(5006) << "KMFilterListBox::slotCopy called while no filter is selected, ignoring." << endl;
+    return;
+  }
+
+  // make sure that all changes are written to the filter before we copy it
+  emit applyWidgets();
+
+  KMFilter *filter = mFilterList.at( mIdxSelItem );
+
+  // enableControls should make sure this method is
+  // never called when no filter is selected.
+  assert( filter );
+
+  // inserts a copy of the current filter.
+  insertFilter( new KMFilter( *filter ) );
   enableControls();
 }
 
@@ -671,6 +714,7 @@ void KMFilterListBox::enableControls()
 
   mBtnUp->setEnabled( aFilterIsSelected && !theFirst );
   mBtnDown->setEnabled( aFilterIsSelected && !theLast );
+  mBtnCopy->setEnabled( aFilterIsSelected );
   mBtnDelete->setEnabled( aFilterIsSelected );
   mBtnRename->setEnabled( aFilterIsSelected );
 

@@ -42,9 +42,9 @@ class KIconButton;
     and @ref KMFilterActionEdit) to do that.
 
     Communication with this widget is quite easy: simply create an
-    instance, connect the signals @ref filterSelected and
-    @ref resetWidgets with a slot that does the right thing and there you
-    go...
+    instance, connect the signals @ref filterSelected, @ref resetWidgets
+    and @ref applyWidgets with a slot that does the right thing and there
+    you go...
 
     This widget will operate on it's own copy of the filter list as
     long as you don't call @ref slotApplyFilterChanges. It will then
@@ -83,11 +83,15 @@ signals:
       operation. */
   void filterSelected( KMFilter* filter );
 
-  /** Emitted when this widgets wants the edit widgets to let go of
+  /** Emitted when this widget wants the edit widgets to let go of
       their filter reference. Everyone holding a reference to a filter
       should update it from the contents of the widgets used to edit
       it and set their internal reference to 0. */
   void resetWidgets();
+
+  /** Emitted when this widget wants the edit widgets to apply the changes
+      to the current filter. */
+  void applyWidgets();
 
 public slots:
   /** Called when the name of a filter might have changed (e.g.
@@ -110,6 +114,9 @@ protected slots:
   /** Called when the user clicks the 'New' button. Creates a new
       empty filter just before the current one. */
   void slotNew();
+  /** Called when the user clicks the 'Copy' button. Creates a copy
+      of the current filter and inserts it just before the current one. */
+  void slotCopy();
   /** Called when the user clicks the 'Delete' button. Deletes the
       current filter. */
   void slotDelete();
@@ -129,7 +136,7 @@ protected:
   /** The listbox displaying the filter list. */
   QListBox *mListBox;
   /** The various action buttons. */
-  QPushButton *mBtnNew, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
+  QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
   /** The index of the currently selected item. */
   int mIdxSelItem;
   bool mShowLater;
@@ -228,6 +235,9 @@ public:
   virtual ~KMFilterActionWidgetLister();
 
   void setActionList( QPtrList<KMFilterAction> * aList );
+
+  /** Updates the action list according to the current widget values */
+  void updateActionList() { regenerateActionListFromWidgets(); }
 
 public slots:
   void reset();
@@ -331,6 +341,7 @@ protected slots:
   void slotConfigureShortcutButtonToggled( bool aChecked );
   void slotFilterActionIconChanged( QString icon );
   void slotReset();
+  void slotUpdateFilter();
   void slotSaveSize();
   /// called when the dialog is closed (finished)
   void slotFinished();
