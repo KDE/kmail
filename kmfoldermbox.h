@@ -21,9 +21,6 @@ using KMail::FolderJob;
 using KMail::MboxJob;
 using KMail::AttachmentStrategy;
 
-class KMFolderMbox;
-
-
 /* Mail folder.
  * (description will be here).
  *
