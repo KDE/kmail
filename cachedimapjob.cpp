@@ -228,7 +228,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   mMsg->setHeaderField("X-UID",QString::number(mfd.uid));
   mMsg->setHeaderField("X-Length",QString::number(mfd.size));
   if( mfd.flags > 0 )
-    mMsg->setStatus( KMFolderCachedImap::flagsToStatus(mfd.flags) );
+    KMFolderCachedImap::flagsToStatus(mMsg, mfd.flags);
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1").arg(mfd.uid));
 

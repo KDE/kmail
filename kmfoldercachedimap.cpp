@@ -983,23 +983,23 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     if ( /*flags & 8 ||*/ uid <= lastUid()) {
       // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<name()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
       /* If this message UID is not present locally, then it must
-	 have been deleted by the user, so we delete it on the
-	 server also.
+          have been deleted by the user, so we delete it on the
+          server also.
       */
       KMMsgBase *existingMessage = findByUID(uid);
       if( !existingMessage ) {
-	// kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
-	uidsForDeletionOnServer << uid;
+         // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
+         uidsForDeletionOnServer << uid;
       } else {
-	/* The message is OK, update flags */
-	existingMessage->setStatus( flagsToStatus( flags ) );
+         /* The message is OK, update flags */
+         flagsToStatus( existingMessage, flags );
       }
       delete msg;
     } else {
       ulong size = msg->headerField("X-Length").toULong();
       mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
       if( imapPath() == "/INBOX/" )
-	mUidsForDownload << uid;
+         mUidsForDownload << uid;
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
@@ -1037,33 +1037,38 @@ void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
   emit newState( name(), mProgress + (20 * done) / total, QString::null);
 }
 
-KMMsgStatus KMFolderCachedImap::flagsToStatus(int flags, bool newMsg)
+//-----------------------------------------------------------------------------
+void KMFolderCachedImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
-  if (flags & 4) return KMMsgStatusFlag;
-  if (flags & 2) return KMMsgStatusReplied;
-  if (flags & 1) return KMMsgStatusOld;
-  return (newMsg) ? KMMsgStatusNew : KMMsgStatusUnread;
+  if (flags & 4) 
+    msg->setStatus( KMMsgStatusFlag );
+  if (flags & 2)
+    msg->setStatus( KMMsgStatusReplied );
+  if (flags & 1)
+    msg->setStatus( KMMsgStatusOld );
+
+  if (msg->isOfUnknownStatus()) {
+    if (newMsg)
+      msg->setStatus( KMMsgStatusNew );
+    else
+      msg->setStatus( KMMsgStatusUnread );
+  }
 }
 
+//-----------------------------------------------------------------------------
 QCString KMFolderCachedImap::statusToFlags(KMMsgStatus status)
 {
   QCString flags = "";
-  switch (status)
-  {
-    case KMMsgStatusNew:
-    case KMMsgStatusUnread:
-      break;
-    case KMMsgStatusDeleted:
-      flags = "\\DELETED";
-      break;
-    case KMMsgStatusReplied:
-      flags = "\\SEEN \\ANSWERED";
-      break;
-    case KMMsgStatusFlag:
-      flags = "\\SEEN \\FLAGGED";
-      break;
-    default:
-      flags = "\\SEEN";
+  if (status & KMMsgStatusNew || status & KMMsgStatusUnread) 
+    return flags;
+  if (status & KMMsgStatusDeleted) 
+    flags = "\\DELETED";
+  else {
+    flags = "\\SEEN";
+    if (status & KMMsgStatusReplied) 
+      flags += " \\ANSWERED";
+    if (status & KMMsgStatusFlag) 
+      flags += " \\FLAGGED";
   }
   return flags;
 }

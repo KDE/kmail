@@ -150,7 +150,10 @@ public:
   void sendFolderComplete(bool success)
   { emit folderComplete(this, success); }
 
-  static KMMsgStatus flagsToStatus(int flags, bool newMsg = TRUE);
+  static void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
+ /**
+   * Convert message status to a list of IMAP flags
+   */
   static QCString statusToFlags(KMMsgStatus status);
 
   /**
