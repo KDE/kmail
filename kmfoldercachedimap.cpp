@@ -1244,14 +1244,14 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
   return true;
 }
 
-void KMFolderCachedImap::slotListResult( QStringList mFolderNames,
-                                         QStringList mFolderPaths,
-                                         QStringList mFolderMimeTypes,
+void KMFolderCachedImap::slotListResult( QStringList folderNames,
+                                         QStringList folderPaths,
+                                         QStringList folderMimeTypes,
                                          const ImapAccountBase::jobData & jobData )
 {
-  mSubfolderNames = mFolderNames;
-  mSubfolderPaths = mFolderPaths;
-  mSubfolderMimeTypes = mFolderMimeTypes;
+  mSubfolderNames = folderNames;
+  mSubfolderPaths = folderPaths;
+  mSubfolderMimeTypes = folderMimeTypes;
   if (jobData.parent) {
     // the account is connected to several folders, so we
     // have to sort out if this result is for us
@@ -1290,17 +1290,22 @@ void KMFolderCachedImap::slotListResult( QStringList mFolderNames,
           (node->name().upper() != "INBOX" || !mAccount->createInbox()) )
       {
         // This subfolder isn't present on the server
-        kdDebug(5006) << node->name() << " isn't on the server." << endl;
         if( !f->uidValidity().isEmpty() ) {
           // The folder have a uidValidity setting, so it has been on the
           // server before. Delete it locally.
           toRemove.append( f->folder() );
+          kdDebug(5006) << node->name() << " isn't on the server. It has a uidvalidity -> delete it locally" << endl;
         }
+        else
+          kdDebug(5006) << node->name() << " isn't on the server. It has no uidvalidity -> keep it" << endl;
       }
       else // folder both local and on server
       {
+        //kdDebug(5006) << node->name() << " is on the server." << endl;
         mAccount->addLastUnreadMsgCount( f->countUnread() );
       }
+    } else {
+      //kdDebug(5006) << "skipping dir node:" << node->name() << endl;
     }
     node = folder()->child()->next();
   }
