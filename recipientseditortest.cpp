@@ -60,6 +60,7 @@ Composer::Composer( QWidget *parent )
   
   QTextEdit *editor = new QTextEdit( this );
   topLayout->addMultiCellWidget( editor, 2, 2, 0, 1 );
+  topLayout->setRowStretch( 2, 1 );
   
   QPushButton *button = new QPushButton( "&Close", this );
   topLayout->addMultiCellWidget( button, 3, 3, 0, 1 );

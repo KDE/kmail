@@ -172,6 +172,8 @@ void RecipientLine::keyPressEvent( QKeyEvent *ev )
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent )
 {
+  setLineWidth( 0 );
+
   addLine();
 }
 
@@ -204,7 +206,7 @@ RecipientLine *RecipientsView::addLine()
   resizeContents( viewport()->width(), mLines.count() * mLineHeight );
 
   if ( mLines.count() < 6 ) {
-    setFixedHeight( mLineHeight * mLines.count() + 2 );
+    setFixedHeight( mLineHeight * mLines.count() );
   }
 
   emit totalChanged( mLines.count() );
@@ -332,6 +334,7 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
   : QWidget( parent )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
+  topLayout->setSpacing( KDialog::spacingHint() );
 
   mRecipientsView = new RecipientsView( this );
   topLayout->addWidget( mRecipientsView );
