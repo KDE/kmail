@@ -262,10 +262,6 @@ protected:
   /** Unselect all items except one */
   virtual void clearSelectionExcept( QListViewItem *exception );
 
-  /** Select all items in list from begin to end, return false
-     if end occurs before begin in the list */
-  virtual bool shiftSelection( QListViewItem *begin, QListViewItem *end );
-
   /** Called when a header is clicked */
   virtual void setSorting( int column, bool ascending = true);
 

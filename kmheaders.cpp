@@ -2401,23 +2401,6 @@ void KMHeaders::clearSelectionExcept( QListViewItem *exception )
 }
 
 //-----------------------------------------------------------------------------
-bool KMHeaders::shiftSelection( QListViewItem *begin, QListViewItem *end )
-{
-  QListViewItem *search = begin;
-  while (search && search->itemBelow() && (search != end))
-    search = search->itemBelow();
-  if (search && (search == end)) {
-    while (search && (search != begin)) {
-      setSelected( search, true );
-      search = search->itemAbove();
-    }
-    setSelected( search, true );
-    return true;
-  }
-  return false;
-}
-
-//-----------------------------------------------------------------------------
 void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
