@@ -589,6 +589,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
     if (uidValidity() != uidv)
     {
       expunge();
+      mLastUid = 0;
     } else {
       if (!mCheckFlags)
         startUid = QString::number(lastUid() + 1);
