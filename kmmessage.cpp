@@ -948,7 +948,7 @@ KMMessage* KMMessage::createForward(void)
   int i;
 
   id = headerField("X-KMail-Identity");
-  if (id.isEmpty() && parent()->isMailingList())
+  if (id.isEmpty() && parent() && parent()->isMailingList())
     id = parent()->mailingListIdentity();
   msg->initHeader(id);
 
