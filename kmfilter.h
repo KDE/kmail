@@ -52,7 +52,7 @@ public:
   KMFilter( const KMFilter & other );
 
   /** Cleanup. */
-  virtual ~KMFilter() {};
+  ~KMFilter() {};
 
   /** Equivalent to @pattern()->name(). @return name of the filter */
   QString name() const {
@@ -70,7 +70,7 @@ public:
       TRUE if the caller may apply other filters and FALSE if he shall
       stop the filtering of this message.
   */
-  virtual ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
+  ReturnCode execActions( KMMessage* msg, bool& stopIt ) const ;
 
   /** No descriptions */
   KMPopFilterAction action();
@@ -82,19 +82,19 @@ public:
       constructor above) has to be preset.  The config object will be
       deleted by higher levels, so it is not allowed to store a
       pointer to it anywhere inside this function. */
-  virtual void writeConfig( KConfig* config ) const;
+  void writeConfig( KConfig* config ) const;
 
   /** Initialize from given config file. The config group (see
       constructor above) has to be preset. The config object will be
       deleted by higher levels, so it is not allowed to store a
       pointer to it anywhere inside this function. */
-  virtual void readConfig( KConfig* config );
+  void readConfig( KConfig* config );
 
   /** Remove empty rules (and actions one day). */
-  virtual void purify();
+  void purify();
 
   /** Check for empty pattern and action list. */
-  virtual bool isEmpty() const;
+  bool isEmpty() const;
 
   /** Provides a reference to the internal action list. If your used
       the @p setAction() and @p action() functions before, please
@@ -155,7 +155,7 @@ public:
    * @return TRUE if a change in some action occured,
    * FALSE if no action was affected.
    */
-  virtual bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );
+  bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );
 
   /** 
    * Called from the filter manager when an identity is renamed.
@@ -164,7 +164,7 @@ public:
    * @return TRUE if a change in some action occured,
    * FALSE if no action was affected.
    */
-  virtual bool identityRenamed( const QString & oldName, const QString & newName );
+  bool identityRenamed( const QString & oldName, const QString & newName );
 
   /** Returns the filter in a human-readable form. useful for
       debugging but not much else. Don't use, as it may well go away
