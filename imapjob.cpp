@@ -80,14 +80,16 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder, QPtrList<KMM
     if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
     mData.resize(cstr.length() + cstr.contains("\n") - cstr.contains("\r\n"));
     unsigned int i = 0;
+    char prevChar = '\0';
     // according to RFC 2060 we need CRLF
     for (char *ch = cstr.data(); *ch; ch++)
     {
-      if (*ch == '\n' && (mData.at(i-1) != '\r')) {
+      if (*ch == '\n' && (prevChar != '\r')) {
         mData.at(i) = '\r'; 
         i++; 
       }
-      mData.at(i) = *ch; 
+      mData.at(i) = *ch;
+      prevChar = *ch;
       i++;
     }
     jd.data = mData;
