@@ -10,7 +10,6 @@
 #include <qstringlist.h>
 #include <qguardedptr.h>
 
-#include <config.h>
 #include <kdialogbase.h>
 #include <kxmlguiclient.h>
 #include <mimelib/string.h>
