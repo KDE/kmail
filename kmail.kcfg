@@ -154,6 +154,12 @@
           "the IMAP inbox to be the parent.&lt;/p&gt;</whatsthis>
       </entry>
 
+      <entry name="TheIMAPResourceAccount" type="Int">
+        <default></default>
+        <whatsthis>&lt;p&gt;This is the ID of the account holding the IMAP resource "
+          "folders.&lt;/p&gt;</whatsthis>
+      </entry>
+
       <entry name="TheIMAPResourceFolderLanguage" type="Int">
         <default>0</default>
         <whatsthis>&lt;p&gt;If you want to set the folder names of the "

@@ -4198,19 +4198,24 @@ void MiscPage::GroupwareTab::load() {
     mFolderCombo->setFolder( i18n( "<Choose a Folder>" ) );
   }
 
-  // Iterate over accounts to select folderId if found (as an inbox folder)
   KMAccount* selectedAccount = 0;
-  for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
-       a = kmkernel->acctMgr()->next() ) {
-    if( a->folder() && a->folder()->child() ) {
-      // Look inside that folder for an INBOX
-      KMFolderNode *node;
-      for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
-        if (!node->isDir() && node->name() == "INBOX") break;
+  int accountId = GlobalSettings::theIMAPResourceAccount();
+  if ( accountId )
+    selectedAccount = kmkernel->acctMgr()->find( accountId );
+  else {
+    // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
+    for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
+         a = kmkernel->acctMgr()->next() ) {
+      if( a->folder() && a->folder()->child() ) {
+        // Look inside that folder for an INBOX
+        KMFolderNode *node;
+        for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
+          if (!node->isDir() && node->name() == "INBOX") break;
 
-      if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
-        selectedAccount = a;
-        break;
+        if ( node && static_cast<KMFolder*>(node)->idString() == folderId ) {
+          selectedAccount = a;
+          break;
+        }
       }
     }
   }
@@ -4248,6 +4253,7 @@ void MiscPage::GroupwareTab::save() {
         if (!node->isDir() && node->name() == "INBOX")
           folder = static_cast<KMFolder*>(node);
     }
+    GlobalSettings::setTheIMAPResourceAccount( acct->id() );
   }
 
   bool enabled = mEnableImapResCB->isChecked() && folder;

@@ -46,6 +46,7 @@
 #include "kmmsgpart.h"
 #include "kmfolderimap.h"
 #include "globalsettings.h"
+#include "kmacctmgr.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
@@ -1037,7 +1038,7 @@ bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
   return mUseResourceIMAP && folder &&
     ( folder == mCalendar || folder == mTasks || folder == mJournals ||
       folder == mNotes || folder == mContacts );
-  // ######## aren't extra folders missing here?
+  // Extra folders are not checked here, since those can't be hidden (right?)
 }
 
 bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
@@ -1309,7 +1310,17 @@ void KMailICalIfaceImpl::readConfig()
   if( folderParent == 0 ) {
     // Parent folder not found. It was probably deleted. The user will have to
     // configure things again.
-    kdWarning(5006) << "Groupware folder " << parentName << " not found. Groupware functionality disabled" << endl;
+    kdDebug(5006) << "Groupware folder " << parentName << " not found. Groupware functionality disabled" << endl;
+    // Or maybe the inbox simply wasn't created on the first startup
+    KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
+    Q_ASSERT( account );
+    if ( account ) {
+      // just in case we were connected already
+      disconnect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+               this, SLOT( slotCheckDone() ) );
+      connect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+               this, SLOT( slotCheckDone() ) );
+    }
     mUseResourceIMAP = false;
     return;
   } else {
@@ -1423,6 +1434,21 @@ void KMailICalIfaceImpl::readConfig()
   slotRefresh( "Notes" );
 
   reloadFolderTree();
+}
+
+void KMailICalIfaceImpl::slotCheckDone()
+{
+  QString parentName = GlobalSettings::theIMAPResourceFolderParent();
+  KMFolder* folderParent = kmkernel->findFolderById( parentName );
+  kdDebug() << k_funcinfo << " folderParent=" << folderParent << endl;
+  if ( folderParent )  // cool it exists now
+  {
+    KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
+    if ( account )
+      disconnect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
+                  this, SLOT( slotCheckDone() ) );
+    readConfig();
+  }
 }
 
 void KMailICalIfaceImpl::slotRefreshCalendar() { slotRefresh( "Calendar" ); }
