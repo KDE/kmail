@@ -640,7 +640,7 @@ void KMMainWidget::slotSearch()
   }
 
   mSearchWin->show();
-  KWin::setActiveWindow(mSearchWin->winId());
+  KWin::activateWindow( mSearchWin->winId() );
 }
 
 
