@@ -267,9 +267,12 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
           // transfer the whole message, e.g. a draft-message is canceled and re-added to the drafts-folder
           for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
           {
-            int idx = msgParent->find(msg);
-            assert(idx != -1);
-            msg = msgParent->getMsg(idx);
+            if (!msg->isComplete())
+            {
+              int idx = msgParent->find(msg);
+              assert(idx != -1);
+              msg = msgParent->getMsg(idx);
+            }
             imapJob = new KMImapJob(msg, KMImapJob::tPutMessage, this);
             connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
                 SLOT(addMsgQuiet(KMMessage*)));
