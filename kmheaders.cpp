@@ -709,7 +709,7 @@ void KMHeaders::msgAdded(int id)
       KMHeaderItem *parent = mIdTree[replyToId];
       assert(parent);
       hi = new KMHeaderItem( parent, mFolder, id, &mPaintInfo );
-      setOpen( parent, true );
+      parent->setOpen( true );
     }
     if (!mIdTree[msgId])
       mIdTree.replace( msgId, hi );
