@@ -137,7 +137,7 @@ IMAPProgressDialog::IMAPProgressDialog( QWidget* parent, const char* name, bool 
     setCaption( i18n("IMAP Progress") );
     resize( 360, 328 );
 
-    QBoxLayout* topLayout = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint(), 
+    QBoxLayout* topLayout = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint(),
 					     "topLayout");
 
     mSyncEditorListView = new QListView( this, "SyncEditorListView" );
@@ -158,7 +158,6 @@ IMAPProgressDialog::IMAPProgressDialog( QWidget* parent, const char* name, bool 
     bottomLayout->addStretch();
 
     KPushButton* pbClose = new KPushButton( KStdGuiItem::close(), this );
-    pbClose->setText( i18n( "Close" ) );
     bottomLayout->addWidget( pbClose );
 
     connect(pbClose, SIGNAL(clicked()), this, SLOT(close())  );

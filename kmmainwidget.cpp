@@ -2107,9 +2107,8 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
-  mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
-    KStdAccel::shortcut(KStdAccel::Save),
-    this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
+  mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()),
+                      actionCollection(), "file_save_as" );
 
   mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
                                   actionCollection() );
@@ -2705,7 +2704,7 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotToggleShowQuickSearch()),
                                        actionCollection(), "show_quick_search");
   mToggleShowQuickSearchAction->setChecked( GlobalSettings::quickSearchActive() );
-  mToggleShowQuickSearchAction->setWhatsThis( 
+  mToggleShowQuickSearchAction->setWhatsThis(
         i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().utf8() ) );
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
