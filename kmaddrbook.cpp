@@ -131,6 +131,7 @@ int KMAddrBook::store(const QString &aFileName)
     return IO_FatalError;
 
   if (!file.open(IO_ReadWrite|IO_Truncate)) return fileError(file.status());
+  file.resetStatus(); // Work around suspected QT pre 2.2 snapshot bug
   QTextStream ts( &file );
 
   addr = "# kmail addressbook file\n";
