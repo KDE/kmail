@@ -901,7 +901,7 @@ void KMHeaders::saveMsg (int msgId)
  
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    str += "From " + msg->from() + " " + msg->dateShortStr() + "\n";
+    str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
     str += msg->asString();
     str += "\n";
   }
