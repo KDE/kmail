@@ -544,6 +544,7 @@ private:
     KURL url;
     QByteArray data;
     bool insert;
+    QCString encoding;
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
   bool mUnicodeFont;

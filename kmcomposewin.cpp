@@ -1616,7 +1616,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     mEditor->getCursorPosition(&line, &col);
     (*it).data.resize((*it).data.size() + 1);
     (*it).data[(*it).data.size() - 1] = '\0';
-    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+    QTextCodec *codec = KGlobal::charsets()->codecForName((*it).encoding);
     if (codec)
       mEditor->insertAt(codec->toUnicode((*it).data), line, col);
     else
@@ -1673,6 +1673,13 @@ void KMComposeWin::slotInsertFile()
 {
   KFileDialog fdlg(QString::null, QString::null, this, NULL, TRUE);
   fdlg.setCaption(i18n("Include File"));
+  fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(FALSE), 4711,
+    false, NULL, NULL, NULL);
+  KComboBox *combo = fdlg.toolBar()->getCombo(4711);
+  for (int i = 0; i < combo->count(); i++)
+    if (KGlobal::charsets()->codecForName(KGlobal::charsets()->
+      encodingForName(combo->text(i)))
+      == QTextCodec::codecForLocale()) combo->setCurrentItem(i);
   if (!fdlg.exec()) return;
 
   KURL u = fdlg.selectedURL();
@@ -1684,6 +1691,8 @@ void KMComposeWin::slotInsertFile()
   ld.url = u;
   ld.data = QByteArray();
   ld.insert = true;
+  ld.encoding = KGlobal::charsets()->encodingForName(
+    combo->currentText()).latin1();
   mapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
