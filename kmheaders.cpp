@@ -9,8 +9,6 @@
 #include <qdatetime.h>
 #include <qheader.h>
 #include <qdragobject.h>
-#include <qmessagebox.h>
-//#include <qimageio.h>
 #include <kimgio.h>
 
 #include <kapp.h>

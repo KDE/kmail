@@ -22,13 +22,13 @@
 #include <qgroupbox.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qmessagebox.h>
 
 #include <kapp.h>
 #include <ksimpleconfig.h>
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kmessagebox.h>
 
 Kpgp *Kpgp::kpgpObject = 0L;
 
@@ -292,12 +292,12 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     }
     if(persons.isEmpty())
     {
-      int ret = QMessageBox::warning(0,i18n("PGP Warning"),
+      int ret = KMessageBox::warningContinueCancel(0,
 			       i18n("Could not find the public keys for the\n"
 				    "recipients of this mail.\n"
 				    "Message will not be encrypted."),
-				     i18n("Continue"), i18n("Cancel"));
-      if(ret == 1) return false;
+                               i18n("PGP Warning"), i18n("C&ontinue"));
+      if(ret == KMessageBox::Cancel) return false;
     }
     else if(!noKeyFor.isEmpty())
     {
@@ -317,9 +317,10 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 	aStr += i18n("This person will not be able to\n");
 
       aStr += i18n("decrypt the message.");
-      int ret = QMessageBox::warning(0,i18n("PGP Warning"), aStr,
-			       i18n("Continue"), i18n("Cancel"));
-      if(ret == 1) return false;
+      int ret = KMessageBox::warningContinueCancel(0, aStr, 
+                               i18n("PGP Warning"), 
+			       i18n("C&ontinue"));
+      if(ret == KMessageBox::Cancel) return false;
     }
   }
 
@@ -329,14 +330,15 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   while(status & KpgpBase::BADPHRASE)
   {
     havePassPhrase = false;
-    ret = QMessageBox::information(0,i18n("PGP Warning"),
+    ret = KMessageBox::warningYesNoCancel(0,
 				   i18n("You just entered an invalid passphrase.\n"
 					"Do you wan't to try again, continue and\n"
 					"leave the message unsigned, "
 					"or cancel sending the message?"),
-				   i18n("Retry"), i18n("Continue"), i18n("Cancel"));
-    if(ret == 2) return false;
-    if(ret == 1) sign = false;
+                                   i18n("PGP Warning"),
+				   i18n("&Retry"), i18n("Send &unsigned"));
+    if(ret == KMessageBox::Cancel) return false;
+    if(ret == KMessageBox::No) sign = false;
     // ok let's try once again...
     status = doEncSign(persons, sign);
   }
@@ -347,11 +349,10 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     aStr += "\n";
     aStr += i18n("Do you wan't to encrypt anyway, leave the\n"
 		 "message as is, or cancel the message?");
-    ret = QMessageBox::warning(0,i18n("PGP Warning"),
-			      aStr, i18n("Encrypt"),
-			       i18n("Continue"), i18n("Cancel"));
-    if(ret == 2) return false;
-    if(ret == 1)
+    ret = KMessageBox::warningYesNoCancel(0,aStr, i18n("PGP Warning"),
+                           i18n("&Encrypt"), i18n("&Send unecrypted"));
+    if(ret == KMessageBox::Cancel) return false;
+    if(ret == KMessageBox::No)
     {
       pgp->clearOutput();
       return true;
@@ -364,10 +365,9 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     aStr += "\n";
     aStr += i18n("Do you want to leave the message as is,\n"
 		 "or cancel the message?");
-    ret = QMessageBox::information(0,i18n("PGP Warning"),
-				   aStr,	
-				   i18n("Continue"), i18n("Cancel"));
-    if(ret == 1) return false;
+    ret = KMessageBox::warningContinueCancel(0,aStr, i18n("PGP Warning"),
+				   i18n("&Send as is"));
+    if(ret == KMessageBox::Cancel) return false;
     pgp->clearOutput();
     return true;
   }

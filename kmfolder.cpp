@@ -13,7 +13,7 @@
 #include <kconfig.h>
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
-#include <qmessagebox.h>
+#include <kmessagebox.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -888,7 +888,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       truncate( location(), revert );
     }
     kbp->idle();
-    QMessageBox::information(0,i18n("KMail error"),
+    KMessageBox::sorry(0,
 	  i18n("Unable to add message to folder.\n"
 	       "(No space left on device or insufficient quota?)\n\n"
 	       "Free space and sufficient quota are required to continue safely."));
@@ -930,7 +930,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 	truncate( indexLocation(), revert );
       }
       kbp->idle();
-      QMessageBox::information(0,i18n("KMail error"),
+      KMessageBox::sorry(0,
         i18n("Unable to add message to folder.\n"
 	     "(No space left on device or insufficient quota?)\n\n"
 	     "Free space and sufficient quota are required to continue safely."));

@@ -1,7 +1,6 @@
 // kmfoldertree.cpp
 #include <qfiledefs.h>
 #include <qdragobject.h>
-#include <qmessagebox.h>
 #include <qheader.h>
 #include <qbitmap.h>
 #include <unistd.h>

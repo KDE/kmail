@@ -2,7 +2,7 @@
 // Author: Stefan Taferner <taferner@kde.org>
 
 #include <kapp.h>
-#include <qmessagebox.h>
+#include <kmessagebox.h>
 #include <qstring.h>
 #include <unistd.h>
 #include <string.h>
@@ -22,8 +22,7 @@ static void msgDialog(const char* msg, const char* arg=NULL)
   if (arg) str.sprintf(msg, arg);
   else str = msg;
 
-  QMessageBox::warning(NULL, i18n("File I/O Error"), str,
-		       i18n("OK"));
+  KMessageBox::sorry(0, str, i18n("File I/O Error"));
 }
 
 
@@ -193,10 +192,9 @@ bool kBytesToFile(const char* aBuffer, int len,
       QString str;
       str = i18n("File %1 exists.\nDo you want to replace it ?")
 		  .arg(aFileName);
-      rc = QMessageBox::information(NULL, i18n("Information"),
-	   str, i18n("&OK"), i18n("&Cancel"),
-	   QString::null, 1);
-      if (rc != 0) return FALSE;
+      rc = KMessageBox::warningContinueCancel(0, 
+	   str, i18n("Save to file"), i18n("&Replace"));
+      if (rc != KMessageBox::Continue) return FALSE;
     }
     if (aBackup)
     {
@@ -209,11 +207,10 @@ bool kBytesToFile(const char* aBuffer, int len,
       {
 	// failed to rename file
 	if (!aVerbose) return FALSE;
-	rc = QMessageBox::warning(NULL, i18n("Warning"),
-	     i18n(
-             "Failed to make a backup copy of %s.\nContinue anyway ?"),
-	     i18n("&OK"), i18n("&Cancel"), QString::null, 1);
-	if (rc != 0) return FALSE;
+	rc = KMessageBox::warningContinueCancel(0,
+	     i18n("Failed to make a backup copy of %s.\nContinue anyway ?"),
+             i18n("Save to file"), i18n("&Save"));
+	if (rc != KMessageBox::Continue) return FALSE;
       }
     }
   }

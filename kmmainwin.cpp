@@ -28,7 +28,7 @@
 #include <qpixmap.h>
 #include <qfile.h>
 #include <qtextstream.h>
-#include <qmessagebox.h>
+#include <kmessagebox.h>
 #include <kconfig.h>
 #include <kapp.h>
 #include <kglobal.h>
@@ -414,8 +414,8 @@ void KMMainWin::slotCheckMail()
 
  if(checkingMail) 
  {
-    QMessageBox::information(0,i18n("KMail error"),
-		     i18n("Already checking for mail!"));
+    KMessageBox::information(this,
+		     i18n("Your mail is already being checked."));
     return;
   }
     
@@ -448,8 +448,8 @@ void KMMainWin::slotCheckOneAccount(int item)
 
   if(checkingMail)
   {
-    QMessageBox::message(0,i18n("KMail error"),
-		     i18n("Already checking for mail!"));
+    KMessageBox::information(this,
+		     i18n("Your mail is already being checked."));
     return;
   }
     
@@ -558,8 +558,11 @@ void KMMainWin::slotRemoveFolder()
   str = i18n("Are you sure you want to remove the folder\n"
 			     "\"%1\", discarding it's contents ?")
 			     .arg(mFolder->label());
-  if ((QMessageBox::information(this,i18n("Confirmation"),str, 
-				i18n( "Yes" ), i18n( "No" ), 0, 0, 1))==0)
+
+  if (KMessageBox::warningContinueCancel(this, str, 
+                              i18n("Remove folder"), i18n("&Remove") )
+      ==
+      KMessageBox::Continue)
   {
     KMFolder *folderToDelete = mFolder;
     QListViewItem *qlviCur = mFolderTree->currentItem();
@@ -626,11 +629,11 @@ void KMMainWin::slotEditMsg()
   int aIdx;
   
   if(mFolder != outboxFolder) 
-    {
-      QMessageBox::information(0,i18n("KMail notification!"),
-		       i18n("Only messages in the outbox folder can be edited!"));
+  {
+      KMessageBox::sorry(0, 
+         i18n("Sorry, only messages in the outbox folder can be edited."));
       return;
-    }
+  }
     
   
   if((aIdx = mHeaders->currentItemIndex()) <= -1)

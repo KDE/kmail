@@ -137,7 +137,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 	!recurse)
     {
       ungrabPtrKb();
-      QMessageBox::warning(NULL, kapp->caption(), msg, i18n("OK"));
+      KMessageBox::sorry(0, msg, i18n("Internal Problem"));
     }
     else kdebug(KDEBUG_INFO, 0, msg);
     break;
@@ -145,8 +145,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
   case QtFatalMsg:
     ungrabPtrKb();
     fprintf(stderr, appName+" "+i18n("fatal error")+": %s\n", msg.data());
-    QMessageBox::critical(NULL, appName+" "+i18n("fatal error"),
-		       aMsg, i18n("OK"));
+    KMessageBox::error(0, aMsg);
     abort();
   }
 
@@ -324,13 +323,11 @@ static void testDir(const char *_name)
   DIR *dp;
   QString c = getenv("HOME");
   if(c.isEmpty())
-    {
-     QMessageBox::critical(0,i18n("KMail notification"),
-			   i18n("$HOME is not set!\n"
-				"KMail cannot start without it.\n"),
-			   i18n("OK"));
+  {
+      KMessageBox::sorry(0, i18n("$HOME is not set!\n"
+				"KMail cannot start without it.\n"));
       exit(-1);
-    }
+  }
 		
   c += _name;
   dp = opendir(c.data());
@@ -392,16 +389,16 @@ static void transferMail(void)
   // Markus: lol ;-)
   if (!dir.cd("KMail")) return;
 
-  rc = QMessageBox::information(NULL, QString(app->name())+" "+i18n("warning"),
-		      i18n(
+  rc = KMessageBox::questionYesNo(NULL, 
+         i18n(
 	    "The directory ~/KMail exists. From now on, KMail uses the\n"
 	    "directory ~/Mail for it's messages.\n"
 	    "KMail can move the contents of the directory ~/KMail into\n"
 	    "~/Mail, but this will replace existing files with the same\n"
 	    "name in the directory ~/Mail (e.g. inbox).\n\n"
-	    "Shall KMail move the mail folders now ?"),
-		      i18n("Yes"), i18n("No"));
-  if (rc == 1) return;
+	    "Shall KMail move the mail folders now ?"));
+
+  if (rc == KMessageBox::No) return;
 
   dir.cd("/");  // otherwise we lock the directory
   testDir("/Mail");
@@ -493,11 +490,9 @@ static void init(int& argc, char *argv[])
   filterMgr->readConfig();
   addrBook->readConfig();
   if(addrBook->load() == IO_FatalError)
-    {
-      QMessageBox::warning(0,i18n("KMail error"),
-			   i18n("Loading addressbook failed"), 
-			   i18n("OK"));
-    }
+  {
+      KMessageBox::sorry(0, i18n("The addressbook could not be loaded."));
+  }
   KMMessage::readConfig();
 
   msgSender = new KMSender;
@@ -642,6 +637,7 @@ void version()
 
 
 //-----------------------------------------------------------------------------
+int
 main(int argc, char *argv[])
 {
   //--- Sven's pseudo IPC&locking start ---

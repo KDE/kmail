@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <klocale.h>
 #include <kstddirs.h>
-#include <qmessagebox.h>
+#include <kmessagebox.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBook::KMAddrBook(): KMAddrBookInherited()
@@ -22,13 +22,12 @@ KMAddrBook::KMAddrBook(): KMAddrBookInherited()
 KMAddrBook::~KMAddrBook()
 {
   if (mModified) 
+  {
+    if(store() == IO_FatalError)
     {
-      if(store() == IO_FatalError)
-	QMessageBox::warning(0,i18n("KMail Error"),
-			     i18n("Storing the addressbook failed!\n"), 
-			     i18n("OK"));
+      KMessageBox::sorry(0, i18n("The addressbook could not be stored!\n"));
     }
-      
+  }
   writeConfig(FALSE);
 }
 
@@ -162,8 +161,7 @@ int KMAddrBook::fileError(int status) const
   }
 
   str.sprintf(msg, mDefaultFileName.data());
-  QMessageBox::warning(NULL, i18n("File I/O Error"), str,
-		       i18n("OK"));
+  KMessageBox::sorry(0, str, i18n("File I/O Error"));
 
   return status;
 }

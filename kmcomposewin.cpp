@@ -33,7 +33,6 @@
 #include <kfiledialog.h>
 #include <kwm.h>
 #include <kglobal.h>
-#include <qmessagebox.h>
 
 #include <qtabdialog.h>
 #include <qlabel.h>
@@ -941,14 +940,13 @@ void KMComposeWin::closeEvent(QCloseEvent* e)
 
   if(mEditor->isModified())
   {
-    rc = QMessageBox::information(this,i18n("Confirmation"),
-				  i18n("Close and discard\nedited message?"),
-				  i18n( "Yes" ), 
-				  i18n( "No" ), 0, 0, 1);
-    if (rc == 1)
+    rc = KMessageBox::warningContinueCancel(this, 
+           i18n("Close and discard\nedited message?"),
+           i18n("Close message"), i18n("&Discard"));
+    if (rc == KMessageBox::Cancel)
     {
-      e->ignore();
-      return;
+       e->ignore();
+       return;
     }
   }
   KMComposeWinInherited::closeEvent(e);
