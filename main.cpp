@@ -127,9 +127,9 @@ int KMailApplication::newInstance()
     if (!to.isEmpty())
       to += ", ";
      if (strncasecmp(args->arg(i),"mailto:",7)==0)
-       to += args->arg(i);
+       to += args->url(i).path();
      else
-       to += args->arg(i);
+       to += QString::fromLocal8Bit( args->arg(i) );
      mailto = true;
   }
 
