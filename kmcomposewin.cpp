@@ -49,7 +49,7 @@
 #include <unistd.h>
 #include <errno.h>
 
-#ifdef CHARSETS
+#if defined CHARSETS
 #include <kcharsets.h>
 #include "charsetsDlg.h"
 #endif
@@ -163,7 +163,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   setView(&mMainWidget, FALSE);
   rethinkFields();
 
-#ifdef CHARSETS  
+#if defined CHARSETS  
   // As family may change with charset, we must save original settings
   mSavedEditorFont=mEditor->font();
 #endif
@@ -218,7 +218,7 @@ void KMComposeWin::readConfig(void)
   mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
   if (mEditor) mEditor->setFont(kstrToFont(mBodyFont));
 
-#ifdef CHARSETS  
+#if defined CHARSETS  
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
   mQuoteUnknownCharacters = config->readNumEntry("quote-unknown",0);
   
@@ -259,7 +259,7 @@ void KMComposeWin::writeConfig(void)
   config->writeEntry("show-toolbar", mShowToolBar);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
-#ifdef CHARSETS  
+#if defined CHARSETS  
   config->writeEntry("7bit-is-ascii",m7BitAscii);
   config->writeEntry("quote-unknown",mQuoteUnknownCharacters);
   config->writeEntry("default-charset",mDefaultCharset);
@@ -484,7 +484,7 @@ void KMComposeWin::setupMenuBar(void)
 				     SLOT(slotToggleConfirmDelivery()));
   mMnuIdConfRead = menu->insertItem(i18n("&Confirm read"), this,
 				    SLOT(slotToggleConfirmRead()));
-#ifdef CHARSETS				    
+#if defined CHARSETS				    
   mMnuIdConfRead = menu->insertItem(i18n("&Charsets..."), this,
 				    SLOT(slotConfigureCharsets()));
 #endif				    
@@ -713,7 +713,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   {
     mMsg->bodyPart(0, &bodyPart);
 
-#ifdef CHARSETS    
+#if defined CHARSETS    
     mCharset=bodyPart.charset();
     cout<<"Charset: "<<mCharset<<"\n";
     if (mCharset==""){
@@ -738,7 +738,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
       addAttach(msgPart);
     }
   }
-#ifdef CHARSETS  
+#if defined CHARSETS  
   else{
     mCharset=mMsg->charset();
     cout<<"mCharset: "<<mCharset<<"\n";
@@ -760,7 +760,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   if (mAutoSign && mayAutoSign) slotAppendSignature();
   mEditor->toggleModified(FALSE);
  
-#ifdef CHARSETS 
+#if defined CHARSETS 
   setEditCharset();
 #endif  
 }
@@ -815,7 +815,7 @@ bool KMComposeWin::applyChanges(void)
       mMsg->setTypeStr("text");
       mMsg->setSubtypeStr("plain");
       mMsg->setCteStr("quoted-printable");
-#ifdef CHARSETS      
+#if defined CHARSETS      
       str=convertToSend(pgpProcessedMsg());
       if (str.isNull()) return FALSE;
       cout<<"Setting charset to: "<<mCharset<<"\n";
@@ -832,7 +832,7 @@ bool KMComposeWin::applyChanges(void)
       mMsg->setTypeStr("text");
       mMsg->setSubtypeStr("plain");
       mMsg->setCteStr("8bit");
-#ifdef CHARSETS      
+#if defined CHARSETS      
       str=convertToSend(pgpProcessedMsg());
       if (str.isNull()) return FALSE;
       cout<<"Setting charset to: "<<mCharset<<"\n";
@@ -862,7 +862,7 @@ bool KMComposeWin::applyChanges(void)
     bodyPart.setSubtypeStr("plain");
     str = pgpProcessedMsg();
     if (str.isNull()) return FALSE;
-#ifdef CHARSETS      
+#if defined CHARSETS      
     str=convertToSend(str);
     cout<<"Setting charset to: "<<mCharset<<"\n";
     mMsg->setCharset(mCharset);
@@ -1697,7 +1697,7 @@ void KMComposeWin::slotSpellMispelling(char *word, QStrList *, long pos)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotConfigureCharsets()
 {
-#ifdef CHARSETS
+#if defined CHARSETS
    CharsetsDlg *dlg=new CharsetsDlg((const char*)mCharset,
 				    (const char*)mComposeCharset,
                                     m7BitAscii,mQuoteUnknownCharacters);
@@ -1720,7 +1720,7 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
   (void)quote;
   (void)def;
 
-#ifdef CHARSETS
+#if defined CHARSETS
   mCharset=message;
   m7BitAscii=ascii;
   if (composer!=mComposeCharset && quote)
@@ -1737,7 +1737,7 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
 }
 
 
-#ifdef CHARSETS
+#if defined CHARSETS
 //-----------------------------------------------------------------------------
 bool KMComposeWin::is8Bit(const QString str)
 {

@@ -1,7 +1,7 @@
 #ifndef EXPIRE_DLG
 #define EXPIRE_DLG
 
-#ifdef CHARSETS
+#if defined CHARSETS
 
 #include <qdialog.h>
 

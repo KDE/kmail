@@ -1,4 +1,4 @@
-#ifdef CHARSETS
+#if defined CHARSETS
 
 #include "charsetsDlg.h"
 

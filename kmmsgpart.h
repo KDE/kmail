@@ -78,7 +78,7 @@ public:
   // Get or set the 'Content-Disposition' header field
   const QString contentDisposition() const;
   void setContentDisposition(const QString aStr);
-#ifdef CHARSETS   
+#if defined CHARSETS   
   /** Get the message part charset.*/
   virtual const QString charset(void) const;
   
@@ -94,7 +94,7 @@ protected:
   QString mContentDisposition;
   QString mBody;
   QString mName;
-#ifdef CHARSETS   
+#if defined CHARSETS   
   QString mCharset;
 #endif   
   int mBodySize;

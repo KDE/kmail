@@ -386,7 +386,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (strnicmp(subject(), "Re:", 3)!=0)
     msg->setSubject("Re: " + subject());
   else msg->setSubject(subject());
-#ifdef CHARSETS
+#if defined CHARSETS
   printf("Setting reply charset: %s\n",(const char *)charset());
   msg->setCharset(charset());
 #endif
@@ -414,7 +414,7 @@ KMMessage* KMMessage::createForward(void)
   if (strnicmp(subject(), "Fwd:", 4)!=0)
     msg->setSubject("Fwd: " + subject());
   else msg->setSubject(subject());
-#ifdef CHARSETS
+#if defined CHARSETS
   msg->setCharset(charset());
 #endif
   setStatus(KMMsgStatusForwarded);
@@ -962,7 +962,7 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     {
       aPart->setTypeStr(headers->ContentType().TypeStr().c_str());
       aPart->setSubtypeStr(headers->ContentType().SubtypeStr().c_str());
-#ifdef CHARSETS
+#if defined CHARSETS
       DwParameter *param=headers->ContentType().FirstParameter();
       while(param)
           if (param->Attribute()=="charset") break;
@@ -1053,7 +1053,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
   const DwString contDesc = (const char*)aPart->contentDescription();
   const DwString contDisp = (const char*)aPart->contentDisposition();
   const DwString bodyStr  = (const char*)aPart->body();
-#ifdef CHARSETS
+#if defined CHARSETS
   const DwString charset  = (const char*)aPart->charset();
 #endif
   DwHeaders& headers = part->Headers();
@@ -1061,7 +1061,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
   {
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
-#ifdef CHARSETS
+#if defined CHARSETS
     if (!charset.empty())
     {
       DwParameter *param=headers.ContentType().FirstParameter();
@@ -1112,7 +1112,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QString contDesc = aPart->contentDescription();
   QString contDisp = aPart->contentDisposition();
   QString name     = aPart->name();
-#ifdef CHARSETS
+#if defined CHARSETS
    QString charset  = aPart->charset();
 #endif
 
@@ -1121,7 +1121,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   {
     headers.ContentType().SetTypeStr((const char*)type);
     headers.ContentType().SetSubtypeStr((const char*)subtype);
-#ifdef CHARSETS
+#if defined CHARSETS
     if (!charset.isEmpty()){
          DwParameter *param;
          param=new DwParameter;
@@ -1263,7 +1263,7 @@ void KMMessage::readConfig(void)
   sIndentPrefixStr = config->readEntry("indent-prefix",">");
 }
 
-#ifdef CHARSETS
+#if defined CHARSETS
 //-----------------------------------------------------------------------------
 const QString KMMessage::charset(void) const
 {

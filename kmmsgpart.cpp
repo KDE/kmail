@@ -337,7 +337,7 @@ void KMMessagePart::setName(const QString aStr)
 {
   mName = aStr.copy();
 }
-#ifdef CHARSETS
+#if defined CHARSETS
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::charset(void) const
 {

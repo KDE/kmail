@@ -243,7 +243,7 @@ public:
    * only the name part and not the given emailAddr. */
   static const QString emailAddrAsAnchor(const QString emailAddr, 
 					 bool stripped=TRUE);
-#ifdef CHARSETS   
+#if defined CHARSETS   
   /** Get the message charset.*/
   virtual const QString charset(void) const;
   

@@ -262,7 +262,7 @@ private:
   /** Get message including signing and encrypting it */
   virtual const QString pgpProcessedMsg(void);
   
-#ifdef CHARSETS  
+#if defined CHARSETS  
   /** Convert message text for editing.
       Converts message to mComposeCharset charset (if neccessary).*/
   QString convertToLocal(const QString str);
@@ -318,7 +318,7 @@ protected:
   KSpell* mKSpell;
   KSpellConfig* mKSpellConfig;
 #endif
-#ifdef CHARSETS
+#if defined CHARSETS
   int m7BitAscii;
   QString mDefaultCharset;
   QString mCharset;
