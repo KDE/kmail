@@ -236,6 +236,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Mark Roberts", 0, "mark@taurine.demon.co.uk" );
   about.addAuthor( "Wolfgang Rohdewald", 0, "wrohdewald@dplanet.ch" );
   about.addAuthor( "Espen Sand", 0, "espen@kde.org" );
+  about.addAuthor( "Jan Simonson", 0, "jan@simonson.pp.se" );
   about.addAuthor( "George Staikos", 0, "staikos@kde.org" );
   about.addAuthor( "Jason Stephenson", 0, "panda@mis.net" );
   about.addAuthor( "Jacek Stolarczyk", 0, "jacek@mer.chemia.polsl.gliwice.pl" );
