@@ -61,9 +61,17 @@ Group=General,new-mail-arrived
 Options=overwrite
 Script=kmail-3.1-update-new-mail-notification-settings.pl,perl
 #
+# KDE 3.1 released
+#
+Id=3.2-update-loop-on-goto-unread-settings
+File=kmailrc
+Group=Behaviour
+Key=LoopOnGotoUnread
+Script=kmail-3.2-update-loop-on-goto-unread-settings.sh,bash
+#
 # Important notice:
 # If you add updates here, keep this text below them.
 # Make sure your updates can be safely run twice and add any new Id
-# to the QStringList in kmail/main.cpp:checkConfigUpdates().
+# to the QStringList in kmail/kmstartup.cpp:checkConfigUpdates().
 # (mmutz)
 #
