@@ -124,7 +124,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   assert(account->type() == "imap");
   KMAcctImap *acct = static_cast<KMAcctImap*>(account);
   setName(acct->name());
-  setCheckInterval( 0 );
+  setCheckInterval(acct->checkInterval());
   setCheckExclude(acct->checkExclude());
   setFolder(acct->folder());
   setHost(acct->host());
@@ -497,7 +497,16 @@ void KMAcctImap::processNewMail(bool interactive)
   for (it = folderList.begin(); it != folderList.end(); it++)
   {
     KMFolder *folder = *it;
-    if (folder) static_cast<KMFolderImap*>(folder)->processNewMail(interactive);
+    if (folder)
+    {
+      KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder);
+      if (imapFolder->getImapState() != KMFolderImap::imapInProgress)
+      {
+        if (imapFolder->isSelected())
+          imapFolder->getFolder();
+        else imapFolder->processNewMail(interactive);
+      }
+    }
   }
   emit finishedCheck(false);
 }

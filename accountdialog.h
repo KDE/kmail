@@ -123,6 +123,9 @@ class AccountDialog : public KDialogBase
       QCheckBox    *subscribedFoldersCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *excludeCheck;
+      QCheckBox    *intervalCheck;
+      QLabel       *intervalLabel;
+      KIntNumInput *intervalSpin;
       QButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
@@ -142,6 +145,7 @@ class AccountDialog : public KDialogBase
     void slotLocationChooser();
     void slotMaildirChooser();
     void slotEnablePopInterval( bool state );
+    void slotEnableImapInterval( bool state );
     void slotEnableLocalInterval( bool state );
     void slotEnableMaildirInterval( bool state );
     void slotFontChanged();

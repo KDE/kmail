@@ -713,7 +713,9 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (mLastItem && mLastItem != fti && mLastItem->folder
      && (mLastItem->folder->protocol() == "imap"))
   {
-    KMAcctImap *act = static_cast<KMFolderImap*>(mLastItem->folder)->account();
+    KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder);
+    imapFolder->setSelected(FALSE);
+    KMAcctImap *act = imapFolder->account();
     act->killAllJobs();
     act->setIdle(TRUE);
   }
@@ -731,6 +733,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     if (fti->folder->protocol() == "imap")
     {
       KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fti->folder);
+      imap_folder->setSelected(TRUE);
       if (imap_folder->getImapState() != KMFolderImap::imapInProgress)
         imap_folder->getFolder();
     }

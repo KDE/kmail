@@ -50,6 +50,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
 {
   mImapState = imapNoInformation;
   mAccount = NULL;
+  mIsSelected = FALSE;
 
   KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "Folder-" + idString());

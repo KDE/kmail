@@ -161,7 +161,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 
   lastAccountChecked = curAccount;
 
-  if (curAccount->folder() == 0)
+  if (curAccount->type() != "imap" && curAccount->folder() == 0)
     {
       QString tmp; //Unsafe
       tmp = i18n("Account %1 has no mailbox defined!\n"

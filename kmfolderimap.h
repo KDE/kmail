@@ -162,6 +162,13 @@ public:
    */
   void processNewMail(bool interactive);
 
+  /**
+   * Tell the folder, this it is selected and shall also display new mails,
+   * not only their number, when checking for mail.
+   */
+  void setSelected(bool selected) { mIsSelected = selected; }
+  bool isSelected() { return mIsSelected; }
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
@@ -269,6 +276,7 @@ protected:
   KMAcctImap  *mAccount;
   QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
   bool        mHasInbox;
+  bool        mIsSelected;
 };
 
 #endif // kmfolderimap_h

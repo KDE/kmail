@@ -608,9 +608,9 @@ void AccountDialog::makeImapAccountPage()
   QWidget *page1 = new QWidget( tabWidget );
   tabWidget->addTab( page1, i18n("&General") );
 
-  QGridLayout *grid = new QGridLayout( page1, 12, 2, spacingHint() );
+  QGridLayout *grid = new QGridLayout( page1, 14, 2, spacingHint() );
   grid->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  grid->setRowStretch( 11, 10 );
+  grid->setRowStretch( 13, 10 );
   grid->setColStretch( 1, 10 );
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
@@ -669,6 +669,18 @@ void AccountDialog::makeImapAccountPage()
   mImap.excludeCheck =
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page1 );
   grid->addMultiCellWidget( mImap.excludeCheck, 10, 10, 0, 1 );
+
+  mImap.intervalCheck =
+    new QCheckBox( i18n("&Enable interval mail checking"), page1 );
+  grid->addMultiCellWidget( mImap.intervalCheck, 11, 11, 0, 2 );
+  connect( mImap.intervalCheck, SIGNAL(toggled(bool)),
+	   this, SLOT(slotEnableImapInterval(bool)) );
+  mImap.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page1 );
+  grid->addWidget( mImap.intervalLabel, 12, 0 );
+  mImap.intervalSpin = new KIntNumInput( page1 );
+  mImap.intervalSpin->setRange( 1, 10000, 1, FALSE );
+  mImap.intervalSpin->setValue( 1 );
+  grid->addWidget( mImap.intervalSpin, 12, 1 );
 
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
@@ -800,7 +812,12 @@ void AccountDialog::setupSettings()
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.subscribedFoldersCheck->setChecked( ai.onlySubscribedFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
+    mImap.intervalCheck->setChecked( interval >= 1 );
+    mImap.intervalSpin->setValue( QMAX(1, interval) );
     mImap.excludeCheck->setChecked( ai.checkExclude() );
+    mImap.intervalCheck->setChecked( interval >= 1 );
+    mImap.intervalSpin->setValue( QMAX(1, interval) );
+    slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( TRUE );
     else if (ai.useTLS())
@@ -1046,8 +1063,10 @@ void AccountDialog::saveSettings()
   else if( accountType == "imap" )
   {
     mAccount->setName( mImap.nameEdit->text() );
-    mAccount->setCheckInterval( 0 );
-    mAccount->setCheckExclude( TRUE );
+    mAccount->setCheckInterval( mImap.intervalCheck->isChecked() ?
+                                mImap.intervalSpin->value() : 0 );
+    mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
+    mAccount->setFolder( NULL );
 
     KMAcctImap &epa = *(KMAcctImap*)mAccount;
     epa.setHost( mImap.hostEdit->text().stripWhiteSpace() );
@@ -1144,6 +1163,11 @@ void AccountDialog::slotEnablePopInterval( bool state )
   mPop.intervalLabel->setEnabled( state );
 }
 
+void AccountDialog::slotEnableImapInterval( bool state )
+{
+  mImap.intervalSpin->setEnabled( state );
+  mImap.intervalLabel->setEnabled( state );
+}
 
 void AccountDialog::slotEnableLocalInterval( bool state )
 {
