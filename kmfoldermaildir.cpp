@@ -275,9 +275,11 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 
   long len;
   unsigned long size;
+  bool opened = FALSE;
   KMFolder* msgParent;
   QCString msgText;
   int idx(-1);
+  int rc;
 
   // take message out of the folder it is currently in, if any
   msgParent = aMsg->parent();
@@ -325,12 +327,21 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   QFile file(tmp_file);
   size = msgText.length();
 
+  if (!isOpened())
+  {
+    opened = TRUE;
+    rc = open();
+    kdDebug(5006) << "addMsg-open: " << rc << endl;
+    if (rc) return rc;
+  }
+
   // now move the file to the correct location
   QString new_loc(location() + "/cur/");
   new_loc += filename;
   if (moveInternal(tmp_file, new_loc, filename, aMsg->status()) == QString::null)
   {
     file.remove();
+    if (opened) close();
     return 0;
   }
 
@@ -413,6 +424,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 
   needsCompact = true;
 
+  if (opened) close();
   return 0;
 }
 
