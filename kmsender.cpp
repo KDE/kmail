@@ -415,6 +415,11 @@ void KMSender::cleanup(void)
   if (mSendProcStarted) mSendProc->finish(false);
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;
+  if (mCurrentMsg)
+  {
+    mCurrentMsg->setTransferInProgress( FALSE );
+    mCurrentMsg = NULL;
+  }
   kernel->sentFolder()->close();
   kernel->outboxFolder()->close();
   if (kernel->outboxFolder()->count()<0)
