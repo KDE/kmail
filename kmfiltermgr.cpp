@@ -126,21 +126,17 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 
     bool stopIt = FALSE;
     int status = -1;
-    KMFilter::ReturnCode result;
  
     QPtrListIterator<KMFilter> it(*this);
     for (it.toFirst() ; !stopIt && it.current() ; ++it)
     {
-      if ( aSet&All
-  	   || ( (aSet&Outbound) && (*it)->applyOnOutbound() )
-  	   || ( (aSet&Inbound)  && (*it)->applyOnInbound() )
-	   || ( (aSet&Explicit) && (*it)->applyOnExplicit() ) ) {
+      if ( ( (aSet&Outbound) && (*it)->applyOnOutbound() ) ||
+  	   ( (aSet&Inbound)  && (*it)->applyOnInbound() ) ||
+	   ( (aSet&Explicit) && (*it)->applyOnExplicit() ) ) {
 
         if ((*it)->pattern()->matches(msg)) {
 
-  	  result = (*it)->execActions(msg, stopIt);
-
-	  switch ( result ) {
+	  switch ( (*it)->execActions(msg, stopIt) ) {
 	  case KMFilter::CriticalError:
 	    // Critical error - immediate return
   	    return 2;
@@ -150,6 +146,7 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
 	  default:
 	    break;
 	  }
+
         }
       }
     }
