@@ -811,6 +811,30 @@ KpgpKey::getKey()
 
 // ------------------------------------------------------------------------
 
+static QLineEdit* 
+createLabeledEntry(QWidget* parent, QGridLayout* grid,
+			       const char* aLabel,
+			       const char* aText, 
+			       int gridy, int gridx)
+{
+  QLabel* label = new QLabel(parent);
+  QLineEdit* edit = new QLineEdit(parent);
+
+  label->setText(aLabel);
+  label->adjustSize();
+  label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
+  label->setMinimumSize(label->size());
+  grid->addWidget(label, gridy, gridx++);
+
+  if (aText) edit->setText(aText);
+  edit->setMinimumSize(100, label->height()+2);
+  edit->setMaximumSize(1000, label->height()+2);
+  grid->addWidget(edit, gridy, gridx++);
+
+  return edit;
+}
+
+
 KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
   : QWidget(parent, name)
 {
@@ -823,7 +847,7 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
 
   QGridLayout* grid = new QGridLayout(grp, 1, 2, 20, 6);
 
-  pgpUserEdit = createLabeledEntry(grid, 
+  pgpUserEdit = createLabeledEntry(grp, grid,
 				   i18n("PGP User Identity:"),
 				   pgp->user(), 0, 0);
 
@@ -875,29 +899,6 @@ KpgpConfig::applySettings()
   pgp->setEncryptToSelf(encToSelf->isChecked());
 
   pgp->writeConfig(true);
-}
-
-QLineEdit* 
-KpgpConfig::createLabeledEntry(QGridLayout* grid,
-			       const char* aLabel,
-			       const char* aText, 
-			       int gridy, int gridx)
-{
-  QLabel* label = new QLabel(this);
-  QLineEdit* edit = new QLineEdit(this);
-
-  label->setText(aLabel);
-  label->adjustSize();
-  label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
-  label->setMinimumSize(label->size());
-  grid->addWidget(label, gridy, gridx++);
-
-  if (aText) edit->setText(aText);
-  edit->setMinimumSize(100, label->height()+2);
-  edit->setMaximumSize(1000, label->height()+2);
-  grid->addWidget(edit, gridy, gridx++);
-
-  return edit;
 }
 
 

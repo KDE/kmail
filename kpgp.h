@@ -223,10 +223,6 @@ public:
   virtual ~KpgpConfig();
 
   virtual void applySettings();
-  QLineEdit* createLabeledEntry(QGridLayout* grid,
-				const char* aLabel,
-				const char* aText, 
-				int gridy, int gridx);
        
 protected:
   Kpgp *pgp;
