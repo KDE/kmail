@@ -125,6 +125,9 @@ public:
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
+  /** DCOP call used by the Kontact plugin to create a new message. */
+  DCOPRef newMessage();
+
   int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader() { openReader( false ); }

@@ -508,6 +508,28 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   return DCOPRef(cWin);
 }
 
+DCOPRef KMKernel::newMessage()
+{
+  KMFolder *folder = 0;
+  KMMainWidget *widget = getKMMainWidget();
+  if ( widget && widget->folderTree() )
+    folder = widget->folderTree()->currentFolder();
+
+  // the following code is basically the same as in KMMainWidget::slotCompose()
+  KMComposeWin *win;
+  KMMessage *msg = new KMMessage;
+  if ( folder ) {
+    msg->initHeader( folder->identity() );
+    win = new KMComposeWin( msg, folder->identity() );
+  } else {
+    msg->initHeader();
+    win = new KMComposeWin( msg );
+  }
+  win->show();
+
+  return DCOPRef( win );
+}
+
 int KMKernel::viewMessage( const KURL & messageFile )
 {
   KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( 0, messageFile );
