@@ -1355,7 +1355,7 @@ void KMKernel::slotEmptyTrash()
 }
 
 KConfig *KMKernel::myConfig = 0;
-KStaticDeleter<KConfig> myConfigSD;
+static KStaticDeleter<KConfig> myConfigSD;
 
 KConfig* KMKernel::config()
 {
