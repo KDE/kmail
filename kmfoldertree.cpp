@@ -133,6 +133,14 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
   const QString& name, const QString& url, const QString& mimeType,
   bool noPrefix)
 {
+  QListViewItem *lvi = item->firstChild();
+  QString label = ((noPrefix || item->folder->imapPath() == "/")
+    && name == "INBOX") ? i18n("inbox") : name;
+  while (lvi)
+  {
+    if (lvi->text(0) == label) return;
+    lvi = lvi->nextSibling();
+  }
   KMFolderTreeItem *fti = new KMFolderTreeItem( item,
     new KMFolder(item->folder->createChildFolder(), name), &mPaintInfo );
   if (fti->folder->create(TRUE))
