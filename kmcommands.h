@@ -37,6 +37,11 @@ public:
   KMCommand( QWidget *parent, KMMsgBase *msgBase );
   virtual ~KMCommand();
 
+  bool deletesItself () { return mDeletesItself; }
+  void setDeletesItself( bool deletesItself ) 
+  { mDeletesItself = deletesItself; }
+  
+
 public slots:
   // Retrieve messages then calls execute
   void start();
@@ -65,7 +70,6 @@ private slots:
   void slotJobFinished();
   /** the transfer was cancelled */
   void slotTransferCancelled();
-
 signals:
   void messagesTransfered(bool);
 
@@ -75,6 +79,7 @@ private:
   //Currently only one async command allowed at a time
   static int mCountJobs;
   int mCountMsgs;
+  bool mDeletesItself;
 
   QWidget *mParent;
   QPtrList<KMMessage> mRetrievedMsgs;
@@ -249,8 +254,21 @@ public:
 private:
   virtual void execute();
 
+private slots:
+  void slotSaveDataReq();
+  void slotSaveResult(KIO::Job *job);
+  /** the message has been transferred for saving */
+  void slotMessageRetrievedForSaving(KMMessage *msg);
+  
 private:
+  static const int MAX_CHUNK_SIZE = 64*1024;
   KURL mUrl;
+  QValueList<unsigned long> mMsgList;
+  unsigned int mMsgListIndex;
+  QByteArray mData;
+  int mOffset;
+  size_t mTotalSize;
+  KIO::TransferJob *mJob;
 };
 
 class KMReplyToCommand : public KMCommand

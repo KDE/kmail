@@ -74,7 +74,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		maildirjob.cpp mboxjob.cpp imapjob.cpp \
 		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
 		folderIface.cpp folderIface.skel mailserviceimpl.cpp \
-		attachmentlistview.cpp
+		attachmentlistview.cpp 
 
 kmail_SOURCES = main.cpp
 
@@ -91,7 +91,7 @@ noinst_HEADERS = adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 signatureconfigurationdialogimpl.h \
 		 encryptionconfigurationdialogimpl.h \
 		 signatureconfigurationdialogimpl.h  \
-		 kmailicalifaceimpl.h mailserviceimpl.h
+		 kmailicalifaceimpl.h mailserviceimpl.h 
 
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 

@@ -149,7 +149,8 @@ void KMCommand::slotPostTransfer(bool success)
     if (msg->parent())
       msg->setTransferInProgress(false);
   }
-  delete this;
+  if ( !deletesItself() )
+    delete this;
 }
 
 void KMCommand::transferSelectedMsgs()
@@ -516,11 +517,24 @@ void KMShowMsgSrcCommand::execute()
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList )
-  :KMCommand( parent, msgList )
+  :KMCommand( parent ), mTotalSize( 0 )
 {
   if (!msgList.getFirst())
     return;
+  setDeletesItself( true );
   KMMsgBase *msgBase = msgList.getFirst();
+ 
+  // We operate on serNums and not the KMMsgBase pointers, as those can 
+  // change, or become invalid when changing the current message, switching
+  // folders, etc.
+  QPtrListIterator<KMMsgBase> it(msgList);
+  while ( it.current() ) {
+    mMsgList.append( (*it)->getMsgSerNum() );
+    mTotalSize += (*it)->msgSize();
+    (*it)->parent()->open();
+    ++it;
+  }
+  mMsgListIndex = 0;
   QString subject = msgBase->subject();
   while (subject.find(':') != -1)
     subject = subject.mid(subject.find(':') + 1).stripWhiteSpace();
@@ -535,21 +549,127 @@ KURL KMSaveMsgCommand::url()
 
 void KMSaveMsgCommand::execute()
 {
-//TODO: Handle messages one by one
-  QPtrList<KMMessage> msgList = retrievedMsgs();
-  QCString str;
-  if (!msgList.getFirst())
+  mJob = KIO::put( mUrl, -1, false, false );
+  mJob->slotTotalSize( mTotalSize );
+  mJob->setAsyncDataEnabled( true );
+  mJob->setReportDataSent( true );
+  connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
+    SLOT(slotSaveDataReq()));
+  connect(mJob, SIGNAL(result(KIO::Job*)),
+    SLOT(slotSaveResult(KIO::Job*)));
+}
+
+void KMSaveMsgCommand::slotSaveDataReq()
+{
+  int remainingBytes = mData.size() - mOffset;
+  if ( remainingBytes > 0 ) {
+    // eat leftovers first
+    if ( remainingBytes > MAX_CHUNK_SIZE )
+      remainingBytes = MAX_CHUNK_SIZE;
+    
+    QByteArray data;
+    data.duplicate( mData + mOffset, remainingBytes );
+    mJob->sendAsyncData( mData );
+    mOffset += remainingBytes;
     return;
-
-  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
-    str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
-    str += msg->asString();
-    str += "\n";
   }
+  // No leftovers, process next message.
+  if ( mMsgListIndex < mMsgList.size() ) {
+    KMMessage *msg = 0;
+    int idx = -1;
+    KMFolder * p = 0;
+    kernel->msgDict()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
+    assert( p );
+    assert( idx >= 0 );
+    msg = p->getMsg(idx);
+    
+    if (msg->transferInProgress()) {
+      QByteArray data = QByteArray();
+      mJob->sendAsyncData( data );
+    }
+    msg->setTransferInProgress( true );  
+    if (msg->isComplete() ) {
+      slotMessageRetrievedForSaving(msg);
+    } else {
+      // retrieve Message first
+      if (msg->parent()  && !msg->isComplete() ) {
+        FolderJob *job = msg->parent()->createJob(msg);
+        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
+        job->start();
+      } 
+    }
+  } else {
+    // No more messages. Tell the putjob we are done.
+    QByteArray data = QByteArray();
+    mJob->sendAsyncData( data );
+  }
+}
 
-  QByteArray ba = str;
-  ba.resize(ba.size() - 1);
-  kernel->byteArrayToRemoteFile(ba, mUrl);
+void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
+{
+  QCString str;    
+  str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
+  str += msg->asString();
+  str += "\n";
+  msg->setTransferInProgress(false);
+
+  mData = str;
+  mData.resize(mData.size() - 1);
+  mOffset = 0;
+  QByteArray data;
+  int size;
+  // Unless it is great than 64 k send the whole message. kio buffers for us.
+  if( mData.size() > (unsigned int) MAX_CHUNK_SIZE )
+    size = MAX_CHUNK_SIZE;
+  else 
+    size = mData.size();
+
+  data.duplicate( mData, size );
+  mJob->sendAsyncData( data );
+  mOffset += size;
+  ++mMsgListIndex;
+  // Get rid of the message.
+  if (msg->parent()) {
+    int idx = -1;
+    KMFolder * p = 0;
+    kernel->msgDict()->getLocation( msg, &p, &idx );
+    assert( p == msg->parent() ); assert( idx >= 0 );
+    p->unGetMsg( idx );
+    p->close();
+  }
+}
+
+void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
+{
+  if (job->error())
+  {
+    if (job->error() == KIO::ERR_FILE_ALREADY_EXIST)
+    {
+      if (KMessageBox::warningContinueCancel(0,
+        i18n("File %1 exists.\nDo you want to replace it?")
+        .arg(mUrl.prettyURL()), i18n("Save to file"), i18n("&Replace"))
+        == KMessageBox::Continue) {
+        mMsgListIndex = 0;
+        
+        mJob = KIO::put( mUrl, -1, true, false );
+        mJob->slotTotalSize( mTotalSize );
+        mJob->setAsyncDataEnabled( true );
+        mJob->setReportDataSent( true );
+        connect(mJob, SIGNAL(dataReq(KIO::Job*, QByteArray &)),
+            SLOT(slotSaveDataReq()));
+        connect(mJob, SIGNAL(result(KIO::Job*)),
+            SLOT(slotSaveResult(KIO::Job*)));
+      }
+    }
+    else 
+    {
+      job->showErrorDialog();
+      delete this; 
+    }
+  } else {
+    delete this; 
+  }
 }
 
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll are all similar
