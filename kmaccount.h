@@ -14,9 +14,6 @@
 #include <kprocess.h>
 #include "kmnewiostatuswdg.h"
 
-// The default check interval
-const int DEFAULT_CK_INT = 5;
-
 class KMAcctMgr;
 class KMFolder;
 class KMAcctFolder;
@@ -52,6 +49,9 @@ class KMAccount: public QObject
 
 public:
   virtual ~KMAccount();
+
+  /** The default check interval */
+  const int DefaultCheckInterval = 5;
 
   /**
    * Returns type of the account
@@ -114,7 +114,7 @@ public:
   /**
    * This can be used to provide a more complex calculation later if we want
    */
-  inline const int defaultCheckInterval(void) const { return DEFAULT_CK_INT; }
+  inline const int defaultCheckInterval(void) const { return DefaultCheckInterval; }
 
   /**
    * Set/get whether account should be part of the accounts checked
