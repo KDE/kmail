@@ -191,6 +191,11 @@ bool KMSender::sendQueued(void)
   KMFolder* outbox = kernel->outboxFolder();
   outbox->open();
   mTotalMessages = outbox->count();
+  if (mTotalMessages == 0) {
+    // Nothing in the outbox. We are done.
+    outbox->close();
+    return TRUE;
+  }
   mTotalBytes = 0;
   for( int i = 0 ; i<mTotalMessages ; ++i )
       mTotalBytes += outbox->getMsgBase(i)->msgSize();
