@@ -131,10 +131,11 @@ protected:
   QTimer processMsgsTimer;
   QTimer *ss;
   int processingDelay;
-  int numMsgs, numBytes, numBytesRead, numMsgBytesRead;
+  int numMsgs, numBytes, numBytesToRead, numBytesRead, numMsgBytesRead;
   bool interactive;
   bool mProcessing;
   bool mUidlFinished;
+  int dataCounter;
 
 protected slots:
   /** Messages are downloaded in the background and then once every x seconds

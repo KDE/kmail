@@ -58,6 +58,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   curMsgStrm = 0;
   processingDelay = 2*100;
   mProcessing = false;
+  dataCounter = 0;
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
   ss = new QTimer();
   connect( ss, SIGNAL( timeout() ), this, SLOT( slotGetNextMsg() ));
@@ -415,9 +416,6 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     return;
   mProcessing = true;
 
-  if ((stage != Idle) && (stage != Quit))
-    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
-
   bool addedOk;
   QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
@@ -555,6 +553,11 @@ void KMAcctExpPop::slotJobFinished() {
     mUidlFinished = TRUE;
     stage = Retr;
     numMsgs = idsOfMsgsPendingDownload.count();
+    numBytesToRead = 0;
+    QValueList<int>::Iterator len = lensOfMsgsPendingDownload.begin();
+    for (len = lensOfMsgsPendingDownload.begin();
+      len != lensOfMsgsPendingDownload.end(); len++)
+        numBytesToRead += *len;
     slotGetNextMsg();
     processMsgsTimer.start(processingDelay);
 
@@ -596,7 +599,11 @@ void KMAcctExpPop::slotJobFinished() {
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
       indexOfCurrentMsg : idsOfMsgs.count();
     if (numMessages > 0) {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB).").arg(numMessages).arg(numBytesRead/1024));
+      QString msg = i18n("Transmission completed. (%1 messages, %2 KB)").
+        arg(numMessages).arg(numBytesRead/1024);
+      if (numBytesToRead != numBytes && mLeaveOnServer)
+        msg += " " + i18n("(%1 KB remain on the server)").arg(numBytes/1024);
+      KMBroadcastStatus::instance()->setStatusMsg( msg );
     } else {
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed." ));
     }
@@ -661,11 +668,6 @@ void KMAcctExpPop::slotGetNextMsg()
     curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
     curMsgLen = *nextLen;
     ++indexOfCurrentMsg;
-    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024));
-    KMBroadcastStatus::instance()->setStatusProgressPercent(
-      ((indexOfCurrentMsg)*100) / numMsgs );
-//      ((indexOfCurrentMsg + 1)*100) / numMsgs );
-
     job = KIO::get( *next, false, false );
     idsOfMsgsPendingDownload.remove( next );
     kdDebug() << QString("Length of message about to get %1").arg( *nextLen ) << endl;
@@ -691,6 +693,18 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     if (numMsgBytesRead > curMsgLen)
       numMsgBytesRead = curMsgLen;
     numBytesRead += numMsgBytesRead - oldNumMsgBytesRead;
+    dataCounter++;
+    if (dataCounter % 100 == 0)
+    {
+      QString msg = i18n("Message ") + QString("%1/%2 (%3/%4 KB)").
+        arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).
+        arg(numBytesToRead/1024);
+      if (numBytes != numBytesToRead && mLeaveOnServer)
+        msg += " " + i18n("(%1 KB remain on the server)").arg(numBytes/1024);
+      KMBroadcastStatus::instance()->setStatusMsg( msg );
+      KMBroadcastStatus::instance()->setStatusProgressPercent(
+        numBytesRead * 100 / numBytesToRead );
+    }
     return;
   }
 
