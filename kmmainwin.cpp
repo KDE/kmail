@@ -1729,10 +1729,11 @@ void KMMainWin::setupMenuBar()
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
   mEncoding->setCurrentItem(0);
+
   QStringList::Iterator it;
   int i = 0;
   for( it = encodings.begin(); it != encodings.end(); ++it) {
-      if ( (*it).contains( mEncodingStr ) ) {
+      if ( KGlobal::charsets()->encodingForName(*it ) == mEncodingStr ) {
 	  mEncoding->setCurrentItem( i );
 	  break;
       }
