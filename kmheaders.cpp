@@ -405,7 +405,7 @@ public:
         if ( msgBase->isWatched() ) pixmaps << *KMHeaders::pixWatched;
       }
 
-      if ( !headers->mPaintInfo.showStatus ) {
+      if ( headers->mPaintInfo.showStatus ) {
         const QPixmap *pix = statusIcon(msgBase);
         if ( pix ) pixmaps << *pix;
       }
