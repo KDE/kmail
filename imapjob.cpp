@@ -492,7 +492,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
   if (job->error())
   {
     if ( (*it).progressItem )
-      (*it).progressItem->setStatus("Uploading message data failed.");
+      (*it).progressItem->setStatus( i18n("Uploading message data failed.") );
     account->handlePutError( job, *it, mDestFolder );
     return;
   } else {
@@ -506,7 +506,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
     }
     msg = 0;
     if ( (*it).progressItem )
-      (*it).progressItem->setStatus("Uploading message data completed.");
+      (*it).progressItem->setStatus( i18n("Uploading message data completed.") );
   }
   if (account->slave()) {
     account->removeJob(it);
