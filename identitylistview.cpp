@@ -79,6 +79,7 @@ namespace KMail {
   IdentityListView::IdentityListView( QWidget * parent, const char * name )
     : KListView( parent, name )
   {
+    setFullWidth( true );
     setDragEnabled( true );
     setAcceptDrops( true );
     setDropVisualizer( true );
