@@ -1264,8 +1264,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
 
   if ((id < 0) || (id >= (int)mItems.size()))
     return;
-  CREATE_TIMER(msgRemoved);
-  START_TIMER(msgRemoved);
   /*
    * qlistview has its own ideas about what to select as the next
    * item once this one is removed. Sine we have already selected
@@ -1360,8 +1358,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
 
-  END_TIMER(msgRemoved);
-  SHOW_TIMER(msgRemoved);
 }
 
 
