@@ -425,38 +425,36 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 {
   QString str;
   int num;
-  const char* pos;
-  char* dest;
+  int pos=0;
 
-  if (aStr.isEmpty()) return aStr;
+  if (aStr.isEmpty()) return str;
 
-  for (num=0, pos=aStr.data(); *pos; pos++)
+  for (num=0; pos<(int)aStr.length(); pos++)
   {
-    if (*pos=='\n')
+    if (aStr[pos]=='\n')
     {
       num++;
-      if (pos[1]=='.') num++;
+      if (aStr[pos+1]=='.') num++;
     }
   }
-  str.truncate(aStr.length() + num + 2);
 
   // Convert LF to CR+LF and handle dots at beginning of line.
-  for (pos=aStr.data(), dest=(char*)str.data(); *pos; pos++)
+  for (pos=0; pos<(int)aStr.length(); pos++)
   {
-    if (*pos=='\n')
+    QChar c = aStr[pos];
+    if (c=='\n')
     {
-      if (toCRLF) *dest++ = '\r';
-      *dest++ = *pos;
-      if (pos[1]=='.' && pos[2]<=' ')
+      if (toCRLF) str += '\r';
+      str += c;
+      if (aStr[pos+1]=='.' && aStr[pos+2]<=' ')
       {
 	pos++;
-	*dest++ = '.';
-	*dest++ = '.';
+	str += '.';
+	str += '.';
       }
     }
-    else *dest++ = *pos;
+    else str += c;
   }
-  *dest = '\0';
 
   return str;
 }
