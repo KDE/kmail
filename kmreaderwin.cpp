@@ -881,35 +881,16 @@ void KMReaderWin::clearCache()
 
 // enter items for the "Important changes" list here:
 static const char * const kmailChanges[] = {
-  I18N_NOOP("Operations on the parent of a closed thread are now performed on all messages of that thread. That means it is now possible for example to delete a whole thread or subthread by closing it and deleting the parent.")
 };
-static const int numKMailChanges =
-  sizeof kmailChanges / sizeof *kmailChanges;
+static const int numKMailChanges = 0;
+//  sizeof kmailChanges / sizeof *kmailChanges;
 
 // enter items for the "new features" list here, so the main body of
 // the welcome page can be left untouched (probably much easier for
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP("KMail can now be embedded in the Kontact container application."),
-  I18N_NOOP("Search Folders (a.k.a Virtual Folders)"),
-  I18N_NOOP("As-you-type spell checking is supported."),
-  I18N_NOOP("Panel applet showing unread message totals."),
-  I18N_NOOP("Per folder duplicate mail removal"),
-  I18N_NOOP("Drag and drop support of messages onto the composer"),
-  I18N_NOOP("Improved threading; threading by subject, sort stable deletion"),
-  I18N_NOOP("Numerous search dialog improvements"),
-  I18N_NOOP("SMTP pipelining (faster mail submission)."),
-  I18N_NOOP("Separate reader window improvements, including new tool bar"),
-  I18N_NOOP("Configurable startup folder."),
-  I18N_NOOP("IMAP messages are loaded progressively."),
-  I18N_NOOP("IMAP attachments are loaded on demand."),
-  I18N_NOOP("KMail can check your accounts for new mail on startup."),
-  I18N_NOOP("Individual IMAP folders can be checked for new mail."),
-  I18N_NOOP("Ignore Thread and Watch Thread."),
-  I18N_NOOP("Messages can have more than one status."),
-  I18N_NOOP("More flexible layout (no message pane or panes side by side)"),
-  I18N_NOOP("Disconnected IMAP.")
+  I18N_NOOP("Antispam wizard")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -953,7 +934,7 @@ void KMReaderWin::displayAboutPage()
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
     .arg("http://kmail.kde.org/") // KMail homepage URL
-    .arg("1.5").arg("3.1"); // prior KMail and KDE version
+    .arg("1.6").arg("3.2"); // prior KMail and KDE version
 
   QString featureItems;
   for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
@@ -976,7 +957,7 @@ void KMReaderWin::displayAboutPage()
   for ( int i = 0 ; i < numKMailChanges ; i++ )
     changesItems += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
 
-  info = info.arg("1.5").arg( changesItems );
+  info = info.arg("1.6").arg( changesItems );
 
   mViewer->write(content.arg(pointsToPixel( mCSSHelper->bodyFont().pointSize() )).arg(info));
   mViewer->end();
