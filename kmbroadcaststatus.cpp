@@ -94,7 +94,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   m_pLabel->installEventFilter( this );
   m_pLabel->setMinimumWidth( w );
   stack->addWidget( m_pLabel, 2 );
-  m_pButton->setMaximumHeight( minimumSizeHint().height() - 8 ); // yes this is an evil cludge
+  m_pButton->setMaximumHeight( fontMetrics().height() );
   setMinimumWidth( minimumSizeHint().width() );
 
   mode = None;
