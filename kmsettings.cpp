@@ -43,8 +43,9 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   config=app->getConfig();
   setCaption(nls->translate("Settings"));
   resize(500,600);
-  setCancelButton();
-  setDefaultButton();
+  setOKButton(nls->translate("OK"));
+  setCancelButton(nls->translate("Cancel"));
+  setDefaultButton(nls->translate("Default"));
   connect(this,SIGNAL(defaultButtonPressed()),this,SLOT(setDefaults()));
 
   createTabIdentity(this);
@@ -205,8 +206,8 @@ void KMSettings::createTabNetwork(QWidget* parent)
 
   sendmailLocationEdit->setText(msgSender->mailer());
   smtpServerEdit->setText(msgSender->smtpHost());
-  smtpPortEdit->setText(QString(msgSender->smtpPort()));
-
+  QString tmp;
+  smtpPortEdit->setText(tmp.setNum(msgSender->smtpPort()));
 
   //---- group: incoming mail
   grp = new QGroupBox(nls->translate("Incoming Mail"), tab);
@@ -396,9 +397,7 @@ void KMSettings::removeAccount()
 //-----------------------------------------------------------------------------
 void KMSettings::setDefaults()
 {
-  QString s="";
-  s.append(QDir::home().path());
-  sigEdit->setText(s+"/.signature");
+  sigEdit->setText(QString(QDir::home().path())+"/.signature");
   sendmailRadio->setChecked(TRUE);
   sendmailLocationEdit->setText("/usr/sbin/sendmail");
   smtpRadio->setChecked(FALSE);
