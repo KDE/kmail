@@ -60,10 +60,13 @@ namespace KMail {
 
     Interface::BodyPartMemento * memento() const;
     void setBodyPartMemento( Interface::BodyPartMemento * memento );
+    BodyPart::Display defaultDisplay() const;
+    void setDefaultDisplay( BodyPart::Display );
 
   private:
     partNode & mPartNode;
     const QTextCodec * mCodec;
+    BodyPart::Display mDefaultDisplay;
   };
 
 } // namespace KMail

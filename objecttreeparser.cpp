@@ -244,6 +244,9 @@ namespace KMail {
       if ( const Interface::BodyPartFormatter * formatter
            = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
         PartNodeBodyPart part( *node, codecFor( node ) );
+        // Set the default display strategy for this body part relying on the 
+        // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
+        part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
         if ( mReader && node->bodyPartMemento() )
           if ( Interface::Observable * obs = node->bodyPartMemento()->asObservable() )

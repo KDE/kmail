@@ -41,7 +41,9 @@
 static int serial = 0;
 
 KMail::PartNodeBodyPart::PartNodeBodyPart( partNode & n, const QTextCodec * codec  )
-  : KMail::Interface::BodyPart(), mPartNode( n ), mCodec( codec ) {}
+  : KMail::Interface::BodyPart(), mPartNode( n ), mCodec( codec ),
+    mDefaultDisplay( KMail::Interface::BodyPart::None )
+{}
 
 QString KMail::PartNodeBodyPart::makeLink( const QString & path ) const {
   static const int utf8 = 106;
@@ -87,4 +89,12 @@ KMail::Interface::BodyPartMemento * KMail::PartNodeBodyPart::memento() const {
 
 void KMail::PartNodeBodyPart::setBodyPartMemento( Interface::BodyPartMemento * memento ) {
   mPartNode.setBodyPartMemento( memento );
+}
+
+KMail::Interface::BodyPart::Display KMail::PartNodeBodyPart::defaultDisplay() const {
+  return mDefaultDisplay;
+}
+
+void KMail::PartNodeBodyPart::setDefaultDisplay( KMail::Interface::BodyPart::Display d ){
+  mDefaultDisplay = d;
 }

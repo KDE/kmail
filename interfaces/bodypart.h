@@ -148,6 +148,12 @@ namespace KMail {
 	 interface as a status object with this part.
       */
       virtual void setBodyPartMemento( BodyPartMemento * ) = 0;
+
+      enum Display { None, AsIcon, Inline };
+      /**
+        @return whether this body part should be displayed iconic or inline
+       */
+      virtual Display defaultDisplay() const = 0;
     };
 
   } // namespace Interface

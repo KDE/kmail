@@ -3,6 +3,9 @@
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
 #include <config.h>
+// needed temporarily until KMime is replacing the partNode helper class:
+#include "partNode.h"
+
 
 #define ALLOW_GUI 1
 #include "kmmessage.h"
@@ -58,9 +61,6 @@ using namespace KMime::Types;
 #if ALLOW_GUI
 #include <kmessagebox.h>
 #endif
-
-// needed temporarily until KMime is replacing the partNode helper class:
-#include "partNode.h"
 
 using namespace KMime;
 
