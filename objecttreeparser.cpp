@@ -1070,36 +1070,49 @@ namespace KMail {
     mResultString += otp.resultString();
   }
 
-  bool ObjectTreeParser::processMultiPartMixedSubtype( partNode * curNode, ProcessResult & ) {
+  bool ObjectTreeParser::processMultiPartMixedSubtype( partNode * curNode,
+                                                       ProcessResult & )
+  {
     if ( !curNode->mChild )
       return false;
 
     // Might be a Kroupware message,
     // let's look for the parts contained in the mixture:
     partNode* dataPlain =
-      curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
-    if ( dataPlain ) {
-      partNode* dataCal =
-	curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal, false, true );
-      if ( dataCal ) {
-	// Kroupware message found,
-	// we ignore the plain text but process the calendar part.
-	dataPlain->mWasProcessed = true;
-	stdChildHandling( dataCal );
-	return true;
-      } else {
-	partNode* dataTNEF =
-	  curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeMsTNEF, false, true );
-	if ( dataTNEF ){
-	  // encoded Kroupware message found,
-	  // we ignore the plain text but process the MS-TNEF part.
-	  dataPlain->mWasProcessed = true;
-	  stdChildHandling( dataTNEF );
-	  return true;
-	}
+      curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain,
+                                 false, true );
+
+    // special treatment of vCal attachment (might be invitation or similar)
+    partNode* dataCal =
+      curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal,
+                                 false, true );
+    if ( dataCal ) {
+      ProcessResult dummy;
+      if ( processTextVCalSubtype( dataCal, dummy ) ) {
+        // Kroupware message found,
+        // we can ignore the plain text part
+        if ( dataPlain )
+          dataPlain->mWasProcessed = true;
+        return true;
       }
     }
 
+    // special treatment of TNEF attachment (might be invitation or similar)
+    partNode* dataTNEF =
+      curNode->mChild->findType( DwMime::kTypeApplication,
+                                 DwMime::kSubtypeMsTNEF, false, true );
+    if ( dataTNEF ) {
+      ProcessResult dummy;
+      if ( processApplicationMsTnefSubtype( dataTNEF, dummy ) ) {
+        // encoded Kroupware message found,
+        // we can ignore the plain text part
+        if ( dataPlain )
+          dataPlain->mWasProcessed = true;
+        return true;
+      }
+    }
+
+    // normal treatment of the parts in the mp/mixed container
     stdChildHandling( curNode->mChild );
     return true;
   }
@@ -1620,32 +1633,38 @@ namespace KMail {
     return isSigned || isEncrypted;
   }
 
-  bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode * curNode, ProcessResult & result ) {
-    QString vPart( curNode->msgPart().bodyDecoded() );
+  bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode * curNode,
+                                                          ProcessResult & result )
+  {
+    // For special treatment of invitations etc. we need a reader window
+    if ( !mReader )
+      return false;
+
     QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
     QString fname( byteArrayToTempFile( mReader,
 					"groupware",
 					"msTNEF.raw",
 					theBody ) );
-    if ( !fname.isEmpty() ){
+    if ( !fname.isEmpty() ) {
+      QString vPart( curNode->msgPart().bodyDecoded() );
       QString prefix;
       QString postfix;
       // We let KMGroupware do most of our 'print formatting':
       // 1. decodes the TNEF data and produces a vPart
       //    or preserves the old data (if no vPart can be created)
       // 2. generates text preceding to / following to the vPart
-      bool bVPartCreated
-	= kmkernel->groupware().msTNEFToHTML( mReader, vPart, fname,
-					    prefix, postfix );
-      if ( bVPartCreated && mReader && !showOnlyOneMimePart() ){
+      bool bVPartCreated =
+	kmkernel->groupware().msTNEFToHTML( mReader, vPart, fname,
+                                          prefix, postfix );
+      if ( bVPartCreated && !showOnlyOneMimePart() ) {
 	htmlWriter()->queue( prefix );
 	writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
 			 codecFor( curNode ), result );
 	htmlWriter()->queue( postfix );
+        return true;
       }
     }
-    mResultString = vPart.latin1();
-    return true;
+    return false;
   }
 
   bool ObjectTreeParser::processAudioType( int /*subtype*/, partNode * curNode,
