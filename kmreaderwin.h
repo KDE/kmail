@@ -100,10 +100,6 @@ public:
   bool autoDelete(void) const { return mAutoDelete; }
   void setAutoDelete(bool f) { mAutoDelete=f; }
 
-  /** Get/set message body font. */
-  virtual void setBodyFont(const QFont);
-  const QFont& bodyFont(void) const { return mBodyFont; }
-
   /** Override default html mail setting */
   void setHtmlOverride( bool override );
 
@@ -253,7 +249,7 @@ protected:
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;
-  QFont mBodyFont;
+  QFont mBodyFont, mFixedFont;
   bool inlineImage;
   static QString mAttachDir;
   /** where did the user save the attachment last time */

@@ -280,10 +280,12 @@ void KMReaderWin::readConfig(void)
   {
   KConfigGroupSaver saver(config, "Fonts");
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
+  mBodyFont = KGlobalSettings::generalFont();
+  mFixedFont = KGlobalSettings::fixedFont();
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
-    mBodyFont = QFont("helvetica");
     mBodyFont = config->readFontEntry((mPrinting) ? "print-font" : "body-font",
       &mBodyFont);
+    mFixedFont = config->readFontEntry("fixed-font", &mFixedFont);
     fntSize = mBodyFont.pointSize();
     mBodyFamily = mBodyFont.family();
   }
@@ -414,14 +416,6 @@ void KMReaderWin::initHtmlWidget(void)
 	  SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::setBodyFont(const QFont aFont)
-{
-  mBodyFont = aFont;
-  update(true);
 }
 
 
@@ -1192,8 +1186,6 @@ QString KMReaderWin::quotedHTML(const QString& s)
   beg = pos;
 
   htmlStr = normalStartTag;
-  if (mUseFixedFont)
-     htmlStr.append("<pre>");
 
   int currQuoteLevel = -1;
   
@@ -1235,8 +1227,6 @@ QString KMReaderWin::quotedHTML(const QString& s)
     }
 
     /* finish last quotelevel */
-    if (mUseFixedFont)
-        htmlStr.append("</pre>");
     if (currQuoteLevel == -1)
 	htmlStr.append( normalEndTag );
     else
@@ -1248,15 +1238,11 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	line.prepend(normalStartTag);
     else
         line.prepend( mQuoteFontTag[currQuoteLevel%3] );
-    if (mUseFixedFont)
-        line.prepend("<pre>");
 
     htmlStr.append(line);
   } /* while() */
 
   /* really finish the last quotelevel */
-  if (mUseFixedFont)
-     htmlStr.append("</pre>");
   if (currQuoteLevel == -1)
      htmlStr.append( normalEndTag );
   else
@@ -1623,6 +1609,8 @@ void KMReaderWin::slotFind()
 void KMReaderWin::slotToggleFixedFont()
 {
   mUseFixedFont = !mUseFixedFont;
+  mBodyFamily = (mUseFixedFont) ? mFixedFont.family() : mBodyFont.family();
+  fntSize = (mUseFixedFont) ? mFixedFont.pointSize() : mBodyFont.pointSize();
   update(true);  
 }
 

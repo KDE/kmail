@@ -528,7 +528,7 @@ protected:
   KFontChooser *mFontChooser;
   
   int          mActiveFontIndex;
-  QFont        mFont[8];
+  QFont        mFont[10];
 };
 
 class AppearancePageColorsTab : public ConfigurationPage {

@@ -1832,15 +1832,18 @@ static const struct {
   const char * configName;
   const char * displayName;
   bool   enableFamilyAndSize;
+  bool   onlyFixed;
 } fontNames[] = {
-  { "body-font", I18N_NOOP("Message body"), true },
-  { "list-font", I18N_NOOP("Message list"), true },
-  { "list-date-font", I18N_NOOP("Message list - date field"), true },
-  { "folder-font", I18N_NOOP("Folder list"), true },
-  { "quote1-font", I18N_NOOP("Quoted text - first level"), false },
-  { "quote2-font", I18N_NOOP("Quoted text - second level"), false },
-  { "quote3-font", I18N_NOOP("Quoted text - third level"), false },
-  { "print-font",  I18N_NOOP("Printing output"), true },
+  { "body-font", I18N_NOOP("Message body"), true, false },
+  { "list-font", I18N_NOOP("Message list"), true, false },
+  { "list-date-font", I18N_NOOP("Message list - date field"), true, false },
+  { "folder-font", I18N_NOOP("Folder list"), true, false },
+  { "quote1-font", I18N_NOOP("Quoted text - first level"), false, false },
+  { "quote2-font", I18N_NOOP("Quoted text - second level"), false, false },
+  { "quote3-font", I18N_NOOP("Quoted text - third level"), false, false },
+  { "fixed-font", I18N_NOOP("Fixed width font"), true, true },
+  { "composer-font", I18N_NOOP("Composer"), true, false },
+  { "print-font",  I18N_NOOP("Printing output"), true, false },
 };
 static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
@@ -1918,7 +1921,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
   
 
   // Display the new setting:
-  mFontChooser->setFont( mFont[index] );
+  mFontChooser->setFont( mFont[index], fontNames[index].onlyFixed );
 
   // Disable Family and Size list if we have selected a quote font:
   mFontChooser->enableColumn( KFontChooser::FamilyList|KFontChooser::SizeList,
@@ -1928,9 +1931,11 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 void AppearancePage::FontsTab::setup() {
   KConfigGroup fonts( kapp->config(), "Fonts" );
 
-  mFont[0] = QFont("helvetica"); // default
+  mFont[0] = KGlobalSettings::generalFont();
+  QFont fixedFont = KGlobalSettings::fixedFont();
   for ( int i = 0 ; i < numFontNames ; i++ )
-    mFont[i] = fonts.readFontEntry( fontNames[i].configName, &mFont[0] );
+    mFont[i] = fonts.readFontEntry( fontNames[i].configName,
+      (fontNames[i].onlyFixed) ? &fixedFont : &mFont[0] );
   
   mCustomFontCheck->setChecked( !fonts.readBoolEntry( "defaultFonts", true ) );
   mFontLocationCombo->setCurrentItem( 0 );
@@ -1951,7 +1956,8 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
 		<< "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
     }
   if ( needChange && mFontLocationCombo->currentItem() > 0 )
-    mFontChooser->setFont( mFont[ mFontLocationCombo->currentItem() ] );
+    mFontChooser->setFont( mFont[ mFontLocationCombo->currentItem() ],
+      fontNames[ mFontLocationCombo->currentItem() ].onlyFixed );
   
   if ( fonts.hasKey( "defaultFonts" ) )
     mCustomFontCheck->setChecked( !fonts.readBoolEntry( "defaultFonts" ) );

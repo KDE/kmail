@@ -271,7 +271,7 @@ public slots:
   /**
    * toggle fixed width font.
    */
-  void slotToggleFixedFont();
+  void slotUpdateFont();
 
   /**
    * Open addressbook editor dialog.
@@ -512,7 +512,7 @@ protected:
   int mWordWrap;
   short mBtnIdSign, mBtnIdEncrypt;
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
-  QFont mBodyFont;
+  QFont mBodyFont, mFixedFont;
   //  QList<QLineEdit> mEdtList;
   QPtrList<QWidget> mEdtList;
   QPtrList<KTempFile> mAtmTempList;
@@ -527,7 +527,7 @@ protected:
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction, *fccAction;
   KToggleAction *toolbarAction, *statusbarAction;
-  KToggleAction *wordWrapAction;
+  KToggleAction *wordWrapAction, *fixedFontAction;
 
   KSelectAction *encodingAction;
 
@@ -553,7 +553,6 @@ private:
     QCString mimeType;
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
-  bool mUnicodeFont;
   bool mForceReplyCharset;
 };
 #endif

@@ -111,6 +111,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
   bAutoCharset = TRUE;
+  fixedFontAction = NULL;
   mEditor = new KMEdit(mMainWidget, this);
   mEditor->setTextFormat(Qt::PlainText);
   disableBreaking = false;
@@ -386,14 +387,13 @@ void KMComposeWin::readConfig(void)
 
   { // area fo config group "Fonts"
     KConfigGroupSaver saver(config, "Fonts");
-    mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
+    mBodyFont = KGlobalSettings::generalFont();
+    mFixedFont = KGlobalSettings::fixedFont();
     if (!config->readBoolEntry("defaultFonts",TRUE)) {
-      mBodyFont = QFont("helvetica");
-      mBodyFont = config->readFontEntry("body-font", &mBodyFont);
+      mBodyFont = config->readFontEntry("composer-font", &mBodyFont);
+      mFixedFont = config->readFontEntry("fixed-font", &mFixedFont);
     }
-    else
-      mBodyFont = KGlobalSettings::generalFont();
-    if (mEditor) mEditor->setFont(mBodyFont);
+    slotUpdateFont();
     mEdtFrom->setFont(mBodyFont);
     mEdtReplyTo->setFont(mBodyFont);
     mEdtTo->setFont(mBodyFont);
@@ -779,8 +779,8 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                       actionCollection(), "clean_spaces");
 
-  (void) new KToggleAction( i18n("Fixed Font Widths"), 0, this,
-                      SLOT(slotToggleFixedFont()), actionCollection(), "toggle_fixedfont" );
+  fixedFontAction = new KToggleAction( i18n("Fixed Font Widths"), 0, this,
+                      SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
 
   //these are checkable!!!
   urgentAction = new KToggleAction (i18n("&Urgent"), 0,
@@ -957,7 +957,7 @@ void KMComposeWin::setupEditor(void)
   }
 
   // Font setup
-  mEditor->setFont(mBodyFont);
+  slotUpdateFont();
 
   menu = new QPopupMenu(this);
   //#ifdef BROKEN
@@ -975,7 +975,7 @@ void KMComposeWin::setupEditor(void)
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
   menu->insertSeparator();
-  menu->insertItem(i18n("Fixed font widths"), this, SLOT(slotToggleFixedFont()));
+  menu->insertItem(i18n("Fixed font widths"), this, SLOT(slotUpdateFont()));
   mEditor->installRBPopup(menu);
   updateCursorPosition();
   connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
@@ -1986,12 +1986,11 @@ void KMComposeWin::slotReplace()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleFixedFont()
+void KMComposeWin::slotUpdateFont()
 {
   if (!mEditor) return;
-
-  QFont fixedfont = KGlobalSettings::fixedFont();
-  mEditor->setFont( (mEditor->font() == fixedfont) ? mBodyFont : fixedfont );
+  mEditor->setFont( fixedFontAction && (fixedFontAction->isChecked())
+    ? mFixedFont : mBodyFont );
 }
 
 //-----------------------------------------------------------------------------
