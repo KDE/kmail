@@ -58,10 +58,11 @@ protected slots:
   void slotFolderComplete(KMFolderImap *folder, bool success);
 
 protected:
-  friend class KMIndexSearchTarget; 
+  friend class KMIndexSearchTarget;
   void setRunning(bool b) { mRunning = b; }
   void setFoundCount(int f) { mFoundCount = f; }
   void setSearchedCount(int f) { mSearchedCount = f; }
+  void setCurrentFolder(const QString &f) { mLastFolder = f; }
 
 private:
   int mRemainingMessages;
@@ -72,7 +73,7 @@ private:
   QValueList<QGuardedPtr<KMFolder> > mFolders, mOpenedFolders;
   QValueList<QGuardedPtr<KMFolderImap> > mIncompleteFolders;
   SerNumList mSerNums;
-  QString mLastFolder;	
+  QString mLastFolder;
   int mSearchedCount, mFoundCount;
 };
 
