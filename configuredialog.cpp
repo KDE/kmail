@@ -3178,7 +3178,7 @@ void SecurityPage::installProfile( KConfig * profile ) {
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-general");
+  return QString::fromLatin1("configure-security-reading");
 }
 
 SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * name )
