@@ -204,6 +204,8 @@ namespace KMail {
   }
 
 
+//-----------------------------------------------------------------------------
+
   void ObjectTreeParser::parseObjectTree( partNode * node ) {
     kdDebug(5006) << "\n**\n** ObjectTreeParser::parseObjectTree( "
 		  << (node ? "node OK, " : "no node, ")
@@ -235,7 +237,7 @@ namespace KMail {
 	processResult.adjustCryptoStatesOfNode( node );
 	continue;
       }
-	
+
       const BodyPartFormatter * bpf
 	= BodyPartFormatter::createFor( node->type(), node->subType() );
       kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
@@ -504,7 +506,7 @@ namespace KMail {
         if ( !messagePart.signerMailAddresses.empty() ) {
           if ( messagePart.signer.isEmpty() )
 	    messagePart.signer = messagePart.signerMailAddresses.front();
-	  else 
+	  else
             messagePart.signer += " <" + messagePart.signerMailAddresses.front() + '>';
         }
       }
@@ -615,6 +617,7 @@ namespace KMail {
     return bIsOpaqueSigned;
   }
 
+
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
 				      QCString& decryptedData,
 				      bool& signatureFound,
@@ -649,7 +652,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     }
   }
 
-  if ( cryptPlug ) {
+  if ( cryptPlug && !kmkernel->contextMenuShown() ) {
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
     QCString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
     bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
@@ -710,7 +713,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     delete errTxt;
     delete[] cleartext;
   }
-  else {
+  else if ( !cryptPlug ) {
     decryptedData = "<div style=\"text-align:center; padding:20pt;\">"
                   + i18n("Undecryptable data not shown.").utf8()
                   + "</div>";
@@ -726,6 +729,24 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     case NO_PLUGIN:
       aErrorText = i18n( "No appropriate crypto plug-in was found." );
       break;
+    }
+  }
+  else {
+    // ### Workaround for bug 56693 (kmail freeze with the complete desktop
+    // ### while pinentry-qt appears)
+    QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
+    QCString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
+    bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
+                          (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
+                          (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
+    if ( !cipherIsBinary ) {
+      decryptedData = cipherStr;
+    }
+    else {
+      decryptedData = "<div style=\"font-size:x-large; text-align:center;"
+                      "padding:20pt;\">"
+                    + i18n("Undecryptable data not shown.").utf8()
+                    + "</div>";
     }
   }
 
@@ -2372,7 +2393,9 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
 	  //htmlStr += "<br>";
 
 	  Kpgp::Block* block = *pbit;
-	  if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+	  if( ( block->type() == Kpgp::PgpMessageBlock &&
+                // ### Workaround for bug 56693
+                !kmkernel->contextMenuShown() ) ||
 	      ( block->type() == Kpgp::ClearsignedBlock ) )
 	  {
 	      isPgpMessage = true;

@@ -1,4 +1,4 @@
-// -*- c++ -*-
+// -*- mode: C++; c-file-style: "gnu" -*-
 
 #ifndef _KMCONTROL
 #define _KMCONTROL
@@ -196,6 +196,13 @@ public:
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMainWindow* mainWin();
 
+  // ### The mContextMenuShown flag is necessary to work around bug# 56693
+  // ### (kmail freeze with the complete desktop while pinentry-qt appears)
+  // ### FIXME: Once the encryption support is asynchron this can be removed
+  // ### again.
+  void setContextMenuShown( bool flag ) { mContextMenuShown = flag; }
+  bool contextMenuShown() const { return mContextMenuShown; }
+
 public slots:
   //Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
@@ -302,6 +309,11 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
+
+  // true if the context menu of KMFolderTree or KMHeaders is shown
+  // this is necessary to know in order to prevent a dead lock between the
+  // context menus and the pinentry program
+  bool mContextMenuShown;
 
   /* Weaver */
   KPIM::ThreadWeaver::Weaver *the_weaver;

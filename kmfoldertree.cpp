@@ -1047,7 +1047,9 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   }
 
 
+  kmkernel->setContextMenuShown( true );
   folderMenu->exec (p, 0);
+  kmkernel->setContextMenuShown( false );
   triggerUpdate();
   delete folderMenu;
   folderMenu = 0;

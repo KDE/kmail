@@ -2458,7 +2458,9 @@ void KMHeaders::slotRMB()
   mOwner->action("apply_filter_actions")->plug(menu);
 
   KAcceleratorManager::manage(menu);
+  kmkernel->setContextMenuShown( true );
   menu->exec(QCursor::pos(), 0);
+  kmkernel->setContextMenuShown( false );
   delete menu;
 }
 

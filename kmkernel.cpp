@@ -73,7 +73,8 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   DCOPObject("KMailIface"), QObject(parent, name),
-  mIdentityManager(0), mProgress(0), mConfigureDialog(0)
+  mIdentityManager(0), mProgress(0), mConfigureDialog(0),
+  mContextMenuShown( false )
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
@@ -958,7 +959,7 @@ void KMKernel::cleanup(void)
   delete the_weaver;
   the_weaver = 0;
 #endif
-  
+
   // Since the application has already quit we can't use
   // kapp->processEvents() because it will return immediately:
   // We first have to fire up a new event loop.
