@@ -262,7 +262,7 @@ namespace KMail {
      */
     bool handleJobError( KIO::Job* job, const QString& context, bool abortSync = false );
 
-  public slots:
+  private slots:
     /**
      * gets the results of listDirectory
      * it includes the folder-information in mSubfolderNames, -Paths and -MIMETypes
@@ -281,6 +281,7 @@ namespace KMail {
      */
     void slotSubscriptionResult(KIO::Job * job);
 
+  public slots:
     /**
      * Update the progress bar
      */

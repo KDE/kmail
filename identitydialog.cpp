@@ -255,11 +255,7 @@ namespace KMail {
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
                                           const QString & msg ) {
-    KMFolder * folder = kmkernel->folderMgr()->findIdString( folderID );
-    if ( !folder )
-      folder = kmkernel->imapFolderMgr()->findIdString( folderID );
-    if ( !folder )
-      folder = kmkernel->dimapFolderMgr()->findIdString( folderID );
+    KMFolder * folder = kmkernel->findFolderById( folderID );
     if ( !folder ) {
       KMessageBox::sorry( this, msg );
       return false;

@@ -33,6 +33,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),
     mReadExpireUnits( expireNever ),
+    mExpireAction( ExpireDelete ),
     mUseCustomIcons( false ), mMailingListEnabled( false ), mContentsType( 0 )
 {
   if( aFolderType == KMFolderTypeCachedImap )
@@ -102,6 +103,8 @@ void KMFolder::readConfig( KConfig* config )
   mReadExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
   mUnreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
   mUnreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
+  mExpireAction = config->readEntry("ExpireAction", "Delete") == "Move" ? ExpireMove : ExpireDelete;
+  mExpireToFolderId = config->readEntry("ExpireToFolder");
 
   mUseCustomIcons = config->readBoolEntry("UseCustomIcons", false );
   mNormalIconPath = config->readEntry("NormalIconPath" );
@@ -130,6 +133,8 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("ReadExpireUnits", mReadExpireUnits);
   config->writeEntry("UnreadExpireAge", mUnreadExpireAge);
   config->writeEntry("UnreadExpireUnits", mUnreadExpireUnits);
+  config->writeEntry("ExpireAction", mExpireAction == ExpireDelete ? "Delete" : "Move");
+  config->writeEntry("ExpireToFolder", mExpireToFolderId);
 
   config->writeEntry("UseCustomIcons", mUseCustomIcons);
   config->writeEntry("NormalIconPath", mNormalIconPath);
@@ -657,6 +662,24 @@ void KMFolder::setReadExpireUnits( ExpireUnits units )
     mReadExpireUnits = units;
 }
 
+
+void KMFolder::setExpireAction( ExpireAction a )
+{
+  if ( a != mExpireAction ) {
+    mExpireAction = a;
+    mStorage->writeConfig();
+  }
+}
+
+void KMFolder::setExpireToFolderId( const QString& id )
+{
+  if ( id != mExpireToFolderId ) {
+    mExpireToFolderId = id;
+    mStorage->writeConfig();
+  }
+}
+
+
 static int daysToExpire( int number, ExpireUnits units )
 {
   switch (units) {
@@ -780,6 +803,5 @@ void KMFolder::reallyAddCopyOfMsg( KMMessage* aMsg )
 {
   mStorage->reallyAddCopyOfMsg( aMsg );
 }
-
 
 #include "kmfolder.moc"

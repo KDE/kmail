@@ -158,6 +158,8 @@ private:
 
   KIntNumInput *mReadExpiryTimeNumInput, *mUnreadExpiryTimeNumInput;
   QComboBox    *mReadExpiryUnitsComboBox, *mUnreadExpiryUnitsComboBox;
+  QRadioButton *mExpireActionDelete, *mExpireActionMove;
+  QComboBox *mExpireToFolderComboBox;
   KMFolderDialog* mDlg;
 };
 
@@ -228,8 +230,11 @@ public:
   const FolderList& folders() const { return mFolders; }
   QStringList folderNameList() const { return mFolderNameList; }
 
+  const FolderList& moveToFolderList() const { return mMoveToFolderList; }
+  QStringList moveToFolderNameList() const { return mMoveToFolderNameList; }
+
   KMFolder* parentFolder() const { return mParentFolder; }
-  int positionInParentFolder() const { return mPositionInParentFolder; }
+  int positionInFolderList() const { return mPositionInFolderList; }
 
 protected slots:
   void slotChanged( bool );
@@ -247,9 +252,14 @@ private:
   QGuardedPtr<KMFolder> mFolder;
   QGuardedPtr<KMFolderDir> mFolderDir;
   QGuardedPtr<KMFolder> mParentFolder;
-  int mPositionInParentFolder;
-  FolderList mFolders;
-  QStringList mFolderNameList;
+
+  int mPositionInFolderList;
+  FolderList mFolders; // list of possible "parent folders" for this folder
+  QStringList mFolderNameList; // names of possible "parent folders" for this folder
+
+  FolderList mMoveToFolderList; // list of all folders suitable for moving messages to them
+  QStringList mMoveToFolderNameList; // names of all folders suitable for moving messages to them
+
   bool mIsNewFolder; // if true, save() did set mFolder.
 
   QValueVector<KMail::FolderDiaTab*> mTabs;

@@ -3125,17 +3125,11 @@ void KMMainWidget::slotShowStartupFolder()
 
   KMFolder* startup = 0;
   if (!mStartupFolder.isEmpty()) {
-    // find the startup-folder with this ugly folderMgr switch
-    startup = kmkernel->folderMgr()->findIdString(mStartupFolder);
-    if (!startup)
-      startup = kmkernel->imapFolderMgr()->findIdString(mStartupFolder);
-    if (!startup)
-      startup = kmkernel->dimapFolderMgr()->findIdString(mStartupFolder);
-    if (!startup)
-      startup = kmkernel->inboxFolder();
-  } else {
-    startup = kmkernel->inboxFolder();
+    // find the startup-folder
+    startup = kmkernel->findFolderById(mStartupFolder);
   }
+  if (!startup)
+    startup = kmkernel->inboxFolder();
   mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(startup));
   mFolderTree->ensureItemVisible(mFolderTree->indexOfFolder(startup));
 }

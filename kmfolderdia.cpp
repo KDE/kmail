@@ -64,6 +64,8 @@
 #include <qvbox.h>
 
 #include <assert.h>
+#include <qhbuttongroup.h>
+#include <qradiobutton.h>
 
 #include "kmfolderdia.moc"
 
@@ -79,12 +81,11 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mPositionInParentFolder( 0 ),
+  mPositionInFolderList( 0 ),
   mIsNewFolder( aFolder == 0 )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
-  QStringList str;
   if( !mFolder ) {
     // new folder can be subfolder of any other folder
     aParent->createFolderList(&mFolderNameList, &mFolders, true, true,
@@ -108,17 +109,21 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   if( mFolderDir ) {
     // search the parent folder of the folder
 //    kdDebug(5006) << "search the parent folder of the folder" << endl;
-    QValueListConstIterator<QGuardedPtr<KMFolder> > it;
+    FolderList::ConstIterator it;
     int i = 1;
     for( it = mFolders.begin(); it != mFolders.end(); ++it, ++i ) {
 //      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
       if( (*it)->child() == mFolderDir ) {
         mParentFolder = *it;
-        mPositionInParentFolder = i;
+        mPositionInFolderList = i;
         break;
       }
     }
   }
+
+  // Now create the folder list for the "move expired message to..." combo
+  aParent->createFolderList(&mMoveToFolderNameList, &mMoveToFolderList, true, true,
+                            true, false, true, true); // all except search folders
 
 
   FolderDiaTab* tab;
@@ -283,8 +288,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), iconGroup );
   mIconsCheckBox->setChecked( false );
   ihl->addWidget( mIconsCheckBox );
+  ihl->addStretch( 2 );
 
-  ihl = new QHBoxLayout( ivl );
   mNormalIconLabel = new QLabel( i18n("&Normal:"), iconGroup );
   mNormalIconLabel->setEnabled( false );
   ihl->addWidget( mNormalIconLabel );
@@ -298,7 +303,6 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mNormalIconButton->setIcon( QString("folder") );
   mNormalIconButton->setEnabled( false );
   ihl->addWidget( mNormalIconButton );
-  ihl->addStretch( 1 );
 
   mUnreadIconLabel = new QLabel( i18n("&Unread:"), iconGroup );
   mUnreadIconLabel->setEnabled( false );
@@ -419,8 +423,26 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   connect( mUnreadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
            this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
 
-  expLayout->setColStretch(0, 3);
-  expLayout->setColStretch(0, 100); /// ### was this meant to be "1, 100"?
+  QHBox* expireActionBox = new QHBox( mExpireGroupBox );
+  QButtonGroup* radioBG = new QButtonGroup( mExpireGroupBox );
+  radioBG->hide(); // just for the exclusive behavior
+  mExpireActionDelete = new QRadioButton( i18n( "Delete old messages" ), expireActionBox );
+  radioBG->insert(mExpireActionDelete);
+  mExpireActionMove = new QRadioButton( i18n( "Move messages to:" ), expireActionBox );
+  radioBG->insert(mExpireActionMove);
+  mExpireActionDelete->setChecked( true );
+  mExpireToFolderComboBox = new QComboBox( expireActionBox );
+  mExpireToFolderComboBox->insertStringList( mDlg->moveToFolderNameList() );
+  expLayout->addMultiCellWidget(expireActionBox, 3, 3, 0, 2);
+
+  connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
+           mExpireActionDelete, SLOT(setEnabled(bool)) );
+  connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
+           mExpireActionMove, SLOT(setEnabled(bool)) );
+  connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
+           mExpireToFolderComboBox, SLOT(setEnabled(bool)) );
+
+  expLayout->setColStretch(3, 100);
 
 
   QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), this );
@@ -505,8 +527,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   KMFolder* parentFolder = mDlg->parentFolder();
 
   if ( parentFolder ) {
-    mBelongsToComboBox->setCurrentItem( mDlg->positionInParentFolder() );
-    slotUpdateItems( mDlg->positionInParentFolder() );
+    mBelongsToComboBox->setCurrentItem( mDlg->positionInFolderList() );
+    slotUpdateItems( mDlg->positionInFolderList() );
   }
 
   if ( mDlg->folder() ) {
@@ -613,7 +635,6 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   // settings for automatic deletion of old messages
   mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
   // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
-  // Should really do something better than hardcoding this everywhere.
   if( folder->getReadExpireUnits() >= 0
       && folder->getReadExpireUnits() < expireMaxUnits) {
     mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
@@ -634,11 +655,27 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   } else {
     mUnreadExpiryTimeNumInput->setValue( 28 );
   }
+  if ( folder->expireAction() == KMFolder::ExpireDelete )
+    mExpireActionDelete->setChecked( true );
+  else
+    mExpireActionMove->setChecked( true );
+  QString destFolderID = folder->expireToFolderId();
+  if ( !destFolderID.isEmpty() ) {
+    KMFolderDialog::FolderList moveToFolderList = mDlg->moveToFolderList();
+    KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
+    int pos = moveToFolderList.findIndex( QGuardedPtr<KMFolder>( destFolder ) );
+    if ( pos > -1 )
+      mExpireToFolderComboBox->setCurrentItem( pos );
+  }
+
   if( !folder->isAutoExpire() ) {
     mReadExpiryTimeNumInput->setEnabled( false );
     mReadExpiryUnitsComboBox->setEnabled( false );
     mUnreadExpiryTimeNumInput->setEnabled( false );
     mUnreadExpiryUnitsComboBox->setEnabled( false );
+    mExpireActionDelete->setEnabled( false );
+    mExpireActionMove->setEnabled( false );
+    mExpireToFolderComboBox->setEnabled( false );
   }
   else {
     // disable the number fields if "Never" is selected
@@ -788,6 +825,13 @@ bool FolderDiaGeneralTab::save()
     folder->setReadExpireAge(mReadExpiryTimeNumInput->value());
     folder->setUnreadExpireUnits((ExpireUnits)mUnreadExpiryUnitsComboBox->currentItem());
     folder->setReadExpireUnits((ExpireUnits)mReadExpiryUnitsComboBox->currentItem());
+    if ( mExpireActionDelete->isChecked() )
+      folder->setExpireAction( KMFolder::ExpireDelete );
+    else
+      folder->setExpireAction( KMFolder::ExpireMove );
+    KMFolder* expireToFolder = mDlg->moveToFolderList()[mExpireToFolderComboBox->currentItem()];
+    if ( expireToFolder )
+      folder->setExpireToFolderId( expireToFolder->idString() );
     // Update the tree iff new icon paths are different and not empty or if
     // useCustomIcons changed.
     if ( folder->useCustomIcons() != mIconsCheckBox->isChecked() ) {

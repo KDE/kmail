@@ -409,6 +409,19 @@ public:
    */
   ExpireUnits getReadExpireUnits() const { return mReadExpireUnits; }
 
+  enum ExpireAction { ExpireDelete, ExpireMove };
+  /**
+   * What should expiry do? Delete or move to another folder?
+   */
+  ExpireAction expireAction() const { return mExpireAction; }
+  void setExpireAction( ExpireAction a );
+
+  /**
+   * If expiry should move to folder, return the ID of that folder
+   */
+  QString expireToFolderId() const { return mExpireToFolderId; }
+  void setExpireToFolderId( const QString& id );
+
   /**
    * Expire old messages in this folder.
    * If immediate is true, do it immediately; otherwise schedule it for later
@@ -552,6 +565,8 @@ private:
   int          mReadExpireAge;           // Given in readExpireUnits
   ExpireUnits  mUnreadExpireUnits;
   ExpireUnits  mReadExpireUnits;
+  ExpireAction mExpireAction;
+  QString      mExpireToFolderId;
 
   /** Icon related variables */
   bool mUseCustomIcons;

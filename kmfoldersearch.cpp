@@ -96,11 +96,7 @@ bool KMSearch::read(QString location)
       mSearchPattern = new KMSearchPattern();
   mSearchPattern->readConfig(&config);
   QString rootString = config.readEntry("Base");
-  mRoot = kmkernel->folderMgr()->findIdString(rootString);
-  if (mRoot.isNull())
-    mRoot = kmkernel->imapFolderMgr()->findIdString(rootString);
-  if (mRoot.isNull())
-    mRoot = kmkernel->dimapFolderMgr()->findIdString(rootString);
+  mRoot = kmkernel->findFolderById(rootString);
   mRecursive = config.readBoolEntry("Recursive");
   return true;
 }

@@ -31,6 +31,7 @@
 #include "globalsettings.h"
 #include "folderstorage.h"
 #include "kmbroadcaststatus.h"
+#include "kmcommands.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -69,6 +70,7 @@ ExpireJob::~ExpireJob()
 
 void ExpireJob::kill()
 {
+  Q_ASSERT( mCancellable );
   // We must close the folder if we opened it and got interrupted
   if ( mFolderOpen && mDestFolder && mDestFolder->storage() )
     mDestFolder->storage()->close();
@@ -128,7 +130,7 @@ void ExpireJob::slotDoWork()
     time_t maxTime = mb->isUnread() ? mMaxUnreadTime : mMaxReadTime;
 
     if (mb->date() < maxTime) {
-      mRemovedMsgs.append( storage->getMsg( mCurrentIndex ) );
+      mRemovedMsgs.append( storage->getMsgBase( mCurrentIndex ) );
     }
   }
   if ( stopIndex == 0 )
@@ -137,16 +139,38 @@ void ExpireJob::slotDoWork()
 
 void ExpireJob::done()
 {
-  kdDebug(5006) << "ExpireJob: finished expiring in folder " << mDestFolder->location()
-                << " " << mRemovedMsgs.count() << " messages to remove." << endl;
+  QString str;
   FolderStorage* storage = mDestFolder->storage();
-  storage->removeMsg( mRemovedMsgs );
+  if ( !mRemovedMsgs.isEmpty() ) {
+    if ( mDestFolder->expireAction() == KMFolder::ExpireDelete ) {
+      // Expire by deletion
+      kdDebug(5006) << "ExpireJob: finished expiring in folder " << mDestFolder->location()
+                    << " " << mRemovedMsgs.count() << " messages to remove." << endl;
+      storage->removeMsg( mRemovedMsgs );
+    } else {
+      // Expire by moving
+      KMFolder* moveToFolder = kmkernel->findFolderById( mDestFolder->expireToFolderId() );
+      if ( moveToFolder ) {
+        kdDebug(5006) << "ExpireJob: finished expiring in folder " << mDestFolder->location()
+                      << " " << mRemovedMsgs.count() << " messages to move to " << moveToFolder->label() << endl;
+        // The command shouldn't kill us because it opens the folder
+        mCancellable = false;
+        KMMoveCommand* cmd = new KMMoveCommand( moveToFolder, mRemovedMsgs );
+        cmd->start();
+      } else {
+        str = i18n( "Can't expire messages from %1: destination folder %2 not found" ).arg( mDestFolder->label(), mDestFolder->expireToFolderId() );
+        kdWarning(5006) << str << endl;
+        KMBroadcastStatus::instance()->setStatusMsg( str );
+      }
+    }
+  }
   storage->close();
   mFolderOpen = false;
-  if ( !mRemovedMsgs.isEmpty() ) {
-    QString str = i18n( "Expired 1 message from %1", "Expired %n messages from %1", mRemovedMsgs.count() );
-    KMBroadcastStatus::instance()->setStatusMsg( str.arg( mDestFolder->label() ) );
+  if ( !mRemovedMsgs.isEmpty() && str.isNull() ) {
+    str = i18n( "Expired 1 message from %1", "Expired %n messages from %1", mRemovedMsgs.count() ).arg( mDestFolder->label() );
   }
+  if ( !str.isNull() )
+    KMBroadcastStatus::instance()->setStatusMsg( str );
   delete this;
 }
 

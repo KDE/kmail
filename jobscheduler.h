@@ -57,6 +57,7 @@ public:
   /// Run this task, i.e. create a job for it.
   /// Important: the job's execute() method must either call open() on the
   /// folder or storage immediately, or abort (deleting itself).
+  /// Usually, that job should also be cancellable.
   /// Otherwise (if the open() is delayed) an unrelated open() could happen first
   /// and mess things up.
   /// If for some reason (e.g. folder deleted) nothing should be done, return 0.

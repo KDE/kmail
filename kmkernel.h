@@ -142,6 +142,10 @@ public:
    * Returns true if the folder is one of the sent-mail folders.
    */
   bool folderIsSentMailFolder( const KMFolder * );
+  /**
+   * Find a folder by ID string in all folder managers
+   */
+  KMFolder* findFolderById( const QString& idString );
 
   KInstance *xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( KInstance *instance ) { mXmlGuiInstance = instance; }

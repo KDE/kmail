@@ -1538,11 +1538,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
-  KMFolder *folder = kmkernel->folderMgr()->findIdString( idString );
-  if ( !folder )
-    folder = kmkernel->imapFolderMgr()->findIdString( idString );
-  if ( !folder )
-    folder = kmkernel->dimapFolderMgr()->findIdString( idString );
+  KMFolder *folder = kmkernel->findFolderById( idString );
   if ( folder )
     mFcc->setFolder( idString );
   else

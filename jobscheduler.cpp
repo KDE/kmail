@@ -86,8 +86,13 @@ void JobScheduler::notifyOpeningFolder( KMFolder* folder )
       kdDebug(5006) << "JobScheduler: got the opening-notification for " << folder->label() << " as expected." << endl;
 #endif
       mIgnoreOpenNotify = false;
-    } else
-      interruptCurrentTask();
+    } else {
+      // Jobs scheduled from here should always be cancellable.
+      // One exception though, is when ExpireJob does its final KMMoveCommand.
+      // Then that command shouldn't kill its own parent job just because it opens a folder...
+      if ( mCurrentJob->isCancellable() )
+        interruptCurrentTask();
+    }
   }
 }
 

@@ -1703,11 +1703,7 @@ void KMKernel::slotEmptyTrash()
 
   for (KMAccount* acct = acctMgr()->first(); acct; acct = acctMgr()->next())
   {
-    KMFolder* trash = folderMgr()->findIdString(acct->trash());
-    if (!trash)
-      trash = imapFolderMgr()->findIdString(acct->trash());
-    if (!trash)
-      trash = dimapFolderMgr()->findIdString(acct->trash());
+    KMFolder* trash = findFolderById(acct->trash());
     if (trash)
     {
       trash->expunge();
@@ -1808,6 +1804,18 @@ void KMKernel::expireAllFoldersNow() // the GUI one
   the_folderMgr->expireAllFolders( true /*immediate*/ );
   the_imapFolderMgr->expireAllFolders( true /*immediate*/ );
   the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
+}
+
+KMFolder* KMKernel::findFolderById( const QString& idString )
+{
+  KMFolder * folder = the_folderMgr->findIdString( idString );
+  if ( !folder )
+    folder = the_imapFolderMgr->findIdString( idString );
+  if ( !folder )
+    folder = the_dimapFolderMgr->findIdString( idString );
+  if ( !folder )
+    folder = the_searchFolderMgr->findIdString( idString );
+  return folder;
 }
 
 #include "kmkernel.moc"

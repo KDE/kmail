@@ -124,9 +124,7 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
 
 void KMFolderComboBox::setFolder( const QString &idString )
 {
-  KMFolder *folder = kmkernel->folderMgr()->findIdString( idString );
-  if (!folder) folder = kmkernel->imapFolderMgr()->findIdString( idString );
-  if (!folder) folder = kmkernel->dimapFolderMgr()->findIdString( idString );
+  KMFolder * folder = kmkernel->findFolderById( idString );
   if (!folder && !idString.isEmpty())
   {
      if (mSpecialIdx >= 0)

@@ -51,7 +51,7 @@ private:
 
 private:
   QTimer mTimer;
-  QPtrList<KMMessage> mRemovedMsgs;
+  QPtrList<KMMsgBase> mRemovedMsgs;
   int mCurrentIndex;
   int mMaxUnreadTime;
   int mMaxReadTime;
