@@ -234,7 +234,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   else if (processResult == 1)
   {
     if( type() == "cachedimap" )
-      parent->addMsgInternal( aMsg, false );
+      ; // already done by caller: parent->addMsgInternal( aMsg, false );
     else {
       // TODO: Perhaps it would be best, if this if was handled by a virtual
       // method, so the if( !dimap ) above could die?
