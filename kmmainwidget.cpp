@@ -178,9 +178,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
-  if ( kmkernel->firstInstance() )
-    QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
-
   toggleSystemTray();
 
   // must be the last line of the constructor:
@@ -3076,11 +3073,6 @@ void KMMainWidget::slotShowStartupFolder()
   if ( mFolderTree ) {
     mFolderTree->showFolder( startup );
   }
-}
-
-void KMMainWidget::slotShowTipOnStart()
-{
-  KTipDialog::showTip( this );
 }
 
 void KMMainWidget::slotShowTip()
