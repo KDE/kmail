@@ -75,6 +75,8 @@
 
 using namespace KMail;
 
+static QString inCaseWeDecideToRenameTheTab( I18N_NOOP( "Permissions (ACL)" ) );
+
 //-----------------------------------------------------------------------------
 KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 			       KMFolderTree* aParent, const QString& aCap,
