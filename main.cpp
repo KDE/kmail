@@ -210,9 +210,10 @@ static void checkConfigUpdates() {
 #if KDE_VERSION >= 306
   KConfig * config = kapp->config();
   const QString updateFile = QString::fromLatin1("kmail.upd");
-  QStringList updates() << "9"
-			<< "3.1-update-identities"
-			<< "3.1-use-identity-uoids";
+  QStringList updates;
+  updates << "9"
+	  << "3.1-update-identities"
+	  << "3.1-use-identity-uoids";
   for ( QStringList::const_iterator it = updates.begin() ; it != updates.end() ; ++it )
     config->checkUpdate( *it, updateFile );
 #endif
