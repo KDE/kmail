@@ -490,6 +490,11 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotUndoEvent()), KStdAccel::undo());
   menu->insertSeparator();
 #endif //BROKEN
+  menu->insertItem(i18n("Undo"),mEditor,
+		   SLOT(undo()), KStdAccel::undo());
+  menu->insertItem(i18n("Redo"),mEditor,
+		   SLOT(redo()), KStdAccel::redo());
+  menu->insertSeparator();
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
   menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
   menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
@@ -685,11 +690,13 @@ void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
   mEditor = new KMEdit(kapp, &mMainWidget, this);
-  //  QMultiLineEdit *mEditor = new QMultiLineEdit(&mMainWidget);
   mEditor->toggleModified(FALSE);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
-  mEditor->setWordWrap( QMultiLineEdit::FixedColumnWrap );
+  mEditor->setWordWrap( false );
+  mEditor->setFillColumnMode(0,FALSE);
+
+  mEditor->QMultiLineEdit::setWordWrap( QMultiLineEdit::FixedColumnWrap );
   mEditor->setWrapColumnOrWidth(80);
 
   /*
@@ -708,11 +715,13 @@ void KMComposeWin::setupEditor(void)
   mEditor->setBackgroundColor(backColor);
 
   menu = new QPopupMenu();
-#ifdef BROKEN
-  menu->insertItem(i18n("Undo"),this,
-		   SLOT(slotUndoEvent()), KStdAccel::undo());
+  //#ifdef BROKEN
+  menu->insertItem(i18n("Undo"),mEditor,
+		   SLOT(undo()), KStdAccel::undo());
+  menu->insertItem(i18n("Redo"),mEditor,
+		   SLOT(redo()), KStdAccel::redo());
   menu->insertSeparator();
-#endif //BROKEN
+  //#endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
   menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
   menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
