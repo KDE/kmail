@@ -3889,8 +3889,8 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         KURL::List urlList;
         if( KURLDrag::decode( e, urlList ) ) {
             KPopupMenu p;
-            p.insertItem( i18n("Add As Text"), 0 );
-            p.insertItem( i18n("Add As Attachment"), 1 );
+            p.insertItem( i18n("Add as Text"), 0 );
+            p.insertItem( i18n("Add as Attachment"), 1 );
             int id = p.exec( mapToGlobal( e->pos() ) );
             switch ( id) {
               case 0:

@@ -479,8 +479,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
                            "since it is not known who will go to those events." ) );
 
     mIncidencesForComboBox->insertItem( i18n( "Nobody" ) );
-    mIncidencesForComboBox->insertItem( i18n( "Admins of this folder" ) );
-    mIncidencesForComboBox->insertItem( i18n( "All readers of this folder" ) );
+    mIncidencesForComboBox->insertItem( i18n( "Admins of This Folder" ) );
+    mIncidencesForComboBox->insertItem( i18n( "All Readers of This Folder" ) );
 
     //connect ( mIncidencesForComboBox, SIGNAL ( activated( int ) ),
     //          this, SLOT( slotIncidencesForChanged( int ) ) );

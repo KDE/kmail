@@ -75,8 +75,8 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name,
   mLabelTo->setBuddy( mBtnTo );
   mEditTo->setFocus();
 
-  setButtonGuiItem( User1, KGuiItem( i18n("&Send now"), "mail_send" ) );
-  setButtonGuiItem( User2, KGuiItem( i18n("Send &later"), "queue" ) );
+  setButtonGuiItem( User1, KGuiItem( i18n("&Send Now"), "mail_send" ) );
+  setButtonGuiItem( User2, KGuiItem( i18n("Send &Later"), "queue" ) );
 }
 
 

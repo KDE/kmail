@@ -61,7 +61,7 @@ FolderShortcutDialog::FolderShortcutDialog( KMFolder *folder,
    mFolder( folder ), mMainWidget( mainwidget )
 {
   QVBox *box = makeVBoxMainWidget();
-  QVGroupBox *gb = new QVGroupBox( i18n("Select shortcut for folder"), box );
+  QVGroupBox *gb = new QVGroupBox( i18n("Select Shortcut for Folder"), box );
   QWhatsThis::add( gb, i18n( "<qt>To choose a key or a combination "
                              "of keys which select the current folder, "
                              "click the button below and then press the key(s) "
