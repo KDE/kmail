@@ -5494,6 +5494,10 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
         return TRUE;
       }
 
+      // ignore modifier keys (cf. bug 48841)
+      if ( (k->key() == Key_Shift) || (k->key() == Key_Control) ||
+           (k->key() == Key_Meta) || (k->key() == Key_Alt) )
+        return true;
       if (mTempFile) return TRUE;
       QRegExp repFn("\\%f");
       QString sysLine = mExtEditor;
