@@ -27,7 +27,12 @@ using KMail::HeaderStrategy;
 #include <kdebug.h>
 #include <kconfig.h>
 #include <khtml_part.h>
+#if KDE_IS_VERSION( 3, 1, 92 )
 #include <kuser.h>
+#else
+#include <unistd.h>
+#include <pwd.h>
+#endif
 
 #include <qcursor.h>
 #include <qtextcodec.h>
@@ -48,7 +53,6 @@ using namespace KMime::Types;
 #include <time.h>
 #include <klocale.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
@@ -3817,9 +3821,17 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
   address += QString::fromLocal8Bit( hostnameC );
 
   // try to determine the real name
-  KUser user( loginName );
+#if KDE_IS_VERSION( 3, 1, 92 )
+  const KUser user( loginName );
   if ( user.isValid() ) {
     QString fullName = user.fullName();
+#else
+  if ( const struct passwd * pw = getpwnam( loginName.local8Bit() ) ) {
+    QString fullName = QString::fromLocal8Bit( pw->pw_gecos ).simplifyWhiteSpace();
+    const int first_comma = fullName.find( ',' );
+    if ( first_comma > 0 )
+      fullName.truncate( first_comma );
+#endif
     if ( fullName.find( QRegExp( "[^ 0-9A-Za-z\\x0080-\\xFFFF]" ) ) != -1 )
       address = '"' + fullName.replace( '\\', "\\" ).replace( '"', "\\" )
 	      + "\" <" + address + '>';

@@ -45,7 +45,12 @@ static const char * configKeyDefaultIdentity = "Default Identity";
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#if KDE_IS_VERSION( 3, 1, 92 )
 #include <kuser.h>
+#else
+#include <pwd.h> // for struct pw;
+#include <unistd.h> // for getuid
+#endif
 
 #include <qregexp.h>
 
@@ -369,6 +374,7 @@ KMIdentity & IdentityManager::newFromExisting( const KMIdentity & other,
 }
 
 void IdentityManager::createDefaultIdentity() {
+#if KDE_IS_VERSION( 3, 1, 92 )
   KUser user;
   QString fullName = user.fullName();
 
@@ -380,25 +386,18 @@ void IdentityManager::createDefaultIdentity() {
       emailAddress += '@' + defaultdomain;
     }
     else {
-      /* ### This code is commented out because the guessed email address
-         ### is most likely anyway wrong (because it contains the full
-         ### hostname while most email addresses only contain the domain name).
-         ### Marc wanted to keep this stuff in the code for a future Config
-         ### Wizard.
-      // get hostname to form an educated guess about the possible email
-      // address:
-      char str[256];
-      if ( !gethostname( str, 255 ) )
-        // str need not be NUL-terminated if it has full length:
-        str[255] = 0;
-      else
-        str[0] = 0;
-      emailAddress += '@' + QString::fromLatin1( *str ? str : "localhost" );
-      */
-      // since we can't guess the domain part (see above) we clear the address
       emailAddress = QString::null;
     }
   }
+#else
+  QString fullName, emailAddress;
+  if ( const struct passwd * pw = getpwuid( getuid() ) ) {
+    // extract possible full name from /etc/passwd
+    fullName = QString::fromLocal8Bit( pw->pw_gecos );
+    const int i = fullName.find(',');
+    if ( i > 0 ) fullName.truncate( i );
+  }
+#endif
   mShadowIdentities << KMIdentity( i18n("Default"), fullName, emailAddress );
   mShadowIdentities.last().setIsDefault( true );
   mShadowIdentities.last().setUoid( newUoid() );
