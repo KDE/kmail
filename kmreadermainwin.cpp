@@ -34,7 +34,6 @@
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
   : KMail::SecondaryWindow( name ), mMsg( 0 )
 {
-  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
   mReaderWin->setAutoDelete( true );
