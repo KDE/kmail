@@ -23,6 +23,11 @@ DS: Set color action
 DS: Dock Windows
 DS: Search folders are invalidated on outbox expunging, fix this.
 
+Level 3a: Before the first 3.2 Beta
+MM: Write config upgrade script for
+    - AttachmentStyle -> AttachmentStrategy change
+    - HeaderStyle -> { HeaderStyle, HeaderStrategy } split
+
 Level 4: Needs more planning
 ??: Incremental spell checking
 DS: Full Text Indexing
@@ -61,4 +66,4 @@ DS: Propoganda: Analysis Articles, head-to-head comparisons
 
 Groupware:
 KHZ: Make groupware use a real vCal parser
-??: Implement generic viewer plugin
+MM: Implement generic viewer plugin
