@@ -481,7 +481,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mContentsComboBox->insertItem( i18n( "Notes" ) );
     mContentsComboBox->insertItem( i18n( "Tasks" ) );
     mContentsComboBox->insertItem( i18n( "Journal" ) );
-    mContentsComboBox->setCurrentItem( mDlg->folder()->contentsType() );
+    if ( mDlg->folder() )
+      mContentsComboBox->setCurrentItem( mDlg->folder()->contentsType() );
   } else
     mContentsComboBox = 0;
 
