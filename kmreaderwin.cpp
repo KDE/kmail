@@ -1176,10 +1176,6 @@ void KMReaderWin::slotAtmView()
 {
   QString str, pname;
   KMMessagePart msgPart;
-  // ---Sven's view text, html and image attachments in html widget start ---
-  // Sven commented out
-  //QMultiLineEdit* edt = new QMultiLineEdit;
-  // ---Sven's view text, html and image attachments in html widget end ---
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   pname = msgPart.fileName();
@@ -1194,27 +1190,16 @@ void KMReaderWin::slotAtmView()
   }
 
   kernel->kbp()->busy();
-  // ---Sven's view text, html and image attachments in html widget start ---
-  // ***start commenting out old stuff
-  //  str = QCString(msgPart.bodyDecoded());
-
-  //edt->setCaption(i18n("View Attachment: ") + pname);
-  //edt->insertLine(str);
-  //edt->setReadOnly(TRUE);
-  //edt->show();
-  // *** end commenting out old stuff
   {
-
     KMReaderWin* win = new KMReaderWin; //new reader
-
     if (stricmp(msgPart.typeStr(), "text")==0)
     {
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><body>");
       QString str = msgPart.bodyDecoded();
-      if (htmlMail() && (stricmp(msgPart.subtypeStr(), "html")==0))
+      if (htmlMail() && (stricmp(msgPart.subtypeStr(), "html")==0))  // HTML
         win->mViewer->write(str);
-      else  //plain text
+      else  // plain text
         win->writeBodyStr(str);
       win->mViewer->write("</body></html>");
       win->mViewer->end();
@@ -1223,7 +1208,7 @@ void KMReaderWin::slotAtmView()
     }
     else if (stricmp(msgPart.typeStr(), "image")==0)
     {
-      //image
+      // image
       // Attachment is saved already; this is the file:
       QString linkName = QString("<img src=\"file:%1part%2/%3\" border=0>")
                         .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
@@ -1234,6 +1219,9 @@ void KMReaderWin::slotAtmView()
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
+    } else {
+      kernel->kbp()->idle();
+      KMessageBox::sorry( 0L, i18n("Cannot view attachment. It is not HTML, image or text.") );
     }
   }
   // ---Sven's view text, html and image attachments in html widget end ---
