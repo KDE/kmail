@@ -1190,6 +1190,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
 {
   KMMsgBase* msgBase = NULL;
   KMHeaderItem* item;
+  bool foundUnreadMessage = false;
 
   if (!mFolder) return -1;
   if (!(mFolder->count()) > 0) return -1;
@@ -1211,6 +1212,8 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
 
   while (item) {
     msgBase = mFolder->getMsgBase(item->msgId());
+    if (msgBase && msgBase->isUnread())
+      foundUnreadMessage = true;
     if (!onlyNew && msgBase && msgBase->isUnread()) break;
     if (onlyNew && msgBase && msgBase->isNew()) break;
     if (aDirNext)
@@ -1223,8 +1226,13 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
 
   
   // A cludge to try to keep the number of unread messages in sync
-  if (!onlyNew)
+  int unread = mFolder->countUnread();
+  if (((unread == 0) && foundUnreadMessage) ||
+      ((unread > 0) && !foundUnreadMessage)) {
+    //  if (mFolder.countUnread() > 0!onlyNew)
     mFolder->correctUnreadMsgsCount();
+    debug( "count corrupted" );
+  }
   return -1;
 }
 
@@ -1357,7 +1365,7 @@ void KMHeaders::updateMessageList(void)
   if (autoUpd) repaint();
   // WABA: The following line is somehow necassery
   // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+) 
-  // highlightMessage(currentItem()); 
+  //  highlightMessage(currentItem());
 }
 
 
