@@ -48,6 +48,9 @@ foreach my $accountGroup (@accountGroups) {
   $nameToType{$name} = $configFile{$accountGroup}{'Type'};
   # create the id entries
   print "${accountGroup}\nId=$id\n";
+}
+
+foreach my $accountGroup (@accountGroups) {
   # rename the trash
   my $trash = $configFile{$accountGroup}{'trash'};
   if (&replaceID($trash)) {
@@ -72,20 +75,23 @@ foreach my $folderGroup ( @folderGroups )
   # extract the accountname
   my (@parts) = split (/\[Folder-/,$folderGroup);
   my $account = substr($parts[1], 0, -1);
-  if ($account =~ /\.directory/)
+  if ($account =~ /^[^\/]*\.directory\//)
   {
     # .account.directory
-    my (@dirparts) = split (/\./,$account);
-    $account = $dirparts[1];
+    my (@dirparts) = split (/\.directory\//,$account);
+    $account = substr( $dirparts[0], 1 );
     # this is no root folder
     $isRootFolder = 0;
   }
   # delete the old group and write the new entry
-  if ( exists( $nameToID{$account} ) ) 
+  my $accountDecoded = QFileDecode( $account );
+  if ( exists( $nameToID{$accountDecoded} ) )
   {
+    my $id = $nameToID{$accountDecoded};
     print "# DELETEGROUP $folderGroup\n";
     my $folderGroupNew = $folderGroup;
-    $folderGroupNew =~ s/$account/$nameToID{$account}/;
+    my $pattern = quotemeta( $account );
+    $folderGroupNew =~ s/$pattern/$id/;
     # new account section
     print "$folderGroupNew\n";
     # print all original keys
@@ -96,20 +102,31 @@ foreach my $folderGroup ( @folderGroups )
     if ($isRootFolder) {
       # new label and id of this rootfolder
       print "SystemLabel=$account\n";
-      print "Id=".$nameToID{$account}."\n";
-    }
+      print "Id=".$id."\n";
 
-    # move the directory
-    my $subdir;
-    if ($nameToType{$account} eq "imap") {
-      $subdir = "imap";
-    } elsif ($nameToType{$account} eq "cachedimap") {
-      $subdir = "dimap";
+      # move the directory
+      my $subdir;
+      if ($nameToType{$accountDecoded} eq "imap") {
+        $subdir = "imap";
+      } elsif ($nameToType{$accountDecoded} eq "cachedimap") {
+        $subdir = "dimap";
+      }
+      my $oldname = QFileEncode( "$basedir/$subdir/\.$account\.directory" );
+      my $systemcall = "mv '$oldname' '$basedir/$subdir/\.".$id."\.directory'";
+      system($systemcall);
+
+      $oldname = QFileEncode( "$basedir/$subdir/$account" );
+      $systemcall = "mv '$oldname' '$basedir/$subdir/".$id."'";
+      system($systemcall);
+
+      $oldname = QFileEncode( "$basedir/$subdir/\.$account\.index" );
+      $systemcall = "mv '$oldname' '$basedir/$subdir/\.".$id."\.index'";
+      system($systemcall);
+
+      $oldname = QFileEncode( "$basedir/$subdir/\.$account\.index.ids" );
+      $systemcall = "mv '$oldname' '$basedir/$subdir/\.".$id."\.index.ids'";
+      system($systemcall);
     }
-    my $systemcall = "mv $basedir/$subdir/\.$account\.directory $basedir/$subdir/\.".$nameToID{$account}."\.directory";
-    system($systemcall);
-    $systemcall = "mv $basedir/$subdir/$account $basedir/$subdir/".$nameToID{$account};
-    system($systemcall);
   }
 }
 
@@ -182,12 +199,38 @@ sub replaceID
 
   if ($input && $input =~ /\.directory/)
   {
-    my (@dirparts) = split (/\./,$input);
-    my $account = $dirparts[1];
-    if ( exists( $nameToID{$account} ) ) 
+    my (@dirparts) = split (/\.directory\//,$input);
+    my $account = substr( $dirparts[0], 1 );
+    my $accountDecoded = QFileDecode( $account );
+    if ( exists( $nameToID{$accountDecoded} ) )
     {
-      $input =~ s/$account/$nameToID{$account}/;
+      my $pattern = quotemeta( $account );
+      $input =~ s/$pattern/$nameToID{$accountDecoded}/;
       return $input;
     }
   }
+}
+
+## emulate QFileDecode
+sub QFileDecode
+{
+  my ($input) = @_;
+
+  $input =~ s/%20/ /g;
+  $input =~ s/%40/\@/g;
+  $input =~ s/%25/%/g;  # must be the last one
+
+  return $input;
+}
+
+## emulate QFileEncode
+sub QFileEncode
+{
+  my ($input) = @_;
+
+  $input =~ s/%/%25/g;  # must be the first one
+  $input =~ s/ /%20/g;
+  $input =~ s/\@/%40/g;
+
+  return $input;
 }
