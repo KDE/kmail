@@ -1274,7 +1274,6 @@ void KMMoveCommand::execute()
     KMFolder *srcFolder = msgBase->parent();
     if (srcFolder == mDestFolder)
       continue;
-    srcFolder->open();
     bool undo = msgBase->enableUndo();
     int idx = srcFolder->find(msgBase);
     assert(idx != -1);
@@ -1296,7 +1295,6 @@ void KMMoveCommand::execute()
           }
         }
       }
-      srcFolder->close();
     } else {
       // really delete messages that are already in the trash folder
       if (srcFolder->protocol() == "imap") {
