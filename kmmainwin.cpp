@@ -154,13 +154,13 @@ void KMMainWin::readConfig(void)
     (*mHorizPannerSep)[0] = (*mVertPannerSep)[0] = 100;
   (*mHorizPannerSep)[1] = h - (*mHorizPannerSep)[0];
   (*mVertPannerSep)[1] = w - (*mVertPannerSep)[0];
-  mSendOnCheck = config->readBoolEntry("SendOnCheck",false);
 
   mMsgView->readConfig();
   mHeaders->readConfig();
   mFolderTree->readConfig();
 
   config->setGroup("General");
+  mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
   mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
   mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
   mExecOnNew = config->readBoolEntry("exec-on-mail", false);
