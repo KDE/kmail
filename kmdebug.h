@@ -46,4 +46,17 @@ static inline kdbgstream kmFatal( bool cond ) { return kdFatal( cond, kmail_debu
 #define SHOW_TIMER(x)
 #endif
 
+// profiling utilities
+#if !defined( NDEBUG )
+#define CREATE_COUNTER(x) int x ## _cnt=0
+#define RESET_COUNTER(x) x ## _cnt=0
+#define INC_COUNTER(x) x ## _cnt++
+#define SHOW_COUNTER(x) kdDebug(5006) << #x " == " << x ## _cnt << endl
+#else
+#define CREATE_COUNTER(x)
+#define RESET_COUNTER(x)
+#define INC_COUNTER(x)
+#define SHOW_COUNTER(x)
+#endif
+
 #endif // __KMAIL_KMDEBUG_H__
