@@ -13,7 +13,7 @@
 //static QString result;
 
 //-----------------------------------------------------------------------------
-KMMsgInfo::KMMsgInfo(KMFolder* p): 
+KMMsgInfo::KMMsgInfo(KMFolder* p):
   KMMsgInfoInherited(p), mSubject(), mFromStrip(), mToStrip()
 {
 }
@@ -34,6 +34,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
   mToStrip = other.mToStrip.copy();
   mReplyToIdMD5 = other.replyToIdMD5().copy();
   mMsgIdMD5 = other.msgIdMD5().copy();
+  mXMark = other.xmark();
   return *this;
 }
 
@@ -47,6 +48,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
   mToStrip = msg.toStrip().copy();
   mReplyToIdMD5 = msg.replyToIdMD5().copy();
   mMsgIdMD5 = msg.msgIdMD5().copy();
+  mXMark = msg.xmark();
   return *this;
 }
 
@@ -54,7 +56,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 //-----------------------------------------------------------------------------
 void KMMsgInfo::init(const QString& aSubject, const QString& aFrom,
                      const QString& aTo, time_t aDate,
-		     KMMsgStatus aStatus, const QString& aXMark, 
+		     KMMsgStatus aStatus, const QString& aXMark,
 		     const QString& replyToId, const QString& msgId,
 		     unsigned long aFolderOffset, unsigned long aMsgSize)
 {
@@ -120,7 +122,7 @@ const QString KMMsgInfo::msgIdMD5(void) const
 void KMMsgInfo::setSubject(const QString& aSubject)
 {
   mSubject = aSubject.copy();
-  mDirty = TRUE;  
+  mDirty = TRUE;
 }
 
 
@@ -128,7 +130,7 @@ void KMMsgInfo::setSubject(const QString& aSubject)
 void KMMsgInfo::setXMark(const QString& aXMark)
 {
   mXMark = aXMark.copy();
-  mDirty = TRUE;  
+  mDirty = TRUE;
 }
 
 
@@ -154,7 +156,7 @@ void KMMsgInfo::fromIndexString(const QString& str, bool toUtf8)
   char statusCh;
   unsigned long ldate;
 
-  sscanf(str.data(), "%c %9lu %9lu %10lu", &statusCh, 
+  sscanf(str.data(), "%c %9lu %9lu %10lu", &statusCh,
 	 &mFolderOffset, &mMsgSize, &ldate);
 
   mDate    = (time_t)ldate;
