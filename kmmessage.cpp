@@ -1893,7 +1893,9 @@ void KMMessage::setReplyTo(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 QString KMMessage::cc() const
 {
-  return headerField("Cc");
+  // get the combined contents of all Cc headers (as workaround for invalid
+  // messages with multiple Cc headers)
+  return allHeaderFields("Cc");
 }
 
 
@@ -2200,6 +2202,18 @@ QString KMMessage::headerField(const QCString& aName) const
     return QString::null;
 
   return decodeRFC2047String( mMsg->Headers().FieldBody( aName.data() ).AsString().c_str() );
+}
+
+
+QString KMMessage::allHeaderFields(const QCString& aName) const
+{
+  if ( aName.isEmpty() )
+    return QString::null;
+
+  if ( !mMsg->Headers().FindField( aName ) )
+    return QString::null;
+
+  return decodeRFC2047String( mMsg->Headers().AllFieldBodiesAsString( aName.data() ).c_str() );
 }
 
 

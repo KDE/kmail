@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 /* kmmessage.h: Mime Message Class
  *
  */
@@ -62,7 +63,7 @@ public:
   using KMMsgBase::isNew; // dto.
   using KMMsgBase::isOld;
   using KMMsgBase::isWatched;
-  using KMMsgBase::isIgnored; 
+  using KMMsgBase::isIgnored;
   using KMMsgBase::setEncryptionStateChar; // KMAcct*
   using KMMsgBase::setSignatureStateChar; // dto.
 
@@ -418,7 +419,7 @@ public:
 
   /** Is the subject prefixed by Re: or similar? */
   bool subjectIsPrefixed() const;
-  
+
   /** Get or set the 'Message-Id' header field */
   QString msgId() const;
   void setMsgId(const QString& aStr);
@@ -440,6 +441,9 @@ public:
   /** Get or set header field with given name */
   QString headerField(const QCString& name) const;
   void setHeaderField(const QCString& name, const QString& value);
+
+  /** Get the comma separated contents of all header fields with given name */
+  QString allHeaderFields(const QCString& aName) const;
 
   /** Get a raw header field */
   QCString rawHeaderField( const QCString & name ) const;
