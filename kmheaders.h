@@ -85,6 +85,7 @@ public:
   virtual void forwardMsg();
   virtual void bounceMsg();
   virtual void replyToMsg(QString selection=QString::null);
+  virtual void noQuoteReplyToMsg();
   virtual void redirectMsg();
   virtual void replyAllToMsg(QString selection=QString::null);
   virtual void replyListToMsg(QString selection=QString::null);

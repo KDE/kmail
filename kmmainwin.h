@@ -75,10 +75,11 @@ public:
 					QPopupMenu *menu);
 
   static void cleanup();
-  KAction *replyAction, *replyAllAction, *replyListAction,
+  KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
       *forwardAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *newAction,*unreadAction,*readAction,*repliedAction,*queueAction,*sentAction;
+    *newAction,*unreadAction,*readAction,*repliedAction,*queueAction,*sentAction,
+    *printAction;
 
 public slots:
   virtual void show();
@@ -123,6 +124,7 @@ protected slots:
   void slotOverrideHtml();
   void slotOverrideThread();
   void slotReplyToMsg();
+  void slotNoQuoteReplyToMsg();
   void slotReplyAllToMsg();
   void slotReplyListToMsg();
   void slotForwardMsg();

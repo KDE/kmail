@@ -1204,6 +1204,23 @@ void KMHeaders::redirectMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::noQuoteReplyToMsg()
+{
+  KMComposeWin *win;
+  KMMessage *msg = currentMsg();
+
+  if (!msg)
+    return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE),
+			 msg->headerField( "X-KMail-Identity" ));
+  win->setCharset(msg->codec()->name(), TRUE);
+  win->show();
+  kernel->kbp()->idle();
+}
+
+//-----------------------------------------------------------------------------
 void KMHeaders::replyToMsg (QString selection)
 {
   KMComposeWin *win;

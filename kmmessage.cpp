@@ -631,7 +631,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString selection)
+KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString selection, bool noQuote)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
@@ -744,6 +744,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
   if (replyToAll || !mailingListStr.isEmpty()) replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
 
+  if (!noQuote)
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection));  
 
   QStringList::Iterator it;
