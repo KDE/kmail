@@ -5207,8 +5207,8 @@ void KMComposeWin::slotSpellcheckConfig()
   qtd.setCancelButton ();
 
   kwin.setIcons (qtd.winId(), kapp->icon(), kapp->miniIcon());
-  qtd.setCancelButton(i18n("&Cancel"));
-  qtd.setOkButton(i18n("&OK"));
+  qtd.setCancelButton(KStdGuiItem::cancel().text());
+  qtd.setOkButton(KStdGuiItem::ok().text());
 
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();
