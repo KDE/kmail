@@ -3538,11 +3538,13 @@ void KMReaderWin::slotUrlClicked()
 {
   KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
   uint identity = 0;
-  if (message() && message()->parent())
+  if (mainWidget && (message() && message()->parent()))
+  {
     identity = message()->parent()->identity();
-  KMCommand *command = new KMUrlClickedCommand( mUrlClicked, identity, this,
+    KMCommand *command = new KMUrlClickedCommand( mUrlClicked, identity, this,
 						false, mainWidget );
-  command->start();
+    command->start();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3580,8 +3582,11 @@ void KMReaderWin::slotMailtoOpenAddrBook()
 void KMReaderWin::slotUrlCopy()
 {
   KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
-  KMCommand *command = new KMUrlCopyCommand( mUrlClicked, mainWidget );
-  command->start();
+  if (mainWidget)
+  {
+    KMCommand *command = new KMUrlCopyCommand( mUrlClicked, mainWidget );
+    command->start();
+  }
 }
 
 //-----------------------------------------------------------------------------

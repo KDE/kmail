@@ -535,6 +535,8 @@ void IdentityPage::slotIdentitySelectionChanged( QListViewItem * i ) {
 
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
+  if ( !item ) return;
+
   mRemoveButton->setEnabled( item && mIdentityList->childCount() > 1 );
   mModifyButton->setEnabled( item );
   mRenameButton->setEnabled( item );
@@ -2609,8 +2611,11 @@ void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
 
 void ComposerPage::PhrasesTab::slotNewLanguage()
 {
-  NewLanguageDialog dialog( mLanguageList,
-			    dynamic_cast<QWidget*>(parent()), "New", true );
+  QWidget* w = dynamic_cast<QWidget*>(parent());
+
+  if ( !w ) return;
+
+  NewLanguageDialog dialog( mLanguageList, w , "New", true );
   int result = dialog.exec();
   if ( result == QDialog::Accepted ) slotAddNewLanguage( dialog.language() );
 }

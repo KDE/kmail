@@ -951,7 +951,8 @@ FolderJob*
 KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
                            KMFolder *folder ) const
 {
-  ImapJob *job = new ImapJob( msg, jt, dynamic_cast<KMFolderImap*>(folder) );
+  KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
+  ImapJob *job = new ImapJob( msg, jt, kmfi );
   return job;
 }
 
@@ -960,7 +961,8 @@ FolderJob*
 KMFolderImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                            FolderJob::JobType jt, KMFolder *folder ) const
 {
-  ImapJob *job = new ImapJob( msgList, sets, jt, dynamic_cast<KMFolderImap*>(folder) );
+  KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
+  ImapJob *job = new ImapJob( msgList, sets, jt, kmfi );
   return job;
 }
 

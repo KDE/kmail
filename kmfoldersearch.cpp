@@ -165,7 +165,10 @@ void KMSearch::start()
 	    while ((node = it.current())) {
 		++it;
 		if (!node->isDir())
-		    folders.append(dynamic_cast<KMFolder*>(node));
+		{
+		    KMFolder* kmf = dynamic_cast<KMFolder*>(node)
+			if (kmf)
+		    	folders.append(kmf);
 	    }
 	}
     }

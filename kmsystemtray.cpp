@@ -344,7 +344,10 @@ KMMainWidget * KMSystemTray::getKMMainWidget()
     ++it;
     QObjectList *l2 = wid->topLevelWidget()->queryList("KMMainWidget");
     if (l2->first())
-      return dynamic_cast<KMMainWidget *>(l2->first());
+	{
+	  KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>(l2->first());
+	  if ( kmmw )
+      	return kmmw;
   }
   return 0;
 }
