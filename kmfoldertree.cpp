@@ -72,7 +72,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
   setPixmap( 0, normalIcon() );
 }
 
-KMFolderTreeItem::~KMFolderTreeItem() 
+KMFolderTreeItem::~KMFolderTreeItem()
 {
 }
 
@@ -242,13 +242,9 @@ void KMFolderTreeItem::properties()
   if ( !mFolder )
     return;
 
-  KMFolderDialog *props;
-
-  props = new KMFolderDialog( mFolder, mFolder->parent(), static_cast<KMFolderTree *>( listView() ),
-                              i18n("Properties of Folder %1").arg( mFolder->label() ) );
-  props->exec();
-  //Nothing here the above exec() may actually delete this KMFolderTreeItem
-  return;
+  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  tree->mainWidget()->modifyFolder( this );
+  //Nothing here the above may actually delete this KMFolderTreeItem
 }
 
 //-----------------------------------------------------------------------------
@@ -257,7 +253,7 @@ void KMFolderTreeItem::assignShortcut()
   if ( !mFolder )
     return;
 
-  KMail::FolderShortcutDialog *shorty = 
+  KMail::FolderShortcutDialog *shorty =
     new KMail::FolderShortcutDialog( mFolder,
               static_cast<KMFolderTree *>( listView() )->mainWidget(),
               listView() );
@@ -460,7 +456,7 @@ void KMFolderTree::reload(bool openFolders)
     return;
   }
   mReloading = true;
-  
+
   int top = contentsY();
   mLastItem = 0;
   // invalidate selected drop item
@@ -468,7 +464,7 @@ void KMFolderTree::reload(bool openFolders)
   // remember last
   KMFolder* last = currentFolder();
   KMFolder* selected = 0;
-  KMFolder* oldCurrentFolder = 
+  KMFolder* oldCurrentFolder =
     ( oldCurrent ? static_cast<KMFolderTreeItem*>(oldCurrent)->folder(): 0 );
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
@@ -561,18 +557,18 @@ void KMFolderTree::reload(bool openFolders)
   // if current and selected folder did not change set it again
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
   {
-    if ( last && 
+    if ( last &&
          static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
     {
       mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
       setCurrentItem( it.current() );
     }
-    if ( selected && 
+    if ( selected &&
          static_cast<KMFolderTreeItem*>( it.current() )->folder() == selected )
     {
       setSelected( it.current(), true );
     }
-    if ( oldCurrentFolder && 
+    if ( oldCurrentFolder &&
          static_cast<KMFolderTreeItem*>( it.current() )->folder() == oldCurrentFolder )
     {
       oldCurrent = it.current();
@@ -1627,7 +1623,7 @@ void KMFolderTree::showFolder( KMFolder* folder )
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver, 
+void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
     KMMenuToFolder *aMenuToFolder, QPopupMenu *menu, QListViewItem *item )
 {
   while ( menu->count() )
@@ -1654,7 +1650,7 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
   if ( !item )
     item = firstChild();
 
-  while ( item ) 
+  while ( item )
   {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( item );
     if ( fti->protocol() == KFolderTreeItem::Search )
@@ -1688,7 +1684,7 @@ void KMFolderTree::folderToPopupMenu( bool move, QObject *receiver,
       if ( fti->folder() )
         aMenuToFolder->insert( menuId, fti->folder() );
       bool enabled = (fti->folder() ? true : false);
-      if ( fti->folder() && 
+      if ( fti->folder() &&
            ( fti->folder()->isReadOnly() || fti->folder()->noContent() ) )
         enabled = false;
       menu->setItemEnabled( menuId, enabled );

@@ -146,6 +146,8 @@ public:
   bool shortcutIsValid( const KShortcut& ) const;
 
 
+  void modifyFolder( KMFolderTreeItem* folderItem );
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash
