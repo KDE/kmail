@@ -63,7 +63,6 @@ public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
 
   virtual void intCheckMail(int, bool _interactive = true);
-  virtual void processNextAccount(bool newMail);
   virtual void processNextCheck(bool _newMail);
 
 signals:

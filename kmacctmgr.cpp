@@ -248,7 +248,6 @@ bool KMAcctMgr::remove(KMAccount* acct)
 void KMAcctMgr::checkMail(bool _interactive)
 {
   newMailArrived = false;
-  interactive = _interactive;
 
   if (checking)
     return;
@@ -261,54 +260,14 @@ void KMAcctMgr::checkMail(bool _interactive)
     return;
   }
 
-  checking = true;
-
-  kernel->serverReady (false);
-
   mAccountIt->toFirst();
-  lastAccountChecked = 0;
-  processNextAccount(false);
-}
-
-void KMAcctMgr::processNextAccount(bool _newMail)
-{
-  KMAccount *cur = mAccountIt->current();
-  newMailArrived |= _newMail;
-  if (lastAccountChecked)
-    disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
-		this, SLOT(processNextAccount(bool)) );
-
-  if (!cur) {
-    kernel->filterMgr()->cleanup();
-    kdDebug(5006) << "checked mail, server ready" << endl;
-    kernel->serverReady (true);
-    checking = false;
-    emit checkedMail(newMailArrived, TRUE);
-    return;
+  while (TRUE)
+  {
+    if (!mAccountIt->current()->checkExclude())
+      singleCheckMail(mAccountIt->current(), _interactive);
+    if (mAccountIt->atLast()) break;
+    ++(*mAccountIt);
   }
-
-  connect( cur, SIGNAL(finishedCheck(bool)),
-	   this, SLOT(processNextAccount(bool)) );
-
-  lastAccountChecked = cur;
-  ++(*mAccountIt);
-
-  if (cur->type() != "imap" && cur->folder() == 0)
-    {
-      QString tmp;
-      tmp = i18n("Account %1 has no mailbox defined!\n"
-		 "Mail checking aborted\n"
-		 "Check your account settings!")
-	.arg(cur->name());
-      KMessageBox::information(0,tmp);
-      processNextAccount(false);
-    }
-  else   if (cur->checkExclude())
-    {
-      // Account excluded from mail check.
-      processNextAccount(false);
-    }
-  else cur->processNewMail(interactive);
 }
 
 
@@ -330,7 +289,6 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   KMAccount* cur;
   newMailArrived = false;
-  interactive = _interactive;
 
   if (checking)
     return;
@@ -364,18 +322,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
     return;
   }
 
-  checking = true;
-
-  kdDebug(5006) << "checking mail, server busy" << endl;
-  kernel->serverReady (false);
-
-  mAccountIt->toLast();
-  ++(*mAccountIt);
-
-  lastAccountChecked = cur;
-  connect( cur, SIGNAL(finishedCheck(bool)),
-	   this, SLOT(processNextAccount(bool)) );
-  cur->processNewMail(interactive);
+  singleCheckMail(cur, _interactive);
 }
 
 
