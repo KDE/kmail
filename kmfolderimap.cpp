@@ -719,6 +719,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     mAccount->displayProgress();
     return;
   }
+  quiet(true);
   if (startUid.isEmpty())
   {
     url.setPath(imapPath() + ";SECTION=UID FLAGS");
@@ -799,6 +800,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
+    quiet(false);
     mContentState = imapFinished;
     emit folderComplete(this, TRUE);
     mAccount->removeJob(it);
@@ -818,6 +820,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
     if (!mAccount->makeConnection())
     {
+      quiet(false);
       emit folderComplete(this, FALSE);
       return;
     }
@@ -1039,6 +1042,7 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else if (lastSet) mContentState = imapFinished;
+  if (lastSet) quiet(false);
   mAccount->removeJob(it);
   if (!job->error() && lastSet)
       emit folderComplete(this, TRUE);

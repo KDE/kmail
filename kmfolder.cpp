@@ -32,6 +32,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   KMFolderNode(aParent, aName)
 {
   mOpenCount      = 0;
+  mQuiet	  = 0;
   mChanged        = FALSE;
   mAutoCreateIndex= TRUE;
   mIsSystemFolder = FALSE;
@@ -224,6 +225,23 @@ void KMFolder::markUnreadAsRead()
 }
 
 //-----------------------------------------------------------------------------
+void KMFolder::quiet(bool beQuiet)
+{
+  if (beQuiet)
+    mQuiet++;
+  else {
+    mQuiet--;
+    if (mQuiet <= 0)
+    {
+      mQuiet = 0;
+      if (mChanged)
+       emit changed();
+      mChanged = FALSE;
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 
 // Needed to use QSortedList in reduceSize()
 
@@ -303,7 +321,11 @@ void KMFolder::expireOldMessages() {
 void KMFolder::emitMsgAddedSignals(int idx)
 {
   Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
-  emit msgAdded(idx);
+  if (!mQuiet) {
+    emit msgAdded(idx);
+  } else {
+    mChanged=true;
+  }
   emit msgAdded(this, serNum);
 }
 
