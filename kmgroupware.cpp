@@ -886,7 +886,7 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   ICalFormat format;
   format.fromString(&cl, vCal);
   // make a shallow copy of the event list
-  QPtrList<Event> eventList = cl.events();
+  Event::List eventList = cl.events();
   // the events will be deleted automatically when cl is destroyed
   eventList.setAutoDelete(false);
 
@@ -900,20 +900,18 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   QString sDtStart = event->dtStartTimeStr();
   QString sDescr = event->description().simplifyWhiteSpace();
   QString sMethod; // = event->method(); //###TODO actually the scheduler needs to do that
-  QPtrList<Attendee> attendees = event->attendees();
+  Attendee::List attendees = event->attendees();
   QString sAttendee;
 
   // FIXME: This is a temporary workaround to get the method
   sMethod = "METHOD";
   vPartMicroParser( vCal.utf8(), sMethod );
 
-  QPtrListIterator<Attendee> it(attendees);
-
-  while (it.current())
-  {
+  Attendee::List::ConstIterator it;
+  for( it = attendees.begin(); it != attendees.end(); ++it ) {
     sAttendee += (*it)->name();
-    if (!it.atLast()) sAttendee += ",";
-    ++it;
+    Attendee::List::ConstIterator it2 = it;
+    if ( ++it2 == attendees.end() ) sAttendee += ",";
   }
 
   QString sSummary = event->summary();
