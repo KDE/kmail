@@ -2035,8 +2035,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   mDateDisplay->layout()->setSpacing( KDialog::spacingHint() );
 
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ ) {
-    QString buttonLabel = i18n(dateDisplayConfig[i].displayName)
-      .arg( DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
+    QString buttonLabel = i18n(dateDisplayConfig[i].displayName);
+    if ( buttonLabel.contains("%1") )
+      buttonLabel = buttonLabel.arg( DateFormatter::formatCurrentDate( dateDisplayConfig[i].dateDisplay ) );
     radio = new QRadioButton( buttonLabel, mDateDisplay );
     mDateDisplay->insert( radio, i );
     if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
