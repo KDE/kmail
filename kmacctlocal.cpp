@@ -46,7 +46,7 @@ void KMAcctLocal::init(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctLocal::processNewMail(KMIOStatus *)
+bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 {
   KMFolder mailFolder(NULL, location());
   long num = 0;
@@ -58,6 +58,8 @@ bool KMAcctLocal::processNewMail(KMIOStatus *)
 
   printf("processNewMail: %s\n", (const char*)location());
 
+  statusWdg->prepareTransmission(location(), KMIOStatus::RETRIEVE);
+  app->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);
   rc = mailFolder.open();
   if (rc)
@@ -74,9 +76,13 @@ bool KMAcctLocal::processNewMail(KMIOStatus *)
 
   for (i=0; i<num; i++)
   {
+    //if(statusWdg->abortRequested())
+    //break;
+    statusWdg->updateProgressBar(i,num);
     debug("processing message %ld", i);
     msg = mailFolder.take(0);
     if (msg) processNewMsg(msg);
+    app->processEvents();
   }
   debug("done, closing folders");
 
@@ -88,6 +94,7 @@ bool KMAcctLocal::processNewMail(KMIOStatus *)
   mailFolder.close();
   mFolder->close();
   mFolder->quiet(FALSE);
+  statusWdg->transmissionCompleted();
 
   return (num > 0);
 }

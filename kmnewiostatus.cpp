@@ -49,8 +49,14 @@ KMIOStatus::task KMIOStatus::Task() {
 }
 
 
+void KMIOStatus::prepareTransmission(QString,task) {
+  
+  
+}
+
 void KMIOStatus::transmissionCompleted() {
 
+ 
 }
 
 KMIOStatus::~KMIOStatus() {

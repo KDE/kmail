@@ -43,6 +43,9 @@ class KMIOStatus : public QWidget
   /** Get widget`s task **/
   task Task();
 
+  /** Prepare transmission **/
+  virtual void prepareTransmission(QString host, task t);
+
   /** Tell widget that the tranmission has been completed **/
   virtual void transmissionCompleted();
 

@@ -103,7 +103,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   KMMessage* msg;
   gotMsgs = FALSE;
 
-  wid->setHost(host());
+  wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
 
   // is everything specified ?
 
@@ -196,6 +196,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 #else
   id = 1;
 #endif
+  // workaround but still is no good. If msgs are too big in size
+  // we will get a timeout.
   client.SetReceiveTimeout(40);
 	
   while (id <= num)
@@ -236,6 +238,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     gotMsgs = TRUE;
     id++;
   }
+  wid->transmissionCompleted();
   client.Quit();
   return gotMsgs;
 }

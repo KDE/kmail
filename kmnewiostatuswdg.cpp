@@ -1,4 +1,5 @@
 #include <iostream.h>
+#include <kapp.h>
 #include "kmnewiostatuswdg.h"
 #include "kmnewiostatuswdg.moc"
 
@@ -22,8 +23,7 @@ KMIOStatusWdg::KMIOStatusWdg(QWidget *parent, const char *name,
   connect(abortBt,SIGNAL(clicked()),this,SLOT(abortPressed()));
 
   msgLbl = new QLabel(this);
-  msgLbl->setGeometry(45,15,200,25);
-  msgLbl->setText("Preparing transmission...");
+  msgLbl->setGeometry(43,15,200,25);
   setMaximumSize(270,140);
   setMinimumSize(270,140);
 
@@ -34,19 +34,26 @@ KMIOStatusWdg::KMIOStatusWdg(QWidget *parent, const char *name,
 void KMIOStatusWdg::update() {
 
   if(Task() == SEND)
-    setCaption("Sending messages to " + host());
+    setCaption(i18n("Sending messages to ") + host());
   else 
     if(Task() == RETRIEVE)
-      setCaption("Retrieving messages from " + host());
-  
+      setCaption(i18n("Retrieving messages from ") + host());
+ 
   QWidget::update();
 
 }
 
+void KMIOStatusWdg::prepareTransmission(QString host, task _t) {
+
+  setHost(host);
+  setTask(_t);
+  msgLbl->setText(i18n("Preparing transmission..."));
+
+}
 
 void KMIOStatusWdg::transmissionCompleted() {
 
-  msgLbl->setText("Transmission completed...");
+  msgLbl->setText(i18n("Transmission completed..."));
 
 }
 
@@ -71,6 +78,7 @@ void KMIOStatusWdg::updateProgressBar(int index ,int of) {
       tmp.sprintf("Sending message %i of %i",index,of);
 
   msgLbl->setText(tmp);
+  msgLbl->resize(msgLbl->sizeHint());
   progressBar->setValue((int)value);
   
 }
@@ -80,7 +88,7 @@ void KMIOStatusWdg::updateProgressBar(int index ,int of) {
 void KMIOStatusWdg::abortPressed() {
 
   cout << "Abort requested...\n";
-  msgLbl->setText("Aborting transmission...\n");
+  msgLbl->setText(i18n("Aborting transmission...\n"));
   abortPressedBool = true;
   emit abort();
 

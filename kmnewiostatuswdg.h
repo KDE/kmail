@@ -28,6 +28,9 @@ class KMIOStatusWdg : public KMIOStatus
     number of all messages **/
   void updateProgressBar(int index, int messages );
 
+  /** Prepare transmission **/
+  void prepareTransmission(QString host, task t);
+
   /** Tell widget that the tranmission has been completed **/
   void transmissionCompleted();
 
