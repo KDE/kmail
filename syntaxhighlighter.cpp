@@ -152,17 +152,7 @@ void SpellChecker::flushCurrentWord()
 	currentWord.truncate( currentWord.length() - 1 );
 
     if ( !currentWord.isEmpty() ) {
-	bool isPlainWord = TRUE;
-	for ( int i = 0; i < (int) currentWord.length(); i++ ) {
-	    QChar ch = currentWord[i];
-	    if ( ch.upper() == ch ) {
-		isPlainWord = FALSE;
-		break;
-	    }
-	}
-
-	if ( isPlainWord && currentWord.length() > 2 &&
-	     isMisspelled(currentWord) )
+	if ( isMisspelled(currentWord) )
             setFormat( currentPos, currentWord.length(), mColor );
     }
     currentWord = "";
