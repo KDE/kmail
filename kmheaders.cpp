@@ -78,30 +78,23 @@ class KMHeaderItem : public QListViewItem
 {
 
 public:
-  KMFolder *mFolder;
   int mMsgId;
   QColor *mColor;
-  QString mSortDate, mSortArrival;
-  KMPaintInfo *mPaintInfo;
 
   // Constuction a new list view item with the given colors and pixmap
-  KMHeaderItem( QListView* parent, KMFolder* folder, int msgId,
-		KMPaintInfo *aPaintInfo )
+    KMHeaderItem( QListView* parent, int msgId )
     : QListViewItem( parent ),
-      mFolder( folder ),
       mMsgId( msgId ),
-      mPaintInfo( aPaintInfo )
+      mColor(NULL)
   {
     irefresh();
   }
 
   // Constuction a new list view item with the given parent, colors, & pixmap
-  KMHeaderItem( QListViewItem* parent, KMFolder* folder, int msgId,
-		KMPaintInfo *aPaintInfo )
+    KMHeaderItem( QListViewItem* parent, int msgId )
     : QListViewItem( parent ),
-      mFolder( folder ),
       mMsgId( msgId ),
-      mPaintInfo( aPaintInfo )
+      mColor(NULL)
   {
     irefresh();
   }
@@ -112,95 +105,23 @@ public:
     mMsgId = aMsgId;
   }
 
-  // Profiling note: About 30% of the time taken to initialize the
-  // listview is spent in this function. About 60% is spent in operator
-  // new and QListViewItem::QListViewItem.
   void irefresh()
   {
-    QString result;
-    KMMsgStatus flag;
-    QString fromStr, subjStr;
-    KMMsgBase *mMsgBase = mFolder->getMsgBase( mMsgId );
+    KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    mColor = NULL;
+    int threadingPolicy = headers->getNestingPolicy();
+    if(threadingPolicy == 3) {
+      KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+      if (mMsgBase->status() == KMMsgStatusNew ||
+	  mMsgBase->status() == KMMsgStatusUnread)
+        threadingPolicy = 1;
+    }
+    if (threadingPolicy < 2) {
     KMHeaderItem * topOfThread = this;
-    int threadingPolicy = ((KMHeaders*)listView())->getNestingPolicy();
     while(topOfThread->parent())
     	topOfThread = (KMHeaderItem*)topOfThread->parent();
-
-    if(mMsgBase==NULL)
-       return;
-
-    flag = mMsgBase->status();
-    if (mPaintInfo->flagCol >= 0)
-      setText( mPaintInfo->flagCol, " " + QString( QChar( (char)flag )));
-
-    if (mFolder == kernel->outboxFolder() || mFolder == kernel->sentFolder()
-        || mFolder == kernel->draftsFolder())
-      fromStr = mMsgBase->toStrip();
-    else
-      fromStr = mMsgBase->fromStrip();
-
-    if (fromStr.isEmpty()) fromStr = i18n("Unknown");
-    setText( mPaintInfo->senderCol, fromStr.simplifyWhiteSpace() );
-
-    subjStr = mMsgBase->subject();
-    if (subjStr.isEmpty()) subjStr = i18n("No Subject");
-    setText( mPaintInfo->subCol, subjStr.simplifyWhiteSpace() );
-
-    time_t mDate = mMsgBase->date();
-    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
-
-    if (mPaintInfo->showSize)
-      setText( mPaintInfo->sizeCol, QString( "%1" ).arg( mMsgBase->msgSize()));
-
-    mColor = &mPaintInfo->colFore;
-
-    switch (flag)
-    {
-    case KMMsgStatusNew:
-      setPixmap( 0, *KMHeaders::pixNew );
-      mColor = &mPaintInfo->colNew;
-      if(threadingPolicy==3)
-         threadingPolicy=1;
-      break;
-    case KMMsgStatusUnread:
-      setPixmap( 0, *KMHeaders::pixUns );
-      mColor = &mPaintInfo->colUnread;
-      if(threadingPolicy==3)
-         threadingPolicy=1;
-      break;
-    case KMMsgStatusDeleted:
-      setPixmap( 0, *KMHeaders::pixDel );
-      break;
-    case KMMsgStatusReplied:
-      setPixmap( 0, *KMHeaders::pixRep );
-      break;
-    case KMMsgStatusForwarded:
-      setPixmap( 0, *KMHeaders::pixFwd );
-      break;
-    case KMMsgStatusQueued:
-      setPixmap( 0, *KMHeaders::pixQueued );
-      break;
-    case KMMsgStatusSent:
-      setPixmap( 0, *KMHeaders::pixSent );
-      break;
-    case KMMsgStatusFlag:
-      setPixmap( 0, *KMHeaders::pixFlag );
-      mColor = &mPaintInfo->colFlag;
-      break;
-    default:
-      setPixmap( 0, *KMHeaders::pixOld );
-      break;
-    };
-
-    if(threadingPolicy < 2)
        topOfThread->setOpen( true );
-
-    mSortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
-
-    const int dateLength = 30;
-    char cDate[dateLength + 1];
-    strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &mDate ));
-    mSortDate = cDate + mSortArrival;
+  }
   }
 
   // Return the msgId of the message associated with this item
@@ -210,9 +131,8 @@ public:
   }
 
   // Update this item to summarise a new folder and message
-  void reset( KMFolder *aFolder, int aMsgId )
+  void reset( int aMsgId )
   {
-    mFolder = aFolder;
     mMsgId = aMsgId;
     irefresh();
   }
@@ -239,17 +159,113 @@ public:
   }
 
 
+  QString text( int col) const
+  {
+    KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+    QString tmp;
+	    if(col == headers->paintInfo()->flagCol) {
+		if (headers->paintInfo()->flagCol >= 0)
+	tmp = QString( QChar( (char)mMsgBase->status() ));
+	    } else if(col == headers->paintInfo()->senderCol) {
+	KMFolder *folder = headers->folder();
+	if (folder == kernel->outboxFolder() || folder == kernel->sentFolder()
+	    || folder == kernel->draftsFolder())
+	  tmp = mMsgBase->toStrip();
+	else
+	  tmp = mMsgBase->fromStrip();
+	if (tmp.isEmpty())
+	  tmp = i18n("Unknown");
+	else
+	  tmp = tmp.simplifyWhiteSpace();
+	    } else if(col == headers->paintInfo()->subCol) {
+      tmp = mMsgBase->subject();
+      if (tmp.isEmpty())
+	tmp = i18n("No Subject");
+      else
+	tmp = tmp.simplifyWhiteSpace();
+	    } else if(col == headers->paintInfo()->dateCol) {
+      time_t mDate = mMsgBase->date();
+      tmp = QString( ctime( &mDate )).stripWhiteSpace();
+	    } else if(col == headers->paintInfo()->sizeCol) {
+		if (headers->paintInfo()->showSize)
+      tmp.sprintf("%d", mMsgBase->msgSize());
+    }
+    return tmp;
+  }
+
+  const QPixmap * pixmap( int col) const
+  {
+    if(!col) {
+      QPixmap *pix = NULL;
+      KMHeaders *headers = static_cast<KMHeaders*>(listView());
+      KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+      switch (mMsgBase->status())
+      {
+	case KMMsgStatusNew:
+	  pix = KMHeaders::pixNew;
+	  break;
+        case KMMsgStatusUnread:
+	  pix = KMHeaders::pixUns;
+	  break;
+        case KMMsgStatusDeleted:
+	  pix = KMHeaders::pixDel;
+	  break;
+        case KMMsgStatusReplied:
+	  pix = KMHeaders::pixRep;
+	  break;
+	case KMMsgStatusForwarded:
+	  pix = KMHeaders::pixFwd;
+	  break;
+	case KMMsgStatusQueued:
+	  pix = KMHeaders::pixQueued;
+	  break;
+	case KMMsgStatusSent:
+	  pix = KMHeaders::pixSent;
+	  break;
+	case KMMsgStatusFlag:
+	  pix = KMHeaders::pixFlag;
+	  break;
+	default:
+	  pix = KMHeaders::pixOld;
+	  break;
+      }
+      return pix;
+    }
+    return NULL;
+  }
+
   void paintCell( QPainter * p, const QColorGroup & cg,
 				int column, int width, int align )
   {
+    KMHeaders *headers = static_cast<KMHeaders*>(listView());
     QColorGroup _cg( cg );
     QColor c = _cg.text();
+
+    if(!mColor) {
+      KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+      switch (mMsgBase->status())
+      {
+        case KMMsgStatusNew:
+		    mColor = (QColor*)(&headers->paintInfo()->colNew);
+	  break;
+        case KMMsgStatusUnread:
+		    mColor = (QColor*)(&headers->paintInfo()->colUnread);
+	  break;
+        case KMMsgStatusFlag:
+		    mColor = (QColor *)(&headers->paintInfo()->colFlag);
+	  break;
+        default:
+		    mColor = (QColor *)(&headers->paintInfo()->colFore);
+	  break;
+      }
+    }
 
     _cg.setColor( QColorGroup::Text, *mColor );
 
     KConfig *conf = kapp->config();
     conf->setGroup("Fonts");
-    if( column == mPaintInfo->dateCol ) {
+	    if( column == headers->paintInfo()->dateCol ) {
       if (!conf->readBoolEntry("defaultFonts",TRUE)) {
         QFont folderFont = QFont("courier");
         p->setFont(conf->readFontEntry("list-date-font", &folderFont));
@@ -263,24 +279,33 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  virtual QString key( int column, bool /*ascending*/ ) const {
-    if (column == mPaintInfo->dateCol) {
-      if (mPaintInfo->orderOfArrival)
-	return mSortArrival;
+  virtual QString key( int column, bool /*ascending*/ ) const
+  {
+    KMHeaders *headers =  static_cast<KMHeaders*>(listView());
+    const KMPaintInfo *paintInfo = headers->paintInfo();
+    KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+    QString sortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
+    time_t mDate = mMsgBase->date();
+    const int dateLength = 30;
+    char cDate[dateLength + 1];
+    strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &mDate ));
+    QString sortDate = cDate + sortArrival;
+    if (column == paintInfo->dateCol) {
+      if (paintInfo->orderOfArrival)
+	return sortArrival;
       else
-	return mSortDate;
+	return sortDate;
     }
-    else if (column == mPaintInfo->senderCol)
-      return text(mPaintInfo->senderCol).lower() + " " + mSortArrival;
-    else if (column == mPaintInfo->subCol) {
-      if (mPaintInfo->status)
-	return QString( QChar( (char)mFolder->getMsgBase( mMsgId )->status() ));
+    else if (column == paintInfo->senderCol)
+      return text(paintInfo->senderCol).lower() + " " + sortArrival;
+    else if (column == paintInfo->subCol) {
+      if (paintInfo->status)
+	return QString( QChar( (uint)mMsgBase->status() ));
       else
-	return KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() )
-	  + " " + mSortArrival;
+	return KMMsgBase::skipKeyword( text(paintInfo->subCol).lower() )
+	  + " " + sortArrival;
     }
-    else if (column == mPaintInfo->sizeCol) {
-      KMMsgBase *mMsgBase = mFolder->getMsgBase( mMsgId );
+    else if (column == paintInfo->sizeCol) {
       if(mMsgBase==NULL)
 	return text(column);
       return QString( "%1" ).arg( mMsgBase->msgSize(), 9 );
@@ -557,6 +582,8 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *aFolder)
 {
+   qDebug("start %d %s:%d", (QTime::currentTime().second()*1000)+QTime::currentTime().msec(), __FILE__,__LINE__);
+
   int id;
   QString str;
 
@@ -657,8 +684,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	setTopItemByIndex(mTopItem);
         setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
       }
+    } else {
+      setCurrentItemByIndex(0);
     }
-    else setCurrentItemByIndex(0);
     makeHeaderVisible();
   }
 
@@ -704,7 +732,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       showingSize = false;
     }
   }
-
+  qDebug("end %d %s:%d", (QTime::currentTime().second()*1000)+QTime::currentTime().msec(), __FILE__,__LINE__);
 }
 
 // QListView::setContentsPos doesn't seem to work
@@ -745,18 +773,18 @@ void KMHeaders::msgAdded(int id)
     QString replyToId = mb->replyToIdMD5();
 
     if (replyToId.isEmpty() || !mIdTree[replyToId])
-      hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
+	    hi = new KMHeaderItem( this, id );
     else {
 
       KMHeaderItem *parent = mIdTree[replyToId];
       assert(parent);
-      hi = new KMHeaderItem( parent, mFolder, id, &mPaintInfo );
+	    hi = new KMHeaderItem( parent, id );
     }
     if (!mIdTree[msgId])
       mIdTree.replace( msgId, hi );
   }
   else
-    hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
+	hi = new KMHeaderItem( this, id );
 
   mItems[id] = hi;
   msgHeaderChanged(id);
@@ -858,11 +886,13 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
+    /*
   QString str;
   str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
     .arg(i18n("%n unread", "%n unread", mFolder->countUnread()));
   if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
   mOwner->statusMsg(str);
+    */
 }
 
 //-----------------------------------------------------------------------------
@@ -1721,12 +1751,10 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
   item = pitem;
 
   findUnreadAux( item, foundUnreadMessage, onlyNew, aDirNext );
-
   if (item)
     return item->msgId();
 
-
-  // A cludge to try to keep the number of unread messages in sync
+  // A kludge to try to keep the number of unread messages in sync
   int unread = mFolder->countUnread();
   if (((unread == 0) && foundUnreadMessage) ||
       ((unread > 0) && !foundUnreadMessage)) {
@@ -1837,8 +1865,8 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
   QString msgId = mb->msgIdMD5();
   if (msgId.isNull())
     msgId = "";
-  mIdTree.replace( msgId, parent );
 
+  mIdTree.replace( msgId, parent );
   assert( mTreeSeen[msgId] );
   if (*(mTreeSeen[msgId])) // this can happen in the pathological case of
     // multiple messages having the same id. This case, even the extra
@@ -1858,19 +1886,17 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
     if (*it == i)
       continue;
 
-    KMHeaderItem* hi = new KMHeaderItem( parent, mFolder, *it, &mPaintInfo );
+	KMHeaderItem* hi = new KMHeaderItem( parent, *it );
     assert(mItems[*it] == 0);
     mItems.operator[](*it) = hi;
     recursivelyAddChildren( *it, hi );
   }
-
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::updateMessageList(void)
 {
-kdDebug() << "KMHeaders::updateMessageList(void)" << endl;
   int i;
   KMMsgBase* mb;
 
@@ -1883,7 +1909,6 @@ kdDebug() << "KMHeaders::updateMessageList(void)" << endl;
     repaint();
     return;
   }
-kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
 
   // About 60% of the time spent in populating the list view in spent
   // in operator new and QListViewItem::QListViewItem. Reseting an item
@@ -1916,7 +1941,6 @@ kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
       delete mItems[temp-1];
   }
 
-kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
   mItems.resize( mFolder->count() );
 
   if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
@@ -1995,20 +2019,20 @@ kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
 	msgId = "";
       assert(mTreeToplevel[msgId]);
       if (*mTreeToplevel[msgId] && !mItems[i]) {
-	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+		KMHeaderItem* hi = new KMHeaderItem( this, i );
 	mItems[i] = hi;
 	if (!msgId.isEmpty()) recursivelyAddChildren( i, hi );
       }
     }
 
-    for (i=0; i<mFolder->count(); i++)
+    for (i=0; i<mFolder->count(); i++) {
       if (mItems[i] == 0) {
 	// It turns out this can happen when different messages have the same ids;
-	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+		KMHeaderItem* hi = new KMHeaderItem( this, i );
 	mItems[i] = hi;
-	kdDebug() << QString("%1 ").arg(i) + mFolder->getMsgBase(i)->subject() + " " +  mFolder->getMsgBase(i)->fromStrip() << endl;
 	//	assert(mItems[i] != 0);
       }
+	}
 
     mTree.clear();
     mTreeSeen.clear();
@@ -2021,9 +2045,9 @@ kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
 	assert(mb != NULL); // otherwise using count() above is wrong
 
 	if (i >= oldSize)
-	  mItems[i] = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+		mItems[i] = new KMHeaderItem( this, i );
 	else
-	  mItems[i]->reset( mFolder, i );
+	  mItems[i]->reset( i );
       }
   }
 
