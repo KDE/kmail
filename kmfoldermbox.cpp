@@ -56,6 +56,7 @@ KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
 {
   mStream         = 0;
   mFilesLocked    = false;
+  mReadOnly       = false;
   mLockType       = lock_none;
 }
 
@@ -302,6 +303,7 @@ int KMFolderMbox::lock()
   QCString cmd_str;
   assert(mStream != 0);
   mFilesLocked = false;
+  mReadOnly = false;
 
   switch( mLockType )
   {
@@ -312,6 +314,7 @@ int KMFolderMbox::lock()
       {
         kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(errno) << " (" << errno << ")" << endl;
+        mReadOnly = true;
         return errno;
       }
 
@@ -325,7 +328,8 @@ int KMFolderMbox::lock()
                     << strerror(errno) << " (" << errno << ")" << endl;
           rc = errno;
           fl.l_type = F_UNLCK;
-          rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
+          /*rc =*/ fcntl(fileno(mIndexStream), F_SETLK, &fl);
+          mReadOnly = true;
           return rc;
         }
       }
@@ -343,6 +347,7 @@ int KMFolderMbox::lock()
       {
         kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
+        mReadOnly = true;
         return rc;
       }
       if( mIndexStream )
@@ -353,6 +358,7 @@ int KMFolderMbox::lock()
         {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
+          mReadOnly = true;
           return rc;
         }
       }
@@ -365,6 +371,7 @@ int KMFolderMbox::lock()
       {
         kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
+        mReadOnly = true;
         return rc;
       }
       if( mIndexStream )
@@ -375,6 +382,7 @@ int KMFolderMbox::lock()
         {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
+          mReadOnly = true;
           return rc;
         }
       }
@@ -387,6 +395,7 @@ int KMFolderMbox::lock()
       {
         kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
+        mReadOnly = true;
         return rc;
       }
       if( mIndexStream )
@@ -397,6 +406,7 @@ int KMFolderMbox::lock()
         {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
+          mReadOnly = true;
           return rc;
         }
       }

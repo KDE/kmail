@@ -92,7 +92,7 @@ public:
   int compact( unsigned int startIndex, int nbMessages, FILE* tmpFile, off_t& offs, bool& done );
 
   /** Is the folder read-only? */
-  virtual bool isReadOnly() const { return false; }
+  virtual bool isReadOnly() const { return mReadOnly; }
 
   /** Is the folder locked? */
   bool isLocked() const { return mFilesLocked; }
@@ -140,6 +140,7 @@ protected:
 private:
   FILE *mStream;
   bool mFilesLocked; // TRUE if the files of the folder are locked (writable)
+  bool mReadOnly; // true if locking failed
   LockType mLockType;
   QString mProcmailLockFileName;
 };
