@@ -511,12 +511,14 @@ class KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMMessage *msg, bool htmlOverride=false );
+  KMPrintCommand( QWidget *parent, KMMessage *msg, 
+                  bool htmlOverride=false, const QTextCodec *codec = 0 );
 
 private:
   virtual Result execute();
 
   bool mHtmlOverride;
+  const QTextCodec *mCodec;
 };
 
 class KMSetStatusCommand : public KMCommand
