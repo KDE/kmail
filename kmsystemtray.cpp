@@ -402,10 +402,12 @@ KMMainWidget * KMSystemTray::getKMMainWidget()
  */
 void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 {
-
-  if(!fldr)
+  //We don't want to count messages from search folders as they
+  //  already counted as part of their original folders
+  if( !fldr ||
+      fldr->folderType() == KMFolderTypeSearch )
   {
-    kdDebug(5006) << "Null folder, can't mess with that" << endl;
+    kdDebug(5006) << "Null or a search folder, can't mess with that" << endl;
     return;
   }
 
