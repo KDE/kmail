@@ -7,6 +7,7 @@
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
 #include <kpgp.h>
+#include <kpgpblock.h>
 #include <kdebug.h>
 
 #include "kmfolder.h"
@@ -611,15 +612,34 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
       assert(pgp != NULL);
 
-      if(allowDecryption && (pgp->setMessage(cStr) &&
-        ((pgp->isEncrypted() && pgp->decrypt()) || pgp->isSigned())))
+      if( allowDecryption && pgp->setMessageForDecryption( cStr ) )
       {
-        result = codec->toUnicode(pgp->frontmatter())
-               + codec->toUnicode(pgp->message())
-               + codec->toUnicode(pgp->backmatter());
-      } else {
-        result = codec->toUnicode(cStr);
+        QPtrList<Kpgp::Block> pgpBlocks = pgp->pgpBlocks();
+        // Only decrypt/strip off the signature if there is only one OpenPGP
+        // block in the message
+        if( pgpBlocks.count() == 1 )
+        {
+          Kpgp::Block* block = pgpBlocks.first();
+          if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+              ( block->type() == Kpgp::ClearsignedBlock ) )
+          {
+            QStrList nonPgpBlocks = pgp->nonPgpBlocks();
+
+            if( block->type() == Kpgp::PgpMessageBlock )
+              // try to decrypt this OpenPGP block
+              block->decrypt();
+            else
+              // strip off the signature
+              block->verify();
+
+            result = codec->toUnicode( nonPgpBlocks.first() )
+                   + codec->toUnicode( block->text() )
+                   + codec->toUnicode( nonPgpBlocks.last() );
+          }
+        }
       }
+      if( result.isEmpty() )
+        result = codec->toUnicode( cStr );
       if (mDecodeHTML && qstrnicmp(typeStr(),"text/html",9) == 0)
       {
         KHTMLPart htmlPart;
@@ -662,14 +682,37 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
       assert(pgp != NULL);
       QString part;
-      if (allowDecryption && ((pgp->setMessage(msgPart.bodyDecoded())) &&
-         ((pgp->isEncrypted()) && (pgp->decrypt()) || pgp->isSigned())))
+
+      if( allowDecryption &&
+          pgp->setMessageForDecryption( msgPart.bodyDecoded() ) )
       {
-        part = codec->toUnicode(pgp->frontmatter())
-             + codec->toUnicode(pgp->message())
-             + codec->toUnicode(pgp->backmatter());
-      } else {
-        part = codec->toUnicode(msgPart.bodyDecoded());
+        QPtrList<Kpgp::Block> pgpBlocks = pgp->pgpBlocks();
+        // Only decrypt/strip off the signature if there is only one OpenPGP
+        // block in the message
+        if( pgpBlocks.count() == 1 )
+        {
+          Kpgp::Block* block = pgpBlocks.first();
+          if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+              ( block->type() == Kpgp::ClearsignedBlock ) )
+          {
+            QStrList nonPgpBlocks = pgp->nonPgpBlocks();
+
+            if( block->type() == Kpgp::PgpMessageBlock )
+              // try to decrypt this OpenPGP block
+              block->decrypt();
+            else
+              // strip off the signature
+              block->verify();
+
+            part = codec->toUnicode( nonPgpBlocks.first() )
+                 + codec->toUnicode( block->text() )
+                 + codec->toUnicode( nonPgpBlocks.last() );
+          }
+        }
+      }
+      if( part.isEmpty() )
+      {
+        part = codec->toUnicode( msgPart.bodyDecoded() );
         //	    debug ("part\n" + part ); inexplicably crashes -sanders
       }
       part.replace(reNL, '\n' + indentStr);

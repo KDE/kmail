@@ -17,6 +17,7 @@
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
 #include <kpgp.h>
+#include <kpgpblock.h>
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmfolderimap.h"
@@ -1111,19 +1112,35 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
     QCString bodyDecoded = mMsg->bodyDecoded();
 
-      Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-      assert(pgp != NULL);
+    Kpgp::Module* pgp = Kpgp::Module::getKpgp();
+    assert(pgp != NULL);
 
-      if (allowDecryption && pgp->setMessage(bodyDecoded))
+    if( allowDecryption && pgp->setMessageForDecryption( bodyDecoded ) )
+    {
+      QPtrList<Kpgp::Block> pgpBlocks = pgp->pgpBlocks();
+      // Only decrypt/strip off the signature if there is only one OpenPGP
+      // block in the message
+      if( pgpBlocks.count() == 1 )
       {
-        QCString str = pgp->frontmatter();
-        if ((pgp->isEncrypted() && pgp->decrypt()) || pgp->isSigned())
+        Kpgp::Block* block = pgpBlocks.first();
+        if( ( block->type() == Kpgp::PgpMessageBlock ) ||
+            ( block->type() == Kpgp::ClearsignedBlock ) )
         {
-          str += pgp->message();
-          str += pgp->backmatter();
-          bodyDecoded = str;
+          QStrList nonPgpBlocks = pgp->nonPgpBlocks();
+
+          if( block->type() == Kpgp::PgpMessageBlock )
+            // try to decrypt this OpenPGP block
+            block->decrypt();
+          else
+            // strip off the signature
+            block->verify();
+
+          bodyDecoded = nonPgpBlocks.first()
+                      + block->text()
+                      + nonPgpBlocks.last();
         }
       }
+    }
 
     QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     if (codec) {
@@ -1330,6 +1347,7 @@ bool KMComposeWin::queryExit ()
 QCString KMComposeWin::pgpProcessedMsg(void)
 {
   Kpgp::Module *pgp = Kpgp::Module::getKpgp();
+  Kpgp::Block block;
   bool doSign = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
   QString text;
@@ -1416,7 +1434,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 
   if (!doSign && !doEncrypt) return cText;
 
-  pgp->setMessage(cText, mCharset);
+  block.setText( cText );
 
   // get PGP user id for the chosen identity
   QCString pgpUserId;
@@ -1430,12 +1448,13 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 
   if (!doEncrypt)
   { // clearsign the message
-    if(pgp->sign(pgpUserId)) return pgp->message();
+    if( block.clearsign( pgpUserId, mCharset ) )
+      return block.text();
   }
   else
   { // encrypt the message
-    if(pgp->encryptFor(recipients, pgpUserId, doSign))
-      return pgp->message();
+    if( block.encrypt( recipients, pgpUserId, doSign, mCharset ) )
+      return block.text();
   }
 
   // in case of an error we end up here
