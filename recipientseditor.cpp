@@ -423,7 +423,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addWidget( mTotalLabel, 1 );
   mTotalLabel->hide();
 
-  QPushButton *button = new QPushButton( "Select...", this );
+  QPushButton *button = new QPushButton( "&Select...", this );
   topLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
 
@@ -438,7 +438,7 @@ void SideWidget::initRecipientPicker()
   connect( mRecipientPicker, SIGNAL( pickedRecipient( const QString & ) ),
     SIGNAL( pickedRecipient( const QString & ) ) );
 
-  new KWindowPositioner( this, mRecipientPicker );
+  mPickerPositioner = new KWindowPositioner( this, mRecipientPicker );
 }
 
 void SideWidget::setTotal( int recipients, int lines )
@@ -463,6 +463,7 @@ void SideWidget::pickRecipient()
   mRecipientPicker->setRecipients( mView->recipients() );
   mRecipientPicker->show();
   mRecipientPicker->raise();
+  mPickerPositioner->reposition();
 #endif
 }
 

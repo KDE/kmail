@@ -32,6 +32,8 @@
 
 class RecipientsPicker;
 
+class KWindowPositioner;
+
 class QComboBox;
 class QLabel;
 
@@ -55,8 +57,7 @@ class Recipient
     static int typeToId( Type );
     static Type idToType( int );
     
-    QString typeLabel() const;
-    static QString typeLabel( Type );
+    QString typeLabel() const;    static QString typeLabel( Type );
     static QStringList allTypeLabels();
     
   private:
@@ -188,6 +189,7 @@ class SideWidget : public QWidget
     RecipientsView *mView;
     QLabel *mTotalLabel;
     RecipientsPicker *mRecipientPicker;
+    KWindowPositioner *mPickerPositioner;
 };
 
 class RecipientsEditor : public QWidget

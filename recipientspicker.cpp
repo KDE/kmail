@@ -137,13 +137,13 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   mSearchLine->setListView( mRecipientList );
 
-  resize( 460 , 460 );
-
   initCollections();
 
   mCollectionCombo->setCurrentItem( 0 );
 
   updateList();
+
+  mSearchLine->setFocus();
 }
 
 void RecipientsPicker::initCollections()

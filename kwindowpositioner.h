@@ -32,6 +32,8 @@ class KWindowPositioner : public QObject
     KWindowPositioner( QWidget *master, QWidget *slave );
 
     bool eventFilter( QObject *watched, QEvent *e );
+
+    void reposition();
     
   private:
     QWidget *mMaster;

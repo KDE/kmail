@@ -34,12 +34,17 @@ KWindowPositioner::KWindowPositioner( QWidget *master, QWidget *slave )
 bool KWindowPositioner::eventFilter( QObject *, QEvent *e )
 {
   if ( e->type() == QEvent::Move ) {
-    QPoint pos = mMaster->mapToGlobal( QPoint( mMaster->width(), -100 ) );
-    mSlave->move( pos );
-    mSlave->raise();
+    reposition();
   }
 
   return false;
+}
+
+void KWindowPositioner::reposition()
+{
+  QPoint pos = mMaster->mapToGlobal( QPoint( mMaster->width(), -100 ) );
+  mSlave->move( pos );
+  mSlave->raise();
 }
 
 #include "kwindowpositioner.moc"
