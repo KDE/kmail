@@ -201,6 +201,8 @@ void KMFolderCachedImap::readConfig()
   kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
                 << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
+  mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know 
+
   KMFolderMaildir::readConfig();
 
   mStatusChangedLocally =
@@ -228,6 +230,7 @@ void KMFolderCachedImap::writeAnnotationConfig()
   configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
   configGroup.writeEntry( "IncidencesForChanged", mIncidencesForChanged );
   configGroup.writeEntry( "IncidencesFor", incidencesForToString( mIncidencesFor ) );
+  configGroup.writeEntry( "UserRights", mUserRights );
 }
 
 void KMFolderCachedImap::remove()
