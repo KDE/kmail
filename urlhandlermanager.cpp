@@ -257,7 +257,9 @@ namespace {
     return !w || kmkernel->groupware().handleLink( url, w->message() );
   }
 
-  QString GroupwareURLHandler::statusBarMessage( const KURL&, KMReaderWin* ) const {
+  QString GroupwareURLHandler::statusBarMessage( const KURL & url, KMReaderWin* ) const {
+     if ( !url.path().startsWith( "groupware" ) )
+        return QString::null;
     return i18n("Groupware choice");
   }
 }
