@@ -3339,9 +3339,8 @@ void KMMainWidget::slotFilterLogViewer()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFileMenu()
 {
-  QStringList actList;
-  actList = kmkernel->acctMgr()->getAccounts(false);
-  
+  QStringList actList = kmkernel->acctMgr()->getAccounts(false);
+
   if( actList.size() == 0 )
   {
     actionCollection()->action("check_mail")->setEnabled(false);
