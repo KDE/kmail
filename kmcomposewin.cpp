@@ -4734,7 +4734,9 @@ void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
   // check if the user wants to encrypt messages to himself and if he defined
   // an encryption key for the current identity
   if ( encrypt && Kpgp::Module::getKpgp()->encryptToSelf()
-               && !mLastIdentityHasOpenPgpKey ) {
+               && !mLastIdentityHasOpenPgpKey
+               // ### hack needed as long as we don't specify S/MIME keys in identities.
+               && ( !mSelectedCryptPlug || mSelectedCryptPlug->protocol() == "openpgp" ) ) {
     if ( setByUser ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to encrypt "
@@ -4785,7 +4787,9 @@ void KMComposeWin::setSigning( bool sign, bool setByUser )
     sign = false;
 
   // check if the user defined a signing key for the current identity
-  if ( sign && !mLastIdentityHasOpenPgpKey ) {
+  if ( sign && !mLastIdentityHasOpenPgpKey
+            // ### hack needed as long as we don't specify S/MIME keys in identities.
+            && ( !mSelectedCryptPlug || mSelectedCryptPlug->protocol() == "openpgp" ) ) {
     if ( setByUser ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to sign "
