@@ -452,6 +452,7 @@ void KMReaderWin::displayAboutPage()
     "<ul>\n"
     "<li>IMAP support including SSL and TLS</li>\n"
     "<li>SSL and TLS support for POP3</li>\n"
+    "<li>Configuration for SASL and APOP authentication</li>\n"
     "<li>Non-blocking sending</li>\n"
     "<li>Performance improvements for huge folders</li>\n"
     "<li>Message scoring</li>\n"
