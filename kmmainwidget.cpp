@@ -1656,8 +1656,10 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
       return;
     mMsgView->clear();
     mMsgView->setWaitingForSerNum( msg->getMsgSerNum() );
-    if ( mJob )
-      disconnect( mJob, 0, this, 0 );
+    if ( mJob ) {
+       disconnect( mJob, 0, mMsgView, 0 );
+       delete mJob;
+    }
     mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0,
           "STRUCTURE", mMsgView->attachmentStrategy() );
     connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),

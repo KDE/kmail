@@ -196,38 +196,34 @@ ImapJob::~ImapJob()
   if ( mDestFolder )
   {
     KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
-    if ( account ) // just to be sure this job is removed from the list
-      account->mJobList.remove(this);
-    if ( account && mJob )
-    {
+    if ( account &&  mJob ) {
       ImapAccountBase::JobIterator it = account->findJob( mJob );
-      if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() )
-      {
+      if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() ) {
         for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-          mit.current()->setTransferInProgress(false);
+          mit.current()->setTransferInProgress( false );
       }
+      account->removeJob( mJob );
+      account->displayProgress();
     }
-
+    account->mJobList.remove( this );
     mDestFolder->close();
   }
 
-  if (mSrcFolder) {
+  if ( mSrcFolder ) {
     if (!mDestFolder || mDestFolder != mSrcFolder) {
       if (! (mSrcFolder->folderType() == KMFolderTypeImap) ) return;
       KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder->storage())->account();
-      if ( account ) // just to be sure this job is removed from the list
-        account->mJobList.remove(this);
-      if ( account && mJob )
-      {
+      if ( account && mJob ) {
         ImapAccountBase::JobIterator it = account->findJob( mJob );
-        if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() )
-        {
+        if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() ) {
           for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
-            mit.current()->setTransferInProgress(false);
+            mit.current()->setTransferInProgress( false );
         }
+        account->removeJob( mJob ); // remove the associated kio job
+        account->displayProgress(); // make sure the progress is reset
       }
+      account->mJobList.remove( this ); // remove the folderjob
     }
-
     mSrcFolder->close();
   }
 }
