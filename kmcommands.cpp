@@ -613,16 +613,14 @@ KMCommand::Result KMEditMsgCommand::execute()
 }
 
 
-KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-  KMMessage *msg, bool fixedFont )
-  :KMCommand( parent, msg ), mFixedFont( fixedFont )
+KMShowMsgSrcCommand::KMShowMsgSrcCommand( KMMessage *msg, bool fixedFont )
+  : mFixedFont( fixedFont ), mMsg ( msg )
 {
 }
 
-KMCommand::Result KMShowMsgSrcCommand::execute()
+void KMShowMsgSrcCommand::start()
 {
-  KMMessage *msg = retrievedMessage();
-  QString str = msg->codec()->toUnicode( msg->asString() );
+  QString str = mMsg->codec()->toUnicode( mMsg->asString() );
 
   MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself upon close
   viewer->setCaption( i18n("Message as Plain Text") );
@@ -642,8 +640,6 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
                   2*QApplication::desktop()->geometry().height()/3);
   }
   viewer->show();
-
-  return OK;
 }
 
 static KURL subjectToUrl( const QString & subject ) {

@@ -275,17 +275,16 @@ private:
   virtual Result execute();
 };
 
-class KMShowMsgSrcCommand : public KMCommand
+class KMShowMsgSrcCommand
 {
-  Q_OBJECT
-
 public:
-  KMShowMsgSrcCommand( QWidget *parent, KMMessage *msg,
-		       bool fixedFont );
-  virtual Result execute();
+  KMShowMsgSrcCommand( KMMessage *msg, bool fixedFont );
+		       
+  void start();
 
 private:
   bool mFixedFont;
+  KMMessage *mMsg;
 };
 
 class KMSaveMsgCommand : public KMCommand
