@@ -62,7 +62,8 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mNeedsAssembly(true),
     mIsComplete(false),
     mTransferInProgress(false),
-    mCodec(0)
+    mCodec(0),
+    mDecodeHTML(false)
 {
 }
 
@@ -93,6 +94,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
   mCodec = NULL;
+  mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
   mMsgSize = 0;
@@ -112,6 +114,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
   mCodec = NULL;
+  mDecodeHTML = FALSE;
   mIsComplete = FALSE;
   mTransferInProgress = FALSE;
   mMsgSize = msgInfo.msgSize();
@@ -579,9 +582,14 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       } else {
         result = codec->toUnicode(cStr);
       }
-      if (qstrnicmp(typeStr(),"text/html",9) == 0)
+      if (mDecodeHTML && qstrnicmp(typeStr(),"text/html",9) == 0)
       {
         KHTMLPart htmlPart;
+        htmlPart.setOnlyLocalReferences(TRUE);
+        htmlPart.enableMetaRefresh(FALSE);
+        htmlPart.enablePlugins(false);
+        htmlPart.enableJScript(false);
+        htmlPart.enableJava(false);
         htmlPart.begin();
         htmlPart.write(result);
         htmlPart.end();
@@ -636,6 +644,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         if (qstricmp(msgPart.typeStr(),"message") == 0) {
           KMMessage inlineMsg;
           inlineMsg.fromString(msgPart.bodyDecoded());
+          inlineMsg.setDecodeHTML(mDecodeHTML);
           QString inlineHeaderStr = inlineMsg.headerAsString();
           inlineHeaderStr.replace(reNL, '\n' + indentStr);
           result += "\n" + indentStr;

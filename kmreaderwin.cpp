@@ -398,7 +398,11 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   kdDebug(5006) << "Not equal" << endl;
 
   mMsg = aMsg;
-  if (mMsg) mMsg->setCodec(mCodec);
+  if (mMsg)
+  {
+    mMsg->setCodec(mCodec);
+    mMsg->setDecodeHTML(htmlMail());
+  }
 
   // Avoid flicker, somewhat of a cludge
   if (force) {
@@ -1781,6 +1785,7 @@ void KMReaderWin::slotDocumentDone()
 void KMReaderWin::setHtmlOverride(bool override)
 {
   mHtmlOverride = override;
+  if (mMsg) mMsg->setDecodeHTML(htmlMail());
 }
 
 
