@@ -560,8 +560,8 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
   // Quote message. Do not quote mime message parts that are of other
   // type than "text".
-  if (numBodyParts() == 0 || selection != QString::null ) {
-    if( selection != QString::null ) {
+  if (numBodyParts() == 0 || !selection.isEmpty() ) {
+    if( !selection.isEmpty() ) {
       result = selection;
     } else {
       cStr = bodyDecoded();
