@@ -1105,8 +1105,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 void KMReaderWin::printMsg(void)
 {
   if (!mMsg) return;
-  // FIXME
-  //mViewer->print();
+  mViewer->view()->print();
 }
 
 
