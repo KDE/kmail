@@ -273,13 +273,11 @@ bool KMSearchPattern::matches( const KMMessage *msg ) const
 
 void KMSearchPattern::purify()
 {
-  kdDebug() << "KMSearchPattern::purify called on a pattern containing "
-	    << count() << " item" << endl;
   QListIterator<KMSearchRule> it(*this);
   it.toLast();
   while ( it.current() )
     if ( (*it)->isEmpty() ) {
-      kdDebug() << "  removing " << (*it)->asString() << endl;
+      kdDebug() << "KMSearchPattern::purify(): removing " << (*it)->asString() << endl;
       remove( *it );
     } else {
       --it;
