@@ -352,6 +352,10 @@ void KMMainWidget::readConfig(void)
     // Update systray
     toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
+    if (oldWindowLayout != mWindowLayout ||
+        oldShowMIMETreeMode != mShowMIMETreeMode )
+      activatePanners();
+
     //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
@@ -451,9 +455,6 @@ void KMMainWidget::writeConfig(void)
 void KMMainWidget::createWidgets(void)
 {
   QAccel *accel = new QAccel(this, "createWidgets()");
-
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Geometry");
 
   // Create the splitters according to the layout settings
   QWidget *headerParent = 0, *folderParent = 0,
