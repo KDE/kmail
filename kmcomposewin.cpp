@@ -93,11 +93,10 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
 
 {
   // make sure we have a valid CryptPlugList
-  mTmpPlugList = !mCryptPlugList;
+  mTmpPlugList = (mCryptPlugList == 0L);
   if( mTmpPlugList ) {
     mCryptPlugList = new CryptPlugWrapperList();
-    KConfig *config = KGlobal::config();
-    mCryptPlugList->loadFromConfig( config );
+    mCryptPlugList->loadFromConfig( KGlobal::config() );
   }
 
   mMainWidget = new QWidget(this);
@@ -945,7 +944,7 @@ void KMComposeWin::setupActions(void)
 
   selectCryptoAction->setEnabled(true);
 
-  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
 
   mLastEncryptActionState =
     ( cryptPlug && EncryptEmail_EncryptAll == cryptPlug->encryptEmail() );
@@ -1152,7 +1151,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // get PGP user id for the currently selected identity
   QString pgpUserId = ident.pgpIdentity();
 
-  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
 
   if( cryptPlug || Kpgp::Module::getKpgp()->usePGP() )
   {
@@ -1385,7 +1384,7 @@ bool KMComposeWin::applyChanges(void)
     kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QCString pgpUserId = ident.pgpIdentity();
 
-  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
 
   Kpgp::Module *pgp = Kpgp::Module::getKpgp();
 
@@ -3338,7 +3337,7 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   lvi->setText(1, KIO::convertSize( msgPart->decodedSize()));
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, prettyMimeType(msgPart->typeStr() + "/" + msgPart->subtypeStr()));
-  if( mCryptPlugList && mCryptPlugList->active() ) {
+  if( mCryptPlugList->active() ) {
     mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmCryptoColWidth );
     mAtmListBox->setColumnWidth( mAtmColSign,    mAtmCryptoColWidth );
     lvi->enableCryptoCBs( true );
@@ -3780,7 +3779,7 @@ int KMComposeWin::currentAttachmentNum()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachProperties()
 {
-  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
 
   int idx = currentAttachmentNum();
 
@@ -3903,8 +3902,8 @@ void KMComposeWin::slotUndo()
 
   if (fw->inherits("KEdit"))
     ((QMultiLineEdit*)fw)->undo();
-  else if (fw->inherits("KMLineEdit"))
-    ((KMLineEdit*)fw)->undo();
+  else if (fw->inherits("QLineEdit"))
+    ((QLineEdit*)fw)->undo();
 }
 
 void KMComposeWin::slotRedo()
@@ -3914,7 +3913,8 @@ void KMComposeWin::slotRedo()
 
   if (fw->inherits("KEdit"))
     ((QMultiLineEdit*)fw)->redo();
-
+  else if (fw->inherits("QLineEdit"))
+    ((QLineEdit*)fw)->redo();
 }
 
 //-----------------------------------------------------------------------------
@@ -3925,8 +3925,8 @@ void KMComposeWin::slotCut()
 
   if (fw->inherits("KEdit"))
     ((QMultiLineEdit*)fw)->cut();
-  else if (fw->inherits("KMLineEdit"))
-    ((KMLineEdit*)fw)->cut();
+  else if (fw->inherits("QLineEdit"))
+    ((QLineEdit*)fw)->cut();
   else kdDebug(5006) << "wrong focus widget" << endl;
 }
 
@@ -3988,7 +3988,8 @@ void KMComposeWin::slotNewComposer()
   KMMessage* msg = new KMMessage;
 
   msg->initHeader();
-  win = new KMComposeWin(mCryptPlugList, msg);
+  // never pass our temporary cryptPlugList to someone else
+  win = new KMComposeWin(mTmpPlugList ? 0L : mCryptPlugList, msg);
   win->show();
 }
 
@@ -4018,7 +4019,7 @@ void KMComposeWin::slotEncryptToggled(bool on)
     encryptAction->setIcon("encrypted");
   else
     encryptAction->setIcon("decrypted");
-  if( mCryptPlugList && mCryptPlugList->active() )
+  if( mCryptPlugList->active() )
     for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
          entry;
          entry = (KMAtmListViewItem*)mAtmItemList.next() )
@@ -4029,7 +4030,7 @@ void KMComposeWin::slotEncryptToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSignToggled(bool on)
 {
-  if( mCryptPlugList && mCryptPlugList->active() )
+  if( mCryptPlugList->active() )
     for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
          entry;
          entry = (KMAtmListViewItem*)mAtmItemList.next() )
@@ -4476,7 +4477,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
     mEditor->setText( edtText );
   }
 
-  CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
+  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
