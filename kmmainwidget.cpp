@@ -1087,17 +1087,9 @@ void KMMainWidget::slotCompactFolder()
   int idx = mHeaders->currentItemIndex();
   if (mFolder)
   {
-    if (mFolder->protocol() == "imap")
-    {
-      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
-      imap->expungeFolder(imap, FALSE);
-    }
-    else
-    {
-      kernel->kbp()->busy();
-      mFolder->compact();
-      kernel->kbp()->idle();
-    }
+    kernel->kbp()->busy();
+    mFolder->compact();
+    kernel->kbp()->idle();
   }
   mHeaders->setCurrentItemByIndex(idx);
 }
@@ -1148,13 +1140,7 @@ void KMMainWidget::slotCompactAll()
   {
     folder = *folders.at(i);
     if (!folder || folder->isDir()) continue;
-    if (folder->protocol() == "imap")
-    {
-      KMFolderImap *imap = static_cast<KMFolderImap*>(folder);
-      imap->expungeFolder(imap, TRUE);
-    }
-    else
-      folder->compact();
+    folder->compact();
   }
   kernel->kbp()->idle();
 }

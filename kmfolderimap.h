@@ -167,6 +167,8 @@ public:
    */
   void expungeFolder(KMFolderImap * aFolder, bool quiet);
 
+  int compact() { expungeFolder(this, false); return 0; };
+  
   /**
    * Emit the folderComplete signal
    */
