@@ -1585,8 +1585,8 @@ bool KMComposeWin::queryClose ()
      (mTransport->lineEdit() && mTransport->lineEdit()->edited()))
   {
     const int rc = KMessageBox::warningYesNoCancel(this,
-           i18n("Do you want to discard the message or save it for later?"),
-           i18n("Discard or Save Message"),
+           i18n("Do you want to save the message for later or discard it?"),
+           i18n("Close Composer"),
            i18n("&Save as Draft"),
            KStdGuiItem::discard() );
     if (rc == KMessageBox::Cancel)
@@ -1747,7 +1747,7 @@ void KMComposeWin::addAttach(const KURL aUrl)
   ld.insert = false;
   if( !aUrl.fileEncoding().isEmpty() )
     ld.encoding = aUrl.fileEncoding().latin1();
-  
+
   mMapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
