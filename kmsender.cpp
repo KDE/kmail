@@ -24,6 +24,7 @@
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
+#include "kbusyptr.h"
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -935,10 +936,16 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     if(ti->user.isEmpty() || ti->pass.isEmpty())
     {
       bool b = FALSE;
-      if (KIO::PasswordDialog::getNameAndPassword(ti->user, ti->pass, &b,
-        i18n("You need to supply a username and a password to use this "
-        "SMTP server."), FALSE, QString::null, ti->name, QString::null)
-        != QDialog::Accepted)
+      int result;
+
+      bool busy = kernel->kbp()->isBusy(); // hackish, but used elsewhere
+      if (busy) kernel->kbp()->idle();
+      result = KIO::PasswordDialog::getNameAndPassword(ti->user, ti->pass,
+	&b, i18n("You need to supply a username and a password to use this "
+	     "SMTP server."), FALSE, QString::null, ti->name, QString::null);
+      if (busy) kernel->kbp()->busy();
+
+      if ( result != QDialog::Accepted )
       {
         abort();
         return FALSE;
