@@ -2127,10 +2127,13 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                             htmlStr += i18n( "Message was signed by %1." )
                                     .arg( signer );
                     } else {
-                        bool dateOK = (0 < block.creationTime.tm_year);
-                        QDate created( 1900 + block.creationTime.tm_year,
-                                    block.creationTime.tm_mon,
-                                    block.creationTime.tm_mday );
+                        bool dateOK = ( 0 < block.creationTime.tm_year &&
+                                        block.creationTime.tm_year < 3000 );
+                        QDate created;
+                        if ( dateOK )
+                          created = QDate( 1900 + block.creationTime.tm_year,
+                                           block.creationTime.tm_mon,
+                                           block.creationTime.tm_mday );
                         if( dateOK && created.isValid() ) {
                             if( signer.isEmpty() ) {
                                 if( onlyShowKeyURL )
@@ -2187,10 +2190,13 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                 }
                 else {
                   if( !block.keyId.isEmpty() ) {
-                    bool dateOK = (0 < block.creationTime.tm_year);
-                    QDate created( 1900 + block.creationTime.tm_year,
-                                  block.creationTime.tm_mon,
-                                  block.creationTime.tm_mday );
+                    bool dateOK = ( 0 < block.creationTime.tm_year &&
+                                    block.creationTime.tm_year < 3000 );
+                    QDate created;
+                    if ( dateOK )
+                      created = QDate( 1900 + block.creationTime.tm_year,
+                                       block.creationTime.tm_mon,
+                                       block.creationTime.tm_mday );
                     if( dateOK && created.isValid() )
                         htmlStr += i18n( "Message was signed with unknown key %1, created %2." )
                                 .arg( keyWithWithoutURL ).arg( created.toString( Qt::LocalDate ) );
