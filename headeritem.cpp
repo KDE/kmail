@@ -200,13 +200,13 @@ QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
   }
 
   QPixmap res( width, height );
-  QBitmap mask( width, height );
+  QBitmap mask( width, height, true );
 
   int x = 0;
   for ( PixmapList::ConstIterator it = pixmaps.begin();
       it != pixmaps.end(); ++it ) {
-    bitBlt( &res, x, 0, &(*it) );
-    bitBlt( &mask, x, 0, (*it).mask() );
+    bitBlt( &res, x, (height - (*it).height()) / 2, &(*it) );
+    bitBlt( &mask, x, (height - (*it).height()) / 2, (*it).mask() );
     x += (*it).width();
   }
 
