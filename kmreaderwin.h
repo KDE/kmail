@@ -443,7 +443,6 @@ private:
   KMail::CSSHelper * mCSSHelper;
   bool mUseFixedFont;
   bool mPrinting;
-
   bool mShowColorbar;
   //bool mShowCompleteMessage;
   QStringList mTempFiles;
@@ -466,6 +465,7 @@ private:
   bool mAtmUpdate;
   int mChoice;
   unsigned long mWaitingForSerNum;
+  float mSavedRelativePosition;
 };
 
 

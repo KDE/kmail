@@ -505,7 +505,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mStartIMChatAction( 0 ),
     mSelectAllAction( 0 ),
     mToggleFixFontAction( 0 ),
-    mHtmlWriter( 0 )
+    mHtmlWriter( 0 ),
+    mSavedRelativePosition( 0 )
 {
   mSplitterSizes << 180 << 100;
   mMimeTreeMode = 1;
@@ -1308,6 +1309,13 @@ void KMReaderWin::updateReaderWin()
     htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
   }
+
+  if (mSavedRelativePosition)
+  {
+    QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
+    scrollview->setContentsPos ( 0, qRound(  scrollview->contentsHeight() * mSavedRelativePosition ) );
+    mSavedRelativePosition = 0;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1827,6 +1835,9 @@ void KMReaderWin::slotFind()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
+  QScrollView * scrollview = static_cast<QScrollView *>(mViewer->widget());
+  mSavedRelativePosition = (float)scrollview->contentsY() / scrollview->contentsHeight();
+
   mUseFixedFont = !mUseFixedFont;
   update(true);
 }
