@@ -162,13 +162,15 @@ TransactionItem::TransactionItem( QWidget* parent,
   mItemLabel = new QLabel( item->label(), h );
   h->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
 
-  mProgress = new QProgressBar( 100, h );
-  mProgress->setProgress( item->progress() );
+
   if ( item->canBeCanceled() ) {
     mCancelButton = new QPushButton( SmallIcon( "cancel" ), QString::null, h );
     connect ( mCancelButton, SIGNAL( clicked() ),
               this, SLOT( slotItemCanceled() ));
   }
+  mProgress = new QProgressBar( 100, h );
+  mProgress->setProgress( item->progress() );
+
   h = new QHBox( this );
   h->setSpacing( 5 );
   h->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
