@@ -3563,7 +3563,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       QString brokenAddress;
       KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( to()), brokenAddress );
       if ( errorCode != KPIM::AddressOk ) {
-        QString errorMsg( "<qt><p><b>" + brokenAddress + 
+        QString errorMsg( "<qt><p><b>" + brokenAddress +
                           "</b></p><p>" + KPIM::emailParseResultToString( errorCode ) +
                           "</p></qt>" );
         KMessageBox::sorry( this, errorMsg, i18n("Invalid Email Address") );
@@ -3582,7 +3582,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
         return;
       }
     }
- 
+
     if ( !bcc().isEmpty() ) {
       QString brokenAddress;
       KPIM::EmailParseResult errorCode = KMMessage::isValidEmailAddressList( KMMessage::expandAliases( bcc()), brokenAddress);
@@ -3985,6 +3985,17 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( KPIM::getFirstEmailAddress( from() ).isEmpty() )
     mShowHeaders |= HDR_FROM;
   if ( mEdtReplyTo ) mEdtReplyTo->setText(ident.replyToAddr());
+
+  if ( mRecipientsEditor ) {
+    // remove BCC of old identity and add BCC of new identity (if they differ)
+    const KPIM::Identity & oldIdentity =
+      kmkernel->identityManager()->identityForUoid( mId );
+    if ( oldIdentity.bcc() != ident.bcc() ) {
+      mRecipientsEditor->removeRecipient( oldIdentity.bcc(), Recipient::Bcc );
+      mRecipientsEditor->addRecipient( ident.bcc(), Recipient::Bcc );
+    }
+  }
+
   // don't overwrite the BCC field under certain circomstances
   // NOT edited and preset BCC from the identity
   if( mEdtBcc && !mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
