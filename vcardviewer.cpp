@@ -23,9 +23,9 @@
 #include <addresseeview.h>
 using KPIM::AddresseeView;
 
-#include <kabc/vcardtool.h>
+#include <kabc/vcardconverter.h>
 #include <kabc/addressee.h>
-using KABC::VCardTool;
+using KABC::VCardConverter;
 using KABC::Addressee;
 
 #include <klocale.h>
@@ -43,7 +43,7 @@ KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const cha
   setMainWidget(mAddresseeView);
 
   Addressee::List al;
-  VCardTool t;
+  VCardConverter t;
     
   al = t.parseVCards( vCard );
   if ( !al.empty() ) 
