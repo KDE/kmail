@@ -87,7 +87,7 @@ void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 			      const QValueList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
-  if ( mdn && !kmkernel->msgSender()->send( mdn ) ) {
+  if ( mdn && !kmkernel->msgSender()->send( mdn, FALSE ) ) {
     kdDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
     //delete mdn;
   }
@@ -1366,7 +1366,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send(msg) ) {
+  if ( !kmkernel->msgSender()->send( msg, FALSE ) ) {
     kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
@@ -1407,7 +1407,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kmkernel->msgSender()->send(msg) ) {
+  if ( !kmkernel->msgSender()->send( msg, FALSE ) ) {
     kdDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
