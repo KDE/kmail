@@ -11,7 +11,16 @@
 
 #include <qdatetime.h>
 
-//#include <string.h>
+
+#include <qglobal.h>
+#if QT_VERSION > 290
+// new regexp
+#include <qregexp.h>
+#define QRegExp3 QRegExp
+#else
+// old regexp
+#include <qregexp3.h>
+#endif
 
 static const char* funcConfigNames[] =
   { "equals", "not-equal", "contains", "contains-not", "regexp",
@@ -139,10 +148,16 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     return ( msgContents.find(mContents, FALSE) < 0 );
 
   case KMSearchRule::FuncRegExp:
-    return (msgContents.find(QRegExp(mContents, FALSE)) >= 0);
+    {
+      QRegExp3 regexp(mContents, FALSE);
+      return (regexp.search( msgContents ) >= 0);
+    }
 
   case KMSearchRule::FuncNotRegExp:
-    return (msgContents.find(QRegExp(mContents, FALSE)) < 0);
+    {
+      QRegExp3 regexp(mContents, FALSE);
+      return (regexp.search( msgContents ) < 0);
+    }
 
   case FuncIsGreater:
     if (numerical)
