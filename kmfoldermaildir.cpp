@@ -418,8 +418,9 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 	kdDebug(5006) << "Undoing changes" << endl;
 	truncate( QFile::encodeName(indexLocation()), revert );
       }
-      kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
-      exit(1);
+      KMKernel::self()->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
+      // exit(1); // don't ever use exit(), use the above!
+
       /* This code may not be 100% reliable
       bool busy = kernel->kbp()->isBusy();
       if (busy) kernel->kbp()->idle();
