@@ -1,8 +1,32 @@
-/* Action Scheduler
- *
- * Author: Don Sanders <sanders@kde.org>
- * License: GPL
- */
+/*  Action Scheduler
+   
+    This file is part of KMail, the KDE mail client.
+    Copyright (c) Don Sanders <sanders@kde.org>
+
+    KMail is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License, version 2, as
+    published by the Free Software Foundation.
+
+    KMail is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+    In addition, as a special exception, the copyright holders give
+    permission to link the code of this program with any edition of
+    the Qt library by Trolltech AS, Norway (or with modified versions
+    of Qt that use the same license as Qt), and distribute linked
+    combinations including the two.  You must obey the GNU General
+    Public License in all respects for all of the code used other than
+    Qt.  If you modify this file, you may extend this exception to
+    your version of the file, but you are not obligated to do so.  If
+    you do not wish to do so, delete this exception statement from
+    your version.
+*/
 
 #include "actionscheduler.h"
 
@@ -52,7 +76,7 @@ ActionScheduler::ActionScheduler(KMFilterMgr::FilterSet set,
   connect( processMessageTimer, SIGNAL(timeout()), this, SLOT(processMessage()));
   filterMessageTimer = new QTimer( this );
   connect( filterMessageTimer, SIGNAL(timeout()), this, SLOT(filterMessage()));
-  
+
   for (filter = filters.first(); filter; filter = filters.next())
     mFilters.append( *filter );
   mDestFolder = 0;
@@ -75,7 +99,7 @@ ActionScheduler::~ActionScheduler()
 {
   tempCloseFolders();
   mSrcFolder->close();
-  
+
   if (mDeleteSrcFolder)
     tempFolderMgr->remove(mSrcFolder);
 
@@ -133,7 +157,7 @@ int ActionScheduler::tempOpenFolder( KMFolder* aFolder )
   tempCloseFoldersTimer->stop();
   if ( aFolder == mSrcFolder.operator->() )
     return 0;
-  
+
   int rc = aFolder->open();
   if (rc)
     return rc;
@@ -242,7 +266,7 @@ void ActionScheduler::finish()
     emit result( mResult );
     return;
   }
-      
+
   if (!mFetchExecuting && !mExecuting) {
     // If an error has occurred and a permanent source folder has
     // been set then move all the messages left in the source folder
@@ -253,7 +277,7 @@ void ActionScheduler::finish()
 	KMMessage *msg = mSrcFolder->getMsg( 0 );
 	mDestFolder->moveMsg( msg );
       }
-      
+
       // Wait a little while before closing temp folders, just in case
       // new messages arrive for filtering.
       tempCloseFoldersTimer->start( 60*1000, true );
@@ -273,7 +297,7 @@ void ActionScheduler::finish()
       delete this;
   }
   // else a message may be in the process of being fetched or filtered
-  // wait until both of these commitments are finished  then this 
+  // wait until both of these commitments are finished  then this
   // method should be called again.
 }
 
@@ -399,7 +423,7 @@ void ActionScheduler::processMessage()
     mExecuting = false;
     return;
   }
-  
+
   MessageProperty::setFiltering( *mMessageIt, true );
   MessageProperty::setFilterHandler( *mMessageIt, this );
   MessageProperty::setFilterFolder( *mMessageIt, mDestFolder );
@@ -527,13 +551,13 @@ void ActionScheduler::moveMessage()
     if (!folder) // no filter folder specified leave in current place
       folder = orgMsg->parent();
   }
-  
+
   mIgnore = true;
   assert( msg->parent() == mSrcFolder.operator->() );
   mSrcFolder->take( mSrcFolder->find( msg ) );
   mSrcFolder->addMsg( msg );
   mIgnore = false;
-  
+
   if (msg && kmkernel->folderIsTrash( folder ))
     KMFilterAction::sendMDN( msg, KMime::MDN::Deleted );
 
