@@ -417,7 +417,7 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
         curNode_replacedType    = DwMime::kTypeText;
         curNode_replacedSubType = DwMime::kSubtypePlain;
       }
-        
+
 
       switch( curNode_replacedType ){
       case DwMime::kTypeText: {
@@ -729,7 +729,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     sigMeta.extended_info_count = 0;
                     sigMeta.nota_xml            = 0;
                     bool passphraseError;
-                    
+
                     bool bOkDecrypt = okDecryptMIME( reader, useThisCryptPlug,
                                        *data,
                                        decryptedData,
@@ -738,7 +738,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                        true,
                                        passphraseError,
                                        messagePart.errorText );
-                                       
+
                     if( bOkDecrypt ){
                       // paint the frame
                       if( reader ) {
@@ -749,7 +749,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                                                        useThisCryptPlug,
                                                                        curNode->trueFromAddress() ) );
                       }
-                      
+
                       // Note: Multipart/Encrypted might also be signed
                       //       without encapsulating a nicely formatted
                       //       ~~~~~~~                 Multipart/Signed part.
@@ -781,7 +781,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                                     &*decryptedData,
                                                     "encrypted data" );
                       }
-                      
+
                       if( reader )
                         reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                     }
@@ -1589,7 +1589,7 @@ KMReaderWin::KMReaderWin(KMMimePartTree* mimePartTree,
 
   mCodec = 0;
   mAutoDetectEncoding = true;
-    
+
   if(getenv("KMAIL_DEBUG_READER_CRYPTO") != NULL){
     QCString cE = getenv("KMAIL_DEBUG_READER_CRYPTO");
     mDebugReaderCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
@@ -2399,6 +2399,7 @@ void KMReaderWin::parseMsg(void)
                                           "border-width: 0px; "
                                           "align: left }\n"
                   "th.fancyHeaderDtls { padding: 0px; "
+				       "white-space: nowrap; "
                                        "border-spacing: 0px; "
                                        "text-align: left; "
                                        "vertical-align: top; }\n"
@@ -2484,7 +2485,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     QByteArray signaturetext;
     bool signatureIsBinary = false;
     int signatureLen = 0;
-    
+
     if( doCheck ){
       if( data )
         cleartext = data->dwPart()->AsString().c_str();
@@ -2666,7 +2667,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                            useThisCryptPlug,
                                                            fromAddress ) );
         bIsOpaqueSigned = true;
-        
+
         if( doCheck ){
           QCString deb;
           deb = "\n\nN E W    C O N T E N T = \"";
@@ -2674,7 +2675,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
           deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
           kdDebug(5006) << deb << endl;
         }
-        
+
         insertAndParseNewChildNode( reader,
                                     resultString,
                                     useThisCryptPlug,
@@ -2895,7 +2896,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
     int cipherLen = ciphertext.size();
-    
+
     if( reader && reader->mDebugReaderCrypto ){
       QFile fileC( "dat_04_reader.encrypted" );
       if( fileC.open( IO_WriteOnly ) ) {
@@ -3230,7 +3231,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
   if( mRootNode && DwMime::kTypeApplication       == rootNodeCntType
                 && DwMime::kSubtypePgpClearsigned == mRootNode->subType() )
     rootNodeCntType = DwMime::kTypeText;
-    
+
   // if necessary restore original mRootNode
   if(onlyProcessHeaders) {
     delete mRootNode;
@@ -4677,7 +4678,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
   kernel->kbp()->busy();
   {
     KMReaderWin* win = new KMReaderWin; //new reader
-    
+
     QString partTypeStr    = aMsgPart->typeStr().lower();
     QString partSubtypeStr = aMsgPart->subtypeStr().lower();
     if(    DwMime::kTypeApplication       == aMsgPart->type()
@@ -4685,7 +4686,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       partTypeStr    = "text";
       partSubtypeStr = "plain";
     }
-    
+
     if (partTypeStr == "message")
     {               // if called from compose win
       KMMessage* msg = new KMMessage;
