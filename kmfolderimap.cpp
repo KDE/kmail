@@ -52,6 +52,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
     mIsSystemFolder = TRUE;
     mLabel = i18n("inbox");
   }
+  mNoContent = config->readBoolEntry("NoContent", FALSE);
 }
 
 KMFolderImap::~KMFolderImap()
@@ -60,6 +61,7 @@ KMFolderImap::~KMFolderImap()
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UidValidity", mUidValidity);
   config->writeEntry("ImapPath", mImapPath);
+  config->writeEntry("NoContent", mNoContent);
 
   if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
 }
