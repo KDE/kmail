@@ -2095,10 +2095,10 @@ void KMSaveAttachmentsCommand::slotSaveAll()
 
     if ( !curUrl.isEmpty() ) {
       if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
-        if ( KMessageBox::warningYesNo( parentWidget(),
+        if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" )
               .arg( curUrl.fileName() ),
-              i18n( "KMail Warning" ) ) == KMessageBox::No ) {
+              i18n( "File Already Exists" ), i18n("Overwrite") ) == KMessageBox::Cancel) {
           continue;
         }
       }
