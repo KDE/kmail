@@ -1161,6 +1161,9 @@ kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tre
   }
   htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard) );
 
+  // ### extracted from parseObjectTree
+  if ( kmkernel->groupware().isEnabled() )
+    emit signalGroupwareShow( false );
 
   // show message content
   ObjectTreeParser otp( this );
@@ -1699,6 +1702,24 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   win->show();
 }
 
+
+void KMReaderWin::setMsgPart( partNode * node ) {
+  // ### extracted from parseObjectTree...
+  if ( kmkernel->groupware().isEnabled() )
+    emit signalGroupwareShow( false );
+  htmlWriter()->reset();
+  mColorBar->hide();
+  htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
+  htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) );
+  // end ###
+  if ( node ) {
+    ObjectTreeParser otp( this, 0, true );
+    otp.parseObjectTree( node );
+  }
+  // ### this, too
+  htmlWriter()->queue( "</body></html>" );
+  htmlWriter()->flush();
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,

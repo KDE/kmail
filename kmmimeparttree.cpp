@@ -1,7 +1,5 @@
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 #include "kmmimeparttree.h"
 
@@ -10,8 +8,6 @@
 #include "kmmsgpart.h"
 #include "kmkernel.h"
 #include "kmcommands.h"
-#include "objecttreeparser.h"
-using KMail::ObjectTreeParser;
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -78,19 +74,13 @@ void KMMimePartTree::restoreLayoutIfPresent() {
 
 void KMMimePartTree::itemClicked( QListViewItem* item )
 {
-    KMMimePartTreeItem* i = dynamic_cast<KMMimePartTreeItem*>( item );
-    if ( 0 == i ) {
-        kdDebug(5006) << "Item was not a KMMimePartTreeItem!" << endl;
-    }
-    else {
-        kdDebug(5006) << "\n**\n** KMMimePartTree::itemClicked() **\n**" << endl;
-        if( mReaderWin->mRootNode == i->node() )
-          mReaderWin->update( true ); // Force update
-        else {
-          ObjectTreeParser otp( mReaderWin, 0, true );
-	  otp.parseObjectTree( i->node() );
-	}
-    }
+  if ( const KMMimePartTreeItem * i = dynamic_cast<KMMimePartTreeItem*>( item ) ) {
+    if( mReaderWin->mRootNode == i->node() )
+      mReaderWin->update( true ); // Force update
+    else
+      mReaderWin->setMsgPart( i->node() );
+  } else
+    kdWarning(5006) << "Item was not a KMMimePartTreeItem!" << endl;
 }
 
 

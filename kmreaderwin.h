@@ -129,6 +129,8 @@ public:
   void setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
 		   const QString& aFileName, const QString& pname );
 
+  void setMsgPart( partNode * node );
+
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
   void showHideMimeTree( bool isPlainTextTopLevel );

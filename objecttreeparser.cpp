@@ -190,29 +190,6 @@ namespace KMail {
 		  << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
 		  << " ) **\n**" << endl;
 
-    // make widgets visible that might have been hidden by
-    // previous groupware activation
-
-    // ### (mmutz) This type of code needs to go to whereever
-    // ### parseObjectTree is called from in the first place!
-    if ( mReader && kmkernel->groupware().isEnabled() )
-      emit mReader->signalGroupwareShow( false );
-
-    if ( showOnlyOneMimePart() && mReader ) {
-      htmlWriter()->reset();
-
-      mReader->mColorBar->hide();
-
-      // start the new viewer content
-      htmlWriter()->begin( cssHelper()->cssDefinitions( mReader->isFixedFont() ) );
-      htmlWriter()->write( cssHelper()->htmlHead( mReader->isFixedFont() ) );
-      if ( !node ) { // no node, no content:
-	htmlWriter()->queue("</body></html>");
-	htmlWriter()->flush();
-      }
-    }
-    // end of ###
-
     if ( !node )
       return;
 
@@ -298,10 +275,6 @@ namespace KMail {
       node->setCryptoType( partNode::CryptoTypeNone );
     // end of ###
 
-    if ( mReader && showOnlyOneMimePart() ) {
-      htmlWriter()->queue("</body></html>");
-      htmlWriter()->flush();
-    }
   }
 
 
@@ -515,7 +488,6 @@ namespace KMail {
       messagePart.creationTime.tm_mday = 1;
     }
 
-    QString unknown( i18n("(unknown)") );
     if ( !doCheck || !data ){
       if ( cleartextData || new_cleartext ) {
         if ( mReader )
@@ -557,7 +529,7 @@ namespace KMail {
           txt.append( "</i>" );
         }
         else
-          txt.append( unknown );
+          txt.append( i18n("(unknown)") );
         if ( mReader )
           htmlWriter()->queue(txt);
       }
@@ -1497,6 +1469,7 @@ namespace KMail {
 
     DwHeaders & headers( curNode->dwPart()->Headers() );
     QCString ctypStr( headers.ContentType().AsString().c_str() );
+    // ### ugh.
     ctypStr.replace( "\"", "" );
     bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
     bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
