@@ -1042,6 +1042,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   aMsg->setStatusFields();
   msgText = aMsg->asString();
+  msgText.replace(QRegExp("\nFrom "),"\n>From ");
   len = msgText.length();
 
   assert(mStream != NULL);

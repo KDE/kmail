@@ -254,7 +254,8 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
   resultPos = (char*)result.data();
   if (strPos) for (; (ch=*strPos)!='\0'; strPos++)
   {
-    if (ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0')
+    if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0')
+       && !(ch=='>' && aStr.mid(strPos-aStr.data()-1,6)=="\n>From"))
       *resultPos++ = ch;
   }
   *resultPos = '\0'; // terminate zero for casting
