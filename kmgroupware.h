@@ -160,9 +160,10 @@ public slots:
   /** Delete and sync the local IMAP cache  */
   void slotInvalidateIMAPFolders();
 
+public:
+  void readConfigInternal();
 protected:
   void saveActionEnable( const QString& name, bool on ) const;
-  void readConfigInternal();
 
   // Figure out if a vCal is a todo, event or neither
   enum VCalType { vCalEvent, vCalTodo, vCalUnknown };

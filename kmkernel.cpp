@@ -690,7 +690,7 @@ void KMKernel::init()
       cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
-  mGroupware.readConfigStartup();
+  mGroupware.readConfigInternal();
   // filterMgr->dump();
 #if 0 //disbabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
