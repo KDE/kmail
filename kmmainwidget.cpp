@@ -3041,7 +3041,19 @@ void KMMainWidget::removeDuplicates()
   mFolder->open();
   for (int i = mFolder->count() - 1; i >= 0; --i) {
     QString id = (*mFolder)[i]->msgIdMD5();
-    idMD5s[id].append( i );
+    if ( !id.isEmpty() ) {
+      QString subjMD5 = (*mFolder)[i]->strippedSubjectMD5();
+      int other = -1;
+      if ( idMD5s.contains(id) ) 
+        other = idMD5s[id].first();
+      else
+        idMD5s[id].append( i );
+      if ( other != -1 ) {
+        QString otherSubjMD5 = (*mFolder)[other]->strippedSubjectMD5();
+        if (otherSubjMD5 == subjMD5)
+          idMD5s[id].append( i );  
+      }
+    }
   }
   QMap< QString, QValueList<int> >::Iterator it;
   for ( it = idMD5s.begin(); it != idMD5s.end() ; ++it ) {
