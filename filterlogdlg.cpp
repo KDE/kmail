@@ -53,7 +53,7 @@ using namespace KMail;
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )
 : KDialogBase( parent, "FilterLogDlg", false, i18n( "Filter Log Viewer" ),
-              User1|User2|Close, Close, true, i18n("Clea&r"), i18n("&Save...") )
+              User1|User2|Close, Close, true, KStdGuiItem::clear(), KStdGuiItem::saveAs() )
 {
   setWFlags( WDestructiveClose );
   QVBox *page = makeVBoxMainWidget();
@@ -75,7 +75,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
       FilterLog::instance()->isContentTypeEnabled( FilterLog::ruleResult ) );
   connect( mLogRuleEvaluationBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogRuleEvaluation(void)) );
-  QWhatsThis::add( mLogRuleEvaluationBox, 
+  QWhatsThis::add( mLogRuleEvaluationBox,
       i18n( "You can control the feedback in the log concerning the "
             "evaluation of the filter rules of applied filters: "
             "having this option checked will give detailed feedback "
@@ -87,7 +87,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogActiveBox->setChecked( FilterLog::instance()->isLogging() );
   connect( mLogActiveBox, SIGNAL(clicked()),
             this, SLOT(slotSwitchLogState(void)) );
-  QWhatsThis::add( mLogActiveBox, 
+  QWhatsThis::add( mLogActiveBox,
       i18n( "You can turn logging of filter activities on and off here. "
             "Of course, log data is collected and shown only when logging "
             "is turned on. " ) );
@@ -103,7 +103,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
   mLogMemLimitSpin->setSpecialValueText( i18n("unlimited") );
   connect( mLogMemLimitSpin, SIGNAL(valueChanged(int)),
             this, SLOT(slotChangeLogMemLimit(int)) );
-  QWhatsThis::add( mLogMemLimitSpin, 
+  QWhatsThis::add( mLogMemLimitSpin,
       i18n( "Collecting log data uses memory to temporarily store the "
 	    "log data; here you can limit the maximum amount of memory "
 	    "to be used: if the size of the collected log data exceeds "
