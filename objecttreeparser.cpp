@@ -672,7 +672,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
     dumpToFile( "dat_04_reader.encrypted", ciphertext.data(), ciphertext.size() );
 
-#ifndef NDEBUG
+#ifdef MARCS_DEBUG
     QCString deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
     if ( cipherIsBinary )
@@ -2702,7 +2702,7 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
     return node->msgPart().codec();
   }
 
-#ifndef NDEBUG
+#ifdef MARCS_DEBUG
   void ObjectTreeParser::dumpToFile( const char * filename, const char * start,
 				     size_t len ) {
     assert( filename );
