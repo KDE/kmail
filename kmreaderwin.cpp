@@ -1316,8 +1316,13 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     fileName = "unnamed";
   fname += "/" + fileName;
 
-  if( !kByteArrayToFile( aMsgPart->bodyDecodedBinary(), fname, false, false,
-			false ) )
+  QByteArray data = aMsgPart->bodyDecodedBinary();
+  size_t size = data.size();
+  if ( aMsgPart->type() == DwMime::kTypeText ) {
+    // convert CRLF to LF before writing text attachments to disk
+    size = KMFolder::crlf2lf( data.data(), size );
+  }
+  if( !kBytesToFile( data.data(), size, fname, false, false, false ) )
     return QString::null;
 
   mTempFiles.append( fname );
