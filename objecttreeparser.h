@@ -106,8 +106,14 @@ namespace KMail {
 			QString& aErrorText );
 
     bool processTextType( int subtype, partNode * node, bool showOneMimePart,
+			  bool keepEncryptions, bool includeSignatures,
 			  bool & isInlineSigned, bool & isInlineEncrypted,
 			  bool & bNeverDisplayInline );
+
+    bool processMultiPartType( int subtype, partNode * node, bool showOneMimePart,
+			       bool keepEncryptions, bool includeSignatures,
+			       bool & isInlineSigned, bool & isInlineEncrypted,
+			       bool & bNeverDisplayInline );
 
   private:
     KMReaderWin * mReader;

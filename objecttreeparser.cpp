@@ -390,322 +390,15 @@ public:
 	switch( curNode_replacedType ){
 	case DwMime::kTypeText:
 	  bDone = processTextType( curNode_replacedSubType, curNode,
-				   showOneMimePart, isInlineSigned,
+				   showOneMimePart, keepEncryptions,
+				   includeSignatures, isInlineSigned,
 				   isInlineEncrypted, bNeverDisplayInline );
 	  break;
-	case DwMime::kTypeMultipart: {
-	  kdDebug(5006) << "* multipart *" << endl;
-          switch( curNode_replacedSubType ){
-          case DwMime::kSubtypeMixed: {
-	    kdDebug(5006) << "mixed" << endl;
-	    if( curNode->mChild ){
-
-	      // Might be a Kroupware message,
-	      // let's look for the parts contained in the mixture:
-	      partNode* dataPlain =
-		curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
-	      if( dataPlain ) {
-		partNode* dataCal =
-		  curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal, false, true );
-		if( dataCal ){
-		  // Kroupware message found,
-		  // we ignore the plain text but process the calendar part.
-		  dataPlain->mWasProcessed = true;
-		  parseObjectTree( dataCal,
-				   false,
-				   keepEncryptions,
-				   includeSignatures );
-		  bDone = true;
-		}else {
-		  partNode* dataTNEF =
-		    curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeMsTNEF, false, true );
-		  if( dataTNEF ){
-		    // encoded Kroupware message found,
-		    // we ignore the plain text but process the MS-TNEF part.
-		    dataPlain->mWasProcessed = true;
-		    parseObjectTree( dataTNEF,
-				     false,
-				     keepEncryptions,
-				     includeSignatures );
-		    bDone = true;
-		  }
-		}
-	      }
-	      if( !bDone ) {
-		parseObjectTree( curNode->mChild,
-				 false,
-				 keepEncryptions,
-				 includeSignatures );
-		bDone = true;
-	      }
-	    }
-	  }
-            break;
-          case DwMime::kSubtypeAlternative: {
-	    kdDebug(5006) << "alternative" << endl;
-	    if( curNode->mChild ) {
-	      partNode* dataHtml =
-		curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeHtml, false, true );
-	      partNode* dataPlain =
-		curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
-
-	      if( !mReader || (mReader->htmlMail() && dataHtml) ) {
-		if( dataPlain )
-		  dataPlain->mWasProcessed = true;
-		parseObjectTree( dataHtml,
-				 false,
-				 keepEncryptions,
-				 includeSignatures );
-	      }
-	      else if( !mReader || (!mReader->htmlMail() && dataPlain) ) {
-		if( dataHtml )
-		  dataHtml->mWasProcessed = true;
-		parseObjectTree( dataPlain,
-				 false,
-				 keepEncryptions,
-				 includeSignatures );
-	      }
-	      else
-		parseObjectTree( curNode->mChild,
-				 true,
-				 keepEncryptions,
-				 includeSignatures );
-	      bDone = true;
-	    }
-	  }
-            break;
-          case DwMime::kSubtypeDigest: {
-	    kdDebug(5006) << "digest" << endl;
-	  }
-            break;
-          case DwMime::kSubtypeParallel: {
-	    kdDebug(5006) << "parallel" << endl;
-	  }
-            break;
-          case DwMime::kSubtypeSigned: {
-	    kdDebug(5006) << "signed" << endl;
-	    CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
-
-
-	    // ATTENTION: We currently do _not_ support "multipart/signed" with _multiple_ signatures.
-	    //            Instead we expect to find two objects: one object containing the signed data
-	    //            and another object containing exactly one signature, this is determined by
-	    //            looking for an "application/pgp-signature" object.
-	    if( !curNode->mChild )
-	      kdDebug(5006) << "       SORRY, signed has NO children" << endl;
-	    else {
-	      kdDebug(5006) << "       signed has children" << endl;
-
-	      bool plugFound = false;
-
-	      // ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-	      partNode* data = 0;
-	      partNode* sign;
-	      sign = curNode->mChild->findType(      DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
-	      if( sign ) {
-		kdDebug(5006) << "       OpenPGP signature found" << endl;
-		data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
-		if( data ){
-		  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-		  plugFound = foundMatchingCryptPlug( "openpgp", "OpenPGP" );
-		}
-	      }
-	      else {
-		sign = curNode->mChild->findType(      DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
-		if( sign ) {
-		  kdDebug(5006) << "       S/MIME signature found" << endl;
-		  data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
-		  if( data ){
-		    curNode->setCryptoType( partNode::CryptoTypeSMIME );
-		    plugFound = foundMatchingCryptPlug( "smime", "S/MIME" );
-		  }
-		} else {
-		  kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
-		}
-	      }
-
-	      /*
-		---------------------------------------------------------------------------------------------------------------
-	      */
-
-	      if( sign && data ) {
-		kdDebug(5006) << "       signed has data + signature" << endl;
-		curNode->setSigned( true );
-	      }
-
-	      if( !includeSignatures ) {
-		if( !data )
-		  data = curNode->mChild;
-		QCString cstr( data->msgPart().bodyDecoded() );
-		if( mReader )
-		  mReader->writeBodyStr(cstr,
-				       mReader->mCodec,
-				       curNode->trueFromAddress(),
-				       &isInlineSigned, &isInlineEncrypted);
-		mResultString += cstr;
-		bDone = true;
-	      } else if( sign && data && plugFound ) {
-		// Set the signature node to done to prevent it from being processed
-		// by parseObjectTree( data ) called from writeOpaqueOrMultipartSignedData().
-		sign->mWasProcessed = true;
-		writeOpaqueOrMultipartSignedData( data,
-						  *sign,
-						  curNode->trueFromAddress() );
-		bDone = true;
-	      }
-	    }
-	    setCryptPlugWrapper( oldUseThisCryptPlug );
-	  }
-            break;
-          case DwMime::kSubtypeEncrypted: {
-	    kdDebug(5006) << "encrypted" << endl;
-	    CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
-	    if( keepEncryptions ) {
-	      curNode->setEncrypted( true );
-	      QCString cstr( curNode->msgPart().bodyDecoded() );
-	      if( mReader )
-		mReader->writeBodyStr(cstr,
-				     mReader->mCodec,
-				     curNode->trueFromAddress(),
-				     &isInlineSigned, &isInlineEncrypted);
-	      mResultString += cstr;
-	      bDone = true;
-	    } else if( curNode->mChild ) {
-
-	      bool isOpenPGP = false;
-	      bool plugFound = false;
-
-	      /*
-		ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-	      */
-	      partNode* data =
-		curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
-	      if( data ){
-		isOpenPGP = true;
-		curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-		plugFound = foundMatchingCryptPlug( "openpgp", "OpenPGP" );
-	      }
-	      if( !data ) {
-		data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
-		if( data ){
-		  curNode->setCryptoType( partNode::CryptoTypeSMIME );
-		  plugFound = foundMatchingCryptPlug( "smime", "S/MIME" );
-		}
-	      }
-	      /*
-		---------------------------------------------------------------------------------------------------------------
-	      */
-
-	      if( data ) {
-		if( data->mChild ) {
-		  kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-		  parseObjectTree( data->mChild,
-				   false,
-				   keepEncryptions,
-				   includeSignatures );
-		  bDone = true;
-		  kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
-		}
-		else if( plugFound ) {
-		  kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
-		  PartMetaData messagePart;
-		  curNode->setEncrypted( true );
-		  QCString decryptedData;
-		  bool signatureFound;
-		  struct CryptPlugWrapper::SignatureMetaData sigMeta;
-		  sigMeta.status              = 0;
-		  sigMeta.extended_info       = 0;
-		  sigMeta.extended_info_count = 0;
-		  sigMeta.nota_xml            = 0;
-		  bool passphraseError;
-
-		  bool bOkDecrypt = okDecryptMIME( *data,
-						   decryptedData,
-						   signatureFound,
-						   sigMeta,
-						   true,
-						   passphraseError,
-						   messagePart.errorText );
-
-		  if( bOkDecrypt ){
-		    // paint the frame
-		    if( mReader ) {
-		      messagePart.isDecryptable = true;
-		      messagePart.isEncrypted = true;
-		      messagePart.isSigned = false;
-		      mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								     cryptPlugWrapper(),
-								     curNode->trueFromAddress() ) );
-		    }
-
-		    // Note: Multipart/Encrypted might also be signed
-		    //       without encapsulating a nicely formatted
-		    //       ~~~~~~~                 Multipart/Signed part.
-		    //                               (see RFC 3156 --> 6.2)
-		    // In this case we paint a _2nd_ frame inside the
-		    // encryption frame, but we do _not_ show a respective
-		    // encapsulated MIME part in the Mime Tree Viewer
-		    // since we do want to show the _true_ structure of the
-		    // message there - not the structure that the sender's
-		    // MUA 'should' have sent.  :-D       (khz, 12.09.2002)
-		    //
-		    if( signatureFound ){
-		      writeOpaqueOrMultipartSignedData( 0,
-							*curNode,
-							curNode->trueFromAddress(),
-							false,
-							&decryptedData,
-							&sigMeta,
-							false );
-		      curNode->setSigned( true );
-		    }else{
-		      insertAndParseNewChildNode( *curNode,
-						  &*decryptedData,
-						  "encrypted data" );
-		    }
-
-		    if( mReader )
-		      mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
-		  } else {
-		    if( mReader ) {
-		      if( passphraseError ) {
-			messagePart.isDecryptable = false;
-			messagePart.isEncrypted = true;
-			messagePart.isSigned = false;
-			mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								       cryptPlugWrapper(),
-								       curNode->trueFromAddress() ) );
-		      }
-		      mReader->writeHTMLStr(mReader->mCodec->toUnicode( decryptedData ));
-		      if( passphraseError )
-			mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
-		    }
-		    mResultString += decryptedData;
-		  }
-		  data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
-		  bDone = true;
-		}
-	      }
-	    }
-	    setCryptPlugWrapper( oldUseThisCryptPlug );
-	  }
-            break;
-          default : {
-	    kdDebug(5006) << "(  unknown subtype  )" << endl;
-	  }
-            break;
-          }
-          //  Multipart object not processed yet?  Just parse the children!
-          if( !bDone ){
-            if( curNode && curNode->mChild ) {
-              parseObjectTree( curNode->mChild,
-                               false,
-                               keepEncryptions,
-                               includeSignatures );
-              bDone = true;
-            }
-          }
-        }
+	case DwMime::kTypeMultipart:
+	  bDone = processMultiPartType( curNode_replacedSubType, curNode,
+					showOneMimePart, keepEncryptions,
+					includeSignatures, isInlineSigned,
+					isInlineEncrypted, bNeverDisplayInline );
 	  break;
 	case DwMime::kTypeMessage: {
 	  kdDebug(5006) << "* message *" << endl;
@@ -1645,7 +1338,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 }
 
   bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
-					  bool showOneMimePart,
+					  bool showOneMimePart, bool, bool,
 					  bool & isInlineSigned,
 					  bool & isInlineEncrypted,
 					  bool & bNeverDisplayInline ) {
@@ -1914,6 +1607,329 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     }
       break;
     }
+    return bDone;
+  }
+
+  bool ObjectTreeParser::processMultiPartType( int subtype, partNode * curNode,
+					       bool /*showOneMimePart*/,
+					       bool keepEncryptions,
+					       bool includeSignatures,
+					       bool & isInlineSigned,
+					       bool & isInlineEncrypted,
+					       bool & /*bNeverDisplayInline*/ ) {
+    bool bDone = false;
+    kdDebug(5006) << "* multipart *" << endl;
+    switch( subtype ){
+    case DwMime::kSubtypeMixed: {
+      kdDebug(5006) << "mixed" << endl;
+      if( curNode->mChild ){
+
+	// Might be a Kroupware message,
+	// let's look for the parts contained in the mixture:
+	partNode* dataPlain =
+	  curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
+	if( dataPlain ) {
+	  partNode* dataCal =
+	    curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal, false, true );
+	  if( dataCal ){
+	    // Kroupware message found,
+	    // we ignore the plain text but process the calendar part.
+	    dataPlain->mWasProcessed = true;
+	    parseObjectTree( dataCal,
+			     false,
+			     keepEncryptions,
+			     includeSignatures );
+	    bDone = true;
+	  }else {
+	    partNode* dataTNEF =
+	      curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeMsTNEF, false, true );
+	    if( dataTNEF ){
+	      // encoded Kroupware message found,
+	      // we ignore the plain text but process the MS-TNEF part.
+	      dataPlain->mWasProcessed = true;
+	      parseObjectTree( dataTNEF,
+			       false,
+			       keepEncryptions,
+			       includeSignatures );
+	      bDone = true;
+	    }
+	  }
+	}
+	if( !bDone ) {
+	  parseObjectTree( curNode->mChild,
+			   false,
+			   keepEncryptions,
+			   includeSignatures );
+	  bDone = true;
+	}
+      }
+    }
+      break;
+    case DwMime::kSubtypeAlternative: {
+      kdDebug(5006) << "alternative" << endl;
+      if( curNode->mChild ) {
+	partNode* dataHtml =
+	  curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeHtml, false, true );
+	partNode* dataPlain =
+	  curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
+
+	if( !mReader || (mReader->htmlMail() && dataHtml) ) {
+	  if( dataPlain )
+	    dataPlain->mWasProcessed = true;
+	  parseObjectTree( dataHtml,
+			   false,
+			   keepEncryptions,
+			   includeSignatures );
+	}
+	else if( !mReader || (!mReader->htmlMail() && dataPlain) ) {
+	  if( dataHtml )
+	    dataHtml->mWasProcessed = true;
+	  parseObjectTree( dataPlain,
+			   false,
+			   keepEncryptions,
+			   includeSignatures );
+	}
+	else
+	  parseObjectTree( curNode->mChild,
+			   true,
+			   keepEncryptions,
+			   includeSignatures );
+	bDone = true;
+      }
+    }
+      break;
+    case DwMime::kSubtypeDigest: {
+      kdDebug(5006) << "digest" << endl;
+    }
+      break;
+    case DwMime::kSubtypeParallel: {
+      kdDebug(5006) << "parallel" << endl;
+    }
+      break;
+    case DwMime::kSubtypeSigned: {
+      kdDebug(5006) << "signed" << endl;
+      CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
+
+
+      // ATTENTION: We currently do _not_ support "multipart/signed" with _multiple_ signatures.
+      //            Instead we expect to find two objects: one object containing the signed data
+      //            and another object containing exactly one signature, this is determined by
+      //            looking for an "application/pgp-signature" object.
+      if( !curNode->mChild )
+	kdDebug(5006) << "       SORRY, signed has NO children" << endl;
+      else {
+	kdDebug(5006) << "       signed has children" << endl;
+
+	bool plugFound = false;
+
+	// ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
+	partNode* data = 0;
+	partNode* sign;
+	sign = curNode->mChild->findType(      DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
+	if( sign ) {
+	  kdDebug(5006) << "       OpenPGP signature found" << endl;
+	  data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
+	  if( data ){
+	    curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
+	    plugFound = foundMatchingCryptPlug( "openpgp", "OpenPGP" );
+	  }
+	}
+	else {
+	  sign = curNode->mChild->findType(      DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
+	  if( sign ) {
+	    kdDebug(5006) << "       S/MIME signature found" << endl;
+	    data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
+	    if( data ){
+	      curNode->setCryptoType( partNode::CryptoTypeSMIME );
+	      plugFound = foundMatchingCryptPlug( "smime", "S/MIME" );
+	    }
+	  } else {
+	    kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
+	  }
+	}
+
+	/*
+	  ---------------------------------------------------------------------------------------------------------------
+	*/
+
+	if( sign && data ) {
+	  kdDebug(5006) << "       signed has data + signature" << endl;
+	  curNode->setSigned( true );
+	}
+
+	if( !includeSignatures ) {
+	  if( !data )
+	    data = curNode->mChild;
+	  QCString cstr( data->msgPart().bodyDecoded() );
+	  if( mReader )
+	    mReader->writeBodyStr(cstr,
+				  mReader->mCodec,
+				  curNode->trueFromAddress(),
+				  &isInlineSigned, &isInlineEncrypted);
+	  mResultString += cstr;
+	  bDone = true;
+	} else if( sign && data && plugFound ) {
+	  // Set the signature node to done to prevent it from being processed
+	  // by parseObjectTree( data ) called from writeOpaqueOrMultipartSignedData().
+	  sign->mWasProcessed = true;
+	  writeOpaqueOrMultipartSignedData( data,
+					    *sign,
+					    curNode->trueFromAddress() );
+	  bDone = true;
+	}
+      }
+      setCryptPlugWrapper( oldUseThisCryptPlug );
+    }
+      break;
+    case DwMime::kSubtypeEncrypted: {
+      kdDebug(5006) << "encrypted" << endl;
+      CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
+      if( keepEncryptions ) {
+	curNode->setEncrypted( true );
+	QCString cstr( curNode->msgPart().bodyDecoded() );
+	if( mReader )
+	  mReader->writeBodyStr(cstr,
+				mReader->mCodec,
+				curNode->trueFromAddress(),
+				&isInlineSigned, &isInlineEncrypted);
+	mResultString += cstr;
+	bDone = true;
+      } else if( curNode->mChild ) {
+
+	bool isOpenPGP = false;
+	bool plugFound = false;
+
+	/*
+	  ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
+	*/
+	partNode* data =
+	  curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
+	if( data ){
+	  isOpenPGP = true;
+	  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
+	  plugFound = foundMatchingCryptPlug( "openpgp", "OpenPGP" );
+	}
+	if( !data ) {
+	  data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
+	  if( data ){
+	    curNode->setCryptoType( partNode::CryptoTypeSMIME );
+	    plugFound = foundMatchingCryptPlug( "smime", "S/MIME" );
+	  }
+	}
+	/*
+	  ---------------------------------------------------------------------------------------------------------------
+	*/
+
+	if( data ) {
+	  if( data->mChild ) {
+	    kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+	    parseObjectTree( data->mChild,
+			     false,
+			     keepEncryptions,
+			     includeSignatures );
+	    bDone = true;
+	    kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+	  }
+	  else if( plugFound ) {
+	    kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
+	    PartMetaData messagePart;
+	    curNode->setEncrypted( true );
+	    QCString decryptedData;
+	    bool signatureFound;
+	    struct CryptPlugWrapper::SignatureMetaData sigMeta;
+	    sigMeta.status              = 0;
+	    sigMeta.extended_info       = 0;
+	    sigMeta.extended_info_count = 0;
+	    sigMeta.nota_xml            = 0;
+	    bool passphraseError;
+
+	    bool bOkDecrypt = okDecryptMIME( *data,
+					     decryptedData,
+					     signatureFound,
+					     sigMeta,
+					     true,
+					     passphraseError,
+					     messagePart.errorText );
+
+	    if( bOkDecrypt ){
+	      // paint the frame
+	      if( mReader ) {
+		messagePart.isDecryptable = true;
+		messagePart.isEncrypted = true;
+		messagePart.isSigned = false;
+		mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
+								 cryptPlugWrapper(),
+								 curNode->trueFromAddress() ) );
+	      }
+
+	      // Note: Multipart/Encrypted might also be signed
+	      //       without encapsulating a nicely formatted
+	      //       ~~~~~~~                 Multipart/Signed part.
+	      //                               (see RFC 3156 --> 6.2)
+	      // In this case we paint a _2nd_ frame inside the
+	      // encryption frame, but we do _not_ show a respective
+	      // encapsulated MIME part in the Mime Tree Viewer
+	      // since we do want to show the _true_ structure of the
+	      // message there - not the structure that the sender's
+	      // MUA 'should' have sent.  :-D       (khz, 12.09.2002)
+	      //
+	      if( signatureFound ){
+		writeOpaqueOrMultipartSignedData( 0,
+						  *curNode,
+						  curNode->trueFromAddress(),
+						  false,
+						  &decryptedData,
+						  &sigMeta,
+						  false );
+		curNode->setSigned( true );
+	      }else{
+		insertAndParseNewChildNode( *curNode,
+					    &*decryptedData,
+					    "encrypted data" );
+	      }
+
+	      if( mReader )
+		mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+	    } else {
+	      if( mReader ) {
+		if( passphraseError ) {
+		  messagePart.isDecryptable = false;
+		  messagePart.isEncrypted = true;
+		  messagePart.isSigned = false;
+		  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
+								   cryptPlugWrapper(),
+								   curNode->trueFromAddress() ) );
+		}
+		mReader->writeHTMLStr(mReader->mCodec->toUnicode( decryptedData ));
+		if( passphraseError )
+		  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+	      }
+	      mResultString += decryptedData;
+	    }
+	    data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
+	    bDone = true;
+	  }
+	}
+      }
+      setCryptPlugWrapper( oldUseThisCryptPlug );
+    }
+      break;
+    default : {
+      kdDebug(5006) << "(  unknown subtype  )" << endl;
+    }
+      break;
+    }
+    //  Multipart object not processed yet?  Just parse the children!
+    if( !bDone ){
+      if( curNode && curNode->mChild ) {
+	parseObjectTree( curNode->mChild,
+			 false,
+			 keepEncryptions,
+			 includeSignatures );
+	bDone = true;
+      }
+    }
+
     return bDone;
   }
 
