@@ -587,6 +587,7 @@ public:
   /** Get the 1st DwBodyPart.
       If there is no body part, return value will be zero. */
   DwBodyPart * getFirstDwBodyPart() const;
+  DwMessage * getTopLevelPart() const { return mMsg; }
 
   /** Fill the KMMessagePart structure for a given DwBodyPart.
       Iff withBody is false the body of the KMMessagePart will be left

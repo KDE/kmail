@@ -118,8 +118,7 @@ partNode * partNode::fromMessage( const KMMessage * msg ) {
   // used DwBodyPart, not DwEntiy everywhere. *shrug*. DwStrings are
   // subscrib-shared, so we just force mimelib to parse the whole mail
   // as just another DwBodyPart...
-  DwBodyPart * mainBody = new DwBodyPart( msg->asDwString(), 0 );
-  mainBody->Parse();
+  DwBodyPart * mainBody = new DwBodyPart( *msg->getTopLevelPart() );
 
   partNode * root = new partNode( mainBody, mainType, mainSubType, true );
   root->buildObjectTree();
