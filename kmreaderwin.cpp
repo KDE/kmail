@@ -1850,6 +1850,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
     msg->fromString(aMsgPart->bodyDecoded());
   }
   assert(msg != 0);
+  msg->setMsgSerNum( 0 ); // because lookups will fail
   // some information that is needed for imap messages with LOD
   msg->setParent( message()->parent() );
   msg->setUID(message()->UID());

@@ -317,6 +317,7 @@ private:
   KURL mUrl;
   QValueList<unsigned long> mMsgList;
   unsigned int mMsgListIndex;
+  KMMessage *mStandAloneMessage;
   QByteArray mData;
   int mOffset;
   size_t mTotalSize;

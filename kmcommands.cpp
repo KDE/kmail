@@ -670,12 +670,21 @@ static KURL subjectToUrl( const QString & subject ) {
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
+    mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( msg ? msg->msgSize() : 0 )
 {
   if ( !msg ) return;
   setDeletesItself( true );
-  mMsgList.append( msg->getMsgSerNum() );
+  // If the mail has a serial number, operate on sernums, if it does not
+  // we need to work with the pointer, but can be reasonably sure it won't 
+  // go away, since it'll be an encapsulated message or one that was opened
+  // from an .eml file.
+  if ( msg->getMsgSerNum() != 0 ) {
+    mMsgList.append( msg->getMsgSerNum() );
+  } else {
+    mStandAloneMessage = msg;
+  }
   mUrl = subjectToUrl( msg->cleanSubject() );
 }
 
@@ -683,6 +692,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
                                     const QPtrList<KMMsgBase> &msgList )
   : KMCommand( parent ),
     mMsgListIndex( 0 ),
+    mStandAloneMessage( 0 ),
     mOffset( 0 ),
     mTotalSize( 0 )
 {
@@ -767,9 +777,15 @@ void KMSaveMsgCommand::slotSaveDataReq()
       }
     }
   } else {
-    // No more messages. Tell the putjob we are done.
-    QByteArray data = QByteArray();
-    mJob->sendAsyncData( data );
+    if ( mStandAloneMessage ) {
+      // do the special case of a standalone message
+      slotMessageRetrievedForSaving( mStandAloneMessage );
+      mStandAloneMessage = 0;
+    } else {
+      // No more messages. Tell the putjob we are done.
+      QByteArray data = QByteArray();
+      mJob->sendAsyncData( data );
+    }
   }
 }
 
@@ -798,7 +814,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   }
   ++mMsgListIndex;
   // Get rid of the message.
-  if ( msg && msg->parent()) {
+  if ( msg && msg->parent() && msg->getMsgSerNum() ) {
     int idx = -1;
     KMFolder * p = 0;
     kmkernel->msgDict()->getLocation( msg, &p, &idx );
