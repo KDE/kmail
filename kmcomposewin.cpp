@@ -1123,7 +1123,9 @@ bool KMComposeWin::applyChanges(void)
     } else
       body = codec->fromUnicode(str);
 
-    bodyPart.setBodyEncoded(body);
+    QByteArray bBody(body);
+    bBody.resize(bBody.size() - 1);
+    bodyPart.setBodyEncoded(bBody);
 
     mMsg->addBodyPart(&bodyPart);
 
