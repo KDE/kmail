@@ -449,7 +449,7 @@ void KMFolderCachedImap::slotTroubleshoot()
       return;
     }
     QString str = i18n("Are you sure you want to refresh the IMAP cache of "
-                       "the folder %1 and all it's subfolders?\nThis will "
+                       "the folder %1 and all its subfolders?\nThis will "
                        "remove all changes you have done locally to your "
                        "folders.").arg( label() );
     QString s1 = i18n("Refresh IMAP Cache");
