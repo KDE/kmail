@@ -2561,6 +2561,10 @@ void KMComposeWin::openAttach( int index )
   mAtmTempList.append( atmTempFile );
   const bool autoDelete = true;
   atmTempFile->setAutoDelete( autoDelete );
+  
+  KURL url;
+  url.setPath( atmTempFile->name() );
+  
   KPIM::kByteArrayToFile( msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false );
   if ( ::chmod( QFile::encodeName( atmTempFile->name() ), S_IRUSR ) != 0) {
@@ -2571,8 +2575,6 @@ void KMComposeWin::openAttach( int index )
   KService::Ptr offer =
     KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
 
-  KURL url;
-  url.setPath( atmTempFile->name() );
   if ( !offer || mimetype->name() == "application/octet-stream" ) {
     if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
       QFile::remove(url.path());
