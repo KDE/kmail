@@ -54,6 +54,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& folder,
   kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << folder << ", "
 	    << uid << " )" << endl;
   bool rc = mGroupware->deleteIncidence( folder, uid );
+  return rc;
 }
 
 QStringList KMailICalIfaceImpl::incidences( const QString& folder )
