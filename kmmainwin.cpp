@@ -1064,9 +1064,9 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     msg->initHeader();
     msg->setTo(aUrl.path());
     QString query=aUrl.query();
-    if (query.left(8) == "subject=")
+    if (query.left(9) == "?subject=")
     {
-       msg->setSubject( query.mid(8) ); // TODO: Decode subject!
+       msg->setSubject( KURL::decode_string(query.mid(9)) ); 
     }
 
     win = new KMComposeWin(msg);
