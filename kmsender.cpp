@@ -25,8 +25,8 @@ using namespace KMime::Types;
 #include "kmfiltermgr.h"
 
 #include "kcursorsaver.h"
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 #include "progressmanager.h"
 #include "kmaccount.h"
 #include "kmtransport.h"

@@ -26,8 +26,8 @@ using KMail::SieveJob;
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
 #include "kmmessage.h"
-#include <libkdepim/identitymanager.h>
-#include <libkdepim/identity.h>
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identity.h>
 
 #include <kmime_header_parsing.h>
 using KMime::Types::AddrSpecList;

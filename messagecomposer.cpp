@@ -44,8 +44,8 @@
 #include "kmfoldercombobox.h"
 #include "keyresolver.h"
 
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 #include <libkdepim/email.h>
 
 #include <ui/keyselectiondialog.h>

@@ -18,7 +18,7 @@
 
 #include <qwidget.h>
 
-#include <libkdepim/identity.h> // for Signature::Type
+#include <libkpimidentities/identity.h> // for Signature::Type
 using KPIM::Signature;
 
 class QComboBox;

@@ -32,7 +32,7 @@
 #ifndef __KMAIL_IDENTITYDRAG_H__
 #define __KMAIL_IDENTITYDRAG_H__
 
-#include <libkdepim/identity.h>
+#include <libkpimidentities/identity.h>
 
 #include <qdragobject.h> // is a qobject and a qmimesource
 

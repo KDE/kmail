@@ -35,7 +35,7 @@
 #include "kmfolderdia.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
-#include <libkdepim/identitycombo.h>
+#include <libkpimidentities/identitycombo.h>
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"

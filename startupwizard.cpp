@@ -44,8 +44,8 @@
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldercachedimap.h"
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 #include "kmtransport.h"
 #include "kmsender.h"
 #include "kmgroupware.h"

@@ -38,7 +38,7 @@
 #include "kmsender.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identitymanager.h>
 #include "identitylistview.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"
@@ -52,7 +52,7 @@ using KMail::IdentityListViewItem;
 using KMail::IdentityDialog;
 
 // other kdenetwork headers:
-#include <libkdepim/identity.h>
+#include <libkpimidentities/identity.h>
 #include <kmime_util.h>
 using KMime::DateFormatter;
 #include <kleo/cryptoconfig.h>

@@ -46,7 +46,7 @@
 
 // other kdepim headers:
 // libkdepim
-#include <libkdepim/identity.h>
+#include <libkpimidentities/identity.h>
 // libkleopatra:
 #include <ui/keyrequester.h>
 #include <kleo/cryptobackendfactory.h>

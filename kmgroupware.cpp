@@ -40,8 +40,8 @@
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmcomposewin.h"
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 #include <libkdepim/email.h>
 #include "kmkernel.h"
 

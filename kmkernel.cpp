@@ -30,8 +30,8 @@
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 #include "configuredialog.h"
 #include "kmcommands.h"
 #include "kmsystemtray.h"

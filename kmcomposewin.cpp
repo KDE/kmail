@@ -42,9 +42,9 @@ using KPIM::MailListDrag;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 
-#include <libkdepim/identitymanager.h>
-#include <libkdepim/identitycombo.h>
-#include <libkdepim/identity.h>
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identitycombo.h>
+#include <libkpimidentities/identity.h>
 #include <libkdepim/kfileio.h>
 #include <libkdepim/email.h>
 #include <kleo/cryptobackendfactory.h>

@@ -34,8 +34,8 @@
 #include "kmkernel.h"
 #include "kmmessage.h"
 #include <libkdepim/email.h>
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 

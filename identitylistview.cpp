@@ -36,7 +36,7 @@
 #include "identitylistview.h"
 
 #include "identitydrag.h"
-#include <libkdepim/identitymanager.h>
+#include <libkpimidentities/identitymanager.h>
 #include "kmkernel.h"
 
 #include <klocale.h> // i18n

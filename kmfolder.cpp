@@ -12,8 +12,8 @@
 #include "kmfoldersearch.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
-#include <libkdepim/identitymanager.h>
-#include <libkdepim/identity.h>
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identity.h>
 #include "kmailicalifaceimpl.h"
 #include "expirejob.h"
 #include "compactionjob.h"

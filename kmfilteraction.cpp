@@ -15,9 +15,9 @@
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
-#include <libkdepim/identity.h>
-#include <libkdepim/identitymanager.h>
-#include <libkdepim/identitycombo.h>
+#include <libkpimidentities/identity.h>
+#include <libkpimidentities/identitymanager.h>
+#include <libkpimidentities/identitycombo.h>
 #include <libkdepim/kfileio.h>
 #include <libkdepim/collectingprocess.h>
 using KPIM::CollectingProcess;
