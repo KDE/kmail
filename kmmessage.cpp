@@ -901,7 +901,7 @@ QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace
   // construct a big regexp that
   // 1. is anchored to the beginning of the subject (sans whitespace)
   // 2. matches at least one of the part regexps in prefixRegExps
-  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s+")
+  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
     .arg( prefixRegExps.join(")|(?:") );
   kdDebug(5006) << "KMMessage::cleanSubject(): bigRegExp = \"" << bigRegExp
 		<< "\"" << endl;
