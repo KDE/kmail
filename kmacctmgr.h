@@ -24,15 +24,8 @@ class KMAcctMgr: public QObject
 public:
   /** Initialize Account Manager and load accounts with reload() if the
     base path is given */
-  KMAcctMgr(const char* aBasePath);
+  KMAcctMgr();
   virtual ~KMAcctMgr();
-
-  /** Returns path to directory where the accounts' configuration is stored. */
-  QString basePath(void) const { return mBasePath; }
-
-  /** Set base path. Does *not* call reload(). A tilde (~) as the first
-    character is expanded to the contents of the HOME environment variable. */
-  virtual void setBasePath(const char* aBasePath);
 
   /** Completely reload accounts from config. */
   virtual void readConfig(void);
@@ -78,7 +71,6 @@ signals:
   void checkedMail(bool);
 
 private:
-  QString      mBasePath;
   KMAcctList   mAcctList;
   QListIterator< KMAccount > *mAccountIt;
   QList< KMAccount > *mAcctChecking;

@@ -67,9 +67,6 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
-  KIO::Scheduler::connect(
-    SIGNAL(slaveConnected(KIO::Slave *)),
-    this, SLOT(slotSlaveConnected(KIO::Slave *)));
 }
 
 
@@ -567,7 +564,6 @@ void KMAcctExpPop::startJob() {
   }
   else if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
-//   This can't go here.  It has to go in slotSlaveConnected()
   url.setPath(QString("/index"));
   job = KIO::get( url.url(), false, false );
   connectJob();
@@ -822,15 +818,4 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   }
   stage = Quit;
   slotCancel();
-}
-
-void KMAcctExpPop::slotSlaveConnected(KIO::Slave *aSlave)
-{
-#if 0
-  if (aSlave != slave) return;
-  KURL url = getUrl();
-  url.setPath(QString("/index"));
-  job = KIO::get( url.url(), false, false );
-  connectJob();
-#endif
 }

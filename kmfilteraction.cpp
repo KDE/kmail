@@ -558,8 +558,8 @@ public:
 
   virtual bool isEmpty() const { return false; }
 
-  virtual void KMFilterActionSetStatus::argsFromString( const QString argsStr );
-  virtual const QString KMFilterActionSetStatus::argsAsString() const;
+  virtual void argsFromString( const QString argsStr );
+  virtual const QString argsAsString() const;
 };
 
 

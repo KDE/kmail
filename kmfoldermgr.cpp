@@ -35,7 +35,6 @@
 KMFolderMgr::KMFolderMgr(const QString& aBasePath):
   KMFolderMgrInherited(), mDir()
 {
-
   setBasePath(aBasePath);
 }
 
@@ -212,7 +211,7 @@ void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
   QDir dir;
   QString folderDirLocation = aFolderDir->path();
   KMFolderNode* fN;
-  for (fN = aFolderDir->first(); fN != 0; fN = aFolderDir->next()) {
+  for (fN = aFolderDir->first(); fN != 0; fN = aFolderDir->first()) {
     if (fN->isDir())
       removeDirAux(static_cast<KMFolderDir*>(fN));
     else
@@ -220,7 +219,7 @@ void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
   }
   aFolderDir->clear();
   aFolderDir->parent()->remove(aFolderDir);
-  dir.remove(folderDirLocation);
+  dir.rmdir(folderDirLocation);
 }
 
 //-----------------------------------------------------------------------------
@@ -261,7 +260,7 @@ void KMFolderMgr::createFolderList(QStringList *str,
 				   QValueList<QGuardedPtr<KMFolder> > *folders,
 				   KMFolderDir *adir, 
 				   const QString& prefix,
-				   bool i18nized=FALSE)
+				   bool i18nized)
 {
   KMFolderNode* cur;
   KMFolderDir* fdir = adir ? adir : &(kernel->folderMgr()->dir());

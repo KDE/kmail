@@ -442,7 +442,7 @@ void KMKernel::initFolders(KConfig* cfg)
 void KMKernel::init()
 {
   kdDebug(5006) << "entering KMKernel::init()" << endl;
-  QCString  acctPath, foldersPath;
+  QString foldersPath;
   KConfig* cfg;
 
   the_checkingMail = false;
@@ -460,19 +460,17 @@ void KMKernel::init()
   the_firstStart = cfg->readBoolEntry("first-start", true);
   the_previousVersion = cfg->readEntry("previous-version", "");
   cfg->writeEntry("previous-version", KMAIL_VERSION);
-  foldersPath = cfg->readEntry("folders", "").local8Bit();
-  acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts")
-    .local8Bit();
+  foldersPath = cfg->readEntry("folders", "");
 
   if (foldersPath.isEmpty())
   {
-    foldersPath = QString(QDir::homeDirPath() + QString("/Mail")).local8Bit();
+    foldersPath = QDir::homeDirPath() + QString("/Mail");
     transferMail();
   }
 
   the_undoStack = new KMUndoStack(20);
   the_folderMgr = new KMFolderMgr(foldersPath);
-  the_acctMgr   = new KMAcctMgr(acctPath);
+  the_acctMgr   = new KMAcctMgr();
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
   the_addrBook  = new KMAddrBook;

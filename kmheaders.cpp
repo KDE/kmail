@@ -2470,8 +2470,8 @@ void KMHeaders::setNestedOverride( bool override )
   mSortInfo.dirty = TRUE;
   mNestedOverride = override;
   setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
-  QCString sortFile = mFolder->indexLocation() + ".sorted";
-  unlink(sortFile);
+  QString sortFile = mFolder->indexLocation() + ".sorted";
+  unlink(sortFile.local8Bit());
   reset();
 }
 
@@ -2545,18 +2545,18 @@ bool KMHeaders::writeSortOrder()
 {
   if (mSortInfo.removed)
     return TRUE; // Need serial ids to optimize this out
-  QCString sortFile = KMAIL_SORT_FILE(mFolder);
+  QString sortFile = KMAIL_SORT_FILE(mFolder);
 
   if (!mSortInfo.dirty) {
     struct stat stat_tmp;
-    if(stat(sortFile, &stat_tmp) == -1) {
+    if(stat(sortFile.local8Bit(), &stat_tmp) == -1) {
 	mSortInfo.dirty = TRUE;
     }
   }
   if (mSortInfo.dirty) {
-    QCString tempName = sortFile + ".temp";
-    unlink(tempName);
-    FILE *sortStream = fopen(tempName, "w");
+    QString tempName = sortFile + ".temp";
+    unlink(tempName.local8Bit());
+    FILE *sortStream = fopen(tempName.local8Bit(), "w");
     if (!sortStream)
       return FALSE;
     mSortInfo.dirty = FALSE;
@@ -2629,14 +2629,14 @@ bool KMHeaders::writeSortOrder()
     fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile);
+	unlink(sortFile.local8Bit());
 	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
 	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
 	exit(1);
     }
     fclose(sortStream);
-    rename(tempName, sortFile);
+    rename(tempName.local8Bit(), sortFile.local8Bit());
   }
 
   return TRUE;
@@ -2645,8 +2645,8 @@ bool KMHeaders::writeSortOrder()
 
 void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 {
-  QCString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(sortFile, "r+")) {
+  QString sortFile = KMAIL_SORT_FILE(mFolder);
+  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {
     KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
     int parent_id = -2; //no parent, top level
     if(khi->parent())
@@ -2663,7 +2663,7 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile);
+	unlink(sortFile.local8Bit());
 	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
 	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;
@@ -2791,8 +2791,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	mItems[i] = 0;
     }
 
-    QCString sortFile = KMAIL_SORT_FILE(mFolder);
-    FILE *sortStream = fopen(sortFile, "r+");
+    QString sortFile = KMAIL_SORT_FILE(mFolder);
+    FILE *sortStream = fopen(sortFile.local8Bit(), "r+");
     mSortInfo.fakeSort = 0;
 
     if(sortStream) {
@@ -3046,7 +3046,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     SHOW_TIMER(selection);
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile);
+	unlink(sortFile.local8Bit());
 	kdDebug(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
 	kdDebug(5006) << __FILE__ << ":" << __LINE__ << endl;

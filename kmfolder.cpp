@@ -114,38 +114,38 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
-QCString KMFolder::location() const
+QString KMFolder::location() const
 {
-  QCString sLocation(path().local8Bit());
+  QString sLocation(path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += name().local8Bit();
+  sLocation += name();
 
   return sLocation;
 }
 
 
 //-----------------------------------------------------------------------------
-QCString KMFolder::indexLocation() const
+QString KMFolder::indexLocation() const
 {
-  QCString sLocation(path().local8Bit());
+  QString sLocation(path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += name().local8Bit();
+  sLocation += name();
   sLocation += ".index";
 
   return sLocation;
 }
 
 //-----------------------------------------------------------------------------
-QCString KMFolder::subdirLocation() const
+QString KMFolder::subdirLocation() const
 {
-  QCString sLocation(path().local8Bit());
+  QString sLocation(path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += name().local8Bit();
+  sLocation += name();
   sLocation += ".directory";
 
   return sLocation;
@@ -154,17 +154,18 @@ QCString KMFolder::subdirLocation() const
 //-----------------------------------------------------------------------------
 KMFolderDir* KMFolder::createChildFolder()
 {
-  QCString childName = "." + name().local8Bit() + ".directory";
-  QCString childDir = path().local8Bit() + "/" + childName;
+  QString childName = "." + name() + ".directory";
+  QString childDir = path() + "/" + childName;
   bool ok = true;
 
   if (mChild)
     return mChild;
 
-  if (access(childDir, W_OK) != 0) // Not there or not writable
+  if (access(childDir.local8Bit(), W_OK) != 0) // Not there or not writable
   {
-    if (mkdir(childDir, S_IRWXU) != 0 && chmod(childDir, S_IRWXU) != 0)
-      ok=false; //failed create new or chmod existing tmp/
+    if (mkdir(childDir.local8Bit(), S_IRWXU) != 0
+      && chmod(childDir.local8Bit(), S_IRWXU) != 0)
+        ok=false; //failed create new or chmod existing tmp/
   }
 
   if (!ok) {
@@ -173,8 +174,7 @@ KMFolderDir* KMFolder::createChildFolder()
     return 0;
   }
 
-  KMFolderDir* folderDir = new KMFolderDir(parent(),
-    QString::fromLocal8Bit(childName));
+  KMFolderDir* folderDir = new KMFolderDir(parent(), childName);
   if (!folderDir)
     return 0;
   folderDir->reload();
@@ -194,10 +194,10 @@ int KMFolder::open()
   assert(name() != "");
 
   mFilesLocked = FALSE;
-  mStream = fopen(location(), "r+"); // messages file
+  mStream = fopen(location().local8Bit(), "r+"); // messages file
   if (!mStream)
   {
-    kdDebug(5006) << "Cannot open folder `" << (const char*)location() << "': " << strerror(errno) << endl;
+    kdDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
     return errno;
   }
@@ -214,7 +214,7 @@ int KMFolder::open()
 		  .arg(name());
       emit statusMsg(str);
     } else {
-      mIndexStream = fopen(indexLocation(), "r+"); // index file
+      mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
       updateIndexStreamPtr();
     }	
 
@@ -246,7 +246,7 @@ int KMFolder::create()
   assert(mOpenCount == 0);
 
   kdDebug(5006) << "Creating folder " << endl;
-  if (access(location(), F_OK) == 0) {
+  if (access(location().local8Bit(), F_OK) == 0) {
     kdDebug(5006) << "KMFolder::create call to access function failed." << endl;
     kdDebug(5006) << "File:: " << endl;
     kdDebug(5006) << "Error " << endl;
@@ -254,7 +254,7 @@ int KMFolder::create()
   }
 
   old_umask = umask(077);
-  mStream = fopen(location(), "w+"); //sven; open RW
+  mStream = fopen(location().local8Bit(), "w+"); //sven; open RW
   umask(old_umask);
 
   if (!mStream) return errno;
@@ -262,7 +262,7 @@ int KMFolder::create()
   if (!path().isEmpty())
   {
     old_umask = umask(077);
-    mIndexStream = fopen(indexLocation(), "w+"); //sven; open RW
+    mIndexStream = fopen(indexLocation().local8Bit(), "w+"); //sven; open RW
 	updateIndexStreamPtr(TRUE);
     umask(old_umask);
 
@@ -341,7 +341,7 @@ int KMFolder::lock()
 
       if (rc < 0)
       {
-	kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
+	kdDebug(5006) << "Cannot lock folder `" << location() << "': "
 		  << strerror(errno) << " (" << errno << ")" << endl;
 	return errno;
       }
@@ -352,7 +352,7 @@ int KMFolder::lock()
 
 	if (rc < 0)
 	{
-          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(errno) << " (" << errno << ")" << endl;
 	  rc = errno;
 	  fl.l_type = F_UNLCK;
@@ -369,20 +369,20 @@ int KMFolder::lock()
       else
         cmd_str += location() + ".lock";
 
-      rc = system( cmd_str.latin1() );
+      rc = system( cmd_str.local8Bit() );
       if( rc != 0 )
       {
-	kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
+	kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
       if( mIndexStream )
       {
         cmd_str = "lockfile " + indexLocation() + ".lock";
-        rc = system( cmd_str.latin1() );
+        rc = system( cmd_str.local8Bit() );
         if( rc != 0 )
         {
-          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
           return rc;
         }
@@ -391,20 +391,20 @@ int KMFolder::lock()
 
     case mutt_dotlock:
       cmd_str = "mutt_dotlock " + location();
-      rc = system( cmd_str.latin1() );
+      rc = system( cmd_str.local8Bit() );
       if( rc != 0 )
       {
-        kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
+        kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock " + indexLocation();
-        rc = system( cmd_str.latin1() );
+        rc = system( cmd_str.local8Bit() );
         if( rc != 0 )
         {
-          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
           return rc;
         }
@@ -413,20 +413,20 @@ int KMFolder::lock()
 
     case mutt_dotlock_privileged:
       cmd_str = "mutt_dotlock -p " + location();
-      rc = system( cmd_str.latin1() );
+      rc = system( cmd_str.local8Bit() );
       if( rc != 0 )
       {
-        kdDebug(5006) << "Cannot lock folder `" << (const char*)location() << "': "
+        kdDebug(5006) << "Cannot lock folder `" << location() << "': "
                   << strerror(rc) << " (" << rc << ")" << endl;
         return rc;
       }
       if( mIndexStream )
       {
         cmd_str = "mutt_dotlock -p " + indexLocation();
-        rc = system( cmd_str.latin1() );
+        rc = system( cmd_str.local8Bit() );
         if( rc != 0 )
         {
-          kdDebug(5006) << "Cannot lock index of folder `" << (const char*)location() << "': "
+          kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
                     << strerror(rc) << " (" << rc << ")" << endl;
           return rc;
         }
@@ -721,7 +721,7 @@ int KMFolder::createIndexFromContents()
 //-----------------------------------------------------------------------------
 int KMFolder::writeIndex()
 {
-  QCString tempName;
+  QString tempName;
   KMMsgBase* msgBase;
   int old_umask;
   int i=0, len;
@@ -730,11 +730,11 @@ int KMFolder::writeIndex()
   old_umask = umask(077);
 
   //the sorted file must be removed, BIG kludge, don made me do it!
-  unlink(indexLocation() + ".sorted");
+  unlink(indexLocation().local8Bit() + ".sorted");
   tempName = indexLocation() + ".temp";
-  unlink(tempName);
+  unlink(tempName.local8Bit());
 
-  FILE *tmpIndexStream = fopen(tempName, "w");
+  FILE *tmpIndexStream = fopen(tempName.local8Bit(), "w");
   umask(old_umask);
   if (!tmpIndexStream)
     return errno;
@@ -762,11 +762,11 @@ int KMFolder::writeIndex()
   if (fflush(tmpIndexStream) != 0) return errno;
   if (fclose(tmpIndexStream) != 0) return errno;
 
-  _rename(tempName, indexLocation());
+  _rename(tempName.local8Bit(), indexLocation().local8Bit());
   if (mIndexStream)
       fclose(mIndexStream);
   mHeaderOffset = nho;
-  mIndexStream = fopen(indexLocation(), "r+"); // index file
+  mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
   updateIndexStreamPtr();
 
   mDirty = FALSE;
@@ -792,14 +792,14 @@ bool KMFolder::readIndexHeader(int *gv)
       *gv = indexVersion;
   if (indexVersion < 1505 ) {
       if(indexVersion == 1503) {
-	  kdDebug(5006) << "Converting old index file " << (const char*)indexLocation() << " to utf-8" << endl;
+	  kdDebug(5006) << "Converting old index file " << indexLocation() << " to utf-8" << endl;
 	  mConvertToUtf8 = TRUE;
       }
       return TRUE;
   } else if (indexVersion == 1505) {
       fseek(mIndexStream, sizeof(char), SEEK_CUR );
   } else if (indexVersion < INDEX_VERSION) {
-      kdDebug(5006) << "Index file " << (const char*)indexLocation() << " is out of date. Re-creating it." << endl;
+      kdDebug(5006) << "Index file " << indexLocation() << " is out of date. Re-creating it." << endl;
       createIndexFromContents();
       return FALSE;
   } else if(indexVersion > INDEX_VERSION) {
@@ -1434,7 +1434,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
     kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
     if (ftell(mStream) > revert) {
       kdDebug(5006) << "Undoing changes" << endl;
-      truncate( location(), revert );
+      truncate( location().local8Bit(), revert );
     }
     kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
     exit(1);
@@ -1496,7 +1496,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
 	kdDebug(5006) << "Undoing changes" << endl;
-	truncate( indexLocation(), revert );
+	truncate( indexLocation().local8Bit(), revert );
       }
       kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
       exit(1);
@@ -1533,8 +1533,8 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 //-----------------------------------------------------------------------------
 int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 {
-  QCString oldLoc, oldIndexLoc, newLoc, newIndexLoc;
-  QCString oldSubDirLoc, newSubDirLoc;
+  QString oldLoc, oldIndexLoc, newLoc, newIndexLoc;
+  QString oldSubDirLoc, newSubDirLoc;
   QString oldName;
   int rc=0, openCount=mOpenCount;
   KMFolderDir *oldParent;
@@ -1557,14 +1557,14 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
 
-  if (_rename(oldLoc, newLoc)) {
+  if (_rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
     setName(oldName);
     setParent(oldParent);
     rc = errno;
   }
   else if (!oldIndexLoc.isEmpty()) {
-    _rename(oldIndexLoc, newIndexLoc);
-    if (!_rename(oldSubDirLoc, newSubDirLoc )) {
+    _rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
+    if (!_rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
       KMFolderDir* fdir = parent();
       KMFolderNode* fN;
 
@@ -1605,8 +1605,9 @@ int KMFolder::remove()
   assert(name() != "");
 
   close(TRUE);
-  unlink(indexLocation());
-  rc = unlink(location());
+  unlink(indexLocation().local8Bit() + ".sorted");
+  unlink(indexLocation().local8Bit());
+  rc = unlink(location().local8Bit());
   if (rc) return rc;
 
   mMsgList.reset(INIT_MSGS);
@@ -1624,10 +1625,10 @@ int KMFolder::expunge()
 
   close(TRUE);
 
-  if (mAutoCreateIndex) truncate(indexLocation(), mHeaderOffset);
-  else unlink(indexLocation());
+  if (mAutoCreateIndex) truncate(indexLocation().local8Bit(), mHeaderOffset);
+  else unlink(indexLocation().local8Bit());
 
-  if (truncate(location(), 0)) return errno;
+  if (truncate(location().local8Bit(), 0)) return errno;
   mDirty = FALSE;
 
   mMsgList.reset(INIT_MSGS);
@@ -1654,7 +1655,7 @@ int KMFolder::expunge()
 //-----------------------------------------------------------------------------
 int KMFolder::compact()
 {
-  QCString tempName;
+  QString tempName;
   QString msgStr;
   int rc = 0;
   int openCount = mOpenCount;
@@ -1663,9 +1664,9 @@ int KMFolder::compact()
     return 0;
   kdDebug(5006) << "Compacting " << endl;
 
-  tempName = path().local8Bit() + "/." + name().local8Bit() + ".compacted";
+  tempName = path() + "/." + name() + ".compacted";
   mode_t old_umask = umask(077);
-  FILE *tmpfile = fopen(tempName, "w");
+  FILE *tmpfile = fopen(tempName.local8Bit(), "w");
   umask(old_umask);
   if (!tmpfile)
     return errno;
@@ -1741,7 +1742,7 @@ int KMFolder::compact()
   if (!rc) {
     writeIndex();
     close(TRUE);
-    _rename(tempName, location());
+    _rename(tempName.local8Bit(), location().local8Bit());
   }
   else
   {

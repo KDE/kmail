@@ -25,11 +25,9 @@
 #include <kdebug.h>
 
 //-----------------------------------------------------------------------------
-KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
+KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
-  assert(aBasePath != NULL);
   mAcctList.setAutoDelete(TRUE);
-  setBasePath(aBasePath);
   mAccountIt = new QListIterator<KMAccount>(mAcctList);
   mAcctChecking = new QList<KMAccount>();
   checking = false;
@@ -44,21 +42,6 @@ KMAcctMgr::~KMAcctMgr()
   delete mAcctChecking;
   writeConfig(FALSE);
   mAcctList.clear();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctMgr::setBasePath(const char* aBasePath)
-{
-  assert(aBasePath != NULL);
-
-  if (aBasePath[0] == '~')
-  {
-    mBasePath = QDir::homeDirPath();
-    mBasePath.append("/");
-    mBasePath.append(aBasePath+1);
-  }
-  else mBasePath = aBasePath;
 }
 
 

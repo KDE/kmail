@@ -187,9 +187,6 @@ protected slots:
 
   /** Slave error handling */
   void slotSlaveError(KIO::Slave *, int, const QString &);
-
-  /** Start the transfer, when the connection is established */
-  void slotSlaveConnected(KIO::Slave *);
 };
 
 
