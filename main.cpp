@@ -160,6 +160,7 @@ int KMailApplication::newInstance()
   {
      mailto = true;
      for ( QCStringList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
+       if ( !(*it).isEmpty() )
          attachURLs += KURL( QString::fromLocal8Bit( *it ) );
   }
 
