@@ -29,6 +29,7 @@ KMFilterMgr::KMFilterMgr(bool popFilter): KMFilterMgrInherited(),
 //-----------------------------------------------------------------------------
 KMFilterMgr::~KMFilterMgr()
 {
+  cleanup();
   writeConfig(FALSE);
 }
 
