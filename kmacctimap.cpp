@@ -160,9 +160,6 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
     ++it;
     if ( job->msgList().findRef( msg ) != -1 )
     {
-      if ( job->mJob )
-        removeJob( job->mJob );
-      mJobList.remove( job );
       job->kill();
     }
   }
@@ -178,9 +175,6 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
     ++it;
     if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder )
     {
-      if ( job->mJob )
-        removeJob( job->mJob );
-      mJobList.remove( job );
       job->kill();
     }
   }
