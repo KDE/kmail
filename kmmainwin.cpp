@@ -288,7 +288,7 @@ void KMMainWin::slotCheckMail()
  rc = acctMgr->checkMail();
  kbp->idle();
  
- if (!rc) warning(i18n("No new mail available"));
+ if (!rc) statusMsg(i18n("No new mail available"));
  
  if(mSendOnCheck)
    slotSendQueued();
