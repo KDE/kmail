@@ -1497,39 +1497,6 @@ void KMKernel::slotResult(KIO::Job *job)
   mPutJobs.remove(it);
 }
 
-// ### consider using KPIM::ProcessCollector instead
-void KMKernel::slotCollectStdOut( KProcess * proc, char * buffer, int len )
-{
-  QByteArray & ba = mStdOutCollection[proc];
-  // append data to ba:
-  int oldsize = ba.size();
-  ba.resize( oldsize + len );
-  qmemmove( ba.begin() + oldsize, buffer, len );
-}
-
-void KMKernel::slotCollectStdErr( KProcess * proc, char * buffer, int len )
-{
-  QByteArray & ba = mStdErrCollection[proc];
-  // append data to ba:
-  int oldsize = ba.size();
-  ba.resize( oldsize + len );
-  qmemmove( ba.begin() + oldsize, buffer, len );
-}
-
-QByteArray KMKernel::getCollectedStdOut( KProcess * proc )
-{
-  QByteArray result = mStdOutCollection[proc];
-  mStdOutCollection.remove(proc);
-  return result;
-}
-
-QByteArray KMKernel::getCollectedStdErr( KProcess * proc )
-{
-  QByteArray result = mStdErrCollection[proc];
-  mStdErrCollection.remove(proc);
-  return result;
-}
-
 void KMKernel::slotRequestConfigSync() {
   // ### FIXME: delay as promised in the kdoc of this function ;-)
   KMKernel::config()->sync();

@@ -208,11 +208,6 @@ public:
   unsigned long getNextMsgSerNum();
   QTextCodec *networkCodec() { return netCodec; }
 
-  /** See @ref slotCollectStdOut */
-  QByteArray getCollectedStdOut(KProcess*);
-  /** See @ref slotCollectStdErr */
-  QByteArray getCollectedStdErr(KProcess*);
-
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMainWindow* mainWin();
 
@@ -227,24 +222,6 @@ public slots:
 
   //Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
-
-  /** Connect the received* signals of K(Shell)Process to these slots
-      to let the kernel collect the output for you.
-
-      Works by keeping a map of QByteArrays, indexed by the KProcess
-      pointers.
-
-      After the command finished, you can then get a QByteArray with
-      the data by calling @ref getCollectedStdOut with the same
-      KProcess* pointer as when calling these slots.
-
-      See KMFilterActionWithCommand and derived classes for example
-      usages.
-      ### consider using KPIM::ProcessCollector instead
-  */
-  void slotCollectStdOut(KProcess*,char*,int);
-  /** Same as @ref slotCollectStdOut, but for stderr. */
-  void slotCollectStdErr(KProcess*,char*,int);
 
   /** Call this slot instead of directly @ref KConfig::sync() to
       minimize the overall config writes. Calling this slot will
@@ -299,8 +276,6 @@ private:
     int offset;
   };
   QMap<KIO::Job *, putData> mPutJobs;
-  QMap<KProcess*,QByteArray> mStdOutCollection;
-  QMap<KProcess*,QByteArray> mStdErrCollection;
   /** previous KMail version. If different from current,
       the user has just updated. read from config */
   QString the_previousVersion;
