@@ -137,8 +137,6 @@ void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::Addressee::List addresseeList = addressBook->findByEmail(email);
   kapp->startServiceByDesktopName( "kaddressbook" );
-  sleep(2);
-
   DCOPRef call( "kaddressbook", "KAddressBookIface" );
   if( !addresseeList.isEmpty() ) {
     call.send( "showContactEditor(QString)", addresseeList.first().uid() );
