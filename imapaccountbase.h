@@ -33,7 +33,6 @@
 class KMAcctMgr;
 class KMFolder;
 class KConfig/*Base*/;
-class KMessage;
 class KMMessagePart;
 class DwBodyPart;
 class DwMessage;
