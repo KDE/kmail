@@ -302,7 +302,7 @@ void KMMessage::setStatusFields(void)
   char str[3];
 
   setHeaderField("Status", status() & KMMsgStatusNew ? "R \0" : "RO\0");
-  setHeaderField("X-Status", statusToStr());
+  setHeaderField("X-Status", statusToStr(status()));
 
   str[0] = (char)encryptionState();
   str[1] = '\0';

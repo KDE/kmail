@@ -56,7 +56,7 @@ using KMail::FolderJob;
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;
 QPixmap* KMHeaders::pixDel = 0;
-QPixmap* KMHeaders::pixOld = 0;
+QPixmap* KMHeaders::pixRead = 0;
 QPixmap* KMHeaders::pixRep = 0;
 QPixmap* KMHeaders::pixQueued = 0;
 QPixmap* KMHeaders::pixSent = 0;
@@ -273,7 +273,7 @@ public:
       if(mMsgBase->isWatched()) pixmaps << *KMHeaders::pixWatched;
       
       if(mMsgBase->isNew()) pixmaps << *KMHeaders::pixNew;
-      if(mMsgBase->isOld() || mMsgBase->isRead()) pixmaps << *KMHeaders::pixOld;
+      if(mMsgBase->isRead() || mMsgBase->isOld()) pixmaps << *KMHeaders::pixRead;
       if(mMsgBase->isUnread()) pixmaps << *KMHeaders::pixUns;
       if(mMsgBase->isDeleted()) pixmaps << *KMHeaders::pixDel;
       if(mMsgBase->isFlag()) pixmaps << *KMHeaders::pixFlag;
@@ -497,7 +497,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixNew   = new QPixmap( UserIcon("kmmsgnew") );
     pixUns   = new QPixmap( UserIcon("kmmsgunseen") );
     pixDel   = new QPixmap( UserIcon("kmmsgdel") );
-    pixOld   = new QPixmap( UserIcon("kmmsgread") );
+    pixRead   = new QPixmap( UserIcon("kmmsgread") );
     pixRep   = new QPixmap( UserIcon("kmmsgreplied") );
     pixQueued= new QPixmap( UserIcon("kmmsgqueued") );
     pixSent  = new QPixmap( UserIcon("kmmsgsent") );

@@ -146,6 +146,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 
     case KMMsgStatusUnread:
       // unread overrides read
+      mStatus &= ~KMMsgStatusOld;
       mStatus &= ~KMMsgStatusRead;
       mStatus &= ~KMMsgStatusNew;
       mStatus |= KMMsgStatusUnread; 
@@ -393,19 +394,19 @@ bool KMMsgBase::isIgnored(void) const
 }
 
 //-----------------------------------------------------------------------------
-const QCString KMMsgBase::statusToStr()
+static const QCString KMMsgBase::statusToStr(KMMsgStatus status)
 {
   QCString sstr;
-  if (status() & KMMsgStatusNew) sstr += 'N';
-  if (status() & KMMsgStatusUnread) sstr += 'U';
-  if (status() & KMMsgStatusOld) sstr += 'O';
-  if (status() & KMMsgStatusRead) sstr += 'R';
-  if (status() & KMMsgStatusDeleted) sstr += 'D';
-  if (status() & KMMsgStatusReplied) sstr += 'A';
-  if (status() & KMMsgStatusForwarded) sstr += 'F';
-  if (status() & KMMsgStatusQueued) sstr += 'Q';
-  if (status() & KMMsgStatusSent) sstr += 'S';
-  if (status() & KMMsgStatusFlag) sstr += 'G';
+  if (status & KMMsgStatusNew) sstr += 'N';
+  if (status & KMMsgStatusUnread) sstr += 'U';
+  if (status & KMMsgStatusOld) sstr += 'O';
+  if (status & KMMsgStatusRead) sstr += 'R';
+  if (status & KMMsgStatusDeleted) sstr += 'D';
+  if (status & KMMsgStatusReplied) sstr += 'A';
+  if (status & KMMsgStatusForwarded) sstr += 'F';
+  if (status & KMMsgStatusQueued) sstr += 'Q';
+  if (status & KMMsgStatusSent) sstr += 'S';
+  if (status & KMMsgStatusFlag) sstr += 'G';
 
   return sstr;
 }

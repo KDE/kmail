@@ -19,6 +19,7 @@
 #include "kfileio.h"
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
+#include "kmmsgbase.h"
 
 #include <kregexp3.h>
 #include <ktempfile.h>
@@ -758,7 +759,7 @@ void KMFilterActionSetStatus::argsFromString( const QString argsStr )
 {
   if ( argsStr.length() == 1 ) {
     for ( int i = 0 ; i < 8 ; i++ )
-      if ( char(stati[i]) == argsStr[0] ) {
+      if ( KMMsgBase::statusToStr(stati[i])[0] == argsStr[0] ) {
 	mParameter = *mParameterList.at(i+1);
 	return;
       }
@@ -772,7 +773,7 @@ const QString KMFilterActionSetStatus::argsAsString() const
   if ( idx < 1 ) return QString::null;
 
   KMMsgStatus status = stati[idx-1];
-  return QString( QChar( char(status) ) );
+  return KMMsgBase::statusToStr(status);
 }
 
 

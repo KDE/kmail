@@ -212,7 +212,7 @@ public slots:
   void setFolderInfoStatus();
 
 protected:
-  static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
+  static QPixmap *pixNew, *pixUns, *pixDel, *pixRead, *pixRep, *pixSent,
     *pixQueued, *pixFwd, *pixFlag, *pixWatched, *pixIgnored,
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
