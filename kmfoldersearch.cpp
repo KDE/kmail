@@ -40,7 +40,7 @@
 #define kmail_swap_32(x) bswap_32(x)
 #else
 #define kmail_swap_32(x) \
-     ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |		      \
+     ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |               \
       (((x) & 0x0000ff00) <<  8) | (((x) & 0x000000ff) << 24))
 #endif
 
@@ -348,53 +348,53 @@ KMFolderSearch::KMFolderSearch(KMFolder* folder, const char* name)
     //Hook up some slots for live updating of search folders
     //TODO: Optimize folderInvalidated, folderAdded, folderRemoved
     connect(kmkernel->folderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-	    this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
+            this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
     connect(kmkernel->folderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-	    this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
+            this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
     connect(kmkernel->folderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
-	    this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+            this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
     connect(kmkernel->folderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+            this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->folderMgr(), SIGNAL(folderAdded(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+            this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-	    this, SLOT(examineRemovedFolder(KMFolder*)));
+            this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kmkernel->folderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
-	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
+            this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
     connect(kmkernel->imapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-	    this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
+            this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-	    this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
+            this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
-	    this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+            this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+            this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(folderAdded(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+            this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-	    this, SLOT(examineRemovedFolder(KMFolder*)));
+            this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
-	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
+            this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
     connect(kmkernel->dimapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
-	    this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
+            this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
-	    this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
+            this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
-	    this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+            this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+            this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(folderAdded(KMFolder*)),
-	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+            this, SLOT(examineInvalidatedFolder(KMFolder*)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
-	    this, SLOT(examineRemovedFolder(KMFolder*)));
+            this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kmkernel->dimapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
-	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
+            this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
   mExecuteSearchTimer = new QTimer();
   connect(mExecuteSearchTimer, SIGNAL(timeout()),
-	  this, SLOT(executeSearch()));
+          this, SLOT(executeSearch()));
 }
 
 KMFolderSearch::~KMFolderSearch()
@@ -542,13 +542,13 @@ int KMFolderSearch::open()
 
     readConfig();
     if (!mSearch && !readSearch())
-	return -1;
+        return -1;
 
     emit cleared();
     if (!mSearch || !search()->running())
-	if (!readIndex()) {
-	    executeSearch();
-	}
+        if (!readIndex()) {
+            executeSearch();
+        }
 
     return 0;
 }
@@ -558,7 +558,7 @@ int KMFolderSearch::canAccess()
     assert(!folder()->name().isEmpty());
 
     if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
-	return 1;
+        return 1;
     return 0;
 }
 
@@ -610,7 +610,7 @@ int KMFolderSearch::create(bool)
     int old_umask;
     int rc = unlink(QFile::encodeName(location()));
     if (!rc)
-	return rc;
+        return rc;
     rc = 0;
 
     assert(!folder()->name().isEmpty());
@@ -859,7 +859,7 @@ bool KMFolderSearch::readIndex()
         return false;
     }
     if (swapByteOrder)
-	count = kmail_swap_32(count);
+        count = kmail_swap_32(count);
 
     mUnreadMsgs = 0;
     mSerNums.reserve(count);
@@ -982,7 +982,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
 
     if (folder->folderType() == KMFolderTypeImap) {
         // Unless there is a search currently running, add the message to
-	// the list of ones to check on folderCompleted and hook up the signal.
+        // the list of ones to check on folderCompleted and hook up the signal.
         KMFolderImap *imapFolder =
            dynamic_cast<KMFolderImap*> ( folder->storage() );
         if (!mSearch->running()) {
@@ -1067,11 +1067,11 @@ void KMFolderSearch::examineInvalidatedFolder(KMFolder *folder)
 
     mInvalid = true;
     if (mSearch)
-	mSearch->stop();
+        mSearch->stop();
 
     removeContents();
     if (!isOpened()) //give up, until the user manually opens the folder
-	return;
+        return;
 
     if (!mTempOpened) {
         open();
@@ -1084,8 +1084,8 @@ void KMFolderSearch::examineRemovedFolder(KMFolder *folder)
 {
     examineInvalidatedFolder(folder);
     if (mSearch->root() == folder) {
-	delete mSearch;
-	mSearch = 0;
+        delete mSearch;
+        mSearch = 0;
     }
 }
 
@@ -1093,22 +1093,22 @@ void KMFolderSearch::propagateHeaderChanged(KMFolder *aFolder, int idx)
 {
     int pos = 0;
     if (!search() && !readSearch())
-	return;
+        return;
     if (!search()->inScope(aFolder))
-	return;
+        return;
     if (!mTempOpened) {
-	open();
-	mTempOpened = true;
+        open();
+        mTempOpened = true;
     }
 
     Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(aFolder, idx);
     QValueVector<Q_UINT32>::const_iterator it;
     for(it = mSerNums.begin(); it != mSerNums.end(); ++it) {
-	if ((*it) == serNum) {
-	    emit msgHeaderChanged(folder(), pos);
-	    return;
-	}
-	++pos;
+        if ((*it) == serNum) {
+            emit msgHeaderChanged(folder(), pos);
+            return;
+        }
+        ++pos;
     }
 }
 
