@@ -180,20 +180,18 @@ public:
    * List a directory and add the contents to kmfoldermgr
    * returns false if the connection failed
    */
-  bool listDirectory();
+  bool listDirectory(bool secondStep = false);
 
   /** Return the trash folder. */
   KMFolder* trashFolder() const;
 
 protected slots:
   /**
-   * Add the imap folders to the folder tree
+   * Connected to ImapAccountBase::receivedFolders 
+   * creates/removes folders 
    */
-  void slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
-  /**
-   * Free the resources
-   */
-  void slotListResult(KIO::Job * job);
+  void slotListResult(QStringList, QStringList,
+      QStringList, const ImapAccountBase::jobData &);
 
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KIO::Job * job, bool lastSet);
