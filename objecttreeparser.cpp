@@ -724,7 +724,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
         i18n("Crypto plug-in %1 can not decrypt any messages.").arg(cryptPlug->libName()),
         i18n("Please split translation across this and the next message",
 	     "Please specify a matching plug-in from the"),
-        i18n("..continued", "'Settings->Configure KMail->Security' dialog."),
+        i18n("...continued", "'Settings->Configure KMail->Security' dialog."),
         decryptedData );
     } else {
       kdDebug(5006) << "ObjectTreeParser::decryptMIME: going to call CRYPTPLUG "
