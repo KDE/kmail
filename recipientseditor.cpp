@@ -30,6 +30,7 @@
 
 #include <libemailfunctions/email.h>
 
+#include <kapplication.h>
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <klocale.h>
@@ -170,7 +171,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   kdDebug() << "HEIGHT: " << height << endl;
 
   mRemoveButton = new QPushButton( this );
-  mRemoveButton->setPixmap( SmallIcon( "clear_left" ) );
+  mRemoveButton->setIconSet( KApplication::reverseLayout() ? SmallIconSet("locationbar_erase") : SmallIconSet( "clear_left" ) );
   topLayout->addWidget( mRemoveButton );
   connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
 
