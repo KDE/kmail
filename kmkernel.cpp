@@ -446,7 +446,7 @@ void KMKernel::init()
   QDir dir;
   QString d = locateLocal("data", "kmail/");
 
-  cfg->setGroup("General");
+  KConfigGroupSaver saver(cfg, "General");
   the_firstStart = cfg->readBoolEntry("first-start", true);
   the_previousVersion = cfg->readEntry("previous-version", "");
   cfg->writeEntry("previous-version", KMAIL_VERSION);
@@ -481,13 +481,15 @@ void KMKernel::init()
 
   the_server_is_ready = true;
 
-  cfg->setGroup("Composer");
-  if (cfg->readListEntry("charsets").isEmpty())
-  {
-    cfg->writeEntry("charsets", "us-ascii,utf-8,iso-8859-1,iso-8859-15,"
-    "iso-8859-2,iso-8859-3,iso-8859-4,iso-8859-5,koi8-r,koi8-u,windows-1251,"
-    "iso-8859-6,iso-8859-7,iso-8859-8,iso-8859-9,iso-8859-10,iso-8859-13,"
-    "iso-8859-14,iso-2022-jp,euc-jp,shift_jis,euc-kr,Big5,gb2312");
+  { // area for config group "Composer"
+    KConfigGroupSaver saver(cfg, "Composer");
+    if (cfg->readListEntry("charsets").isEmpty())
+    {
+      cfg->writeEntry("charsets", "us-ascii,utf-8,iso-8859-1,iso-8859-15,"
+      "iso-8859-2,iso-8859-3,iso-8859-4,iso-8859-5,koi8-r,koi8-u,windows-1251,"
+      "iso-8859-6,iso-8859-7,iso-8859-8,iso-8859-9,iso-8859-10,iso-8859-13,"
+      "iso-8859-14,iso-2022-jp,euc-jp,shift_jis,euc-kr,Big5,gb2312");
+    }
   }
   // filterMgr->dump();
   kdDebug() << "exiting KMKernel::init()" << endl;
@@ -514,11 +516,11 @@ void KMKernel::cleanup(void)
 {
   the_shuttingDown = TRUE;
   KConfig* config =  kapp->config();
+  KConfigGroupSaver saver(config, "General");
 
   if (the_trashFolder) {
 
     the_trashFolder->close(TRUE);
-    config->setGroup("General");
     if (config->readBoolEntry("empty-trash-on-exit", true))
       the_trashFolder->expunge();
 
@@ -560,7 +562,6 @@ void KMKernel::cleanup(void)
 
 
   if (the_folderMgr) {
-    config->setGroup("General");
     if (config->readBoolEntry("compact-all-on-exit", true))
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
   }

@@ -1778,7 +1778,7 @@ QString KMFolder::idString()
 void KMFolder::readConfig()
 {
   KConfig* config = kapp->config();
-  config->setGroup("Folder-" + idString());
+  KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
   mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
@@ -1791,7 +1791,7 @@ void KMFolder::readConfig()
 void KMFolder::writeConfig()
 {
   KConfig* config = kapp->config();
-  config->setGroup("Folder-" + idString());
+  KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);

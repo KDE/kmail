@@ -21,7 +21,7 @@
 QStringList KMIdentity::identities()
 {
   KConfig* config = kapp->config();
-  config->setGroup( "Identity" );
+  KConfigGroupSaver saver( config, "Identity" );
 
   QStringList result = config->readListEntry( "IdentityList" );
   if (!result.contains( i18n( "Default" ))) {
@@ -36,7 +36,7 @@ QStringList KMIdentity::identities()
 void KMIdentity::saveIdentities( QStringList ids, bool aWithSync )
 {
   KConfig* config = kapp->config();
-  config->setGroup( "Identity" );
+  KConfigGroupSaver saver( config, "Identity" );
 
   if (ids.contains( i18n( "Default" )))
     ids.remove( i18n( "Default" ));
@@ -67,10 +67,8 @@ void KMIdentity::readConfig(void)
   char str[80];
   int i;
 
-  if (mIdentity == i18n( "Default" ))
-    config->setGroup( "Identity" );
-  else
-    config->setGroup( "Identity-" + mIdentity );
+  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ? 
+		     QString("Identity") : "Identity-" + mIdentity );
 
   mFullName = config->readEntry("Name");
   if (mFullName.isEmpty())
@@ -114,10 +112,8 @@ void KMIdentity::writeConfig(bool aWithSync)
 {
   KConfig* config = kapp->config();
 
-  if (mIdentity == i18n( "Default" ))
-    config->setGroup( "Identity" );
-  else
-    config->setGroup( "Identity-" + mIdentity );
+  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ? 
+		     QString("Identity") : "Identity-" + mIdentity );
 
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Name", mFullName);
@@ -145,7 +141,7 @@ bool KMIdentity::mailingAllowed(void) const
 //-----------------------------------------------------------------------------
 void KMIdentity::setFullName(const QString &str)
 {
-    mFullName = str;
+  mFullName = str;
 }
 
 
@@ -218,7 +214,7 @@ void KMIdentity::setUseSignatureFile( bool flag )
 //-----------------------------------------------------------------------------
 void KMIdentity::setTransport(const QString &str)
 {
-    mTransport = str;
+  mTransport = str;
 }
 
 //-----------------------------------------------------------------------------

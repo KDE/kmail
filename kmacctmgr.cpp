@@ -69,13 +69,13 @@ void KMAcctMgr::writeConfig(bool withSync)
   QString groupName;
   int i;
 
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   config->writeEntry("accounts", mAcctList.count());
 
   for (i=1,acct=mAcctList.first(); acct; acct=mAcctList.next(),i++)
   {
     groupName.sprintf("Account %d", i);
-    config->setGroup(groupName);
+    KConfigGroupSaver saver(config, groupName);
     acct->writeConfig(*config);
   }
   if (withSync) config->sync();
@@ -92,13 +92,13 @@ void KMAcctMgr::readConfig(void)
 
   mAcctList.clear();
 
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   num = config->readNumEntry("accounts", 0);
 
   for (i=1; i<=num; i++)
   {
     groupName.sprintf("Account %d", i);
-    config->setGroup(groupName);
+    KConfigGroupSaver saver(config, groupName);
     acctType = config->readEntry("Type");
     // Provide backwards compatibility
     if (acctType == "advanced pop" || acctType == "experimental pop")

@@ -236,7 +236,7 @@ bool KMComposeWin::event(QEvent *e)
 void KMComposeWin::readColorConfig(void)
 {
   KConfig *config = kapp->config();
-  config->setGroup("Reader");
+  KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().normal().text());
   QColor c4=QColor(kapp->palette().normal().base());
 
@@ -274,9 +274,10 @@ void KMComposeWin::readConfig(void)
 {
   KConfig *config = kapp->config();
   QString str;
-  int w, h, maxTransportItems;
+  //  int w, h, 
+  int maxTransportItems;
 
-  config->setGroup("Composer");
+  KConfigGroupSaver saver(config, "Composer");
 
   str = config->readEntry("charset", "");
   if (str.isNull() || str.isEmpty() || str=="default")
@@ -313,48 +314,54 @@ void KMComposeWin::readConfig(void)
 
   readColorConfig();
 
-  config->setGroup("General");
-  mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
-  useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
-
-  int headerCount = config->readNumEntry("mime-header-count", 0);
-  mCustHeaders.clear();
-  mCustHeaders.setAutoDelete(true);
-  for (int i = 0; i < headerCount; i++) {
-    QString thisGroup;
-    _StringPair *thisItem = new _StringPair;
-    thisGroup.sprintf("Mime #%d", i);
-    config->setGroup(thisGroup);
-    thisItem->name = config->readEntry("name", "");
-    if ((thisItem->name).length() > 0) {
-      thisItem->value = config->readEntry("value", "");
-      mCustHeaders.append(thisItem);
-    } else {
-      delete thisItem;
+  { // area for config group "General"
+    KConfigGroupSaver saver(config, "General");
+    mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
+    useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
+    
+    int headerCount = config->readNumEntry("mime-header-count", 0);
+    mCustHeaders.clear();
+    mCustHeaders.setAutoDelete(true);
+    for (int i = 0; i < headerCount; i++) {
+      QString thisGroup;
+      _StringPair *thisItem = new _StringPair;
+      thisGroup.sprintf("Mime #%d", i);
+      KConfigGroupSaver saver(config, thisGroup);
+      thisItem->name = config->readEntry("name", "");
+      if ((thisItem->name).length() > 0) {
+	thisItem->value = config->readEntry("value", "");
+	mCustHeaders.append(thisItem);
+      } else {
+	delete thisItem;
+      }
     }
   }
 
-  config->setGroup("Fonts");
-  mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
-  if (!config->readBoolEntry("defaultFonts",TRUE)) {
-    mBodyFont = QFont("helvetica");
-    mBodyFont = config->readFontEntry("body-font", &mBodyFont);
-    QString bodyFamily = mBodyFont.family();
-    int pos = bodyFamily.find("-");
-    // We ignore the foundary, otherwise we can't set the charset
-    if (pos != -1)
-      mBodyFont.setFamily(bodyFamily.right(bodyFamily.length()-pos-1));
+  { // area fo config group "Fonts"
+    KConfigGroupSaver saver(config, "Fonts");
+    mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
+    if (!config->readBoolEntry("defaultFonts",TRUE)) {
+      mBodyFont = QFont("helvetica");
+      mBodyFont = config->readFontEntry("body-font", &mBodyFont);
+      QString bodyFamily = mBodyFont.family();
+      int pos = bodyFamily.find("-");
+      // We ignore the foundary, otherwise we can't set the charset
+      if (pos != -1)
+	mBodyFont.setFamily(bodyFamily.right(bodyFamily.length()-pos-1));
+    }
+    else
+      mBodyFont = KGlobalSettings::generalFont();
+    if (mEditor) mEditor->setFont(mBodyFont);
   }
-  else
-    mBodyFont = KGlobalSettings::generalFont();
-  if (mEditor) mEditor->setFont(mBodyFont);
 
-  config->setGroup("Geometry");
-  str = config->readEntry("composer", "480 510");
-  sscanf(str.data(), "%d %d", &w, &h);
-  if (w<200) w=200;
-  if (h<200) h=200;
-  resize(w, h);
+  { // area fo config group "Fonts"
+    KConfigGroupSaver saver(config, "Geometry");
+    QSize defaultSize(480,510);
+    QSize siz = config->readSizeEntry("composer", &defaultSize);
+    if (siz.width() < 200) siz.setWidth(200);
+    if (siz.height() < 200) siz.setHeight(200);
+    resize(siz);
+  }
 
   mIdentity.clear();
   mIdentity.insertStringList( KMIdentity::identities() );
@@ -381,23 +388,26 @@ void KMComposeWin::writeConfig(void)
   KConfig *config = kapp->config();
   QString str;
 
-  config->setGroup("Composer");
-  config->writeEntry("signature", mAutoSign?"auto":"manual");
-  config->writeEntry("encoding", mDefEncoding);
-  config->writeEntry("headers", mShowHeaders);
-  config->writeEntry("sticky-transport", mBtnTransport.isChecked());
-  config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
-  config->writeEntry("previous-identity", mIdentity.currentText() );
-  mTransportHistory.remove(mTransport.currentText());
-  mTransportHistory.prepend(mTransport.currentText());
-  config->writeEntry("transport-history", mTransportHistory );
+  {
+    KConfigGroupSaver saver(config, "Composer");
+    config->writeEntry("signature", mAutoSign?"auto":"manual");
+    config->writeEntry("encoding", mDefEncoding);
+    config->writeEntry("headers", mShowHeaders);
+    config->writeEntry("sticky-transport", mBtnTransport.isChecked());
+    config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
+    config->writeEntry("previous-identity", mIdentity.currentText() );
+    mTransportHistory.remove(mTransport.currentText());
+    mTransportHistory.prepend(mTransport.currentText());
+    config->writeEntry("transport-history", mTransportHistory );
+  }
 
-  config->setGroup("Geometry");
-  str.sprintf("%d %d", width(), height());
-  config->writeEntry("composer", str);
+  {
+    KConfigGroupSaver saver(config, "Geometry");
+    config->writeEntry("composer", size());
 
-  saveMainWindowSettings(config, "Composer");
-  config->sync();
+    saveMainWindowSettings(config, "Composer");
+    config->sync();
+  }
 }
 
 
@@ -718,7 +728,7 @@ void KMComposeWin::setupActions(void)
   connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   KConfig *config = kapp->config();
-  config->setGroup("Composer");
+  KConfigGroupSaver saver(config, "Composer");
   QStringList encodings = config->readListEntry("charsets");
   makeDescriptiveNames( encodings );
 

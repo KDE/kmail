@@ -304,7 +304,7 @@ void KMFolderTree::readColorConfig (void)
 {
   KConfig* conf = kapp->config();
   // Custom/System color support
-  conf->setGroup("Reader");
+  KConfigGroupSaver saver(conf, "Reader");
   QColor c1=QColor(kapp->palette().normal().text());
   QColor c2=QColor("blue");
   QColor c4=QColor(kapp->palette().normal().base());
@@ -332,24 +332,28 @@ void KMFolderTree::readConfig (void)
   QString fntStr;
 
   // Backing pixmap support
-  conf->setGroup("Pixmaps");
-  QString pixmapFile = conf->readEntry("FolderTree","");
-  mPaintInfo.pixmapOn = FALSE;
-  if (pixmapFile != "") {
-    mPaintInfo.pixmapOn = TRUE;
-    mPaintInfo.pixmap = QPixmap( pixmapFile );
+  { //area for config group "Pixmaps"
+    KConfigGroupSaver saver(conf, "Pixmaps");
+    QString pixmapFile = conf->readEntry("FolderTree","");
+    mPaintInfo.pixmapOn = FALSE;
+    if (pixmapFile != "") {
+      mPaintInfo.pixmapOn = TRUE;
+      mPaintInfo.pixmap = QPixmap( pixmapFile );
+    }
   }
 
   readColorConfig();
 
   // Custom/Ssystem font support
-  conf->setGroup("Fonts");
-  if (!conf->readBoolEntry("defaultFonts",TRUE)) {
-    QFont folderFont = QFont("helvetica");
-    setFont(conf->readFontEntry("folder-font", &folderFont));
+  { //area for config group "Pixmaps"
+    KConfigGroupSaver saver(conf, "Fonts");
+    if (!conf->readBoolEntry("defaultFonts",TRUE)) {
+      QFont folderFont = QFont("helvetica");
+      setFont(conf->readFontEntry("folder-font", &folderFont));
+    }
+    else
+      setFont(KGlobalSettings::generalFont());
   }
-  else
-    setFont(KGlobalSettings::generalFont());
 }
 
 //-----------------------------------------------------------------------------
@@ -776,7 +780,7 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
   KConfig* conf = kapp->config();
 
-  conf->setGroup("Geometry");
+  KConfigGroupSaver saver(conf, "Geometry");
   conf->writeEntry(name(), size().width());
 
   KMFolderTreeInherited::resizeEvent(e);
@@ -926,7 +930,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   KMFolder *folder = fti->folder;
   if (!folder)
     return TRUE;
-  config->setGroup("Folder-" + folder->idString());
+  KConfigGroupSaver saver(config, "Folder-" + folder->idString());
 
   return config->readBoolEntry("isOpen", false);
 }
@@ -939,7 +943,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   KMFolder *folder = fti->folder;
   if (!folder)
     return;
-  config->setGroup("Folder-" + folder->idString());
+  KConfigGroupSaver saver(config, "Folder-" + folder->idString());
   config->writeEntry("isOpen", fti->isOpen());
 }
 

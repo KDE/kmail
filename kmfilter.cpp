@@ -15,14 +15,11 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <kdebug.h>
-//#include <kapp.h>
 
 #include <qregexp.h>
 #include <qstring.h>
-#include <qstringlist.h>
 
 #include <assert.h>
-//#include <string.h>
 
 
 KMFilter::KMFilter( KConfig* aConfig )
@@ -112,12 +109,11 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
 void KMFilter::readConfig(KConfig* config)
 {
   // MKSearchPattern::readConfig ensures
-  // it the pattern is purified.
+  // that the pattern is purified.
   mPattern.readConfig(config);
 
   int i, numActions;
   QString actName, argsName;
-  QStringList actNames, actArgs;
 
   mActions.clear();
 
@@ -127,37 +123,29 @@ void KMFilter::readConfig(KConfig* config)
     KMessageBox::information( 0, i18n("Too many filter actions in filter rule `%1'").arg( mPattern.name() ) );
   }
 
-  // (mmutz) Some KMFilterAction* constructors want to read
-  // from the config, too. So make sure we have read our stuff
-  // before they can switch the group...
   for ( i=0 ; i < numActions ; i++ ) {
-    actNames.append( config->readEntry( actName.sprintf("action-name-%d", i) ) );
-    actArgs.append( config->readEntry( argsName.sprintf("action-args-%d", i) ) );
-  }
-
-  QStringList::Iterator nIt = actNames.begin(), aIt = actArgs.begin();
-  for ( ; nIt != actNames.end() && aIt != actArgs.end(); ++nIt, ++aIt ) {
-    KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*nIt) ];
+    actName.sprintf("action-name-%d", i);
+    argsName.sprintf("action-args-%d", i);
+    // get the action description...
+    KMFilterActionDesc *desc = (*kernel->filterActionDict())[ config->readEntry( actName ) ];
     if ( desc ) {
       //...create an instance...
       KMFilterAction *fa = desc->create();
       if ( fa ) {
 	//...load it with it's parameter...
-	fa->argsFromString( *aIt );
+	fa->argsFromString( config->readEntry( argsName ) );
 	//...check if it's emoty and...
-	if ( !fa->isEmpty() ) {
+	if ( !fa->isEmpty() )
 	  //...append it if it's not and...
 	  mActions.append( fa );
-	} else {
-	  //...delete it else.
+	else
+	  //...delete is else.
 	  delete fa;
-	}
       }
-    } else {
+    } else
       KMessageBox::information( 0 /* app-global modal dialog box */,
 				i18n("Unknown filter action `%1'\n in filter rule `%2'."
-				     "\nIgnoring it.").arg( *nIt ).arg( mPattern.name() ) );
-    }
+				     "\nIgnoring it.").arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
   }
 }
 

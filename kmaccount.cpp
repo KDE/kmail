@@ -128,7 +128,8 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString &aReceiptTo)
   KConfig* cfg = kapp->config();
   bool sendReceipts;
 
-  cfg->setGroup("General");
+  KConfigGroupSaver saver(cfg, "General");
+
   sendReceipts = cfg->readBoolEntry("send-receipts", false);
   if (!sendReceipts) return;
 

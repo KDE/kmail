@@ -153,7 +153,8 @@ bool KMReaderWin::event(QEvent *e)
 void KMReaderWin::readColorConfig(void)
 {
   KConfig *config = kapp->config();
-  config->setGroup("Reader");
+  KConfigGroupSaver saver(config, "Reader");
+
   c1 = QColor(kapp->palette().normal().text());
   c2 = KGlobalSettings::linkColor();
   c3 = KGlobalSettings::visitedLinkColor();
@@ -183,14 +184,17 @@ void KMReaderWin::readConfig(void)
 {
   KConfig *config = kapp->config();
   QString encoding;
-
-  config->setGroup("Pixmaps");
+  
+  { // block defines the lifetime of KConfigGroupSaver
+  KConfigGroupSaver saver(config, "Pixmaps");
   mBackingPixmapOn = FALSE;
   mBackingPixmapStr = config->readEntry("Readerwin","");
   if (mBackingPixmapStr != "")
     mBackingPixmapOn = TRUE;
+  }
 
-  config->setGroup("Reader");
+  {
+  KConfigGroupSaver saver(config, "Reader");
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
@@ -198,9 +202,12 @@ void KMReaderWin::readConfig(void)
 							   SmartAttmnt);
   mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
   mViewer->setOnlyLocalReferences( !mLoadExternal );
+  }
+
   fntSize = 0;
 
-  config->setGroup("Fonts");
+  {
+  KConfigGroupSaver saver(config, "Fonts");
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = QFont("helvetica");
@@ -221,6 +228,7 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = KGlobalSettings::generalFont().family();
   }
   mViewer->setStandardFont(mBodyFamily);
+  }
 
   readColorConfig();
 
@@ -235,7 +243,7 @@ void KMReaderWin::readConfig(void)
 void KMReaderWin::writeConfig(bool aWithSync)
 {
   KConfig *config = kapp->config();
-  config->setGroup("Reader");
+  KConfigGroupSaver saver(config, "Reader");
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
   config->writeEntry("attmnt-style",(int)mAttachmentStyle);
@@ -246,47 +254,52 @@ void KMReaderWin::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 QString KMReaderWin::quoteFontTag( int quoteLevel )
 {
-  KConfig &config = *kapp->config();
+  KConfig *config = kapp->config();
 
   QColor color;
-  config.setGroup("Reader");
-  if( config.readBoolEntry( "defaultColors", true ) == true )
-  {
-    color = QColor(kapp->palette().normal().text());
-  }
-  else
-  {
-    QColor defaultColor = QColor(kapp->palette().normal().text());
-    if( quoteLevel == 0 )
-      color = config.readColorEntry( "QuoutedText1", &defaultColor );
-    else if( quoteLevel == 1 )
-      color = config.readColorEntry( "QuoutedText2", &defaultColor );
-    else if( quoteLevel == 2 )
-      color = config.readColorEntry( "QuoutedText3", &defaultColor );
+
+  { // block defines the lifetime of KConfigGroupSaver
+    KConfigGroupSaver saver(config, "Reader");
+    if( config->readBoolEntry( "defaultColors", true ) == true )
+    {
+      color = QColor(kapp->palette().normal().text());
+    }
     else
-      color = QColor(kapp->palette().normal().base());
+    {
+      QColor defaultColor = QColor(kapp->palette().normal().text());
+      if( quoteLevel == 0 )
+	color = config->readColorEntry( "QuoutedText1", &defaultColor );
+      else if( quoteLevel == 1 )
+	color = config->readColorEntry( "QuoutedText2", &defaultColor );
+      else if( quoteLevel == 2 )
+	color = config->readColorEntry( "QuoutedText3", &defaultColor );
+      else
+	color = QColor(kapp->palette().normal().base());
+    }
   }
 
   QFont font;
-  config.setGroup("Fonts");
-  if( config.readBoolEntry( "defaultFonts", true ) == true )
   {
-    font = KGlobalSettings::generalFont();
-    font.setItalic(true);
-  }
-  else
-  {
-    const QFont defaultFont = QFont("helvetica");
-    if( quoteLevel == 0 )
-      font  = config.readFontEntry( "quote1-font", &defaultFont );
-    else if( quoteLevel == 1 )
-      font  = config.readFontEntry( "quote2-font", &defaultFont );
-    else if( quoteLevel == 2 )
-      font  = config.readFontEntry( "quote3-font", &defaultFont );
-    else
+    KConfigGroupSaver saver(config, "Fonts");
+    if( config->readBoolEntry( "defaultFonts", true ) == true )
     {
       font = KGlobalSettings::generalFont();
       font.setItalic(true);
+    }
+    else
+    {
+      const QFont defaultFont = QFont("helvetica");
+      if( quoteLevel == 0 )
+	font  = config->readFontEntry( "quote1-font", &defaultFont );
+      else if( quoteLevel == 1 )
+	font  = config->readFontEntry( "quote2-font", &defaultFont );
+      else if( quoteLevel == 2 )
+	font  = config->readFontEntry( "quote3-font", &defaultFont );
+      else
+      {
+	font = KGlobalSettings::generalFont();
+	font.setItalic(true);
+      }
     }
   }
 

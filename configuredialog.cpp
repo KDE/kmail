@@ -22,7 +22,9 @@
 // Add header files alphabetically
 
 // This must be first
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 
 #include <signal.h>
 #ifdef HAVE_UNISTD_H
@@ -1425,7 +1427,6 @@ void ConfigureDialog::makeSecurityPage( void )
                            "If you wish to view images in HTML, you can\n"
                            "enable this option, but be aware of the possible\n"
                            "problem.</qt>" ) );
-
 }
 
 #include <kinstance.h>
@@ -1576,15 +1577,15 @@ void ConfigureDialog::setupNetworkPage( void )
     QString().setNum(kernel->msgSender()->smtpPort()) );
   mNetwork.precommandEdit->setText( kernel->msgSender()->precommand() );
 
-  KConfig &config = *kapp->config();
-  config.setGroup("Composer");
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver(config, "Composer");
 
   mNetwork.sendMethodCombo->setCurrentItem(
     kernel->msgSender()->sendImmediate() ? 0 : 1 );
   mNetwork.messagePropertyCombo->setCurrentItem(
     kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
   mNetwork.confirmSendCheck->setChecked(
-    config.readBoolEntry( "confirm-before-send", false ) );
+    config->readBoolEntry( "confirm-before-send", false ) );
 
   mNetwork.accountList->clear();
   QListViewItem *top = 0;
@@ -1612,133 +1613,142 @@ void ConfigureDialog::setupNetworkPage( void )
 
 void ConfigureDialog::setupAppearancePage( void )
 {
-  KConfig &config = *kapp->config();
-  config.setGroup("Fonts");
+  KConfig *config = kapp->config();
+  bool state;
 
-  mAppearance.font[0] = QFont("helvetica");
-  mAppearance.font[0] =
-    config.readFontEntry("body-font", &mAppearance.font[0]);
-  mAppearance.font[1] =
-    config.readFontEntry("list-font", &mAppearance.font[0]);
-  mAppearance.font[2] =
-    config.readFontEntry("list-date-font", &mAppearance.font[0]);
-  mAppearance.font[3] =
-    config.readFontEntry("folder-font", &mAppearance.font[0]);
-  mAppearance.font[4] =
-    config.readFontEntry("quote1-font", &mAppearance.font[0]);
-  mAppearance.font[5] =
-    config.readFontEntry("quote2-font", &mAppearance.font[0]);
-  mAppearance.font[6] =
-    config.readFontEntry("quote3-font", &mAppearance.font[0]);
+  { //area for config group "Fonts"
+    KConfigGroupSaver saver(config, "Fonts");
+    mAppearance.font[0] = QFont("helvetica");
+    mAppearance.font[0] =
+      config->readFontEntry("body-font", &mAppearance.font[0]);
+    mAppearance.font[1] =
+      config->readFontEntry("list-font", &mAppearance.font[0]);
+    mAppearance.font[2] =
+      config->readFontEntry("list-date-font", &mAppearance.font[0]);
+    mAppearance.font[3] =
+      config->readFontEntry("folder-font", &mAppearance.font[0]);
+    mAppearance.font[4] =
+      config->readFontEntry("quote1-font", &mAppearance.font[0]);
+    mAppearance.font[5] =
+      config->readFontEntry("quote2-font", &mAppearance.font[0]);
+    mAppearance.font[6] =
+      config->readFontEntry("quote3-font", &mAppearance.font[0]);
 
-  bool state = config.readBoolEntry("defaultFonts", TRUE );
-  mAppearance.customFontCheck->setChecked( state == false ? true : false );
-  mAppearance.unicodeFontCheck->setChecked( config.readBoolEntry(
-    "unicodeFont", false ) );
-  slotCustomFontSelectionChanged();
-  updateFontSelector();
-  slotFontSelectorChanged( mAppearance.fontLocationCombo->currentItem() );
-
-  config.setGroup("Reader");
-
-  QColor defaultColor = QColor(kapp->palette().normal().base());
-  mAppearance.colorList->setColor(
-    0, config.readColorEntry("BackgroundColor",&defaultColor ) );
-
-  defaultColor = QColor(kapp->palette().normal().text());
-  mAppearance.colorList->setColor(
-    1, config.readColorEntry("ForegroundColor",&defaultColor ) );
-
-  defaultColor = QColor(kapp->palette().normal().text());
-  mAppearance.colorList->setColor(
-    2, config.readColorEntry("QuoutedText1",&defaultColor ) );
-
-  defaultColor = QColor(kapp->palette().normal().text());
-  mAppearance.colorList->setColor(
-    3, config.readColorEntry("QuoutedText2",&defaultColor ) );
-
-  defaultColor = QColor(kapp->palette().normal().text());
-  mAppearance.colorList->setColor(
-    4, config.readColorEntry("QuoutedText3",&defaultColor ) );
-
-  defaultColor = KGlobalSettings::linkColor();
-  mAppearance.colorList->setColor(
-    5, config.readColorEntry("LinkColor",&defaultColor ) );
-
-  defaultColor = KGlobalSettings::visitedLinkColor();
-  mAppearance.colorList->setColor(
-    6, config.readColorEntry("FollowedColor",&defaultColor ) );
-
-  defaultColor = QColor("red");
-  mAppearance.colorList->setColor(
-    7, config.readColorEntry("NewMessage",&defaultColor ) );
-
-  defaultColor = QColor("blue");
-  mAppearance.colorList->setColor(
-    8, config.readColorEntry("UnreadMessage",&defaultColor ) );
-
-  defaultColor = QColor(0,0x7F,0);
-  mAppearance.colorList->setColor(
-    9, config.readColorEntry("FlagMessage",&defaultColor ) );
-
-  state = config.readBoolEntry("defaultColors", true );
-  mAppearance.customColorCheck->setChecked( state == false ? true : false );
-  slotCustomColorSelectionChanged();
-
-  state = config.readBoolEntry( "RecycleQuoteColors", false );
-  mAppearance.recycleColorCheck->setChecked( state );
-
-  config.setGroup("Geometry");
-  state = config.readBoolEntry( "longFolderList", false );
-  mAppearance.longFolderCheck->setChecked( state );
-
-  state = config.readBoolEntry( "nestedMessages", false );
-  mAppearance.nestedMessagesCheck->setChecked( state );
-
-  switch( config.readNumEntry( "nestingPolicy", 3 ) )
-  {
-  case 0:
-     mAppearance.rdAlwaysOpen->setChecked( true );
-     break;
-  case 1:
-     mAppearance.rdDefaultOpen->setChecked( true );
-     break;
-  case 2:
-     mAppearance.rdDefaultClosed->setChecked( true );
-     break;
-  case 3:
-     mAppearance.rdUnreadOpen->setChecked( true );
-     break;
-  default:
-     mAppearance.rdUnreadOpen->setChecked( true );
-     break;
+    state = config->readBoolEntry("defaultFonts", TRUE );
+    mAppearance.customFontCheck->setChecked( state == false ? true : false );
+    mAppearance.unicodeFontCheck->setChecked( config->readBoolEntry(
+      "unicodeFont", false ) );
+    slotCustomFontSelectionChanged();
+    updateFontSelector();
+    slotFontSelectorChanged( mAppearance.fontLocationCombo->currentItem() );
   }
-  config.setGroup("Reader");
-  state = config.readBoolEntry( "htmlMail", false );
-  mAppearance.htmlMailCheck->setChecked( state );
-  state = config.readBoolEntry( "htmlLoadExternal", false );
-  mSecurity.externalReferences->setChecked( state );
 
-  config.setGroup("General");
-  state = config.readBoolEntry( "showMessageSize", false );
-  mAppearance.messageSizeCheck->setChecked( state );
+  {
+    KConfigGroupSaver saver(config, "Reader");
 
-  mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 1 )) ;
-  mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config.readNumEntry( "addressbook", 1 )) );
+    QColor defaultColor = QColor(kapp->palette().normal().base());
+    mAppearance.colorList->setColor(
+      0, config->readColorEntry("BackgroundColor",&defaultColor ) );
 
-  QString dateDisplay = config.readEntry( "dateDisplay", "fancyDate" );
-  if ( dateDisplay == "ctime" )
+    defaultColor = QColor(kapp->palette().normal().text());
+    mAppearance.colorList->setColor(
+      1, config->readColorEntry("ForegroundColor",&defaultColor ) );
+
+    defaultColor = QColor(kapp->palette().normal().text());
+    mAppearance.colorList->setColor(
+      2, config->readColorEntry("QuoutedText1",&defaultColor ) );
+
+    defaultColor = QColor(kapp->palette().normal().text());
+    mAppearance.colorList->setColor(
+      3, config->readColorEntry("QuoutedText2",&defaultColor ) );
+
+    defaultColor = QColor(kapp->palette().normal().text());
+    mAppearance.colorList->setColor(
+      4, config->readColorEntry("QuoutedText3",&defaultColor ) );
+
+    defaultColor = KGlobalSettings::linkColor();
+    mAppearance.colorList->setColor(
+      5, config->readColorEntry("LinkColor",&defaultColor ) );
+
+    defaultColor = KGlobalSettings::visitedLinkColor();
+    mAppearance.colorList->setColor(
+      6, config->readColorEntry("FollowedColor",&defaultColor ) );
+
+    defaultColor = QColor("red");
+    mAppearance.colorList->setColor(
+      7, config->readColorEntry("NewMessage",&defaultColor ) );
+
+    defaultColor = QColor("blue");
+    mAppearance.colorList->setColor(
+      8, config->readColorEntry("UnreadMessage",&defaultColor ) );
+
+    defaultColor = QColor(0,0x7F,0);
+    mAppearance.colorList->setColor(
+      9, config->readColorEntry("FlagMessage",&defaultColor ) );
+
+    state = config->readBoolEntry("defaultColors", true );
+    mAppearance.customColorCheck->setChecked( state == false ? true : false );
+    slotCustomColorSelectionChanged();
+
+    state = config->readBoolEntry( "RecycleQuoteColors", false );
+    mAppearance.recycleColorCheck->setChecked( state );
+  }
+
+  {
+    KConfigGroupSaver saver(config, "Geometry");
+    state = config->readBoolEntry( "longFolderList", false );
+    mAppearance.longFolderCheck->setChecked( state );
+
+    state = config->readBoolEntry( "nestedMessages", false );
+    mAppearance.nestedMessagesCheck->setChecked( state );
+
+    switch( config->readNumEntry( "nestingPolicy", 3 ) )
+    {
+    case 0:
+      mAppearance.rdAlwaysOpen->setChecked( true );
+      break;
+    case 1:
+      mAppearance.rdDefaultOpen->setChecked( true );
+      break;
+    case 2:
+      mAppearance.rdDefaultClosed->setChecked( true );
+      break;
+    case 3:
+      mAppearance.rdUnreadOpen->setChecked( true );
+      break;
+    default:
+     mAppearance.rdUnreadOpen->setChecked( true );
+     break;
+    }
+  }
+
+  {
+    KConfigGroupSaver saver(config, "Reader");
+    state = config->readBoolEntry( "htmlMail", false );
+    mAppearance.htmlMailCheck->setChecked( state );
+  }
+
+  {
+    KConfigGroupSaver saver(config, "General");
+    state = config->readBoolEntry( "showMessageSize", false );
+    mAppearance.messageSizeCheck->setChecked( state );
+    mAppearance.addressbookCombo->setCurrentItem( config->readNumEntry( "addressbook", 1 )) ;
+    mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config->readNumEntry( "addressbook", 1 )) );
+
+    QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
+    if ( dateDisplay == "ctime" )
       mAppearance.rdDateCtime->setChecked( true );
-  else if ( dateDisplay == "localized" )
+    else if ( dateDisplay == "localized" )
       mAppearance.rdDateLocalized->setChecked( true );
-  else
+    else
       mAppearance.rdDateFancy->setChecked( true );
+  }
 }
 
 
 void ConfigureDialog::setupComposerPage( void )
 {
-  KConfig &config = *kapp->config();
+  KConfig *config = kapp->config();
   mComposer.CurrentLanguage = NULL;
   LanguageItem *l = mComposer.LanguageList;
   while (mComposer.LanguageList)
@@ -1749,20 +1759,20 @@ void ConfigureDialog::setupComposerPage( void )
   }
   mComposer.phraseLanguageCombo->clear();
 
-  config.setGroup("General");
-  int num = config.readNumEntry("reply-languages",0);
-  int currentNr = config.readNumEntry("reply-current-language",0);
-  QString itemStr = QString();
+  KConfigGroupSaver saver(config, "General");
+  int num = config->readNumEntry("reply-languages",0);
+  int currentNr = config->readNumEntry("reply-current-language",0);
+  QString itemStr;
   int nr;
 
   for (int i = num - 1; i >= 0; i--)
   {
-    config.setGroup(QString("KMMessage #%1").arg(i));
-    l = new LanguageItem( config.readEntry("language"),
-                          config.readEntry("phrase-reply"),
-                          config.readEntry("phrase-reply-all"),
-                          config.readEntry("phrase-forward"),
-                          config.readEntry("indent-prefix") );
+    KConfigGroupSaver saver(config, QString("KMMessage #%1").arg(i));
+    l = new LanguageItem( config->readEntry("language"),
+                          config->readEntry("phrase-reply"),
+                          config->readEntry("phrase-reply-all"),
+                          config->readEntry("phrase-forward"),
+                          config->readEntry("indent-prefix") );
     l->next = mComposer.LanguageList;
     mComposer.LanguageList = l;
     nr = mComposer.phraseLanguageCombo->insertLanguage( l->mLanguage );
@@ -1778,79 +1788,80 @@ void ConfigureDialog::setupComposerPage( void )
   slotLanguageChanged( NULL );
 
   // editor
-  config.setGroup("General");
-  bool state = config.readBoolEntry( "use-external-editor", false );
+    bool state = config->readBoolEntry( "use-external-editor", false );
   mComposer.externalEditorCheck->setChecked( state );
-  mComposer.externalEditorEdit->setText( config.readEntry("external-editor", "") );
+  mComposer.externalEditorEdit->setText( config->readEntry("external-editor", "") );
 
-  config.setGroup("Composer");
-
-  // prefixes
-  QStringList prefixList = config.readListEntry("reply-prefixes", ',');
-  if (prefixList.count() == 0)
-    prefixList.append("Re:");
-  mComposer.replyListBox->clear();
-  mComposer.replyListBox->insertStringList(prefixList);
-  state = config.readBoolEntry("replace-reply-prefix", true );
-  mComposer.replaceReplyPrefixCheck->setChecked( state );
-
-  prefixList = config.readListEntry("forward-prefixes", ',');
-  if (prefixList.count() == 0)
-    prefixList.append("Fwd:");
-  mComposer.forwardListBox->clear();
-  mComposer.forwardListBox->insertStringList(prefixList);
-  state = config.readBoolEntry("replace-forward-prefix", true);
-  mComposer.replaceForwardPrefixCheck->setChecked( state );
-
-  state = qstricmp( config.readEntry("signature"), "auto" ) == 0;
-  mComposer.autoAppSignFileCheck->setChecked( state );
-
-  state = config.readBoolEntry( "smart-quote", true );
-  mComposer.smartQuoteCheck->setChecked(state);
-
-  state = config.readBoolEntry( "pgp-auto-sign", false );
-  mComposer.pgpAutoSignatureCheck->setChecked(state);
-
-  state = config.readBoolEntry( "word-wrap", true );
-  mComposer.wordWrapCheck->setChecked( state );
-
-  int value = config.readEntry("break-at","78" ).toInt();
-  mComposer.wrapColumnSpin->setValue( value );
-  slotWordWrapSelectionChanged();
-
-  //charsets
-  QStringList charsets = config.readListEntry("charsets");
-  mComposer.charsetListBox->clear();
-  mComposer.charsetListBox->insertStringList( charsets );
-  mComposer.charsetListBox->setCurrentItem( 0 );
-
-  charsets.prepend( i18n("Use language encoding") );
-  mComposer.defaultCharsetCombo->clear();
-  mComposer.defaultCharsetCombo->insertStringList(charsets);
-  QString str = config.readEntry( "charset", "" );
-  if (str.isNull() || str.isEmpty() || str == "default")
-    mComposer.defaultCharsetCombo->setCurrentItem( 0 );
-  else
   {
-    bool found = false;
-    for (int j = 1; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
-      if (mComposer.defaultCharsetCombo->text( j ) == str)
-      {
-        mComposer.defaultCharsetCombo->setCurrentItem( j );
-        found = true;
-        break;
-      }
-    if (!found)
-      mComposer.defaultCharsetCombo->setCurrentItem(0);
+    KConfigGroupSaver saver(config, "Composer");
+
+    // prefixes
+    QStringList prefixList = config->readListEntry("reply-prefixes", ',');
+    if (prefixList.count() == 0)
+      prefixList.append("Re:");
+    mComposer.replyListBox->clear();
+    mComposer.replyListBox->insertStringList(prefixList);
+    state = config->readBoolEntry("replace-reply-prefix", true );
+    mComposer.replaceReplyPrefixCheck->setChecked( state );
+
+    prefixList = config->readListEntry("forward-prefixes", ',');
+    if (prefixList.count() == 0)
+      prefixList.append("Fwd:");
+    mComposer.forwardListBox->clear();
+    mComposer.forwardListBox->insertStringList(prefixList);
+    state = config->readBoolEntry("replace-forward-prefix", true);
+    mComposer.replaceForwardPrefixCheck->setChecked( state );
+
+    state = qstricmp( config->readEntry("signature"), "auto" ) == 0;
+    mComposer.autoAppSignFileCheck->setChecked( state );
+
+    state = config->readBoolEntry( "smart-quote", true );
+    mComposer.smartQuoteCheck->setChecked(state);
+
+    state = config->readBoolEntry( "pgp-auto-sign", false );
+    mComposer.pgpAutoSignatureCheck->setChecked(state);
+
+    state = config->readBoolEntry( "word-wrap", true );
+    mComposer.wordWrapCheck->setChecked( state );
+
+    int value = config->readEntry("break-at","78" ).toInt();
+    mComposer.wrapColumnSpin->setValue( value );
+    slotWordWrapSelectionChanged();
+
+    //charsets
+    QStringList charsets = config->readListEntry("charsets");
+    mComposer.charsetListBox->clear();
+    mComposer.charsetListBox->insertStringList( charsets );
+    mComposer.charsetListBox->setCurrentItem( 0 );
+
+    charsets.prepend( i18n("Use language encoding") );
+    mComposer.defaultCharsetCombo->clear();
+    mComposer.defaultCharsetCombo->insertStringList(charsets);
+    QString str = config->readEntry( "charset", "" );
+    if (str.isNull() || str.isEmpty() || str == "default")
+      mComposer.defaultCharsetCombo->setCurrentItem( 0 );
+    else
+    {
+      bool found = false;
+      for (int j = 1; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
+	if (mComposer.defaultCharsetCombo->text( j ) == str)
+	{
+	  mComposer.defaultCharsetCombo->setCurrentItem( j );
+	  found = true;
+	  break;
+	}
+      if (!found)
+	mComposer.defaultCharsetCombo->setCurrentItem(0);
+    }
+    state = config->readBoolEntry( "force-reply-charset", false );
+    mComposer.forceReplyCharsetCheck->setChecked( state );
   }
-  state = config.readBoolEntry( "force-reply-charset", false );
-  mComposer.forceReplyCharsetCheck->setChecked( state );
 }
 
 void ConfigureDialog::setupMimePage( void )
 {
-  KConfig &config = *kapp->config();
-  config.setGroup("General");
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver(config, "General");
 
   mMime.tagList->clear();
   mMime.currentTagItem = 0;
@@ -1861,11 +1872,11 @@ void ConfigureDialog::setupMimePage( void )
   mMime.tagNameLabel->setEnabled(false);
   mMime.tagValueLabel->setEnabled(false);
 
-  QString str = config.readEntry( "myMessageIdSuffix", "" );
+  QString str = config->readEntry( "myMessageIdSuffix", "" );
   mMime.messageIdSuffixEdit->setText( str );
   bool state = (str.isNull() || str.isEmpty())
              ? false
-             : config.readBoolEntry("createOwnMessageIdHeaders", false );
+             : config->readBoolEntry("createOwnMessageIdHeaders", false );
   mMime.createOwnMessageIdCheck->setChecked(  state );
   mMime.messageIdSuffixLabel->setEnabled(     state );
   mMime.messageIdSuffixEdit->setEnabled(      state );
@@ -1874,13 +1885,13 @@ void ConfigureDialog::setupMimePage( void )
 
   QListViewItem *top = 0;
 
-  int count = config.readNumEntry( "mime-header-count", 0 );
+  int count = config->readNumEntry( "mime-header-count", 0 );
   mMime.tagList->clear();
   for(int i = 0; i < count; i++)
   {
-    config.setGroup( QString("Mime #%1").arg(i) );
-    QString name  = config.readEntry("name", "");
-    QString value = config.readEntry("value", "");
+    KConfigGroupSaver saver(config, QString("Mime #%1").arg(i) );
+    QString name  = config->readEntry("name", "");
+    QString value = config->readEntry("value", "");
     if( name.length() > 0 )
     {
       QListViewItem *listItem =
@@ -1903,37 +1914,37 @@ void ConfigureDialog::setupSecurityPage( void )
 
 void ConfigureDialog::setupMiscPage( void )
 {
-  KConfig &config = *kapp->config();
-  config.setGroup("General");
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver(config, "General");
 
-  bool state = config.readBoolEntry("empty-trash-on-exit",false);
+  bool state = config->readBoolEntry("empty-trash-on-exit",false);
   mMisc.emptyTrashCheck->setChecked( state );
-  state = config.readBoolEntry("keep-small-trash", true);
+  state = config->readBoolEntry("keep-small-trash", true);
   mMisc.keepSmallTrashCheck->setChecked( state );
-  int num = config.readNumEntry("small-trash-size", 1);
+  int num = config->readNumEntry("small-trash-size", 1);
   mMisc.smallTrashSizeSpin->setValue( num );
-  state = config.readBoolEntry("remove-old-mail-from-trash", true);
+  state = config->readBoolEntry("remove-old-mail-from-trash", true);
   mMisc.removeOldMailCheck->setChecked( state );
-  num = config.readNumEntry("old-mail-age", 1);
+  num = config->readNumEntry("old-mail-age", 1);
   mMisc.oldMailAgeSpin->setValue( num );
-  num = config.readNumEntry("old-mail-age-unit", 1);
+  num = config->readNumEntry("old-mail-age-unit", 1);
   mMisc.timeUnitCombo->setCurrentItem( num );
-  state = config.readBoolEntry("sendOnCheck", false);
+  state = config->readBoolEntry("sendOnCheck", false);
   mMisc.sendOutboxCheck->setChecked( state );
-  state = config.readBoolEntry("send-receipts", false );
+  state = config->readBoolEntry("send-receipts", false );
   mMisc.sendReceiptCheck->setChecked( state );
-  state = config.readBoolEntry("compact-all-on-exit", true );
+  state = config->readBoolEntry("compact-all-on-exit", true );
   mMisc.compactOnExitCheck->setChecked( state );
-  state = config.readBoolEntry("confirm-before-empty", true );
+  state = config->readBoolEntry("confirm-before-empty", true );
   mMisc.emptyFolderConfirmCheck->setChecked( state );
 
-  state = config.readBoolEntry("beep-on-mail", false );
+  state = config->readBoolEntry("beep-on-mail", false );
   mMisc.beepNewMailCheck->setChecked( state );
-  state = config.readBoolEntry("msgbox-on-mail", false);
+  state = config->readBoolEntry("msgbox-on-mail", false);
   mMisc.showMessageBoxCheck->setChecked( state );
-  state = config.readBoolEntry("exec-on-mail", false);
+  state = config->readBoolEntry("exec-on-mail", false);
   mMisc.mailCommandCheck->setChecked( state );
-  mMisc.mailCommandEdit->setText( config.readEntry("exec-on-mail-cmd", ""));
+  mMisc.mailCommandEdit->setText( config->readEntry("exec-on-mail-cmd", ""));
   slotExternalEditorSelectionChanged();
   slotMailCommandSelectionChanged();
 }
@@ -2103,7 +2114,7 @@ void ConfigureDialog::slotApply( void )
 
 void ConfigureDialog::slotDoApply( bool everything )
 {
-  KConfig &config = *kapp->config();
+  KConfig *config = kapp->config();
 
   int activePage = activePageIndex();
   if( activePage == mIdentity.pageIndex || everything )
@@ -2111,10 +2122,10 @@ void ConfigureDialog::slotDoApply( bool everything )
     saveActiveIdentity(); // Copy from textfields into list
     mIdentityList.exportData();
     if( secondIdentity ) {
-	config.setGroup("Composer");
-	long mShowHeaders = config.readNumEntry("headers", HDR_STANDARD);
+	KConfigGroupSaver saver(config, "Composer");
+	long mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
 	mShowHeaders |= HDR_IDENTITY;
-	config.writeEntry("headers", mShowHeaders);
+	config->writeEntry("headers", mShowHeaders);
     }
   }
   if( activePage == mNetwork.pageIndex || everything )
@@ -2139,9 +2150,9 @@ void ConfigureDialog::slotDoApply( bool everything )
     kernel->msgSender()->setSendQuotedPrintable( quotedPrintable );
     kernel->msgSender()->writeConfig(FALSE);
     // Moved from composer page !
-    config.setGroup("Composer");
+    KConfigGroupSaver saver(config, "Composer");
     bool confirmBeforeSend = mNetwork.confirmSendCheck->isChecked();
-    config.writeEntry("confirm-before-send", confirmBeforeSend );
+    config->writeEntry("confirm-before-send", confirmBeforeSend );
 
     // Add accounts marked as new
     QValueList< QGuardedPtr<KMAccount> >::Iterator it;
@@ -2186,75 +2197,82 @@ void ConfigureDialog::slotDoApply( bool everything )
       installProfile();
     }
 
-    config.setGroup("Fonts");
-    bool defaultFonts = !mAppearance.customFontCheck->isChecked();
-    config.writeEntry("defaultFonts", defaultFonts );
-    config.writeEntry("unicodeFont", mAppearance.unicodeFontCheck->
-      isChecked());
-    config.writeEntry( "body-font",   mAppearance.font[0] );
-    config.writeEntry( "list-font",   mAppearance.font[1] );
-    config.writeEntry( "list-date-font", mAppearance.font[2] );
-    config.writeEntry( "folder-font", mAppearance.font[3] );
-    config.writeEntry( "quote1-font", mAppearance.font[4] );
-    config.writeEntry( "quote2-font", mAppearance.font[5] );
-    config.writeEntry( "quote3-font", mAppearance.font[6] );
+    {
+      KConfigGroupSaver saver(config, "Fonts");
+      bool defaultFonts = !mAppearance.customFontCheck->isChecked();
+      config->writeEntry("defaultFonts", defaultFonts );
+      config->writeEntry("unicodeFont", mAppearance.unicodeFontCheck->
+			 isChecked());
+      config->writeEntry( "body-font",   mAppearance.font[0] );
+      config->writeEntry( "list-font",   mAppearance.font[1] );
+      config->writeEntry( "list-date-font", mAppearance.font[2] );
+      config->writeEntry( "folder-font", mAppearance.font[3] );
+      config->writeEntry( "quote1-font", mAppearance.font[4] );
+      config->writeEntry( "quote2-font", mAppearance.font[5] );
+      config->writeEntry( "quote3-font", mAppearance.font[6] );
 //  GS - should this be here?
 //    printf("WRITE: %s\n", mAppearance.fontString[3].latin1() );
-
-    config.setGroup("Reader");
-    bool defaultColors = !mAppearance.customColorCheck->isChecked();
-    config.writeEntry("defaultColors", defaultColors );
-    if (!defaultColors)
-    {
-       // Don't write color info when we use default colors.
-       config.writeEntry("BackgroundColor", mAppearance.colorList->color(0) );
-       config.writeEntry("ForegroundColor", mAppearance.colorList->color(1) );
-       config.writeEntry("QuoutedText1",    mAppearance.colorList->color(2) );
-       config.writeEntry("QuoutedText2",    mAppearance.colorList->color(3) );
-       config.writeEntry("QuoutedText3",    mAppearance.colorList->color(4) );
-       config.writeEntry("LinkColor",       mAppearance.colorList->color(5) );
-       config.writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
-       config.writeEntry("NewMessage",      mAppearance.colorList->color(7) );
-       config.writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
-       config.writeEntry("FlagMessage",     mAppearance.colorList->color(9) );
     }
-    bool recycleColors = mAppearance.recycleColorCheck->isChecked();
-    config.writeEntry("RecycleQuoteColors", recycleColors );
 
-    config.setGroup("Geometry");
-    bool longFolderList = mAppearance.longFolderCheck->isChecked();
-    config.writeEntry( "longFolderList", longFolderList );
+    {
+      KConfigGroupSaver saver(config, "Reader");
+      bool defaultColors = !mAppearance.customColorCheck->isChecked();
+      config->writeEntry("defaultColors", defaultColors );
+      if (!defaultColors)
+      {
+	// Don't write color info when we use default colors.
+	config->writeEntry("BackgroundColor", mAppearance.colorList->color(0) );
+	config->writeEntry("ForegroundColor", mAppearance.colorList->color(1) );
+	config->writeEntry("QuoutedText1",    mAppearance.colorList->color(2) );
+	config->writeEntry("QuoutedText2",    mAppearance.colorList->color(3) );
+	config->writeEntry("QuoutedText3",    mAppearance.colorList->color(4) );
+	config->writeEntry("LinkColor",       mAppearance.colorList->color(5) );
+	config->writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
+	config->writeEntry("NewMessage",      mAppearance.colorList->color(7) );
+	config->writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
+	config->writeEntry("FlagMessage",     mAppearance.colorList->color(9) );
+      }
+      bool recycleColors = mAppearance.recycleColorCheck->isChecked();
+      config->writeEntry("RecycleQuoteColors", recycleColors );
 
-    bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
-    config.writeEntry( "nestedMessages", nestedMessages );
+      bool htmlMail = mAppearance.htmlMailCheck->isChecked();
+      config->writeEntry( "htmlMail", htmlMail );
+      config->writeEntry( "htmlLoadExternal", mSecurity.
+                          externalReferences->isChecked() );
+    }
+    
+    {
+      KConfigGroupSaver saver(config, "Geometry");
+      bool longFolderList = mAppearance.longFolderCheck->isChecked();
+      config->writeEntry( "longFolderList", longFolderList );
+      
+      bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
+      config->writeEntry( "nestedMessages", nestedMessages );
 
-    int threadPolicy = 3;
-    if( mAppearance.rdAlwaysOpen->isChecked() )
-       threadPolicy = 0;
-    else if( mAppearance.rdDefaultOpen->isChecked() )
-       threadPolicy = 1;
-    else if( mAppearance.rdDefaultClosed->isChecked() )
+      int threadPolicy = 3;
+      if( mAppearance.rdAlwaysOpen->isChecked() )
+	threadPolicy = 0;
+      else if( mAppearance.rdDefaultOpen->isChecked() )
+	threadPolicy = 1;
+      else if( mAppearance.rdDefaultClosed->isChecked() )
        threadPolicy = 2;
 
-    config.writeEntry( "nestingPolicy", threadPolicy );
+      config->writeEntry( "nestingPolicy", threadPolicy );
+    }
 
-    config.setGroup("Reader");
-    bool htmlMail = mAppearance.htmlMailCheck->isChecked();
-    config.writeEntry( "htmlMail", htmlMail );
-    config.writeEntry( "htmlLoadExternal", mSecurity.
-                       externalReferences->isChecked() );
+    {
+      KConfigGroupSaver saver(config, "General");
+      bool messageSize = mAppearance.messageSizeCheck->isChecked();
+      config->writeEntry( "showMessageSize", messageSize );
+      config->writeEntry( "addressbook", mAppearance.addressbookCombo->currentItem() );
 
-    config.setGroup("General");
-    bool messageSize = mAppearance.messageSizeCheck->isChecked();
-    config.writeEntry( "showMessageSize", messageSize );
-    config.writeEntry( "addressbook", mAppearance.addressbookCombo->currentItem() );
-
-    if ( mAppearance.rdDateCtime->isChecked() )
-        config.writeEntry( "dateDisplay", "ctime" );
-    else if ( mAppearance.rdDateLocalized->isChecked() )
-        config.writeEntry( "dateDisplay", "localized" );
-    else if ( mAppearance.rdDateFancy->isChecked() )
-        config.writeEntry( "dateDisplay", "fancyDate" );
+      if ( mAppearance.rdDateCtime->isChecked() )
+        config->writeEntry( "dateDisplay", "ctime" );
+      else if ( mAppearance.rdDateLocalized->isChecked() )
+        config->writeEntry( "dateDisplay", "localized" );
+      else if ( mAppearance.rdDateFancy->isChecked() )
+        config->writeEntry( "dateDisplay", "fancyDate" );
+    }
   }
   if( activePage == mComposer.pageIndex || everything )
   {
@@ -2264,71 +2282,75 @@ void ConfigureDialog::slotDoApply( bool everything )
     while (l)
     {
       if (l == mComposer.CurrentLanguage) currentNr = languageCount;
-      config.setGroup(QString("KMMessage #%1").arg(languageCount));
-      config.writeEntry( "language", l->mLanguage );
-      config.writeEntry( "phrase-reply", l->mReply );
-      config.writeEntry( "phrase-reply-all", l->mReplyAll );
-      config.writeEntry( "phrase-forward", l->mForward );
-      config.writeEntry( "indent-prefix", l->mIndentPrefix );
+      KConfigGroupSaver saver(config, QString("KMMessage #%1").arg(languageCount));
+      config->writeEntry( "language", l->mLanguage );
+      config->writeEntry( "phrase-reply", l->mReply );
+      config->writeEntry( "phrase-reply-all", l->mReplyAll );
+      config->writeEntry( "phrase-forward", l->mForward );
+      config->writeEntry( "indent-prefix", l->mIndentPrefix );
       l = l->next;
       languageCount++;
     }
 
-    config.setGroup("General");
-    config.writeEntry("reply-languages", languageCount);
-    config.writeEntry("reply-current-language", currentNr);
+    {
+      KConfigGroupSaver saver(config, "General");
+      config->writeEntry("reply-languages", languageCount);
+      config->writeEntry("reply-current-language", currentNr);
 
-    config.writeEntry( "use-external-editor",
-		       mComposer.externalEditorCheck->isChecked() );
-    config.writeEntry( "external-editor",
-		       mComposer.externalEditorEdit->text() );
+      config->writeEntry( "use-external-editor",
+			  mComposer.externalEditorCheck->isChecked() );
+      config->writeEntry( "external-editor",
+			  mComposer.externalEditorEdit->text() );
+    }
 
-    config.setGroup("Composer");
+    {
+      KConfigGroupSaver saver(config, "Composer");
 
-    int prefixCount = mComposer.replyListBox->count();
-    QStringList prefixList;
-    int j;
-    for (j = 0; j < prefixCount; j++)
-      prefixList.append( mComposer.replyListBox->item( j )->text() );
-    config.writeEntry("reply-prefixes", prefixList);
-    config.writeEntry("replace-reply-prefix",
-                                mComposer.replaceReplyPrefixCheck->isChecked() );
-    prefixList.clear();
-    prefixCount = mComposer.forwardListBox->count();
-    for (j = 0; j < prefixCount; j++)
-      prefixList.append( mComposer.forwardListBox->item( j )->text() );
-    config.writeEntry("forward-prefixes", prefixList);
-    config.writeEntry("replace-forward-prefix",
-                            mComposer.replaceForwardPrefixCheck->isChecked() );
+      int prefixCount = mComposer.replyListBox->count();
+      QStringList prefixList;
+      int j;
+      for (j = 0; j < prefixCount; j++)
+	prefixList.append( mComposer.replyListBox->item( j )->text() );
+      config->writeEntry("reply-prefixes", prefixList);
+      config->writeEntry("replace-reply-prefix",
+			 mComposer.replaceReplyPrefixCheck->isChecked() );
+      prefixList.clear();
+      prefixCount = mComposer.forwardListBox->count();
+      for (j = 0; j < prefixCount; j++)
+	prefixList.append( mComposer.forwardListBox->item( j )->text() );
+      config->writeEntry("forward-prefixes", prefixList);
+      config->writeEntry("replace-forward-prefix",
+			 mComposer.replaceForwardPrefixCheck->isChecked() );
 
-    QStringList charsetList;
-    int charsetCount = mComposer.charsetListBox->count();
-    for (j = 0; j < charsetCount; j++)
-      charsetList.append( mComposer.charsetListBox->item( j )->text() );
-    config.writeEntry("charsets", charsetList);
+      QStringList charsetList;
+      int charsetCount = mComposer.charsetListBox->count();
+      for (j = 0; j < charsetCount; j++)
+	charsetList.append( mComposer.charsetListBox->item( j )->text() );
+      config->writeEntry("charsets", charsetList);
 
-    bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
-    config.writeEntry("signature", autoSignature ? "auto" : "manual" );
-    config.writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
-    config.writeEntry("pgp-auto-sign",
-		      mComposer.pgpAutoSignatureCheck->isChecked() );
-    config.writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
-    config.writeEntry("break-at", mComposer.wrapColumnSpin->value() );
-    // charset settings
-    if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
-      config.writeEntry("charset", "default");
-    else
-      config.writeEntry("charset", mComposer.defaultCharsetCombo->
-        currentText());
-    config.writeEntry("force-reply-charset",
-                      mComposer.forceReplyCharsetCheck->isChecked() );
+      bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
+      config->writeEntry("signature", autoSignature ? "auto" : "manual" );
+      config->writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
+      config->writeEntry("pgp-auto-sign",
+			 mComposer.pgpAutoSignatureCheck->isChecked() );
+      config->writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
+      config->writeEntry("break-at", mComposer.wrapColumnSpin->value() );
+      // charset settings
+      if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
+	config->writeEntry("charset", "default");
+      else
+	config->writeEntry("charset", mComposer.defaultCharsetCombo->
+			   currentText());
+      config->writeEntry("force-reply-charset",
+			 mComposer.forceReplyCharsetCheck->isChecked() );
+    }
   }
   if( activePage == mMime.pageIndex || everything )
   {
-    config.setGroup("General");
-    config.writeEntry( "createOwnMessageIdHeaders",
+    KConfigGroupSaver(config, "General");
+    config->writeEntry( "createOwnMessageIdHeaders",
                        mMime.createOwnMessageIdCheck->isChecked() );
-    config.writeEntry( "myMessageIdSuffix",
+    config->writeEntry( "myMessageIdSuffix",
                        mMime.messageIdSuffixEdit->text() );
 
     int numValidEntry = 0;
@@ -2336,17 +2358,16 @@ void ConfigureDialog::slotDoApply( bool everything )
     QListViewItem *item = mMime.tagList->firstChild();
     for (int i = 0; i < numEntry; i++)
     {
-      config.setGroup(QString("Mime #%1").arg(i));
+      KConfigGroupSaver saver(config, QString("Mime #%1").arg(i));
       if( item->text(0).length() > 0 )
       {
-	config.writeEntry( "name",  item->text(0) );
-	config.writeEntry( "value", item->text(1) );
+	config->writeEntry( "name",  item->text(0) );
+	config->writeEntry( "value", item->text(1) );
 	numValidEntry += 1;
       }
       item = item->nextSibling();
     }
-    config.setGroup("General");
-    config.writeEntry("mime-header-count", numValidEntry );
+    config->writeEntry("mime-header-count", numValidEntry );
   }
   if( activePage == mSecurity.pageIndex || everything )
   {
@@ -2354,36 +2375,36 @@ void ConfigureDialog::slotDoApply( bool everything )
   }
   if( activePage == mMisc.pageIndex || everything )
   {
-    config.setGroup("General");
-    config.writeEntry( "empty-trash-on-exit",
-		       mMisc.emptyTrashCheck->isChecked() );
-    config.writeEntry( "keep-small-trash",
-                       mMisc.keepSmallTrashCheck->isChecked() );
-    config.writeEntry( "small-trash-size",
-                       mMisc.smallTrashSizeSpin->value() );
-    config.writeEntry( "remove-old-mail-from-trash",
-                       mMisc.removeOldMailCheck->isChecked() );
-    config.writeEntry( "old-mail-age",
-                       mMisc.oldMailAgeSpin->value() );
-    config.writeEntry( "old-mail-age-unit",
-                       mMisc.timeUnitCombo->currentItem() );
-    config.writeEntry( "sendOnCheck",
-		       mMisc.sendOutboxCheck->isChecked() );
-    config.writeEntry( "send-receipts",
-		       mMisc.sendReceiptCheck->isChecked() );
-    config.writeEntry( "compact-all-on-exit",
-		       mMisc.compactOnExitCheck->isChecked() );
-    config.writeEntry( "confirm-before-empty",
-                       mMisc.emptyFolderConfirmCheck->isChecked() );
+    KConfigGroupSaver saver(config, "General");
+    config->writeEntry( "empty-trash-on-exit",
+			mMisc.emptyTrashCheck->isChecked() );
+    config->writeEntry( "keep-small-trash",
+			mMisc.keepSmallTrashCheck->isChecked() );
+    config->writeEntry( "small-trash-size",
+			mMisc.smallTrashSizeSpin->value() );
+    config->writeEntry( "remove-old-mail-from-trash",
+			mMisc.removeOldMailCheck->isChecked() );
+    config->writeEntry( "old-mail-age",
+			mMisc.oldMailAgeSpin->value() );
+    config->writeEntry( "old-mail-age-unit",
+			mMisc.timeUnitCombo->currentItem() );
+    config->writeEntry( "sendOnCheck",
+			mMisc.sendOutboxCheck->isChecked() );
+    config->writeEntry( "send-receipts",
+			mMisc.sendReceiptCheck->isChecked() );
+    config->writeEntry( "compact-all-on-exit",
+			mMisc.compactOnExitCheck->isChecked() );
+    config->writeEntry( "confirm-before-empty",
+			mMisc.emptyFolderConfirmCheck->isChecked() );
 
-    config.writeEntry( "beep-on-mail",
-		       mMisc.beepNewMailCheck->isChecked() );
-    config.writeEntry( "msgbox-on-mail",
-		       mMisc.showMessageBoxCheck->isChecked() );
-    config.writeEntry( "exec-on-mail",
-		       mMisc.mailCommandCheck->isChecked() );
-    config.writeEntry( "exec-on-mail-cmd",
-		       mMisc.mailCommandEdit->text() );
+    config->writeEntry( "beep-on-mail",
+			mMisc.beepNewMailCheck->isChecked() );
+    config->writeEntry( "msgbox-on-mail",
+			mMisc.showMessageBoxCheck->isChecked() );
+    config->writeEntry( "exec-on-mail",
+			mMisc.mailCommandCheck->isChecked() );
+    config->writeEntry( "exec-on-mail-cmd",
+			mMisc.mailCommandEdit->text() );
   }
 
   kdDebug() << "KMScoringManager::globalScoringManager()->save();" << endl;
@@ -2392,9 +2413,9 @@ void ConfigureDialog::slotDoApply( bool everything )
   //
   // Always
   //
-  config.setGroup("General");
-  config.writeEntry("first-start", false);
-  config.sync();
+  KConfigGroupSaver saver(config, "General");
+  config->writeEntry("first-start", false);
+  config->sync();
 
   //
   // Make other components read the new settings

@@ -79,7 +79,7 @@ void KMSender::readConfig(void)
   QString str;
   KConfig* config = kapp->config();
 
-  config->setGroup(SENDER_GROUP);
+  KConfigGroupSaver saver(config, SENDER_GROUP);
 
   mSendImmediate = (bool)config->readNumEntry("Immediate", TRUE);
   mSendQuotedPrintable = (bool)config->readNumEntry("Quoted-Printable", FALSE);
@@ -99,7 +99,7 @@ void KMSender::readConfig(void)
 void KMSender::writeConfig(bool aWithSync)
 {
   KConfig* config = kapp->config();
-  config->setGroup(SENDER_GROUP);
+  KConfigGroupSaver saver(config, SENDER_GROUP);
 
   config->writeEntry("Immediate", mSendImmediate);
   config->writeEntry("Quoted-Printable", mSendQuotedPrintable);

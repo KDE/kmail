@@ -265,8 +265,8 @@ public:
     _cg.setColor( QColorGroup::Text, *color );
 
     KConfig *conf = kapp->config();
-    conf->setGroup("Fonts");
-	    if( column == headers->paintInfo()->dateCol ) {
+    KConfigGroupSaver saver(conf, "Fonts");
+    if( column == headers->paintInfo()->dateCol ) {
       if (!conf->readBoolEntry("defaultFonts",TRUE)) {
         QFont folderFont = QFont("courier");
         p->setFont(conf->readFontEntry("list-date-font", &folderFont));
@@ -446,7 +446,7 @@ void KMHeaders::readColorConfig (void)
 {
   KConfig* config = kapp->config();
   // Custom/System colors
-  config->setGroup("Reader");
+  KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().normal().text());
   QColor c2=QColor("red");
   QColor c3=QColor("blue");
@@ -483,33 +483,39 @@ void KMHeaders::readConfig (void)
   KConfig* config = kapp->config();
 
   // Backing pixmap support
-  config->setGroup("Pixmaps");
-  QString pixmapFile = config->readEntry("Headers","");
-  mPaintInfo.pixmapOn = FALSE;
-  if (pixmapFile != "") {
-    mPaintInfo.pixmapOn = TRUE;
-    mPaintInfo.pixmap = QPixmap( pixmapFile );
+  { // area for config group "Pixmaps"
+    KConfigGroupSaver saver(config, "Pixmaps");
+    QString pixmapFile = config->readEntry("Headers","");
+    mPaintInfo.pixmapOn = FALSE;
+    if (pixmapFile != "") {
+      mPaintInfo.pixmapOn = TRUE;
+      mPaintInfo.pixmap = QPixmap( pixmapFile );
+    }
   }
 
-  config->setGroup("General");
-  mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
-  mPaintInfo.dateDisplay = FancyDate;
-  QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
-  if ( dateDisplay == "ctime" )
+  { // area for config group "General"
+    KConfigGroupSaver saver(config, "General");
+    mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
+    mPaintInfo.dateDisplay = FancyDate;
+    QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
+    if ( dateDisplay == "ctime" )
       mPaintInfo.dateDisplay = CTime;
-  else if ( dateDisplay == "localized" )
+    else if ( dateDisplay == "localized" )
       mPaintInfo.dateDisplay = Localized;
+  }
 
   readColorConfig();
 
   // Custom/System fonts
-  config->setGroup("Fonts");
-  if (!(config->readBoolEntry("defaultFonts",TRUE))) {
-    QFont listFont = QFont("helvetica");
-    setFont(config->readFontEntry("list-font", &listFont));
+  { // area for config group "General"
+    KConfigGroupSaver saver(config, "Fonts");
+    if (!(config->readBoolEntry("defaultFonts",TRUE))) {
+      QFont listFont = QFont("helvetica");
+      setFont(config->readFontEntry("list-font", &listFont));
+    }
+    else
+      setFont(KGlobalSettings::generalFont());
   }
-  else
-    setFont(KGlobalSettings::generalFont());
 
 }
 
@@ -532,7 +538,7 @@ void KMHeaders::refreshNestedState(void)
   bool oldState = mNested;
   int oldNestPolicy = nestingPolicy;
   KConfig* config = kapp->config();
-  config->setGroup("Geometry");
+  KConfigGroupSaver saver(config, "Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
 
   nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
@@ -550,7 +556,7 @@ void KMHeaders::readFolderConfig (void)
   KConfig* config = kapp->config();
   assert(mFolder!=NULL);
 
-  config->setGroup("Folder-" + mFolder->idString());
+  KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
   setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
@@ -575,9 +581,11 @@ void KMHeaders::readFolderConfig (void)
   mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", TRUE );
   mPaintInfo.status = config->readBoolEntry( "Status", FALSE );
 
-  config->setGroup("Geometry");
-  mNested = config->readBoolEntry( "nestedMessages", FALSE );
-  nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
+  { //area for config group "Geometry"
+    KConfigGroupSaver saver(config, "Geometry");
+    mNested = config->readBoolEntry( "nestedMessages", FALSE );
+    nestingPolicy = config->readNumEntry( "nestingPolicy", 3 );
+  }
 
   setRootIsDecorated( nestingPolicy != 0 && mNested != mNestedOverride );
 }
@@ -591,7 +599,7 @@ void KMHeaders::writeFolderConfig (void)
 
   assert(mFolder!=NULL);
 
-  config->setGroup("Folder-" + mFolder->idString());
+  KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry("SenderWidth", columnWidth(mPaintInfo.senderCol));
   config->writeEntry("SubjectWidth", columnWidth(mPaintInfo.subCol));
   config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
@@ -747,7 +755,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
   if (mFolder) {
     KConfig *config = kapp->config();
-    config->setGroup("Folder-" + mFolder->idString());
+    KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
 
     if (mPaintInfo.showSize) {
       colText = i18n( "Size" );

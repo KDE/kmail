@@ -37,13 +37,13 @@ void KMFilterMgr::readConfig(void)
 
   clear();
 
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   numFilters = config->readNumEntry("filters",0);
 
   for (i=0; i<numFilters; i++)
   {
     grpName.sprintf("Filter #%d", i);
-    config->setGroup(grpName);
+    KConfigGroupSaver saver(config, grpName);
     filter = new KMFilter(config);
     filter->purify();
     if ( filter->isEmpty() ) {
@@ -68,13 +68,13 @@ void KMFilterMgr::writeConfig(bool withSync)
   while ( it.current() ) {
     if ( !(*it)->isEmpty() ) {
       grpName.sprintf("Filter #%d", i);
-      config->setGroup(grpName);
+      KConfigGroupSaver saver(config, grpName);
       (*it)->writeConfig(config);
       ++i;
     }
     ++it;
   }
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   config->writeEntry("filters", i);
 
   if (withSync) config->sync();

@@ -2149,17 +2149,16 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 void KMMessage::readConfig(void)
 {
   KConfig *config=kapp->config();
-
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
 
   sCreateOwnMessageIdHeaders = config->readBoolEntry( "createOwnMessageIdHeaders",
-                                                  false );
+						      false );
   sMessageIdSuffix = config->readEntry( "myMessageIdSuffix", "" );
 
   int languageNr = config->readNumEntry("reply-current-language",0);
 
-  config->setGroup(QString("KMMessage #%1").arg(languageNr));
-  {
+  { // area for config group "KMMessage #n"
+    KConfigGroupSaver saver(config, QString("KMMessage #%1").arg(languageNr));
     sReplyLanguage = config->readEntry("language",KGlobal::locale()->language());
     sReplyStr = config->readEntry("phrase-reply",
       i18n("On %D, you wrote:"));
@@ -2169,26 +2168,31 @@ void KMMessage::readConfig(void)
       i18n("Forwarded Message"));
     sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
   }
-  config->setGroup("Composer");
-  sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
-  if (sReplySubjPrefixes.count() == 0)
-    sReplySubjPrefixes.append("Re:");
-  sReplaceSubjPrefix = config->readBoolEntry("replace-reply-prefix", true);
-  sForwardSubjPrefixes = config->readListEntry("forward-prefixes", ',');
-  if (sForwardSubjPrefixes.count() == 0)
-    sForwardSubjPrefixes.append("Fwd:");
-  sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
 
-  config->setGroup("Reader");
-  sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);
+  { // area for config group "Composer"
+    KConfigGroupSaver saver(config, "Composer");
+    sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
+    if (sReplySubjPrefixes.count() == 0)
+      sReplySubjPrefixes.append("Re:");
+    sReplaceSubjPrefix = config->readBoolEntry("replace-reply-prefix", true);
+    sForwardSubjPrefixes = config->readListEntry("forward-prefixes", ',');
+    if (sForwardSubjPrefixes.count() == 0)
+      sForwardSubjPrefixes.append("Fwd:");
+    sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
 
-  config->setGroup("Composer");
-  sSmartQuote = config->readBoolEntry("smart-quote", true);
-  sWrapCol = config->readNumEntry("break-at", 78);
-  if ((sWrapCol == 0) || (sWrapCol > 78))
-     sWrapCol = 78;
-  if (sWrapCol < 60)
-     sWrapCol = 60;
+    sSmartQuote = config->readBoolEntry("smart-quote", true);
+    sWrapCol = config->readNumEntry("break-at", 78);
+    if ((sWrapCol == 0) || (sWrapCol > 78))
+      sWrapCol = 78;
+    if (sWrapCol < 60)
+      sWrapCol = 60;
+  }
+
+  { // area for config group "Reader"
+    KConfigGroupSaver saver(config, "Reader");
+    sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);
+  }
+
 }
 
 

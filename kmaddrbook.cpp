@@ -74,7 +74,7 @@ void KMAddrBook::writeConfig(bool aWithSync)
 {
   KConfig* config = kapp->config();
 
-  config->setGroup("Addressbook");
+  KConfigGroupSaver saver(config, "Addressbook");
   config->writeEntry("default", mDefaultFileName);
 
   if (aWithSync) config->sync();
@@ -85,7 +85,7 @@ void KMAddrBook::writeConfig(bool aWithSync)
 void KMAddrBook::readConfig(void)
 {
   KConfig* config = kapp->config();
-  config->setGroup("Addressbook");
+  KConfigGroupSaver saver(config, "Addressbook");
 
   mDefaultFileName = config->readEntry("default");
   if (mDefaultFileName.isEmpty())
@@ -317,7 +317,7 @@ bool KabBridge::replace(QString address, KabKey kabKey)
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
   KConfig *config = kapp->config();
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   if (ab == 3) {
     KRun::runCommand( "abbrowser -a \"" + addr.replace(QRegExp("\""), "")
@@ -337,7 +337,7 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
 
 void KMAddrBookExternal::launch(QWidget *parent) {
   KConfig *config = kapp->config();
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   switch (ab)
   {
@@ -363,7 +363,7 @@ void KMAddrBookExternal::launch(QWidget *parent) {
 bool KMAddrBookExternal::useKAB()
 {
   KConfig *config = kapp->config();
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   if (ab <= 0)
     return false;

@@ -153,10 +153,12 @@ void KMMainWin::readPreConfig(void)
   KConfig *config = kapp->config();
   QString str;
 
-  config->setGroup("Geometry");
-  mLongFolderList = config->readBoolEntry("longFolderList", false);
+  { // area for config group "Geometry"
+    KConfigGroupSaver saver(config, "Geometry");
+    mLongFolderList = config->readBoolEntry("longFolderList", false);
+  }
 
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   mEncodingStr = config->readEntry("encoding", "");
 }
 
@@ -168,7 +170,7 @@ void KMMainWin::readFolderConfig(void)
     return;
 
   KConfig *config = kapp->config();
-  config->setGroup("Folder-" + mFolder->idString());
+  KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
   mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
 }
@@ -181,7 +183,7 @@ void KMMainWin::writeFolderConfig(void)
     return;
 
   KConfig *config = kapp->config();
-  config->setGroup("Folder-" + mFolder->idString());
+  KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
   config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
 }
@@ -192,8 +194,8 @@ void KMMainWin::readConfig(void)
 {
   KConfig *config = kapp->config();
   bool oldLongFolderList=false;
-  int w, h;
   QString str;
+  QSize siz;
 
   if (mStartupDone)
   {
@@ -210,37 +212,42 @@ void KMMainWin::readConfig(void)
     }
   }
 
-  config->setGroup("Reader");
-  mHtmlPref = config->readBoolEntry( "htmlMail", false );
-
-  config->setGroup("Geometry");
-  mThreadPref = config->readBoolEntry( "nestedMessages", false );
-  str = config->readEntry("MainWin", "600,600");
-  if (!str.isEmpty() && str.find(',')>=0)
-  {
-    sscanf(str,"%d,%d",&w,&h);
-    resize(w,h);
+  { // area for config group "Reader"
+    KConfigGroupSaver saver(config, "Reader");
+    mHtmlPref = config->readBoolEntry( "htmlMail", false );
   }
-  str = config->readEntry("Panners", "300,130");
-  if ((!str.isEmpty()) && (str.find(',')!=-1))
-    sscanf(str,"%d,%d",&((*mHorizPannerSep)[0]),&((*mVertPannerSep)[0]));
-  else
-    (*mHorizPannerSep)[0] = (*mVertPannerSep)[0] = 100;
-  (*mHorizPannerSep)[1] = h - (*mHorizPannerSep)[0];
-  (*mVertPannerSep)[1] = w - (*mVertPannerSep)[0];
+
+  { // area for config group "Geometry"
+    KConfigGroupSaver saver(config, "Geometry");
+    mThreadPref = config->readBoolEntry( "nestedMessages", false );
+    QSize defaultSize(600,600);
+    siz = config->readSizeEntry("MainWin", &defaultSize);
+    if (!siz.isEmpty())
+      resize(siz);
+    defaultSize = QSize(300,130);
+    siz = config->readSizeEntry("Panners", &defaultSize);
+    if (siz.isEmpty())
+      siz = QSize(100,100); // why not defaultSize?
+    (*mHorizPannerSep)[0] = siz.width();
+    (*mVertPannerSep)[0] = siz.height();
+    (*mHorizPannerSep)[1] = height() - siz.width();
+    (*mVertPannerSep)[1] = width() - siz.height();
+  }
 
   mMsgView->readConfig();
   slotSetEncoding();
   mHeaders->readConfig();
   mFolderTree->readConfig();
 
-  config->setGroup("General");
-  mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
-  mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
-  mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
-  mExecOnNew = config->readBoolEntry("exec-on-mail", false);
-  mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
-  mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
+  { // area for config group "General"
+    KConfigGroupSaver saver(config, "General");
+    mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
+    mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
+    mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
+    mExecOnNew = config->readBoolEntry("exec-on-mail", false);
+    mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
+    mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
+  }
 
   // Re-activate panners
   if (mStartupDone)
@@ -286,21 +293,21 @@ void KMMainWin::writeConfig(void)
   mMsgView->writeConfig();
   mFolderTree->writeConfig();
 
-  config->setGroup("Geometry");
+  { // area for config group "Geometry"
+    KConfigGroupSaver saver(config, "Geometry");
 
-  s.sprintf("%i,%i", r.width(), r.height());
-  config->writeEntry("MainWin", s);
+    config->writeEntry("MainWin", r.size());
 
-  // Get those panner sizes right!
-  s.sprintf("%i,%i",
-	    (mHorizPanner->sizes()[0] * r.height() ) /
-	    (mHorizPanner->sizes()[0] + mHorizPanner->sizes()[1]),
-	    ( mVertPanner->sizes()[0] * r.width() ) /
-	    (mVertPanner->sizes()[0] + mVertPanner->sizes()[1])
-	    );
-  config->writeEntry("Panners", s);
+    // Get those panner sizes right!
+    config->writeEntry("Panners",
+        QSize( mHorizPanner->sizes()[0] * r.height() /
+	         (mHorizPanner->sizes()[0] + mHorizPanner->sizes()[1]),
+	       mVertPanner->sizes()[0] * r.width() /
+	         (mVertPanner->sizes()[0] + mVertPanner->sizes()[1])
+	       ) );
+  }
 
-  config->setGroup("General");
+  KConfigGroupSaver saver(config, "General");
   config->writeEntry("encoding", mEncodingStr);
 }
 
