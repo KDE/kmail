@@ -35,6 +35,7 @@
 #include "kmfolderdia.h"
 #include "kmfoldertype.h"
 
+class KMFolderImap;
 class KPushButton;
 class QWidgetStack;
 class QHBox;
@@ -101,6 +102,7 @@ private slots:
   void slotMultiSetACLResult(KIO::Job *);
   void slotACLChanged( const QString&, int );
   void slotReceivedUserRights( KMFolder* folder );
+  void slotDirectoryListingFinished(KMFolderImap*);
 
   // User (KListView) slots
   void slotEditACL(QListViewItem*);
@@ -137,6 +139,7 @@ private:
   int mUserRights;
   KMFolderType mFolderType;
   ACLList mInitialACLList;
+  ACLList mACLList; // to be set
   IMAPUserIdFormat mUserIdFormat;
 
   QLabel* mLabel;

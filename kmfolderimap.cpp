@@ -654,6 +654,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
   }
   // now others should react on the changes
   kmkernel->imapFolderMgr()->quiet(false);
+  emit directoryListingFinished( this );
 }
 
 //-----------------------------------------------------------------------------

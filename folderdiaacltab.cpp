@@ -652,13 +652,31 @@ bool KMail::FolderDiaACLTab::save()
     return true;
   }
 
-  // When creating a new folder with online imap, update mImapPath
-  // For disconnected imap, we shouldn't even be here
-  if ( mDlg->isNewFolder() ) {
-    mImapPath += mDlg->folder()->name();
-  }
+  mACLList = aclList;
 
-  KIO::Job* job = ACLJobs::multiSetACL( mImapAccount->slave(), imapURL(), aclList );
+  KMFolderImap* parentImap = mDlg->parentFolder() ? static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) : 0;
+
+  if ( mDlg->isNewFolder() ) {
+    // The folder isn't created yet, wait for it
+    // It's a two-step process (mkdir+listDir) so we wait for the dir listing to be complete
+    connect( parentImap, SIGNAL( directoryListingFinished(KMFolderImap*) ),
+             this, SLOT( slotDirectoryListingFinished(KMFolderImap*) ) );
+  } else {
+      slotDirectoryListingFinished( parentImap );
+  }
+  return true;
+}
+
+void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
+{
+  if ( f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) )
+    return;
+
+  // When creating a new folder with online imap, update mImapPath
+  KMFolderImap* folderImap = static_cast<KMFolderImap*>( mDlg->folder()->storage() );
+  mImapPath = folderImap->imapPath();
+
+  KIO::Job* job = ACLJobs::multiSetACL( mImapAccount->slave(), imapURL(), mACLList );
   ImapAccountBase::jobData jd;
   jd.total = 1; jd.done = 0; jd.parent = 0;
   mImapAccount->insertJob(job, jd);
@@ -667,8 +685,6 @@ bool KMail::FolderDiaACLTab::save()
           SLOT(slotMultiSetACLResult(KIO::Job *)));
   connect(job, SIGNAL(aclChanged( const QString&, int )),
           SLOT(slotACLChanged( const QString&, int )) );
-
-  return true;
 }
 
 void KMail::FolderDiaACLTab::slotMultiSetACLResult(KIO::Job* job)

@@ -289,6 +289,11 @@ signals:
    */
   void deleted(KMFolderImap*);
 
+  /**
+   * Emitted at the end of the directory listing
+   */
+  void directoryListingFinished(KMFolderImap*);
+
 public slots:
   /** Add a message to a folder after is has been added on an IMAP server */
   virtual void addMsgQuiet(KMMessage *);
