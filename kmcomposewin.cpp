@@ -1884,6 +1884,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   QString msgId = mMsg->msgId();
   static bool busy = 0;
   bool sentOk;
+  bool editSubject = true;   // This is an inverted variable due to return type
   if (busy) return;
   busy = true;
 
@@ -1904,7 +1905,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (saveInDrafts)
       sentOk = (applyChanges() && !(kernel->draftsFolder()->addMsg(mMsg)));
   else
-      sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
+      sentOk = (applyChanges() && (editSubject = kernel->msgSender()->send(mMsg, aSendNow)));
   disableBreaking = false;
 
   kernel->kbp()->idle();
@@ -1918,6 +1919,9 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     mFolder = NULL;
     close();
   }
+
+  if (!editSubject) mEdtSubject.setFocus();
+
   busy = false;
 }
 
