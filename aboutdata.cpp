@@ -152,6 +152,8 @@ namespace KMail {
 
   static const about_data credits[] = {
     { "Joern Ahrens", 0, 0, 0 }, // implement wish 77182 (Add some separators to "Mark Message as" popup menu)
+    { "Frederick Emmott", I18N_NOOP("Anti-virus support"),
+      "fred87@users.sf.net", 0 },
     { "Sandro Giessl", 0, 0, 0 }, // frame width fixes for widget styles
     { "Severin Greimel", 0, 0, 0 }, // several patches
     { "Shaheed Haque", 0, 0, 0 }, // fix for bug:69744 (Resource folders: "Journals" should be "Journal")
@@ -173,9 +175,7 @@ namespace KMail {
     { "Wolfgang Westphal", I18N_NOOP("multiple encryption keys per address"),
       "wolfgang.westphal@gmx.de", 0 },
     { "Thorsten Zachmann", I18N_NOOP("POP filters"),
-      "t.zachmann@zagge.de", 0 },
-    { "Frederick Emmott", I18N_NOOP("Anti-virus support"),
-      "fred87@users.sf.net", 0 }
+      "t.zachmann@zagge.de", 0 }
   };
 
   AboutData::AboutData()
