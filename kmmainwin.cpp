@@ -854,7 +854,7 @@ void KMMainWin::setupMenuBar()
 		       SLOT(slotPrintMsg()), keys->print());
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Check Mail..."), this,
-		       SLOT(slotCheckMail()));
+		       SLOT(slotCheckMail()), CTRL+Key_L);
   actMenu = new QPopupMenu();
 
   getAccountMenu();
