@@ -7,6 +7,7 @@
 #include "kmtopwidget.h"
 
 #include <qlabel.h>
+#include <qlistview.h>
 
 #include <qcheckbox.h>
 #include <qpushbutton.h>
@@ -39,7 +40,6 @@ class QFrame;
 class QGridLayout;
 class QLineEdit;
 class QListView;
-class QListViewItem;
 class QPopupMenu;
 class QPushButton;
 class QCString;
@@ -62,6 +62,7 @@ class CryptPlugWrapperList;
 class SpellingFilter;
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
+
 
 //-----------------------------------------------------------------------------
 #define KMEditInherited KEdit
@@ -157,6 +158,32 @@ private:
   static bool s_addressesDirty;
   static KCompletion *s_completion;
 
+};
+
+
+//-----------------------------------------------------------------------------
+class KMAtmListViewItem : public QObject, public QListViewItem
+{
+  Q_OBJECT
+  friend class KMComposeWin;
+
+public:
+  KMAtmListViewItem(QListView * parent);
+  virtual ~KMAtmListViewItem();
+  virtual void paintCell( QPainter * p, const QColorGroup & cg,
+                          int column, int width, int align );
+
+protected:
+  void enableCryptoCBs(bool on);
+  void setEncrypt(bool on);
+  bool isEncrypt();
+  void setSign(bool on);
+  bool isSign();
+
+private:
+  QListView* mListview;
+  QCheckBox* mCBEncrypt;
+  QCheckBox* mCBSign;
 };
 
 
@@ -326,8 +353,14 @@ public slots:
 
   /**
    * Switch the icon to lock or unlock respectivly.
+   * Change states of all encrypt check boxes in the attachments listview
    */
   void slotEncryptToggled(bool);
+
+  /**
+   * Change states of all sign check boxes in the attachments listview
+   */
+  void slotSignToggled(bool);
 
   /**
    * Let the user select another crypto engine
@@ -492,7 +525,7 @@ protected:
    /**
     * Updates an item in the QListView to represnet a given message part
     */
-   void msgPartToItem(const KMMessagePart* msgPart, QListViewItem *lvi);
+   void msgPartToItem(const KMMessagePart* msgPart, KMAtmListViewItem *lvi);
 
   /**
    * Open addressbook and append selected addresses to the given
@@ -548,11 +581,25 @@ private:
                                const StructuringInfoWrapper& structuring,
                                KMMessagePart&  resultingPart );
 
+  /**
+   * Retrieve encrypt flag of an attachment
+   * ( == state of it's check box in the attachments list view )
+   */
+  bool encryptFlagOfAttachment(int idx);
+
+  /**
+   * Retrieve sign flag of an attachment
+   * ( == state of it's check box in the attachments list view )
+   */
+  bool signFlagOfAttachment(int idx);
+
+
   bool encryptMessage( KMMessage* msg, const QStringList& recipients, bool doSign, bool doEncrypt,
 				     CryptPlugWrapper* cryptPlug,
 				     const QCString& encodedBody,int previousBoundaryLevel,
 				     const KMMessagePart& oldBodyPart,
-				     bool earlyAddAttachments, KMMessagePart newBodyPart );
+				     bool earlyAddAttachments, bool allAttachmentsAreInBody,
+                     KMMessagePart newBodyPart );
 
   /**
    * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
@@ -634,7 +681,7 @@ protected:
   bool bAutoCharset;
 
     bool bAlwaysSend;
-    
+
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
 
@@ -655,6 +702,7 @@ private:
   bool mForceReplyCharset;
 
   CryptPlugWrapperList * mCryptPlugList;
+  bool mTmpPlugList;
   QString mErrorProcessingStructuringInfo;
   QString mErrorNoCryptPlugAndNoBuildIn;
 };
