@@ -19,6 +19,7 @@ class KMAcctMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
 class KMAddrBook;
+class KabAPI;
 class KMSender;
 class KMIdentity;
 class KMKernel;
@@ -72,6 +73,9 @@ public:
   inline KMFilterMgr *filterMgr() { return the_filterMgr; }
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   inline KMAddrBook *addrBook() { return the_addrBook; }
+  inline KabAPI *KABaddrBook() { return the_KAB_addrBook; }
+  inline bool useKAB() { return mUseKAB; }
+  inline void setUseKAB( bool useKAB ) { mUseKAB = useKAB; }
   inline KMSender *msgSender() { return the_msgSender; }
 
   inline bool firstStart() { return the_firstStart; }
@@ -92,12 +96,14 @@ private:
   KMFilterMgr *the_filterMgr;
   KMFilterActionDict *the_filterActionDict;
   KMAddrBook *the_addrBook;
+  KabAPI *the_KAB_addrBook;
   KMSender *the_msgSender;
 
   bool the_firstStart;          // is this the first start?  read from config
   bool the_shuttingDown;        // are we going down? set from here
   bool the_checkingMail;        // are we checking mail? set from... where the mail is checked
   bool the_server_is_ready;     // are we in the middle of network operations (needed?)
+  bool mUseKAB;
 
   static KMKernel *mySelf;
 };

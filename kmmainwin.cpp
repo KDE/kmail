@@ -56,6 +56,7 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kwm.h"
+#include "addtoaddressbook.h"
 
 #include <errno.h>
 #include <stdlib.h>
@@ -222,6 +223,7 @@ void KMMainWin::readConfig(void)
   mExecOnNew = config->readBoolEntry("exec-on-mail", false);
   mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
   mUseKab = config->readBoolEntry("use-kab", false);
+  kernel->setUseKAB( mUseKab );
 
   // Re-activate panners
   if (mStartupDone)
@@ -499,8 +501,12 @@ void KMMainWin::slotFilter()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg( kernel->addrBook(), this );
-  dlg.exec();
+  if (!kernel->useKAB()) {
+    KMAddrBookEditDlg dlg( kernel->addrBook(), this );
+    dlg.exec();
+  }
+  else
+    debug("KMMainWin::slotAddrBook: not implemented.");
 }
 
 
@@ -509,6 +515,7 @@ void KMMainWin::slotUseKab()
 {
   mUseKab = !mUseKab;
   fileMenu->setItemChecked( mUseKabId, mUseKab );
+  kernel->setUseKAB( mUseKab );
 }
 
 
@@ -1111,10 +1118,15 @@ void KMMainWin::slotMailtoForward()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMailtoAddAddrBook()
 {
-
+  if (!kernel->useKAB()) {
     if (mUrlCurrent.isEmpty()) return;
     kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
     statusMsg(i18n("Address added to addressbook."));
+  }
+  else {
+    AddToKabDialog dialog(mUrlCurrent, kernel->KABaddrBook(), this);
+    dialog.exec();
+  }
 }
 
 
@@ -1590,26 +1602,6 @@ void KMMainWin::updateFolderMenu()
   else
     mFolderMenu->changeItem(threadId, i18n( "Don't thread messages" ));
   mFolderMenu->setItemChecked(threadId, !mFolderThreadPref);
-
-  /*
-  if (mHtmlPref && mFolderHtmlPref)
-    mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text (default)" ));
-  else if (mHtmlPref && !mFolderHtmlPref)
-    mFolderMenu->changeItem(htmlId, i18n( "Prefer plain text to HTML (override default)" ));
-  else if (!mHtmlPref && mFolderHtmlPref)
-    mFolderMenu->changeItem(htmlId, i18n( "Prefer plain text to HTML (default)" ));
-  else if (!mHtmlPref && !mFolderHtmlPref)
-    mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text (override default)" ));
-
-  if (mThreadPref && mFolderThreadPref)
-    mFolderMenu->changeItem(threadId, i18n( "Thread messages (default)" ));
-  else if (mThreadPref && !mFolderThreadPref)
-    mFolderMenu->changeItem(threadId, i18n( "Don't thread messages (override default)" ));
-  else if (!mThreadPref && mFolderThreadPref)
-    mFolderMenu->changeItem(threadId, i18n( "Don't thread messages (default)" ));
-  else if (!mThreadPref && !mFolderThreadPref)
-    mFolderMenu->changeItem(threadId, i18n( "Thread messages (override default)" ));
-  */
 }
 
 #ifdef MALLOC_DEBUG

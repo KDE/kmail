@@ -29,6 +29,7 @@
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmaddrbook.h"
+#include <kabapi.h>
 
 #include <X11/Xlib.h>
 
@@ -303,6 +304,7 @@ void KMKernel::init()
   the_checkingMail = false;
   the_shuttingDown = false;
   the_server_is_ready = false;
+  mUseKAB = false;
   
   the_kbp = new KBusyPtr;
   cfg = kapp->config();
@@ -331,7 +333,17 @@ void KMKernel::init()
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
   the_addrBook  = new KMAddrBook;
-
+  the_KAB_addrBook = new KabAPI; // KabApi is a dialog;
+  CHECK_PTR(the_KAB_addrBook);
+  if(KABaddrBook()->init()!=AddressBook::NoError)
+  { // this connects to the default address book and opens it:
+      debug( "Error initializing the connection to your KAB address book." );
+      the_KAB_addrBook=0;
+  } 
+  else {
+      debug ("KMKernel::init: KabApi initialized.");
+  }
+  
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();

@@ -22,8 +22,9 @@
 #include "kpgp.h"
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
-#include "kfontutils.h"
 #include "kmidentity.h"
+#include <kabapi.h>
+#include <kfontutils.h>
 
 #include <kaction.h>
 #include <kstdaction.h>
@@ -84,6 +85,7 @@ extern KBusyPtr *kbp;
 extern KRNSender *msgSender;
 extern KMIdentity *identity;
 extern KMAddrBook *addrBook;
+extern KabApi *KABaddrBook;
 typedef QList<QWidget> WindowList;
 WindowList* windowList=new WindowList;
 #define aboutText "KRN"
@@ -1310,31 +1312,95 @@ void KMComposeWin::removeAttach(int idx)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 {
-  KMAddrBookSelDlg dlg(kernel->addrBook());
-  QString txt;
-
-  //assert(aLineEdit!=NULL);
-  if(!aLineEdit)
-    {
-      debug("KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n");
-      return;
+  if (kernel->useKAB()) {
+    if(kernel->KABaddrBook()!=0)
+      {
+	if(kernel->KABaddrBook()->addressbook()->noOfEntries()==0)
+	{
+	  KMessageBox::information
+	    (this,
+	     i18n("Your address book does not contain entries."),
+	     i18n("No addresses"));
+	} else {
+	  QString address;
+	  AddressBook::Entry entry;
+	  KabKey key;
+	  for(;;)
+	    {
+	      if(!kernel->KABaddrBook()->exec()) break; // rejected
+	      switch(kernel->KABaddrBook()->getEntry(entry, key))
+		{
+		case AddressBook::NoError: // an entry has been selected
+		  // ----- a test:
+		  if(entry.emails.isEmpty())
+		    { // may be allow to enter one?
+		      KMessageBox::information
+			(this,
+			 i18n("This address has no email address.\n"
+        		      "Please try another one."),
+			 i18n("No email addresses"));
+		      continue;
+		    } else {
+		      // ----- assemble address string:
+		      // here you see how to use the AddressBook
+		      // object from the KabApi:
+		      kernel->KABaddrBook()->addressbook()->literalName
+			(entry, address); 
+		      if(entry.emails.count()>1)
+			{ // select one of the addresses:
+			  // ... WORK_TO_DO
+			  // append selected address to address:
+			  address=address + " <" + entry.emails.first()
+			    +">";
+			} else {
+			  address=address + " <" + entry.emails.first()
+			    +">";
+			}
+		      aLineEdit->setText(address);
+		    }
+		  break;
+		default:
+		  KMessageBox::information
+		    (this,
+		     i18n("Some error occured while browsing the address book."),
+		     i18n("Error"));
+		}
+	      break;
+	    }
+	}
     }
-  if (dlg.exec()==QDialog::Rejected) return;
-  txt = QString(aLineEdit->text()).stripWhiteSpace();
-  if (!txt.isEmpty())
-  {
-    if (txt.right(1).at(0)!=',') txt += ", ";
-    else txt += ' ';
   }
-  aLineEdit->setText(txt + dlg.address());
+  else {
+    KMAddrBookSelDlg dlg(kernel->addrBook());
+    QString txt;
+
+    //assert(aLineEdit!=NULL);
+    if(!aLineEdit)
+      {
+	debug("KMComposeWin::addrBookSelInto() : aLineEdit == NULL\n");
+	return;
+      }
+    if (dlg.exec()==QDialog::Rejected) return;
+    txt = QString(aLineEdit->text()).stripWhiteSpace();
+    if (!txt.isEmpty())
+      {
+	if (txt.right(1).at(0)!=',') txt += ", ";
+	else txt += ' ';
+      }
+    aLineEdit->setText(txt + dlg.address());
+  }
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg( kernel->addrBook(), this );
-  dlg.exec();
+  if (!kernel->useKAB()) {
+    KMAddrBookEditDlg dlg( kernel->addrBook(), this );
+    dlg.exec();
+  }
+  else
+    debug("KMComposeWin::slotAddrBook: not implemented.");
 }
 
 
