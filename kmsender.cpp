@@ -1003,7 +1003,7 @@ bool KMSendSMTP::addOneRecipient(const QString& _addr)
 
 void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
 {
-  if(mMessage.length())
+  if(!mMessage.isEmpty())
   {
     array.duplicate(mMessage, mMessage.length());
     mMessage = "";
