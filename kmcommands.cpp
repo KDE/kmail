@@ -291,7 +291,7 @@ void KMMailtoComposeCommand::execute()
 }
 
 
-KMMailtoReplyCommand::KMMailtoReplyCommand( KMainWindow *parent,
+KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
    const KURL &url, KMMsgBase *msgBase, const QString &selection )
   :KMCommand( parent, msgBase ), mUrl( url ), mSelection( selection  )
 {
@@ -312,7 +312,7 @@ void KMMailtoReplyCommand::execute()
 }
 
 
-KMMailtoForwardCommand::KMMailtoForwardCommand( KMainWindow *parent,
+KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
    const KURL &url, KMMsgBase *msgBase )
   :KMCommand( parent, msgBase ), mUrl( url )
 {
@@ -426,7 +426,7 @@ void KMUrlSaveCommand::slotUrlSaveResult( KIO::Job *job )
 }
 
 
-KMEditMsgCommand::KMEditMsgCommand( KMainWindow *parent, KMMsgBase *msgBase )
+KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMsgBase *msgBase )
   :KMCommand( parent, msgBase )
 {
 }
@@ -460,7 +460,7 @@ void KMEditMsgCommand::execute()
 }
 
 
-KMShowMsgSrcCommand::KMShowMsgSrcCommand( KMainWindow *parent,
+KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
   KMMsgBase *msgBase, const QTextCodec *codec, bool fixedFont )
   :KMCommand( parent, msgBase ), mCodec( codec ), mFixedFont( fixedFont )
 {
@@ -480,7 +480,7 @@ void KMShowMsgSrcCommand::execute()
 		   mFixedFont );
 }
 
-KMSaveMsgCommand::KMSaveMsgCommand( KMainWindow *parent,
+KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList, KMFolder *folder )
   :KMCommand( parent, msgList, folder )
 {
@@ -518,7 +518,7 @@ void KMSaveMsgCommand::execute()
 
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll are all similar
 //and should be factored
-KMReplyToCommand::KMReplyToCommand( KMainWindow *parent, KMMsgBase *msgBase,
+KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMsgBase *msgBase,
 				    const QString &selection )
   : KMCommand( parent, msgBase ), mSelection( selection )
 {
@@ -537,7 +537,7 @@ void KMReplyToCommand::execute()
 }
 
 
-KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( KMainWindow *parent,
+KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 						  KMMsgBase *msgBase )
   : KMCommand( parent, msgBase )
 {
@@ -556,7 +556,7 @@ void KMNoQuoteReplyToCommand::execute()
 }
 
 
-KMReplyListCommand::KMReplyListCommand( KMainWindow *parent,
+KMReplyListCommand::KMReplyListCommand( QWidget *parent,
   KMMsgBase *msgBase, const QString &selection )
  : KMCommand( parent, msgBase ), mSelection( selection )
 {
@@ -575,7 +575,7 @@ void KMReplyListCommand::execute()
 }
 
 
-KMReplyToAllCommand::KMReplyToAllCommand( KMainWindow *parent,
+KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
   KMMsgBase *msgBase, const QString &selection )
   :KMCommand( parent, msgBase ), mSelection( selection )
 {
@@ -594,7 +594,7 @@ void KMReplyToAllCommand::execute()
 }
 
 
-KMForwardCommand::KMForwardCommand( KMainWindow *parent,
+KMForwardCommand::KMForwardCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList, KMFolder *folder )
   : KMCommand( parent, msgList, folder ),
     mParent( parent ), mFolder( folder )
@@ -712,7 +712,7 @@ void KMForwardCommand::execute()
 }
 
 
-KMForwardAttachedCommand::KMForwardAttachedCommand( KMainWindow *parent,
+KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList, KMFolder *folder )
   : KMCommand( parent, msgList, folder ), mFolder( folder )
 {
@@ -765,7 +765,7 @@ void KMForwardAttachedCommand::execute()
 }
 
 
-KMRedirectCommand::KMRedirectCommand( KMainWindow *parent,
+KMRedirectCommand::KMRedirectCommand( QWidget *parent,
   KMMsgBase *msgBase )
   : KMCommand( parent, msgBase )
 {
@@ -787,7 +787,7 @@ void KMRedirectCommand::execute()
 }
 
 
-KMBounceCommand::KMBounceCommand( KMainWindow *parent,
+KMBounceCommand::KMBounceCommand( QWidget *parent,
   KMMsgBase *msgBase )
   : KMCommand( parent, msgBase )
 {
@@ -813,7 +813,7 @@ void KMToggleFixedCommand::execute()
 }
 
 
-KMPrintCommand::KMPrintCommand( KMainWindow *parent,
+KMPrintCommand::KMPrintCommand( QWidget *parent,
   KMMsgBase *msgBase )
   : KMCommand( parent, msgBase)
 {
@@ -853,7 +853,7 @@ void KMFilterCommand::execute()
 }
 
 
-KMMailingListFilterCommand::KMMailingListFilterCommand( KMainWindow *parent,
+KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
   KMMsgBase *msgBase )
   : KMCommand( parent, msgBase )
 {

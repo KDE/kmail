@@ -32,6 +32,8 @@ public:
   // Retrieve the single message msgBase when start is called.
   KMCommand( QWidget *parent, KMMsgBase *msgBase );
   virtual ~KMCommand();
+
+public slots:
   // Retrieve messages then calls execute
   void start();
 
@@ -95,7 +97,7 @@ class KMMailtoReplyCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoReplyCommand( KMainWindow *parent, const KURL &url,
+  KMMailtoReplyCommand( QWidget *parent, const KURL &url,
 			KMMsgBase *msgBase, const QString &selection );
 
 private:
@@ -110,7 +112,7 @@ class KMMailtoForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoForwardCommand( KMainWindow *parent, const KURL &url, 
+  KMMailtoForwardCommand( QWidget *parent, const KURL &url, 
 			  KMMsgBase *msgBase );
 
 private:
@@ -197,7 +199,7 @@ class KMEditMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMEditMsgCommand( KMainWindow *parent, KMMsgBase *msgBase );
+  KMEditMsgCommand( QWidget *parent, KMMsgBase *msgBase );
 
 private:
   virtual void execute();
@@ -208,7 +210,7 @@ class KMShowMsgSrcCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMShowMsgSrcCommand( KMainWindow *parent, KMMsgBase *msgBase, 
+  KMShowMsgSrcCommand( QWidget *parent, KMMsgBase *msgBase, 
 		       const QTextCodec *codec, bool fixedFont );
   virtual void execute();
 
@@ -222,7 +224,7 @@ class KMSaveMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMSaveMsgCommand( KMainWindow *parent, const QPtrList<KMMsgBase> &msgList, 
+  KMSaveMsgCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList, 
 		    KMFolder *folder );
   KURL url();
 
@@ -238,7 +240,7 @@ class KMReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToCommand( KMainWindow *parent, KMMsgBase *msgBase, 
+  KMReplyToCommand( QWidget *parent, KMMsgBase *msgBase, 
 		    const QString &selection );
 
 private:
@@ -253,7 +255,7 @@ class KMNoQuoteReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMNoQuoteReplyToCommand( KMainWindow *parent, KMMsgBase *msgBase );
+  KMNoQuoteReplyToCommand( QWidget *parent, KMMsgBase *msgBase );
 
 private:
   virtual void execute();
@@ -264,7 +266,7 @@ class KMReplyListCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyListCommand( KMainWindow *parent, KMMsgBase *msgBase, 
+  KMReplyListCommand( QWidget *parent, KMMsgBase *msgBase, 
 		      const QString &selection );
 
 private:
@@ -279,7 +281,7 @@ class KMReplyToAllCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToAllCommand( KMainWindow *parent, KMMsgBase *msgBase, 
+  KMReplyToAllCommand( QWidget *parent, KMMsgBase *msgBase, 
 		       const QString &selection );
 
 private:
@@ -294,7 +296,7 @@ class KMForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardCommand( KMainWindow *parent, const QPtrList<KMMsgBase> &msgList, 
+  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList, 
 		    KMFolder *folder );
 
 private:
@@ -310,7 +312,7 @@ class KMForwardAttachedCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardAttachedCommand( KMainWindow *parent, 
+  KMForwardAttachedCommand( QWidget *parent, 
 			    const QPtrList<KMMsgBase> &msgList, KMFolder *folder );
 
 private:
@@ -324,7 +326,7 @@ class KMRedirectCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMRedirectCommand( KMainWindow *parent, KMMsgBase *msgBase );
+  KMRedirectCommand( QWidget *parent, KMMsgBase *msgBase );
 
 private:
   virtual void execute();
@@ -335,7 +337,7 @@ class KMBounceCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMBounceCommand( KMainWindow *parent, KMMsgBase *msgBase );
+  KMBounceCommand( QWidget *parent, KMMsgBase *msgBase );
 
 private:
   virtual void execute();
@@ -359,7 +361,7 @@ class KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( KMainWindow *parent, KMMsgBase *msgBase );
+  KMPrintCommand( QWidget *parent, KMMsgBase *msgBase );
 
 private:
   virtual void execute();
@@ -401,7 +403,7 @@ class KMMailingListFilterCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailingListFilterCommand( KMainWindow *parent, KMMsgBase *msgBase );
+  KMMailingListFilterCommand( QWidget *parent, KMMsgBase *msgBase );
 
 private:
   virtual void execute();
