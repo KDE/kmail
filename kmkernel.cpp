@@ -1338,9 +1338,11 @@ KMMainWin* KMKernel::mainWin()
 {
   KMainWindow *kmWin = 0;
 
-  for (kmWin = KMainWindow::memberList->first(); kmWin;
-    kmWin = KMainWindow::memberList->next())
+  if (KMainWindow::memberList) {
+    for (kmWin = KMainWindow::memberList->first(); kmWin;
+        kmWin = KMainWindow::memberList->next())
       if (kmWin->isA("KMMainWin")) break;
+  }
   if (kmWin && kmWin->isA("KMMainWin")) {
     return (KMMainWin *) kmWin;
   } else {
