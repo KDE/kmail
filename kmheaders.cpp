@@ -1345,6 +1345,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::setCurrentMsg(int cur)
 {
+  if (!mFolder) return;
   if (cur >= mFolder->count()) cur = mFolder->count() - 1;
   if ((cur >= 0) && (cur < (int)mItems.size())) {
     clearSelection();
