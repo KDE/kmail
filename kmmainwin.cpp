@@ -1355,7 +1355,7 @@ void KMMainWin::setupToolBar()
 			SLOT(slotCompose()), TRUE,
 			i18n("Compose new message"));
 
-  mToolBar->insertButton(BarIcon("filefloppy"), 0,
+  mToolBar->insertButton(BarIcon("filesave"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotSaveMsg()), TRUE,
 			i18n("Save message to file"));
