@@ -72,12 +72,7 @@ QString KMAcctExpPop::type(void) const
 void KMAcctExpPop::init(void)
 {
   mHost   = "";
-  struct servent *serv = getservbyname("pop-3", "tcp");
-  if (serv) {
-    mPort = ntohs(serv->s_port);
-  } else {
-    mPort = 110;
-  }
+  mPort   = 110;
   mLogin  = "";
   mPasswd = "";
   mProtocol = 3;

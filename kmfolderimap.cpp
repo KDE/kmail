@@ -912,9 +912,19 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
+static QTextCodec *sUtf7Codec = NULL;
+
+QTextCodec * KMFolderImap::utf7Codec()
+{
+  if (!sUtf7Codec) sUtf7Codec = QTextCodec::codecForName("utf-7");
+  return sUtf7Codec;
+}
+
+
+//-----------------------------------------------------------------------------
 QString KMFolderImap::encodeFileName(const QString &name)
 {
-  QString result = QTextCodec::codecForName("utf-7")->fromUnicode(name);
+  QString result = utf7Codec()->fromUnicode(name);
   return KURL::encode_string_no_slash(result);
 }
 
@@ -923,7 +933,7 @@ QString KMFolderImap::encodeFileName(const QString &name)
 QString KMFolderImap::decodeFileName(const QString &name)
 {
   QString result = KURL::decode_string(name);
-  return QTextCodec::codecForName("utf-7")->toUnicode(result.latin1());
+  return utf7Codec()->toUnicode(result.latin1());
 }
 
 //-----------------------------------------------------------------------------

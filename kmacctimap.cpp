@@ -78,12 +78,7 @@ QString KMAcctImap::type(void) const
 void KMAcctImap::init(void)
 {
   mHost   = "";
-  struct servent *serv = getservbyname("imap-4", "tcp");
-  if (serv) {
-    mPort = ntohs(serv->s_port);
-  } else {
-    mPort = 143;
-  }
+  mPort   = 143;
   mLogin  = "";
   mPasswd = "";
   mAuth = "*";

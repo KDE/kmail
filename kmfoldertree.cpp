@@ -91,17 +91,20 @@ void KMFolderTreeItem::paintCell( QPainter * p, const QColorGroup & cg,
 // (or last when sorting in descending order)
 QString KMFolderTreeItem::key( int, bool ) const
 {
-  if (folder->label() == i18n("inbox"))
-    return "\t0";
-  else if (folder->label() == i18n("outbox"))
-    return "\t1";
-  else if (folder->label() == i18n("sent-mail"))
-    return "\t2";
-  else if (folder->label() == i18n("trash"))
-    return "\t3";
-  else if (folder->label() == i18n("drafts"))
-    return "\t4";
-  else if (folder->protocol() == "imap")
+  if (folder->isSystemFolder())
+  {
+    if (folder->label() == i18n("inbox"))
+      return "\t0";
+    if (folder->label() == i18n("outbox"))
+      return "\t1";
+    if (folder->label() == i18n("sent-mail"))
+      return "\t2";
+    if (folder->label() == i18n("trash"))
+      return "\t3";
+    if (folder->label() == i18n("drafts"))
+      return "\t4";
+  }
+  if (folder->protocol() == "imap")
     return "\t5" + folder->label();
   return text(0).lower();
 }
