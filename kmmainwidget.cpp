@@ -3340,6 +3340,12 @@ void KMMainWidget::clearFilterActions()
 void KMMainWidget::initializeFolderShortcutActions()
 {
 
+  // If we are loaded as a part, this will be set to fals, since the part
+  // does xml loading. Temporarily set to true, in that case, so the 
+  // accels are added to the collection as expected.
+  bool old = actionCollection()->isAutoConnectShortcuts();
+
+  actionCollection()->setAutoConnectShortcuts( true );
   QValueList< QGuardedPtr< KMFolder > > folders = kmkernel->allFolders();
   QValueList< QGuardedPtr< KMFolder > >::Iterator it = folders.begin();
   while ( it != folders.end() ) {
@@ -3347,6 +3353,7 @@ void KMMainWidget::initializeFolderShortcutActions()
     ++it;
     slotShortcutChanged( folder ); // load the initial accel
   }
+  actionCollection()->setAutoConnectShortcuts( old );
 }
  
 
