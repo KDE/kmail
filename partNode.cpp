@@ -73,14 +73,15 @@ partNode::CryptoType partNode::firstCryptoType() const
 KMMsgEncryptionState partNode::overallEncryptionState() const
 {
     KMMsgEncryptionState myState = KMMsgEncryptionStateUnknown;
-    if( mIsEncrypted )
-        myState = KMMsgFullyEncrypted;
-    else {
+    if( mEncryptionState == KMMsgNotEncrypted ) {
         // NOTE: children are tested ONLY when parent is not encrypted
         if( mChild )
             myState = mChild->overallEncryptionState();
         else
             myState = KMMsgNotEncrypted;
+    }
+    else { // part is partially or fully encrypted
+        myState = mEncryptionState;
     }
     // siblings are tested allways
     if( mNext ) {
@@ -115,14 +116,15 @@ kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
 KMMsgSignatureState  partNode::overallSignatureState() const
 {
     KMMsgSignatureState myState = KMMsgSignatureStateUnknown;
-    if( mIsSigned )
-        myState = KMMsgFullySigned;
-    else {
+    if( mSignatureState == KMMsgNotSigned ) {
         // children are tested ONLY when parent is not signed
         if( mChild )
             myState = mChild->overallSignatureState();
         else
             myState = KMMsgNotSigned;
+    }
+    else { // part is partially or fully signed
+        myState = mSignatureState;
     }
     // siblings are tested allways
     if( mNext ) {

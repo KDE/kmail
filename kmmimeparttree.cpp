@@ -141,7 +141,7 @@ void KMMimePartTree::slotSaveAs()
             }
 
             bool bSaveEncrypted = false;
-            bool bEncryptedParts = mCurrentContextMenuItem->node()->isEncrypted();
+            bool bEncryptedParts = mCurrentContextMenuItem->node()->encryptionState() != KMMsgNotEncrypted;
             if( bEncryptedParts )
                 if( KMessageBox::questionYesNo( this,
                                                 i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
@@ -150,7 +150,7 @@ void KMMimePartTree::slotSaveAs()
                     bSaveEncrypted = true;
 
             bool bSaveWithSig = true;
-            if( mCurrentContextMenuItem->node()->isSigned() )
+            if( mCurrentContextMenuItem->node()->signatureState() != KMMsgNotSigned )
                 if( KMessageBox::questionYesNo( this,
                                                 i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
                                                 i18n( "KMail Question" ) ) !=

@@ -350,15 +350,14 @@ namespace KMail {
 	parseObjectTree( curNode->mNext );
 
       // adjust signed/encrypted flags if inline PGP was found
-      if( processResult.isInlineSigned() || processResult.isInlineEncrypted() ){
+      if( ( processResult.inlineSignatureState()  != KMMsgNotSigned ) ||
+          ( processResult.inlineEncryptionState() != KMMsgNotEncrypted ) ) {
 	if(    partNode::CryptoTypeUnknown == curNode->cryptoType()
 	       || partNode::CryptoTypeNone    == curNode->cryptoType() ){
 	  curNode->setCryptoType( partNode::CryptoTypeInlinePGP );
 	}
-	if( processResult.isInlineSigned() )
-	  curNode->setSigned( true );
-	if( processResult.isInlineEncrypted() )
-	  curNode->setEncrypted( true );
+        curNode->setSignatureState( processResult.inlineSignatureState() );
+        curNode->setEncryptionState( processResult.inlineEncryptionState() );
       }
       if( partNode::CryptoTypeUnknown == curNode->cryptoType() )
 	curNode->setCryptoType( partNode::CryptoTypeNone );
@@ -1230,7 +1229,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 
 	if( sign && data ) {
 	  kdDebug(5006) << "       signed has data + signature" << endl;
-	  curNode->setSigned( true );
+          curNode->setSignatureState( KMMsgFullySigned );
 	}
 
 	if( !includeSignatures() ) {
@@ -1258,7 +1257,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       kdDebug(5006) << "encrypted" << endl;
       CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
       if( keepEncryptions() ) {
-	curNode->setEncrypted( true );
+        curNode->setEncryptionState( KMMsgFullyEncrypted );
 	QCString cstr( curNode->msgPart().bodyDecoded() );
 	if( mReader )
 	  writeBodyString ( cstr, curNode->trueFromAddress(), result );
@@ -1303,7 +1302,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  else if( plugFound ) {
 	    kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
 	    PartMetaData messagePart;
-	    curNode->setEncrypted( true );
+            curNode->setEncryptionState( KMMsgFullyEncrypted );
 	    QCString decryptedData;
 	    bool signatureFound;
 	    struct CryptPlugWrapper::SignatureMetaData sigMeta;
@@ -1351,7 +1350,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 						  &decryptedData,
 						  &sigMeta,
 						  false );
-		curNode->setSigned( true );
+                curNode->setSignatureState( KMMsgFullySigned );
 	      }else{
 		insertAndParseNewChildNode( *curNode,
 					    &*decryptedData,
@@ -1484,7 +1483,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	if(    curNode->mRoot
 	       && DwMime::kTypeMultipart    == curNode->mRoot->type()
 	       && DwMime::kSubtypeEncrypted == curNode->mRoot->subType() ) {
-	  curNode->setEncrypted( true );
+          curNode->setEncryptionState( KMMsgFullyEncrypted );
 	  curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
 	  if( keepEncryptions() ) {
 	    QCString cstr( curNode->msgPart().bodyDecoded() );
@@ -1618,7 +1617,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 				 messagePart.errorText ) ) {
 		kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
 		isEncrypted = true;
-		curNode->setEncrypted( true );
+                curNode->setEncryptionState( KMMsgFullyEncrypted );
 		signTestNode = 0;
 		// paint the frame
 		messagePart.isDecryptable = true;
@@ -1654,7 +1653,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		}
 	      }
 	      if( isEncrypted )
-		curNode->setEncrypted( true );
+                curNode->setEncryptionState( KMMsgFullyEncrypted );
 	    }
 
 	    // We now try signature verification if necessarry.
@@ -1676,9 +1675,9 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
 		  isSigned = true;
 		}
-		signTestNode->setSigned( true );
+		signTestNode->setSignatureState( KMMsgFullySigned );
 		if( signTestNode != curNode )
-		  curNode->setSigned( true );
+		  curNode->setSignatureState( KMMsgFullySigned );
 	      } else {
 		kdDebug(5006) << "pkcs7 mime  -  NO signature found   :-(" << endl;
 	      }
@@ -1759,12 +1758,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					  const QString & fromAddress,
 					  ProcessResult & result ) {
     assert( mReader );
-    bool isInlineSigned = result.isInlineSigned();
-    bool isInlineEncrypted = result.isInlineEncrypted();
+    KMMsgSignatureState inlineSignatureState = result.inlineSignatureState();
+    KMMsgEncryptionState inlineEncryptionState = result.inlineEncryptionState();
     mReader->writeBodyStr( bodyString, mReader->mCodec, fromAddress,
-			   &isInlineSigned, &isInlineEncrypted );
-    result.setIsInlineSigned( isInlineSigned );
-    result.setIsInlineEncrypted( isInlineEncrypted );
+			   inlineSignatureState, inlineEncryptionState );
+    result.setInlineSignatureState( inlineSignatureState );
+    result.setInlineEncryptionState( inlineEncryptionState );
   }
 
 #ifndef NDEBUG

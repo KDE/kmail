@@ -300,7 +300,8 @@ kdDebug(5006) << "pgp signed" << endl;
 kdDebug(5006) << "pkcs7 mime" << endl;
               // note: subtype Pkcs7Mime can also be signed
               //       and we do NOT want to remove the signature!
-              if( curNode->isEncrypted() && curNode->mChild )
+              if( ( curNode->encryptionState() != KMMsgNotEncrypted )
+                  && curNode->mChild )
                 dataNode = curNode->mChild;
             }
             break;
@@ -2248,9 +2249,19 @@ QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
+void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
+                                const QString& fromAddress )
+{
+  KMMsgSignatureState dummy1;
+  KMMsgEncryptionState dummy2;
+  writeBodyStr( aStr, aCodec, fromAddress, dummy1, dummy2 );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
                                 const QString& fromAddress,
-                                bool* flagSigned, bool* flagEncrypted )
+                                KMMsgSignatureState&  inlineSignatureState,
+                                KMMsgEncryptionState& inlineEncryptionState )
 {
   QString line, htmlStr;
   QString signClass;
@@ -2262,11 +2273,14 @@ void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
   QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
   QString headerStr = QString("<div dir=\"%1\">").arg(dir);
 
+  inlineSignatureState  = KMMsgNotSigned;
+  inlineEncryptionState = KMMsgNotEncrypted;
   QPtrList<Kpgp::Block> pgpBlocks;
   QStrList nonPgpBlocks;
   if( Kpgp::Module::prepareMessageForDecryption( aStr, pgpBlocks, nonPgpBlocks ) )
   {
       bool isEncrypted = false, isSigned = false;
+      bool fullySignedOrEncrypted = true;
       bool couldDecrypt = false;
       QString signer;
       QCString keyId;
@@ -2281,8 +2295,12 @@ void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
       {
 	  // insert the next Non-OpenPGP block
 	  QCString str( *npbit );
-	  if( !str.isEmpty() )
+	  if( !str.isEmpty() ) {
 	    htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+            kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
+                            << "'" << endl;
+            fullySignedOrEncrypted = false;
+          }
 
 	  //htmlStr += "<br>";
 
@@ -2325,14 +2343,10 @@ void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
 		  }
 	      }
 
-	      if( isSigned ) {
-		if( flagSigned )
-		  *flagSigned = true;
-	      }
-	      if( isEncrypted ) {
-		if( flagEncrypted )
-		  *flagEncrypted = true;
-	      }
+              if( isSigned )
+                inlineSignatureState = KMMsgPartiallySigned;
+	      if( isEncrypted )
+                inlineEncryptionState = KMMsgPartiallyEncrypted;
 
 	      PartMetaData messagePart;
 
@@ -2356,8 +2370,20 @@ void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
 
       // add the last Non-OpenPGP block
       QCString str( nonPgpBlocks.last() );
-      if( !str.isEmpty() )
-	  htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+      if( !str.isEmpty() ) {
+        htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+        // Even if the trailing Non-OpenPGP block isn't empty we still
+        // consider the message part fully signed/encrypted because else
+        // all inline signed mailing list messages would only be partially
+        // signed because of the footer which is often added by the mailing
+        // list software. IK, 2003-02-15
+      }
+      if( fullySignedOrEncrypted ) {
+        if( inlineSignatureState == KMMsgPartiallySigned )
+          inlineSignatureState = KMMsgFullySigned;
+        if( inlineEncryptionState == KMMsgPartiallyEncrypted )
+          inlineEncryptionState = KMMsgFullyEncrypted;
+      }
   }
   else
       htmlStr = quotedHTML( aCodec->toUnicode( aStr ) );

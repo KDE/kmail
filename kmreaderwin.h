@@ -351,11 +351,14 @@ protected:
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
-  virtual void writeBodyStr( const QCString bodyString,
+  virtual void writeBodyStr( const QCString& bodyString,
 			     const QTextCodec *aCodec,
                              const QString& fromAddress,
-                             bool* isSigned = 0,
-                             bool* isEncrypted = 0 );
+                             KMMsgSignatureState&  inlineSignatureState,
+                             KMMsgEncryptionState& inlineEncryptionState );
+  virtual void writeBodyStr( const QCString& bodyString,
+                             const QTextCodec *aCodec,
+                             const QString& fromAddress );
 
   /** Feeds the HTML widget with the contents of the given HTML message-body
     string. May contain body parts. */

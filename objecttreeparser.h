@@ -17,6 +17,8 @@
 #ifndef _KMAIL_OBJECTTREEPARSER_H_
 #define _KMAIL_OBJECTTREEPARSER_H_
 
+#include "kmmsgbase.h"
+
 #include <cryptplugwrapper.h>
 #include <qcstring.h>
 
@@ -32,21 +34,27 @@ namespace KMail {
 
   class ProcessResult {
   public:
-    ProcessResult( bool isInlineSigned=false, bool isInlineEncrypted=false,
-		   bool neverDisplayInline=false, bool isImage=false )
-      : mIsInlineSigned( isInlineSigned ),
-	mIsInlineEncrypted( isInlineEncrypted ),
+    ProcessResult( KMMsgSignatureState  inlineSignatureState  = KMMsgNotSigned,
+                   KMMsgEncryptionState inlineEncryptionState = KMMsgNotEncrypted,
+		   bool neverDisplayInline = false,
+                   bool isImage = false )
+      : mInlineSignatureState( inlineSignatureState ),
+	mInlineEncryptionState( inlineEncryptionState ),
 	mNeverDisplayInline( neverDisplayInline ),
 	mIsImage( isImage ) {}
 
-    bool isInlineSigned() const { return mIsInlineSigned; }
-    void setIsInlineSigned( bool isSigned ) {
-      mIsInlineSigned = isSigned;
+    KMMsgSignatureState inlineSignatureState() const {
+      return mInlineSignatureState;
+    }
+    void setInlineSignatureState( KMMsgSignatureState state ) {
+      mInlineSignatureState = state;
     }
 
-    bool isInlineEncrypted() const { return mIsInlineEncrypted; }
-    void setIsInlineEncrypted( bool isEncrypted ) {
-      mIsInlineEncrypted = isEncrypted;
+    KMMsgEncryptionState inlineEncryptionState() const {
+      return mInlineEncryptionState;
+    }
+    void setInlineEncryptionState( KMMsgEncryptionState state ) {
+      mInlineEncryptionState = state;
     }
 
     bool neverDisplayInline() const { return mNeverDisplayInline; }
@@ -60,8 +68,8 @@ namespace KMail {
     }
     
   private:
-    bool mIsInlineSigned : 1;
-    bool mIsInlineEncrypted : 1;
+    KMMsgSignatureState mInlineSignatureState;
+    KMMsgEncryptionState mInlineEncryptionState;
     bool mNeverDisplayInline : 1;
     bool mIsImage : 1;
   };

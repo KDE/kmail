@@ -59,8 +59,8 @@ private:
         mType(         DwMime::kTypeUnknown  ),
         mSubType(      DwMime::kSubtypeUnknown ),
         mCryptoType(   CryptoTypeUnknown ),
-        mIsEncrypted(  false ),
-        mIsSigned(     false ),
+        mEncryptionState( KMMsgNotEncrypted ),
+        mSignatureState(  KMMsgNotSigned ),
         mMsgPartOk(    false ),
         mEncodedOk(    false ),
         mDeleteDwBodyPart( false ),
@@ -83,8 +83,8 @@ public:
         mWasProcessed( false ),
         mDwPart(       dwPart ),
         mCryptoType(   CryptoTypeUnknown ),
-        mIsEncrypted(  false ),
-        mIsSigned(     false ),
+        mEncryptionState( KMMsgNotEncrypted ),
+        mSignatureState(  KMMsgNotSigned ),
         mMsgPartOk(    false ),
         mEncodedOk(    false ),
         mDeleteDwBodyPart( deleteDwBodyPart ),
@@ -121,8 +121,8 @@ public:
         mWasProcessed( false ),
         mDwPart(       dwPart ),
         mCryptoType(   CryptoTypeUnknown ),
-        mIsEncrypted(  false ),
-        mIsSigned(     false ),
+        mEncryptionState( KMMsgNotEncrypted ),
+        mSignatureState(  KMMsgNotSigned ),
         mMsgPartOk(    false ),
         mEncodedOk(    false ),
         mDeleteDwBodyPart( deleteDwBodyPart ),
@@ -198,11 +198,11 @@ public:
     // or return none (or unknown, resp.) if no other crypto type set
     CryptoType firstCryptoType() const ;
 
-    void setEncrypted( bool isEncrypted ) {
-        mIsEncrypted = isEncrypted;
+    void setEncryptionState( KMMsgEncryptionState state ) {
+        mEncryptionState = state;
     }
-    bool isEncrypted() const {
-        return mIsEncrypted;
+    KMMsgEncryptionState encryptionState() const {
+        return mEncryptionState;
     }
 
     // look at the encryption states of all children and return result
@@ -211,11 +211,11 @@ public:
     // look at the signature states of all children and return result
     KMMsgSignatureState  overallSignatureState() const ;
 
-    void setSigned( bool isSigned ) {
-        mIsSigned = isSigned;
+    void setSignatureState( KMMsgSignatureState state ) {
+        mSignatureState = state;
     }
-    bool isSigned() const {
-        return mIsSigned;
+    KMMsgSignatureState signatureState() const {
+        return mSignatureState;
     }
 
     int nodeId();  // node ids start at 1 (this is the top level root node)
@@ -294,8 +294,8 @@ private:
     int           mType;
     int           mSubType;
     CryptoType    mCryptoType;
-    bool          mIsEncrypted;
-    bool          mIsSigned;
+    KMMsgEncryptionState mEncryptionState;
+    KMMsgSignatureState  mSignatureState;
     bool          mMsgPartOk;
     bool          mEncodedOk;
     bool          mDeleteDwBodyPart;
