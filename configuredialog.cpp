@@ -1090,6 +1090,18 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   connect( mBeepNewMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  // "Verbose new mail notification" check box
+  mVerboseNotificationCheck =
+    new QCheckBox( i18n( "&Verbose new mail notification" ), group );
+  mVerboseNotificationCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
+                                                         QSizePolicy::Fixed ) );
+  QToolTip::add( mVerboseNotificationCheck,
+                 i18n( "Show for each folder the number of newly arrived "
+                       "messages" ) );
+  QWhatsThis::add( mVerboseNotificationCheck,
+    GlobalSettings::self()->verboseNewMailNotificationItem()->whatsThis() );
+  connect( mVerboseNotificationCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // "Systray" notification check box
   mSystrayCheck = new QCheckBox( i18n("System &tray notification"), group );
@@ -1358,7 +1370,7 @@ void NetworkPage::ReceivingTab::load() {
   }
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
-
+  mVerboseNotificationCheck->setChecked( GlobalSettings::verboseNewMailNotification() );
   mSystrayCheck->setChecked( general.readBoolEntry("systray-on-mail", false) );
   mBlinkingSystray->setChecked( !general.readBoolEntry("systray-on-new", true) );
   mSystrayOnNew->setChecked( general.readBoolEntry("systray-on-new", true) );
@@ -1405,6 +1417,7 @@ void NetworkPage::ReceivingTab::save() {
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
+  GlobalSettings::setVerboseNewMailNotification( mVerboseNotificationCheck->isChecked() );
   general.writeEntry( "systray-on-mail", mSystrayCheck->isChecked() );
   general.writeEntry( "systray-on-new", mSystrayOnNew->isChecked() );
 

@@ -340,6 +340,7 @@ protected:
   QPushButton   *mModifyAccountButton;
   QPushButton   *mRemoveAccountButton;
   QCheckBox     *mBeepNewMailCheck;
+  QCheckBox     *mVerboseNotificationCheck;
   QCheckBox     *mSystrayCheck;
   QRadioButton  *mBlinkingSystray;
   QRadioButton  *mSystrayOnNew;

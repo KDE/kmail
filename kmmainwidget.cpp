@@ -804,24 +804,29 @@ void KMMainWidget::slotMailChecked( bool newMail, bool sendOnCheck,
 
   // build summary for new mail message
   QString summary;
-  QStringList keys( newInFolder.keys() );
-  keys.sort();
-  for ( QStringList::const_iterator it = keys.begin();
-        it != keys.end();
-        ++it ) {
-    kdDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
-                  << *it << endl;
+  if ( GlobalSettings::verboseNewMailNotification() ) {
+    QStringList keys( newInFolder.keys() );
+    keys.sort();
+    for ( QStringList::const_iterator it = keys.begin();
+          it != keys.end();
+          ++it ) {
+      kdDebug(5006) << newInFolder.find( *it ).data() << " new message(s) in "
+                    << *it << endl;
 
-    KMFolder *folder = kmkernel->findFolderById( *it );
+      KMFolder *folder = kmkernel->findFolderById( *it );
 
-    summary += "<br>" + i18n( "1 new message in %1",
-                              "%n new messages in %1",
-                              newInFolder.find( *it ).data() )
-                        .arg( folder->prettyURL() );
+      summary += "<br>" + i18n( "1 new message in %1",
+                                "%n new messages in %1",
+                                newInFolder.find( *it ).data() )
+                          .arg( folder->prettyURL() );
+    }
+    summary = i18n( "%1 is a list of the number of new messages per folder",
+                    "<b>New mail arrived</b><br>%1" )
+              .arg( summary );
   }
-  summary = i18n( "%1 is a list of the number of new messages per folder",
-                  "<b>New mail arrived</b><br>%1" )
-            .arg( summary );
+  else {
+    summary = i18n( "New mail arrived" );
+  }
 
   if(kmkernel->xmlGuiInstance()) {
     KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
