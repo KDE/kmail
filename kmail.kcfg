@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.dtd">
+<kcfg>
+    <group name="Behaviour">
+    <entry name="DelayedMarkAsRead"  type="Bool">
+        <label> </label>
+        <whatsthis> </whatsthis>
+        <default>true</default>
+    </entry>
+    <entry name="DelayedMarkTime"  type="UInt">
+        <label> </label>
+        <whatsthis> </whatsthis>
+        <default>0</default>
+    </entry>
+    <entry name="JumpToUnread"  type="Bool">
+        <label> </label>
+        <whatsthis> </whatsthis>
+        <default>false</default>
+    </entry>
+    <entry name="LoopOnGotoUnread"  type="Enum">
+      <choices>
+        <choice name="DontLoop"/>
+        <choice name="LoopInCurrentFolder"/>
+        <choice name="LoopInAllFolders"/>
+      </choices>
+        <label> </label>
+        <whatsthis> </whatsthis>
+        <default>DontLoop</default>
+    </entry>
+    <entry name="ShowPopupAfterDnD"  type="Bool">
+        <label> </label>
+        <whatsthis> </whatsthis>
+        <default>true</default>
+    </entry>
+    </group>
+
+</kcfg>

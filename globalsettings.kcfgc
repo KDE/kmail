@@ -1,0 +1,4 @@
+File=kmail.kcfg
+ClassName=GlobalSettings
+Mutators=true
+Singleton=true
