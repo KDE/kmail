@@ -117,7 +117,7 @@ const QString KMFolderDir::path() const
   {
     p = parent()->path();
     p.append("/");
-    p.append(QString::fromLocal8Bit(name()));
+    p.append(name());
   }
   else p = "";
 
@@ -183,7 +183,7 @@ bool KMFolderDir::reload(void)
 	it != diList.end(); 
 	++it)
       if (*it == "." + folder->name() + ".directory") {
-	KMFolderDir* folderDir = new KMFolderDir(this, (*it).local8Bit());
+	KMFolderDir* folderDir = new KMFolderDir(this, *it);
 	folderDir->reload();
 	append(folderDir);
 	folder->setChild(folderDir);

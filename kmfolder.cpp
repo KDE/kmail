@@ -104,7 +104,7 @@ KMFolder :: ~KMFolder()
 //-----------------------------------------------------------------------------
 const QString KMFolder::location() const
 {
-  QString sLocation(path());
+  QString sLocation(path().local8Bit());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += name().local8Bit();
@@ -116,7 +116,7 @@ const QString KMFolder::location() const
 //-----------------------------------------------------------------------------
 const QString KMFolder::indexLocation() const
 {
-  QString sLocation(path());
+  QString sLocation(path().local8Bit());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
@@ -129,7 +129,7 @@ const QString KMFolder::indexLocation() const
 //-----------------------------------------------------------------------------
 const QString KMFolder::subdirLocation() const
 {
-  QString sLocation(path());
+  QString sLocation(path().local8Bit());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
@@ -142,8 +142,8 @@ const QString KMFolder::subdirLocation() const
 //-----------------------------------------------------------------------------
 KMFolderDir* KMFolder::createChildFolder()
 {
-  QString childName = "." + name().local8Bit() + ".directory";
-  QString childDir = path() + "/" + childName;
+  QCString childName = "." + name().local8Bit() + ".directory";
+  QCString childDir = path().local8Bit() + "/" + childName;
   bool ok = true;
 
   if (mChild)
@@ -161,7 +161,8 @@ KMFolderDir* KMFolder::createChildFolder()
     return 0;
   }
 
-  KMFolderDir* folderDir = new KMFolderDir(parent(), childName);
+  KMFolderDir* folderDir = new KMFolderDir(parent(),
+    QString::fromLocal8Bit(childName));
   if (!folderDir)
     return 0;
   folderDir->reload();
@@ -1304,7 +1305,7 @@ int KMFolder::compact()
 {
   KMFolder* tempFolder;
   KMMessage* msg;
-  QString tempName;
+  QCString tempName;
   QString msgStr;
   int openCount = mOpenCount;
   int num, numStatus;
@@ -1316,7 +1317,7 @@ int KMFolder::compact()
   tempName = "." + name().local8Bit();
 
   tempName += ".compacted";
-  unlink(path() + "/" + tempName);
+  unlink(path().local8Bit() + "/" + tempName);
   tempFolder = new KMFolder(parent(), tempName);   //sven: we create it
   if(tempFolder->create()) {
     kdDebug() << "KMFolder::compact() Creating tempFolder failed!\n" << endl;
