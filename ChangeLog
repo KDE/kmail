@@ -1,3 +1,93 @@
+1999-12-15  Don Sanders  <sanders@kde.org> (KMail-1.1.32)
+
+        General
+        * Cache number of unread messages
+        * Added auto synchronization logic for correcting count of unread 
+	  messages.
+        * Added support for customizing colors in all three panes. (Currently 
+	  have to restart kmail for this to take effect due to HTML widget 
+	  renovations).
+        * Added support for customizing fonts and font sizes in all three 
+	  panes. (Currently have to restart kmail for this to take effect due 
+	  to HTML widget renovations). Fixed width fonts starting working too.
+	* Ported all the changes made to KMail 1.0.x.
+	* Ported KMail to QT 2.1 and KDE 2 kdelibs (that is it runs and works
+	  now rather than just compiling)
+
+        Privacy
+        * Committed patch by "J. Nick Koston" <bdraco@darkorb.net> to add 
+	  support for GNU Privacy Guard.
+
+        Filter Dialog
+        * Various buttons are enabled/disabled depending on whether they can
+          be used.
+        * Filter title is updated as the user enters filter details
+        * Fix a bug where changes could be lost when changing priority of 
+	  new filter.
+        * List of folders supports nested folders by indentation.
+
+        Folder Tree Window
+        * Nested folder support.
+        * Improved DnD support (hover opening, auto scrolling, highlight
+	  destination folder while dragging).
+        * Show count of unread messages in different color after the folder 
+	  name.
+
+        Headers Window
+        * Ported kmheaders to QListView.
+        * Sorting is now done by QListView, this means the index file on 
+	  doesn't have to be updated, all sorting is done in main memory 
+	  (much faster). This also seems to have eliminated the lingering 
+	  problem of missorted mail.
+        * Implemented support for Shift and Ctrl selection and DnD.
+        * Show DnD cursor while dragging even in headers window.
+        * Eliminated flicker when changing folder.
+        * Speed up folder changing by reusing QListViewItems.
+        * When sorting always use the date as the second priority sorting key
+        * Added indicator in header for current sort column and direction.
+        * Eliminated needless gui updating when changing status, copying or 
+	  moving messages. This speeds up these operations a lot.
+        * Fixed problem with different date format being shown for current 
+	  message.
+
+        Reader Window
+        * Committed patched by Daniel Naber <dnaber@mini.gt.owl.de> that 
+	  fixes problem with messges with attachments and no text part.
+        * Lars Knoll ported the Reader Window to the new html widget. This 
+	  widget is still under construction (somethings haven't been 
+	  reimplemented yet)
+        * Show messages of type text/html as html (For Wired news etc).
+        * Added slight delay to updating reader window and so that holding 
+	  down the next/prev message key wouldn't cause the header window to 
+	  become out of sync with the reader window.
+
+        Folder Settings Dialog
+        * Simplified by removing account related stuff.
+        * Added support for reparenting via combobox.
+
+         Pixmaps
+        * Converted the pixmaps to png (expect for kdelogo which wasn't 
+	  looking right).
+        * New folder pixmaps contributed by 
+	  Greg Newton <gregnewton@netscape.net>
+
+        Composer Window
+        * Added undo/redo menu items. (Sent patch to support undo/redo in 
+          QMultiLineEdit to Trolls)
+        * Updated KMail to use the new improved word wrapping in QMultiLineEdit 
+          (no more signature munching).
+        * Set date of sent messages to current sent time rather than creation 
+	  time.
+
+        Message class
+        * Worked with Jacek Stolarczyk <jacek@mer.chemia.polsl.gliwice.pl> to 
+	  fix bug that was preventing KMail from working on Alpha Architecture.
+
+        Folder class
+        *  Added extra protection so mail won't be lost if the disk was full.
+        *  Fixed problem with unfiltered mail being lost with the help of
+           Bob Bernstein <ruptured-duck@home.com> and dep <dep@snet.net>
+
 1999-12-04  Stefan Taferner  <taferner@kde.org> (KMail-1.1.31)
 
 	* Implemented bouncing of mails. Hopefully this will help
