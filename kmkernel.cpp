@@ -454,7 +454,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
         msgPart->setCharset( attachCharset );
       }
       // Don't show the composer window, if the automatic sending is checked
-      iCalAutoSend = GlobalSettings::automaticSending();
+      KConfigGroup options(  config(), "Groupware" );
+      iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
     }
   }
 
