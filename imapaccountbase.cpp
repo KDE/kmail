@@ -226,7 +226,8 @@ namespace KMail {
 
   ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() {
     if ( mSlave && mSlaveConnected ) return Connected;
-
+    // already waiting for a connection?
+    if ( mSlave && !mSlaveConnected ) return Connecting;
     if ( mPasswordDialogIsActive ) return Connecting;
     if( mAskAgain || passwd().isEmpty() || login().isEmpty() ) {
       QString log = login();
