@@ -606,6 +606,9 @@ KpgpBaseG::pubKeys()
     if( (index2 = output.find("\n",index+1)) != -1)
     {
       int index3 = output.find("pub ",index);
+      int index4 = output.find("uid ",index);
+      if ((index4 != -1) && ((index4 < index3) || (index3 == -1)))
+        index3 = index4;
 		    
       if( (index3 <index2) && (index3 != -1) )
       {
@@ -1356,8 +1359,15 @@ KpgpBase6::decrypt(const char *passphrase)
   {
     //kdDebug() << "kpgpbase: message is encrypted" << endl;
     status |= ENCRYPTED;
-    if( info.find("Key for user ID") != -1)
+    if((index = info.find("Key for user ID")) != -1)
     {
+      // Find out the key for which the phrase is needed
+      index  = info.find(":", index) + 2;
+      index2 = info.find("\n", index);
+      QString keyId = info.mid(index, index2 - index);
+      //kdDebug() << "KpgpBase: key needed is \"" << keyId << "\"!" << endl;
+      //kdDebug() << "KpgpBase: pgp user is \"" << pgpUser << "\"." << endl;
+
       // Test output length to find out, if the passphrase is
       // bad. If someone knows a better way, please fix this.
       if (!passphrase || !output.length())
