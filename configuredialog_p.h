@@ -865,7 +865,6 @@ public:
   void defaults() {}
   QString helpAnchor() const;
 private slots:
-  void slotStorageFormatChanged( int );
   void slotLegacyBodyInvitesToggled( bool on );
 private:
   QCheckBox* mEnableGwCB;
@@ -874,13 +873,8 @@ private:
   QWidget* mBox;
   QVBox* gBox;
 
-  QComboBox* mStorageFormatCombo;
-  QComboBox* mLanguageCombo;
-
   QLabel* mFolderComboLabel;
-  QWidgetStack* mFolderComboStack;
-  KMFolderComboBox* mFolderCombo; // in the widgetstack
-  KMail::AccountComboBox* mAccountCombo; // in the widgetstack
+  KMail::AccountComboBox* mAccountCombo;
 
   QCheckBox* mHideGroupwareFolders;
   QCheckBox* mAutoResCB;
