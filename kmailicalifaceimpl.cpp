@@ -64,29 +64,35 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
   kdDebug() << "KMailICalIfaceImpl::addIncidence( " << type << ", "
 	    << uid << ", " << ical << " )" << endl;
 
+  bool rc = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
   // Find the folder
   KMFolder* folder = folderFromType( type );
-  if( !folder ) return false;
+  if( folder == mContacts ) {
+    // TODO
+  } else if( folder ) {
+    // Make a new message for the incidence
+    KMMessage* msg = new KMMessage();
+    msg->initHeader();
+    msg->setType(    DwMime::kTypeText );
+    msg->setSubtype( DwMime::kSubtypeVCal );
+    msg->setHeaderField("Content-Type",
+			"text/calendar; method=REQUEST; charset=\"utf-8\"");
+    msg->setSubject( uid );
+    msg->setTo( msg->from() );
+    msg->setBodyEncoded( ical.utf8() );
 
-  // Make a new message for the incidence
-  KMMessage* msg = new KMMessage(); // makes a "Content-Type=text/plain" message
-  msg->initHeader();
-  msg->setType(    DwMime::kTypeText );
-  msg->setSubtype( DwMime::kSubtypeVCal );
-  msg->setHeaderField("Content-Type",
-		      "text/calendar; method=REQUEST; charset=\"utf-8\"");
-  msg->setSubject( uid );
-  msg->setTo( msg->from() );
-  msg->setBodyEncoded( ical.utf8() );
+    msg->touch();
+    folder->addMsg( msg );  
 
-  msg->touch();
-  folder->addMsg( msg );  
+    rc = true;
+  }
 
   mResourceQuiet = quiet;
-  return true;
+
+  return false;
 }
 
 // libkcal orders a deletion
@@ -95,17 +101,22 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type, const QString& ui
   kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
 	    << uid << " )" << endl;
 
+  bool rc = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
 
   // Find the folder and the incidence in it
   KMFolder* folder = folderFromType( type );
-  if( !folder ) return false;
-  KMMessage* msg = findMessageByUID( uid, folder );
-  if( !msg ) return false;
-
-  // Message found - delete it and return happy
-  deleteMsg( msg );
+  if( folder == mContacts ) {
+    // TODO
+  } else if( folder ) {
+    KMMessage* msg = findMessageByUID( uid, folder );
+    if( msg ) {
+      // Message found - delete it and return happy
+      deleteMsg( msg );
+      rc = true;
+    }
+  }
 
   mResourceQuiet = quiet;
   return true;
@@ -115,20 +126,30 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type, const QString& ui
 QStringList KMailICalIfaceImpl::incidences( const QString& type )
 {
   kdDebug() << "KMailICalIfaceImpl::incidences( " << type << " )" << endl;
+  QStringList ilist;
 
   KMFolder* folder = folderFromType( type );
-  if( !folder || type == "Journal" )
-    // TODO: Make journals work
-    return QStringList();
+  if( folder ) {
+    if( folder == mJournals ) {
+      // TODO: Make journals work
+    } else {
+      QString s;
+      for( int i=0; i<folder->count(); ++i ) {
+	bool unget = !folder->isMessage(i);
+	if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
+	  if( folder == mContacts ) {
+	    // What what what???
+	    s.replace('\n', "\\n");
+	    s.truncate(65);
+	  }
+	  ilist << s;
+	}
+	if( unget ) folder->unGetMsg(i);
+      }
+    }
+  } else
+    kdError() << "Not an IMAP resource folder" << endl;
 
-  QStringList ilist;
-  QString s;
-  for( int i=0; i<folder->count(); ++i ){
-    bool unget = !folder->isMessage(i);
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) )
-      ilist << s;
-    if( unget ) folder->unGetMsg(i);
-  }
   return ilist;
 }
 
@@ -140,26 +161,26 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     return;
 
   QString type = icalFolderType( folder );
-  if( type.isNull() ) {
+  if( folder == mContacts ) {
+    // TODO: Fill this
+  } else if( !type.isEmpty() ) {
+    int i = 0;
+    KMFolder* aFolder = 0;
+    kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
+    assert( folder == aFolder );
+
+    bool unget = !folder->isMessage( i );
+    QString ical;
+    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
+      QByteArray data;
+      QDataStream arg(data, IO_WriteOnly );
+      arg << type << ical;
+      kdDebug() << "Emitting DCOP signal incidenceAdded( " << type << ", " << ical << " )" << endl;
+      emitDCOPSignal( "incidenceAdded(QString,QString)", data );
+    }
+    if( unget ) folder->unGetMsg(i);
+  } else
     kdError() << "Not an IMAP resource folder" << endl;
-    return;
-  }
-
-  int i = 0;
-  KMFolder* aFolder = 0;
-  kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
-  assert( folder == aFolder );
-
-  bool unget = !folder->isMessage( i );
-  QString ical;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
-    QByteArray data;
-    QDataStream arg(data, IO_WriteOnly );
-    arg << type << ical;
-    kdDebug() << "Emitting DCOP signal incidenceAdded( " << type << ", " << ical << " )" << endl;
-    emitDCOPSignal( "incidenceAdded(QString,QString)", data );
-  }
-  if( unget ) folder->unGetMsg(i);
 }
 
 // KMail deleted a file
@@ -170,28 +191,28 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     return;
 
   QString type = icalFolderType( folder );
-  if( type.isNull() ) {
+  if( folder == mContacts ) {
+    // TODO: Fill this
+  } else if( !type.isEmpty() ) {
+    int i = 0;
+    KMFolder* aFolder = 0;
+    kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
+    assert( folder == aFolder );
+
+    bool unget = !folder->isMessage( i );
+    QString ical;
+    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
+      QString uid( "UID" );
+      vPartMicroParser( ical.utf8(), uid );
+      QByteArray data;
+      QDataStream arg(data, IO_WriteOnly );
+      arg << type << uid;
+      kdDebug() << "Emitting DCOP signal incidenceDeleted( " << type << ", " << uid << " )" << endl;
+      emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
+    }
+    if( unget ) folder->unGetMsg(i);
+  } else
     kdError() << "Not a groupware folder" << endl;
-    return;
-  }
-
-  int i = 0;
-  KMFolder* aFolder = 0;
-  kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
-  assert( folder == aFolder );
-
-  bool unget = !folder->isMessage( i );
-  QString ical;
-  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
-    QString uid( "UID" );
-    vPartMicroParser( ical.utf8(), uid );
-    QByteArray data;
-    QDataStream arg(data, IO_WriteOnly );
-    arg << type << uid;
-    kdDebug() << "Emitting DCOP signal incidenceDeleted( " << type << ", " << uid << " )" << endl;
-    emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
-  }
-  if( unget ) folder->unGetMsg(i);
 }
 
 // KMail orders a refresh
