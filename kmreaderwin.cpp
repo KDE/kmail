@@ -918,7 +918,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("IMAP messages are loaded progressively."),
   I18N_NOOP("IMAP attachments are loaded on demand."),
   I18N_NOOP("KMail can check your accounts for new mail on startup."),
-  I18N_NOOP("Individual imap folders can be checked for new mail."),
+  I18N_NOOP("Individual IMAP folders can be checked for new mail."),
   I18N_NOOP("Ignore Thread and Watch Thread."),
   I18N_NOOP("Messages can have more than one status.")
 };
