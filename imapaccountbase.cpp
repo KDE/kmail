@@ -390,7 +390,6 @@ namespace KMail {
     {
       slotSlaveError( mSlave, job->error(),
           job->errorString() );
-      if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
     }
     if (!job->error())
     {
@@ -444,7 +443,6 @@ namespace KMail {
     {
       slotSlaveError( mSlave, job->error(),
           job->errorString() );
-      if (job->error() == KIO::ERR_SLAVE_DIED) slaveDied();
     } else {
       emit subscriptionChanged(
           static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
