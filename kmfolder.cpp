@@ -1783,7 +1783,7 @@ void KMFolder::writeConfig()
 {
   KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
-  if (!mAccount) config->writeEntry("UnreadMsgs", mUnreadMsgs);
+  config->writeEntry("UnreadMsgs", mUnreadMsgs);
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
