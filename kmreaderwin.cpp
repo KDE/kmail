@@ -3634,6 +3634,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
         // checking with QColor default c'tor did not work for
         // some reason.
         if( Qt::black != frameColor ) {
+            bool notEnoughInfoToCheckSignature = false;
         
             // new frame settings for CMS:
             
@@ -3641,8 +3642,10 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
 kdDebug(5006) << "2. setting CMS color" << endl;
             if( Qt::green == frameColor )
                 block.signClass = "signOkKeyOk";//"signCMSGreen";    
-            else if( Qt::yellow == frameColor )
+            else if( Qt::yellow == frameColor ) {
+                notEnoughInfoToCheckSignature = true;
                 block.signClass = "signOkKeyBad";//"signCMSYellow";
+            }
             else // by definition frame must be red then
                 block.signClass = "signErr";//"signCMSRed";
 
@@ -3650,52 +3653,61 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
             if( showKeyInfos ) {
-                if (block.signer.isEmpty())
-                    signer = "";
-                else {
-                    // HTMLize the signer's user id but do *not* create mailto: link
-                    signer.replace( QRegExp("&"), "&amp;" );
-                    signer.replace( QRegExp("<"), "&lt;" );
-                    signer.replace( QRegExp(">"), "&gt;" );
-                    signer.replace( QRegExp("\""), "&quot;" );
+                
+                QString keyWithURL
+                    = cryptPlug
+                    ? QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">%4</a>")
+                        .arg( cryptPlug->displayName() )
+                        .arg( cryptPlug->libName() )
+                        .arg( block.keyId )
+                        .arg( notEnoughInfoToCheckSignature ? i18n("[Details]") : block.keyId )
+                    : QString::fromUtf8( block.keyId );
+                    
+                if( notEnoughInfoToCheckSignature ) {
+                    htmlStr += i18n( "Not enough information to check "
+                                     "signature. %1" )
+                                .arg( keyWithURL );
                 }
-                if( block.keyId.isEmpty() ) {
-                    if( signer.isEmpty() )
-                        htmlStr += i18n( "Message was signed with unknown key." );
-                    else
-                        htmlStr += i18n( "Message was signed by %1." )
-                                .arg( signer );
-                } else {
-                    QString keyWithURL
-                        = cryptPlug
-                        ? QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">%4</a>")
-                            .arg( cryptPlug->displayName() )
-                            .arg( cryptPlug->libName() )
-                            .arg( block.keyId )
-                            .arg( block.keyId )
-                        : QString::fromUtf8( block.keyId );
-                    bool dateOK = (0 < block.creationTime.tm_year);
-                    QDate created( 1900 + block.creationTime.tm_year,
-                                block.creationTime.tm_mon,
-                                block.creationTime.tm_mday );
-                    if( dateOK && created.isValid() ) {
-                        if( signer.isEmpty() )
-                            htmlStr += i18n( "Message was signed with key 0x%1, created %2." )
-                                    .arg( keyWithURL ).arg( created.toString( Qt::LocalDate ) );
-                        else
-                            htmlStr += i18n( "Message was signed by %1 with key 0x%2, created %3." )
-                                    .arg( signer )
-                                    .arg( keyWithURL )
-                                    .arg( created.toString( Qt::LocalDate ) );
-                    }
+                else {
+                    if (block.signer.isEmpty())
+                        signer = "";
                     else {
+                        // HTMLize the signer's user id but do *not* create mailto: link
+                        signer.replace( QRegExp("&"), "&amp;" );
+                        signer.replace( QRegExp("<"), "&lt;" );
+                        signer.replace( QRegExp(">"), "&gt;" );
+                        signer.replace( QRegExp("\""), "&quot;" );
+                    }
+                    if( block.keyId.isEmpty() ) {
                         if( signer.isEmpty() )
-                            htmlStr += i18n( "Message was signed with key 0x%1." )
-                                    .arg( keyWithURL );
+                            htmlStr += i18n( "Message was signed with unknown key." );
                         else
-                            htmlStr += i18n( "Message was signed by %1 with key 0x%1." )
-                                    .arg( signer )
-                                    .arg( keyWithURL );
+                            htmlStr += i18n( "Message was signed by %1." )
+                                    .arg( signer );
+                    } else {
+                        bool dateOK = (0 < block.creationTime.tm_year);
+                        QDate created( 1900 + block.creationTime.tm_year,
+                                    block.creationTime.tm_mon,
+                                    block.creationTime.tm_mday );
+                        if( dateOK && created.isValid() ) {
+                            if( signer.isEmpty() )
+                                htmlStr += i18n( "Message was signed with key 0x%1, created %2." )
+                                        .arg( keyWithURL ).arg( created.toString( Qt::LocalDate ) );
+                            else
+                                htmlStr += i18n( "Message was signed by %1 with key 0x%2, created %3." )
+                                        .arg( signer )
+                                        .arg( keyWithURL )
+                                        .arg( created.toString( Qt::LocalDate ) );
+                        }
+                        else {
+                            if( signer.isEmpty() )
+                                htmlStr += i18n( "Message was signed with key 0x%1." )
+                                        .arg( keyWithURL );
+                            else
+                                htmlStr += i18n( "Message was signed by %1 with key 0x%1." )
+                                        .arg( signer )
+                                        .arg( keyWithURL );
+                        }
                     }
                 }
                 htmlStr += "<br />";
