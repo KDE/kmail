@@ -3175,6 +3175,7 @@ void KMMainWidget::slotShowTip()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotChangeCaption(QListViewItem * i)
 {
+  if ( !i ) return;
   // set the caption to the current full path
   QStringList names;
   for ( QListViewItem * item = i ; item ; item = item->parent() )
