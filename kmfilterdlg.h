@@ -6,7 +6,7 @@
 #ifndef kmfilterdlg_h
 #define kmfilterdlg_h
 
-#include "kwidgetlister.h"
+#include "../libkdenetwork/kwidgetlister.h"
 #include "kmfilter.h"
 #include "kmfilteraction.h"
 

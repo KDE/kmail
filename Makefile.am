@@ -14,7 +14,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp \
-		kmacctlocal.cpp kmfolderdir.cpp kwidgetlister.cpp \
+		kmacctlocal.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \
 		kmfilteraction.cpp kmsearchpattern.cpp kmidentity.cpp \
