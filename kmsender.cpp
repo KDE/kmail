@@ -248,6 +248,7 @@ void KMSender::doSendMsg()
   // Move previously sent message to folder "sent"
   if (mCurrentMsg)
     {
+      mCurrentMsg->setTransferInProgress( FALSE );
       mCurrentMsg->setStatus(KMMsgStatusSent);
       kernel->sentFolder()->moveMsg(mCurrentMsg);
       mCurrentMsg = NULL;
@@ -272,6 +273,7 @@ void KMSender::doSendMsg()
       setStatusMsg(i18n("Queued messages successfully sent."));
     return;
   }
+  mCurrentMsg->setTransferInProgress( TRUE );
 
   // start the sender process or initialize communication
   if (!mSendProcStarted)
