@@ -105,7 +105,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 
 //-----------------------------------------------------------------------------
 bool kStringToFile(const QString aBuffer, const char* aFileName, 
-		   bool aAskIfExists, bool aBackup=TRUE, bool aVerbose)
+		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
   QFile file(aFileName);
   QFileInfo info(aFileName);
