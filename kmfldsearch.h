@@ -45,7 +45,7 @@ protected:
   virtual bool searchInMessage(KMMessage*);
 
   /** Search for matches in given folder. Adds matches to listbox mLbxMatches. */
-  virtual void searchInFolder(KMFolder*);
+  virtual void searchInFolder(KMFolder*,int);
 
   /** Search for matches in all folders. Calls searchInFolder() for every
       folder. */

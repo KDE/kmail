@@ -1,4 +1,7 @@
 // kmfldsearch.cpp
+// TODO: Add search in subfolder checkbox
+// TODO: Allow searching in bodies
+// TODO: Use msgIdMD5 in MSGID_COLUMN
 
 #include "kmfldsearch.h"
 #include "kmglobal.h"
@@ -70,7 +73,14 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, bool modal, WFlags f):
   mLbxMatches->addColumn(i18n("Folder"), 200);
 
 #define MSGID_COLUMN 4
-  mLbxMatches->addColumn(i18n("Msg"));
+  //TODO: Use msgIDMD5, and create KMFolder::findIdMD5(QString) method
+  mLbxMatches->addColumn(i18n(""));
+  mLbxMatches->setColumnWidth( MSGID_COLUMN, 0 );
+
+#define FOLDERID_COLUMN 5
+  mLbxMatches->addColumn(i18n(""));
+  mLbxMatches->setColumnWidth( FOLDERID_COLUMN, 0 );
+
   mLbxMatches->setMinimumSize(300, 100);
   mLbxMatches->setMaximumSize(2048, 2048);
   mLbxMatches->resize(300, 400);
@@ -120,8 +130,8 @@ KMFldSearch::~KMFldSearch()
 //-----------------------------------------------------------------------------
 QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
 {
- QComboBox* cbx = new QComboBox(false, this);
  QList<KMFolder> folders;
+ QComboBox* cbx = new QComboBox(false, this);
  QStringList str;
  
  kernel->folderMgr()->createFolderList( &str, &folders );
@@ -172,7 +182,7 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::searchInFolder(KMFolder* aFld)
+void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
 {
   KMMessage* msg;
   int i, num, upd;
@@ -200,7 +210,8 @@ void KMFldSearch::searchInFolder(KMFolder* aFld)
 			      msg->from(),
 			      msg->dateStr(),
 			      aFld->name(),
-			      QString("%1").arg(i)
+			      QString("%1").arg(i),
+			      QString("%1").arg(fldNum)
 			      );
       mNumMatches++;
       updStatus();
@@ -210,6 +221,7 @@ void KMFldSearch::searchInFolder(KMFolder* aFld)
       kapp->processEvents();
       upd = 0;
     }
+    aFld->unGetMsg(i);
   }
 
   if(!mSearching)
@@ -229,13 +241,15 @@ void KMFldSearch::searchInAllFolders(void)
   QList<KMFolder> folders;
   KMFolder *folder;
   QStringList str;
+  int i = 0;
 
   kernel->folderMgr()->createFolderList( &str, &folders );
   for(folder = folders.first(); folder != 0; folder = folders.next()) {
     // Stop pressed?
     if(!mSearching)
       break;
-    searchInFolder(folder);
+    searchInFolder(folder,i);
+    ++i;
   }
 }
 
@@ -265,8 +279,15 @@ void KMFldSearch::slotSearch()
   
   if (mCbxFolders->currentItem() <= 0) 
     searchInAllFolders();
-  else 
-    searchInFolder(kernel->folderMgr()->find(mCbxFolders->currentText()));
+  else {
+    QList<KMFolder> folders;
+    QStringList str;
+    kernel->folderMgr()->createFolderList( &str, &folders );
+    if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
+      searchInFolder(folders.at(mCbxFolders->currentItem()-1),
+		     mCbxFolders->currentItem()-1);
+    }
+  }
 
   mSearching=false;
   updStatus();
@@ -295,11 +316,15 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
     return;
 
   QString fldName = item->text(LOCATION_COLUMN);
-  fld = kernel->folderMgr()->find(fldName);
+  QList<KMFolder> folders;
+  QStringList str;
+  int idx = atoi(item->text(FOLDERID_COLUMN));
+  kernel->folderMgr()->createFolderList( &str, &folders );
+  fld = folders.at(idx);
   if (!fld) 
     return;
+  // This could goto the wrong folder if the folder list has been modified
 
-  //  mMainWin->folderSelected(fld);
   mMainWin->slotSelectFolder(fld);
   msg = fld->getMsg(atoi(item->text(MSGID_COLUMN)));
   if (!msg) 
