@@ -1484,7 +1484,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
 	win->mViewer->write(win->codec()->toUnicode(str));
       else  // plain text
-	win->writeBodyStr(str, codec);
+	win->writeBodyStr(str, win->codec());
       win->mViewer->write("</body></html>");
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
