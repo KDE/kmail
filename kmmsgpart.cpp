@@ -75,7 +75,7 @@ QString KMMessagePart::encodeBase64(const QString& aStr)
     return QString();
 
   // Generate digest
-  KMD5 context(aStr);
+  KMD5 context(aStr.latin1());
 
   dwSrc = DwString((const char*)context.rawDigest(), 16);
   DwEncodeBase64(dwSrc, dwResult);
