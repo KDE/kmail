@@ -519,42 +519,39 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       pgpMessage = true;
       if(pgp->decrypt())
       {
-	line.sprintf("<B>%s</B><BR>",
-		     (const char*)i18n("Encrypted message"));
-	htmlStr += line;
+	htmlStr += QString("<B>%1</B><BR>").arg(i18n("Encrypted message"));
       }
       else
       {
-	line.sprintf("<B>%s</B><BR>%s<BR><BR>",
-		     (const char*)i18n("Cannot decrypt message:"),
-		     (const char*)pgp->lastErrorMsg());
-	htmlStr += line;
+	htmlStr += QString("<B>%1</B><BR>%2<BR><BR>")
+                    .arg(i18n("Cannot decrypt message:"))
+                    .arg(pgp->lastErrorMsg());
       }
     }
     // check for PGP signing
     if (pgp->isSigned())
     {
       pgpMessage = true;
-      if (pgp->goodSignature()) sig = i18n("Message was signed by");
-      else sig = i18n("Warning: Bad signature from");
+      if (pgp->goodSignature()) 
+         sig = i18n("Message was signed by");
+      else 
+         sig = i18n("Warning: Bad signature from");
       
       /* HTMLize signedBy data */
-      QString *sdata=new QString(pgp->signedBy());
-      sdata->replace(QRegExp("\""), "&quot;");
-      sdata->replace(QRegExp("<"), "&lt;");
-      sdata->replace(QRegExp(">"), "&gt;");
+      QString sdata=pgp->signedBy();
+      sdata.replace(QRegExp("\""), "&quot;");
+      sdata.replace(QRegExp("<"), "&lt;");
+      sdata.replace(QRegExp(">"), "&gt;");
 
-      if (sdata->contains(QRegExp("unknown key ID")))
+      if (sdata.contains(QRegExp("unknown key ID")))
       {
-      sdata->replace(QRegExp("unknown key ID"), i18n("unknown key ID"));
-      line.sprintf("<B>%s %s</B><BR>",sig.data(), sdata->data());
+         sdata.replace(QRegExp("unknown key ID"), i18n("unknown key ID"));
+         htmlStr += QString("<B>%1 %2</B><BR>").arg(sig).arg(sdata);
       } 
-      else
-      line.sprintf("<B>%s <A HREF=\"mailto:%s\">%s</A></B><BR>", sig.data(), 
-		   sdata->data(),sdata->data());
-
-      delete sdata;
-      htmlStr += line;
+      else {
+         htmlStr += QString("<B>%1 <A HREF=\"mailto:%2\">%3</A></B><BR>")
+                      .arg(sig).arg(sdata).arg(sdata);
+      }
     }
     htmlStr += quotedHTML(pgp->message());
     if(pgpMessage) htmlStr += "<BR><B>End pgp message</B><BR><BR>";
@@ -637,10 +634,9 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   label = fileName;
 
 //--- Sven's save attachments to /tmp start ---
-  QString fname;
   bool ok = true;
 
-  fname.sprintf("%s/part%d", (const char*)mAttachDir, aPartNum+1);
+  QString fname = QString("%1/part%2").arg(mAttachDir).arg(aPartNum+1);
   if (access(fname.data(), W_OK) != 0) // Not there or not writable
     if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
       ok = false; //failed create
@@ -667,12 +663,13 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   }
   if (ok)
   {
-    href.sprintf("file:%s", fname.data());
+    href = QString("file:")+fname;
     //debug ("Wrote attachment to %s", href.data());
   }
-  else
-//--- Sven's save attachments to /tmp end ---
-  href.sprintf("part://%i", aPartNum+1);
+  else {
+    //--- Sven's save attachments to /tmp end ---
+    href = QString("part://%1").arg(aPartNum+1);
+  }
 
   // sven: for viewing images inline
   if (inlineImage)
@@ -820,11 +817,9 @@ void KMReaderWin::printMsg(void)
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl(const char* aUrl)
 {
-  QString url;
-
   if (!aUrl || !mMsg) return -1;
   
-  url.sprintf("file:%s/part", (const char*)mAttachDir);
+  QString url = QString("file:%1/part").arg(mAttachDir);
   int s = url.length();
   if (strncmp(aUrl, url, s) == 0)
   {
@@ -989,11 +984,9 @@ void KMReaderWin::slotAtmView()
     else if (stricmp(msgPart.typeStr(), "image")==0)
     {
       //image
-      QString linkName;
       // Attachment is saved already; this is the file:
-      linkName.sprintf ("<img src=\"file:%s/part%d/%s\" border=0>",
-                        (const char*)mAttachDir, mAtmCurrent+1,
-                        pname.data()); // set linkname
+      QString linkName = QString("<img src=\"file:%1/part%2/%3\" border=0>")
+                        .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
       win->mViewer->begin();
       win->mViewer->write("<HTML><BODY>");
       win->mViewer->write(linkName.data());
@@ -1031,8 +1024,8 @@ void KMReaderWin::slotAtmOpen()
   if (pname.isEmpty()) pname="unnamed";
   //--- Sven's save attachments to /tmp start ---
   // Sven added:
-  fileName.sprintf ("%s/part%d/%s", (const char*)mAttachDir, mAtmCurrent+1,
-                    pname.data());
+  fileName = QString("%1/part%2/%3")
+             .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
   // Sven commented out:
   //tmpName = tempnam(NULL, NULL);
   //if (!tmpName)
