@@ -769,18 +769,16 @@ protected slots:
   void slotPlugSelectionChanged();
 
 private:
-  KListView* plugList;
+  KListView     *mPlugList;
 
-  QPushButton* addCryptPlugButton;
-  QPushButton* removeCryptPlugButton;
-  QPushButton* activateCryptPlugButton;
-  QPushButton* configureCryptPlugButton;
+  QPushButton   *mNewButton;
+  QPushButton   *mRemoveButton;
+  QPushButton   *mActivateButton;
+  QPushButton   *mConfigureButton;
 
-  QLineEdit* plugNameEdit;
-  KURLRequester* plugLocationRequester;
-  QLineEdit* plugUpdateURLEdit;
-
-  CryptPlugWrapperList* mCryptPlugList;
+  QLineEdit     *mNameEdit;
+  KURLRequester *mLocationRequester;
+  QLineEdit     *mUpdateURLEdit;
 };
 
 class SecurityPage : public TabbedConfigurationPage {
