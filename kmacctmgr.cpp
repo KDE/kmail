@@ -151,7 +151,19 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     mTotalNewMailsArrived = 0;
   }
   if (mAcctTodo.isEmpty()) return;
-  curAccount = mAcctTodo.take(0);
+
+  curAccount = 0;
+  KMAcctList::Iterator it ( mAcctTodo.begin() );
+  KMAcctList::Iterator last ( mAcctTodo.end() );
+  for ( ; it != last; it++ )
+  {
+    if ( !(*it)->checkingMail() ) {
+      curAccount = (*it);
+      mAcctTodo.remove( curAccount );
+      break;
+    }
+  }
+  if ( !curAccount ) return; // no account or all of them are already checking
 
   if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" &&
       curAccount->folder() == 0)
