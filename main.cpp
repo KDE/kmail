@@ -196,7 +196,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Michael Haeckel", I18N_NOOP("Current maintainer"), "michael@haeckel.net" );
   about.addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "sanders@kde.org" );
   about.addAuthor( "Stefan Taferner ", 0, "taferner@kde.org" );
-  about.addAuthor( "Daniel Naber", I18N_NOOP("Security"), "daniel.naber@t-online.de" );
+  about.addAuthor( "Daniel Naber", I18N_NOOP("Documentation"), "daniel.naber@t-online.de" );
   about.addAuthor( "Andreas Gungl", I18N_NOOP("Encryption"), "a.gungl@gmx.de" );
   about.addAuthor( "Toyohiro Asukai", 0, "toyohiro@ksmplus.com" );
   about.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
