@@ -1,3 +1,4 @@
+// -*- c-basic-offset: 2 -*-
 // kmmessage.cpp
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
@@ -413,35 +414,7 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
   }
 
   mNeedsAssembly = FALSE;
-    mDate = date();
-
-  // Convert messages with a binary body into a message with attachment.
-#if 0
-  QCString ct = dwContentType().TypeStr().c_str();
-  QCString st = dwContentType().SubtypeStr().c_str();
-  ct = ct.lower();
-  st = st.lower();
-  if (   ct.isEmpty()
-      || ct == "text"
-      || ct == "multipart"
-      || (    ct == "application"
-              && (st == "pkcs7-mime" || st == "x-pkcs7-mime" || st == "pgp") ) )
-    return;
-  KMMessagePart textPart;
-  textPart.setTypeStr("text");
-  textPart.setSubtypeStr("plain");
-  textPart.setBody("\n");
-  KMMessagePart bodyPart;
-  bodyPart.setTypeStr(ct);
-  bodyPart.setSubtypeStr(subtypeStr());
-  bodyPart.setContentDisposition(headerField("Content-Disposition").latin1());
-  bodyPart.setCteStr(contentTransferEncodingStr());
-  bodyPart.setContentDisposition(headerField("Content-Disposition").latin1());
-  bodyPart.setBodyEncodedBinary(bodyDecodedBinary());
-  addBodyPart(&textPart);
-  addBodyPart(&bodyPart);
-  mNeedsAssembly = FALSE;
-#endif
+  mDate = date();
 }
 
 
@@ -3862,7 +3835,7 @@ QString KMMessage::expandAliases( const QString& recipients )
     if ( !expandedRecipients.isEmpty() )
       expandedRecipients += ", ";
     QString receiver = (*it).stripWhiteSpace();
-    
+
     // try to expand distribution list
     QString expandedList = KabcBridge::expandDistributionList( receiver );
     if ( !expandedList.isEmpty() ) {
@@ -3876,7 +3849,7 @@ QString KMMessage::expandAliases( const QString& recipients )
       expandedRecipients += expandedNickName;
       continue;
     }
-    
+
     // check whether the address is missing the domain part
     // FIXME: looking for '@' might be wrong
     if ( receiver.find('@') == -1 ) {
@@ -4175,8 +4148,8 @@ DwBodyPart* KMMessage::findDwBodyPart( const QString & partSpecifier )
 void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & data)
 {
   DwString content( data.data(), data.size() );
-  if ( numBodyParts() > 0 && 
-       partSpecifier != "0" && 
+  if ( numBodyParts() > 0 &&
+       partSpecifier != "0" &&
        partSpecifier != "TEXT" )
   {
     QString specifier = partSpecifier;
