@@ -206,7 +206,7 @@ void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
 void KMAcctImap::processNewMail(bool interactive)
 {
   if (!mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
-      makeConnection() != ImapAccountBase::Connected)
+      makeConnection() == ImapAccountBase::Error)
   {
     mCountRemainChecks = 0;
     checkDone(false, 0);
