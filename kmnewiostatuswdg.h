@@ -18,7 +18,7 @@ class KMIOStatusWdg : public KMIOStatus
  public:
   
   KMIOStatusWdg(QWidget *parent = 0, const char * name = 0,
-		task = 0, QString host = 0 );
+		task type = SEND, QString host = 0 );
   ~KMIOStatusWdg();
 
 

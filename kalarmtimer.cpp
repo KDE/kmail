@@ -38,7 +38,7 @@ static KAlarmTimerId idCounter = 1;
 static char* time2str(struct timeval& tv)
 {
   static char str[32];
-  sprintf (str, "%d.%d", tv.tv_sec, tv.tv_usec);
+  sprintf (str, "%ld.%ld", tv.tv_sec, tv.tv_usec);
   return str;
 }
 

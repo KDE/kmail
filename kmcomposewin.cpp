@@ -447,12 +447,9 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotUndoEvent()), keys->undo());
   menu->insertSeparator();
 #endif //BROKEN
-  menu->insertItem(i18n("Cut"), this, SLOT(slotCut()),
-		   keys->cut());
-  menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()),
-		   keys->copy());
-  menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()),
-		   keys->paste());
+  menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
+  menu->insertItem(i18n("Copy"), this, SLOT(slotCopy()));
+  menu->insertItem(i18n("Paste"), this, SLOT(slotPaste()));
   menu->insertItem(i18n("Mark all"),this,
 		   SLOT(slotMarkAll()));
   menu->insertSeparator();
@@ -1310,8 +1307,16 @@ void KMComposeWin::slotCut()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
+  if (fw->inherits("KEdit"))
+    ((QMultiLineEdit*)fw)->cut();
+  else if (fw->inherits("KMLineEdit"))
+    ((KMLineEdit*)fw)->cut();
+  else debug("wrong focus widget");
+
+#ifdef BROKEN
   QKeyEvent k(Event_KeyPress, Key_X , 0 , ControlButton);
   app->notify(fw, &k);
+#endif
 }
 
 

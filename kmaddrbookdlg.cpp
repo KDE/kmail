@@ -204,7 +204,7 @@ void KMAddrBookEditDlg::slotRemove()
   int idx = mListBox.currentItem();
   mIndex = -1;
   if (idx >= 0) mListBox.removeItem(idx);
-  if (idx >= mListBox.count()) idx--;
+  if (idx >= (int)mListBox.count()) idx--;
   mListBox.setCurrentItem(idx);
 }
 

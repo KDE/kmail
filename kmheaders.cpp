@@ -272,7 +272,7 @@ void KMHeaders::applyFiltersOnMsg(int msgId)
   for (idx=cur, msg=msgList->first(); msg; msg=msgList->next())
     filterMgr->process(msg);
 
-  if (cur > count()) cur = count()-1;
+  if (cur > (int)count()) cur = count()-1;
   setCurrentItem(cur);
 }
 
