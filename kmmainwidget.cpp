@@ -390,6 +390,7 @@ void KMMainWidget::readConfig(void)
 
   }
   updateMessageMenu();
+  updateFileMenu();
 }
 
 
@@ -3333,4 +3334,27 @@ void KMMainWidget::slotFilterLogViewer()
 {
   FilterLogDialog * dlg = new FilterLogDialog( 0 );
   dlg->show();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::updateFileMenu()
+{
+  QStringList actList;
+  actList = kmkernel->acctMgr()->getAccounts(false);
+  
+  if( actList.size() == 0 )
+  {
+    actionCollection()->action("check_mail")->setEnabled(false);
+    actionCollection()->action("check_mail_in")->setEnabled(false);
+  }
+  else if( actList.size() == 1 )
+  {
+    actionCollection()->action("check_mail")->setEnabled(true);
+    actionCollection()->action("check_mail_in")->setEnabled(false);
+  }
+  else
+  {
+    actionCollection()->action("check_mail")->setEnabled(true);
+    actionCollection()->action("check_mail_in")->setEnabled(true);
+  }
 }

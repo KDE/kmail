@@ -187,6 +187,7 @@ protected:
   void createWidgets();
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
+  void updateFileMenu();
 
   KActionCollection * actionCollection() { return mActionCollection; }
 
