@@ -23,6 +23,8 @@
 #include <qwidget.h>
 #include <qlayout.h>
 
+// Other headers:
+#include <assert.h>
 
 // used in IdentityList::{import,export}Data
 static QString pipeSymbol = QString::fromLatin1("|");
