@@ -489,7 +489,8 @@ bool KMSendProc::addRecipients(const QStrList& aRecipientList)
         receiver.truncate(i);  // "radej@kde.org "
     }
     //printf ("Receiver = %s\n", receiver.data());
-    
+ 
+    receiver = receiver.stripWhiteSpace();   
     if (!receiver.isEmpty()) 
     {
       rc = addOneRecipient(receiver);
