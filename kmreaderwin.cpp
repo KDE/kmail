@@ -484,18 +484,25 @@ QString KMReaderWin::quotedHTML(char * pos)
   }
 
   pos = beg;
+  int tcnt = 0;
+  QString tmpStr;
+
   while (1)
   {
     ch = *pos;
     if (ch=='\n' || ch=='\0')
     {
+      tcnt ++;
       *pos = '\0';
       line = strToHtml(beg,TRUE,TRUE);
       *pos = ch;
       if (quoted && !lastQuoted) line.prepend("<I>");
       else if (!quoted && lastQuoted) line.prepend("</I>");
-      htmlStr += line + "<BR>\n";
-
+      tmpStr += line + "<BR>\n";
+      if (!(tcnt % 100)) {
+	htmlStr += tmpStr;
+	tmpStr.truncate(0);
+      }
       beg = pos+1;
       atStart = TRUE;
       lastQuoted = quoted;
@@ -509,6 +516,7 @@ QString KMReaderWin::quotedHTML(char * pos)
     if (!ch) break;
     pos++;
   }
+  htmlStr += tmpStr;
   return htmlStr;
 }
 
