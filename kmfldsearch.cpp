@@ -7,11 +7,13 @@
 #include "kmmainwin.h"
 #include "kmfoldertree.h"
 #include "kmfolderimap.h"
+#include <kmfolderdir.h>
 
 #include <qlineedit.h>
 #include <qregexp.h>
 #include <qlayout.h>
 #include <assert.h>
+#include <qcheckbox.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -65,6 +67,10 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   lbl->setFixedSize(lbl->sizeHint().width(), mCbxFolders->sizeHint().height());
   lbl->setAlignment(AlignRight|AlignVCenter);
   mGrid->addWidget(lbl, 0, 0);
+
+  mChkSubFolders = new QCheckBox(i18n("i&nclude sub-folders"), this);
+  mChkSubFolders->setChecked(true);
+  mGrid->addWidget(mChkSubFolders, 0, 3);
 
   mLastFocus = 0L;	// to remeber the position of the focus
 
@@ -229,7 +235,7 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
+void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum, bool recursive)
 {
   KMMessage* msg;
   int i, num, upd;
@@ -303,6 +309,25 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
 
   aFld->close();
   if (aFld->protocol() == "imap") searchDone();
+
+  if (!recursive)
+    return;
+
+  KMFolderDir *dir = aFld->child();
+  if (dir)
+  {
+    KMFolder *folder;
+    QPtrListIterator<KMFolderNode> it(*dir);
+    for ( ; it.current(); ++it )
+    {
+      KMFolderNode *node = (*it);
+      if (!node->isDir())
+      {
+        folder = static_cast<KMFolder*>(node);
+        searchInFolder(folder, fldNum++, recursive);
+      }
+    }
+  }
 }
 
 
@@ -378,7 +403,7 @@ void KMFldSearch::slotSearch()
           return;
         }
       }
-      searchInFolder(folder, mCbxFolders->currentItem()-1);
+      searchInFolder(folder, mCbxFolders->currentItem()-1, mChkSubFolders->isChecked());
     }
   }
   searchDone();
@@ -462,6 +487,7 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
 void KMFldSearch::enableGUI() {
   mBtnClose->setEnabled(!mSearching);
   mCbxFolders->setEnabled(!mSearching);
+  mChkSubFolders->setEnabled(!mSearching);
 
   for(int i = 0; i < mNumRules; i++)
     mRules[i]->setEnabled(!mSearching);

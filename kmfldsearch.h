@@ -23,6 +23,7 @@ class KMMainWin;
 class KMFolderMgr;
 class QListViewItem;
 class KMFolderImap;
+class QCheckBox;
 
 #define KMFldSearchInherited QDialog
 class KMFldSearch: public QDialog
@@ -51,7 +52,7 @@ protected:
   virtual bool searchInMessage(KMMessage*, const QCString&);
 
   /** Search for matches in given folder. Adds matches to listbox mLbxMatches. */
-  virtual void searchInFolder(QGuardedPtr<KMFolder>, int);
+  virtual void searchInFolder(QGuardedPtr<KMFolder>, int, bool recursive = true);
 
   /** Search for matches in all folders. Calls searchInFolder() for every
       folder. */
@@ -73,6 +74,7 @@ protected:
   QGridLayout* mGrid;
   QComboBox *mCbxFolders;
   QPushButton *mBtnSearch, *mBtnStop, *mBtnClose;
+  QCheckBox *mChkSubFolders;
   KMFldSearchRule **mRules;
   QListView* mLbxMatches;
   QLabel* mLblStatus;
