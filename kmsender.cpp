@@ -441,9 +441,9 @@ void KMSender::slotIdle()
         "The message will stay in the 'outbox' folder and will be resent.\n"
         "Please remove it from there if you do not want the message to\n"
 		"be resent.\n\n"
-        "The following transport protocol was used:\n  %2");
-  msg.arg(mSendProc->message());
-  msg.arg(mMethodStr);
+	"The following transport protocol was used:\n  %2")
+    .arg(mSendProc->message())
+    .arg(mMethodStr);
   KMessageBox::information(0,msg);
   
   if (mMsgSendProc) {
