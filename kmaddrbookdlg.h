@@ -12,8 +12,12 @@
 #include <qlistbox.h>
 #include <qlineedit.h>
 #include <qlayout.h>
+#include <qvaluelist.h> // for kab stuff
 
 class KMAddrBook;
+class KabBridge;
+class QStringList; // for kab stuff
+class KabKey; // for kab stuff
 
 #define KMAddrBookSelDlgInherited QDialog
 class KMAddrBookSelDlg: public QDialog
@@ -68,6 +72,10 @@ protected:
   QListBox* mListBox;
   QLineEdit* mEdtAddress;
   int mIndex;
+
+  //kab specific
+  QStringList *mAddresses;
+  QValueList<KabKey> *mKeys;
 };
 
 

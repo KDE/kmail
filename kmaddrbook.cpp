@@ -12,6 +12,9 @@
 #include <kstddirs.h>
 #include <kmessagebox.h>
 
+#include "kmkernel.h" // for KabBridge
+#include "kmmessage.h" // for KabBridge
+
 //-----------------------------------------------------------------------------
 KMAddrBook::KMAddrBook(): KMAddrBookInherited()
 {
@@ -172,3 +175,122 @@ int KMAddrBook::compareItems(Item aItem1, Item aItem2)
 {
   return strcasecmp((const char*)aItem1, (const char*)aItem2);
 }
+
+
+
+
+//-----------------------------------------------------------------------------
+void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
+{
+  QString addr;
+  KabKey key;
+  AddressBook::Entry entry;
+  if (keys)
+    keys->clear();
+  int num = kernel->KABaddrBook()->addressbook()->noOfEntries();
+  
+  for (int i = 0; i < num; ++i) {
+    if (AddressBook::NoError != 
+	kernel->KABaddrBook()->addressbook()->getKey( i, key ))
+      continue;
+    if (AddressBook::NoError != 
+	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
+      continue;
+    if ((entry.emails.count() > 0) && !entry.emails[0].isEmpty()) {
+      int bob = entry.emails[0].find( "<" );
+      if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
+	addr = "";
+      else
+	addr = "\"" + entry.fn + "\" ";
+      addr += "<" + entry.emails[0] + ">";
+      addr.stripWhiteSpace();
+      result->append( addr );
+      if (keys)
+	keys->append( key );
+    }
+  }
+}
+
+QString KabBridge::fn(QString address)
+{
+  return KMMessage::stripEmailAddr( address );
+}
+
+QString KabBridge::email(QString address)
+{
+  int i = address.find( "<" );
+  if (i < 0)
+    return "";
+  int j = address.find( ">", i );
+  if (j < 0)
+    return "";
+  return address.mid( i + 1, j - i - 1 );
+}
+
+bool KabBridge::add(QString address, KabKey &kabkey)
+{
+  AddressBook::Entry entry;
+  if (entry.emails.count() < 1)
+    entry.emails.append( "" );
+  entry.emails[0] = email(address);
+  entry.fn = fn(address);
+
+  if (kernel->KABaddrBook()->addressbook()->add( entry, kabkey, true ) !=
+      AddressBook::NoError) {
+    debug( "Error occurred trying to update database: operation insert.0" );
+    return false;
+  }
+  if (kernel->KABaddrBook()->addressbook()->save("", true) != 
+      AddressBook::NoError) {
+    debug( "Error occurred trying to update database: opeation insert.1" );
+    return false;
+  }
+  return true;
+}
+
+bool KabBridge::remove(KabKey kabKey)
+{
+  if (kernel->KABaddrBook()->addressbook()->remove( kabKey ) !=
+      AddressBook::NoError) {
+    debug( "Error occurred trying to update database: operation remove.0" );
+    return false;
+  }
+  
+  if (kernel->KABaddrBook()->addressbook()->save("", true) != 
+      AddressBook::NoError) {
+    debug( "Error occurred trying to update database: operation remove.1" );
+    return false;
+  }
+  return true;
+}
+
+bool KabBridge::replace(QString address, KabKey kabKey)
+{
+  AddressBook::Entry old;
+  if (AddressBook::NoError != 
+      kernel->KABaddrBook()->addressbook()->getEntry( kabKey, old )) {
+    debug( "Error occurred trying to update database: operation replace.0" );
+    return false;
+  }
+
+  if (old.emails.count() < 1)
+    old.emails.append( "" );
+  old.emails[0] = email(address);
+  old.fn = fn(address);
+
+  if (kernel->KABaddrBook()->addressbook()->change( kabKey, old ) !=
+      AddressBook::NoError) {
+    debug( "Error occurred trying to update database: operation replace.1" );
+    return false;
+  }
+
+  if (kernel->KABaddrBook()->addressbook()->save("", true) != 
+      AddressBook::NoError) {
+    debug( "Error occurred trying to update database: operation replace.2" );
+    return false;
+  }
+  return true;
+}
+
+
+

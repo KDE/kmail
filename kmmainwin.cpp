@@ -503,12 +503,8 @@ void KMMainWin::slotFilter()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
-  if (!kernel->useKAB()) {
-    KMAddrBookEditDlg dlg( kernel->addrBook(), this );
-    dlg.exec();
-  }
-  else
-    debug("KMMainWin::slotAddrBook: not implemented.");
+  KMAddrBookEditDlg dlg( kernel->addrBook(), this );
+  dlg.exec();
 }
 
 

@@ -2321,21 +2321,31 @@ void KMLineEdit::slotCompletion()
     prevAddr = s.left(n+1) + ' ';
     s = s.mid(n+1,255).stripWhiteSpace();
   }
-  //s.append("*");
-  //QRegExp regexp(s.data(), FALSE, TRUE);
 
   n=0;
-  for (QString a=adb.first(); a; a=adb.next())
-  {
-    //t.setStr(a);
-    //if (t.contains(regexp))
-    if (QString(a).find(s,0,false) >= 0)
-    {
-      pop.insertItem(a);
-      n++;
-    }
+  if (!kernel->useKAB())
+    for (QString a=adb.first(); a; a=adb.next())
+      {
+	if (QString(a).find(s,0,false) >= 0)
+	  {
+	    pop.insertItem(a);
+	    n++;
+	  }
+      }
+  else {
+    QStringList addresses;
+    KabBridge::addresses(&addresses);
+    QStringList::Iterator it = addresses.begin();
+    for (; it != addresses.end(); ++it)
+      {
+	if ((*it).find(s,0,false) >= 0)
+	  {
+	    pop.insertItem(*it);
+	    n++;
+	  }
+      }
   }
-
+  
   if (n > 1)
   {
     int id;

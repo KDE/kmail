@@ -6,6 +6,10 @@
 #define KMAddrBook_h
 
 #include <qstrlist.h>
+#include <qstringlist.h> // for KabBridge
+#include <qvaluelist.h>  // for KabBridge
+#include <kabapi.h> // for KabBridge
+
 
 #define KMAddrBookInherited QStrList
 class KMAddrBook: protected QStrList
@@ -57,6 +61,16 @@ protected:
 
   QString mDefaultFileName;
   bool mModified;
+};
+
+class KabBridge {
+public:
+  static void addresses(QStringList* result, QValueList<KabKey> *keys=0);
+  static QString fn(QString address);
+  static QString email(QString address);
+  static bool add(QString address, KabKey &kabkey);
+  static bool remove(KabKey);
+  static bool replace(QString address, KabKey);
 };
 
 #endif /*KMAddrBook_h*/

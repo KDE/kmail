@@ -3,10 +3,12 @@
 
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
+#include "kmkernel.h"
 #include <assert.h>
 #include <kapp.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kabapi.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
@@ -45,10 +47,15 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
 
-  for (addr=mAddrBook->first(); addr; addr=mAddrBook->next())
-  {
-    mListBox.insertItem(addr);
+  if (!kernel->useKAB())
+    for (QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
+      mListBox.insertItem(addr);
+  else {
+    QStringList addresses;
+    KabBridge::addresses(&addresses);
+    mListBox.insertStringList(addresses);
   }
+
   resize(350, 450);
 }
 
@@ -119,9 +126,15 @@ KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
   connect(this, SIGNAL(user1Clicked()), this, SLOT(slotAdd()) );
   connect(this, SIGNAL(user2Clicked()), this, SLOT(slotRemove()) );
 
-  for( QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
-  {
-    mListBox->insertItem(addr);
+  mAddresses = new QStringList();
+  mKeys = new QValueList<KabKey>();
+  
+  if (!kernel->useKAB())
+    for (QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
+      mListBox->insertItem(addr);
+  else {
+    KabBridge::addresses(mAddresses,mKeys);
+    mListBox->insertStringList(*mAddresses);
   }
 
   mEdtAddress->setFocus();
@@ -133,6 +146,8 @@ KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
 //-----------------------------------------------------------------------------
 KMAddrBookEditDlg::~KMAddrBookEditDlg()
 {
+  delete mAddresses;
+  delete mKeys;
 }
 
 
@@ -148,8 +163,11 @@ void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 
   // Change of behaviour between QT 2.1b1 and QT2.1b2
   //  changeItem below changes the currentItem!
-  if (oldIndex>=0)
+  if (oldIndex>=0) {
+    if (kernel->useKAB())
+      KabBridge::replace( mEdtAddress->text(), *(mKeys->at(oldIndex)) );
     mListBox->changeItem(mEdtAddress->text(), oldIndex);
+  }
   mListBox->setCurrentItem( mIndex );  // keep currentItem the same
   mEdtAddress->setText(aItem);
 
@@ -163,24 +181,40 @@ void KMAddrBookEditDlg::slotOk()
 {
   int idx, num;
   QString addr = mEdtAddress->text();
+  disconnect( mListBox, SIGNAL(highlighted(const QString&)), 
+	  this, SLOT(slotLbxHighlighted(const QString&)));
 
-  if (mIndex>=0)
+  if (mIndex>=0) {
+    if (kernel->useKAB())
+      KabBridge::replace( mEdtAddress->text(), *(mKeys->at(mIndex)) );
     mListBox->changeItem(addr, mIndex);
-  else if (!addr.isEmpty())
-    mListBox->insertItem(mEdtAddress->text(), mListBox->currentItem());
+  }
+  else if (!addr.isEmpty()) {
+    if (kernel->useKAB()) {
+      KabKey key;
+      if (KabBridge::add( mEdtAddress->text(), key)) {
+	mKeys->insert( mKeys->at(mListBox->currentItem()), key );
+	mListBox->insertItem(mEdtAddress->text(), mListBox->currentItem());
+      }
+    } else
+      mListBox->insertItem(mEdtAddress->text(), mListBox->currentItem());
+  }
 
-  mAddrBook->clear();
-  num = mListBox->count();
-  for(idx=0; idx<num; idx++)
-  {
-    addr = mListBox->text(idx);
-    mAddrBook->insert(addr);
+  if (!kernel->useKAB()) { // Update KMail address book
+    mAddrBook->clear();
+    num = mListBox->count();
+    for(idx=0; idx<num; idx++)
+      {
+	addr = mListBox->text(idx);
+	mAddrBook->insert(addr);
+      }
+    if(mAddrBook->store() == IO_FatalError)
+      {
+	KMessageBox::sorry(0, i18n("The addressbook could not be stored."));
+	return;
+      }
   }
-  if(mAddrBook->store() == IO_FatalError)
-  {
-    KMessageBox::sorry(0, i18n("The addressbook could not be stored."));
-    return;
-  }
+
   accept();
 }
 
@@ -210,7 +244,16 @@ void KMAddrBookEditDlg::slotAdd()
   }
 
   mIndex = -1;
-  mListBox->insertItem( addr, 0 );
+
+  if (kernel->useKAB()) {
+    KabKey key;
+    if (KabBridge::add( addr, key)) {
+      mKeys->insert( mKeys->at(0), key );
+      mListBox->insertItem(addr, 0);
+    }
+  } else
+    mListBox->insertItem( addr, 0 );
+
   mListBox->setContentsPos(0, 0);
   mEdtAddress->setText("");
   mEdtAddress->setFocus();
@@ -233,220 +276,19 @@ void KMAddrBookEditDlg::slotRemove()
 {
   int idx = mListBox->currentItem();
   mIndex = -1;
-  if (idx >= 0) mListBox->removeItem(idx);
+  if (idx >= 0) {
+    mListBox->removeItem(idx);
+    if (kernel->useKAB()) {
+      KabBridge::remove( *(mKeys->at(idx)) );
+      mKeys->remove( mKeys->at(idx) );
+    }
+  }
   if (idx >= (int)mListBox->count()) idx--;
   mListBox->setCurrentItem(idx);
   if( mListBox->count() == 0 ) {
     enableButton( User2, false ); // Remove
   }
 }
-
-
-
-#if 0
-
-
-#define KMAddrBookEditDlgInherited QDialog
-class KMAddrBookEditDlg: public QDialog
-{
-  Q_OBJECT
-public:
-  KMAddrBookEditDlg(KMAddrBook* addrBook, const char* caption=NULL);
-  virtual ~KMAddrBookEditDlg();
-
-protected slots:
-  void slotOk();
-  void slotCancel();
-  void slotEnableAdd();
-  void slotAdd();
-  void slotEnableRemove();
-  void slotRemove();
-  void slotLbxHighlighted(const QString& item);
-
-protected:
-  KMAddrBook* mAddrBook;
-  QGridLayout mGrid;
-  QListBox mListBox;
-  QLineEdit mEdtAddress;
-  QPushButton mBtnOk, mBtnCancel, mBtnAdd, mBtnRemove;
-  int mIndex;
-};
-
-
-KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
-  KMAddrBookEditDlgInherited(NULL, NULL, TRUE), mGrid(this, 3, 4),
-  mListBox(this), mEdtAddress(this),
-  mBtnOk(i18n("OK"),this), 
-  mBtnCancel(i18n("Cancel"),this),
-  mBtnAdd(i18n("Add"),this), 
-  mBtnRemove(i18n("Remove"),this)
-{
-  QString addr;
-
-  initMetaObject();
-  setCaption(aCap ? QString(aCap) : i18n("Addressbook Manager"));
-
-  assert(aAddrBook != NULL);
-  mAddrBook = aAddrBook;
-  mIndex = -1;
-
-  mEdtAddress.adjustSize();
-  mEdtAddress.setMinimumSize(mEdtAddress.size());
-  mBtnOk.adjustSize();
-  mBtnOk.setMinimumSize(mBtnOk.size());
-  mBtnCancel.adjustSize();
-  mBtnCancel.setMinimumSize(mBtnCancel.size());
-  mBtnAdd.adjustSize();
-  mBtnAdd.setMinimumSize(mBtnAdd.size());
-  mBtnAdd.setEnabled(false);
-  mBtnRemove.adjustSize();
-  mBtnRemove.setMinimumSize(mBtnRemove.size());
-  mBtnRemove.setEnabled(false);
-
-  mGrid.addMultiCellWidget(&mListBox, 0, 0, 0, 3);
-  mGrid.addMultiCellWidget(&mEdtAddress, 1, 1, 0, 3);
-  mGrid.addWidget(&mBtnAdd, 2, 0);
-  mGrid.addWidget(&mBtnRemove, 2, 1);
-  mGrid.addWidget(&mBtnOk, 2, 2);
-  mGrid.addWidget(&mBtnCancel, 2, 3);
-
-  mGrid.setRowStretch(0,10);
-  mGrid.setRowStretch(1,0);
-  mGrid.setRowStretch(2,0);
-  mGrid.setColStretch(0,10);
-  mGrid.setColStretch(1,10);
-  mGrid.setColStretch(2,10);
-  mGrid.setColStretch(3,10);
-  mGrid.activate();
-
-  connect(&mListBox, SIGNAL(highlighted(const QString&)), 
-	  SLOT(slotLbxHighlighted(const QString&)));
-  connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
-  connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
-  connect(&mBtnAdd, SIGNAL(clicked()), SLOT(slotAdd()));
-  connect(&mBtnRemove, SIGNAL(clicked()), SLOT(slotRemove()));
-  connect(&mEdtAddress, SIGNAL(textChanged(const QString&)), SLOT(slotEnableAdd()));
-  connect(&mListBox, SIGNAL(selectionChanged()), SLOT(slotEnableRemove()));
-
-  for (addr=mAddrBook->first(); addr; addr=mAddrBook->next())
-  {
-    mListBox.insertItem(addr);
-  }
-
-  mEdtAddress.setFocus();
-  resize(350, 450);
-}
-
-
-//-----------------------------------------------------------------------------
-KMAddrBookEditDlg::~KMAddrBookEditDlg()
-{
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
-{
-
-  mBtnRemove.setEnabled(true);
-  
-  int oldIndex = mIndex;
-  disconnect(&mListBox, SIGNAL(highlighted(const QString&)), 
-	  this, SLOT(slotLbxHighlighted(const QString&)));
-  mIndex = mListBox.currentItem();
-
-  // Change of behaviour between QT 2.1b1 and QT2.1b2
-  //  changeItem below changes the currentItem!
-  if (oldIndex>=0)
-    mListBox.changeItem(mEdtAddress.text(), oldIndex);
-  mListBox.setCurrentItem( mIndex );  // keep currentItem the same
-  mEdtAddress.setText(aItem);
-
-  connect(&mListBox, SIGNAL(highlighted(const QString&)), 
-	  SLOT(slotLbxHighlighted(const QString&)));
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotOk()
-{
-  int idx, num;
-  QString addr = mEdtAddress.text();
-
-  if (mIndex>=0)
-    mListBox.changeItem(addr, mIndex);
-  else if (!addr.isEmpty())
-    mListBox.insertItem(mEdtAddress.text(), mListBox.currentItem());
-
-  mAddrBook->clear();
-  num = mListBox.count();
-  for(idx=0; idx<num; idx++)
-  {
-    addr = mListBox.text(idx);
-    mAddrBook->insert(addr);
-  }
-  if(mAddrBook->store() == IO_FatalError)
-  {
-    KMessageBox::sorry(0, i18n("The addressbook could not be stored."));
-    return;
-  }
-  accept();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotCancel()
-{
-  reject();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotEnableAdd()
-{
-  mBtnAdd.setEnabled(true);
-  mBtnAdd.setDefault(true);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotAdd()
-{
-  const char* addr = mEdtAddress.text();
-
-  if (!addr || !*addr) return;
-  mIndex = -1;
-  mListBox.insertItem(addr, 0);
-  mListBox.setContentsPos(0, 0);
-  mEdtAddress.setText("");
-  mEdtAddress.setFocus();
-  mBtnAdd.setDefault(false);
-  mBtnAdd.setEnabled(false);
-  mBtnOk.setDefault(true);
-  
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotEnableRemove()
-{
-  mBtnRemove.setEnabled(true);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBookEditDlg::slotRemove()
-{
-  int idx = mListBox.currentItem();
-  mIndex = -1;
-  if (idx >= 0) mListBox.removeItem(idx);
-  if (idx >= (int)mListBox.count()) idx--;
-  mListBox.setCurrentItem(idx);
-  if( mListBox.count() == 0 ) {
-    mBtnRemove.setEnabled(false);
-  }
-}
-#endif
 
 
 //-----------------------------------------------------------------------------
