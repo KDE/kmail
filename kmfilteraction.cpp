@@ -292,8 +292,8 @@ int KMFilterActionExec::process(KMMessage *aMsg, bool& /*stop*/)
     KTempFile *atmTempFile = new KTempFile();
     atmList.append( atmTempFile );
     atmTempFile->setAutoDelete( true );
-    kByteArrayToFile(msgPart.bodyDecoded(), atmTempFile->name(), false, false,
-      false);
+    kByteArrayToFile(msgPart.bodyDecodedBinary(), atmTempFile->name(),
+      false, false, false);
     fullCmd = fullCmd.arg( atmTempFile->name() );
   }
   oldSigHandler = signal(SIGALRM, &KMFilterActionExec::dummySigHandler);
