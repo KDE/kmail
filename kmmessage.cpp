@@ -47,9 +47,12 @@ static DwString emptyString("");
 static QCString result;
 
 // Values that are set from the config file with KMMessage::readConfig()
-static QString sReplyStr, sForwardStr, sReplyAllStr, sIndentPrefixStr;
+static QString sReplyStr, sReplyAllStr, sIndentPrefixStr;
 static bool sSmartQuote;
-static int sWrapCol, sHdrStyle;
+static int sWrapCol;
+
+QString KMMessage::sForwardStr = "";
+int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
 /* Start functions added for KRN */
 

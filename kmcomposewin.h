@@ -137,10 +137,13 @@ protected:
 };
 
 
+class KMHeaders;
+
 //-----------------------------------------------------------------------------
 class KMComposeWin : public KMTopLevelWidget
 {
   Q_OBJECT
+  friend class KMHeaders;         // needed for the digest forward
 
 public:
   KMComposeWin(KMMessage* msg=NULL, QString id = "unknown" );

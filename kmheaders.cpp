@@ -33,6 +33,11 @@
 #include "kmfoldermgr.h"
 #include "kmsender.h"
 #include "kmundostack.h"
+#include "kmreaderwin.h"
+
+#include <mimelib/enum.h>
+#include <mimelib/field.h>
+#include <mimelib/mimepp.h>
 
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;
@@ -743,7 +748,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
 
                                                              
 //-----------------------------------------------------------------------------
-void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
+void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 {
   QListViewItem *qitem;
   for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
@@ -986,7 +991,6 @@ void KMHeaders::bounceMsg ()
 void KMHeaders::forwardMsg ()
 {
   KMComposeWin *win;
-  KMMessage *msg;
   KMMessageList* msgList = selectedMsgs();
 
   if (msgList->count() >= 2) {
@@ -994,15 +998,114 @@ void KMHeaders::forwardMsg ()
 
     if (KMessageBox::questionYesNo(this, i18n("Forward selected messages as"
                                               " a MIME digest?")) 
-                                  == KMessageBox::Yes) {
-      KMessageBox::error(this, "FINISH ME");
+                                                      == KMessageBox::Yes) {
+      // we default to the first identity to save prompting the user
+      // (the messages could have different identities)
+      QString id = "";
+      KMMessage *fwdMsg = new KMMessage;
+      KMMessagePart *msgPart = new KMMessagePart;
+      QString msgPartText;
+      int msgCnt = 0; // incase there are some we can't forward for some reason
+
+      fwdMsg->initHeader(id);
+      fwdMsg->setAutomaticFields(true);
+      fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
+      msgPartText = i18n("\nThis is a MIME digest forward.  The content of the"
+                         " message is contained in the attachment(s).\n\n\n"
+                         "--\n");
+      debug("Doing a mime digest forward\n");
+      // iterate through all the messages to be forwarded
+      for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
+        int idx = mFolder->find(mb);
+        if (idx < 0) continue;
+        KMMessage *thisMsg = mFolder->getMsg(idx);
+        if (!thisMsg) continue;
+        // set the identity
+        if (id.length() == 0)
+          id = thisMsg->headerField("X-KMail-Identity");
+        // set the part header
+        msgPartText += "--";
+        msgPartText += fwdMsg->mMsg->Headers().ContentType().Boundary().c_str();
+        msgPartText += "\nContent-Type: MESSAGE/RFC822";
+        #ifdef CHARSETS
+          msgPartText += QString("; CHARSET=%1").arg(charset());
+        #endif
+        msgPartText += "\n";
+        debug("Adding message ID %s\n", thisMsg->id().ascii());
+        DwHeaders dwh;
+        dwh.MessageId().CreateDefault();
+        msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
+        msgPartText += QString("Content-Description: %1").arg(thisMsg->subject());
+        if (!thisMsg->subject().contains("(fwd)")) 
+          msgPartText += " (fwd)";
+        msgPartText += "\n\n";
+        // set the part
+        msgPartText += thisMsg->headerAsString();
+        msgPartText += "\n";
+        msgPartText += thisMsg->body();
+        msgPartText += "\n";     // eot
+        msgCnt++;
+      }
+      debug("Done adding messages to the digest\n");
+      msgPart->setTypeStr("MULTIPART");
+      msgPart->setSubtypeStr(QString("Digest; boundary=\"%1\"").arg(fwdMsg->mMsg->Headers().ContentType().Boundary().c_str()));
+      msgPart->setName("unnamed");
+      msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
+      msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
+      // THIS HAS TO BE AFTER setCte()!!!!
+      msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
+      debug("Launching composer window\n");
+      kernel->kbp()->busy();
+      win = new KMComposeWin(fwdMsg, id);
+      win->addAttach(msgPart);
+      win->show();
+      kernel->kbp()->idle();
+      return;
+    } else {            // NO MIME DIGEST, Multiple forward
+      QString id = "";
+      QString msgText = "";
+      for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
+        int idx = mFolder->find(mb);
+        if (idx < 0) continue;
+        KMMessage *thisMsg = mFolder->getMsg(idx);
+        if (!thisMsg) continue;
+
+        // set the identity
+        if (id.length() == 0)
+          id = thisMsg->headerField("X-KMail-Identity");
+
+        // add the message to the body
+        if (KMMessage::sHdrStyle == KMReaderWin::HdrAll) {
+          msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
+          msgText += thisMsg->asString();
+          msgText = thisMsg->asQuotedString(msgText, "", FALSE, false);
+          msgText += "\n-------------------------------------------------------\n";
+        } else {
+          msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
+          msgText += "Subject: " + thisMsg->subject() + "\n";
+          msgText += "Date: " + thisMsg->dateStr() + "\n";
+          msgText += "From: " + thisMsg->from() + "\n";
+          msgText += "To: " + thisMsg->to() + "\n";
+          msgText += "\n";
+          msgText = thisMsg->asQuotedString(msgText, "", FALSE, false);
+          msgText += "\n-------------------------------------------------------\n";
+        }
+      }
+      KMMessage *fwdMsg = new KMMessage;
+      fwdMsg->initHeader(id);
+      fwdMsg->setAutomaticFields(true);
+      fwdMsg->setBody(msgText);
+      kernel->kbp()->busy();
+      win = new KMComposeWin(fwdMsg, id);
+      win->show();
+      kernel->kbp()->idle();
       return;
     }
   }
 
   // forward a single message at most.
 
-  msg = currentMsg();
+  KMMessage *msg = currentMsg();
   if (!msg) return;
 
   kernel->kbp()->busy();
@@ -1073,7 +1176,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessage *msg;
   KMMsgBase *msgBase, *curMsg = 0;
   int top, rc;
-  bool doUpd;
+//  bool doUpd;
 
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
@@ -1223,7 +1326,7 @@ void KMHeaders::setCurrentMsg(int cur)
 
 
 //-----------------------------------------------------------------------------
-KMMessageList* KMHeaders::selectedMsgs(int idx)
+KMMessageList* KMHeaders::selectedMsgs(int /*idx*/)
 {
   QListViewItem *qitem;
 

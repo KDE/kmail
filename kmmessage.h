@@ -17,6 +17,7 @@ class KMMsgInfo;
 class KMMessage: public KMMsgBase
 {
  friend class KMFolder;
+ friend class KMHeaders;    // needed for MIME Digest forward
 
 public:
   /** Straight forward initialization. */
@@ -305,6 +306,8 @@ protected:
 protected:
   DwMessage* mMsg;
   bool       mNeedsAssembly;
+  static int sHdrStyle;
+  static QString sForwardStr;
 };
 
 typedef KMMessage* KMMessagePtr;
