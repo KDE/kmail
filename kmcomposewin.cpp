@@ -102,25 +102,6 @@ WindowList* windowList=new WindowList;
 
 #include "kmcomposewin.moc"
 
-
-#define HDR_FROM     0x01
-#define HDR_REPLY_TO 0x02
-#define HDR_TO       0x04
-#define HDR_CC       0x08
-#define HDR_BCC      0x10
-#define HDR_SUBJECT  0x20
-#define HDR_NEWSGROUPS  0x40
-#define HDR_FOLLOWUP_TO 0x80
-#define HDR_IDENTITY 0x100
-#define HDR_TRANSPORT 0x200
-#define HDR_ALL      0x3ff
-
-#ifdef KRN
-#define HDR_STANDARD (HDR_SUBJECT|HDR_NEWSGROUPS)
-#else
-#define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
-#endif
-
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   : KMTopLevelWidget (),

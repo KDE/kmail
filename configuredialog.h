@@ -56,14 +56,14 @@ class NewIdentityDialog : public KDialogBase
       ControlCenter,
       ExistingEntry
     };
-      
+
     NewIdentityDialog( QWidget *parent=0, const char *name=0, bool modal=true);
     void setIdentities( const QStringList &list );
 
     QString identityText( void );
     QString duplicateText( void );
     int     duplicateMode( void );
-      
+
   private slots:
     void radioClicked( int id );
 
@@ -72,7 +72,7 @@ class NewIdentityDialog : public KDialogBase
 
   private:
   int mDuplicateMode;
-    QLineEdit  *mLineEdit; 
+    QLineEdit  *mLineEdit;
     QLabel     *mComboLabel;
     QComboBox  *mComboBox;
 };
@@ -84,7 +84,7 @@ class RenameIdentityDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    RenameIdentityDialog( QWidget *parent=0, const char *name=0, 
+    RenameIdentityDialog( QWidget *parent=0, const char *name=0,
 			  bool modal=true );
     void setIdentities( const QString &current, const QStringList &list );
     QString identityText( void );
@@ -122,7 +122,7 @@ class IdentityEntry
     void setOrganization( const QString &organization );
     void setEmailAddress( const QString &emailAddress );
     void setReplyToAddress( const QString &replytoAddress );
-    void setSignatureFileName( const QString &signatureFileName, 
+    void setSignatureFileName( const QString &signatureFileName,
 			       bool importIdentity=false );
     void setSignatureInlineText( const QString &signatureInlineText );
     void setSignatureFileIsAProgram( bool signatureFileIsAProgram );
@@ -149,8 +149,8 @@ class IdentityList
     QStringList identities( void );
     IdentityEntry *get( const QString &identity );
     IdentityEntry *get( uint index );
- 
-    void importData( void ); // Load system settings 
+
+    void importData( void ); // Load system settings
     void exportData( void ); // Save state to system
 
     void add( const IdentityEntry &entry );
@@ -206,7 +206,7 @@ class ConfigureDialog : public KDialogBase
   Q_OBJECT
 
   private:
-    class ApplicationLaunch 
+    class ApplicationLaunch
     {
       public:
         ApplicationLaunch( const QString &cmd );
@@ -226,7 +226,7 @@ class ConfigureDialog : public KDialogBase
 	void resizeColums( void );
 
 	void setVisibleItem( int visibleItem, bool updateSize=true );
-	virtual QSize sizeHint( void ) const; 
+	virtual QSize sizeHint( void ) const;
 
       protected:
 	virtual void resizeEvent( QResizeEvent *e );
@@ -264,7 +264,7 @@ class ConfigureDialog : public KDialogBase
       QPushButton  *sendmailChooseButton;
       QLineEdit    *sendmailLocationEdit;
       QLineEdit    *smtpServerEdit;
-      QLineEdit    *smtpPortEdit;  
+      QLineEdit    *smtpPortEdit;
       QLineEdit    *precommandEdit;
       ListView     *accountList;
       QPushButton  *addAccountButton;
@@ -478,6 +478,7 @@ class ConfigureDialog : public KDialogBase
       QGuardedPtr<KMAccount> newAccount;
     };
     QValueList<mModifiedAccountsType*> mModifiedAccounts;
+    bool secondIdentity;
 };
 
 

@@ -464,6 +464,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   setHelp( "kmail/kmail.html", QString::null );
   setIconListAllVisible( true );
   enableButton( Default, false );
+  secondIdentity = false;
   connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancelOrClose() ));
   connect( this, SIGNAL( closeClicked() ), this, SLOT( slotCancelOrClose() ));
 
@@ -497,7 +498,7 @@ void ConfigureDialog::makeIdentityPage( void )
 {
   QFrame *page = addPage( i18n("Identity"), i18n("Personal information"),
     KGlobal::instance()->iconLoader()->loadIcon( "identity", KIcon::NoGroup,
-    KIcon::SizeMedium ));                                                       
+    KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mIdentity.pageIndex = pageIndex(page);
 
@@ -623,7 +624,7 @@ void ConfigureDialog::makeNetworkPage( void )
   QFrame *page = addPage( i18n("Network"),
 			  i18n("Setup for sending and receiving messages"),
     KGlobal::instance()->iconLoader()->loadIcon( "network", KIcon::NoGroup,
-    KIcon::SizeMedium ));                                                       
+    KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mNetwork.pageIndex = pageIndex(page);
 
@@ -756,7 +757,7 @@ void ConfigureDialog::makeAppearancePage( void )
   QVBox *vbox = addVBoxPage( i18n("Appearance"),
 			     i18n("Customize visual appearance"),
     KGlobal::instance()->iconLoader()->loadIcon( "appearance", KIcon::NoGroup,
-    KIcon::SizeMedium ));                                                       
+    KIcon::SizeMedium ));
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
   mAppearance.pageIndex = pageIndex(vbox);
 
@@ -1115,7 +1116,7 @@ void ConfigureDialog::makeMimePage( void )
   QFrame *page = addPage( i18n("Mime Headers"),
     i18n("Define custom mime header tags for outgoing emails"),
     KGlobal::instance()->iconLoader()->loadIcon( "readme", KIcon::NoGroup,
-    KIcon::SizeMedium ));                                                       
+    KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMime.pageIndex = pageIndex(page);
 
@@ -1176,7 +1177,7 @@ void ConfigureDialog::makeSecurityPage( void )
   QVBox *vbox = addVBoxPage( i18n("Security"),
 			     i18n("Security Settings"),
     KGlobal::instance()->iconLoader()->loadIcon( "encrypted", KIcon::NoGroup,
-    KIcon::SizeMedium ));                                                       
+    KIcon::SizeMedium ));
   mSecurity.pageIndex = pageIndex(vbox);
 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
@@ -1452,11 +1453,11 @@ void ConfigureDialog::setupComposerPage( void )
   KConfig &config = *kapp->config();
   mComposer.CurrentLanguage = NULL;
   LanguageItem *l = mComposer.LanguageList;
-  while (mComposer.LanguageList) 
-  { 
+  while (mComposer.LanguageList)
+  {
     l = mComposer.LanguageList;
     mComposer.LanguageList = l->next;
-    delete l; 
+    delete l;
   }
   mComposer.phraseLanguageCombo->clear();
 
@@ -1748,6 +1749,12 @@ void ConfigureDialog::slotDoApply( bool everything )
   {
     saveActiveIdentity(); // Copy from textfields into list
     mIdentityList.exportData();
+    if( secondIdentity ) {
+	config.setGroup("Composer");
+	long mShowHeaders = config.readNumEntry("headers", HDR_STANDARD);
+	mShowHeaders |= HDR_IDENTITY;
+	config.writeEntry("headers", mShowHeaders);
+    }
   }
   if( activePage == mNetwork.pageIndex || everything )
   {
@@ -2091,6 +2098,10 @@ void ConfigureDialog::slotNewIdentity( void )
     QString identityText = dialog->identityText().stripWhiteSpace();
     if( identityText.isEmpty() == false )
     {
+	qDebug( "Here we are %d", list.count() );
+      if (list.count() == 1)
+	  secondIdentity = true;
+	
       //
       // Add the new identity. Make sure the default identity is
       // first in the otherwise sorted list
