@@ -601,7 +601,7 @@ namespace KMail {
         }
       }
       mErrorDialogIsActive = false;
-    } else
+    } else if ( errorCode != KIO::ERR_USER_CANCELED )
       kdDebug(5006) << "suppressing error:" << errorMsg << endl;
 
     if ( job && !jobsKilled )
