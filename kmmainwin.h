@@ -99,7 +99,8 @@ public slots:
   void slotAtmMsg(KMMessage *msg);
 
   /** Output given message in the statusbar message field. */
-  void statusMsg(const QString& text);
+  void statusMsg(const QString&);
+  void htmlStatusMsg(const QString&);
   void folderSelected(KMFolder*);
   void folderSelectedUnread( KMFolder* );
 
@@ -125,6 +126,7 @@ protected:
   virtual bool queryClose();
 
 protected slots:
+  void displayStatusMsg(const QString&);
   void slotCheckOneAccount(int);
   void slotMailChecked(bool newMail, bool sendOnCheck);
   void getAccountMenu();
@@ -235,6 +237,7 @@ protected slots:
 
 protected:
   KStatusBar   *mStatusBar;
+  QString      mLastStatusMsg;
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
   QSplitter    *mHorizPanner, *mVertPanner;

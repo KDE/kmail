@@ -351,7 +351,7 @@ void KMMainWin::createWidgets(void)
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
-	  this, SLOT(statusMsg(const QString&)));
+	  this, SLOT(htmlStatusMsg(const QString&)));
   connect(mMsgView, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
 	  this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
   connect(mMsgView, SIGNAL(urlClicked(const KURL&,int)),
@@ -488,7 +488,21 @@ void KMMainWin::slotSetEncoding()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWin::htmlStatusMsg(const QString &aText)
+{
+  if (aText.isEmpty()) displayStatusMsg(mLastStatusMsg);
+  else displayStatusMsg(aText);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWin::statusMsg(const QString& aText)
+{
+  mLastStatusMsg = aText;
+  displayStatusMsg(aText);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::displayStatusMsg(const QString& aText)
 {
   QString text = " " + aText + " ";
   int statusWidth = mStatusBar->width() - littleProgress->width()
