@@ -348,6 +348,7 @@ void CachedImapJob::slotPutNextMessage()
     mData.at(i) = *ch; i++;
   }
   jd.data = mData;
+  jd.msgList.append( mMsg );
 
   mMsg->setTransferInProgress(true);
   KIO::SimpleJob *simpleJob = KIO::put(url, 0, false, false, false);
@@ -411,11 +412,7 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   }
 
   if ( job->error() ) {
-    // ### (*it).items isn't set... but showing a UID isn't really helpful, is it?
-    QString myError = "<p><b>" + i18n("Error while uploading message")
-      + "</b></p><p>" + i18n("Could not upload the message %1 on the server from folder %2 with URL %3.").arg((*it).items[0]).arg(mFolder->label()).arg((*it).htmlURL())
-      + "</p><p>" + i18n("This could be because you do not have permission to do this; the error message from the server communication is here:") + "</p>";
-    mAccount->handleJobError( job, myError );
+    mAccount->handlePutError( job, *it, mFolder->folder() );
     delete this;
     return;
   }

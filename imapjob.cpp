@@ -442,7 +442,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
 
   if (job->error())
   {
-    account->handleJobError( job, i18n("Error while uploading messages to the server.") );
+    account->handlePutError( job, *it, mDestFolder );
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )

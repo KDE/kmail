@@ -629,6 +629,21 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
+  bool ImapAccountBase::handlePutError( KIO::Job* job, jobData& jd, KMFolder* folder )
+  {
+    Q_ASSERT( !jd.msgList.isEmpty() );
+    KMMessage* msg = jd.msgList.first();
+    // Use double-quotes around the subject to keep the sentence readable,
+    // but don't use double quotes around the sender since from() might return a double-quoted name already
+    const QString subject = msg->subject().isEmpty() ? i18n( "<unknown>" ) : QString("\"%1\"").arg( msg->subject() );
+    const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
+    QString myError = "<p><b>" + i18n("Error while uploading message")
+      + "</b></p><p>" + i18n("Could not upload the message from %1 with subject %2 on the server. The destination folder was %3, which has the URL %4.").arg(from, subject, folder->label(), jd.htmlURL())
+      + "</p><p>" + i18n("The error message from the server communication is here:") + "</p>";
+    return handleJobError( job, myError );
+  }
+
+  //-----------------------------------------------------------------------------
   bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
   {
     // Copy job's data before a possible killAllJobs

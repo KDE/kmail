@@ -339,6 +339,9 @@ namespace KMail {
      */
     virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
+    /** Handle an error during KIO::put - helper method */
+    bool handlePutError( KIO::Job* job, jobData& jd, KMFolder* folder );
+
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;
     // ### Hacks
