@@ -979,6 +979,7 @@ void KMHeaders::bounceMsg ()
 
   newMsg = new KMMessage;
   newMsg->setTo(fromStr);
+  newMsg->setDateToday();
   newMsg->setSubject("mail failed, returning to sender");
 
   str = newMsg->from();
