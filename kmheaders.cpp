@@ -93,11 +93,11 @@ class KMSortCacheItem {
 public:
     KMSortCacheItem() : mItem(0), mParent(0), mId(-1), mSortOffset(-1),
 	mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0),
-        mImperfectlyThreaded (false) { }
+        mImperfectlyThreaded (true) { }
     KMSortCacheItem(int i, QString k, int o=-1)
 	: mItem(0), mParent(0), mId(i), mSortOffset(o), mKey(k),
 	  mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0),
-          mImperfectlyThreaded (false) { }
+          mImperfectlyThreaded (true) { }
     ~KMSortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
     KMSortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
@@ -137,7 +137,7 @@ public:
     int offset() const { return mSortOffset; }
     void setOffset(int x) { mSortOffset = x; }
 
-    void updateSortFile(FILE *, KMFolder *folder, bool =FALSE);
+    void updateSortFile(FILE *, KMFolder *folder, bool = FALSE);
 };
 
 
@@ -1084,15 +1084,18 @@ void KMHeaders::msgAdded(int id)
     KMSortCacheItem *sci = new KMSortCacheItem;
     sci->setId(id);
 
-    KMSortCacheItem *parent = findParentForSortCacheItem( sci );
-    if (parent && sci->isImperfectlyThreaded()) {
-      // The parent we found could be by subject, in which case it is
-      // possible, that it would be preferrable to thread it below us,
-      // not the other way around. Check that. This is not only
-      // cosmetic, as getting this wrong leads to circular threading.
-      if (msgId == mFolder->getMsgBase(parent->item()->msgId())->replyToIdMD5()
-       || msgId == mFolder->getMsgBase(parent->item()->msgId())->replyToAuxIdMD5())
-        parent = NULL;
+    KMSortCacheItem *parent = findParent( sci );
+    if (!parent && mSubjThreading) {
+      parent = findParentBySubject( sci );
+      if (parent && sci->isImperfectlyThreaded()) {
+        // The parent we found could be by subject, in which case it is
+        // possible, that it would be preferrable to thread it below us,
+        // not the other way around. Check that. This is not only
+        // cosmetic, as getting this wrong leads to circular threading.
+        if (msgId == mFolder->getMsgBase(parent->item()->msgId())->replyToIdMD5()
+         || msgId == mFolder->getMsgBase(parent->item()->msgId())->replyToAuxIdMD5())
+          parent = NULL;
+      }
     }
     if (parent)
       hi = new KMHeaderItem( parent->item(), id );
@@ -1115,13 +1118,14 @@ void KMHeaders::msgAdded(int id)
     mItems[id] = hi;
 
     mSortCacheItems.replace(msgId, sci);
-    if (mSubjThreading) {
+    /* Add to the list of potential parents for subject threading. But only if
+     * we are top level. */
+    if (mSubjThreading && parent) {
       QString subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
       if (subjMD5.isEmpty()) {
         mFolder->getMsgBase(id)->initStrippedSubjectMD5();
         subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
       }
-      /* Add to the list of potential parents for subject threading. */
       if( !subjMD5.isEmpty()) {
         if ( !mSubjectLists.find(subjMD5) )
           mSubjectLists.insert(subjMD5, new QPtrList<KMSortCacheItem>());
@@ -1265,7 +1269,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       QListViewItem *lvi = *it;
       KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
       KMSortCacheItem *sci = item->sortCacheItem();
-      KMSortCacheItem *parent = findParentForSortCacheItem( sci );
+      KMSortCacheItem *parent = findParent( sci );
+      if (!parent) parent = findParentBySubject( sci );
       myParent->takeItem(lvi);
       if (parent && parent->item() != item)
           parent->item()->insertItem(lvi);
@@ -2592,7 +2597,7 @@ bool KMHeaders::writeSortOrder()
 
     KMMsgBase *kmb;
     while(KMHeaderItem *i = items.pop()) {
-      int parent_id = -2; //no parent, top level
+      int parent_id = -1; //no parent, top level
       if (threaded) {
         kmb = mFolder->getMsgBase( i->mMsgId );
         assert(kmb); // I have seen 0L come out of this, called from
@@ -2604,9 +2609,7 @@ bool KMHeaders::writeSortOrder()
           p = mSortCacheItems[replymd5];
 
         if (p)
-          parent_id = p->item()->msgId();
-        else
-          parent_id = -1;
+          parent_id = p->id();
         // We now have either found a parent, or set it to -1, which means that
         // it will be reevaluated when a message is added, for example. If there
         // is no replyToId and no replyToAuxId and the message is not prefixed,
@@ -2653,14 +2656,18 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
   if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+")) {
-    KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
-    int parent_id = -2; //no parent, top level
-    if(khi->parent())
-      parent_id = ((KMHeaderItem *)khi->parent())->mMsgId;
-    else if(!kmb->replyToIdMD5().isEmpty()
-        || !kmb->replyToAuxIdMD5().isEmpty()
-        || kmb->subjectIsPrefixed())
-      parent_id = -1;
+    int parent_id = -1; //no parent, top level
+    
+    if (isThreaded()) {
+      KMSortCacheItem *sci = khi->sortCacheItem();
+      KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
+      if(sci->parent() && !sci->isImperfectlyThreaded())
+        parent_id = sci->parent()->id();
+      else if(kmb->replyToIdMD5().isEmpty()
+           && kmb->replyToAuxIdMD5().isEmpty()
+           && !kmb->subjectIsPrefixed())
+        parent_id = -2;
+    }
     internalWriteItem(sortStream, mFolder, khi->mMsgId, parent_id,
 		      khi->key(mSortCol, !mSortDescending));
 
@@ -2697,12 +2704,10 @@ void KMSortCacheItem::updateSortFile(FILE *sortStream, KMFolder *folder, bool wa
 	fseek(sortStream, mSortOffset, SEEK_SET);
     }
 
-    int parent_id = -2;
+    int parent_id = -1;
     if(!waiting_for_parent) {
-	if(mParent)
+	if(mParent && !isImperfectlyThreaded())
 	    parent_id = mParent->id();
-	else
-	    parent_id = -1;
     }
     internalWriteItem(sortStream, folder, mId, parent_id, mKey);
 }
@@ -2720,12 +2725,10 @@ static int compare_KMSortCacheItem(const void *s1, const void *s2)
     return ret;
 }
 
-void KMHeaders::buildThreadingTrees( QMemArray<KMSortCacheItem *> sortCache )
+void KMHeaders::buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache )
 {
     mSortCacheItems.clear();
-    mSubjectLists.clear();  // autoDelete is true
     mSortCacheItems.resize( mFolder->count() * 2 );
-    mSubjectLists.resize( mFolder->count() * 2 );
 
     // build a dict of all message id's
     for(int x = 0; x < mFolder->count(); x++) {
@@ -2734,10 +2737,18 @@ void KMHeaders::buildThreadingTrees( QMemArray<KMSortCacheItem *> sortCache )
         if(!md5.isEmpty())
             mSortCacheItems.insert(md5, sortCache[x]);
     }
-    if (!mSubjThreading)
-        return;
-    int compare_count =0; // For profiling.
+}
+
+  
+void KMHeaders::buildSubjectThreadingTree( QMemArray<KMSortCacheItem *> sortCache ) 
+{    
+    mSubjectLists.clear();  // autoDelete is true
+    mSubjectLists.resize( mFolder->count() * 2 );
+    
     for(int x = 0; x < mFolder->count(); x++) {
+        // Only a lot items that are now toplevel
+        if ( sortCache[x]->parent() 
+          && sortCache[x]->parent()->id() != -666 ) continue;
         KMMsgBase *mi = mFolder->getMsgBase(x);
         QString subjMD5 = mi->strippedSubjectMD5();
         if (subjMD5.isEmpty()) {
@@ -2758,20 +2769,16 @@ void KMHeaders::buildThreadingTrees( QMemArray<KMSortCacheItem *> sortCache )
         for (QPtrListIterator<KMSortCacheItem> it(*mSubjectLists[subjMD5]);
                 it.current(); ++it) {
             KMMsgBase *mb = mFolder->getMsgBase((*it)->id());
-            compare_count++; //profiling
             if ( mb->date() < mi->date())
                 break;
             p++;
         }
         mSubjectLists[subjMD5]->insert( p, sortCache[x]);
-
     }
-    kdDebug(5006) << "KMHeaders::readSortOrder - Folder message count: " << mFolder->count() << endl;
-    kdDebug(5006) << "KMHeaders::readSortOrder - Number of compares  : " << compare_count << endl;
 }
 
 
-KMSortCacheItem* KMHeaders::findParentForSortCacheItem(KMSortCacheItem *item)
+KMSortCacheItem* KMHeaders::findParent(KMSortCacheItem *item)
 {
     KMSortCacheItem *parent = NULL;
     if (!item) return parent;
@@ -2796,29 +2803,40 @@ KMSortCacheItem* KMHeaders::findParentForSortCacheItem(KMSortCacheItem *item)
         if (!ref.isEmpty())
             parent = mSortCacheItems[ref];
     }
-    if (!parent && msg->subjectIsPrefixed() && mSubjThreading) {
-        // Still no parent. Let's try by subject, but only if the
-        // subject is prefixed. This is necessary to make for
-        // example cvs commit mailing lists work as expected without
-        // having to turn threading off alltogether.
-        QString subjMD5 = msg->strippedSubjectMD5();
-        if (!subjMD5.isEmpty() && mSubjectLists[subjMD5]) {
-            /* Iterate over the list of potential parents with the same
-             * subject, and take the closest one by date. */
-            for (QPtrListIterator<KMSortCacheItem> it2(*mSubjectLists[subjMD5]);
-                    it2.current(); ++it2) {
-                KMMsgBase *mb = mFolder->getMsgBase((*it2)->id());
-                // make sure it's not ourselves
-                if ( item == (*it2)) continue;
-                int delta = msg->date() - mb->date();
-                // delta == 0 is not allowed, to avoid circular threading
-                // with duplicates.
-                if (delta > 0 ) {
-                    // Don't use parents more than 6 weeks older than us.
-                    if (delta < 3628899)
-                        parent = (*it2);
-                    break;
-                }
+    return parent;
+}
+
+KMSortCacheItem* KMHeaders::findParentBySubject(KMSortCacheItem *item)
+{
+    KMSortCacheItem *parent = NULL;
+    if (!item) return parent;
+    
+    KMMsgBase *msg =  mFolder->getMsgBase(item->id()); 
+ 
+    // Let's try by subject, but only if the  subject is prefixed. 
+    // This is necessary to make for example cvs commit mailing lists 
+    // work as expected without having to turn threading off alltogether.
+    if (!msg->subjectIsPrefixed())
+        return parent;
+    
+    QString replyToIdMD5 = msg->replyToIdMD5();
+    QString subjMD5 = msg->strippedSubjectMD5();
+    if (!subjMD5.isEmpty() && mSubjectLists[subjMD5]) {
+        /* Iterate over the list of potential parents with the same
+         * subject, and take the closest one by date. */
+        for (QPtrListIterator<KMSortCacheItem> it2(*mSubjectLists[subjMD5]);
+                it2.current(); ++it2) {
+            KMMsgBase *mb = mFolder->getMsgBase((*it2)->id());
+            // make sure it's not ourselves
+            if ( item == (*it2)) continue;
+            int delta = msg->date() - mb->date();
+            // delta == 0 is not allowed, to avoid circular threading
+            // with duplicates.
+            if (delta > 0 ) {
+                // Don't use parents more than 6 weeks older than us.
+                if (delta < 3628899)
+                    parent = (*it2);
+                break;
             }
         }
     }
@@ -3026,37 +3044,50 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
     // Make sure we've placed everything in parent/child relationship. All
     // messages with a parent id of -1 in the sort file are reevaluated here.
-    if (threaded) buildThreadingTrees( sortCache );
+    if (threaded) buildThreadingTree( sortCache );
+    QPtrList<KMSortCacheItem> toBeSubjThreaded;
+
     if (appended && threaded && !unparented.isEmpty()) {
 	CREATE_TIMER(reparent);
 	START_TIMER(reparent);
-        
+       
 	for(QPtrListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
 	    KMSortCacheItem *item = (*it);
-	    KMSortCacheItem *parent = findParentForSortCacheItem( item );
-            KMMsgBase *msg =  mFolder->getMsgBase(item->id());
+	    KMSortCacheItem *parent = findParent( item );
 	    // If we have a parent, make sure it's not ourselves
 	    if ( parent && (parent != (*it)) ) {
 		parent->addUnsortedChild((*it));
 		if(sortStream)
 		    (*it)->updateSortFile(sortStream, mFolder);
-                // If the parent is watched or ignored, propagate that to it's
-                // children
-                if (mFolder->getMsgBase(parent->id())->isWatched())
-                  msg->setStatus(KMMsgStatusWatched);
-                if (mFolder->getMsgBase(parent->id())->isIgnored()) {
-                  msg->setStatus(KMMsgStatusIgnored);
-                  mFolder->setStatus((*it)->id(), KMMsgStatusRead);
-                }
-	    } else {
-		//oh well we tried, to the root with you!
-		root.addUnsortedChild((*it));
-	    }
+            } else {
+		// if we will attempt subject threading, add to the list, 
+                // otherwise to the root with them
+                if (mSubjThreading)
+                  toBeSubjThreaded.append((*it));
+                else
+                  root.addUnsortedChild((*it));
+            }
 	}
+    
+        if (mSubjThreading) {
+            buildSubjectThreadingTree( sortCache );
+            for(QPtrListIterator<KMSortCacheItem> it(toBeSubjThreaded); it.current(); ++it) {
+                KMSortCacheItem *item = (*it);
+                KMSortCacheItem *parent = findParentBySubject( item );
+            
+                if ( parent ) {
+                    parent->addUnsortedChild((*it));
+                    if(sortStream)
+                      (*it)->updateSortFile(sortStream, mFolder);
+                } else {
+                    //oh well we tried, to the root with you!
+                    root.addUnsortedChild((*it));
+                }
+            }
+        }
 	END_TIMER(reparent);
 	SHOW_TIMER(reparent);
     }
-
     //create headeritems
     int first_unread = -1;
     CREATE_TIMER(header_creation);
@@ -3088,10 +3119,19 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    if(new_kci->item() || new_kci->parent() != i) //could happen if you reparent
 		continue;
 
-	    if(threaded && i->item())
+	    if(threaded && i->item()) {
 		khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key());
-	    else
+                // If the parent is watched or ignored, propagate that to it's
+                // children
+                if (mFolder->getMsgBase(i->id())->isWatched())
+                  mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusWatched);
+                if (mFolder->getMsgBase(i->id())->isIgnored()) {
+                  mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusIgnored);
+                  mFolder->setStatus(new_kci->id(), KMMsgStatusRead);
+                }
+            } else {
 		khi = new KMHeaderItem(this, new_kci->id(), new_kci->key());
+            }
 	    new_kci->setItem(mItems[new_kci->id()] = khi);
 	    if(new_kci->hasChildren())
 		s.enqueue(new_kci);
@@ -3103,10 +3143,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
 
     for(int x = 0; x < mFolder->count(); x++) {	    //cleanup
 	if (!sortCache[x]->item()) { // we missed a message, how did that happen ?
+            kdDebug(5006) << "KMHeaders::readSortOrder - msg could not be threaded. " 
+                  << endl << "Please talk to your threading counselor asap. " <<  endl;
 	    khi = new KMHeaderItem(this, sortCache[x]->id(), sortCache[x]->key());
 	    sortCache[x]->setItem(mItems[sortCache[x]->id()] = khi);
-            // by definition ;)
-            sortCache[x]->setImperfectlyThreaded(true);
 	}
         // Add all imperfectly threaded items to a list, so they can be
         // reevaluated when a new message arrives which might be a better parent.
@@ -3118,6 +3158,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
         // keeping the data structures up to date on removal, for example.
         sortCache[x]->item()->setSortCacheItem(sortCache[x]);
     }
+
     if (getNestingPolicy()<2)
     for (KMHeaderItem *khi=static_cast<KMHeaderItem*>(firstChild()); khi!=0;khi=static_cast<KMHeaderItem*>(khi->nextSibling()))
        khi->setOpen(true);

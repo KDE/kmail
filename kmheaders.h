@@ -301,15 +301,16 @@ private:
   QMemArray<KMHeaderItem*> mItems;
   QDict< KMSortCacheItem > mSortCacheItems;
   QDict< QPtrList< KMSortCacheItem > > mSubjectLists;	
-  void buildThreadingTrees( QMemArray<KMSortCacheItem *> sortCache );
-  KMSortCacheItem* findParentForSortCacheItem(KMSortCacheItem *item);
+  void buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
+  void buildSubjectThreadingTree( QMemArray<KMSortCacheItem *> sortCache );
+  /** Find a msg to thread mb below */
+  KMSortCacheItem* findParent(KMSortCacheItem *item);
+  KMSortCacheItem* findParentBySubject(KMSortCacheItem *item);
 
   bool mNested, mNestedOverride, mSubjThreading;
   NestingPolicy nestingPolicy;
   QPtrList<KMHeaderItem> mImperfectlyThreadedList;
 
-  /** Find a msg to thread mb below */
-  KMHeaderItem * findParent(int id, bool *perfectParent = NULL);
   /** These must replaced by something better! */
   static bool mTrue, mFalse;
 
