@@ -69,7 +69,7 @@ EXTRA_DIST = KMail.desktop
 KDE_ICON = AUTO
 
 rcdir = $(kde_datadir)/kmail
-rc_DATA = kmcomposerui.rc kmmainwin.rc
+rc_DATA = kmcomposerui.rc kmmainwin.rc eventsrc
 
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
