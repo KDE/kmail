@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     simplestringlisteditor.cpp
 
     This file is part of KMail, the KDE mail client.
@@ -66,7 +66,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
 		     i18n("New entry:") : addDialogLabel )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
-  
+
   mListBox = new QListBox( this );
   hlay->addWidget( mListBox, 1 );
 
@@ -86,7 +86,7 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     connect( mAddButton, SIGNAL(clicked()),
 	     this, SLOT(slotAdd()) );
   }
-  
+
   if ( buttons & Remove ) {
     if ( removeLabel.isEmpty() )
       mRemoveButton = new QPushButton( i18n("&Remove"), this );
@@ -109,6 +109,8 @@ SimpleStringListEditor::SimpleStringListEditor( QWidget * parent,
     vlay->addWidget( mModifyButton );
     connect( mModifyButton, SIGNAL(clicked()),
 	     this, SLOT(slotModify()) );
+    connect( mListBox, SIGNAL( doubleClicked( QListBoxItem* ) ),
+             this, SLOT( slotModify() ) );
   }
 
   if ( buttons & Up ) {
