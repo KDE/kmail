@@ -1383,7 +1383,6 @@ void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
     aValue = encodeRFC2047String(bValue);
 
   if (aName.isEmpty()) return;
-  if (aValue.isEmpty()) return;
 
   str = aName;
   if (str[str.length()-1] != ':') str += ": ";
