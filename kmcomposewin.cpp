@@ -5893,7 +5893,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     int para = 1, charPos, firstSpace, lastSpace;
 
     //Get the character at the position of the click
-    charPos = charAt( event->pos(), &para );
+    charPos = charAt( viewportToContents(event->pos()), &para );
     QString paraText = text( para );
 
     if( !paraText.at(charPos).isSpace() )
