@@ -65,8 +65,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
   // Check that all updates have been run on the config file:
-  kmail::checkConfigUpdates();
-  kmail::lockOrDie();
+  KMail::checkConfigUpdates();
+  KMail::lockOrDie();
 
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
@@ -134,7 +134,7 @@ KMailPart::~KMailPart()
   }
   kernel->notClosedByUser();
   delete kernel;
-  kmail::cleanup();
+  KMail::cleanup();
 }
 
 KAboutData *KMailPart::createAboutData()
