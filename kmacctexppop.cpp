@@ -291,7 +291,7 @@ void KMAcctExpPop::startJob() {
 
   KURL url = getUrl();
 
-  if ( url.isMalformed() ) {
+  if ( !url.isValid() ) {
     KMessageBox::error(0, i18n("Source URL is malformed"),
                           i18n("Kioslave Error Message") );
     return;
