@@ -494,6 +494,7 @@ void KMComposeWin::readConfig(void)
 
   mIdentity->setCurrentIdentity( mId );
 
+  mTransport->clear();
   mTransport->insertStringList( KMTransportInfo::availableTransports() );
   while (mTransportHistory.count() > (uint)maxTransportItems)
     mTransportHistory.remove( mTransportHistory.last() );
