@@ -1662,7 +1662,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder)
     if( mSearchAndHeaders && mHeaders )
       mSearchAndHeaders->show();
   }
-  
+
   if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
@@ -3108,15 +3108,18 @@ void KMMainWidget::updateMarkAsReadAction()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
-  mModifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  mCompactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent()
-                                            && ( mFolder->folderType() == KMFolderTypeImap
-                                                 || mFolder->folderType() == KMFolderTypeCachedImap )
-                                            : false );
-  mEmptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
-                                             && ( mFolder->count() > 0 ) )
-                                         : false );
+  bool folderWithContent = mFolder && !mFolder->noContent();
+  mModifyFolderAction->setEnabled( folderWithContent );
+  mCompactFolderAction->setEnabled( folderWithContent );
+
+  // This is the refresh-folder action in the menu. See kmfoldertree for the one in the RMB...
+  bool imap = mFolder && mFolder->folderType() == KMFolderTypeImap;
+  bool cachedImap = mFolder && mFolder->folderType() == KMFolderTypeCachedImap;
+  // For dimap, check that the imap path is known before allowing "check mail in this folder".
+  bool knownImapPath = cachedImap && !static_cast<KMFolderCachedImap*>( mFolder->storage() )->imapPath().isEmpty();
+  mRefreshFolderAction->setEnabled( folderWithContent && ( imap
+                                                           || ( cachedImap && knownImapPath ) ) );
+  mEmptyFolderAction->setEnabled( folderWithContent && ( mFolder->count() > 0 ) );
   mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("E&mpty Trash") : i18n("&Move All Messages to Trash") );
   mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );

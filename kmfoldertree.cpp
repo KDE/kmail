@@ -933,11 +933,15 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
     if (!fti->folder()->noContent())
     {
-      folderMenu->insertItem(SmallIcon("kmmsgnew"), i18n("Check Mail in This Folder"), mMainWidget,
-          SLOT(slotRefreshFolder()));
+      int id = folderMenu->insertItem(SmallIcon("kmmsgnew"), i18n("Check Mail in This Folder"), mMainWidget,
+                                      SLOT(slotRefreshFolder()));
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
         folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
             SLOT(slotResetFolderList()));
+      } else {
+        bool knownImapPath = !static_cast<KMFolderCachedImap*>( fti->folder()->storage() )->imapPath().isEmpty();
+        folderMenu->setItemEnabled( id, knownImapPath );
+
       }
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
